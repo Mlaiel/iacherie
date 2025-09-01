@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -43,7 +44,9 @@ from ..utils.ai_optimization import AIOptimizationEngine
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""
+    """
+Types of analytics metrics"""
+
     REVENUE = "revenue"
     USAGE = "usage"
     PERFORMANCE = "performance"
@@ -58,6 +61,7 @@ class AnalyticsMetricType(Enum):
 
 class TimeFrameType(Enum):
     """Analytics time frame types"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -70,6 +74,7 @@ class TimeFrameType(Enum):
 
 class ReportFormat(Enum):
     """Analytics report output formats"""
+
     JSON = "json"
     CSV = "csv"
     EXCEL = "excel"
@@ -104,7 +109,8 @@ class PerformanceMetrics:
 
 @dataclass
 class RevenueInsights:
-    """Advanced revenue analytics and insights"""
+    """
+Advanced revenue analytics and insights"""
     insight_id: str
     period_start: datetime
     period_end: datetime
@@ -126,7 +132,8 @@ class RevenueInsights:
 
 @dataclass
 class PredictiveModel:
-    """Machine learning model for predictive analytics"""
+    """
+Machine learning model for predictive analytics"""
     model_id: str
     model_type: str
     algorithm: str
@@ -166,7 +173,8 @@ class LicensingAnalytics:
         territories: Optional[List[str]] = None,
         platforms: Optional[List[str]] = None
     ) -> PerformanceMetrics:
-        """Generate comprehensive performance analytics report"""
+        """
+Generate comprehensive performance analytics report"""
         try:
             # Calculate time boundaries
             if not start_date:
@@ -458,7 +466,8 @@ class LicensingAnalytics:
             return now - timedelta(days=7)  # Default to weekly
     
     async def _cache_performance_metrics(self, metrics: PerformanceMetrics):
-        """Cache performance metrics in Redis for faster access"""
+        """
+Cache performance metrics in Redis for faster access"""
         try:
             cache_key = f"analytics:performance:{metrics.metric_id}"
             cache_data = json.dumps(metrics.__dict__, default=str)
@@ -525,11 +534,13 @@ class LicensingAnalytics:
         return 0.85  # Example confidence score
     
     async def _assess_data_quality(self, data: Dict[str, Any]) -> float:
-        """Assess data quality score"""
+        """
+Assess data quality score"""
         return 0.92  # Example data quality score
     
     async def _generate_ai_recommendations(self, insights: RevenueInsights) -> List[str]:
-        """Generate AI-powered recommendations"""
+        """
+Generate AI-powered recommendations"""
         return [
             "Consider expanding licensing to emerging markets",
             "Optimize pricing strategy for video content",
@@ -551,7 +562,8 @@ class LicensingAnalytics:
         })
     
     async def _cache_ml_model(self, model_metadata: PredictiveModel, model):
-        """Cache ML model for future use"""
+        """
+Cache ML model for future use"""
         try:
             # In a real implementation, would serialize and store the model
             cache_key = f"analytics:model:{model_metadata.model_id}"

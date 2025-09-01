@@ -4,11 +4,12 @@ AI-powered trend detection, prediction, and optimization system for content crea
 influencers, and multi-platform content strategy optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -32,7 +33,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class TrendType(Enum):
-    """Types of trends"""
+    """
+Types of trends"""
+
     CONTENT_THEME = "content_theme"
     HASHTAG = "hashtag"
     MUSIC = "music"
@@ -44,6 +47,7 @@ class TrendType(Enum):
 
 class TrendStatus(Enum):
     """Trend lifecycle status"""
+
     EMERGING = "emerging"
     RISING = "rising"
     PEAK = "peak"
@@ -53,6 +57,7 @@ class TrendStatus(Enum):
 
 class Platform(Enum):
     """Supported social media platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -87,7 +92,8 @@ class TrendData:
 
 @dataclass
 class TrendPrediction:
-    """Trend prediction result"""
+    """
+Trend prediction result"""
     trend_id: str
     predicted_status: TrendStatus
     confidence: float
@@ -104,7 +110,8 @@ class TrendPrediction:
 
 @dataclass
 class TrendAlert:
-    """Trend alert notification"""
+    """
+Trend alert notification"""
     alert_id: str
     trend_id: str
     alert_type: str  # emerging, peak, declining, opportunity
@@ -141,7 +148,8 @@ class TrendAnalyzer:
         self.trend_network = nx.Graph()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
+        """
+Get default configuration"""
         return {
             'update_interval': timedelta(minutes=15),
             'min_engagement_threshold': 1000,
@@ -163,7 +171,8 @@ class TrendAnalyzer:
         }
     
     async def initialize(self):
-        """Initialize trend analyzer"""
+        """
+Initialize trend analyzer"""
         try:
             logger.info("Initializing trend analyzer...")
             
@@ -678,7 +687,8 @@ class TrendAnalyzer:
         }
     
     async def _initialize_ml_models(self):
-        """Initialize ML models for trend prediction"""
+        """
+Initialize ML models for trend prediction"""
         try:
             # Initialize trend classification model
             self.ml_models['trend_classifier'] = None  # Would load trained model

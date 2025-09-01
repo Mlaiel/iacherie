@@ -23,6 +23,7 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import os
@@ -59,7 +60,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelFormat(Enum):
-    """Supported model formats."""
+    """
+Supported model formats."""
+
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     ONNX = "onnx"
@@ -70,6 +73,7 @@ class ModelFormat(Enum):
 
 class ModelStatus(Enum):
     """Model deployment status."""
+
     LOADING = "loading"
     READY = "ready"
     ERROR = "error"
@@ -80,6 +84,7 @@ class ModelStatus(Enum):
 
 class InferenceBackend(Enum):
     """Inference backend types."""
+
     CPU = "cpu"
     GPU = "gpu"
     TENSORRT = "tensorrt"
@@ -125,7 +130,8 @@ class ModelPerformanceMetrics:
 
 @dataclass
 class InferenceRequest:
-    """Model inference request."""
+    """
+Model inference request."""
     request_id: str
     model_id: str
     input_data: Any
@@ -137,7 +143,8 @@ class InferenceRequest:
 
 @dataclass
 class InferenceResult:
-    """Model inference result."""
+    """
+Model inference result."""
     request_id: str
     model_id: str
     output_data: Any
@@ -343,7 +350,8 @@ class ModelLoader:
         return list(self.loaded_models.keys())
     
     def get_model_metadata(self, model_id: str) -> Optional[ModelMetadata]:
-        """Get metadata for specific model."""
+        """
+Get metadata for specific model."""
         return self.model_metadata.get(model_id)
 
 
@@ -354,7 +362,8 @@ class ModelInferenceEngine:
     """
     
     def __init__(self, model_loader: ModelLoader, batch_size: int = 32):
-        """Initialize inference engine."""
+        """
+Initialize inference engine."""
         self.model_loader = model_loader
         self.batch_size = batch_size
         self.inference_cache: Dict[str, Any] = {}
@@ -464,7 +473,8 @@ class ModelInferenceEngine:
                 return output
     
     async def _tensorflow_inference(self, model: Any, input_data: Any, metadata: ModelMetadata) -> Any:
-        """Perform TensorFlow model inference."""
+        """
+Perform TensorFlow model inference."""
         if isinstance(input_data, np.ndarray):
             input_tensor = tf.constant(input_data)
         elif isinstance(input_data, dict):
@@ -485,7 +495,8 @@ class ModelInferenceEngine:
             return output
     
     async def _onnx_inference(self, session: ort.InferenceSession, input_data: Any, metadata: ModelMetadata) -> Any:
-        """Perform ONNX model inference."""
+        """
+Perform ONNX model inference."""
         # Prepare input dictionary
         input_names = [input.name for input in session.get_inputs()]
         
@@ -507,7 +518,8 @@ class ModelInferenceEngine:
         return output[0] if len(output) == 1 else output
     
     async def _huggingface_inference(self, model_dict: Dict[str, Any], input_data: Any, metadata: ModelMetadata) -> Any:
-        """Perform Hugging Face model inference."""
+        """
+Perform Hugging Face model inference."""
         model = model_dict['model']
         tokenizer = model_dict['tokenizer']
         
@@ -551,7 +563,8 @@ class ModelInferenceEngine:
             return model.predict(input_data)
     
     def _update_performance_metrics(self, model_id: str, processing_time: float, success: bool):
-        """Update performance metrics for model."""
+        """
+Update performance metrics for model."""
         if model_id not in self.performance_metrics:
             self.performance_metrics[model_id] = ModelPerformanceMetrics(
                 model_id=model_id,
@@ -585,7 +598,8 @@ class ModelInferenceEngine:
         metrics.last_updated = datetime.utcnow()
     
     async def batch_infer(self, requests: List[InferenceRequest]) -> List[InferenceResult]:
-        """Perform batch inference for improved throughput."""
+        """
+Perform batch inference for improved throughput."""
         if not requests:
             return []
         
@@ -610,7 +624,8 @@ class ModelInferenceEngine:
         return all_results
     
     def get_performance_metrics(self, model_id: str) -> Optional[ModelPerformanceMetrics]:
-        """Get performance metrics for specific model."""
+        """
+Get performance metrics for specific model."""
         return self.performance_metrics.get(model_id)
 
 
@@ -621,7 +636,8 @@ class ModelManager:
     """
     
     def __init__(self, config: ProcessingConfig):
-        """Initialize model manager."""
+        """
+Initialize model manager."""
         self.config = config
         self.model_loader = ModelLoader()
         self.inference_engine = ModelInferenceEngine(self.model_loader)
@@ -741,11 +757,13 @@ class ModelManager:
         return await self.inference_engine.infer(request)
     
     async def batch_inference(self, requests: List[InferenceRequest]) -> List[InferenceResult]:
-        """Perform batch inference."""
+        """
+Perform batch inference."""
         return await self.inference_engine.batch_infer(requests)
     
     def _validate_metadata(self, metadata: ModelMetadata) -> bool:
-        """Validate model metadata."""
+        """
+Validate model metadata."""
         required_fields = ['model_id', 'name', 'version', 'model_type', 'format']
         
         for field in required_fields:
@@ -760,18 +778,21 @@ class ModelManager:
         return self.deployment_status.get(model_id)
     
     def get_active_models(self) -> List[str]:
-        """Get list of active model IDs."""
+        """
+Get list of active model IDs."""
         return [
             model_id for model_id, status in self.deployment_status.items()
             if status == ModelStatus.READY
         ]
     
     def get_model_performance(self, model_id: str) -> Optional[ModelPerformanceMetrics]:
-        """Get performance metrics for model."""
+        """
+Get performance metrics for model."""
         return self.inference_engine.get_performance_metrics(model_id)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check."""
+        """
+Perform comprehensive health check."""
         health_status = {
             'status': 'healthy',
             'total_models': len(self.model_registry),
@@ -794,7 +815,8 @@ class ModelManager:
 
 # Factory functions for easy model creation
 async def create_audio_fingerprint_model(model_path: str, model_id: str = None) -> ModelMetadata:
-    """Create metadata for audio fingerprinting model."""
+    """
+Create metadata for audio fingerprinting model."""
     if model_id is None:
         model_id = str(uuid.uuid4())
     

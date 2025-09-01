@@ -10,6 +10,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import json
 import logging
 import logging.handlers
@@ -25,7 +26,9 @@ import hashlib
 
 
 class LogLevel(Enum):
-    """Enhanced log levels for different contexts."""
+    """
+Enhanced log levels for different contexts."""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -39,6 +42,7 @@ class LogLevel(Enum):
 
 class EventCategory(Enum):
     """Event categories for structured logging."""
+
     USER_ACTION = "user_action"
     SYSTEM_EVENT = "system_event"
     SECURITY_EVENT = "security_event"
@@ -75,7 +79,8 @@ class StructuredLogEntry:
     tags: List[str] = None
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary for JSON serialization."""
+        """
+Convert to dictionary for JSON serialization."""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['level'] = self.level.value
@@ -85,12 +90,14 @@ class StructuredLogEntry:
         return data
 
     def to_json(self) -> str:
-        """Convert to JSON string."""
+        """
+Convert to JSON string."""
         return json.dumps(self.to_dict(), ensure_ascii=False)
 
 
 class StructuredLogger:
-    """Enhanced structured logger with multiple output formats."""
+    """
+Enhanced structured logger with multiple output formats."""
     
     def __init__(self, service_name: str, log_directory: str = "/var/log/ia-influencer"):
         self.service_name = service_name
@@ -185,7 +192,8 @@ class StructuredLogger:
             exception: Optional[Exception] = None,
             metadata: Optional[Dict] = None,
             tags: Optional[List[str]] = None):
-        """Log a structured entry."""
+        """
+Log a structured entry."""
         
         # Create structured log entry
         entry = StructuredLogEntry(
@@ -229,27 +237,33 @@ class StructuredLogger:
             self.app_logger.info(json_message)
     
     def debug(self, message: str, **kwargs):
-        """Log debug message."""
+        """
+Log debug message."""
         self.log(LogLevel.DEBUG, EventCategory.SYSTEM_EVENT, message, **kwargs)
     
     def info(self, message: str, **kwargs):
-        """Log info message."""
+        """
+Log info message."""
         self.log(LogLevel.INFO, EventCategory.SYSTEM_EVENT, message, **kwargs)
     
     def warning(self, message: str, **kwargs):
-        """Log warning message."""
+        """
+Log warning message."""
         self.log(LogLevel.WARNING, EventCategory.SYSTEM_EVENT, message, **kwargs)
     
     def error(self, message: str, exception: Optional[Exception] = None, **kwargs):
-        """Log error message."""
+        """
+Log error message."""
         self.log(LogLevel.ERROR, EventCategory.ERROR_EVENT, message, exception=exception, **kwargs)
     
     def critical(self, message: str, exception: Optional[Exception] = None, **kwargs):
-        """Log critical message."""
+        """
+Log critical message."""
         self.log(LogLevel.CRITICAL, EventCategory.ERROR_EVENT, message, exception=exception, **kwargs)
     
     def log_user_action(self, action: str, user_id: str, details: Optional[Dict] = None, **kwargs):
-        """Log user action."""
+        """
+Log user action."""
         self.log(
             LogLevel.INFO, 
             EventCategory.USER_ACTION, 
@@ -335,7 +349,8 @@ class StructuredLogger:
             return [log.to_dict() for log in recent_logs]
     
     def get_log_metrics(self) -> Dict:
-        """Get logging metrics."""
+        """
+Get logging metrics."""
         with self._lock:
             return {
                 "total_logs": sum(self.log_metrics.values()),

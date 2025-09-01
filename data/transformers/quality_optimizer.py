@@ -5,9 +5,10 @@ Advanced quality optimization system using machine learning and AI techniques
 for intelligent content enhancement and quality assessment.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions."""
+    """
+Quality assessment dimensions."""
+
     VISUAL_CLARITY = "visual_clarity"
     AUDIO_FIDELITY = "audio_fidelity"
     COMPRESSION_EFFICIENCY = "compression_efficiency"
@@ -34,6 +37,7 @@ class QualityDimension(Enum):
 
 class OptimizationGoal(Enum):
     """Optimization objectives."""
+
     MAXIMIZE_QUALITY = "maximize_quality"
     MINIMIZE_SIZE = "minimize_size"
     BALANCE_QUALITY_SIZE = "balance_quality_size"
@@ -44,6 +48,7 @@ class OptimizationGoal(Enum):
 
 class QualityLevel(Enum):
     """Quality levels."""
+
     POOR = "poor"
     FAIR = "fair"
     GOOD = "good"
@@ -106,7 +111,8 @@ class QualityMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Result of quality optimization."""
+    """
+Result of quality optimization."""
     success: bool
     input_file: str
     output_file: str
@@ -775,7 +781,8 @@ class QualityOptimizer:
         optimized: QualityMetrics,
         goal: OptimizationGoal
     ) -> List[str]:
-        """Generate optimization recommendations."""
+        """
+Generate optimization recommendations."""
         recommendations = []
         
         if optimized.overall_score > original.overall_score:
@@ -795,7 +802,8 @@ class QualityOptimizer:
         return (improvement + size_reduction) / 2
     
     async def _can_enhance_with_ai(self, file_path: str) -> bool:
-        """Check if AI enhancement is available for this content."""
+        """
+Check if AI enhancement is available for this content."""
         content_type = self._detect_content_type(file_path)
         
         # Check if we have AI models for this content type

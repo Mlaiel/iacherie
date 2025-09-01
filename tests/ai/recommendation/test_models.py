@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for AI Recommendation Data Models
+"""
+Comprehensive Tests for AI Recommendation Data Models
 Testing all data structures, validation, and serialization
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -42,10 +45,12 @@ from ai.recommendation.models import (
 
 
 class TestCreatorProfile:
-    """Comprehensive tests for CreatorProfile model"""
+    """
+Comprehensive tests for CreatorProfile model"""
     
     def test_creator_profile_creation(self, sample_creator_musician):
-        """Test basic creator profile creation"""
+        """
+Test basic creator profile creation"""
         profile = sample_creator_musician
         
         assert profile.creator_id == "musician_001"
@@ -112,7 +117,8 @@ class TestCreatorProfile:
         assert engagement_score > 0
     
     def test_creator_profile_platform_management(self):
-        """Test platform addition and removal"""
+        """
+Test platform addition and removal"""
         profile = CreatorProfile(
             creator_id="test_003",
             display_name="Test Creator",
@@ -150,10 +156,12 @@ class TestCreatorProfile:
 
 
 class TestContentRecommendation:
-    """Comprehensive tests for ContentRecommendation model"""
+    """
+Comprehensive tests for ContentRecommendation model"""
     
     def test_recommendation_creation(self, sample_content_recommendations):
-        """Test content recommendation creation"""
+        """
+Test content recommendation creation"""
         recommendation = sample_content_recommendations[0]
         
         assert recommendation.recommendation_id == "rec_001"
@@ -218,7 +226,8 @@ class TestContentRecommendation:
         assert time_diff <= timedelta(hours=24)
     
     def test_recommendation_monetization_calculation(self, sample_content_recommendations):
-        """Test monetization potential calculations"""
+        """
+Test monetization potential calculations"""
         recommendation = sample_content_recommendations[0]
         
         assert recommendation.monetization_potential > 0
@@ -249,7 +258,8 @@ class TestCollaborationMatch:
     """Comprehensive tests for CollaborationMatch model"""
     
     def test_collaboration_match_creation(self, sample_collaboration_matches):
-        """Test collaboration match creation"""
+        """
+Test collaboration match creation"""
         match = sample_collaboration_matches[0]
         
         assert match.match_id == "collab_001"
@@ -279,7 +289,8 @@ class TestCollaborationMatch:
         assert 0 <= match.geographic_compatibility <= 1
     
     def test_collaboration_timeline_estimation(self, sample_collaboration_matches):
-        """Test collaboration timeline estimation"""
+        """
+Test collaboration timeline estimation"""
         match = sample_collaboration_matches[0]
         
         assert match.timeline_estimate is not None
@@ -315,7 +326,8 @@ class TestTrendInsight:
     """Comprehensive tests for TrendInsight model"""
     
     def test_trend_insight_creation(self, sample_trend_insights):
-        """Test trend insight creation"""
+        """
+Test trend insight creation"""
         trend = sample_trend_insights[0]
         
         assert trend.trend_id == "trend_001"
@@ -373,7 +385,8 @@ class TestTrendInsight:
         assert len(major_platforms.intersection(covered_platforms)) > 0
     
     def test_trend_content_opportunities(self, sample_trend_insights):
-        """Test content opportunity identification"""
+        """
+Test content opportunity identification"""
         trend = sample_trend_insights[0]
         
         assert len(trend.content_opportunities) > 0
@@ -410,7 +423,8 @@ class TestRevenueStrategy:
     """Comprehensive tests for RevenueStrategy model"""
     
     def test_revenue_strategy_creation(self):
-        """Test revenue strategy creation"""
+        """
+Test revenue strategy creation"""
         strategy = RevenueStrategy(
             creator_id="test_creator_001",
             target_revenue=10000.0,
@@ -489,7 +503,8 @@ class TestAudienceInsight:
     """Comprehensive tests for AudienceInsight model"""
     
     def test_audience_insight_creation(self):
-        """Test audience insight creation"""
+        """
+Test audience insight creation"""
         insight = AudienceInsight(
             primary_demographics={
                 "age_18_24": 0.35,
@@ -545,7 +560,8 @@ class TestPerformanceMetrics:
     """Comprehensive tests for PerformanceMetrics model"""
     
     def test_performance_metrics_creation(self, sample_performance_metrics):
-        """Test performance metrics creation"""
+        """
+Test performance metrics creation"""
         metrics = PerformanceMetrics(
             views=sample_performance_metrics["views"],
             likes=sample_performance_metrics["likes"],
@@ -600,7 +616,8 @@ class TestModelIntegration:
     """Integration tests for model interactions"""
     
     def test_creator_recommendation_integration(self, sample_creator_musician, sample_content_recommendations):
-        """Test integration between creator profile and recommendations"""
+        """
+Test integration between creator profile and recommendations"""
         creator = sample_creator_musician
         recommendations = sample_content_recommendations
         
@@ -620,7 +637,8 @@ class TestModelIntegration:
                 assert True  # Genre alignment found
     
     def test_collaboration_creator_matching(self, sample_creator_musician, sample_collaboration_matches):
-        """Test collaboration matching with creator profiles"""
+        """
+Test collaboration matching with creator profiles"""
         creator = sample_creator_musician
         matches = sample_collaboration_matches
         
@@ -636,7 +654,8 @@ class TestModelIntegration:
             assert match.revenue_potential < creator.average_revenue * 10  # Not unrealistic
     
     def test_trend_recommendation_alignment(self, sample_trend_insights, sample_content_recommendations):
-        """Test alignment between trends and recommendations"""
+        """
+Test alignment between trends and recommendations"""
         trends = sample_trend_insights
         recommendations = sample_content_recommendations
         
@@ -659,11 +678,13 @@ class TestModelIntegration:
 
 
 class TestModelValidation:
-    """Comprehensive model validation tests"""
+    """
+Comprehensive model validation tests"""
     
     def test_all_models_serializable(self, sample_creator_musician, sample_content_recommendations,
                                    sample_collaboration_matches, sample_trend_insights):
-        """Test all models can be serialized to JSON"""
+        """
+Test all models can be serialized to JSON"""
         models_to_test = [
             sample_creator_musician,
             sample_content_recommendations[0],
@@ -716,7 +737,8 @@ class TestModelValidation:
         assert isinstance(creator.monetization_enabled, bool)
     
     def test_model_constraints(self):
-        """Test model constraint validation"""
+        """
+Test model constraint validation"""
         # Test engagement rate constraints
         with pytest.raises(ValueError):
             CreatorProfile(

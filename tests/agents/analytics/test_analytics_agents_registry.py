@@ -20,16 +20,19 @@ from ai_agents.analytics_agents_registry import (
 
 
 class TestAnalyticsAgentsRegistry:
-    """Test the analytics agents registry."""
+    """
+Test the analytics agents registry."""
     
     @pytest.fixture
     def registry(self):
-        """Create test registry instance."""
+        """
+Create test registry instance."""
         return AnalyticsAgentsRegistry()
     
     @pytest.fixture
     def sample_request(self):
-        """Create sample analytics request."""
+        """
+Create sample analytics request."""
         return AnalyticsRequest(
             request_id="test_request_123",
             agents_to_run=['user_behavior', 'performance_metrics', 'sentiment_analysis'],
@@ -53,7 +56,8 @@ class TestAnalyticsAgentsRegistry:
             assert agent_name in registry.agents
     
     def test_get_available_agents(self, registry):
-        """Test getting available agents."""
+        """
+Test getting available agents."""
         available = registry.get_available_agents()
         assert isinstance(available, list)
         assert 'user_behavior' in available
@@ -62,7 +66,8 @@ class TestAnalyticsAgentsRegistry:
         assert 'business_intelligence' in available
     
     def test_get_agent_status(self, registry):
-        """Test getting agent status."""
+        """
+Test getting agent status."""
         status = registry.get_agent_status()
         assert isinstance(status, dict)
         assert len(status) == 6
@@ -74,7 +79,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_run_comprehensive_analytics(self, registry, sample_request):
-        """Test running comprehensive analytics."""
+        """
+Test running comprehensive analytics."""
         result = await registry.run_comprehensive_analytics(sample_request)
         
         assert isinstance(result, AnalyticsResult)
@@ -90,7 +96,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_user_behavior_agent_analysis(self, registry, sample_request):
-        """Test user behavior agent analysis."""
+        """
+Test user behavior agent analysis."""
         result = await registry._run_agent_analysis('user_behavior', sample_request)
         
         assert isinstance(result, dict)
@@ -101,7 +108,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_performance_metrics_agent_analysis(self, registry, sample_request):
-        """Test performance metrics agent analysis."""
+        """
+Test performance metrics agent analysis."""
         result = await registry._run_agent_analysis('performance_metrics', sample_request)
         
         assert isinstance(result, dict)
@@ -112,7 +120,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_sentiment_analysis_agent_analysis(self, registry, sample_request):
-        """Test sentiment analysis agent analysis."""
+        """
+Test sentiment analysis agent analysis."""
         result = await registry._run_agent_analysis('sentiment_analysis', sample_request)
         
         assert isinstance(result, dict)
@@ -123,7 +132,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_business_intelligence_agent_analysis(self, registry, sample_request):
-        """Test business intelligence agent analysis."""
+        """
+Test business intelligence agent analysis."""
         result = await registry._run_agent_analysis('business_intelligence', sample_request)
         
         assert isinstance(result, dict)
@@ -134,7 +144,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_get_real_time_dashboard(self, registry):
-        """Test getting real-time dashboard."""
+        """
+Test getting real-time dashboard."""
         dashboard = await registry.get_real_time_dashboard()
         
         assert isinstance(dashboard, dict)
@@ -146,7 +157,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_cross_agent_insights_generation(self, registry):
-        """Test cross-agent insights generation."""
+        """
+Test cross-agent insights generation."""
         # Mock agent results
         mock_results = {
             'user_behavior': {'status': 'success', 'data': Mock()},
@@ -169,7 +181,8 @@ class TestAnalyticsAgentsRegistry:
     
     @pytest.mark.asyncio
     async def test_unified_recommendations_generation(self, registry):
-        """Test unified recommendations generation."""
+        """
+Test unified recommendations generation."""
         mock_results = {'user_behavior': {'status': 'success'}}
         mock_insights = [{'type': 'correlation', 'confidence': 0.85}]
         
@@ -188,11 +201,13 @@ class TestAnalyticsAgentsRegistry:
 
 
 class TestAnalyticsAgentsConvenienceFunctions:
-    """Test convenience functions for analytics agents."""
+    """
+Test convenience functions for analytics agents."""
     
     @pytest.mark.asyncio
     async def test_run_full_analytics(self):
-        """Test run_full_analytics convenience function."""
+        """
+Test run_full_analytics convenience function."""
         result = await run_full_analytics(
             request_id="test_conv_123",
             time_period="7_days"
@@ -211,7 +226,8 @@ class TestAnalyticsAgentsConvenienceFunctions:
         assert 'agents_status' in dashboard
     
     def test_get_analytics_agents_status(self):
-        """Test get_analytics_agents_status convenience function."""
+        """
+Test get_analytics_agents_status convenience function."""
         status = get_analytics_agents_status()
         
         assert isinstance(status, dict)
@@ -219,10 +235,12 @@ class TestAnalyticsAgentsConvenienceFunctions:
 
 
 class TestAnalyticsRequest:
-    """Test AnalyticsRequest data model."""
+    """
+Test AnalyticsRequest data model."""
     
     def test_analytics_request_creation(self):
-        """Test creating analytics request."""
+        """
+Test creating analytics request."""
         request = AnalyticsRequest(
             request_id="test_123",
             agents_to_run=['user_behavior', 'sentiment_analysis'],
@@ -252,7 +270,8 @@ class TestAnalyticsResult:
     """Test AnalyticsResult data model."""
     
     def test_analytics_result_creation(self):
-        """Test creating analytics result."""
+        """
+Test creating analytics result."""
         result = AnalyticsResult(
             request_id="test_789",
             timestamp=datetime.now(),
@@ -280,7 +299,8 @@ class TestAnalyticsPerformance:
     @pytest.mark.asyncio
     @pytest.mark.slow
     async def test_concurrent_analytics_requests(self):
-        """Test handling multiple concurrent analytics requests."""
+        """
+Test handling multiple concurrent analytics requests."""
         registry = AnalyticsAgentsRegistry()
         
         # Create multiple requests

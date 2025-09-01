@@ -11,6 +11,7 @@ Test suite for all monitoring and analytics components:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import asyncio
 from datetime import datetime, timedelta
@@ -39,7 +40,8 @@ from monitoring.advanced_metrics.unified_analytics_dashboard import (
 
 
 class TestUserMetricsTracker:
-    """Test cases for User Metrics Tracker"""
+    """
+Test cases for User Metrics Tracker"""
     
     @pytest.fixture
     async def user_tracker(self):
@@ -49,14 +51,16 @@ class TestUserMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_user_tracker_initialization(self, user_tracker):
-        """Test user tracker initialization"""
+        """
+Test user tracker initialization"""
         assert user_tracker is not None
         assert hasattr(user_tracker, 'prometheus_metrics')
         assert hasattr(user_tracker, 'activity_cache')
     
     @pytest.mark.asyncio
     async def test_track_user_activity(self, user_tracker):
-        """Test tracking user activities"""
+        """
+Test tracking user activities"""
         activity = UserActivity(
             user_id="test_user_123",
             activity_type=UserActivityType.CONTENT_UPLOAD,
@@ -85,7 +89,8 @@ class TestUserMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_calculate_dau_metrics(self, user_tracker):
-        """Test DAU metrics calculation"""
+        """
+Test DAU metrics calculation"""
         dau_metrics = await user_tracker.calculate_dau_metrics()
         
         assert dau_metrics is not None
@@ -96,7 +101,8 @@ class TestUserMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_calculate_retention_metrics(self, user_tracker):
-        """Test retention metrics calculation"""
+        """
+Test retention metrics calculation"""
         retention_metrics = await user_tracker.calculate_retention_metrics()
         
         assert retention_metrics is not None
@@ -108,7 +114,8 @@ class TestUserMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_calculate_engagement_metrics(self, user_tracker):
-        """Test engagement metrics calculation"""
+        """
+Test engagement metrics calculation"""
         engagement_metrics = await user_tracker.calculate_engagement_metrics()
         
         assert engagement_metrics is not None
@@ -119,7 +126,8 @@ class TestUserMetricsTracker:
 
 
 class TestRevenueMetricsTracker:
-    """Test cases for Revenue Metrics Tracker"""
+    """
+Test cases for Revenue Metrics Tracker"""
     
     @pytest.fixture
     async def revenue_tracker(self):
@@ -129,14 +137,16 @@ class TestRevenueMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_revenue_tracker_initialization(self, revenue_tracker):
-        """Test revenue tracker initialization"""
+        """
+Test revenue tracker initialization"""
         assert revenue_tracker is not None
         assert hasattr(revenue_tracker, 'prometheus_metrics')
         assert hasattr(revenue_tracker, 'transaction_cache')
     
     @pytest.mark.asyncio
     async def test_track_revenue_transaction(self, revenue_tracker):
-        """Test tracking revenue transactions"""
+        """
+Test tracking revenue transactions"""
         transaction = RevenueTransaction(
             transaction_id="txn_123",
             customer_id="customer_456",
@@ -166,7 +176,8 @@ class TestRevenueMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_calculate_arr_metrics(self, revenue_tracker):
-        """Test ARR metrics calculation"""
+        """
+Test ARR metrics calculation"""
         arr_metrics = await revenue_tracker.calculate_arr_metrics()
         
         assert arr_metrics is not None
@@ -177,7 +188,8 @@ class TestRevenueMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_calculate_clv_metrics(self, revenue_tracker):
-        """Test CLV metrics calculation"""
+        """
+Test CLV metrics calculation"""
         clv_metrics = await revenue_tracker.calculate_clv_metrics()
         
         assert clv_metrics is not None
@@ -188,7 +200,8 @@ class TestRevenueMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_calculate_churn_metrics(self, revenue_tracker):
-        """Test churn metrics calculation"""
+        """
+Test churn metrics calculation"""
         churn_metrics = await revenue_tracker.calculate_churn_metrics()
         
         assert churn_metrics is not None
@@ -199,7 +212,8 @@ class TestRevenueMetricsTracker:
     
     @pytest.mark.asyncio
     async def test_generate_revenue_insights(self, revenue_tracker):
-        """Test revenue insights generation"""
+        """
+Test revenue insights generation"""
         insights = await revenue_tracker.generate_revenue_insights()
         
         assert insights is not None
@@ -220,7 +234,8 @@ class TestTechnicalPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_tech_monitor_initialization(self, tech_monitor):
-        """Test technical monitor initialization"""
+        """
+Test technical monitor initialization"""
         assert tech_monitor is not None
         assert hasattr(tech_monitor, 'prometheus_metrics')
         assert hasattr(tech_monitor, 'performance_cache')
@@ -228,7 +243,8 @@ class TestTechnicalPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_record_performance_metric(self, tech_monitor):
-        """Test recording performance metrics"""
+        """
+Test recording performance metrics"""
         metric = PerformanceMetric(
             component_id="api_gateway_01",
             component_type=ComponentType.API_GATEWAY,
@@ -276,7 +292,8 @@ class TestTechnicalPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_collect_api_performance(self, tech_monitor):
-        """Test API performance collection"""
+        """
+Test API performance collection"""
         api_metrics = await tech_monitor.collect_api_performance()
         
         assert api_metrics is not None
@@ -288,7 +305,8 @@ class TestTechnicalPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_collect_database_performance(self, tech_monitor):
-        """Test database performance collection"""
+        """
+Test database performance collection"""
         db_metrics = await tech_monitor.collect_database_performance()
         
         assert db_metrics is not None
@@ -299,7 +317,8 @@ class TestTechnicalPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_collect_uptime_metrics(self, tech_monitor):
-        """Test uptime metrics collection"""
+        """
+Test uptime metrics collection"""
         uptime_metrics = await tech_monitor.collect_uptime_metrics()
         
         assert uptime_metrics is not None
@@ -310,7 +329,8 @@ class TestTechnicalPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_collect_cdn_performance(self, tech_monitor):
-        """Test CDN performance collection"""
+        """
+Test CDN performance collection"""
         cdn_metrics = await tech_monitor.collect_cdn_performance()
         
         assert cdn_metrics is not None
@@ -321,7 +341,8 @@ class TestTechnicalPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_comprehensive_performance_report(self, tech_monitor):
-        """Test comprehensive performance report generation"""
+        """
+Test comprehensive performance report generation"""
         report = await tech_monitor.get_comprehensive_performance_report()
         
         assert report is not None
@@ -344,7 +365,8 @@ class TestAIModelPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_ai_tracker_initialization(self, ai_tracker):
-        """Test AI tracker initialization"""
+        """
+Test AI tracker initialization"""
         assert ai_tracker is not None
         assert hasattr(ai_tracker, 'prometheus_metrics')
         assert hasattr(ai_tracker, 'model_registry')
@@ -352,7 +374,8 @@ class TestAIModelPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_register_model(self, ai_tracker):
-        """Test model registration"""
+        """
+Test model registration"""
         model_id = "test_content_protector_v1"
         model_type = AIModelType.CONTENT_PROTECTOR
         
@@ -492,7 +515,8 @@ class TestUnifiedAnalyticsDashboard:
     
     @pytest.mark.asyncio
     async def test_dashboard_initialization(self, dashboard):
-        """Test dashboard initialization"""
+        """
+Test dashboard initialization"""
         assert dashboard is not None
         assert hasattr(dashboard, 'user_tracker')
         assert hasattr(dashboard, 'revenue_tracker')
@@ -502,7 +526,8 @@ class TestUnifiedAnalyticsDashboard:
     
     @pytest.mark.asyncio
     async def test_get_unified_metrics(self, dashboard):
-        """Test unified metrics collection"""
+        """
+Test unified metrics collection"""
         unified_metrics = await dashboard.get_unified_metrics()
         
         assert unified_metrics is not None
@@ -532,7 +557,8 @@ class TestUnifiedAnalyticsDashboard:
     
     @pytest.mark.asyncio
     async def test_get_kpi_performance_report(self, dashboard):
-        """Test KPI performance report generation"""
+        """
+Test KPI performance report generation"""
         kpi_report = await dashboard.get_kpi_performance_report()
         
         assert kpi_report is not None
@@ -593,7 +619,8 @@ class TestIntegrationScenarios:
     
     @pytest.fixture
     async def full_system(self):
-        """Setup full monitoring system for integration tests"""
+        """
+Setup full monitoring system for integration tests"""
         dashboard = UnifiedAnalyticsDashboard()
         await dashboard.initialize()
         

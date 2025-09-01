@@ -10,6 +10,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from sqlalchemy import (
     Column, Integer, String, Text, Boolean, DateTime, Float, 
     BigInteger, JSON, LargeBinary, ForeignKey, Index, 
@@ -272,7 +273,8 @@ class CrawlerJob(Base):
 
 
 class RevenueRecord(Base):
-    """Content monetization and revenue tracking"""
+    """
+Content monetization and revenue tracking"""
     __tablename__ = 'revenue_records'
     
     id = Column(Integer, primary_key=True)
@@ -393,7 +395,8 @@ class PlatformIntegration(Base):
 
 
 class AuditLog(Base):
-    """System audit and activity logging"""
+    """
+System audit and activity logging"""
     __tablename__ = 'audit_logs'
     
     id = Column(Integer, primary_key=True)
@@ -445,7 +448,8 @@ class AuditLog(Base):
 
 
 class SystemConfiguration(Base):
-    """System-wide configuration settings"""
+    """
+System-wide configuration settings"""
     __tablename__ = 'system_configuration'
     
     id = Column(Integer, primary_key=True)
@@ -482,7 +486,8 @@ class SystemConfiguration(Base):
 
 # Migration tracking table (handled by MigrationRunner)
 class SchemaMigration(Base):
-    """Database schema migration tracking"""
+    """
+Database schema migration tracking"""
     __tablename__ = 'schema_migrations'
     
     id = Column(Integer, primary_key=True)
@@ -505,12 +510,14 @@ class SchemaMigration(Base):
 
 # Function to create all tables
 def create_all_tables(engine):
-    """Create all database tables"""
+    """
+Create all database tables"""
     Base.metadata.create_all(engine)
 
 
 class ContentLicensing(Base):
-    """Content licensing and rights management"""
+    """
+Content licensing and rights management"""
     __tablename__ = 'content_licensing'
     
     id = Column(Integer, primary_key=True)
@@ -996,7 +1003,8 @@ class DataRetentionPolicy(Base):
 
 
 class ConsentRecord(Base):
-    """User consent records for GDPR compliance"""
+    """
+User consent records for GDPR compliance"""
     __tablename__ = 'consent_records'
     
     id = Column(Integer, primary_key=True)
@@ -1069,5 +1077,6 @@ def create_all_tables(engine):
 
 # Function to drop all tables (use with caution!)
 def drop_all_tables(engine):
-    """Drop all database tables - USE WITH EXTREME CAUTION!"""
+    """
+Drop all database tables - USE WITH EXTREME CAUTION!"""
     Base.metadata.drop_all(engine)

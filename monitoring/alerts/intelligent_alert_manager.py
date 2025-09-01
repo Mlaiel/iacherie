@@ -12,6 +12,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertCategory(Enum):
-    """Alert categories for intelligent routing"""
+    """
+Alert categories for intelligent routing"""
+
     BUSINESS = "business"
     TECHNICAL = "technical" 
     AI_ML = "ai_ml"
@@ -36,6 +39,7 @@ class AlertCategory(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels with escalation priority"""
+
     EMERGENCY = "emergency"  # Immediate escalation required
     CRITICAL = "critical"    # Escalate within 15 minutes
     WARNING = "warning"      # Escalate within 1 hour
@@ -131,7 +135,8 @@ class IntelligentAlertManager:
     """
     
     def __init__(self):
-        """Initialize the intelligent alert manager"""
+        """
+Initialize the intelligent alert manager"""
         self.alert_rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, IntelligentAlert] = {}
         self.alert_history: List[IntelligentAlert] = []
@@ -650,7 +655,8 @@ class IntelligentAlertManager:
             return timedelta(minutes=5)  # Default to 5 minutes
     
     def _update_resolution_time_stats(self, resolution_time_seconds: float):
-        """Update average resolution time statistics"""
+        """
+Update average resolution time statistics"""
         current_avg = self.alert_stats["avg_resolution_time"]
         total_alerts = self.alert_stats["total_alerts"]
         

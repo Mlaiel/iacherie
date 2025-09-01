@@ -19,6 +19,7 @@ Project: IA Influencer Agent + Content Protection Platform
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import time
@@ -48,7 +49,9 @@ import base64
 
 
 class ViolationType(Enum):
-    """Types of copyright violations"""
+    """
+Types of copyright violations"""
+
     EXACT_MATCH = "exact_match"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     DERIVATIVE_WORK = "derivative_work"
@@ -60,6 +63,7 @@ class ViolationType(Enum):
 
 class EnforcementAction(Enum):
     """Types of enforcement actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CONTENT_ID_CLAIM = "content_id_claim"
     REVENUE_CLAIM = "revenue_claim"
@@ -72,6 +76,7 @@ class EnforcementAction(Enum):
 
 class DetectionStatus(Enum):
     """Detection processing status"""
+
     PENDING = "pending"
     ANALYZING = "analyzing"
     DETECTED = "detected"
@@ -83,6 +88,7 @@ class DetectionStatus(Enum):
 
 class EnforcementStatus(Enum):
     """Enforcement action status"""
+
     INITIATED = "initiated"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
@@ -113,7 +119,8 @@ class ViolationDetection:
 
 @dataclass
 class EnforcementAction:
-    """Enforcement action record"""
+    """
+Enforcement action record"""
     action_id: str
     detection_id: str
     action_type: EnforcementAction
@@ -228,7 +235,8 @@ class CopyrightDetectionEngine:
         }
     
     def _init_ml_models(self) -> Dict[str, Any]:
-        """Initialize machine learning models for detection"""
+        """
+Initialize machine learning models for detection"""
         return {
             'violation_classifier': None,  # Load pre-trained model
             'confidence_predictor': None,  # Load confidence prediction model
@@ -519,7 +527,8 @@ class CopyrightDetectionEngine:
     def _determine_violation_type(self,
                                 similarity_scores: Dict[str, float],
                                 match_data: Dict[str, Any]) -> ViolationType:
-        """Determine the type of copyright violation"""
+        """
+Determine the type of copyright violation"""
         max_similarity = max(similarity_scores.values()) if similarity_scores else 0.0
         
         # Exact match threshold
@@ -547,7 +556,8 @@ class CopyrightDetectionEngine:
             return ViolationType.SUBSTANTIAL_SIMILARITY
     
     def _metadata_suggests_copying(self, original: Dict[str, Any], match: Dict[str, Any]) -> bool:
-        """Check if metadata suggests copying behavior"""
+        """
+Check if metadata suggests copying behavior"""
         original_title = original.get('title', '').lower()
         match_title = match.get('title', '').lower()
         
@@ -568,7 +578,8 @@ class CopyrightDetectionEngine:
         return False
     
     def _is_derivative_work(self, match_data: Dict[str, Any]) -> bool:
-        """Check if content appears to be derivative work"""
+        """
+Check if content appears to be derivative work"""
         description = match_data.get('description', '').lower()
         title = match_data.get('title', '').lower()
         
@@ -581,7 +592,8 @@ class CopyrightDetectionEngine:
         return False
     
     def _is_unauthorized_remix(self, match_data: Dict[str, Any]) -> bool:
-        """Check if content appears to be unauthorized remix"""
+        """
+Check if content appears to be unauthorized remix"""
         description = match_data.get('description', '').lower()
         title = match_data.get('title', '').lower()
         
@@ -594,7 +606,8 @@ class CopyrightDetectionEngine:
         return False
     
     async def _estimate_revenue_loss(self, detection: ViolationDetection) -> float:
-        """Estimate potential revenue loss from violation"""
+        """
+Estimate potential revenue loss from violation"""
         try:
             # Get engagement metrics from violating content
             violator_metrics = detection.violator_info.get('engagement_metrics', {})
@@ -629,7 +642,8 @@ class CopyrightDetectionEngine:
         return rates.get(platform.lower(), 0.001)
     
     def _get_content_type_from_fingerprint(self, fp_type: str) -> str:
-        """Get content type from fingerprint type"""
+        """
+Get content type from fingerprint type"""
         if fp_type in ['chromaprint', 'spectral', 'mfcc']:
             return 'audio'
         elif fp_type in ['frame_hash', 'perceptual']:
@@ -642,7 +656,8 @@ class CopyrightDetectionEngine:
             return 'unknown'
     
     def _string_similarity(self, s1: str, s2: str) -> float:
-        """Calculate string similarity using Levenshtein distance"""
+        """
+Calculate string similarity using Levenshtein distance"""
         if not s1 or not s2:
             return 0.0
         
@@ -666,24 +681,28 @@ class CopyrightDetectionEngine:
     
     # Similarity algorithm implementations
     async def _chromaprint_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate Chromaprint similarity"""
+        """
+Calculate Chromaprint similarity"""
         # Implementation would use actual chromaprint library
         return self._string_similarity(fp1, fp2)
     
     async def _spectral_similarity(self, fp1: np.ndarray, fp2: np.ndarray) -> float:
-        """Calculate spectral fingerprint similarity"""
+        """
+Calculate spectral fingerprint similarity"""
         if fp1.shape != fp2.shape:
             return 0.0
         return float(np.corrcoef(fp1, fp2)[0, 1])
     
     async def _mfcc_similarity(self, fp1: np.ndarray, fp2: np.ndarray) -> float:
-        """Calculate MFCC similarity"""
+        """
+Calculate MFCC similarity"""
         if fp1.shape != fp2.shape:
             return 0.0
         return float(np.dot(fp1, fp2) / (np.linalg.norm(fp1) * np.linalg.norm(fp2)))
     
     async def _frame_similarity(self, fp1: List[str], fp2: List[str]) -> float:
-        """Calculate video frame similarity"""
+        """
+Calculate video frame similarity"""
         if not fp1 or not fp2:
             return 0.0
         
@@ -697,16 +716,19 @@ class CopyrightDetectionEngine:
         return matches / total if total > 0 else 0.0
     
     async def _motion_similarity(self, fp1: Any, fp2: Any) -> float:
-        """Calculate motion vector similarity"""
+        """
+Calculate motion vector similarity"""
         # Implementation would analyze motion patterns
         return 0.0
     
     async def _perceptual_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate perceptual hash similarity"""
+        """
+Calculate perceptual hash similarity"""
         return self._string_similarity(fp1, fp2)
     
     async def _phash_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate pHash similarity"""
+        """
+Calculate pHash similarity"""
         if len(fp1) != len(fp2):
             return 0.0
         
@@ -717,64 +739,75 @@ class CopyrightDetectionEngine:
         return 1.0 - (differences / max_diff) if max_diff > 0 else 0.0
     
     async def _clip_similarity(self, fp1: np.ndarray, fp2: np.ndarray) -> float:
-        """Calculate CLIP embedding similarity"""
+        """
+Calculate CLIP embedding similarity"""
         if fp1.shape != fp2.shape:
             return 0.0
         return float(np.dot(fp1, fp2) / (np.linalg.norm(fp1) * np.linalg.norm(fp2)))
     
     async def _structural_similarity(self, fp1: Any, fp2: Any) -> float:
-        """Calculate structural similarity"""
+        """
+Calculate structural similarity"""
         # Implementation would use SSIM or similar
         return 0.0
     
     async def _semantic_similarity(self, fp1: np.ndarray, fp2: np.ndarray) -> float:
-        """Calculate semantic similarity"""
+        """
+Calculate semantic similarity"""
         if fp1.shape != fp2.shape:
             return 0.0
         return float(np.dot(fp1, fp2) / (np.linalg.norm(fp1) * np.linalg.norm(fp2)))
     
     async def _ngram_similarity(self, fp1: np.ndarray, fp2: np.ndarray) -> float:
-        """Calculate n-gram similarity"""
+        """
+Calculate n-gram similarity"""
         if fp1.shape != fp2.shape:
             return 0.0
         return float(np.corrcoef(fp1, fp2)[0, 1])
     
     async def _bert_similarity(self, fp1: np.ndarray, fp2: np.ndarray) -> float:
-        """Calculate BERT embedding similarity"""
+        """
+Calculate BERT embedding similarity"""
         if fp1.shape != fp2.shape:
             return 0.0
         return float(np.dot(fp1, fp2) / (np.linalg.norm(fp1) * np.linalg.norm(fp2)))
     
     # Search methods for different fingerprint types
     async def _search_audio_fingerprints(self, fingerprint: Any) -> List[Dict[str, Any]]:
-        """Search audio fingerprints in database"""
+        """
+Search audio fingerprints in database"""
         # Implementation would query audio fingerprint database
         return []
     
     async def _search_video_fingerprints(self, fingerprint: Any) -> List[Dict[str, Any]]:
-        """Search video fingerprints in database"""
+        """
+Search video fingerprints in database"""
         # Implementation would query video fingerprint database
         return []
     
     async def _search_image_fingerprints(self, fingerprint: Any) -> List[Dict[str, Any]]:
-        """Search image fingerprints in database"""
+        """
+Search image fingerprints in database"""
         # Implementation would query image fingerprint database
         return []
     
     async def _search_text_fingerprints(self, fingerprint: Any) -> List[Dict[str, Any]]:
-        """Search text fingerprints in database"""
+        """
+Search text fingerprints in database"""
         # Implementation would query text fingerprint database
         return []
     
     async def _generate_content_fingerprints(self, crawl_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate fingerprints for crawled content"""
+        """
+Generate fingerprints for crawled content"""
         # This would integrate with the fingerprinting service
         return {}
     
     async def _search_protected_content_matches(self,
                                               fingerprints: Dict[str, Any],
                                               protected_db: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Search for matches in protected content database"""
+        """
+Search for matches in protected content database"""
         # Implementation would search protected content database
         return []
     
@@ -782,12 +815,14 @@ class CopyrightDetectionEngine:
                                         crawl_result: Dict[str, Any],
                                         match_data: Dict[str, Any],
                                         fingerprints: Dict[str, Any]) -> Optional[ViolationDetection]:
-        """Create violation detection from crawl result and match"""
+        """
+Create violation detection from crawl result and match"""
         # Implementation would create violation detection object
         return None
     
     async def _store_detection(self, detection: ViolationDetection):
-        """Store violation detection in database"""
+        """
+Store violation detection in database"""
         try:
             detection_data = {
                 'detection_id': detection.detection_id,
@@ -818,13 +853,15 @@ class CopyrightDetectionEngine:
     def _start_background_workers(self):
         """Start background worker threads"""
         def detection_processor():
-            """Process detection queue"""
+            """
+Process detection queue"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             loop.run_forever()
         
         def enforcement_processor():
-            """Process enforcement queue"""
+            """
+Process enforcement queue"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             loop.run_forever()
@@ -948,7 +985,8 @@ Sincerely,
         }
     
     def _init_platform_enforcers(self) -> Dict[str, Any]:
-        """Initialize platform-specific enforcement methods"""
+        """
+Initialize platform-specific enforcement methods"""
         return {
             'youtube': self._enforce_youtube,
             'tiktok': self._enforce_tiktok,
@@ -1221,7 +1259,8 @@ Sincerely,
                                      action: EnforcementAction,
                                      detection: ViolationDetection) -> str:
         """Generate legal action summary document"""
-        return f"""LEGAL ACTION SUMMARY
+        return f"""
+LEGAL ACTION SUMMARY
 
 Case ID: {action.action_id}
 Date: {datetime.now().strftime("%Y-%m-%d")}
@@ -1253,7 +1292,8 @@ EVIDENCE:
                         subject: str,
                         body: str,
                         attachment_data: Optional[bytes] = None) -> bool:
-        """Send email notification"""
+        """
+Send email notification"""
         try:
             if not self.email_config:
                 self.logger.warning("Email configuration not provided")
@@ -1314,7 +1354,8 @@ EVIDENCE:
         return contacts.get(platform.lower())
     
     async def _get_violator_contact_info(self, detection: ViolationDetection) -> Optional[Dict[str, str]]:
-        """Get violator contact information"""
+        """
+Get violator contact information"""
         # This would extract contact info from crawled data
         violator_info = detection.violator_info
         
@@ -1328,22 +1369,26 @@ EVIDENCE:
         return contact_info if contact_info else None
     
     async def _send_platform_dmca(self, platform: str, dmca_notice: str, detection: ViolationDetection) -> bool:
-        """Send DMCA notice via platform API"""
+        """
+Send DMCA notice via platform API"""
         # Platform-specific API implementation
         return False
     
     async def _submit_platform_revenue_claim(self, claim: RevenueClaim, detection: ViolationDetection) -> bool:
-        """Submit revenue claim to platform"""
+        """
+Submit revenue claim to platform"""
         # Platform-specific revenue claim implementation
         return False
     
     async def _generic_platform_report(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
-        """Generic platform violation reporting"""
+        """
+Generic platform violation reporting"""
         # Generic reporting mechanism
         return False
     
     async def _notify_legal_team(self, action: EnforcementAction, detection: ViolationDetection):
-        """Notify legal team of escalated case"""
+        """
+Notify legal team of escalated case"""
         try:
             legal_email = "legal@ia-influencer.com"
             subject = f"Legal Action Required - Case {action.action_id}"
@@ -1372,23 +1417,28 @@ Please review and take appropriate legal action.
         return False
     
     async def _enforce_tiktok(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
-        """TikTok-specific enforcement"""
+        """
+TikTok-specific enforcement"""
         return False
     
     async def _enforce_instagram(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
-        """Instagram-specific enforcement"""
+        """
+Instagram-specific enforcement"""
         return False
     
     async def _enforce_twitter(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
-        """Twitter-specific enforcement"""
+        """
+Twitter-specific enforcement"""
         return False
     
     async def _enforce_generic_web(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
-        """Generic web platform enforcement"""
+        """
+Generic web platform enforcement"""
         return False
     
     async def _store_enforcement_action(self, action: EnforcementAction):
-        """Store enforcement action in database"""
+        """
+Store enforcement action in database"""
         try:
             action_data = {
                 'action_id': action.action_id,

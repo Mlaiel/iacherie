@@ -22,6 +22,7 @@ Business Logic Integration:
 - AI processing completion notifications
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 import asyncio
 import logging
@@ -45,7 +46,8 @@ import certifi
 logger = logging.getLogger(__name__)
 
 class WebhookEvent(Enum):
-    """Webhook event types for IA Influencer platform"""
+    """
+Webhook event types for IA Influencer platform"""
     # Deployment events
     DEPLOYMENT_STARTED = "deployment.started"
     DEPLOYMENT_COMPLETED = "deployment.completed"
@@ -85,6 +87,7 @@ class WebhookEvent(Enum):
 
 class WebhookStatus(Enum):
     """Webhook delivery status"""
+
     PENDING = "pending"
     SENDING = "sending"
     SUCCESS = "success"
@@ -94,6 +97,7 @@ class WebhookStatus(Enum):
 
 class IntegrationType(Enum):
     """External integration types"""
+
     SLACK = "slack"
     TEAMS = "teams"
     DISCORD = "discord"
@@ -191,7 +195,8 @@ class WebhookDelivery:
     response_time_ms: Optional[float] = None
 
 class WebhookSecurityManager:
-    """Security manager for webhook operations"""
+    """
+Security manager for webhook operations"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -202,7 +207,8 @@ class WebhookSecurityManager:
         return Fernet.generate_key()
     
     def encrypt_secret(self, secret: str) -> str:
-        """Encrypt webhook secret"""
+        """
+Encrypt webhook secret"""
         try:
             fernet = Fernet(self.encryption_key)
             encrypted_secret = fernet.encrypt(secret.encode())
@@ -602,7 +608,8 @@ class WebhookIntegrationManager:
         return self.deliveries.get(delivery_id)
     
     async def retry_failed_delivery(self, delivery_id: str) -> bool:
-        """Retry a failed webhook delivery"""
+        """
+Retry a failed webhook delivery"""
         try:
             delivery = self.deliveries.get(delivery_id)
             if not delivery:
@@ -664,7 +671,8 @@ class WebhookIntegrationManager:
         endpoint: WebhookEndpoint,
         payload: WebhookPayload
     ) -> str:
-        """Queue webhook delivery for processing"""
+        """
+Queue webhook delivery for processing"""
         delivery_id = str(uuid.uuid4())
         
         delivery = WebhookDelivery(
@@ -684,7 +692,8 @@ class WebhookIntegrationManager:
         return delivery_id
     
     async def _start_delivery_workers(self, worker_count: int = 3):
-        """Start webhook delivery worker tasks"""
+        """
+Start webhook delivery worker tasks"""
         for i in range(worker_count):
             worker_task = asyncio.create_task(self._webhook_delivery_worker(f"worker-{i}"))
             self.worker_tasks.append(worker_task)
@@ -809,12 +818,14 @@ class WebhookIntegrationManager:
         await self.delivery_queue.put(delivery)
     
     async def _setup_default_endpoints(self):
-        """Setup default webhook endpoints"""
+        """
+Setup default webhook endpoints"""
         # This would be configured based on environment and requirements
         pass
     
     async def _initialize_external_integrations(self):
-        """Initialize external service integrations"""
+        """
+Initialize external service integrations"""
         # This would load integration configurations from settings
         pass
 

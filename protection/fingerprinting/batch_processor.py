@@ -5,13 +5,14 @@ High-performance batch processing system for large-scale content fingerprinting 
 Optimized for processing millions of files with intelligent resource management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Tuple, Union
@@ -35,14 +36,18 @@ from .exceptions import BatchProcessingError, ResourceError
 logger = logging.getLogger(__name__)
 
 class ProcessingPriority(Enum):
-    """Processing priority levels."""
+    """
+Processing priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
 
 class ResourceAllocation(Enum):
-    """Resource allocation strategies."""
+    """
+Resource allocation strategies."""
+
     CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
@@ -66,7 +71,8 @@ class BatchConfig:
 
 @dataclass
 class ProcessingTask:
-    """Individual processing task within a batch."""
+    """
+Individual processing task within a batch."""
     task_id: str
     file_path: str
     content_type: ContentType
@@ -79,7 +85,8 @@ class ProcessingTask:
 
 @dataclass
 class BatchProgress:
-    """Progress tracking for batch operations."""
+    """
+Progress tracking for batch operations."""
     job_id: str
     total_items: int
     completed_items: int = 0
@@ -100,19 +107,22 @@ class ResourceMonitor:
         self.max_history = 1000
         
     def start_monitoring(self):
-        """Start resource monitoring in background thread."""
+        """
+Start resource monitoring in background thread."""
         self.monitoring = True
         self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.monitor_thread.start()
         
     def stop_monitoring(self):
-        """Stop resource monitoring."""
+        """
+Stop resource monitoring."""
         self.monitoring = False
         if hasattr(self, 'monitor_thread'):
             self.monitor_thread.join(timeout=2.0)
     
     def _monitor_loop(self):
-        """Main monitoring loop."""
+        """
+Main monitoring loop."""
         while self.monitoring:
             try:
                 stats = self._collect_stats()
@@ -140,11 +150,13 @@ class ResourceMonitor:
         }
     
     def get_current_stats(self) -> Optional[Dict[str, float]]:
-        """Get most recent resource statistics."""
+        """
+Get most recent resource statistics."""
         return self.stats_history[-1] if self.stats_history else None
     
     def get_average_stats(self, window_seconds: int = 60) -> Dict[str, float]:
-        """Get average statistics over time window."""
+        """
+Get average statistics over time window."""
         if not self.stats_history:
             return {}
             
@@ -163,7 +175,8 @@ class ResourceMonitor:
         return avg_stats
 
 class AdaptiveBatchSizer:
-    """Intelligent batch size optimization based on system performance."""
+    """
+Intelligent batch size optimization based on system performance."""
     
     def __init__(self, initial_size: int = 32, min_size: int = 1, max_size: int = 256):
         self.current_size = initial_size
@@ -174,7 +187,8 @@ class AdaptiveBatchSizer:
         
     def adapt_batch_size(self, processing_time: float, memory_usage: float, 
                         cpu_usage: float) -> int:
-        """Adapt batch size based on performance metrics."""
+        """
+Adapt batch size based on performance metrics."""
         
         # Record performance
         performance_score = self._calculate_performance_score(
@@ -556,11 +570,13 @@ class BatchProcessor:
         return self.active_jobs.get(job_id)
     
     def get_all_jobs(self) -> List[BatchProcessingJob]:
-        """Get status of all active jobs."""
+        """
+Get status of all active jobs."""
         return list(self.active_jobs.values())
     
     def cancel_job(self, job_id: str) -> bool:
-        """Cancel a running batch job."""
+        """
+Cancel a running batch job."""
         job = self.active_jobs.get(job_id)
         if not job:
             return False

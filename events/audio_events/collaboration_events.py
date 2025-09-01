@@ -7,6 +7,7 @@ versioning, and social interaction features for creators and artists.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -17,7 +18,9 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
+    """
+Types of collaboration"""
+
     REMIX = "remix"
     COVER = "cover"
     COLLABORATION = "collaboration"
@@ -32,6 +35,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration requests"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
@@ -43,6 +47,7 @@ class CollaborationStatus(Enum):
 
 class RemixType(Enum):
     """Types of remixes"""
+
     OFFICIAL_REMIX = "official_remix"
     BOOTLEG_REMIX = "bootleg_remix"
     RADIO_EDIT = "radio_edit"

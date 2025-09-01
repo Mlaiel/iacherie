@@ -26,6 +26,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -97,7 +98,9 @@ from ..core.config import get_database, get_redis_client
 
 
 class ContentFormat(Enum):
-    """Supported content formats for protection."""
+    """
+Supported content formats for protection."""
+
     AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
@@ -116,6 +119,7 @@ class ContentFormat(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection security levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -125,6 +129,7 @@ class ProtectionLevel(Enum):
 
 class ThreatSeverity(Enum):
     """Piracy threat severity classification."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -134,6 +139,7 @@ class ThreatSeverity(Enum):
 
 class ProtectionStatus(Enum):
     """Protection operation status tracking."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     FINGERPRINTING = "fingerprinting"
@@ -148,6 +154,7 @@ class ProtectionStatus(Enum):
 
 class ResponseAction(Enum):
     """Automated response actions to threats."""
+
     MONITOR_ONLY = "monitor_only"
     SEND_WARNING = "send_warning"
     DMCA_TAKEDOWN = "dmca_takedown"
@@ -230,7 +237,8 @@ class ProtectionResult:
 
 @dataclass
 class ThreatAlert:
-    """Security threat alert with detailed context."""
+    """
+Security threat alert with detailed context."""
     alert_id: str
     content_id: str
     creator_id: str
@@ -279,7 +287,8 @@ class ContentProtectionSystem:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the content protection system."""
+        """
+Initialize the content protection system."""
         self.config = config or {}
         self.logger = logging.getLogger("protection.system")
         

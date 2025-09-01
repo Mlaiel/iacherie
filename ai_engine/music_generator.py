@@ -4,6 +4,7 @@ AI-powered music composition and generation system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MusicGenerationParams:
-    """Music generation parameters"""
+    """
+Music generation parameters"""
     genre: str
     tempo: int  # BPM
     key: str
@@ -30,7 +32,8 @@ class MusicGenerationParams:
 
 @dataclass
 class GeneratedMusic:
-    """Generated music result"""
+    """
+Generated music result"""
     music_id: str
     file_path: str
     parameters: MusicGenerationParams
@@ -41,7 +44,8 @@ class GeneratedMusic:
 
 
 class MusicGenerator:
-    """AI-powered music composition and generation engine"""
+    """
+AI-powered music composition and generation engine"""
     
     def __init__(self):
         self.generation_history = {}
@@ -53,7 +57,8 @@ class MusicGenerator:
         params: MusicGenerationParams,
         user_id: str
     ) -> GeneratedMusic:
-        """Generate a complete musical composition"""
+        """
+Generate a complete musical composition"""
         try:
             start_time = datetime.now()
             

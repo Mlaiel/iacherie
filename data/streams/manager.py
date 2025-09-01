@@ -5,8 +5,9 @@ Enterprise-grade stream management for real-time content processing,
 protection monitoring, and revenue tracking across multiple platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, AsyncGenerator
@@ -32,7 +33,9 @@ settings = get_settings()
 
 
 class StreamType(str, Enum):
-    """Stream type enumeration for different content categories"""
+    """
+Stream type enumeration for different content categories"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -45,6 +48,7 @@ class StreamType(str, Enum):
 
 class StreamStatus(str, Enum):
     """Stream processing status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -66,7 +70,8 @@ class StreamEvent:
 
 
 class StreamMetrics(BaseModel):
-    """Stream performance metrics"""
+    """
+Stream performance metrics"""
     total_events: int = Field(default=0, description="Total events processed")
     success_rate: float = Field(default=0.0, description="Success rate percentage")
     avg_processing_time: float = Field(default=0.0, description="Average processing time in seconds")
@@ -91,7 +96,8 @@ class DataStreamManager:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream manager with Redis connection and handlers"""
+        """
+Initialize stream manager with Redis connection and handlers"""
         try:
             self.redis = await get_redis_client()
             await self._register_default_handlers()
@@ -322,11 +328,13 @@ class DataStreamManager:
         self.stream_handlers[stream_type].append(handler)
         
     async def get_stream_metrics(self, stream_id: str) -> Optional[StreamMetrics]:
-        """Get performance metrics for stream"""
+        """
+Get performance metrics for stream"""
         return self.metrics.get(stream_id)
         
     async def list_active_streams(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List active streams, optionally filtered by user"""
+        """
+List active streams, optionally filtered by user"""
         streams = []
         for stream_id, config in self.active_streams.items():
             if user_id is None or config.get("user_id") == user_id:
@@ -357,7 +365,8 @@ class DataStreamManager:
                               metrics.total_events * 100) if metrics.total_events > 0 else 0
                               
     async def _trigger_handlers(self, stream_type: StreamType, event: StreamEvent) -> None:
-        """Trigger registered handlers for stream type"""
+        """
+Trigger registered handlers for stream type"""
         handlers = self.stream_handlers.get(stream_type, [])
         for handler in handlers:
             try:

@@ -2,6 +2,7 @@
 """Content Protection Deployment Manager
 Specialized deployment automation for AI fingerprinting and content protection systems
 """
+
 import os
 import sys
 import time
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionStrategy(Enum):
-    """Content protection deployment strategy"""
+    """
+Content protection deployment strategy"""
+
     PHASED_ROLLOUT = "phased_rollout"
     INSTANT_ACTIVATION = "instant_activation"
     GRADUAL_MIGRATION = "gradual_migration"
@@ -43,6 +46,7 @@ class ProtectionStrategy(Enum):
 
 class ProtectionMode(Enum):
     """Protection mode enumeration"""
+
     PASSIVE_MONITORING = "passive_monitoring"
     ACTIVE_DETECTION = "active_detection"
     AGGRESSIVE_ENFORCEMENT = "aggressive_enforcement"
@@ -51,6 +55,7 @@ class ProtectionMode(Enum):
 
 class FingerprintEngine(Enum):
     """Fingerprinting engine types"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     VIDEO_OPENCV = "video_opencv"
     IMAGE_CLIP = "image_clip"
@@ -73,7 +78,8 @@ class ProtectionDeploymentConfig:
 
 @dataclass
 class FingerprintEngineStatus:
-    """Status of fingerprinting engines"""
+    """
+Status of fingerprinting engines"""
     engine_type: FingerprintEngine
     status: str
     accuracy_score: float
@@ -89,7 +95,8 @@ class ContentProtectionDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize content protection deployment manager"""
+        """
+Initialize content protection deployment manager"""
         self.config_path = config_path or "/etc/ia-influencer/protection-deployment.yaml"
         self.config = self._load_configuration()
         self.docker_client = docker.from_env()
@@ -198,7 +205,8 @@ class ContentProtectionDeploymentManager:
         }
     
     def deploy_protection_system(self, deployment_config: ProtectionDeploymentConfig) -> str:
-        """Deploy complete content protection system"""
+        """
+Deploy complete content protection system"""
         deployment_id = f"protection-{int(time.time())}"
         
         try:
@@ -499,7 +507,8 @@ class ContentProtectionDeploymentManager:
         }
     
     def _create_engine_manifest(self, engine: FingerprintEngine, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create fingerprint engine deployment manifest"""
+        """
+Create fingerprint engine deployment manifest"""
         engine_name = engine.value.replace('_', '-')
         
         return {
@@ -550,7 +559,8 @@ class ContentProtectionDeploymentManager:
         }
     
     def _create_crawler_manifest(self, platform: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create content crawler deployment manifest"""
+        """
+Create content crawler deployment manifest"""
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -601,7 +611,8 @@ class ContentProtectionDeploymentManager:
         }
     
     def _verify_protection_deployment(self, deployment_id: str) -> bool:
-        """Verify protection system deployment"""
+        """
+Verify protection system deployment"""
         logger.info(f"Verifying protection deployment: {deployment_id}")
         
         try:
@@ -646,7 +657,8 @@ class ContentProtectionDeploymentManager:
         return all(engine_statuses)
     
     def _get_engine_status(self, engine: FingerprintEngine) -> FingerprintEngineStatus:
-        """Get status of specific fingerprint engine"""
+        """
+Get status of specific fingerprint engine"""
         engine_name = engine.value.replace('_', '-')
         
         try:
@@ -715,7 +727,8 @@ class ContentProtectionDeploymentManager:
         return status
     
     def _get_vector_db_status(self) -> Dict[str, Any]:
-        """Get vector database status"""
+        """
+Get vector database status"""
         try:
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name='faiss-vector-db',
@@ -741,7 +754,8 @@ class ContentProtectionDeploymentManager:
             }
     
     def _get_crawlers_status(self) -> Dict[str, Any]:
-        """Get content crawlers status"""
+        """
+Get content crawlers status"""
         crawler_status = {}
         platforms = ['youtube', 'instagram', 'tiktok', 'twitter']
         
@@ -773,7 +787,8 @@ class ContentProtectionDeploymentManager:
         return crawler_status
     
     def _rollback_protection_deployment(self, deployment_id: str) -> None:
-        """Rollback failed protection deployment"""
+        """
+Rollback failed protection deployment"""
         logger.info(f"Rolling back protection deployment: {deployment_id}")
         
         try:

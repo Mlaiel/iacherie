@@ -6,6 +6,7 @@ Provides type-safe interfaces and validation for all conversion operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Tuple
 from pathlib import Path
@@ -19,7 +20,9 @@ import json
 
 
 class AudioFormat(Enum):
-    """Enumeration of supported audio formats"""
+    """
+Enumeration of supported audio formats"""
+
     WAV = "wav"
     FLAC = "flac"
     MP3 = "mp3"
@@ -34,6 +37,7 @@ class AudioFormat(Enum):
 
 class QualityLevel(Enum):
     """Quality level enumeration"""
+
     LOW = "low"
     STANDARD = "standard"
     HIGH = "high"
@@ -44,6 +48,7 @@ class QualityLevel(Enum):
 
 class ConversionPriority(Enum):
     """Conversion priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -52,6 +57,7 @@ class ConversionPriority(Enum):
 
 class ProcessingStatus(Enum):
     """Processing status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -70,7 +76,8 @@ class AudioBuffer:
     bit_depth: Optional[int] = None
     
     def __post_init__(self):
-        """Validate audio buffer after initialization"""
+        """
+Validate audio buffer after initialization"""
         if self.data is None or len(self.data) == 0:
             raise ValueError("Audio data cannot be empty")
         
@@ -92,14 +99,16 @@ class AudioBuffer:
         return self.data.nbytes
     
     def get_rms_level(self) -> float:
-        """Get RMS level in dB"""
+        """
+Get RMS level in dB"""
         rms = np.sqrt(np.mean(self.data ** 2))
         if rms > 0:
             return 20 * np.log10(rms)
         return -float('inf')
     
     def get_peak_level(self) -> float:
-        """Get peak level in dB"""
+        """
+Get peak level in dB"""
         peak = np.max(np.abs(self.data))
         if peak > 0:
             return 20 * np.log10(peak)
@@ -108,7 +117,8 @@ class AudioBuffer:
 
 @dataclass
 class FormatSpecification:
-    """Audio format specification"""
+    """
+Audio format specification"""
     format: AudioFormat
     sample_rate: int
     bit_depth: int
@@ -127,7 +137,8 @@ class FormatSpecification:
     supports_cover_art: bool = False
     
     def __post_init__(self):
-        """Validate format specification"""
+        """
+Validate format specification"""
         if self.sample_rate <= 0:
             raise ValueError("Sample rate must be positive")
         
@@ -162,7 +173,8 @@ class FormatSpecification:
         return self.format in lossless_formats
     
     def estimate_file_size(self, duration_seconds: float) -> int:
-        """Estimate file size in bytes"""
+        """
+Estimate file size in bytes"""
         if self.bitrate:
             # Use bitrate if available (for lossy formats)
             return int((self.bitrate * 1000 * duration_seconds) / 8)
@@ -181,7 +193,8 @@ class FormatSpecification:
 
 @dataclass
 class QualityProfile:
-    """Quality profile configuration"""
+    """
+Quality profile configuration"""
     name: str
     description: str
     quality_level: QualityLevel
@@ -206,7 +219,8 @@ class QualityProfile:
     platform_optimizations: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Validate quality profile"""
+        """
+Validate quality profile"""
         if not self.name:
             raise ValueError("Quality profile name cannot be empty")
         
@@ -333,7 +347,8 @@ class ConversionRequest(BaseModel):
         
     @validator('input_path')
     def validate_input_path(cls, v):
-        """Validate input path exists"""
+        """
+Validate input path exists"""
         if not v.exists():
             raise ValueError(f"Input file does not exist: {v}")
         return v
@@ -381,7 +396,8 @@ class ConversionRequest(BaseModel):
 
 @dataclass
 class ConversionResult:
-    """Conversion operation result with comprehensive information"""
+    """
+Conversion operation result with comprehensive information"""
     
     # Basic result information
     conversion_id: str
@@ -438,7 +454,8 @@ class ConversionResult:
     completed_at: Optional[datetime] = None
     
     def __post_init__(self):
-        """Post-initialization processing"""
+        """
+Post-initialization processing"""
         if self.completed_at and self.started_at and not self.processing_time:
             self.processing_time = self.completed_at - self.started_at
         
@@ -450,15 +467,18 @@ class ConversionResult:
                 self.compression_ratio = self.input_file_size / self.output_file_size
     
     def is_successful(self) -> bool:
-        """Check if conversion was successful"""
+        """
+Check if conversion was successful"""
         return self.success and self.error_message is None
     
     def has_warnings(self) -> bool:
-        """Check if result has warnings"""
+        """
+Check if result has warnings"""
         return len(self.warnings) > 0
     
     def get_quality_grade(self) -> str:
-        """Get quality grade based on metrics"""
+        """
+Get quality grade based on metrics"""
         if self.quality_score >= 0.9:
             return "Excellent"
         elif self.quality_score >= 0.8:
@@ -484,7 +504,8 @@ class ConversionResult:
         }
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary for serialization"""
+        """
+Convert result to dictionary for serialization"""
         result_dict = {
             'conversion_id': self.conversion_id,
             'success': self.success,
@@ -510,7 +531,8 @@ class ConversionResult:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ConversionResult':
-        """Create result from dictionary"""
+        """
+Create result from dictionary"""
         # Parse timestamps
         started_at = None
         if data.get('started_at'):
@@ -553,7 +575,8 @@ class ConversionResult:
 
 @dataclass
 class BatchConversionRequest:
-    """Batch conversion request for multiple files"""
+    """
+Batch conversion request for multiple files"""
     
     requests: List[ConversionRequest]
     batch_id: str = field(default_factory=lambda: f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
@@ -592,7 +615,8 @@ class BatchConversionRequest:
 
 @dataclass  
 class BatchConversionResult:
-    """Batch conversion result"""
+    """
+Batch conversion result"""
     
     batch_id: str
     total_requests: int
@@ -611,7 +635,8 @@ class BatchConversionResult:
     error_summary: Dict[str, int] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Calculate batch statistics"""
+        """
+Calculate batch statistics"""
         if self.results:
             # Calculate averages
             quality_scores = [r.quality_score for r in self.results if r.success]
@@ -635,13 +660,15 @@ class BatchConversionResult:
                     )
     
     def get_success_rate(self) -> float:
-        """Get conversion success rate"""
+        """
+Get conversion success rate"""
         if self.total_requests == 0:
             return 0.0
         return self.successful_conversions / self.total_requests
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get batch processing summary"""
+        """
+Get batch processing summary"""
         return {
             'batch_id': self.batch_id,
             'total_requests': self.total_requests,

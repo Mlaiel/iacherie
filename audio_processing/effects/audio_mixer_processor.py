@@ -4,8 +4,9 @@ Advanced audio mixing with multiple channels, routing, buses, sends/returns,
 automation, and professional mixing console capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -15,7 +16,9 @@ import copy
 
 
 class PanLaw(Enum):
-    """Pan law types for stereo positioning"""
+    """
+Pan law types for stereo positioning"""
+
     LINEAR = "linear"
     CONSTANT_POWER = "constant_power"
     MINUS_3DB = "minus_3db"
@@ -25,6 +28,7 @@ class PanLaw(Enum):
 
 class ChannelType(Enum):
     """Audio channel types"""
+
     MONO = "mono"
     STEREO = "stereo"
     SURROUND_5_1 = "surround_5_1"
@@ -51,7 +55,8 @@ class ChannelSettings:
 
 
 class MixerChannel:
-    """Individual mixer channel"""
+    """
+Individual mixer channel"""
     
     def __init__(self, channel_id: str, channel_type: ChannelType = ChannelType.MONO):
         self.channel_id = channel_id
@@ -69,7 +74,8 @@ class MixerChannel:
         self._init_filters()
     
     def _init_filters(self):
-        """Initialize channel filters"""
+        """
+Initialize channel filters"""
         self.high_cut_filter = None
         self.low_cut_filter = None
         self.eq_filters = {
@@ -79,7 +85,8 @@ class MixerChannel:
         }
     
     def process_audio(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Process audio through channel"""
+        """
+Process audio through channel"""
         processed = audio_data.copy()
         
         # Apply filters
@@ -101,7 +108,8 @@ class MixerChannel:
         return processed
     
     def _apply_filters(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply high/low cut filters"""
+        """
+Apply high/low cut filters"""
         processed = audio_data
         
         # High cut (low-pass) filter
@@ -125,7 +133,8 @@ class MixerChannel:
         return processed
     
     def _apply_eq(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply 3-band EQ"""
+        """
+Apply 3-band EQ"""
         # Simple gain-based EQ (would be more sophisticated in practice)
         processed = audio_data
         
@@ -138,14 +147,16 @@ class MixerChannel:
         return processed
     
     def _update_meters(self, audio_data: np.ndarray):
-        """Update peak and RMS meters"""
+        """
+Update peak and RMS meters"""
         if len(audio_data) > 0:
             self.peak_meter = float(np.max(np.abs(audio_data)))
             self.rms_meter = float(np.sqrt(np.mean(audio_data**2)))
 
 
 class AudioMixerProcessor:
-    """Professional audio mixer processor"""
+    """
+Professional audio mixer processor"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -249,7 +260,8 @@ class AudioMixerProcessor:
                 self.channels[channel_id].gain_history.append(gain)
     
     def set_channel_pan(self, channel_id: str, pan: float):
-        """Set channel pan (-1.0 to 1.0)"""
+        """
+Set channel pan (-1.0 to 1.0)"""
         if channel_id in self.channels:
             pan = max(-1.0, min(1.0, pan))
             self.channels[channel_id].settings.pan = pan
@@ -259,12 +271,14 @@ class AudioMixerProcessor:
                 self.channels[channel_id].pan_history.append(pan)
     
     def set_channel_mute(self, channel_id: str, mute: bool):
-        """Set channel mute"""
+        """
+Set channel mute"""
         if channel_id in self.channels:
             self.channels[channel_id].settings.mute = mute
     
     def set_channel_solo(self, channel_id: str, solo: bool):
-        """Set channel solo"""
+        """
+Set channel solo"""
         if channel_id in self.channels:
             self.channels[channel_id].settings.solo = solo
             
@@ -276,14 +290,16 @@ class AudioMixerProcessor:
             self.solo_active = len(self.soloed_channels) > 0
     
     def set_send_level(self, channel_id: str, send_name: str, level: float):
-        """Set send level for channel"""
+        """
+Set send level for channel"""
         if channel_id in self.channels and send_name in self.sends:
             level = max(0.0, min(1.0, level))
             self.sends[send_name][channel_id] = level
             self.channels[channel_id].settings.send_levels[send_name] = level
     
     def process_mix(self, channel_inputs: Dict[str, np.ndarray]) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
-        """Process complete mix"""
+        """
+Process complete mix"""
         try:
             if not channel_inputs:
                 return np.array([]), {}
@@ -408,7 +424,8 @@ class AudioMixerProcessor:
         return left_gain, right_gain
     
     def get_channel_meters(self, channel_id: str) -> Dict[str, float]:
-        """Get channel meter readings"""
+        """
+Get channel meter readings"""
         if channel_id not in self.channels:
             return {"peak": 0.0, "rms": 0.0}
         

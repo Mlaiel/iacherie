@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -50,6 +53,7 @@ class DistributionPlatform(Enum):
 
 class ContentFormat(Enum):
     """Content formats for distribution"""
+
     AUDIO_TRACK = "audio_track"
     MUSIC_VIDEO = "music_video"
     LYRIC_VIDEO = "lyric_video"
@@ -65,6 +69,7 @@ class ContentFormat(Enum):
 
 class DistributionStrategy(Enum):
     """Distribution strategies"""
+
     SIMULTANEOUS_RELEASE = "simultaneous_release"
     STAGGERED_RELEASE = "staggered_release"
     PLATFORM_EXCLUSIVE = "platform_exclusive"
@@ -75,6 +80,7 @@ class DistributionStrategy(Enum):
 
 class UploadStatus(Enum):
     """Upload status tracking"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     UPLOADED = "uploaded"

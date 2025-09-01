@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for TaskManager
+"""
+Comprehensive Tests for TaskManager
 
 Industrial-grade testing for task management, scheduling, coordination,
 and execution monitoring capabilities.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -53,10 +56,12 @@ logger = logging.getLogger(__name__)
 
 
 class TestTask:
-    """Test task creation and management"""
+    """
+Test task creation and management"""
     
     def test_task_creation(self):
-        """Test creating task instances"""
+        """
+Test creating task instances"""
         task = Task(
             task_id="test_task_001",
             task_type=TaskType.CONTENT_GENERATION,
@@ -194,7 +199,8 @@ class TestTaskQueue:
     
     @pytest.fixture
     def task_queue(self) -> TaskQueue:
-        """Create task queue for testing"""
+        """
+Create task queue for testing"""
         config = TaskConfig(
             max_queue_size=100,
             priority_levels=5,
@@ -203,7 +209,8 @@ class TestTaskQueue:
         return TaskQueue(config)
     
     def test_queue_initialization(self):
-        """Test task queue initialization"""
+        """
+Test task queue initialization"""
         config = TaskConfig(max_queue_size=50)
         queue = TaskQueue(config)
         
@@ -213,7 +220,8 @@ class TestTaskQueue:
         assert queue.max_size == 50
     
     def test_task_enqueue_dequeue(self, task_queue):
-        """Test adding and removing tasks from queue"""
+        """
+Test adding and removing tasks from queue"""
         task1 = Task(
             task_id="queue_task_1",
             task_type=TaskType.CONTENT_GENERATION,
@@ -330,7 +338,8 @@ class TestTaskScheduler:
     
     @pytest.fixture
     async def task_scheduler(self) -> TaskScheduler:
-        """Create task scheduler for testing"""
+        """
+Create task scheduler for testing"""
         config = TaskConfig(
             scheduling_algorithm="priority_round_robin",
             time_slice_ms=100,
@@ -356,7 +365,8 @@ class TestTaskScheduler:
         await scheduler.shutdown()
     
     async def test_task_scheduling(self, task_scheduler):
-        """Test basic task scheduling"""
+        """
+Test basic task scheduling"""
         # Create tasks for scheduling
         tasks = [
             Task(
@@ -466,7 +476,8 @@ class TestTaskExecutor:
     
     @pytest.fixture
     async def task_executor(self) -> TaskExecutor:
-        """Create task executor for testing"""
+        """
+Create task executor for testing"""
         config = TaskConfig(
             max_concurrent_tasks=5,
             execution_timeout=60,
@@ -480,7 +491,8 @@ class TestTaskExecutor:
         await executor.shutdown()
     
     async def test_executor_initialization(self):
-        """Test task executor initialization"""
+        """
+Test task executor initialization"""
         config = TaskConfig()
         executor = TaskExecutor(config)
         
@@ -493,7 +505,8 @@ class TestTaskExecutor:
         await executor.shutdown()
     
     async def test_task_execution(self, task_executor):
-        """Test basic task execution"""
+        """
+Test basic task execution"""
         task = Task(
             task_id="execution_test",
             task_type=TaskType.CONTENT_GENERATION,
@@ -616,7 +629,8 @@ class TestTaskManager:
     
     @pytest.fixture
     async def task_manager(self) -> TaskManager:
-        """Create task manager for testing"""
+        """
+Create task manager for testing"""
         config = TaskConfig(
             max_concurrent_tasks=10,
             max_queue_size=100,
@@ -647,7 +661,8 @@ class TestTaskManager:
         await manager.shutdown()
     
     async def test_end_to_end_task_processing(self, task_manager):
-        """Test complete task processing pipeline"""
+        """
+Test complete task processing pipeline"""
         # Create a complex task
         task = Task(
             task_id="e2e_test_task",

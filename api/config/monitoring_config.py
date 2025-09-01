@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -12,7 +13,9 @@ from enum import Enum
 
 
 class MetricType(Enum):
-    """Types of metrics to collect"""
+    """
+Types of metrics to collect"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -21,6 +24,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -298,7 +302,8 @@ class MonitoringConfig:
         self._validate_configuration()
     
     def _initialize_custom_metrics(self):
-        """Initialize custom business metrics"""
+        """
+Initialize custom business metrics"""
         self.custom_metrics = {
             "content_uploads_total": {
                 "type": MetricType.COUNTER,

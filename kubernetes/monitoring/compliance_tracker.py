@@ -17,6 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceType(Enum):
-    """Types of compliance requirements"""
+    """
+Types of compliance requirements"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -49,6 +52,7 @@ class ComplianceType(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
@@ -59,6 +63,7 @@ class ComplianceStatus(Enum):
 
 class ComplianceSeverity(Enum):
     """Compliance violation severity"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -83,7 +88,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
+    """
+Compliance violation record"""
     id: str
     rule_id: str
     compliance_type: ComplianceType
@@ -100,7 +106,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance status report"""
+    """
+Compliance status report"""
     compliance_type: ComplianceType
     overall_status: ComplianceStatus
     total_rules: int
@@ -114,7 +121,8 @@ class ComplianceReport:
 
 @dataclass
 class DataProcessingRecord:
-    """GDPR Article 30 - Record of Processing Activities"""
+    """
+GDPR Article 30 - Record of Processing Activities"""
     id: str
     name: str
     purpose: str
@@ -904,25 +912,29 @@ class ComplianceTracker:
         pass
         
     async def _check_data_retention_compliance(self):
-        """Check data retention compliance"""
+        """
+Check data retention compliance"""
         
         # Implementation for data retention monitoring
         pass
         
     async def _check_platform_compliance(self):
-        """Check platform integration compliance"""
+        """
+Check platform integration compliance"""
         
         # Implementation for platform compliance monitoring
         pass
         
     async def _process_data_subject_requests(self):
-        """Process data subject requests (GDPR/CCPA)"""
+        """
+Process data subject requests (GDPR/CCPA)"""
         
         # Implementation for data subject request processing
         pass
         
     async def _generate_compliance_reports(self):
-        """Generate compliance status reports"""
+        """
+Generate compliance status reports"""
         
         try:
             for compliance_type in ComplianceType:
@@ -979,7 +991,8 @@ class ComplianceTracker:
         )
         
     def _generate_recommendations(self, compliance_type: ComplianceType, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate compliance recommendations"""
+        """
+Generate compliance recommendations"""
         
         recommendations = []
         
@@ -1129,13 +1142,15 @@ class ComplianceTracker:
         pass
         
     async def _save_compliance_data(self):
-        """Save compliance data to storage"""
+        """
+Save compliance data to storage"""
         
         # Implementation for saving compliance data
         pass
         
     async def get_status(self) -> Dict[str, Any]:
-        """Get compliance monitoring status"""
+        """
+Get compliance monitoring status"""
         
         overall_status = ComplianceStatus.COMPLIANT
         total_violations = len(self._violations)
@@ -1170,7 +1185,8 @@ class ComplianceTracker:
         severity: Optional[ComplianceSeverity] = None,
         days: int = 30
     ) -> List[ComplianceViolation]:
-        """Get compliance violations"""
+        """
+Get compliance violations"""
         
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         
@@ -1188,7 +1204,8 @@ class ComplianceTracker:
         return sorted(violations, key=lambda x: x.detected_at, reverse=True)
         
     async def get_compliance_report(self, compliance_type: ComplianceType) -> Optional[ComplianceReport]:
-        """Get latest compliance report"""
+        """
+Get latest compliance report"""
         
         if self.redis_client:
             try:

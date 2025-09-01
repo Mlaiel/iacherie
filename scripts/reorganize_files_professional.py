@@ -5,6 +5,7 @@ Reorganizes ALL files into professional enterprise architecture
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import shutil
 import logging
@@ -16,7 +17,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class ProfessionalReorganizer:
-    """Reorganizes files into professional enterprise structure"""
+    """
+Reorganizes files into professional enterprise structure"""
     
     def __init__(self, base_path: str = "/workspaces/Ainflue/ai_agents"):
         self.base_path = Path(base_path)
@@ -108,7 +110,8 @@ class ProfessionalReorganizer:
         return directories
     
     def reorganize_files(self, module_dir: Path, file_categories: Dict[str, List[Path]], directories: Dict[str, Path]):
-        """Reorganize files into professional structure"""
+        """
+Reorganize files into professional structure"""
         
         # Mapping of file categories to target directories
         target_mapping = {
@@ -253,7 +256,8 @@ from .manager import SomeModuleManager
 """)
     
     def reorganize_single_module(self, module_name: str) -> Dict[str, any]:
-        """Reorganize a single module"""
+        """
+Reorganize a single module"""
         module_dir = self.base_path / module_name
         
         if not module_dir.is_dir():

@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import secrets
 import hashlib
@@ -45,7 +46,9 @@ logger = get_logger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security level classifications"""
+    """
+Security level classifications"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -54,6 +57,7 @@ class SecurityLevel(Enum):
 
 class TokenType(Enum):
     """Security token types"""
+
     SESSION = "session"
     REFRESH = "refresh"
     API = "api"
@@ -63,6 +67,7 @@ class TokenType(Enum):
 
 class SecurityEvent(Enum):
     """Security event types"""
+
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILED = "login_failed"
     SESSION_CREATED = "session_created"
@@ -128,7 +133,8 @@ class SecureSessionToken(BaseModel):
 
 
 class SessionAuthenticationHandler:
-    """Advanced session authentication with multi-factor support"""
+    """
+Advanced session authentication with multi-factor support"""
     
     def __init__(self, config: SecurityConfig):
         self.config = config
@@ -147,7 +153,8 @@ class SessionAuthenticationHandler:
         user_credentials: Dict[str, Any],
         fingerprint: SessionFingerprint
     ) -> Tuple[bool, Optional[SecureSessionToken]]:
-        """Authenticate session with comprehensive validation"""
+        """
+Authenticate session with comprehensive validation"""
         
         try:
             user_id = user_credentials.get("user_id")
@@ -309,7 +316,8 @@ class SessionAuthenticationHandler:
         user_id: str,
         fingerprint: SessionFingerprint
     ) -> SecurityLevel:
-        """Determine appropriate security level based on context"""
+        """
+Determine appropriate security level based on context"""
         
         # Base security level
         security_level = SecurityLevel.MEDIUM
@@ -595,12 +603,14 @@ class SessionEncryptionManager:
         self.previous_keys: List[bytes] = []
     
     def _generate_encryption_key(self) -> bytes:
-        """Generate new encryption key"""
+        """
+Generate new encryption key"""
         
         return Fernet.generate_key()
     
     async def encrypt_session_data(self, data: Dict[str, Any]) -> bytes:
-        """Encrypt session data with current key"""
+        """
+Encrypt session data with current key"""
         
         try:
             # Serialize data
@@ -707,7 +717,8 @@ class SecureSessionTokenGenerator:
         self.public_key = self.private_key.public_key()
     
     def _generate_rsa_keys(self):
-        """Generate RSA key pair for JWT signing"""
+        """
+Generate RSA key pair for JWT signing"""
         
         return rsa.generate_private_key(
             public_exponent=65537,
@@ -718,7 +729,8 @@ class SecureSessionTokenGenerator:
         self,
         token_data: SecureSessionToken
     ) -> str:
-        """Generate JWT token from session token data"""
+        """
+Generate JWT token from session token data"""
         
         try:
             payload = {
@@ -791,7 +803,8 @@ class SecureSessionTokenGenerator:
         session_id: str,
         user_id: str
     ) -> str:
-        """Generate secure refresh token"""
+        """
+Generate secure refresh token"""
         
         try:
             # Create token data
@@ -839,7 +852,8 @@ class SessionSecurityManager:
         user_credentials: Dict[str, Any],
         request_fingerprint: Dict[str, Any]
     ) -> Tuple[bool, Optional[str]]:
-        """Complete session authentication and security setup"""
+        """
+Complete session authentication and security setup"""
         
         try:
             # Create session fingerprint
@@ -1029,12 +1043,14 @@ class SessionSecurityManager:
         return await self.encryption_manager.encrypt_session_data(data)
     
     async def decrypt_session_data(self, encrypted_data: bytes) -> Dict[str, Any]:
-        """Decrypt session data"""
+        """
+Decrypt session data"""
         
         return await self.encryption_manager.decrypt_session_data(encrypted_data)
     
     async def get_security_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive security metrics"""
+        """
+Get comprehensive security metrics"""
         
         try:
             # Get authentication metrics

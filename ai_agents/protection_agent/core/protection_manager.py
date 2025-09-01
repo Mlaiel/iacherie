@@ -5,6 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union
 from datetime import datetime, timedelta
 import asyncio
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProtectionRequest:
-    """Protection request structure"""
+    """
+Protection request structure"""
     request_id: str
     owner_id: str
     content_data: bytes
@@ -87,7 +89,8 @@ class ProtectionManager:
         self.monitoring_interval = config.get('monitoring_interval', 3600)  # 1 hour
         
     async def start_services(self):
-        """Start all protection services and background tasks"""
+        """
+Start all protection services and background tasks"""
         try:
             # Start monitoring service
             if not self.monitoring_active:
@@ -541,6 +544,7 @@ class ProtectionManager:
 
 class BatchOperationType(Enum):
     """Batch operation types"""
+
     PROTECT_CONTENT = "protect_content"
     SCAN_VIOLATIONS = "scan_violations"
     ENFORCE_RIGHTS = "enforce_rights"
@@ -561,7 +565,8 @@ class ProtectionMetrics:
 
 @dataclass
 class BatchOperationResult:
-    """Batch operation result"""
+    """
+Batch operation result"""
     operation_id: str
     operation_type: BatchOperationType
     total_items: int
@@ -996,7 +1001,8 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _manage_protection_lifecycle(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Manage protection lifecycle operations"""
+        """
+Manage protection lifecycle operations"""
         
         operation = request.get('operation', 'check_renewals')
         user_id = request.get('user_id')
@@ -1040,7 +1046,8 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _optimize_protection_settings(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize protection settings based on performance data"""
+        """
+Optimize protection settings based on performance data"""
         
         user_id = request.get('user_id')
         optimization_type = request.get('optimization_type', 'performance')
@@ -1067,7 +1074,8 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _generate_protection_report(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive protection report"""
+        """
+Generate comprehensive protection report"""
         
         report_type = request.get('report_type', 'summary')
         user_id = request.get('user_id')
@@ -1223,30 +1231,37 @@ class ProtectionAgentManager(BaseAgent):
     
     # Additional helper methods would be implemented here
     async def _collect_analytics_data(self, user_id, tenant_id, start_date, end_date, include_trends):
-        """Collect analytics data for the specified period"""
+        """
+Collect analytics data for the specified period"""
         # Implementation would query database and collect metrics
         return {}
     
     async def _check_protection_agent_health(self):
-        """Check protection agent health"""
+        """
+Check protection agent health"""
         return {'status': 'healthy', 'response_time': 0.1}
     
     async def _check_batch_processor_health(self):
-        """Check batch processor health"""
+        """
+Check batch processor health"""
         return {'status': 'healthy', 'queue_size': 0}
     
     async def _check_monitoring_services_health(self):
-        """Check monitoring services health"""
+        """
+Check monitoring services health"""
         return {'status': 'healthy', 'active_monitors': 5}
     
     async def _check_database_health(self):
-        """Check database health"""
+        """
+Check database health"""
         return {'status': 'healthy', 'connection_pool': '10/10'}
     
     async def _check_queue_health(self):
-        """Check queue health"""
+        """
+Check queue health"""
         return {'status': 'healthy', 'pending_jobs': 0}
     
     async def _get_system_uptime(self):
-        """Get system uptime"""
+        """
+Get system uptime"""
         return "99.9%"

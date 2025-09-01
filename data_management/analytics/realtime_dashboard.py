@@ -26,6 +26,7 @@ dashboard frameworks, and business intelligence methodologies developed by Fahed
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All dashboard designs and analytical interfaces are protected intellectual property.
 """
+
 import asyncio
 import json
 from datetime import datetime, timedelta
@@ -52,7 +53,9 @@ from .storage import TimeSeriesStore
 
 
 class DashboardType(Enum):
-    """Types of analytics dashboards available."""
+    """
+Types of analytics dashboards available."""
+
     EXECUTIVE = "executive"
     OPERATIONAL = "operational"
     CONTENT_ANALYTICS = "content_analytics"
@@ -64,6 +67,7 @@ class DashboardType(Enum):
 
 class VisualizationType(Enum):
     """Types of data visualizations supported."""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -80,6 +84,7 @@ class VisualizationType(Enum):
 
 class UpdateFrequency(Enum):
     """Dashboard update frequencies."""
+
     REAL_TIME = "real_time"  # Every few seconds
     LIVE = "live"  # Every minute
     FREQUENT = "frequent"  # Every 5 minutes
@@ -104,7 +109,8 @@ class DashboardWidget:
 
 @dataclass
 class DashboardLayout:
-    """Complete dashboard layout configuration."""
+    """
+Complete dashboard layout configuration."""
     dashboard_id: str
     name: str
     dashboard_type: DashboardType
@@ -120,7 +126,8 @@ class DashboardLayout:
 
 @dataclass
 class DashboardData:
-    """Real-time dashboard data packet."""
+    """
+Real-time dashboard data packet."""
     dashboard_id: str
     widget_id: str
     data: Any
@@ -153,7 +160,8 @@ class RealTimeDashboard:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize dashboard system and real-time connections."""
+        """
+Initialize dashboard system and real-time connections."""
         try:
             # Initialize Redis connection
             self.redis_client = redis.Redis(
@@ -572,7 +580,8 @@ class RealTimeDashboard:
         metrics: List[str],
         time_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get user-related data."""
+        """
+Get user-related data."""
         return {
             'new_users': 1250,
             'active_users': 8500,
@@ -588,7 +597,8 @@ class RealTimeDashboard:
         metrics: List[str],
         time_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get content-related data."""
+        """
+Get content-related data."""
         return {
             'total_content': 25000,
             'content_performance': [
@@ -609,7 +619,8 @@ class RealTimeDashboard:
         metrics: List[str],
         time_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get KPI data."""
+        """
+Get KPI data."""
         return {
             'conversion_rate': 3.2,
             'retention_rate': 78.5,
@@ -622,7 +633,8 @@ class RealTimeDashboard:
         data_source: str,
         metrics: List[str]
     ) -> Dict[str, Any]:
-        """Get data from generic data source."""
+        """
+Get data from generic data source."""
         # Placeholder implementation
         return {metric: np.random.rand() * 100 for metric in metrics}
     
@@ -631,7 +643,8 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create line chart visualization."""
+        """
+Create line chart visualization."""
         fig = go.Figure()
         
         for column in data.select_dtypes(include=[np.number]).columns:
@@ -658,7 +671,8 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create bar chart visualization."""
+        """
+Create bar chart visualization."""
         fig = go.Figure()
         
         for column in data.select_dtypes(include=[np.number]).columns:
@@ -682,7 +696,8 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create pie chart visualization."""
+        """
+Create pie chart visualization."""
         # Use first numeric column for values
         value_column = data.select_dtypes(include=[np.number]).columns[0]
         labels = data.index if hasattr(data, 'index') else range(len(data))
@@ -705,7 +720,8 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create scatter plot visualization."""
+        """
+Create scatter plot visualization."""
         numeric_columns = data.select_dtypes(include=[np.number]).columns
         
         if len(numeric_columns) >= 2:
@@ -738,7 +754,8 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create heatmap visualization."""
+        """
+Create heatmap visualization."""
         numeric_data = data.select_dtypes(include=[np.number])
         
         fig = go.Figure(data=go.Heatmap(
@@ -760,7 +777,8 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create gauge visualization."""
+        """
+Create gauge visualization."""
         # Use first numeric value
         value = data.iloc[0, 0] if not data.empty else 0
         
@@ -801,7 +819,8 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create sunburst visualization."""
+        """
+Create sunburst visualization."""
         # Implementation for sunburst
         return go.Figure()
     
@@ -810,12 +829,14 @@ class RealTimeDashboard:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> go.Figure:
-        """Create candlestick chart."""
+        """
+Create candlestick chart."""
         # Implementation for candlestick
         return go.Figure()
     
     def _get_cache_ttl(self, update_frequency: UpdateFrequency) -> int:
-        """Get cache TTL based on update frequency."""
+        """
+Get cache TTL based on update frequency."""
         ttl_map = {
             UpdateFrequency.REAL_TIME: 10,
             UpdateFrequency.LIVE: 60,
@@ -826,17 +847,20 @@ class RealTimeDashboard:
         return ttl_map.get(update_frequency, 300)
     
     async def _start_data_streams(self):
-        """Start real-time data streaming tasks."""
+        """
+Start real-time data streaming tasks."""
         # Implementation for starting background tasks
         pass
     
     async def _load_dashboards(self):
-        """Load saved dashboards from storage."""
+        """
+Load saved dashboards from storage."""
         # Implementation for loading dashboards
         pass
     
     async def _save_dashboard(self, dashboard: DashboardLayout):
-        """Save dashboard to persistent storage."""
+        """
+Save dashboard to persistent storage."""
         # Implementation for saving dashboard
         pass
     
@@ -845,7 +869,8 @@ class RealTimeDashboard:
         dashboard_id: str,
         widgets: List[DashboardWidget]
     ):
-        """Initialize data streams for dashboard widgets."""
+        """
+Initialize data streams for dashboard widgets."""
         # Implementation for widget stream initialization
         pass
     
@@ -854,7 +879,8 @@ class RealTimeDashboard:
         dashboard_id: str,
         user_id: str
     ) -> bool:
-        """Check if user has permission to access dashboard."""
+        """
+Check if user has permission to access dashboard."""
         # Implementation for permission checking
         return True  # Placeholder
     
@@ -865,7 +891,8 @@ class RealTimeDashboard:
         user_id: str,
         message: Dict[str, Any]
     ):
-        """Handle incoming WebSocket message."""
+        """
+Handle incoming WebSocket message."""
         # Implementation for message handling
         pass
     
@@ -874,7 +901,8 @@ class RealTimeDashboard:
         dashboard_id: str,
         data_packet: DashboardData
     ):
-        """Broadcast data update to all connected clients."""
+        """
+Broadcast data update to all connected clients."""
         if dashboard_id not in self.active_connections:
             return
         

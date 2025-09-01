@@ -5,8 +5,9 @@ The ContentClassifier automatically categorizes and tags content using
 advanced machine learning models for improved organization and discovery.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -29,7 +30,8 @@ from ..ml.models.quality_classifier import QualityClassifier
 
 @dataclass
 class ClassificationResult:
-    """Content classification result container"""
+    """
+Content classification result container"""
     content_id: str
     primary_category: str
     subcategories: List[str]
@@ -41,7 +43,8 @@ class ClassificationResult:
 
 @dataclass
 class ClassificationConfig:
-    """Content classification configuration"""
+    """
+Content classification configuration"""
     enable_auto_tagging: bool = True
     enable_genre_detection: bool = True
     enable_mood_analysis: bool = True

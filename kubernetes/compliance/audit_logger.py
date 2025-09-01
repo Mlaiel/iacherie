@@ -4,6 +4,7 @@ Comprehensive audit logging system for compliance and security
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import hashlib
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class AuditLevel(str, Enum):
-    """Audit event severity levels"""
+    """
+Audit event severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -38,6 +41,7 @@ class AuditLevel(str, Enum):
 
 class AuditCategory(str, Enum):
     """Audit event categories"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
@@ -54,6 +58,7 @@ class AuditCategory(str, Enum):
 
 class ComplianceFramework(str, Enum):
     """Compliance frameworks for audit mapping"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -77,7 +82,8 @@ class AuditContext:
 
 @dataclass
 class SecurityContext:
-    """Security event context"""
+    """
+Security event context"""
     threat_level: str
     attack_type: Optional[str] = None
     source_ip: Optional[str] = None
@@ -88,7 +94,8 @@ class SecurityContext:
 
 @dataclass
 class ComplianceContext:
-    """Compliance audit context"""
+    """
+Compliance audit context"""
     framework: ComplianceFramework
     regulation_section: str
     control_objective: str
@@ -102,7 +109,8 @@ request_correlation_id: ContextVar[Optional[str]] = ContextVar('correlation_id',
 
 
 class AuditLogger:
-    """Enterprise-grade audit logging system"""
+    """
+Enterprise-grade audit logging system"""
     
     def __init__(self):
         self.logger = logger
@@ -524,11 +532,13 @@ class AuditLogger:
         audit_context.set(context)
     
     def set_correlation_id(self, correlation_id: str) -> None:
-        """Set correlation ID for request tracking"""
+        """
+Set correlation ID for request tracking"""
         request_correlation_id.set(correlation_id)
     
     async def _encrypt_audit_data(self, audit_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive audit data"""
+        """
+Encrypt sensitive audit data"""
         try:
             sensitive_fields = ["user_agent", "ip_address", "details"]
             encrypted_data = audit_data.copy()

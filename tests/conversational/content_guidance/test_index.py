@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test for Content Guidance Index Module - Enterprise Level Testing
+"""
+Test for Content Guidance Index Module - Enterprise Level Testing
 ================================================================
 
 Comprehensive testing suite for the content guidance orchestrator ensuring
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import pytest
 import sys
 import os
@@ -44,13 +47,15 @@ from conversational.content_guidance.index import (
 
 @pytest.fixture
 def orchestrator():
-    """Create a content guidance orchestrator for testing."""
+    """
+Create a content guidance orchestrator for testing."""
     return ContentGuidanceOrchestrator()
 
 
 @pytest.fixture
 def sample_request():
-    """Create a sample content guidance request."""
+    """
+Create a sample content guidance request."""
     return ContentGuidanceRequest(
         creator_id="creator_123",
         content_type="video",
@@ -83,7 +88,8 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_orchestrator_initialization(self, orchestrator):
-        """Test that orchestrator initializes all service engines correctly."""
+        """
+Test that orchestrator initializes all service engines correctly."""
         assert orchestrator.content_optimizer is not None
         assert orchestrator.platform_engine is not None
         assert orchestrator.monetization_engine is not None
@@ -102,7 +108,8 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_comprehensive_guidance_workflow(self, orchestrator, sample_request):
-        """Test the complete comprehensive guidance workflow."""
+        """
+Test the complete comprehensive guidance workflow."""
         
         # Mock all service engines
         with patch.multiple(
@@ -405,7 +412,8 @@ class TestConvenienceFunctions:
     
     @pytest.mark.asyncio
     async def test_get_comprehensive_content_guidance(self):
-        """Test comprehensive content guidance convenience function."""
+        """
+Test comprehensive content guidance convenience function."""
         
         with patch('backend.conversational.content_guidance.index.content_guidance_orchestrator') as mock_orchestrator:
             mock_orchestrator.process_comprehensive_guidance.return_value = {}
@@ -459,7 +467,8 @@ class TestDataStructures:
     """Test suite for data structures."""
     
     def test_content_guidance_request_creation(self):
-        """Test ContentGuidanceRequest creation and validation."""
+        """
+Test ContentGuidanceRequest creation and validation."""
         
         request = ContentGuidanceRequest(
             creator_id="creator_123",
@@ -524,7 +533,8 @@ class TestPerformanceAndReliability:
     
     @pytest.mark.asyncio
     async def test_concurrent_service_processing(self, orchestrator, sample_request):
-        """Test that services can be processed concurrently without conflicts."""
+        """
+Test that services can be processed concurrently without conflicts."""
         
         # Mock all services with realistic delays
         with patch.multiple(

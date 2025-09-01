@@ -6,6 +6,7 @@ with business logic integration and content creator specialization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,7 +27,9 @@ from ...core.monitoring import MetricsCollector
 
 
 class TemplateCategory(Enum):
-    """Template category enumeration"""
+    """
+Template category enumeration"""
+
     WELCOME = "welcome"
     HELP = "help"
     GUIDANCE = "guidance"
@@ -43,6 +46,7 @@ class TemplateCategory(Enum):
 
 class ContentCreatorType(Enum):
     """Content creator type enumeration"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
@@ -109,7 +113,8 @@ class TemplateLibrary:
         self._initialize_default_templates()
     
     def _initialize_default_templates(self):
-        """Initialize default template library"""
+        """
+Initialize default template library"""
         default_templates = self._get_default_templates()
         
         for template_data in default_templates:
@@ -120,7 +125,8 @@ class TemplateLibrary:
         self._update_jinja_environment()
     
     def _get_default_templates(self) -> List[Dict[str, Any]]:
-        """Get default template definitions"""
+        """
+Get default template definitions"""
         return [
             # Welcome Templates
             {
@@ -336,7 +342,8 @@ class TemplateLibrary:
         self.jinja_env = Environment(loader=DictLoader(template_dict))
     
     async def get_template(self, template_id: str) -> Optional[ResponseTemplate]:
-        """Get template by ID"""
+        """
+Get template by ID"""
         template = self.templates.get(template_id)
         if template:
             # Update usage count
@@ -378,7 +385,8 @@ class TemplateLibrary:
         return matching_templates
     
     async def add_template(self, template: ResponseTemplate) -> bool:
-        """Add new template to library"""
+        """
+Add new template to library"""
         try:
             self.templates[template.template_id] = template
             self._update_jinja_environment()
@@ -395,7 +403,8 @@ class TemplateLibrary:
             await self.metrics.track_template_effectiveness(template_id, effectiveness_score)
     
     async def get_template_statistics(self) -> Dict[str, Any]:
-        """Get template library statistics"""
+        """
+Get template library statistics"""
         total_templates = len(self.templates)
         category_counts = {}
         creator_type_counts = {}
@@ -568,7 +577,8 @@ class DynamicTemplateSelector:
         template: ResponseTemplate,
         variables: TemplateVariables
     ) -> float:
-        """Calculate personalization fit score"""
+        """
+Calculate personalization fit score"""
         personalization_data = variables.personalization_data
         if not personalization_data:
             return 0.5  # Neutral score
@@ -621,7 +631,8 @@ class DynamicTemplateSelector:
 
 
 class TemplateCustomizer:
-    """Advanced template customization and variable injection"""
+    """
+Advanced template customization and variable injection"""
     
     def __init__(self, template_library: TemplateLibrary):
         self.library = template_library
@@ -798,7 +809,8 @@ class TemplateCustomizer:
         return processed
     
     async def _apply_personalization_enhancements(self, content: str, variables: TemplateVariables) -> str:
-        """Apply personalization-based content enhancements"""
+        """
+Apply personalization-based content enhancements"""
         personalization = variables.personalization_data
         
         # Adjust tone based on preferences

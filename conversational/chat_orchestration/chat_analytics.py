@@ -6,6 +6,7 @@ user interactions, and system performance optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,7 +21,9 @@ from backend.core.database import DatabaseManager
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -32,6 +35,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Types of metrics tracked"""
+
     SESSION_COUNT = "session_count"
     MESSAGE_COUNT = "message_count"
     USER_ENGAGEMENT = "user_engagement"
@@ -61,7 +65,8 @@ class SessionMetrics:
 
 @dataclass
 class SystemMetrics:
-    """Overall system performance metrics"""
+    """
+Overall system performance metrics"""
     timeframe: AnalyticsTimeframe
     total_sessions: int
     active_users: int
@@ -78,7 +83,8 @@ class SystemMetrics:
 
 @dataclass
 class UserBehaviorInsights:
-    """User behavior analysis insights"""
+    """
+User behavior analysis insights"""
     user_id: str
     creator_type: str
     session_frequency: float
@@ -661,7 +667,8 @@ class ChatAnalytics:
             return datetime(2020, 1, 1)  # Platform start date
     
     def _get_timeframe_days(self, timeframe: AnalyticsTimeframe) -> int:
-        """Get number of days in timeframe"""
+        """
+Get number of days in timeframe"""
         timeframe_days = {
             AnalyticsTimeframe.HOUR: 1/24,
             AnalyticsTimeframe.DAY: 1,
@@ -674,7 +681,8 @@ class ChatAnalytics:
         return timeframe_days.get(timeframe, 30)
     
     async def _fetch_sessions_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch session metrics from database"""
+        """
+Fetch session metrics from database"""
         try:
             query = """
                 SELECT session_id, user_id, creator_type, start_time, end_time,
@@ -713,7 +721,8 @@ class ChatAnalytics:
         )
     
     def _create_empty_user_insights(self, user_id: str) -> UserBehaviorInsights:
-        """Create empty user insights for fallback"""
+        """
+Create empty user insights for fallback"""
         return UserBehaviorInsights(
             user_id=user_id,
             creator_type="unknown",
@@ -734,11 +743,13 @@ class ChatAnalytics:
         return []
     
     async def _fetch_users_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch user metrics"""
+        """
+Fetch user metrics"""
         return []
     
     def _calculate_avg_session_duration(self, sessions_data: List[Dict[str, Any]]) -> float:
-        """Calculate average session duration"""
+        """
+Calculate average session duration"""
         if not sessions_data:
             return 0.0
         
@@ -775,15 +786,18 @@ class ChatAnalytics:
         return 0.85  # Placeholder
     
     async def _calculate_avg_response_time(self, start_date: datetime, end_date: datetime) -> float:
-        """Calculate average system response time"""
+        """
+Calculate average system response time"""
         return 1.2  # Placeholder
     
     async def _calculate_user_satisfaction(self, start_date: datetime, end_date: datetime) -> float:
-        """Calculate user satisfaction average"""
+        """
+Calculate user satisfaction average"""
         return 4.2  # Placeholder
     
     async def _get_top_intents(self, start_date: datetime, end_date: datetime) -> List[Tuple[str, int]]:
-        """Get top intents by frequency"""
+        """
+Get top intents by frequency"""
         return [("content_analysis", 150), ("monetization_question", 120)]  # Placeholder
     
     async def _calculate_feature_adoption(self, start_date: datetime, end_date: datetime) -> Dict[str, float]:

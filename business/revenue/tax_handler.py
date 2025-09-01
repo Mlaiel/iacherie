@@ -6,7 +6,7 @@ withholdings, reporting, and automated tax calculations for content creators
 across multiple jurisdictions.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Tax Management
 ========================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaxJurisdiction(Enum):
-    """Tax jurisdictions"""
+    """
+Tax jurisdictions"""
+
     US = "us"
     EU = "eu"
     UK = "uk"
@@ -46,6 +49,7 @@ class TaxJurisdiction(Enum):
 
 class TaxType(Enum):
     """Tax types"""
+
     INCOME_TAX = "income_tax"
     WITHHOLDING_TAX = "withholding_tax"
     VAT = "vat"
@@ -97,7 +101,8 @@ class TaxHandler:
         self._compliance_rules = {}
         
     async def initialize(self):
-        """Initialize tax handler"""
+        """
+Initialize tax handler"""
         try:
             # Load tax rates and treaties
             await self._load_tax_configuration()

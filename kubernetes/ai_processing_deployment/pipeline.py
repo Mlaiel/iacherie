@@ -12,6 +12,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import time
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStage(Enum):
-    """Pipeline processing stages."""
+    """
+Pipeline processing stages."""
+
     PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
     FINGERPRINT_GENERATION = "fingerprint_generation"
@@ -58,6 +61,7 @@ class PipelineStage(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats."""
+
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -87,7 +91,8 @@ class PipelineConfig:
 
 @dataclass
 class StageResult:
-    """Result from a pipeline stage."""
+    """
+Result from a pipeline stage."""
     stage: PipelineStage
     success: bool
     data: Any
@@ -98,7 +103,8 @@ class StageResult:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline execution result."""
+    """
+Complete pipeline execution result."""
     task_id: str
     success: bool
     fingerprint: Optional[str]
@@ -119,7 +125,8 @@ class ProcessingPipeline:
     """
     
     def __init__(self, config: PipelineConfig):
-        """Initialize processing pipeline."""
+        """
+Initialize processing pipeline."""
         self.config = config
         self.stage_processors = {}
         self.active_executions: Dict[str, asyncio.Task] = {}
@@ -131,7 +138,8 @@ class ProcessingPipeline:
         self._initialize_stage_processors()
     
     def _initialize_models(self):
-        """Initialize AI models for different content types."""
+        """
+Initialize AI models for different content types."""
         try:
             # Text embedding model
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -963,7 +971,8 @@ class ProcessingPipeline:
             return 0.5  # Default quality score
     
     async def _validate_results(self, task: ProcessingTask, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate processing results."""
+        """
+Validate processing results."""
         try:
             validation_results = {
                 'fingerprint_valid': bool(input_data.get('fingerprint')),
@@ -1002,7 +1011,8 @@ class ProcessingPipeline:
         return metadata
     
     async def get_pipeline_status(self) -> Dict[str, Any]:
-        """Get current pipeline status."""
+        """
+Get current pipeline status."""
         return {
             'active_executions': len(self.active_executions),
             'config': {
@@ -1018,7 +1028,8 @@ class ProcessingPipeline:
 
 # Factory function
 def create_pipeline(config: Optional[PipelineConfig] = None) -> ProcessingPipeline:
-    """Create processing pipeline with configuration."""
+    """
+Create processing pipeline with configuration."""
     if config is None:
         config = PipelineConfig()
     return ProcessingPipeline(config)

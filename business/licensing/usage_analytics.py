@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -30,7 +31,9 @@ from ..ai.usage_intelligence import UsageIntelligenceEngine
 
 
 class UsageType(Enum):
-    """Types of content usage"""
+    """
+Types of content usage"""
+
     STREAM = "stream"
     DOWNLOAD = "download"
     BROADCAST = "broadcast"
@@ -45,6 +48,7 @@ class UsageType(Enum):
 
 class UsageMetric(Enum):
     """Usage measurement metrics"""
+
     PLAY_COUNT = "play_count"
     UNIQUE_LISTENERS = "unique_listeners"
     TOTAL_DURATION = "total_duration"
@@ -57,6 +61,7 @@ class UsageMetric(Enum):
 
 class ReportingPeriod(Enum):
     """Reporting period types"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -81,7 +86,8 @@ class UsageInsights:
 
 
 class UsageTrackingRequest(BaseModel):
-    """Usage tracking request structure"""
+    """
+Usage tracking request structure"""
     content_id: str = Field(..., description="Content being tracked")
     usage_type: UsageType = Field(..., description="Type of usage")
     platform: str = Field(..., description="Platform where usage occurred")
@@ -563,11 +569,13 @@ class UsageAnalyticsService:
         pass
     
     async def _process_usage_event(self, request: UsageTrackingRequest) -> Any:
-        """Process individual usage event"""
+        """
+Process individual usage event"""
         # Implementation for usage event processing
         pass
     
     async def _analyze_usage_performance(self, usage_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze usage performance metrics"""
+        """
+Analyze usage performance metrics"""
         # Implementation for performance analysis
         pass

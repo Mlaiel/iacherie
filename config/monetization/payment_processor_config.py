@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set
@@ -24,7 +25,9 @@ import json
 
 
 class PaymentProcessor(str, Enum):
-    """Supported payment processors for global monetization."""
+    """
+Supported payment processors for global monetization."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"  # Formerly TransferWise
@@ -47,6 +50,7 @@ class PaymentProcessor(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Supported payment methods across all processors."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
@@ -81,6 +85,7 @@ class PaymentMethod(str, Enum):
 
 class ProcessorCapability(str, Enum):
     """Processor capabilities for advanced features."""
+
     RECURRING_PAYMENTS = "recurring_payments"
     INSTANT_PAYOUTS = "instant_payouts"
     MARKETPLACE_SPLITS = "marketplace_splits"
@@ -107,7 +112,8 @@ class FeeStructure:
 
 @dataclass
 class ProcessorConfig:
-    """Enhanced payment processor configuration."""
+    """
+Enhanced payment processor configuration."""
     processor: PaymentProcessor
     display_name: str
     api_key: str
@@ -418,7 +424,8 @@ class PaymentProcessorConfig:
         return self.PROCESSORS.get(processor)
     
     def get_regional_processors(self, country_code: str) -> List[PaymentProcessor]:
-        """Get recommended processors for a specific country/region."""
+        """
+Get recommended processors for a specific country/region."""
         return self.REGIONAL_PROCESSORS.get(
             country_code.upper(), 
             self.REGIONAL_PROCESSORS["GLOBAL"]
@@ -431,13 +438,15 @@ class PaymentProcessorConfig:
     
     def supports_payment_method(self, processor: PaymentProcessor, 
                               method: PaymentMethod) -> bool:
-        """Check if processor supports a specific payment method."""
+        """
+Check if processor supports a specific payment method."""
         config = self.get_processor_config(processor)
         return config and method in config.supported_methods
     
     def get_processor_fee(self, processor: PaymentProcessor, 
                          currency: str, amount: Decimal) -> Decimal:
-        """Calculate processor fee for a transaction."""
+        """
+Calculate processor fee for a transaction."""
         config = self.get_processor_config(processor)
         if not config or currency not in config.fee_structures:
             return Decimal("0.00")
@@ -466,6 +475,7 @@ from enum import Enum
 
 class PaymentProvider(str, Enum):
     """Supported payment providers."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -483,6 +493,7 @@ class PaymentProvider(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Payment method types."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
@@ -501,6 +512,7 @@ class PaymentMethod(str, Enum):
 
 class PaymentStatus(str, Enum):
     """Payment status types."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -514,6 +526,7 @@ class PaymentStatus(str, Enum):
 
 class PayoutFrequency(str, Enum):
     """Payout frequency options."""
+
     INSTANT = "instant"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -549,7 +562,8 @@ class PaymentProviderConfig:
 
 @dataclass
 class PaymentSecurityConfig:
-    """Security configuration for payments."""
+    """
+Security configuration for payments."""
     enable_3ds: bool = True
     enable_fraud_detection: bool = True
     enable_velocity_checks: bool = True
@@ -843,14 +857,16 @@ class PaymentProcessorConfig:
         return self.PAYMENT_PROVIDERS.get(provider)
     
     def get_enabled_providers(self) -> List[PaymentProvider]:
-        """Get list of enabled payment providers."""
+        """
+Get list of enabled payment providers."""
         return [
             provider for provider, config in self.PAYMENT_PROVIDERS.items() 
             if config.enabled
         ]
     
     def get_primary_provider(self) -> Optional[PaymentProvider]:
-        """Get the primary (highest priority) enabled provider."""
+        """
+Get the primary (highest priority) enabled provider."""
         enabled_providers = [
             (provider, config) for provider, config in self.PAYMENT_PROVIDERS.items() 
             if config.enabled
@@ -861,7 +877,8 @@ class PaymentProcessorConfig:
         return min(enabled_providers, key=lambda x: x[1].priority)[0]
     
     def get_supported_methods(self, provider: PaymentProvider) -> List[PaymentMethod]:
-        """Get supported payment methods for a provider."""
+        """
+Get supported payment methods for a provider."""
         return self.PROVIDER_PAYMENT_METHODS.get(provider, [])
     
     def calculate_processing_fee(
@@ -869,7 +886,8 @@ class PaymentProcessorConfig:
         provider: PaymentProvider, 
         amount: Decimal
     ) -> Decimal:
-        """Calculate processing fee for a transaction."""
+        """
+Calculate processing fee for a transaction."""
         config = self.get_provider_config(provider)
         if not config:
             return Decimal("0.00")

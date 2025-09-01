@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for NLP Fingerprinting Module
+"""
+Comprehensive Tests for NLP Fingerprinting Module
 
 Industrial-grade tests for AdvancedFingerprintEngine covering copyright protection,
 content similarity detection, and plagiarism prevention with real implementations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -48,11 +51,13 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentFingerprinter:
-    """Comprehensive tests for AdvancedFingerprintEngine"""
+    """
+Comprehensive tests for AdvancedFingerprintEngine"""
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, fingerprint_engine):
-        """Test fingerprint engine initialization"""
+        """
+Test fingerprint engine initialization"""
         assert fingerprint_engine is not None
         assert hasattr(fingerprint_engine, 'config')
         assert hasattr(fingerprint_engine, 'similarity_matcher')
@@ -66,7 +71,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_content_fingerprint_generation(self, fingerprint_engine, sample_texts):
-        """Test content fingerprint generation"""
+        """
+Test content fingerprint generation"""
         for language, texts in sample_texts.items():
             text = texts[0]
             
@@ -113,7 +119,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_similarity_detection(self, fingerprint_engine):
-        """Test content similarity detection"""
+        """
+Test content similarity detection"""
         # Create similar contents
         original_content = "This is an amazing product that will change your life! 🌟"
         similar_content = "This is a fantastic product that will transform your life! ✨"
@@ -343,7 +350,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_advanced_similarity_algorithms(self, fingerprint_engine):
-        """Test advanced similarity detection algorithms"""
+        """
+Test advanced similarity detection algorithms"""
         # Test with different types of content modifications
         test_cases = [
             {
@@ -489,7 +497,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, fingerprint_engine, benchmark_config):
-        """Test fingerprinting performance benchmarks"""
+        """
+Test fingerprinting performance benchmarks"""
         # Test single fingerprint generation performance
         content = "Test content for performance benchmarking of fingerprint generation."
         
@@ -591,7 +600,8 @@ class TestContentFingerprint:
     """Test content fingerprint data structure"""
     
     def test_fingerprint_creation(self):
-        """Test fingerprint creation"""
+        """
+Test fingerprint creation"""
         fingerprint = ContentFingerprint(
             content_hash="abcd1234",
             similarity_hash="efgh5678",
@@ -608,26 +618,31 @@ class TestSimilarityMatcher:
     
     @pytest.mark.asyncio
     async def test_similarity_matcher_initialization(self):
-        """Test similarity matcher initialization"""
+        """
+Test similarity matcher initialization"""
         matcher = SimilarityMatcher()
         assert matcher is not None
         assert hasattr(matcher, 'calculate_similarity')
 
 class TestPlagiarismDetector:
-    """Test plagiarism detector"""
+    """
+Test plagiarism detector"""
     
     @pytest.mark.asyncio
     async def test_plagiarism_detector_initialization(self):
-        """Test plagiarism detector initialization"""
+        """
+Test plagiarism detector initialization"""
         detector = PlagiarismDetector()
         assert detector is not None
         assert hasattr(detector, 'detect_plagiarism')
 
 class TestFingerprintConfig:
-    """Test fingerprint configuration"""
+    """
+Test fingerprint configuration"""
     
     def test_config_creation(self):
-        """Test fingerprint configuration creation"""
+        """
+Test fingerprint configuration creation"""
         config = FingerprintConfig(
             similarity_threshold=0.8,
             hash_algorithms=['md5', 'sha256'],

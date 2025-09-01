@@ -5,7 +5,7 @@ Advanced configuration management for multiple vector database backends
 with enterprise-grade settings, optimization, and monitoring capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ COPYRIGHT WARNING ⚠️
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
@@ -23,6 +23,7 @@ TEAM SPECIALTIES:
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
 """
+
 import os
 import yaml
 import json
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackendType(Enum):
-    """Supported vector database backends."""
+    """
+Supported vector database backends."""
+
     FAISS = "faiss"
     CHROMA = "chroma"
     ELASTICSEARCH = "elasticsearch"
@@ -51,6 +54,7 @@ class BackendType(Enum):
 
 class IndexType(Enum):
     """FAISS index types for different use cases."""
+
     FLAT = "IndexFlatL2"
     IVF_FLAT = "IndexIVFFlat"
     IVF_PQ = "IndexIVFPQ"
@@ -61,6 +65,7 @@ class IndexType(Enum):
 
 class MetricType(Enum):
     """Distance metrics for similarity computation."""
+
     EUCLIDEAN = "l2"
     COSINE = "cosine"
     INNER_PRODUCT = "ip"
@@ -84,7 +89,8 @@ class PerformanceSettings:
 
 @dataclass
 class SecuritySettings:
-    """Security and access control settings."""
+    """
+Security and access control settings."""
     encryption_enabled: bool = True
     encryption_algorithm: str = "AES-256"
     key_rotation_days: int = 90
@@ -114,7 +120,8 @@ class MonitoringSettings:
 
 @dataclass
 class FAISSBackendConfig:
-    """FAISS-specific configuration."""
+    """
+FAISS-specific configuration."""
     index_type: IndexType = IndexType.IVF_FLAT
     nlist: int = 1024
     nprobe: int = 64
@@ -245,7 +252,8 @@ class VectorBackendConfig:
         self._setup_directories()
     
     def _validate_configuration(self):
-        """Validate configuration settings."""
+        """
+Validate configuration settings."""
         try:
             # Validate backend type
             if not isinstance(self.backend_type, BackendType):
@@ -347,7 +355,8 @@ class VectorBackendConfigManager:
         self._load_config()
     
     def _load_config(self) -> VectorBackendConfig:
-        """Load configuration from file or environment."""
+        """
+Load configuration from file or environment."""
         try:
             with self._lock:
                 if os.path.exists(self.config_path):

@@ -5,11 +5,12 @@ Provides AI-powered optimal timing, queue management, and automated publishing.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -58,6 +59,7 @@ metrics = MetricsCollector("distribution.scheduler")
 
 class SchedulingStrategy(str, Enum):
     """Content scheduling strategies"""
+
     IMMEDIATE = "immediate"
     OPTIMAL_TIMING = "optimal_timing"
     STAGGERED = "staggered"
@@ -74,6 +76,7 @@ class SchedulingStrategy(str, Enum):
 
 class ScheduleStatus(str, Enum):
     """Schedule status tracking"""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -88,6 +91,7 @@ class ScheduleStatus(str, Enum):
 
 class Priority(str, Enum):
     """Task priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -97,6 +101,7 @@ class Priority(str, Enum):
 
 class TimeSlotType(str, Enum):
     """Time slot optimization types"""
+
     PEAK_ENGAGEMENT = "peak_engagement"
     LOW_COMPETITION = "low_competition"
     OPTIMAL_REACH = "optimal_reach"
@@ -124,7 +129,8 @@ class OptimalTimeSlot:
 
 @dataclass
 class ScheduleTask:
-    """Individual scheduling task"""
+    """
+Individual scheduling task"""
     id: str
     user_id: int
     content_id: int
@@ -145,7 +151,8 @@ class ScheduleTask:
 
 @dataclass
 class BatchSchedule:
-    """Batch scheduling configuration"""
+    """
+Batch scheduling configuration"""
     name: str
     user_id: int
     content_ids: List[int]
@@ -161,7 +168,8 @@ class BatchSchedule:
 
 
 class SchedulingConfig(BaseModel):
-    """Scheduling configuration model"""
+    """
+Scheduling configuration model"""
     user_id: int
     default_strategy: SchedulingStrategy = SchedulingStrategy.OPTIMAL_TIMING
     timezone: str = "UTC"
@@ -238,14 +246,16 @@ class ContentDistributionScheduler:
         self.executor = ThreadPoolExecutor(max_workers=10)
         
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.redis_client = await aioredis.from_url(settings.REDIS_URL)
         self.celery_app = Celery('content_scheduler', broker=settings.CELERY_BROKER_URL)
         self.scheduler.start()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.scheduler.running:
             self.scheduler.shutdown()
         if self.redis_client:
@@ -253,7 +263,8 @@ class ContentDistributionScheduler:
         self.executor.shutdown(wait=True)
     
     def _load_timing_models(self) -> Dict[str, Any]:
-        """Load ML models for optimal timing prediction"""
+        """
+Load ML models for optimal timing prediction"""
         models = {}
         
         try:
@@ -324,11 +335,13 @@ class ContentDistributionScheduler:
         }
     
     def _initialize_platform_queues(self) -> Dict[PlatformType, deque]:
-        """Initialize platform-specific task queues"""
+        """
+Initialize platform-specific task queues"""
         return {platform: deque() for platform in PlatformType}
     
     def _initialize_rate_limiters(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize rate limiting configurations"""
+        """
+Initialize rate limiting configurations"""
         return {
             PlatformType.YOUTUBE: {
                 "requests_per_minute": 100,
@@ -565,7 +578,8 @@ class ContentDistributionScheduler:
         return config
     
     async def _get_content_details(self, content_id: int) -> ContentModel:
-        """Get detailed content information"""
+        """
+Get detailed content information"""
         content = self.db.query(ContentModel).filter(ContentModel.id == content_id).first()
         if not content:
             raise ValidationError(f"Content {content_id} not found")
@@ -643,7 +657,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(str, Enum):
-    """Types of scheduling strategies"""
+    """
+Types of scheduling strategies"""
+
     IMMEDIATE = "immediate"
     OPTIMAL_TIME = "optimal_time"
     SPECIFIC_TIME = "specific_time"
@@ -654,6 +670,7 @@ class ScheduleType(str, Enum):
 
 class RecurrencePattern(str, Enum):
     """Recurrence patterns for scheduled content"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -662,6 +679,7 @@ class RecurrencePattern(str, Enum):
 
 class TimeZonePreference(str, Enum):
     """Common timezone preferences"""
+
     UTC = "UTC"
     EST = "America/New_York"
     PST = "America/Los_Angeles"
@@ -684,7 +702,8 @@ class OptimalTimeSlot:
 
 @dataclass
 class ScheduleConflict:
-    """Schedule conflict information"""
+    """
+Schedule conflict information"""
     existing_post_id: int
     conflicting_time: datetime
     platform: PlatformType
@@ -693,7 +712,8 @@ class ScheduleConflict:
 
 
 class ScheduleRequest(BaseModel):
-    """Content scheduling request"""
+    """
+Content scheduling request"""
     user_id: int
     content_id: int
     schedule_type: ScheduleType
@@ -720,7 +740,8 @@ class ScheduleRequest(BaseModel):
 
 
 class ScheduleResult(BaseModel):
-    """Scheduling operation result"""
+    """
+Scheduling operation result"""
     schedule_id: str
     success: bool
     scheduled_posts: List[Dict[str, Any]] = Field(default_factory=list)
@@ -747,7 +768,8 @@ class ContentScheduler:
             self.scheduler.start()
     
     def _initialize_platform_limits(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform-specific posting limits and guidelines"""
+        """
+Initialize platform-specific posting limits and guidelines"""
         return {
             PlatformType.YOUTUBE: {
                 "daily_limit": 10,

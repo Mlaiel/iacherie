@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Content Service Tests
+"""
+Content Service Tests
 
 Comprehensive tests for the ContentService class that provides
 the high-level business logic API for content operations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -54,12 +57,14 @@ class TestContentService:
     
     @pytest.fixture
     def service(self):
-        """Create a content service instance"""
+        """
+Create a content service instance"""
         return ContentService()
     
     @pytest.fixture
     def mock_generation_manager(self):
-        """Create a mock generation manager"""
+        """
+Create a mock generation manager"""
         manager = AsyncMock()
         manager.submit_generation_request.return_value = "task_123"
         manager.get_task_result.return_value = Mock(
@@ -130,7 +135,8 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_create_content_blog_post(self, service, blog_request, mock_generation_manager, mock_quality_metrics):
-        """Test creating a blog post"""
+        """
+Test creating a blog post"""
         with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 response = await service.create_content(blog_request)
@@ -353,7 +359,8 @@ class TestContentService:
                 # Both should succeed regardless of caching implementation
     
     def test_content_validation(self, service):
-        """Test content validation methods"""
+        """
+Test content validation methods"""
         # Test valid content
         valid_content = "This is a well-formed piece of content with appropriate length and structure."
         validation_result = service._validate_content(valid_content, ContentType.BLOG_POST)
@@ -383,7 +390,8 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_concurrent_content_creation(self, service, mock_generation_manager, mock_quality_metrics):
-        """Test concurrent content creation"""
+        """
+Test concurrent content creation"""
         with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 # Create multiple requests
@@ -527,12 +535,14 @@ class TestContentServiceIntegration:
     
     @pytest.fixture
     def integrated_service(self):
-        """Create a service with real dependencies for integration testing"""
+        """
+Create a service with real dependencies for integration testing"""
         return ContentService()
     
     @pytest.mark.asyncio
     async def test_end_to_end_blog_creation(self, integrated_service):
-        """Test end-to-end blog post creation"""
+        """
+Test end-to-end blog post creation"""
         request = ContentGenerationRequest(
             content_type=ContentType.BLOG_POST,
             topic="Benefits of Remote Work",

@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class SubstackPlatform(PlatformBase):
-    """Substack platform integration"""
+    """
+Substack platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Substack platform"""
+        """
+Initialize Substack platform"""
         super().__init__(config)
         
         # Substack uses publication-specific API endpoints
@@ -46,7 +49,8 @@ class SubstackPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Substack"""
+        """
+Authenticate with Substack"""
         try:
             # Substack uses email/password or API key authentication
             api_key = self.config.credentials.get('api_key')
@@ -125,7 +129,8 @@ class SubstackPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Substack API"""
+        """
+Make authenticated request to Substack API"""
         try:
             session = await self._get_session()
             

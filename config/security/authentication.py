@@ -19,6 +19,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -27,7 +28,9 @@ from enum import Enum
 
 
 class AuthenticationMethod(Enum):
-    """Supported authentication methods."""
+    """
+Supported authentication methods."""
+
     JWT = "jwt"
     OAUTH2 = "oauth2"
     BASIC = "basic"
@@ -38,6 +41,7 @@ class AuthenticationMethod(Enum):
 
 class SocialProvider(Enum):
     """Supported social authentication providers."""
+
     GOOGLE = "google"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
@@ -287,12 +291,14 @@ authentication_config = AuthenticationConfig()
 
 
 def get_authentication_config() -> AuthenticationConfig:
-    """Get the authentication configuration instance."""
+    """
+Get the authentication configuration instance."""
     return authentication_config
 
 
 def validate_authentication_config(config: AuthenticationConfig) -> bool:
-    """Validate authentication configuration settings."""
+    """
+Validate authentication configuration settings."""
     if not config.jwt.secret_key:
         raise ValueError("JWT secret key is required")
     

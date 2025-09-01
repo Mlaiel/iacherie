@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
 from enum import Enum
@@ -21,7 +22,9 @@ import os
 
 
 class ContentType(str, Enum):
-    """Supported content types for fingerprinting."""
+    """
+Supported content types for fingerprinting."""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -70,7 +73,8 @@ class AudioFingerprintConfig:
 
 @dataclass
 class VideoFingerprintConfig:
-    """Video fingerprinting configuration."""
+    """
+Video fingerprinting configuration."""
     algorithm: FingerprintAlgorithm = FingerprintAlgorithm.PERCEPTUAL_HASH
     frame_sample_rate: int = 1  # frames per second
     hash_size: int = 8
@@ -140,7 +144,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for fingerprinting."""
+    """
+Security configuration for fingerprinting."""
     encryption_algorithm: str = "AES-256-GCM"
     hash_algorithm: str = "SHA-256"
     secure_deletion: bool = True
@@ -169,7 +174,8 @@ class FingerprintEngineConfig:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
+        """
+Load configuration from environment variables."""
         # Audio configuration
         self.audio.sample_rate = int(os.getenv("FINGERPRINT_AUDIO_SAMPLE_RATE", "22050"))
         self.audio.precision_threshold = float(os.getenv("FINGERPRINT_AUDIO_PRECISION", "0.95"))

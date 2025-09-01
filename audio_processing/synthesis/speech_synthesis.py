@@ -4,10 +4,11 @@ This module implements state-of-the-art speech synthesis technologies including
 neural TTS, voice cloning, and emotional speech generation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class VoiceEmotion(Enum):
-    """Voice emotion types for emotional speech synthesis."""
+    """
+Voice emotion types for emotional speech synthesis."""
+
     NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
@@ -47,6 +50,7 @@ class VoiceEmotion(Enum):
 
 class SpeechLanguage(Enum):
     """Supported languages for speech synthesis."""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -109,7 +113,8 @@ class TextPreprocessor:
         self.number_patterns = self._build_number_patterns()
         
     def _get_phonemizer_backend(self) -> str:
-        """Get phonemizer backend for language."""
+        """
+Get phonemizer backend for language."""
         backends = {
             SpeechLanguage.ENGLISH: 'espeak',
             SpeechLanguage.FRENCH: 'espeak',
@@ -125,7 +130,8 @@ class TextPreprocessor:
         return backends.get(self.language, 'espeak')
         
     def _load_abbreviations(self) -> Dict[str, str]:
-        """Load common abbreviations for expansion."""
+        """
+Load common abbreviations for expansion."""
         return {
             "Dr.": "Doctor",
             "Mr.": "Mister",
@@ -153,7 +159,8 @@ class TextPreprocessor:
         }
         
     def preprocess_text(self, text: str) -> str:
-        """Preprocess text for speech synthesis."""
+        """
+Preprocess text for speech synthesis."""
         # Clean text
         text = self._clean_text(text)
         
@@ -169,7 +176,8 @@ class TextPreprocessor:
         return text
         
     def _clean_text(self, text: str) -> str:
-        """Clean input text."""
+        """
+Clean input text."""
         # Remove extra whitespace
         text = re.sub(r'\s+', ' ', text.strip())
         
@@ -185,7 +193,8 @@ class TextPreprocessor:
         return text
         
     def _process_numbers(self, text: str) -> str:
-        """Convert numbers to spoken form."""
+        """
+Convert numbers to spoken form."""
         # Currency
         text = self.number_patterns['currency'].sub(
             lambda m: f"{self._number_to_words(int(float(m.group(1))))} dollars", text
@@ -247,7 +256,8 @@ class TextPreprocessor:
             return word + 'th'
             
     def _year_to_words(self, year: int) -> str:
-        """Convert year to spoken form."""
+        """
+Convert year to spoken form."""
         if 1000 <= year <= 2999:
             if year % 100 == 0:
                 return self._number_to_words(year // 100) + " hundred"
@@ -282,7 +292,8 @@ class TextPreprocessor:
         return text
         
     def text_to_phonemes(self, text: str) -> str:
-        """Convert text to phonemes."""
+        """
+Convert text to phonemes."""
         try:
             phonemes = phonemizer.phonemize(
                 text,
@@ -325,7 +336,8 @@ class Tacotron2Encoder(nn.Module):
         )
         
     def forward(self, text_sequences: torch.Tensor) -> torch.Tensor:
-        """Encode text sequences."""
+        """
+Encode text sequences."""
         # Embed characters
         embedded = self.char_embedding(text_sequences)
         embedded = embedded.transpose(1, 2)  # (B, D, T)
@@ -342,7 +354,8 @@ class Tacotron2Encoder(nn.Module):
 
 
 class Tacotron2Decoder(nn.Module):
-    """Tacotron2 decoder with attention mechanism."""
+    """
+Tacotron2 decoder with attention mechanism."""
     
     def __init__(self, config: SpeechConfig):
         super().__init__()
@@ -398,7 +411,8 @@ class Tacotron2Decoder(nn.Module):
             
     def forward(self, encoder_outputs: torch.Tensor,
                 target_mels: Optional[torch.Tensor] = None) -> Dict[str, torch.Tensor]:
-        """Decode encoder outputs to mel spectrograms."""
+        """
+Decode encoder outputs to mel spectrograms."""
         batch_size = encoder_outputs.size(0)
         max_decoder_steps = self.config.max_decoder_steps
         
@@ -482,7 +496,8 @@ class Tacotron2Decoder(nn.Module):
 
 
 class LocationSensitiveAttention(nn.Module):
-    """Location-sensitive attention mechanism."""
+    """
+Location-sensitive attention mechanism."""
     
     def __init__(self, encoder_dim: int, decoder_dim: int, attention_dim: int):
         super().__init__()
@@ -502,7 +517,8 @@ class LocationSensitiveAttention(nn.Module):
         
     def forward(self, query: torch.Tensor, keys: torch.Tensor,
                 previous_attention: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Compute attention context and weights."""
+        """
+Compute attention context and weights."""
         batch_size, seq_len = keys.size(0), keys.size(1)
         
         # Process query
@@ -534,7 +550,8 @@ class LocationSensitiveAttention(nn.Module):
 
 
 class Postnet(nn.Module):
-    """Postnet for mel-spectrogram refinement."""
+    """
+Postnet for mel-spectrogram refinement."""
     
     def __init__(self, n_mels: int):
         super().__init__()
@@ -554,7 +571,8 @@ class Postnet(nn.Module):
         )
         
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Apply postnet processing."""
+        """
+Apply postnet processing."""
         for conv in self.conv_layers[:-1]:
             x = conv(x)
         x = self.conv_layers[-1](x)
@@ -562,7 +580,8 @@ class Postnet(nn.Module):
 
 
 class TextToSpeechEngine:
-    """Complete text-to-speech synthesis engine."""
+    """
+Complete text-to-speech synthesis engine."""
     
     def __init__(self, config: SpeechConfig):
         self.config = config
@@ -580,7 +599,8 @@ class TextToSpeechEngine:
         self.is_trained = False
         
     def _build_character_mapping(self) -> Dict[str, int]:
-        """Build character to index mapping."""
+        """
+Build character to index mapping."""
         chars = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?;:-\'\"()'
         return {char: idx for idx, char in enumerate(chars)}
         
@@ -595,7 +615,8 @@ class TextToSpeechEngine:
         return sequence
         
     def synthesize_text(self, text: str) -> np.ndarray:
-        """Synthesize speech from text."""
+        """
+Synthesize speech from text."""
         if not self.is_trained:
             logger.warning("Model not trained. Using dummy synthesis.")
             return self._dummy_synthesis(text)
@@ -635,7 +656,8 @@ class TextToSpeechEngine:
         return audio.astype(np.float32)
         
     def _mel_to_audio(self, mel_spectrogram: np.ndarray) -> np.ndarray:
-        """Convert mel spectrogram to audio (simplified)."""
+        """
+Convert mel spectrogram to audio (simplified)."""
         # This would typically use a neural vocoder
         # For now, using Griffin-Lim algorithm
         
@@ -658,7 +680,8 @@ class TextToSpeechEngine:
         return audio.astype(np.float32)
         
     def load_checkpoint(self, checkpoint_path: str) -> None:
-        """Load trained model checkpoint."""
+        """
+Load trained model checkpoint."""
         checkpoint = torch.load(checkpoint_path, map_location=self.device)
         
         self.encoder.load_state_dict(checkpoint['encoder'])
@@ -685,7 +708,8 @@ class VoiceCloningEngine:
         self.voice_profiles: Dict[str, torch.Tensor] = {}
         
     def _build_speaker_encoder(self) -> nn.Module:
-        """Build speaker encoder network."""
+        """
+Build speaker encoder network."""
         return nn.Sequential(
             nn.Conv1d(self.config.n_mels, 256, 3, padding=1),
             nn.ReLU(),
@@ -699,7 +723,8 @@ class VoiceCloningEngine:
         ).to(self.device)
         
     def extract_voice_embedding(self, audio_samples: List[np.ndarray]) -> torch.Tensor:
-        """Extract voice embedding from audio samples."""
+        """
+Extract voice embedding from audio samples."""
         embeddings = []
         
         for audio in audio_samples:
@@ -726,7 +751,8 @@ class VoiceCloningEngine:
         return voice_embedding
         
     def register_voice(self, voice_id: str, audio_samples: List[np.ndarray]) -> None:
-        """Register new voice profile."""
+        """
+Register new voice profile."""
         voice_embedding = self.extract_voice_embedding(audio_samples)
         self.voice_profiles[voice_id] = voice_embedding
         
@@ -752,7 +778,8 @@ class EmotionalSpeechSynthesis:
         self.emotion_models = self._build_emotion_models()
         
     def _build_emotion_models(self) -> Dict[VoiceEmotion, Dict[str, float]]:
-        """Build emotion parameter models."""
+        """
+Build emotion parameter models."""
         return {
             VoiceEmotion.NEUTRAL: {
                 'pitch_shift': 0.0,
@@ -806,7 +833,8 @@ class EmotionalSpeechSynthesis:
         
     def synthesize_emotional_speech(self, text: str, 
                                   emotion: VoiceEmotion) -> np.ndarray:
-        """Synthesize speech with specified emotion."""
+        """
+Synthesize speech with specified emotion."""
         # Generate base speech
         base_audio = self.base_tts.synthesize_text(text)
         
@@ -818,7 +846,8 @@ class EmotionalSpeechSynthesis:
         
     def _apply_emotion_transform(self, audio: np.ndarray, 
                                params: Dict[str, float]) -> np.ndarray:
-        """Apply emotional transformation to audio."""
+        """
+Apply emotional transformation to audio."""
         modified_audio = audio.copy()
         
         # Pitch shifting
@@ -848,7 +877,8 @@ class EmotionalSpeechSynthesis:
 
 
 class MultiLanguageTTS:
-    """Multi-language text-to-speech system."""
+    """
+Multi-language text-to-speech system."""
     
     def __init__(self):
         self.language_engines: Dict[SpeechLanguage, TextToSpeechEngine] = {}
@@ -856,13 +886,15 @@ class MultiLanguageTTS:
         
     def register_language(self, language: SpeechLanguage, 
                          config: SpeechConfig) -> None:
-        """Register TTS engine for language."""
+        """
+Register TTS engine for language."""
         config.language = language
         self.language_engines[language] = TextToSpeechEngine(config)
         
     def synthesize_multilingual(self, text: str, 
                                language: Optional[SpeechLanguage] = None) -> np.ndarray:
-        """Synthesize speech in specified or detected language."""
+        """
+Synthesize speech in specified or detected language."""
         if language is None:
             language = self._detect_language(text)
             
@@ -882,7 +914,8 @@ class MultiLanguageTTS:
 
 
 class RealTimeSpeechGenerator:
-    """Real-time speech generation with streaming capabilities."""
+    """
+Real-time speech generation with streaming capabilities."""
     
     def __init__(self, config: SpeechConfig):
         self.config = config
@@ -893,7 +926,8 @@ class RealTimeSpeechGenerator:
         self.audio_thread = None
         
     def start_streaming(self) -> None:
-        """Start real-time speech streaming."""
+        """
+Start real-time speech streaming."""
         if self.is_streaming:
             return
             
@@ -967,7 +1001,8 @@ class ProsodyController:
         
     def apply_prosody(self, audio: np.ndarray, 
                      prosody_params: Dict[str, float]) -> np.ndarray:
-        """Apply prosodic modifications to speech."""
+        """
+Apply prosodic modifications to speech."""
         modified_audio = audio.copy()
         
         # Rhythm modification
@@ -992,7 +1027,8 @@ class ProsodyController:
         
     def _apply_stress_pattern(self, audio: np.ndarray, 
                             stress_pattern: List[float]) -> np.ndarray:
-        """Apply stress pattern to audio."""
+        """
+Apply stress pattern to audio."""
         # Divide audio into segments and apply stress
         segment_length = len(audio) // len(stress_pattern)
         modified_audio = audio.copy()
@@ -1006,21 +1042,24 @@ class ProsodyController:
         
     def _apply_intonation_curve(self, audio: np.ndarray,
                                intonation_curve: List[float]) -> np.ndarray:
-        """Apply intonation curve to audio."""
+        """
+Apply intonation curve to audio."""
         # This would modify pitch contour
         # Simplified implementation
         return audio
 
 
 class VoiceStyleTransfer:
-    """Transfer speaking style between voices."""
+    """
+Transfer speaking style between voices."""
     
     def __init__(self, config: SpeechConfig):
         self.config = config
         self.style_models = {}
         
     def extract_style(self, audio: np.ndarray, style_name: str) -> Dict[str, Any]:
-        """Extract speaking style from audio."""
+        """
+Extract speaking style from audio."""
         # Extract prosodic features
         pitch = librosa.yin(audio, fmin=80, fmax=400)
         rhythm = self._extract_rhythm_features(audio)
@@ -1038,7 +1077,8 @@ class VoiceStyleTransfer:
         return style
         
     def transfer_style(self, audio: np.ndarray, target_style: str) -> np.ndarray:
-        """Transfer style to target audio."""
+        """
+Transfer style to target audio."""
         if target_style not in self.style_models:
             logger.warning(f"Style '{target_style}' not found")
             return audio
@@ -1082,14 +1122,16 @@ class VoiceStyleTransfer:
 
 
 class SpeechParameterController:
-    """Fine-grained control over speech synthesis parameters."""
+    """
+Fine-grained control over speech synthesis parameters."""
     
     def __init__(self, config: SpeechConfig):
         self.config = config
         
     def synthesize_with_parameters(self, text: str, 
                                  **parameters) -> np.ndarray:
-        """Synthesize speech with custom parameters."""
+        """
+Synthesize speech with custom parameters."""
         # Create modified config
         modified_config = self._modify_config(parameters)
         
@@ -1105,7 +1147,8 @@ class SpeechParameterController:
         return audio
         
     def _modify_config(self, parameters: Dict[str, Any]) -> SpeechConfig:
-        """Modify config based on parameters."""
+        """
+Modify config based on parameters."""
         config = SpeechConfig(**self.config.__dict__)
         
         # Update config fields
@@ -1117,7 +1160,8 @@ class SpeechParameterController:
         
     def _apply_postprocessing(self, audio: np.ndarray, 
                             parameters: Dict[str, Any]) -> np.ndarray:
-        """Apply post-processing effects."""
+        """
+Apply post-processing effects."""
         modified_audio = audio.copy()
         
         # Volume control

@@ -10,8 +10,9 @@ Advanced optimization system for content protection performance:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + ML Engineer + Performance Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import numpy as np
 import pandas as pd
@@ -503,7 +504,8 @@ class OptimizationEngine:
         }
     
     async def _measure_response_performance(self) -> Dict[str, Any]:
-        """Measure response time performance"""
+        """
+Measure response time performance"""
         # Placeholder implementation
         return {
             'avg_response_time': 8.5,
@@ -513,7 +515,8 @@ class OptimizationEngine:
         }
     
     async def _measure_resource_performance(self) -> Dict[str, Any]:
-        """Measure resource usage performance"""
+        """
+Measure resource usage performance"""
         # Placeholder implementation
         return {
             'cpu_usage': 0.65,
@@ -523,7 +526,8 @@ class OptimizationEngine:
         }
     
     async def _measure_accuracy_performance(self, risk_assessment: Dict[str, Any]) -> Dict[str, Any]:
-        """Measure accuracy-related performance"""
+        """
+Measure accuracy-related performance"""
         # Placeholder implementation
         return {
             'detection_accuracy': 0.88,
@@ -533,7 +537,8 @@ class OptimizationEngine:
         }
     
     async def _measure_cost_performance(self) -> Dict[str, Any]:
-        """Measure cost-related performance"""
+        """
+Measure cost-related performance"""
         # Placeholder implementation
         return {
             'cost_per_detection': 0.05,
@@ -542,7 +547,8 @@ class OptimizationEngine:
         }
     
     def _calculate_overall_performance_score(self, performance_metrics: Dict[str, Any]) -> float:
-        """Calculate overall performance score"""
+        """
+Calculate overall performance score"""
         scores = []
         
         # Extract key metrics and normalize
@@ -572,7 +578,8 @@ class OptimizationEngine:
         return sum(scores)
     
     def _identify_performance_bottlenecks(self, performance_metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks"""
+        """
+Identify performance bottlenecks"""
         bottlenecks = []
         
         # Check response time
@@ -612,7 +619,8 @@ class OptimizationEngine:
     
     # Additional helper methods would be implemented here...
     def _calculate_priority_score(self, optimization: Dict[str, Any]) -> float:
-        """Calculate priority score for optimization"""
+        """
+Calculate priority score for optimization"""
         impact = optimization.get('impact_score', 0.5)
         cost = optimization.get('implementation_cost', 0.5)
         complexity_weights = {'low': 1.0, 'medium': 0.7, 'high': 0.4}
@@ -623,7 +631,8 @@ class OptimizationEngine:
         return priority_score
     
     async def _update_optimization_history(self, optimization_result: Dict[str, Any]):
-        """Update optimization history for learning"""
+        """
+Update optimization history for learning"""
         self.optimization_history.append({
             'timestamp': datetime.utcnow(),
             'optimization_result': optimization_result,

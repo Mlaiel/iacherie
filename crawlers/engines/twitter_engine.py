@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
@@ -56,7 +57,8 @@ settings = get_settings()
 
 @dataclass
 class TwitterTweetData:
-    """Twitter tweet data structure"""
+    """
+Twitter tweet data structure"""
     tweet_id: str
     url: str
     text: str
@@ -94,7 +96,8 @@ class TwitterTweetData:
 
 @dataclass
 class TwitterUserData:
-    """Twitter user data structure"""
+    """
+Twitter user data structure"""
     user_id: str
     username: str
     name: str
@@ -122,7 +125,8 @@ class TwitterUserData:
 
 @dataclass
 class TwitterThreadData:
-    """Twitter thread data structure"""
+    """
+Twitter thread data structure"""
     thread_id: str
     author_id: str
     author_username: str
@@ -151,7 +155,8 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, api_credentials: Dict, config: Optional[Dict] = None):
-        """Initialize Twitter crawler engine"""
+        """
+Initialize Twitter crawler engine"""
         super().__init__(config)
         self.api_credentials = api_credentials
         self.client = None
@@ -171,7 +176,8 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_twitter_client(self) -> None:
-        """Setup Twitter API v2 client"""
+        """
+Setup Twitter API v2 client"""
         try:
             self.client = tweepy.Client(
                 bearer_token=self.api_credentials.get('bearer_token'),
@@ -727,7 +733,8 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _calculate_influence_score(self, user) -> float:
-        """Calculate user's influence score"""
+        """
+Calculate user's influence score"""
         try:
             if not user.public_metrics:
                 return 0.0
@@ -750,7 +757,8 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _calculate_bot_probability(self, user) -> float:
-        """Calculate probability that user is a bot"""
+        """
+Calculate probability that user is a bot"""
         try:
             bot_score = 0.0
             
@@ -792,7 +800,8 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _calculate_tweet_similarity(self, original: Dict, candidate: Dict) -> float:
-        """Calculate similarity between original and candidate tweets"""
+        """
+Calculate similarity between original and candidate tweets"""
         try:
             # Text similarity
             original_text = original.get('text', '').lower()

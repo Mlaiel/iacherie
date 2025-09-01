@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests de compliance pour le système d'évaluation de qualité IA.
+"""
+Tests de compliance pour le système d'évaluation de qualité IA.
 Module de test complet pour la validation de conformité plateforme et légale.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 Développement de Systèmes IA Professionnels
 """
+
 import pytest
 import sys
 import os
@@ -101,12 +104,14 @@ class TestComplianceValidator:
     
     @pytest.fixture
     def compliance_validator(self):
-        """Fixture pour le validateur de compliance."""
+        """
+Fixture pour le validateur de compliance."""
         return ComplianceValidator()
     
     @pytest.fixture
     def sample_compliant_content(self):
-        """Génère du contenu conforme pour les tests."""
+        """
+Génère du contenu conforme pour les tests."""
         return {
             'content_type': 'image',
             'platform': 'instagram',
@@ -136,7 +141,8 @@ class TestComplianceValidator:
     
     @pytest.fixture
     def sample_violating_content(self):
-        """Génère du contenu avec violations pour les tests."""
+        """
+Génère du contenu avec violations pour les tests."""
         return {
             'content_type': 'video',
             'platform': 'youtube',
@@ -161,7 +167,8 @@ class TestComplianceValidator:
         }
     
     def test_validate_compliant_content(self, compliance_validator, sample_compliant_content):
-        """Test de validation de contenu conforme."""
+        """
+Test de validation de contenu conforme."""
         result = compliance_validator.validate_content(sample_compliant_content)
         
         # Vérification de la structure de résultat
@@ -178,7 +185,8 @@ class TestComplianceValidator:
         assert isinstance(result['violations'], list)
     
     def test_validate_violating_content(self, compliance_validator, sample_violating_content):
-        """Test de validation de contenu avec violations."""
+        """
+Test de validation de contenu avec violations."""
         result = compliance_validator.validate_content(sample_violating_content)
         
         # Vérification de la détection de violations
@@ -202,7 +210,8 @@ class TestComplianceValidator:
                         assert violation[key] is not None
     
     def test_platform_specific_validation(self, compliance_validator):
-        """Test de validation spécifique aux plateformes."""
+        """
+Test de validation spécifique aux plateformes."""
         platforms = ['instagram', 'youtube', 'tiktok', 'facebook', 'linkedin', 'twitter']
         
         for platform in platforms:
@@ -225,25 +234,30 @@ class TestComplianceValidator:
 
 
 class TestPlatformPolicyChecker:
-    """Tests pour le vérificateur de politiques de plateforme."""
+    """
+Tests pour le vérificateur de politiques de plateforme."""
     
     @pytest.fixture
     def instagram_checker(self):
-        """Fixture pour le vérificateur Instagram."""
+        """
+Fixture pour le vérificateur Instagram."""
         return PlatformPolicyChecker('instagram')
     
     @pytest.fixture
     def youtube_checker(self):
-        """Fixture pour le vérificateur YouTube."""
+        """
+Fixture pour le vérificateur YouTube."""
         return PlatformPolicyChecker('youtube')
     
     @pytest.fixture
     def tiktok_checker(self):
-        """Fixture pour le vérificateur TikTok."""
+        """
+Fixture pour le vérificateur TikTok."""
         return PlatformPolicyChecker('tiktok')
     
     def test_instagram_policy_validation(self, instagram_checker):
-        """Test des politiques Instagram."""
+        """
+Test des politiques Instagram."""
         instagram_content = {
             'content_type': 'image',
             'text_content': {
@@ -272,7 +286,8 @@ class TestPlatformPolicyChecker:
             assert instagram_checker.platform == 'instagram'
     
     def test_youtube_policy_validation(self, youtube_checker):
-        """Test des politiques YouTube."""
+        """
+Test des politiques YouTube."""
         youtube_content = {
             'content_type': 'video',
             'text_content': {
@@ -302,7 +317,8 @@ class TestPlatformPolicyChecker:
             assert youtube_checker.platform == 'youtube'
     
     def test_tiktok_policy_validation(self, tiktok_checker):
-        """Test des politiques TikTok."""
+        """
+Test des politiques TikTok."""
         tiktok_content = {
             'content_type': 'video',
             'text_content': {
@@ -332,15 +348,18 @@ class TestPlatformPolicyChecker:
 
 
 class TestLegalComplianceAnalyzer:
-    """Tests pour l'analyseur de conformité légale."""
+    """
+Tests pour l'analyseur de conformité légale."""
     
     @pytest.fixture
     def legal_analyzer(self):
-        """Fixture pour l'analyseur légal."""
+        """
+Fixture pour l'analyseur légal."""
         return LegalComplianceAnalyzer()
     
     def test_gdpr_compliance_check(self, legal_analyzer):
-        """Test de conformité RGPD."""
+        """
+Test de conformité RGPD."""
         user_data = {
             'personal_data': {
                 'email': 'user@example.com',
@@ -377,7 +396,8 @@ class TestLegalComplianceAnalyzer:
             assert user_data['user_rights']['right_to_deletion'] is True
     
     def test_copyright_compliance_check(self, legal_analyzer):
-        """Test de conformité copyright."""
+        """
+Test de conformité copyright."""
         content_data = {
             'media_files': ['/tmp/test_image.jpg', '/tmp/test_audio.mp3'],
             'copyright_info': {
@@ -394,7 +414,7 @@ class TestLegalComplianceAnalyzer:
             'creator_info': {
                 'creator_name': 'Fahed Mlaiel',
                 'creation_date': '2025-01-31',
-                'copyright_notice': '© 2025 Fahed Mlaiel. All rights reserved.'
+                'copyright_notice': '(c) 2025 Fahed Mlaiel. All rights reserved.'
             }
         }
         
@@ -414,7 +434,8 @@ class TestLegalComplianceAnalyzer:
             assert content_data['creator_info']['creator_name'] is not None
     
     def test_accessibility_compliance_check(self, legal_analyzer):
-        """Test de conformité accessibilité."""
+        """
+Test de conformité accessibilité."""
         accessibility_data = {
             'content_type': 'video',
             'accessibility_features': {
@@ -453,15 +474,18 @@ class TestLegalComplianceAnalyzer:
 
 
 class TestContentModerationEngine:
-    """Tests pour le moteur de modération de contenu."""
+    """
+Tests pour le moteur de modération de contenu."""
     
     @pytest.fixture
     def moderation_engine(self):
-        """Fixture pour le moteur de modération."""
+        """
+Fixture pour le moteur de modération."""
         return ContentModerationEngine()
     
     def test_text_content_moderation(self, moderation_engine):
-        """Test de modération de contenu textuel."""
+        """
+Test de modération de contenu textuel."""
         text_samples = [
             {
                 'text': 'Voici un contenu parfaitement acceptable et positif !',
@@ -497,7 +521,8 @@ class TestContentModerationEngine:
                 assert sample['language'] == 'fr'
     
     def test_image_content_moderation(self, moderation_engine):
-        """Test de modération de contenu visuel."""
+        """
+Test de modération de contenu visuel."""
         # Création d'une image de test
         from PIL import Image
         
@@ -535,7 +560,8 @@ class TestContentModerationEngine:
                 os.unlink(tmp_file.name)
     
     def test_automated_flagging_system(self, moderation_engine):
-        """Test du système de signalement automatique."""
+        """
+Test du système de signalement automatique."""
         flagging_scenarios = [
             {
                 'content': {'type': 'text', 'text': 'Contenu spam répétitif'},
@@ -568,15 +594,18 @@ class TestContentModerationEngine:
 
 
 class TestPrivacyComplianceChecker:
-    """Tests pour le vérificateur de conformité vie privée."""
+    """
+Tests pour le vérificateur de conformité vie privée."""
     
     @pytest.fixture
     def privacy_checker(self):
-        """Fixture pour le vérificateur de vie privée."""
+        """
+Fixture pour le vérificateur de vie privée."""
         return PrivacyComplianceChecker()
     
     def test_personal_data_detection(self, privacy_checker):
-        """Test de détection de données personnelles."""
+        """
+Test de détection de données personnelles."""
         content_with_pii = {
             'text_content': 'Mon email est john.doe@email.com et mon téléphone 06.12.34.56.78',
             'image_metadata': {
@@ -607,7 +636,8 @@ class TestPrivacyComplianceChecker:
             assert content_with_pii['image_metadata']['gps_coordinates'] is not None
     
     def test_data_anonymization_check(self, privacy_checker):
-        """Test de vérification d'anonymisation."""
+        """
+Test de vérification d'anonymisation."""
         data_before_anonymization = {
             'user_name': 'Jean Dupont',
             'email': 'jean.dupont@email.com',
@@ -641,15 +671,18 @@ class TestPrivacyComplianceChecker:
 
 
 class TestComplianceReporting:
-    """Tests pour le système de reporting de compliance."""
+    """
+Tests pour le système de reporting de compliance."""
     
     @pytest.fixture
     def compliance_report(self):
-        """Fixture pour le rapport de compliance."""
+        """
+Fixture pour le rapport de compliance."""
         return ComplianceReport() if 'ComplianceReport' in globals() else None
     
     def test_generate_compliance_report(self, compliance_report):
-        """Test de génération de rapport de compliance."""
+        """
+Test de génération de rapport de compliance."""
         if compliance_report is None:
             pytest.skip("ComplianceReport class not available")
         

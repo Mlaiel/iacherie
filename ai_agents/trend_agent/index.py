@@ -25,6 +25,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Service mesh and deployment automation
 - AI Prompt Engineer & Content Protection: Intelligent service coordination and protection
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ from .market_intelligence import MarketIntelligence, CompetitorAnalyzer
 logger = logging.getLogger(__name__)
 
 class ServiceType(Enum):
-    """Available trend analysis services"""
+    """
+Available trend analysis services"""
+
     TREND_ANALYSIS = "trend_analysis"
     VIRAL_DETECTION = "viral_detection"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
@@ -51,6 +54,7 @@ class ServiceType(Enum):
 
 class ServiceStatus(Enum):
     """Service operational status"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     ERROR = "error"
@@ -69,7 +73,8 @@ class TrendServiceRequest:
 
 @dataclass
 class TrendServiceResponse:
-    """Unified response structure for all trend services"""
+    """
+Unified response structure for all trend services"""
     service_type: ServiceType
     request_id: str
     success: bool

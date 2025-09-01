@@ -5,9 +5,10 @@ Advanced intelligent response generation system for conversational AI.
 Creates personalized, contextual, and engaging responses for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import json
@@ -36,7 +37,9 @@ RESPONSE_GENERATION_TIME = Histogram('response_generation_duration_seconds', 'Re
 
 
 class ResponseType(Enum):
-    """Response types for different contexts"""
+    """
+Response types for different contexts"""
+
     INFORMATIONAL = "informational"
     ADVISORY = "advisory"
     MOTIVATIONAL = "motivational"
@@ -51,6 +54,7 @@ class ResponseType(Enum):
 
 class ResponsePersonality(Enum):
     """Response personality styles"""
+
     PROFESSIONAL_EXPERT = "professional_expert"
     FRIENDLY_MENTOR = "friendly_mentor"
     CREATIVE_INSPIRATION = "creative_inspiration"
@@ -77,7 +81,8 @@ class ResponseContext:
 
 @dataclass
 class GeneratedResponse:
-    """Generated response with metadata"""
+    """
+Generated response with metadata"""
     response_id: str
     text: str
     response_type: ResponseType
@@ -92,7 +97,8 @@ class GeneratedResponse:
 
 @dataclass
 class ResponseMetrics:
-    """Response quality metrics"""
+    """
+Response quality metrics"""
     clarity_score: float
     relevance_score: float
     engagement_score: float
@@ -123,7 +129,8 @@ class ResponseGenerator:
         self._personality_configs = {}
         
     async def initialize(self) -> None:
-        """Initialize the response generator"""
+        """
+Initialize the response generator"""
         try:
             await self.ai_models.load_conversational_models()
             await self.nlp_processor.initialize()
@@ -329,7 +336,8 @@ class ResponseGenerator:
         pass
     
     async def _load_personality_configurations(self) -> None:
-        """Load personality configurations"""
+        """
+Load personality configurations"""
         # Implementation would load personality configs
         pass
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -349,7 +357,9 @@ logger = logging.getLogger(__name__)
 
 
 class ResponseType(Enum):
-    """Types of AI responses"""
+    """
+Types of AI responses"""
+
     INFORMATIONAL = "informational"
     INSTRUCTIONAL = "instructional"
     CREATIVE = "creative"
@@ -362,6 +372,7 @@ class ResponseType(Enum):
 
 class ResponseTone(Enum):
     """Response tone options"""
+
     PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     ENTHUSIASTIC = "enthusiastic"
@@ -373,6 +384,7 @@ class ResponseTone(Enum):
 
 class ResponseComplexity(Enum):
     """Response complexity levels"""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     DETAILED = "detailed"
@@ -410,7 +422,8 @@ class ResponseMetadata:
 
 @dataclass
 class GeneratedResponse:
-    """Complete generated response structure"""
+    """
+Complete generated response structure"""
     text: str
     response_type: ResponseType
     tone: ResponseTone
@@ -438,7 +451,8 @@ class ResponseGenerator:
         self._personalization_rules = {}
         
     async def initialize(self) -> None:
-        """Initialize the response generator"""
+        """
+Initialize the response generator"""
         try:
             await self.ai_models.load_language_models()
             await self.nlp_processor.initialize()

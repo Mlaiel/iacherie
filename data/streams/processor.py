@@ -5,7 +5,7 @@ Professional real-time data processing engine for multi-format content streams,
 AI-powered content analysis, protection monitoring, and revenue optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use, copying, modification, or distribution of this code
@@ -14,6 +14,7 @@ Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable, Tuple
@@ -53,7 +54,9 @@ settings = get_settings()
 
 
 class ProcessingPriority(str, Enum):
-    """Content processing priority levels"""
+    """
+Content processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal" 
     HIGH = "high"
@@ -62,6 +65,7 @@ class ProcessingPriority(str, Enum):
 
 class ProcessingStage(str, Enum):
     """Content processing pipeline stages"""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     FINGERPRINTING = "fingerprinting"
@@ -131,7 +135,8 @@ class ProcessingJob:
 
 
 class ProcessingMetrics(BaseModel):
-    """Real-time processing performance metrics"""
+    """
+Real-time processing performance metrics"""
     jobs_processed: int = Field(default=0, description="Total jobs processed")
     jobs_failed: int = Field(default=0, description="Total jobs failed")
     avg_processing_time: float = Field(default=0.0, description="Average processing time in seconds")
@@ -207,7 +212,8 @@ class RealTimeProcessor:
         }
         
     async def initialize(self) -> None:
-        """Initialize processor with dependencies and AI engines"""
+        """
+Initialize processor with dependencies and AI engines"""
         try:
             self.redis = await get_redis_client()
             
@@ -389,7 +395,8 @@ class RealTimeProcessor:
         return self.metrics
         
     async def _start_workers(self) -> None:
-        """Start worker tasks for processing jobs"""
+        """
+Start worker tasks for processing jobs"""
         if self.workers_running:
             return
             
@@ -419,7 +426,8 @@ class RealTimeProcessor:
         return worker_distribution[priority]
         
     async def _process_queue_worker(self, priority: ProcessingPriority, worker_name: str) -> None:
-        """Worker task for processing jobs from priority queue"""
+        """
+Worker task for processing jobs from priority queue"""
         logger.info(f"Started worker {worker_name} for {priority.value} priority")
         
         while self.workers_running:
@@ -759,7 +767,8 @@ class RealTimeProcessor:
         return file_extension == format.value.lower()
         
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio-specific metadata"""
+        """
+Extract audio-specific metadata"""
         # Placeholder for audio metadata extraction
         return {
             "audio_metadata": {

@@ -22,6 +22,7 @@ Team Specialties:
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
 """
+
 import asyncio
 import logging
 import time
@@ -58,7 +59,9 @@ from ...observability.metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class CollaborationStatus(Enum):
-    """Collaboration request and project status"""
+    """
+Collaboration request and project status"""
+
     PENDING = "pending"
     ACCEPTED = "accepted" 
     REJECTED = "rejected"
@@ -69,6 +72,7 @@ class CollaborationStatus(Enum):
 
 class ProjectPhase(Enum):
     """Project development phases"""
+
     PLANNING = "planning"
     PRE_PRODUCTION = "pre_production"
     PRODUCTION = "production"
@@ -97,7 +101,8 @@ class CollaborationProposal:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone tracking"""
+    """
+Project milestone tracking"""
     milestone_id: str
     project_id: str
     title: str
@@ -521,7 +526,8 @@ class CollaborationAgentManager:
         }
     
     def _generate_timeline(self, collaboration_details: Dict[str, Any]) -> Dict[str, datetime]:
-        """Generate realistic project timeline"""
+        """
+Generate realistic project timeline"""
         base_date = datetime.utcnow()
         duration_weeks = collaboration_details.get('estimated_duration_weeks', 8)
         
@@ -535,7 +541,8 @@ class CollaborationAgentManager:
         }
     
     async def _store_collaboration_proposal(self, proposal: CollaborationProposal):
-        """Store collaboration proposal in database"""
+        """
+Store collaboration proposal in database"""
         async with get_async_session() as session:
             try:
                 collaboration_request = CollaborationRequest(

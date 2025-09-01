@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import numpy as np
@@ -43,7 +44,9 @@ logger = get_logger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Engagement optimization strategies"""
+    """
+Engagement optimization strategies"""
+
     CONTENT_TIMING = "content_timing"
     CONTENT_FORMAT = "content_format"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
@@ -60,6 +63,7 @@ class OptimizationStrategy(Enum):
 
 class EngagementGoal(Enum):
     """Types of engagement goals"""
+
     INCREASE_LIKES = "increase_likes"
     INCREASE_COMMENTS = "increase_comments"
     INCREASE_SHARES = "increase_shares"
@@ -74,6 +78,7 @@ class EngagementGoal(Enum):
 
 class PersonalizationDimension(Enum):
     """Dimensions for engagement personalization"""
+
     CONTENT_TYPE = "content_type"
     POSTING_TIME = "posting_time"
     CONTENT_LENGTH = "content_length"
@@ -105,7 +110,8 @@ class EngagementOptimizationEvent(BaseEvent):
     competitor_analysis: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert engagement optimization event to dictionary"""
+        """
+Convert engagement optimization event to dictionary"""
         return {
             **asdict(self),
             'optimization_goals': [g.value for g in self.optimization_goals],
@@ -116,7 +122,8 @@ class EngagementOptimizationEvent(BaseEvent):
 
 @dataclass
 class OptimizationRecommendation:
-    """Represents an optimization recommendation"""
+    """
+Represents an optimization recommendation"""
     recommendation_id: str
     creator_id: str
     strategy: OptimizationStrategy
@@ -135,7 +142,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class PersonalizationProfile:
-    """Personalization profile for a creator's audience"""
+    """
+Personalization profile for a creator's audience"""
     creator_id: str
     audience_segment_id: str
     preferences: Dict[str, Any]
@@ -147,7 +155,8 @@ class PersonalizationProfile:
 
 
 class EngagementOptimizationEventHandler(BaseEventHandler):
-    """Handles engagement optimization events with ML-driven insights"""
+    """
+Handles engagement optimization events with ML-driven insights"""
     
     def __init__(self):
         super().__init__()
@@ -159,7 +168,8 @@ class EngagementOptimizationEventHandler(BaseEventHandler):
         self.personalization_engine = EngagementPersonalizationEngine()
         
     async def handle(self, event: EngagementOptimizationEvent) -> Dict[str, Any]:
-        """Process engagement optimization event with comprehensive analysis"""
+        """
+Process engagement optimization event with comprehensive analysis"""
         try:
             # Validate event data
             await self._validate_event(event)
@@ -250,7 +260,8 @@ class EngagementOptimizationEventHandler(BaseEventHandler):
             )
     
     async def _calculate_optimization_potential(self, event: EngagementOptimizationEvent) -> Dict[str, Any]:
-        """Calculate the potential for engagement optimization"""
+        """
+Calculate the potential for engagement optimization"""
         current_metrics = event.current_metrics
         
         # Get benchmark data for similar creators
@@ -292,7 +303,8 @@ class EngagementOptimizer:
         self.scaler = StandardScaler()
         
     async def optimize_engagement(self, event: EngagementOptimizationEvent) -> List[OptimizationRecommendation]:
-        """Generate ML-driven engagement optimization recommendations"""
+        """
+Generate ML-driven engagement optimization recommendations"""
         # Get training data
         training_data = await self._get_optimization_training_data(event.creator_id)
         
@@ -317,7 +329,8 @@ class EngagementOptimizer:
         return recommendations[:10]  # Return top 10 recommendations
     
     async def _get_optimization_training_data(self, creator_id: str) -> pd.DataFrame:
-        """Get training data for optimization models"""
+        """
+Get training data for optimization models"""
         async with self.db_manager.get_session() as session:
             result = await session.execute(
                 """
@@ -349,7 +362,8 @@ class EngagementOptimizer:
     async def _generate_strategy_recommendation(self, event: EngagementOptimizationEvent, 
                                               strategy: OptimizationStrategy,
                                               training_data: pd.DataFrame) -> Optional[OptimizationRecommendation]:
-        """Generate recommendation for specific optimization strategy"""
+        """
+Generate recommendation for specific optimization strategy"""
         
         if strategy == OptimizationStrategy.CONTENT_TIMING:
             return await self._optimize_content_timing(event, training_data)
@@ -378,7 +392,8 @@ class EngagementOptimizer:
     
     async def _optimize_content_timing(self, event: EngagementOptimizationEvent, 
                                      training_data: pd.DataFrame) -> OptimizationRecommendation:
-        """Optimize content posting timing"""
+        """
+Optimize content posting timing"""
         # Analyze historical engagement by time
         timing_analysis = await self._analyze_optimal_timing(event.creator_id, event.platform)
         
@@ -459,7 +474,8 @@ class EngagementStrategyEngine:
         self.db_manager = DatabaseManager()
         
     async def create_strategy(self, event: EngagementOptimizationEvent) -> Dict[str, Any]:
-        """Create comprehensive engagement strategy"""
+        """
+Create comprehensive engagement strategy"""
         # Analyze current performance
         performance_analysis = await self._analyze_current_performance(event)
         
@@ -486,14 +502,16 @@ class EngagementStrategyEngine:
 
 
 class EngagementPredictionEngine:
-    """Predicts engagement outcomes for optimization strategies"""
+    """
+Predicts engagement outcomes for optimization strategies"""
     
     def __init__(self):
         self.engagement_predictor = EngagementOptimizer()
         self.db_manager = DatabaseManager()
         
     async def predict_engagement_outcomes(self, event: EngagementOptimizationEvent) -> Dict[str, Any]:
-        """Predict engagement outcomes for different optimization strategies"""
+        """
+Predict engagement outcomes for different optimization strategies"""
         # Get baseline predictions
         baseline_predictions = await self._predict_baseline_engagement(event)
         
@@ -519,7 +537,8 @@ class EngagementPredictionEngine:
 
 
 class EngagementPersonalizationEngine:
-    """Personalizes engagement strategies based on audience segments"""
+    """
+Personalizes engagement strategies based on audience segments"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -527,7 +546,8 @@ class EngagementPersonalizationEngine:
         self.kmeans = KMeans(n_clusters=5, random_state=42)
         
     async def personalize_engagement(self, event: EngagementOptimizationEvent) -> Dict[str, Any]:
-        """Personalize engagement strategies for different audience segments"""
+        """
+Personalize engagement strategies for different audience segments"""
         # Analyze audience segments
         audience_analysis = await self._analyze_audience_segments(event)
         
@@ -553,7 +573,8 @@ class EngagementPersonalizationEngine:
         }
     
     async def _analyze_audience_segments(self, event: EngagementOptimizationEvent) -> Dict[str, Any]:
-        """Analyze different audience segments"""
+        """
+Analyze different audience segments"""
         audience_segments = event.audience_segments
         
         segment_analysis = {}

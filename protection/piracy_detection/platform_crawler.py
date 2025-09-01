@@ -4,7 +4,7 @@
 Advanced AI-powered web crawling for content piracy detection across platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -30,6 +30,7 @@ This module provides:
 - Real-time monitoring and alerting
 - Scalable distributed crawling architecture
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -53,7 +54,9 @@ import time
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Types of platforms for crawling."""
+    """
+Types of platforms for crawling."""
+
     VIDEO_STREAMING = "video_streaming"
     AUDIO_STREAMING = "audio_streaming"
     SOCIAL_MEDIA = "social_media"
@@ -66,6 +69,7 @@ class PlatformType(Enum):
 
 class CrawlStatus(Enum):
     """Status of crawling operations."""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -76,6 +80,7 @@ class CrawlStatus(Enum):
 
 class ContentDetectionMethod(Enum):
     """Methods for detecting content on platforms."""
+
     METADATA_ANALYSIS = "metadata_analysis"
     VISUAL_SIMILARITY = "visual_similarity"
     AUDIO_FINGERPRINT = "audio_fingerprint"
@@ -101,7 +106,8 @@ class PlatformConfig:
 
 @dataclass
 class CrawlResult:
-    """Result of a crawling operation."""
+    """
+Result of a crawling operation."""
     platform: str
     search_query: str
     crawl_timestamp: datetime
@@ -114,7 +120,8 @@ class CrawlResult:
 
 @dataclass
 class DetectedContent:
-    """Content detected during crawling."""
+    """
+Content detected during crawling."""
     detection_id: str
     platform: str
     content_url: str
@@ -132,7 +139,8 @@ class DetectedContent:
     evidence_data: Dict[str, Any]
 
 class UserAgentRotator:
-    """Rotates user agents to avoid detection."""
+    """
+Rotates user agents to avoid detection."""
     
     def __init__(self):
         self.ua = fake_useragent.UserAgent()
@@ -140,7 +148,8 @@ class UserAgentRotator:
         self.agent_history = []
         
     def get_random_agent(self) -> str:
-        """Get a random user agent."""
+        """
+Get a random user agent."""
         agent = self.ua.random
         
         # Ensure we don't repeat agents too quickly
@@ -158,7 +167,8 @@ class UserAgentRotator:
         return agent
 
 class ProxyManager:
-    """Manages proxy rotation for crawling."""
+    """
+Manages proxy rotation for crawling."""
     
     def __init__(self, proxy_list: List[str]):
         self.proxy_list = proxy_list
@@ -166,7 +176,8 @@ class ProxyManager:
         self.failed_proxies = set()
         
     def get_next_proxy(self) -> Optional[str]:
-        """Get the next available proxy."""
+        """
+Get the next available proxy."""
         available_proxies = [p for p in self.proxy_list if p not in self.failed_proxies]
         
         if not available_proxies:
@@ -182,18 +193,21 @@ class ProxyManager:
         return None
     
     def mark_proxy_failed(self, proxy: str):
-        """Mark a proxy as failed."""
+        """
+Mark a proxy as failed."""
         self.failed_proxies.add(proxy)
 
 class RateLimiter:
-    """Manages rate limiting for different platforms."""
+    """
+Manages rate limiting for different platforms."""
     
     def __init__(self):
         self.platform_timers = {}
         self.global_timer = 0
         
     async def wait_if_needed(self, platform: str, delay: float):
-        """Wait if rate limiting is needed for platform."""
+        """
+Wait if rate limiting is needed for platform."""
         now = time.time()
         
         # Check platform-specific rate limit
@@ -217,7 +231,8 @@ class RateLimiter:
         self.global_timer = time.time()
 
 class ContentExtractor:
-    """Extracts content information from web pages."""
+    """
+Extracts content information from web pages."""
     
     def __init__(self):
         self.audio_extensions = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma'}
@@ -228,7 +243,8 @@ class ContentExtractor:
                                  html_content: str, 
                                  url: str,
                                  platform_config: PlatformConfig) -> List[DetectedContent]:
-        """Extract content information from HTML."""
+        """
+Extract content information from HTML."""
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             detected_contents = []
@@ -905,7 +921,8 @@ class IntelligentPlatformCrawler:
         return urls
     
     async def _extract_page_urls(self, html_content: str, base_url: str) -> List[str]:
-        """Extract additional URLs from a page."""
+        """
+Extract additional URLs from a page."""
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             urls = []

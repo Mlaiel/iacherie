@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContextType(Enum):
-    """Types of context information"""
+    """
+Types of context information"""
+
     CONVERSATION = "conversation"
     USER_PROFILE = "user_profile"
     TEMPORAL = "temporal"
@@ -39,6 +42,7 @@ class ContextType(Enum):
 
 class ContextualWeight(Enum):
     """Context weighting categories"""
+
     CRITICAL = 1.0
     HIGH = 0.8
     MEDIUM = 0.6
@@ -48,7 +52,8 @@ class ContextualWeight(Enum):
 
 @dataclass
 class ConversationContext:
-    """Conversation-specific context information"""
+    """
+Conversation-specific context information"""
     
     # Message history
     message_history: List[Dict[str, Any]] = field(default_factory=list)
@@ -142,7 +147,8 @@ class BusinessContext:
 
 @dataclass
 class ContextualEnhancement:
-    """Context-based intent enhancement result"""
+    """
+Context-based intent enhancement result"""
     
     # Enhanced intent
     enhanced_intent: str
@@ -159,7 +165,8 @@ class ContextualEnhancement:
 
 
 class ContextualEnhancer:
-    """Context-based intent enhancement engine"""
+    """
+Context-based intent enhancement engine"""
     
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
@@ -168,7 +175,8 @@ class ContextualEnhancer:
         self.pattern_matchers = self._initialize_pattern_matchers()
     
     def _initialize_context_weights(self) -> Dict[ContextType, float]:
-        """Initialize context type weights"""
+        """
+Initialize context type weights"""
         return {
             ContextType.CONVERSATION: 0.9,
             ContextType.USER_PROFILE: 0.8,
@@ -179,7 +187,8 @@ class ContextualEnhancer:
         }
     
     def _load_enhancement_rules(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Load context-based enhancement rules"""
+        """
+Load context-based enhancement rules"""
         return {
             "music_creation": [
                 {
@@ -569,7 +578,8 @@ class ContextualEnhancer:
             return 0.0
     
     def _refine_intent(self, base_intent: str, enhancement_factors: Dict[str, float]) -> str:
-        """Refine intent based on context analysis"""
+        """
+Refine intent based on context analysis"""
         # For now, return the base intent
         # Future enhancement: use context to suggest more specific intents
         
@@ -771,13 +781,15 @@ class ContextualIntentProcessor:
         return ConversationContext()
     
     def _gather_user_context(self, user_id: str) -> UserProfileContext:
-        """Gather user profile context"""
+        """
+Gather user profile context"""
         # Implementation would fetch from user profile database
         # For now, return default context
         return UserProfileContext()
     
     def _gather_temporal_context(self) -> TemporalContext:
-        """Gather current temporal context"""
+        """
+Gather current temporal context"""
         now = datetime.now()
         return TemporalContext(
             current_time=now,
@@ -788,7 +800,8 @@ class ContextualIntentProcessor:
         )
     
     def _gather_business_context(self, user_id: str) -> Optional[BusinessContext]:
-        """Gather business and monetization context"""
+        """
+Gather business and monetization context"""
         # Implementation would fetch from business data storage
         # For now, return None
         return None
@@ -800,7 +813,8 @@ class ContextualIntentProcessor:
         message_text: str,
         context: ConversationContext
     ):
-        """Update conversation context with current interaction"""
+        """
+Update conversation context with current interaction"""
         context.turn_count += 1
         context.previous_intents.append(intent)
         
@@ -817,14 +831,17 @@ class ContextualIntentProcessor:
         })
     
     def _store_session_context(self, session_id: str, context_data: Dict[str, Any]):
-        """Store session context for future reference"""
+        """
+Store session context for future reference"""
         self.session_contexts[session_id] = context_data
     
     def get_context_summary(self, session_id: str) -> Dict[str, Any]:
-        """Get summary of current session context"""
+        """
+Get summary of current session context"""
         return self.session_contexts.get(session_id, {})
     
     def clear_session_context(self, session_id: str):
-        """Clear stored context for a session"""
+        """
+Clear stored context for a session"""
         if session_id in self.session_contexts:
             del self.session_contexts[session_id]

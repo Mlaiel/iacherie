@@ -12,6 +12,7 @@ Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
@@ -38,7 +39,9 @@ Base = declarative_base()
 
 
 class TaxJurisdiction(Enum):
-    """Juridictions fiscales supportées"""
+    """
+Juridictions fiscales supportées"""
+
     GERMANY = "DE"
     FRANCE = "FR"
     UNITED_STATES = "US"
@@ -75,6 +78,7 @@ class TaxJurisdiction(Enum):
 
 class TaxType(Enum):
     """Types de taxes"""
+
     INCOME_TAX = "income_tax"
     VAT = "vat"
     WITHHOLDING_TAX = "withholding_tax"
@@ -89,6 +93,7 @@ class TaxType(Enum):
 
 class TaxStatus(Enum):
     """Status des calculs fiscaux"""
+
     CALCULATED = "calculated"
     REVIEWED = "reviewed"
     FILED = "filed"

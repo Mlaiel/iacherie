@@ -5,8 +5,9 @@ Advanced Wise (formerly TransferWise) payment processor for international
 multi-currency transactions with real-time exchange rates and low fees.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,25 +24,30 @@ logger = logging.getLogger(__name__)
 
 
 class WiseEnvironment(Enum):
-    """Wise environment types"""
+    """
+Wise environment types"""
+
     SANDBOX = "sandbox"
     LIVE = "live"
 
 
 class WiseAccountType(Enum):
     """Wise account types"""
+
     PERSONAL = "personal"
     BUSINESS = "business"
 
 
 class WiseProfileType(Enum):
     """Wise profile types"""
+
     PERSONAL = "personal"
     BUSINESS = "business"
 
 
 class TransferPurpose(Enum):
     """Transfer purpose codes"""
+
     VERIFICATION_OF_DEPOSIT = "verification.of.deposit"
     FAMILY_SUPPORT = "family.support"
     EDUCATION = "education"
@@ -53,6 +59,7 @@ class TransferPurpose(Enum):
 
 class WiseCurrency:
     """Supported Wise currencies with metadata"""
+
     CURRENCIES = {
         "USD": {"name": "US Dollar", "symbol": "$", "decimals": 2},
         "EUR": {"name": "Euro", "symbol": "€", "decimals": 2},
@@ -103,7 +110,8 @@ class WiseProfile:
 
 @dataclass
 class WiseAccount:
-    """Wise account details"""
+    """
+Wise account details"""
     id: int
     profile_id: int
     account_holder_name: str
@@ -115,7 +123,8 @@ class WiseAccount:
 
 @dataclass
 class WiseExchangeRate:
-    """Real-time exchange rate"""
+    """
+Real-time exchange rate"""
     source: str
     target: str
     rate: Decimal
@@ -159,7 +168,8 @@ class WiseMultiCurrencyProcessor:
         environment: WiseEnvironment = WiseEnvironment.SANDBOX,
         webhook_secret: Optional[str] = None
     ):
-        """Initialize Wise Multi-Currency processor"""
+        """
+Initialize Wise Multi-Currency processor"""
         self.api_token = api_token
         self.environment = environment
         self.webhook_secret = webhook_secret

@@ -20,6 +20,7 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class PoolStrategy(Enum):
-    """Session pool management strategies"""
+    """
+Session pool management strategies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_USED = "least_used"
     PERFORMANCE_BASED = "performance_based"
@@ -56,6 +59,7 @@ class PoolStrategy(Enum):
 
 class SessionPriority(Enum):
     """Session priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -64,7 +68,8 @@ class SessionPriority(Enum):
 
 @dataclass
 class PoolConfiguration:
-    """Session pool configuration"""
+    """
+Session pool configuration"""
     min_size: int = 5
     max_size: int = 20
     initial_size: int = 10
@@ -80,7 +85,8 @@ class PoolConfiguration:
 
 @dataclass
 class SessionMetrics:
-    """Session performance and usage metrics"""
+    """
+Session performance and usage metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -94,7 +100,8 @@ class SessionMetrics:
 
 @dataclass
 class PooledSession:
-    """Enhanced session container for pool management"""
+    """
+Enhanced session container for pool management"""
     session: BrowserSession
     metrics: SessionMetrics = field(default_factory=SessionMetrics)
     priority: SessionPriority = SessionPriority.NORMAL
@@ -357,7 +364,8 @@ class SessionPool:
         return available_pooled_sessions[0]
     
     def _should_scale_up(self) -> bool:
-        """Check if pool should scale up"""
+        """
+Check if pool should scale up"""
         if not self.config.enable_auto_scaling:
             return False
         
@@ -365,7 +373,8 @@ class SessionPool:
         return utilization >= self.config.scale_up_threshold
     
     def _should_scale_down(self) -> bool:
-        """Check if pool should scale down"""
+        """
+Check if pool should scale down"""
         if not self.config.enable_auto_scaling:
             return False
         
@@ -376,7 +385,8 @@ class SessionPool:
         return utilization <= self.config.scale_down_threshold
     
     async def _monitor_pool(self) -> None:
-        """Monitor pool health and performance"""
+        """
+Monitor pool health and performance"""
         while self.monitoring_active:
             try:
                 # Health checks
@@ -501,7 +511,8 @@ class SessionPool:
             )
     
     async def get_pool_status(self) -> Dict[str, Any]:
-        """Get comprehensive pool status information"""
+        """
+Get comprehensive pool status information"""
         with self.pool_lock:
             available_count = len(self.available_sessions)
             in_use_count = len(self.in_use_sessions)
@@ -536,7 +547,8 @@ class SessionPool:
             }
     
     async def shutdown(self) -> None:
-        """Shutdown pool and cleanup all resources"""
+        """
+Shutdown pool and cleanup all resources"""
         logger.info(f"Shutting down SessionPool {self.pool_id}")
         
         # Stop monitoring
@@ -611,7 +623,8 @@ class SessionPoolManager:
     @asynccontextmanager
     async def session_from_pool(self, pool_id: str, 
                                priority: SessionPriority = SessionPriority.NORMAL):
-        """Context manager for pool session usage"""
+        """
+Context manager for pool session usage"""
         pool = self.pools.get(pool_id)
         if not pool:
             raise SessionError(f"Pool {pool_id} not found")
@@ -650,7 +663,8 @@ class SessionPoolManager:
         }
     
     async def shutdown_all(self) -> None:
-        """Shutdown all pools and cleanup resources"""
+        """
+Shutdown all pools and cleanup resources"""
         logger.info("Shutting down all session pools")
         
         pool_ids = list(self.pools.keys())
@@ -674,7 +688,8 @@ def create_stealth_pool_config() -> PoolConfiguration:
 
 
 def create_performance_pool_config() -> PoolConfiguration:
-    """Create configuration for high-performance pool"""
+    """
+Create configuration for high-performance pool"""
     return PoolConfiguration(
         min_size=10,
         max_size=50,

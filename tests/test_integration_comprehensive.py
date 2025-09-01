@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,9 +13,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Tests for Core Platform Features
+"""
+Integration Tests for Core Platform Features
 Ensures comprehensive test coverage for critical business workflows
 """
+
 import pytest
 import sys
 import os
@@ -26,11 +29,13 @@ from pathlib import Path
 
 
 class TestContentWorkflow:
-    """Integration tests for content management workflow"""
+    """
+Integration tests for content management workflow"""
     
     @pytest.mark.asyncio
     async def test_content_upload_to_protection_flow(self):
-        """Test complete flow from upload to protection activation"""
+        """
+Test complete flow from upload to protection activation"""
         # Mock the complete workflow
         content_id = "test-content-123"
         
@@ -88,7 +93,8 @@ class TestPlatformIntegrations:
     
     @pytest.mark.asyncio
     async def test_youtube_integration_flow(self):
-        """Test YouTube platform integration"""
+        """
+Test YouTube platform integration"""
         platform = "youtube"
         
         # Mock YouTube API responses
@@ -127,7 +133,8 @@ class TestSecurityWorkflow:
     """Integration tests for security features"""
     
     def test_authentication_flow(self):
-        """Test complete authentication workflow"""
+        """
+Test complete authentication workflow"""
         # Mock authentication
         credentials = {"email": "test@example.com", "password": "secure123"}
         
@@ -165,7 +172,8 @@ class TestAnalyticsWorkflow:
     
     @pytest.mark.asyncio
     async def test_analytics_generation_flow(self):
-        """Test analytics generation workflow"""
+        """
+Test analytics generation workflow"""
         # Mock analytics generation
         content_id = "content-analytics-123"
         
@@ -204,7 +212,8 @@ class TestAIWorkflow:
     
     @pytest.mark.asyncio
     async def test_ai_content_analysis_workflow(self):
-        """Test AI content analysis workflow"""
+        """
+Test AI content analysis workflow"""
         content_path = "/tmp/test_content.mp4"
         
         # Step 1: Content Preprocessing
@@ -241,7 +250,8 @@ class TestPaymentWorkflow:
     
     @pytest.mark.asyncio
     async def test_payment_processing_workflow(self):
-        """Test complete payment processing workflow"""
+        """
+Test complete payment processing workflow"""
         amount = 150.00
         
         # Step 1: Payment Initiation
@@ -278,7 +288,8 @@ class TestErrorHandlingWorkflow:
     
     @pytest.mark.asyncio
     async def test_network_failure_recovery(self):
-        """Test network failure recovery workflow"""
+        """
+Test network failure recovery workflow"""
         # Mock network failure scenario
         with patch('aiohttp.ClientSession.post') as mock_post:
             mock_post.side_effect = Exception("Network error")
@@ -320,7 +331,8 @@ class TestScalabilityWorkflow:
     
     @pytest.mark.asyncio
     async def test_high_load_processing(self):
-        """Test high load processing workflow"""
+        """
+Test high load processing workflow"""
         # Mock high load scenario
         requests_count = 1000
         

@@ -20,7 +20,9 @@ from .transformer_models import TransformerConfig, MultiModalTransformer
 
 
 class ContentType(Enum):
-    """Types of content for analysis"""
+    """
+Types of content for analysis"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -32,6 +34,7 @@ class ContentType(Enum):
 
 class AnalysisLevel(Enum):
     """Levels of content analysis"""
+
     BASIC = "basic"           # Genre, format, basic metadata
     INTERMEDIATE = "intermediate"  # Emotion, style, quality
     ADVANCED = "advanced"     # Deep semantics, personality, trends

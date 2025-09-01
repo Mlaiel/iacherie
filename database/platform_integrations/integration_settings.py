@@ -22,6 +22,7 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
+
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationSettingType(Enum):
-    """Types de paramètres d'intégration."""
+    """
+Types de paramètres d'intégration."""
+
     STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
@@ -57,6 +60,7 @@ class IntegrationSettingType(Enum):
 
 class IntegrationStatus(Enum):
     """Statuts d'intégration."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
@@ -68,6 +72,7 @@ class IntegrationStatus(Enum):
 
 class CapabilityType(Enum):
     """Types de capacités des plateformes."""
+
     READ_CONTENT = "read_content"
     WRITE_CONTENT = "write_content"
     DELETE_CONTENT = "delete_content"
@@ -214,13 +219,15 @@ class PlatformIntegrationSetting(BaseModel):
         return True
     
     def reset_to_default(self):
-        """Remet la valeur par défaut."""
+        """
+Remet la valeur par défaut."""
         self.previous_value = self.setting_value
         self.setting_value = self.default_value
         self.updated_at = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le setting en dictionnaire."""
+        """
+Convertit le setting en dictionnaire."""
         return {
             "key": self.setting_key,
             "name": self.setting_name,
@@ -282,7 +289,8 @@ class IntegrationProfile(BaseModel):
         return self.profile_settings.get(platform_name, {})
     
     def is_compatible_with_user(self, user_type: str, platforms: List[str]) -> bool:
-        """Vérifie si le profil est compatible avec un utilisateur."""
+        """
+Vérifie si le profil est compatible avec un utilisateur."""
         if self.target_user_type and self.target_user_type != user_type:
             return False
         
@@ -415,7 +423,8 @@ class IntegrationHealthCheck(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès du check."""
+        """
+Calcule le taux de succès du check."""
         total_checks = self.successful_checks + self.failed_checks + self.warning_checks
         if total_checks == 0:
             return 100.0
@@ -548,6 +557,7 @@ logger = logging.getLogger(__name__)
 
 class IntegrationSettingType(str, Enum):
     """Types de paramètres d'intégration."""
+
     STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
@@ -559,6 +569,7 @@ class IntegrationSettingType(str, Enum):
 
 class IntegrationStatus(str, Enum):
     """Statuts d'intégration."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
@@ -629,7 +640,8 @@ class PlatformIntegrationSetting(BaseModel):
             return self.string_value
     
     def set_value(self, value: Union[str, int, float, bool, dict, list]):
-        """Définit la valeur du paramètre selon son type."""
+        """
+Définit la valeur du paramètre selon son type."""
         # Réinitialise toutes les valeurs
         self.string_value = None
         self.integer_value = None
@@ -651,7 +663,8 @@ class PlatformIntegrationSetting(BaseModel):
             self.string_value = str(value)
     
     def validate_value(self) -> bool:
-        """Valide la valeur selon les règles définies."""
+        """
+Valide la valeur selon les règles définies."""
         if not self.validation_rules:
             return True
         
@@ -860,7 +873,8 @@ class IntegrationHealthCheck(BaseModel):
         return int(delta.total_seconds() * 1000)
     
     def get_health_score(self) -> float:
-        """Calcule un score de santé (0-100) basé sur les résultats."""
+        """
+Calcule un score de santé (0-100) basé sur les résultats."""
         base_score = 100.0 if self.success else 0.0
         
         # Pénalités pour les warnings et erreurs

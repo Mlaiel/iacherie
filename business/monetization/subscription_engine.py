@@ -6,7 +6,7 @@ churn prediction, and automated billing. Supports multiple subscription models,
 dynamic pricing, and AI-powered retention strategies.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: User Registration → Subscription Selection → Content Access → Retention Optimization
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class SubscriptionStatus(Enum):
-    """Subscription status types"""
+    """
+Subscription status types"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     TRIAL = "trial"
@@ -51,6 +54,7 @@ class SubscriptionStatus(Enum):
 
 class BillingCycle(Enum):
     """Billing cycle options"""
+
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     SEMI_ANNUAL = "semi_annual"
@@ -62,6 +66,7 @@ class BillingCycle(Enum):
 
 class SubscriptionType(Enum):
     """Subscription type categories"""
+
     CREATOR_BASIC = "creator_basic"
     CREATOR_PRO = "creator_pro"
     CREATOR_ENTERPRISE = "creator_enterprise"
@@ -74,6 +79,7 @@ class SubscriptionType(Enum):
 
 class DiscountType(Enum):
     """Discount and coupon types"""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     FREE_TRIAL = "free_trial"
@@ -102,7 +108,8 @@ class SubscriptionTier:
 
 @dataclass
 class UserSubscription:
-    """User subscription instance"""
+    """
+User subscription instance"""
     subscription_id: str
     user_id: str
     tier: SubscriptionTier
@@ -124,7 +131,8 @@ class UserSubscription:
 
 @dataclass
 class SubscriptionMetrics:
-    """Subscription analytics and metrics"""
+    """
+Subscription analytics and metrics"""
     total_subscribers: int
     active_subscribers: int
     trial_subscribers: int
@@ -140,7 +148,8 @@ class SubscriptionMetrics:
 
 
 class ChurnPredictor:
-    """AI-powered churn prediction system"""
+    """
+AI-powered churn prediction system"""
     
     def __init__(self):
         self.model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -252,7 +261,8 @@ class ChurnPredictor:
         self,
         subscription: UserSubscription
     ) -> List[float]:
-        """Extract features from current subscription"""
+        """
+Extract features from current subscription"""
         now = datetime.utcnow()
         days_since_signup = (now - subscription.created_at).days
         
@@ -271,7 +281,8 @@ class ChurnPredictor:
         return features
     
     def _get_feature_importance(self, features: List[float]) -> Dict[str, float]:
-        """Get feature importance scores"""
+        """
+Get feature importance scores"""
         if not self.is_trained:
             return {}
         
@@ -290,7 +301,8 @@ class ChurnPredictor:
         churn_prob: float,
         feature_importance: Dict[str, float]
     ) -> List[str]:
-        """Generate retention recommendations based on churn probability"""
+        """
+Generate retention recommendations based on churn probability"""
         recommendations = []
         
         if churn_prob > 0.7:
@@ -502,7 +514,8 @@ class SubscriptionAnalytics:
         self,
         subscriptions: List[UserSubscription]
     ) -> Decimal:
-        """Calculate customer lifetime value"""
+        """
+Calculate customer lifetime value"""
         try:
             # Implementation would use cohort analysis
             return Decimal('500')  # Placeholder LTV
@@ -542,7 +555,8 @@ class SubscriptionAnalytics:
         self,
         subscriptions: List[UserSubscription]
     ) -> Dict[str, float]:
-        """Calculate retention rates for different periods"""
+        """
+Calculate retention rates for different periods"""
         try:
             # Implementation would calculate cohort retention rates
             return {
@@ -894,7 +908,8 @@ class SubscriptionManager:
             return period_start + timedelta(days=30)  # Default to monthly
     
     async def _fetch_tier(self, tier_id: str) -> Optional[SubscriptionTier]:
-        """Fetch subscription tier from database"""
+        """
+Fetch subscription tier from database"""
         try:
             # This would query the database
             # Return placeholder tier for now
@@ -1058,17 +1073,20 @@ class SubscriptionEngine:
         period_end: datetime,
         tier_filter: Optional[List[str]] = None
     ) -> SubscriptionMetrics:
-        """Get subscription analytics"""
+        """
+Get subscription analytics"""
         return await self.analytics.generate_subscription_metrics(
             period_start, period_end, tier_filter
         )
     
     async def predict_churn(self, subscription_id: str) -> Dict[str, Any]:
-        """Predict churn for subscription"""
+        """
+Predict churn for subscription"""
         return await self.subscription_manager.predict_churn_risk(subscription_id)
     
     async def process_billing_cycles(self) -> Dict[str, Any]:
-        """Process billing for all due subscriptions"""
+        """
+Process billing for all due subscriptions"""
         try:
             # This would fetch all subscriptions due for billing
             # and process them in batch

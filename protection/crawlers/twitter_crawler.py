@@ -5,12 +5,13 @@ Professional Twitter/X content discovery and monitoring system.
 Integrates Twitter API v2 with advanced content analysis capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import re
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwitterTweetInfo:
-    """Twitter tweet information structure."""
+    """
+Twitter tweet information structure."""
     tweet_id: str
     url: str
     text: str
@@ -52,7 +54,8 @@ class TwitterTweetInfo:
 
 @dataclass
 class TwitterUserInfo:
-    """Twitter user information structure."""
+    """
+Twitter user information structure."""
     user_id: str
     username: str
     name: str
@@ -69,7 +72,8 @@ class TwitterUserInfo:
 
 @dataclass
 class TwitterSpaceInfo:
-    """Twitter Space information structure."""
+    """
+Twitter Space information structure."""
     space_id: str
     state: str
     title: str
@@ -84,7 +88,8 @@ class TwitterSpaceInfo:
     ended_at: Optional[datetime] = None
 
 class TwitterAPIClient:
-    """Twitter API v2 client with comprehensive features."""
+    """
+Twitter API v2 client with comprehensive features."""
     
     def __init__(
         self,
@@ -94,7 +99,8 @@ class TwitterAPIClient:
         access_token: Optional[str] = None,
         access_token_secret: Optional[str] = None
     ):
-        """Initialize Twitter API client."""
+        """
+Initialize Twitter API client."""
         self.bearer_token = bearer_token
         self.api_key = api_key
         self.api_secret = api_secret
@@ -400,7 +406,8 @@ class TwitterCrawler(BasePlatformCrawler):
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Twitter crawler."""
+        """
+Initialize Twitter crawler."""
         super().__init__("twitter", config)
         
         # API configuration
@@ -731,7 +738,8 @@ class TwitterCrawler(BasePlatformCrawler):
         return True
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""
+        """
+Get crawler statistics."""
         return {
             "platform": "twitter",
             "api_available": self.api_client is not None,

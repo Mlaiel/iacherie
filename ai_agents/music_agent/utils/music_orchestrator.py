@@ -15,6 +15,7 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -46,7 +47,9 @@ settings = get_settings()
 
 
 class WorkflowStage(Enum):
-    """Music workflow stages enum"""
+    """
+Music workflow stages enum"""
+
     UPLOAD = "upload"
     ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
@@ -78,7 +81,8 @@ class MusicOrchestrator:
     content protection, and monetization optimization.
     """
     def __init__(self):
-        """Initialize music orchestrator with all required agents"""
+        """
+Initialize music orchestrator with all required agents"""
         self.security_manager = SecurityManager()
         self.spotify_agent = SpotifyAgent()
         self.audio_agent = AudioAgent()
@@ -515,7 +519,8 @@ class MusicOrchestrator:
         return stage_progress.get(stage, 0.0)
 
     def _estimate_completion_time(self, context: MusicWorkflowContext) -> str:
-        """Estimate workflow completion time"""
+        """
+Estimate workflow completion time"""
         current_progress = self._calculate_progress(context.stage)
         if current_progress >= 100:
             return "Completed"
@@ -714,7 +719,8 @@ class MusicOrchestrator:
         pass
 
     async def get_orchestrator_stats(self) -> Dict[str, Any]:
-        """Get orchestrator performance statistics"""
+        """
+Get orchestrator performance statistics"""
         return {
             "active_workflows": len(self._active_workflows),
             "completed_workflows": len(self._workflow_history),

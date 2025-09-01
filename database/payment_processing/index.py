@@ -22,6 +22,7 @@ ENTERPRISE FEATURES:
 - Circuit breaker et load balancing intégrés
 - Conformité et sécurité enforced
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
@@ -104,7 +105,8 @@ class PaymentProcessingRequest:
 
 @dataclass
 class PaymentProcessingResponse:
-    """Unified payment processing response"""
+    """
+Unified payment processing response"""
     success: bool
     operation: str
     transaction_id: Optional[str] = None

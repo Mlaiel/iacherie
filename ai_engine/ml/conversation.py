@@ -17,6 +17,7 @@ Features:
 - Multi-modal conversation support
 - Adaptive response generation
 """
+
 import logging
 import numpy as np
 import torch
@@ -46,6 +47,7 @@ except ImportError:
 
 class ConversationMode(Enum):
     """Conversation modes"""
+
     CASUAL = "casual"
     PROFESSIONAL = "professional"
     CREATIVE = "creative"
@@ -57,6 +59,7 @@ class ConversationMode(Enum):
 
 class PersonalityTrait(Enum):
     """Personality traits for conversation"""
+
     FRIENDLY = "friendly"
     PROFESSIONAL = "professional"
     HUMOROUS = "humorous"
@@ -69,6 +72,7 @@ class PersonalityTrait(Enum):
 
 class EmotionalState(Enum):
     """Emotional states"""
+
     NEUTRAL = "neutral"
     HAPPY = "happy"
     EXCITED = "excited"
@@ -81,6 +85,7 @@ class EmotionalState(Enum):
 
 class ContextType(Enum):
     """Types of conversational context"""
+
     TOPIC = "topic"
     ENTITY = "entity"
     INTENT = "intent"
@@ -103,7 +108,8 @@ class ConversationTurn:
 
 @dataclass
 class ConversationContext:
-    """Conversation context information"""
+    """
+Conversation context information"""
     context_type: ContextType
     key: str
     value: Any
@@ -114,7 +120,8 @@ class ConversationContext:
 
 @dataclass
 class DialogueResponse:
-    """Response from dialogue system"""
+    """
+Response from dialogue system"""
     response_text: str
     confidence: float
     emotion: EmotionalState
@@ -125,7 +132,8 @@ class DialogueResponse:
 
 @dataclass
 class ConversationProfile:
-    """User conversation profile"""
+    """
+User conversation profile"""
     user_id: str
     personality_preferences: List[PersonalityTrait]
     conversation_history: List[ConversationTurn]
@@ -135,7 +143,8 @@ class ConversationProfile:
 
 
 class BaseConversationalModel(ABC):
-    """Base class for conversational models"""
+    """
+Base class for conversational models"""
     
     def __init__(self, model_name: str = "base_conversation"):
         self.model_name = model_name
@@ -153,12 +162,14 @@ class BaseConversationalModel(ABC):
     @abstractmethod
     def generate_response(self, user_input: str, conversation_history: List[ConversationTurn],
                          context: Dict[str, Any]) -> DialogueResponse:
-        """Generate response to user input"""
+        """
+Generate response to user input"""
         pass
 
 
 class ConversationalModel(BaseConversationalModel):
-    """Advanced conversational AI model"""
+    """
+Advanced conversational AI model"""
     
     def __init__(self, model_name: str = "conversational_v1"):
         super().__init__(f"conv_{model_name}")
@@ -249,7 +260,8 @@ class ConversationalModel(BaseConversationalModel):
     
     def generate_response(self, user_input: str, conversation_history: List[ConversationTurn],
                          context: Dict[str, Any]) -> DialogueResponse:
-        """Generate conversational response"""
+        """
+Generate conversational response"""
         start_time = time.time()
         
         try:
@@ -339,7 +351,8 @@ class ConversationalModel(BaseConversationalModel):
         return self.model.generate(user_input, context)
     
     def _detect_emotion(self, text: str) -> EmotionalState:
-        """Simple emotion detection from text"""
+        """
+Simple emotion detection from text"""
         text_lower = text.lower()
         
         # Positive emotions
@@ -355,7 +368,8 @@ class ConversationalModel(BaseConversationalModel):
             return EmotionalState.NEUTRAL
     
     def _extract_intent(self, text: str) -> str:
-        """Extract user intent from text"""
+        """
+Extract user intent from text"""
         text_lower = text.lower()
         
         # Common intents
@@ -375,7 +389,8 @@ class ConversationalModel(BaseConversationalModel):
             return 'general_conversation'
     
     def _apply_personality(self, response: str, user_emotion: EmotionalState) -> str:
-        """Apply personality traits to response"""
+        """
+Apply personality traits to response"""
         # Add personality-based modifications
         if PersonalityTrait.FRIENDLY in self.personality_traits:
             if not any(friendly_word in response.lower() for friendly_word in ['please', 'thank', 'happy']):
@@ -423,7 +438,8 @@ class ConversationalModel(BaseConversationalModel):
         return entities[:3]  # Limit to 3 entities
     
     def _suggest_actions(self, user_input: str, intent: str) -> List[str]:
-        """Suggest follow-up actions"""
+        """
+Suggest follow-up actions"""
         suggestions = []
         
         if intent == 'ask_information':
@@ -436,7 +452,8 @@ class ConversationalModel(BaseConversationalModel):
         return suggestions
     
     def _determine_response_emotion(self, user_emotion: EmotionalState) -> EmotionalState:
-        """Determine appropriate response emotion"""
+        """
+Determine appropriate response emotion"""
         # Mirror or complement user emotion
         emotion_responses = {
             EmotionalState.HAPPY: EmotionalState.HAPPY,
@@ -449,11 +466,13 @@ class ConversationalModel(BaseConversationalModel):
         return emotion_responses.get(user_emotion, EmotionalState.NEUTRAL)
     
     def set_personality(self, traits: List[PersonalityTrait]):
-        """Set personality traits for the conversation"""
+        """
+Set personality traits for the conversation"""
         self.personality_traits = traits
     
     def set_conversation_mode(self, mode: ConversationMode):
-        """Set conversation mode"""
+        """
+Set conversation mode"""
         mode_personalities = {
             ConversationMode.PROFESSIONAL: [PersonalityTrait.PROFESSIONAL, PersonalityTrait.CONFIDENT],
             ConversationMode.CASUAL: [PersonalityTrait.FRIENDLY, PersonalityTrait.HUMOROUS],
@@ -467,7 +486,8 @@ class ConversationalModel(BaseConversationalModel):
 
 
 class DialogueManager:
-    """Manages multi-turn dialogues and conversation flow"""
+    """
+Manages multi-turn dialogues and conversation flow"""
     
     def __init__(self, model: ConversationalModel):
         self.model = model
@@ -475,7 +495,8 @@ class DialogueManager:
         self.max_conversation_length = 50
         
     def start_conversation(self, user_id: str, initial_message: str = None) -> str:
-        """Start a new conversation"""
+        """
+Start a new conversation"""
         conversation_id = f"{user_id}_{int(time.time())}"
         
         self.active_conversations[conversation_id] = ConversationProfile(
@@ -537,7 +558,8 @@ class DialogueManager:
         return context
     
     def _get_recent_topics(self, history: List[ConversationTurn]) -> List[str]:
-        """Extract recent topics from conversation history"""
+        """
+Extract recent topics from conversation history"""
         topics = []
         for turn in history[-5:]:  # Last 5 turns
             # Simple topic extraction (in practice would use more sophisticated methods)
@@ -551,7 +573,8 @@ class DialogueManager:
     
     def _update_context_memory(self, profile: ConversationProfile, 
                              context_updates: List[ConversationContext]):
-        """Update context memory with new information"""
+        """
+Update context memory with new information"""
         for update in context_updates:
             key = f"{update.context_type.value}_{update.key}"
             profile.context_memory[key] = update
@@ -581,7 +604,8 @@ class DialogueManager:
         }
     
     def _analyze_emotions(self, history: List[ConversationTurn]) -> Dict[str, float]:
-        """Analyze emotion distribution in conversation"""
+        """
+Analyze emotion distribution in conversation"""
         emotions = [turn.emotion.value for turn in history]
         from collections import Counter
         emotion_counts = Counter(emotions)
@@ -590,7 +614,8 @@ class DialogueManager:
         return {emotion: count/total for emotion, count in emotion_counts.items()}
     
     def end_conversation(self, conversation_id: str) -> bool:
-        """End a conversation"""
+        """
+End a conversation"""
         if conversation_id in self.active_conversations:
             del self.active_conversations[conversation_id]
             return True
@@ -598,14 +623,16 @@ class DialogueManager:
 
 
 class ContextTracker:
-    """Tracks and manages conversation context"""
+    """
+Tracks and manages conversation context"""
     
     def __init__(self, max_context_items: int = 100):
         self.max_context_items = max_context_items
         self.context_store = {}
         
     def add_context(self, conversation_id: str, context: ConversationContext):
-        """Add context item to tracker"""
+        """
+Add context item to tracker"""
         if conversation_id not in self.context_store:
             self.context_store[conversation_id] = deque(maxlen=self.max_context_items)
         
@@ -613,7 +640,8 @@ class ContextTracker:
     
     def get_relevant_context(self, conversation_id: str, 
                            query: str, max_items: int = 5) -> List[ConversationContext]:
-        """Get relevant context items for a query"""
+        """
+Get relevant context items for a query"""
         if conversation_id not in self.context_store:
             return []
         
@@ -637,7 +665,8 @@ class ContextTracker:
         return [context for context, score in scored_contexts[:max_items]]
     
     def cleanup_old_context(self, max_age_seconds: int = 3600):
-        """Remove old context items"""
+        """
+Remove old context items"""
         current_time = time.time()
         
         for conversation_id in self.context_store:

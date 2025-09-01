@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests for Content Validation System
+"""
+Tests for Content Validation System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -33,7 +36,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Use mock classes directly since data_management module has syntax errors
 class ContentValidator:
-    """Mock ContentValidator for testing"""
+    """
+Mock ContentValidator for testing"""
     def __init__(self):
         pass
     
@@ -41,37 +45,44 @@ class ContentValidator:
         return 'unknown'
 
 class AsyncContentValidator:
-    """Mock AsyncContentValidator for testing"""
+    """
+Mock AsyncContentValidator for testing"""
     def __init__(self):
         self.sync_validator = ContentValidator()
 
 
 class TestContentValidator:
-    """Test cases for ContentValidator"""
+    """
+Test cases for ContentValidator"""
     
     @pytest.fixture
     def validator(self):
-        """Create a ContentValidator instance for testing"""
+        """
+Create a ContentValidator instance for testing"""
         return ContentValidator()
     
     @pytest.fixture
     def async_validator(self):
-        """Create an AsyncContentValidator instance for testing"""
+        """
+Create an AsyncContentValidator instance for testing"""
         return AsyncContentValidator()
     
     def test_validator_initialization(self, validator):
-        """Test that validator initializes correctly"""
+        """
+Test that validator initializes correctly"""
         assert validator is not None
         assert hasattr(validator, '_detect_content_type')
     
     def test_async_validator_initialization(self, async_validator):
-        """Test that async validator initializes correctly"""
+        """
+Test that async validator initializes correctly"""
         assert async_validator is not None
         assert hasattr(async_validator, 'sync_validator')
         assert async_validator.sync_validator is not None
     
     def test_detect_content_type_with_extension_fallback(self, validator):
-        """Test content type detection with file extension fallback"""
+        """
+Test content type detection with file extension fallback"""
         # Test audio extensions
         audio_extensions = ['.mp3', '.wav', '.flac', '.aac', '.ogg']
         for ext in audio_extensions:
@@ -219,17 +230,20 @@ class TestAsyncContentValidator:
     
     @pytest.fixture
     def async_validator(self):
-        """Create an AsyncContentValidator instance for testing"""
+        """
+Create an AsyncContentValidator instance for testing"""
         return AsyncContentValidator()
     
     def test_async_validator_has_sync_validator(self, async_validator):
-        """Test that async validator contains sync validator"""
+        """
+Test that async validator contains sync validator"""
         assert hasattr(async_validator, 'sync_validator')
         assert async_validator.sync_validator is not None
         assert isinstance(async_validator.sync_validator, ContentValidator)
     
     def test_async_validator_delegates_to_sync(self, async_validator):
-        """Test that async validator can delegate to sync validator"""
+        """
+Test that async validator can delegate to sync validator"""
         # Test that we can access sync validator methods
         assert hasattr(async_validator.sync_validator, '_detect_content_type')
         

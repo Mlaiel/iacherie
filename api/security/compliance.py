@@ -28,6 +28,7 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
+
 import json
 import secrets
 from datetime import datetime, timedelta, timezone
@@ -46,7 +47,9 @@ settings = get_settings()
 
 
 class ComplianceStandard(Enum):
-    """Supported compliance standards"""
+    """
+Supported compliance standards"""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
@@ -61,6 +64,7 @@ class ComplianceStandard(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIAL = "partial_compliance"
@@ -71,6 +75,7 @@ class ComplianceStatus(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     NEGLIGIBLE = "negligible"
     LOW = "low"
     MODERATE = "moderate"
@@ -80,6 +85,7 @@ class RiskLevel(Enum):
 
 class DataCategory(Enum):
     """Data categories for compliance"""
+
     PERSONAL_DATA = "personal_data"
     SENSITIVE_DATA = "sensitive_data"
     FINANCIAL_DATA = "financial_data"
@@ -223,7 +229,8 @@ class ComplianceManager:
         self._setup_compliance_framework()
     
     def _setup_compliance_framework(self):
-        """Initialize compliance framework with standard rules"""
+        """
+Initialize compliance framework with standard rules"""
         # GDPR Rules
         self._setup_gdpr_rules()
         
@@ -237,7 +244,8 @@ class ComplianceManager:
         self._setup_iso27001_rules()
     
     def _setup_gdpr_rules(self):
-        """Setup GDPR compliance rules"""
+        """
+Setup GDPR compliance rules"""
         gdpr_rules = [
             {
                 "rule_name": "Right to Information",
@@ -949,7 +957,8 @@ async def register_processing_activity(
     purposes: List[str],
     legal_basis: List[str]
 ) -> DataProcessingActivity:
-    """Register data processing activity"""
+    """
+Register data processing activity"""
     return await compliance_manager.register_data_processing_activity(
         name, description, data_categories, purposes, legal_basis
     )
@@ -958,5 +967,6 @@ async def generate_regulatory_report(
     standards: Optional[List[ComplianceStandard]] = None,
     period_days: int = 30
 ) -> Dict[str, Any]:
-    """Generate compliance report"""
+    """
+Generate compliance report"""
     return await compliance_manager.generate_compliance_report(standards, period_days)

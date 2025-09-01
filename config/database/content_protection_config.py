@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,7 +35,9 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""
+    """
+Supported content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"  
     IMAGE = "image"
@@ -47,6 +50,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -55,6 +59,7 @@ class ProtectionLevel(Enum):
 
 class ViolationStatus(Enum):
     """Content violation status tracking"""
+
     DETECTED = "detected"
     ANALYZING = "analyzing"
     CONFIRMED = "confirmed"
@@ -67,6 +72,7 @@ class ViolationStatus(Enum):
 
 class DetectionMethod(Enum):
     """Content detection methodology"""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_HASH = "image_hash"
@@ -153,7 +159,8 @@ class ContentProtectionDatabase(Base):
 
 
 class ProtectionViolation(Base):
-    """Protection violations table"""
+    """
+Protection violations table"""
     __tablename__ = 'protection_violations'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -175,7 +182,8 @@ class ProtectionViolation(Base):
 
 
 class DMCARequest(Base):
-    """DMCA takedown requests table"""
+    """
+DMCA takedown requests table"""
     __tablename__ = 'dmca_requests'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -224,7 +232,8 @@ class ContentProtectionConfig:
     automated_responses: bool = False
     
     def __post_init__(self):
-        """Initialize default fingerprint configurations"""
+        """
+Initialize default fingerprint configurations"""
         if not self.fingerprint_configs:
             self.fingerprint_configs = {
                 ContentType.AUDIO: FingerprintConfiguration(
@@ -255,7 +264,8 @@ class ContentProtectionConfig:
 
 
 class ContentProtectionManager:
-    """Professional content protection database manager"""
+    """
+Professional content protection database manager"""
     
     def __init__(self, config: ContentProtectionConfig):
         self.config = config
@@ -265,7 +275,8 @@ class ContentProtectionManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize content protection database connections"""
+        """
+Initialize content protection database connections"""
         try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
@@ -389,7 +400,8 @@ class ContentProtectionManager:
             await self.send_dmca_request(violation_id)
     
     async def send_dmca_request(self, violation_id: int) -> int:
-        """Send DMCA takedown request"""
+        """
+Send DMCA takedown request"""
         try:
             with self._session_factory() as session:
                 violation = session.query(ProtectionViolation).filter_by(id=violation_id).first()
@@ -519,7 +531,8 @@ def create_content_protection_config() -> ContentProtectionConfig:
 
 
 def create_content_protection_manager(config: Optional[ContentProtectionConfig] = None) -> ContentProtectionManager:
-    """Create content protection manager with configuration"""
+    """
+Create content protection manager with configuration"""
     if config is None:
         config = create_content_protection_config()
     return ContentProtectionManager(config)

@@ -29,6 +29,7 @@ Team Specialties & Expertise:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, time
@@ -56,7 +57,9 @@ from ...integrations.analytics_integration import AnalyticsIntegration
 
 
 class SubscriptionType(Enum):
-    """Comprehensive subscription types for IA Influencer platform"""
+    """
+Comprehensive subscription types for IA Influencer platform"""
+
     CONTENT_NOTIFICATIONS = "content_notifications"
     PROTECTION_ALERTS = "protection_alerts"
     COLLABORATION_OPPORTUNITIES = "collaboration_opportunities"
@@ -71,6 +74,7 @@ class SubscriptionType(Enum):
 
 class FrequencyType(Enum):
     """Notification frequency options"""
+
     IMMEDIATE = "immediate"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -81,6 +85,7 @@ class FrequencyType(Enum):
 
 class PersonalizationLevel(Enum):
     """AI personalization levels"""
+
     MINIMAL = "minimal"
     BASIC = "basic"
     ADVANCED = "advanced"
@@ -102,7 +107,8 @@ class ChannelPreference:
 
 @dataclass
 class SubscriptionSettings:
-    """Comprehensive subscription configuration"""
+    """
+Comprehensive subscription configuration"""
     subscription_type: SubscriptionType
     enabled: bool
     frequency: FrequencyType
@@ -114,7 +120,8 @@ class SubscriptionSettings:
 
 @dataclass
 class UserNotificationProfile:
-    """Complete user notification profile with intelligent defaults"""
+    """
+Complete user notification profile with intelligent defaults"""
     user_id: str
     subscription_settings: Dict[SubscriptionType, SubscriptionSettings]
     global_preferences: Dict[str, Any] = field(default_factory=dict)
@@ -475,13 +482,15 @@ class NotificationSubscriptionManager:
             return await self._create_default_profile(user_id)
     
     async def _save_user_profile_to_db(self, profile: UserNotificationProfile):
-        """Save user profile to database"""
+        """
+Save user profile to database"""
         async with get_async_session() as session:
             # Implementation would save to database
             pass
     
     async def _create_default_profile(self, user_id: str) -> UserNotificationProfile:
-        """Create default notification profile for new user"""
+        """
+Create default notification profile for new user"""
         
         # Default channel preferences
         default_channels = [
@@ -557,7 +566,8 @@ class NotificationSubscriptionManager:
     def _map_event_to_subscription(
         self, event_type: NotificationEventType
     ) -> SubscriptionType:
-        """Map notification event type to subscription type"""
+        """
+Map notification event type to subscription type"""
         mapping = {
             NotificationEventType.CONTENT_UPLOADED: SubscriptionType.CONTENT_NOTIFICATIONS,
             NotificationEventType.CONTENT_PROCESSED: SubscriptionType.CONTENT_NOTIFICATIONS,
@@ -580,7 +590,8 @@ class NotificationSubscriptionManager:
     async def _validate_subscription_settings(
         self, settings: SubscriptionSettings
     ) -> bool:
-        """Validate subscription settings"""
+        """
+Validate subscription settings"""
         if not settings.channel_preferences:
             return False
         
@@ -599,7 +610,8 @@ class NotificationSubscriptionManager:
         preferences: List[ChannelPreference],
         ai_insights: Dict[str, Any]
     ) -> List[ChannelPreference]:
-        """Optimize channel preferences based on AI insights"""
+        """
+Optimize channel preferences based on AI insights"""
         optimized_prefs = preferences.copy()
         
         # Adjust priorities based on engagement rates
@@ -618,7 +630,8 @@ class NotificationSubscriptionManager:
     async def _is_in_quiet_hours(
         self, user_id: str, channel_pref: ChannelPreference
     ) -> bool:
-        """Check if current time is within user's quiet hours"""
+        """
+Check if current time is within user's quiet hours"""
         if not channel_pref.quiet_hours_enabled:
             return False
         
@@ -642,7 +655,8 @@ class NotificationSubscriptionManager:
         subscription_type: SubscriptionType,
         settings: SubscriptionSettings
     ) -> bool:
-        """Check if user has exceeded frequency limits"""
+        """
+Check if user has exceeded frequency limits"""
         # Implementation would check database for recent notifications
         # For now, always return True (no limits exceeded)
         return True
@@ -653,13 +667,15 @@ class NotificationSubscriptionManager:
         event_type: NotificationEventType,
         settings: SubscriptionSettings
     ) -> bool:
-        """Check if notification passes content filters"""
+        """
+Check if notification passes content filters"""
         # Implementation would apply content filters
         # For now, always return True (no filters)
         return True
     
     async def _periodic_cleanup(self):
-        """Periodic cleanup of cached data"""
+        """
+Periodic cleanup of cached data"""
         while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
@@ -738,7 +754,8 @@ class PersonalizationEngine:
 
 
 class PreferenceOptimizer:
-    """Advanced preference optimization with ML-driven insights"""
+    """
+Advanced preference optimization with ML-driven insights"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)

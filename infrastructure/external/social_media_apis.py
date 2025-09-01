@@ -8,6 +8,7 @@ API professionnel avec authentification, validation, et monitoring.
 Routes consolidées: 0
 ==================================================================
 """
+
 from fastapi import FastAPI, HTTPException, Depends, status, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 security = HTTPBearer()
 
 class APIResponse(BaseModel):
-    """Réponse API standardisée"""
+    """
+Réponse API standardisée"""
     success: bool = True
     data: Optional[Any] = None
     message: str = ""
@@ -44,7 +46,8 @@ class APIError(BaseModel):
 # =============== MIDDLEWARE ===============
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Middleware d'authentification"""
+    """
+Middleware d'authentification"""
     try:
         # JWT validation for social media API integrations
         token = credentials.credentials
@@ -161,7 +164,8 @@ class SocialMediaApisAPI:
         self.setup_middleware()
     
     def setup_middleware(self):
-        """Configuration des middlewares"""
+        """
+Configuration des middlewares"""
         self.app.add_middleware(
             CORSMiddleware,
             allow_origins=["https://app.ainflue.com", "https://dashboard.ainflue.com", "https://social.ainflue.com"],  # Social media app origins
@@ -359,23 +363,27 @@ class WebSocketManager:
         self.active_connections: List = []
     
     async def connect(self, websocket):
-        """Connexion WebSocket"""
+        """
+Connexion WebSocket"""
         await websocket.accept()
         self.active_connections.append(websocket)
     
     def disconnect(self, websocket):
-        """Déconnexion WebSocket"""
+        """
+Déconnexion WebSocket"""
         self.active_connections.remove(websocket)
     
     async def broadcast(self, message: str):
-        """Diffusion message à tous les clients"""
+        """
+Diffusion message à tous les clients"""
         for connection in self.active_connections:
             await connection.send_text(message)
 
 # =============== EXPORT MODULE ===============
 
 def create_socialmediaapis_api(app: FastAPI) -> SocialMediaApisAPI:
-    """Factory pour créer l'API Social Media Apis"""
+    """
+Factory pour créer l'API Social Media Apis"""
     return SocialMediaApisAPI(app)
 
 __all__ = [

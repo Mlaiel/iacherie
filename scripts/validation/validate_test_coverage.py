@@ -9,6 +9,7 @@ Provides comprehensive reporting on test coverage across critical modules.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Validate test coverage meets production quality standards
 """
+
 import subprocess
 import sys
 import os
@@ -17,7 +18,8 @@ import json
 
 
 class CoverageValidator:
-    """Validates test coverage across the platform."""
+    """
+Validates test coverage across the platform."""
     validator = CoverageValidator()
     
     print("🧪 Ainflue Platform - Test Coverage Validation")

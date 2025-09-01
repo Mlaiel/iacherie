@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive engagement analytics for social media content,
 including engagement rate calculation, audience analysis, and performance insights.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -17,7 +18,9 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class EngagementType(Enum):
-    """Types of engagement metrics"""
+    """
+Types of engagement metrics"""
+
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
@@ -31,6 +34,7 @@ class EngagementType(Enum):
 
 class Platform(Enum):
     """Social media platforms"""
+
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
@@ -42,6 +46,7 @@ class Platform(Enum):
 
 class TimeFrame(Enum):
     """Time frames for analytics"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -64,7 +69,8 @@ class EngagementMetrics:
 
 @dataclass
 class ContentPerformance:
-    """Performance data for a piece of content"""
+    """
+Performance data for a piece of content"""
     content_id: str
     platform: Platform
     published_at: datetime
@@ -80,7 +86,8 @@ class ContentPerformance:
 
 @dataclass
 class EngagementTrend:
-    """Engagement trend over time"""
+    """
+Engagement trend over time"""
     platform: Platform
     metric_type: EngagementType
     time_frame: TimeFrame
@@ -207,7 +214,8 @@ class EngagementAnalyzer:
         return min(virality_score, 100.0)
     
     def _calculate_quality_score(self, metrics: EngagementMetrics, engagement_rate: float, platform: Platform) -> float:
-        """Calculate content quality score"""
+        """
+Calculate content quality score"""
         benchmarks = self.engagement_benchmarks.get(platform.value, {})
         engagement_benchmark = benchmarks.get("engagement_rate", {})
         
@@ -253,7 +261,8 @@ class EngagementAnalyzer:
         return published_at + timedelta(hours=hours_to_peak)
     
     def calculate_engagement_rate(self, metrics: EngagementMetrics, reach: int = 0, followers: int = 0) -> float:
-        """Calculate engagement rate with flexible denominators"""
+        """
+Calculate engagement rate with flexible denominators"""
         total_engagement = (metrics.likes + metrics.comments + 
                           metrics.shares + metrics.saves + metrics.clicks)
         
@@ -267,7 +276,8 @@ class EngagementAnalyzer:
     
     def analyze_engagement_trend(self, platform: Platform, metric_type: EngagementType, 
                                time_frame: TimeFrame, days_back: int = 30) -> EngagementTrend:
-        """Analyze engagement trends over time"""
+        """
+Analyze engagement trends over time"""
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days_back)
@@ -356,7 +366,8 @@ class EngagementAnalyzer:
         return data_points
     
     def _extract_metric_value(self, metrics: EngagementMetrics, metric_type: EngagementType) -> int:
-        """Extract specific metric value from engagement metrics"""
+        """
+Extract specific metric value from engagement metrics"""
         metric_mapping = {
             EngagementType.LIKE: metrics.likes,
             EngagementType.COMMENT: metrics.comments,
@@ -370,7 +381,8 @@ class EngagementAnalyzer:
         return metric_mapping.get(metric_type, 0)
     
     def _calculate_trend(self, data_points: List[Dict[str, Any]]) -> Tuple[str, float]:
-        """Calculate trend direction and strength"""
+        """
+Calculate trend direction and strength"""
         if len(data_points) < 2:
             return "stable", 0.0
         
@@ -426,7 +438,8 @@ class EngagementAnalyzer:
     def compare_platform_performance(self, platforms: List[Platform], 
                                    metric_type: EngagementType,
                                    days_back: int = 30) -> Dict[str, Any]:
-        """Compare performance across multiple platforms"""
+        """
+Compare performance across multiple platforms"""
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days_back)
@@ -550,7 +563,8 @@ class EngagementAnalyzer:
         return sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)
     
     def _find_optimal_posting_times(self, performances: List[ContentPerformance]) -> Dict[str, Any]:
-        """Find optimal posting times based on performance"""
+        """
+Find optimal posting times based on performance"""
         hour_performance = {}
         day_performance = {}
         

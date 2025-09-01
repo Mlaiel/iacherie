@@ -7,6 +7,7 @@ analysis, optimization, and intelligent metadata extraction for content creators
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -39,7 +40,8 @@ settings = get_settings()
 
 
 class ContentProcessingEngine:
-    """Advanced multi-format content processing engine with AI capabilities."""
+    """
+Advanced multi-format content processing engine with AI capabilities."""
     
     def __init__(self):
         self.db = get_database()
@@ -163,7 +165,8 @@ class ContentProcessingEngine:
         content_type: str,
         content_id: UUID
     ) -> Dict[str, Any]:
-        """Process content based on its type."""
+        """
+Process content based on its type."""
         processors = {
             'audio': self._process_audio,
             'video': self._process_video,
@@ -415,14 +418,16 @@ class ContentProcessingEngine:
         return float(-23.0 + 20 * np.log10(np.sqrt(np.mean(y**2)) + 1e-10))
     
     def _calculate_stereo_width(self, y: np.ndarray) -> float:
-        """Calculate stereo width if stereo audio."""
+        """
+Calculate stereo width if stereo audio."""
         if len(y.shape) > 1:
             correlation = np.corrcoef(y[0], y[1])[0, 1]
             return float(1.0 - abs(correlation))
         return 0.0
     
     def _analyze_frequency_balance(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Analyze frequency balance across spectrum."""
+        """
+Analyze frequency balance across spectrum."""
         stft = librosa.stft(y)
         magnitude = np.abs(stft)
         freqs = librosa.fft_frequencies(sr=sr)
@@ -440,13 +445,15 @@ class ContentProcessingEngine:
     
     # Video analysis helper methods
     def _calculate_video_sharpness(self, frame: np.ndarray) -> float:
-        """Calculate video frame sharpness."""
+        """
+Calculate video frame sharpness."""
         gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
         laplacian = cv2.Laplacian(gray, cv2.CV_64F)
         return float(laplacian.var())
     
     def _analyze_color_distribution(self, frame: np.ndarray) -> Dict[str, float]:
-        """Analyze color distribution in video frame."""
+        """
+Analyze color distribution in video frame."""
         return {
             'red_mean': float(np.mean(frame[:, :, 0])),
             'green_mean': float(np.mean(frame[:, :, 1])),
@@ -455,7 +462,8 @@ class ContentProcessingEngine:
         }
     
     def _calculate_motion_intensity(self, clip) -> float:
-        """Calculate motion intensity in video."""
+        """
+Calculate motion intensity in video."""
         # Simplified motion calculation
         frames = [clip.get_frame(t) for t in np.linspace(0, min(clip.duration, 10), 10)]
         motion_scores = []
@@ -467,7 +475,8 @@ class ContentProcessingEngine:
         return float(np.mean(motion_scores)) if motion_scores else 0.0
     
     def _detect_scene_changes(self, clip) -> List[float]:
-        """Detect scene changes in video."""
+        """
+Detect scene changes in video."""
         # Simplified scene detection
         timestamps = []
         prev_frame = None
@@ -483,7 +492,8 @@ class ContentProcessingEngine:
         return timestamps
     
     def _extract_dominant_colors(self, frame: np.ndarray) -> List[List[int]]:
-        """Extract dominant colors from frame."""
+        """
+Extract dominant colors from frame."""
         from sklearn.cluster import KMeans
         
         pixels = frame.reshape(-1, 3)
@@ -493,7 +503,8 @@ class ContentProcessingEngine:
         return [color.astype(int).tolist() for color in kmeans.cluster_centers_]
     
     def _analyze_lighting(self, frame: np.ndarray) -> Dict[str, float]:
-        """Analyze lighting conditions in frame."""
+        """
+Analyze lighting conditions in frame."""
         gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
         
         return {
@@ -505,7 +516,8 @@ class ContentProcessingEngine:
     
     # Image analysis helper methods
     def _calculate_image_sharpness(self, img_array: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance."""
+        """
+Calculate image sharpness using Laplacian variance."""
         if len(img_array.shape) == 3:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         else:
@@ -515,14 +527,16 @@ class ContentProcessingEngine:
         return float(laplacian.var())
     
     def _calculate_saturation(self, img_array: np.ndarray) -> float:
-        """Calculate image saturation."""
+        """
+Calculate image saturation."""
         if len(img_array.shape) == 3:
             hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV)
             return float(np.mean(hsv[:, :, 1]))
         return 0.0
     
     def _estimate_noise_level(self, img_array: np.ndarray) -> float:
-        """Estimate noise level in image."""
+        """
+Estimate noise level in image."""
         if len(img_array.shape) == 3:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         else:
@@ -533,7 +547,8 @@ class ContentProcessingEngine:
         return float(np.std(laplacian))
     
     def _extract_image_dominant_colors(self, img_array: np.ndarray) -> List[List[int]]:
-        """Extract dominant colors from image."""
+        """
+Extract dominant colors from image."""
         from sklearn.cluster import KMeans
         
         pixels = img_array.reshape(-1, 3) if len(img_array.shape) == 3 else img_array.reshape(-1, 1)
@@ -543,7 +558,8 @@ class ContentProcessingEngine:
         return [color.astype(int).tolist() for color in kmeans.cluster_centers_]
     
     def _analyze_color_harmony(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Analyze color harmony in image."""
+        """
+Analyze color harmony in image."""
         if len(img_array.shape) == 3:
             hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV)
             hue_std = float(np.std(hsv[:, :, 0]))
@@ -558,7 +574,8 @@ class ContentProcessingEngine:
         return {'harmony_score': 0.0}
     
     def _calculate_color_temperature(self, img_array: np.ndarray) -> float:
-        """Calculate color temperature of image."""
+        """
+Calculate color temperature of image."""
         if len(img_array.shape) == 3:
             r_mean = np.mean(img_array[:, :, 0])
             b_mean = np.mean(img_array[:, :, 2])
@@ -570,7 +587,8 @@ class ContentProcessingEngine:
         return 6500.0  # Neutral temperature
     
     def _generate_color_histogram(self, img_array: np.ndarray) -> Dict[str, List[int]]:
-        """Generate color histogram."""
+        """
+Generate color histogram."""
         if len(img_array.shape) == 3:
             hist_r = cv2.calcHist([img_array], [0], None, [256], [0, 256])
             hist_g = cv2.calcHist([img_array], [1], None, [256], [0, 256])
@@ -586,7 +604,8 @@ class ContentProcessingEngine:
             return {'grayscale': hist.flatten().astype(int).tolist()}
     
     def _check_rule_of_thirds(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Check rule of thirds composition."""
+        """
+Check rule of thirds composition."""
         h, w = img_array.shape[:2]
         
         # Define rule of thirds lines
@@ -616,7 +635,8 @@ class ContentProcessingEngine:
         }
     
     def _analyze_symmetry(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Analyze image symmetry."""
+        """
+Analyze image symmetry."""
         h, w = img_array.shape[:2]
         
         # Horizontal symmetry
@@ -637,7 +657,8 @@ class ContentProcessingEngine:
         }
     
     def _detect_leading_lines(self, img_array: np.ndarray) -> Dict[str, int]:
-        """Detect leading lines in image."""
+        """
+Detect leading lines in image."""
         if len(img_array.shape) == 3:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         else:
@@ -657,7 +678,8 @@ class ContentProcessingEngine:
         }
     
     def _identify_focal_points(self, img_array: np.ndarray) -> List[Dict[str, int]]:
-        """Identify focal points in image."""
+        """
+Identify focal points in image."""
         if len(img_array.shape) == 3:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         else:
@@ -680,7 +702,8 @@ class ContentProcessingEngine:
     
     # Text analysis helper methods
     def _calculate_flesch_score(self, text: str) -> float:
-        """Calculate Flesch Reading Ease score."""
+        """
+Calculate Flesch Reading Ease score."""
         words = text.split()
         sentences = text.split('.')
         syllables = sum(self._count_syllables(word) for word in words)
@@ -695,7 +718,8 @@ class ContentProcessingEngine:
         return max(0.0, min(100.0, score))
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word."""
+        """
+Count syllables in a word."""
         vowels = 'aeiouyAEIOUY'
         syllable_count = 0
         previous_was_vowel = False
@@ -712,7 +736,8 @@ class ContentProcessingEngine:
         return max(1, syllable_count)
     
     def _calculate_complex_words_ratio(self, words: List[str]) -> float:
-        """Calculate ratio of complex words (3+ syllables)."""
+        """
+Calculate ratio of complex words (3+ syllables)."""
         if not words:
             return 0.0
         
@@ -720,7 +745,8 @@ class ContentProcessingEngine:
         return complex_words / len(words)
     
     def _detect_passive_voice_ratio(self, text: str) -> float:
-        """Detect passive voice usage ratio."""
+        """
+Detect passive voice usage ratio."""
         # Simplified passive voice detection
         passive_indicators = ['was', 'were', 'been', 'being', 'by']
         words = text.lower().split()
@@ -732,7 +758,8 @@ class ContentProcessingEngine:
         return passive_count / len(words)
     
     def _extract_key_phrases(self, text: str) -> List[str]:
-        """Extract key phrases from text."""
+        """
+Extract key phrases from text."""
         # Simplified key phrase extraction
         words = text.lower().split()
         
@@ -747,7 +774,8 @@ class ContentProcessingEngine:
         return [word for word, count in word_counts.most_common(10)]
     
     def _identify_topics(self, text: str) -> List[str]:
-        """Identify main topics in text."""
+        """
+Identify main topics in text."""
         # Simplified topic identification
         key_phrases = self._extract_key_phrases(text)
         
@@ -759,7 +787,8 @@ class ContentProcessingEngine:
         return topics
     
     def _extract_named_entities(self, text: str) -> List[Dict[str, str]]:
-        """Extract named entities from text."""
+        """
+Extract named entities from text."""
         # Simplified named entity extraction
         import re
         
@@ -781,7 +810,8 @@ class ContentProcessingEngine:
         return entities
     
     def _detect_language(self, text: str) -> str:
-        """Detect text language."""
+        """
+Detect text language."""
         # Simplified language detection
         common_words = {
             'english': ['the', 'and', 'of', 'to', 'a', 'in', 'is', 'it', 'you', 'that'],
@@ -807,7 +837,8 @@ class ContentProcessingEngine:
         content_type: str,
         processing_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI-powered insights for the content."""
+        """
+Generate AI-powered insights for the content."""
         insights = {
             'optimization_suggestions': [],
             'platform_recommendations': [],
@@ -829,7 +860,8 @@ class ContentProcessingEngine:
         return insights
     
     async def _generate_audio_insights(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate AI insights for audio content."""
+        """
+Generate AI insights for audio content."""
         technical = processing_result.get('technical_analysis', {})
         quality = processing_result.get('quality_metrics', {})
         
@@ -1097,7 +1129,8 @@ class ContentProcessingEngine:
         content_type: str,
         processing_result: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Get platform-specific optimization strategy."""
+        """
+Get platform-specific optimization strategy."""
         strategies = {
             'YouTube': {
                 'audio': 'Focus on high-quality audio, create engaging thumbnails, optimize for 10+ minute duration',
@@ -1132,7 +1165,8 @@ class ContentProcessingEngine:
         content_type: str,
         processing_result: Dict[str, Any]
     ) -> List[str]:
-        """Generate SEO optimization recommendations."""
+        """
+Generate SEO optimization recommendations."""
         seo_tips = [
             'Use descriptive, keyword-rich filenames',
             'Add relevant tags and metadata',
@@ -1173,7 +1207,8 @@ class ContentProcessingEngine:
         content_type: str,
         ai_insights: Dict[str, Any]
     ) -> List[str]:
-        """Generate monetization recommendations."""
+        """
+Generate monetization recommendations."""
         tips = [
             'Set up content fingerprinting for copyright protection',
             'Consider licensing opportunities',
@@ -1216,7 +1251,8 @@ class ContentProcessingEngine:
         content_type: str,
         processing_result: Dict[str, Any]
     ) -> List[str]:
-        """Suggest collaboration opportunities."""
+        """
+Suggest collaboration opportunities."""
         collaborations = [
             'Connect with creators in similar niches',
             'Participate in content challenges',
@@ -1256,7 +1292,8 @@ class ContentProcessingEngine:
         content_id: UUID,
         processing_result: Dict[str, Any]
     ) -> None:
-        """Update content record with processing results."""
+        """
+Update content record with processing results."""
         update_data = {
             'status': ProcessingStatus.COMPLETED,
             'technical_analysis': processing_result.get('technical_analysis', {}),
@@ -1267,7 +1304,8 @@ class ContentProcessingEngine:
         await self.db.content.update(content_id, update_data)
     
     async def get_processing_status(self, content_id: UUID) -> Dict[str, Any]:
-        """Get processing status for content."""
+        """
+Get processing status for content."""
         content = await self.db.content.get_by_id(content_id)
         if not content:
             raise ContentProcessingError("Content not found")

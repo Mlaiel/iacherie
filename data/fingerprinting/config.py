@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class PerformanceProfile(Enum):
-    """Performance optimization profiles"""
+    """
+Performance optimization profiles"""
+
     ULTRA_FAST = "ultra_fast"
     FAST = "fast"
     BALANCED = "balanced"
@@ -41,6 +44,7 @@ class PerformanceProfile(Enum):
 
 class ProcessingMode(Enum):
     """Processing mode configurations"""
+
     SINGLE_THREADED = "single_threaded"
     MULTI_THREADED = "multi_threaded"
     GPU_ACCELERATED = "gpu_accelerated"
@@ -88,7 +92,8 @@ class AudioFingerprintConfig:
 
 @dataclass
 class VideoFingerprintConfig:
-    """Configuration for video fingerprinting"""
+    """
+Configuration for video fingerprinting"""
     # Frame extraction
     fps: Optional[float] = 1.0  # Extract 1 frame per second
     max_frames: int = 300
@@ -404,7 +409,8 @@ class ConfigManager:
         return FingerprintingSystemConfig()
     
     def optimize_for_hardware(self, config: FingerprintingSystemConfig) -> FingerprintingSystemConfig:
-        """Optimize configuration based on available hardware"""
+        """
+Optimize configuration based on available hardware"""
         try:
             import psutil
             import torch
@@ -471,5 +477,6 @@ def get_config(environment: str = "production") -> FingerprintingSystemConfig:
     return config_manager.optimize_for_hardware(config)
 
 def reset_config_cache():
-    """Reset the configuration cache"""
+    """
+Reset the configuration cache"""
     config_manager._config_cache.clear()

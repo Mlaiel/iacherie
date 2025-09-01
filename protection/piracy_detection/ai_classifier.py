@@ -4,7 +4,7 @@
 Advanced AI-powered content classification and violation categorization system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -30,6 +30,7 @@ This module provides:
 - Real-time inference optimization
 - Continuous learning and adaptation
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -51,7 +52,9 @@ import librosa
 logger = logging.getLogger(__name__)
 
 class ClassificationCategory(Enum):
-    """Content classification categories."""
+    """
+Content classification categories."""
+
     ORIGINAL_CONTENT = "original_content"
     EXACT_COPY = "exact_copy"
     MODIFIED_COPY = "modified_copy"
@@ -67,6 +70,7 @@ class ClassificationCategory(Enum):
 
 class ConfidenceLevel(Enum):
     """Classification confidence levels."""
+
     VERY_HIGH = "very_high"  # 95-100%
     HIGH = "high"           # 85-94%
     MEDIUM = "medium"       # 70-84%
@@ -75,6 +79,7 @@ class ConfidenceLevel(Enum):
 
 class ModelType(Enum):
     """Types of AI models used."""
+
     TRANSFORMER_BERT = "transformer_bert"
     VISION_TRANSFORMER = "vision_transformer"
     AUDIO_CLASSIFIER = "audio_classifier"
@@ -105,7 +110,8 @@ class ClassificationResult:
 
 @dataclass 
 class TrainingMetrics:
-    """Metrics for model training and evaluation."""
+    """
+Metrics for model training and evaluation."""
     accuracy: float
     precision: float
     recall: float
@@ -121,7 +127,8 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingData:
-    """Training data for model improvement."""
+    """
+Training data for model improvement."""
     data_id: str
     content_features: Dict[str, Any]
     ground_truth_label: ClassificationCategory
@@ -132,7 +139,8 @@ class TrainingData:
     timestamp: datetime
 
 class ContentFeatureExtractor:
-    """Extracts features from various content types."""
+    """
+Extracts features from various content types."""
     
     def __init__(self):
         self.text_tokenizer = None
@@ -140,7 +148,8 @@ class ContentFeatureExtractor:
         self.image_size = (224, 224)
     
     async def extract_text_features(self, text: str) -> Dict[str, Any]:
-        """Extract features from text content."""
+        """
+Extract features from text content."""
         try:
             if not self.text_tokenizer:
                 self.text_tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -351,7 +360,8 @@ class EnsembleClassifier(nn.Module):
         )
         
     def forward(self, features: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-        """Forward pass through ensemble."""
+        """
+Forward pass through ensemble."""
         outputs = {}
         
         # Individual classifier outputs
@@ -387,7 +397,8 @@ class EnsembleClassifier(nn.Module):
         return outputs
 
 class ModelTrainer:
-    """Handles model training and optimization."""
+    """
+Handles model training and optimization."""
     
     def __init__(self, model: nn.Module):
         self.model = model
@@ -396,13 +407,15 @@ class ModelTrainer:
         self.training_history = []
     
     def setup_training(self, learning_rate: float = 0.001):
-        """Setup training configuration."""
+        """
+Setup training configuration."""
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
     
     async def train_epoch(self, 
                          training_data: List[TrainingData],
                          batch_size: int = 32) -> Dict[str, float]:
-        """Train model for one epoch."""
+        """
+Train model for one epoch."""
         self.model.train()
         total_loss = 0.0
         correct_predictions = 0
@@ -445,7 +458,8 @@ class ModelTrainer:
         }
     
     async def _prepare_batch(self, batch: List[TrainingData]) -> Tuple[Dict[str, torch.Tensor], torch.Tensor]:
-        """Prepare batch data for training."""
+        """
+Prepare batch data for training."""
         features = {'batch_size': len(batch)}
         labels = []
         
@@ -763,7 +777,8 @@ class AdvancedAIClassifier:
         return features
     
     async def _prepare_model_features(self, features: Dict[str, Any]) -> Dict[str, torch.Tensor]:
-        """Prepare features for model input."""
+        """
+Prepare features for model input."""
         model_features = {'batch_size': 1}
         
         # Text features (use embeddings if available)
@@ -817,7 +832,8 @@ class AdvancedAIClassifier:
         return model_features
     
     def _determine_confidence_level(self, confidence_score: float) -> ConfidenceLevel:
-        """Determine confidence level based on score."""
+        """
+Determine confidence level based on score."""
         if confidence_score >= 0.95:
             return ConfidenceLevel.VERY_HIGH
         elif confidence_score >= 0.85:
@@ -834,7 +850,8 @@ class AdvancedAIClassifier:
                                   model_outputs: Dict[str, torch.Tensor],
                                   predicted_class: int,
                                   confidence: float) -> str:
-        """Generate explanation for classification decision."""
+        """
+Generate explanation for classification decision."""
         category = list(ClassificationCategory)[predicted_class]
         
         explanation_parts = [
@@ -933,7 +950,8 @@ class AdvancedAIClassifier:
         return importance
     
     def _generate_cache_key(self, content_data: Dict[str, Any], content_metadata: Dict[str, Any]) -> str:
-        """Generate cache key for classification."""
+        """
+Generate cache key for classification."""
         # Create hash of content and metadata
         content_str = json.dumps(content_data, sort_keys=True, default=str)
         metadata_str = json.dumps(content_metadata, sort_keys=True, default=str)
@@ -943,7 +961,8 @@ class AdvancedAIClassifier:
         return hashlib.sha256(combined.encode()).hexdigest()
     
     async def _get_cached_classification(self, cache_key: str) -> Optional[ClassificationResult]:
-        """Get cached classification result."""
+        """
+Get cached classification result."""
         if cache_key in self.classification_cache:
             cached_result, timestamp = self.classification_cache[cache_key]
             
@@ -958,7 +977,8 @@ class AdvancedAIClassifier:
         return None
     
     async def _cache_classification(self, cache_key: str, result: ClassificationResult):
-        """Cache classification result."""
+        """
+Cache classification result."""
         self.classification_cache[cache_key] = (result, datetime.now())
         
         # Clean up old cache entries if cache gets too large
@@ -973,7 +993,8 @@ class AdvancedAIClassifier:
             self.classification_cache = dict(sorted_cache[-800:])
     
     async def _retrain_model(self):
-        """Retrain model with new data."""
+        """
+Retrain model with new data."""
         if len(self.training_data) < 10:  # Need minimum data
             return
         

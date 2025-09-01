@@ -10,8 +10,9 @@ Professional legal compliance management system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Compliance Officer + Risk Manager
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -25,7 +26,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ComplianceLevel(Enum):
-    """Compliance validation levels"""
+    """
+Compliance validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -33,6 +36,7 @@ class ComplianceLevel(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -40,6 +44,7 @@ class RiskLevel(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance check status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     CONDITIONAL = "conditional"
@@ -61,7 +66,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceResult:
-    """Compliance validation result"""
+    """
+Compliance validation result"""
     rule_id: str
     status: ComplianceStatus
     confidence_score: float
@@ -72,7 +78,8 @@ class ComplianceResult:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance assessment report"""
+    """
+Comprehensive compliance assessment report"""
     license_id: str
     jurisdiction: str
     overall_status: ComplianceStatus
@@ -93,7 +100,8 @@ class ComplianceManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize compliance manager with configuration."""
+        """
+Initialize compliance manager with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -385,7 +393,8 @@ class ComplianceManager:
         license_data: Dict[str, Any],
         rule: ComplianceRule
     ) -> ComplianceResult:
-        """Validate license against a single compliance rule."""
+        """
+Validate license against a single compliance rule."""
         try:
             # Convert license to searchable text
             license_text = self._extract_license_text(license_data)
@@ -462,7 +471,8 @@ class ComplianceManager:
         license_text: str,
         pattern_match: bool
     ) -> Tuple[ComplianceStatus, float, List[str], List[str]]:
-        """Evaluate compliance for a specific rule."""
+        """
+Evaluate compliance for a specific rule."""
         issues = []
         recommendations = []
         
@@ -579,7 +589,8 @@ class ComplianceManager:
             return rule.penalty_severity
     
     def _calculate_overall_compliance(self, validation_results: List[ComplianceResult]) -> Tuple[ComplianceStatus, float]:
-        """Calculate overall compliance status and score."""
+        """
+Calculate overall compliance status and score."""
         if not validation_results:
             return ComplianceStatus.PENDING_REVIEW, 0.0
         
@@ -623,7 +634,8 @@ class ComplianceManager:
         return overall_status, compliance_score
     
     def _assess_overall_risk(self, validation_results: List[ComplianceResult]) -> RiskLevel:
-        """Assess overall risk level from validation results."""
+        """
+Assess overall risk level from validation results."""
         risk_levels = [result.risk_level for result in validation_results]
         
         if RiskLevel.CRITICAL in risk_levels:
@@ -636,7 +648,8 @@ class ComplianceManager:
             return RiskLevel.LOW
     
     def _generate_required_actions(self, validation_results: List[ComplianceResult]) -> List[str]:
-        """Generate list of required actions to achieve compliance."""
+        """
+Generate list of required actions to achieve compliance."""
         required_actions = []
         
         for result in validation_results:

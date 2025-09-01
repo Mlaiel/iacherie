@@ -19,6 +19,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -50,6 +51,7 @@ except ImportError:
 
 class SecurityLevel(Enum):
     """Security assessment levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -58,6 +60,7 @@ class SecurityLevel(Enum):
 
 class ComplianceStandard(Enum):
     """Supported compliance standards"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
@@ -69,6 +72,7 @@ class ComplianceStandard(Enum):
 
 class AuditCategory(Enum):
     """Security audit categories"""
+
     INFRASTRUCTURE = "infrastructure"
     APPLICATION = "application"
     DATABASE = "database"
@@ -114,7 +118,8 @@ class ComplianceAssessment:
 
 @dataclass
 class SecurityAuditReport:
-    """Comprehensive security audit report"""
+    """
+Comprehensive security audit report"""
     audit_id: str
     audit_date: datetime
     audit_type: str  # full, targeted, compliance
@@ -166,7 +171,8 @@ class ComprehensiveSecurityAuditor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the security auditor with configuration."""
+        """
+Initialize the security auditor with configuration."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -556,7 +562,8 @@ class ComprehensiveSecurityAuditor:
             )
     
     async def _assess_gdpr_compliance(self) -> ComplianceAssessment:
-        """Assess GDPR compliance."""
+        """
+Assess GDPR compliance."""
         gdpr_findings = []
         requirements_met = 0
         total_requirements = 10
@@ -648,7 +655,8 @@ class ComprehensiveSecurityAuditor:
         scope: List[str],
         duration_minutes: float
     ) -> SecurityAuditReport:
-        """Generate comprehensive audit report."""
+        """
+Generate comprehensive audit report."""
         
         # Calculate statistics
         total_findings = len(self.findings)
@@ -725,7 +733,8 @@ class ComprehensiveSecurityAuditor:
         return min(10.0, score)
     
     def _determine_risk_level(self, risk_score: float) -> SecurityLevel:
-        """Determine risk level based on score."""
+        """
+Determine risk level based on score."""
         if risk_score >= 8.0:
             return SecurityLevel.CRITICAL
         elif risk_score >= 6.0:
@@ -738,7 +747,8 @@ class ComprehensiveSecurityAuditor:
             return SecurityLevel.INFO
     
     def _generate_immediate_actions(self) -> List[str]:
-        """Generate list of immediate actions needed."""
+        """
+Generate list of immediate actions needed."""
         actions = []
         
         critical_findings = [f for f in self.findings if f.severity == SecurityLevel.CRITICAL]
@@ -801,7 +811,8 @@ class ComprehensiveSecurityAuditor:
     
     # Placeholder methods for specific security checks
     async def _check_ssh_root_login(self) -> Dict[str, Any]:
-        """Check if SSH root login is disabled."""
+        """
+Check if SSH root login is disabled."""
         return {"compliant": True, "details": "Root login disabled"}
     
     async def _check_ssh_password_auth(self) -> Dict[str, Any]:
@@ -1176,7 +1187,8 @@ class InfrastructureSecurityScanner:
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
-        """Scan infrastructure for security issues."""
+        """
+Scan infrastructure for security issues."""
         issues = []
         
         # Check network security
@@ -1190,23 +1202,27 @@ class InfrastructureSecurityScanner:
         return issues
     
     async def _scan_network_security(self) -> List[SecurityIssue]:
-        """Scan network security configurations."""
+        """
+Scan network security configurations."""
         # Placeholder for network security checks
         return []
     
     async def _scan_server_configs(self) -> List[SecurityIssue]:
-        """Scan server configurations."""
+        """
+Scan server configurations."""
         # Placeholder for server configuration checks
         return []
 
 class ApplicationSecurityScanner:
-    """Application security scanner."""
+    """
+Application security scanner."""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
-        """Scan application for security vulnerabilities."""
+        """
+Scan application for security vulnerabilities."""
         issues = []
         
         # Check for common vulnerabilities
@@ -1220,23 +1236,27 @@ class ApplicationSecurityScanner:
         return issues
     
     async def _scan_vulnerabilities(self) -> List[SecurityIssue]:
-        """Scan for common vulnerabilities."""
+        """
+Scan for common vulnerabilities."""
         # Placeholder for vulnerability scanning
         return []
     
     async def _scan_authentication(self) -> List[SecurityIssue]:
-        """Scan authentication systems."""
+        """
+Scan authentication systems."""
         # Placeholder for authentication checks
         return []
 
 class DatabaseSecurityScanner:
-    """Database security scanner."""
+    """
+Database security scanner."""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
-        """Scan database for security issues."""
+        """
+Scan database for security issues."""
         issues = []
         
         # Check database access controls
@@ -1250,23 +1270,27 @@ class DatabaseSecurityScanner:
         return issues
     
     async def _scan_access_controls(self) -> List[SecurityIssue]:
-        """Scan database access controls."""
+        """
+Scan database access controls."""
         # Placeholder for access control checks
         return []
     
     async def _scan_encryption(self) -> List[SecurityIssue]:
-        """Scan database encryption settings."""
+        """
+Scan database encryption settings."""
         # Placeholder for encryption checks
         return []
 
 class APISecurityScanner:
-    """API security scanner."""
+    """
+API security scanner."""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
-        """Scan API endpoints for security issues."""
+        """
+Scan API endpoints for security issues."""
         issues = []
         
         # Check API authentication
@@ -1280,23 +1304,27 @@ class APISecurityScanner:
         return issues
     
     async def _scan_api_auth(self) -> List[SecurityIssue]:
-        """Scan API authentication."""
+        """
+Scan API authentication."""
         # Placeholder for API auth checks
         return []
     
     async def _scan_rate_limiting(self) -> List[SecurityIssue]:
-        """Scan API rate limiting."""
+        """
+Scan API rate limiting."""
         # Placeholder for rate limiting checks
         return []
 
 class DependencySecurityScanner:
-    """Dependency security scanner."""
+    """
+Dependency security scanner."""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
-        """Scan dependencies for security vulnerabilities."""
+        """
+Scan dependencies for security vulnerabilities."""
         issues = []
         
         # Check for vulnerable packages
@@ -1310,23 +1338,27 @@ class DependencySecurityScanner:
         return issues
     
     async def _scan_vulnerable_packages(self) -> List[SecurityIssue]:
-        """Scan for vulnerable packages."""
+        """
+Scan for vulnerable packages."""
         # Placeholder for vulnerable package scanning
         return []
     
     async def _scan_outdated_packages(self) -> List[SecurityIssue]:
-        """Scan for outdated packages."""
+        """
+Scan for outdated packages."""
         # Placeholder for outdated package scanning
         return []
 
 class ComplianceScanner:
-    """Compliance scanner."""
+    """
+Compliance scanner."""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
-        """Scan for compliance issues."""
+        """
+Scan for compliance issues."""
         issues = []
         
         # Check GDPR compliance
@@ -1340,19 +1372,22 @@ class ComplianceScanner:
         return issues
     
     async def _scan_gdpr_compliance(self) -> List[SecurityIssue]:
-        """Scan GDPR compliance."""
+        """
+Scan GDPR compliance."""
         # Placeholder for GDPR compliance checks
         return []
     
     async def _scan_data_retention(self) -> List[SecurityIssue]:
-        """Scan data retention policies."""
+        """
+Scan data retention policies."""
         # Placeholder for data retention checks
         return []
 
 
 # Utility functions
 async def perform_quick_security_scan() -> SecurityAuditReport:
-    """Perform a quick security scan of critical components."""
+    """
+Perform a quick security scan of critical components."""
     auditor = ComprehensiveSecurityAuditor({
         'deep_scan': False,
         'max_scan_duration': 300,  # 5 minutes

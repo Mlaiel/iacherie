@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import re
 import asyncio
 import logging
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ExtractedContent:
-    """Structure for extracted content."""
+    """
+Structure for extracted content."""
     title: Optional[str] = None
     description: Optional[str] = None
     content: Optional[str] = None
@@ -149,7 +151,8 @@ class ContentExtractor:
     """
     
     def __init__(self):
-        """Initialize content extractor."""
+        """
+Initialize content extractor."""
         self.social_media_patterns = self._load_social_media_patterns()
         self.contact_patterns = self._load_contact_patterns()
         self.content_selectors = self._load_content_selectors()
@@ -158,7 +161,8 @@ class ContentExtractor:
         self.readability_doc = None
     
     def _load_social_media_patterns(self) -> Dict[str, Dict[str, str]]:
-        """Load social media URL patterns."""
+        """
+Load social media URL patterns."""
         return {
             'youtube': {
                 'channel': r'youtube\.com/(?:c/|channel/|user/|@)([^/?]+)',
@@ -195,7 +199,8 @@ class ContentExtractor:
         }
     
     def _load_contact_patterns(self) -> Dict[str, str]:
-        """Load contact information patterns."""
+        """
+Load contact information patterns."""
         return {
             'email': r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
             'phone': r'(\+?1?[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})',
@@ -205,7 +210,8 @@ class ContentExtractor:
         }
     
     def _load_content_selectors(self) -> Dict[str, List[str]]:
-        """Load CSS selectors for content extraction."""
+        """
+Load CSS selectors for content extraction."""
         return {
             'title': [
                 'h1',
@@ -346,7 +352,8 @@ class ContentExtractor:
         )
     
     def _clean_html(self, soup: BeautifulSoup) -> None:
-        """Remove unwanted HTML elements."""
+        """
+Remove unwanted HTML elements."""
         # Remove scripts, styles, and comments
         for element in soup(['script', 'style', 'nav', 'footer', 'header']):
             element.decompose()
@@ -388,7 +395,8 @@ class ContentExtractor:
         return None
     
     def _extract_description(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page description."""
+        """
+Extract page description."""
         # Try meta descriptions first
         meta_desc = soup.find('meta', {'name': 'description'})
         if meta_desc and meta_desc.get('content'):
@@ -408,7 +416,8 @@ class ContentExtractor:
         return None
     
     def _extract_main_content(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract main content."""
+        """
+Extract main content."""
         # Try content selectors
         for selector in self.content_selectors['content']:
             element = soup.select_one(selector)
@@ -423,7 +432,8 @@ class ContentExtractor:
         return str(soup)
     
     def _extract_clean_text(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract clean text content."""
+        """
+Extract clean text content."""
         # Try to use readability for better content extraction
         try:
             if self.readability_doc:
@@ -490,7 +500,8 @@ class ContentExtractor:
         return links
     
     def _extract_images(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract all images."""
+        """
+Extract all images."""
         images = []
         
         for img in soup.find_all('img', src=True):
@@ -510,7 +521,8 @@ class ContentExtractor:
         return images
     
     def _extract_videos(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract all videos."""
+        """
+Extract all videos."""
         videos = []
         
         # Extract video elements
@@ -545,7 +557,8 @@ class ContentExtractor:
         return videos
     
     def _extract_social_media_links(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract social media links."""
+        """
+Extract social media links."""
         social_links = []
         
         for link in soup.find_all('a', href=True):
@@ -567,7 +580,8 @@ class ContentExtractor:
         return social_links
     
     def _extract_contact_info(self, text: str) -> Dict[str, Any]:
-        """Extract contact information."""
+        """
+Extract contact information."""
         if not text:
             return {}
         
@@ -601,7 +615,8 @@ class ContentExtractor:
         return contact
     
     def _detect_language(self, soup: BeautifulSoup) -> Optional[str]:
-        """Detect content language."""
+        """
+Detect content language."""
         # Check HTML lang attribute
         html_tag = soup.find('html')
         if html_tag and html_tag.get('lang'):
@@ -620,7 +635,8 @@ class ContentExtractor:
         return None
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text."""
+        """
+Extract keywords from text."""
         if not text:
             return []
         
@@ -651,7 +667,8 @@ class ContentExtractor:
         return [word for word, freq in sorted_words[:20]]
     
     def _extract_author(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract author information."""
+        """
+Extract author information."""
         for selector in self.content_selectors['author']:
             element = soup.select_one(selector)
             if element:
@@ -663,7 +680,8 @@ class ContentExtractor:
         return None
     
     def _extract_publish_date(self, soup: BeautifulSoup) -> Optional[datetime]:
-        """Extract publication date."""
+        """
+Extract publication date."""
         for selector in self.content_selectors['date']:
             element = soup.select_one(selector)
             if element:
@@ -760,7 +778,8 @@ class ContentExtractor:
             return None
     
     def _extract_twitter_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract Twitter-specific content."""
+        """
+Extract Twitter-specific content."""
         # Twitter content extraction logic
         text_element = soup.select_one('[data-testid="tweetText"]')
         text = text_element.get_text(strip=True) if text_element else None
@@ -792,7 +811,8 @@ class ContentExtractor:
         )
     
     def _extract_youtube_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract YouTube-specific content."""
+        """
+Extract YouTube-specific content."""
         # YouTube content extraction logic
         return SocialMediaContent(
             platform='youtube',
@@ -801,7 +821,8 @@ class ContentExtractor:
         )
     
     def _extract_tiktok_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract TikTok-specific content."""
+        """
+Extract TikTok-specific content."""
         # TikTok content extraction logic
         return SocialMediaContent(
             platform='tiktok',
@@ -810,7 +831,8 @@ class ContentExtractor:
         )
     
     def _extract_facebook_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract Facebook-specific content."""
+        """
+Extract Facebook-specific content."""
         # Facebook content extraction logic
         return SocialMediaContent(
             platform='facebook',
@@ -819,7 +841,8 @@ class ContentExtractor:
         )
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score using multiple metrics."""
+        """
+Calculate readability score using multiple metrics."""
         if not text or len(text) < 50:
             return 0.0
         
@@ -1235,7 +1258,8 @@ class ContentExtractor:
             return 'unknown'
     
     def _categorize_image_size(self, img) -> str:
-        """Categorize image size."""
+        """
+Categorize image size."""
         try:
             width = int(img.get('width', 0))
             height = int(img.get('height', 0))
@@ -1258,7 +1282,8 @@ class ContentExtractor:
             return 'unknown'
     
     def _identify_video_platform(self, url: str) -> str:
-        """Identify video platform from URL."""
+        """
+Identify video platform from URL."""
         url_lower = url.lower()
         if 'youtube' in url_lower:
             return 'youtube'
@@ -1274,7 +1299,8 @@ class ContentExtractor:
             return 'unknown'
     
     def _get_audio_format(self, url: str) -> str:
-        """Determine audio format from URL."""
+        """
+Determine audio format from URL."""
         url_lower = url.lower()
         if '.mp3' in url_lower:
             return 'mp3'
@@ -1290,7 +1316,8 @@ class ContentExtractor:
             return 'unknown'
     
     def _get_document_format(self, url: str) -> str:
-        """Determine document format from URL."""
+        """
+Determine document format from URL."""
         url_lower = url.lower()
         if '.pdf' in url_lower:
             return 'pdf'
@@ -1312,7 +1339,8 @@ class ContentExtractor:
             return 'unknown'
     
     async def extract_schema_markup(self, soup: BeautifulSoup) -> List[Dict]:
-        """Extract structured data markup."""
+        """
+Extract structured data markup."""
         structured_data = []
         
         try:
@@ -1392,7 +1420,8 @@ class ContentExtractor:
         return data
     
     def _extract_rdfa(self, element) -> Dict:
-        """Extract RDFa from element."""
+        """
+Extract RDFa from element."""
         data = {}
         
         # Get type
@@ -1418,7 +1447,8 @@ class ContentExtractor:
 
 # Utility functions for content extraction
 async def extract_content_from_url(url: str, timeout: int = 30) -> Optional[ExtractedContent]:
-    """Extract content directly from URL."""
+    """
+Extract content directly from URL."""
     try:
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
             async with session.get(url) as response:

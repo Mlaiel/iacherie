@@ -14,13 +14,16 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
 class DistributionPlatform(Enum):
-    """Supported content distribution platforms."""
+    """
+Supported content distribution platforms."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -40,6 +43,7 @@ class DistributionPlatform(Enum):
 
 class ContentFormat(Enum):
     """Content formats for distribution."""
+
     VIDEO_SHORT = "video_short"  # TikTok, YouTube Shorts, Instagram Reels
     VIDEO_LONG = "video_long"    # YouTube, Facebook, LinkedIn
     AUDIO_TRACK = "audio_track"  # Spotify, Apple Music, SoundCloud
@@ -52,6 +56,7 @@ class ContentFormat(Enum):
 
 class DistributionStatus(Enum):
     """Status of content distribution."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     SCHEDULED = "scheduled"
@@ -243,7 +248,8 @@ class MultiPlatformDistributionConfig:
         return self.platform_configs.get(platform)
     
     def get_supported_platforms_for_format(self, content_format: ContentFormat) -> List[DistributionPlatform]:
-        """Get platforms that support specific content format."""
+        """
+Get platforms that support specific content format."""
         supported_platforms = []
         for platform, config in self.platform_configs.items():
             if content_format in config.supported_formats:
@@ -251,12 +257,14 @@ class MultiPlatformDistributionConfig:
         return supported_platforms
     
     def is_content_adaptation_enabled(self) -> bool:
-        """Check if automatic content adaptation is enabled."""
+        """
+Check if automatic content adaptation is enabled."""
         return self.content_adaptation_config.get('enable_auto_adaptation', False)
 
 @dataclass
 class ContentSyndicationConfig:
-    """Configuration for content syndication and cross-posting."""
+    """
+Configuration for content syndication and cross-posting."""
     
     # Syndication rules and logic
     syndication_rules: Dict[str, Any] = field(default_factory=lambda: {
@@ -289,7 +297,8 @@ class ContentSyndicationConfig:
 
 @dataclass
 class DistributionAnalyticsConfig:
-    """Configuration for distribution analytics and performance tracking."""
+    """
+Configuration for distribution analytics and performance tracking."""
     
     # Analytics collection configuration
     analytics_collection: Dict[str, Any] = field(default_factory=lambda: {
@@ -328,7 +337,8 @@ distribution_analytics_config = DistributionAnalyticsConfig()
 
 # Configuration validation functions
 def validate_distribution_config() -> bool:
-    """Validate multi-platform distribution configuration."""
+    """
+Validate multi-platform distribution configuration."""
     try:
         # Validate required paths
         required_paths = [
@@ -359,7 +369,8 @@ def validate_distribution_config() -> bool:
         return False
 
 def validate_content_syndication_config() -> bool:
-    """Validate content syndication configuration."""
+    """
+Validate content syndication configuration."""
     try:
         # Validate syndication rules
         rules = content_syndication_config.syndication_rules

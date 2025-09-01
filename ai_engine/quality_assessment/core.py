@@ -4,7 +4,7 @@ Central engine for comprehensive content quality assessment across all supported
 Implements industry-standard quality metrics with AI-powered analysis and business intelligence.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityLevel(Enum):
-    """Quality assessment levels for content grading"""
+    """
+Quality assessment levels for content grading"""
+
     PROFESSIONAL = "professional"
     COMMERCIAL = "commercial"
     BROADCAST = "broadcast"
@@ -44,6 +47,7 @@ class QualityLevel(Enum):
 
 class QualityDimension(Enum):
     """Quality dimensions for comprehensive assessment"""
+
     TECHNICAL = "technical"
     CREATIVE = "creative"
     BUSINESS = "business"
@@ -54,6 +58,7 @@ class QualityDimension(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -72,13 +77,15 @@ class QualityThreshold:
     basic: float = 60.0
     
     def get_threshold(self, level: QualityLevel) -> float:
-        """Get threshold for specific quality level"""
+        """
+Get threshold for specific quality level"""
         return getattr(self, level.value)
 
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics container"""
+    """
+Comprehensive quality metrics container"""
     technical_score: float = field(default=0.0)
     creative_score: float = field(default=0.0)
     business_score: float = field(default=0.0)
@@ -128,7 +135,8 @@ class QualityMetrics:
         return self.overall_score
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
+        """
+Convert metrics to dictionary"""
         return {
             'technical_score': self.technical_score,
             'creative_score': self.creative_score,
@@ -152,7 +160,8 @@ class QualityMetrics:
 
 
 class ContentQualityScore(BaseModel):
-    """Content quality score model with validation"""
+    """
+Content quality score model with validation"""
     score: float = Field(..., ge=0.0, le=100.0, description="Quality score (0-100)")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence level (0-1)")
     level: QualityLevel = Field(..., description="Quality level classification")
@@ -253,7 +262,8 @@ class QualityAssessmentEngine(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize quality assessment engine"""
+        """
+Initialize quality assessment engine"""
         super().__init__(config or ModelConfig(
             name="quality_assessment_engine",
             provider=ModelProvider.LOCAL,

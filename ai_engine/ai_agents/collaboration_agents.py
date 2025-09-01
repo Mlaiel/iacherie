@@ -3,11 +3,12 @@
 Specialized agents for creator collaboration, partnership matching, and network building.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in creator collaboration matching,
 partnership opportunities, cross-promotion strategies, and network building.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -22,7 +23,8 @@ from ..neural_networks.recommendation_networks import CollaborationRecommendatio
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match structure"""
+    """
+Collaboration match structure"""
     partner_id: str
     partner_name: str
     compatibility_score: float
@@ -36,7 +38,8 @@ class CollaborationMatch:
 
 @dataclass
 class NetworkAnalysis:
-    """Creator network analysis results"""
+    """
+Creator network analysis results"""
     network_strength: float
     influence_score: float
     collaboration_history: Dict[str, Any]
@@ -350,7 +353,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     async def _calculate_compatibility(self, creator1: Dict[str, Any], 
                                      creator2: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate compatibility between two creators"""
+        """
+Calculate compatibility between two creators"""
         compatibility_scores = {}
         
         # Content style similarity
@@ -393,7 +397,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _calculate_audience_synergy(self, audience1: Dict[str, Any], 
                                   audience2: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate audience overlap and synergy potential"""
+        """
+Calculate audience overlap and synergy potential"""
         if not audience1 or not audience2:
             return {'overlap': 0.3, 'synergy': 0.5}  # Default values
         
@@ -424,7 +429,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
         }
 
     def _estimate_reach_boost(self, followers1: int, followers2: int, overlap: float) -> float:
-        """Estimate potential reach boost from collaboration"""
+        """
+Estimate potential reach boost from collaboration"""
         # Calculate effective new reach (accounting for overlap)
         new_reach_potential = followers2 * (1 - overlap)
         
@@ -439,7 +445,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
     def _identify_collaboration_types(self, creator1: Dict[str, Any], 
                                     creator2: Dict[str, Any],
                                     goals: Dict[str, Any]) -> List[str]:
-        """Identify suitable collaboration types"""
+        """
+Identify suitable collaboration types"""
         suitable_types = []
         
         primary_goal = goals.get('primary_goal', 'growth')
@@ -468,7 +475,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _identify_mutual_benefits(self, creator1: Dict[str, Any], 
                                 creator2: Dict[str, Any], goal: str) -> List[str]:
-        """Identify mutual benefits of collaboration"""
+        """
+Identify mutual benefits of collaboration"""
         benefits = []
         
         followers1 = creator1.get('total_followers', 0)
@@ -550,7 +558,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _calculate_influence_score(self, creator_profile: Dict[str, Any], 
                                  collaborations: List[Dict]) -> float:
-        """Calculate creator's influence score within their network"""
+        """
+Calculate creator's influence score within their network"""
         base_influence = min(creator_profile.get('total_followers', 0) / 1000000, 0.5)
         engagement_influence = creator_profile.get('engagement_rate', 0.03) * 5
         collaboration_influence = len(collaborations) * 0.05
@@ -558,7 +567,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return min(base_influence + engagement_influence + collaboration_influence, 1.0)
 
     def _analyze_collaboration_history(self, collaborations: List[Dict]) -> Dict[str, Any]:
-        """Analyze past collaborations for insights"""
+        """
+Analyze past collaborations for insights"""
         if not collaborations:
             return {"total_collaborations": 0, "success_rate": 0, "patterns": []}
         
@@ -657,7 +667,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return niche_map.get(niche, ['general', 'lifestyle', 'entertainment'])
 
     def _get_complementary_niches(self, niche: str) -> List[str]:
-        """Get complementary niches that work well together"""
+        """
+Get complementary niches that work well together"""
         complement_map = {
             'gaming': ['tech', 'entertainment', 'streaming'],
             'lifestyle': ['fashion', 'wellness', 'travel'],
@@ -669,7 +680,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return complement_map.get(niche, ['lifestyle', 'entertainment', 'general'])
 
     def _get_important_niches_for(self, niche: str) -> List[str]:
-        """Get important niches for network building"""
+        """
+Get important niches for network building"""
         importance_map = {
             'gaming': ['tech', 'streaming', 'esports', 'entertainment'],
             'lifestyle': ['fashion', 'wellness', 'beauty', 'home'],
@@ -680,7 +692,8 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return importance_map.get(niche, ['lifestyle', 'entertainment', 'business'])
 
     def _create_campaign_timeline(self, campaign_type: str, duration_weeks: int) -> Dict[str, List[str]]:
-        """Create campaign timeline"""
+        """
+Create campaign timeline"""
         timeline = {}
         
         if campaign_type == "joint_creation":

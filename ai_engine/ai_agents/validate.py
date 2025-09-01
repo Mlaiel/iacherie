@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import sys
 import traceback
@@ -32,7 +33,8 @@ class AIAgentsValidator:
         self.warnings = []
     
     def validate_imports(self) -> bool:
-        """Validate all module imports"""
+        """
+Validate all module imports"""
         print("🔍 Validating module imports...")
         
         try:

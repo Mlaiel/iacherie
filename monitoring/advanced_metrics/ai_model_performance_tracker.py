@@ -9,6 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """Types of AI models in the platform"""
+    """
+Types of AI models in the platform"""
+
     CONTENT_PROTECTOR = "content_protector"
     AUDIO_FINGERPRINTER = "audio_fingerprinter"
     VIDEO_ANALYZER = "video_analyzer"
@@ -44,6 +47,7 @@ class AIModelType(Enum):
 
 class ModelStatus(Enum):
     """AI model operational status"""
+
     ACTIVE = "active"
     TRAINING = "training"
     EVALUATING = "evaluating"
@@ -54,6 +58,7 @@ class ModelStatus(Enum):
 
 class PerformanceMetricType(Enum):
     """Types of AI performance metrics"""
+
     ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
@@ -84,7 +89,8 @@ class ModelPrediction:
 
 @dataclass
 class AccuracyMetrics:
-    """Model accuracy performance metrics"""
+    """
+Model accuracy performance metrics"""
     model_id: str
     model_type: AIModelType
     total_predictions: int
@@ -102,7 +108,8 @@ class AccuracyMetrics:
 
 @dataclass
 class ProcessingTimeMetrics:
-    """Model processing time performance metrics"""
+    """
+Model processing time performance metrics"""
     model_id: str
     model_type: AIModelType
     total_predictions: int
@@ -120,7 +127,8 @@ class ProcessingTimeMetrics:
 
 @dataclass
 class ModelResourceMetrics:
-    """Model resource utilization metrics"""
+    """
+Model resource utilization metrics"""
     model_id: str
     model_type: AIModelType
     avg_memory_usage_mb: float
@@ -136,7 +144,8 @@ class ModelResourceMetrics:
 
 @dataclass
 class ModelDriftMetrics:
-    """Model drift detection metrics"""
+    """
+Model drift detection metrics"""
     model_id: str
     model_type: AIModelType
     drift_score: float
@@ -153,7 +162,8 @@ class ModelDriftMetrics:
 
 @dataclass
 class ModelComparisonMetrics:
-    """Model comparison and A/B testing metrics"""
+    """
+Model comparison and A/B testing metrics"""
     model_a_id: str
     model_b_id: str
     model_type: AIModelType
@@ -782,17 +792,20 @@ class AIModelPerformanceTracker:
         return 0.85 + 0.1 * np.random.random()
     
     async def _calculate_recall(self, predictions: List[ModelPrediction]) -> float:
-        """Calculate recall score"""
+        """
+Calculate recall score"""
         # Simplified recall calculation
         return 0.82 + 0.12 * np.random.random()
     
     async def _calculate_auc_roc(self, predictions: List[ModelPrediction]) -> Optional[float]:
-        """Calculate AUC-ROC score"""
+        """
+Calculate AUC-ROC score"""
         # Simplified AUC-ROC calculation
         return 0.88 + 0.1 * np.random.random()
     
     async def _calculate_confidence_distribution(self, predictions: List[ModelPrediction]) -> Dict[str, int]:
-        """Calculate confidence score distribution"""
+        """
+Calculate confidence score distribution"""
         return {
             "0.0-0.2": int(len(predictions) * 0.05),
             "0.2-0.4": int(len(predictions) * 0.10),
@@ -812,11 +825,13 @@ class AIModelPerformanceTracker:
         }
     
     async def _calculate_batch_processing_avg(self, predictions: List[ModelPrediction]) -> float:
-        """Calculate batch processing average time"""
+        """
+Calculate batch processing average time"""
         return 150.0 + 50.0 * np.random.random()
     
     async def _calculate_processing_time_distribution(self, processing_times: List[float]) -> Dict[str, int]:
-        """Calculate processing time distribution"""
+        """
+Calculate processing time distribution"""
         total = len(processing_times)
         return {
             "0-50ms": int(total * 0.30),
@@ -832,7 +847,8 @@ class AIModelPerformanceTracker:
         return 0.15 + 0.25 * np.random.random()
     
     async def _calculate_feature_drift_scores(self, predictions: List[ModelPrediction]) -> Dict[str, float]:
-        """Calculate feature-level drift scores"""
+        """
+Calculate feature-level drift scores"""
         return {
             "feature_1": 0.12 + 0.15 * np.random.random(),
             "feature_2": 0.08 + 0.20 * np.random.random(),
@@ -845,16 +861,19 @@ class AIModelPerformanceTracker:
         return 0.10 + 0.15 * np.random.random()
     
     async def _calculate_data_quality_score(self, predictions: List[ModelPrediction]) -> float:
-        """Calculate data quality score"""
+        """
+Calculate data quality score"""
         return 0.85 + 0.12 * np.random.random()
     
     async def _calculate_statistical_significance(self, model_a_perf: Dict, model_b_perf: Dict, total_comparisons: int) -> float:
-        """Calculate statistical significance of model comparison"""
+        """
+Calculate statistical significance of model comparison"""
         # Simplified statistical significance calculation
         return 0.85 + 0.12 * np.random.random()
     
     async def _calculate_confidence_interval(self, model_a_perf: Dict, model_b_perf: Dict) -> Tuple[float, float]:
-        """Calculate confidence interval for model comparison"""
+        """
+Calculate confidence interval for model comparison"""
         # Simplified confidence interval calculation
         diff = model_a_perf["accuracy"] - model_b_perf["accuracy"]
         margin = 0.05
@@ -1031,22 +1050,26 @@ class AIModelPerformanceTracker:
         pass
     
     async def _update_prediction_cache(self, prediction: ModelPrediction) -> None:
-        """Update real-time prediction cache"""
+        """
+Update real-time prediction cache"""
         if prediction.model_id not in self.prediction_cache:
             self.prediction_cache[prediction.model_id] = deque(maxlen=1000)
         self.prediction_cache[prediction.model_id].append(prediction)
     
     async def _initialize_model_registry(self) -> None:
-        """Initialize model registry with existing models"""
+        """
+Initialize model registry with existing models"""
         # In production, this would load from database
         pass
     
     async def _setup_performance_monitoring(self) -> None:
-        """Setup performance monitoring infrastructure"""
+        """
+Setup performance monitoring infrastructure"""
         # In production, this would setup monitoring agents
         pass
     
     async def _initialize_drift_detection(self) -> None:
-        """Initialize drift detection system"""
+        """
+Initialize drift detection system"""
         # In production, this would setup drift detection pipelines
         pass

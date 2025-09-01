@@ -9,6 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -110,7 +111,9 @@ from .vector_database import (
 logger = logging.getLogger(__name__)
 
 class DeploymentMode(Enum):
-    """Infrastructure deployment modes"""
+    """
+Infrastructure deployment modes"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -118,6 +121,7 @@ class DeploymentMode(Enum):
 
 class DeploymentEnvironment(Enum):
     """Deployment environments"""
+
     LOCAL = "local"
     CLOUD = "cloud"
     HYBRID = "hybrid"

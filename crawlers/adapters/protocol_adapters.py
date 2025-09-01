@@ -33,12 +33,13 @@ Advanced Features:
 - Bandwidth optimization and compression
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 import ssl
@@ -114,7 +115,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ProtocolType(Enum):
-    """Supported protocol types."""
+    """
+Supported protocol types."""
+
     HTTP = "http"
     HTTPS = "https"
     WEBSOCKET = "websocket"
@@ -129,6 +132,7 @@ class ProtocolType(Enum):
 
 class AuthenticationType(Enum):
     """Supported authentication types."""
+
     NONE = "none"
     BASIC = "basic"
     BEARER = "bearer"
@@ -153,7 +157,8 @@ class ConnectionMetrics:
 
 @dataclass
 class ProtocolConfig:
-    """Advanced configuration for protocol adapters."""
+    """
+Advanced configuration for protocol adapters."""
     # Basic connection settings
     host: str
     port: int
@@ -234,7 +239,8 @@ class ProtocolResponse:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class CircuitBreaker:
-    """Circuit breaker implementation for resilience."""
+    """
+Circuit breaker implementation for resilience."""
     
     def __init__(self, threshold: int = 5, timeout: float = 60.0):
         self.threshold = threshold
@@ -280,7 +286,8 @@ class RateLimiter:
         self.lock = asyncio.Lock()
     
     async def acquire(self) -> bool:
-        """Acquire a token for rate limiting."""
+        """
+Acquire a token for rate limiting."""
         async with self.lock:
             now = time.time()
             elapsed = now - self.last_update
@@ -293,10 +300,12 @@ class RateLimiter:
             return False
 
 class ProtocolAdapter(ABC):
-    """Enterprise base class for all protocol adapters."""
+    """
+Enterprise base class for all protocol adapters."""
     
     def __init__(self, config: ProtocolConfig):
-        """Initialize protocol adapter with enterprise features."""
+        """
+Initialize protocol adapter with enterprise features."""
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
         self.connection = None
@@ -340,12 +349,14 @@ class ProtocolAdapter(ABC):
     
     @abstractmethod
     async def connect(self) -> bool:
-        """Connect using the protocol."""
+        """
+Connect using the protocol."""
         pass
     
     @abstractmethod
     async def disconnect(self):
-        """Disconnect from the protocol."""
+        """
+Disconnect from the protocol."""
         pass
     
     @abstractmethod
@@ -356,11 +367,13 @@ class ProtocolAdapter(ABC):
         data: Optional[Any] = None,
         **kwargs
     ) -> ProtocolResponse:
-        """Send request using the protocol."""
+        """
+Send request using the protocol."""
         pass
     
     async def health_check(self) -> bool:
-        """Perform health check on the connection."""
+        """
+Perform health check on the connection."""
         try:
             if self.config.protocol in [ProtocolType.HTTP, ProtocolType.HTTPS]:
                 response = await self.send_request("HEAD", "/health")
@@ -386,7 +399,8 @@ class HTTPAdapter(ProtocolAdapter):
     """Adapter for HTTP protocol."""
     
     def __init__(self, config: ProtocolConfig):
-        """Initialize HTTP adapter."""
+        """
+Initialize HTTP adapter."""
         super().__init__(config)
         self.protocol_name = "HTTP"
         self.session = None
@@ -432,7 +446,8 @@ class HTTPAdapter(ProtocolAdapter):
         data: Optional[Any] = None,
         **kwargs
     ) -> ProtocolResponse:
-        """Send HTTP request."""
+        """
+Send HTTP request."""
         start_time = datetime.now()
         
         try:
@@ -503,22 +518,27 @@ class HTTPAdapter(ProtocolAdapter):
         return await self.send_request('GET', path, **kwargs)
     
     async def post(self, path: str, data: Any = None, **kwargs) -> ProtocolResponse:
-        """Send POST request."""
+        """
+Send POST request."""
         return await self.send_request('POST', path, data, **kwargs)
     
     async def put(self, path: str, data: Any = None, **kwargs) -> ProtocolResponse:
-        """Send PUT request."""
+        """
+Send PUT request."""
         return await self.send_request('PUT', path, data, **kwargs)
     
     async def delete(self, path: str, **kwargs) -> ProtocolResponse:
-        """Send DELETE request."""
+        """
+Send DELETE request."""
         return await self.send_request('DELETE', path, **kwargs)
 
 class HTTPSAdapter(HTTPAdapter):
-    """Adapter for HTTPS protocol."""
+    """
+Adapter for HTTPS protocol."""
     
     def __init__(self, config: ProtocolConfig):
-        """Initialize HTTPS adapter."""
+        """
+Initialize HTTPS adapter."""
         super().__init__(config)
         self.protocol_name = "HTTPS"
         self.base_url = f"https://{config.host}:{config.port}"
@@ -569,7 +589,8 @@ class WebSocketSecureAdapter(ProtocolAdapter):
     """Adapter for secure WebSocket protocol."""
     
     def __init__(self, config: ProtocolConfig):
-        """Initialize WebSocket Secure adapter."""
+        """
+Initialize WebSocket Secure adapter."""
         super().__init__(config)
         self.protocol_name = "WSS"
         self.websocket = None
@@ -637,7 +658,8 @@ class WebSocketSecureAdapter(ProtocolAdapter):
         data: Optional[Any] = None,
         **kwargs
     ) -> ProtocolResponse:
-        """Send WebSocket message."""
+        """
+Send WebSocket message."""
         start_time = datetime.now()
         
         try:
@@ -713,14 +735,17 @@ class WebSocketSecureAdapter(ProtocolAdapter):
         self.message_handlers[message_type] = handler
     
     async def send_message(self, message: Union[str, Dict]) -> ProtocolResponse:
-        """Send raw message via WebSocket."""
+        """
+Send raw message via WebSocket."""
         return await self.send_request('SEND', '', message)
 
 class FTPAdapter(ProtocolAdapter):
-    """Adapter for FTP protocol."""
+    """
+Adapter for FTP protocol."""
     
     def __init__(self, config: ProtocolConfig):
-        """Initialize FTP adapter."""
+        """
+Initialize FTP adapter."""
         super().__init__(config)
         
         if not FTP_AVAILABLE:
@@ -766,7 +791,8 @@ class FTPAdapter(ProtocolAdapter):
         data: Optional[Any] = None,
         **kwargs
     ) -> ProtocolResponse:
-        """Execute FTP operation."""
+        """
+Execute FTP operation."""
         start_time = datetime.now()
         
         try:
@@ -850,18 +876,22 @@ class FTPAdapter(ProtocolAdapter):
         return await self.send_request('LIST', path)
     
     async def download_file(self, remote_path: str, local_path: str) -> ProtocolResponse:
-        """Download file from FTP server."""
+        """
+Download file from FTP server."""
         return await self.send_request('DOWNLOAD', remote_path, local_path=local_path)
     
     async def upload_file(self, local_path: str, remote_path: str) -> ProtocolResponse:
-        """Upload file to FTP server."""
+        """
+Upload file to FTP server."""
         return await self.send_request('UPLOAD', remote_path, local_path=local_path)
 
 class SFTPAdapter(ProtocolAdapter):
-    """Adapter for SFTP protocol."""
+    """
+Adapter for SFTP protocol."""
     
     def __init__(self, config: ProtocolConfig):
-        """Initialize SFTP adapter."""
+        """
+Initialize SFTP adapter."""
         super().__init__(config)
         
         if not FTP_AVAILABLE:
@@ -918,7 +948,8 @@ class SFTPAdapter(ProtocolAdapter):
         data: Optional[Any] = None,
         **kwargs
     ) -> ProtocolResponse:
-        """Execute SFTP operation."""
+        """
+Execute SFTP operation."""
         start_time = datetime.now()
         
         try:
@@ -999,7 +1030,8 @@ class TCPAdapter(ProtocolAdapter):
     """Adapter for raw TCP protocol."""
     
     def __init__(self, config: ProtocolConfig):
-        """Initialize TCP adapter."""
+        """
+Initialize TCP adapter."""
         super().__init__(config)
         self.protocol_name = "TCP"
         self.reader = None
@@ -1035,7 +1067,8 @@ class TCPAdapter(ProtocolAdapter):
         data: Optional[Any] = None,
         **kwargs
     ) -> ProtocolResponse:
-        """Send TCP data."""
+        """
+Send TCP data."""
         start_time = datetime.now()
         
         try:
@@ -1119,7 +1152,8 @@ class TCPAdapter(ProtocolAdapter):
         return await self.send_request('SEND', '', data, **kwargs)
     
     async def receive_data(self, buffer_size: int = 1024, timeout: float = 5.0) -> Optional[bytes]:
-        """Receive data from TCP connection."""
+        """
+Receive data from TCP connection."""
         try:
             data = await asyncio.wait_for(
                 self.reader.read(buffer_size),

@@ -20,6 +20,7 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for API integration"""
+    """
+Supported platform types for API integration"""
+
     TWITTER = "twitter"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -72,6 +75,7 @@ class PlatformType(Enum):
 
 class AuthType(Enum):
     """Supported authentication types"""
+
     OAUTH2 = "oauth2"
     JWT = "jwt"
     API_KEY = "api_key"
@@ -83,6 +87,7 @@ class AuthType(Enum):
 
 class ClientStatus(Enum):
     """API client status tracking"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     RATE_LIMITED = "rate_limited"
@@ -105,7 +110,8 @@ class RateLimitConfig:
 
 @dataclass
 class AuthCredentials:
-    """Authentication credentials container"""
+    """
+Authentication credentials container"""
     auth_type: AuthType
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
@@ -123,7 +129,8 @@ class AuthCredentials:
 
 @dataclass
 class APIClientConfig:
-    """Comprehensive API client configuration"""
+    """
+Comprehensive API client configuration"""
     platform: PlatformType
     base_url: str
     auth_credentials: AuthCredentials
@@ -158,7 +165,8 @@ class APIResponse:
 
 
 class APIClient(ABC):
-    """Abstract base class for platform-specific API clients"""
+    """
+Abstract base class for platform-specific API clients"""
     
     def __init__(self, config: APIClientConfig):
         self.config = config
@@ -198,26 +206,31 @@ class APIClient(ABC):
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Platform-specific authentication implementation"""
+        """
+Platform-specific authentication implementation"""
         pass
     
     @abstractmethod
     async def refresh_authentication(self) -> bool:
-        """Refresh authentication tokens"""
+        """
+Refresh authentication tokens"""
         pass
     
     @abstractmethod
     def _build_request_headers(self) -> Dict[str, str]:
-        """Build platform-specific request headers"""
+        """
+Build platform-specific request headers"""
         pass
     
     @abstractmethod
     def _extract_rate_limit_info(self, headers: Dict[str, str]) -> Dict[str, Optional[int]]:
-        """Extract rate limit information from response headers"""
+        """
+Extract rate limit information from response headers"""
         pass
     
     async def initialize(self) -> None:
-        """Initialize API client and establish connection"""
+        """
+Initialize API client and establish connection"""
         try:
             # Create HTTP session
             timeout = aiohttp.ClientTimeout(total=self.config.timeout)
@@ -385,7 +398,8 @@ class APIClient(ABC):
         return responses
     
     async def _ensure_authenticated(self) -> None:
-        """Ensure client is authenticated and tokens are valid"""
+        """
+Ensure client is authenticated and tokens are valid"""
         async with self.auth_lock:
             current_time = time.time()
             
@@ -409,11 +423,13 @@ class APIClient(ABC):
             return await response.read()
     
     def _extract_pagination_info(self, response: APIResponse) -> Optional[Dict[str, Any]]:
-        """Extract pagination information from response (override in subclasses)"""
+        """
+Extract pagination information from response (override in subclasses)"""
         return None
     
     def _handle_client_error(self, error: aiohttp.ClientResponseError) -> None:
-        """Handle client-specific HTTP errors"""
+        """
+Handle client-specific HTTP errors"""
         if error.status == 429:
             self.status = ClientStatus.RATE_LIMITED
             self.stats['rate_limited_requests'] += 1
@@ -442,7 +458,8 @@ class APIClient(ABC):
         )
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get client health and status information"""
+        """
+Get client health and status information"""
         return {
             'platform': self.platform.value,
             'status': self.status.value,
@@ -453,7 +470,8 @@ class APIClient(ABC):
         }
     
     async def cleanup(self) -> None:
-        """Cleanup client resources"""
+        """
+Cleanup client resources"""
         if self.session:
             await self.session.close()
         
@@ -497,7 +515,8 @@ class TwitterAPIClient(APIClient):
         return await self.authenticate()
     
     def _build_request_headers(self) -> Dict[str, str]:
-        """Build Twitter-specific request headers"""
+        """
+Build Twitter-specific request headers"""
         headers = {
             "Authorization": f"Bearer {self.config.auth_credentials.bearer_token}",
             "User-Agent": self.config.user_agent,
@@ -515,10 +534,12 @@ class TwitterAPIClient(APIClient):
 
 
 class YouTubeAPIClient(APIClient):
-    """YouTube Data API v3 client implementation"""
+    """
+YouTube Data API v3 client implementation"""
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API using API key"""
+        """
+Authenticate with YouTube API using API key"""
         try:
             # Test with a simple quota-free request
             params = {'key': self.config.auth_credentials.api_key, 'part': 'id'}
@@ -542,7 +563,8 @@ class YouTubeAPIClient(APIClient):
         return await self.authenticate()
     
     def _build_request_headers(self) -> Dict[str, str]:
-        """Build YouTube-specific request headers"""
+        """
+Build YouTube-specific request headers"""
         headers = {
             "User-Agent": self.config.user_agent,
             "Accept": "application/json"
@@ -609,7 +631,8 @@ class APIClientManager:
         return self.clients.get(client_id)
     
     async def get_platform_client(self, platform: PlatformType) -> Optional[APIClient]:
-        """Get healthy client for specific platform"""
+        """
+Get healthy client for specific platform"""
         for client_id, client in self.clients.items():
             if (client.platform == platform and 
                 client.status == ClientStatus.ACTIVE):
@@ -617,7 +640,8 @@ class APIClientManager:
         return None
     
     async def remove_client(self, client_id: str) -> bool:
-        """Remove and cleanup API client"""
+        """
+Remove and cleanup API client"""
         client = self.clients.get(client_id)
         if client:
             await client.cleanup()
@@ -640,7 +664,8 @@ class APIClientManager:
         }
     
     async def cleanup_all(self) -> None:
-        """Cleanup all registered clients"""
+        """
+Cleanup all registered clients"""
         for client_id in list(self.clients.keys()):
             await self.remove_client(client_id)
         

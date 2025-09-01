@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import json
 import jsonschema
 from typing import Dict, Any, List, Optional, Union, Type, Callable
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class SerializationFormat(Enum):
-    """Serialization format enumeration"""
+    """
+Serialization format enumeration"""
+
     JSON = "json"
     YAML = "yaml"
     XML = "xml"
@@ -46,13 +49,15 @@ class ValidationResult:
     validation_time: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class ProcessingStats:
-    """JSON processing statistics"""
+    """
+JSON processing statistics"""
     files_processed: int = 0
     records_processed: int = 0
     processing_time: float = 0.0
@@ -62,10 +67,12 @@ class ProcessingStats:
 
 
 class CustomJSONEncoder(json.JSONEncoder):
-    """Custom JSON encoder for complex data types"""
+    """
+Custom JSON encoder for complex data types"""
     
     def default(self, obj):
-        """Handle custom object serialization"""
+        """
+Handle custom object serialization"""
         if isinstance(obj, datetime):
             return obj.isoformat()
         elif isinstance(obj, date):
@@ -85,7 +92,8 @@ class CustomJSONEncoder(json.JSONEncoder):
 
 
 class JSONProcessor:
-    """Advanced JSON processing with validation and transformation"""
+    """
+Advanced JSON processing with validation and transformation"""
     
     def __init__(self, use_compression: bool = False):
         self.use_compression = use_compression
@@ -95,16 +103,19 @@ class JSONProcessor:
         self.processing_stats = ProcessingStats()
         
     def register_custom_encoder(self, obj_type: Type, encoder_func: Callable):
-        """Register custom encoder for specific type"""
+        """
+Register custom encoder for specific type"""
         self.custom_encoders[obj_type] = encoder_func
     
     def register_custom_decoder(self, type_name: str, decoder_func: Callable):
-        """Register custom decoder for specific type"""
+        """
+Register custom decoder for specific type"""
         self.custom_decoders[type_name] = decoder_func
     
     async def process_json_data(self, data: Any, 
                               validate_schema: Optional[str] = None) -> Dict[str, Any]:
-        """Process JSON data with optional validation"""
+        """
+Process JSON data with optional validation"""
         try:
             start_time = datetime.utcnow()
             
@@ -166,7 +177,8 @@ class JSONProcessor:
         return json.dumps(data, cls=ExtendedJSONEncoder, indent=indent, ensure_ascii=False)
     
     def deserialize_from_json(self, json_string: str) -> Any:
-        """Deserialize JSON string with custom decoders"""
+        """
+Deserialize JSON string with custom decoders"""
         def custom_decoder(dct):
             # Apply custom decoders
             for key, value in dct.items():
@@ -178,7 +190,8 @@ class JSONProcessor:
     
     async def validate_against_schema(self, data: Dict[str, Any], 
                                     schema_name: str) -> ValidationResult:
-        """Validate JSON data against registered schema"""
+        """
+Validate JSON data against registered schema"""
         try:
             start_time = datetime.utcnow()
             
@@ -321,7 +334,8 @@ class SchemaValidator:
         self.validator_cache = {}
         
     def register_schema(self, name: str, schema: Dict[str, Any]):
-        """Register JSON schema"""
+        """
+Register JSON schema"""
         try:
             # Validate schema itself
             jsonschema.Draft7Validator.check_schema(schema)
@@ -543,7 +557,8 @@ class DataSerializer:
         }
     
     def serialize(self, data: Any, format_type: SerializationFormat) -> str:
-        """Serialize data to specified format"""
+        """
+Serialize data to specified format"""
         try:
             serializer = self.serializers.get(format_type)
             if not serializer:
@@ -573,15 +588,18 @@ class DataSerializer:
         return json.dumps(data, cls=CustomJSONEncoder, indent=2, ensure_ascii=False)
     
     def _deserialize_json(self, data_string: str) -> Any:
-        """Deserialize from JSON"""
+        """
+Deserialize from JSON"""
         return json.loads(data_string)
     
     def _serialize_yaml(self, data: Any) -> str:
-        """Serialize to YAML"""
+        """
+Serialize to YAML"""
         return yaml.dump(data, default_flow_style=False, allow_unicode=True)
     
     def _deserialize_yaml(self, data_string: str) -> Any:
-        """Deserialize from YAML"""
+        """
+Deserialize from YAML"""
         return yaml.safe_load(data_string)
     
     def _serialize_xml(self, data: Any, root_name: str = "root") -> str:
@@ -640,7 +658,8 @@ class DataSerializer:
         return xml_to_dict(root)
     
     def _serialize_csv(self, data: List[Dict[str, Any]]) -> str:
-        """Serialize list of dictionaries to CSV"""
+        """
+Serialize list of dictionaries to CSV"""
         if not data or not isinstance(data, list):
             raise ValueError("CSV serialization requires list of dictionaries")
         
@@ -689,20 +708,23 @@ class DataSerializer:
         return result
     
     def _serialize_pickle(self, data: Any) -> str:
-        """Serialize to pickle (base64 encoded)"""
+        """
+Serialize to pickle (base64 encoded)"""
         pickled_data = pickle.dumps(data)
         import base64
         return base64.b64encode(pickled_data).decode('ascii')
     
     def _deserialize_pickle(self, data_string: str) -> Any:
-        """Deserialize from pickle (base64 encoded)"""
+        """
+Deserialize from pickle (base64 encoded)"""
         import base64
         pickled_data = base64.b64decode(data_string.encode('ascii'))
         return pickle.loads(pickled_data)
 
 
 class ConfigParser:
-    """Configuration file parser supporting multiple formats"""
+    """
+Configuration file parser supporting multiple formats"""
     
     def __init__(self):
         self.serializer = DataSerializer()
@@ -710,7 +732,8 @@ class ConfigParser:
         
     def load_config(self, file_path: str, 
                    format_type: Optional[SerializationFormat] = None) -> Dict[str, Any]:
-        """Load configuration from file"""
+        """
+Load configuration from file"""
         try:
             file_path_obj = Path(file_path)
             
@@ -779,7 +802,8 @@ class ConfigParser:
         return format_map.get(suffix, SerializationFormat.JSON)
     
     def reload_if_changed(self, file_path: str) -> Optional[Dict[str, Any]]:
-        """Reload configuration if file has been modified"""
+        """
+Reload configuration if file has been modified"""
         try:
             file_path_obj = Path(file_path)
             
@@ -811,7 +835,8 @@ class MetadataExtractor:
         }
     
     def extract_metadata(self, data: Any, source_type: str) -> Dict[str, Any]:
-        """Extract metadata based on source type"""
+        """
+Extract metadata based on source type"""
         try:
             extractor = self.extractors.get(source_type)
             if not extractor:
@@ -846,7 +871,8 @@ class MetadataExtractor:
         }
     
     def _extract_json_metadata(self, json_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract metadata from JSON structure"""
+        """
+Extract metadata from JSON structure"""
         metadata = {
             'total_keys': len(json_data) if isinstance(json_data, dict) else 0,
             'data_types': {},
@@ -880,7 +906,8 @@ class MetadataExtractor:
         return metadata
     
     def _extract_content_metadata(self, content: str) -> Dict[str, Any]:
-        """Extract metadata from content string"""
+        """
+Extract metadata from content string"""
         lines = content.split('\n')
         words = content.split()
         
@@ -900,5 +927,6 @@ class MetadataExtractor:
 
 
 class JSONProcessingError(Exception):
-    """Custom exception for JSON processing errors"""
+    """
+Custom exception for JSON processing errors"""
     pass

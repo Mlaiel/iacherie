@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ from ...utils.chart_generator import ChartGenerator
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration."""
+    """
+Report template configuration."""
     template_id: str
     name: str
     description: str
@@ -47,7 +49,8 @@ class ReportTemplate:
 
 @dataclass
 class ReportData:
-    """Report data structure."""
+    """
+Report data structure."""
     report_id: str
     template_id: str
     title: str
@@ -72,7 +75,8 @@ class ReportGenerator:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the report generator."""
+        """
+Initialize the report generator."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

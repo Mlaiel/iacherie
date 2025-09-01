@@ -15,6 +15,7 @@ Gestionnaires de configuration multi-environnements enterprise.
 Support complet: Development, Staging, Testing, Production, Docker, K8s, Cloud.
 ==================================================================
 """
+
 import os
 from typing import Dict, Any, Optional, Type, Union
 from enum import Enum
@@ -46,7 +47,9 @@ from .cloud import (
 
 
 class DeploymentType(str, Enum):
-    """Types de déploiement supportés"""
+    """
+Types de déploiement supportés"""
+
     LOCAL = "local"
     DOCKER = "docker"
     KUBERNETES = "kubernetes"
@@ -126,7 +129,8 @@ class EnvironmentManagerFactory:
         
     @classmethod
     def _auto_detect_environment(cls) -> EnvironmentType:
-        """Détecte automatiquement l'environnement"""
+        """
+Détecte automatiquement l'environnement"""
         env_indicators = {
             EnvironmentType.PRODUCTION: [
                 "PROD", "PRODUCTION", "prod",
@@ -226,7 +230,8 @@ def get_default_config() -> BaseEnvironmentConfigManager:
 
 
 def create_config_from_env() -> BaseEnvironmentConfigManager:
-    """Crée la configuration à partir des variables d'environnement"""
+    """
+Crée la configuration à partir des variables d'environnement"""
     env_type_str = os.getenv("ENVIRONMENT", "development").lower()
     deployment_type_str = os.getenv("DEPLOYMENT_TYPE", "local").lower()
     cloud_provider_str = os.getenv("CLOUD_PROVIDER", "aws").lower()

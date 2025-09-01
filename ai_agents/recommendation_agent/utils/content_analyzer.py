@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -72,7 +73,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         }
         
     def _initialize_models(self):
-        """Initialize machine learning models for content analysis"""
+        """
+Initialize machine learning models for content analysis"""
         try:
             # Text analysis models
             self.text_sentiment_model = transformers.pipeline(
@@ -615,7 +617,8 @@ class ContentAnalyzer(IContentAnalyzer, IMultiModalProcessor):
         return technical_scores
     
     def _calculate_overall_quality(self, quality_metrics: Dict[str, float]) -> float:
-        """Calculate overall quality score from individual metrics"""
+        """
+Calculate overall quality score from individual metrics"""
         weights = {
             'technical': 0.3,
             'content': 0.25,

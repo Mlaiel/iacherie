@@ -10,6 +10,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
@@ -21,7 +22,9 @@ import logging
 
 
 class SLAStatus(Enum):
-    """SLA compliance status."""
+    """
+SLA compliance status."""
+
     COMPLIANT = "compliant"
     AT_RISK = "at_risk"
     VIOLATED = "violated"
@@ -30,6 +33,7 @@ class SLAStatus(Enum):
 
 class ServiceTier(Enum):
     """Service tier definitions."""
+
     PREMIUM = "premium"
     STANDARD = "standard"
     BASIC = "basic"
@@ -50,7 +54,8 @@ class SLATarget:
 
 @dataclass
 class SLAMeasurement:
-    """Individual SLA measurement point."""
+    """
+Individual SLA measurement point."""
     timestamp: datetime
     sla_name: str
     measured_value: float
@@ -60,7 +65,8 @@ class SLAMeasurement:
     metadata: Dict = None
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['service_tier'] = self.service_tier.value
@@ -69,7 +75,8 @@ class SLAMeasurement:
 
 @dataclass 
 class SLAReport:
-    """SLA compliance report."""
+    """
+SLA compliance report."""
     sla_name: str
     service_tier: ServiceTier
     measurement_period: str
@@ -84,7 +91,8 @@ class SLAReport:
     generated_at: datetime
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         data = asdict(self)
         data['service_tier'] = self.service_tier.value
         data['status'] = self.status.value
@@ -93,7 +101,8 @@ class SLAReport:
 
 
 class ServiceLevelTracker:
-    """Tracks service level metrics and compliance."""
+    """
+Tracks service level metrics and compliance."""
     
     def __init__(self, retention_days: int = 30):
         self.retention_days = retention_days
@@ -105,7 +114,8 @@ class ServiceLevelTracker:
         self._initialize_default_slas()
     
     def _initialize_default_slas(self):
-        """Initialize default SLA targets for the platform."""
+        """
+Initialize default SLA targets for the platform."""
         
         # Content Upload SLAs
         self.sla_targets['content_upload_success_rate'] = SLATarget(
@@ -282,7 +292,8 @@ class ServiceLevelTracker:
             return SLAStatus.VIOLATED
     
     def generate_sla_report(self, sla_name: str, period_hours: int = 24) -> Optional[SLAReport]:
-        """Generate comprehensive SLA report."""
+        """
+Generate comprehensive SLA report."""
         if sla_name not in self.sla_targets:
             return None
         
@@ -415,14 +426,16 @@ class ServiceLevelTracker:
 
 
 class AvailabilityCalculator:
-    """Calculates system availability and uptime metrics."""
+    """
+Calculates system availability and uptime metrics."""
     
     def __init__(self):
         self.uptime_events = deque(maxlen=10000)
         self.downtime_events = deque(maxlen=1000)
         
     def record_uptime_event(self, service_name: str, timestamp: datetime = None):
-        """Record a service uptime event."""
+        """
+Record a service uptime event."""
         event = {
             'timestamp': timestamp or datetime.utcnow(),
             'service': service_name,
@@ -431,7 +444,8 @@ class AvailabilityCalculator:
         self.uptime_events.append(event)
     
     def record_downtime_event(self, service_name: str, duration_seconds: int, reason: str = None, timestamp: datetime = None):
-        """Record a service downtime event."""
+        """
+Record a service downtime event."""
         event = {
             'timestamp': timestamp or datetime.utcnow(),
             'service': service_name,
@@ -442,7 +456,8 @@ class AvailabilityCalculator:
         self.downtime_events.append(event)
     
     def calculate_availability(self, service_name: str, period_hours: int = 24) -> Dict:
-        """Calculate availability metrics for a service."""
+        """
+Calculate availability metrics for a service."""
         cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
         
         # Get relevant events for the period
@@ -478,7 +493,8 @@ class AvailabilityCalculator:
         }
     
     def _calculate_mtbf(self, service_name: str, period_hours: int) -> float:
-        """Calculate Mean Time Between Failures."""
+        """
+Calculate Mean Time Between Failures."""
         cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
         
         failures = [
@@ -500,7 +516,8 @@ class AvailabilityCalculator:
         return sum(intervals) / len(intervals) if intervals else period_hours
     
     def _calculate_mttr(self, service_name: str, period_hours: int) -> float:
-        """Calculate Mean Time To Recovery."""
+        """
+Calculate Mean Time To Recovery."""
         cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
         
         downtimes = [
@@ -514,7 +531,8 @@ class AvailabilityCalculator:
         return (sum(downtimes) / len(downtimes)) / 60  # Convert to minutes
     
     def get_service_availability_summary(self, period_hours: int = 24) -> Dict:
-        """Get availability summary for all services."""
+        """
+Get availability summary for all services."""
         # Get unique service names
         all_services = set()
         for event in list(self.uptime_events) + list(self.downtime_events):
@@ -541,7 +559,8 @@ class AvailabilityCalculator:
 
 
 class SLAMonitor:
-    """Main SLA monitoring orchestrator."""
+    """
+Main SLA monitoring orchestrator."""
     
     def __init__(self, retention_days: int = 30):
         self.service_tracker = ServiceLevelTracker(retention_days)
@@ -549,7 +568,8 @@ class SLAMonitor:
         self.monitoring_active = False
         
     def start_monitoring(self):
-        """Start SLA monitoring."""
+        """
+Start SLA monitoring."""
         self.monitoring_active = True
         logging.info("SLA monitoring started")
     
@@ -657,6 +677,7 @@ class SLAMonitor:
         return dashboard_data
     
     async def cleanup_old_data(self):
-        """Clean up old monitoring data."""
+        """
+Clean up old monitoring data."""
         self.service_tracker.cleanup_old_measurements()
         logging.info("SLA monitoring data cleanup completed")

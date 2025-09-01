@@ -6,6 +6,7 @@ Copyright: All rights reserved - Unauthorized use strictly prohibited
 This module provides centralized management and orchestration for all seed data
 initialization across the IA Influencer Agent platform.
 """
+
 from typing import Dict, List, Any, Optional, Union
 import asyncio
 import logging
@@ -44,7 +45,8 @@ class SeedsOrchestrator:
     """
     
     def __init__(self):
-        """Initialize seeds orchestrator with all managers."""
+        """
+Initialize seeds orchestrator with all managers."""
         self.managers = {
             'user_seeds': UserSeedsManager(),
             'content_seeds': ContentSeedsManager(),
@@ -319,7 +321,8 @@ class SeedsOrchestrator:
         return validation_results
     
     async def _rollback_initialization(self, initialized: set):
-        """Rollback partial initialization on failure."""
+        """
+Rollback partial initialization on failure."""
         logger.warning("Rolling back partial initialization...")
         
         for module_name in initialized:
@@ -368,12 +371,14 @@ seeds_orchestrator = SeedsOrchestrator()
 
 
 async def initialize_all_seeds(**kwargs) -> Dict[str, Any]:
-    """Convenience function to initialize all seeds."""
+    """
+Convenience function to initialize all seeds."""
     return await seeds_orchestrator.initialize_all(**kwargs)
 
 
 async def initialize_seed_module(module_name: str) -> Dict[str, Any]:
-    """Convenience function to initialize a specific seed module."""
+    """
+Convenience function to initialize a specific seed module."""
     return await seeds_orchestrator.initialize_module(module_name)
 
 

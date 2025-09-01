@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -41,7 +42,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class WhatsAppMessage:
-    """WhatsApp Business message information"""
+    """
+WhatsApp Business message information"""
     message_id: str
     wa_id: str  # WhatsApp ID of sender
     phone_number: str
@@ -76,7 +78,8 @@ class WhatsAppMessage:
 
 @dataclass
 class WhatsAppContact:
-    """WhatsApp Business contact information"""
+    """
+WhatsApp Business contact information"""
     wa_id: str
     phone_number: str
     profile_name: Optional[str]
@@ -100,7 +103,8 @@ class WhatsAppContact:
 
 @dataclass
 class WhatsAppBusinessAccount:
-    """WhatsApp Business account information"""
+    """
+WhatsApp Business account information"""
     business_account_id: str
     business_phone_number_id: str
     display_phone_number: str

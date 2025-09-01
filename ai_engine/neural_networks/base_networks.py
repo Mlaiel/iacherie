@@ -6,6 +6,7 @@ Provides standardized architecture, training, and deployment capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkType(Enum):
-    """Neural network architecture types"""
+    """
+Neural network architecture types"""
+
     TRANSFORMER = "transformer"
     CNN = "convolutional"
     RNN = "recurrent"  
@@ -37,6 +40,7 @@ class NetworkType(Enum):
 
 class DeviceType(Enum):
     """Supported computation devices"""
+
     CPU = "cpu"
     CUDA = "cuda"
     MPS = "mps"  # Apple Silicon
@@ -170,11 +174,13 @@ class BaseNeuralNetwork(nn.Module, ABC):
         predictions: torch.Tensor, 
         targets: torch.Tensor
     ) -> torch.Tensor:
-        """Compute loss for the specific network type"""
+        """
+Compute loss for the specific network type"""
         pass
     
     def configure_optimizer(self) -> optim.Optimizer:
-        """Configure optimizer for training"""
+        """
+Configure optimizer for training"""
         if hasattr(self.config, 'optimizer_type'):
             optimizer_type = self.config.optimizer_type
         else:
@@ -318,14 +324,16 @@ class BaseNeuralNetwork(nn.Module, ABC):
         outputs: torch.Tensor, 
         inputs: torch.Tensor
     ) -> torch.Tensor:
-        """Compute unsupervised loss (reconstruction, etc.)"""
+        """
+Compute unsupervised loss (reconstruction, etc.)"""
         return nn.MSELoss()(outputs, inputs)
     
     def validate(
         self, 
         dataloader: DataLoader
     ) -> Dict[str, float]:
-        """Validate the model"""
+        """
+Validate the model"""
         self.eval()
         total_loss = 0.0
         total_accuracy = 0.0
@@ -360,7 +368,8 @@ class BaseNeuralNetwork(nn.Module, ABC):
         }
     
     def save_model(self, path: Union[str, Path]) -> None:
-        """Save model checkpoint"""
+        """
+Save model checkpoint"""
         path = Path(path)
         path.mkdir(parents=True, exist_ok=True)
         
@@ -419,14 +428,16 @@ class ModelRegistry:
         self.models = self._load_registry()
     
     def _load_registry(self) -> Dict[str, Any]:
-        """Load model registry from disk"""
+        """
+Load model registry from disk"""
         if self.registry_file.exists():
             with open(self.registry_file, 'r') as f:
                 return json.load(f)
         return {}
     
     def _save_registry(self) -> None:
-        """Save model registry to disk"""
+        """
+Save model registry to disk"""
         with open(self.registry_file, 'w') as f:
             json.dump(self.models, f, indent=2, default=str)
     
@@ -467,7 +478,8 @@ class ModelRegistry:
         return self.models.get(name)
     
     def list_models(self, tag: str = None) -> List[str]:
-        """List available models, optionally filtered by tag"""
+        """
+List available models, optionally filtered by tag"""
         if tag:
             return [
                 name for name, info in self.models.items()
@@ -476,7 +488,8 @@ class ModelRegistry:
         return list(self.models.keys())
     
     def remove_model(self, name: str) -> None:
-        """Remove model from registry"""
+        """
+Remove model from registry"""
         if name in self.models:
             del self.models[name]
             self._save_registry()
@@ -570,7 +583,8 @@ class InferenceEngine:
         inputs: Union[torch.Tensor, np.ndarray],
         batch_size: Optional[int] = None
     ) -> np.ndarray:
-        """Run batch inference on large inputs"""
+        """
+Run batch inference on large inputs"""
         
         if batch_size is None:
             batch_size = self.batch_size

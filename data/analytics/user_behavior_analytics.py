@@ -5,12 +5,13 @@ Advanced user behavior analysis and pattern recognition for content optimization
 Provides comprehensive insights into user interactions, preferences, and engagement patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ import networkx as nx
 
 
 class UserAction(Enum):
-    """User action types"""
+    """
+User action types"""
+
     VIEW = "view"
     LIKE = "like"
     COMMENT = "comment"
@@ -50,6 +53,7 @@ class UserAction(Enum):
 
 class UserSegment(Enum):
     """User segment categories"""
+
     CASUAL_VIEWER = "casual_viewer"
     ENGAGED_FAN = "engaged_fan"
     SUPER_FAN = "super_fan"
@@ -62,6 +66,7 @@ class UserSegment(Enum):
 
 class ContentCategory(Enum):
     """Content category types"""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
@@ -89,7 +94,8 @@ class UserProfile:
 
 @dataclass
 class BehaviorPattern:
-    """User behavior pattern"""
+    """
+User behavior pattern"""
     pattern_id: str
     pattern_type: str
     frequency: float
@@ -102,7 +108,8 @@ class BehaviorPattern:
 
 @dataclass
 class EngagementInsight:
-    """Engagement insight data"""
+    """
+Engagement insight data"""
     insight_type: str
     description: str
     affected_segments: List[UserSegment]
@@ -114,7 +121,8 @@ class EngagementInsight:
 
 @dataclass
 class UserJourney:
-    """User journey mapping"""
+    """
+User journey mapping"""
     journey_id: str
     user_segment: UserSegment
     typical_path: List[Dict]

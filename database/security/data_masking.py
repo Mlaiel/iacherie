@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class MaskingTechnique(Enum):
-    """Data masking techniques"""
+    """
+Data masking techniques"""
+
     REDACTION = "redaction"  # Replace with asterisks or X's
     SUBSTITUTION = "substitution"  # Replace with realistic fake data
     SHUFFLING = "shuffling"  # Randomize order within column
@@ -61,6 +64,7 @@ class MaskingTechnique(Enum):
 
 class DataType(Enum):
     """Supported data types for masking"""
+
     EMAIL = "email"
     PHONE = "phone"
     SSN = "ssn"
@@ -79,6 +83,7 @@ class DataType(Enum):
 
 class SensitivityLevel(Enum):
     """Data sensitivity levels"""
+
     PUBLIC = 1
     INTERNAL = 2
     CONFIDENTIAL = 3
@@ -88,7 +93,8 @@ class SensitivityLevel(Enum):
 
 @dataclass
 class MaskingRule:
-    """Data masking rule definition"""
+    """
+Data masking rule definition"""
     rule_id: str
     table_name: str
     column_name: str
@@ -106,7 +112,8 @@ class MaskingRule:
 
 @dataclass
 class MaskingJob:
-    """Data masking job definition"""
+    """
+Data masking job definition"""
     job_id: str
     name: str
     description: str
@@ -137,18 +144,21 @@ class MaskingResult:
 
 
 class DataMasker(ABC):
-    """Abstract data masker interface"""
+    """
+Abstract data masker interface"""
     
     @property
     @abstractmethod
     def supported_data_types(self) -> List[DataType]:
-        """List of supported data types"""
+        """
+List of supported data types"""
         pass
     
     @property
     @abstractmethod
     def technique(self) -> MaskingTechnique:
-        """Masking technique this masker implements"""
+        """
+Masking technique this masker implements"""
         pass
     
     @abstractmethod
@@ -158,17 +168,20 @@ class DataMasker(ABC):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask a single value according to the rule"""
+        """
+Mask a single value according to the rule"""
         pass
     
     @abstractmethod
     async def validate_rule(self, rule: MaskingRule) -> bool:
-        """Validate if rule is compatible with this masker"""
+        """
+Validate if rule is compatible with this masker"""
         pass
 
 
 class RedactionMasker(DataMasker):
-    """Redaction-based data masker"""
+    """
+Redaction-based data masker"""
     
     @property
     def supported_data_types(self) -> List[DataType]:
@@ -184,7 +197,8 @@ class RedactionMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using redaction technique"""
+        """
+Mask value using redaction technique"""
         if value is None and rule.preserve_null:
             return None
         
@@ -294,7 +308,8 @@ class RedactionMasker(DataMasker):
 
 
 class SubstitutionMasker(DataMasker):
-    """Substitution-based data masker using realistic fake data"""
+    """
+Substitution-based data masker using realistic fake data"""
     
     def __init__(self, locale: str = "en_US"):
         self.faker = Faker(locale)
@@ -346,7 +361,8 @@ class SubstitutionMasker(DataMasker):
 
 
 class EncryptionMasker(DataMasker):
-    """Encryption-based data masker"""
+    """
+Encryption-based data masker"""
     
     def __init__(self, encryption_key: Optional[str] = None):
         self.encryption_key = encryption_key or secrets.token_hex(32)
@@ -365,7 +381,8 @@ class EncryptionMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using encryption"""
+        """
+Mask value using encryption"""
         if value is None and rule.preserve_null:
             return None
         
@@ -386,7 +403,8 @@ class EncryptionMasker(DataMasker):
 
 
 class ShufflingMasker(DataMasker):
-    """Shuffling-based data masker"""
+    """
+Shuffling-based data masker"""
     
     def __init__(self):
         self.column_values: Dict[str, List[Any]] = {}
@@ -405,7 +423,8 @@ class ShufflingMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using shuffling technique"""
+        """
+Mask value using shuffling technique"""
         if value is None and rule.preserve_null:
             return None
         
@@ -429,7 +448,8 @@ class ShufflingMasker(DataMasker):
 
 
 class TokenizationMasker(DataMasker):
-    """Tokenization-based data masker"""
+    """
+Tokenization-based data masker"""
     
     def __init__(self):
         self.token_map: Dict[str, str] = {}
@@ -449,7 +469,8 @@ class TokenizationMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using tokenization"""
+        """
+Mask value using tokenization"""
         if value is None and rule.preserve_null:
             return None
         
@@ -486,7 +507,8 @@ class TokenizationMasker(DataMasker):
         return rule.masking_technique == self.technique
     
     def detokenize(self, token: str) -> Optional[str]:
-        """Reverse tokenization to get original value"""
+        """
+Reverse tokenization to get original value"""
         return self.reverse_map.get(token)
 
 
@@ -503,7 +525,8 @@ class DataMaskingEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize data masking engine"""
+        """
+Initialize data masking engine"""
         self.config = config or {}
         self.maskers: Dict[MaskingTechnique, DataMasker] = {}
         self.masking_rules: Dict[str, MaskingRule] = {}
@@ -853,7 +876,8 @@ class DataMaskingEngine:
         return min(score, 1.0)
     
     def _has_similar_format(self, original: Any, masked: Any, data_type: DataType) -> bool:
-        """Check if masked value preserves format of original"""
+        """
+Check if masked value preserves format of original"""
         orig_str = str(original)
         masked_str = str(masked)
         
@@ -876,11 +900,13 @@ class DataMaskingEngine:
         return self.masking_jobs.get(job_id)
     
     def list_masking_rules(self) -> List[MaskingRule]:
-        """List all masking rules"""
+        """
+List all masking rules"""
         return list(self.masking_rules.values())
     
     def list_active_jobs(self) -> List[MaskingJob]:
-        """List active masking jobs"""
+        """
+List active masking jobs"""
         return [
             job for job in self.masking_jobs.values()
             if job.status in ["pending", "running"]

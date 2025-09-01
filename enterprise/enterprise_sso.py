@@ -13,6 +13,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationProtocol(Enum):
-    """Authentication protocol types"""
+    """
+Authentication protocol types"""
+
     SAML2 = "saml2"
     OIDC = "oidc"
     OAUTH2 = "oauth2"
@@ -52,6 +55,7 @@ class AuthenticationProtocol(Enum):
 
 class SessionStatus(Enum):
     """User session status"""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     INVALIDATED = "invalidated"
@@ -60,6 +64,7 @@ class SessionStatus(Enum):
 
 class MFAMethod(Enum):
     """Multi-factor authentication methods"""
+
     TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"
@@ -135,7 +140,8 @@ class UserProfile:
 
 @dataclass
 class AuthenticationSession:
-    """User authentication session"""
+    """
+User authentication session"""
     session_id: str
     user_id: str
     user_profile: UserProfile
@@ -156,7 +162,8 @@ class AuthenticationSession:
 
 @dataclass
 class IdentityProvider:
-    """Identity provider configuration"""
+    """
+Identity provider configuration"""
     provider_id: str
     name: str
     protocol: AuthenticationProtocol
@@ -172,7 +179,8 @@ class IdentityProvider:
 
 
 class SAMLProvider:
-    """SAML 2.0 authentication provider"""
+    """
+SAML 2.0 authentication provider"""
     
     def __init__(self, config: SAMLConfiguration):
         self.config = config
@@ -181,7 +189,8 @@ class SAMLProvider:
         self._load_certificates()
     
     def _load_certificates(self):
-        """Load SAML certificates"""
+        """
+Load SAML certificates"""
         try:
             # Load X.509 certificate
             cert_pem = self.config.certificate.encode('utf-8')
@@ -330,7 +339,8 @@ class OIDCProvider:
         self._jwks: Optional[Dict[str, Any]] = None
     
     async def initialize(self):
-        """Initialize OIDC provider with discovery"""
+        """
+Initialize OIDC provider with discovery"""
         try:
             # Fetch discovery document
             async with aiohttp.ClientSession() as session:
@@ -487,14 +497,16 @@ class OIDCProvider:
 
 
 class ActiveDirectoryConnector:
-    """Active Directory LDAP connector"""
+    """
+Active Directory LDAP connector"""
     
     def __init__(self, config: ActiveDirectoryConfiguration):
         self.config = config
         self._connection: Optional[ldap3.Connection] = None
     
     async def connect(self) -> bool:
-        """Connect to Active Directory"""
+        """
+Connect to Active Directory"""
         try:
             server = ldap3.Server(
                 self.config.server_uri,
@@ -607,7 +619,8 @@ class ActiveDirectoryConnector:
 
 
 class SessionManager:
-    """Advanced session management with Redis backend"""
+    """
+Advanced session management with Redis backend"""
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
@@ -826,7 +839,8 @@ class EnterpriseSSO:
         )
         
     async def initialize(self):
-        """Initialize SSO system"""
+        """
+Initialize SSO system"""
         try:
             await self.session_manager.initialize()
             logger.info("Enterprise SSO system initialized")
@@ -1079,7 +1093,8 @@ class EnterpriseSSO:
         return providers
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for SSO system"""
+        """
+Health check for SSO system"""
         try:
             health_status = {
                 'status': 'healthy',

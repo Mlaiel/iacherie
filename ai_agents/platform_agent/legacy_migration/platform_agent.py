@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -52,7 +53,9 @@ from ...utils.retry_handler import RetryHandler
 
 
 class PlatformType(Enum):
-    """Supported platform types for content distribution"""
+    """
+Supported platform types for content distribution"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -72,6 +75,7 @@ class PlatformType(Enum):
 
 class ContentStatus(Enum):
     """Content distribution status tracking"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     UPLOADED = "uploaded"
@@ -102,7 +106,8 @@ class PlatformMetrics:
 
 @dataclass
 class ContentDistributionConfig:
-    """Configuration for content distribution across platforms"""
+    """
+Configuration for content distribution across platforms"""
     target_platforms: List[PlatformType]
     optimization_level: str = "high"
     auto_translate: bool = True
@@ -624,27 +629,32 @@ class PlatformAgent(BaseAgent):
         pass
 
     async def _create_youtube_client(self, config: Dict[str, Any]):
-        """Create YouTube API client"""
+        """
+Create YouTube API client"""
         # Implementation for YouTube client creation
         pass
 
     async def _create_instagram_client(self, config: Dict[str, Any]):
-        """Create Instagram API client"""
+        """
+Create Instagram API client"""
         # Implementation for Instagram client creation
         pass
 
     async def _create_tiktok_client(self, config: Dict[str, Any]):
-        """Create TikTok API client"""
+        """
+Create TikTok API client"""
         # Implementation for TikTok client creation
         pass
 
     async def _create_twitter_client(self, config: Dict[str, Any]):
-        """Create Twitter API client"""
+        """
+Create Twitter API client"""
         # Implementation for Twitter client creation
         pass
 
     async def _create_generic_client(self, platform_type: PlatformType, config: Dict[str, Any]):
-        """Create generic API client for other platforms"""
+        """
+Create generic API client for other platforms"""
         # Implementation for generic client creation
         pass
 
@@ -691,7 +701,8 @@ class PlatformAgentManager:
         return await agent.distribute_content(content, distribution_config, user_id)
 
     async def get_aggregated_analytics(self, user_ids: List[str] = None) -> Dict[str, Any]:
-        """Get aggregated analytics across users and platforms"""
+        """
+Get aggregated analytics across users and platforms"""
         if user_ids is None:
             user_ids = list(self.agents.keys())
         
@@ -714,7 +725,8 @@ class PlatformAgentManager:
         }
 
     async def _generate_cross_user_insights(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate cross-user insights and patterns"""
+        """
+Generate cross-user insights and patterns"""
         try:
             total_content = sum(data.get('total_content', 0) for data in analytics_data.values())
             total_engagement = sum(data.get('total_engagement', 0) for data in analytics_data.values())
@@ -777,7 +789,8 @@ class PlatformAgentManager:
         return content_types
 
     async def _detect_content_trends(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect trending content patterns"""
+        """
+Detect trending content patterns"""
         try:
             trends = {
                 'trending_hashtags': {},
@@ -930,7 +943,8 @@ class PlatformAgentManager:
         return results
 
     async def _execute_single_operation(self, agent: 'PlatformAgent', operation: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a single platform operation"""
+        """
+Execute a single platform operation"""
         op_type = operation.get('type')
         
         if op_type == 'upload_content':

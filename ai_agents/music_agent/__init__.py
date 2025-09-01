@@ -16,6 +16,7 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
+
 from .utils.music_orchestrator import MusicOrchestrator
 from .utils.spotify_integration import SpotifyIntegration
 from .utils.composition_analyzer import (
@@ -104,20 +105,24 @@ def create_music_agent():
     return MusicOrchestrator()
 
 def create_composition_analyzer():
-    """Factory function to create composition analyzer"""
+    """
+Factory function to create composition analyzer"""
     return CompositionAnalyzer()
 
 def create_music_generator():
-    """Factory function to create music generator"""
+    """
+Factory function to create music generator"""
     return MusicGenerator()
 
 def create_artist_insights():
-    """Factory function to create artist insights engine"""
+    """
+Factory function to create artist insights engine"""
     return ArtistInsights()
 
 # Module information
 def get_module_info():
-    """Get module information and capabilities"""
+    """
+Get module information and capabilities"""
     return {
         "name": "Music Agent",
         "version": __version__,

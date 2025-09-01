@@ -8,7 +8,7 @@ Technologies: Python, Platform APIs, Content Optimization, Social Media Integrat
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Contenu optimisé → Analyse plateformes → Distribution intelligente → 
 Optimisation formats → Publication coordonnée → Monitoring performance → Analytics cross-platform
 """
+
 from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Plateformes de distribution supportées"""
+    """
+Plateformes de distribution supportées"""
     # Video platforms
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -85,6 +87,7 @@ class Platform(Enum):
 
 class ContentFormat(Enum):
     """Formats de contenu"""
+
     VIDEO_SHORT = "video_short"  # <60s
     VIDEO_LONG = "video_long"    # >60s
     AUDIO_TRACK = "audio_track"
@@ -99,6 +102,7 @@ class ContentFormat(Enum):
 
 class DistributionStatus(Enum):
     """Statuts de distribution"""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -111,6 +115,7 @@ class DistributionStatus(Enum):
 
 class OptimizationType(Enum):
     """Types d'optimisation"""
+
     FORMAT_CONVERSION = "format_conversion"
     SIZE_OPTIMIZATION = "size_optimization"
     QUALITY_ENHANCEMENT = "quality_enhancement"
@@ -173,7 +178,8 @@ class DistributionConfig:
 
 @dataclass
 class PlatformConfig:
-    """Configuration spécifique à une plateforme"""
+    """
+Configuration spécifique à une plateforme"""
     platform: Platform
     name: str
     api_endpoint: str = ""
@@ -1077,7 +1083,8 @@ class DistributionManager(ABC):
         pass
     
     async def _generate_hashtag_strategy(self, content_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate hashtag strategy based on content analysis"""
+        """
+Generate hashtag strategy based on content analysis"""
         # Simplified hashtag generation
         content_type = content_analysis.get("type", "")
         category = content_analysis.get("category", "")

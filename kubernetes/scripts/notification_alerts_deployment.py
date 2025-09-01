@@ -24,6 +24,7 @@ and international copyright laws.
 Project: IA Influencer Agent Platform - Notification & Alert System
 Copyright: Fahed Mlaiel - All rights reserved
 """
+
 import os
 import sys
 import time
@@ -71,7 +72,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(Enum):
-    """Types of notification channels"""
+    """
+Types of notification channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
@@ -89,6 +92,7 @@ class NotificationChannel(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -99,6 +103,7 @@ class AlertSeverity(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -108,6 +113,7 @@ class NotificationPriority(Enum):
 
 class NotificationCategory(Enum):
     """Categories of notifications"""
+
     SECURITY_ALERT = "security_alert"
     CONTENT_PROTECTION = "content_protection"
     REVENUE_UPDATE = "revenue_update"
@@ -124,6 +130,7 @@ class NotificationCategory(Enum):
 
 class DeliveryStatus(Enum):
     """Notification delivery status"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -136,6 +143,7 @@ class DeliveryStatus(Enum):
 
 class TemplateType(Enum):
     """Notification template types"""
+
     HTML_EMAIL = "html_email"
     PLAIN_TEXT = "plain_text"
     SMS_TEXT = "sms_text"
@@ -178,7 +186,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRule:
-    """Rules for notification routing and delivery"""
+    """
+Rules for notification routing and delivery"""
     rule_id: str
     rule_name: str
     conditions: Dict[str, Any]
@@ -211,7 +220,8 @@ class NotificationRule:
 
 @dataclass
 class NotificationRequest:
-    """Request to send notification"""
+    """
+Request to send notification"""
     request_id: str
     user_id: str
     template_id: str
@@ -242,7 +252,8 @@ class NotificationRequest:
 
 @dataclass
 class DeploymentConfig:
-    """Notification system deployment configuration"""
+    """
+Notification system deployment configuration"""
     replicas: int = 3
     resource_limits: Dict[str, str] = field(default_factory=lambda: {
         'cpu': '1000m',
@@ -288,7 +299,8 @@ class NotificationAlertsDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Notification Alerts Deployment Manager"""
+        """
+Initialize the Notification Alerts Deployment Manager"""
         self.config_path = config_path or os.getenv('NOTIFICATIONS_CONFIG_PATH', '/etc/notifications/config.yaml')
         self.templates: Dict[str, NotificationTemplate] = {}
         self.rules: Dict[str, NotificationRule] = {}
@@ -1414,7 +1426,8 @@ class NotificationAlertsDeploymentManager:
         return effective_channels
     
     def _is_rate_limited(self, user_id: str, channel: NotificationChannel) -> bool:
-        """Check if user is rate limited for specific channel"""
+        """
+Check if user is rate limited for specific channel"""
         if not self.redis_client:
             return False
         
@@ -1483,7 +1496,8 @@ class NotificationAlertsDeploymentManager:
                 )
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
+        """
+Perform comprehensive health check"""
         health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',

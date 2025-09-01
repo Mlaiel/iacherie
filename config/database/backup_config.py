@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 import shutil
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackupEnvironment(Enum):
-    """Backup environment types"""
+    """
+Backup environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -47,6 +50,7 @@ class BackupEnvironment(Enum):
 
 class BackupType(Enum):
     """Backup operation types"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -55,6 +59,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -64,6 +69,7 @@ class BackupStatus(Enum):
 
 class StorageProvider(Enum):
     """Cloud storage providers"""
+
     LOCAL = "local"
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
@@ -73,6 +79,7 @@ class StorageProvider(Enum):
 
 class DatabaseSystem(Enum):
     """Supported database systems for backup"""
+
     POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     REDIS = "redis"
@@ -109,7 +116,8 @@ class StorageConfig:
 
 @dataclass
 class BackupRecord:
-    """Backup operation record"""
+    """
+Backup operation record"""
     backup_id: str
     database_system: DatabaseSystem
     backup_type: BackupType
@@ -126,7 +134,8 @@ class BackupRecord:
 
 
 class PostgreSQLBackupManager:
-    """PostgreSQL backup management using pg_dump/pg_restore"""
+    """
+PostgreSQL backup management using pg_dump/pg_restore"""
     
     def __init__(self, connection_string: str, config: StorageConfig):
         self.connection_string = connection_string

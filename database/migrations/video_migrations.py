@@ -8,7 +8,7 @@ Responsibility: Database schema evolution for video content processing, fingerpr
 ===============================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -24,6 +24,7 @@ Video Content Types Supported:
 - Live Streams: Concerts, Q&As, gaming, events
 - Promotional Content: Trailers, ads, brand content
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class VideoFormat(Enum):
-    """Supported video formats with compression types"""
+    """
+Supported video formats with compression types"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -59,6 +62,7 @@ class VideoFormat(Enum):
 
 class VideoQuality(Enum):
     """Video quality classifications"""
+
     LOW_QUALITY = "low_quality"      # <480p
     STANDARD_DEFINITION = "standard_definition"  # 480p
     HIGH_DEFINITION = "high_definition"  # 720p
@@ -70,6 +74,7 @@ class VideoQuality(Enum):
 
 class VideoContentType(Enum):
     """Video content categorization"""
+
     MUSIC_VIDEO = "music_video"
     SOCIAL_MEDIA = "social_media"
     EDUCATIONAL = "educational"

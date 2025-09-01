@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Workflow Integration Tests
+"""
+Workflow Integration Tests
 
 Tests for end-to-end workflows including content upload to protection,
 user registration to monetization, and complete business workflows.
@@ -20,6 +22,7 @@ user registration to monetization, and complete business workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -56,7 +59,8 @@ class WorkflowTestClient:
             await self.session.close()
     
     async def authenticate_user(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Register and authenticate a user for workflow testing."""
+        """
+Register and authenticate a user for workflow testing."""
         # Register user
         register_response = await self.session.post(
             f"{self.base_url}/auth/register",
@@ -153,7 +157,8 @@ async def workflow_client():
 
 @pytest.fixture
 def sample_audio_file():
-    """Create a sample audio file for testing."""
+    """
+Create a sample audio file for testing."""
     with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as f:
         # Create minimal WAV file header
         wav_header = b'RIFF\x24\x08\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x01\x00\x44\xac\x00\x00\x88X\x01\x00\x02\x00\x10\x00data\x00\x08\x00\x00'
@@ -172,7 +177,8 @@ def sample_audio_file():
 
 @pytest.fixture
 def sample_image_file():
-    """Create a sample image file for testing."""
+    """
+Create a sample image file for testing."""
     with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
         # Minimal JPEG header
         jpeg_header = b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x01\x00H\x00H\x00\x00\xff\xdb\x00C\x00'
@@ -191,12 +197,14 @@ def sample_image_file():
 
 
 class TestContentUploadToProtectionWorkflow:
-    """Test complete content upload to protection workflow."""
+    """
+Test complete content upload to protection workflow."""
     
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_audio_content_protection_workflow(self, workflow_client, sample_audio_file):
-        """Test complete audio content protection workflow."""
+        """
+Test complete audio content protection workflow."""
         # Step 1: Create and authenticate user
         user_data = {
             "email": f"audio_creator_{uuid.uuid4()}@example.com",
@@ -320,7 +328,8 @@ class TestUserRegistrationToMonetizationWorkflow:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_creator_monetization_setup_workflow(self, workflow_client):
-        """Test complete creator monetization setup workflow."""
+        """
+Test complete creator monetization setup workflow."""
         # Step 1: Register new creator
         user_data = {
             "email": f"monetization_creator_{uuid.uuid4()}@example.com",
@@ -490,7 +499,8 @@ class TestCollaborationWorkflow:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_music_collaboration_workflow(self, workflow_client):
-        """Test complete music collaboration workflow."""
+        """
+Test complete music collaboration workflow."""
         # Step 1: Create two artists
         artist1_data = {
             "email": f"artist1_{uuid.uuid4()}@example.com",
@@ -598,7 +608,8 @@ class TestLicenseToPaymentWorkflow:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_licensing_workflow(self, workflow_client, sample_audio_file):
-        """Test complete content licensing workflow."""
+        """
+Test complete content licensing workflow."""
         # Step 1: Setup licensor (content owner)
         licensor_data = {
             "email": f"licensor_{uuid.uuid4()}@example.com",
@@ -721,7 +732,8 @@ class TestMonitoringToDetectionWorkflow:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_monitoring_detection_workflow(self, workflow_client, sample_audio_file):
-        """Test complete content monitoring and detection workflow."""
+        """
+Test complete content monitoring and detection workflow."""
         # Step 1: Setup content owner
         owner_data = {
             "email": f"content_owner_{uuid.uuid4()}@example.com",
@@ -847,7 +859,8 @@ class TestCrossServiceWorkflowIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_complete_platform_workflow(self, workflow_client, sample_audio_file):
-        """Test complete end-to-end platform workflow."""
+        """
+Test complete end-to-end platform workflow."""
         # This test combines multiple workflows into one comprehensive test
         
         # Step 1: Creator onboarding and setup

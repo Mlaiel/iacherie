@@ -4,6 +4,7 @@ Complete multilingual SEO optimization supporting all global languages.
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ COPYRIGHT WARNING: Proprietary code - unauthorized use prohibited.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Set
 import json
@@ -11,7 +12,8 @@ from dataclasses import dataclass
 
 
 class ExtendedLanguage(str, Enum):
-    """Extended language support - 644 languages for global SEO optimization."""
+    """
+Extended language support - 644 languages for global SEO optimization."""
     
     # Major World Languages (Top 50)
     EN = "en"  # English
@@ -216,14 +218,16 @@ class LanguageConfig:
 
 
 class IndustrialSEOLanguageEngine:
-    """Industrial-grade SEO engine supporting 644 languages."""
+    """
+Industrial-grade SEO engine supporting 644 languages."""
     
     def __init__(self):
         self.language_configs = self._initialize_all_languages()
         self.translation_providers = self._initialize_translation_providers()
     
     def _initialize_all_languages(self) -> Dict[str, LanguageConfig]:
-        """Initialize configuration for all 644 supported languages."""
+        """
+Initialize configuration for all 644 supported languages."""
         configs = {}
         
         # Major world languages with full configuration
@@ -504,7 +508,8 @@ class IndustrialSEOLanguageEngine:
         content: str, 
         config: LanguageConfig
     ) -> List[str]:
-        """Generate SEO keywords for specific language."""
+        """
+Generate SEO keywords for specific language."""
         # Combine cultural keywords with content analysis
         return config.cultural_keywords[:5]  # Top 5 for example
     
@@ -513,7 +518,8 @@ class IndustrialSEOLanguageEngine:
         content: str, 
         config: LanguageConfig
     ) -> str:
-        """Apply language-specific formatting rules."""
+        """
+Apply language-specific formatting rules."""
         # Apply date, currency, number formatting
         return content
     
@@ -522,12 +528,14 @@ class IndustrialSEOLanguageEngine:
         content: str, 
         config: LanguageConfig
     ) -> float:
-        """Calculate optimization score for language."""
+        """
+Calculate optimization score for language."""
         # Score based on cultural appropriateness, SEO factors, etc.
         return 0.85  # Example score
     
     def get_supported_languages(self) -> List[Dict[str, str]]:
-        """Get list of all supported languages."""
+        """
+Get list of all supported languages."""
         return [
             {
                 "code": config.language_code,

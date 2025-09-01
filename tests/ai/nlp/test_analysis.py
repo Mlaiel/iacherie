@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Text Analysis Tests for IA Influencer Agent Platform
+"""
+Text Analysis Tests for IA Influencer Agent Platform
 
 Comprehensive test suite for text analysis components
 with industrial-grade testing standards.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import unittest
 import asyncio
 import pytest
@@ -52,7 +55,8 @@ class TextAnalysisTests(unittest.TestCase):
     """
     
     def setUp(self):
-        """Initialize test environment with professional configuration"""
+        """
+Initialize test environment with professional configuration"""
         logger.info("🔧 Setting up Text Analysis Tests - Industrial Grade Configuration")
         self.test_config = {
             'timeout': 30.0,
@@ -277,7 +281,8 @@ class AdvancedTextAnalysisTests(TextAnalysisTests):
     """
     
     def test_multi_language_support(self):
-        """Test multi-language text analysis support"""
+        """
+Test multi-language text analysis support"""
         logger.info("🧪 Testing multi-language support")
         
         # Mock multi-language texts

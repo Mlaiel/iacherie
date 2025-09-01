@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SERVICE MESH INTELLIGENT
@@ -15,6 +15,7 @@ Infrastructure de communication microservices avancée
 - Security policies et mTLS automatique
 - Observability complète et tracing distribué
 """
+
 import asyncio
 import json
 import logging
@@ -38,7 +39,9 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 logger = logging.getLogger(__name__)
 
 class ServiceType(Enum):
-    """Types de services"""
+    """
+Types de services"""
+
     API_GATEWAY = "api_gateway"
     MICROSERVICE = "microservice" 
     DATABASE = "database"
@@ -50,6 +53,7 @@ class ServiceType(Enum):
 
 class ServiceHealth(Enum):
     """État de santé des services"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -59,6 +63,7 @@ class ServiceHealth(Enum):
 
 class TrafficPolicy(Enum):
     """Politiques de trafic"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED = "weighted"
     LEAST_CONN = "least_conn"
@@ -139,7 +144,8 @@ class ServicePolicy:
     canary_percentage: float = 0.0
 
 class ServiceDiscovery:
-    """Service de découverte automatique"""
+    """
+Service de découverte automatique"""
     
     def __init__(self, 
                  redis_client: aioredis.Redis,
@@ -243,7 +249,8 @@ class ServiceDiscovery:
         return instances
         
     async def update_health(self, service_name: str, instance_id: str, health: ServiceHealth):
-        """Met à jour l'état de santé d'un service"""
+        """
+Met à jour l'état de santé d'un service"""
         if (service_name in self.services and 
             instance_id in self.services[service_name]):
             
@@ -256,7 +263,8 @@ class ServiceDiscovery:
             await self._record_heartbeat(service_name, instance_id)
             
     async def set_service_policy(self, policy: ServicePolicy):
-        """Définit une politique pour un service"""
+        """
+Définit une politique pour un service"""
         self.policies[policy.service_name] = policy
         
         # Persister dans Redis
@@ -269,7 +277,8 @@ class ServiceDiscovery:
         return self.policies.get(service_name)
         
     async def _persist_service(self, service: ServiceInstance):
-        """Persiste un service dans Redis"""
+        """
+Persiste un service dans Redis"""
         key = f"{self.registry_key}:{service.service_name}:{service.service_id}"
         data = self._serialize_service(service)
         
@@ -375,7 +384,8 @@ class ServiceDiscovery:
         return data
         
     def _deserialize_service(self, data: Dict[str, Any]) -> ServiceInstance:
-        """Désérialise un service"""
+        """
+Désérialise un service"""
         # Convertir les enums et sets
         data['service_type'] = ServiceType(data['service_type'])
         data['health'] = ServiceHealth(data['health'])
@@ -387,20 +397,23 @@ class ServiceDiscovery:
         return ServiceInstance(**data)
         
     def _serialize_policy(self, policy: ServicePolicy) -> Dict[str, Any]:
-        """Sérialise une politique"""
+        """
+Sérialise une politique"""
         data = asdict(policy)
         data['traffic_policy'] = policy.traffic_policy.value
         data['allowed_services'] = list(policy.allowed_services)
         return data
         
     def _deserialize_policy(self, data: Dict[str, Any]) -> ServicePolicy:
-        """Désérialise une politique"""
+        """
+Désérialise une politique"""
         data['traffic_policy'] = TrafficPolicy(data['traffic_policy'])
         data['allowed_services'] = set(data['allowed_services'])
         return ServicePolicy(**data)
         
     def get_discovery_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques de découverte"""
+        """
+Retourne les statistiques de découverte"""
         return {
             "total_services": len(self.services),
             "total_instances": sum(len(instances) for instances in self.services.values()),
@@ -574,7 +587,8 @@ class ServiceMesh:
             return instances[0]
             
     def _is_circuit_breaker_open(self, service_name: str, instance_id: str) -> bool:
-        """Vérifie si le circuit breaker est ouvert"""
+        """
+Vérifie si le circuit breaker est ouvert"""
         key = f"{service_name}:{instance_id}"
         if key not in self.circuit_breakers:
             return False

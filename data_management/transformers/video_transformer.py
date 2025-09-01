@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -21,6 +21,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel
 - Sécurité Expert: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import time
@@ -54,7 +55,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class VideoFormat(Enum):
-    """Formats vidéo supportés"""
+    """
+Formats vidéo supportés"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -66,6 +69,7 @@ class VideoFormat(Enum):
 
 class VideoCodec(Enum):
     """Codecs vidéo supportés"""
+
     H264 = "libx264"
     H265 = "libx265"
     VP9 = "libvpx-vp9"
@@ -74,6 +78,7 @@ class VideoCodec(Enum):
 
 class VideoQuality(Enum):
     """Niveaux de qualité vidéo"""
+
     ULTRA = "ultra"      # 4K, bitrate élevé
     HIGH = "high"        # 1080p, bitrate optimisé
     STANDARD = "standard" # 720p, bitrate équilibré
@@ -81,6 +86,7 @@ class VideoQuality(Enum):
 
 class ContentType(Enum):
     """Types de contenu pour optimisation"""
+
     MUSIC_VIDEO = "music_video"
     SOCIAL_MEDIA = "social_media"
     PODCAST = "podcast"
@@ -104,7 +110,8 @@ class VideoProcessingResult:
     errors: List[str]
 
 class VideoAnalyzer:
-    """Analyseur vidéo intelligent pour créateurs de contenu"""
+    """
+Analyseur vidéo intelligent pour créateurs de contenu"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -233,7 +240,8 @@ class VideoAnalyzer:
         return scene_changes
     
     def _analyze_motion(self, cap: cv2.VideoCapture) -> float:
-        """Analyse le niveau de mouvement dans la vidéo"""
+        """
+Analyse le niveau de mouvement dans la vidéo"""
         cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
         
         motion_scores = []
@@ -267,7 +275,8 @@ class VideoAnalyzer:
         return np.mean(motion_scores) if motion_scores else 0.0
     
     def _analyze_faces(self, cap: cv2.VideoCapture) -> List[Dict[str, Any]]:
-        """Détecte et analyse les visages dans la vidéo"""
+        """
+Détecte et analyse les visages dans la vidéo"""
         faces_info = []
         
         try:
@@ -399,7 +408,8 @@ class VideoAnalyzer:
         faces: List[Dict],
         audio_info: Dict
     ) -> str:
-        """Classifie automatiquement le type de contenu"""
+        """
+Classifie automatiquement le type de contenu"""
         
         # Calcul des métriques
         scene_change_rate = len(scene_changes)
@@ -419,7 +429,8 @@ class VideoAnalyzer:
             return ContentType.SOCIAL_MEDIA.value
     
     def _calculate_quality_score(self, width: int, height: int, fps: float, bitrate: int) -> float:
-        """Calcule un score de qualité global"""
+        """
+Calcule un score de qualité global"""
         
         # Normalisation des métriques
         resolution_score = min(1.0, (width * height) / (1920 * 1080))
@@ -436,7 +447,8 @@ class VideoAnalyzer:
         faces: List[Dict],
         objects: List[Dict]
     ) -> List[str]:
-        """Génère des tags automatiques basés sur le contenu détecté"""
+        """
+Génère des tags automatiques basés sur le contenu détecté"""
         
         tags = []
         
@@ -563,7 +575,8 @@ class VideoEnhancer:
             return input_path
     
     def _color_correct_video(self, input_path: str, output_path: str, intensity: float) -> str:
-        """Correction colorimétrique"""
+        """
+Correction colorimétrique"""
         
         try:
             # Correction avec filtres ffmpeg
@@ -681,7 +694,8 @@ class VideoTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation vidéo selon configuration"""
+        """
+Transformation vidéo selon configuration"""
         
         start_time = time.time()
         operations = []
@@ -1022,7 +1036,8 @@ class VideoTransformer:
         )
 
 class AsyncVideoTransformer:
-    """Version asynchrone du transformateur vidéo"""
+    """
+Version asynchrone du transformateur vidéo"""
     
     def __init__(self):
         self.sync_transformer = VideoTransformer()
@@ -1034,7 +1049,8 @@ class AsyncVideoTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation vidéo asynchrone"""
+        """
+Transformation vidéo asynchrone"""
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
@@ -1050,7 +1066,8 @@ class AsyncVideoTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 2  # Moins de concurrence pour vidéo
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""
+        """
+Transformation en lot asynchrone"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         

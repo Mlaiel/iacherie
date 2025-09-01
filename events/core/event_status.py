@@ -4,8 +4,9 @@ Defines status states for event processing lifecycle management
 in the enterprise event system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from enum import Enum
 from typing import List, Set
 
@@ -13,33 +14,43 @@ class EventStatus(Enum):
     """
     Event status states for tracking processing lifecycle
     """
+
     
     PENDING = "pending"
     """Event created but not yet started processing"""
+
     
     QUEUED = "queued" 
     """Event queued for processing"""
+
     
     PROCESSING = "processing"
     """Event currently being processed"""
+
     
     COMPLETED = "completed"
     """Event processing completed successfully"""
+
     
     FAILED = "failed"
     """Event processing failed with errors"""
+
     
     CANCELLED = "cancelled"
     """Event processing was cancelled"""
+
     
     TIMEOUT = "timeout"
     """Event processing exceeded timeout limit"""
+
     
     RETRY = "retry"
     """Event marked for retry after failure"""
+
     
     PAUSED = "paused"
     """Event processing temporarily paused"""
+
     
     ARCHIVED = "archived"
     """Event archived after completion or failure"""
@@ -48,7 +59,8 @@ class EventStatus(Enum):
         return self.value
     
     def is_terminal(self) -> bool:
-        """Check if this is a terminal status (no further processing)"""
+        """
+Check if this is a terminal status (no further processing)"""
         terminal_statuses = {
             EventStatus.COMPLETED,
             EventStatus.CANCELLED,
@@ -57,7 +69,8 @@ class EventStatus(Enum):
         return self in terminal_statuses
     
     def is_active(self) -> bool:
-        """Check if event is actively being processed"""
+        """
+Check if event is actively being processed"""
         active_statuses = {
             EventStatus.QUEUED,
             EventStatus.PROCESSING,
@@ -66,7 +79,8 @@ class EventStatus(Enum):
         return self in active_statuses
     
     def is_error(self) -> bool:
-        """Check if status indicates an error condition"""
+        """
+Check if status indicates an error condition"""
         error_statuses = {
             EventStatus.FAILED,
             EventStatus.TIMEOUT
@@ -74,7 +88,8 @@ class EventStatus(Enum):
         return self in error_statuses
     
     def can_transition_to(self, new_status: 'EventStatus') -> bool:
-        """Check if transition to new status is valid"""
+        """
+Check if transition to new status is valid"""
         # Define valid transitions
         valid_transitions = {
             EventStatus.PENDING: {
@@ -126,7 +141,8 @@ class EventStatus(Enum):
         return new_status in allowed_transitions
     
     def get_description(self) -> str:
-        """Get human-readable description of status"""
+        """
+Get human-readable description of status"""
         descriptions = {
             EventStatus.PENDING: "Event created and waiting to start",
             EventStatus.QUEUED: "Event queued for processing",
@@ -148,17 +164,20 @@ class EventStatus(Enum):
     
     @classmethod
     def get_terminal_statuses(cls) -> Set['EventStatus']:
-        """Get set of terminal statuses"""
+        """
+Get set of terminal statuses"""
         return {status for status in cls if status.is_terminal()}
     
     @classmethod
     def get_active_statuses(cls) -> Set['EventStatus']:
-        """Get set of active processing statuses"""
+        """
+Get set of active processing statuses"""
         return {status for status in cls if status.is_active()}
     
     @classmethod
     def get_error_statuses(cls) -> Set['EventStatus']:
-        """Get set of error statuses"""
+        """
+Get set of error statuses"""
         return {status for status in cls if status.is_error()}
 
 # Export enum

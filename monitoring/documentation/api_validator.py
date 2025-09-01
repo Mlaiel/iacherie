@@ -1,6 +1,7 @@
 """API Documentation Coverage Validation System
 Ensures 100% API documentation coverage requirement
 """
+
 import asyncio
 import logging
 import ast
@@ -13,7 +14,8 @@ from datetime import datetime
 
 @dataclass
 class APIEndpoint:
-    """API endpoint information"""
+    """
+API endpoint information"""
     path: str
     method: str
     function_name: str
@@ -27,7 +29,8 @@ class APIEndpoint:
 
 @dataclass
 class DocumentationReport:
-    """API documentation coverage report"""
+    """
+API documentation coverage report"""
     total_endpoints: int
     documented_endpoints: int
     undocumented_endpoints: int
@@ -302,7 +305,8 @@ class APIDocumentationValidator:
         endpoint.is_documented = is_documented
         
     async def get_compliance_status(self) -> Dict[str, Any]:
-        """Get current API documentation compliance status"""
+        """
+Get current API documentation compliance status"""
         report = await self.scan_api_documentation()
         
         return {

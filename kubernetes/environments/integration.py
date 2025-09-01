@@ -16,6 +16,7 @@ Handles APIs, webhooks, third-party integrations, data synchronization,
 and service orchestration for multi-platform content distribution.
 =====================================================
 """
+
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union, Callable
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationType(Enum):
-    """Integration type enumeration"""
+    """
+Integration type enumeration"""
+
     API_REST = "api_rest"
     API_GRAPHQL = "api_graphql"
     WEBHOOK = "webhook"
@@ -45,6 +48,7 @@ class IntegrationType(Enum):
 
 class IntegrationStatus(Enum):
     """Integration status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
@@ -55,6 +59,7 @@ class IntegrationStatus(Enum):
 
 class AuthenticationType(Enum):
     """Authentication type enumeration"""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
@@ -554,7 +559,8 @@ class IntegrationEnvironmentManager:
     
     # Private helper methods
     def _initialize_social_media_platforms(self) -> List[SocialMediaPlatformConfig]:
-        """Initialize social media platform configurations"""
+        """
+Initialize social media platform configurations"""
         return [
             SocialMediaPlatformConfig(
                 platform_name="youtube",
@@ -826,16 +832,19 @@ class IntegrationEnvironmentManager:
         return next((p for p in self.social_media_platforms if p.platform_name == platform_name), None)
     
     def _get_payment_provider_config(self, provider_name: str) -> Optional[PaymentProviderConfig]:
-        """Get payment provider configuration"""
+        """
+Get payment provider configuration"""
         return next((p for p in self.payment_providers if p.provider_name == provider_name), None)
     
     def _get_webhook_config(self, webhook_name: str) -> Optional[WebhookConfig]:
-        """Get webhook configuration"""
+        """
+Get webhook configuration"""
         return next((w for w in self.webhooks if w.name == webhook_name), None)
     
     async def _publish_to_platform(self, platform: str, content_data: Dict[str, Any], 
                                   config: SocialMediaPlatformConfig) -> Dict[str, Any]:
-        """Publish content to specific platform"""
+        """
+Publish content to specific platform"""
         # Implement platform-specific publishing logic
         logger.info(f"Publishing content to {platform}")
         return {'status': 'success', 'platform_id': f"{platform}_123456"}
@@ -853,7 +862,8 @@ class IntegrationEnvironmentManager:
     
     async def _process_payment_with_provider(self, payment_data: Dict[str, Any], 
                                            config: PaymentProviderConfig) -> Dict[str, Any]:
-        """Process payment with specific provider"""
+        """
+Process payment with specific provider"""
         # Implement provider-specific payment processing
         logger.info(f"Processing payment with {config.provider_name}")
         return {'status': 'success', 'transaction_id': 'tx_123456'}
@@ -880,7 +890,8 @@ class IntegrationEnvironmentManager:
         return hmac.compare_digest(signature, expected_signature)
     
     def _route_webhook_event(self, webhook_name: str, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Route webhook event to appropriate handler"""
+        """
+Route webhook event to appropriate handler"""
         # Implement webhook routing logic
         logger.info(f"Routing webhook event: {webhook_name}")
         return {'status': 'processed'}
@@ -897,7 +908,8 @@ class IntegrationEnvironmentManager:
     
     # Data synchronization methods
     def _get_compatible_platforms_for_data_type(self, data_type: str) -> List[str]:
-        """Get platforms compatible with data type"""
+        """
+Get platforms compatible with data type"""
         compatible_platforms = []
         for platform in self.social_media_platforms:
             if data_type in platform.content_types_supported:
@@ -905,7 +917,8 @@ class IntegrationEnvironmentManager:
         return compatible_platforms
     
     async def _sync_data_outbound(self, platform: str, data_type: str) -> Dict[str, Any]:
-        """Sync data outbound to platform"""
+        """
+Sync data outbound to platform"""
         logger.info(f"Syncing {data_type} data outbound to {platform}")
         return {'status': 'success', 'synced_items': 10}
     
@@ -942,7 +955,8 @@ class IntegrationEnvironmentManager:
     
     # Metrics calculation methods
     def _count_api_calls_24h(self) -> int:
-        """Count API calls in last 24 hours"""
+        """
+Count API calls in last 24 hours"""
         cutoff = datetime.now() - timedelta(days=1)
         return len([
             call for call in self.api_call_history
@@ -950,7 +964,8 @@ class IntegrationEnvironmentManager:
         ])
     
     def _calculate_success_rate(self) -> float:
-        """Calculate API call success rate"""
+        """
+Calculate API call success rate"""
         if not self.api_call_history:
             return 100.0
         
@@ -961,23 +976,27 @@ class IntegrationEnvironmentManager:
         return (successful_calls / len(self.api_call_history)) * 100
     
     def _calculate_average_response_time(self) -> float:
-        """Calculate average response time"""
+        """
+Calculate average response time"""
         return 150.5  # Placeholder
     
     def _count_rate_limited_calls(self) -> int:
-        """Count rate limited calls"""
+        """
+Count rate limited calls"""
         return len([
             call for call in self.api_call_history
             if call['status'] == 'rate_limited'
         ])
     
     def _count_payment_transactions_24h(self) -> int:
-        """Count payment transactions in last 24 hours"""
+        """
+Count payment transactions in last 24 hours"""
         return 125  # Placeholder
     
     # Analytics methods
     def _get_api_metrics(self, time_period: str) -> Dict[str, Any]:
-        """Get API metrics"""
+        """
+Get API metrics"""
         return {
             'total_calls': 1500,
             'successful_calls': 1425,
@@ -986,7 +1005,8 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_platform_performance(self, time_period: str) -> Dict[str, Any]:
-        """Get platform performance metrics"""
+        """
+Get platform performance metrics"""
         return {
             'youtube': {'uptime': 99.8, 'avg_response_ms': 120},
             'instagram': {'uptime': 99.5, 'avg_response_ms': 180},
@@ -994,7 +1014,8 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_payment_analytics(self, time_period: str) -> Dict[str, Any]:
-        """Get payment analytics"""
+        """
+Get payment analytics"""
         return {
             'total_transactions': 125,
             'successful_transactions': 120,
@@ -1003,7 +1024,8 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_webhook_analytics(self, time_period: str) -> Dict[str, Any]:
-        """Get webhook analytics"""
+        """
+Get webhook analytics"""
         return {
             'total_events': 250,
             'processed_events': 245,
@@ -1012,7 +1034,8 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_error_analysis(self, time_period: str) -> Dict[str, Any]:
-        """Get error analysis"""
+        """
+Get error analysis"""
         return {
             'error_types': {
                 'timeout': 15,
@@ -1024,7 +1047,8 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_rate_limit_analysis(self, time_period: str) -> Dict[str, Any]:
-        """Get rate limit analysis"""
+        """
+Get rate limit analysis"""
         return {
             'rate_limited_calls': 8,
             'most_limited_service': 'youtube',
@@ -1032,7 +1056,8 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_integration_cost_analysis(self, time_period: str) -> Dict[str, Any]:
-        """Get integration cost analysis"""
+        """
+Get integration cost analysis"""
         return {
             'api_costs_usd': 150.75,
             'payment_processing_fees_usd': 85.20,

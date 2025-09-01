@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -360,7 +361,8 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         interactions: List[InteractionEvent]
     ) -> Dict[str, float]:
-        """Analyze user affinities for different creators"""
+        """
+Analyze user affinities for different creators"""
         creator_interactions = {}
         
         for interaction in interactions:
@@ -393,7 +395,8 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         interactions: List[InteractionEvent]
     ) -> Dict[str, float]:
-        """Extract behavioral patterns from interaction data"""
+        """
+Extract behavioral patterns from interaction data"""
         if not interactions:
             return {}
         
@@ -442,7 +445,8 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         interactions: List[InteractionEvent]
     ) -> Dict[str, float]:
-        """Analyze temporal usage patterns"""
+        """
+Analyze temporal usage patterns"""
         if not interactions:
             return {}
         
@@ -487,16 +491,19 @@ class PersonalizationEngine(IPersonalizationEngine):
         return patterns
     
     def _calculate_temporal_weight(self, timestamp: datetime) -> float:
-        """Calculate temporal weight for interaction based on recency"""
+        """
+Calculate temporal weight for interaction based on recency"""
         time_diff = (datetime.now() - timestamp).total_seconds() / (24 * 3600)  # Days
         return np.exp(-self.temporal_decay_lambda * time_diff)
     
     def _get_vector_dimension(self) -> int:
-        """Get the dimension of personalization vectors"""
+        """
+Get the dimension of personalization vectors"""
         return len(ContentType) * 3 + 50  # Content types + behavior features
     
     def _get_feature_names(self) -> List[str]:
-        """Get feature names for personalization vector"""
+        """
+Get feature names for personalization vector"""
         features = []
         
         # Content type features

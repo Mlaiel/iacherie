@@ -4,6 +4,7 @@ AI-Powered Social Media Trend Detection and Analysis System
 This module provides comprehensive trend monitoring capabilities including
 real-time detection, viral content identification, sentiment tracking, and predictive analytics.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrendType(str, Enum):
-    """Types of trends to monitor"""
+    """
+Types of trends to monitor"""
+
     HASHTAG = "hashtag"
     TOPIC = "topic"
     KEYWORD = "keyword"
@@ -45,6 +48,7 @@ class TrendType(str, Enum):
 
 class TrendSource(str, Enum):
     """Sources for trend detection"""
+
     TWITTER = "twitter"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -61,6 +65,7 @@ class TrendSource(str, Enum):
 
 class TrendStatus(str, Enum):
     """Status of detected trends"""
+
     EMERGING = "emerging"
     GROWING = "growing"
     PEAK = "peak"
@@ -71,6 +76,7 @@ class TrendStatus(str, Enum):
 
 class TrendCategory(str, Enum):
     """Categories of trends"""
+
     TECHNOLOGY = "technology"
     ENTERTAINMENT = "entertainment"
     SPORTS = "sports"
@@ -106,7 +112,8 @@ class ViralityScore(BaseModel):
 
 
 class TrendMetrics(BaseModel):
-    """Comprehensive trend metrics"""
+    """
+Comprehensive trend metrics"""
     total_mentions: int = 0
     unique_users: int = 0
     total_engagement: int = 0
@@ -134,7 +141,8 @@ class TrendMetrics(BaseModel):
 
 
 class TrendPrediction(BaseModel):
-    """Trend prediction and forecasting"""
+    """
+Trend prediction and forecasting"""
     prediction_id: str
     prediction_horizon: str  # "1h", "6h", "24h", "7d"
     confidence_level: float = Field(ge=0.0, le=1.0)
@@ -201,7 +209,8 @@ class DetectedTrend(BaseModel):
 
 
 class TrendAlert(BaseModel):
-    """Alert for significant trend activity"""
+    """
+Alert for significant trend activity"""
     alert_id: str
     alert_type: str  # "new_trend", "viral_spike", "sentiment_shift", "decline_alert"
     alert_level: str  # "low", "medium", "high", "critical"
@@ -831,7 +840,8 @@ class AdvancedTrendMonitor(BaseCrawler):
         return await self._collect_source_data(source)
 
     async def _analyze_trending_patterns(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Analyze data for trending patterns"""
+        """
+Analyze data for trending patterns"""
         patterns = []
         
         # Group by hashtag/topic
@@ -865,7 +875,8 @@ class AdvancedTrendMonitor(BaseCrawler):
         pattern: Dict[str, Any],
         source: TrendSource
     ) -> Optional[DetectedTrend]:
-        """Create trend object from detected pattern"""
+        """
+Create trend object from detected pattern"""
         try:
             trend_id = hashlib.md5(f"{pattern['hashtag']}_{datetime.utcnow()}".encode()).hexdigest()
             
@@ -924,7 +935,8 @@ class AdvancedTrendMonitor(BaseCrawler):
         return filtered
 
     def _classify_trend_category(self, hashtag: str) -> TrendCategory:
-        """Classify trend into category based on hashtag"""
+        """
+Classify trend into category based on hashtag"""
         # Simplified category classification
         hashtag_lower = hashtag.lower()
         
@@ -938,7 +950,8 @@ class AdvancedTrendMonitor(BaseCrawler):
             return TrendCategory.LIFESTYLE
 
     def _parse_period_hours(self, period: str) -> int:
-        """Parse period string to hours"""
+        """
+Parse period string to hours"""
         if period.endswith('h'):
             return int(period[:-1])
         elif period.endswith('d'):
@@ -951,115 +964,143 @@ class AdvancedTrendMonitor(BaseCrawler):
     # Additional simplified helper methods...
     
     async def _process_source_data(self, source: TrendSource, data: List[Dict[str, Any]]):
-        """Process data from source"""
+        """
+Process data from source"""
         pass
 
     async def _update_trend_statuses(self):
-        """Update status of all trends"""
+        """
+Update status of all trends"""
         pass
 
     async def _analyze_trend_relationships(self):
-        """Analyze relationships between trends"""
+        """
+Analyze relationships between trends"""
         pass
 
     async def _update_trend_predictions(self):
-        """Update predictions for all trends"""
+        """
+Update predictions for all trends"""
         pass
 
     async def _cleanup_old_trends(self):
-        """Clean up old trend data"""
+        """
+Clean up old trend data"""
         pass
 
     async def _check_alert_conditions(self) -> List[TrendAlert]:
-        """Check for alert conditions"""
+        """
+Check for alert conditions"""
         return []
 
     async def _send_alert_notification(self, alert: TrendAlert):
-        """Send alert notification"""
+        """
+Send alert notification"""
         pass
 
     async def _cleanup_old_alerts(self):
-        """Clean up old alerts"""
+        """
+Clean up old alerts"""
         pass
 
     async def _fetch_content_data(self, url: str, platform: TrendSource) -> Dict[str, Any]:
-        """Fetch content data for analysis"""
+        """
+Fetch content data for analysis"""
         return {'url': url, 'platform': platform}
 
     async def _analyze_engagement_velocity(self, content_data: Dict[str, Any]) -> float:
-        """Analyze engagement velocity"""
+        """
+Analyze engagement velocity"""
         return 0.8
 
     async def _analyze_reach_patterns(self, content_data: Dict[str, Any]) -> float:
-        """Analyze reach patterns"""
+        """
+Analyze reach patterns"""
         return 0.7
 
     async def _analyze_engagement_quality(self, content_data: Dict[str, Any]) -> float:
-        """Analyze engagement quality"""
+        """
+Analyze engagement quality"""
         return 0.85
 
     async def _analyze_platform_diversity(self, content_data: Dict[str, Any]) -> float:
-        """Analyze platform diversity"""
+        """
+Analyze platform diversity"""
         return 0.6
 
     async def _predict_content_longevity(self, content_data: Dict[str, Any]) -> float:
-        """Predict content longevity"""
+        """
+Predict content longevity"""
         return 0.5
 
     async def _analyze_historical_patterns(self, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze historical patterns"""
+        """
+Analyze historical patterns"""
         return {}
 
     async def _apply_prediction_models(self, trend: DetectedTrend, patterns: Dict[str, Any], horizon: str) -> Dict[str, Any]:
-        """Apply prediction models"""
+        """
+Apply prediction models"""
         return {}
 
     async def _calculate_prediction_confidence(self, historical_data: List[Dict[str, Any]], patterns: Dict[str, Any]) -> float:
-        """Calculate prediction confidence"""
+        """
+Calculate prediction confidence"""
         return 0.75
 
     async def _identify_risk_factors(self, trend: DetectedTrend, patterns: Dict[str, Any]) -> List[str]:
-        """Identify risk factors"""
+        """
+Identify risk factors"""
         return []
 
     async def _identify_opportunity_factors(self, trend: DetectedTrend, patterns: Dict[str, Any]) -> List[str]:
-        """Identify opportunity factors"""
+        """
+Identify opportunity factors"""
         return []
 
     async def _get_top_trending_hashtags(self, trends: List[DetectedTrend]) -> List[Dict[str, Any]]:
-        """Get top trending hashtags"""
+        """
+Get top trending hashtags"""
         return []
 
     async def _get_top_trending_topics(self, trends: List[DetectedTrend]) -> List[Dict[str, Any]]:
-        """Get top trending topics"""
+        """
+Get top trending topics"""
         return []
 
     async def _get_viral_content(self, trends: List[DetectedTrend]) -> List[Dict[str, Any]]:
-        """Get viral content"""
+        """
+Get viral content"""
         return []
 
     async def _analyze_platform_trends(self, trends: List[DetectedTrend]) -> Dict[TrendSource, List[Dict[str, Any]]]:
-        """Analyze platform-specific trends"""
+        """
+Analyze platform-specific trends"""
         return {}
 
     async def _analyze_cross_platform_trends(self, trends: List[DetectedTrend]) -> List[Dict[str, Any]]:
-        """Analyze cross-platform trends"""
+        """
+Analyze cross-platform trends"""
         return []
 
     async def _generate_trend_insights(self, trends: List[DetectedTrend]) -> List[str]:
-        """Generate trend insights"""
+        """
+Generate trend insights"""
         return []
 
     async def _generate_trend_predictions(self, trends: List[DetectedTrend]) -> List[str]:
-        """Generate trend predictions"""
+        """
+Generate trend predictions"""
         return []
 
     async def _identify_market_opportunities(self, trends: List[DetectedTrend]) -> List[str]:
-        """Identify market opportunities"""
+        """
+Identify market opportunities"""
         return []
 
     async def close(self):
-        """Close trend monitor and cleanup resources"""
+        """
+Close trend monitor and cleanup resources"""
         try:
             await self.stop_monitoring()
             await self.cache_manager.close()

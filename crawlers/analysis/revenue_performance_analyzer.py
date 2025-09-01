@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -45,7 +46,9 @@ import seaborn as sns
 logger = logging.getLogger(__name__)
 
 class RevenueMetric(Enum):
-    """Revenue metrics enumeration."""
+    """
+Revenue metrics enumeration."""
+
     TOTAL_REVENUE = "total_revenue"
     REVENUE_PER_VIEW = "revenue_per_view"
     REVENUE_PER_ENGAGEMENT = "revenue_per_engagement"
@@ -59,6 +62,7 @@ class RevenueMetric(Enum):
 
 class RevenueSource(Enum):
     """Revenue source types."""
+
     AD_REVENUE = "ad_revenue"
     SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_COMMISSIONS = "affiliate_commissions"
@@ -72,6 +76,7 @@ class RevenueSource(Enum):
 
 class Platform(Enum):
     """Platform enumeration."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -99,7 +104,8 @@ class RevenueData:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis result."""
+    """
+Revenue analysis result."""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_revenue: Decimal
@@ -116,7 +122,8 @@ class RevenueAnalysis:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight structure."""
+    """
+Performance insight structure."""
     insight_type: str
     title: str
     description: str
@@ -141,7 +148,8 @@ class RevenuePerformanceAnalyzer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the revenue performance analyzer."""
+        """
+Initialize the revenue performance analyzer."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -277,7 +285,8 @@ class RevenuePerformanceAnalyzer:
         return total.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _calculate_revenue_by_source(self, revenue_data: List[RevenueData]) -> Dict[RevenueSource, Decimal]:
-        """Calculate revenue breakdown by source."""
+        """
+Calculate revenue breakdown by source."""
         revenue_by_source = defaultdict(lambda: Decimal('0.00'))
         
         for data in revenue_data:
@@ -291,7 +300,8 @@ class RevenuePerformanceAnalyzer:
         }
     
     async def _calculate_revenue_by_platform(self, revenue_data: List[RevenueData]) -> Dict[Platform, Decimal]:
-        """Calculate revenue breakdown by platform."""
+        """
+Calculate revenue breakdown by platform."""
         revenue_by_platform = defaultdict(lambda: Decimal('0.00'))
         
         for data in revenue_data:
@@ -305,7 +315,8 @@ class RevenuePerformanceAnalyzer:
         }
     
     def _convert_currency(self, amount: Decimal, from_currency: str, to_currency: str) -> Decimal:
-        """Convert currency using conversion rates."""
+        """
+Convert currency using conversion rates."""
         if from_currency == to_currency:
             return amount
         
@@ -319,7 +330,8 @@ class RevenuePerformanceAnalyzer:
         return converted_amount
     
     async def _calculate_growth_rate(self, revenue_data: List[RevenueData]) -> float:
-        """Calculate revenue growth rate."""
+        """
+Calculate revenue growth rate."""
         if len(revenue_data) < 2:
             return 0.0
         
@@ -472,7 +484,8 @@ class RevenuePerformanceAnalyzer:
         return daily_df
     
     def _extract_forecast_features(self, df: pd.DataFrame) -> List[List[float]]:
-        """Extract features for forecasting."""
+        """
+Extract features for forecasting."""
         features = []
         
         if len(df) < 7:
@@ -497,7 +510,8 @@ class RevenuePerformanceAnalyzer:
         return features
     
     def _generate_forecasts(self, df: pd.DataFrame, last_features: np.ndarray) -> Dict[str, Decimal]:
-        """Generate revenue forecasts for different time periods."""
+        """
+Generate revenue forecasts for different time periods."""
         forecasts = {}
         
         try:
@@ -723,7 +737,8 @@ class RevenuePerformanceAnalyzer:
         revenue_data: List[RevenueData],
         performance_metrics: Dict[RevenueMetric, float]
     ) -> List[str]:
-        """Identify potential risk factors."""
+        """
+Identify potential risk factors."""
         risks = []
         
         try:
@@ -927,7 +942,8 @@ class RevenuePerformanceAnalyzer:
         }
     
     def __del__(self):
-        """Cleanup resources."""
+        """
+Cleanup resources."""
         try:
             # Cleanup any remaining resources
             pass

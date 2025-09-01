@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import uuid
@@ -33,12 +34,15 @@ logger = logging.getLogger(__name__)
 
 
 def utc_now() -> datetime:
-    """Get current UTC datetime using the modern timezone-aware approach"""
+    """
+Get current UTC datetime using the modern timezone-aware approach"""
     return datetime.now(timezone.utc)
 
 
 class DetectionType(Enum):
-    """Types of content detection"""
+    """
+Types of content detection"""
+
     EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     PARTIAL_MATCH = "partial_match"
@@ -50,6 +54,7 @@ class DetectionType(Enum):
 
 class MonitoringSource(Enum):
     """Sources for content monitoring"""
+
     WEB_CRAWL = "web_crawl"
     SOCIAL_MEDIA = "social_media"
     FILE_SHARING = "file_sharing"
@@ -63,6 +68,7 @@ class MonitoringSource(Enum):
 
 class DetectionStatus(Enum):
     """Status of detection alerts"""
+
     NEW = "new"
     PENDING_REVIEW = "pending_review"
     INVESTIGATING = "investigating"
@@ -74,6 +80,7 @@ class DetectionStatus(Enum):
 
 class AlertSeverity(Enum):
     """Severity levels for detection alerts"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -101,13 +108,15 @@ class DetectionAlert:
     
     @property
     def infringing_url(self):
-        """Alias for detected_url for compatibility"""
+        """
+Alias for detected_url for compatibility"""
         return self.detected_url
 
 
 @dataclass
 class MonitoringProfile:
-    """Content monitoring configuration profile"""
+    """
+Content monitoring configuration profile"""
     # Required fields (no defaults)
     profile_id: str
     content_id: str
@@ -126,7 +135,8 @@ class MonitoringProfile:
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific monitoring configuration"""
+    """
+Platform-specific monitoring configuration"""
     platform_id: str
     platform_name: str
     base_url: str
@@ -139,7 +149,8 @@ class PlatformConfig:
 
 @dataclass
 class ScanResult:
-    """Result of a monitoring scan"""
+    """
+Result of a monitoring scan"""
     scan_id: str
     profile_id: str
     started_at: datetime
@@ -160,7 +171,8 @@ class PiracyDetector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize piracy detector"""
+        """
+Initialize piracy detector"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -187,7 +199,8 @@ class PiracyDetector:
         )
     
     async def initialize(self):
-        """Initialize the piracy detector asynchronously"""
+        """
+Initialize the piracy detector asynchronously"""
         self.logger.info("Initializing PiracyDetector")
         # Initialize ML models, connect to databases, etc.
         self._is_initialized = True
@@ -523,7 +536,8 @@ class PiracyDetector:
         source: MonitoringSource,
         scan_result: ScanResult
     ) -> List[DetectionAlert]:
-        """Scan specific source for unauthorized content"""
+        """
+Scan specific source for unauthorized content"""
         alerts = []
         
         try:
@@ -986,7 +1000,8 @@ class PiracyDetector:
         raw_alerts: List[DetectionAlert],
         profile: MonitoringProfile
     ) -> List[DetectionAlert]:
-        """Process and filter detection results"""
+        """
+Process and filter detection results"""
         filtered_alerts = []
         
         # Remove duplicates based on URL
@@ -1009,7 +1024,8 @@ class PiracyDetector:
         alert: DetectionAlert,
         profile: MonitoringProfile
     ) -> bool:
-        """Validate detection alert before including in results"""
+        """
+Validate detection alert before including in results"""
         try:
             # Check minimum confidence threshold
             if alert.confidence_score < 0.5:
@@ -1041,7 +1057,8 @@ class PiracyDetector:
             return False
     
     def _count_alerts_by_source(self, alerts: List[DetectionAlert]) -> Dict[str, int]:
-        """Count alerts by monitoring source"""
+        """
+Count alerts by monitoring source"""
         counts = {}
         for alert in alerts:
             source = alert.source.value
@@ -1049,7 +1066,8 @@ class PiracyDetector:
         return counts
     
     def _calculate_confidence_distribution(self, alerts: List[DetectionAlert]) -> Dict[str, int]:
-        """Calculate confidence score distribution"""
+        """
+Calculate confidence score distribution"""
         distribution = {'low': 0, 'medium': 0, 'high': 0}
         
         for alert in alerts:
@@ -1063,7 +1081,8 @@ class PiracyDetector:
         return distribution
     
     def _calculate_alert_trends(self, alerts: List[DetectionAlert], days: int) -> Dict[str, List[int]]:
-        """Calculate alert trends over time"""
+        """
+Calculate alert trends over time"""
         # Group alerts by day
         daily_counts = {}
         for i in range(days):
@@ -1082,16 +1101,19 @@ class PiracyDetector:
     
     # Additional helper methods would be implemented here
     async def _generate_content_signature(self, content_id: str) -> Dict[str, Any]:
-        """Generate content signature for similarity comparison"""
+        """
+Generate content signature for similarity comparison"""
         # This would generate actual content signatures
         return {'text': 'sample content', 'hash': 'sample_hash'}
     
     async def _generate_candidate_signature(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate signature for candidate content"""
+        """
+Generate signature for candidate content"""
         return {'text': content.get('title', ''), 'hash': 'candidate_hash'}
     
     async def _schedule_scan(self, profile: MonitoringProfile):
-        """Schedule periodic scans for monitoring profile"""
+        """
+Schedule periodic scans for monitoring profile"""
         # Implementation for scheduling periodic scans
         pass
     
@@ -1104,7 +1126,8 @@ class PiracyDetector:
         monitoring_profile: Optional[MonitoringProfile] = None,
         similarity_threshold: float = 0.8
     ) -> Dict[str, Any]:
-        """Detect content theft across multiple platforms"""
+        """
+Detect content theft across multiple platforms"""
         self.logger.info(f"Detecting content theft for: {content_id}")
         
         try:
@@ -1297,12 +1320,14 @@ class UnauthorizedUseDetector:
     """
     
     def __init__(self, piracy_detector: PiracyDetector):
-        """Initialize unauthorized use detector"""
+        """
+Initialize unauthorized use detector"""
         self.piracy_detector = piracy_detector
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self):
-        """Initialize the unauthorized use detector asynchronously"""
+        """
+Initialize the unauthorized use detector asynchronously"""
         self.logger.info("Initializing UnauthorizedUseDetector")
         # Initialize detection algorithms
         self._is_initialized = True
@@ -1364,7 +1389,8 @@ class UnauthorizedUseDetector:
         profile_id: str,
         monitoring_profile: Optional[MonitoringProfile] = None
     ) -> Dict[str, Any]:
-        """Perform a monitoring scan for a specific profile"""
+        """
+Perform a monitoring scan for a specific profile"""
         try:
             self.logger.info(f"Performing monitoring scan for profile: {profile_id}")
             
@@ -1435,7 +1461,8 @@ class UnauthorizedUseDetector:
         content_id: str,
         monitoring_profile: MonitoringProfile
     ) -> List[DetectionAlert]:
-        """Detect false attribution or credit claiming"""
+        """
+Detect false attribution or credit claiming"""
         # Implementation for detecting false attribution
         pass
     
@@ -1445,7 +1472,8 @@ class UnauthorizedUseDetector:
         monitoring_profile: MonitoringProfile,
         similarity_threshold: float = 0.8
     ) -> List[DetectionAlert]:
-        """Detect content theft across multiple platforms"""
+        """
+Detect content theft across multiple platforms"""
         self.logger.info(f"Detecting content theft for: {content_id}")
         
         alerts = []
@@ -1588,7 +1616,8 @@ class SimilarityAnalyzer:
         self.analysis_models = {}
         
     async def analyze_content_similarity(self, content_features: Dict[str, Any], reference_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze similarity between content and reference"""
+        """
+Analyze similarity between content and reference"""
         try:
             self.logger.info("Analyzing content similarity")
             
@@ -1842,7 +1871,8 @@ class SimilarityAnalyzer:
         return max(0.7, best_similarity)  # Ensure minimum similarity for time-shifted copies
         
     async def _calculate_correlation_similarity(self, seq1: np.ndarray, seq2: np.ndarray) -> float:
-        """Calculate correlation-based similarity"""
+        """
+Calculate correlation-based similarity"""
         await asyncio.sleep(0.03)  # Simulate processing
         
         try:
@@ -1877,7 +1907,8 @@ class SimilarityAnalyzer:
         return 0.0
         
     async def _analyze_visual_similarity(self, content_hist: Dict, reference_hist: Dict) -> float:
-        """Analyze visual similarity using histogram features"""
+        """
+Analyze visual similarity using histogram features"""
         await asyncio.sleep(0.03)  # Simulate processing
         # Simplified histogram similarity
         similarities = []
@@ -1895,7 +1926,8 @@ class SimilarityAnalyzer:
 
 
 class InfringementDetector:
-    """Professional infringement detection system"""
+    """
+Professional infringement detection system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -1904,7 +1936,8 @@ class InfringementDetector:
         self.threshold = self.config.get('detection_threshold', 0.8)
         
     async def detect_infringement(self, content_data: Dict[str, Any], reference_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect content infringement"""
+        """
+Detect content infringement"""
         try:
             # Real infringement detection logic
             similarity_score = await self._calculate_similarity(content_data, reference_content)
@@ -2105,7 +2138,8 @@ class InfringementDetector:
         return modification_factors.get(modification_level, 1.0)
         
     def _evaluate_distribution_factor(self, distribution_scale: str) -> float:
-        """Evaluate distribution factor for severity assessment"""
+        """
+Evaluate distribution factor for severity assessment"""
         distribution_factors = {
             'private': 0.6,    # Private use = less severe
             'small': 0.8,      # Small scale = moderately severe
@@ -2116,7 +2150,8 @@ class InfringementDetector:
         return distribution_factors.get(distribution_scale, 1.0)
             
     async def _calculate_content_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> float:
-        """Calculate similarity between content features"""
+        """
+Calculate similarity between content features"""
         try:
             if not features1 or not features2:
                 return 0.0
@@ -2198,7 +2233,8 @@ class InfringementDetector:
         return purpose_scores.get(purpose, 0.3)
         
     def _evaluate_nature_factor(self, nature: str) -> float:
-        """Evaluate nature of work factor for fair use"""
+        """
+Evaluate nature of work factor for fair use"""
         nature_scores = {
             'factual': 0.7,
             'creative': 0.3,
@@ -2208,7 +2244,8 @@ class InfringementDetector:
         return nature_scores.get(nature, 0.4)
         
     def _evaluate_amount_factor(self, amount) -> float:
-        """Evaluate amount used factor for fair use"""
+        """
+Evaluate amount used factor for fair use"""
         # Handle numeric amount (percentage)
         if isinstance(amount, (int, float)):
             if amount <= 0.1:  # 10% or less
@@ -2230,7 +2267,8 @@ class InfringementDetector:
         return amount_scores.get(amount, 0.3)
         
     def _evaluate_market_factor(self, effect: str) -> float:
-        """Evaluate market effect factor for fair use"""
+        """
+Evaluate market effect factor for fair use"""
         effect_scores = {
             'positive': 0.7,
             'neutral': 0.5,
@@ -2242,7 +2280,8 @@ class InfringementDetector:
         return effect_scores.get(effect, 0.3)
     
     async def _calculate_similarity(self, content1: Dict[str, Any], content2: Dict[str, Any]) -> float:
-        """Calculate content similarity"""
+        """
+Calculate content similarity"""
         # Real similarity calculation
         if content1.get('hash') == content2.get('hash'):
             return 1.0
@@ -2259,17 +2298,20 @@ class InfringementDetector:
         return 0.7  # Default similarity for unknown types
     
     async def _audio_similarity(self, audio1: Dict[str, Any], audio2: Dict[str, Any]) -> float:
-        """Calculate audio similarity"""
+        """
+Calculate audio similarity"""
         # Mock audio fingerprint comparison
         return 0.85
     
     async def _image_similarity(self, img1: Dict[str, Any], img2: Dict[str, Any]) -> float:
-        """Calculate image similarity"""
+        """
+Calculate image similarity"""
         # Mock perceptual hash comparison
         return 0.82
     
     async def _text_similarity(self, text1: Dict[str, Any], text2: Dict[str, Any]) -> float:
-        """Calculate text similarity"""
+        """
+Calculate text similarity"""
         # Real text similarity using TF-IDF
         content1 = text1.get('content', '')
         content2 = text2.get('content', '')
@@ -2287,7 +2329,8 @@ class InfringementDetector:
 
 
 class ContentMatcher:
-    """Professional content matching system"""
+    """
+Professional content matching system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -2296,7 +2339,8 @@ class ContentMatcher:
         self.reference_database = {}  # Store reference content
         
     async def add_reference_content(self, content_id: str, features: Dict[str, Any], content_type) -> bool:
-        """Add reference content to the matching database"""
+        """
+Add reference content to the matching database"""
         try:
             self.reference_database[content_id] = {
                 'id': content_id,
@@ -2427,7 +2471,8 @@ class ContentMatcher:
         }
     
     async def _fuzzy_match(self, content1: Dict[str, Any], content2: Dict[str, Any]) -> float:
-        """Perform fuzzy matching"""
+        """
+Perform fuzzy matching"""
         # Real fuzzy matching logic
         content_type = content1.get('type', 'unknown')
         
@@ -2458,7 +2503,8 @@ class ContentMatcher:
 
 
 class ContentDetector:
-    """Base content detection system"""
+    """
+Base content detection system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -2472,7 +2518,8 @@ class ContentDetector:
         features: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Store reference content for future detection"""
+        """
+Store reference content for future detection"""
         try:
             self.reference_database[content_id] = {
                 'content_type': content_type,
@@ -2584,7 +2631,8 @@ class ProfessionalContentDetector:
         self.monitoring_active = False
         
     async def store_reference_content(self, content_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Store reference content for comparison"""
+        """
+Store reference content for comparison"""
         try:
             # Real reference storage
             fingerprint = self._generate_content_fingerprint(content_data)
@@ -2617,7 +2665,8 @@ class ProfessionalContentDetector:
         return hashlib.sha256(content_str.encode()).hexdigest()
     
     async def start_realtime_detection(self, monitoring_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Start real-time content detection monitoring"""
+        """
+Start real-time content detection monitoring"""
         try:
             self.monitoring_active = True
             
@@ -2657,7 +2706,8 @@ class ProfessionalContentDetector:
         pass
     
     async def train_similarity_model(self, training_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Train similarity detection model"""
+        """
+Train similarity detection model"""
         try:
             model_type = 'neural_similarity'
             
@@ -2719,7 +2769,8 @@ class ProfessionalContentDetector:
         return features[:10]  # Return first 10 features
     
     async def detect_content_similarity(self, content1: Dict[str, Any], content2: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect similarity between two pieces of content"""
+        """
+Detect similarity between two pieces of content"""
         try:
             # Use trained models if available
             if self.similarity_models:

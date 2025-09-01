@@ -5,6 +5,7 @@ Core engine for contract generation operations with intelligent contract generat
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContractGenerationJob:
-    """Contract Generation operation job"""
+    """
+Contract Generation operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class ContractGenerationJob:
 
 @dataclass
 class ContractGenerationResult:
-    """Contract Generation operation result"""
+    """
+Contract Generation operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class ContractGenerationResult:
     completed_at: datetime = None
 
 class ContractGenerationEngine:
-    """Core contract generation processing engine"""
+    """
+Core contract generation processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

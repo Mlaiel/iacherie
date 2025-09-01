@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Time frame options for analytics"""
+    """
+Time frame options for analytics"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -65,6 +68,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Types of metrics to analyze"""
+
     REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     GROWTH = "growth"
@@ -88,7 +92,8 @@ class RevenueInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Complete analytics report structure"""
+    """
+Complete analytics report structure"""
     report_id: str
     user_id: str
     timeframe: AnalyticsTimeframe
@@ -115,7 +120,8 @@ class MonetizationAnalyticsEngine:
         self._initialize_ml_models()
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for predictions"""
+        """
+Initialize machine learning models for predictions"""
         self.ml_models = {
             "revenue_prediction": RandomForestRegressor(n_estimators=100, random_state=42),
             "growth_prediction": LinearRegression(),
@@ -320,7 +326,8 @@ class MonetizationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Analyze performance across different platforms"""
+        """
+Analyze performance across different platforms"""
         
         # Query platform revenue grouped by platform
         stmt = select(
@@ -417,7 +424,8 @@ class MonetizationAnalyticsEngine:
     async def _analyze_revenue_diversification(
         self, revenue_data: List[Dict[str, Any]]
     ) -> RevenueInsight:
-        """Analyze revenue stream diversification"""
+        """
+Analyze revenue stream diversification"""
         
         # Calculate revenue by stream
         stream_revenue = {}

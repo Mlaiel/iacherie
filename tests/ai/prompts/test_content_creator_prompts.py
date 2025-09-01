@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Content Creator Prompts Tests
+"""
+Advanced Content Creator Prompts Tests
 Ultra-professional test suite for Content Creator Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -43,11 +46,13 @@ from ai.prompts.content_creator_prompts import (
 
 
 class TestContentCreatorPrompts:
-    """Ultra-comprehensive test suite for Content Creator Prompts"""
+    """
+Ultra-comprehensive test suite for Content Creator Prompts"""
     
     @pytest.fixture
     async def content_creator_prompts(self):
-        """Create a fresh ContentCreatorPrompts instance for each test"""
+        """
+Create a fresh ContentCreatorPrompts instance for each test"""
         prompts = ContentCreatorPrompts()
         await prompts.initialize()
         yield prompts
@@ -55,7 +60,8 @@ class TestContentCreatorPrompts:
     
     @pytest.fixture
     def sample_musician_context(self):
-        """Create sample musician context for testing"""
+        """
+Create sample musician context for testing"""
         return PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
@@ -157,7 +163,8 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_prompt_registry_loading(self, content_creator_prompts):
-        """Test that prompt registry is properly loaded"""
+        """
+Test that prompt registry is properly loaded"""
         registry = CONTENT_CREATOR_PROMPTS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)
@@ -176,7 +183,8 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_musician_creation_prompts(self, content_creator_prompts, sample_musician_context):
-        """Test musician creation prompts generation"""
+        """
+Test musician creation prompts generation"""
         result = await content_creator_prompts.generate_prompt(sample_musician_context)
         
         assert result["success"] is True

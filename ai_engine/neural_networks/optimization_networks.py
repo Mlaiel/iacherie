@@ -19,7 +19,9 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig
 
 
 class OptimizationType(Enum):
-    """Types of optimization"""
+    """
+Types of optimization"""
+
     SEO = "seo"
     MONETIZATION = "monetization"
     ENGAGEMENT = "engagement"
@@ -30,6 +32,7 @@ class OptimizationType(Enum):
 
 class Platform(Enum):
     """Content platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"

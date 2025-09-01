@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -23,8 +24,9 @@ Comprehensive testing for audio fingerprinting and content identification includ
 - Performance benchmarking
 
 Created by Expert Team: Security Specialist + ML Engineer + Audio Developer
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -71,7 +73,8 @@ class TestSpectralLandmarkExtractor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.extractor = SpectralLandmarkExtractor()
         self.processor = AudioProcessor()
@@ -87,7 +90,8 @@ class TestSpectralLandmarkExtractor:
         assert hasattr(extractor, 'peak_threshold')
     
     def test_compute_spectrogram(self):
-        """Test spectrogram computation"""
+        """
+Test spectrogram computation"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -237,7 +241,8 @@ class TestAudioFingerprinter:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         
         # Create temporary database for testing
@@ -255,7 +260,8 @@ class TestAudioFingerprinter:
             os.unlink(self.temp_db_path)
     
     def test_initialization(self):
-        """Test AudioFingerprinter initialization"""
+        """
+Test AudioFingerprinter initialization"""
         fingerprinter = AudioFingerprinter(database_path=self.temp_db_path)
         assert fingerprinter is not None
         assert hasattr(fingerprinter, 'database_path')
@@ -263,7 +269,8 @@ class TestAudioFingerprinter:
         assert os.path.exists(self.temp_db_path)
     
     def test_generate_fingerprint(self):
-        """Test fingerprint generation"""
+        """
+Test fingerprint generation"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -455,7 +462,8 @@ class TestContentMatcher:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         
         # Create temporary database with test data
@@ -477,7 +485,8 @@ class TestContentMatcher:
             os.unlink(self.temp_db_path)
     
     def _populate_test_database(self):
-        """Populate database with test fingerprints"""
+        """
+Populate database with test fingerprints"""
         audio_files = [
             ("pure_tone_440hz.wav", "reference_tone"),
             ("white_noise.wav", "reference_noise"),
@@ -503,7 +512,8 @@ class TestContentMatcher:
         assert os.path.exists(self.temp_db_path)
     
     def test_find_matches_exact(self):
-        """Test finding exact matches"""
+        """
+Test finding exact matches"""
         # Use same audio as in database
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
@@ -645,7 +655,8 @@ class TestFingerprintResult:
     """Test FingerprintResult data structure"""
     
     def test_fingerprint_result_creation(self):
-        """Test FingerprintResult creation"""
+        """
+Test FingerprintResult creation"""
         hashes = [
             {'hash': 12345, 'time_offset': 0.5},
             {'hash': 67890, 'time_offset': 1.0}
@@ -687,7 +698,8 @@ class TestMatchResult:
     """Test MatchResult data structure"""
     
     def test_match_result_creation(self):
-        """Test MatchResult creation"""
+        """
+Test MatchResult creation"""
         result = MatchResult(
             track_id="matched_track",
             confidence=0.85,
@@ -721,7 +733,8 @@ class TestFingerprintingIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         
@@ -736,7 +749,8 @@ class TestFingerprintingIntegration:
             os.unlink(self.temp_db_path)
     
     def test_complete_fingerprinting_workflow(self):
-        """Test complete fingerprinting workflow"""
+        """
+Test complete fingerprinting workflow"""
         processor = AudioProcessor()
         fingerprinter = AudioFingerprinter(database_path=self.temp_db_path)
         matcher = ContentMatcher(database_path=self.temp_db_path)

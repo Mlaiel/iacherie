@@ -27,6 +27,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -65,7 +66,9 @@ from .exceptions import OptimizationError, InsufficientDataError, ModelValidatio
 
 
 class PerformanceMetric(str, Enum):
-    """Comprehensive performance metrics for all creator types"""
+    """
+Comprehensive performance metrics for all creator types"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -133,6 +136,7 @@ class CreatorPerformanceMetric(str, Enum):
 
 class OptimizationStrategy(str, Enum):
     """Advanced optimization strategies with AI enhancement"""
+
     ENGAGEMENT_FOCUSED = "engagement_focused"
     REACH_MAXIMIZATION = "reach_maximization"
     CONVERSION_OPTIMIZATION = "conversion_optimization"
@@ -152,6 +156,7 @@ class OptimizationStrategy(str, Enum):
 
 class PerformanceCategory(str, Enum):
     """Performance categorization for analysis"""
+
     EXCELLENT = "excellent"      # Top 10% performers
     GOOD = "good"               # Top 25% performers
     AVERAGE = "average"         # Middle 50% performers
@@ -182,7 +187,8 @@ class PerformanceData:
 
 @dataclass
 class OptimizationRecommendation:
-    """Advanced optimization recommendation with implementation details"""
+    """
+Advanced optimization recommendation with implementation details"""
     recommendation_id: str
     priority: str  # 'high', 'medium', 'low'
     category: str
@@ -202,7 +208,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class OptimizationRequest:
-    """Enterprise-grade performance optimization request with comprehensive configuration"""
+    """
+Enterprise-grade performance optimization request with comprehensive configuration"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -243,7 +250,8 @@ class PerformancePrediction:
 
 @dataclass
 class OptimizationResult:
-    """Comprehensive result of performance optimization process with actionable insights"""
+    """
+Comprehensive result of performance optimization process with actionable insights"""
     optimization_id: str
     creator_id: str
     creator_type: str
@@ -637,7 +645,8 @@ class PerformanceOptimizer:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, List[float]]:
-        """Load historical performance data"""
+        """
+Load historical performance data"""
         # Implementation would load from database
         return {
             'engagement_rate': [0.03, 0.035, 0.032, 0.038, 0.041],
@@ -653,7 +662,8 @@ class PerformanceOptimizer:
         target_metrics: List[PerformanceMetric],
         session: AsyncSession
     ) -> Dict[str, PerformanceData]:
-        """Analyze current performance state"""
+        """
+Analyze current performance state"""
         current_performance = {}
         
         for metric in target_metrics:
@@ -677,7 +687,8 @@ class PerformanceOptimizer:
         target_metrics: List[PerformanceMetric],
         session: AsyncSession
     ) -> Dict[str, float]:
-        """Load competitive benchmark data"""
+        """
+Load competitive benchmark data"""
         return {
             metric.value: self.benchmark_data.get(metric.value, 0.04)
             for metric in target_metrics
@@ -689,7 +700,8 @@ class PerformanceOptimizer:
         current_performance: Dict[str, PerformanceData],
         request: OptimizationRequest
     ) -> Dict[str, float]:
-        """Generate performance predictions using ML models"""
+        """
+Generate performance predictions using ML models"""
         predictions = {}
         
         for metric in request.target_metrics:
@@ -723,7 +735,8 @@ class PerformanceOptimizer:
         current_performance: Dict[str, PerformanceData],
         predictions: Dict[str, float]
     ) -> OptimizationStrategy:
-        """Optimize strategy selection based on current state"""
+        """
+Optimize strategy selection based on current state"""
         # Analyze performance gaps
         performance_gaps = {}
         for metric_name, perf_data in current_performance.items():
@@ -744,7 +757,8 @@ class PerformanceOptimizer:
         current_performance: Dict[str, PerformanceData],
         request: OptimizationRequest
     ) -> List[Dict[str, Any]]:
-        """Generate actionable optimization recommendations"""
+        """
+Generate actionable optimization recommendations"""
         recommendations = []
         
         if strategy == OptimizationStrategy.ENGAGEMENT_FOCUSED:
@@ -803,7 +817,8 @@ class PerformanceOptimizer:
         budget_constraints: Optional[Dict[str, float]],
         predictions: Dict[str, float]
     ) -> Dict[str, float]:
-        """Optimize budget allocation across recommendations"""
+        """
+Optimize budget allocation across recommendations"""
         if not budget_constraints or 'total_budget' not in budget_constraints:
             return {'total_budget': 500.0, 'recommendation_allocation': {}}
         
@@ -850,7 +865,8 @@ class PerformanceOptimizer:
         recommendations: List[Dict[str, Any]],
         time_horizon: int
     ) -> Dict[str, Any]:
-        """Create implementation timeline for recommendations"""
+        """
+Create implementation timeline for recommendations"""
         timeline = {
             'total_duration': time_horizon,
             'phases': [],
@@ -901,7 +917,8 @@ class PerformanceOptimizer:
         recommendations: List[Dict[str, Any]],
         historical_data: Dict[str, List[float]]
     ) -> Dict[str, Any]:
-        """Assess risks associated with optimization strategy"""
+        """
+Assess risks associated with optimization strategy"""
         risks = {
             'overall_risk_level': 'medium',
             'risk_factors': [],
@@ -945,7 +962,8 @@ class PerformanceOptimizer:
         predictions: Dict[str, float],
         current_performance: Dict[str, PerformanceData]
     ) -> float:
-        """Calculate expected return on investment"""
+        """
+Calculate expected return on investment"""
         total_investment = budget_allocation.get('total_allocated', 0)
         
         if total_investment == 0:
@@ -965,7 +983,8 @@ class PerformanceOptimizer:
         return max(0.0, expected_roi)
     
     def _load_benchmark_data(self) -> Dict[str, float]:
-        """Load industry benchmark data"""
+        """
+Load industry benchmark data"""
         return {
             'engagement_rate': 0.042,
             'reach': 1500,
@@ -984,7 +1003,8 @@ class PerformanceOptimizer:
         }
     
     def _initialize_optimization_algorithms(self) -> Dict[str, Any]:
-        """Initialize optimization algorithms"""
+        """
+Initialize optimization algorithms"""
         return {
             'genetic_algorithm': {
                 'population_size': 50,
@@ -1011,6 +1031,7 @@ class PerformanceOptimizer:
         recommendations: List[Dict[str, Any]],
         session: AsyncSession
     ) -> None:
-        """Store optimization results in database"""
+        """
+Store optimization results in database"""
         # Implementation would store in database
         pass

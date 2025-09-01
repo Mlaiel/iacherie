@@ -9,6 +9,7 @@ Business Logic: User Upload → AI Protection → Copyright Verification → Lic
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class CopyrightStatus(Enum):
-    """Copyright status enumeration."""
+    """
+Copyright status enumeration."""
+
     VERIFIED = "verified"
     PENDING_VERIFICATION = "pending_verification"
     DISPUTED = "disputed"
@@ -37,6 +40,7 @@ class CopyrightStatus(Enum):
 
 class RightsType(Enum):
     """Types of rights that can be held."""
+
     FULL_OWNERSHIP = "full_ownership"
     EXCLUSIVE_LICENSE = "exclusive_license"
     NON_EXCLUSIVE_LICENSE = "non_exclusive_license"
@@ -51,6 +55,7 @@ class RightsType(Enum):
 
 class ContentType(Enum):
     """Content types for copyright management."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -61,6 +66,7 @@ class ContentType(Enum):
 
 class CreatorType(Enum):
     """Creator types for specialized copyright handling."""
+
     MUSICIAN = "musician"
     PRODUCER = "producer"
     BLOGGER = "blogger"
@@ -97,7 +103,8 @@ class CopyrightRecord:
 
 @dataclass
 class RoyaltyDistribution:
-    """Enhanced royalty distribution configuration."""
+    """
+Enhanced royalty distribution configuration."""
     distribution_id: str
     content_id: str
     rights_holders: List[Dict[str, Any]]  # [{holder_id, percentage, role, creator_type}]
@@ -112,7 +119,8 @@ class RoyaltyDistribution:
 
 @dataclass
 class ContentUsageRecord:
-    """Track content usage across platforms."""
+    """
+Track content usage across platforms."""
     usage_id: str
     content_id: str
     platform: str
@@ -125,7 +133,8 @@ class ContentUsageRecord:
 
 @dataclass
 class LicenseAgreement:
-    """License agreement structure."""
+    """
+License agreement structure."""
     license_id: str
     content_id: str
     licensee_id: str
@@ -344,7 +353,8 @@ class CopyrightManager:
         content_type: ContentType,
         content_metadata: Dict[str, Any]
     ) -> RightsType:
-        """Determine appropriate rights type based on creator and content."""
+        """
+Determine appropriate rights type based on creator and content."""
         # Default to full ownership for original creators
         if content_metadata.get("original_creation", True):
             return RightsType.FULL_OWNERSHIP
@@ -528,7 +538,8 @@ class CopyrightManager:
         similarity_score: float,
         ai_confidence: float
     ) -> None:
-        """Create infringement record for legal processing."""
+        """
+Create infringement record for legal processing."""
         infringement_record = {
             "infringement_id": str(uuid.uuid4()),
             "original_content_id": original_content_id,
@@ -1222,7 +1233,8 @@ class CopyrightManager:
         records: List[Dict[str, Any]],
         fingerprint_matches: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Detect potential copyright conflicts."""
+        """
+Detect potential copyright conflicts."""
         conflicts = []
         
         # Check for multiple ownership claims
@@ -1335,7 +1347,8 @@ class CopyrightManager:
         return filtered
     
     def _calculate_next_payment_date(self, payment_schedule: str) -> str:
-        """Calculate next payment date based on schedule."""
+        """
+Calculate next payment date based on schedule."""
         now = datetime.utcnow()
         
         if payment_schedule == "monthly":
@@ -1356,11 +1369,13 @@ class CopyrightManager:
         return 0.8  # Placeholder
     
     async def _check_content_uniqueness(self, content_id: str) -> float:
-        """Check content uniqueness score."""
+        """
+Check content uniqueness score."""
         return 0.9  # Placeholder
     
     async def _check_metadata_consistency(self, content_id: str, owner_id: str) -> float:
-        """Check metadata consistency score."""
+        """
+Check metadata consistency score."""
         return 0.85  # Placeholder
     
     async def _analyze_claim_validity(
@@ -1370,7 +1385,8 @@ class CopyrightManager:
         claim_type: str,
         evidence: List[str]
     ) -> Dict[str, Any]:
-        """Analyze validity of copyright claim."""
+        """
+Analyze validity of copyright claim."""
         return {
             "score": 0.7,
             "factors": ["Evidence provided", "User verification completed"]

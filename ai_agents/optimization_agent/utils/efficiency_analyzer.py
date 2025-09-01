@@ -8,7 +8,8 @@ class EfficiencyAnalyzer:
     """
     
     def __init__(self):
-        """Initialize the efficiency analyzer."""
+        """
+Initialize the efficiency analyzer."""
         self.logger = logger
         self.metrics = MetricsCollector()
         self.db_path = "/tmp/efficiency_analyzer.db"
@@ -864,7 +865,8 @@ class EfficiencyAnalyzer:
         performance_data: Dict[str, Any],
         waste_analysis: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Perform cost analysis based on performance and waste data."""
+        """
+Perform cost analysis based on performance and waste data."""
         try:
             # Estimated cost factors (these would be real costs in production)
             cost_per_cpu_hour = 0.05  # $0.05 per CPU hour
@@ -942,7 +944,8 @@ class EfficiencyAnalyzer:
         return max(0.0, min(1.0, usage_score - variance_penalty))
     
     def _calculate_memory_efficiency(self, memory_info) -> float:
-        """Calculate memory efficiency score."""
+        """
+Calculate memory efficiency score."""
         try:
             usage_percent = memory_info.percent
             
@@ -960,12 +963,14 @@ class EfficiencyAnalyzer:
             return 0.5
     
     def _estimate_memory_fragmentation(self) -> float:
-        """Estimate memory fragmentation score (0-1, lower is better)."""
+        """
+Estimate memory fragmentation score (0-1, lower is better)."""
         # This would be calculated from actual memory allocation patterns in production
         return np.random.uniform(0.1, 0.3)  # Simulate reasonable fragmentation
     
     def _calculate_io_efficiency(self, wait_times: np.ndarray, throughput: np.ndarray) -> float:
-        """Calculate I/O efficiency score."""
+        """
+Calculate I/O efficiency score."""
         try:
             avg_wait_time = np.mean(wait_times)
             avg_throughput = np.mean(throughput)
@@ -980,7 +985,8 @@ class EfficiencyAnalyzer:
             return 0.5
     
     def _calculate_network_efficiency(self, latency: np.ndarray, bandwidth_usage: np.ndarray) -> float:
-        """Calculate network efficiency score."""
+        """
+Calculate network efficiency score."""
         try:
             avg_latency = np.mean(latency)
             avg_bandwidth = np.mean(bandwidth_usage)
@@ -995,7 +1001,8 @@ class EfficiencyAnalyzer:
             return 0.5
     
     def _calculate_database_efficiency(self, query_times: np.ndarray, cache_hit_rates: np.ndarray) -> float:
-        """Calculate database efficiency score."""
+        """
+Calculate database efficiency score."""
         try:
             avg_query_time = np.mean(query_times)
             avg_cache_hit_rate = np.mean(cache_hit_rates)
@@ -1010,7 +1017,8 @@ class EfficiencyAnalyzer:
             return 0.5
     
     def _calculate_application_efficiency(self, response_times: np.ndarray, error_rates: np.ndarray) -> float:
-        """Calculate application efficiency score."""
+        """
+Calculate application efficiency score."""
         try:
             avg_response_time = np.mean(response_times)
             avg_error_rate = np.mean(error_rates)
@@ -1025,7 +1033,8 @@ class EfficiencyAnalyzer:
             return 0.5
     
     def _calculate_cost_efficiency(self, performance_data: Dict[str, Any]) -> float:
-        """Calculate cost efficiency score."""
+        """
+Calculate cost efficiency score."""
         try:
             # This is a simplified cost efficiency calculation
             # In production, this would consider actual cloud costs and resource utilization
@@ -1045,7 +1054,8 @@ class EfficiencyAnalyzer:
             return 0.5
     
     def _calculate_stability_score(self, performance_data: Dict[str, Any]) -> float:
-        """Calculate system stability score."""
+        """
+Calculate system stability score."""
         try:
             stability_factors = []
             
@@ -1082,7 +1092,8 @@ class EfficiencyAnalyzer:
             return 0.5
     
     async def _save_analysis_report(self, report: EfficiencyReport) -> None:
-        """Save efficiency analysis report to database."""
+        """
+Save efficiency analysis report to database."""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -1174,6 +1185,7 @@ class EfficiencyAnalyzer:
                 'generated_at': datetime.now().isoformat()
             }
     """Types of system bottlenecks"""
+
     CPU_BOUND = "cpu_bound"
     MEMORY_BOUND = "memory_bound"
     IO_BOUND = "io_bound"
@@ -1186,6 +1198,7 @@ class EfficiencyAnalyzer:
 
 class AnalysisScope(Enum):
     """Scope of efficiency analysis"""
+
     SYSTEM_WIDE = "system_wide"
     SERVICE_SPECIFIC = "service_specific"
     COMPONENT_LEVEL = "component_level"
@@ -1205,7 +1218,8 @@ class EfficiencyScore:
 
 @dataclass
 class Bottleneck:
-    """System bottleneck identification"""
+    """
+System bottleneck identification"""
     bottleneck_id: str
     type: BottleneckType
     severity: float  # 0-100
@@ -1220,7 +1234,8 @@ class Bottleneck:
 
 @dataclass
 class EfficiencyAnalysis:
-    """Comprehensive efficiency analysis results"""
+    """
+Comprehensive efficiency analysis results"""
     analysis_id: str
     scope: AnalysisScope
     timestamp: datetime
@@ -1407,7 +1422,8 @@ class EfficiencyAnalyzer:
         return scores
 
     async def _calculate_resource_efficiency(self, metrics: Dict[str, Any]) -> EfficiencyScore:
-        """Calculate resource utilization efficiency"""
+        """
+Calculate resource utilization efficiency"""
         try:
             system_metrics = metrics.get('system', {})
             
@@ -1521,7 +1537,8 @@ class EfficiencyAnalyzer:
         return bottlenecks
 
     async def _detect_cpu_bottleneck(self, metrics: Dict[str, Any]) -> Optional[Bottleneck]:
-        """Detect CPU-related bottlenecks"""
+        """
+Detect CPU-related bottlenecks"""
         try:
             system_metrics = metrics.get('system', {})
             cpu_usage = system_metrics.get('cpu_percent', 0)
@@ -1676,7 +1693,8 @@ class BottleneckDetector:
         self.bottleneck_patterns: Dict[str, List[Dict]] = defaultdict(list)
         
     async def detect_bottlenecks(self, metrics: Dict[str, Any]) -> List[Bottleneck]:
-        """Detect bottlenecks using multiple detection algorithms"""
+        """
+Detect bottlenecks using multiple detection algorithms"""
         try:
             all_bottlenecks = []
             

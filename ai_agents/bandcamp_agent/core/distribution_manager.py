@@ -7,6 +7,7 @@ and optimization on Bandcamp platform.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class DistributionStatus(Enum):
-    """Distribution status types"""
+    """
+Distribution status types"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     LIVE = "live"
@@ -60,7 +63,8 @@ class DistributionManager:
         release_data: Dict[str, Any],
         release_date: Optional[datetime] = None
     ) -> BandcampRelease:
-        """Schedule an automated release"""
+        """
+Schedule an automated release"""
         try:
             release = BandcampRelease(
                 id=f"release_{len(self.releases) + 1}",

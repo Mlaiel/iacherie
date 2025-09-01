@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Test: Gamification Workflows End-to-End
+"""
+Integration Test: Gamification Workflows End-to-End
 ==================================================
 
 Tests the complete gamification system workflows including:
@@ -24,6 +26,7 @@ Tests the complete gamification system workflows including:
 
 Author: Integration Test Suite
 """
+
 import asyncio
 import pytest
 import sys
@@ -39,11 +42,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestGamificationWorkflows:
-    """Integration tests for gamification system workflows"""
+    """
+Integration tests for gamification system workflows"""
     
     @pytest.fixture
     def sample_user_data(self):
-        """Sample user data for testing"""
+        """
+Sample user data for testing"""
         return {
             "user_id": "test_user_123",
             "username": "test_creator",
@@ -73,7 +78,8 @@ class TestGamificationWorkflows:
     
     @pytest.fixture
     def mock_reward_calculator(self):
-        """Mock reward calculator for testing"""
+        """
+Mock reward calculator for testing"""
         try:
             from business.engagement.reward_calculator import RewardCalculator
             calculator = RewardCalculator()

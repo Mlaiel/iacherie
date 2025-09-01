@@ -8,6 +8,7 @@ Enterprise environment management for multi-format content platform.
 Manages development, staging, and production environments with automated provisioning.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -27,7 +28,9 @@ import docker
 logger = logging.getLogger(__name__)
 
 class EnvironmentType(Enum):
-    """Environment type enumeration"""
+    """
+Environment type enumeration"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -37,6 +40,7 @@ class EnvironmentType(Enum):
 
 class EnvironmentStatus(Enum):
     """Environment status enumeration"""
+
     CREATING = "creating"
     ACTIVE = "active"
     UPDATING = "updating"
@@ -46,6 +50,7 @@ class EnvironmentStatus(Enum):
 
 class InfrastructureProvider(Enum):
     """Infrastructure provider enumeration"""
+
     KUBERNETES = "kubernetes"
     DOCKER_COMPOSE = "docker_compose"
     AWS_ECS = "aws_ecs"
@@ -112,10 +117,12 @@ class EnvironmentConfiguration:
             self.custom_configs = {}
 
 class EnvironmentManager:
-    """Enterprise environment management system"""
+    """
+Enterprise environment management system"""
     
     def __init__(self):
-        """Initialize environment manager"""
+        """
+Initialize environment manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.environments: Dict[str, EnvironmentConfiguration] = {}
         self.environment_status: Dict[str, EnvironmentStatus] = {}
@@ -903,7 +910,8 @@ echo "Environment directory: {env_dir}"
         return self.environment_status.get(env_name)
     
     async def get_environment_info(self, env_name: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive environment information"""
+        """
+Get comprehensive environment information"""
         if env_name not in self.environments:
             return None
         
@@ -935,7 +943,8 @@ echo "Environment directory: {env_dir}"
         return environments
     
     async def _wait_for_environment_ready(self, env_name: str, timeout: int = 300) -> bool:
-        """Wait for environment to be ready"""
+        """
+Wait for environment to be ready"""
         start_time = datetime.now()
         
         while (datetime.now() - start_time).seconds < timeout:
@@ -948,7 +957,8 @@ echo "Environment directory: {env_dir}"
         return False
     
     async def _check_environment_health(self, env_name: str) -> bool:
-        """Check environment health"""
+        """
+Check environment health"""
         if env_name not in self.environments:
             return False
         
@@ -962,7 +972,8 @@ echo "Environment directory: {env_dir}"
             return True  # Local environments are always considered healthy
     
     async def _check_k8s_health(self, config: EnvironmentConfiguration) -> bool:
-        """Check Kubernetes environment health"""
+        """
+Check Kubernetes environment health"""
         try:
             if not self.k8s_client:
                 return False
@@ -980,12 +991,14 @@ echo "Environment directory: {env_dir}"
             return False
     
     async def _load_environments(self) -> None:
-        """Load environments from storage"""
+        """
+Load environments from storage"""
         # Implementation would load from persistent storage
         pass
     
     async def _save_environments(self) -> None:
-        """Save environments to storage"""
+        """
+Save environments to storage"""
         # Implementation would save to persistent storage
         pass
 

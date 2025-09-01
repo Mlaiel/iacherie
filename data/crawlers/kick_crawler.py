@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class KickStream:
-    """Kick stream information"""
+    """
+Kick stream information"""
     stream_id: str
     channel_id: str
     channel_name: str
@@ -74,7 +76,8 @@ class KickStream:
 
 @dataclass
 class KickUser:
-    """Kick user information"""
+    """
+Kick user information"""
     user_id: str
     username: str
     display_name: str
@@ -106,7 +109,8 @@ class KickUser:
 
 @dataclass
 class KickClip:
-    """Kick clip information"""
+    """
+Kick clip information"""
     clip_id: str
     title: str
     channel_id: str
@@ -130,7 +134,8 @@ class KickClip:
 
 @dataclass
 class KickChatMessage:
-    """Kick chat message information"""
+    """
+Kick chat message information"""
     message_id: str
     channel_id: str
     user_id: str
@@ -154,7 +159,8 @@ class KickChatMessage:
 
 @dataclass
 class KickCategory:
-    """Kick category information"""
+    """
+Kick category information"""
     category_id: str
     name: str
     slug: str
@@ -721,7 +727,8 @@ class KickCrawler(PlatformCrawler):
         return live_streams[:max_results]
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
+        """
+Get trending content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -738,7 +745,8 @@ class KickCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_stream_data(self, stream_data: Dict[str, Any]) -> Optional[KickStream]:
-        """Parse stream data"""
+        """
+Parse stream data"""
         try:
             started_at = datetime.fromisoformat(stream_data.get('started_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

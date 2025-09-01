@@ -5,8 +5,9 @@ Handles the actual publishing of content to various platforms with format adapta
 metadata optimization, and compliance checking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from ..validation.compliance import ComplianceValidator
 
 
 class PublishingStatus(Enum):
-    """Publishing status enumeration."""
+    """
+Publishing status enumeration."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     UPLOADING = "uploading"
@@ -36,6 +39,7 @@ class PublishingStatus(Enum):
 
 class ContentFormat(Enum):
     """Content format enumeration."""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -95,7 +99,8 @@ class ContentPublisher:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content publisher."""
+        """
+Initialize content publisher."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -447,7 +452,8 @@ class ContentPublisher:
         return await adapter.publish_content(publication_data)
     
     async def _get_content_information(self, content_id: UUID) -> Dict[str, Any]:
-        """Get content information from content management system."""
+        """
+Get content information from content management system."""
         # This would interface with the content management system
         # For now, return mock data
         return {
@@ -460,7 +466,8 @@ class ContentPublisher:
         }
     
     async def _validate_platform_compatibility(self, request: PublishingRequest) -> None:
-        """Validate content compatibility with platform."""
+        """
+Validate content compatibility with platform."""
         platform_config = self.platform_configs.get(request.platform)
         if not platform_config:
             raise ValueError(f"Unknown platform: {request.platform}")
@@ -544,7 +551,8 @@ class ContentPublisher:
         request.platform_metadata.update(seo_result.get('platform_specific', {}))
     
     async def _generate_thumbnails(self, request: PublishingRequest) -> None:
-        """Generate thumbnails for video content."""
+        """
+Generate thumbnails for video content."""
         if request.content_format != ContentFormat.VIDEO:
             return
         
@@ -746,7 +754,8 @@ class ContentPublisher:
         }
     
     async def _initialize_platform_adapters(self) -> None:
-        """Initialize platform adapters."""
+        """
+Initialize platform adapters."""
         # This would initialize actual platform adapters
         for platform in self.platform_configs:
             self.platform_adapters[platform] = type('MockPlatformAdapter', (), {
@@ -754,7 +763,8 @@ class ContentPublisher:
             })()
     
     async def _mock_platform_publish(self, publication_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock platform publication for testing."""
+        """
+Mock platform publication for testing."""
         await asyncio.sleep(1)  # Simulate upload time
         
         return {
@@ -815,7 +825,8 @@ class ContentPublisher:
             return 0
     
     def _update_platform_metrics(self, platform: str, success: bool) -> None:
-        """Update platform-specific metrics."""
+        """
+Update platform-specific metrics."""
         if platform not in self.metrics['platform_metrics']:
             self.metrics['platform_metrics'][platform] = {
                 'total': 0,
@@ -835,7 +846,8 @@ class ContentPublisher:
         platform_metrics['success_rate'] = platform_metrics['successful'] / platform_metrics['total']
     
     def get_publication_status(self, request_id: UUID) -> Optional[Dict[str, Any]]:
-        """Get status of a publication request."""
+        """
+Get status of a publication request."""
         # Check active publications
         if request_id in self.active_publications:
             request = self.active_publications[request_id]
@@ -856,7 +868,8 @@ class ContentPublisher:
         return None
     
     def get_platform_status(self, platform: str) -> Dict[str, Any]:
-        """Get status for a specific platform."""
+        """
+Get status for a specific platform."""
         return {
             'platform': platform,
             'connected': self.platform_connections.get(platform, False),
@@ -866,7 +879,8 @@ class ContentPublisher:
         }
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics."""
+        """
+Get current performance metrics."""
         return {
             **self.metrics,
             'timestamp': datetime.utcnow().isoformat(),
@@ -883,15 +897,18 @@ class ContentPublisher:
 
 # Custom exceptions
 class SecurityError(Exception):
-    """Content security scan failed."""
+    """
+Content security scan failed."""
     pass
 
 
 class ComplianceError(Exception):
-    """Content compliance validation failed."""
+    """
+Content compliance validation failed."""
     pass
 
 
 class ProcessingError(Exception):
-    """Content processing failed."""
+    """
+Content processing failed."""
     pass

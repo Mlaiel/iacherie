@@ -6,6 +6,7 @@ diff analysis, rollback capabilities, and evolution monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class VersionChangeType(Enum):
-    """Types of version changes"""
+    """
+Types of version changes"""
+
     CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
@@ -48,6 +51,7 @@ class VersionChangeType(Enum):
 
 class VersionStatus(Enum):
     """Version status options"""
+
     ACTIVE = "active"
     ARCHIVED = "archived"
     DEPRECATED = "deprecated"
@@ -78,7 +82,8 @@ class VersionMetadata:
 
 
 class FingerprintVersionModel(Base):
-    """SQLAlchemy model for fingerprint versions"""
+    """
+SQLAlchemy model for fingerprint versions"""
     __tablename__ = 'fingerprint_versions'
     
     # Primary identification
@@ -134,7 +139,8 @@ class FingerprintVersionModel(Base):
 
 
 class VersionBranchModel(Base):
-    """SQLAlchemy model for version branches"""
+    """
+SQLAlchemy model for version branches"""
     __tablename__ = 'fingerprint_version_branches'
     
     branch_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -162,7 +168,8 @@ class VersionBranchModel(Base):
 
 @dataclass
 class VersionQuery:
-    """Query configuration for version operations"""
+    """
+Query configuration for version operations"""
     fingerprint_id: Optional[str] = None
     version_ids: Optional[List[str]] = None
     
@@ -192,7 +199,8 @@ class VersionQuery:
 
 
 class VersionDiffEngine:
-    """Engine for calculating and analyzing version differences"""
+    """
+Engine for calculating and analyzing version differences"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.VersionDiffEngine")
@@ -895,7 +903,8 @@ class FingerprintVersionManager:
         session: AsyncSession,
         version_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Get version data as dictionary"""
+        """
+Get version data as dictionary"""
         version = await self._get_version_by_id(session, version_id)
         if version:
             return await self._extract_version_data(version)
@@ -906,7 +915,8 @@ class FingerprintVersionManager:
         session: AsyncSession,
         version_id: str
     ) -> Optional[FingerprintVersionModel]:
-        """Get version model by ID"""
+        """
+Get version model by ID"""
         result = await session.execute(
             select(FingerprintVersionModel).where(
                 FingerprintVersionModel.version_id == version_id
@@ -919,7 +929,8 @@ class FingerprintVersionManager:
         session: AsyncSession,
         branch_id: str
     ) -> Optional[VersionBranchModel]:
-        """Get branch model by ID"""
+        """
+Get branch model by ID"""
         result = await session.execute(
             select(VersionBranchModel).where(
                 VersionBranchModel.branch_id == branch_id
@@ -931,7 +942,8 @@ class FingerprintVersionManager:
         self,
         version: FingerprintVersionModel
     ) -> Dict[str, Any]:
-        """Extract fingerprint data from version model"""
+        """
+Extract fingerprint data from version model"""
         return {
             'primary_hash': version.primary_hash,
             'perceptual_hash': version.perceptual_hash,
@@ -946,7 +958,8 @@ class FingerprintVersionManager:
         self,
         fingerprint_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Prepare data for storage with compression/encryption"""
+        """
+Prepare data for storage with compression/encryption"""
         storage_data = {}
         
         # Compress data if compression manager is available
@@ -963,7 +976,8 @@ class FingerprintVersionManager:
         return storage_data
     
     def _calculate_checksum(self, data: Dict[str, Any]) -> str:
-        """Calculate validation checksum for data"""
+        """
+Calculate validation checksum for data"""
         data_str = json.dumps(data, sort_keys=True, default=str)
         return hashlib.sha256(data_str.encode()).hexdigest()
     
@@ -972,7 +986,8 @@ class FingerprintVersionManager:
         stmt,
         query: VersionQuery
     ):
-        """Apply filters to version query"""
+        """
+Apply filters to version query"""
         if query.change_types:
             change_type_values = [ct.value for ct in query.change_types]
             stmt = stmt.where(FingerprintVersionModel.change_type.in_(change_type_values))
@@ -1003,7 +1018,8 @@ class FingerprintVersionManager:
         version: FingerprintVersionModel,
         query: VersionQuery
     ) -> Dict[str, Any]:
-        """Format version data for output"""
+        """
+Format version data for output"""
         data = {
             'version_id': str(version.version_id),
             'fingerprint_id': str(version.fingerprint_id),
@@ -1042,7 +1058,8 @@ class FingerprintVersionManager:
         target_data: Dict[str, Any],
         merge_strategy: str
     ) -> Dict[str, Any]:
-        """Perform merge based on strategy"""
+        """
+Perform merge based on strategy"""
         if merge_strategy == "fast_forward":
             # Use source data for fast forward
             return source_data

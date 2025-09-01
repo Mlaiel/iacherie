@@ -9,6 +9,7 @@ WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
 """
+
 import hashlib
 import numpy as np
 import librosa
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class HashConfiguration:
-    """Configuration for hash generation algorithms."""
+    """
+Configuration for hash generation algorithms."""
     
     hash_size: int = 64
     sample_rate: int = 22050
@@ -45,7 +47,8 @@ class PerceptualHashGenerator:
     """
     
     def __init__(self, config: Optional[HashConfiguration] = None):
-        """Initialize the perceptual hash generator."""
+        """
+Initialize the perceptual hash generator."""
         self.config = config or HashConfiguration()
         self.executor = ThreadPoolExecutor(max_workers=4)
         
@@ -291,7 +294,8 @@ class PerceptualHashGenerator:
         return y, sr
     
     def _resize_spectrogram(self, spectrogram: np.ndarray, target_shape: Tuple[int, int]) -> np.ndarray:
-        """Resize spectrogram to target dimensions using interpolation."""
+        """
+Resize spectrogram to target dimensions using interpolation."""
         return signal.resample(
             signal.resample(spectrogram, target_shape[1], axis=1), 
             target_shape[0], 
@@ -299,7 +303,8 @@ class PerceptualHashGenerator:
         )
     
     async def _generate_binary_hash(self, data: np.ndarray) -> np.ndarray:
-        """Generate binary hash from 2D data matrix."""
+        """
+Generate binary hash from 2D data matrix."""
         loop = asyncio.get_event_loop()
         
         def _hash_sync():
@@ -322,7 +327,8 @@ class PerceptualHashGenerator:
         return await loop.run_in_executor(self.executor, _hash_sync)
     
     def _quantize_intervals(self, intervals: np.ndarray) -> np.ndarray:
-        """Quantize beat intervals to create rhythm pattern."""
+        """
+Quantize beat intervals to create rhythm pattern."""
         if len(intervals) == 0:
             return np.zeros(16, dtype=bool)
         
@@ -342,7 +348,8 @@ class PerceptualHashGenerator:
         return np.array(pattern[:self.config.hash_size], dtype=bool)
     
     def _pad_to_size(self, data: np.ndarray, target_size: int) -> np.ndarray:
-        """Pad or truncate array to target size."""
+        """
+Pad or truncate array to target size."""
         if len(data) >= target_size:
             return data[:target_size]
         else:
@@ -351,7 +358,8 @@ class PerceptualHashGenerator:
             return padded
     
     def _bits_to_hex(self, bits: np.ndarray) -> str:
-        """Convert bit array to hexadecimal string."""
+        """
+Convert bit array to hexadecimal string."""
         # Ensure multiple of 8 bits for byte conversion
         padded_bits = self._pad_to_size(bits, ((len(bits) + 7) // 8) * 8)
         
@@ -367,7 +375,8 @@ class PerceptualHashGenerator:
         return bytes_data.hex()
     
     def _hex_to_bits(self, hex_string: str) -> np.ndarray:
-        """Convert hexadecimal string back to bit array."""
+        """
+Convert hexadecimal string back to bit array."""
         try:
             # Convert hex to bytes
             bytes_data = bytes.fromhex(hex_string)
@@ -401,7 +410,8 @@ class HashComparator:
     """
     
     def __init__(self):
-        """Initialize the hash comparator."""
+        """
+Initialize the hash comparator."""
         self.executor = ThreadPoolExecutor(max_workers=2)
         logger.info("HashComparator initialized")
     
@@ -463,7 +473,8 @@ class HashComparator:
         return 1.0 - hamming_dist
     
     def _jaccard_similarity(self, bits1: np.ndarray, bits2: np.ndarray) -> float:
-        """Calculate Jaccard similarity between bit arrays."""
+        """
+Calculate Jaccard similarity between bit arrays."""
         intersection = np.logical_and(bits1, bits2).sum()
         union = np.logical_or(bits1, bits2).sum()
         
@@ -473,7 +484,8 @@ class HashComparator:
         return intersection / union
     
     def _cosine_similarity(self, bits1: np.ndarray, bits2: np.ndarray) -> float:
-        """Calculate cosine similarity between bit arrays."""
+        """
+Calculate cosine similarity between bit arrays."""
         dot_product = np.dot(bits1.astype(float), bits2.astype(float))
         norm1 = np.linalg.norm(bits1.astype(float))
         norm2 = np.linalg.norm(bits2.astype(float))
@@ -484,7 +496,8 @@ class HashComparator:
         return dot_product / (norm1 * norm2)
     
     def _normalized_hamming_similarity(self, bits1: np.ndarray, bits2: np.ndarray) -> float:
-        """Calculate normalized Hamming similarity with bit position weighting."""
+        """
+Calculate normalized Hamming similarity with bit position weighting."""
         if len(bits1) == 0 or len(bits2) == 0:
             return 0.0
         

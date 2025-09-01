@@ -8,7 +8,7 @@ Enterprise archive storage for long-term retention, compliance,
 and cold storage management with automated lifecycle policies.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 ÉQUIPE PROJET - SPÉCIALITÉS:
@@ -17,6 +17,7 @@ Contact: mlaiel@live.de
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 import logging
 import asyncio
@@ -38,7 +39,9 @@ import tempfile
 logger = logging.getLogger(__name__)
 
 class ArchiveTier(Enum):
-    """Archive storage tiers"""
+    """
+Archive storage tiers"""
+
     IMMEDIATE = "immediate"  # Frequent access
     INFREQUENT = "infrequent"  # Monthly access
     GLACIER = "glacier"  # Yearly access
@@ -46,6 +49,7 @@ class ArchiveTier(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms for archival"""
+
     GZIP = "gzip"
     LZMA = "lzma"
     BROTLI = "brotli"
@@ -54,6 +58,7 @@ class CompressionType(Enum):
 
 class ArchiveStatus(Enum):
     """Archive operation status"""
+
     PENDING = "pending"
     ARCHIVING = "archiving"
     ARCHIVED = "archived"
@@ -64,6 +69,7 @@ class ArchiveStatus(Enum):
 
 class ComplianceLevel(Enum):
     """Data compliance levels"""
+
     STANDARD = "standard"
     HIPAA = "hipaa"
     GDPR = "gdpr"
@@ -186,7 +192,8 @@ class ArchiveStorageManager:
     """
     
     def __init__(self, config: ArchiveConfig):
-        """Initialize archive storage manager"""
+        """
+Initialize archive storage manager"""
         self.config = config
         self.archive_policies: Dict[str, ArchivePolicy] = {}
         self.archive_records: Dict[str, ArchiveRecord] = {}
@@ -787,7 +794,8 @@ class ArchiveStorageManager:
         compression_type: CompressionType,
         compression_level: int
     ) -> Dict[str, Any]:
-        """Compress file with specified algorithm"""
+        """
+Compress file with specified algorithm"""
         try:
             target_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -890,7 +898,8 @@ class ArchiveStorageManager:
         )
     
     async def _save_policy_configuration(self, archive_policy: ArchivePolicy) -> None:
-        """Save archive policy to disk"""
+        """
+Save archive policy to disk"""
         try:
             policy_path = Path(self.config.archive_root_path) / "metadata" / "policies" / f"{archive_policy.policy_id}.json"
             
@@ -962,24 +971,29 @@ class ArchiveStorageManager:
 
 
 class LifecycleManager:
-    """Manages archive lifecycle and tier transitions"""
+    """
+Manages archive lifecycle and tier transitions"""
     
     def __init__(self, archive_manager: ArchiveStorageManager):
-        """Initialize lifecycle manager"""
+        """
+Initialize lifecycle manager"""
         self.archive_manager = archive_manager
         self.lifecycle_task = None
     
     async def start(self) -> None:
-        """Start lifecycle management"""
+        """
+Start lifecycle management"""
         self.lifecycle_task = asyncio.create_task(self._lifecycle_loop())
     
     async def stop(self) -> None:
-        """Stop lifecycle management"""
+        """
+Stop lifecycle management"""
         if self.lifecycle_task:
             self.lifecycle_task.cancel()
     
     async def _lifecycle_loop(self) -> None:
-        """Main lifecycle management loop"""
+        """
+Main lifecycle management loop"""
         while True:
             try:
                 await asyncio.sleep(self.archive_manager.config.lifecycle_check_interval * 3600)
@@ -1071,12 +1085,14 @@ class ComplianceManager:
     """Manages compliance and legal hold requirements"""
     
     def __init__(self, archive_manager: ArchiveStorageManager):
-        """Initialize compliance manager"""
+        """
+Initialize compliance manager"""
         self.archive_manager = archive_manager
         self.compliance_rules = {}
     
     async def register_archive(self, archive_record: ArchiveRecord) -> None:
-        """Register archive for compliance monitoring"""
+        """
+Register archive for compliance monitoring"""
         try:
             policy = self.archive_manager.archive_policies.get(archive_record.policy_id)
             if not policy:
@@ -1161,7 +1177,8 @@ class RetrievalManager:
     """Manages content retrieval from different tiers"""
     
     def __init__(self, archive_manager: ArchiveStorageManager):
-        """Initialize retrieval manager"""
+        """
+Initialize retrieval manager"""
         self.archive_manager = archive_manager
     
     async def retrieve_from_tier(
@@ -1170,7 +1187,8 @@ class RetrievalManager:
         retrieval_path: str,
         priority: str
     ) -> Dict[str, Any]:
-        """Retrieve content from archive tier"""
+        """
+Retrieve content from archive tier"""
         try:
             start_time = datetime.now()
             
@@ -1294,11 +1312,13 @@ class ArchiveIntegrityChecker:
     """Checks archive integrity and detects corruption"""
     
     def __init__(self, archive_manager: ArchiveStorageManager):
-        """Initialize integrity checker"""
+        """
+Initialize integrity checker"""
         self.archive_manager = archive_manager
     
     async def verify_archive_integrity(self, archive_id: str) -> Dict[str, Any]:
-        """Verify integrity of specific archive"""
+        """
+Verify integrity of specific archive"""
         try:
             if archive_id not in self.archive_manager.archive_records:
                 return {

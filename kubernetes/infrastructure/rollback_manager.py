@@ -7,6 +7,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, reprod
 or distribution without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from backend.deployment.infrastructure.cloud_provider import CloudProviderManage
 
 
 class RollbackTrigger(Enum):
-    """Rollback trigger types"""
+    """
+Rollback trigger types"""
+
     MANUAL = "manual"
     AUTOMATIC = "automatic"
     HEALTH_CHECK_FAILURE = "health_check_failure"
@@ -36,6 +39,7 @@ class RollbackTrigger(Enum):
 
 class RollbackStrategy(Enum):
     """Rollback strategy types"""
+
     IMMEDIATE = "immediate"
     GRADUAL = "gradual"
     BLUE_GREEN_SWAP = "blue_green_swap"
@@ -45,6 +49,7 @@ class RollbackStrategy(Enum):
 
 class RollbackStatus(Enum):
     """Rollback execution status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
@@ -68,7 +73,8 @@ class RollbackTarget:
 
 @dataclass
 class RollbackPlan:
-    """Rollback execution plan"""
+    """
+Rollback execution plan"""
     rollback_id: str
     trigger: RollbackTrigger
     strategy: RollbackStrategy
@@ -84,7 +90,8 @@ class RollbackPlan:
 
 @dataclass
 class RollbackExecution:
-    """Rollback execution tracking"""
+    """
+Rollback execution tracking"""
     rollback_id: str
     plan: RollbackPlan
     status: RollbackStatus
@@ -136,7 +143,8 @@ class RollbackManager:
         self.auto_rollback_timeout_minutes = config.get('auto_rollback_timeout', 15)
     
     async def initialize(self) -> None:
-        """Initialize rollback manager"""
+        """
+Initialize rollback manager"""
         try:
             self.logger.info("Initializing rollback manager")
             
@@ -403,7 +411,8 @@ class RollbackManager:
         return sorted(filtered_rollbacks, key=lambda x: x.started_at, reverse=True)
     
     async def validate_rollback_feasibility(self, targets: List[RollbackTarget]) -> Dict[str, Any]:
-        """Validate if rollback is feasible for given targets"""
+        """
+Validate if rollback is feasible for given targets"""
         results = {
             'feasible': True,
             'warnings': [],
@@ -514,22 +523,26 @@ class RollbackManager:
         pass
     
     async def _execute_blue_green_rollback(self, execution: RollbackExecution) -> None:
-        """Execute blue-green rollback strategy"""
+        """
+Execute blue-green rollback strategy"""
         # Implementation for blue-green rollback
         pass
     
     async def _execute_canary_rollback(self, execution: RollbackExecution) -> None:
-        """Execute canary rollback strategy"""
+        """
+Execute canary rollback strategy"""
         # Implementation for canary rollback
         pass
     
     async def _execute_database_rollback(self, execution: RollbackExecution) -> None:
-        """Execute database point-in-time rollback"""
+        """
+Execute database point-in-time rollback"""
         # Implementation for database rollback
         pass
     
     def _generate_rollback_id(self, targets: List[RollbackTarget]) -> str:
-        """Generate unique rollback ID"""
+        """
+Generate unique rollback ID"""
         target_names = [t.service_name for t in targets]
         timestamp = datetime.utcnow().isoformat()
         combined = f"{'-'.join(target_names)}-{timestamp}"
@@ -542,56 +555,67 @@ class RollbackManager:
     
     async def _calculate_rollback_order(self, targets: List[RollbackTarget], 
                                       dependencies: Dict[str, List[str]]) -> List[str]:
-        """Calculate optimal rollback order"""
+        """
+Calculate optimal rollback order"""
         # Implementation for rollback order calculation
         return [t.service_name for t in targets]
     
     async def _estimate_rollback_duration(self, targets: List[RollbackTarget], 
                                         strategy: RollbackStrategy) -> int:
-        """Estimate rollback duration in minutes"""
+        """
+Estimate rollback duration in minutes"""
         # Implementation for duration estimation
         return len(targets) * 5  # 5 minutes per service as default
     
     async def _get_pre_rollback_checks(self, targets: List[RollbackTarget]) -> List[str]:
-        """Get pre-rollback checks for targets"""
+        """
+Get pre-rollback checks for targets"""
         return ['health_check', 'dependency_check', 'backup_verification']
     
     async def _get_post_rollback_checks(self, targets: List[RollbackTarget]) -> List[str]:
-        """Get post-rollback checks for targets"""
+        """
+Get post-rollback checks for targets"""
         return ['health_check', 'functionality_test', 'performance_check']
     
     async def _validate_rollback_plan(self, plan: RollbackPlan) -> None:
-        """Validate rollback plan"""
+        """
+Validate rollback plan"""
         # Implementation for plan validation
         pass
     
     async def _execute_pre_rollback_checks(self, execution: RollbackExecution) -> None:
-        """Execute pre-rollback checks"""
+        """
+Execute pre-rollback checks"""
         # Implementation for pre-rollback checks
         pass
     
     async def _execute_post_rollback_checks(self, execution: RollbackExecution) -> None:
-        """Execute post-rollback checks"""
+        """
+Execute post-rollback checks"""
         # Implementation for post-rollback checks
         pass
     
     async def _load_rollback_templates(self) -> None:
-        """Load rollback templates from configuration"""
+        """
+Load rollback templates from configuration"""
         # Implementation for loading rollback templates
         pass
     
     async def _register_health_checkers(self) -> None:
-        """Register custom health check functions"""
+        """
+Register custom health check functions"""
         # Implementation for registering health checkers
         pass
     
     async def _get_last_stable_version(self, service_name: str) -> Optional[str]:
-        """Get last stable version for a service"""
+        """
+Get last stable version for a service"""
         # Implementation for finding last stable version
         return None
     
     async def _get_service_environment(self, service_name: str) -> str:
-        """Get environment for a service"""
+        """
+Get environment for a service"""
         # Implementation for getting service environment
         return "production"
     
@@ -601,21 +625,25 @@ class RollbackManager:
         return True
     
     async def _estimate_service_downtime(self, target: RollbackTarget) -> int:
-        """Estimate downtime for service rollback"""
+        """
+Estimate downtime for service rollback"""
         # Implementation for downtime estimation
         return 5  # 5 minutes default
     
     async def _should_trigger_health_rollback(self, service: Dict[str, Any]) -> bool:
-        """Check if health-based rollback should be triggered"""
+        """
+Check if health-based rollback should be triggered"""
         # Implementation for health-based rollback decision
         return False
     
     async def _should_trigger_performance_rollback(self, service: Dict[str, Any]) -> bool:
-        """Check if performance-based rollback should be triggered"""
+        """
+Check if performance-based rollback should be triggered"""
         # Implementation for performance-based rollback decision
         return False
     
     async def _should_trigger_error_rate_rollback(self, service: Dict[str, Any]) -> bool:
-        """Check if error rate-based rollback should be triggered"""
+        """
+Check if error rate-based rollback should be triggered"""
         # Implementation for error rate-based rollback decision
         return False

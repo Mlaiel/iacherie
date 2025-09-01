@@ -9,7 +9,7 @@ Module: backend/business/index.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -26,6 +26,7 @@ Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching → Multi-platform Distribution → Revenue Optimization → Analytics
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -66,7 +67,7 @@ logger = logging.getLogger(__name__)
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 
 @dataclass
@@ -109,7 +110,8 @@ class CreatorJourneyRequest:
 
 @dataclass
 class CreatorJourneyResponse:
-    """Response structure for creator journey processing"""
+    """
+Response structure for creator journey processing"""
     journey_id: str
     creator_id: str
     success: bool
@@ -171,7 +173,8 @@ class BusinessOrchestrator:
         self.last_health_check = None
     
     async def initialize(self) -> bool:
-        """Initialize all business services and connections"""
+        """
+Initialize all business services and connections"""
         try:
             # Initialize Redis connection
             self.redis_client = redis.from_url(
@@ -595,7 +598,8 @@ class BusinessOrchestrator:
         return self.services.get(service_name)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all business services"""
+        """
+Perform health check on all business services"""
         health_status = {
             "orchestrator": "healthy" if self.initialized else "unhealthy",
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -662,13 +666,15 @@ async def get_business_orchestrator(
 async def initialize_business_system(
     config: Optional[BusinessServiceConfig] = None
 ) -> BusinessServiceOrchestrator:
-    """Initialize the complete business system"""
+    """
+Initialize the complete business system"""
     return await get_business_orchestrator(config)
 
 
 @asynccontextmanager
 async def business_context(config: Optional[BusinessServiceConfig] = None):
-    """Async context manager for business services"""
+    """
+Async context manager for business services"""
     orchestrator = await get_business_orchestrator(config)
     try:
         yield orchestrator
@@ -684,7 +690,8 @@ async def process_creator_journey(
     metadata: Optional[Dict[str, Any]] = None,
     preferences: Optional[Dict[str, Any]] = None
 ) -> CreatorJourneyResponse:
-    """Convenience function to process creator journey"""
+    """
+Convenience function to process creator journey"""
     orchestrator = await get_business_orchestrator()
     
     request = CreatorJourneyRequest(

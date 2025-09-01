@@ -7,6 +7,7 @@ and machine learning pipeline health tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """AI model types"""
+    """
+AI model types"""
+
     CONTENT_FINGERPRINTING = "content_fingerprinting"
     SIMILARITY_DETECTION = "similarity_detection"
     COPYRIGHT_CLASSIFICATION = "copyright_classification"
@@ -37,6 +40,7 @@ class AIModelType(Enum):
 
 class DriftType(Enum):
     """Types of model drift"""
+
     DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     PREDICTION_DRIFT = "prediction_drift"
@@ -45,6 +49,7 @@ class DriftType(Enum):
 
 class ModelHealth(Enum):
     """Model health status"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -114,7 +119,8 @@ class ModelBaseline:
 
 @dataclass
 class DriftDetectionResult:
-    """Drift detection analysis result"""
+    """
+Drift detection analysis result"""
     model_id: str
     drift_type: DriftType
     drift_score: float
@@ -140,7 +146,8 @@ class AIAlertManager:
     """
     
     def __init__(self, alert_manager: IntelligentAlertManager):
-        """Initialize AI alert manager"""
+        """
+Initialize AI alert manager"""
         self.alert_manager = alert_manager
         self.model_metrics_history: Dict[str, List[ModelMetrics]] = {}
         self.model_baselines: Dict[str, ModelBaseline] = {}
@@ -612,7 +619,8 @@ class AIAlertManager:
         return self.model_baselines.get(model_id)
     
     async def _update_model_baseline(self, metrics: ModelMetrics):
-        """Update model baseline if performance is good"""
+        """
+Update model baseline if performance is good"""
         try:
             # Only update baseline if model is performing well
             if (metrics.accuracy > 0.85 and 

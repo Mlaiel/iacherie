@@ -16,6 +16,7 @@ Automated setup utility for deployment environments.
 Provides one-click environment initialization and validation.
 ===============================================
 """
+
 import os
 import sys
 import asyncio
@@ -63,7 +64,8 @@ class EnvironmentSetupManager:
         self.setup_results: Dict[str, Any] = {}
         
     async def setup_all_environments(self, environment_types: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Setup all or specified environments"""
+        """
+Setup all or specified environments"""
         try:
             logger.info("Starting environment setup process...")
             
@@ -347,7 +349,8 @@ class EnvironmentSetupManager:
             return 0.0
     
     def _get_available_memory(self) -> float:
-        """Get available memory in GB"""
+        """
+Get available memory in GB"""
         try:
             import psutil
             memory = psutil.virtual_memory()
@@ -356,7 +359,8 @@ class EnvironmentSetupManager:
             return 0.0
     
     async def _check_network_connectivity(self) -> Dict[str, Any]:
-        """Check network connectivity"""
+        """
+Check network connectivity"""
         try:
             import aiohttp
             async with aiohttp.ClientSession() as session:
@@ -369,7 +373,8 @@ class EnvironmentSetupManager:
             return {'satisfied': False, 'error': 'Network connectivity failed'}
     
     def _check_docker_availability(self) -> Dict[str, Any]:
-        """Check Docker availability"""
+        """
+Check Docker availability"""
         try:
             import subprocess
             result = subprocess.run(['docker', '--version'], capture_output=True, text=True)
@@ -381,7 +386,8 @@ class EnvironmentSetupManager:
             return {'available': False}
     
     def _check_kubernetes_availability(self) -> Dict[str, Any]:
-        """Check Kubernetes availability"""
+        """
+Check Kubernetes availability"""
         try:
             import subprocess
             result = subprocess.run(['kubectl', 'version', '--client'], capture_output=True, text=True)
@@ -393,7 +399,8 @@ class EnvironmentSetupManager:
             return {'available': False}
     
     def _validate_cross_environment_configurations(self, environments: List[EnvironmentType]) -> Dict[str, Any]:
-        """Validate cross-environment configurations"""
+        """
+Validate cross-environment configurations"""
         return {
             'conflicts': [],
             'recommendations': [
@@ -403,37 +410,44 @@ class EnvironmentSetupManager:
         }
     
     async def _setup_ssl_certificates(self) -> bool:
-        """Setup SSL certificates"""
+        """
+Setup SSL certificates"""
         # Placeholder for SSL certificate setup
         return True
     
     async def _setup_firewall_rules(self) -> bool:
-        """Setup firewall rules"""
+        """
+Setup firewall rules"""
         # Placeholder for firewall setup
         return True
     
     async def _setup_access_controls(self) -> bool:
-        """Setup access controls"""
+        """
+Setup access controls"""
         # Placeholder for access control setup
         return True
     
     async def _setup_encryption(self) -> bool:
-        """Setup encryption"""
+        """
+Setup encryption"""
         # Placeholder for encryption setup
         return True
     
     async def _setup_audit_logging(self) -> bool:
-        """Setup audit logging"""
+        """
+Setup audit logging"""
         # Placeholder for audit logging setup
         return True
     
     async def _setup_security_scanning(self) -> bool:
-        """Setup security scanning"""
+        """
+Setup security scanning"""
         # Placeholder for security scanning setup
         return True
     
     def _generate_next_steps(self) -> List[str]:
-        """Generate next steps recommendations"""
+        """
+Generate next steps recommendations"""
         return [
             "Review environment configurations",
             "Run health checks",
@@ -458,7 +472,8 @@ class EnvironmentSetupManager:
 
 
 async def main():
-    """Main setup function"""
+    """
+Main setup function"""
     parser = argparse.ArgumentParser(description='IA Influencer Agent Environment Setup')
     parser.add_argument(
         '--environments',

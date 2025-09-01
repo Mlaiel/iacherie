@@ -7,6 +7,7 @@ API limits and avoid being blocked.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved.
 """
+
 import asyncio
 import time
 from typing import Dict
@@ -14,7 +15,8 @@ from datetime import datetime, timedelta
 
 
 class EcommerceRateLimiter:
-    """Rate limiter for e-commerce platform crawling."""
+    """
+Rate limiter for e-commerce platform crawling."""
     
     def __init__(self):
         self.platform_limits = {
@@ -26,7 +28,8 @@ class EcommerceRateLimiter:
         self.last_request_time = {}
     
     async def wait_if_needed(self, platform: str):
-        """Wait if rate limit would be exceeded."""
+        """
+Wait if rate limit would be exceeded."""
         if platform not in self.platform_limits:
             return
         
@@ -41,7 +44,8 @@ class EcommerceRateLimiter:
             await asyncio.sleep(min_delay - time_since_last)
     
     async def update_usage(self, platform: str, request_count: int):
-        """Update usage tracking."""
+        """
+Update usage tracking."""
         self.last_request_time[platform] = time.time()
         if platform not in self.usage_tracking:
             self.usage_tracking[platform] = []
@@ -53,7 +57,8 @@ class EcommerceRateLimiter:
 
 
 class EducationalRateLimiter:
-    """Rate limiter for educational platform crawling."""
+    """
+Rate limiter for educational platform crawling."""
     
     def __init__(self):
         self.platform_limits = {
@@ -66,7 +71,8 @@ class EducationalRateLimiter:
         self.last_request_time = {}
     
     async def wait_if_needed(self, platform: str):
-        """Wait if rate limit would be exceeded."""
+        """
+Wait if rate limit would be exceeded."""
         if platform not in self.platform_limits:
             return
         
@@ -80,7 +86,8 @@ class EducationalRateLimiter:
             await asyncio.sleep(min_delay - time_since_last)
     
     async def update_usage(self, platform: str, request_count: int):
-        """Update usage tracking."""
+        """
+Update usage tracking."""
         self.last_request_time[platform] = time.time()
         if platform not in self.usage_tracking:
             self.usage_tracking[platform] = []
@@ -92,7 +99,8 @@ class EducationalRateLimiter:
 
 
 class NewsRateLimiter:
-    """Rate limiter for news platform crawling."""
+    """
+Rate limiter for news platform crawling."""
     
     def __init__(self):
         self.platform_limits = {
@@ -106,7 +114,8 @@ class NewsRateLimiter:
         self.last_request_time = {}
     
     async def wait_if_needed(self, platform: str):
-        """Wait if rate limit would be exceeded."""
+        """
+Wait if rate limit would be exceeded."""
         if platform not in self.platform_limits:
             return
         
@@ -120,7 +129,8 @@ class NewsRateLimiter:
             await asyncio.sleep(min_delay - time_since_last)
     
     async def update_usage(self, platform: str, request_count: int):
-        """Update usage tracking."""
+        """
+Update usage tracking."""
         self.last_request_time[platform] = time.time()
         if platform not in self.usage_tracking:
             self.usage_tracking[platform] = []
@@ -132,7 +142,8 @@ class NewsRateLimiter:
 
 
 class PodcastRateLimiter:
-    """Rate limiter for podcast platform crawling."""
+    """
+Rate limiter for podcast platform crawling."""
     
     def __init__(self):
         self.platform_limits = {
@@ -145,7 +156,8 @@ class PodcastRateLimiter:
         self.last_request_time = {}
     
     async def wait_if_needed(self, platform: str):
-        """Wait if rate limit would be exceeded."""
+        """
+Wait if rate limit would be exceeded."""
         if platform not in self.platform_limits:
             return
         
@@ -159,7 +171,8 @@ class PodcastRateLimiter:
             await asyncio.sleep(min_delay - time_since_last)
     
     async def update_usage(self, platform: str, request_count: int):
-        """Update usage tracking."""
+        """
+Update usage tracking."""
         self.last_request_time[platform] = time.time()
         if platform not in self.usage_tracking:
             self.usage_tracking[platform] = []
@@ -171,7 +184,8 @@ class PodcastRateLimiter:
 
 
 class GenericRateLimiter:
-    """Generic rate limiter for general web crawling."""
+    """
+Generic rate limiter for general web crawling."""
     
     def __init__(self, requests_per_minute: int = 30, requests_per_hour: int = 600):
         self.requests_per_minute = requests_per_minute
@@ -180,7 +194,8 @@ class GenericRateLimiter:
         self.last_request_time = {}
     
     async def wait_if_needed(self, domain: str):
-        """Wait if rate limit would be exceeded."""
+        """
+Wait if rate limit would be exceeded."""
         current_time = time.time()
         last_time = self.last_request_time.get(domain, 0)
         
@@ -191,7 +206,8 @@ class GenericRateLimiter:
             await asyncio.sleep(min_delay - time_since_last)
     
     async def update_usage(self, domain: str, request_count: int):
-        """Update usage tracking."""
+        """
+Update usage tracking."""
         self.last_request_time[domain] = time.time()
         if domain not in self.usage_tracking:
             self.usage_tracking[domain] = []
@@ -203,7 +219,8 @@ class GenericRateLimiter:
 
 
 class RedditRateLimiter:
-    """Rate limiter specific for Reddit API."""
+    """
+Rate limiter specific for Reddit API."""
     
     def __init__(self):
         # Reddit API allows 60 requests per minute for authenticated users
@@ -213,7 +230,8 @@ class RedditRateLimiter:
         self.last_request_time = 0
     
     async def acquire(self):
-        """Acquire permission to make a request."""
+        """
+Acquire permission to make a request."""
         current_time = time.time()
         min_delay = 60.0 / self.requests_per_minute
         time_since_last = current_time - self.last_request_time
@@ -224,7 +242,8 @@ class RedditRateLimiter:
         self.last_request_time = time.time()
     
     def get_status(self) -> Dict:
-        """Get current rate limiter status."""
+        """
+Get current rate limiter status."""
         return {
             'requests_per_minute': self.requests_per_minute,
             'last_request': self.last_request_time,

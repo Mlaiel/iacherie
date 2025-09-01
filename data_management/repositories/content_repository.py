@@ -8,7 +8,7 @@ Responsibility: Advanced content management with AI processing and protection
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ CONTENT REPOSITORY ARCHITECTURE:
 Content Upload → Format Detection → AI Processing → Fingerprint Generation → 
 Metadata Extraction → Cache Storage → Vector Indexing → Protection Registration
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -34,7 +35,9 @@ from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 from ..models.content_model import ContentModel, ContentType, ContentStatus, CreatorType
 
 class ContentFormat(Enum):
-    """Content format types for multi-format support"""
+    """
+Content format types for multi-format support"""
+
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -68,7 +71,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentProcessingResult:
-    """Result of content processing pipeline"""
+    """
+Result of content processing pipeline"""
     fingerprint_hash: str
     ai_analysis: Dict[str, Any]
     metadata: ContentMetadata
@@ -624,12 +628,14 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def get_by_type(self, content_type: ContentType, limit: int = 100, 
                    offset: int = 0) -> List[ContentModel]:
-        """Get contents by type"""
+        """
+Get contents by type"""
         filters = {'content_type': content_type.value}
         return self.list(filters=filters, limit=limit, offset=offset)
     
     def get_trending(self, time_period: str = '24h', limit: int = 50) -> List[ContentModel]:
-        """Get trending content based on engagement metrics"""
+        """
+Get trending content based on engagement metrics"""
         try:
             # Calculate trending based on views, likes, shares, comments
             # This would involve complex analytics queries
@@ -958,7 +964,8 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
         pass
     
     async def _register_protection_async(self, content: ContentModel, fingerprint: str) -> bool:
-        """Register content protection asynchronously"""
+        """
+Register content protection asynchronously"""
         try:
             if not self.protection_service:
                 return False
@@ -1322,7 +1329,8 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
             pass
     
     def _build_query(self, filters: Dict[str, Any], limit: int, offset: int) -> Dict[str, Any]:
-        """Construit la requête avec filtres"""
+        """
+Construit la requête avec filtres"""
         query = {}
         
         # Filtres de base
@@ -1455,6 +1463,7 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
         pass
     
     async def _remove_content_vectors_async(self, content_id: str):
-        """Supprime les vecteurs de manière asynchrone"""
+        """
+Supprime les vecteurs de manière asynchrone"""
         # Implementation asynchrone de la suppression
         pass

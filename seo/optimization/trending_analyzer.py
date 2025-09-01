@@ -6,6 +6,7 @@ across different platforms and industries with real-time trend detection and pre
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrendType(Enum):
-    """Types of trends"""
+    """
+Types of trends"""
+
     VIRAL = "viral"
     EMERGING = "emerging"
     SEASONAL = "seasonal"
@@ -30,6 +33,7 @@ class TrendType(Enum):
 
 class Platform(Enum):
     """Platforms for trend analysis"""
+
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     TIKTOK = "tiktok"
@@ -42,6 +46,7 @@ class Platform(Enum):
 
 class TimeFrame(Enum):
     """Time frames for trend analysis"""
+
     HOUR = "1h"
     DAY = "24h"
     WEEK = "7d"
@@ -64,7 +69,8 @@ class TrendMetrics:
 
 @dataclass
 class TrendingTopic:
-    """Individual trending topic"""
+    """
+Individual trending topic"""
     topic: str
     trend_type: TrendType
     platforms: List[Platform]
@@ -78,7 +84,8 @@ class TrendingTopic:
 
 @dataclass
 class TrendAnalysis:
-    """Complete trend analysis result"""
+    """
+Complete trend analysis result"""
     trending_topics: List[TrendingTopic]
     emerging_trends: List[TrendingTopic]
     declining_trends: List[TrendingTopic]
@@ -213,7 +220,8 @@ class TrendingAnalyzer:
         platforms: List[Platform], 
         time_frame: TimeFrame
     ) -> List[TrendingTopic]:
-        """Identify currently trending topics"""
+        """
+Identify currently trending topics"""
         
         trending_topics = []
         
@@ -554,7 +562,8 @@ class TrendingAnalyzer:
         )
 
     def _classify_trend_type(self, metrics: TrendMetrics) -> TrendType:
-        """Classify the type of trend based on metrics"""
+        """
+Classify the type of trend based on metrics"""
         
         if metrics.virality_index > 80 and metrics.growth_rate > 100:
             return TrendType.VIRAL
@@ -568,7 +577,8 @@ class TrendingAnalyzer:
             return TrendType.CYCLICAL
 
     def _calculate_confidence_score(self, metrics: TrendMetrics, keyword: str, topic: str) -> float:
-        """Calculate confidence score for trend prediction"""
+        """
+Calculate confidence score for trend prediction"""
         
         # Keyword relevance factor
         keyword_match = 1.0 if keyword.lower() in topic.lower() else 0.5
@@ -585,7 +595,8 @@ class TrendingAnalyzer:
         return round(min(1.0, confidence), 2)
 
     def _calculate_keyword_relevance(self, topic: str, keywords: List[str]) -> float:
-        """Calculate relevance of a topic to given keywords"""
+        """
+Calculate relevance of a topic to given keywords"""
         
         if not keywords:
             return 0.0
@@ -603,7 +614,8 @@ class TrendingAnalyzer:
         return intersection / union if union > 0 else 0.0
 
     def _is_emerging_keyword(self, keyword: str) -> bool:
-        """Check if a keyword shows signs of emerging trend"""
+        """
+Check if a keyword shows signs of emerging trend"""
         
         # Simple heuristics for emerging keywords
         emerging_indicators = [
@@ -707,7 +719,8 @@ class TrendingAnalyzer:
         return min(100.0, score)
 
     def _initialize_trend_data(self) -> Dict[str, Any]:
-        """Initialize trend database"""
+        """
+Initialize trend database"""
         
         return {
             "current_trends": {
@@ -792,7 +805,8 @@ class TrendingAnalyzer:
         }
 
     def get_trend_recommendations(self, analysis: TrendAnalysis) -> List[str]:
-        """Get actionable recommendations based on trend analysis"""
+        """
+Get actionable recommendations based on trend analysis"""
         
         recommendations = []
         

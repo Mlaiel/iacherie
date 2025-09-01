@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import hashlib
 import json
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFingerprintProcessor:
-    """Advanced multi-modal content fingerprinting engine for copyright protection"""
+    """
+Advanced multi-modal content fingerprinting engine for copyright protection"""
     
     def __init__(self):
         self.db = get_database()
@@ -74,7 +76,8 @@ class ContentFingerprintProcessor:
         file_path: str,
         metadata: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive fingerprint for any content type"""
+        """
+Generate comprehensive fingerprint for any content type"""
         try:
             logger.info(f"Generating fingerprint for content {content_id}")
             
@@ -381,7 +384,8 @@ class ContentFingerprintProcessor:
             ]
 
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of binary data"""
+        """
+Calculate Shannon entropy of binary data"""
         if not data:
             return 0.0
         
@@ -401,7 +405,8 @@ class ContentFingerprintProcessor:
         return entropy
 
     async def _store_fingerprint(self, fingerprint_data: Dict[str, Any]) -> None:
-        """Store fingerprint data in database"""
+        """
+Store fingerprint data in database"""
         try:
             query = """
             INSERT INTO content_fingerprints 
@@ -524,7 +529,8 @@ class ContentFingerprintProcessor:
             return 0.0
 
     def _calculate_image_similarity(self, fp1: Dict, fp2: Dict) -> float:
-        """Calculate similarity between image fingerprints"""
+        """
+Calculate similarity between image fingerprints"""
         try:
             # Compare perceptual hashes
             hash1 = fp1.get('perceptual_hash', '')
@@ -552,7 +558,8 @@ class ContentFingerprintProcessor:
             return 0.0
 
     def _calculate_video_similarity(self, fp1: Dict, fp2: Dict) -> float:
-        """Calculate similarity between video fingerprints"""
+        """
+Calculate similarity between video fingerprints"""
         try:
             # Compare frame hashes
             frames1 = fp1.get('frame_hashes', [])
@@ -591,7 +598,8 @@ class ContentFingerprintProcessor:
             return 0.0
 
     def _calculate_text_similarity(self, fp1: Dict, fp2: Dict) -> float:
-        """Calculate similarity between text fingerprints"""
+        """
+Calculate similarity between text fingerprints"""
         try:
             # Compare TF-IDF features
             features1 = fp1.get('top_tfidf_features', {})
@@ -621,7 +629,8 @@ class ContentFingerprintProcessor:
             return 0.0
 
     def _calculate_hash_similarity(self, fp1: Dict, fp2: Dict) -> float:
-        """Calculate similarity between hash fingerprints"""
+        """
+Calculate similarity between hash fingerprints"""
         try:
             hash1 = fp1.get('sha256_hash', '')
             hash2 = fp2.get('sha256_hash', '')
@@ -635,7 +644,8 @@ class ContentFingerprintProcessor:
             return 0.0
 
     async def cleanup_old_fingerprints(self, days_old: int = 365) -> int:
-        """Clean up old fingerprint records"""
+        """
+Clean up old fingerprint records"""
         try:
             query = """
             DELETE FROM content_fingerprints

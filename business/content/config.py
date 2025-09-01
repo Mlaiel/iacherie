@@ -7,6 +7,7 @@ settings, feature flags, and deployment configurations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import os
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
@@ -18,7 +19,8 @@ from ...core.config import BaseConfig
 
 @dataclass
 class ContentProcessingConfig:
-    """Configuration for content processing engine."""
+    """
+Configuration for content processing engine."""
     
     # Processing limits
     max_file_size_mb: int = 1024  # 1GB default
@@ -276,7 +278,8 @@ class CollaborationConfig:
 
 
 class ContentModuleConfig(BaseConfig):
-    """Main configuration class for content module."""
+    """
+Main configuration class for content module."""
     
     def __init__(self, env: str = "development"):
         super().__init__(env)
@@ -334,19 +337,23 @@ class ContentModuleConfig(BaseConfig):
         return self.distribution.platforms.get(platform)
     
     def is_feature_enabled(self, feature: str) -> bool:
-        """Check if a feature is enabled."""
+        """
+Check if a feature is enabled."""
         return self.features.get(feature, False)
     
     def get_quality_threshold(self, level: str, metric: str) -> float:
-        """Get quality threshold for specific level and metric."""
+        """
+Get quality threshold for specific level and metric."""
         return self.quality_assurance.quality_thresholds.get(level, {}).get(metric, 0.5)
     
     def get_commission_rate(self, strategy: str) -> Decimal:
-        """Get commission rate for monetization strategy."""
+        """
+Get commission rate for monetization strategy."""
         return self.monetization.commission_rates.get(strategy, Decimal('0.10'))
     
     def validate_config(self) -> List[str]:
-        """Validate configuration and return list of issues."""
+        """
+Validate configuration and return list of issues."""
         issues = []
         
         # Check required directories
@@ -390,7 +397,8 @@ class ContentModuleConfig(BaseConfig):
         pass
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
+        """
+Convert configuration to dictionary."""
         return {
             "processing": self.processing.__dict__,
             "distribution": self.distribution.__dict__,

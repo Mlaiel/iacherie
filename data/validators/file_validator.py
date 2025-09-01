@@ -5,9 +5,10 @@ Comprehensive file validation system with integrity checks, format validation,
 and corruption detection for creator content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, BinaryIO
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class FileValidationType(Enum):
-    """Types of file validation."""
+    """
+Types of file validation."""
+
     INTEGRITY = "integrity"
     FORMAT = "format"
     SIGNATURE = "signature"
@@ -40,6 +43,7 @@ class FileValidationType(Enum):
 
 class ValidationSeverity(Enum):
     """File validation issue severity."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -48,6 +52,7 @@ class ValidationSeverity(Enum):
 
 class FileStatus(Enum):
     """File validation status."""
+
     VALID = "valid"
     CORRUPTED = "corrupted"
     INVALID_FORMAT = "invalid_format"
@@ -78,7 +83,8 @@ class FileIssue:
 
 @dataclass
 class FileSignature:
-    """File signature information."""
+    """
+File signature information."""
     magic_bytes: bytes
     offset: int = 0
     description: str = ""
@@ -848,7 +854,8 @@ class FileValidator:
             return False
     
     async def _has_malicious_signature(self, file_data: bytes) -> bool:
-        """Check for known malicious signatures."""
+        """
+Check for known malicious signatures."""
         try:
             # Known malicious patterns
             malicious_patterns = [
@@ -866,7 +873,8 @@ class FileValidator:
             return False
     
     async def _validate_jpeg_structure(self, file_data: bytes) -> bool:
-        """Validate JPEG file structure."""
+        """
+Validate JPEG file structure."""
         try:
             # Check JPEG markers
             if not file_data.startswith(b'\xff\xd8'):
@@ -905,7 +913,8 @@ class FileValidator:
             return False
     
     async def _validate_png_structure(self, file_data: bytes) -> bool:
-        """Validate PNG file structure."""
+        """
+Validate PNG file structure."""
         try:
             # Check PNG signature
             if not file_data.startswith(b'\x89PNG\r\n\x1a\n'):
@@ -925,7 +934,8 @@ class FileValidator:
             return False
     
     async def _validate_mp3_structure(self, file_data: bytes) -> bool:
-        """Validate MP3 file structure."""
+        """
+Validate MP3 file structure."""
         try:
             # Check for ID3 tag or frame sync
             if file_data.startswith(b'ID3') or file_data.startswith(b'\xff\xfb'):
@@ -942,7 +952,8 @@ class FileValidator:
             return False
     
     async def _validate_mp4_structure(self, file_data: bytes) -> bool:
-        """Validate MP4 file structure."""
+        """
+Validate MP4 file structure."""
         try:
             # Check for ftyp box
             if len(file_data) < 8:
@@ -958,7 +969,8 @@ class FileValidator:
             return False
     
     async def _has_corruption_patterns(self, file_data: bytes) -> bool:
-        """Check for general corruption patterns."""
+        """
+Check for general corruption patterns."""
         try:
             # Check for repeated patterns that might indicate corruption
             chunk_size = 1024
@@ -980,7 +992,8 @@ class FileValidator:
             return False
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data."""
+        """
+Calculate Shannon entropy of data."""
         try:
             if len(data) == 0:
                 return 0.0
@@ -1005,7 +1018,8 @@ class FileValidator:
             return 0.0
     
     async def _detect_suspicious_patterns(self, file_data: bytes) -> List[str]:
-        """Detect suspicious data patterns."""
+        """
+Detect suspicious data patterns."""
         try:
             patterns = []
             
@@ -1170,7 +1184,8 @@ class FileValidator:
             return False
     
     async def _generate_file_recommendations(self, result: FileValidationResult):
-        """Generate file validation recommendations."""
+        """
+Generate file validation recommendations."""
         try:
             recommendations = []
             
@@ -1217,7 +1232,8 @@ class FileValidator:
         return format_extensions.get(format_name, [])
     
     def _create_error_result(self, error_message: str) -> FileValidationResult:
-        """Create error validation result."""
+        """
+Create error validation result."""
         return FileValidationResult(
             is_valid=False,
             file_status=FileStatus.ERROR,
@@ -1229,7 +1245,8 @@ class FileValidator:
         )
     
     def _init_file_signatures(self) -> List[FileSignature]:
-        """Initialize file signatures database."""
+        """
+Initialize file signatures database."""
         return [
             FileSignature(b'\xff\xd8\xff', 0, 'JPEG Image', ['.jpg', '.jpeg'], ['image/jpeg']),
             FileSignature(b'\x89PNG\r\n\x1a\n', 0, 'PNG Image', ['.png'], ['image/png']),
@@ -1244,7 +1261,8 @@ class FileValidator:
         ]
     
     def _init_supported_formats(self) -> Set[str]:
-        """Initialize supported file formats."""
+        """
+Initialize supported file formats."""
         return {
             'JPEG Image', 'PNG Image', 'GIF Image',
             'MP3 Audio', 'MP4 Video', 'WAV Audio',
@@ -1252,7 +1270,8 @@ class FileValidator:
         }
     
     def _init_validation_rules(self) -> Dict[str, Any]:
-        """Initialize validation rules."""
+        """
+Initialize validation rules."""
         return {
             "max_file_size": 100 * 1024 * 1024,  # 100MB
             "min_file_size": 1,  # 1 byte

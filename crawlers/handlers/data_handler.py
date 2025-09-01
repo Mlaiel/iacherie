@@ -31,6 +31,7 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
+
 import asyncio
 import logging
 import json
@@ -74,7 +75,9 @@ logger = get_logger(__name__)
 
 
 class DataType(Enum):
-    """Data type enumeration."""
+    """
+Data type enumeration."""
+
     STRUCTURED = "structured"
     UNSTRUCTURED = "unstructured"
     MEDIA_METADATA = "media_metadata"
@@ -88,6 +91,7 @@ class DataType(Enum):
 
 class DataFormat(Enum):
     """Data format enumeration."""
+
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -99,6 +103,7 @@ class DataFormat(Enum):
 
 class DataOperation(Enum):
     """Data operation types."""
+
     CREATE = "create"
     READ = "read"
     UPDATE = "update"
@@ -128,7 +133,8 @@ class DataSchema:
 
 @dataclass
 class DataMetrics:
-    """Data processing metrics."""
+    """
+Data processing metrics."""
     
     total_records: int = 0
     valid_records: int = 0
@@ -147,19 +153,22 @@ class DataMetrics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate."""
+        """
+Calculate success rate."""
         if self.total_records == 0:
             return 0.0
         return self.valid_records / self.total_records
     
     @property
     def error_rate(self) -> float:
-        """Calculate error rate."""
+        """
+Calculate error rate."""
         return 1.0 - self.success_rate
 
 
 class ContentMetadataModel(BaseModel):
-    """Content metadata validation model."""
+    """
+Content metadata validation model."""
     
     content_id: Optional[int] = None
     title: Optional[str] = None
@@ -194,7 +203,8 @@ class ContentMetadataModel(BaseModel):
 
 
 class FinancialDataModel(BaseModel):
-    """Financial data validation model."""
+    """
+Financial data validation model."""
     
     user_id: int
     platform: str
@@ -244,13 +254,15 @@ class AnalyticsDataModel(BaseModel):
 
 
 class DataTransformer:
-    """Professional data transformation system."""
+    """
+Professional data transformation system."""
     
     def __init__(self):
         self.transformations = self._load_transformations()
     
     def _load_transformations(self) -> Dict[str, Any]:
-        """Load transformation configurations."""
+        """
+Load transformation configurations."""
         return {
             'platform_standardization': {
                 'youtube': {
@@ -291,7 +303,8 @@ class DataTransformer:
         data: Dict[str, Any], 
         platform: str
     ) -> Dict[str, Any]:
-        """Transform platform-specific data to standardized format."""
+        """
+Transform platform-specific data to standardized format."""
         try:
             if platform not in self.transformations['platform_standardization']:
                 return data
@@ -334,7 +347,8 @@ class DataTransformer:
             return None
     
     def _normalize_value(self, value: Any, field_name: str) -> Any:
-        """Normalize individual field values."""
+        """
+Normalize individual field values."""
         try:
             # Numeric fields
             if field_name.endswith('_count') or 'count' in field_name:
@@ -397,7 +411,8 @@ class DataTransformer:
         return None
     
     def _normalize_text(self, value: str) -> str:
-        """Normalize text values."""
+        """
+Normalize text values."""
         if not isinstance(value, str):
             return str(value)
         
@@ -417,7 +432,8 @@ class DataTransformer:
         data: List[Dict[str, Any]], 
         aggregation_type: str
     ) -> Dict[str, Any]:
-        """Aggregate data based on predefined rules."""
+        """
+Aggregate data based on predefined rules."""
         try:
             if aggregation_type not in self.transformations['aggregation_rules']:
                 raise DataTransformationError(f"Unknown aggregation type: {aggregation_type}")
@@ -491,7 +507,8 @@ class DataValidator:
         self.validation_rules = self._load_validation_rules()
     
     def _load_schemas(self) -> Dict[str, DataSchema]:
-        """Load data schemas for validation."""
+        """
+Load data schemas for validation."""
         return {
             'content_metadata': DataSchema(
                 name='content_metadata',
@@ -528,7 +545,8 @@ class DataValidator:
         }
     
     def _load_validation_rules(self) -> Dict[str, Any]:
-        """Load custom validation rules."""
+        """
+Load custom validation rules."""
         return {
             'content_rules': {
                 'title_length': {'min': 1, 'max': 500},

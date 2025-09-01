@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -56,7 +57,9 @@ logger = get_logger(__name__)
 
 
 class Platform(Enum):
-    """Social media and content platforms"""
+    """
+Social media and content platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -72,6 +75,7 @@ class Platform(Enum):
 
 class OptimizationType(Enum):
     """Types of content optimization"""
+
     SEO = "seo"
     ENGAGEMENT = "engagement"
     READABILITY = "readability"
@@ -83,6 +87,7 @@ class OptimizationType(Enum):
 
 class ContentGoal(Enum):
     """Content marketing goals"""
+
     BRAND_AWARENESS = "brand_awareness"
     LEAD_GENERATION = "lead_generation"
     SALES_CONVERSION = "sales_conversion"
@@ -125,7 +130,8 @@ class SEOAnalysis:
 
 @dataclass
 class EngagementAnalysis:
-    """Engagement potential analysis"""
+    """
+Engagement potential analysis"""
     engagement_score: float
     emotional_triggers: List[str]
     call_to_action_strength: float
@@ -139,7 +145,8 @@ class EngagementAnalysis:
 
 @dataclass
 class PlatformOptimization:
-    """Platform-specific optimization suggestions"""
+    """
+Platform-specific optimization suggestions"""
     optimal_length: int
     hashtag_suggestions: List[str]
     posting_time_recommendations: List[str]
@@ -152,7 +159,8 @@ class PlatformOptimization:
 
 @dataclass
 class OptimizationResult:
-    """Complete optimization result"""
+    """
+Complete optimization result"""
     optimized_content: str
     optimization_score: float
     improvements_made: List[str]
@@ -168,7 +176,8 @@ class OptimizationResult:
 
 
 class SEOAnalyzer:
-    """Advanced SEO analysis and optimization"""
+    """
+Advanced SEO analysis and optimization"""
     
     def __init__(self):
         self.nlp = None
@@ -176,7 +185,8 @@ class SEOAnalyzer:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize SEO analysis models"""
+        """
+Initialize SEO analysis models"""
         try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_lg")
@@ -509,7 +519,8 @@ class ContentOptimizer:
         self._initialize_platform_configs()
         
     def _initialize_platform_configs(self):
-        """Initialize platform-specific configurations"""
+        """
+Initialize platform-specific configurations"""
         self.platform_configs = {
             Platform.INSTAGRAM: {
                 'max_length': 2200,

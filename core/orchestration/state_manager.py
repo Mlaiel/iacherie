@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class StateType(Enum):
-    """State management types."""
+    """
+State management types."""
+
     WORKFLOW_STATE = "workflow_state"
     TASK_STATE = "task_state"
     PIPELINE_STATE = "pipeline_state"
@@ -38,6 +41,7 @@ class StateType(Enum):
 
 class StateStatus(Enum):
     """State status enumeration."""
+
     ACTIVE = "active"
     CHECKPOINT = "checkpoint"
     SUSPENDED = "suspended"
@@ -48,6 +52,7 @@ class StateStatus(Enum):
 
 class PersistenceMode(Enum):
     """State persistence modes."""
+
     MEMORY = "memory"
     DISK = "disk"
     DATABASE = "database"
@@ -71,7 +76,8 @@ class StateSnapshot:
 
 @dataclass
 class StateDefinition:
-    """State definition with configuration."""
+    """
+State definition with configuration."""
     state_id: str
     name: str
     state_type: StateType
@@ -87,7 +93,8 @@ class StateDefinition:
 
 @dataclass
 class StateTransaction:
-    """State transaction for atomic operations."""
+    """
+State transaction for atomic operations."""
     transaction_id: str
     state_id: str
     operation: str  # "create", "update", "delete", "checkpoint"
@@ -610,7 +617,8 @@ class StateManager:
         return None
     
     async def _verify_snapshot_integrity(self, snapshot: StateSnapshot) -> bool:
-        """Verify snapshot data integrity."""
+        """
+Verify snapshot data integrity."""
         try:
             # Recalculate checksum
             data_json = json.dumps(snapshot.data, sort_keys=True)
@@ -622,13 +630,15 @@ class StateManager:
             return False
     
     async def _initialize_state_storage(self, state_def: StateDefinition) -> None:
-        """Initialize storage for state definition."""
+        """
+Initialize storage for state definition."""
         # This would initialize the appropriate storage backend
         # Based on the persistence mode
         pass
     
     async def _persist_state(self, state_id: str, data: Dict[str, Any]) -> bool:
-        """Persist state data."""
+        """
+Persist state data."""
         try:
             state_def = self.state_definitions[state_id]
             
@@ -695,7 +705,8 @@ class StateManager:
         self.memory_cache[state_id] = data.copy()
     
     async def _checkpoint_loop(self) -> None:
-        """Background checkpoint creation loop."""
+        """
+Background checkpoint creation loop."""
         while self._manager_running:
             try:
                 current_time = datetime.now()
@@ -752,7 +763,8 @@ class StateManager:
                     ]
     
     async def _cleanup_old_transactions(self) -> None:
-        """Clean up old completed transactions."""
+        """
+Clean up old completed transactions."""
         cutoff_time = datetime.now() - timedelta(hours=24)
         
         old_transactions = [
@@ -769,7 +781,8 @@ class StateManager:
         pass
     
     async def _validate_state_definition(self, state_def: StateDefinition) -> bool:
-        """Validate state definition."""
+        """
+Validate state definition."""
         try:
             if not state_def.state_id or not state_def.name:
                 return False
@@ -783,7 +796,8 @@ class StateManager:
             return False
     
     async def get_state_info(self, state_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive state information."""
+        """
+Get comprehensive state information."""
         if state_id not in self.state_definitions:
             return None
         
@@ -802,7 +816,8 @@ class StateManager:
         }
     
     async def list_snapshots(self, state_id: str) -> List[Dict[str, Any]]:
-        """List all snapshots for a state."""
+        """
+List all snapshots for a state."""
         if state_id not in self.state_snapshots:
             return []
         
@@ -820,7 +835,8 @@ class StateManager:
         ]
     
     async def get_state_stats(self) -> Dict[str, Any]:
-        """Get state management statistics."""
+        """
+Get state management statistics."""
         return {
             **self.state_stats,
             'registered_states': len(self.state_definitions),

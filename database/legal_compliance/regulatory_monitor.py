@@ -6,6 +6,7 @@ for the IA Influencer Agent platform across multiple legal frameworks.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class Jurisdiction(Enum):
-    """Legal jurisdictions supported."""
+    """
+Legal jurisdictions supported."""
+
     EU = "eu"
     US = "us"
     UK = "uk"
@@ -33,6 +36,7 @@ class Jurisdiction(Enum):
 
 class RegulatoryFramework(Enum):
     """Regulatory frameworks monitored."""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
@@ -47,6 +51,7 @@ class RegulatoryFramework(Enum):
 
 class ComplianceRequirement(Enum):
     """Types of compliance requirements."""
+
     DATA_PROTECTION = "data_protection"
     CONTENT_MODERATION = "content_moderation"
     ACCESSIBILITY = "accessibility"
@@ -77,7 +82,8 @@ class RegulatoryRule:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert structure."""
+    """
+Compliance alert structure."""
     alert_id: str
     rule_id: str
     alert_type: str
@@ -664,7 +670,8 @@ class RegulatoryMonitor:
         rule: RegulatoryRule, 
         content_type: str
     ) -> bool:
-        """Check if a rule applies to the given content type."""
+        """
+Check if a rule applies to the given content type."""
         # For now, apply all rules to all content types
         # In practice, this would have more sophisticated logic
         return True
@@ -676,7 +683,8 @@ class RegulatoryMonitor:
         user_data: Optional[Dict[str, Any]],
         content_metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Evaluate compliance with a specific rule."""
+        """
+Evaluate compliance with a specific rule."""
         # Placeholder implementation
         # Real implementation would have rule-specific evaluation logic
         return {
@@ -716,7 +724,8 @@ class RegulatoryMonitor:
         return next_review.isoformat()
     
     def _frequency_to_days(self, frequency: str) -> int:
-        """Convert monitoring frequency to days."""
+        """
+Convert monitoring frequency to days."""
         frequency_map = {
             "daily": 1,
             "weekly": 7,
@@ -736,7 +745,8 @@ class RegulatoryMonitor:
         framework: RegulatoryFramework, 
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check for updates in a regulatory framework."""
+        """
+Check for updates in a regulatory framework."""
         # Placeholder - would integrate with external sources
         return {
             "framework": framework.value,
@@ -765,7 +775,8 @@ class RegulatoryMonitor:
         self, 
         framework_changes: Dict[str, Any]
     ) -> List[str]:
-        """Generate alerts for regulatory changes."""
+        """
+Generate alerts for regulatory changes."""
         alerts = []
         
         for new_rule in framework_changes.get("new_rules", []):

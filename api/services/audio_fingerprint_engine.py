@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, modification or use is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import hashlib
 import librosa
 import numpy as np
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure"""
+    """
+Audio fingerprint data structure"""
     chromaprint_hash: str
     spectral_hash: str
     mfcc_features: np.ndarray
@@ -51,7 +53,8 @@ class AudioFingerprintEngine:
         self.hpcp = HPCP()
         
     def extract_fingerprint(self, audio_file_path: str) -> AudioFingerprint:
-        """Extract comprehensive audio fingerprint from file"""
+        """
+Extract comprehensive audio fingerprint from file"""
         try:
             # Load audio with librosa
             y, sr = librosa.load(audio_file_path, sr=self.sample_rate)
@@ -156,7 +159,8 @@ class AudioFingerprintEngine:
             return 0.5  # Default confidence
             
     def compare_fingerprints(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
-        """Compare two audio fingerprints and return similarity score (0-1)"""
+        """
+Compare two audio fingerprints and return similarity score (0-1)"""
         try:
             scores = []
             
@@ -212,7 +216,8 @@ class AudioFingerprintEngine:
             return 0.0
             
     def _mfcc_similarity(self, mfcc1: np.ndarray, mfcc2: np.ndarray) -> float:
-        """Calculate MFCC feature similarity using cosine similarity"""
+        """
+Calculate MFCC feature similarity using cosine similarity"""
         try:
             # Average MFCC features across time
             avg_mfcc1 = np.mean(mfcc1, axis=1)
@@ -233,7 +238,8 @@ class AudioFingerprintEngine:
             return 0.0
             
     def batch_extract_fingerprints(self, audio_files: List[str]) -> Dict[str, AudioFingerprint]:
-        """Extract fingerprints from multiple audio files"""
+        """
+Extract fingerprints from multiple audio files"""
         fingerprints = {}
         
         for audio_file in audio_files:

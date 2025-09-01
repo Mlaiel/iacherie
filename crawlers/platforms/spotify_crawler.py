@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -35,7 +36,8 @@ settings = get_settings()
 
 @dataclass
 class SpotifyTrack:
-    """Spotify track data structure."""
+    """
+Spotify track data structure."""
     track_id: str
     name: str
     artists: List[Dict]
@@ -58,7 +60,8 @@ class SpotifyTrack:
 
 @dataclass
 class SpotifyArtist:
-    """Spotify artist data structure."""
+    """
+Spotify artist data structure."""
     artist_id: str
     name: str
     external_urls: Dict
@@ -72,7 +75,8 @@ class SpotifyArtist:
 
 @dataclass
 class SpotifyAlbum:
-    """Spotify album data structure."""
+    """
+Spotify album data structure."""
     album_id: str
     name: str
     album_type: str
@@ -96,7 +100,8 @@ class SpotifyAlbum:
 
 @dataclass
 class SpotifyPlaylist:
-    """Spotify playlist data structure."""
+    """
+Spotify playlist data structure."""
     playlist_id: str
     name: str
     description: str
@@ -129,7 +134,8 @@ class SpotifyCrawler:
     """
     
     def __init__(self):
-        """Initialize Spotify crawler."""
+        """
+Initialize Spotify crawler."""
         self.client_id = settings.SPOTIFY_CLIENT_ID
         self.client_secret = settings.SPOTIFY_CLIENT_SECRET
         self.access_token = None
@@ -172,12 +178,14 @@ class SpotifyCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
     async def _get_access_token(self):
-        """Get Spotify access token using client credentials flow."""
+        """
+Get Spotify access token using client credentials flow."""
         try:
             if (self.access_token and self.token_expires_at and 
                 datetime.now() < self.token_expires_at):
@@ -709,7 +717,8 @@ class SpotifyCrawler:
             await self._get_access_token()
     
     async def analyze_track_popularity(self, track: SpotifyTrack) -> Dict:
-        """Analyze track popularity and metrics."""
+        """
+Analyze track popularity and metrics."""
         try:
             # Get audio features
             audio_features = await self.get_audio_features([track.track_id])

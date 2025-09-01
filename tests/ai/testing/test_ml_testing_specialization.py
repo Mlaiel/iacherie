@@ -51,7 +51,8 @@ from ai_engine.testing.ab_testing_integration import (
 
 
 class TestProductionAccuracyValidator:
-    """Tests for production accuracy validation"""
+    """
+Tests for production accuracy validation"""
     
     @pytest.fixture
     def validator(self):
@@ -70,13 +71,15 @@ class TestProductionAccuracyValidator:
         return y_pred, y_true
     
     def test_validator_initialization(self, validator):
-        """Test validator initialization"""
+        """
+Test validator initialization"""
         assert validator.min_accuracy_threshold == 0.99
         assert isinstance(validator.validation_history, dict)
     
     @pytest.mark.asyncio
     async def test_validate_model_accuracy_success(self, validator, sample_data):
-        """Test successful model accuracy validation"""
+        """
+Test successful model accuracy validation"""
         y_pred, y_true = sample_data
         
         result = await validator.validate_model_accuracy(
@@ -122,13 +125,15 @@ class TestFairnessValidator:
         return y_pred, y_true, sensitive_attributes
     
     def test_validator_initialization(self, validator):
-        """Test fairness validator initialization"""
+        """
+Test fairness validator initialization"""
         assert validator.fairness_threshold == 0.90
         assert isinstance(validator.validation_history, dict)
     
     @pytest.mark.asyncio
     async def test_validate_model_fairness(self, validator, sample_bias_data):
-        """Test comprehensive fairness validation"""
+        """
+Test comprehensive fairness validation"""
         y_pred, y_true, sensitive_attributes = sample_bias_data
         
         result = await validator.validate_model_fairness(
@@ -168,13 +173,15 @@ class TestAdversarialSecurityTester:
         return mock_predict, X_test, y_test
     
     def test_tester_initialization(self, tester):
-        """Test adversarial tester initialization"""
+        """
+Test adversarial tester initialization"""
         assert tester.security_threshold == 0.85
         assert isinstance(tester.validation_history, dict)
     
     @pytest.mark.asyncio
     async def test_validate_model_security(self, tester, sample_model_data):
-        """Test comprehensive security validation"""
+        """
+Test comprehensive security validation"""
         mock_predict, X_test, y_test = sample_model_data
         
         result = await tester.validate_model_security(

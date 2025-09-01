@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Configuration Loading → Validation → Environment Resolution → Dynamic Updates → Monitoring
 """
+
 import os
 import json
 import yaml
@@ -22,7 +23,9 @@ import configparser
 
 
 class ConfigurationSource(Enum):
-    """Configuration sources"""
+    """
+Configuration sources"""
+
     FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
@@ -32,6 +35,7 @@ class ConfigurationSource(Enum):
 
 class ConfigurationFormat(Enum):
     """Configuration file formats"""
+
     JSON = "json"
     YAML = "yaml"
     INI = "ini"
@@ -40,6 +44,7 @@ class ConfigurationFormat(Enum):
 
 class EnvironmentType(Enum):
     """Environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -167,7 +172,8 @@ class ConfigurationValidator:
         return False
     
     def validate_configuration(self, config: Dict[str, ConfigurationEntry]) -> Dict[str, List[str]]:
-        """Validate entire configuration"""
+        """
+Validate entire configuration"""
         validation_errors = {}
         
         for key, entry in config.items():
@@ -179,7 +185,8 @@ class ConfigurationValidator:
 
 
 class ConfigurationLoader:
-    """Advanced configuration loading system"""
+    """
+Advanced configuration loading system"""
     
     def __init__(self, config_dir: str = "config"):
         self.config_dir = Path(config_dir)
@@ -236,7 +243,8 @@ class ConfigurationLoader:
         return config
     
     async def load_from_database(self, connection_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Load configuration from database"""
+        """
+Load configuration from database"""
         # Placeholder for database configuration loading
         # In real implementation, connect to database and fetch configuration
         self.logger.info("Loading configuration from database (placeholder)")
@@ -509,7 +517,8 @@ class PipelineConfiguration:
             self.set_value(schema.key, schema.default_value, ConfigurationSource.DEFAULT)
     
     async def load_configuration(self):
-        """Load configuration from all sources"""
+        """
+Load configuration from all sources"""
         
         # Define configuration sources in order of precedence (lowest to highest)
         sources = [
@@ -634,7 +643,8 @@ class PipelineConfiguration:
         return default
     
     def get_bool(self, key: str, default: bool = False) -> bool:
-        """Get boolean configuration value"""
+        """
+Get boolean configuration value"""
         value = self.get_value(key, default)
         if isinstance(value, bool):
             return value
@@ -643,7 +653,8 @@ class PipelineConfiguration:
         return bool(value)
     
     def get_int(self, key: str, default: int = 0) -> int:
-        """Get integer configuration value"""
+        """
+Get integer configuration value"""
         value = self.get_value(key, default)
         try:
             return int(value)
@@ -651,7 +662,8 @@ class PipelineConfiguration:
             return default
     
     def get_float(self, key: str, default: float = 0.0) -> float:
-        """Get float configuration value"""
+        """
+Get float configuration value"""
         value = self.get_value(key, default)
         try:
             return float(value)
@@ -659,7 +671,8 @@ class PipelineConfiguration:
             return default
     
     def get_list(self, key: str, default: List[Any] = None) -> List[Any]:
-        """Get list configuration value"""
+        """
+Get list configuration value"""
         value = self.get_value(key, default or [])
         if isinstance(value, list):
             return value
@@ -672,7 +685,8 @@ class PipelineConfiguration:
         return default or []
     
     def get_dict(self, key: str, default: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Get dictionary configuration value"""
+        """
+Get dictionary configuration value"""
         value = self.get_value(key, default or {})
         if isinstance(value, dict):
             return value
@@ -684,7 +698,8 @@ class PipelineConfiguration:
         return default or {}
     
     def get_section(self, prefix: str) -> Dict[str, Any]:
-        """Get all configuration values with a specific prefix"""
+        """
+Get all configuration values with a specific prefix"""
         section = {}
         
         for key, entry in self.configuration.items():
@@ -696,15 +711,18 @@ class PipelineConfiguration:
         return section
     
     def has_value(self, key: str) -> bool:
-        """Check if configuration value exists"""
+        """
+Check if configuration value exists"""
         return key in self.configuration
     
     def get_all_values(self) -> Dict[str, Any]:
-        """Get all configuration values"""
+        """
+Get all configuration values"""
         return {key: entry.value for key, entry in self.configuration.items()}
     
     def get_configuration_info(self) -> Dict[str, Any]:
-        """Get configuration information"""
+        """
+Get configuration information"""
         return {
             "environment": self.environment,
             "total_entries": len(self.configuration),
@@ -724,7 +742,8 @@ class PipelineConfiguration:
         self.change_callbacks.append(callback)
     
     def _notify_change_callbacks(self, key: str, old_value: Any, new_value: Any):
-        """Notify configuration change callbacks"""
+        """
+Notify configuration change callbacks"""
         for callback in self.change_callbacks:
             try:
                 callback(key, old_value, new_value)

@@ -12,6 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Docker configuration and management for IA-Influencer-Agent platform.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -33,7 +34,9 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 class DockerImageType(Enum):
-    """Docker image types for IA-Influencer-Agent platform"""
+    """
+Docker image types for IA-Influencer-Agent platform"""
+
     WEB_API = "web-api"
     AI_ENGINE = "ai-engine"
     ML_WORKER = "ml-worker"
@@ -58,6 +61,7 @@ class DockerImageType(Enum):
 
 class DockerBuildTarget(Enum):
     """Docker build targets for multi-stage builds"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     PRODUCTION = "production"
@@ -65,6 +69,7 @@ class DockerBuildTarget(Enum):
 
 class DockerRegistry(Enum):
     """Supported Docker registries"""
+
     DOCKER_HUB = "docker.io"
     AWS_ECR = "ecr"
     GOOGLE_GCR = "gcr.io"
@@ -103,7 +108,8 @@ class DockerConfig:
         return asdict(self)
     
     def generate_dockerfile(self) -> str:
-        """Generate Dockerfile content for this configuration."""
+        """
+Generate Dockerfile content for this configuration."""
         dockerfile_content = f"""# IA-Influencer-Agent {self.image_type.value} Service
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional-grade multi-stage Docker build
@@ -183,7 +189,8 @@ CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "{sel
 
 @dataclass
 class DockerBuildResult:
-    """Docker build operation result"""
+    """
+Docker build operation result"""
     success: bool
     image_id: str
     image_size: int
@@ -196,7 +203,8 @@ class DockerBuildResult:
 
 @dataclass 
 class DockerRegistryCredentials:
-    """Docker registry authentication credentials"""
+    """
+Docker registry authentication credentials"""
     registry_url: str
     username: str
     password: str
@@ -205,7 +213,8 @@ class DockerRegistryCredentials:
 
 
 class DockerConfigManager:
-    """Enterprise-grade Docker configuration manager for IA-Influencer-Agent"""
+    """
+Enterprise-grade Docker configuration manager for IA-Influencer-Agent"""
     
     def __init__(self, config_path: str = "/app/config/docker"):
         self.config_path = Path(config_path)
@@ -460,7 +469,8 @@ class DockerConfigManager:
         return self.configs.get(service_name)
     
     async def create_config(self, service_name: str, config: DockerConfig) -> bool:
-        """Create new Docker configuration"""
+        """
+Create new Docker configuration"""
         try:
             self.configs[service_name] = config
             await self._save_config(service_name, config)
@@ -600,7 +610,8 @@ class DockerConfigManager:
 
 
 class DockerImageBuilder:
-    """Professional Docker image builder with advanced features"""
+    """
+Professional Docker image builder with advanced features"""
     
     def __init__(self, docker_client, registry_manager=None):
         self.client = docker_client
@@ -779,7 +790,8 @@ class DockerImageBuilder:
 
 
 class DockerRegistryManager:
-    """Professional Docker registry management"""
+    """
+Professional Docker registry management"""
     
     def __init__(self, default_registry: str = "registry.ia-influencer-agent.com"):
         self.default_registry = default_registry
@@ -1153,7 +1165,8 @@ class DockerRegistryManager:
         return self.configs.get(service_name)
     
     async def update_service_config(self, service_name: str, config: DockerConfig) -> bool:
-        """Update configuration for specific service"""
+        """
+Update configuration for specific service"""
         try:
             self.configs[service_name] = config
             await self._save_config(service_name, config)

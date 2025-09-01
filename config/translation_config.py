@@ -5,6 +5,7 @@ Centralized configuration for translation service providers.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
@@ -12,7 +13,8 @@ from dataclasses import dataclass
 
 @dataclass
 class TranslationProviderConfig:
-    """Configuration for a translation provider"""
+    """
+Configuration for a translation provider"""
     enabled: bool
     api_key: Optional[str] = None
     endpoint: Optional[str] = None
@@ -24,13 +26,15 @@ class TranslationProviderConfig:
 
 
 class TranslationConfig:
-    """Multi-provider translation configuration"""
+    """
+Multi-provider translation configuration"""
     
     def __init__(self):
         self.providers = self._load_provider_configs()
         
     def _load_provider_configs(self) -> Dict[str, TranslationProviderConfig]:
-        """Load configuration for all translation providers"""
+        """
+Load configuration for all translation providers"""
         return {
             "google": TranslationProviderConfig(
                 enabled=True,
@@ -94,14 +98,16 @@ class TranslationConfig:
         return self.providers.get(provider)
     
     def get_enabled_providers(self) -> Dict[str, TranslationProviderConfig]:
-        """Get all enabled providers"""
+        """
+Get all enabled providers"""
         return {
             name: config for name, config in self.providers.items() 
             if config.enabled and self._is_provider_ready(name, config)
         }
     
     def _is_provider_ready(self, provider: str, config: TranslationProviderConfig) -> bool:
-        """Check if provider is properly configured and ready"""
+        """
+Check if provider is properly configured and ready"""
         if provider in ["google", "deepl", "azure", "openai"]:
             return config.api_key is not None
         elif provider == "aws":
@@ -153,7 +159,8 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 
 def print_configuration_status():
-    """Print current configuration status"""
+    """
+Print current configuration status"""
     config = translation_config
     enabled_providers = config.get_enabled_providers()
     

@@ -16,6 +16,7 @@ Features:
 - Real-time content violation detection
 - Legal compliance and documentation
 """
+
 import asyncio
 import logging
 from abc import abstractmethod
@@ -38,7 +39,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class ProtectionPlatform(Enum):
-    """Supported content protection platforms."""
+    """
+Supported content protection platforms."""
+
     YOUTUBE_CONTENT_ID = "youtube_content_id"
     FACEBOOK_RIGHTS_MANAGER = "facebook_rights_manager"
     INSTAGRAM_CREATOR_STUDIO = "instagram_creator_studio"
@@ -52,6 +55,7 @@ class ProtectionPlatform(Enum):
 
 class ContentType(Enum):
     """Types of content that can be protected."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -65,6 +69,7 @@ class ContentType(Enum):
 
 class ViolationType(Enum):
     """Types of copyright violations."""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
@@ -78,6 +83,7 @@ class ViolationType(Enum):
 
 class ActionType(Enum):
     """Actions that can be taken on violations."""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     COPYRIGHT_CLAIM = "copyright_claim"
     MONETIZATION_CLAIM = "monetization_claim"
@@ -103,7 +109,8 @@ class ProtectedContent:
     copyright_info: Optional[Dict[str, Any]] = None
     
 class ContentViolation:
-    """Represents a detected content violation."""
+    """
+Represents a detected content violation."""
     
     def __init__(
         self,
@@ -175,26 +182,31 @@ class BaseProtectionAdapter(BasePlatformAdapter):
     
     @abstractmethod
     async def register_content(self, content: ProtectedContent) -> bool:
-        """Register content for protection monitoring."""
+        """
+Register content for protection monitoring."""
         pass
     
     @abstractmethod
     async def scan_for_violations(self, content_id: str) -> List[ContentViolation]:
-        """Scan for violations of protected content."""
+        """
+Scan for violations of protected content."""
         pass
     
     @abstractmethod
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
-        """Submit a DMCA takedown request."""
+        """
+Submit a DMCA takedown request."""
         pass
     
     @abstractmethod
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
-        """Check the status of a takedown request."""
+        """
+Check the status of a takedown request."""
         pass
     
     async def generate_content_fingerprint(self, content_data: bytes, content_type: ContentType) -> str:
-        """Generate a fingerprint for content identification."""
+        """
+Generate a fingerprint for content identification."""
         # Basic hash-based fingerprint (should be replaced with advanced algorithms)
         fingerprint_data = hashlib.sha256(content_data).hexdigest()
         
@@ -212,7 +224,8 @@ class BaseProtectionAdapter(BasePlatformAdapter):
         return fingerprint_data
     
     async def calculate_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between two fingerprints."""
+        """
+Calculate similarity between two fingerprints."""
         # Basic implementation - should be replaced with advanced similarity algorithms
         if fingerprint1 == fingerprint2:
             return 1.0
@@ -227,7 +240,8 @@ class BaseProtectionAdapter(BasePlatformAdapter):
         return similarity
     
     async def analyze_violation_severity(self, violation: ContentViolation) -> Dict[str, Any]:
-        """Analyze the severity and recommended actions for a violation."""
+        """
+Analyze the severity and recommended actions for a violation."""
         severity_score = 0.0
         recommended_actions = []
         
@@ -269,7 +283,8 @@ class BaseProtectionAdapter(BasePlatformAdapter):
         }
 
 class YouTubeContentIDAdapter(BaseProtectionAdapter):
-    """YouTube Content ID system adapter."""
+    """
+YouTube Content ID system adapter."""
     
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
@@ -735,7 +750,8 @@ class ProtectionAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseProtectionAdapter:
-        """Create a protection adapter instance."""
+        """
+Create a protection adapter instance."""
         adapter_class = cls._adapters.get(platform)
         if not adapter_class:
             raise ValueError(f"Unsupported protection platform: {platform}")
@@ -748,7 +764,8 @@ class ProtectionAdapterFactory:
         return list(cls._adapters.keys())
 
 class ProtectionAdapterManager:
-    """Manager for content protection adapter instances and orchestration."""
+    """
+Manager for content protection adapter instances and orchestration."""
     
     def __init__(self):
         self.adapters: Dict[ProtectionPlatform, BaseProtectionAdapter] = {}
@@ -757,7 +774,8 @@ class ProtectionAdapterManager:
         self.takedown_requests: Dict[str, TakedownRequest] = {}
     
     def register_adapter(self, platform: ProtectionPlatform, adapter: BaseProtectionAdapter):
-        """Register a protection adapter."""
+        """
+Register a protection adapter."""
         self.adapters[platform] = adapter
         logger.info(f"Registered protection adapter for platform: {platform.value}")
     

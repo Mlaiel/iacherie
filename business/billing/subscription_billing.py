@@ -7,6 +7,7 @@ dunning management, and revenue recognition for SaaS creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class SubscriptionPlan(Enum):
-    """Subscription plan types"""
+    """
+Subscription plan types"""
+
     STARTER = "starter"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -29,6 +32,7 @@ class SubscriptionPlan(Enum):
 
 class BillingCycle(Enum):
     """Billing cycle options"""
+
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     ANNUALLY = "annually"
@@ -36,6 +40,7 @@ class BillingCycle(Enum):
 
 class SubscriptionStatus(Enum):
     """Subscription status"""
+
     ACTIVE = "active"
     TRIAL = "trial"
     PAST_DUE = "past_due"
@@ -69,7 +74,8 @@ class SubscriptionBillingEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize subscription billing engine"""
+        """
+Initialize subscription billing engine"""
         try:
             await self._setup_database_tables()
             await self._load_subscription_plans()
@@ -132,7 +138,8 @@ class SubscriptionBillingEngine:
             """)
 
     async def _load_subscription_plans(self) -> None:
-        """Load subscription plans configuration"""
+        """
+Load subscription plans configuration"""
         try:
             plans_config = {
                 SubscriptionPlan.STARTER: {
@@ -258,7 +265,8 @@ class SubscriptionBillingEngine:
             return start_date + timedelta(days=30)
 
     async def _store_subscription(self, subscription: SubscriptionData) -> None:
-        """Store subscription in database"""
+        """
+Store subscription in database"""
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""

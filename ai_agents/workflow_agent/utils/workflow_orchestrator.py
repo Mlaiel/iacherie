@@ -21,6 +21,7 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ from ..base import BaseAgent
 
 
 class OrchestrationStrategy(Enum):
-    """Workflow orchestration strategy enumeration."""
+    """
+Workflow orchestration strategy enumeration."""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     MIXED = "mixed"
@@ -50,6 +53,7 @@ class OrchestrationStrategy(Enum):
 
 class ResourceType(Enum):
     """Resource type enumeration."""
+
     CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
@@ -73,14 +77,16 @@ class WorkflowNode:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post initialization setup."""
+        """
+Post initialization setup."""
         if not self.id:
             self.id = str(uuid.uuid4())
 
 
 @dataclass
 class ExecutionContext:
-    """Workflow execution context."""
+    """
+Workflow execution context."""
     workflow_id: str
     user_id: str
     session_id: str
@@ -93,7 +99,8 @@ class ExecutionContext:
 
 @dataclass
 class ExecutionResult:
-    """Workflow execution result."""
+    """
+Workflow execution result."""
     node_id: str
     success: bool
     result: Any = None
@@ -112,7 +119,8 @@ class WorkflowOrchestrator(BaseAgent):
     execution strategies.
     """
     def __init__(self):
-        """Initialize the workflow orchestrator."""
+        """
+Initialize the workflow orchestrator."""
         super().__init__()
         self.logger = logging.getLogger(__name__)
         
@@ -637,7 +645,8 @@ class WorkflowOrchestrator(BaseAgent):
                 self.available_resources[resource_type] += amount
 
     def _compute_execution_levels(self, workflow_id: str) -> Dict[int, List[str]]:
-        """Compute execution levels for parallel execution."""
+        """
+Compute execution levels for parallel execution."""
         workflow_nodes = [
             node for node in self.workflow_graph.nodes()
             if node.startswith(f"{workflow_id}:")
@@ -746,7 +755,8 @@ class WorkflowOrchestrator(BaseAgent):
             self.execution_stats['resource_utilization'][resource_type] += usage
 
     def _get_executor_from_registry(self, executor_name: str) -> Callable:
-        """Get executor function from registry."""
+        """
+Get executor function from registry."""
         # This would typically be a more sophisticated registry
         # For now, return a placeholder
         async def placeholder_executor(context):

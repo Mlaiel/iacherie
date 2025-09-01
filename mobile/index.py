@@ -4,6 +4,7 @@ Provides comprehensive overview and navigation for all mobile modules
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
 """
+
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import importlib.util
@@ -12,7 +13,8 @@ import os
 
 @dataclass
 class MobileModuleInfo:
-    """Professional mobile module information structure."""
+    """
+Professional mobile module information structure."""
     name: str
     description: str
     file_path: str
@@ -23,7 +25,8 @@ class MobileModuleInfo:
 
 
 class MobileModuleIndex:
-    """Professional index of all mobile infrastructure modules."""
+    """
+Professional index of all mobile infrastructure modules."""
     
     def __init__(self):
         self.modules = {
@@ -93,25 +96,29 @@ class MobileModuleIndex:
         return self.modules
     
     def get_module_by_name(self, name: str) -> Optional[MobileModuleInfo]:
-        """Get specific mobile module information."""
+        """
+Get specific mobile module information."""
         return self.modules.get(name)
     
     def find_modules_for_platform(self, platform: str) -> List[MobileModuleInfo]:
-        """Find modules supporting specific platform."""
+        """
+Find modules supporting specific platform."""
         return [
             module for module in self.modules.values()
             if platform in module.mobile_platforms
         ]
     
     def find_modules_for_purpose(self, purpose_keyword: str) -> List[MobileModuleInfo]:
-        """Find modules by business purpose keyword."""
+        """
+Find modules by business purpose keyword."""
         return [
             module for module in self.modules.values()
             if purpose_keyword.lower() in module.business_purpose.lower()
         ]
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive mobile system overview."""
+        """
+Get comprehensive mobile system overview."""
         return {
             "total_modules": len(self.modules),
             "modules": {
@@ -163,19 +170,22 @@ def get_module_index() -> MobileModuleIndex:
 
 
 def get_system_overview() -> Dict[str, Any]:
-    """Get mobile system overview."""
+    """
+Get mobile system overview."""
     index = get_module_index()
     return index.get_system_overview()
 
 
 def find_modules_for_purpose(purpose: str) -> List[MobileModuleInfo]:
-    """Find mobile modules for specific business purpose."""
+    """
+Find mobile modules for specific business purpose."""
     index = get_module_index()
     return index.find_modules_for_purpose(purpose)
 
 
 def find_modules_for_platform(platform: str) -> List[MobileModuleInfo]:
-    """Find mobile modules for specific platform."""
+    """
+Find mobile modules for specific platform."""
     index = get_module_index()
     return index.find_modules_for_platform(platform)
 

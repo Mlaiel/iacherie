@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit tests for fingerprinting engines.
+"""
+Unit tests for fingerprinting engines.
 
 Tests for video, audio, image, and text fingerprinting capabilities
 with comprehensive coverage of all core functionalities.
@@ -20,6 +22,7 @@ with comprehensive coverage of all core functionalities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -53,7 +56,8 @@ class TestFingerprintingService:
     
     @pytest.fixture
     def service(self):
-        """Create fingerprinting service instance."""
+        """
+Create fingerprinting service instance."""
         config = {
             'enable_video': True,
             'enable_audio': True,
@@ -66,7 +70,8 @@ class TestFingerprintingService:
     
     @pytest.fixture
     def sample_video_file(self):
-        """Create temporary video file for testing."""
+        """
+Create temporary video file for testing."""
         with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as f:
             # Create minimal valid MP4 header for testing
             f.write(b'\x00\x00\x00\x20ftypmp42')
@@ -76,7 +81,8 @@ class TestFingerprintingService:
     
     @pytest.fixture
     def sample_audio_file(self):
-        """Create temporary audio file for testing."""
+        """
+Create temporary audio file for testing."""
         with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as f:
             # Create minimal MP3 header for testing
             f.write(b'ID3\x03\x00\x00\x00')
@@ -86,7 +92,8 @@ class TestFingerprintingService:
     
     @pytest.fixture
     def sample_image_file(self):
-        """Create temporary image file for testing."""
+        """
+Create temporary image file for testing."""
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
             # Create minimal JPEG header for testing
             f.write(b'\xff\xd8\xff\xe0\x00\x10JFIF')
@@ -95,14 +102,16 @@ class TestFingerprintingService:
         os.unlink(f.name)
     
     def test_service_initialization(self, service):
-        """Test service initializes correctly."""
+        """
+Test service initializes correctly."""
         assert service is not None
         assert service.config['enable_video'] is True
         assert service.config['quality_threshold'] == 0.85
     
     @pytest.mark.asyncio
     async def test_fingerprint_video_content(self, service, sample_video_file):
-        """Test video content fingerprinting."""
+        """
+Test video content fingerprinting."""
         request = FingerprintRequest(
             content_id="test_video_001",
             content_type=ContentType.VIDEO,
@@ -250,7 +259,8 @@ class TestVideoFingerprintingService:
     
     @pytest.fixture
     def video_service(self):
-        """Create video fingerprinting service."""
+        """
+Create video fingerprinting service."""
         config = {
             'frame_sampling_rate': 1.0,
             'hash_size': 16,
@@ -260,7 +270,8 @@ class TestVideoFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_extract_video_metadata(self, video_service):
-        """Test video metadata extraction."""
+        """
+Test video metadata extraction."""
         with patch('cv2.VideoCapture') as mock_cap:
             mock_cap_instance = Mock()
             mock_cap.return_value = mock_cap_instance
@@ -304,7 +315,8 @@ class TestAudioFingerprintingService:
     
     @pytest.fixture
     def audio_service(self):
-        """Create audio fingerprinting service."""
+        """
+Create audio fingerprinting service."""
         config = {
             'sampling_rate': 22050,
             'frame_size': 2048,
@@ -314,7 +326,8 @@ class TestAudioFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_extract_audio_features(self, audio_service):
-        """Test audio feature extraction."""
+        """
+Test audio feature extraction."""
         with patch('librosa.load') as mock_load:
             mock_load.return_value = (Mock(), 22050)  # audio data, sample rate
             
@@ -340,11 +353,13 @@ class TestAudioFingerprintingService:
 
 
 class TestImageFingerprintingService:
-    """Test suite for image fingerprinting service."""
+    """
+Test suite for image fingerprinting service."""
     
     @pytest.fixture
     def image_service(self):
-        """Create image fingerprinting service."""
+        """
+Create image fingerprinting service."""
         config = {
             'hash_size': 16,
             'enable_phash': True,
@@ -354,7 +369,8 @@ class TestImageFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_perceptual_hash_generation(self, image_service):
-        """Test perceptual hash generation."""
+        """
+Test perceptual hash generation."""
         with patch('PIL.Image.open') as mock_open:
             mock_image = Mock()
             mock_open.return_value = mock_image
@@ -390,7 +406,8 @@ class TestTextFingerprintingService:
     
     @pytest.fixture
     def text_service(self):
-        """Create text fingerprinting service."""
+        """
+Create text fingerprinting service."""
         config = {
             'min_similarity': 0.8,
             'enable_semantic': True,
@@ -400,7 +417,8 @@ class TestTextFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_semantic_similarity(self, text_service):
-        """Test semantic similarity calculation."""
+        """
+Test semantic similarity calculation."""
         text1 = "This is a sample text about machine learning."
         text2 = "This text discusses artificial intelligence and ML."
         
@@ -457,14 +475,16 @@ class TestFingerprintingIntegration:
     
     @pytest.mark.asyncio
     async def test_end_to_end_fingerprinting_workflow(self):
-        """Test complete fingerprinting workflow."""
+        """
+Test complete fingerprinting workflow."""
         # This would test the entire pipeline from file upload to similarity matching
         # Implementation would depend on the full system architecture
         pass
     
     @pytest.mark.asyncio
     async def test_cross_modal_similarity(self):
-        """Test similarity matching across different content types."""
+        """
+Test similarity matching across different content types."""
         # Test comparing video, audio, and image content
         # This is advanced functionality that might not be implemented yet
         pass

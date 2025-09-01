@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -31,7 +32,9 @@ import imageio
 logger = logging.getLogger(__name__)
 
 class VideoFormat(Enum):
-    """Supported video formats with technical specifications"""
+    """
+Supported video formats with technical specifications"""
+
     MP4 = {"ext": ".mp4", "container": "MP4", "codecs": ["H.264", "H.265"], "quality": "excellent"}
     AVI = {"ext": ".avi", "container": "AVI", "codecs": ["XVID", "DivX"], "quality": "good"}
     MOV = {"ext": ".mov", "container": "QuickTime", "codecs": ["H.264", "ProRes"], "quality": "excellent"}
@@ -43,6 +46,7 @@ class VideoFormat(Enum):
 
 class VideoContentType(Enum):
     """Video content classification types"""
+
     MOVIE = "movie"
     MUSIC_VIDEO = "music_video"
     DOCUMENTARY = "documentary"
@@ -60,6 +64,7 @@ class VideoContentType(Enum):
 
 class VideoQuality(Enum):
     """Video quality classifications"""
+
     SD = {"resolution": "480p", "min_width": 640, "min_height": 480}
     HD = {"resolution": "720p", "min_width": 1280, "min_height": 720}
     FULL_HD = {"resolution": "1080p", "min_width": 1920, "min_height": 1080}
@@ -141,7 +146,8 @@ class VideoMetadata:
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint for content identification and protection"""
+    """
+Video fingerprint for content identification and protection"""
     content_id: str
     primary_hash: str
     perceptual_hash: str
@@ -159,7 +165,8 @@ class VideoFingerprint:
 
 @dataclass
 class VideoScene:
-    """Video scene detection and analysis"""
+    """
+Video scene detection and analysis"""
     scene_id: str
     start_frame: int
     end_frame: int

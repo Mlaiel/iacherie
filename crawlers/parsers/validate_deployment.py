@@ -4,13 +4,14 @@
 Comprehensive deployment validation and health check script for the parsers module.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import sys
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 async def validate_module_imports() -> bool:
-    """Validate all module imports"""
+    """
+Validate all module imports"""
     logger.info("🔍 Validating module imports...")
     
     try:
@@ -354,7 +356,7 @@ async def main():
     logger.info("🚀 IA INFLUENCER AGENT - PARSERS MODULE VALIDATION")
     logger.info("=" * 60)
     logger.info("Author: Fahed Mlaiel <mlaiel@live.de>")
-    logger.info("Copyright: © 2025 Fahed Mlaiel. All rights reserved.")
+    logger.info("Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.")
     logger.info("=" * 60)
     
     try:

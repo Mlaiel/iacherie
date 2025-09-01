@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VersionControlSystemStatus:
-    """Overall version control system status"""
+    """
+Overall version control system status"""
     is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0

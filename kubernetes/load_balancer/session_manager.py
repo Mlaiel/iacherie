@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class SessionAffinityType(Enum):
-    """Session affinity types for different services"""
+    """
+Session affinity types for different services"""
+
     NONE = "none"
     IP_HASH = "ip_hash"
     COOKIE_BASED = "cookie"
@@ -123,7 +126,8 @@ class SessionManager:
         return base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes).decode('utf-8')
     
     async def initialize(self) -> None:
-        """Initialize session manager"""
+        """
+Initialize session manager"""
         try:
             logger.info("Initializing Session Manager...")
             

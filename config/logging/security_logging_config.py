@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import json
 import time
 import hashlib
@@ -34,7 +35,9 @@ import structlog
 
 
 class ThreatLevel(str, Enum):
-    """Security threat levels"""
+    """
+Security threat levels"""
+
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
@@ -107,6 +110,7 @@ class SecurityEventType(str, Enum):
 
 class IncidentStatus(str, Enum):
     """Security incident status"""
+
     OPEN = "open"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
@@ -143,7 +147,8 @@ class GeoLocation:
 
 @dataclass
 class SecurityEvent:
-    """Security event data structure"""
+    """
+Security event data structure"""
     event_id: str
     timestamp: datetime
     event_type: SecurityEventType
@@ -313,7 +318,8 @@ class SecurityLoggingConfig:
         self._security_logger = self._initialize_security_logger()
     
     def _initialize_geoip(self, database_path: str) -> None:
-        """Initialize GeoIP database reader"""
+        """
+Initialize GeoIP database reader"""
         try:
             self._geo_reader = geoip2.database.Reader(database_path)
             logging.info(f"Initialized GeoIP database: {database_path}")
@@ -594,7 +600,8 @@ class SecurityLoggingConfig:
         return values.get(level, 0)
     
     def _get_ip_reputation(self, ip: str) -> Optional[IPReputation]:
-        """Get IP reputation information"""
+        """
+Get IP reputation information"""
         if ip in self._ip_reputation_cache:
             return self._ip_reputation_cache[ip]
         
@@ -608,7 +615,8 @@ class SecurityLoggingConfig:
         return reputation
     
     def _calculate_basic_ip_reputation(self, ip: str) -> Optional[IPReputation]:
-        """Calculate basic IP reputation"""
+        """
+Calculate basic IP reputation"""
         try:
             ip_obj = ipaddress.ip_address(ip)
             
@@ -636,15 +644,18 @@ class SecurityLoggingConfig:
             return None
     
     def _is_ip_whitelisted(self, ip: str) -> bool:
-        """Check if IP is in whitelist"""
+        """
+Check if IP is in whitelist"""
         return ip in self.ip_whitelist
     
     def _is_ip_blacklisted(self, ip: str) -> bool:
-        """Check if IP is in blacklist"""
+        """
+Check if IP is in blacklist"""
         return ip in self.ip_blacklist
     
     def _update_statistics(self, event: SecurityEvent) -> None:
-        """Update security statistics"""
+        """
+Update security statistics"""
         self._stats['total_events'] += 1
         self._stats['events_by_type'][event.event_type.value] += 1
         self._stats['events_by_threat_level'][event.threat_level.value] += 1
@@ -653,7 +664,8 @@ class SecurityLoggingConfig:
             self._stats['blocked_ips'].add(event.source_ip)
     
     def _log_security_event(self, event: SecurityEvent) -> None:
-        """Log security event using structured logging"""
+        """
+Log security event using structured logging"""
         try:
             event_dict = asdict(event)
             
@@ -693,13 +705,15 @@ class SecurityLoggingConfig:
         return mapping.get(threat_level, logging.WARNING)
     
     def _check_incident_creation(self, event: SecurityEvent) -> None:
-        """Check if event should trigger incident creation"""
+        """
+Check if event should trigger incident creation"""
         if event.threat_score >= self.auto_incident_threshold:
             incident_id = self._create_incident(event)
             event.incident_id = incident_id
     
     def _create_incident(self, triggering_event: SecurityEvent) -> str:
-        """Create a new security incident"""
+        """
+Create a new security incident"""
         incident_id = f"INC_{datetime.now().strftime('%Y%m%d%H%M%S')}"
         
         incident = {
@@ -749,7 +763,8 @@ class SecurityLoggingConfig:
             self._analyze_correlated_events(correlation_key)
     
     def _get_correlation_key(self, event: SecurityEvent) -> str:
-        """Get correlation key for event grouping"""
+        """
+Get correlation key for event grouping"""
         # Group by source IP and event type
         return f"{event.source_ip or 'unknown'}_{event.event_type.value}"
     
@@ -790,7 +805,8 @@ class SecurityLoggingConfig:
             self._send_webhook_alert(event)
     
     def _send_webhook_alert(self, event: SecurityEvent) -> None:
-        """Send webhook alert for security event"""
+        """
+Send webhook alert for security event"""
         if not self.webhook_urls:
             return
         
@@ -869,7 +885,8 @@ class SecurityLoggingConfig:
         return events[:limit]
     
     def get_security_statistics(self) -> Dict[str, Any]:
-        """Get security statistics"""
+        """
+Get security statistics"""
         with self._lock:
             stats = self._stats.copy()
             stats['blocked_ips'] = list(stats['blocked_ips'])
@@ -882,7 +899,8 @@ class SecurityLoggingConfig:
         return stats
     
     def add_ip_to_whitelist(self, ip: str) -> None:
-        """Add IP to whitelist"""
+        """
+Add IP to whitelist"""
         self.ip_whitelist.add(ip)
         logging.info(f"Added IP to whitelist: {ip}")
     
@@ -998,7 +1016,8 @@ def initialize_security_logging(
 
 
 def get_security_config() -> SecurityLoggingConfig:
-    """Get the global security logging configuration"""
+    """
+Get the global security logging configuration"""
     if not _security_config:
         initialize_security_logging()
     

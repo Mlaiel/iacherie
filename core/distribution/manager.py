@@ -5,8 +5,9 @@ Main orchestrator for content distribution across multiple platforms.
 Handles distribution workflows, platform coordination, and business logic.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from ..security.access_control import AccessController
 
 
 class DistributionStrategy(Enum):
-    """Distribution strategy types."""
+    """
+Distribution strategy types."""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     OPTIMIZED = "optimized"
@@ -32,6 +35,7 @@ class DistributionStrategy(Enum):
 
 class DistributionPriority(Enum):
     """Distribution priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -41,7 +45,8 @@ class DistributionPriority(Enum):
 
 @dataclass
 class DistributionRequest:
-    """Distribution request data structure."""
+    """
+Distribution request data structure."""
     request_id: UUID = field(default_factory=uuid4)
     content_id: UUID = field(default_factory=uuid4)
     user_id: UUID = field(default_factory=uuid4)
@@ -62,7 +67,8 @@ class DistributionRequest:
 
 @dataclass
 class DistributionResult:
-    """Distribution result data structure."""
+    """
+Distribution result data structure."""
     request_id: UUID
     success: bool
     platform_results: Dict[str, Dict[str, Any]] = field(default_factory=dict)
@@ -86,7 +92,8 @@ class DistributionManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution manager."""
+        """
+Initialize distribution manager."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.event_emitter = EventEmitter()
@@ -482,7 +489,8 @@ class DistributionManager:
         return platform_results
     
     async def _execute_waterfall_distribution(self, request: DistributionRequest) -> Dict[str, Dict[str, Any]]:
-        """Execute distribution to platforms sequentially."""
+        """
+Execute distribution to platforms sequentially."""
         platform_results = {}
         
         for platform in request.platforms:
@@ -530,7 +538,8 @@ class DistributionManager:
         return platform_results
     
     async def _distribute_to_platform(self, request: DistributionRequest, platform: str) -> Dict[str, Any]:
-        """Distribute content to a specific platform."""
+        """
+Distribute content to a specific platform."""
         adapter = self.platform_adapters.get(platform)
         if not adapter:
             raise ValueError(f"No adapter available for platform: {platform}")
@@ -607,7 +616,8 @@ class DistributionManager:
         }
     
     async def _initialize_platform_adapters(self) -> None:
-        """Initialize platform adapters."""
+        """
+Initialize platform adapters."""
         # This would initialize actual platform adapters
         # For now, we'll create mock adapters
         for platform in self.platform_configs:
@@ -617,7 +627,8 @@ class DistributionManager:
             })()
     
     async def _mock_platform_distribution(self, **kwargs) -> Dict[str, Any]:
-        """Mock platform distribution for testing."""
+        """
+Mock platform distribution for testing."""
         await asyncio.sleep(0.1)  # Simulate API call
         return {
             'success': True,
@@ -644,7 +655,8 @@ class DistributionManager:
         asyncio.create_task(self._collect_metrics())
     
     async def _process_distribution_queue(self) -> None:
-        """Process scheduled distributions."""
+        """
+Process scheduled distributions."""
         while self.is_running:
             try:
                 current_time = datetime.utcnow()
@@ -694,13 +706,15 @@ class DistributionManager:
         return 0.95  # 95% success rate
     
     async def _apply_rate_limiting(self, platform: str) -> None:
-        """Apply rate limiting for platform."""
+        """
+Apply rate limiting for platform."""
         # This would implement actual rate limiting logic
         # For now, just add a small delay
         await asyncio.sleep(0.01)
     
     async def _optimize_platform_order(self, request: DistributionRequest) -> List[str]:
-        """Optimize platform order for distribution."""
+        """
+Optimize platform order for distribution."""
         # This would implement optimization logic based on:
         # - Platform success rates
         # - Audience compatibility
@@ -716,17 +730,20 @@ class DistributionManager:
         return sorted(request.platforms, key=lambda p: platform_scores.get(p, 0), reverse=True)
     
     async def _analyze_distribution_result(self, platform: str, result: Dict[str, Any]) -> None:
-        """Analyze distribution result for optimization."""
+        """
+Analyze distribution result for optimization."""
         # This would analyze results and update optimization parameters
         pass
     
     def _is_critical_platform(self, platform: str) -> bool:
-        """Check if platform is critical for distribution."""
+        """
+Check if platform is critical for distribution."""
         critical_platforms = self.config.get('critical_platforms', ['youtube', 'spotify'])
         return platform in critical_platforms
     
     def get_distribution_status(self, request_id: UUID) -> Optional[Dict[str, Any]]:
-        """Get status of a distribution request."""
+        """
+Get status of a distribution request."""
         # Check active distributions
         if request_id in self.active_distributions:
             request = self.active_distributions[request_id]
@@ -756,7 +773,8 @@ class DistributionManager:
         return None
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics."""
+        """
+Get current performance metrics."""
         return {
             **self.metrics,
             'timestamp': datetime.utcnow().isoformat(),

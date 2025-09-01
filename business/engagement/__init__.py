@@ -10,7 +10,7 @@ Module: backend/business/engagement/__init__.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -27,6 +27,7 @@ Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching + Gamification → Multi-platform Distribution → Revenue Optimization → Analytics
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 
@@ -37,7 +38,7 @@ logger = logging.getLogger(__name__)
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Core gamification imports
 try:
@@ -183,7 +184,8 @@ class EngagementOrchestrator:
     """
     
     def __init__(self):
-        """Initialize the engagement orchestrator."""
+        """
+Initialize the engagement orchestrator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.initialized = False
         

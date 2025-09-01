@@ -6,9 +6,10 @@ to all collaboration components, database models, and management engines.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Type, Union
 import logging
 from datetime import datetime

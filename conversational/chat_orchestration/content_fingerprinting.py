@@ -20,12 +20,13 @@ Technologies:
 - Text: BERT/RoBERTa + Vector Similarity
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -57,7 +58,9 @@ from backend.security.encryption import EncryptionService
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting"""
+    """
+Content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -68,6 +71,7 @@ class ContentType(Enum):
 
 class FingerprintAlgorithm(Enum):
     """Fingerprinting algorithms by content type"""
+
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     OPENCV_HASH = "opencv_hash"
@@ -80,6 +84,7 @@ class FingerprintAlgorithm(Enum):
 
 class SimilarityThreshold(Enum):
     """Similarity thresholds for matching"""
+
     EXACT = 0.95
     HIGH = 0.85
     MEDIUM = 0.75
@@ -89,7 +94,8 @@ class SimilarityThreshold(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint with metadata"""
+    """
+Content fingerprint with metadata"""
     fingerprint_id: str
     creator_id: str
     content_type: ContentType
@@ -842,7 +848,8 @@ class EnterpriseContentFingerprinting:
         return np.random.rand(44100 * 10), 44100  # 10 seconds of random audio at 44.1kHz
     
     async def _analyze_video_properties(self, video_data: bytes) -> Dict[str, Any]:
-        """Analyze video properties"""
+        """
+Analyze video properties"""
         return {
             "duration": 120.0,  # seconds
             "fps": 30,
@@ -856,7 +863,8 @@ class EnterpriseContentFingerprinting:
         return None
     
     async def _get_existing_fingerprint(self, file_hash: str) -> Optional[ContentFingerprint]:
-        """Check if fingerprint already exists"""
+        """
+Check if fingerprint already exists"""
         # Check cache first
         for fingerprint in self.fingerprint_cache.values():
             if fingerprint.file_hash == file_hash:
@@ -867,7 +875,8 @@ class EnterpriseContentFingerprinting:
         return None
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint) -> None:
-        """Store fingerprint in database and cache"""
+        """
+Store fingerprint in database and cache"""
         # Store in cache
         self.fingerprint_cache[fingerprint.fingerprint_id] = fingerprint
         
@@ -876,7 +885,8 @@ class EnterpriseContentFingerprinting:
         pass
     
     async def _add_to_faiss_index(self, fingerprint: ContentFingerprint) -> None:
-        """Add fingerprint to FAISS index for similarity search"""
+        """
+Add fingerprint to FAISS index for similarity search"""
         if self.faiss_index is not None:
             vector = fingerprint.vector_embedding.reshape(1, -1)
             self.faiss_index.add(vector)
@@ -887,7 +897,8 @@ class EnterpriseContentFingerprinting:
         similarity_threshold: float,
         max_results: int
     ) -> List[SimilarityMatch]:
-        """Search FAISS index for similar vectors"""
+        """
+Search FAISS index for similar vectors"""
         matches = []
         
         if self.faiss_index is not None:
@@ -935,7 +946,8 @@ class EnterpriseContentFingerprinting:
         match: SimilarityMatch,
         query_fingerprint: ContentFingerprint
     ) -> float:
-        """Calculate confidence level for match"""
+        """
+Calculate confidence level for match"""
         base_confidence = match.similarity_score
         
         # Adjust based on algorithm used
@@ -953,7 +965,8 @@ class EnterpriseContentFingerprinting:
         match: SimilarityMatch,
         query_fingerprint: ContentFingerprint
     ) -> float:
-        """Estimate false positive probability"""
+        """
+Estimate false positive probability"""
         base_rate = 1.0 - match.similarity_score
         
         # Adjust based on algorithm reliability
@@ -963,18 +976,21 @@ class EnterpriseContentFingerprinting:
         return min(1.0, max(0.0, base_rate))
     
     async def _is_potential_violation(self, match: SimilarityMatch, creator_id: str) -> bool:
-        """Check if match represents potential copyright violation"""
+        """
+Check if match represents potential copyright violation"""
         # Implementation would check if detected content belongs to different creator
         return True  # Placeholder
     
     async def _rank_matches_by_severity(self, matches: List[SimilarityMatch]) -> List[SimilarityMatch]:
-        """Rank matches by violation severity"""
+        """
+Rank matches by violation severity"""
         # Sort by similarity score and confidence
         matches.sort(key=lambda x: (x.similarity_score, x.confidence_level), reverse=True)
         return matches
     
     async def _store_similarity_match(self, match: SimilarityMatch) -> None:
-        """Store similarity match in database"""
+        """
+Store similarity match in database"""
         # Implementation would insert into database
         pass
     
@@ -983,7 +999,8 @@ class EnterpriseContentFingerprinting:
         fingerprints: List[ContentFingerprint],
         content_type: ContentType
     ) -> Dict[str, float]:
-        """Calculate fingerprint quality metrics"""
+        """
+Calculate fingerprint quality metrics"""
         return {
             "algorithm_coverage": len(fingerprints) / 3.0,  # Assume 3 algorithms per type
             "vector_quality": 0.9,  # Placeholder
@@ -1022,7 +1039,8 @@ class EnterpriseContentFingerprinting:
         return (algorithm_coverage + platform_coverage) / 2.0
     
     def _update_fingerprinting_metrics(self, processing_time: float, fingerprint_count: int) -> None:
-        """Update fingerprinting performance metrics"""
+        """
+Update fingerprinting performance metrics"""
         self.fingerprinting_metrics["total_fingerprints"] += fingerprint_count
         
         # Update average processing time
@@ -1063,11 +1081,13 @@ class EnterpriseContentFingerprinting:
         return self.fingerprinting_metrics.copy()
     
     def get_supported_content_types(self) -> List[ContentType]:
-        """Get list of supported content types"""
+        """
+Get list of supported content types"""
         return [ContentType.AUDIO, ContentType.VIDEO, ContentType.IMAGE, ContentType.TEXT]
     
     def get_supported_algorithms(self) -> List[FingerprintAlgorithm]:
-        """Get list of supported fingerprinting algorithms"""
+        """
+Get list of supported fingerprinting algorithms"""
         return list(FingerprintAlgorithm)
 
 

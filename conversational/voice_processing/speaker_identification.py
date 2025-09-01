@@ -15,6 +15,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpeakerEmbedding:
-    """Speaker voice embedding representation"""
+    """
+Speaker voice embedding representation"""
     speaker_id: str
     embedding_vector: np.ndarray
     confidence_score: float
@@ -42,7 +44,8 @@ class SpeakerEmbedding:
 
 @dataclass
 class IdentificationResult:
-    """Speaker identification result"""
+    """
+Speaker identification result"""
     identified_speaker: Optional[SpeakerProfile]
     confidence_score: float
     similarity_scores: Dict[str, float]
@@ -52,7 +55,8 @@ class IdentificationResult:
 
 @dataclass
 class VerificationResult:
-    """Speaker verification result"""
+    """
+Speaker verification result"""
     is_verified: bool
     confidence_score: float
     threshold_used: float
@@ -74,7 +78,8 @@ class SpeakerIdentifier:
     """
     
     def __init__(self, config: SpeakerConfig):
-        """Initialize speaker identifier"""
+        """
+Initialize speaker identifier"""
         self.config = config
         self.is_initialized = False
         
@@ -507,7 +512,8 @@ class SpeakerIdentifier:
     async def _compare_embeddings(self,
                                 test_embedding: SpeakerEmbedding,
                                 reference_speakers: Optional[List[str]]) -> Dict[str, float]:
-        """Compare test embedding against enrolled speakers"""
+        """
+Compare test embedding against enrolled speakers"""
         try:
             similarity_scores = {}
             
@@ -617,7 +623,8 @@ class SpeakerIdentifier:
         return audio_data
     
     def _validate_audio_input(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Validate audio input"""
+        """
+Validate audio input"""
         if not isinstance(audio_data, np.ndarray):
             raise ValueError("Audio data must be numpy array")
         
@@ -659,7 +666,8 @@ class SpeakerIdentifier:
     async def _analyze_speaker_characteristics(self,
                                              audio_data: np.ndarray,
                                              sample_rate: int) -> Dict[str, float]:
-        """Analyze speaker voice characteristics"""
+        """
+Analyze speaker voice characteristics"""
         try:
             characteristics = {}
             
@@ -792,18 +800,21 @@ class VoiceBiometrics:
         self.identifier = identifier
     
     async def extract_biometric_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract biometric features from voice"""
+        """
+Extract biometric features from voice"""
         embedding = await self.identifier._extract_embedding_internal(audio_data, sample_rate)
         characteristics = await self.identifier._analyze_speaker_characteristics(audio_data, sample_rate)
         return characteristics
 
 class SpeakerVerifier:
-    """Speaker verification utilities"""
+    """
+Speaker verification utilities"""
     def __init__(self, identifier: SpeakerIdentifier):
         self.identifier = identifier
     
     async def batch_verify(self, audio_samples: List[np.ndarray], speaker_id: str) -> List[VerificationResult]:
-        """Verify multiple audio samples"""
+        """
+Verify multiple audio samples"""
         results = []
         for audio in audio_samples:
             result = await self.identifier.verify_speaker(audio, speaker_id)
@@ -811,12 +822,14 @@ class SpeakerVerifier:
         return results
 
 class VoiceSignatureExtractor:
-    """Voice signature extraction utilities"""
+    """
+Voice signature extraction utilities"""
     def __init__(self, identifier: SpeakerIdentifier):
         self.identifier = identifier
     
     async def extract_signature(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract unique voice signature"""
+        """
+Extract unique voice signature"""
         embedding = await self.identifier._extract_embedding_internal(audio_data, sample_rate)
         return {
             "embedding": embedding.embedding_vector,
@@ -830,6 +843,7 @@ class IdentityValidator:
         self.identifier = identifier
     
     async def validate_identity(self, audio_data: np.ndarray, claimed_identity: str) -> bool:
-        """Validate claimed identity against voice"""
+        """
+Validate claimed identity against voice"""
         result = await self.identifier.verify_speaker(audio_data, claimed_identity)
         return result.is_verified and result.anti_spoofing_score > 0.7

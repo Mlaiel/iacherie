@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import re
 import json
 import asyncio
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class TemplateType(Enum):
-    """Types of templates"""
+    """
+Types of templates"""
+
     STATIC = "static"
     DYNAMIC = "dynamic"
     CONDITIONAL = "conditional"
@@ -36,6 +39,7 @@ class TemplateType(Enum):
 
 class VariableType(Enum):
     """Variable types for validation"""
+
     STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
@@ -96,7 +100,8 @@ class TemplateVariable:
 
 
 class TemplateProcessor:
-    """Professional template processing with conditional logic"""
+    """
+Professional template processing with conditional logic"""
     
     def __init__(self):
         self.variable_pattern = re.compile(r'\{\{(\w+)\}\}')
@@ -106,7 +111,8 @@ class TemplateProcessor:
         
     def process_template(self, template: str, variables: Dict[str, Any], 
                         functions: Optional[Dict[str, Callable]] = None) -> str:
-        """Process template with variables, conditionals, and functions"""
+        """
+Process template with variables, conditionals, and functions"""
         try:
             result = template
             
@@ -211,17 +217,20 @@ class VariableResolver:
         self.global_variables = {}
         
     def push_context(self, context: Dict[str, Any]):
-        """Push new variable context"""
+        """
+Push new variable context"""
         self.context_stack.append(context)
         
     def pop_context(self) -> Optional[Dict[str, Any]]:
-        """Pop variable context"""
+        """
+Pop variable context"""
         if self.context_stack:
             return self.context_stack.pop()
         return None
     
     def resolve_variable(self, name: str, default: Any = None) -> Any:
-        """Resolve variable from context stack"""
+        """
+Resolve variable from context stack"""
         # Check context stack (most recent first)
         for context in reversed(self.context_stack):
             if name in context:
@@ -234,11 +243,13 @@ class VariableResolver:
         return default
     
     def set_global_variable(self, name: str, value: Any):
-        """Set global variable"""
+        """
+Set global variable"""
         self.global_variables[name] = value
     
     def get_all_variables(self) -> Dict[str, Any]:
-        """Get all available variables"""
+        """
+Get all available variables"""
         result = self.global_variables.copy()
         
         # Merge context stack
@@ -249,7 +260,8 @@ class VariableResolver:
 
 
 class TemplateEngine:
-    """Main template engine with caching and optimization"""
+    """
+Main template engine with caching and optimization"""
     
     def __init__(self):
         self.processor = TemplateProcessor()
@@ -263,7 +275,8 @@ class TemplateEngine:
                             template_variables: List[TemplateVariable] = None,
                             functions: Optional[Dict[str, Callable]] = None,
                             use_cache: bool = True) -> str:
-        """Render template with full feature support"""
+        """
+Render template with full feature support"""
         start_time = datetime.now()
         
         try:
@@ -338,11 +351,13 @@ class TemplateEngine:
         stats['success_rate'] = stats['successful_calls'] / stats['total_calls']
     
     def get_performance_stats(self, template_id: str) -> Optional[Dict[str, Any]]:
-        """Get performance statistics for template"""
+        """
+Get performance statistics for template"""
         return self.performance_stats.get(template_id)
     
     def clear_cache(self, template_id: str = None):
-        """Clear template cache"""
+        """
+Clear template cache"""
         if template_id:
             # Clear specific template cache
             keys_to_remove = [key for key in self.template_cache.keys() 
@@ -360,5 +375,6 @@ class TemplateProcessingError(Exception):
 
 
 class TemplateValidationError(Exception):
-    """Template validation error"""
+    """
+Template validation error"""
     pass

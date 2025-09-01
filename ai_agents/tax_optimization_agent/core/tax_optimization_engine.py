@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TaxOptimizationJob:
-    """Job configuration for tax_optimization operations"""
+    """
+Job configuration for tax_optimization operations"""
     job_id: str
     operation: str
     data: Dict[str, Any]
@@ -26,7 +28,8 @@ class TaxOptimizationJob:
 
 @dataclass 
 class TaxOptimizationResult:
-    """Result of tax_optimization operations"""
+    """
+Result of tax_optimization operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
@@ -52,7 +55,8 @@ class TaxOptimizationEngine:
         self.active_jobs = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the tax_optimization engine"""
+        """
+Initialize the tax_optimization engine"""
         try:
             logger.info("Initializing TaxOptimization Engine...")
             
@@ -150,7 +154,8 @@ class TaxOptimizationEngine:
             del self.active_jobs[job_id]
     
     async def _process_job(self, job: TaxOptimizationJob) -> Dict[str, Any]:
-        """Process a specific job"""
+        """
+Process a specific job"""
         # Implementation specific to tax_optimization operations
         return {
             "operation": job.operation,

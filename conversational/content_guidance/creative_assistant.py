@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -48,7 +49,9 @@ settings = get_settings()
 
 
 class ContentType(Enum):
-    """Types of content that can be created."""
+    """
+Types of content that can be created."""
+
     TEXT_POST = "text_post"
     IMAGE_POST = "image_post"
     VIDEO_POST = "video_post"
@@ -65,6 +68,7 @@ class ContentType(Enum):
 
 class CreativeStyle(Enum):
     """Creative styles for content generation."""
+
     EDUCATIONAL = "educational"
     ENTERTAINING = "entertaining"
     INSPIRATIONAL = "inspirational"
@@ -81,6 +85,7 @@ class CreativeStyle(Enum):
 
 class IdeationType(Enum):
     """Types of content ideas."""
+
     TRENDING_TOPIC = "trending_topic"
     SEASONAL_CONTENT = "seasonal_content"
     USER_GENERATED = "user_generated"
@@ -95,6 +100,7 @@ class IdeationType(Enum):
 
 class CreativityLevel(Enum):
     """Levels of creativity for content generation."""
+
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     CREATIVE = "creative"
@@ -130,7 +136,8 @@ class ContentIdea:
 
 @dataclass
 class CreativeTemplate:
-    """Template for content creation."""
+    """
+Template for content creation."""
     template_id: str
     name: str
     content_type: ContentType
@@ -147,7 +154,8 @@ class CreativeTemplate:
 
 @dataclass
 class ContentScript:
-    """Script for video or audio content."""
+    """
+Script for video or audio content."""
     script_id: str
     title: str
     content_type: ContentType
@@ -165,7 +173,8 @@ class ContentScript:
 
 @dataclass
 class VisualConcept:
-    """Visual concept for content creation."""
+    """
+Visual concept for content creation."""
     concept_id: str
     title: str
     description: str
@@ -182,7 +191,8 @@ class VisualConcept:
 
 @dataclass
 class AudioConcept:
-    """Audio concept for content creation."""
+    """
+Audio concept for content creation."""
     concept_id: str
     title: str
     description: str
@@ -200,7 +210,8 @@ class AudioConcept:
 
 @dataclass
 class CreativeBrief:
-    """Comprehensive creative brief for content."""
+    """
+Comprehensive creative brief for content."""
     brief_id: str
     project_title: str
     objectives: List[str]
@@ -227,7 +238,8 @@ class ContentIdeationEngine:
     """
     
     def __init__(self):
-        """Initialize the content ideation engine."""
+        """
+Initialize the content ideation engine."""
         self.creativity_analyzer = CreativityAnalysisEngine()
         self.platform_manager = PlatformAPIManager()
         
@@ -289,7 +301,8 @@ class ContentIdeationEngine:
         }
     
     def _load_creative_prompts(self) -> Dict[CreativeStyle, List[str]]:
-        """Load creative prompts by style."""
+        """
+Load creative prompts by style."""
         
         return {
             CreativeStyle.EDUCATIONAL: [
@@ -715,7 +728,8 @@ class ContentIdeationEngine:
         return resource_map.get(content_type, ['Basic equipment'])
     
     def _generate_hashtags(self, topic: str, niche: str) -> List[str]:
-        """Generate relevant hashtags for the content."""
+        """
+Generate relevant hashtags for the content."""
         
         # Extract keywords from topic
         keywords = topic.lower().split()
@@ -898,7 +912,8 @@ class ContentIdeationEngine:
         return sorted(ideas, key=lambda x: x.estimated_engagement, reverse=True)
     
     def _map_preference_to_content_type(self, preference: str) -> ContentType:
-        """Map audience preference to content type."""
+        """
+Map audience preference to content type."""
         
         mapping = {
             'educational': ContentType.TEXT_POST,
@@ -912,7 +927,8 @@ class ContentIdeationEngine:
         return mapping.get(preference, ContentType.TEXT_POST)
     
     def _map_preference_to_style(self, preference: str) -> CreativeStyle:
-        """Map audience preference to creative style."""
+        """
+Map audience preference to creative style."""
         
         mapping = {
             'educational': CreativeStyle.EDUCATIONAL,
@@ -925,7 +941,8 @@ class ContentIdeationEngine:
         return mapping.get(preference, CreativeStyle.EDUCATIONAL)
     
     def _determine_difficulty(self, creativity_level: CreativityLevel) -> str:
-        """Determine difficulty based on creativity level."""
+        """
+Determine difficulty based on creativity level."""
         
         difficulty_map = {
             CreativityLevel.CONSERVATIVE: 'Easy',
@@ -945,7 +962,8 @@ class CreativeAssistant:
     """
     
     def __init__(self):
-        """Initialize the creative assistant."""
+        """
+Initialize the creative assistant."""
         self.ideation_engine = ContentIdeationEngine()
         self.content_generator = ContentGenerationEngine()
         
@@ -1165,7 +1183,8 @@ class CreativeAssistant:
         return templates
     
     async def _generate_scripts_for_brief(self, content_ideas: List[ContentIdea]) -> List[ContentScript]:
-        """Generate scripts for video content in the brief."""
+        """
+Generate scripts for video content in the brief."""
         
         scripts = []
         
@@ -1184,7 +1203,8 @@ class CreativeAssistant:
         return scripts
     
     async def _generate_content_script(self, idea: ContentIdea) -> ContentScript:
-        """Generate detailed script for video content."""
+        """
+Generate detailed script for video content."""
         
         # Determine video duration based on content type
         duration_map = {
@@ -1338,7 +1358,8 @@ class CreativeAssistant:
         return palettes.get(style, ['#333333', '#666666', '#999999', '#CCCCCC'])
     
     def _determine_audio_genre(self, style: CreativeStyle) -> str:
-        """Determine audio genre based on creative style."""
+        """
+Determine audio genre based on creative style."""
         
         genre_map = {
             CreativeStyle.EDUCATIONAL: 'Corporate/Ambient',
@@ -1351,7 +1372,8 @@ class CreativeAssistant:
         return genre_map.get(style, 'Ambient')
     
     def _determine_audio_mood(self, style: CreativeStyle) -> str:
-        """Determine audio mood based on creative style."""
+        """
+Determine audio mood based on creative style."""
         
         mood_map = {
             CreativeStyle.EDUCATIONAL: 'Professional and clear',
@@ -1364,7 +1386,8 @@ class CreativeAssistant:
         return mood_map.get(style, 'Neutral')
     
     def _determine_tempo(self, content_type: ContentType) -> int:
-        """Determine appropriate tempo for content type."""
+        """
+Determine appropriate tempo for content type."""
         
         tempo_map = {
             ContentType.REEL: 120,  # Upbeat
@@ -1377,7 +1400,8 @@ class CreativeAssistant:
         return tempo_map.get(content_type, 100)
     
     def _suggest_instruments(self, content_type: ContentType) -> List[str]:
-        """Suggest instruments based on content type."""
+        """
+Suggest instruments based on content type."""
         
         instrument_map = {
             ContentType.PODCAST: ['Voice', 'Subtle piano', 'Ambient pads'],
@@ -1389,7 +1413,8 @@ class CreativeAssistant:
         return instrument_map.get(content_type, ['Voice', 'Background music'])
     
     def _suggest_sound_effects(self, content_type: ContentType) -> List[str]:
-        """Suggest sound effects based on content type."""
+        """
+Suggest sound effects based on content type."""
         
         effects_map = {
             ContentType.VIDEO_POST: ['Transition whooshes', 'Button clicks', 'Success chimes'],
@@ -1458,7 +1483,8 @@ class CreativeAssistant:
     def _create_template_from_pattern(
         self, pattern: Dict[str, Any], creator_profile: Dict[str, Any]
     ) -> CreativeTemplate:
-        """Create template based on successful pattern."""
+        """
+Create template based on successful pattern."""
         
         template = CreativeTemplate(
             template_id=f"personalized_{int(datetime.now().timestamp())}",
@@ -1507,7 +1533,8 @@ class CreativeAssistant:
         }
     
     def _generate_visual_guidelines_from_pattern(self, pattern: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate visual guidelines from pattern."""
+        """
+Generate visual guidelines from pattern."""
         
         return {
             'duration': '30-60 seconds' if 'reel' in str(pattern['content_type']).lower() else 'N/A',
@@ -1516,7 +1543,8 @@ class CreativeAssistant:
         }
     
     def _generate_text_guidelines_from_pattern(self, pattern: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate text guidelines from pattern."""
+        """
+Generate text guidelines from pattern."""
         
         return {
             'tone': 'Conversational and helpful',
@@ -1524,7 +1552,8 @@ class CreativeAssistant:
         }
     
     def _generate_audio_guidelines_from_pattern(self, pattern: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate audio guidelines from pattern."""
+        """
+Generate audio guidelines from pattern."""
         
         return {
             'music_style': 'Upbeat and engaging',
@@ -1532,7 +1561,8 @@ class CreativeAssistant:
         }
     
     def _generate_customization_options(self, pattern: Dict[str, Any]) -> List[str]:
-        """Generate customization options for template."""
+        """
+Generate customization options for template."""
         
         return [
             'Color scheme adjustment',

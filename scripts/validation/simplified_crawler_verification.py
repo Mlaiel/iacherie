@@ -5,6 +5,7 @@
 
 Quick verification of crawler implementations and API connectivity.
 """
+
 import asyncio
 import json
 import sys
@@ -19,7 +20,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SimpleCrawlerVerifier:
-    """Simplified crawler verification without complex dependencies."""
+    """
+Simplified crawler verification without complex dependencies."""
     
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)

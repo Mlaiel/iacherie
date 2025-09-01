@@ -4,8 +4,9 @@ Advanced AI personalization system for multi-format content creators.
 Implements deep learning algorithms for intelligent user profiling and content adaptation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -26,7 +27,9 @@ from .exceptions import ProfileNotFoundError, InsufficientDataError
 
 
 class PersonalizationType(Enum):
-    """Types of personalization strategies"""
+    """
+Types of personalization strategies"""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"  
     HYBRID = "hybrid"
@@ -37,6 +40,7 @@ class PersonalizationType(Enum):
 
 class ContentType(Enum):
     """Content types for personalization"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -49,6 +53,7 @@ class ContentType(Enum):
 
 class UserInteractionType(Enum):
     """Types of user interactions"""
+
     VIEW = "view"
     LIKE = "like"
     SHARE = "share"
@@ -63,6 +68,7 @@ class UserInteractionType(Enum):
 
 class PersonalizationStrategy(Enum):
     """Personalization strategies"""
+
     EXPLORATION = "exploration"
     EXPLOITATION = "exploitation"
     BALANCED = "balanced"
@@ -82,7 +88,8 @@ class PersonalizationSettings:
         
 
 class ModelConfiguration:
-    """Configuration for ML models"""
+    """
+Configuration for ML models"""
     
     def __init__(self):
         self.model_path = "/models/personalization/"
@@ -110,7 +117,8 @@ class SecurityConfiguration:
 
 @dataclass
 class PersonalizationConfig:
-    """Configuration for personalization engine"""
+    """
+Configuration for personalization engine"""
     
     # Model settings
     model_type: PersonalizationType = PersonalizationType.HYBRID
@@ -149,7 +157,8 @@ class PersonalizationConfig:
 
 @dataclass 
 class UserProfile:
-    """Comprehensive user profile for personalization"""
+    """
+Comprehensive user profile for personalization"""
     
     user_id: str
     created_at: datetime
@@ -246,7 +255,8 @@ class PersonalizationResult:
 
 @dataclass
 class RecommendationScore:
-    """Detailed recommendation scoring"""
+    """
+Detailed recommendation scoring"""
     
     content_id: str
     user_id: str
@@ -282,7 +292,8 @@ class PersonalizationEngine:
     """
     
     def __init__(self, config: PersonalizationConfig):
-        """Initialize personalization engine"""
+        """
+Initialize personalization engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -1020,7 +1031,8 @@ class PersonalizationEngine:
         return final_recs
     
     def _load_content_model(self):
-        """Load content similarity model"""
+        """
+Load content similarity model"""
         # In production, this would load a trained model
         return {"model_type": "content_similarity", "loaded": True}
     
@@ -1284,7 +1296,8 @@ class PersonalizationEngine:
         profile: UserProfile, 
         content_type: Optional[ContentType]
     ) -> List[Dict[str, Any]]:
-        """Generate behavioral-based recommendations"""
+        """
+Generate behavioral-based recommendations"""
         try:
             recommendations = []
             
@@ -1608,7 +1621,8 @@ class UserProfileManager:
         self.logger = logging.getLogger(__name__)
     
     async def create_profile(self, user_id: str, initial_data: Dict[str, Any]) -> UserProfile:
-        """Create new user profile with initial data"""
+        """
+Create new user profile with initial data"""
         try:
             profile = UserProfile(
                 user_id=user_id,
@@ -1784,7 +1798,8 @@ class ContentPersonalizer:
         content: Dict[str, Any], 
         profile: UserProfile
     ) -> Dict[str, Any]:
-        """Personalize content presentation style"""
+        """
+Personalize content presentation style"""
         
         # Adapt complexity based on sophistication level
         sophistication = profile.content_sophistication
@@ -1812,7 +1827,8 @@ class ContentPersonalizer:
         content: Dict[str, Any], 
         profile: UserProfile
     ) -> Dict[str, Any]:
-        """Optimize content timing based on user patterns"""
+        """
+Optimize content timing based on user patterns"""
         
         # Analyze user's session patterns
         session_patterns = profile.session_patterns
@@ -1830,7 +1846,8 @@ class ContentPersonalizer:
         original_content: Dict[str, Any], 
         profile: UserProfile
     ) -> float:
-        """Calculate how well content was adapted for user"""
+        """
+Calculate how well content was adapted for user"""
         
         score = 0.0
         
@@ -1875,7 +1892,8 @@ class RecommendationEngine:
         }
     
     def _initialize_models(self) -> Dict[str, Any]:
-        """Initialize recommendation models"""
+        """
+Initialize recommendation models"""
         return {
             'collaborative_filtering': {'initialized': True},
             'content_based': {'initialized': True},
@@ -1972,7 +1990,8 @@ class RecommendationEngine:
         content_type: Optional[ContentType],
         num_recommendations: int
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations using content-based filtering"""
+        """
+Generate recommendations using content-based filtering"""
         
         recommendations = []
         
@@ -2012,7 +2031,8 @@ class RecommendationEngine:
         content_type: Optional[ContentType],
         num_recommendations: int
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations using deep learning models"""
+        """
+Generate recommendations using deep learning models"""
         
         recommendations = []
         
@@ -2045,7 +2065,8 @@ class RecommendationEngine:
         content_type: Optional[ContentType],
         num_recommendations: int
     ) -> List[Dict[str, Any]]:
-        """Generate hybrid recommendations combining multiple strategies"""
+        """
+Generate hybrid recommendations combining multiple strategies"""
         
         # Get recommendations from different strategies
         collaborative_recs = await self._collaborative_filtering_recommendations(
@@ -2092,7 +2113,8 @@ class RecommendationEngine:
     # Helper methods
     
     def _deduplicate_recommendations(self, recommendations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate recommendations and combine scores"""
+        """
+Remove duplicate recommendations and combine scores"""
         seen_content = {}
         deduplicated = []
         
@@ -2109,7 +2131,8 @@ class RecommendationEngine:
         return deduplicated
     
     def _user_already_interacted(self, user_profile: UserProfile, content_id: str) -> bool:
-        """Check if user already interacted with content"""
+        """
+Check if user already interacted with content"""
         for interaction in user_profile.interaction_history:
             if interaction.get('content_id') == content_id:
                 return True

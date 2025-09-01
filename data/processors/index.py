@@ -16,6 +16,7 @@ content processors in the IA Influencer Agent platform. It provides:
 - Resource allocation
 - Error handling and recovery
 """
+
 import logging
 from typing import Dict, Any, List, Optional, Type
 from dataclasses import dataclass, field
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessorInfo:
-    """Information about a registered processor"""
+    """
+Information about a registered processor"""
     name: str
     class_type: Type
     category: str
@@ -60,7 +62,8 @@ class ProcessorMetrics:
     error_rate: float = 0.0
 
 class ProcessorIndex:
-    """Central index and registry for all content processors"""
+    """
+Central index and registry for all content processors"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ProcessorIndex")
@@ -187,11 +190,13 @@ class ProcessorIndex:
         self._metrics[name] = ProcessorMetrics(processor_name=name)
     
     def get_processor_info(self, processor_name: str) -> Optional[ProcessorInfo]:
-        """Get information about a specific processor"""
+        """
+Get information about a specific processor"""
         return self._processors.get(processor_name)
     
     def list_processors(self, category: Optional[str] = None) -> List[ProcessorInfo]:
-        """List all processors, optionally filtered by category"""
+        """
+List all processors, optionally filtered by category"""
         processors = list(self._processors.values())
         
         if category:
@@ -200,12 +205,14 @@ class ProcessorIndex:
         return processors
     
     def list_categories(self) -> List[str]:
-        """List all processor categories"""
+        """
+List all processor categories"""
         categories = set(p.category for p in self._processors.values())
         return sorted(list(categories))
     
     def get_processor_instance(self, processor_name: str, config: Optional[Dict[str, Any]] = None):
-        """Get or create a processor instance"""
+        """
+Get or create a processor instance"""
         try:
             # Check if instance already exists
             if processor_name in self._instances:
@@ -241,7 +248,8 @@ class ProcessorIndex:
         return compatible_processors
     
     def find_processors_by_capability(self, capability: str) -> List[str]:
-        """Find all processors that have a specific capability"""
+        """
+Find all processors that have a specific capability"""
         capable_processors = []
         
         for name, info in self._processors.items():
@@ -256,7 +264,8 @@ class ProcessorIndex:
         content_data: Any,
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process content while tracking metrics"""
+        """
+Process content while tracking metrics"""
         try:
             start_time = time.time()
             
@@ -319,11 +328,13 @@ class ProcessorIndex:
         return self._metrics.get(processor_name)
     
     def get_all_metrics(self) -> Dict[str, ProcessorMetrics]:
-        """Get performance metrics for all processors"""
+        """
+Get performance metrics for all processors"""
         return self._metrics.copy()
     
     def reset_metrics(self, processor_name: Optional[str] = None):
-        """Reset metrics for a specific processor or all processors"""
+        """
+Reset metrics for a specific processor or all processors"""
         if processor_name:
             if processor_name in self._metrics:
                 self._metrics[processor_name] = ProcessorMetrics(processor_name=processor_name)
@@ -332,7 +343,8 @@ class ProcessorIndex:
                 self._metrics[name] = ProcessorMetrics(processor_name=name)
     
     def deactivate_processor(self, processor_name: str):
-        """Deactivate a processor"""
+        """
+Deactivate a processor"""
         if processor_name in self._processors:
             self._processors[processor_name].is_active = False
             # Remove instance if exists
@@ -387,11 +399,13 @@ def get_processor(processor_name: str, config: Optional[Dict[str, Any]] = None):
     return processor_index.get_processor_instance(processor_name, config)
 
 def list_all_processors(category: Optional[str] = None) -> List[ProcessorInfo]:
-    """List all available processors"""
+    """
+List all available processors"""
     return processor_index.list_processors(category)
 
 def find_processors_for_format(file_format: str) -> List[str]:
-    """Find processors compatible with a file format"""
+    """
+Find processors compatible with a file format"""
     return processor_index.find_processors_for_format(file_format)
 
 async def process_content_with_metrics(
@@ -399,11 +413,13 @@ async def process_content_with_metrics(
     content_data: Any,
     config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Process content with automatic metrics tracking"""
+    """
+Process content with automatic metrics tracking"""
     return await processor_index.process_with_metrics(processor_name, content_data, config)
 
 def get_system_status() -> Dict[str, Any]:
-    """Get overall system health status"""
+    """
+Get overall system health status"""
     return processor_index.get_system_status()
 
 # Export main components

@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import smtplib
 import ssl
 from email.mime.text import MIMEText
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
+    """
+Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -50,6 +53,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -59,6 +63,7 @@ class NotificationPriority(Enum):
 
 class NotificationStatus(Enum):
     """Notification delivery status"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -99,7 +104,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationMessage:
-    """Individual notification message"""
+    """
+Individual notification message"""
     message_id: str
     recipient: str
     channel: NotificationChannel
@@ -120,7 +126,8 @@ class NotificationMessage:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'message_id': self.message_id,
             'recipient': self.recipient,
@@ -145,7 +152,8 @@ class NotificationMessage:
 
 @dataclass
 class DeliveryResult:
-    """Notification delivery result"""
+    """
+Notification delivery result"""
     success: bool
     message_id: str
     channel: NotificationChannel
@@ -159,7 +167,8 @@ class DeliveryResult:
 
 
 class TemplateEngine:
-    """Advanced template engine for notifications"""
+    """
+Advanced template engine for notifications"""
     
     def __init__(self):
         self.jinja_env = jinja2.Environment(
@@ -179,7 +188,8 @@ class TemplateEngine:
     
     def render_template(self, template_content: str, 
                        template_data: Dict[str, Any]) -> str:
-        """Render template with provided data"""
+        """
+Render template with provided data"""
         try:
             template = Template(template_content, environment=self.jinja_env)
             return template.render(**template_data)
@@ -230,12 +240,14 @@ class TemplateEngine:
         return value[:length - len(end)] + end
     
     def _markdown_filter(self, value: str) -> str:
-        """Convert markdown to HTML"""
+        """
+Convert markdown to HTML"""
         return markdown.markdown(value)
     
     def _format_number(self, value: Union[int, float], 
                       decimal_places: int = 0) -> str:
-        """Format numbers with thousand separators"""
+        """
+Format numbers with thousand separators"""
         if decimal_places > 0:
             return f"{value:,.{decimal_places}f}"
         else:
@@ -255,7 +267,8 @@ class EmailChannel:
         self.from_address = username
         
     async def send_notification(self, message: NotificationMessage) -> DeliveryResult:
-        """Send email notification"""
+        """
+Send email notification"""
         start_time = time.time()
         
         try:
@@ -631,7 +644,8 @@ class NotificationStorage:
             ''')
     
     def save_template(self, template: NotificationTemplate) -> bool:
-        """Save notification template"""
+        """
+Save notification template"""
         try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
@@ -1047,12 +1061,14 @@ class NotificationManager:
         return rate_limit['count'] < rate_limit['max_per_minute']
     
     def _update_rate_limit(self, channel: NotificationChannel):
-        """Update rate limit counter"""
+        """
+Update rate limit counter"""
         if channel in self.rate_limits:
             self.rate_limits[channel]['count'] += 1
     
     async def start_processing(self):
-        """Start processing notification queue"""
+        """
+Start processing notification queue"""
         self.processing = True
         
         while self.processing:
@@ -1077,7 +1093,8 @@ class NotificationManager:
         self.processing = False
     
     def get_delivery_stats(self, hours: int = 24) -> Dict[str, Any]:
-        """Get delivery statistics for the specified time period"""
+        """
+Get delivery statistics for the specified time period"""
         try:
             since_time = (datetime.utcnow() - timedelta(hours=hours)).isoformat()
             

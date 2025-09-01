@@ -11,6 +11,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class FailoverTrigger(Enum):
-    """Failover trigger types"""
+    """
+Failover trigger types"""
+
     HEALTH_CHECK_FAILURE = "health_check_failure"
     HIGH_ERROR_RATE = "high_error_rate"
     HIGH_RESPONSE_TIME = "high_response_time"
@@ -40,6 +43,7 @@ class FailoverTrigger(Enum):
 
 class FailoverStrategy(Enum):
     """Failover strategies"""
+
     IMMEDIATE = "immediate"
     GRADUAL = "gradual"
     CIRCUIT_BREAKER = "circuit_breaker"
@@ -49,6 +53,7 @@ class FailoverStrategy(Enum):
 
 class NodeStatus(Enum):
     """Node status enumeration"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -81,7 +86,8 @@ class ServiceNode:
 
 @dataclass
 class FailoverEvent:
-    """Failover event record"""
+    """
+Failover event record"""
     id: str
     trigger: FailoverTrigger
     strategy: FailoverStrategy
@@ -523,7 +529,8 @@ class FailoverManager:
         return [node_id for node_id, _ in node_scores[:min(2, len(node_scores))]]
     
     async def _execute_failover(self, failover_event: FailoverEvent) -> bool:
-        """Execute the actual failover"""
+        """
+Execute the actual failover"""
         try:
             strategy = failover_event.strategy
             
@@ -657,7 +664,8 @@ class FailoverManager:
                 await self._restore_node(node)
     
     async def _restore_node(self, node: ServiceNode) -> None:
-        """Restore a recovered node to service"""
+        """
+Restore a recovered node to service"""
         try:
             logger.info(f"Restoring node {node.id} to service")
             

@@ -16,6 +16,7 @@ Professional audio analysis engine for musical content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import numpy as np
 import librosa
 import essentia.standard as es
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFeatures:
-    """Comprehensive audio feature representation"""
+    """
+Comprehensive audio feature representation"""
     spectral_features: Dict[str, np.ndarray]
     rhythmic_features: Dict[str, float]
     harmonic_features: Dict[str, np.ndarray]
@@ -386,7 +388,8 @@ class AudioAnalysisEngine:
         return features
     
     def _extract_mood_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extract features optimized for mood classification"""
+        """
+Extract features optimized for mood classification"""
         # Energy and dynamics
         rms = librosa.feature.rms(y=y)
         
@@ -407,7 +410,8 @@ class AudioAnalysisEngine:
         return features
     
     def _calculate_snr(self, y: np.ndarray) -> float:
-        """Calculate Signal-to-Noise Ratio"""
+        """
+Calculate Signal-to-Noise Ratio"""
         try:
             # Simple SNR calculation
             signal_power = np.mean(y ** 2)
@@ -418,7 +422,8 @@ class AudioAnalysisEngine:
             return 0.0
     
     def _calculate_thd(self, y: np.ndarray, sr: int) -> float:
-        """Calculate Total Harmonic Distortion"""
+        """
+Calculate Total Harmonic Distortion"""
         try:
             # FFT for harmonic analysis
             fft = np.fft.fft(y)
@@ -651,7 +656,8 @@ class AudioAnalysisEngine:
         return features
     
     def _extract_rhythmic_features(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Extract rhythm and tempo features"""
+        """
+Extract rhythm and tempo features"""
         features = {}
         
         # Tempo estimation
@@ -670,7 +676,8 @@ class AudioAnalysisEngine:
         return features
     
     def _extract_harmonic_features(self, y: np.ndarray, sr: int) -> Dict[str, np.ndarray]:
-        """Extract harmonic and tonal features"""
+        """
+Extract harmonic and tonal features"""
         features = {}
         
         # Harmonic-percussive separation
@@ -688,7 +695,8 @@ class AudioAnalysisEngine:
         return features
     
     def _extract_perceptual_features(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Extract perceptual audio features"""
+        """
+Extract perceptual audio features"""
         features = {}
         
         # RMS energy
@@ -710,7 +718,8 @@ class AudioAnalysisEngine:
         return features
     
     def _generate_fingerprint(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Generate audio fingerprint for similarity matching"""
+        """
+Generate audio fingerprint for similarity matching"""
         try:
             # Use Chromaprint-style fingerprinting
             fingerprint = self._generate_chromaprint(y, sr)
@@ -741,7 +750,8 @@ class AudioAnalysisEngine:
     
     def _classify_audio(self, y: np.ndarray, sr: int, 
                        config: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform audio classification tasks"""
+        """
+Perform audio classification tasks"""
         classifications = {}
         
         # Genre classification
@@ -762,7 +772,8 @@ class AudioAnalysisEngine:
         return classifications
     
     def _classify_genre(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Classify audio genre using ML models"""
+        """
+Classify audio genre using ML models"""
         # Placeholder for genre classification
         # In production, this would use a trained model
         genres = ['rock', 'pop', 'classical', 'jazz', 'electronic', 'hip-hop']
@@ -771,7 +782,8 @@ class AudioAnalysisEngine:
         return dict(zip(genres, probabilities.tolist()))
     
     def _classify_mood(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Classify audio mood using ML models"""
+        """
+Classify audio mood using ML models"""
         # Placeholder for mood classification
         moods = ['happy', 'sad', 'energetic', 'calm', 'aggressive', 'romantic']
         probabilities = np.random.softmax(np.random.random(len(moods)))
@@ -779,14 +791,16 @@ class AudioAnalysisEngine:
         return dict(zip(moods, probabilities.tolist()))
     
     def _detect_instruments(self, y: np.ndarray, sr: int) -> List[str]:
-        """Detect instruments present in audio"""
+        """
+Detect instruments present in audio"""
         # Placeholder for instrument detection
         # In production, this would use a trained model
         possible_instruments = ['guitar', 'piano', 'drums', 'violin', 'saxophone']
         return np.random.choice(possible_instruments, size=np.random.randint(1, 4), replace=False).tolist()
     
     def _assess_quality(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Assess audio quality metrics"""
+        """
+Assess audio quality metrics"""
         quality_metrics = {}
         
         # Signal-to-noise ratio estimation
@@ -808,7 +822,8 @@ class AudioAnalysisEngine:
         return quality_metrics
     
     def _estimate_snr(self, y: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio"""
+        """
+Estimate signal-to-noise ratio"""
         # Simple SNR estimation based on spectral analysis
         stft = librosa.stft(y)
         magnitude = np.abs(stft)
@@ -824,7 +839,8 @@ class AudioAnalysisEngine:
         return float(snr_db)
     
     def _calculate_quality_score(self, metrics: Dict[str, float]) -> float:
-        """Calculate overall audio quality score"""
+        """
+Calculate overall audio quality score"""
         score = 100.0
         
         # Penalize for high clipping
@@ -844,7 +860,8 @@ class AudioAnalysisEngine:
         return max(0.0, min(100.0, score))
     
     def _extract_metadata(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract audio metadata"""
+        """
+Extract audio metadata"""
         metadata = {
             'duration_seconds': len(y) / sr,
             'sample_rate': sr,
@@ -860,7 +877,8 @@ class AudioAnalysisEngine:
     
     def calculate_similarity(self, fingerprint1: np.ndarray, 
                            fingerprint2: np.ndarray) -> float:
-        """Calculate similarity between two audio fingerprints"""
+        """
+Calculate similarity between two audio fingerprints"""
         try:
             # Ensure same length for comparison
             min_length = min(len(fingerprint1), len(fingerprint2))
@@ -894,7 +912,8 @@ class AudioAnalysisEngine:
     
     def real_time_analysis(self, audio_buffer: np.ndarray, 
                           buffer_size: int = 4096) -> Dict[str, Any]:
-        """Perform real-time audio analysis on buffer"""
+        """
+Perform real-time audio analysis on buffer"""
         try:
             # Quick feature extraction for real-time processing
             features = {}

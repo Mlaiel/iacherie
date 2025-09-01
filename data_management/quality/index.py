@@ -16,6 +16,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Quality request → Component factory → Workflow orchestration → 
 Quality assessment → Results aggregation → Reporting & recommendations
 """
+
 import logging
 import asyncio
 from datetime import datetime
@@ -53,7 +54,9 @@ from .enhancer import (
 
 
 class QualityWorkflowType(Enum):
-    """Types of quality workflows"""
+    """
+Types of quality workflows"""
+
     CONTENT_VALIDATION = "content_validation"
     COMPREHENSIVE_ANALYSIS = "comprehensive_analysis"
     PLATFORM_OPTIMIZATION = "platform_optimization"
@@ -149,7 +152,8 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> QualityOrchestrator:
-        """Create and configure a QualityOrchestrator instance."""
+        """
+Create and configure a QualityOrchestrator instance."""
         effective_config = {**self.default_configs['orchestrator']}
         if config:
             effective_config.update(config)
@@ -186,7 +190,8 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> QualityMetricsEngine:
-        """Create and configure a QualityMetricsEngine instance."""
+        """
+Create and configure a QualityMetricsEngine instance."""
         effective_config = {**self.default_configs['metrics']}
         if config:
             effective_config.update(config)
@@ -212,7 +217,8 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> PerformanceMetricsCalculator:
-        """Create and configure a PerformanceMetricsCalculator instance."""
+        """
+Create and configure a PerformanceMetricsCalculator instance."""
         effective_config = {**self.default_configs['metrics']}
         if config:
             effective_config.update(config)
@@ -223,7 +229,8 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> IntegrityController:
-        """Create and configure an IntegrityController instance."""
+        """
+Create and configure an IntegrityController instance."""
         effective_config = {**self.default_configs['integrity']}
         if config:
             effective_config.update(config)
@@ -249,7 +256,8 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> MetadataIntegrityChecker:
-        """Create and configure a MetadataIntegrityChecker instance."""
+        """
+Create and configure a MetadataIntegrityChecker instance."""
         effective_config = {**self.default_configs['integrity']}
         if config:
             effective_config.update(config)
@@ -260,7 +268,8 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> ComplianceChecker:
-        """Create and configure a ComplianceChecker instance."""
+        """
+Create and configure a ComplianceChecker instance."""
         effective_config = {**self.default_configs['compliance']}
         if config:
             effective_config.update(config)
@@ -286,7 +295,8 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> CopyrightComplianceChecker:
-        """Create and configure a CopyrightComplianceChecker instance."""
+        """
+Create and configure a CopyrightComplianceChecker instance."""
         effective_config = {**self.default_configs['compliance']}
         if config:
             effective_config.update(config)
@@ -422,11 +432,13 @@ class QualityManagerFactory:
         return self._workflow_registry.get(workflow_id)
     
     def list_workflows(self) -> List[str]:
-        """List all active workflow IDs."""
+        """
+List all active workflow IDs."""
         return list(self._workflow_registry.keys())
     
     def cleanup_workflow(self, workflow_id: str) -> bool:
-        """Clean up and remove a workflow."""
+        """
+Clean up and remove a workflow."""
         if workflow_id in self._workflow_registry:
             workflow = self._workflow_registry[workflow_id]
             workflow.cleanup()
@@ -678,7 +690,8 @@ class QualityWorkflow:
         return 0.5  # Neutral score if no components available
     
     def _generate_workflow_recommendations(self, workflow_results: Dict[str, Any]) -> List[str]:
-        """Generate comprehensive recommendations from all workflow components."""
+        """
+Generate comprehensive recommendations from all workflow components."""
         all_recommendations = []
         
         # Collect recommendations from all components
@@ -708,7 +721,8 @@ class QualityWorkflow:
         return unique_recommendations[:10]  # Limit to top 10 recommendations
     
     def _update_processing_stats(self, workflow_results: Dict[str, Any]):
-        """Update workflow processing statistics."""
+        """
+Update workflow processing statistics."""
         self.processing_stats['total_processed'] += 1
         
         if workflow_results.get('workflow_status') == 'completed':
@@ -725,7 +739,8 @@ class QualityWorkflow:
         self.processing_stats['average_processing_time'] = round(new_avg, 3)
     
     def get_processing_stats(self) -> Dict[str, Any]:
-        """Get workflow processing statistics."""
+        """
+Get workflow processing statistics."""
         return {
             'workflow_id': self.workflow_id,
             'workflow_type': self.config.workflow_type.value,
@@ -736,7 +751,8 @@ class QualityWorkflow:
         }
     
     def cleanup(self):
-        """Clean up workflow resources."""
+        """
+Clean up workflow resources."""
         self.active = False
         self.results_cache.clear()
         self.components.clear()

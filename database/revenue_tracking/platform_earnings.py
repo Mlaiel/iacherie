@@ -6,6 +6,7 @@ avancées et optimisation des performances financières.
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer & Platform Revenue Architect
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -31,7 +32,9 @@ Base = declarative_base()
 
 
 class EarningsInterval(Enum):
-    """Intervalles de calcul des revenus"""
+    """
+Intervalles de calcul des revenus"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -42,6 +45,7 @@ class EarningsInterval(Enum):
 
 class PlatformPerformanceRating(Enum):
     """Évaluation des performances plateforme"""
+
     EXCELLENT = "excellent"  # >90% performance
     GOOD = "good"           # 70-90% performance
     AVERAGE = "average"     # 50-70% performance
@@ -139,7 +143,8 @@ class PlatformEarnings(BaseModel, TimestampMixin):
         return round(score, 2)
 
     def get_performance_rating(self) -> PlatformPerformanceRating:
-        """Détermine la notation de performance"""
+        """
+Détermine la notation de performance"""
         score = self.performance_score or 0
         
         if score >= 90:
@@ -569,7 +574,8 @@ class PlatformEarningsManager:
             return None
 
     async def _determine_revenue_source(self, platform_name: str) -> str:
-        """Détermine la source de revenus basée sur le nom de plateforme"""
+        """
+Détermine la source de revenus basée sur le nom de plateforme"""
         platform_mapping = {
             "spotify": RevenueSource.SPOTIFY.value,
             "youtube": RevenueSource.YOUTUBE.value,

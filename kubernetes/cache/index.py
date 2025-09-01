@@ -11,6 +11,7 @@ Logique Métier: User (musicien/blogueur/photographe/influencer/comédien) → U
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Tous droits réservés - Utilisation non autorisée strictement interdite
 """
+
 import asyncio
 import logging
 import signal
@@ -48,7 +49,9 @@ from ...monitoring.telemetry import TelemetryCollector
 
 
 class CacheSystemStatus(Enum):
-    """Status du système de cache global."""
+    """
+Status du système de cache global."""
+
     INITIALIZING = "initializing"
     STARTING = "starting"
     RUNNING = "running"
@@ -482,7 +485,8 @@ class CacheDeploymentIndex:
         )
     
     def _signal_handler(self, signum: int, frame) -> None:
-        """Gestionnaire de signaux pour arrêt propre."""
+        """
+Gestionnaire de signaux pour arrêt propre."""
         self.logger.info(f"🛑 Signal {signum} reçu, arrêt en cours...")
         asyncio.create_task(self.shutdown())
     

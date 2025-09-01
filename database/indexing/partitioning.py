@@ -15,7 +15,7 @@ Supports temporal, hash, range, and list partitioning with automated management.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,7 +40,9 @@ from ..security.partition_security import PartitionSecurityManager
 logger = logging.getLogger(__name__)
 
 class PartitionType(Enum):
-    """Types of database partitioning"""
+    """
+Types of database partitioning"""
+
     RANGE = "range"
     HASH = "hash"
     LIST = "list"
@@ -48,6 +51,7 @@ class PartitionType(Enum):
 
 class PartitionStrategy(Enum):
     """Partitioning strategies"""
+
     BY_DATE = "by_date"
     BY_CONTENT_TYPE = "by_content_type"
     BY_USER_ID = "by_user_id"
@@ -72,7 +76,8 @@ class PartitionConfig:
 
 @dataclass
 class PartitionMetrics:
-    """Partition performance metrics"""
+    """
+Partition performance metrics"""
     partition_name: str
     table_size: int
     row_count: int
@@ -99,7 +104,8 @@ class PartitioningManager:
     """
     
     def __init__(self):
-        """Initialize partitioning manager"""
+        """
+Initialize partitioning manager"""
         self.db_manager = DatabaseManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = PartitionSecurityManager()
@@ -726,37 +732,44 @@ class PartitioningManager:
         pass
     
     async def _is_table_partitioned(self, table_name: str) -> bool:
-        """Check if table is partitioned"""
+        """
+Check if table is partitioned"""
         # Implementation would check PostgreSQL system catalogs
         return False  # Simplified
     
     async def _convert_to_partitioned_table(self, table_name: str, partition_type: PartitionType):
-        """Convert regular table to partitioned table"""
+        """
+Convert regular table to partitioned table"""
         # Implementation would use PostgreSQL partitioning commands
         pass
     
     async def _create_partition_indexes(self, partition_name: str, parent_table: str):
-        """Create indexes on partition"""
+        """
+Create indexes on partition"""
         # Implementation would create necessary indexes
         pass
     
     async def _discover_partition_values(self, table_name: str, key_column: str) -> List[Any]:
-        """Discover unique values for list partitioning"""
+        """
+Discover unique values for list partitioning"""
         # Implementation would query database for distinct values
         return ['audio', 'video', 'image', 'text']  # Simplified
     
     async def _create_partitions_by_strategy(self, table_name: str, config: Dict[str, Any], level: int = 1) -> bool:
-        """Create partitions by strategy"""
+        """
+Create partitions by strategy"""
         # Implementation would delegate to appropriate creation method
         return True  # Simplified
     
     async def _create_sub_partitions(self, parent_partition: str, config: Dict[str, Any]):
-        """Create sub-partitions for composite partitioning"""
+        """
+Create sub-partitions for composite partitioning"""
         # Implementation would create sub-partitions
         pass
     
     async def _collect_partition_metrics(self, partition_name: str) -> PartitionMetrics:
-        """Collect metrics for specific partition"""
+        """
+Collect metrics for specific partition"""
         # Implementation would collect actual metrics from database
         return PartitionMetrics(
             partition_name=partition_name,
@@ -770,27 +783,32 @@ class PartitioningManager:
         )
     
     async def _check_auto_partitioning(self):
-        """Check if automatic partitioning is needed"""
+        """
+Check if automatic partitioning is needed"""
         # Implementation would check table sizes and create new partitions
         pass
     
     async def _update_partition_metrics(self):
-        """Update partition performance metrics"""
+        """
+Update partition performance metrics"""
         # Implementation would collect and update metrics
         pass
     
     async def _apply_retention_policies(self):
-        """Apply retention policies to old partitions"""
+        """
+Apply retention policies to old partitions"""
         # Implementation would check and apply retention rules
         pass
     
     async def _optimize_partitions(self):
-        """Optimize partition performance"""
+        """
+Optimize partition performance"""
         # Implementation would run optimization tasks
         pass
     
     async def cleanup(self):
-        """Cleanup partitioning manager"""
+        """
+Cleanup partitioning manager"""
         try:
             # Stop maintenance
             await self.stop_maintenance()

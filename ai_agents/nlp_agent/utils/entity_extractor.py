@@ -7,6 +7,7 @@ and classifying entities in text with high precision and comprehensive coverage.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
@@ -39,6 +40,7 @@ logger = logging.getLogger(__name__)
 
 class EntityType(Enum):
     """Standard entity types"""
+
     PERSON = "PERSON"
     ORGANIZATION = "ORG"
     LOCATION = "LOC"
@@ -58,6 +60,7 @@ class EntityType(Enum):
 
 class EntityCategory(Enum):
     """High-level entity categories"""
+
     PEOPLE = "people"
     ORGANIZATIONS = "organizations"
     PLACES = "places"
@@ -93,7 +96,8 @@ class EntityCluster:
 
 @dataclass
 class ExtractionResult:
-    """Complete entity extraction result"""
+    """
+Complete entity extraction result"""
     text: str
     entities: List[Entity] = field(default_factory=list)
     entity_clusters: List[EntityCluster] = field(default_factory=list)
@@ -114,7 +118,8 @@ class EntityExtractor:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Entity Extractor"""
+        """
+Initialize Entity Extractor"""
         self.config = config or default_config
         self.models = {}
         self.pipelines = {}
@@ -125,7 +130,8 @@ class EntityExtractor:
         self._initialize_models()
     
     def _load_entity_patterns(self) -> Dict[str, List[str]]:
-        """Load regex patterns for entity recognition"""
+        """
+Load regex patterns for entity recognition"""
         return {
             "email": [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -259,7 +265,8 @@ class EntityExtractor:
             ]
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
+        """
+Get optimal device for model execution"""
         if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
@@ -551,7 +558,8 @@ class EntityExtractor:
         return merged
     
     async def _calculate_statistics(self, result: ExtractionResult):
-        """Calculate entity statistics"""
+        """
+Calculate entity statistics"""
         entities = result.entities
         
         if not entities:
@@ -579,7 +587,8 @@ class EntityExtractor:
             result.dominant_category = max(category_counts, key=category_counts.get)
     
     async def _cluster_entities(self, entities: List[Entity]) -> List[EntityCluster]:
-        """Cluster related entities"""
+        """
+Cluster related entities"""
         clusters = []
         
         try:
@@ -694,7 +703,8 @@ class EntityExtractor:
         entity_text: str,
         fuzzy_match: bool = True
     ) -> List[Entity]:
-        """Find all mentions of a specific entity in text"""
+        """
+Find all mentions of a specific entity in text"""
         mentions = []
         
         # Extract all entities first
@@ -712,13 +722,15 @@ class EntityExtractor:
         return mentions
     
     def get_supported_entity_types(self) -> List[str]:
-        """Get list of supported entity types"""
+        """
+Get list of supported entity types"""
         types = list(EntityType.__members__.keys())
         types.extend(self.entity_patterns.keys())
         return sorted(set(types))
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
+        """
+Perform health check"""
         status = {
             "status": "healthy",
             "spacy_available": SPACY_AVAILABLE and self.nlp is not None,
@@ -774,7 +786,8 @@ def calculate_entity_overlap(entity1: Entity, entity2: Entity) -> float:
     return overlap_length / total_length if total_length > 0 else 0.0
 
 def merge_entity_results(results: List[ExtractionResult]) -> ExtractionResult:
-    """Merge multiple extraction results"""
+    """
+Merge multiple extraction results"""
     if not results:
         return ExtractionResult(text="")
     

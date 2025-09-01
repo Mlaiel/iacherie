@@ -13,6 +13,7 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Any
 from dataclasses import dataclass
@@ -20,7 +21,9 @@ from datetime import datetime, timedelta
 
 
 class ComplianceStandard(str, Enum):
-    """Supported compliance standards and regulations."""
+    """
+Supported compliance standards and regulations."""
+
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"  # Personal Information Protection and Electronic Documents Act (Canada)
@@ -37,6 +40,7 @@ class ComplianceStandard(str, Enum):
 
 class DataCategory(str, Enum):
     """Categories of data for compliance classification."""
+
     PERSONAL_IDENTIFIABLE = "personal_identifiable"
     SENSITIVE_PERSONAL = "sensitive_personal"
     FINANCIAL = "financial"
@@ -51,6 +55,7 @@ class DataCategory(str, Enum):
 
 class ProcessingPurpose(str, Enum):
     """Legitimate purposes for data processing."""
+
     SERVICE_PROVISION = "service_provision"
     CONTRACT_PERFORMANCE = "contract_performance"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -66,6 +71,7 @@ class ProcessingPurpose(str, Enum):
 
 class RetentionPeriod(str, Enum):
     """Data retention periods."""
+
     SESSION = "session"
     DAYS_30 = "30_days"
     DAYS_90 = "90_days"
@@ -95,7 +101,8 @@ class DataProcessingRecord:
 
 @dataclass
 class ConsentRecord:
-    """User consent tracking record."""
+    """
+User consent tracking record."""
     user_id: str
     consent_type: str
     granted: bool
@@ -108,7 +115,8 @@ class ConsentRecord:
 
 @dataclass
 class CompliancePolicy:
-    """Compliance policy definition."""
+    """
+Compliance policy definition."""
     policy_id: str
     standard: ComplianceStandard
     title: str
@@ -122,7 +130,8 @@ class CompliancePolicy:
 
 
 class ComplianceConfig:
-    """Enterprise compliance management configuration."""
+    """
+Enterprise compliance management configuration."""
     # Regional compliance requirements
     REGIONAL_COMPLIANCE = {
         "european_union": {
@@ -513,13 +522,15 @@ class ComplianceConfig:
 
     @classmethod
     def get_data_category_requirements(cls, category: DataCategory) -> Dict[str, Any]:
-        """Get compliance requirements for a specific data category."""
+        """
+Get compliance requirements for a specific data category."""
         return cls.DATA_PROCESSING_COMPLIANCE.get(category, {})
 
     @classmethod
     def validate_processing_lawfulness(cls, category: DataCategory, purpose: ProcessingPurpose, 
                                      region: str) -> Dict[str, bool]:
-        """Validate if data processing is lawful under applicable regulations."""
+        """
+Validate if data processing is lawful under applicable regulations."""
         validation_results = {}
         
         regional_reqs = cls.get_regional_requirements(region)
@@ -588,7 +599,8 @@ class ComplianceConfig:
 
     @classmethod
     def calculate_compliance_score(cls, assessment_results: Dict[str, Any]) -> float:
-        """Calculate overall compliance score based on policy assessments."""
+        """
+Calculate overall compliance score based on policy assessments."""
         total_weight = sum(policy.compliance_score_weight for policy in cls.COMPLIANCE_POLICIES.values())
         weighted_score = 0.0
         
@@ -606,7 +618,8 @@ class ComplianceConfig:
     @classmethod
     def is_consent_required(cls, data_category: DataCategory, processing_purpose: ProcessingPurpose, 
                           region: str) -> bool:
-        """Determine if explicit consent is required for data processing."""
+        """
+Determine if explicit consent is required for data processing."""
         regional_reqs = cls.get_regional_requirements(region)
         category_reqs = cls.get_data_category_requirements(data_category)
         

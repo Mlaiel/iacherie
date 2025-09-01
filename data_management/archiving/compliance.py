@@ -16,6 +16,7 @@ Any unauthorized use is strictly prohibited.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import hashlib
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceRegion(Enum):
-    """Regulatory regions and jurisdictions"""
+    """
+Regulatory regions and jurisdictions"""
+
     EU = "eu"  # European Union (GDPR)
     US = "us"  # United States (SOX, HIPAA, etc.)
     UK = "uk"  # United Kingdom (UK GDPR)
@@ -49,6 +52,7 @@ class ComplianceRegion(Enum):
 
 class ComplianceStandard(Enum):
     """Compliance standards and regulations"""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     SOX = "sox"  # Sarbanes-Oxley Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
@@ -63,6 +67,7 @@ class ComplianceStandard(Enum):
 
 class AuditEventType(Enum):
     """Types of audit events"""
+
     CREATE = "create"
     READ = "read"
     UPDATE = "update"
@@ -81,6 +86,7 @@ class AuditEventType(Enum):
 
 class DataClassification(Enum):
     """Data classification levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -91,6 +97,7 @@ class DataClassification(Enum):
 
 class RetentionStatus(Enum):
     """Retention status of data"""
+
     ACTIVE = "active"
     RETAINED = "retained"
     EXPIRED = "expired"
@@ -292,17 +299,20 @@ class ComplianceChecker(ABC):
         archive_entry: ArchiveEntry,
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
-        """Check compliance for archive entry against requirement"""
+        """
+Check compliance for archive entry against requirement"""
         pass
     
     @abstractmethod
     def get_supported_standards(self) -> Set[ComplianceStandard]:
-        """Get supported compliance standards"""
+        """
+Get supported compliance standards"""
         pass
 
 
 class GDPRComplianceChecker(ComplianceChecker):
-    """GDPR compliance checker"""
+    """
+GDPR compliance checker"""
     
     def __init__(self):
         self.supported_standards = {ComplianceStandard.GDPR}
@@ -312,7 +322,8 @@ class GDPRComplianceChecker(ComplianceChecker):
         archive_entry: ArchiveEntry,
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
-        """Check GDPR compliance"""
+        """
+Check GDPR compliance"""
         try:
             issues = []
             
@@ -361,7 +372,8 @@ class SOXComplianceChecker(ComplianceChecker):
         archive_entry: ArchiveEntry,
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
-        """Check SOX compliance"""
+        """
+Check SOX compliance"""
         try:
             issues = []
             

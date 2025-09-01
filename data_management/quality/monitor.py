@@ -15,6 +15,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Continuous monitoring → Quality tracking → Threshold detection → 
 Alert generation → Trend analysis → Performance optimization → Automated responses
 """
+
 import logging
 import asyncio
 import json
@@ -51,7 +52,9 @@ from ..models.quality_models import QualityAssessment, QualityAlert, QualityTren
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -61,6 +64,7 @@ class AlertSeverity(Enum):
 
 class AlertType(Enum):
     """Types of quality alerts"""
+
     QUALITY_DEGRADATION = "quality_degradation"
     THRESHOLD_BREACH = "threshold_breach"
     ANOMALY_DETECTED = "anomaly_detected"
@@ -72,6 +76,7 @@ class AlertType(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring system status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -94,7 +99,8 @@ class QualityThreshold:
 
 @dataclass
 class QualityAlert:
-    """Quality alert structure"""
+    """
+Quality alert structure"""
     alert_id: str
     alert_type: AlertType
     severity: AlertSeverity
@@ -116,7 +122,8 @@ class QualityAlert:
 
 @dataclass
 class MonitoringMetrics:
-    """System monitoring metrics"""
+    """
+System monitoring metrics"""
     timestamp: datetime
     quality_scores: Dict[str, float]
     processing_times: Dict[str, float]
@@ -127,7 +134,8 @@ class MonitoringMetrics:
 
 
 class MetricsCollector:
-    """Metrics collection and aggregation system"""
+    """
+Metrics collection and aggregation system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -282,7 +290,8 @@ class MetricsCollector:
         end_time: datetime,
         aggregation_interval: timedelta = timedelta(minutes=5)
     ) -> List[MonitoringMetrics]:
-        """Get historical metrics from buffer."""
+        """
+Get historical metrics from buffer."""
         historical_metrics = []
         
         for metrics in self.metrics_buffer:
@@ -296,7 +305,8 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """Alert management and notification system"""
+    """
+Alert management and notification system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -386,7 +396,8 @@ class AlertManager:
         return alerts
     
     def _get_metric_value(self, metrics: MonitoringMetrics, metric_path: str) -> Optional[float]:
-        """Get metric value from metrics object using dot notation."""
+        """
+Get metric value from metrics object using dot notation."""
         try:
             parts = metric_path.split('.')
             value = metrics
@@ -405,7 +416,8 @@ class AlertManager:
             return None
     
     def _check_threshold_violation(self, metric_value: float, threshold: QualityThreshold) -> bool:
-        """Check if metric value violates threshold."""
+        """
+Check if metric value violates threshold."""
         if threshold.operator == ">":
             return metric_value > threshold.value
         elif threshold.operator == "<":
@@ -551,7 +563,8 @@ class AlertManager:
         return alerts
     
     async def _send_notifications(self, alert: QualityAlert):
-        """Send alert notifications."""
+        """
+Send alert notifications."""
         for handler in self.notification_handlers:
             try:
                 await handler(alert)
@@ -564,7 +577,8 @@ class AlertManager:
 
 
 class TrendAnalyzer:
-    """Quality trend analysis system"""
+    """
+Quality trend analysis system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -671,7 +685,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_performance_trends(self, metrics: List[MonitoringMetrics]) -> Dict[str, Any]:
-        """Analyze processing time trends."""
+        """
+Analyze processing time trends."""
         times = [m.processing_times.get('average', 0) for m in metrics if m.processing_times]
         
         if len(times) < 2:
@@ -704,7 +719,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_volume_trends(self, metrics: List[MonitoringMetrics]) -> Dict[str, Any]:
-        """Analyze content volume trends."""
+        """
+Analyze content volume trends."""
         volumes = [sum(m.content_volume.values()) for m in metrics if m.content_volume]
         
         if len(volumes) < 2:
@@ -735,7 +751,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_error_rate_trends(self, metrics: List[MonitoringMetrics]) -> Dict[str, Any]:
-        """Analyze error rate trends."""
+        """
+Analyze error rate trends."""
         error_rates = [m.error_rates.get('overall_error_rate', 0) for m in metrics if m.error_rates]
         
         if len(error_rates) < 2:
@@ -767,7 +784,8 @@ class TrendAnalyzer:
         }
     
     async def _calculate_overall_trend(self, trends: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall system trend."""
+        """
+Calculate overall system trend."""
         trend_scores = []
         
         # Quality score trend (weight: 40%)
@@ -1096,7 +1114,8 @@ class QualityMonitor:
         }
     
     async def get_current_metrics(self) -> Optional[MonitoringMetrics]:
-        """Get most recent monitoring metrics."""
+        """
+Get most recent monitoring metrics."""
         if self.metrics_collector.metrics_buffer:
             return self.metrics_collector.metrics_buffer[-1]
         return None
@@ -1106,16 +1125,19 @@ class QualityMonitor:
         severity_filter: Optional[AlertSeverity] = None,
         limit: int = 50
     ) -> List[QualityAlert]:
-        """Get recent alerts with optional filtering."""
+        """
+Get recent alerts with optional filtering."""
         alerts = await self.alert_manager.get_active_alerts(severity_filter)
         return alerts[:limit]
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert."""
+        """
+Acknowledge an alert."""
         return await self.alert_manager.acknowledge_alert(alert_id, acknowledged_by)
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve an alert."""
+        """
+Resolve an alert."""
         return await self.alert_manager.resolve_alert(alert_id)
     
     async def add_custom_threshold(
@@ -1128,7 +1150,8 @@ class QualityMonitor:
         description: str,
         consecutive_violations: int = 1
     ) -> bool:
-        """Add custom monitoring threshold."""
+        """
+Add custom monitoring threshold."""
         try:
             threshold = QualityThreshold(
                 name=name,

@@ -7,6 +7,7 @@ performance bonuses, and automated distribution for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class CommissionTier(Enum):
-    """Commission tier levels"""
+    """
+Commission tier levels"""
+
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -32,6 +35,7 @@ class CommissionTier(Enum):
 
 class CommissionType(Enum):
     """Types of commissions"""
+
     CONTENT_SALES = "content_sales"
     LICENSING_REVENUE = "licensing_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
@@ -54,7 +58,8 @@ class CommissionRule:
 
 @dataclass
 class CommissionData:
-    """Commission calculation result"""
+    """
+Commission calculation result"""
     commission_id: str
     creator_id: str
     revenue_amount: Decimal
@@ -79,7 +84,8 @@ class CommissionCalculatorEngine:
         self.commission_rules = {}
         
     async def initialize(self) -> None:
-        """Initialize commission calculator engine"""
+        """
+Initialize commission calculator engine"""
         try:
             await self._setup_database_tables()
             await self._load_commission_rules()
@@ -158,7 +164,8 @@ class CommissionCalculatorEngine:
             """)
 
     async def _load_commission_rules(self) -> None:
-        """Load commission rules into memory"""
+        """
+Load commission rules into memory"""
         try:
             # Initialize default commission rules
             default_rules = [

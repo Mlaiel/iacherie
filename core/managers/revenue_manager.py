@@ -8,7 +8,7 @@ Technologies: Python, FastAPI, ML Analytics, Financial APIs, Blockchain, Real-ti
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Upload créateur → Protection contenu → Distribution multi-plateformes → 
 Tracking revenus temps réel → Analytics IA → Optimisation stratégique → Paiements automatiques
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Sources de revenus supportées"""
+    """
+Sources de revenus supportées"""
+
     STREAMING = "streaming"  # Spotify, Apple Music, etc.
     SOCIAL_MEDIA = "social_media"  # Instagram, TikTok, YouTube
     LICENSING = "licensing"  # Content licensing
@@ -50,6 +53,7 @@ class RevenueSource(Enum):
 
 class RevenueStatus(Enum):
     """Statut des revenus"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSING = "processing"
@@ -61,6 +65,7 @@ class RevenueStatus(Enum):
 
 class PaymentMethod(Enum):
     """Méthodes de paiement"""
+
     BANK_TRANSFER = "bank_transfer"
     STRIPE = "stripe"
     PAYPAL = "paypal"
@@ -72,6 +77,7 @@ class PaymentMethod(Enum):
 
 class Currency(Enum):
     """Devises supportées"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -215,7 +221,8 @@ class RevenueForecast:
 
 @dataclass
 class RevenueAnalytics:
-    """Analytics avancés des revenus"""
+    """
+Analytics avancés des revenus"""
     user_id: str
     period_start: datetime
     period_end: datetime
@@ -750,7 +757,8 @@ class RevenueManager(ABC):
         ).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _detect_transaction_anomalies(self, transaction: RevenueTransaction) -> None:
-        """Detect suspicious transaction patterns"""
+        """
+Detect suspicious transaction patterns"""
         # Simple anomaly detection based on amount and frequency
         user_transactions = [
             tx for tx in self._transactions.values()
@@ -935,7 +943,8 @@ class RevenueManager(ABC):
     
     @asynccontextmanager
     async def get_revenue_session(self):
-        """Context manager for revenue operations"""
+        """
+Context manager for revenue operations"""
         session_id = str(uuid.uuid4())
         try:
             logger.info(f"💰 Revenue session started: {session_id}")

@@ -4,8 +4,9 @@ Provides comprehensive analytics and insights across all connected platforms
 including performance tracking, audience analysis, and revenue analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,7 +35,9 @@ from ...utils.analytics_utils import calculate_growth_rate, calculate_engagement
 logger = get_logger(__name__)
 
 class MetricType(Enum):
-    """Analytics metric types"""
+    """
+Analytics metric types"""
+
     VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
@@ -51,6 +54,7 @@ class MetricType(Enum):
 
 class TimeFrame(Enum):
     """Analytics time frames"""
+
     LAST_24H = "last_24h"
     LAST_7D = "last_7d"
     LAST_30D = "last_30d"
@@ -70,7 +74,8 @@ class MetricData:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     user_id: int
     time_frame: TimeFrame
     platforms: List[str]
@@ -81,7 +86,8 @@ class AnalyticsReport:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis data"""
+    """
+Competitor analysis data"""
     competitor_name: str
     platform: str
     metrics: Dict[str, Union[int, float]]
@@ -642,17 +648,20 @@ class PlatformAnalytics:
         return ['youtube', 'instagram', 'tiktok']  # Placeholder
     
     async def _get_user_monetized_platforms(self, user_id: int, session: AsyncSession) -> List[str]:
-        """Get list of monetized platforms for user"""
+        """
+Get list of monetized platforms for user"""
         # Implementation to get user's monetized platforms
         return ['youtube', 'spotify']  # Placeholder
     
     async def _identify_best_platform(self, metrics: Dict[str, List[MetricData]]) -> Optional[str]:
-        """Identify best performing platform"""
+        """
+Identify best performing platform"""
         # Implementation for platform performance analysis
         return 'youtube'  # Placeholder
     
     async def _analyze_growth_trends(self, metrics: Dict[str, List[MetricData]]) -> Dict[str, Any]:
-        """Analyze growth trends across platforms"""
+        """
+Analyze growth trends across platforms"""
         # Implementation for growth trend analysis
         return {'declining_platforms': [], 'growing_platforms': []}  # Placeholder
     
@@ -660,6 +669,7 @@ class PlatformAnalytics:
         self, 
         metrics: Dict[str, List[MetricData]]
     ) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities"""
+        """
+Identify optimization opportunities"""
         # Implementation for optimization opportunity identification
         return []  # Placeholder

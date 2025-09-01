@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationIntentType(Enum):
-    """Types of monetization intents"""
+    """
+Types of monetization intents"""
+
     REVENUE_SETUP = "revenue_setup"
     PAYMENT_CONFIGURATION = "payment_configuration"
     SUBSCRIPTION_MANAGEMENT = "subscription_management"
@@ -44,6 +47,7 @@ class MonetizationIntentType(Enum):
 
 class RevenueModel(Enum):
     """Revenue model types"""
+
     SUBSCRIPTION = "subscription"
     ONE_TIME_PURCHASE = "one_time_purchase"
     COMMISSION_BASED = "commission_based"
@@ -60,6 +64,7 @@ class RevenueModel(Enum):
 
 class FinancialGoal(Enum):
     """Financial goal categories"""
+
     SHORT_TERM_CASH_FLOW = "short_term_cash_flow"
     LONG_TERM_WEALTH = "long_term_wealth"
     PASSIVE_INCOME = "passive_income"
@@ -98,7 +103,8 @@ class MonetizationStrategy:
 
 @dataclass
 class RevenueIntentAnalysis:
-    """Revenue intent analysis result"""
+    """
+Revenue intent analysis result"""
     
     intent_type: MonetizationIntentType
     confidence: float
@@ -130,7 +136,8 @@ class RevenueIntentAnalysis:
 
 @dataclass
 class LicensingIntent:
-    """Licensing-specific intent analysis"""
+    """
+Licensing-specific intent analysis"""
     
     content_type: str
     licensing_model: str
@@ -171,7 +178,8 @@ class MonetizationIntentHandler:
         self.market_data = self._load_market_data()
     
     def _initialize_monetization_patterns(self) -> Dict[str, re.Pattern]:
-        """Initialize monetization pattern matching"""
+        """
+Initialize monetization pattern matching"""
         return {
             "revenue_setup": re.compile(
                 r'\b(monetize|revenue|income|earnings|make money|generate income)\b',
@@ -789,7 +797,8 @@ class MonetizationIntentHandler:
         user_profile: Dict[str, Any],
         current_status: Dict[str, Any]
     ) -> List[str]:
-        """Identify quick monetization wins"""
+        """
+Identify quick monetization wins"""
         
         quick_wins = []
         followers = user_profile.get("total_followers", 0)
@@ -907,7 +916,8 @@ class MonetizationIntentHandler:
         intent_type: MonetizationIntentType,
         strategies: List[MonetizationStrategy]
     ) -> List[str]:
-        """Generate actionable next steps"""
+        """
+Generate actionable next steps"""
         
         steps = []
         
@@ -1038,7 +1048,8 @@ class RevenueIntentClassifier:
         self.revenue_keywords = self._load_revenue_keywords()
     
     def _load_revenue_keywords(self) -> Dict[str, List[str]]:
-        """Load revenue-specific keywords"""
+        """
+Load revenue-specific keywords"""
         return {
             "direct_monetization": ["sell", "charge", "price", "payment", "revenue"],
             "indirect_monetization": ["sponsor", "partnership", "affiliate", "commission"],
@@ -1060,14 +1071,16 @@ class RevenueIntentClassifier:
 
 
 class LicensingIntentProcessor:
-    """Specialized processor for licensing-related intents"""
+    """
+Specialized processor for licensing-related intents"""
     
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.licensing_models = self._load_licensing_models()
     
     def _load_licensing_models(self) -> Dict[str, Dict[str, Any]]:
-        """Load licensing model specifications"""
+        """
+Load licensing model specifications"""
         return {
             "royalty_free": {
                 "pricing": "one_time_fee",
@@ -1111,7 +1124,8 @@ class LicensingIntentProcessor:
         )
     
     def _determine_licensing_model(self, text: str) -> str:
-        """Determine appropriate licensing model"""
+        """
+Determine appropriate licensing model"""
         
         text_lower = text.lower()
         

@@ -6,6 +6,7 @@ and platform compliance management for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class DMCANoticeStatus(Enum):
-    """DMCA notice status enumeration."""
+    """
+DMCA notice status enumeration."""
+
     RECEIVED = "received"
     PROCESSING = "processing"
     VALID = "valid"
@@ -33,6 +36,7 @@ class DMCANoticeStatus(Enum):
 
 class NoticeType(Enum):
     """Type of DMCA notice."""
+
     TAKEDOWN = "takedown"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
@@ -41,6 +45,7 @@ class NoticeType(Enum):
 
 class InfringementType(Enum):
     """Type of copyright infringement."""
+
     DIRECT_COPY = "direct_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     UNAUTHORIZED_DERIVATIVE = "unauthorized_derivative"
@@ -70,7 +75,8 @@ class DMCANotice:
 
 @dataclass
 class CounterNotification:
-    """DMCA counter-notification data structure."""
+    """
+DMCA counter-notification data structure."""
     counter_id: str
     original_notice_id: str
     respondent_info: Dict[str, Any]

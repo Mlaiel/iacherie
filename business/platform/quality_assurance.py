@@ -4,8 +4,9 @@ Comprehensive quality assurance system for content validation, platform reliabil
 performance monitoring, and automated testing across all platform operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -27,7 +28,9 @@ from ...services.monitoring.performance_monitor import PerformanceMonitorService
 logger = get_logger(__name__)
 
 class QualityCheckType(Enum):
-    """Quality check types"""
+    """
+Quality check types"""
+
     CONTENT_QUALITY = "content_quality"
     TECHNICAL_QUALITY = "technical_quality"
     PERFORMANCE_CHECK = "performance_check"
@@ -38,6 +41,7 @@ class QualityCheckType(Enum):
 
 class QualityLevel(Enum):
     """Quality levels"""
+
     EXCELLENT = "excellent"  # 90-100
     GOOD = "good"           # 75-89
     FAIR = "fair"           # 60-74
@@ -57,7 +61,8 @@ class QualityMetrics:
 
 @dataclass
 class QualityIssue:
-    """Quality issue structure"""
+    """
+Quality issue structure"""
     issue_id: str
     severity: str
     category: str
@@ -469,7 +474,8 @@ class QualityAssurance:
         return quality_results
     
     async def _calculate_overall_quality_score(self, quality_results: Dict[str, Any]) -> float:
-        """Calculate weighted overall quality score"""
+        """
+Calculate weighted overall quality score"""
         weights = {
             'technical_quality': 0.30,
             'content_quality': 0.25,
@@ -489,7 +495,8 @@ class QualityAssurance:
         return total_score / total_weight if total_weight > 0 else 0.0
     
     async def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level based on score"""
+        """
+Determine quality level based on score"""
         if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
@@ -506,7 +513,8 @@ class QualityAssurance:
         quality_results: Dict[str, Any], 
         content_type: str
     ) -> List[str]:
-        """Generate quality improvement recommendations"""
+        """
+Generate quality improvement recommendations"""
         recommendations = []
         
         # Technical recommendations
@@ -526,31 +534,37 @@ class QualityAssurance:
         return recommendations
     
     async def _assess_platform_performance(self) -> Dict[str, Any]:
-        """Assess platform performance metrics"""
+        """
+Assess platform performance metrics"""
         return await self.performance_monitor.get_comprehensive_metrics()
     
     async def _assess_platform_security(self) -> Dict[str, Any]:
-        """Assess platform security metrics"""
+        """
+Assess platform security metrics"""
         # Implementation for security assessment
         return {'score': 95.0, 'issues': [], 'recommendations': []}
     
     async def _assess_platform_reliability(self) -> Dict[str, Any]:
-        """Assess platform reliability metrics"""
+        """
+Assess platform reliability metrics"""
         # Implementation for reliability assessment
         return {'score': 98.5, 'uptime': 99.9, 'error_rate': 0.1}
     
     async def _assess_user_experience(self) -> Dict[str, Any]:
-        """Assess user experience metrics"""
+        """
+Assess user experience metrics"""
         # Implementation for UX assessment
         return {'score': 88.0, 'satisfaction_rating': 4.4, 'usability_score': 85}
     
     async def _assess_api_quality(self) -> Dict[str, Any]:
-        """Assess API quality metrics"""
+        """
+Assess API quality metrics"""
         # Implementation for API quality assessment
         return {'score': 92.0, 'response_time': 150, 'success_rate': 99.8}
     
     async def _continuous_quality_monitoring(self):
-        """Continuous background quality monitoring"""
+        """
+Continuous background quality monitoring"""
         while True:
             try:
                 logger.info("Running continuous quality monitoring")

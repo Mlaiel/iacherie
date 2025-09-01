@@ -11,6 +11,7 @@ property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distri
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
 prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioWatermarkTechnique(Enum):
-    """Audio watermarking techniques"""
+    """
+Audio watermarking techniques"""
+
     SPECTRAL_SPREADING = "spectral_spreading"
     LSB_EMBEDDING = "lsb_embedding"
     ECHO_HIDING = "echo_hiding"
@@ -51,6 +54,7 @@ class AudioWatermarkTechnique(Enum):
 
 class AudioWatermarkStrength(Enum):
     """Audio watermark strength levels"""
+
     TRANSPARENT = "transparent"    # Completely inaudible
     LIGHT = "light"               # Very light, high quality
     MEDIUM = "medium"             # Balanced strength/quality
@@ -85,7 +89,8 @@ class AudioWatermarkMetrics:
 
 
 class PsychoacousticModel:
-    """Psychoacoustic masking model for audio watermarking"""
+    """
+Psychoacoustic masking model for audio watermarking"""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
@@ -93,7 +98,8 @@ class PsychoacousticModel:
         self.masking_thresholds = {}
     
     def _generate_bark_scale(self) -> np.ndarray:
-        """Generate Bark scale frequency mapping"""
+        """
+Generate Bark scale frequency mapping"""
         freqs = np.linspace(0, self.sample_rate // 2, 1025)
         bark = 13 * np.arctan(0.00076 * freqs) + 3.5 * np.arctan((freqs / 7500) ** 2)
         return bark
@@ -103,7 +109,8 @@ class PsychoacousticModel:
         audio_spectrum: np.ndarray,
         frequencies: np.ndarray
     ) -> np.ndarray:
-        """Calculate psychoacoustic masking threshold"""
+        """
+Calculate psychoacoustic masking threshold"""
         try:
             # Convert to dB
             spectrum_db = 20 * np.log10(np.abs(audio_spectrum) + 1e-10)
@@ -144,7 +151,8 @@ class SpectralWatermarkEngine:
         watermark_bits: List[int],
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Embed watermark using spread spectrum technique"""
+        """
+Embed watermark using spread spectrum technique"""
         try:
             if not AUDIO_AVAILABLE:
                 raise ValueError("Audio libraries not available")
@@ -396,7 +404,8 @@ class WaveletWatermarkEngine:
         watermark_bits: List[int],
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Embed watermark in wavelet domain"""
+        """
+Embed watermark in wavelet domain"""
         try:
             if not AUDIO_AVAILABLE:
                 raise ValueError("Audio libraries not available")
@@ -1005,7 +1014,8 @@ class AudioWatermarkEngine:
         return bits
     
     def _bits_to_data(self, bits: List[int]) -> bytes:
-        """Convert bit list to bytes"""
+        """
+Convert bit list to bytes"""
         data = bytearray()
         for i in range(0, len(bits), 8):
             if i + 8 <= len(bits):
@@ -1016,14 +1026,16 @@ class AudioWatermarkEngine:
         return bytes(data)
     
     def _add_error_correction(self, bits: List[int]) -> List[int]:
-        """Add simple error correction (duplication)"""
+        """
+Add simple error correction (duplication)"""
         corrected_bits = []
         for bit in bits:
             corrected_bits.extend([bit, bit])  # Simple duplication
         return corrected_bits
     
     def _apply_error_correction(self, bits: List[int]) -> List[int]:
-        """Apply error correction (majority voting)"""
+        """
+Apply error correction (majority voting)"""
         corrected_bits = []
         for i in range(0, len(bits), 2):
             if i + 1 < len(bits):
@@ -1037,7 +1049,8 @@ class AudioWatermarkEngine:
         return corrected_bits
     
     def _remove_redundancy(self, bits: List[int], factor: int) -> List[int]:
-        """Remove redundancy by majority voting"""
+        """
+Remove redundancy by majority voting"""
         if factor <= 1:
             return bits
         

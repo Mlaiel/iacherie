@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationTechnique(Enum):
-    """Model optimization techniques"""
+    """
+Model optimization techniques"""
+
     QUANTIZATION = "quantization"
     PRUNING = "pruning"
     DISTILLATION = "distillation"
@@ -55,6 +58,7 @@ class OptimizationTechnique(Enum):
 
 class OptimizationTarget(Enum):
     """Optimization targets"""
+
     INFERENCE_SPEED = "inference_speed"
     MODEL_SIZE = "model_size"
     MEMORY_USAGE = "memory_usage"
@@ -66,6 +70,7 @@ class OptimizationTarget(Enum):
 
 class HardwareTarget(Enum):
     """Hardware optimization targets"""
+
     CPU = "cpu"
     GPU = "gpu"
     TPU = "tpu"

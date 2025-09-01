@@ -35,6 +35,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -81,6 +82,7 @@ logger = logging.getLogger(__name__)
 
 class DatabaseType(str, Enum):
     """Supported database types"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -90,6 +92,7 @@ class DatabaseType(str, Enum):
 
 class ConnectionState(str, Enum):
     """Connection states"""
+
     IDLE = "idle"
     ACTIVE = "active"
     FAILED = "failed"
@@ -98,6 +101,7 @@ class ConnectionState(str, Enum):
 
 class PoolStrategy(str, Enum):
     """Pool management strategies"""
+
     FIXED = "fixed"
     DYNAMIC = "dynamic"
     ADAPTIVE = "adaptive"
@@ -141,7 +145,8 @@ class PoolConfig:
 
 @dataclass
 class DatabaseConnectionInfo:
-    """Database connection information"""
+    """
+Database connection information"""
     host: str
     port: int
     database: str
@@ -160,43 +165,51 @@ class IConnectionPool(ABC):
     
     @abstractmethod
     async def acquire(self, timeout: Optional[float] = None) -> Any:
-        """Acquire connection from pool"""
+        """
+Acquire connection from pool"""
         pass
     
     @abstractmethod
     async def release(self, connection: Any) -> None:
-        """Release connection back to pool"""
+        """
+Release connection back to pool"""
         pass
     
     @abstractmethod
     async def close(self) -> None:
-        """Close all connections in pool"""
+        """
+Close all connections in pool"""
         pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check pool health"""
+        """
+Check pool health"""
         pass
     
     @abstractmethod
     def get_stats(self) -> Dict[str, Any]:
-        """Get pool statistics"""
+        """
+Get pool statistics"""
         pass
     
     @abstractmethod
     async def resize_pool(self, new_min_size: int, new_max_size: int) -> bool:
-        """Dynamically resize pool"""
+        """
+Dynamically resize pool"""
         pass
     
     @abstractmethod
     async def execute_maintenance(self) -> bool:
-        """Execute pool maintenance operations"""
+        """
+Execute pool maintenance operations"""
         pass
 
 # =============== CONNECTION POOL IMPLEMENTATIONS ===============
 
 class PostgreSQLConnectionPool(IConnectionPool):
-    """PostgreSQL connection pool with advanced features"""
+    """
+PostgreSQL connection pool with advanced features"""
     
     def __init__(self, config: PoolConfig, connection_info: DatabaseConnectionInfo):
         self.config = config
@@ -313,7 +326,8 @@ class PostgreSQLConnectionPool(IConnectionPool):
         return random.choice(self.read_pools)
     
     async def release(self, connection: asyncpg.Connection) -> None:
-        """Release connection back to pool"""
+        """
+Release connection back to pool"""
         try:
             # Determine which pool the connection belongs to
             pool_to_release = self.pool
@@ -654,7 +668,8 @@ class DatabasePoolManager:
         self.optimization_history: List[Dict[str, Any]] = []
     
     def register_pool_config(self, db_type: DatabaseType, config: PoolConfig) -> None:
-        """Register pool configuration for database type"""
+        """
+Register pool configuration for database type"""
         self.pool_configs[db_type] = config
         logger.info(f"✅ Pool config registered for {db_type.value}")
     
@@ -727,7 +742,8 @@ class DatabasePoolManager:
         return self.pools.get(pool_id)
     
     async def acquire_connection(self, pool_id: str, **kwargs) -> Any:
-        """Acquire connection from specific pool"""
+        """
+Acquire connection from specific pool"""
         pool = await self.get_pool(pool_id)
         if not pool:
             raise ValueError(f"Pool {pool_id} not found")
@@ -741,7 +757,8 @@ class DatabasePoolManager:
             await pool.release(connection)
     
     async def health_check_all(self) -> Dict[str, bool]:
-        """Health check all pools"""
+        """
+Health check all pools"""
         results = {}
         
         for pool_id, pool in self.pools.items():
@@ -761,7 +778,8 @@ class DatabasePoolManager:
         }
     
     async def start_monitoring(self) -> None:
-        """Start background monitoring"""
+        """
+Start background monitoring"""
         if self.is_running:
             return
         
@@ -830,7 +848,8 @@ def get_pool_manager() -> DatabasePoolManager:
     return _global_pool_manager
 
 async def initialize_pools(config_dict: Dict[str, Any]) -> bool:
-    """Initialize all pools from configuration"""
+    """
+Initialize all pools from configuration"""
     manager = get_pool_manager()
     
     try:

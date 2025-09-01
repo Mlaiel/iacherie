@@ -5,8 +5,9 @@ Advanced royalty calculation engine with multi-model support,
 automated distribution, and compliance validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, List, Any, Optional, Tuple
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, date
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class RoyaltyModel(Enum):
-    """Royalty calculation models"""
+    """
+Royalty calculation models"""
+
     PERCENTAGE = "percentage"
     TIERED = "tiered" 
     PERFORMANCE_BASED = "performance_based"
@@ -39,6 +42,7 @@ class RoyaltyModel(Enum):
 
 class DistributionMethod(Enum):
     """Revenue distribution methods"""
+
     PROPORTIONAL = "proportional"
     EQUAL_SPLIT = "equal_split"
     PRIORITY_BASED = "priority_based"
@@ -58,7 +62,8 @@ class RoyaltyCalculator:
         currency_converter: CurrencyConverter = None,
         cache_manager: CacheManager = None
     ):
-        """Initialize calculator with dependencies"""
+        """
+Initialize calculator with dependencies"""
         self.repository = repository or LicensingRepository()
         self.currency_converter = currency_converter or CurrencyConverter()
         self.cache_manager = cache_manager or CacheManager()

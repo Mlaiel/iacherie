@@ -6,6 +6,7 @@ control and monitoring capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,7 +19,9 @@ from .core.currency_exchange_engine import CurrencyExchangeEngine
 logger = logging.getLogger(__name__)
 
 class CurrencyExchangeSystemStatus(Enum):
-    """System status for currency_exchange management"""
+    """
+System status for currency_exchange management"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -60,7 +63,8 @@ class CurrencyExchangeManager:
         )
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the currency_exchange management system"""
+        """
+Initialize the currency_exchange management system"""
         try:
             logger.info("Initializing CurrencyExchange Manager...")
             

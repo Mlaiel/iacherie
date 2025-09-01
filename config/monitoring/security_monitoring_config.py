@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import ipaddress
 
 
 class ThreatLevel(Enum):
-    """Security threat levels"""
+    """
+Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -32,6 +35,7 @@ class ThreatLevel(Enum):
 
 class SecurityEventType(Enum):
     """Security event types"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
@@ -48,6 +52,7 @@ class SecurityEventType(Enum):
 
 class ResponseAction(Enum):
     """Security response actions"""
+
     ALERT = "alert"
     BLOCK = "block"
     RATE_LIMIT = "rate_limit"

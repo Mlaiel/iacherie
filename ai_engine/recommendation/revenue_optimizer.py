@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -44,7 +45,9 @@ from ..core.base_models import ModelStatus
 
 
 class OptimizationGoal(Enum):
-    """Revenue optimization goals"""
+    """
+Revenue optimization goals"""
+
     MAXIMIZE_REVENUE = "maximize_revenue"
     DIVERSIFY_STREAMS = "diversify_streams"
     REDUCE_RISK = "reduce_risk"
@@ -57,6 +60,7 @@ class OptimizationGoal(Enum):
 
 class RevenueModel(Enum):
     """Revenue model types"""
+
     SUBSCRIPTION = "subscription"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -73,6 +77,7 @@ class RevenueModel(Enum):
 
 class PricingStrategy(Enum):
     """Pricing strategy types"""
+
     PREMIUM = "premium"
     COMPETITIVE = "competitive"
     PENETRATION = "penetration"
@@ -144,7 +149,8 @@ class RevenueOptimizer:
     """
     
     def __init__(self):
-        """Initialize revenue optimizer"""
+        """
+Initialize revenue optimizer"""
         self.logger = logging.getLogger(__name__)
         self.status = ModelStatus.INITIALIZING
         
@@ -649,7 +655,8 @@ class RevenueOptimizer:
         creator_profile: CreatorProfile,
         revenue_analysis: RevenueAnalysis
     ) -> Dict[Platform, Dict[str, Any]]:
-        """Optimize platform-specific revenue strategies"""
+        """
+Optimize platform-specific revenue strategies"""
         platform_strategies = {}
         
         for platform in creator_profile.platforms:
@@ -959,7 +966,8 @@ class RevenueOptimizer:
         return allocation
     
     async def _define_performance_kpis(self, strategy: RevenueStrategy) -> List[str]:
-        """Define key performance indicators for strategy"""
+        """
+Define key performance indicators for strategy"""
         kpis = [
             "Monthly recurring revenue (MRR)",
             "Average revenue per user (ARPU)",
@@ -1079,7 +1087,8 @@ class RevenueOptimizer:
         strategy: RevenueStrategy,
         target_revenue: Optional[float]
     ) -> float:
-        """Estimate return on investment for strategy"""
+        """
+Estimate return on investment for strategy"""
         current_revenue = creator_profile.average_revenue or 0
         
         if target_revenue:
@@ -1104,7 +1113,8 @@ class RevenueOptimizer:
         return max(1.0, roi)  # Minimum 1.0 ROI
     
     async def _generate_strategy_explanations(self, strategy: RevenueStrategy) -> List[str]:
-        """Generate human-readable explanations for strategy"""
+        """
+Generate human-readable explanations for strategy"""
         explanations = []
         
         explanations.append(f"Focusing on {len(strategy.primary_revenue_streams)} primary revenue streams for balanced growth")
@@ -1198,7 +1208,8 @@ class RevenueOptimizer:
         recommendation: ContentRecommendation,
         creator_profile: CreatorProfile
     ) -> float:
-        """Estimate actual revenue for content"""
+        """
+Estimate actual revenue for content"""
         total_followers = sum(creator_profile.followers_count.values())
         avg_engagement = np.mean(list(creator_profile.engagement_rate.values())) if creator_profile.engagement_rate else 0.05
         
@@ -1213,7 +1224,8 @@ class RevenueOptimizer:
         recommendation: ContentRecommendation,
         creator_profile: CreatorProfile
     ) -> List[str]:
-        """Generate revenue-focused explanations for recommendations"""
+        """
+Generate revenue-focused explanations for recommendations"""
         explanations = []
         
         if recommendation.monetization_potential > 0.8:
@@ -1272,7 +1284,8 @@ class MonetizationAnalyzer:
         creator_profile: CreatorProfile,
         content_portfolio: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze monetization opportunities for creator"""
+        """
+Analyze monetization opportunities for creator"""
         
         opportunities = {
             "immediate_opportunities": [],

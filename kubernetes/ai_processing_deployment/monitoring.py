@@ -23,6 +23,7 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -75,6 +78,7 @@ class AlertSeverity(Enum):
 
 class AlertType(Enum):
     """Types of alerts."""
+
     PERFORMANCE = "performance"
     ERROR = "error"
     AVAILABILITY = "availability"
@@ -85,6 +89,7 @@ class AlertType(Enum):
 
 class HealthStatus(Enum):
     """Health check status."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -93,6 +98,7 @@ class HealthStatus(Enum):
 
 class MonitoringState(Enum):
     """Monitoring system state."""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     DEGRADED = "degraded"
@@ -132,7 +138,8 @@ class AlertRule:
 
 @dataclass
 class AlertEvent:
-    """Alert event data."""
+    """
+Alert event data."""
     event_id: str
     rule_id: str
     alert_name: str
@@ -149,7 +156,8 @@ class AlertEvent:
 
 @dataclass
 class HealthCheckResult:
-    """Health check result."""
+    """
+Health check result."""
     component: str
     status: HealthStatus
     message: str
@@ -160,7 +168,8 @@ class HealthCheckResult:
 
 @dataclass
 class SystemMetrics:
-    """System-level metrics snapshot."""
+    """
+System-level metrics snapshot."""
     timestamp: datetime
     cpu_usage_percent: float
     memory_usage_percent: float
@@ -175,7 +184,8 @@ class SystemMetrics:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report."""
+    """
+Performance analysis report."""
     report_id: str
     generated_at: datetime
     time_range: Dict[str, datetime]
@@ -193,7 +203,8 @@ class MetricsCollector:
     """
     
     def __init__(self, collection_interval: int = 60):
-        """Initialize metrics collector."""
+        """
+Initialize metrics collector."""
         self.collection_interval = collection_interval
         self.metrics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self.custom_metrics: Dict[str, MetricDefinition] = {}
@@ -201,7 +212,8 @@ class MetricsCollector:
         self.is_collecting = False
         
     async def start_collection(self):
-        """Start metrics collection."""
+        """
+Start metrics collection."""
         if self.is_collecting:
             return
             
@@ -327,7 +339,8 @@ class MetricsCollector:
         return list(self.metrics_buffer[metric_type])[-count:]
     
     def get_metric_statistics(self, metric_type: str, field: str) -> Dict[str, float]:
-        """Get statistical summary of metric field."""
+        """
+Get statistical summary of metric field."""
         metrics = self.get_recent_metrics(metric_type)
         
         if not metrics:
@@ -357,7 +370,8 @@ class AlertManager:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize alert manager."""
+        """
+Initialize alert manager."""
         self.config = config or {}
         self.alert_rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, AlertEvent] = {}
@@ -367,7 +381,8 @@ class AlertManager:
         self.is_active = False
         
     async def start_alerting(self):
-        """Start alert evaluation and notification system."""
+        """
+Start alert evaluation and notification system."""
         if self.is_active:
             return
             
@@ -450,7 +465,8 @@ class AlertManager:
         return None
     
     def _evaluate_condition(self, value: float, condition: str, threshold: float) -> bool:
-        """Evaluate alert condition."""
+        """
+Evaluate alert condition."""
         if condition == '>':
             return value > threshold
         elif condition == '<':
@@ -567,7 +583,8 @@ Message: {alert.message}
 Triggered At: {alert.triggered_at}
 """
             if notification_type == 'resolution':
-                body += f"""Resolved At: {alert.resolved_at}
+                body += f"""
+Resolved At: {alert.resolved_at}
 Duration: {alert.duration_seconds:.2f} seconds
 """
             
@@ -661,7 +678,8 @@ Duration: {alert.duration_seconds:.2f} seconds
         return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[AlertEvent]:
-        """Get alert history."""
+        """
+Get alert history."""
         return self.alert_history[-limit:]
 
 
@@ -672,7 +690,8 @@ class HealthMonitor:
     """
     
     def __init__(self, check_interval: int = 300):
-        """Initialize health monitor."""
+        """
+Initialize health monitor."""
         self.check_interval = check_interval
         self.health_checks: Dict[str, Callable] = {}
         self.health_status: Dict[str, HealthCheckResult] = {}
@@ -680,7 +699,8 @@ class HealthMonitor:
         self.is_monitoring = False
         
     async def start_monitoring(self):
-        """Start health monitoring."""
+        """
+Start health monitoring."""
         if self.is_monitoring:
             return
             
@@ -850,7 +870,8 @@ class MonitoringSystem:
     """
     
     def __init__(self, config: ProcessingConfig):
-        """Initialize monitoring system."""
+        """
+Initialize monitoring system."""
         self.config = config
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager()
@@ -859,7 +880,8 @@ class MonitoringSystem:
         self.prometheus_server = None
         
     async def initialize(self):
-        """Initialize monitoring system."""
+        """
+Initialize monitoring system."""
         try:
             # Start Prometheus metrics server
             if self.config.monitoring_enabled:
@@ -1036,7 +1058,8 @@ class MonitoringSystem:
         }
     
     async def generate_performance_report(self, time_range_hours: int = 24) -> PerformanceReport:
-        """Generate comprehensive performance analysis report."""
+        """
+Generate comprehensive performance analysis report."""
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=time_range_hours)
         

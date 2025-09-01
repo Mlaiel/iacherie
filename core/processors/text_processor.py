@@ -12,7 +12,9 @@ distribution, or commercialization without explicit written permission is
 strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""import asyncio
+"""
+
+import asyncio
 import logging
 import hashlib
 import re
@@ -52,6 +54,7 @@ logger = logging.getLogger(__name__)
 
 class TextFormat(str, Enum):
     """Supported text formats"""
+
     PLAIN = "plain"
     HTML = "html"
     MARKDOWN = "markdown"
@@ -64,6 +67,7 @@ class TextFormat(str, Enum):
 
 class TextQuality(str, Enum):
     """Text quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -72,6 +76,7 @@ class TextQuality(str, Enum):
 
 class TextProcessingType(str, Enum):
     """Types of text processing"""
+
     ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
     CONVERSION = "conversion"
@@ -134,7 +139,8 @@ class TextMetadata:
 
 @dataclass
 class SentimentAnalysis:
-    """Sentiment analysis results"""
+    """
+Sentiment analysis results"""
     overall_sentiment: str  # positive, negative, neutral
     confidence: float
     polarity: float  # -1 to 1
@@ -145,7 +151,8 @@ class SentimentAnalysis:
 
 @dataclass
 class EntityRecognition:
-    """Named entity recognition results"""
+    """
+Named entity recognition results"""
     entities: List[Dict[str, Any]] = field(default_factory=list)
     entity_types: Dict[str, int] = field(default_factory=dict)
     confidence_scores: Dict[str, float] = field(default_factory=dict)
@@ -153,7 +160,8 @@ class EntityRecognition:
 
 @dataclass
 class KeywordExtraction:
-    """Keyword extraction results"""
+    """
+Keyword extraction results"""
     keywords: List[str] = field(default_factory=list)
     keyphrases: List[str] = field(default_factory=list)
     keyword_scores: Dict[str, float] = field(default_factory=dict)
@@ -162,7 +170,8 @@ class KeywordExtraction:
 
 @dataclass
 class ReadabilityAnalysis:
-    """Readability analysis results"""
+    """
+Readability analysis results"""
     flesch_reading_ease: Optional[float] = None
     flesch_kincaid_grade: Optional[float] = None
     gunning_fog: Optional[float] = None
@@ -175,7 +184,8 @@ class ReadabilityAnalysis:
 
 @dataclass
 class StyleAnalysis:
-    """Writing style analysis results"""
+    """
+Writing style analysis results"""
     writing_style: Optional[str] = None
     tone: Optional[str] = None
     formality_level: Optional[str] = None
@@ -188,7 +198,8 @@ class StyleAnalysis:
 
 @dataclass
 class TextFeatures:
-    """Advanced text features extracted via AI"""
+    """
+Advanced text features extracted via AI"""
     sentiment_analysis: Optional[SentimentAnalysis] = None
     entity_recognition: Optional[EntityRecognition] = None
     keyword_extraction: Optional[KeywordExtraction] = None
@@ -205,7 +216,8 @@ class TextFeatures:
 
 @dataclass
 class TextAnalysisResult:
-    """Result of text analysis"""
+    """
+Result of text analysis"""
     success: bool
     metadata: Optional[TextMetadata] = None
     features: Optional[TextFeatures] = None
@@ -895,7 +907,8 @@ class TextProcessor:
             return {}
     
     async def _determine_complexity_level(self, readability_scores: Optional[Dict[str, float]]) -> str:
-        """Determine complexity level based on readability scores"""
+        """
+Determine complexity level based on readability scores"""
         if not readability_scores or 'flesch_kincaid_grade' not in readability_scores:
             return "medium"
         
@@ -972,7 +985,8 @@ class TextProcessor:
             return []
     
     async def _analyze_emotions(self, text: str) -> Dict[str, float]:
-        """Analyze emotions in the text (simplified)"""
+        """
+Analyze emotions in the text (simplified)"""
         # Simplified emotion analysis based on keyword matching
         emotion_keywords = {
             'joy': ['happy', 'joyful', 'excited', 'pleased', 'delighted', 'cheerful'],
@@ -993,7 +1007,8 @@ class TextProcessor:
         return emotions
     
     async def _generate_summary(self, text: str) -> Optional[str]:
-        """Generate summary of the text"""
+        """
+Generate summary of the text"""
         try:
             if not self._summarizer:
                 return None
@@ -1084,7 +1099,8 @@ class TextProcessor:
         return 'general'
     
     async def _analyze_target_audience(self, text: str) -> str:
-        """Analyze target audience of the text"""
+        """
+Analyze target audience of the text"""
         readability_scores = await self._calculate_readability_scores(text)
         
         if readability_scores and 'flesch_kincaid_grade' in readability_scores:
@@ -1104,7 +1120,8 @@ class TextProcessor:
         return 'general_public'
     
     async def _calculate_seo_score(self, text: str) -> float:
-        """Calculate SEO score of the text"""
+        """
+Calculate SEO score of the text"""
         try:
             score = 0.0
             
@@ -1325,7 +1342,8 @@ class TextProcessor:
         return max(scores.keys(), key=scores.get)
     
     async def _calculate_complexity_score(self, style_analysis: StyleAnalysis) -> float:
-        """Calculate complexity score from style analysis"""
+        """
+Calculate complexity score from style analysis"""
         try:
             score = 0.0
             

@@ -1,6 +1,7 @@
 """Evidence Collection and Documentation System
 Professional evidence gathering for copyright enforcement cases
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceType(Enum):
-    """Types of evidence that can be collected"""
+    """
+Types of evidence that can be collected"""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_SAMPLE = "audio_sample"
@@ -40,6 +43,7 @@ class EvidenceType(Enum):
 
 class EvidenceQuality(Enum):
     """Quality levels for collected evidence"""
+
     EXCELLENT = "excellent"    # Court-admissible quality
     GOOD = "good"             # Strong supporting evidence
     FAIR = "fair"             # Basic documentation
@@ -48,6 +52,7 @@ class EvidenceQuality(Enum):
 
 class CollectionMethod(Enum):
     """Methods used to collect evidence"""
+
     AUTOMATED_CRAWL = "automated_crawl"
     API_EXTRACTION = "api_extraction"
     MANUAL_CAPTURE = "manual_capture"
@@ -110,7 +115,8 @@ class EvidenceItem:
 
 @dataclass
 class EvidencePackage:
-    """Complete evidence package for a case"""
+    """
+Complete evidence package for a case"""
     case_id: str
     violation_url: str
     original_content_url: str
@@ -128,11 +134,13 @@ class EvidencePackage:
         self.total_items = len(self.evidence_items)
     
     def get_evidence_by_type(self, evidence_type: EvidenceType) -> List[EvidenceItem]:
-        """Get all evidence items of specific type"""
+        """
+Get all evidence items of specific type"""
         return [item for item in self.evidence_items if item.evidence_type == evidence_type]
     
     def calculate_package_hash(self) -> str:
-        """Calculate hash of entire evidence package"""
+        """
+Calculate hash of entire evidence package"""
         content = f"{self.case_id}:{self.violation_url}:{self.total_items}"
         for item in self.evidence_items:
             content += f":{item.calculate_hash()}"
@@ -262,7 +270,8 @@ class MetadataCollector:
         url: str,
         case_id: str
     ) -> EvidenceItem:
-        """Collect metadata from URL"""
+        """
+Collect metadata from URL"""
         try:
             logger.info(f"Collecting metadata from {url}")
             
@@ -495,7 +504,8 @@ class FingerprintCollector:
         matched_fingerprint: Dict[str, Any],
         similarity_score: float
     ) -> EvidenceItem:
-        """Collect fingerprint matching evidence"""
+        """
+Collect fingerprint matching evidence"""
         try:
             logger.info(f"Collecting fingerprint evidence for case {case_id}")
             
@@ -570,7 +580,8 @@ class FingerprintCollector:
 
 
 class EvidenceCollectionService:
-    """Main service for collecting and managing evidence"""
+    """
+Main service for collecting and managing evidence"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

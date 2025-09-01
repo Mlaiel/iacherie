@@ -16,6 +16,7 @@ Enterprise-grade monetization configuration for content creators
 → revenue tracking → payment processing → automated licensing → financial analytics.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple
@@ -26,7 +27,9 @@ from decimal import Decimal
 import json
 
 class RevenueSource(Enum):
-    """Revenue source types"""
+    """
+Revenue source types"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     YOUTUBE_AD_REVENUE = "youtube_ad_revenue"
@@ -44,6 +47,7 @@ class RevenueSource(Enum):
 
 class PaymentGateway(Enum):
     """Supported payment gateways"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -57,6 +61,7 @@ class PaymentGateway(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -70,6 +75,7 @@ class Currency(Enum):
 
 class PayoutFrequency(Enum):
     """Payout frequency options"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -80,6 +86,7 @@ class PayoutFrequency(Enum):
 
 class TaxRegion(Enum):
     """Tax calculation regions"""
+
     US = "us"
     EU = "eu"
     UK = "uk"
@@ -89,6 +96,7 @@ class TaxRegion(Enum):
 
 class LicensingType(Enum):
     """Content licensing types"""
+
     SYNC_LICENSE = "sync_license"
     MECHANICAL_LICENSE = "mechanical_license"
     PERFORMANCE_LICENSE = "performance_license"
@@ -202,7 +210,8 @@ class TaxConfiguration:
 
 @dataclass
 class LicensingConfiguration:
-    """Automated licensing configuration"""
+    """
+Automated licensing configuration"""
     enabled: bool = True
     
     # Licensing automation

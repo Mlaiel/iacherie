@@ -11,6 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -34,7 +35,9 @@ _dashboard_metrics_registered = False
 
 
 class DashboardStatus(Enum):
-    """Dashboard operational status"""
+    """
+Dashboard operational status"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -43,6 +46,7 @@ class DashboardStatus(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -90,7 +94,8 @@ class DashboardMetrics:
 
 @dataclass
 class KPITarget:
-    """KPI target and threshold definition"""
+    """
+KPI target and threshold definition"""
     metric_name: str
     target_value: float
     warning_threshold: float
@@ -679,7 +684,8 @@ class UnifiedAnalyticsDashboard:
             return DashboardStatus.CRITICAL
     
     async def _collect_active_alerts(self) -> List[Dict[str, Any]]:
-        """Collect active alerts from all systems"""
+        """
+Collect active alerts from all systems"""
         try:
             alerts = await self.get_real_time_alerts()
             return alerts
@@ -904,6 +910,7 @@ class UnifiedAnalyticsDashboard:
         pass
     
     async def _initialize_alerting(self) -> None:
-        """Initialize alerting system"""
+        """
+Initialize alerting system"""
         # In production, this would setup alerting channels and rules
         pass

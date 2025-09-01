@@ -4,8 +4,9 @@ Intelligent matching and management system for creator collaborations
 including skill-based matching, project management, and revenue sharing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -27,7 +28,9 @@ from ...services.notification.notification_service import NotificationService
 logger = get_logger(__name__)
 
 class CollaborationType(Enum):
-    """Collaboration types"""
+    """
+Collaboration types"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     CONTENT_CREATION = "content_creation"
@@ -38,6 +41,7 @@ class CollaborationType(Enum):
 
 class SkillCategory(Enum):
     """Skill categories"""
+
     MUSIC_PRODUCTION = "music_production"
     VOCAL_PERFORMANCE = "vocal_performance"
     VIDEO_EDITING = "video_editing"
@@ -457,7 +461,8 @@ class CollaborationEngine:
         requester_profile: CreatorProfile,
         session: AsyncSession
     ) -> List[CreatorProfile]:
-        """Find potential collaborators"""
+        """
+Find potential collaborators"""
         # Implementation for finding potential collaborators
         result = await session.execute(
             select(CreatorProfile).where(
@@ -476,7 +481,8 @@ class CollaborationEngine:
         candidate: CreatorProfile,
         request: CollaborationRequest
     ) -> float:
-        """Calculate collaboration compatibility score"""
+        """
+Calculate collaboration compatibility score"""
         score = 0.0
         
         # Skill match score
@@ -505,7 +511,8 @@ class CollaborationEngine:
         candidate: CreatorProfile,
         request: CollaborationRequest
     ) -> List[str]:
-        """Generate reasons why this is a good match"""
+        """
+Generate reasons why this is a good match"""
         reasons = []
         
         # Skill complementarity
@@ -551,7 +558,8 @@ class CollaborationEngine:
         requester: CreatorProfile,
         candidate: CreatorProfile
     ) -> float:
-        """Calculate content style compatibility"""
+        """
+Calculate content style compatibility"""
         # Implementation for style analysis
         return 75.0  # Placeholder
     
@@ -560,7 +568,8 @@ class CollaborationEngine:
         requester: CreatorProfile,
         candidate: CreatorProfile
     ) -> float:
-        """Calculate audience compatibility score"""
+        """
+Calculate audience compatibility score"""
         # Implementation for audience analysis
         return 70.0  # Placeholder
     
@@ -569,6 +578,7 @@ class CollaborationEngine:
         requester: CreatorProfile,
         candidate: CreatorProfile
     ) -> float:
-        """Calculate engagement compatibility score"""
+        """
+Calculate engagement compatibility score"""
         # Implementation for engagement analysis
         return 65.0  # Placeholder

@@ -8,7 +8,7 @@ Technologies: Redis, RabbitMQ, Priority Queues, Dead Letter Queues
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Queue ingestion → Priority analysis → Dead letter handling → 
 Batch processing → Distribution optimization → Recovery mechanisms → Monitoring
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
@@ -46,7 +47,9 @@ T = TypeVar('T')
 
 
 class QueueType(Enum):
-    """Queue types for different processing needs"""
+    """
+Queue types for different processing needs"""
+
     HIGH_PRIORITY = "high_priority"
     NORMAL_PRIORITY = "normal_priority"
     LOW_PRIORITY = "low_priority"
@@ -59,6 +62,7 @@ class QueueType(Enum):
 
 class QueueStatus(Enum):
     """Queue processing status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     DRAINING = "draining"
@@ -69,6 +73,7 @@ class QueueStatus(Enum):
 
 class ProcessingMode(Enum):
     """Queue processing modes"""
+
     FIFO = "fifo"
     LIFO = "lifo"
     PRIORITY = "priority"
@@ -97,7 +102,8 @@ class QueueConfig:
 
 @dataclass
 class QueueMetrics:
-    """Queue performance metrics"""
+    """
+Queue performance metrics"""
     queue_name: str
     total_messages: int = 0
     pending_messages: int = 0
@@ -116,7 +122,8 @@ class QueueMetrics:
 
 @dataclass
 class QueueMessage(Generic[T]):
-    """Queue message wrapper"""
+    """
+Queue message wrapper"""
     message_id: str
     queue_name: str
     payload: T
@@ -883,7 +890,8 @@ class QueueProcessorManager:
         return self.processors.get(queue_name)
 
     async def get_global_status(self) -> Dict[str, Any]:
-        """Get global status of all processors"""
+        """
+Get global status of all processors"""
         try:
             total_processors = len(self.processors)
             active_processors = sum(1 for p in self.processors.values() if p.status == QueueStatus.ACTIVE)

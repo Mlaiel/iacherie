@@ -5,9 +5,10 @@ Comprehensive quality validation system with multi-dimensional quality assessmen
 scoring algorithms, and quality improvement recommendations for creator content.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Tuple
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions."""
+    """
+Quality assessment dimensions."""
+
     TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     CONTENT = "content"
@@ -82,6 +85,7 @@ class QualityMetric(Enum):
 
 class QualityLevel(Enum):
     """Quality assessment levels."""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     SATISFACTORY = "satisfactory"
@@ -328,7 +332,8 @@ class AudioQualityAnalyzer:
             return 0.0
     
     def _calculate_sample_rate_score(self, sample_rate: int) -> float:
-        """Calculate sample rate quality score."""
+        """
+Calculate sample rate quality score."""
         try:
             if sample_rate >= 48000:
                 return 100.0
@@ -342,7 +347,8 @@ class AudioQualityAnalyzer:
             return 0.0
     
     def _calculate_dynamic_range_score(self, dynamic_range: float) -> float:
-        """Calculate dynamic range quality score."""
+        """
+Calculate dynamic range quality score."""
         try:
             if dynamic_range >= 14.0:
                 return 100.0
@@ -356,7 +362,8 @@ class AudioQualityAnalyzer:
             return 0.0
     
     async def _calculate_dynamic_range(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Calculate audio dynamic range (simulated)."""
+        """
+Calculate audio dynamic range (simulated)."""
         try:
             # Simulate dynamic range calculation
             # In real implementation, this would analyze the audio signal
@@ -365,7 +372,8 @@ class AudioQualityAnalyzer:
             return 0.0
     
     async def _analyze_audio_clarity(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze audio clarity (simulated)."""
+        """
+Analyze audio clarity (simulated)."""
         try:
             # Simulate clarity analysis
             return 78.0  # Simulated clarity score
@@ -373,7 +381,8 @@ class AudioQualityAnalyzer:
             return 0.0
     
     async def _analyze_audio_noise(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze audio noise level (simulated)."""
+        """
+Analyze audio noise level (simulated)."""
         try:
             # Simulate noise analysis (higher score = less noise)
             return 82.0  # Simulated noise score
@@ -381,7 +390,8 @@ class AudioQualityAnalyzer:
             return 0.0
     
     def _get_bitrate_suggestions(self, bitrate: int) -> List[str]:
-        """Get bitrate improvement suggestions."""
+        """
+Get bitrate improvement suggestions."""
         suggestions = []
         
         if bitrate < 128000:
@@ -619,7 +629,8 @@ class VideoQualityAnalyzer:
             return 0.0
     
     def _calculate_fps_score(self, fps: float) -> float:
-        """Calculate frame rate quality score."""
+        """
+Calculate frame rate quality score."""
         try:
             if fps >= 60:
                 return 100.0
@@ -635,7 +646,8 @@ class VideoQualityAnalyzer:
             return 0.0
     
     def _calculate_video_bitrate_score(self, bitrate: int, resolution: Tuple[int, int]) -> float:
-        """Calculate video bitrate quality score based on resolution."""
+        """
+Calculate video bitrate quality score based on resolution."""
         try:
             width, height = resolution
             pixels = width * height
@@ -664,7 +676,8 @@ class VideoQualityAnalyzer:
             return 0.0
     
     async def _analyze_video_sharpness(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze video sharpness (simulated)."""
+        """
+Analyze video sharpness (simulated)."""
         try:
             # Simulate sharpness analysis
             return 76.0  # Simulated sharpness score
@@ -672,7 +685,8 @@ class VideoQualityAnalyzer:
             return 0.0
     
     async def _analyze_video_contrast(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze video contrast (simulated)."""
+        """
+Analyze video contrast (simulated)."""
         try:
             # Simulate contrast analysis
             return 82.0  # Simulated contrast score
@@ -680,7 +694,8 @@ class VideoQualityAnalyzer:
             return 0.0
     
     async def _analyze_color_balance(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze color balance (simulated)."""
+        """
+Analyze color balance (simulated)."""
         try:
             # Simulate color balance analysis
             return 79.0  # Simulated color balance score
@@ -688,7 +703,8 @@ class VideoQualityAnalyzer:
             return 0.0
     
     async def _analyze_video_composition(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze video composition (simulated)."""
+        """
+Analyze video composition (simulated)."""
         try:
             # Simulate composition analysis
             return 73.0  # Simulated composition score
@@ -696,7 +712,8 @@ class VideoQualityAnalyzer:
             return 0.0
     
     def _init_video_thresholds(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize video quality thresholds."""
+        """
+Initialize video quality thresholds."""
         return {
             "resolution": {
                 "4k": (3840, 2160),
@@ -900,7 +917,8 @@ class ImageQualityAnalyzer:
             return 0.0
     
     def _calculate_color_depth_score(self, color_depth: int) -> float:
-        """Calculate color depth quality score."""
+        """
+Calculate color depth quality score."""
         try:
             if color_depth >= 16:
                 return 100.0
@@ -914,7 +932,8 @@ class ImageQualityAnalyzer:
             return 0.0
     
     async def _analyze_image_sharpness(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image sharpness (simulated)."""
+        """
+Analyze image sharpness (simulated)."""
         try:
             # Simulate sharpness analysis
             return 84.0  # Simulated sharpness score
@@ -922,7 +941,8 @@ class ImageQualityAnalyzer:
             return 0.0
     
     async def _analyze_image_noise(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image noise (simulated)."""
+        """
+Analyze image noise (simulated)."""
         try:
             # Simulate noise analysis (higher score = less noise)
             return 77.0  # Simulated noise score
@@ -930,7 +950,8 @@ class ImageQualityAnalyzer:
             return 0.0
     
     async def _analyze_image_lighting(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image lighting (simulated)."""
+        """
+Analyze image lighting (simulated)."""
         try:
             # Simulate lighting analysis
             return 81.0  # Simulated lighting score
@@ -938,7 +959,8 @@ class ImageQualityAnalyzer:
             return 0.0
     
     async def _analyze_image_composition(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image composition (simulated)."""
+        """
+Analyze image composition (simulated)."""
         try:
             # Simulate composition analysis
             return 75.0  # Simulated composition score
@@ -946,7 +968,8 @@ class ImageQualityAnalyzer:
             return 0.0
     
     def _init_image_thresholds(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize image quality thresholds."""
+        """
+Initialize image quality thresholds."""
         return {
             "resolution": {
                 "4k": (3840, 2160),
@@ -989,6 +1012,7 @@ class ImageQualityAnalyzer:
 
 class QualityLevel(Enum):
     """Quality assessment levels."""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -1023,7 +1047,8 @@ class QualityScore:
 
 @dataclass
 class DimensionScore:
-    """Quality dimension assessment result."""
+    """
+Quality dimension assessment result."""
     dimension: QualityDimension
     overall_score: float  # 0-100
     weight: float = 1.0
@@ -1042,13 +1067,15 @@ class DimensionScore:
     
     @property
     def weighted_score(self) -> float:
-        """Calculate weighted score."""
+        """
+Calculate weighted score."""
         return self.overall_score * self.weight
 
 
 @dataclass
 class QualityValidationResult:
-    """Comprehensive quality validation result."""
+    """
+Comprehensive quality validation result."""
     overall_score: float  # 0-100
     overall_level: QualityLevel
     is_acceptable: bool
@@ -1791,7 +1818,8 @@ class QualityValidator:
             return QualityLevel.UNACCEPTABLE
     
     def _get_dimension_metrics(self, dimension: QualityDimension, content_type: str) -> List[QualityMetric]:
-        """Get applicable metrics for dimension and content type."""
+        """
+Get applicable metrics for dimension and content type."""
         dimension_metrics = {
             QualityDimension.TECHNICAL: [
                 QualityMetric.RESOLUTION, QualityMetric.BITRATE, QualityMetric.COMPRESSION,
@@ -1838,7 +1866,8 @@ class QualityValidator:
         )
     
     def _init_dimension_weights(self) -> Dict[str, Dict[str, float]]:
-        """Initialize dimension weights by content type."""
+        """
+Initialize dimension weights by content type."""
         return {
             "image": {
                 "technical": 0.3,
@@ -2293,7 +2322,8 @@ class QualityValidator:
         dimension_scores: Dict[QualityDimension, float],
         requirements: Optional[Dict[str, Any]]
     ) -> bool:
-        """Check if quality meets acceptability criteria."""
+        """
+Check if quality meets acceptability criteria."""
         try:
             # Default minimum score
             min_score = requirements.get("min_overall_score", 60.0) if requirements else 60.0
@@ -2403,7 +2433,8 @@ class QualityValidator:
             return 50.0
     
     def _calculate_text_completeness_score(self, text: str) -> float:
-        """Calculate text completeness score."""
+        """
+Calculate text completeness score."""
         try:
             # Basic completeness indicators
             word_count = len(text.split())
@@ -2463,7 +2494,8 @@ class QualityValidator:
             return 50.0
     
     def _calculate_file_size_score(self, file_size: int) -> float:
-        """Calculate file size quality score."""
+        """
+Calculate file size quality score."""
         try:
             # Size scoring (favors reasonable file sizes)
             mb_size = file_size / (1024 * 1024)
@@ -2481,7 +2513,8 @@ class QualityValidator:
             return 50.0
     
     def _init_quality_thresholds(self) -> Dict[str, float]:
-        """Initialize quality thresholds."""
+        """
+Initialize quality thresholds."""
         return {
             "excellent": 90.0,
             "good": 75.0,

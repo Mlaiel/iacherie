@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -83,7 +84,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsType(Enum):
-    """Types of analytics"""
+    """
+Types of analytics"""
+
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
     ENGAGEMENT = "engagement"
@@ -98,6 +101,7 @@ class AnalyticsType(Enum):
 
 class InsightLevel(Enum):
     """Insight complexity levels"""
+
     BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -107,6 +111,7 @@ class InsightLevel(Enum):
 
 class PredictionHorizon(Enum):
     """Prediction time horizons"""
+
     NEXT_HOUR = "next_hour"
     NEXT_DAY = "next_day"
     NEXT_WEEK = "next_week"
@@ -224,7 +229,8 @@ class AudienceInsights:
 
 @dataclass
 class PredictiveInsights:
-    """AI-powered predictive insights"""
+    """
+AI-powered predictive insights"""
     
     # Performance predictions
     predicted_views: Dict[str, int] = field(default_factory=dict)
@@ -252,7 +258,8 @@ class PredictiveInsights:
 
 
 class PerformanceAnalyticsExtractor(BaseExtractor):
-    """Advanced performance analytics extractor with AI insights"""
+    """
+Advanced performance analytics extractor with AI insights"""
     
     def __init__(self):
         super().__init__("PerformanceAnalyticsExtractor")
@@ -607,7 +614,8 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
 
 
 class AudienceAnalyticsExtractor(BaseExtractor):
-    """Advanced audience analytics and segmentation extractor"""
+    """
+Advanced audience analytics and segmentation extractor"""
     
     def __init__(self):
         super().__init__("AudienceAnalyticsExtractor")
@@ -731,7 +739,8 @@ class AudienceAnalyticsExtractor(BaseExtractor):
 
 # Factory function for analytics extractors
 def create_analytics_extractor_suite() -> Dict[str, BaseExtractor]:
-    """Create a complete suite of analytics extractors"""
+    """
+Create a complete suite of analytics extractors"""
     return {
         'performance_analytics': PerformanceAnalyticsExtractor(),
         'audience_analytics': AudienceAnalyticsExtractor()

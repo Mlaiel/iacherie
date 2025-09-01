@@ -7,6 +7,7 @@ comprehensive deployment event communication.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from ..monitoring.metrics_collector import MetricsCollector
 
 
 class NotificationLevel(Enum):
-    """Notification severity levels"""
+    """
+Notification severity levels"""
+
     DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
@@ -37,6 +40,7 @@ class NotificationLevel(Enum):
 
 class NotificationChannel(Enum):
     """Notification delivery channels"""
+
     EMAIL = "email"
     SLACK = "slack"
     TEAMS = "teams"
@@ -49,6 +53,7 @@ class NotificationChannel(Enum):
 
 class NotificationEventType(Enum):
     """Types of notification events"""
+
     DEPLOYMENT_STARTED = "deployment_started"
     DEPLOYMENT_COMPLETED = "deployment_completed"
     DEPLOYMENT_FAILED = "deployment_failed"
@@ -81,7 +86,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient configuration"""
+    """
+Notification recipient configuration"""
     name: str
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -119,7 +125,8 @@ class NotificationEvent:
 
 @dataclass
 class NotificationDelivery:
-    """Notification delivery tracking"""
+    """
+Notification delivery tracking"""
     delivery_id: str
     notification_event_id: str
     recipient: str
@@ -171,7 +178,8 @@ class NotificationHandler(BaseComponent):
         asyncio.create_task(self._notification_worker())
 
     def _initialize_default_templates(self) -> None:
-        """Initialize default notification templates"""
+        """
+Initialize default notification templates"""
         
         # Deployment Started
         self.templates['deployment_started'] = NotificationTemplate(
@@ -194,7 +202,7 @@ The deployment is now in progress. You will receive updates as the process conti
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=5
         )
@@ -222,7 +230,7 @@ The new version is now live and serving traffic.
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=5
         )
@@ -259,7 +267,7 @@ A deployment has failed for the IA Influencer Agent platform.
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=10
         )
@@ -288,7 +296,7 @@ The service has been restored to the previous stable version.
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=15
         )
@@ -319,7 +327,7 @@ The service capacity has been automatically adjusted based on current demand.
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=30,
             max_frequency_per_hour=6
@@ -357,14 +365,15 @@ A critical health check has failed for the IA Influencer Agent platform.
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=5,
             max_frequency_per_hour=12
         )
 
     def _initialize_default_recipients(self) -> None:
-        """Initialize default notification recipients"""
+        """
+Initialize default notification recipients"""
         
         # Platform Administrator
         self.recipients['platform_admin'] = NotificationRecipient(
@@ -530,7 +539,8 @@ IA Influencer Agent Deployment System
         return None
 
     def _get_critical_template(self) -> NotificationTemplate:
-        """Get default critical notification template"""
+        """
+Get default critical notification template"""
         
         return NotificationTemplate(
             name="Critical Alert",
@@ -552,13 +562,14 @@ Immediate attention required!
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=5
         )
 
     def _get_error_template(self) -> NotificationTemplate:
-        """Get default error notification template"""
+        """
+Get default error notification template"""
         
         return NotificationTemplate(
             name="Error Alert",
@@ -580,13 +591,14 @@ Please investigate this issue.
 
 ---
 IA Influencer Agent Deployment System
-© Fahed Mlaiel - All rights reserved
+(c) Fahed Mlaiel - All rights reserved
             """,
             cooldown_minutes=10
         )
 
     def _get_recipients_for_level(self, level: NotificationLevel) -> Dict[str, NotificationRecipient]:
-        """Get recipients that should receive notifications at this level"""
+        """
+Get recipients that should receive notifications at this level"""
         
         relevant_recipients = {}
         
@@ -605,7 +617,8 @@ IA Influencer Agent Deployment System
         recipient_name: str,
         recipient: NotificationRecipient
     ) -> None:
-        """Send notification to a specific recipient"""
+        """
+Send notification to a specific recipient"""
         
         try:
             # Check if recipient wants notifications at this level
@@ -1010,7 +1023,8 @@ IA Influencer Agent Deployment System
             return quiet_start <= current_hour < quiet_end
 
     async def add_notification_template(self, template: NotificationTemplate) -> None:
-        """Add a new notification template"""
+        """
+Add a new notification template"""
         
         self.templates[template.name.lower().replace(' ', '_')] = template
         self.logger.info(f"Added notification template: {template.name}")
@@ -1045,7 +1059,8 @@ IA Influencer Agent Deployment System
         }
 
     async def get_delivery_statistics(self, hours: int = 24) -> Dict[str, Any]:
-        """Get notification delivery statistics"""
+        """
+Get notification delivery statistics"""
         
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
@@ -1081,7 +1096,8 @@ IA Influencer Agent Deployment System
         }
 
     async def test_notification_channels(self) -> Dict[str, Any]:
-        """Test all configured notification channels"""
+        """
+Test all configured notification channels"""
         
         test_results = {}
         

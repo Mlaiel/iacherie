@@ -21,6 +21,7 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -40,7 +41,9 @@ from ..base import BaseAgent
 
 
 class ScheduleType(Enum):
-    """Schedule type enumeration."""
+    """
+Schedule type enumeration."""
+
     ONE_TIME = "one_time"
     RECURRING = "recurring"
     CONDITIONAL = "conditional"
@@ -50,6 +53,7 @@ class ScheduleType(Enum):
 
 class ScheduleStatus(Enum):
     """Schedule status enumeration."""
+
     PENDING = "pending"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -60,6 +64,7 @@ class ScheduleStatus(Enum):
 
 class Priority(Enum):
     """Schedule priority enumeration."""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -69,7 +74,8 @@ class Priority(Enum):
 
 @dataclass
 class ScheduleCondition:
-    """Schedule execution condition."""
+    """
+Schedule execution condition."""
     type: str  # time, resource, event, custom
     parameters: Dict[str, Any]
     description: str = ""
@@ -115,7 +121,8 @@ class WorkflowSchedule:
 
 @dataclass
 class ScheduleExecution:
-    """Schedule execution record."""
+    """
+Schedule execution record."""
     id: str
     schedule_id: str
     workflow_id: str
@@ -136,7 +143,8 @@ class WorkflowScheduler(BaseAgent):
     resource optimization, adaptive timing, and complex scheduling patterns.
     """
     def __init__(self, max_concurrent_executions: int = 50):
-        """Initialize the workflow scheduler."""
+        """
+Initialize the workflow scheduler."""
         super().__init__()
         self.logger = logging.getLogger(__name__)
         
@@ -622,7 +630,8 @@ class WorkflowScheduler(BaseAgent):
             }
 
     async def _update_schedule_metrics(self, schedule: WorkflowSchedule, execution: ScheduleExecution):
-        """Update schedule performance metrics."""
+        """
+Update schedule performance metrics."""
         try:
             # Update success rate
             recent_executions = self.execution_history[schedule.id][-10:]

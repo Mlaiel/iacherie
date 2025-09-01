@@ -17,7 +17,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 class CreatorType(Enum):
-    """Types de créateurs supportés"""
+    """
+Types de créateurs supportés"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -26,6 +28,7 @@ class CreatorType(Enum):
 
 class ContentType(Enum):
     """Types de contenu supportés"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -60,6 +63,7 @@ class Platform(Enum):
 
 class RevenueStream(Enum):
     """Sources de revenus disponibles"""
+
     STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIPS = "sponsorships"

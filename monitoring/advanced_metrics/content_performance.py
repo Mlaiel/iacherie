@@ -12,6 +12,7 @@ CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited
 Business Logic Integration:
 Content Upload → IA Protection → Quality Analysis → SEO Optimization → Platform Distribution → Performance Tracking
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content supported by the platform"""
+    """
+Types of content supported by the platform"""
+
     AUDIO_MUSIC = "audio_music"
     VIDEO_SHORT = "video_short"
     VIDEO_LONG = "video_long"
@@ -47,6 +50,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content lifecycle status"""
+
     UPLOADED = "uploaded"
     PROCESSING = "processing"
     PROTECTED = "protected"
@@ -61,6 +65,7 @@ class ContentStatus(Enum):
 
 class PlatformType(Enum):
     """Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -77,6 +82,7 @@ class PlatformType(Enum):
 
 class PerformanceMetricType(Enum):
     """Types of performance metrics"""
+
     REACH = "reach"
     ENGAGEMENT = "engagement"
     CONVERSION = "conversion"
@@ -143,7 +149,8 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class PlatformPerformanceTracker:
-    """Platform-specific performance tracking"""
+    """
+Platform-specific performance tracking"""
     platform: PlatformType
     content_id: str
     
@@ -173,7 +180,8 @@ class PlatformPerformanceTracker:
 
 @dataclass
 class ViralityAnalyzer:
-    """Virality analysis and prediction"""
+    """
+Virality analysis and prediction"""
     content_id: str
     virality_score: float
     viral_threshold: float
@@ -199,7 +207,8 @@ class ViralityAnalyzer:
 
 @dataclass
 class ContentOptimizationEngine:
-    """Content optimization recommendations"""
+    """
+Content optimization recommendations"""
     content_id: str
     
     # SEO optimization
@@ -231,7 +240,8 @@ class ContentOptimizationEngine:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Cross-platform performance analytics"""
+    """
+Cross-platform performance analytics"""
     content_id: str
     
     # Platform distribution
@@ -257,7 +267,8 @@ class CrossPlatformAnalytics:
 
 @dataclass
 class ContentLifecycleMetrics:
-    """Content lifecycle and performance evolution"""
+    """
+Content lifecycle and performance evolution"""
     content_id: str
     
     # Lifecycle stages
@@ -797,7 +808,8 @@ class ContentMetricsCollector:
         return base_views_map.get(content_type, np.random.randint(1000, 20000))
     
     def _get_engagement_rate_for_content_type(self, content_type: ContentType) -> float:
-        """Get realistic engagement rate for content type"""
+        """
+Get realistic engagement rate for content type"""
         engagement_map = {
             ContentType.VIDEO_SHORT: np.random.uniform(0.08, 0.15),
             ContentType.AUDIO_MUSIC: np.random.uniform(0.05, 0.12),
@@ -809,7 +821,8 @@ class ContentMetricsCollector:
         return engagement_map.get(content_type, np.random.uniform(0.03, 0.10))
     
     async def _update_prometheus_metrics(self, metrics: Dict[str, Any]) -> None:
-        """Update Prometheus metrics with performance data"""
+        """
+Update Prometheus metrics with performance data"""
         try:
             # Update content performance metrics
             content_performance = metrics.get("content_performance", [])
@@ -859,7 +872,8 @@ class ContentMetricsCollector:
         pass
     
     async def _initialize_quality_assessment(self) -> None:
-        """Initialize content quality assessment systems"""
+        """
+Initialize content quality assessment systems"""
         # In production, this would initialize AI quality assessment models
         pass
 
@@ -876,7 +890,8 @@ class ContentPerformanceAnalyzer:
         self.performance_patterns = {}
     
     async def initialize(self) -> None:
-        """Initialize the content performance analyzer"""
+        """
+Initialize the content performance analyzer"""
         try:
             self.logger.info("Initializing Content Performance Analyzer...")
             

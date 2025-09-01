@@ -45,7 +45,8 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 For licensing inquiries, contact: mlaiel@live.de
 
 Violators will be prosecuted to the full extent of the law.
-"""def print_copyright_notice():
+"""
+def print_copyright_notice():
     """Print copyright and team information"""
     print(COPYRIGHT_NOTICE)
     print(f"\nProject Lead: {__author__}")

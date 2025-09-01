@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Monetization Modules
+"""
+Unit Tests for Monetization Modules
 ===================================
 
 Comprehensive unit tests for monetization system including:
@@ -26,6 +28,7 @@ Comprehensive unit tests for monetization system including:
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure monetization system reliability and accuracy
 """
+
 import pytest
 import sys
 import os
@@ -40,11 +43,13 @@ import uuid
 
 
 class TestRevenueCalculator:
-    """Unit tests for revenue calculation system"""
+    """
+Unit tests for revenue calculation system"""
     
     @pytest.fixture
     def mock_revenue_calculator(self):
-        """Mock revenue calculator"""
+        """
+Mock revenue calculator"""
         calculator = Mock()
         calculator.calculate_cpm_revenue = Mock(return_value=Decimal('125.50'))
         calculator.calculate_subscription_revenue = Mock(return_value=Decimal('299.99'))
@@ -56,7 +61,8 @@ class TestRevenueCalculator:
         return calculator
     
     def test_cpm_revenue_calculation(self, mock_revenue_calculator):
-        """Test CPM-based revenue calculation"""
+        """
+Test CPM-based revenue calculation"""
         views = 100000
         cpm_rate = 2.50
         
@@ -66,7 +72,8 @@ class TestRevenueCalculator:
         mock_revenue_calculator.calculate_cpm_revenue.assert_called_once_with(views, cpm_rate)
     
     def test_subscription_revenue_calculation(self, mock_revenue_calculator):
-        """Test subscription-based revenue calculation"""
+        """
+Test subscription-based revenue calculation"""
         subscribers = 1000
         monthly_rate = Decimal('9.99')
         
@@ -76,7 +83,8 @@ class TestRevenueCalculator:
         mock_revenue_calculator.calculate_subscription_revenue.assert_called_once()
     
     def test_commission_calculation(self, mock_revenue_calculator):
-        """Test commission calculation"""
+        """
+Test commission calculation"""
         revenue = Decimal('1000.00')
         commission_rate = Decimal('0.15')
         
@@ -86,7 +94,8 @@ class TestRevenueCalculator:
         mock_revenue_calculator.calculate_commission.assert_called_once()
     
     def test_platform_rates_retrieval(self, mock_revenue_calculator):
-        """Test platform rate retrieval"""
+        """
+Test platform rate retrieval"""
         rates = mock_revenue_calculator.get_platform_rates()
         
         assert 'youtube' in rates
@@ -96,11 +105,13 @@ class TestRevenueCalculator:
 
 
 class TestPaymentProcessor:
-    """Unit tests for payment processing system"""
+    """
+Unit tests for payment processing system"""
     
     @pytest.fixture
     def mock_payment_processor(self):
-        """Mock payment processor"""
+        """
+Mock payment processor"""
         processor = Mock()
         processor.process_payment = AsyncMock(return_value={
             'transaction_id': 'txn_123456789',
@@ -120,7 +131,8 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_payment_processing(self, mock_payment_processor):
-        """Test payment processing"""
+        """
+Test payment processing"""
         payment_data = {
             'amount': Decimal('99.99'),
             'currency': 'EUR',
@@ -137,7 +149,8 @@ class TestPaymentProcessor:
         mock_payment_processor.process_payment.assert_called_once()
     
     def test_payment_method_validation(self, mock_payment_processor):
-        """Test payment method validation"""
+        """
+Test payment method validation"""
         payment_method = {
             'type': 'credit_card',
             'card_number': '**** **** **** 1234',
@@ -151,7 +164,8 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_payment_refund(self, mock_payment_processor):
-        """Test payment refund processing"""
+        """
+Test payment refund processing"""
         transaction_id = 'txn_123456789'
         refund_amount = Decimal('99.99')
         
@@ -162,7 +176,8 @@ class TestPaymentProcessor:
         assert 'refund_id' in result
     
     def test_payment_status_check(self, mock_payment_processor):
-        """Test payment status checking"""
+        """
+Test payment status checking"""
         transaction_id = 'txn_123456789'
         
         status = mock_payment_processor.get_payment_status(transaction_id)
@@ -171,11 +186,13 @@ class TestPaymentProcessor:
 
 
 class TestRoyaltyEngine:
-    """Unit tests for royalty distribution system"""
+    """
+Unit tests for royalty distribution system"""
     
     @pytest.fixture
     def mock_royalty_engine(self):
-        """Mock royalty engine"""
+        """
+Mock royalty engine"""
         engine = Mock()
         engine.calculate_royalties = AsyncMock(return_value={
             'total_revenue': Decimal('1000.00'),
@@ -199,7 +216,8 @@ class TestRoyaltyEngine:
     
     @pytest.mark.asyncio
     async def test_royalty_calculation(self, mock_royalty_engine):
-        """Test royalty calculation"""
+        """
+Test royalty calculation"""
         revenue_data = {
             'total_revenue': Decimal('1000.00'),
             'content_id': 'content_123',
@@ -215,7 +233,8 @@ class TestRoyaltyEngine:
     
     @pytest.mark.asyncio
     async def test_royalty_distribution(self, mock_royalty_engine):
-        """Test royalty distribution"""
+        """
+Test royalty distribution"""
         distribution_data = {
             'content_id': 'content_123',
             'total_amount': Decimal('700.00'),
@@ -229,7 +248,8 @@ class TestRoyaltyEngine:
         assert 'distribution_id' in result
     
     def test_royalty_rules_validation(self, mock_royalty_engine):
-        """Test royalty rules validation"""
+        """
+Test royalty rules validation"""
         royalty_rules = {
             'creator_percentage': 0.60,
             'collaborator_percentage': 0.10,
@@ -242,11 +262,13 @@ class TestRoyaltyEngine:
 
 
 class TestContractGenerator:
-    """Unit tests for contract generation system"""
+    """
+Unit tests for contract generation system"""
     
     @pytest.fixture
     def mock_contract_generator(self):
-        """Mock contract generator"""
+        """
+Mock contract generator"""
         generator = Mock()
         generator.generate_creator_contract = Mock(return_value={
             'contract_id': 'contract_123',
@@ -270,7 +292,8 @@ class TestContractGenerator:
         return generator
     
     def test_creator_contract_generation(self, mock_contract_generator):
-        """Test creator contract generation"""
+        """
+Test creator contract generation"""
         contract_params = {
             'creator_id': 'creator_123',
             'content_type': 'video',
@@ -285,7 +308,8 @@ class TestContractGenerator:
         assert 'contract_id' in result
     
     def test_collaboration_contract_generation(self, mock_contract_generator):
-        """Test collaboration contract generation"""
+        """
+Test collaboration contract generation"""
         collaboration_params = {
             'creators': ['creator_1', 'creator_2'],
             'project_type': 'joint_content',
@@ -299,7 +323,8 @@ class TestContractGenerator:
         assert result['revenue_split']['creator_1'] == 0.60
     
     def test_contract_terms_validation(self, mock_contract_generator):
-        """Test contract terms validation"""
+        """
+Test contract terms validation"""
         contract_terms = {
             'revenue_share': 0.70,
             'content_rights': 'exclusive',
@@ -313,7 +338,8 @@ class TestContractGenerator:
     
     @pytest.mark.asyncio
     async def test_contract_execution(self, mock_contract_generator):
-        """Test contract execution"""
+        """
+Test contract execution"""
         contract_id = 'contract_123'
         signatures = ['creator_signature', 'platform_signature']
         
@@ -323,11 +349,13 @@ class TestContractGenerator:
 
 
 class TestRightsValidator:
-    """Unit tests for rights validation system"""
+    """
+Unit tests for rights validation system"""
     
     @pytest.fixture
     def mock_rights_validator(self):
-        """Mock rights validator"""
+        """
+Mock rights validator"""
         validator = Mock()
         validator.validate_content_rights = AsyncMock(return_value={
             'is_valid': True,
@@ -349,7 +377,8 @@ class TestRightsValidator:
     
     @pytest.mark.asyncio
     async def test_content_rights_validation(self, mock_rights_validator):
-        """Test content rights validation"""
+        """
+Test content rights validation"""
         content_data = {
             'content_id': 'content_123',
             'creator_id': 'creator_123',
@@ -365,7 +394,8 @@ class TestRightsValidator:
     
     @pytest.mark.asyncio
     async def test_copyright_status_check(self, mock_rights_validator):
-        """Test copyright status checking"""
+        """
+Test copyright status checking"""
         content_id = 'content_123'
         
         result = await mock_rights_validator.check_copyright_status(content_id)
@@ -375,7 +405,8 @@ class TestRightsValidator:
         assert result['fair_use_applicable'] is False
     
     def test_licensing_terms_validation(self, mock_rights_validator):
-        """Test licensing terms validation"""
+        """
+Test licensing terms validation"""
         licensing_terms = {
             'license_type': 'commercial',
             'duration': '24_months',
@@ -388,7 +419,8 @@ class TestRightsValidator:
         assert result is True
     
     def test_usage_permissions_retrieval(self, mock_rights_validator):
-        """Test usage permissions retrieval"""
+        """
+Test usage permissions retrieval"""
         content_id = 'content_123'
         license_type = 'commercial'
         
@@ -400,11 +432,13 @@ class TestRightsValidator:
 
 
 class TestPlatformAPIs:
-    """Unit tests for platform API integration"""
+    """
+Unit tests for platform API integration"""
     
     @pytest.fixture
     def mock_platform_apis(self):
-        """Mock platform APIs"""
+        """
+Mock platform APIs"""
         apis = Mock()
         apis.youtube_api = Mock()
         apis.youtube_api.get_video_analytics = AsyncMock(return_value={
@@ -431,7 +465,8 @@ class TestPlatformAPIs:
     
     @pytest.mark.asyncio
     async def test_youtube_analytics_retrieval(self, mock_platform_apis):
-        """Test YouTube analytics retrieval"""
+        """
+Test YouTube analytics retrieval"""
         video_id = 'yt_video_123'
         
         result = await mock_platform_apis.youtube_api.get_video_analytics(video_id)
@@ -443,7 +478,8 @@ class TestPlatformAPIs:
     
     @pytest.mark.asyncio
     async def test_spotify_stats_retrieval(self, mock_platform_apis):
-        """Test Spotify statistics retrieval"""
+        """
+Test Spotify statistics retrieval"""
         track_id = 'spotify_track_456'
         
         result = await mock_platform_apis.spotify_api.get_track_stats(track_id)
@@ -455,7 +491,8 @@ class TestPlatformAPIs:
     
     @pytest.mark.asyncio
     async def test_instagram_metrics_retrieval(self, mock_platform_apis):
-        """Test Instagram metrics retrieval"""
+        """
+Test Instagram metrics retrieval"""
         post_id = 'ig_post_789'
         
         result = await mock_platform_apis.instagram_api.get_post_metrics(post_id)
@@ -467,11 +504,13 @@ class TestPlatformAPIs:
 
 
 class TestMonetizationIntegration:
-    """Integration tests for monetization system"""
+    """
+Integration tests for monetization system"""
     
     @pytest.fixture
     def mock_monetization_system(self):
-        """Mock complete monetization system"""
+        """
+Mock complete monetization system"""
         system = Mock()
         system.revenue_calculator = Mock()
         system.payment_processor = Mock()
@@ -483,7 +522,8 @@ class TestMonetizationIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_monetization_workflow(self, mock_monetization_system):
-        """Test complete monetization workflow"""
+        """
+Test complete monetization workflow"""
         # Mock the full workflow
         content_data = {
             'content_id': 'content_123',
@@ -519,7 +559,8 @@ class TestMonetizationIntegration:
         assert payment['status'] == 'completed'
     
     def test_monetization_system_health_check(self, mock_monetization_system):
-        """Test monetization system health check"""
+        """
+Test monetization system health check"""
         # Mock health check for all components
         health_checks = {
             'revenue_calculator': True,
@@ -539,7 +580,8 @@ class TestMonetizationIntegration:
     
     @pytest.mark.asyncio
     async def test_revenue_reporting_pipeline(self, mock_monetization_system):
-        """Test revenue reporting pipeline"""
+        """
+Test revenue reporting pipeline"""
         # Mock revenue reporting workflow
         reporting_period = {
             'start_date': '2025-01-01',

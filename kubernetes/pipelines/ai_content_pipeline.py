@@ -2,7 +2,7 @@
 Enterprise-Grade AI Content Processing & Generation Pipeline Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive AI content processing pipeline management for the IA Influencer Agent
 platform, supporting multi-format content analysis, generation, optimization, and enhancement workflows.
@@ -18,6 +18,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -33,7 +34,9 @@ from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 from .pipeline_manager import PipelineStep, PipelineExecution, AdvancedPipelineManager
 
 class ContentFormat(Enum):
-    """Content format enumeration for AI processing"""
+    """
+Content format enumeration for AI processing"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -45,6 +48,7 @@ class ContentFormat(Enum):
 
 class AIModelType(Enum):
     """AI model type classifications"""
+
     TRANSFORMER = "transformer"
     DIFFUSION = "diffusion"
     GENERATIVE_ADVERSARIAL = "gan"
@@ -56,6 +60,7 @@ class AIModelType(Enum):
 
 class ProcessingTask(Enum):
     """AI processing task types"""
+
     CONTENT_ANALYSIS = "content_analysis"
     CONTENT_GENERATION = "content_generation"
     CONTENT_ENHANCEMENT = "content_enhancement"
@@ -83,7 +88,8 @@ class AIProcessingRequest:
 
 @dataclass
 class AIProcessingResult:
-    """AI processing result data structure"""
+    """
+AI processing result data structure"""
     result_id: str
     request_id: str
     processing_task: ProcessingTask
@@ -364,7 +370,8 @@ class AIContentProcessingPipelineManager:
         
     def _select_processing_pipeline(self, content_format: ContentFormat, 
                                   processing_tasks: List[ProcessingTask]) -> str:
-        """Select appropriate processing pipeline based on content and tasks"""
+        """
+Select appropriate processing pipeline based on content and tasks"""
         # Determine primary processing type
         if ProcessingTask.CONTENT_GENERATION in processing_tasks:
             return "ai-content-generation"

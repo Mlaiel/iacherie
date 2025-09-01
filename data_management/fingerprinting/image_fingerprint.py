@@ -8,7 +8,7 @@ Responsibility: Advanced image fingerprinting with CLIP, ImageHash, and perceptu
 ======================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -28,6 +28,7 @@ IMAGE FINGERPRINTING TECHNOLOGIES:
 ├── 📊 Statistical Analysis (Moments + Entropy + Energy)
 └── 🛡️ Protection System (Monitoring + Similarity Detection)
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
@@ -134,7 +135,8 @@ class ImageProcessor(ABC):
     
     @abstractmethod
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Process image file and generate fingerprint"""
+        """
+Process image file and generate fingerprint"""
         logger.warning(f"process method not implemented in {self.__class__.__name__}")
         
         # Return basic fingerprint data structure
@@ -498,7 +500,8 @@ class PerceptualImageProcessor(ImageProcessor):
     """Processeur pour l'analyse perceptuelle avancée"""
     
     def __init__(self):
-        """Initialise le processeur d'analyse perceptuelle"""
+        """
+Initialise le processeur d'analyse perceptuelle"""
         if not CV2_AVAILABLE:
             raise ImportError("OpenCV library not available for perceptual image processing")
         self.name = "perceptual_analysis"
@@ -772,7 +775,8 @@ class PerceptualImageProcessor(ImageProcessor):
             return 0.0
     
     def _calculate_kurtosis(self, data: np.ndarray) -> float:
-        """Calcule l'aplatissement"""
+        """
+Calcule l'aplatissement"""
         try:
             mean = np.mean(data)
             std = np.std(data)
@@ -783,7 +787,8 @@ class PerceptualImageProcessor(ImageProcessor):
             return 0.0
 
 class WHASHProcessor(ImageProcessor):
-    """Processeur pour Wavelet Hash avancé"""
+    """
+Processeur pour Wavelet Hash avancé"""
     
     def __init__(self):
         if not PIL_AVAILABLE:
@@ -1061,7 +1066,8 @@ class ImageFingerprintEngine:
         return self.config.supported_formats
     
     def get_processor_status(self) -> Dict[str, bool]:
-        """Retourne le statut des processeurs"""
+        """
+Retourne le statut des processeurs"""
         return {
             "clip": "clip" in self.processors,
             "image_hash": "image_hash" in self.processors,

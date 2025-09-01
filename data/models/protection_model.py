@@ -5,7 +5,7 @@ Professional content protection data model for monitoring and enforcement.
 Comprehensive protection tracking with alerts, violations, and enforcement actions.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
@@ -28,7 +29,9 @@ Base = declarative_base()
 
 
 class ProtectionType(Enum):
-    """Protection type enumeration"""
+    """
+Protection type enumeration"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PRIVACY = "privacy"
@@ -43,6 +46,7 @@ class ProtectionType(Enum):
 
 class ViolationType(Enum):
     """Violation type enumeration"""
+
     EXACT_MATCH = "exact_match"
     PARTIAL_MATCH = "partial_match"
     DERIVATIVE_WORK = "derivative_work"
@@ -55,6 +59,7 @@ class ViolationType(Enum):
 
 class SeverityLevel(Enum):
     """Severity level enumeration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,6 +69,7 @@ class SeverityLevel(Enum):
 
 class ProtectionStatus(Enum):
     """Protection status enumeration"""
+
     MONITORING = "monitoring"
     DETECTED = "detected"
     INVESTIGATING = "investigating"
@@ -79,6 +85,7 @@ class ProtectionStatus(Enum):
 
 class EnforcementAction(Enum):
     """Enforcement action enumeration"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
@@ -304,37 +311,44 @@ class ProtectionModel(Base):
     
     @property
     def is_copyright_violation(self) -> bool:
-        """Check if violation is copyright-related"""
+        """
+Check if violation is copyright-related"""
         return self.protection_type == ProtectionType.COPYRIGHT.value
     
     @property
     def is_high_severity(self) -> bool:
-        """Check if violation is high severity"""
+        """
+Check if violation is high severity"""
         return self.severity_level in [SeverityLevel.HIGH.value, SeverityLevel.CRITICAL.value, SeverityLevel.EMERGENCY.value]
     
     @property
     def is_resolved(self) -> bool:
-        """Check if protection issue is resolved"""
+        """
+Check if protection issue is resolved"""
         return self.status == ProtectionStatus.RESOLVED.value
     
     @property
     def is_under_investigation(self) -> bool:
-        """Check if violation is under investigation"""
+        """
+Check if violation is under investigation"""
         return self.status in [ProtectionStatus.INVESTIGATING.value, ProtectionStatus.CONFIRMED.value]
     
     @property
     def is_takedown_in_progress(self) -> bool:
-        """Check if takedown is in progress"""
+        """
+Check if takedown is in progress"""
         return self.status == ProtectionStatus.TAKEDOWN_REQUESTED.value
     
     @property
     def has_evidence(self) -> bool:
-        """Check if evidence has been collected"""
+        """
+Check if evidence has been collected"""
         return bool(self.evidence_urls or self.evidence_files)
     
     @property
     def severity_color(self) -> str:
-        """Get color code for severity level"""
+        """
+Get color code for severity level"""
         colors = {
             SeverityLevel.LOW.value: "#28a745",      # Green
             SeverityLevel.MEDIUM.value: "#ffc107",   # Yellow
@@ -354,7 +368,8 @@ class ProtectionModel(Base):
     
     @property
     def time_to_resolution(self) -> Optional[float]:
-        """Calculate time from detection to resolution in hours"""
+        """
+Calculate time from detection to resolution in hours"""
         if self.resolved_at and self.detected_at:
             delta = self.resolved_at - self.detected_at
             return delta.total_seconds() / 3600
@@ -362,7 +377,8 @@ class ProtectionModel(Base):
     
     @property
     def financial_impact_formatted(self) -> str:
-        """Get formatted financial impact"""
+        """
+Get formatted financial impact"""
         if self.estimated_revenue_loss:
             return f"€{self.estimated_revenue_loss:,.2f}"
         return "€0.00"
@@ -415,7 +431,8 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def add_evidence(self, evidence_type: str, evidence_data: Dict[str, Any]):
-        """Add evidence to the case"""
+        """
+Add evidence to the case"""
         if not self.evidence_urls:
             self.evidence_urls = []
         if not self.evidence_files:
@@ -436,7 +453,8 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def send_dmca_notice(self, notice_details: Dict[str, Any]):
-        """Record DMCA notice sending"""
+        """
+Record DMCA notice sending"""
         self.dmca_notice_sent = True
         self.dmca_notice_date = date.today()
         self.status = ProtectionStatus.TAKEDOWN_REQUESTED.value
@@ -459,7 +477,8 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def record_dmca_response(self, response_type: str, response_data: Dict[str, Any]):
-        """Record response to DMCA notice"""
+        """
+Record response to DMCA notice"""
         self.dmca_response_received = True
         self.dmca_response_date = date.today()
         
@@ -486,7 +505,8 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def escalate_to_legal(self, legal_representative: str, jurisdiction: str):
-        """Escalate case to legal action"""
+        """
+Escalate case to legal action"""
         self.status = ProtectionStatus.LEGAL_ACTION.value
         self.legal_representative = legal_representative
         self.jurisdiction = jurisdiction
@@ -548,7 +568,8 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def update_risk_assessment(self):
-        """Update risk scores"""
+        """
+Update risk scores"""
         # Calculate risk based on various factors
         base_risk = 0
         
@@ -585,7 +606,8 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_monitoring_schedule(self, frequency: str, keywords: List[str] = None, platforms: List[str] = None):
-        """Configure monitoring settings"""
+        """
+Configure monitoring settings"""
         self.monitoring_frequency = frequency
         self.monitoring_keywords = keywords or []
         self.monitoring_platforms = platforms or []
@@ -629,14 +651,16 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def enable_auto_enforcement(self, threshold: float = 95.0):
-        """Enable automatic enforcement"""
+        """
+Enable automatic enforcement"""
         self.auto_takedown_enabled = True
         self.auto_takedown_threshold = threshold
         self.auto_notice_enabled = True
         self.updated_at = datetime.utcnow()
     
     def human_review(self, reviewer_id: str, decision: str, notes: str = None):
-        """Record human review of case"""
+        """
+Record human review of case"""
         self.human_reviewed = True
         self.reviewed_by = reviewer_id
         self.reviewed_at = datetime.utcnow()
@@ -663,7 +687,8 @@ class ProtectionModel(Base):
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted protection record"""
+        """
+Restore soft-deleted protection record"""
         self.is_deleted = False
         self.deleted_at = None
         self.updated_at = datetime.utcnow()

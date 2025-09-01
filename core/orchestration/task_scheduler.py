@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class TaskPriority(Enum):
-    """Task priority levels."""
+    """
+Task priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -35,7 +38,9 @@ class TaskPriority(Enum):
 
 
 class SchedulingStrategy(Enum):
-    """Task scheduling strategy options."""
+    """
+Task scheduling strategy options."""
+
     FIFO = "fifo"
     PRIORITY = "priority"
     ROUND_ROBIN = "round_robin"
@@ -47,6 +52,7 @@ class SchedulingStrategy(Enum):
 
 class TaskType(Enum):
     """Task type classification."""
+
     CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
     CONTENT_ANALYSIS = "content_analysis"
@@ -60,6 +66,7 @@ class TaskType(Enum):
 
 class ResourceType(Enum):
     """System resource types."""
+
     CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
@@ -81,7 +88,8 @@ class ResourceRequirement:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task definition with execution parameters."""
+    """
+Scheduled task definition with execution parameters."""
     task_id: str
     name: str
     task_type: TaskType
@@ -110,7 +118,8 @@ class ScheduledTask:
 
 @dataclass
 class TaskExecution:
-    """Task execution tracking information."""
+    """
+Task execution tracking information."""
     task_id: str
     execution_id: str
     executor_id: str
@@ -690,7 +699,8 @@ class TaskScheduler:
         return base_score
     
     async def _calculate_resource_score(self, node: ExecutorNode, task: ScheduledTask) -> float:
-        """Calculate resource availability score."""
+        """
+Calculate resource availability score."""
         total_score = 0.0
         requirement_count = 0
         
@@ -708,13 +718,15 @@ class TaskScheduler:
         return total_score / max(requirement_count, 1)
     
     async def _calculate_load_score(self, node: ExecutorNode) -> float:
-        """Calculate executor load score."""
+        """
+Calculate executor load score."""
         max_tasks = 10  # Configurable
         current_tasks = len(node.active_tasks)
         return max(0.0, 1.0 - (current_tasks / max_tasks))
     
     async def _check_resource_availability(self, node: ExecutorNode, task: ScheduledTask) -> bool:
-        """Check if node has sufficient resources for task."""
+        """
+Check if node has sufficient resources for task."""
         for req in task.resource_requirements:
             if req.resource_type.value in node.available_resources:
                 if node.available_resources[req.resource_type.value] < req.amount:
@@ -722,7 +734,8 @@ class TaskScheduler:
         return True
     
     async def _allocate_task_resources(self, task: ScheduledTask, executor_id: str) -> None:
-        """Allocate resources for task execution."""
+        """
+Allocate resources for task execution."""
         node = self.executor_nodes[executor_id]
         
         for req in task.resource_requirements:
@@ -734,7 +747,8 @@ class TaskScheduler:
                 node.allocated_resources[req.resource_type.value] += req.amount
     
     async def _release_task_resources(self, task: ScheduledTask, executor_id: str) -> None:
-        """Release allocated task resources."""
+        """
+Release allocated task resources."""
         node = self.executor_nodes[executor_id]
         
         for req in task.resource_requirements:
@@ -747,7 +761,8 @@ class TaskScheduler:
                         del node.allocated_resources[req.resource_type.value]
     
     async def _validate_task(self, task: ScheduledTask) -> bool:
-        """Validate task definition."""
+        """
+Validate task definition."""
         try:
             if not task.task_id or not task.executor:
                 return False
@@ -761,7 +776,8 @@ class TaskScheduler:
             return False
     
     async def _check_task_dependencies(self, task: ScheduledTask) -> bool:
-        """Check if task dependencies are satisfied."""
+        """
+Check if task dependencies are satisfied."""
         for dep_id in task.dependencies:
             # Check if dependency is completed
             if dep_id in self.scheduled_tasks:
@@ -791,7 +807,8 @@ class TaskScheduler:
             del self.completed_tasks[exec_id]
     
     async def _update_performance_metrics(self) -> None:
-        """Update scheduler performance metrics."""
+        """
+Update scheduler performance metrics."""
         if self.scheduling_stats['total_tasks_completed'] > 0:
             # Calculate average metrics
             total_wait_time = 0.0
@@ -831,7 +848,8 @@ class TaskScheduler:
                 self.scheduling_stats['resource_utilization'] = total_allocated / total_capacity
     
     async def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get current task status."""
+        """
+Get current task status."""
         # Check scheduled tasks
         if task_id in self.scheduled_tasks:
             return {
@@ -858,7 +876,8 @@ class TaskScheduler:
         return None
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a scheduled or running task."""
+        """
+Cancel a scheduled or running task."""
         try:
             # Remove from scheduled tasks
             if task_id in self.scheduled_tasks:
@@ -912,7 +931,8 @@ class TaskScheduler:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown scheduler gracefully."""
+        """
+Shutdown scheduler gracefully."""
         self._scheduler_running = False
         
         # Cancel all active tasks

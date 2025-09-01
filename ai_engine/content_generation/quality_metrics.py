@@ -4,11 +4,12 @@ Professional quality assessment system that evaluates content across
 multiple dimensions and provides comprehensive quality scores.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Tuple
@@ -22,7 +23,8 @@ import statistics
 
 @dataclass
 class QualityScore:
-    """Data class for quality scores"""
+    """
+Data class for quality scores"""
     overall_score: float
     readability_score: float
     engagement_score: float
@@ -50,7 +52,8 @@ class QualityMetrics:
     """
     
     def __init__(self):
-        """Initialize quality metrics system"""
+        """
+Initialize quality metrics system"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Quality dimensions and weights
@@ -624,7 +627,8 @@ class QualityMetrics:
         return [s.strip() for s in sentences if s.strip()]
     
     def _flesch_reading_ease(self, text: str) -> float:
-        """Calculate Flesch Reading Ease score"""
+        """
+Calculate Flesch Reading Ease score"""
         sentences = self._split_sentences(text)
         words = text.split()
         syllables = sum(self._count_syllables(word) for word in words)
@@ -636,7 +640,8 @@ class QualityMetrics:
         return max(0, min(100, score))
     
     def _flesch_kincaid_grade(self, text: str) -> float:
-        """Calculate Flesch-Kincaid Grade Level"""
+        """
+Calculate Flesch-Kincaid Grade Level"""
         sentences = self._split_sentences(text)
         words = text.split()
         syllables = sum(self._count_syllables(word) for word in words)
@@ -648,7 +653,8 @@ class QualityMetrics:
         return max(0, grade)
     
     def _gunning_fog_index(self, text: str) -> float:
-        """Calculate Gunning Fog Index"""
+        """
+Calculate Gunning Fog Index"""
         sentences = self._split_sentences(text)
         words = text.split()
         complex_words = sum(1 for word in words if self._count_syllables(word) >= 3)
@@ -660,7 +666,8 @@ class QualityMetrics:
         return max(0, fog)
     
     def _smog_index(self, text: str) -> float:
-        """Calculate SMOG Index"""
+        """
+Calculate SMOG Index"""
         sentences = self._split_sentences(text)
         if len(sentences) < 30:
             return self._gunning_fog_index(text)  # Fallback for short text
@@ -672,7 +679,8 @@ class QualityMetrics:
         return max(0, smog)
     
     def _coleman_liau_index(self, text: str) -> float:
-        """Calculate Coleman-Liau Index"""
+        """
+Calculate Coleman-Liau Index"""
         sentences = self._split_sentences(text)
         words = text.split()
         letters = sum(len(re.sub(r'[^a-zA-Z]', '', word)) for word in words)
@@ -687,7 +695,8 @@ class QualityMetrics:
         return max(0, cli)
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
+        """
+Count syllables in a word (simplified)"""
         word = word.lower().strip()
         if not word:
             return 0
@@ -714,7 +723,8 @@ class QualityMetrics:
         return max(1, syllable_count)
     
     def _get_quality_grade(self, score: float) -> str:
-        """Convert numeric score to letter grade"""
+        """
+Convert numeric score to letter grade"""
         for grade, threshold in self.grade_boundaries.items():
             if score >= threshold:
                 return grade
@@ -726,7 +736,8 @@ class QualityMetrics:
         content: str,
         content_type: str
     ) -> List[str]:
-        """Generate specific improvement suggestions"""
+        """
+Generate specific improvement suggestions"""
         suggestions = []
         
         # Readability improvements
@@ -790,7 +801,8 @@ class ContentQualityAnalyzer:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def analyze_structure(self, content: str) -> Dict[str, Any]:
-        """Analyze content structure and organization"""
+        """
+Analyze content structure and organization"""
         paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
         sentences = [s.strip() for s in content.split('.') if s.strip()]
         words = content.split()

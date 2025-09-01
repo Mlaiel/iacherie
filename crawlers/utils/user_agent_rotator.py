@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import random
 import logging
 from typing import Dict, List, Optional, Tuple
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class UserAgentInfo:
-    """User agent information structure."""
+    """
+User agent information structure."""
     string: str
     browser: str
     browser_version: str
@@ -36,7 +38,8 @@ class UserAgentInfo:
 
 @dataclass
 class BrowserFingerprint:
-    """Browser fingerprint for realistic simulation."""
+    """
+Browser fingerprint for realistic simulation."""
     user_agent: str
     accept_language: str
     accept_encoding: str
@@ -66,7 +69,8 @@ class UserAgentRotator:
     """
     
     def __init__(self):
-        """Initialize user agent rotator."""
+        """
+Initialize user agent rotator."""
         self.user_agents: List[UserAgentInfo] = []
         self.usage_history: Dict[str, int] = {}
         self.current_fingerprint: Optional[BrowserFingerprint] = None
@@ -104,7 +108,8 @@ class UserAgentRotator:
         }
     
     def _load_user_agents(self) -> None:
-        """Load comprehensive user agent database."""
+        """
+Load comprehensive user agent database."""
         # Chrome user agents (most popular)
         chrome_agents = [
             # Windows Chrome
@@ -222,7 +227,8 @@ class UserAgentRotator:
         browser: Optional[str],
         mobile: Optional[bool]
     ) -> List[UserAgentInfo]:
-        """Filter user agents based on criteria."""
+        """
+Filter user agents based on criteria."""
         candidates = self.user_agents.copy()
         
         if device_type:
@@ -237,7 +243,8 @@ class UserAgentRotator:
         return candidates
     
     def _select_weighted_random(self, candidates: List[UserAgentInfo]) -> UserAgentInfo:
-        """Select user agent using weighted random selection."""
+        """
+Select user agent using weighted random selection."""
         total_weight = sum(ua.popularity_score for ua in candidates)
         
         if total_weight == 0:
@@ -254,7 +261,8 @@ class UserAgentRotator:
         return candidates[-1]
     
     def _select_least_used(self, candidates: List[UserAgentInfo]) -> UserAgentInfo:
-        """Select least used user agent."""
+        """
+Select least used user agent."""
         min_usage = float('inf')
         selected_ua = candidates[0]
         
@@ -267,11 +275,13 @@ class UserAgentRotator:
         return selected_ua
     
     def record_usage(self, user_agent: str) -> None:
-        """Record user agent usage."""
+        """
+Record user agent usage."""
         self.usage_history[user_agent] = self.usage_history.get(user_agent, 0) + 1
     
     def generate_browser_fingerprint(self, user_agent: UserAgentInfo) -> BrowserFingerprint:
-        """Generate realistic browser fingerprint."""
+        """
+Generate realistic browser fingerprint."""
         # Screen resolutions based on device type
         if user_agent.device_type == 'desktop':
             screen_resolutions = [
@@ -368,7 +378,8 @@ class UserAgentRotator:
         return fingerprint
     
     def get_headers(self, user_agent: UserAgentInfo, referer: Optional[str] = None) -> Dict[str, str]:
-        """Generate realistic HTTP headers."""
+        """
+Generate realistic HTTP headers."""
         browser_lower = user_agent.browser.lower()
         config = self.browser_configs.get(browser_lower, self.browser_configs['chrome'])
         
@@ -407,18 +418,21 @@ class UserAgentRotator:
         return self.get_user_agent(mobile=True)
     
     def get_desktop_user_agent(self) -> UserAgentInfo:
-        """Get a desktop user agent."""
+        """
+Get a desktop user agent."""
         return self.get_user_agent(mobile=False)
     
     def get_random_user_agent(self) -> UserAgentInfo:
-        """Get a random user agent with realistic mobile/desktop distribution."""
+        """
+Get a random user agent with realistic mobile/desktop distribution."""
         if random.random() < self.mobile_ratio:
             return self.get_mobile_user_agent()
         else:
             return self.get_desktop_user_agent()
     
     def get_usage_statistics(self) -> Dict:
-        """Get user agent usage statistics."""
+        """
+Get user agent usage statistics."""
         total_usage = sum(self.usage_history.values())
         
         stats = {
@@ -457,7 +471,8 @@ class UserAgentRotator:
         return stats
     
     def reset_usage_history(self) -> None:
-        """Reset usage history."""
+        """
+Reset usage history."""
         self.usage_history.clear()
         logger.info("User agent usage history reset")
     

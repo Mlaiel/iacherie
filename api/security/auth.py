@@ -4,6 +4,7 @@ Enterprise-grade authentication with multi-factor support
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Security Expert + Backend Senior
 """
+
 import jwt
 import bcrypt
 import secrets
@@ -37,12 +38,15 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationError(Exception):
-    """Custom authentication exception"""
+    """
+Custom authentication exception"""
     pass
 
 
 class AuthenticationStatus(Enum):
-    """Authentication status enumeration"""
+    """
+Authentication status enumeration"""
+
     SUCCESS = "success"
     FAILED = "failed"
     PENDING = "pending"
@@ -53,6 +57,7 @@ class AuthenticationStatus(Enum):
 
 class AuthenticationMethod(Enum):
     """Supported authentication methods"""
+
     PASSWORD = "password"
     JWT_TOKEN = "jwt_token"
     OAUTH2 = "oauth2"
@@ -78,7 +83,8 @@ class AuthenticationResult:
 
 @dataclass
 class UserCredentials:
-    """User credentials data structure"""
+    """
+User credentials data structure"""
     username: str
     password: Optional[str] = None
     email: Optional[str] = None
@@ -90,26 +96,31 @@ class UserCredentials:
 
 
 class BaseAuthenticator(ABC):
-    """Base authenticator interface"""
+    """
+Base authenticator interface"""
     
     @abstractmethod
     async def authenticate(self, credentials: Dict[str, Any]) -> AuthenticationResult:
-        """Authenticate user with provided credentials"""
+        """
+Authenticate user with provided credentials"""
         pass
     
     @abstractmethod
     async def validate_token(self, token: str) -> AuthenticationResult:
-        """Validate authentication token"""
+        """
+Validate authentication token"""
         pass
     
     @abstractmethod
     async def revoke_authentication(self, token: str) -> bool:
-        """Revoke authentication token"""
+        """
+Revoke authentication token"""
         pass
 
 
 class JWTManager:
-    """Advanced JWT token management with security features"""
+    """
+Advanced JWT token management with security features"""
     
     def __init__(self, secret_key: str, algorithm: str = "HS256"):
         self.secret_key = secret_key
@@ -160,7 +171,8 @@ class JWTManager:
         return access_token, refresh_token
     
     def verify_token(self, token: str) -> Dict[str, Any]:
-        """Verify and decode JWT token"""
+        """
+Verify and decode JWT token"""
         try:
             if token in self.token_blacklist:
                 raise AuthenticationError("Token has been revoked")
@@ -210,17 +222,20 @@ class JWTManager:
         return True
     
     def revoke_refresh_token(self, refresh_token: str) -> bool:
-        """Revoke refresh token"""
+        """
+Revoke refresh token"""
         return self.refresh_tokens.pop(refresh_token, None) is not None
     
     def _get_user_permissions(self, user_id: str) -> List[str]:
-        """Get user permissions (to be implemented with database)"""
+        """
+Get user permissions (to be implemented with database)"""
         # Placeholder - should query database for user permissions
         return ['read', 'write', 'content_create']
 
 
 class OAuth2Manager:
-    """OAuth2 authentication management"""
+    """
+OAuth2 authentication management"""
     
     def __init__(self):
         self.providers = {
@@ -249,7 +264,8 @@ class OAuth2Manager:
         self.state_tokens = {}  # For CSRF protection
     
     def generate_auth_url(self, provider: str, redirect_uri: str, state: str = None) -> str:
-        """Generate OAuth2 authorization URL"""
+        """
+Generate OAuth2 authorization URL"""
         if provider not in self.providers:
             raise ValueError(f"Unsupported OAuth2 provider: {provider}")
         
@@ -493,7 +509,8 @@ class TwoFactorAuthManager:
         return totp.verify(token, valid_window=1)  # Allow 1 window before/after
     
     def generate_backup_codes(self, user_id: str) -> List[str]:
-        """Generate backup recovery codes"""
+        """
+Generate backup recovery codes"""
         backup_codes = []
         
         for _ in range(self.backup_codes_count):
@@ -507,7 +524,8 @@ class TwoFactorAuthManager:
         return backup_codes
     
     def verify_backup_code(self, user_id: str, backup_code: str) -> bool:
-        """Verify backup recovery code"""
+        """
+Verify backup recovery code"""
         stored_codes = self._get_backup_codes(user_id)
         
         for i, hashed_code in enumerate(stored_codes):
@@ -520,12 +538,14 @@ class TwoFactorAuthManager:
         return False
     
     def _store_user_secret(self, user_id: str, secret: str):
-        """Store user's TOTP secret (placeholder - implement with secure database)"""
+        """
+Store user's TOTP secret (placeholder - implement with secure database)"""
         # In production: encrypt and store in database
         pass
     
     def _get_user_secret(self, user_id: str) -> Optional[str]:
-        """Get user's TOTP secret (placeholder)"""
+        """
+Get user's TOTP secret (placeholder)"""
         # In production: decrypt from database
         return "JBSWY3DPEHPK3PXP"  # Mock secret for testing
     
@@ -534,12 +554,14 @@ class TwoFactorAuthManager:
         pass
     
     def _get_backup_codes(self, user_id: str) -> List[str]:
-        """Get backup codes (placeholder)"""
+        """
+Get backup codes (placeholder)"""
         return []
 
 
 class BiometricAuthManager:
-    """Biometric authentication management"""
+    """
+Biometric authentication management"""
     
     def __init__(self):
         self.face_encodings = {}  # In production: use secure database
@@ -547,7 +569,8 @@ class BiometricAuthManager:
         self.voice_prints = {}
     
     def register_face(self, user_id: str, face_image: np.ndarray) -> bool:
-        """Register user's face for biometric authentication"""
+        """
+Register user's face for biometric authentication"""
         try:
             # Detect faces in the image
             face_locations = face_recognition.face_locations(face_image)
@@ -803,7 +826,8 @@ class AuthenticationManager:
     
     async def logout_user(self, session_id: str = None, access_token: str = None, 
                          refresh_token: str = None) -> bool:
-        """Logout user and revoke tokens/sessions"""
+        """
+Logout user and revoke tokens/sessions"""
         success_count = 0
         
         if session_id:
@@ -821,7 +845,8 @@ class AuthenticationManager:
         return success_count > 0
     
     async def _authenticate_password(self, credentials: UserCredentials) -> AuthenticationResult:
-        """Authenticate using password"""
+        """
+Authenticate using password"""
         if not credentials.password:
             return AuthenticationResult(
                 status=AuthenticationStatus.FAILED,
@@ -846,17 +871,20 @@ class AuthenticationManager:
         return AuthenticationResult(status=AuthenticationStatus.SUCCESS)
     
     async def _authenticate_two_factor(self, credentials: UserCredentials) -> bool:
-        """Authenticate using two-factor authentication"""
+        """
+Authenticate using two-factor authentication"""
         # Implementation would check TOTP token or backup codes
         return True  # Placeholder
     
     async def _authenticate_biometric(self, credentials: UserCredentials) -> bool:
-        """Authenticate using biometric data"""
+        """
+Authenticate using biometric data"""
         # Implementation would verify biometric hash
         return True  # Placeholder
     
     async def _is_user_locked(self, username: str) -> bool:
-        """Check if user account is locked due to failed attempts"""
+        """
+Check if user account is locked due to failed attempts"""
         if username not in self.failed_attempts:
             return False
         
@@ -869,7 +897,8 @@ class AuthenticationManager:
         return False
     
     async def _record_failed_attempt(self, username: str):
-        """Record failed authentication attempt"""
+        """
+Record failed authentication attempt"""
         current_time = time.time()
         
         if username not in self.failed_attempts:
@@ -879,7 +908,8 @@ class AuthenticationManager:
         self.failed_attempts[username]['last_attempt'] = current_time
     
     def _get_stored_password_hash(self, username: str) -> Optional[str]:
-        """Get stored password hash (placeholder - implement with database)"""
+        """
+Get stored password hash (placeholder - implement with database)"""
         # Placeholder - in production, query database
         return self.pwd_context.hash("default_password")
     

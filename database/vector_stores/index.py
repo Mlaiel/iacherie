@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -48,7 +49,8 @@ class VectorStoreService:
     """
     
     def __init__(self):
-        """Initialize the unified vector store service"""
+        """
+Initialize the unified vector store service"""
         self.vector_manager = VectorStoreManager()
         self.streaming_service = RealTimeVectorStreaming()
         self.optimizer = VectorDatabaseOptimizer()
@@ -445,7 +447,8 @@ async def get_vector_service() -> VectorStoreService:
 
 
 async def close_vector_service() -> None:
-    """Close the global vector service instance"""
+    """
+Close the global vector service instance"""
     global _vector_service_instance
     
     if _vector_service_instance is not None:
@@ -460,7 +463,8 @@ async def store_fingerprint(
     user_id: int,
     metadata: Dict[str, Any] = None
 ) -> Dict[str, Any]:
-    """Convenience function to store content fingerprint"""
+    """
+Convenience function to store content fingerprint"""
     service = await get_vector_service()
     return await service.store_content_fingerprint(content_type, content_data, user_id, metadata)
 
@@ -471,7 +475,8 @@ async def search_similar(
     similarity_threshold: float = 0.8,
     limit: int = 10
 ) -> List[Dict[str, Any]]:
-    """Convenience function to search similar content"""
+    """
+Convenience function to search similar content"""
     service = await get_vector_service()
     return await service.search_similar_content(content_type, query_data, similarity_threshold, limit)
 
@@ -481,7 +486,8 @@ async def start_protection(
     content_type: str,
     streaming_mode: StreamingMode = StreamingMode.CONTINUOUS_MONITORING
 ) -> str:
-    """Convenience function to start real-time protection"""
+    """
+Convenience function to start real-time protection"""
     service = await get_vector_service()
     return await service.start_real_time_protection(user_id, content_type, streaming_mode)
 

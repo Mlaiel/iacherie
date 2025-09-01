@@ -13,8 +13,9 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
-All rights reserved © 2025 Fahed Mlaiel
+All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import os
 import base64
 import hashlib
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityError(Exception):
-    """Custom exception for security-related errors"""
+    """
+Custom exception for security-related errors"""
     pass
 
 
@@ -53,7 +55,8 @@ class ContentProtectionSecurityService:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize security service"""
+        """
+Initialize security service"""
         self.config = config or {}
         self.logger = logger
         
@@ -558,63 +561,74 @@ class ContentProtectionSecurityService:
             return key
     
     def _generate_jwt_secret(self) -> str:
-        """Generate JWT secret if not provided"""
+        """
+Generate JWT secret if not provided"""
         return secrets.token_urlsafe(64)
 
 
 # Factory function
 def create_security_service(config: Optional[Dict[str, Any]] = None) -> ContentProtectionSecurityService:
-    """Factory function to create security service"""
+    """
+Factory function to create security service"""
     return ContentProtectionSecurityService(config)
 
 
 # Convenience functions
 def encrypt_sensitive_data(data: str, config: Optional[Dict[str, Any]] = None) -> str:
-    """Convenience function for encryption"""
+    """
+Convenience function for encryption"""
     service = create_security_service(config)
     return service.encrypt_sensitive_data(data)
 
 
 def decrypt_sensitive_data(encrypted_data: str, config: Optional[Dict[str, Any]] = None) -> str:
-    """Convenience function for decryption"""
+    """
+Convenience function for decryption"""
     service = create_security_service(config)
     return service.decrypt_sensitive_data(encrypted_data)
 
 
 def generate_secure_hash(data: str, salt: Optional[str] = None) -> Dict[str, str]:
-    """Convenience function for hash generation"""
+    """
+Convenience function for hash generation"""
     service = create_security_service()
     return service.generate_secure_hash(data, salt)
 
 
 # Compatibility aliases for business modules
 class SecurityManager:
-    """Security manager compatibility class for business modules"""
+    """
+Security manager compatibility class for business modules"""
     
     def __init__(self):
         self._service = ContentProtectionSecurityService()
     
     def __getattr__(self, name):
-        """Delegate to the underlying service"""
+        """
+Delegate to the underlying service"""
         return getattr(self._service, name)
 
 
 class EncryptionManager:
-    """Encryption manager compatibility class for business modules"""
+    """
+Encryption manager compatibility class for business modules"""
     
     def __init__(self):
         self._service = ContentProtectionSecurityService()
     
     def encrypt(self, data: str, key: Optional[str] = None) -> str:
-        """Encrypt data using the service"""
+        """
+Encrypt data using the service"""
         return self._service.encrypt_data(data, key)
     
     def decrypt(self, encrypted_data: str, key: Optional[str] = None) -> str:
-        """Decrypt data using the service"""
+        """
+Decrypt data using the service"""
         return self._service.decrypt_data(encrypted_data, key)
     
     def __getattr__(self, name):
-        """Delegate to the underlying service"""
+        """
+Delegate to the underlying service"""
         return getattr(self._service, name)
 
 

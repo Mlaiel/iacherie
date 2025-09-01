@@ -8,7 +8,7 @@ security throughout the distribution pipeline.
 Business Logic Integration: User Upload → AI Protection → Secure Distribution → Monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 ML Engineer + Content Protection Specialist + Distribution Expert + Security Engineer + 
@@ -27,6 +27,7 @@ LEGAL CONSEQUENCES: Violation will result in immediate legal action including:
 - Permanent injunction against unauthorized use
 - Full recovery of legal costs and fees
 """
+
 import asyncio
 import json
 import uuid
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels for distribution"""
+    """
+Content protection levels for distribution"""
+
     PUBLIC = "public"
     BASIC = "basic"
     STANDARD = "standard"
@@ -63,6 +66,7 @@ class ProtectionLevel(str, Enum):
 
 class DistributionSecurityMode(str, Enum):
     """Security modes for content distribution"""
+
     OPEN = "open"
     PROTECTED = "protected"
     ENCRYPTED = "encrypted"
@@ -72,6 +76,7 @@ class DistributionSecurityMode(str, Enum):
 
 class ContentSecurityStatus(str, Enum):
     """Status of content security in distribution"""
+
     PENDING_PROTECTION = "pending_protection"
     PROTECTED = "protected"
     DISTRIBUTING = "distributing"
@@ -198,7 +203,8 @@ class ProtectionDistributionConfig:
 
 @dataclass
 class SecurityCheckResult:
-    """Result of security check during distribution"""
+    """
+Result of security check during distribution"""
     check_id: str
     distribution_id: str
     security_status: ContentSecurityStatus
@@ -217,7 +223,8 @@ class ContentProtectionIntegrationManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the protection integration manager"""
+        """
+Initialize the protection integration manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
@@ -582,7 +589,8 @@ class ContentProtectionIntegrationManager:
         return 0.95  # Mock implementation
     
     async def _validate_watermark_integrity(self, watermark_id: uuid.UUID, platform_data: Dict[str, Any]) -> float:
-        """Validate watermark integrity in distributed content"""
+        """
+Validate watermark integrity in distributed content"""
         # Implementation would involve watermark detection and verification
         return 0.92  # Mock implementation
     
@@ -591,13 +599,15 @@ class ContentProtectionIntegrationManager:
         distribution: ProtectedContentDistribution, 
         platform_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Detect unauthorized distribution of protected content"""
+        """
+Detect unauthorized distribution of protected content"""
         # Implementation would involve AI-powered similarity detection
         # across monitored platforms
         return []  # Mock implementation
     
     async def _create_security_violation(self, distribution_id: str, violation_data: Dict[str, Any]):
-        """Create security violation record in database"""
+        """
+Create security violation record in database"""
         try:
             violation = SecurityViolation(
                 distribution_id=uuid.UUID(distribution_id),

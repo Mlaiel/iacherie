@@ -8,7 +8,7 @@ Responsibility: Advanced AI workflow orchestration and automation pipeline manag
 =================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -21,6 +21,7 @@ Workflow Definition → Step Orchestration → Condition Evaluation →
 Parallel Processing → Error Handling → Progress Tracking → 
 Notification Integration → Performance Analytics
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
 import logging
 import asyncio
@@ -33,7 +34,9 @@ from enum import Enum
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     RUNNING = "running"
@@ -45,6 +48,7 @@ class WorkflowStatus(Enum):
 
 class StepStatus(Enum):
     """Workflow step status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -55,6 +59,7 @@ class StepStatus(Enum):
 
 class StepType(Enum):
     """Types of workflow steps"""
+
     AI_PROCESSING = "ai_processing"
     CONTENT_ANALYSIS = "content_analysis"
     FINGERPRINT_GENERATION = "fingerprint_generation"
@@ -68,6 +73,7 @@ class StepType(Enum):
 
 class TriggerType(Enum):
     """Workflow trigger types"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_BASED = "event_based"
@@ -77,6 +83,7 @@ class TriggerType(Enum):
 
 class ConditionOperator(Enum):
     """Condition operators for workflow logic"""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -98,7 +105,8 @@ class WorkflowCondition:
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step definition"""
+    """
+Individual workflow step definition"""
     step_id: str
     name: str
     step_type: StepType
@@ -115,7 +123,8 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""
+    """
+Complete workflow definition"""
     workflow_id: str
     name: str
     description: str
@@ -136,7 +145,8 @@ class WorkflowDefinition:
 
 @dataclass
 class StepExecution:
-    """Individual step execution tracking"""
+    """
+Individual step execution tracking"""
     execution_id: str
     step_id: str
     workflow_execution_id: str
@@ -153,7 +163,8 @@ class StepExecution:
 
 @dataclass
 class WorkflowExecution:
-    """Complete workflow execution tracking"""
+    """
+Complete workflow execution tracking"""
     execution_id: str
     workflow_id: str
     workflow_version: str
@@ -172,7 +183,8 @@ class WorkflowExecution:
 
 @dataclass
 class WorkflowTemplate:
-    """Reusable workflow template"""
+    """
+Reusable workflow template"""
     template_id: str
     name: str
     description: str
@@ -237,7 +249,8 @@ class WorkflowRepository(BaseRepository):
         self.auto_scaling_enabled = True
 
     def create(self, entity, **kwargs):
-        """Create workflow entity"""
+        """
+Create workflow entity"""
         self._validate_entity(entity)
         
         # Generate ID if not provided
@@ -277,7 +290,8 @@ class WorkflowRepository(BaseRepository):
         return created_entity
 
     def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get workflow entity by ID"""
+        """
+Get workflow entity by ID"""
         if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_workflow_by_id", entity_id=entity_id)
             cached_result = self.cache.get(cache_key)
@@ -732,7 +746,8 @@ class WorkflowRepository(BaseRepository):
         return None
 
     def _validate_workflow_definition(self, workflow: WorkflowDefinition):
-        """Validate workflow definition"""
+        """
+Validate workflow definition"""
         # Check for duplicate step IDs
         step_ids = [step.step_id for step in workflow.steps]
         if len(step_ids) != len(set(step_ids)):
@@ -754,22 +769,26 @@ class WorkflowRepository(BaseRepository):
         return False
 
     def _store_workflow_entity(self, entity):
-        """Store workflow entity in database"""
+        """
+Store workflow entity in database"""
         # Implementation would store in database
         return entity
 
     def _setup_workflow_schedule(self, workflow: WorkflowDefinition):
-        """Set up workflow scheduling"""
+        """
+Set up workflow scheduling"""
         # Implementation would set up scheduling
         pass
 
     def _fetch_workflow_by_id(self, entity_id: str):
-        """Fetch workflow entity by ID"""
+        """
+Fetch workflow entity by ID"""
         # Implementation would fetch from database
         return None
 
     def _increment_version(self, current_version: str) -> str:
-        """Increment version number"""
+        """
+Increment version number"""
         try:
             parts = current_version.split('.')
             parts[-1] = str(int(parts[-1]) + 1)
@@ -783,47 +802,56 @@ class WorkflowRepository(BaseRepository):
         return entity
 
     def _update_workflow_schedule(self, workflow: WorkflowDefinition):
-        """Update workflow scheduling"""
+        """
+Update workflow scheduling"""
         # Implementation would update scheduling
         pass
 
     def _stop_active_executions(self, workflow_id: str):
-        """Stop all active executions for workflow"""
+        """
+Stop all active executions for workflow"""
         # Implementation would stop executions
         pass
 
     def _remove_workflow_schedule(self, workflow_id: str):
-        """Remove workflow from scheduler"""
+        """
+Remove workflow from scheduler"""
         # Implementation would remove scheduling
         pass
 
     def _delete_workflow_entity(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete workflow entity"""
+        """
+Delete workflow entity"""
         # Implementation would delete from database
         return True
 
     def _fetch_workflow_list(self, filters, limit, offset, order_by):
-        """Fetch workflow entities list"""
+        """
+Fetch workflow entities list"""
         # Implementation would fetch from database
         return []
 
     def _check_concurrent_execution_limits(self, workflow: WorkflowDefinition) -> bool:
-        """Check if workflow can be executed (concurrent limits)"""
+        """
+Check if workflow can be executed (concurrent limits)"""
         # Implementation would check limits
         return True
 
     def _execute_workflow_inline(self, execution: WorkflowExecution, workflow: WorkflowDefinition):
-        """Execute workflow inline (fallback)"""
+        """
+Execute workflow inline (fallback)"""
         # Implementation would execute workflow
         pass
 
     def _send_execution_notification(self, execution: WorkflowExecution, event_type: str):
-        """Send execution notification"""
+        """
+Send execution notification"""
         # Implementation would send notification
         pass
 
     def _create_workflow_definition_from_template(self, template_data: Dict[str, Any]) -> WorkflowDefinition:
-        """Create workflow definition from template data"""
+        """
+Create workflow definition from template data"""
         # Implementation would create workflow definition
         return WorkflowDefinition(
             workflow_id=self._generate_workflow_id(),
@@ -842,7 +870,8 @@ class WorkflowRepository(BaseRepository):
         return []
 
     def _categorize_error(self, error_message: str) -> str:
-        """Categorize error type"""
+        """
+Categorize error type"""
         error_lower = error_message.lower()
         if 'timeout' in error_lower:
             return 'timeout_error'
@@ -856,32 +885,38 @@ class WorkflowRepository(BaseRepository):
             return 'unknown_error'
 
     def _identify_bottleneck_steps(self, executions: List[WorkflowExecution]) -> List[str]:
-        """Identify bottleneck steps in workflow"""
+        """
+Identify bottleneck steps in workflow"""
         # Implementation would identify bottlenecks
         return []
 
     def _generate_optimization_suggestions(self, executions: List[WorkflowExecution]) -> List[str]:
-        """Generate optimization suggestions"""
+        """
+Generate optimization suggestions"""
         # Implementation would generate suggestions
         return []
 
     def _calculate_resource_efficiency(self, executions: List[WorkflowExecution]) -> float:
-        """Calculate resource efficiency"""
+        """
+Calculate resource efficiency"""
         # Implementation would calculate efficiency
         return 0.85
 
     def _calculate_performance_trends(self, executions: List[WorkflowExecution]) -> Dict[str, List[float]]:
-        """Calculate performance trends"""
+        """
+Calculate performance trends"""
         # Implementation would calculate trends
         return {}
 
     def _fetch_all_executions(self, filters: Dict[str, Any]) -> List[WorkflowExecution]:
-        """Fetch all executions with filters"""
+        """
+Fetch all executions with filters"""
         # Implementation would fetch executions
         return []
 
     def _calculate_execution_status_breakdown(self, executions: List[WorkflowExecution]) -> Dict[str, int]:
-        """Calculate execution status breakdown"""
+        """
+Calculate execution status breakdown"""
         breakdown = {}
         for execution in executions:
             status = execution.status.value
@@ -889,38 +924,45 @@ class WorkflowRepository(BaseRepository):
         return breakdown
 
     def _calculate_workflow_type_usage(self, workflows: List[WorkflowDefinition]) -> Dict[str, int]:
-        """Calculate workflow type usage"""
+        """
+Calculate workflow type usage"""
         # Implementation would calculate usage
         return {}
 
     def _calculate_average_execution_time(self, executions: List[WorkflowExecution]) -> float:
-        """Calculate average execution time"""
+        """
+Calculate average execution time"""
         durations = [e.duration_seconds for e in executions if e.duration_seconds]
         return sum(durations) / len(durations) if durations else 0
 
     def _calculate_resource_utilization(self, executions: List[WorkflowExecution]) -> Dict[str, float]:
-        """Calculate resource utilization"""
+        """
+Calculate resource utilization"""
         # Implementation would calculate utilization
         return {}
 
     def _analyze_execution_errors(self, executions: List[WorkflowExecution]) -> Dict[str, Any]:
-        """Analyze execution errors"""
+        """
+Analyze execution errors"""
         # Implementation would analyze errors
         return {}
 
     def _calculate_overall_performance_trends(self, executions: List[WorkflowExecution]) -> Dict[str, Any]:
-        """Calculate overall performance trends"""
+        """
+Calculate overall performance trends"""
         # Implementation would calculate trends
         return {}
 
     def _get_most_popular_templates(self) -> List[Dict[str, Any]]:
-        """Get most popular workflow templates"""
+        """
+Get most popular workflow templates"""
         # Implementation would get popular templates
         return []
 
     def _generate_global_optimization_recommendations(self, workflows: List[WorkflowDefinition], 
                                                     executions: List[WorkflowExecution]) -> List[str]:
-        """Generate global optimization recommendations"""
+        """
+Generate global optimization recommendations"""
         # Implementation would generate recommendations
         return []
 
@@ -953,7 +995,8 @@ class AsyncWorkflowRepository(AsyncBaseRepository):
         )
 
     async def create(self, entity, **kwargs):
-        """Create workflow entity asynchronously"""
+        """
+Create workflow entity asynchronously"""
         await self._validate_entity(entity)
         
         # Generate ID if not provided
@@ -993,7 +1036,8 @@ class AsyncWorkflowRepository(AsyncBaseRepository):
         return created_entity
 
     async def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get workflow entity by ID asynchronously"""
+        """
+Get workflow entity by ID asynchronously"""
         if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_workflow_by_id", entity_id=entity_id)
             cached_result = await self.cache.get_async(cache_key)
@@ -1176,51 +1220,61 @@ class AsyncWorkflowRepository(AsyncBaseRepository):
         return entity
 
     async def _setup_workflow_schedule_async(self, workflow: WorkflowDefinition):
-        """Set up workflow scheduling asynchronously"""
+        """
+Set up workflow scheduling asynchronously"""
         # Implementation would set up scheduling
         pass
 
     async def _fetch_workflow_by_id_async(self, entity_id: str):
-        """Fetch workflow entity by ID asynchronously"""
+        """
+Fetch workflow entity by ID asynchronously"""
         # Implementation would fetch from database
         return None
 
     async def _update_workflow_entity_async(self, entity):
-        """Update workflow entity in database asynchronously"""
+        """
+Update workflow entity in database asynchronously"""
         # Implementation would update database
         return entity
 
     async def _update_workflow_schedule_async(self, workflow: WorkflowDefinition):
-        """Update workflow scheduling asynchronously"""
+        """
+Update workflow scheduling asynchronously"""
         # Implementation would update scheduling
         pass
 
     async def _stop_active_executions_async(self, workflow_id: str):
-        """Stop all active executions for workflow asynchronously"""
+        """
+Stop all active executions for workflow asynchronously"""
         # Implementation would stop executions
         pass
 
     async def _remove_workflow_schedule_async(self, workflow_id: str):
-        """Remove workflow from scheduler asynchronously"""
+        """
+Remove workflow from scheduler asynchronously"""
         # Implementation would remove scheduling
         pass
 
     async def _delete_workflow_entity_async(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete workflow entity asynchronously"""
+        """
+Delete workflow entity asynchronously"""
         # Implementation would delete from database
         return True
 
     async def _fetch_workflow_list_async(self, filters, limit, offset, order_by):
-        """Fetch workflow entities list asynchronously"""
+        """
+Fetch workflow entities list asynchronously"""
         # Implementation would fetch from database
         return []
 
     async def _check_concurrent_execution_limits_async(self, workflow: WorkflowDefinition) -> bool:
-        """Check if workflow can be executed asynchronously"""
+        """
+Check if workflow can be executed asynchronously"""
         # Implementation would check limits
         return True
 
     async def _execute_workflow_inline_async(self, execution: WorkflowExecution, workflow: WorkflowDefinition):
-        """Execute workflow inline asynchronously"""
+        """
+Execute workflow inline asynchronously"""
         # Implementation would execute workflow
         pass

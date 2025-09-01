@@ -14,6 +14,7 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 class DistributionChannel(Enum):
-    """Available distribution channels"""
+    """
+Available distribution channels"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -45,6 +48,7 @@ class DistributionChannel(Enum):
 
 class ContentFormat(Enum):
     """Content formats for distribution"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -56,6 +60,7 @@ class ContentFormat(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status states"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -78,7 +83,8 @@ class PlatformResult:
 
 @dataclass
 class DistributionResult:
-    """Complete distribution result"""
+    """
+Complete distribution result"""
     distribution_id: str
     creator_id: str
     content_id: str
@@ -156,7 +162,8 @@ class DistributionManager:
         }
     
     async def distribute_content(self, creator_id: str, distribution_config: Dict[str, Any]) -> DistributionResult:
-        """Distribute content across multiple platforms"""
+        """
+Distribute content across multiple platforms"""
         try:
             distribution_id = str(uuid.uuid4())
             content_id = distribution_config.get('content_id')
@@ -240,7 +247,8 @@ class DistributionManager:
         }
     
     async def _select_optimal_platforms(self, content_metadata: Dict[str, Any], requested_platforms: List[str]) -> List[DistributionChannel]:
-        """Select optimal platforms based on content and creator preferences"""
+        """
+Select optimal platforms based on content and creator preferences"""
         content_format = ContentFormat(content_metadata.get('content_type', 'video'))
         
         # Filter platforms that support the content format
@@ -256,7 +264,8 @@ class DistributionManager:
         return optimized_platforms
     
     async def _ai_platform_selection(self, content_metadata: Dict[str, Any], compatible_platforms: List[DistributionChannel]) -> List[DistributionChannel]:
-        """AI-powered platform selection optimization"""
+        """
+AI-powered platform selection optimization"""
         # This would use ML algorithms to select optimal platforms
         # Based on content type, creator profile, audience, etc.
         
@@ -293,7 +302,8 @@ class DistributionManager:
         return [platform for platform, score in sorted_platforms if score > 0.3]
     
     async def _optimize_content_for_platforms(self, content_metadata: Dict[str, Any], platforms: List[DistributionChannel]) -> Dict[DistributionChannel, Dict[str, Any]]:
-        """Optimize content metadata for each platform"""
+        """
+Optimize content metadata for each platform"""
         optimized_content = {}
         
         for platform in platforms:
@@ -330,7 +340,8 @@ class DistributionManager:
         return optimized_content
     
     async def _optimize_title(self, original_title: str, platform: DistributionChannel) -> str:
-        """Optimize title for specific platform"""
+        """
+Optimize title for specific platform"""
         optimizations = {
             DistributionChannel.YOUTUBE: {
                 'max_length': 100,
@@ -387,7 +398,8 @@ class DistributionManager:
         return unique_tags[:15]  # Most platforms have tag limits
     
     async def _generate_thumbnail(self, content_metadata: Dict[str, Any], platform: DistributionChannel) -> Optional[str]:
-        """Generate optimized thumbnail for platform"""
+        """
+Generate optimized thumbnail for platform"""
         if platform in [DistributionChannel.YOUTUBE, DistributionChannel.INSTAGRAM]:
             # This would generate/optimize thumbnails using AI
             return f"thumbnail_{platform.value}_{content_metadata['content_id']}.jpg"
@@ -417,7 +429,8 @@ class DistributionManager:
         return next_optimal
     
     async def _determine_youtube_category(self, content_metadata: Dict[str, Any]) -> str:
-        """Determine YouTube category based on content"""
+        """
+Determine YouTube category based on content"""
         tags = content_metadata.get('tags', [])
         if any(tag in ['music', 'song', 'audio'] for tag in tags):
             return 'Music'
@@ -429,7 +442,8 @@ class DistributionManager:
             return 'Entertainment'
     
     async def _create_instagram_caption(self, content_metadata: Dict[str, Any]) -> str:
-        """Create optimized Instagram caption"""
+        """
+Create optimized Instagram caption"""
         base_caption = content_metadata.get('description', '')
         emoji_enhanced = f"✨ {base_caption} ✨"
         return emoji_enhanced
@@ -453,7 +467,8 @@ class DistributionManager:
         return ['Original Sound', 'Trending Effect', 'Color Pop', 'Slow Motion']
     
     async def _schedule_distribution(self, optimized_content: Dict[DistributionChannel, Dict[str, Any]], platforms: List[DistributionChannel], scheduled_time: str) -> List[PlatformResult]:
-        """Schedule content distribution"""
+        """
+Schedule content distribution"""
         results = []
         
         for platform in platforms:
@@ -476,7 +491,8 @@ class DistributionManager:
         return results
     
     async def _immediate_distribution(self, optimized_content: Dict[DistributionChannel, Dict[str, Any]], platforms: List[DistributionChannel]) -> List[PlatformResult]:
-        """Immediate content distribution"""
+        """
+Immediate content distribution"""
         results = []
         
         for platform in platforms:
@@ -551,7 +567,8 @@ class DistributionManager:
         return estimated_reach
     
     async def _forecast_engagement(self, platform: DistributionChannel, content_config: Dict[str, Any]) -> float:
-        """Forecast engagement rate for platform"""
+        """
+Forecast engagement rate for platform"""
         base_rates = {
             DistributionChannel.YOUTUBE: 0.06,
             DistributionChannel.INSTAGRAM: 0.08,
@@ -569,7 +586,8 @@ class DistributionManager:
         return min(base_rate + quality_bonus, 0.25)  # Cap at 25%
     
     async def get_distribution_analytics(self, distribution_id: str) -> Dict[str, Any]:
-        """Get distribution analytics and performance metrics"""
+        """
+Get distribution analytics and performance metrics"""
         # This would fetch real analytics data
         return {
             'distribution_id': distribution_id,
@@ -587,7 +605,8 @@ class DistributionManager:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for distribution manager"""
+        """
+Health check for distribution manager"""
         return {
             "status": "healthy",
             "supported_platforms": len(self.platform_configs),

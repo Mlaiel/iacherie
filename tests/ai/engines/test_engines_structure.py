@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Simplified Tests for AI Engines Module
+"""
+Simplified Tests for AI Engines Module
 
 Direct testing without complex import dependencies.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -26,6 +28,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will face legal action under international copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -40,9 +43,11 @@ from datetime import datetime, timezone
 
 
 class TestAIEnginesStructure:
-    """Test the AI engines module structure and functionality"""
+    """
+Test the AI engines module structure and functionality"""
     def test_module_directory_structure(self):
-        """Test that all required module directories exist"""
+        """
+Test that all required module directories exist"""
         base_path = "/workspaces/Ainflue/backend/ai/engines"
         
         required_files = [
@@ -446,7 +451,8 @@ class TestAIEnginesStructure:
         import time
         
         async def mock_processing_task(duration=0.1):
-            """Mock processing task for performance testing"""
+            """
+Mock processing task for performance testing"""
             await asyncio.sleep(duration)
             return {'processed': True, 'data': 'test_result'}
         

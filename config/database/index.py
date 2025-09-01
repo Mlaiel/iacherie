@@ -6,6 +6,7 @@ Professional Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 WARNING: This code is proprietary and belongs to Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 from enum import Enum
@@ -13,7 +14,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class IndexType(Enum):
-    """Database index types for optimization"""
+    """
+Database index types for optimization"""
+
     BTREE = "btree"
     HASH = "hash" 
     GIST = "gist"
@@ -38,7 +41,8 @@ class DatabaseIndexManager:
         self.vector_db_indexes = self._get_vector_db_indexes()
     
     def _get_postgresql_indexes(self) -> Dict[str, List[Dict[str, Any]]]:
-        """PostgreSQL optimized indexes for content protection and user management"""
+        """
+PostgreSQL optimized indexes for content protection and user management"""
         return {
             "users": [
                 {
@@ -465,7 +469,8 @@ class DatabaseIndexManager:
         return sql_statements
     
     def _build_postgresql_index_sql(self, table_name: str, config: Dict[str, Any]) -> Optional[str]:
-        """Build individual PostgreSQL index creation statement"""
+        """
+Build individual PostgreSQL index creation statement"""
         try:
             sql_parts = ["CREATE"]
             
@@ -515,27 +520,32 @@ class DatabaseIndexManager:
         return self.mongodb_indexes.get(collection_name, [])
     
     def get_redis_cache_patterns(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Get Redis caching patterns and TTL configurations"""
+        """
+Get Redis caching patterns and TTL configurations"""
         return self.redis_indexes
     
     def get_elasticsearch_mappings(self, index_name: str) -> Optional[Dict[str, Any]]:
-        """Get Elasticsearch index mappings"""
+        """
+Get Elasticsearch index mappings"""
         return self.elasticsearch_indexes.get(index_name)
     
     def get_vector_index_config(self, index_name: str) -> Optional[Dict[str, Any]]:
-        """Get Vector DB index configuration"""
+        """
+Get Vector DB index configuration"""
         return self.vector_db_indexes.get(index_name)
 
 # Global index manager instance
 index_manager = DatabaseIndexManager()
 
 def get_index_manager() -> DatabaseIndexManager:
-    """Get the global database index manager instance"""
+    """
+Get the global database index manager instance"""
     return index_manager
 
 # Quick access functions for different database types
 def get_postgresql_indexes(table_name: str) -> List[str]:
-    """Get PostgreSQL index creation SQL for table"""
+    """
+Get PostgreSQL index creation SQL for table"""
     return index_manager.get_index_creation_sql("postgresql", table_name)
 
 def get_mongodb_indexes(collection_name: str) -> List[Dict[str, Any]]:
@@ -543,13 +553,16 @@ def get_mongodb_indexes(collection_name: str) -> List[Dict[str, Any]]:
     return index_manager.get_mongodb_index_specs(collection_name)
 
 def get_redis_patterns() -> Dict[str, List[Dict[str, Any]]]:
-    """Get Redis caching patterns"""
+    """
+Get Redis caching patterns"""
     return index_manager.get_redis_cache_patterns()
 
 def get_elasticsearch_mapping(index_name: str) -> Optional[Dict[str, Any]]:
-    """Get Elasticsearch index mapping"""
+    """
+Get Elasticsearch index mapping"""
     return index_manager.get_elasticsearch_mappings(index_name)
 
 def get_vector_config(index_name: str) -> Optional[Dict[str, Any]]:
-    """Get Vector DB index configuration"""
+    """
+Get Vector DB index configuration"""
     return index_manager.get_vector_index_config(index_name)

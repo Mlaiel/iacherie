@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -31,7 +32,9 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class ContentFormat(Enum):
-    """Supported content formats."""
+    """
+Supported content formats."""
+
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -56,6 +59,7 @@ class ContentFormat(Enum):
 
 class ContentCategory(Enum):
     """Content categorization types."""
+
     MUSIC_SONG = "music_song"
     MUSIC_INSTRUMENTAL = "music_instrumental"
     MUSIC_PODCAST = "music_podcast"
@@ -76,6 +80,7 @@ class ContentCategory(Enum):
 
 class QualityLevel(Enum):
     """Content quality assessment levels."""
+
     PROFESSIONAL = "professional"
     SEMI_PROFESSIONAL = "semi_professional"
     AMATEUR = "amateur"
@@ -85,6 +90,7 @@ class QualityLevel(Enum):
 
 class AnalysisDepth(Enum):
     """Analysis depth levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -112,7 +118,8 @@ class ContentAnalysisResult:
 
 @dataclass
 class OptimizationRecommendation:
-    """Content optimization recommendation."""
+    """
+Content optimization recommendation."""
     recommendation_id: str
     content_id: str
     optimization_type: str
@@ -126,7 +133,8 @@ class OptimizationRecommendation:
 
 
 class ContentAnalysisWorkflow:
-    """Advanced content analysis and classification workflow system."""
+    """
+Advanced content analysis and classification workflow system."""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}

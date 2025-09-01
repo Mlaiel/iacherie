@@ -15,6 +15,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Content validation → Regulatory compliance → Platform policy verification → 
 Business rule validation → Copyright checking → Privacy compliance → Legal clearance
 """
+
 import logging
 import re
 import json
@@ -49,7 +50,9 @@ except ImportError:
 
 
 class ComplianceLevel(Enum):
-    """Compliance verification levels"""
+    """
+Compliance verification levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -58,6 +61,7 @@ class ComplianceLevel(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance verification status"""
+
     COMPLIANT = "compliant"
     MINOR_VIOLATIONS = "minor_violations"
     MAJOR_VIOLATIONS = "major_violations"
@@ -66,6 +70,7 @@ class ComplianceStatus(Enum):
 
 class ViolationType(Enum):
     """Types of compliance violations"""
+
     COPYRIGHT = "copyright"
     PRIVACY = "privacy"
     CONTENT_POLICY = "content_policy"
@@ -198,7 +203,8 @@ class ComplianceChecker:
         }
     
     def _load_platform_policies(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific compliance policies."""
+        """
+Load platform-specific compliance policies."""
         return {
             'youtube': {
                 'content_policies': [
@@ -277,7 +283,8 @@ class ComplianceChecker:
         }
     
     def _load_business_rules(self) -> Dict[str, List[str]]:
-        """Load business-specific compliance rules."""
+        """
+Load business-specific compliance rules."""
         return {
             'content_quality': [
                 'minimum_resolution_standards',
@@ -306,7 +313,8 @@ class ComplianceChecker:
         }
     
     def _load_content_filters(self) -> Dict[str, List[str]]:
-        """Load content filtering rules."""
+        """
+Load content filtering rules."""
         return {
             'prohibited_keywords': [
                 # Violence and threats
@@ -549,7 +557,8 @@ class ComplianceChecker:
         return analysis
     
     def _analyze_fair_use(self, text_content: str, content_type: str) -> Dict[str, Any]:
-        """Analyze content for fair use factors."""
+        """
+Analyze content for fair use factors."""
         factors = {
             'transformative': False,
             'educational': False,
@@ -594,7 +603,8 @@ class ComplianceChecker:
         return factors
     
     def _assess_audio_copyright_risk(self, content_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Assess copyright risk for audio content (placeholder)."""
+        """
+Assess copyright risk for audio content (placeholder)."""
         # This would integrate with audio fingerprinting systems
         # For now, return a baseline risk
         return 0.3
@@ -605,7 +615,8 @@ class ComplianceChecker:
         content_type: str,
         user_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Verify privacy regulation compliance."""
+        """
+Verify privacy regulation compliance."""
         analysis = {
             'violations': [],
             'personal_data_detected': [],
@@ -663,7 +674,8 @@ class ComplianceChecker:
         return analysis
     
     def _detect_personal_data(self, text: str) -> List[str]:
-        """Detect personal data in text content."""
+        """
+Detect personal data in text content."""
         personal_data = []
         
         # Email addresses
@@ -730,7 +742,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> Dict[str, Any]:
-        """Verify content against safety and community policies."""
+        """
+Verify content against safety and community policies."""
         analysis = {
             'violations': [],
             'safety_score': 0.9,
@@ -820,7 +833,8 @@ class ComplianceChecker:
         return analysis
     
     def _analyze_content_sentiment(self, text: str) -> Dict[str, float]:
-        """Analyze content sentiment for harmful content detection."""
+        """
+Analyze content sentiment for harmful content detection."""
         try:
             blob = TextBlob(text)
             polarity = blob.sentiment.polarity  # -1 to 1
@@ -845,7 +859,8 @@ class ComplianceChecker:
             }
     
     def _assess_age_appropriateness(self, text: str, violations: List[str]) -> str:
-        """Assess age appropriateness of content."""
+        """
+Assess age appropriateness of content."""
         adult_keywords = ['explicit', 'adult', 'mature', 'violence', 'drug']
         mature_keywords = ['politics', 'controversial', 'complex']
         
@@ -859,7 +874,8 @@ class ComplianceChecker:
             return 'general'
     
     async def _check_visual_content_safety(self, content_data: Union[bytes, str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Check visual content for safety violations."""
+        """
+Check visual content for safety violations."""
         safety_check = {
             'violations': [],
             'nsfw_detected': False,
@@ -895,7 +911,8 @@ class ComplianceChecker:
         content_type: str,
         target_platforms: Optional[List[str]]
     ) -> Dict[str, bool]:
-        """Verify compliance with platform-specific policies."""
+        """
+Verify compliance with platform-specific policies."""
         platform_compliance = {}
         
         if not target_platforms:
@@ -932,7 +949,8 @@ class ComplianceChecker:
         return platform_compliance
     
     def _check_policy_compliance(self, text: str, policy: str) -> bool:
-        """Check if content complies with specific policy."""
+        """
+Check if content complies with specific policy."""
         policy_keywords = {
             'no_hate_speech': ['hate', 'racist', 'supremacist', 'nazi'],
             'no_harassment': ['harass', 'bully', 'stalk', 'threaten'],
@@ -947,7 +965,8 @@ class ComplianceChecker:
         return not any(keyword in text.lower() for keyword in keywords)
     
     def _check_youtube_video_compliance(self, content_data: Union[bytes, str, Dict[str, Any]]) -> bool:
-        """Check YouTube-specific video compliance."""
+        """
+Check YouTube-specific video compliance."""
         # Check video duration, format, quality, etc.
         if isinstance(content_data, dict):
             metadata = content_data.get('metadata', {})
@@ -965,7 +984,8 @@ class ComplianceChecker:
         return True
     
     def _check_spotify_audio_compliance(self, content_data: Union[bytes, str, Dict[str, Any]]) -> bool:
-        """Check Spotify-specific audio compliance."""
+        """
+Check Spotify-specific audio compliance."""
         # Check audio quality, format, licensing, etc.
         if isinstance(content_data, dict):
             metadata = content_data.get('metadata', {})
@@ -988,7 +1008,8 @@ class ComplianceChecker:
         content_type: str,
         user_id: Optional[str]
     ) -> List[ComplianceViolation]:
-        """Verify compliance with specific regulations."""
+        """
+Verify compliance with specific regulations."""
         violations = []
         
         # GDPR compliance
@@ -1011,7 +1032,8 @@ class ComplianceChecker:
         content_type: str,
         user_id: Optional[str]
     ) -> List[ComplianceViolation]:
-        """Check GDPR compliance."""
+        """
+Check GDPR compliance."""
         violations = []
         
         text_content = self._extract_text_content(content_data, content_type)
@@ -1053,7 +1075,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> List[ComplianceViolation]:
-        """Check DMCA compliance."""
+        """
+Check DMCA compliance."""
         violations = []
         
         # Check for potential copyright infringement
@@ -1076,7 +1099,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> List[ComplianceViolation]:
-        """Check COPPA compliance."""
+        """
+Check COPPA compliance."""
         violations = []
         
         text_content = self._extract_text_content(content_data, content_type)
@@ -1110,7 +1134,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> float:
-        """Assess risk of copyright infringement."""
+        """
+Assess risk of copyright infringement."""
         # This would integrate with content identification systems
         # For now, return a baseline risk assessment
         
@@ -1119,7 +1144,7 @@ class ComplianceChecker:
         # Check for known copyrighted material indicators
         text_content = self._extract_text_content(content_data, content_type)
         if text_content:
-            copyright_indicators = ['copyright', '©', 'all rights reserved', 'unauthorized']
+            copyright_indicators = ['copyright', '(c)', 'all rights reserved', 'unauthorized']
             if any(indicator in text_content.lower() for indicator in copyright_indicators):
                 risk_score += 0.3
         
@@ -1135,7 +1160,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> List[ComplianceViolation]:
-        """Verify compliance with business rules."""
+        """
+Verify compliance with business rules."""
         violations = []
         
         # Content quality business rules
@@ -1157,7 +1183,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> List[ComplianceViolation]:
-        """Check quality-related business rules."""
+        """
+Check quality-related business rules."""
         violations = []
         
         if isinstance(content_data, dict) and 'metadata' in content_data:
@@ -1198,7 +1225,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> List[ComplianceViolation]:
-        """Check monetization-related business rules."""
+        """
+Check monetization-related business rules."""
         violations = []
         
         text_content = self._extract_text_content(content_data, content_type)
@@ -1221,7 +1249,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> List[ComplianceViolation]:
-        """Check SEO-related business rules."""
+        """
+Check SEO-related business rules."""
         violations = []
         
         if content_type == 'text':
@@ -1247,7 +1276,8 @@ class ComplianceChecker:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> str:
-        """Extract text content for analysis."""
+        """
+Extract text content for analysis."""
         if isinstance(content_data, str):
             return content_data
         elif isinstance(content_data, dict):
@@ -1302,7 +1332,8 @@ class ComplianceChecker:
         violations: List[ComplianceViolation],
         score: float
     ) -> ComplianceStatus:
-        """Determine overall compliance status."""
+        """
+Determine overall compliance status."""
         critical_violations = [v for v in violations if v.severity == 'critical']
         high_violations = [v for v in violations if v.severity == 'high']
         
@@ -1319,7 +1350,8 @@ class ComplianceChecker:
         self,
         violations: List[ComplianceViolation]
     ) -> List[str]:
-        """Generate compliance improvement recommendations."""
+        """
+Generate compliance improvement recommendations."""
         recommendations = []
         
         # Priority order: critical > high > medium > low
@@ -1546,7 +1578,8 @@ class ContentComplianceValidator:
         content_type: str,
         prohibited_content: List[str]
     ) -> List[Dict[str, Any]]:
-        """Check content against prohibited content policies."""
+        """
+Check content against prohibited content policies."""
         violations = []
         
         # Extract text content for analysis
@@ -1583,7 +1616,8 @@ class ContentComplianceValidator:
         technical_requirements: Dict[str, Any],
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """Check content against technical requirements."""
+        """
+Check content against technical requirements."""
         violations = []
         
         try:
@@ -1735,7 +1769,8 @@ class ContentComplianceValidator:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> Optional[str]:
-        """Extract text content for analysis."""
+        """
+Extract text content for analysis."""
         try:
             if content_type == 'text':
                 if isinstance(content_data, bytes):
@@ -1859,7 +1894,8 @@ class ContentComplianceValidator:
         technical_requirements: Dict[str, Any],
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """Check audio quality requirements."""
+        """
+Check audio quality requirements."""
         violations = []
         
         # This would implement audio quality analysis
@@ -1872,7 +1908,8 @@ class ContentComplianceValidator:
         content_data: Union[bytes, str],
         content_type: str
     ) -> Optional[float]:
-        """Extract duration from audio/video content."""
+        """
+Extract duration from audio/video content."""
         try:
             if content_type == 'audio' and HAS_MEDIA_LIBS:
                 if isinstance(content_data, str):
@@ -1915,7 +1952,8 @@ class ContentComplianceValidator:
         return False
     
     async def _detect_explicit_content(self, text_content: str) -> bool:
-        """Detect explicit content in text."""
+        """
+Detect explicit content in text."""
         explicit_patterns = self.content_patterns.get('explicit_content', [])
         
         for pattern in explicit_patterns:
@@ -1928,7 +1966,8 @@ class ContentComplianceValidator:
         self,
         platform_results: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate overall compliance across all platforms."""
+        """
+Calculate overall compliance across all platforms."""
         compliant_platforms = []
         total_violations = []
         compliance_scores = []
@@ -1961,7 +2000,8 @@ class ContentComplianceValidator:
         violations: List[Dict[str, Any]],
         platform: str
     ) -> List[str]:
-        """Generate platform-specific recommendations."""
+        """
+Generate platform-specific recommendations."""
         recommendations = []
         
         # Group violations by type
@@ -1987,7 +2027,8 @@ class ContentComplianceValidator:
         self,
         total_violations: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate overall compliance recommendations."""
+        """
+Generate overall compliance recommendations."""
         recommendations = []
         
         violation_counts = {}

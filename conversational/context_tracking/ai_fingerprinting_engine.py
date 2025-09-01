@@ -45,8 +45,9 @@ Lead AI Engineer : Fahed Mlaiel <mlaiel@live.de>
 This code is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for licensing inquiries.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 import json
@@ -124,7 +125,8 @@ class AIFingerprintingEngine:
     """
     
     def __init__(self):
-        """Initialisation du moteur de fingerprinting IA."""
+        """
+Initialisation du moteur de fingerprinting IA."""
         self.settings = get_settings()
         self.redis_client = None
         self.elasticsearch_client = None
@@ -616,7 +618,8 @@ class AIFingerprintingEngine:
             return padded / np.linalg.norm(padded)
     
     async def _store_fingerprint(self, fingerprint_record: Dict[str, Any]):
-        """Stockage de l'empreinte dans les bases de données."""
+        """
+Stockage de l'empreinte dans les bases de données."""
         try:
             # Store in Redis for fast access
             redis_key = f"fingerprint:{fingerprint_record['id']}"

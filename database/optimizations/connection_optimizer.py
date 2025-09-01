@@ -6,6 +6,7 @@ including dynamic scaling, health monitoring, and intelligent routing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class PoolStrategy(Enum):
-    """Connection pool strategies"""
+    """
+Connection pool strategies"""
+
     STATIC = "static"
     DYNAMIC = "dynamic"
     QUEUE = "queue"
@@ -38,6 +41,7 @@ class PoolStrategy(Enum):
 
 class ConnectionState(Enum):
     """Connection states"""
+
     IDLE = "idle"
     ACTIVE = "active"
     IN_TRANSACTION = "in_transaction"
@@ -100,21 +104,24 @@ class ConnectionMetrics:
     
     @property
     def error_rate(self) -> float:
-        """Calculate connection error rate"""
+        """
+Calculate connection error rate"""
         if self.connection_requests == 0:
             return 0.0
         return self.connection_errors / self.connection_requests
     
     @property
     def pool_utilization(self) -> float:
-        """Calculate pool utilization rate"""
+        """
+Calculate pool utilization rate"""
         if self.total_connections == 0:
             return 0.0
         return self.active_connections / self.total_connections
 
 
 class ConnectionInfo:
-    """Connection information and metadata"""
+    """
+Connection information and metadata"""
     
     def __init__(self, connection_id: str, created_at: datetime = None):
         self.connection_id = connection_id
@@ -128,13 +135,15 @@ class ConnectionInfo:
         self.transaction_count = 0
         
     def start_query(self, query: str) -> None:
-        """Mark query start"""
+        """
+Mark query start"""
         self.current_query = query
         self.state = ConnectionState.ACTIVE
         self.last_used = datetime.now()
     
     def end_query(self, execution_time: float, error: bool = False) -> None:
-        """Mark query end"""
+        """
+Mark query end"""
         self.current_query = None
         self.state = ConnectionState.IDLE
         self.query_count += 1
@@ -144,22 +153,26 @@ class ConnectionInfo:
     
     @property
     def avg_query_time(self) -> float:
-        """Calculate average query time"""
+        """
+Calculate average query time"""
         return self.total_time / self.query_count if self.query_count > 0 else 0.0
     
     @property
     def age(self) -> timedelta:
-        """Get connection age"""
+        """
+Get connection age"""
         return datetime.now() - self.created_at
     
     @property
     def idle_time(self) -> timedelta:
-        """Get idle time"""
+        """
+Get idle time"""
         return datetime.now() - self.last_used
 
 
 class HealthChecker:
-    """Database connection health checker"""
+    """
+Database connection health checker"""
     
     def __init__(self, config: ConnectionPoolConfig):
         self.config = config
@@ -167,7 +180,8 @@ class HealthChecker:
         self._healthy = True
         
     async def check_connection(self, engine: AsyncEngine) -> bool:
-        """Check if connection is healthy"""
+        """
+Check if connection is healthy"""
         try:
             async with engine.begin() as conn:
                 result = await conn.execute(text("SELECT 1"))
@@ -195,18 +209,21 @@ class HealthChecker:
         return (datetime.now() - self._last_check).total_seconds() >= self.config.health_check_interval
     
     def mark_checked(self, healthy: bool) -> None:
-        """Mark health check as completed"""
+        """
+Mark health check as completed"""
         self._last_check = datetime.now()
         self._healthy = healthy
     
     @property
     def is_healthy(self) -> bool:
-        """Get current health status"""
+        """
+Get current health status"""
         return self._healthy
 
 
 class ConnectionOptimizer:
-    """Advanced database connection optimizer"""
+    """
+Advanced database connection optimizer"""
     
     def __init__(self, config: ConnectionPoolConfig):
         self.config = config
@@ -228,7 +245,8 @@ class ConnectionOptimizer:
         self._query_patterns: Dict[str, int] = {}
         
     async def initialize(self, database_url: Optional[str] = None) -> None:
-        """Initialize connection optimizer"""
+        """
+Initialize connection optimizer"""
         try:
             url = database_url or self.config.database_url or settings.DATABASE_URL
             
@@ -294,7 +312,8 @@ class ConnectionOptimizer:
         return pool_classes.get(self.config.pool_strategy, QueuePool)
     
     def _setup_event_listeners(self) -> None:
-        """Setup SQLAlchemy event listeners for monitoring"""
+        """
+Setup SQLAlchemy event listeners for monitoring"""
         
         @event.listens_for(self._engine.sync_engine, "connect")
         def on_connect(dbapi_connection, connection_record):
@@ -510,7 +529,8 @@ class ConnectionOptimizer:
         self._query_patterns[pattern] = self._query_patterns.get(pattern, 0) + 1
     
     def _extract_query_pattern(self, query: str) -> str:
-        """Extract pattern from query (remove literals)"""
+        """
+Extract pattern from query (remove literals)"""
         import re
         # Simple pattern extraction - replace literals with placeholders
         pattern = re.sub(r"'[^']*'", "?", query)
@@ -695,13 +715,15 @@ def get_connection_optimizer(config: Optional[ConnectionPoolConfig] = None) -> C
 
 
 async def initialize_connections(config: Optional[ConnectionPoolConfig] = None) -> None:
-    """Initialize global connection optimizer"""
+    """
+Initialize global connection optimizer"""
     optimizer = get_connection_optimizer(config)
     await optimizer.initialize()
 
 
 async def close_connections() -> None:
-    """Close global connection optimizer"""
+    """
+Close global connection optimizer"""
     global _connection_optimizer
     
     if _connection_optimizer:
@@ -710,7 +732,8 @@ async def close_connections() -> None:
 
 
 class ContentProtectionConnectionManager:
-    """Specialized connection manager for content protection operations"""
+    """
+Specialized connection manager for content protection operations"""
     
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
@@ -730,19 +753,22 @@ class ContentProtectionConnectionManager:
         )
     
     async def get_fingerprint_connection(self) -> AsyncSession:
-        """Get optimized connection for fingerprint operations"""
+        """
+Get optimized connection for fingerprint operations"""
         return await self.base_optimizer.get_connection(
             pool_config=self.fingerprint_pool_config
         )
     
     async def get_vector_search_connection(self) -> AsyncSession:
-        """Get optimized connection for vector similarity search"""
+        """
+Get optimized connection for vector similarity search"""
         return await self.base_optimizer.get_connection(
             pool_config=self.vector_pool_config
         )
     
     async def get_bulk_content_connection(self) -> AsyncSession:
-        """Get connection optimized for bulk content operations"""
+        """
+Get connection optimized for bulk content operations"""
         bulk_config = ConnectionPoolConfig(
             pool_size=25,
             max_overflow=40,
@@ -754,7 +780,8 @@ class ContentProtectionConnectionManager:
 
 
 class MonetizationConnectionManager:
-    """Specialized connection manager for monetization and analytics operations"""
+    """
+Specialized connection manager for monetization and analytics operations"""
     
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
@@ -774,19 +801,22 @@ class MonetizationConnectionManager:
         )
     
     async def get_analytics_connection(self) -> AsyncSession:
-        """Get optimized connection for analytics operations"""
+        """
+Get optimized connection for analytics operations"""
         return await self.base_optimizer.get_connection(
             pool_config=self.analytics_pool_config
         )
     
     async def get_revenue_connection(self) -> AsyncSession:
-        """Get optimized connection for revenue tracking"""
+        """
+Get optimized connection for revenue tracking"""
         return await self.base_optimizer.get_connection(
             pool_config=self.revenue_pool_config
         )
     
     async def get_reporting_connection(self) -> AsyncSession:
-        """Get read-only connection optimized for reporting"""
+        """
+Get read-only connection optimized for reporting"""
         reporting_config = ConnectionPoolConfig(
             pool_size=6,
             max_overflow=10,
@@ -799,7 +829,8 @@ class MonetizationConnectionManager:
 
 
 class MultimediaConnectionManager:
-    """Specialized connection manager for multimedia content operations"""
+    """
+Specialized connection manager for multimedia content operations"""
     
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
@@ -826,25 +857,29 @@ class MultimediaConnectionManager:
         )
     
     async def get_audio_connection(self) -> AsyncSession:
-        """Get optimized connection for audio content operations"""
+        """
+Get optimized connection for audio content operations"""
         return await self.base_optimizer.get_connection(
             pool_config=self.audio_pool_config
         )
     
     async def get_video_connection(self) -> AsyncSession:
-        """Get optimized connection for video content operations"""
+        """
+Get optimized connection for video content operations"""
         return await self.base_optimizer.get_connection(
             pool_config=self.video_pool_config
         )
     
     async def get_image_connection(self) -> AsyncSession:
-        """Get optimized connection for image content operations"""
+        """
+Get optimized connection for image content operations"""
         return await self.base_optimizer.get_connection(
             pool_config=self.image_pool_config
         )
     
     async def get_metadata_connection(self) -> AsyncSession:
-        """Get optimized connection for multimedia metadata operations"""
+        """
+Get optimized connection for multimedia metadata operations"""
         metadata_config = ConnectionPoolConfig(
             pool_size=10,
             max_overflow=15,
@@ -856,7 +891,8 @@ class MultimediaConnectionManager:
 
 
 class AIProcessingConnectionManager:
-    """Specialized connection manager for AI processing operations"""
+    """
+Specialized connection manager for AI processing operations"""
     
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
@@ -876,19 +912,22 @@ class AIProcessingConnectionManager:
         )
     
     async def get_ml_connection(self) -> AsyncSession:
-        """Get optimized connection for ML training operations"""
+        """
+Get optimized connection for ML training operations"""
         return await self.base_optimizer.get_connection(
             pool_config=self.ml_pool_config
         )
     
     async def get_inference_connection(self) -> AsyncSession:
-        """Get optimized connection for AI inference operations"""
+        """
+Get optimized connection for AI inference operations"""
         return await self.base_optimizer.get_connection(
             pool_config=self.inference_pool_config
         )
     
     async def get_model_storage_connection(self) -> AsyncSession:
-        """Get optimized connection for model metadata storage"""
+        """
+Get optimized connection for model metadata storage"""
         model_config = ConnectionPoolConfig(
             pool_size=8,
             max_overflow=12,

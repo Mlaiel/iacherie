@@ -5,8 +5,9 @@ Real-time usage tracking system for licensed content monitoring,
 analytics, and compliance verification.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, date, timedelta
 from uuid import UUID
@@ -31,7 +32,9 @@ settings = get_settings()
 
 
 class TrackingEvent(Enum):
-    """Usage tracking event types"""
+    """
+Usage tracking event types"""
+
     PLAY = "play"
     STREAM = "stream"
     DOWNLOAD = "download"
@@ -46,6 +49,7 @@ class TrackingEvent(Enum):
 
 class TrackingSource(Enum):
     """Tracking data sources"""
+
     DIRECT_API = "direct_api"
     PLATFORM_WEBHOOK = "platform_webhook"
     BATCH_IMPORT = "batch_import"
@@ -68,7 +72,8 @@ class UsageTracker:
         cache_manager: CacheManager = None,
         queue_manager: QueueManager = None
     ):
-        """Initialize usage tracker with dependencies"""
+        """
+Initialize usage tracker with dependencies"""
         self.repository = repository or LicensingRepository()
         self.compliance_engine = compliance_engine or ComplianceEngine()
         self.analytics_engine = analytics_engine or AnalyticsEngine()
@@ -96,7 +101,8 @@ class UsageTracker:
         event_data: Dict[str, Any],
         source: str = TrackingSource.DIRECT_API.value
     ) -> Dict[str, Any]:
-        """Track individual usage event with real-time compliance"""
+        """
+Track individual usage event with real-time compliance"""
         try:
             # Validate inputs
             await self._validate_tracking_event(license_agreement_id, event_type, event_data)
@@ -479,7 +485,8 @@ class UsageTracker:
         self,
         tracking_record: LicenseUsageTracking
     ) -> None:
-        """Queue tracking record for batch processing"""
+        """
+Queue tracking record for batch processing"""
         if self.queue_manager:
             await self.queue_manager.enqueue(
                 "usage_tracking_batch",
@@ -524,7 +531,8 @@ class UsageTracker:
         self._background_tasks.append(task)
     
     async def _background_batch_processor(self) -> None:
-        """Background task for batch processing"""
+        """
+Background task for batch processing"""
         while True:
             try:
                 await asyncio.sleep(self.flush_interval)

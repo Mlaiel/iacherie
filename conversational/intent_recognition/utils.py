@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import re
 import time
 import hashlib
@@ -107,8 +108,8 @@ def clean_html_content(text: str) -> str:
         '&quot;': '"',
         '&#39;': "'",
         '&nbsp;': ' ',
-        '&copy;': '©',
-        '&reg;': '®'
+        '&copy;': '(c)',
+        '&reg;': '(R)'
     }
     
     for entity, replacement in html_entities.items():
@@ -271,11 +272,13 @@ class ConfidenceCalibrator:
         confidence: float,
         correct: bool
     ) -> None:
-        """Add calibration data point"""
+        """
+Add calibration data point"""
         self.calibration_data[intent].append((confidence, correct))
     
     def fit_calibrators(self) -> None:
-        """Fit calibration models using collected data"""
+        """
+Fit calibration models using collected data"""
         try:
             # Fit per-intent calibrators
             for intent, data in self.calibration_data.items():
@@ -418,7 +421,8 @@ class PerformanceMonitor:
         success: bool = True,
         error_type: Optional[str] = None
     ) -> None:
-        """Record performance metrics for a request"""
+        """
+Record performance metrics for a request"""
         
         self.stats['total_requests'] += 1
         
@@ -435,7 +439,8 @@ class PerformanceMonitor:
         self._update_statistics()
     
     def _update_statistics(self) -> None:
-        """Update running statistics"""
+        """
+Update running statistics"""
         total = self.stats['total_requests']
         
         if total > 0:
@@ -448,7 +453,8 @@ class PerformanceMonitor:
             self.stats['avg_confidence'] = sum(self.confidence_scores) / len(self.confidence_scores)
     
     def get_current_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""
+        """
+Get current performance metrics"""
         return {
             'statistics': self.stats.copy(),
             'recent_response_times': {
@@ -468,7 +474,8 @@ class PerformanceMonitor:
         }
     
     def check_alerts(self) -> List[str]:
-        """Check for performance alerts"""
+        """
+Check for performance alerts"""
         alerts = []
         
         # Response time alert
@@ -659,13 +666,15 @@ def exponential_backoff(
 
 
 def batch_iterator(items: List[Any], batch_size: int):
-    """Iterate over items in batches"""
+    """
+Iterate over items in batches"""
     for i in range(0, len(items), batch_size):
         yield items[i:i + batch_size]
 
 
 def safe_json_serialize(obj: Any) -> str:
-    """Safely serialize object to JSON"""
+    """
+Safely serialize object to JSON"""
     try:
         return json.dumps(obj, default=str, ensure_ascii=False)
     except Exception as e:
@@ -683,7 +692,8 @@ def timestamp_to_iso(timestamp: Optional[datetime] = None) -> str:
 # Creative industry specific utilities
 
 def extract_creative_entities(text: str) -> Dict[str, List[str]]:
-    """Extract creative industry specific entities"""
+    """
+Extract creative industry specific entities"""
     entities = {
         'platforms': [],
         'content_types': [],
@@ -716,7 +726,8 @@ def extract_creative_entities(text: str) -> Dict[str, List[str]]:
 
 
 def detect_collaboration_intent(text: str) -> Dict[str, Any]:
-    """Detect collaboration-related intent indicators"""
+    """
+Detect collaboration-related intent indicators"""
     collaboration_indicators = {
         'sharing': bool(re.search(r'\b(share|sharing|shared)\b', text.lower())),
         'inviting': bool(re.search(r'\b(invite|invitation|join|collaborate)\b', text.lower())),

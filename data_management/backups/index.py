@@ -8,10 +8,11 @@ Responsibility: Point d'entrée unifié pour le système de sauvegarde
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Optional, Dict, Any, List, Union
 import asyncio
 import logging
@@ -85,7 +86,8 @@ class BackupSystem:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialise le système de manière asynchrone"""
+        """
+Initialise le système de manière asynchrone"""
         if self._initialized:
             return
         
@@ -100,7 +102,8 @@ class BackupSystem:
         self._initialized = True
     
     async def shutdown(self) -> None:
-        """Arrêt propre du système"""
+        """
+Arrêt propre du système"""
         if not self._initialized:
             return
         

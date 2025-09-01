@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 import json
@@ -38,7 +39,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class MLModelMetrics:
-    """Machine learning model performance metrics"""
+    """
+Machine learning model performance metrics"""
     model_name: str
     model_version: str
     inference_latency_ms: float
@@ -51,7 +53,8 @@ class MLModelMetrics:
 
 @dataclass
 class GPUMetrics:
-    """GPU utilization and performance metrics"""
+    """
+GPU utilization and performance metrics"""
     device_id: int
     device_name: str
     gpu_utilization_percent: float

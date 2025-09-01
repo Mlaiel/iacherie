@@ -10,13 +10,14 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
 ⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 BUSINESS LOGIC:
 Multi-node cache requests → Consistent hashing → Node selection →
 Replication strategy → Failover handling → Performance optimization
 """
+
 import asyncio
 import logging
 import hashlib
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CacheNode:
-    """Distributed cache node configuration."""
+    """
+Distributed cache node configuration."""
     id: str
     host: str
     port: int
@@ -77,11 +79,13 @@ class ConsistentHashRing:
         self._build_ring()
     
     def _hash(self, key: str) -> int:
-        """Generate hash for key."""
+        """
+Generate hash for key."""
         return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def _build_ring(self) -> None:
-        """Build the hash ring with virtual nodes."""
+        """
+Build the hash ring with virtual nodes."""
         self.ring.clear()
         self.sorted_hashes.clear()
         
@@ -116,7 +120,8 @@ class ConsistentHashRing:
         return self.nodes.get(node_id)
     
     def get_nodes(self, key: str, count: int = 1) -> List[CacheNode]:
-        """Get multiple nodes for replication."""
+        """
+Get multiple nodes for replication."""
         if not self.sorted_hashes or count <= 0:
             return []
         
@@ -150,13 +155,15 @@ class ConsistentHashRing:
         self._build_ring()
     
     def remove_node(self, node_id: str) -> None:
-        """Remove node from ring."""
+        """
+Remove node from ring."""
         if node_id in self.nodes:
             del self.nodes[node_id]
             self._build_ring()
     
     def update_node_status(self, node_id: str, status: str) -> None:
-        """Update node status."""
+        """
+Update node status."""
         if node_id in self.nodes:
             self.nodes[node_id].status = status
             self.nodes[node_id].last_seen = datetime.now()
@@ -525,7 +532,8 @@ class DistributedCache:
             self._health_check_task = None
     
     async def close(self) -> None:
-        """Close all connections and stop monitoring."""
+        """
+Close all connections and stop monitoring."""
         await self.stop_health_monitoring()
         
         # Close node connections
@@ -544,7 +552,8 @@ class ConsistentHashCache(DistributedCache):
     """
     
     def __init__(self, nodes: List[Dict[str, Any]], **kwargs):
-        """Initialize consistent hash cache."""
+        """
+Initialize consistent hash cache."""
         super().__init__(nodes, **kwargs)
         self.logger = logging.getLogger(f"{__name__}.ConsistentHashCache")
         

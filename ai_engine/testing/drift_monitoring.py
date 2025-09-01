@@ -44,6 +44,7 @@ logger = logging.getLogger(__name__)
 
 class MonitoringStatus(str, Enum):
     """Monitoring status enumeration"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -52,6 +53,7 @@ class MonitoringStatus(str, Enum):
 
 class DriftSeverity(str, Enum):
     """Drift severity levels"""
+
     MINIMAL = "minimal"      # < 10% drift
     MODERATE = "moderate"    # 10-25% drift
     SIGNIFICANT = "significant"  # 25-50% drift
@@ -77,7 +79,8 @@ class DriftAlert:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for drift monitoring"""
+    """
+Configuration for drift monitoring"""
     model_id: str
     monitoring_frequency: timedelta
     drift_thresholds: Dict[DriftType, float]
@@ -91,7 +94,8 @@ class MonitoringConfig:
 
 @dataclass
 class DriftTrend:
-    """Drift trend analysis"""
+    """
+Drift trend analysis"""
     model_id: str
     drift_type: DriftType
     trend_direction: str  # "increasing", "decreasing", "stable"
@@ -119,7 +123,8 @@ class EnhancedDriftMonitor:
         self.logger = logging.getLogger(__name__)
         
     def _create_base_detector(self):
-        """Create base drift detector if not provided"""
+        """
+Create base drift detector if not provided"""
         try:
             from database.ai_engines.performance_metrics import ModelDriftDetector
             return ModelDriftDetector()

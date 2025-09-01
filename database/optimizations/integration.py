@@ -6,6 +6,7 @@ Provides unified interface and orchestration for all optimization strategies.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class OptimizationConfig:
-    """Complete optimization configuration"""
+    """
+Complete optimization configuration"""
     # Index optimization
     enable_index_optimization: bool = True
     index_strategy: AdvancedIndexStrategy = AdvancedIndexStrategy.ADAPTIVE
@@ -69,7 +71,8 @@ class OptimizationConfig:
 
 
 class DatabaseOptimizationOrchestrator:
-    """Main orchestrator for all database optimization components"""
+    """
+Main orchestrator for all database optimization components"""
     
     def __init__(self, engines: Dict[str, AsyncEngine], config: OptimizationConfig):
         self.engines = engines
@@ -95,7 +98,8 @@ class DatabaseOptimizationOrchestrator:
         self.running_components: List[str] = []
         
     async def initialize(self) -> bool:
-        """Initialize all optimization components"""
+        """
+Initialize all optimization components"""
         try:
             logger.info("Initializing database optimization orchestrator")
             

@@ -6,6 +6,7 @@ Detects unusual revenue patterns, drops, spikes, and fraud indicators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnomalyType(Enum):
-    """Types of revenue anomalies"""
+    """
+Types of revenue anomalies"""
+
     SUDDEN_DROP = "sudden_drop"
     SUDDEN_SPIKE = "sudden_spike"
     GRADUAL_DECLINE = "gradual_decline"
@@ -31,6 +34,7 @@ class AnomalyType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -64,7 +68,8 @@ class RevenueAnomalyDetector:
     """
     
     def __init__(self, revenue_tracker):
-        """Initialize anomaly detector"""
+        """
+Initialize anomaly detector"""
         self.revenue_tracker = revenue_tracker
         self.historical_data = []
         self.alert_history = []

@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -44,7 +45,8 @@ class IAInfluencerNetworkDemo:
         self.managers = {}
         
     async def run_complete_demo(self):
-        """Run complete network deployment demonstration"""
+        """
+Run complete network deployment demonstration"""
         try:
             print("🚀 Starting IA Influencer Agent Network Module Demo")
             print("=" * 60)

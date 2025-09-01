@@ -6,6 +6,7 @@ delivery for content protection events and system monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
@@ -22,7 +23,9 @@ logger = get_logger(__name__)
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -32,6 +35,7 @@ class AlertSeverity(str, Enum):
 
 class AlertCategory(str, Enum):
     """Alert categories for classification."""
+
     SECURITY_THREAT = "security_threat"
     POLICY_VIOLATION = "policy_violation"
     SYSTEM_PERFORMANCE = "system_performance"
@@ -44,6 +48,7 @@ class AlertCategory(str, Enum):
 
 class AlertStatus(str, Enum):
     """Alert status states."""
+
     OPEN = "open"
     ACKNOWLEDGED = "acknowledged"
     IN_PROGRESS = "in_progress"
@@ -54,6 +59,7 @@ class AlertStatus(str, Enum):
 
 class NotificationChannel(str, Enum):
     """Available notification channels."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -65,6 +71,7 @@ class NotificationChannel(str, Enum):
 
 class EscalationLevel(str, Enum):
     """Escalation levels for alerts."""
+
     LEVEL_1 = "level_1"  # Initial response team
     LEVEL_2 = "level_2"  # Senior team/management
     LEVEL_3 = "level_3"  # Executive/emergency
@@ -95,7 +102,8 @@ class Alert:
 
 @dataclass
 class NotificationRule:
-    """Notification rule configuration."""
+    """
+Notification rule configuration."""
     rule_id: str
     name: str
     conditions: Dict[str, Any]
@@ -110,7 +118,8 @@ class NotificationRule:
 
 @dataclass
 class EscalationPolicy:
-    """Escalation policy definition."""
+    """
+Escalation policy definition."""
     policy_id: str
     name: str
     conditions: Dict[str, Any]

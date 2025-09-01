@@ -9,13 +9,15 @@ and can be imported correctly, proving the implementation is complete.
 Author: Assistant IA
 Date: 21 January 2025
 """
+
 import os
 import sys
 import json
 from pathlib import Path
 
 def check_file_exists(file_path):
-    """Check if a file exists and return status."""
+    """
+Check if a file exists and return status."""
     
     print("🔍 VALIDATION COMPLÈTE - IMPLÉMENTATION AINFLUE")
     print("=" * 60)

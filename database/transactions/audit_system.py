@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import asyncio
 import json
 import hashlib
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuditLevel(Enum):
-    """Audit level enumeration"""
+    """
+Audit level enumeration"""
+
     NONE = "NONE"                   # No auditing
     MINIMAL = "MINIMAL"             # Basic operations only
     STANDARD = "STANDARD"           # Standard audit level
@@ -104,6 +107,7 @@ class AuditEventType(Enum):
 
 class ComplianceStandard(Enum):
     """Compliance standards"""
+
     GDPR = "GDPR"                   # General Data Protection Regulation
     CCPA = "CCPA"                   # California Consumer Privacy Act
     SOX = "SOX"                     # Sarbanes-Oxley Act
@@ -133,7 +137,8 @@ class AuditContext:
     compliance_tags: Set[str] = field(default_factory=set)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'user_id': self.user_id,
             'session_id': self.session_id,
@@ -151,7 +156,8 @@ class AuditContext:
 
 @dataclass
 class TransactionLog:
-    """Transaction log entry for audit purposes"""
+    """
+Transaction log entry for audit purposes"""
     log_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     event_type: AuditEventType = AuditEventType.TRANSACTION_BEGIN
@@ -169,12 +175,14 @@ class TransactionLog:
     checksum: Optional[str] = None
     
     def __post_init__(self):
-        """Calculate checksum after initialization"""
+        """
+Calculate checksum after initialization"""
         if self.checksum is None:
             self.checksum = self._calculate_checksum()
     
     def _calculate_checksum(self) -> str:
-        """Calculate SHA-256 checksum of log entry"""
+        """
+Calculate SHA-256 checksum of log entry"""
         data = {
             'log_id': self.log_id,
             'timestamp': self.timestamp.isoformat(),
@@ -192,12 +200,14 @@ class TransactionLog:
         return hashlib.sha256(data_str.encode('utf-8')).hexdigest()
     
     def verify_integrity(self) -> bool:
-        """Verify log entry integrity"""
+        """
+Verify log entry integrity"""
         expected_checksum = self._calculate_checksum()
         return self.checksum == expected_checksum
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'log_id': self.log_id,
             'timestamp': self.timestamp.isoformat(),
@@ -218,7 +228,8 @@ class TransactionLog:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TransactionLog':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         context = None
         if data.get('context'):
             context_data = data['context']
@@ -263,7 +274,8 @@ class TransactionLog:
 
 
 class AuditStorage:
-    """Audit log storage with SQLite backend"""
+    """
+Audit log storage with SQLite backend"""
     
     def __init__(self, db_path: str = "./audit_logs.db"):
         self.db_path = db_path
@@ -324,7 +336,8 @@ class AuditStorage:
                 conn.close()
     
     def store_log(self, log_entry: TransactionLog) -> None:
-        """Store audit log entry"""
+        """
+Store audit log entry"""
         with self.lock:
             conn = sqlite3.connect(self.db_path)
             try:
@@ -367,7 +380,8 @@ class AuditStorage:
         creator_id: Optional[str] = None,
         limit: int = 1000
     ) -> List[TransactionLog]:
-        """Retrieve audit logs with filtering"""
+        """
+Retrieve audit logs with filtering"""
         
         conditions = []
         params = []
@@ -445,7 +459,8 @@ class AuditStorage:
                 conn.close()
     
     def cleanup_expired_logs(self) -> int:
-        """Remove expired audit logs based on retention period"""
+        """
+Remove expired audit logs based on retention period"""
         
         current_time = datetime.now(timezone.utc).timestamp()
         
@@ -599,7 +614,8 @@ class AuditSystem:
         context: Optional[AuditContext] = None,
         compliance_standards: Optional[Set[ComplianceStandard]] = None
     ) -> str:
-        """Log transaction audit event"""
+        """
+Log transaction audit event"""
         
         # Use current context if none provided
         if context is None and self._context_stack:
@@ -871,7 +887,8 @@ class AuditSystem:
         to_date: datetime,
         creator_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generate compliance report for specific standard"""
+        """
+Generate compliance report for specific standard"""
         
         # Get relevant audit logs
         logs = await self.get_audit_trail(
@@ -933,7 +950,8 @@ class AuditSystem:
         from_timestamp: Optional[datetime] = None,
         to_timestamp: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Verify integrity of audit logs"""
+        """
+Verify integrity of audit logs"""
         
         integrity_report = {
             'total_logs_checked': 0,
@@ -1013,7 +1031,8 @@ class AuditSystem:
         return metrics
     
     def _get_event_audit_level(self, event_type: AuditEventType) -> AuditLevel:
-        """Determine audit level for event type"""
+        """
+Determine audit level for event type"""
         
         # High-priority events always get comprehensive auditing
         high_priority_events = {
@@ -1042,7 +1061,8 @@ class AuditSystem:
         return self.audit_level
     
     def _should_audit(self, event_audit_level: AuditLevel) -> bool:
-        """Check if event should be audited based on configured level"""
+        """
+Check if event should be audited based on configured level"""
         
         level_hierarchy = {
             AuditLevel.NONE: 0,
@@ -1062,7 +1082,8 @@ class AuditSystem:
         return event_level >= configured_level
     
     def _get_retention_period(self, compliance_standards: Set[ComplianceStandard]) -> int:
-        """Get retention period based on compliance standards"""
+        """
+Get retention period based on compliance standards"""
         
         # Default retention periods by standard (in seconds)
         retention_periods = {
@@ -1083,7 +1104,8 @@ class AuditSystem:
         return max_retention
     
     async def _check_compliance_violation(self, log_entry: TransactionLog) -> bool:
-        """Check if log entry indicates compliance violation"""
+        """
+Check if log entry indicates compliance violation"""
         
         violation_events = {
             AuditEventType.SECURITY_VIOLATION,
@@ -1094,7 +1116,8 @@ class AuditSystem:
         return log_entry.event_type in violation_events
     
     async def _handle_compliance_violation(self, log_entry: TransactionLog) -> None:
-        """Handle detected compliance violation"""
+        """
+Handle detected compliance violation"""
         
         logger.warning(
             "Compliance violation detected: %s (log_id=%s, transaction=%s)",
@@ -1126,7 +1149,8 @@ class AuditSystem:
         }
     
     async def _analyze_dmca_compliance(self, logs: List[TransactionLog]) -> Dict[str, Any]:
-        """Analyze DMCA compliance from audit logs"""
+        """
+Analyze DMCA compliance from audit logs"""
         
         return {
             'dmca_analysis': {
@@ -1146,7 +1170,8 @@ class AuditSystem:
         }
     
     async def _analyze_revenue_compliance(self, logs: List[TransactionLog]) -> Dict[str, Any]:
-        """Analyze revenue reporting compliance from audit logs"""
+        """
+Analyze revenue reporting compliance from audit logs"""
         
         revenue_events = [
             log for log in logs 
@@ -1175,7 +1200,8 @@ class AuditSystem:
         }
     
     async def _periodic_cleanup(self) -> None:
-        """Background task for periodic cleanup of expired logs"""
+        """
+Background task for periodic cleanup of expired logs"""
         
         while self._monitoring:
             try:
@@ -1263,7 +1289,8 @@ async def audit_content_operation(
     context: Optional[AuditContext] = None,
     **kwargs
 ):
-    """Audit content protection operation"""
+    """
+Audit content protection operation"""
     
     event_type_map = {
         'fingerprint': AuditEventType.CONTENT_FINGERPRINT,

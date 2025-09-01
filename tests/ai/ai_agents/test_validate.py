@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Validation Framework
+"""
+Comprehensive Tests for Validation Framework
 
 Industrial-grade testing for data validation, schema validation,
 business rule validation, and integrity checking.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -56,15 +59,18 @@ logger = logging.getLogger(__name__)
 
 
 class TestDataValidator:
-    """Test data validation functionality"""
+    """
+Test data validation functionality"""
     
     @pytest.fixture
     def data_validator(self):
-        """Create data validator for testing"""
+        """
+Create data validator for testing"""
         return DataValidator()
     
     def test_basic_type_validation(self, data_validator):
-        """Test basic data type validation"""
+        """
+Test basic data type validation"""
         # String validation
         string_result = data_validator.validate_type("test_string", str)
         assert string_result.is_valid is True
@@ -152,7 +158,8 @@ class TestDataValidator:
         assert not_even_result.is_valid is False
     
     def test_collection_validation(self, data_validator):
-        """Test collection validation rules"""
+        """
+Test collection validation rules"""
         # List validation
         valid_list = [1, 2, 3, 4, 5]
         list_length_result = data_validator.validate_list_length(valid_list, min_length=3, max_length=10)
@@ -211,7 +218,8 @@ class TestDataValidator:
         """Test custom validation rules"""
         # Custom password validation
         def validate_strong_password(password):
-            """Validate password strength"""
+            """
+Validate password strength"""
             if len(password) < 8:
                 return ValidationResult(False, "Password must be at least 8 characters long")
             
@@ -262,11 +270,13 @@ class TestSchemaValidator:
     
     @pytest.fixture
     def schema_validator(self):
-        """Create schema validator for testing"""
+        """
+Create schema validator for testing"""
         return SchemaValidator()
     
     def test_json_schema_validation(self, schema_validator):
-        """Test JSON schema validation"""
+        """
+Test JSON schema validation"""
         # Define user schema
         user_schema = {
             "type": "object",
@@ -538,11 +548,13 @@ class TestBusinessRuleValidator:
     
     @pytest.fixture
     def business_validator(self):
-        """Create business rule validator for testing"""
+        """
+Create business rule validator for testing"""
         return BusinessRuleValidator()
     
     def test_simple_business_rules(self, business_validator):
-        """Test simple business rule validation"""
+        """
+Test simple business rule validation"""
         # Define age-based discount rule
         age_discount_rule = ValidationRule(
             name="age_discount_eligibility",
@@ -811,11 +823,13 @@ class TestIntegrityValidator:
     
     @pytest.fixture
     def integrity_validator(self):
-        """Create integrity validator for testing"""
+        """
+Create integrity validator for testing"""
         return IntegrityValidator()
     
     def test_referential_integrity(self, integrity_validator):
-        """Test referential integrity validation"""
+        """
+Test referential integrity validation"""
         # Mock database tables
         users_table = [
             {"id": 1, "name": "John Doe", "email": "john@example.com"},
@@ -1019,7 +1033,8 @@ class TestAsyncValidator:
     
     @pytest.fixture
     async def async_validator(self):
-        """Create async validator for testing"""
+        """
+Create async validator for testing"""
         validator = AsyncValidator()
         await validator.initialize()
         
@@ -1028,10 +1043,12 @@ class TestAsyncValidator:
         await validator.shutdown()
     
     async def test_async_validation_rules(self, async_validator):
-        """Test asynchronous validation rules"""
+        """
+Test asynchronous validation rules"""
         # Define async validation rule (simulating external API call)
         async def validate_email_deliverability(email):
-            """Simulate checking email deliverability via external service"""
+            """
+Simulate checking email deliverability via external service"""
             await asyncio.sleep(0.1)  # Simulate network delay
             
             # Simple mock validation - reject emails from blocked domains
@@ -1058,7 +1075,8 @@ class TestAsyncValidator:
         """Test parallel execution of async validation rules"""
         # Define multiple async validation rules
         async def validate_username_availability(username):
-            """Simulate checking username availability"""
+            """
+Simulate checking username availability"""
             await asyncio.sleep(0.2)
             
             taken_usernames = ["admin", "root", "test", "user"]
@@ -1104,7 +1122,8 @@ class TestAsyncValidator:
         """Test async validation with timeout handling"""
         # Define slow validation rule
         async def slow_validation(data):
-            """Simulate slow external validation"""
+            """
+Simulate slow external validation"""
             await asyncio.sleep(2.0)  # Intentionally slow
             return ValidationResult(True, "Validation completed")
         
@@ -1118,7 +1137,8 @@ class TestAsyncValidator:
         """Test error handling in async validation"""
         # Define validation rule that raises exception
         async def failing_validation(data):
-            """Validation that raises an exception"""
+            """
+Validation that raises an exception"""
             await asyncio.sleep(0.1)
             raise ValueError("Validation service unavailable")
         
@@ -1134,7 +1154,8 @@ class TestAsyncValidator:
         """Test batch validation of multiple items"""
         # Define batch validation rule
         async def validate_user_batch(users):
-            """Validate a batch of users"""
+            """
+Validate a batch of users"""
             results = []
             
             for user in users:
@@ -1171,7 +1192,8 @@ class TestValidationIntegration:
     
     @pytest.fixture
     async def complete_validator(self):
-        """Create complete validation system for integration testing"""
+        """
+Create complete validation system for integration testing"""
         from ai.ai_agents.validate import ValidationSystem
         
         system = ValidationSystem()
@@ -1182,7 +1204,8 @@ class TestValidationIntegration:
         await system.shutdown()
     
     async def test_multi_layer_validation(self, complete_validator):
-        """Test multi-layer validation (data -> schema -> business -> integrity)"""
+        """
+Test multi-layer validation (data -> schema -> business -> integrity)"""
         # Define user registration data
         registration_data = {
             "username": "johndoe",

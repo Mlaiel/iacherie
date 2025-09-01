@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any
 from dataclasses import dataclass
 from enum import Enum
@@ -22,7 +23,8 @@ from .specialized_services import CreatorType, ContentCategory
 
 @dataclass
 class CreatorConfigPreset:
-    """Configuration preset for specific creator types"""
+    """
+Configuration preset for specific creator types"""
     creator_type: CreatorType
     supported_formats: List[str]
     priority_algorithms: List[str]
@@ -36,7 +38,9 @@ class CreatorConfigPreset:
 
 
 class CreatorConfigurations:
-    """Predefined configurations for different creator types"""
+    """
+Predefined configurations for different creator types"""
+
     
     MUSICIAN_CONFIG = CreatorConfigPreset(
         creator_type=CreatorType.MUSICIAN,
@@ -344,7 +348,8 @@ class CreatorConfigurations:
     
     @classmethod
     def get_all_configs(cls) -> Dict[CreatorType, CreatorConfigPreset]:
-        """Get all creator configurations"""
+        """
+Get all creator configurations"""
         return {
             CreatorType.MUSICIAN: cls.MUSICIAN_CONFIG,
             CreatorType.BLOGGER: cls.BLOGGER_CONFIG,
@@ -358,31 +363,37 @@ class CreatorConfigurations:
     
     @classmethod
     def get_supported_formats_by_type(cls, creator_type: CreatorType) -> List[str]:
-        """Get supported file formats for creator type"""
+        """
+Get supported file formats for creator type"""
         config = cls.get_config(creator_type)
         return config.supported_formats
     
     @classmethod
     def get_platform_preferences_by_type(cls, creator_type: CreatorType) -> List[str]:
-        """Get platform preferences for creator type"""
+        """
+Get platform preferences for creator type"""
         config = cls.get_config(creator_type)
         return config.platform_preferences
     
     @classmethod
     def get_monetization_features_by_type(cls, creator_type: CreatorType) -> Dict[str, bool]:
-        """Get monetization features for creator type"""
+        """
+Get monetization features for creator type"""
         config = cls.get_config(creator_type)
         return config.monetization_features
     
     @classmethod
     def get_collaboration_features_by_type(cls, creator_type: CreatorType) -> Dict[str, bool]:
-        """Get collaboration features for creator type"""
+        """
+Get collaboration features for creator type"""
         config = cls.get_config(creator_type)
         return config.collaboration_features
 
 
 class PlatformOptimizations:
-    """Platform-specific optimization settings"""
+    """
+Platform-specific optimization settings"""
+
     
     PLATFORM_SPECS = {
         "spotify": {
@@ -429,7 +440,8 @@ class PlatformOptimizations:
     
     @classmethod
     def get_optimal_formats_for_platform(cls, platform: str) -> List[str]:
-        """Get optimal file formats for platform"""
+        """
+Get optimal file formats for platform"""
         specs = cls.get_platform_specs(platform)
         formats = []
         

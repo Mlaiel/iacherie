@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import aiohttp
 import websockets
@@ -26,7 +27,8 @@ from collections import defaultdict
 
 @dataclass
 class MonitorTarget:
-    """Real-time monitoring target definition."""
+    """
+Real-time monitoring target definition."""
     target_id: str
     url: str
     platform: str
@@ -43,7 +45,8 @@ class MonitorTarget:
 
 @dataclass
 class RealtimeEvent:
-    """Real-time event data structure."""
+    """
+Real-time event data structure."""
     event_id: str
     target_id: str
     event_type: str  # new_content, content_change, engagement_spike, etc.
@@ -94,16 +97,19 @@ class RealtimeScraper:
         self.running = False
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self.start()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.stop()
         
     async def start(self):
-        """Start real-time monitoring."""
+        """
+Start real-time monitoring."""
         if self.running:
             return
             
@@ -183,7 +189,8 @@ class RealtimeScraper:
         self.active_monitors[target.target_id] = task
         
     async def _stop_monitor(self, target_id: str):
-        """Stop monitoring specific target."""
+        """
+Stop monitoring specific target."""
         if target_id in self.active_monitors:
             self.active_monitors[target_id].cancel()
             try:
@@ -193,7 +200,8 @@ class RealtimeScraper:
             del self.active_monitors[target_id]
             
     async def _monitor_target(self, target: MonitorTarget):
-        """Monitor single target continuously."""
+        """
+Monitor single target continuously."""
         self.logger.info(f"Started monitoring {target.target_id}")
         
         while self.running and target.active:
@@ -289,7 +297,8 @@ class RealtimeScraper:
             await self.event_queue.put(event)
             
     def _generate_event_id(self) -> str:
-        """Generate unique event ID."""
+        """
+Generate unique event ID."""
         timestamp = str(int(time.time() * 1000))
         return f"event_{timestamp}_{hashlib.md5(f'{timestamp}{time.time()}'.encode()).hexdigest()[:8]}"
         
@@ -414,7 +423,8 @@ class RealtimeScraper:
             self.event_handlers[event_type].remove(handler)
             
     async def get_target_status(self, target_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of monitoring target."""
+        """
+Get status of monitoring target."""
         if target_id not in self.targets:
             return None
             
@@ -434,7 +444,8 @@ class RealtimeScraper:
         }
         
     async def get_all_targets(self) -> List[Dict[str, Any]]:
-        """Get status of all monitoring targets."""
+        """
+Get status of all monitoring targets."""
         statuses = []
         for target_id in self.targets:
             status = await self.get_target_status(target_id)
@@ -443,7 +454,8 @@ class RealtimeScraper:
         return statuses
         
     def get_stats(self) -> Dict[str, Any]:
-        """Get real-time scraper statistics."""
+        """
+Get real-time scraper statistics."""
         uptime = (datetime.now() - self.stats['uptime_start']).total_seconds()
         
         return {
@@ -456,7 +468,8 @@ class RealtimeScraper:
         }
         
     async def stream_events(self) -> AsyncGenerator[RealtimeEvent, None]:
-        """Stream events as they occur."""
+        """
+Stream events as they occur."""
         temp_queue = asyncio.Queue()
         
         # Register temporary handler

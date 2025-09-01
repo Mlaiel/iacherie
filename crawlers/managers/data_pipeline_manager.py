@@ -7,6 +7,7 @@ data validation, transformation, and intelligent routing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -34,7 +35,9 @@ from ...monitoring.metrics_collector import MetricsCollector
 
 
 class PipelineStage(Enum):
-    """Data pipeline processing stages."""
+    """
+Data pipeline processing stages."""
+
     INGESTION = "ingestion"
     VALIDATION = "validation"
     CLEANING = "cleaning"
@@ -49,6 +52,7 @@ class PipelineStage(Enum):
 
 class DataFormat(Enum):
     """Supported data formats."""
+
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -62,6 +66,7 @@ class DataFormat(Enum):
 
 class ProcessingStatus(Enum):
     """Data processing status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -91,7 +96,8 @@ class DataRecord:
 
 @dataclass
 class PipelineRule:
-    """Pipeline processing rule."""
+    """
+Pipeline processing rule."""
     rule_id: str
     name: str
     conditions: Dict[str, Any]
@@ -103,7 +109,8 @@ class PipelineRule:
 
 @dataclass
 class PipelineMetrics:
-    """Pipeline performance metrics."""
+    """
+Pipeline performance metrics."""
     pipeline_name: str
     records_processed: int = 0
     records_completed: int = 0
@@ -123,7 +130,8 @@ class PipelineStageProcessor:
     """
     
     def __init__(self, stage: PipelineStage, config: Dict[str, Any] = None):
-        """Initialize stage processor."""
+        """
+Initialize stage processor."""
         self.stage = stage
         self.config = config or {}
         self.logger = get_logger(f"Pipeline-{stage.value}")
@@ -170,19 +178,22 @@ class PipelineStageProcessor:
         return True
         
     async def cleanup(self, record: DataRecord):
-        """Cleanup after processing."""
+        """
+Cleanup after processing."""
         pass
 
 
 class IngestionProcessor(PipelineStageProcessor):
-    """Data ingestion stage processor."""
+    """
+Data ingestion stage processor."""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(PipelineStage.INGESTION, config)
         self.data_validator = DataValidator()
         
     async def process(self, record: DataRecord) -> DataRecord:
-        """Process data ingestion."""
+        """
+Process data ingestion."""
         try:
             # Calculate checksum if not present
             if not record.checksum:
@@ -226,7 +237,8 @@ class ValidationProcessor(PipelineStageProcessor):
         self.validator = DataValidator()
         
     async def process(self, record: DataRecord) -> DataRecord:
-        """Process data validation."""
+        """
+Process data validation."""
         try:
             # Validate data format
             is_valid = await self._validate_format(record)
@@ -293,7 +305,8 @@ class ValidationProcessor(PipelineStageProcessor):
             return False
             
     async def _calculate_checksum(self, data: Union[str, bytes, Dict[str, Any]]) -> str:
-        """Calculate data checksum."""
+        """
+Calculate data checksum."""
         if isinstance(data, dict):
             data_str = json.dumps(data, sort_keys=True)
             data_bytes = data_str.encode('utf-8')
@@ -305,7 +318,8 @@ class ValidationProcessor(PipelineStageProcessor):
         return hashlib.sha256(data_bytes).hexdigest()
         
     async def _apply_validation_rules(self, record: DataRecord) -> Dict[str, Any]:
-        """Apply custom validation rules."""
+        """
+Apply custom validation rules."""
         # Placeholder for custom validation logic
         return {
             'valid': True,
@@ -315,14 +329,16 @@ class ValidationProcessor(PipelineStageProcessor):
 
 
 class TransformationProcessor(PipelineStageProcessor):
-    """Data transformation stage processor."""
+    """
+Data transformation stage processor."""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(PipelineStage.TRANSFORMATION, config)
         self.transformer = DataTransformer()
         
     async def process(self, record: DataRecord) -> DataRecord:
-        """Process data transformation."""
+        """
+Process data transformation."""
         try:
             # Apply transformations based on data format
             if record.data_format == DataFormat.JSON:
@@ -397,7 +413,8 @@ class EnrichmentProcessor(PipelineStageProcessor):
         self.enricher = DataEnricher()
         
     async def process(self, record: DataRecord) -> DataRecord:
-        """Process data enrichment."""
+        """
+Process data enrichment."""
         try:
             # Enrich with metadata
             enriched_metadata = await self._enrich_metadata(record)
@@ -474,7 +491,8 @@ class DataPipelineManager:
     """
     
     def __init__(self, config: Optional[PipelineConfig] = None):
-        """Initialize data pipeline manager."""
+        """
+Initialize data pipeline manager."""
         self.config = config or PipelineConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.metrics_collector = MetricsCollector()
@@ -759,14 +777,16 @@ class DataPipelineManager:
         return None
         
     async def get_pipeline_metrics(self, pipeline_name: str = None) -> Union[PipelineMetrics, Dict[str, PipelineMetrics]]:
-        """Get pipeline metrics."""
+        """
+Get pipeline metrics."""
         if pipeline_name:
             return self.metrics.get(pipeline_name)
         else:
             return self.metrics.copy()
             
     async def get_global_metrics(self) -> PipelineMetrics:
-        """Get global pipeline metrics."""
+        """
+Get global pipeline metrics."""
         # Update throughput
         total_time = (datetime.utcnow() - self.global_metrics.last_updated).total_seconds()
         if total_time > 0:
@@ -780,7 +800,8 @@ class DataPipelineManager:
         return self.global_metrics
         
     async def _save_record_to_database(self, record: DataRecord):
-        """Save processed record to database."""
+        """
+Save processed record to database."""
         try:
             async with get_database_session() as db:
                 db_record = CrawledDataRecord(
@@ -865,7 +886,8 @@ class DataPipelineManager:
             return False
             
     async def shutdown(self):
-        """Shutdown the data pipeline manager."""
+        """
+Shutdown the data pipeline manager."""
         try:
             self.processing_active = False
             
@@ -925,7 +947,8 @@ async def process_crawled_data_batch(data_items: List[Tuple[str, Any, DataFormat
 
 
 async def create_custom_processor(stage: PipelineStage, process_func: Callable) -> PipelineStageProcessor:
-    """Create a custom processor from a function."""
+    """
+Create a custom processor from a function."""
     
     class CustomProcessor(PipelineStageProcessor):
         def __init__(self):

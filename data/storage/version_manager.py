@@ -8,7 +8,7 @@ Technologies: Python, Git-like versioning, Delta compression, Conflict resolutio
 ===========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ Content Creation → Version Tracking → Change Detection →
 Delta Storage → Conflict Resolution → Rollback Support → 
 Branch Management → Collaboration History → Audit Trail
 """
+
 import asyncio
 import logging
 import hashlib
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class VersionType(Enum):
-    """Version type enumeration"""
+    """
+Version type enumeration"""
+
     INITIAL = "initial"
     MINOR = "minor"
     MAJOR = "major"
@@ -60,6 +63,7 @@ class VersionType(Enum):
 
 class ChangeType(Enum):
     """Change type enumeration"""
+
     CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
@@ -71,6 +75,7 @@ class ChangeType(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     AUTO_MERGE = "auto_merge"
     PREFER_LOCAL = "prefer_local"
     PREFER_REMOTE = "prefer_remote"
@@ -152,7 +157,8 @@ class BranchInfo:
 
 @dataclass
 class MergeResult:
-    """Result of merge operation"""
+    """
+Result of merge operation"""
     success: bool
     merged_version_id: str
     conflicts: List[Dict[str, Any]] = field(default_factory=list)
@@ -409,7 +415,8 @@ class VersionManager:
         return file_hash.hexdigest(), content_hash.hexdigest()
     
     async def _store_version_data(self, version_id: str, file_path: Union[str, Path]) -> str:
-        """Store version data in organized structure"""
+        """
+Store version data in organized structure"""
         file_path = Path(file_path)
         
         # Create storage path with organized structure
@@ -792,7 +799,8 @@ class VersionManager:
         return similarity
     
     def _calculate_overall_similarity(self, differences: List[Dict], content_a: bytes, content_b: bytes) -> float:
-        """Calculate overall similarity score between versions"""
+        """
+Calculate overall similarity score between versions"""
         if not differences:
             return 1.0
         

@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationStrategy(Enum):
-    """Available monetization strategies"""
+    """
+Available monetization strategies"""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     ADVERTISING = "advertising"
@@ -56,7 +59,8 @@ class MonetizationPlan:
 
 @dataclass
 class RevenueStream:
-    """Revenue stream definition"""
+    """
+Revenue stream definition"""
     stream_id: str
     stream_type: str
     platform: str
@@ -378,7 +382,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         platform: str, 
         user_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate personalized revenue potential"""
+        """
+Calculate personalized revenue potential"""
         base_streams = await self._get_platform_revenue_streams(platform)
         base_data = base_streams.get(stream_type, {})
         base_potential = base_data.get('base_potential', 1000)
@@ -403,7 +408,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _analyze_current_revenue(self, user_id: str) -> Dict[str, Any]:
-        """Analyze creator's current revenue streams"""
+        """
+Analyze creator's current revenue streams"""
         # Mock implementation - would connect to actual revenue tracking
         return {
             'total_monthly_revenue': 2500.0,
@@ -418,7 +424,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         revenue_goals: Dict[str, Any],
         current_revenue: Dict[str, Any]
     ) -> List[MonetizationStrategy]:
-        """Identify optimal monetization strategies"""
+        """
+Identify optimal monetization strategies"""
         strategies = []
         
         content_type = content_profile.get('primary_content_type', 'mixed')
@@ -456,7 +463,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         strategies: List[MonetizationStrategy],
         content_profile: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate revenue projections"""
+        """
+Calculate revenue projections"""
         return {
             'monthly_projection': 3500.0,
             'annual_projection': 42000.0,
@@ -469,7 +477,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         content_profile: Dict[str, Any],
         strategies: List[MonetizationStrategy]
     ) -> Dict[str, float]:
-        """Optimize allocation across platforms"""
+        """
+Optimize allocation across platforms"""
         # Mock allocation based on content type
         content_type = content_profile.get('primary_content_type', 'mixed')
         
@@ -487,7 +496,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         strategies: List[MonetizationStrategy],
         platform_allocations: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Assess monetization risks"""
+        """
+Assess monetization risks"""
         return {
             'platform_dependency_risk': 0.3,
             'strategy_diversification_risk': 0.2,
@@ -497,7 +507,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _create_implementation_timeline(self, strategies: List[MonetizationStrategy]) -> Dict[str, datetime]:
-        """Create implementation timeline"""
+        """
+Create implementation timeline"""
         now = datetime.now(timezone.utc)
         timeline = {}
         
@@ -511,7 +522,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         revenue_goals: Dict[str, Any],
         strategies: List[MonetizationStrategy]
     ) -> Dict[str, float]:
-        """Define success metrics"""
+        """
+Define success metrics"""
         return {
             'monthly_revenue_target': revenue_goals.get('monthly_target', 1000),
             'revenue_growth_rate': 0.15,
@@ -520,7 +532,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _identify_optimization_opportunities(self, performance: Dict[str, Any]) -> List[str]:
-        """Identify optimization opportunities"""
+        """
+Identify optimization opportunities"""
         opportunities = []
         
         conversion_rate = performance.get('conversion_rate', 0.02)
@@ -541,7 +554,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         user_id: str, 
         performance: Dict[str, Any]
     ) -> Dict[str, Dict[str, Any]]:
-        """Generate platform-specific recommendations"""
+        """
+Generate platform-specific recommendations"""
         return {
             'youtube': {
                 'current_revenue': 1200,
@@ -556,7 +570,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _generate_pricing_suggestions(self, performance: Dict[str, Any]) -> Dict[str, float]:
-        """Generate pricing suggestions"""
+        """
+Generate pricing suggestions"""
         return {
             'premium_content': 9.99,
             'exclusive_access': 19.99,
@@ -565,7 +580,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _generate_audience_targeting(self, performance: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate audience targeting recommendations"""
+        """
+Generate audience targeting recommendations"""
         return {
             'primary_demographics': {'age': '18-34', 'interests': ['technology', 'entertainment']},
             'geographic_focus': ['US', 'UK', 'Canada'],
@@ -576,7 +592,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _generate_timing_recommendations(self, performance: Dict[str, Any]) -> Dict[str, str]:
-        """Generate optimal timing recommendations"""
+        """
+Generate optimal timing recommendations"""
         return {
             'youtube': 'Tuesday-Thursday, 2-4 PM EST',
             'instagram': 'Daily, 11 AM and 7 PM EST',
@@ -584,7 +601,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _analyze_competition(self, user_id: str) -> Dict[str, Any]:
-        """Analyze competitive landscape"""
+        """
+Analyze competitive landscape"""
         return {
             'direct_competitors': 15,
             'average_competitor_revenue': 2800,
@@ -594,7 +612,8 @@ class MonetizationStrategistAgent(BaseAIAgent):
         }
 
     async def _load_monetization_knowledge(self) -> None:
-        """Load monetization knowledge base"""
+        """
+Load monetization knowledge base"""
         logger.info("Loaded monetization knowledge base")
 
     async def _initialize_market_data(self) -> None:

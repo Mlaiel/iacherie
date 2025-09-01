@@ -6,7 +6,7 @@ decision making for audio content approval workflows.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -14,6 +14,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class GateType(Enum):
-    """Quality gate types"""
+    """
+Quality gate types"""
+
     THRESHOLD = "threshold"       # Simple threshold check
     RANGE = "range"              # Value within range
     COMPARISON = "comparison"    # Compare multiple values
@@ -41,6 +44,7 @@ class GateType(Enum):
 
 class GateSeverity(Enum):
     """Gate failure severity levels"""
+
     INFO = "info"               # Informational only
     WARNING = "warning"         # Warning but can pass
     ERROR = "error"            # Error, blocks progression
@@ -105,7 +109,8 @@ class QualityGate(ABC):
         pass
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get gate evaluation statistics"""
+        """
+Get gate evaluation statistics"""
         return {
             'name': self.name,
             'type': self.gate_type.value,
@@ -118,14 +123,16 @@ class QualityGate(ABC):
         }
     
     def reset_statistics(self):
-        """Reset gate statistics"""
+        """
+Reset gate statistics"""
         self.evaluation_count = 0
         self.pass_count = 0
         self.fail_count = 0
         self.total_processing_time = 0.0
     
     def _update_statistics(self, result: QualityGateResult):
-        """Update gate statistics"""
+        """
+Update gate statistics"""
         self.evaluation_count += 1
         if result.passed:
             self.pass_count += 1
@@ -135,7 +142,8 @@ class QualityGate(ABC):
 
 
 class ThresholdGate(QualityGate):
-    """Simple threshold-based quality gate"""
+    """
+Simple threshold-based quality gate"""
     
     def __init__(
         self,
@@ -234,7 +242,8 @@ class ThresholdGate(QualityGate):
         return None
     
     def _evaluate_threshold(self, value: float, threshold: float, operator: str) -> bool:
-        """Evaluate threshold condition"""
+        """
+Evaluate threshold condition"""
         if operator == ">=":
             return value >= threshold
         elif operator == "<=":
@@ -369,7 +378,8 @@ class RangeGate(QualityGate):
         return None
     
     def _get_range_recommendations(self, passed: bool, actual: float) -> List[str]:
-        """Get recommendations for range violations"""
+        """
+Get recommendations for range violations"""
         if passed:
             return []
         
@@ -822,7 +832,8 @@ class QualityGateManager:
             return {name: gate.get_statistics() for name, gate in self.gates.items()}
     
     def get_evaluation_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get evaluation summary for specified period"""
+        """
+Get evaluation summary for specified period"""
         from datetime import timedelta
         
         cutoff_time = datetime.now() - timedelta(hours=hours)
@@ -866,7 +877,8 @@ class QualityGateManager:
         }
     
     def configure_standard_gates(self, profile: QualityProfile):
-        """Configure standard gates based on quality profile"""
+        """
+Configure standard gates based on quality profile"""
         
         # Clear existing gates
         self.gates.clear()
@@ -923,5 +935,6 @@ class QualityGateManager:
         return list(self.gates.keys())
     
     def list_enabled_gates(self) -> List[str]:
-        """List enabled gates"""
+        """
+List enabled gates"""
         return [name for name, gate in self.gates.items() if gate.enabled]

@@ -5,13 +5,14 @@ Centralized management system for all parser operations and orchestration.
 Provides high-level interface for parsing workflows and batch operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -26,7 +27,9 @@ from .exceptions import ParserManagerError, ParsingError, ValidationError
 
 
 class ParseStatus(Enum):
-    """Status of parsing operations"""
+    """
+Status of parsing operations"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -36,6 +39,7 @@ class ParseStatus(Enum):
 
 class ParsePriority(Enum):
     """Priority levels for parsing operations"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -44,7 +48,8 @@ class ParsePriority(Enum):
 
 @dataclass
 class ParseTask:
-    """Represents a parsing task"""
+    """
+Represents a parsing task"""
     task_id: str
     parser_type: Union[ParserType, str]
     content_path: str
@@ -62,7 +67,8 @@ class ParseTask:
 
 @dataclass
 class ParseResult:
-    """Result of a parsing operation"""
+    """
+Result of a parsing operation"""
     task_id: str
     parser_type: str
     status: ParseStatus
@@ -73,7 +79,8 @@ class ParseResult:
 
 
 class ParserManager:
-    """Centralized manager for all parser operations"""
+    """
+Centralized manager for all parser operations"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -107,15 +114,18 @@ class ParserManager:
         }
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         await self.shutdown()
     
     def generate_task_id(self) -> str:
-        """Generate unique task ID"""
+        """
+Generate unique task ID"""
         self._task_counter += 1
         return f"parse_task_{self._task_counter}_{int(datetime.now().timestamp())}"
     
@@ -385,7 +395,8 @@ class ParserManager:
         return processed_results
     
     async def _call_parser_method(self, parser: Any, task: ParseTask) -> Dict[str, Any]:
-        """Call the appropriate parser method based on parser type"""
+        """
+Call the appropriate parser method based on parser type"""
         parser_type_str = str(task.parser_type)
         
         if 'platform' in parser_type_str:
@@ -416,7 +427,8 @@ class ParserManager:
         return self._tasks.get(task_id)
     
     def get_all_tasks(self, status_filter: Optional[ParseStatus] = None) -> List[ParseTask]:
-        """Get all tasks, optionally filtered by status"""
+        """
+Get all tasks, optionally filtered by status"""
         tasks = list(self._tasks.values())
         
         if status_filter:
@@ -425,7 +437,8 @@ class ParserManager:
         return tasks
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get parsing statistics"""
+        """
+Get parsing statistics"""
         return {
             **self._stats,
             'pending_tasks': len([t for t in self._tasks.values() if t.status == ParseStatus.PENDING]),
@@ -434,7 +447,8 @@ class ParserManager:
         }
     
     def register_callback(self, event: str, callback: Callable):
-        """Register callback for parser events"""
+        """
+Register callback for parser events"""
         if event in self._callbacks:
             self._callbacks[event].append(callback)
         else:
@@ -462,7 +476,8 @@ class ParserManager:
             self._stats['average_duration'] = (current_avg * (completed - 1) + duration) / completed
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a queued or running task"""
+        """
+Cancel a queued or running task"""
         try:
             task = self._tasks.get(task_id)
             if not task:
@@ -581,7 +596,8 @@ class ParserManager:
         return mime_type or 'application/octet-stream'
     
     async def get_parser_capabilities(self) -> Dict[str, Any]:
-        """Get information about parser capabilities"""
+        """
+Get information about parser capabilities"""
         return {
             'available_parsers': [pt.value for pt in self.factory.get_available_parser_types()],
             'categories': [cat.value for cat in self.factory.get_categories()],
@@ -599,7 +615,8 @@ class ParserManager:
         parameters: Optional[Dict[str, Any]] = None,
         timeout: Optional[float] = None
     ) -> ParseResult:
-        """Parse content with automatic parser type detection"""
+        """
+Parse content with automatic parser type detection"""
         try:
             # Validate content
             validation = await self.validate_content(content_path)

@@ -4,6 +4,7 @@ Handles content distribution, page management, and monetization on Facebook.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FacebookCredentials:
-    """Facebook Graph API credentials configuration."""
+    """
+Facebook Graph API credentials configuration."""
     app_id: str
     app_secret: str
     access_token: str
@@ -35,6 +37,7 @@ class FacebookAdapter(BasePlatformAdapter):
     Advanced Facebook platform adapter for content distribution and monetization.
     Supports posts, reels, stories, live videos, and comprehensive analytics.
     """
+
     
     PLATFORM_NAME = "facebook"
     API_VERSION = "v18.0"
@@ -338,12 +341,14 @@ class FacebookAdapter(BasePlatformAdapter):
         return os.path.getsize(file_path) / (1024 * 1024)
     
     def _get_file_size_bytes(self, file_path: str) -> int:
-        """Get file size in bytes."""
+        """
+Get file size in bytes."""
         import os
         return os.path.getsize(file_path)
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
-        """Retrieve analytics data for Facebook content."""
+        """
+Retrieve analytics data for Facebook content."""
         try:
             post_id = content_id.replace("facebook_", "")
             

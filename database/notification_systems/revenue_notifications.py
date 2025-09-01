@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, date
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Sources de revenus dans l'écosystème IA Influencer"""
+    """
+Sources de revenus dans l'écosystème IA Influencer"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     SYNC_LICENSING = "sync_licensing"
     MERCHANDISE = "merchandise"
@@ -61,6 +64,7 @@ class RevenueSource(Enum):
 
 class RevenueStatus(Enum):
     """États des transactions de revenus"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     CONFIRMED = "confirmed"
@@ -73,6 +77,7 @@ class RevenueStatus(Enum):
 
 class NotificationTrigger(Enum):
     """Déclencheurs de notifications de revenus"""
+
     THRESHOLD_REACHED = "threshold_reached"
     DAILY_SUMMARY = "daily_summary"
     WEEKLY_REPORT = "weekly_report"
@@ -154,7 +159,8 @@ class RevenueNotificationManager:
         self.payment_providers = self._init_payment_providers()
         
     def _load_revenue_templates(self) -> Dict[str, Template]:
-        """Charge les templates de notification de revenus"""
+        """
+Charge les templates de notification de revenus"""
         templates = {
             "payment_received": Template("""
                 💰 PAIEMENT REÇU - {{ amount }} {{ currency }}
@@ -247,7 +253,8 @@ class RevenueNotificationManager:
         return templates
 
     def _init_payment_providers(self) -> Dict[str, Any]:
-        """Initialise les fournisseurs de paiement"""
+        """
+Initialise les fournisseurs de paiement"""
         return {
             "stripe": {
                 "client": stripe,
@@ -600,7 +607,8 @@ class RevenueNotificationManager:
         return transaction_id
 
     async def _check_revenue_thresholds(self, transaction: RevenueTransaction) -> List[Dict[str, Any]]:
-        """Vérifie les seuils de revenus et retourne les alertes déclenchées"""
+        """
+Vérifie les seuils de revenus et retourne les alertes déclenchées"""
         threshold_alerts = []
         
         async with self.db_pool.acquire() as conn:

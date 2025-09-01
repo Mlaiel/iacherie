@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import numpy as np
@@ -42,7 +43,9 @@ logger = get_logger(__name__)
 
 
 class RevenueSource(Enum):
-    """Sources of revenue for creators"""
+    """
+Sources of revenue for creators"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     SUBSCRIPTION = "subscription"
     MERCHANDISE = "merchandise"
@@ -62,6 +65,7 @@ class RevenueSource(Enum):
 
 class RevenueCategory(Enum):
     """Categories of revenue"""
+
     DIRECT = "direct"           # Direct payments from audience
     INDIRECT = "indirect"       # Ad revenue, sponsorships
     PASSIVE = "passive"         # Royalties, licensing
@@ -72,6 +76,7 @@ class RevenueCategory(Enum):
 
 class PaymentFrequency(Enum):
     """Frequency of payments"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -83,6 +88,7 @@ class PaymentFrequency(Enum):
 
 class RevenueOptimizationGoal(Enum):
     """Goals for revenue optimization"""
+
     INCREASE_TOTAL_REVENUE = "increase_total_revenue"
     DIVERSIFY_SOURCES = "diversify_sources"
     IMPROVE_MARGINS = "improve_margins"
@@ -114,7 +120,8 @@ class RevenueAnalyticsEvent(BaseEvent):
     conversion_data: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert revenue analytics event to dictionary"""
+        """
+Convert revenue analytics event to dictionary"""
         data = asdict(self)
         data.update({
             'revenue_source': self.revenue_source.value,
@@ -130,7 +137,8 @@ class RevenueAnalyticsEvent(BaseEvent):
 
 @dataclass
 class RevenueOptimizationRecommendation:
-    """Revenue optimization recommendation"""
+    """
+Revenue optimization recommendation"""
     recommendation_id: str
     creator_id: str
     optimization_goal: RevenueOptimizationGoal
@@ -148,7 +156,8 @@ class RevenueOptimizationRecommendation:
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection model"""
+    """
+Revenue projection model"""
     creator_id: str
     projection_period: str  # monthly, quarterly, yearly
     projected_revenue: Dict[str, Decimal]
@@ -161,7 +170,8 @@ class RevenueProjection:
 
 
 class RevenueAnalyticsEventHandler(BaseEventHandler):
-    """Handles revenue analytics events with comprehensive processing"""
+    """
+Handles revenue analytics events with comprehensive processing"""
     
     def __init__(self):
         super().__init__()
@@ -173,7 +183,8 @@ class RevenueAnalyticsEventHandler(BaseEventHandler):
         self.attribution_engine = RevenueAttributionEngine()
         
     async def handle(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Process revenue analytics event with comprehensive analysis"""
+        """
+Process revenue analytics event with comprehensive analysis"""
         try:
             # Validate event data
             await self._validate_event(event)
@@ -260,7 +271,8 @@ class RevenueAnalyticsEventHandler(BaseEventHandler):
             )
     
     async def _calculate_revenue_quality(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Calculate revenue quality metrics"""
+        """
+Calculate revenue quality metrics"""
         # Base quality score
         base_score = self._get_base_revenue_score(event.revenue_source, event.revenue_category)
         
@@ -295,7 +307,8 @@ class RevenueAnalyticsEventHandler(BaseEventHandler):
         }
     
     def _get_base_revenue_score(self, source: RevenueSource, category: RevenueCategory) -> float:
-        """Get base quality score for revenue source and category"""
+        """
+Get base quality score for revenue source and category"""
         source_scores = {
             RevenueSource.STREAMING_ROYALTIES: 70,
             RevenueSource.SUBSCRIPTION: 90,
@@ -330,7 +343,8 @@ class RevenueAnalyticsEventHandler(BaseEventHandler):
 
 
 class RevenueTracker:
-    """Tracks comprehensive revenue metrics and trends"""
+    """
+Tracks comprehensive revenue metrics and trends"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -338,7 +352,8 @@ class RevenueTracker:
         self.metrics_calculator = MetricsCalculator()
         
     async def track_revenue(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Track comprehensive revenue metrics"""
+        """
+Track comprehensive revenue metrics"""
         # Calculate current period metrics
         current_period_metrics = await self._calculate_current_period_metrics(event)
         
@@ -368,7 +383,8 @@ class RevenueTracker:
         }
     
     async def _calculate_current_period_metrics(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Calculate metrics for current period"""
+        """
+Calculate metrics for current period"""
         # Get revenue data for current month
         current_month_start = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         
@@ -410,7 +426,8 @@ class RevenueTracker:
             }
     
     async def _calculate_growth_metrics(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Calculate revenue growth metrics"""
+        """
+Calculate revenue growth metrics"""
         # Get historical revenue data
         periods = [
             ('current_month', 0),
@@ -454,7 +471,8 @@ class RevenueTracker:
 
 
 class RevenueOptimizationEngine:
-    """Optimizes revenue strategies using ML and data analysis"""
+    """
+Optimizes revenue strategies using ML and data analysis"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -462,7 +480,8 @@ class RevenueOptimizationEngine:
         self.scaler = StandardScaler()
         
     async def optimize_revenue(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Generate revenue optimization recommendations"""
+        """
+Generate revenue optimization recommendations"""
         # Analyze current revenue performance
         performance_analysis = await self._analyze_revenue_performance(event)
         
@@ -488,7 +507,8 @@ class RevenueOptimizationEngine:
         }
     
     async def _identify_optimization_opportunities(self, event: RevenueAnalyticsEvent) -> List[Dict[str, Any]]:
-        """Identify specific revenue optimization opportunities"""
+        """
+Identify specific revenue optimization opportunities"""
         opportunities = []
         
         # Revenue diversification opportunity
@@ -520,14 +540,16 @@ class RevenueOptimizationEngine:
 
 
 class RevenuePredictionEngine:
-    """Predicts future revenue using advanced ML models"""
+    """
+Predicts future revenue using advanced ML models"""
     
     def __init__(self):
         self.revenue_predictor = RevenuePredictor()
         self.db_manager = DatabaseManager()
         
     async def predict_revenue(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Generate comprehensive revenue predictions"""
+        """
+Generate comprehensive revenue predictions"""
         # Short-term predictions (next 30 days)
         short_term = await self._predict_short_term_revenue(event)
         
@@ -554,13 +576,15 @@ class RevenuePredictionEngine:
 
 
 class RevenueAttributionEngine:
-    """Attributes revenue to specific content, campaigns, and channels"""
+    """
+Attributes revenue to specific content, campaigns, and channels"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
         
     async def attribute_revenue(self, event: RevenueAnalyticsEvent) -> Dict[str, Any]:
-        """Perform revenue attribution analysis"""
+        """
+Perform revenue attribution analysis"""
         if not event.attribution_data:
             return {'status': 'no_attribution_data'}
         

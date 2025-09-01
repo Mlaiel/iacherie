@@ -29,6 +29,7 @@ Features:
 - Co-creation project management
 - International partnership facilitation
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -87,7 +88,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creative collaborations"""
+    """
+Types of creative collaborations"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_CONTENT = "joint_content"
@@ -104,6 +107,7 @@ class CollaborationType(Enum):
 
 class CollaborationStage(Enum):
     """Collaboration lifecycle stages"""
+
     DISCOVERY = "discovery"
     INITIAL_CONTACT = "initial_contact"
     NEGOTIATION = "negotiation"
@@ -117,6 +121,7 @@ class CollaborationStage(Enum):
 
 class MatchingCriteria(Enum):
     """Criteria for collaboration matching"""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     GENRE_COMPATIBILITY = "genre_compatibility"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -146,7 +151,8 @@ class CollaborationProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity data structure"""
+    """
+Collaboration opportunity data structure"""
     opportunity_id: str
     collaboration_type: CollaborationType
     potential_partners: List[str]
@@ -482,7 +488,8 @@ class CollaborationIntelligenceEngine:
         creator_profile: CollaborationProfile,
         preferences: Dict[str, Any]
     ) -> List[CollaborationProfile]:
-        """Find compatible creators for collaboration"""
+        """
+Find compatible creators for collaboration"""
         # Implementation details...
         pass
     
@@ -492,7 +499,8 @@ class CollaborationIntelligenceEngine:
         creator2: CollaborationProfile,
         preferences: Dict[str, Any]
     ) -> List[CollaborationOpportunity]:
-        """Generate collaboration opportunity scenarios"""
+        """
+Generate collaboration opportunity scenarios"""
         # Implementation details...
         pass
     
@@ -501,7 +509,8 @@ class CollaborationIntelligenceEngine:
         opportunities: List[CollaborationOpportunity],
         creator_profile: CollaborationProfile
     ) -> List[CollaborationOpportunity]:
-        """Score and rank collaboration opportunities"""
+        """
+Score and rank collaboration opportunities"""
         # Implementation details...
         pass
 

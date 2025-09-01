@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type, Union
@@ -45,7 +46,8 @@ class VectorServiceRegistry:
         self._shutdown_requested = False
         
     async def initialize(self, config: Optional[VectorConfig] = None) -> None:
-        """Initialize the service registry with configuration"""
+        """
+Initialize the service registry with configuration"""
         try:
             if self._initialized:
                 logger.warning("Service registry already initialized")
@@ -249,7 +251,8 @@ async def get_service_registry() -> VectorServiceRegistry:
 
 
 async def initialize_vector_services(config: Optional[VectorConfig] = None) -> VectorServiceRegistry:
-    """Initialize vector services with configuration"""
+    """
+Initialize vector services with configuration"""
     global _service_registry
     
     if _service_registry is not None:
@@ -273,7 +276,8 @@ async def shutdown_vector_services() -> None:
 
 @asynccontextmanager
 async def vector_service_context(config: Optional[VectorConfig] = None):
-    """Context manager for vector services lifecycle"""
+    """
+Context manager for vector services lifecycle"""
     registry = None
     try:
         registry = await initialize_vector_services(config)
@@ -288,7 +292,8 @@ async def vector_service_context(config: Optional[VectorConfig] = None):
 # ===============================
 
 async def create_vector_orchestrator(config: Optional[VectorConfig] = None) -> VectorOrchestrator:
-    """Factory function to create configured vector orchestrator"""
+    """
+Factory function to create configured vector orchestrator"""
     if config is None:
         config = get_config_for_environment()
     
@@ -298,7 +303,8 @@ async def create_vector_orchestrator(config: Optional[VectorConfig] = None) -> V
 
 
 async def create_faiss_manager(config: Optional[VectorConfig] = None) -> FAISSManager:
-    """Factory function to create configured FAISS manager"""
+    """
+Factory function to create configured FAISS manager"""
     if config is None:
         config = get_config_for_environment()
     
@@ -308,7 +314,8 @@ async def create_faiss_manager(config: Optional[VectorConfig] = None) -> FAISSMa
 
 
 async def create_similarity_engine(config: Optional[VectorConfig] = None) -> SimilarityEngine:
-    """Factory function to create configured similarity engine"""
+    """
+Factory function to create configured similarity engine"""
     if config is None:
         config = get_config_for_environment()
     
@@ -318,7 +325,8 @@ async def create_similarity_engine(config: Optional[VectorConfig] = None) -> Sim
 
 
 async def create_vector_indexer(config: Optional[VectorConfig] = None) -> VectorIndexer:
-    """Factory function to create configured vector indexer"""
+    """
+Factory function to create configured vector indexer"""
     if config is None:
         config = get_config_for_environment()
     
@@ -328,7 +336,8 @@ async def create_vector_indexer(config: Optional[VectorConfig] = None) -> Vector
 
 
 async def create_search_optimizer(config: Optional[VectorConfig] = None) -> SearchOptimizer:
-    """Factory function to create configured search optimizer"""
+    """
+Factory function to create configured search optimizer"""
     if config is None:
         config = get_config_for_environment()
     
@@ -342,7 +351,8 @@ async def create_search_optimizer(config: Optional[VectorConfig] = None) -> Sear
 # ===============================
 
 async def store_vector_document(document: VectorDocument) -> Dict[str, Any]:
-    """Convenience function to store vector document"""
+    """
+Convenience function to store vector document"""
     try:
         registry = await get_service_registry()
         orchestrator = registry.get_orchestrator()

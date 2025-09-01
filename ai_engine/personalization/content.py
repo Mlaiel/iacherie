@@ -21,7 +21,7 @@ Advanced Features:
 - Contextual & Temporal Personalization
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -40,6 +40,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set, Generator
@@ -69,7 +70,9 @@ from .exceptions import RecommendationError, ContentFilteringError, ContentAnaly
 
 
 class RecommendationStrategy(Enum):
-    """Content recommendation strategies"""
+    """
+Content recommendation strategies"""
+
     SIMILAR_CONTENT = "similar_content"
     TRENDING = "trending"
     COLLABORATIVE = "collaborative"
@@ -82,6 +85,7 @@ class RecommendationStrategy(Enum):
 
 class ContentMatchingType(Enum):
     """Content matching algorithms"""
+
     SEMANTIC_SIMILARITY = "semantic_similarity"
     GENRE_MATCHING = "genre_matching"
     CREATOR_SIMILARITY = "creator_similarity"
@@ -188,7 +192,8 @@ class ContentRecommender:
         }
     
     def _initialize_models(self) -> Dict[str, Any]:
-        """Initialize recommendation models"""
+        """
+Initialize recommendation models"""
         return {
             'content_similarity': TfidfVectorizer(max_features=5000, stop_words='english'),
             'collaborative_filtering': {'initialized': True},
@@ -299,7 +304,8 @@ class ContentRecommender:
         user_profile: UserProfile,
         candidate_content: List[ContentItem]
     ) -> List[RecommendationResult]:
-        """Generate recommendations based on content similarity"""
+        """
+Generate recommendations based on content similarity"""
         
         recommendations = []
         
@@ -539,7 +545,8 @@ class ContentRecommender:
         self,
         recommendations: List[RecommendationResult]
     ) -> List[RecommendationResult]:
-        """Remove duplicate recommendations and combine scores"""
+        """
+Remove duplicate recommendations and combine scores"""
         
         seen_content = {}
         deduplicated = []
@@ -670,7 +677,8 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on genre preferences"""
+        """
+Match content based on genre preferences"""
         
         return user_profile.preferred_genres.get(content.genre, 0.0)
     
@@ -679,7 +687,8 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on creator preferences"""
+        """
+Match content based on creator preferences"""
         
         # Check if user has interacted with this creator before
         creator_interactions = [
@@ -703,7 +712,8 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on format preferences"""
+        """
+Match content based on format preferences"""
         
         return user_profile.preferred_formats.get(content.content_type, 0.0)
     
@@ -712,7 +722,8 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on temporal patterns"""
+        """
+Match content based on temporal patterns"""
         
         # Check if content timing matches user's active periods
         content_hour = content.created_at.hour
@@ -732,7 +743,8 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on engagement patterns"""
+        """
+Match content based on engagement patterns"""
         
         # Normalize engagement metrics
         max_views = 1000000  # Simplified normalization
@@ -854,7 +866,8 @@ class PersonalizedContentGenerator:
         return max(0.0, min(1.0, adjusted_complexity))
     
     async def _personalize_tags(self, original_tags: List[str], user_profile: UserProfile) -> List[str]:
-        """Personalize content tags based on user interests"""
+        """
+Personalize content tags based on user interests"""
         
         personalized_tags = original_tags.copy()
         
@@ -973,7 +986,8 @@ class ContentAdaptationEngine:
         user_profile: UserProfile,
         current_time: datetime
     ) -> Dict[str, Any]:
-        """Adapt content based on time of day and user patterns"""
+        """
+Adapt content based on time of day and user patterns"""
         
         adaptations = {}
         hour = current_time.hour
@@ -1015,7 +1029,8 @@ class ContentAdaptationEngine:
         user_profile: UserProfile,
         user_context: str
     ) -> Dict[str, Any]:
-        """Adapt content based on user's current context"""
+        """
+Adapt content based on user's current context"""
         
         adaptations = {}
         
@@ -1051,7 +1066,8 @@ class ContentAdaptationEngine:
         content: ContentItem,
         user_profile: UserProfile
     ) -> Dict[str, Any]:
-        """Adapt content for accessibility needs"""
+        """
+Adapt content for accessibility needs"""
         
         adaptations = {}
         
@@ -1166,11 +1182,13 @@ class ContentRankingEngine:
         return min(relevance, 1.0)
     
     def _calculate_quality_score(self, content: ContentItem) -> float:
-        """Calculate content quality score"""
+        """
+Calculate content quality score"""
         return content.quality_score
     
     def _calculate_freshness_score(self, content: ContentItem) -> float:
-        """Calculate content freshness score"""
+        """
+Calculate content freshness score"""
         
         if not content.published_at:
             return 0.5  # Default for content without publish date
@@ -1190,7 +1208,8 @@ class ContentRankingEngine:
             return 0.2
     
     def _calculate_engagement_score(self, content: ContentItem) -> float:
-        """Calculate content engagement score"""
+        """
+Calculate content engagement score"""
         
         # Normalize engagement metrics
         # In production, these would be based on platform statistics
@@ -1220,7 +1239,8 @@ class ContentRankingEngine:
         all_content: List[ContentItem],
         user_profile: UserProfile
     ) -> float:
-        """Calculate diversity score to avoid too similar content"""
+        """
+Calculate diversity score to avoid too similar content"""
         
         # Simple diversity calculation based on genre distribution
         user_genres = list(user_profile.preferred_genres.keys())
@@ -1320,7 +1340,8 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         allowed_genres: List[str]
     ) -> List[ContentItem]:
-        """Filter by genre"""
+        """
+Filter by genre"""
         return [c for c in content_items if c.genre in allowed_genres]
     
     def _filter_by_quality(
@@ -1328,7 +1349,8 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         quality_threshold: float
     ) -> List[ContentItem]:
-        """Filter by quality threshold"""
+        """
+Filter by quality threshold"""
         return [c for c in content_items if c.quality_score >= quality_threshold]
     
     def _filter_by_duration(
@@ -1336,7 +1358,8 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         duration_range: Tuple[float, float]
     ) -> List[ContentItem]:
-        """Filter by duration range"""
+        """
+Filter by duration range"""
         min_duration, max_duration = duration_range
         return [
             c for c in content_items
@@ -1348,7 +1371,8 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         user_profile: UserProfile
     ) -> List[ContentItem]:
-        """Exclude previously seen content"""
+        """
+Exclude previously seen content"""
         seen_content_ids = {
             i.get('content_id') for i in user_profile.interaction_history
             if i.get('content_id')
@@ -1361,7 +1385,8 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         preferred_language: str
     ) -> List[ContentItem]:
-        """Filter by language preference"""
+        """
+Filter by language preference"""
         return [c for c in content_items if c.language == preferred_language]
     
     async def _apply_user_filters(
@@ -1369,7 +1394,8 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         user_profile: UserProfile
     ) -> List[ContentItem]:
-        """Apply user-specific filtering rules"""
+        """
+Apply user-specific filtering rules"""
         
         # Filter by user's minimum quality expectations
         min_quality = user_profile.content_sophistication * 0.7

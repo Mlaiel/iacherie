@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
+
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
@@ -20,7 +21,9 @@ from .config import FilterConfigManager
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types."""
+    """
+Deployment environment types."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -29,6 +32,7 @@ class DeploymentEnvironment(Enum):
 
 class PerformanceProfile(Enum):
     """Performance optimization profiles."""
+
     ECONOMY = "economy"          # Minimal resources
     BALANCED = "balanced"        # Balanced performance
     PERFORMANCE = "performance"  # High performance
@@ -95,7 +99,8 @@ class AdvancedConfigManager:
     """Advanced configuration manager for enterprise deployments."""
     
     def __init__(self, config_file: Optional[str] = None):
-        """Initialize advanced configuration manager."""
+        """
+Initialize advanced configuration manager."""
         self.base_config = FilterConfigManager()
         self.advanced_config = AdvancedFilterConfig()
         
@@ -110,13 +115,15 @@ class AdvancedConfigManager:
         self._apply_performance_optimizations()
     
     def _load_from_file(self, config_file: str) -> None:
-        """Load configuration from YAML/JSON file."""
+        """
+Load configuration from YAML/JSON file."""
         # Implementation would load from file
         # For now, using environment variables
         pass
     
     def _apply_environment_optimizations(self) -> None:
-        """Apply environment-specific optimizations."""
+        """
+Apply environment-specific optimizations."""
         env = self.advanced_config.environment
         
         if env == DeploymentEnvironment.DEVELOPMENT:
@@ -180,11 +187,13 @@ class AdvancedConfigManager:
         return self.base_config
     
     def get_advanced_config(self) -> AdvancedFilterConfig:
-        """Get advanced configuration."""
+        """
+Get advanced configuration."""
         return self.advanced_config
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete configuration as dictionary."""
+        """
+Export complete configuration as dictionary."""
         return {
             'environment': self.advanced_config.environment.value,
             'performance_profile': self.advanced_config.performance_profile.value,
@@ -221,7 +230,8 @@ advanced_config_manager = AdvancedConfigManager()
 
 
 def get_production_config() -> AdvancedConfigManager:
-    """Get production-optimized configuration."""
+    """
+Get production-optimized configuration."""
     config = AdvancedConfigManager()
     config.advanced_config.environment = DeploymentEnvironment.PRODUCTION
     config.advanced_config.performance_profile = PerformanceProfile.ENTERPRISE
@@ -231,7 +241,8 @@ def get_production_config() -> AdvancedConfigManager:
 
 
 def get_development_config() -> AdvancedConfigManager:
-    """Get development-optimized configuration."""
+    """
+Get development-optimized configuration."""
     config = AdvancedConfigManager()
     config.advanced_config.environment = DeploymentEnvironment.DEVELOPMENT
     config.advanced_config.performance_profile = PerformanceProfile.BALANCED

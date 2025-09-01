@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List, Union, Callable
 from pydantic import BaseSettings, Field, validator
@@ -23,7 +24,9 @@ from datetime import datetime, timedelta
 
 
 class SyncDirection(str, Enum):
-    """Data synchronization direction."""
+    """
+Data synchronization direction."""
+
     BIDIRECTIONAL = "bidirectional"
     PUSH_ONLY = "push_only"
     PULL_ONLY = "pull_only"
@@ -31,6 +34,7 @@ class SyncDirection(str, Enum):
 
 class SyncStrategy(str, Enum):
     """Data synchronization strategies."""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -40,6 +44,7 @@ class SyncStrategy(str, Enum):
 
 class ConflictResolution(str, Enum):
     """Conflict resolution strategies."""
+
     LAST_WRITE_WINS = "last_write_wins"
     SOURCE_PRIORITY = "source_priority"
     MANUAL_RESOLUTION = "manual_resolution"
@@ -49,6 +54,7 @@ class ConflictResolution(str, Enum):
 
 class SyncStatus(str, Enum):
     """Synchronization status."""
+
     IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
@@ -102,7 +108,8 @@ class SyncMetrics:
 
 @dataclass
 class SyncMapping:
-    """Field mapping configuration between data sources."""
+    """
+Field mapping configuration between data sources."""
     source_field: str
     target_field: str
     transform_function: Optional[str] = None
@@ -112,7 +119,8 @@ class SyncMapping:
 
 @dataclass
 class SyncFilter:
-    """Data filtering configuration for synchronization."""
+    """
+Data filtering configuration for synchronization."""
     field_name: str
     operator: str  # eq, ne, gt, lt, gte, lte, in, not_in, contains
     value: Any
@@ -277,11 +285,13 @@ class DataSyncManager:
         self.metrics: Dict[str, SyncMetrics] = {}
         
     def register_sync_mapping(self, sync_id: str, mappings: List[SyncMapping]):
-        """Register field mappings for a sync job."""
+        """
+Register field mappings for a sync job."""
         self.sync_mappings[sync_id] = mappings
     
     def register_sync_filter(self, sync_id: str, filters: List[SyncFilter]):
-        """Register filters for a sync job."""
+        """
+Register filters for a sync job."""
         self.sync_filters[sync_id] = filters
     
     def create_sync_job(
@@ -294,7 +304,8 @@ class DataSyncManager:
         conflict_resolution: ConflictResolution = ConflictResolution.LAST_WRITE_WINS,
         **kwargs
     ) -> Dict[str, Any]:
-        """Create a new synchronization job."""
+        """
+Create a new synchronization job."""
         job_config = {
             "job_id": job_id,
             "source": source,
@@ -320,7 +331,8 @@ class DataSyncManager:
         return self.sync_jobs.get(job_id)
     
     def update_sync_status(self, job_id: str, status: SyncStatus):
-        """Update synchronization job status."""
+        """
+Update synchronization job status."""
         if job_id in self.sync_jobs:
             self.sync_jobs[job_id]["status"] = status
             if status == SyncStatus.RUNNING:
@@ -366,7 +378,8 @@ class DataSyncManager:
         conflicts_detected: int = 0,
         sync_duration: float = 0.0
     ):
-        """Update synchronization metrics."""
+        """
+Update synchronization metrics."""
         if job_id not in self.metrics:
             self.metrics[job_id] = SyncMetrics()
             
@@ -380,7 +393,8 @@ class DataSyncManager:
         metrics.next_sync_time = self.calculate_next_sync_time(job_id)
     
     def get_active_sync_jobs(self) -> List[Dict[str, Any]]:
-        """Get all active synchronization jobs."""
+        """
+Get all active synchronization jobs."""
         return [
             job for job in self.sync_jobs.values()
             if job.get("enabled") and job.get("status") != SyncStatus.CANCELLED
@@ -396,7 +410,8 @@ class DataSyncManager:
         return schedule
     
     def validate_sync_data(self, data: Dict[str, Any], mappings: List[SyncMapping]) -> Dict[str, Any]:
-        """Validate and transform sync data based on mappings."""
+        """
+Validate and transform sync data based on mappings."""
         validated_data = {}
         
         for mapping in mappings:

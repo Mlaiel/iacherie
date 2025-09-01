@@ -6,6 +6,7 @@ the effectiveness of content protection strategies and implementations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -22,7 +23,9 @@ logger = get_logger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of protection metrics."""
+    """
+Types of protection metrics."""
+
     EFFECTIVENESS = "effectiveness"
     COVERAGE = "coverage"
     PERFORMANCE = "performance"
@@ -34,6 +37,7 @@ class MetricType(str, Enum):
 
 class MetricCategory(str, Enum):
     """Metric categories for organization."""
+
     CORE_KPI = "core_kpi"
     OPERATIONAL = "operational"
     STRATEGIC = "strategic"
@@ -43,6 +47,7 @@ class MetricCategory(str, Enum):
 
 class TimeGranularity(str, Enum):
     """Time granularity for metrics."""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"

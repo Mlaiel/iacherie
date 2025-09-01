@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks supported."""
+    """
+Compliance frameworks supported."""
+
     
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
@@ -96,6 +99,7 @@ class ComplianceEventType(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status types."""
+
     
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
@@ -107,6 +111,7 @@ class ComplianceStatus(Enum):
 
 class ComplianceRiskLevel(Enum):
     """Risk levels for compliance events."""
+
     
     CRITICAL = "critical"
     HIGH = "high"
@@ -117,6 +122,7 @@ class ComplianceRiskLevel(Enum):
 
 class DataCategory(Enum):
     """Categories of data for compliance tracking."""
+
     
     PERSONAL_IDENTIFIABLE = "pii"
     SENSITIVE_PERSONAL = "spi"
@@ -146,7 +152,8 @@ class ComplianceContext:
 
 
 class ComplianceTrackingLog(Base):
-    """Compliance tracking log model."""
+    """
+Compliance tracking log model."""
     
     __tablename__ = "compliance_tracking_logs"
     

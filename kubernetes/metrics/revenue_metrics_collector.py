@@ -31,6 +31,7 @@ Features:
 - Revenue forecasting and trends
 - Commission and fee tracking
 """
+
 import asyncio
 import json
 from typing import Dict, List, Optional, Any, Tuple
@@ -51,7 +52,9 @@ metrics_config = get_metrics_config()
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""
+    """
+Revenue source types"""
+
     PLATFORM_REVENUE = "platform_revenue"          # Direct platform earnings
     LICENSING_DEAL = "licensing_deal"              # Content licensing
     PROTECTION_RECOVERY = "protection_recovery"    # Recovered from violations
@@ -64,6 +67,7 @@ class RevenueSource(Enum):
 
 class Platform(Enum):
     """Supported platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -80,6 +84,7 @@ class Platform(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -94,6 +99,7 @@ class Currency(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -126,7 +132,8 @@ class RevenueTransaction:
 
 @dataclass
 class LicensingDeal:
-    """Licensing deal record"""
+    """
+Licensing deal record"""
     deal_id: str
     tenant_id: str
     licensor_id: str
@@ -182,7 +189,8 @@ class RevenueMetricsCollector:
         license_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Track a revenue transaction"""
+        """
+Track a revenue transaction"""
         
         transaction_id = f"txn_{int(datetime.now().timestamp())}_{user_id}"
         

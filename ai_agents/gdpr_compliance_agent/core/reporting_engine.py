@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -51,7 +52,9 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class ReportType(Enum):
-    """Types of compliance reports"""
+    """
+Types of compliance reports"""
+
     MONTHLY_COMPLIANCE = "monthly_compliance"
     QUARTERLY_COMPLIANCE = "quarterly_compliance"
     ANNUAL_COMPLIANCE = "annual_compliance"
@@ -64,6 +67,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     PDF = "pdf"
     HTML = "html"
     JSON = "json"
@@ -72,6 +76,7 @@ class ReportFormat(Enum):
 
 class ComplianceStatus(Enum):
     """Overall compliance status levels"""
+
     EXCELLENT = "excellent"      # 95-100%
     GOOD = "good"               # 85-94%
     SATISFACTORY = "satisfactory" # 75-84%
@@ -97,7 +102,8 @@ class ComplianceMetrics:
 
 @dataclass
 class ReportMetadata:
-    """Report metadata and generation info"""
+    """
+Report metadata and generation info"""
     report_id: str
     report_type: ReportType
     report_format: ReportFormat
@@ -913,7 +919,8 @@ class ReportingEngine:
             return report_content
     
     async def _generate_html_report(self, report_content: Dict[str, Any]) -> str:
-        """Generate HTML format report"""
+        """
+Generate HTML format report"""
         html_template = f"""
         <!DOCTYPE html>
         <html>
@@ -967,7 +974,8 @@ class ReportingEngine:
     # Additional helper methods (placeholder implementations)
     
     async def _get_data_sources(self) -> List[str]:
-        """Get list of data sources used in report"""
+        """
+Get list of data sources used in report"""
         return [
             "Consent Management System",
             "Rights Request Database",

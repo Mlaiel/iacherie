@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of collaboration metrics"""
+    """
+Types of collaboration metrics"""
+
     PRODUCTIVITY = "productivity"
     ENGAGEMENT = "engagement"
     QUALITY = "quality"
@@ -54,6 +57,7 @@ class MetricType(Enum):
 
 class AnalyticsScope(Enum):
     """Scope of analytics analysis"""
+
     INDIVIDUAL = "individual"
     TEAM = "team"
     PROJECT = "project"
@@ -64,6 +68,7 @@ class AnalyticsScope(Enum):
 
 class VisualizationType(Enum):
     """Types of data visualizations"""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -76,6 +81,7 @@ class VisualizationType(Enum):
 
 class AlertSeverity(Enum):
     """Analytics alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -96,7 +102,8 @@ class AnalyticsMetric:
     metadata: Dict[str, Any]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary"""
+        """
+Convert metric to dictionary"""
         return {
             "metric_id": self.metric_id,
             "metric_name": self.metric_name,
@@ -127,7 +134,8 @@ class AnalyticsReport:
     generated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert report to dictionary"""
+        """
+Convert report to dictionary"""
         return {
             "report_id": self.report_id,
             "report_name": self.report_name,
@@ -176,7 +184,8 @@ class CollaborationAnalyticsEngine:
         include_recommendations: bool = True,
         include_visualizations: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive analytics report"""
+        """
+Generate comprehensive analytics report"""
         try:
             report_id = str(uuid.uuid4())
             
@@ -305,7 +314,8 @@ class CollaborationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Collect project analytics data"""
+        """
+Collect project analytics data"""
         # Implementation would query project-specific data
         return []
     
@@ -315,7 +325,8 @@ class CollaborationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Collect organization-wide analytics data"""
+        """
+Collect organization-wide analytics data"""
         # Implementation would aggregate all organization data
         return []
     
@@ -325,7 +336,8 @@ class CollaborationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Default data collection method"""
+        """
+Default data collection method"""
         return []
     
     async def _calculate_productivity_metrics(
@@ -336,7 +348,8 @@ class CollaborationAnalyticsEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[AnalyticsMetric]:
-        """Calculate productivity metrics"""
+        """
+Calculate productivity metrics"""
         metrics = []
         
         # Content creation rate
@@ -1190,7 +1203,8 @@ class TeamPerformanceAnalyzer:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Analyze team dynamics and interaction patterns"""
+        """
+Analyze team dynamics and interaction patterns"""
         try:
             # Collect team interaction data
             interaction_data = await self._collect_team_interactions(team_id, period_start, period_end)
@@ -1240,7 +1254,8 @@ class TeamPerformanceAnalyzer:
         self,
         interaction_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze team communication patterns"""
+        """
+Analyze team communication patterns"""
         return {
             "frequency": 0,
             "response_times": 0,

@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class CommunicationStyle(Enum):
-    """Communication style preferences"""
+    """
+Communication style preferences"""
+
     DIRECT = "direct"
     INDIRECT = "indirect"
     BALANCED = "balanced"
@@ -52,6 +55,7 @@ class CommunicationStyle(Enum):
 
 class CulturalDimension(Enum):
     """Hofstede's cultural dimensions"""
+
     POWER_DISTANCE = "power_distance"
     INDIVIDUALISM = "individualism"
     MASCULINITY = "masculinity"
@@ -123,7 +127,8 @@ class AdaptationResult:
 
 
 class CulturalAdaptor:
-    """Master cultural adaptation system"""
+    """
+Master cultural adaptation system"""
     
     def __init__(self):
         self.cultural_contexts = {}
@@ -134,7 +139,8 @@ class CulturalAdaptor:
         asyncio.create_task(self._initialize_cultural_data())
     
     async def _initialize_cultural_data(self):
-        """Initialize cultural contexts and adaptation rules"""
+        """
+Initialize cultural contexts and adaptation rules"""
         try:
             # Initialize cultural contexts for major regions
             await self._initialize_cultural_contexts()
@@ -1010,7 +1016,8 @@ class CommunicationStyleAdapter:
         self.style_patterns = self._initialize_style_patterns()
     
     def _initialize_style_patterns(self) -> Dict[str, Dict[str, List[Tuple[str, str]]]]:
-        """Initialize communication style adaptation patterns"""
+        """
+Initialize communication style adaptation patterns"""
         return {
             CommunicationStyle.DIRECT.value: {
                 "to_patterns": [
@@ -1074,7 +1081,8 @@ class RegionalCustomizer:
         self.regional_customizations = self._initialize_regional_customizations()
     
     def _initialize_regional_customizations(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize region-specific customizations"""
+        """
+Initialize region-specific customizations"""
         return {
             "DE": {
                 "business_hours": "09:00-17:00",

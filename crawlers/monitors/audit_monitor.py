@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import json
@@ -38,7 +39,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class AuditEventType(Enum):
-    """Audit event types."""
+    """
+Audit event types."""
+
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     DATA_ACCESS = "data_access"
@@ -59,6 +62,7 @@ class AuditEventType(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks."""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
@@ -70,6 +74,7 @@ class ComplianceFramework(Enum):
 
 class AuditSeverity(Enum):
     """Audit event severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -126,7 +131,8 @@ class ComplianceRule:
     severity: AuditSeverity = AuditSeverity.WARNING
 
 class ComplianceChecker:
-    """Compliance checking engine."""
+    """
+Compliance checking engine."""
     
     def __init__(self):
         self.compliance_rules: Dict[str, ComplianceRule] = {}
@@ -138,7 +144,8 @@ class ComplianceChecker:
         self._initialize_compliance_rules()
     
     def _initialize_compliance_rules(self) -> None:
-        """Initialize compliance checking rules."""
+        """
+Initialize compliance checking rules."""
         gdpr_rules = [
             ComplianceRule(
                 rule_id="gdpr_consent_required",
@@ -285,7 +292,8 @@ class ComplianceChecker:
         return False
     
     async def _check_rule(self, rule: ComplianceRule, event: AuditEvent) -> Optional[ComplianceViolation]:
-        """Check specific compliance rule."""
+        """
+Check specific compliance rule."""
         try:
             check_function = getattr(self, rule.check_function)
             return await check_function(rule, event)
@@ -358,27 +366,32 @@ class ComplianceChecker:
         return None
     
     async def check_breach_notification(self, rule: ComplianceRule, event: AuditEvent) -> Optional[ComplianceViolation]:
-        """Check GDPR data breach notification compliance."""
+        """
+Check GDPR data breach notification compliance."""
         # Implementation would check breach notification timing
         return None
     
     async def check_ccpa_disclosure(self, rule: ComplianceRule, event: AuditEvent) -> Optional[ComplianceViolation]:
-        """Check CCPA disclosure requirements."""
+        """
+Check CCPA disclosure requirements."""
         # Implementation would check disclosure compliance
         return None
     
     async def check_opt_out_mechanism(self, rule: ComplianceRule, event: AuditEvent) -> Optional[ComplianceViolation]:
-        """Check CCPA opt-out mechanism."""
+        """
+Check CCPA opt-out mechanism."""
         # Implementation would check opt-out compliance
         return None
     
     async def check_dmca_takedown_response(self, rule: ComplianceRule, event: AuditEvent) -> Optional[ComplianceViolation]:
-        """Check DMCA takedown response compliance."""
+        """
+Check DMCA takedown response compliance."""
         # Implementation would check DMCA response timing
         return None
     
     async def check_dmca_counter_notice(self, rule: ComplianceRule, event: AuditEvent) -> Optional[ComplianceViolation]:
-        """Check DMCA counter-notice processing."""
+        """
+Check DMCA counter-notice processing."""
         # Implementation would check counter-notice processing
         return None
 
@@ -401,7 +414,8 @@ class AuditMonitor(MonitorEngine):
         self._initialize_audit_configuration()
     
     def _initialize_audit_configuration(self) -> None:
-        """Initialize audit monitoring configuration."""
+        """
+Initialize audit monitoring configuration."""
         # Default retention policies
         self.retention_policies = {
             "user_activity": timedelta(days=365 * 7),  # 7 years
@@ -506,7 +520,8 @@ class AuditMonitor(MonitorEngine):
             await self._process_audit_event(event)
     
     async def _process_audit_event(self, event_data: Dict[str, Any]) -> None:
-        """Process individual audit event."""
+        """
+Process individual audit event."""
         try:
             # Create audit event
             audit_event = await self._create_audit_event(event_data)
@@ -721,12 +736,14 @@ class AuditMonitor(MonitorEngine):
         pass
     
     async def _load_compliance_configurations(self) -> None:
-        """Load compliance configurations."""
+        """
+Load compliance configurations."""
         # Implementation would load compliance settings
         pass
     
     async def _monitor_user_activities(self) -> None:
-        """Monitor user activities for audit purposes."""
+        """
+Monitor user activities for audit purposes."""
         while True:
             try:
                 # Monitor user activities

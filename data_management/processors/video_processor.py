@@ -19,6 +19,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 class VideoProcessor(BaseProcessor):
     """
 Processeur spécialisé pour vidéos"""
+
     
     SUPPORTED_FORMATS = ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv']
     
@@ -65,6 +66,7 @@ class AsyncVideoProcessor(AsyncBaseProcessor):
 
 class ImageProcessor(BaseProcessor):
     """Processeur spécialisé pour images"""
+
     
     SUPPORTED_FORMATS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'tiff', 'bmp']
     
@@ -111,6 +113,7 @@ class AsyncImageProcessor(AsyncBaseProcessor):
 
 class DocumentProcessor(BaseProcessor):
     """Processeur spécialisé pour documents"""
+
     
     SUPPORTED_FORMATS = ['txt', 'md', 'html', 'pdf', 'docx', 'rtf', 'odt']
     

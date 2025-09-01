@@ -11,6 +11,7 @@ This module provides detailed metrics collection for disaster recovery:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from backend.utils.metrics import MetricsCollector
 
 
 class MetricType(Enum):
-    """Types of recovery metrics"""
+    """
+Types of recovery metrics"""
+
     RTO_COMPLIANCE = "rto_compliance"
     RPO_COMPLIANCE = "rpo_compliance"
     RECOVERY_TIME = "recovery_time"
@@ -40,6 +43,7 @@ class MetricType(Enum):
 
 class MetricGranularity(Enum):
     """Metric collection granularity"""
+
     REAL_TIME = "real_time"      # Every minute
     HIGH_FREQUENCY = "high_frequency"  # Every 5 minutes
     STANDARD = "standard"        # Every 15 minutes
@@ -66,7 +70,8 @@ class RecoveryMetric:
 
 @dataclass
 class MetricDataPoint:
-    """Individual metric data point"""
+    """
+Individual metric data point"""
     metric_id: str
     timestamp: datetime
     value: float
@@ -76,7 +81,8 @@ class MetricDataPoint:
 
 @dataclass
 class MetricSummary:
-    """Metric summary and statistics"""
+    """
+Metric summary and statistics"""
     metric_id: str
     period_start: datetime
     period_end: datetime
@@ -134,7 +140,8 @@ class RecoveryMetricsCollector:
         self._initialize_core_metrics()
 
     def _initialize_core_metrics(self):
-        """Initialize core disaster recovery metrics"""
+        """
+Initialize core disaster recovery metrics"""
         core_metrics = [
             {
                 'metric_id': 'rto_compliance_percentage',
@@ -274,7 +281,8 @@ class RecoveryMetricsCollector:
             self.metric_definitions[metric_config['metric_id']] = recovery_metric
 
     def _initialize_alert_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize alert configurations for metrics"""
+        """
+Initialize alert configurations for metrics"""
         return {
             'rto_breach': {
                 'metric_id': 'rto_compliance_percentage',
@@ -651,7 +659,8 @@ class RecoveryMetricsCollector:
             return sorted_values[lower_index] * (1 - weight) + sorted_values[upper_index] * weight
 
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for values"""
+        """
+Calculate trend direction for values"""
         if len(values) < 3:
             return "insufficient_data"
         
@@ -726,7 +735,8 @@ class RecoveryMetricsCollector:
         return intervals.get(granularity, 900)
 
     def _update_collection_performance(self, collection_time: float):
-        """Update collection performance metrics"""
+        """
+Update collection performance metrics"""
         self.collection_performance['total_metrics_collected'] += 1
         
         # Update average collection time
@@ -738,7 +748,8 @@ class RecoveryMetricsCollector:
         )
 
     async def get_metrics_status(self) -> Dict[str, Any]:
-        """Get comprehensive metrics collection status"""
+        """
+Get comprehensive metrics collection status"""
         return {
             'registered_metrics': len(self.metric_definitions),
             'active_collectors': len(self.collection_tasks),
@@ -756,7 +767,8 @@ class RecoveryMetricsCollector:
         }
 
     async def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive recovery metrics for disaster recovery coordinator"""
+        """
+Get comprehensive recovery metrics for disaster recovery coordinator"""
         try:
             current_time = datetime.utcnow()
             
@@ -1098,7 +1110,8 @@ class RecoveryMetricsCollector:
             return []
 
     async def _get_last_backup_info(self) -> str:
-        """Get last backup timestamp"""
+        """
+Get last backup timestamp"""
         try:
             last_backup = await self.db_manager.get_most_recent_backup()
             if last_backup:
@@ -1109,7 +1122,8 @@ class RecoveryMetricsCollector:
             return datetime.utcnow().isoformat()
 
     async def _get_next_backup_info(self) -> str:
-        """Get next scheduled backup timestamp"""
+        """
+Get next scheduled backup timestamp"""
         try:
             next_backup = await self.db_manager.get_next_scheduled_backup()
             if next_backup:
@@ -1120,14 +1134,16 @@ class RecoveryMetricsCollector:
             return (datetime.utcnow() + timedelta(hours=1)).isoformat()
 
     async def _get_alerts_for_period(self, period_start: datetime, period_end: datetime) -> List[Dict[str, Any]]:
-        """Get alerts triggered during specified period"""
+        """
+Get alerts triggered during specified period"""
         try:
             return await self.db_manager.get_alerts_for_period(period_start, period_end)
         except Exception:
             return []
 
     async def _generate_overall_summary(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate overall summary from metrics data"""
+        """
+Generate overall summary from metrics data"""
         try:
             # Calculate overall health score
             health_factors = []

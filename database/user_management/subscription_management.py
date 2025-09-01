@@ -13,6 +13,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -29,7 +30,9 @@ Base = declarative_base()
 
 
 class SubscriptionTier(PyEnum):
-    """Niveaux d'abonnement disponibles."""
+    """
+Niveaux d'abonnement disponibles."""
+
     FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
@@ -40,6 +43,7 @@ class SubscriptionTier(PyEnum):
 
 class SubscriptionStatus(PyEnum):
     """Statuts possibles des abonnements."""
+
     ACTIVE = "active"
     PENDING = "pending"
     CANCELLED = "cancelled"
@@ -51,6 +55,7 @@ class SubscriptionStatus(PyEnum):
 
 class BillingCycle(PyEnum):
     """Cycles de facturation disponibles."""
+
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     YEARLY = "yearly"
@@ -59,6 +64,7 @@ class BillingCycle(PyEnum):
 
 class PaymentStatus(PyEnum):
     """Statuts des paiements."""
+
     PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -195,19 +201,22 @@ class UserSubscription(Base):
     
     @property
     def is_active(self) -> bool:
-        """Vérifie si l'abonnement est actif."""
+        """
+Vérifie si l'abonnement est actif."""
         return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
     
     @property
     def days_until_renewal(self) -> int:
-        """Retourne le nombre de jours jusqu'au renouvellement."""
+        """
+Retourne le nombre de jours jusqu'au renouvellement."""
         if not self.current_period_end:
             return 0
         delta = self.current_period_end - datetime.utcnow()
         return max(0, delta.days)
     
     def can_use_feature(self, feature_name: str) -> bool:
-        """Vérifie si l'utilisateur peut utiliser une fonctionnalité."""
+        """
+Vérifie si l'utilisateur peut utiliser une fonctionnalité."""
         if not self.is_active or not self.plan:
             return False
         
@@ -215,7 +224,8 @@ class UserSubscription(Base):
         return feature_name in features
     
     def get_usage_percentage(self, usage_type: str) -> float:
-        """Retourne le pourcentage d'utilisation d'une limite."""
+        """
+Retourne le pourcentage d'utilisation d'une limite."""
         if not self.plan:
             return 0.0
         

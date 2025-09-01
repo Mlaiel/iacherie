@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Utility Functions and Helper Components
+"""
+Comprehensive Tests for Utility Functions and Helper Components
 Testing utility functions, helpers, validators, and common operations
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -34,6 +36,7 @@ Team Specialties:
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
 """
+
 import pytest
 import sys
 import os
@@ -57,10 +60,12 @@ from ai.recommendation.exceptions import ValidationError, RecommendationError
 
 
 class TestDataValidator:
-    """Tests for data validation utilities"""
+    """
+Tests for data validation utilities"""
     
     def test_validate_creator_profile(self, data_validator):
-        """Test creator profile validation"""
+        """
+Test creator profile validation"""
         # Valid profile
         valid_profile = {
             "creator_id": "test_creator_001",
@@ -222,7 +227,8 @@ class TestContentNormalizer:
     """Tests for content normalization utilities"""
     
     def test_normalize_text_content(self, content_normalizer):
-        """Test text content normalization"""
+        """
+Test text content normalization"""
         raw_text = "  This is a TEST text with MIXED case and   extra spaces!!! 🎵  "
         
         normalized = content_normalizer.normalize_text_content(
@@ -313,7 +319,8 @@ class TestMetricsCalculator:
     """Tests for metrics calculation utilities"""
     
     def test_calculate_engagement_rate(self, metrics_calculator):
-        """Test engagement rate calculation"""
+        """
+Test engagement rate calculation"""
         # Standard engagement rate
         metrics = {
             "views": 10000,
@@ -431,7 +438,8 @@ class TestCacheManager:
     
     @pytest.mark.asyncio
     async def test_cache_basic_operations(self, cache_manager):
-        """Test basic cache operations"""
+        """
+Test basic cache operations"""
         # Set and get
         await cache_manager.set("test_key", "test_value", ttl=300)
         value = await cache_manager.get("test_key")
@@ -527,7 +535,8 @@ class TestRateLimiter:
     
     @pytest.mark.asyncio
     async def test_rate_limit_basic(self, rate_limiter):
-        """Test basic rate limiting"""
+        """
+Test basic rate limiting"""
         # Configure rate limit: 5 requests per 10 seconds
         limiter_id = "test_basic"
         await rate_limiter.configure(limiter_id, max_requests=5, window_seconds=10)
@@ -610,7 +619,8 @@ class TestPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_monitor_function_performance(self, performance_monitor):
-        """Test function performance monitoring"""
+        """
+Test function performance monitoring"""
         @performance_monitor.monitor("test_function")
         async def test_function():
             await asyncio.sleep(0.1)  # Simulate work
@@ -669,7 +679,8 @@ class TestPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_performance_alerts(self, performance_monitor):
-        """Test performance alerting"""
+        """
+Test performance alerting"""
         # Configure alert thresholds
         await performance_monitor.configure_alerts({
             "max_response_time": 1.0,  # 1 second
@@ -696,7 +707,8 @@ class TestTextProcessor:
     """Tests for text processing utilities"""
     
     def test_extract_keywords(self, text_processor):
-        """Test keyword extraction"""
+        """
+Test keyword extraction"""
         text = """
         Artificial intelligence and machine learning are transforming the music industry.
         AI-powered recommendation systems help creators discover trending content and
@@ -711,7 +723,8 @@ class TestTextProcessor:
         assert any('music' in kw.lower() for kw in keywords)
     
     def test_analyze_sentiment(self, text_processor):
-        """Test sentiment analysis"""
+        """
+Test sentiment analysis"""
         positive_text = "This is an amazing and wonderful piece of music!"
         negative_text = "This content is terrible and disappointing."
         neutral_text = "This is a technical documentation about API usage."
@@ -754,7 +767,8 @@ class TestTextProcessor:
         assert any('TensorFlow' in o['text'] for o in orgs)
     
     def test_generate_summary(self, text_processor):
-        """Test text summarization"""
+        """
+Test text summarization"""
         long_text = """
         Artificial intelligence has revolutionized many industries, and the music industry
         is no exception. AI-powered recommendation systems analyze user behavior, content
@@ -809,7 +823,8 @@ class TestSecurityUtils:
     """Tests for security utilities"""
     
     def test_hash_data(self, security_utils):
-        """Test data hashing"""
+        """
+Test data hashing"""
         data = "sensitive_data_to_hash"
         
         # SHA256 hash
@@ -856,7 +871,8 @@ class TestSecurityUtils:
         assert all(c in '0123456789abcdef' for c in token_16.lower())
     
     def test_validate_jwt_token(self, security_utils):
-        """Test JWT token validation"""
+        """
+Test JWT token validation"""
         payload = {
             "user_id": "test_user_001",
             "permissions": ["read", "write"],
@@ -901,7 +917,8 @@ class TestRecommendationUtils:
     """Tests for recommendation-specific utilities"""
     
     def test_calculate_similarity_matrix(self, recommendation_utils):
-        """Test similarity matrix calculation"""
+        """
+Test similarity matrix calculation"""
         # User-item matrix
         user_item_matrix = np.array([
             [5, 3, 0, 1],

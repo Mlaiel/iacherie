@@ -9,6 +9,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -21,7 +22,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -40,6 +43,7 @@ class DistributionPlatform(Enum):
 
 class DistributionStrategy(Enum):
     """Distribution strategies"""
+
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     PLATFORM_EXCLUSIVE = "platform_exclusive"
@@ -48,6 +52,7 @@ class DistributionStrategy(Enum):
 
 class ContentAdaptation(Enum):
     """Content adaptation types"""
+
     FORMAT_OPTIMIZATION = "format_optimization"
     PLATFORM_SPECIFIC = "platform_specific"
     AUDIENCE_TAILORED = "audience_tailored"
@@ -65,17 +70,20 @@ class DistributionContext:
     target_audience: Dict[str, Any]
 
 class MultiPlatformDistributionPrompts:
-    """Professional Multi-Platform Distribution Prompts System"""
+    """
+Professional Multi-Platform Distribution Prompts System"""
     
     def __init__(self):
-        """Initialize the distribution prompts system"""
+        """
+Initialize the distribution prompts system"""
         self.distribution_templates = {}
         self.platform_specifications = {}
         self.optimization_strategies = {}
         self._load_distribution_templates()
     
     def _load_distribution_templates(self) -> None:
-        """Load distribution templates and platform specifications"""
+        """
+Load distribution templates and platform specifications"""
         
         # Distribution Templates
         self.distribution_templates = {
@@ -708,7 +716,8 @@ def create_distribution_context(
     budget: Optional[Dict] = None,
     target_audience: Optional[Dict] = None
 ) -> DistributionContext:
-    """Create distribution context"""
+    """
+Create distribution context"""
     return DistributionContext(
         content_type=content_type,
         target_platforms=[DistributionPlatform(p) for p in target_platforms],

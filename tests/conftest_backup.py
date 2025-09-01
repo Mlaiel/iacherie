@@ -7,6 +7,7 @@ importée et adaptée de l'ancien projet IA-Influencer.
 Author: GitHub Copilot (adapté du projet original)
 Date: 2025-08-31
 """
+
 import pytest
 import asyncio
 import logging
@@ -25,7 +26,8 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # Configuration pytest
 def pytest_configure(config):
-    """Configuration pytest principale"""
+    """
+Configuration pytest principale"""
     # Marqueurs de test
     config.addinivalue_line("markers", "unit: Tests unitaires")
     config.addinivalue_line("markers", "integration: Tests d'intégration") 
@@ -63,7 +65,8 @@ def temp_dir(tmp_path):
 
 # Hook pour modifier la collection de tests
 def pytest_collection_modifyitems(config, items):
-    """Modifie la collection de tests"""
+    """
+Modifie la collection de tests"""
     for item in items:
         # Ajouter des marqueurs automatiquement basés sur le nom
         if "performance" in item.name.lower():

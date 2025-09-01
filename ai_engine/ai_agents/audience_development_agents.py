@@ -3,11 +3,12 @@
 Specialized agents for audience growth, engagement optimization, and community building.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in audience development, community building,
 engagement optimization, and growth strategy for content creators.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -21,7 +22,8 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class AudienceAnalysis:
-    """Audience analysis results"""
+    """
+Audience analysis results"""
     audience_size: int
     growth_rate: float
     engagement_quality: float
@@ -34,7 +36,8 @@ class AudienceAnalysis:
 
 @dataclass
 class GrowthStrategy:
-    """Audience growth strategy"""
+    """
+Audience growth strategy"""
     target_growth_rate: float
     primary_growth_channels: List[str]
     content_optimization_plan: List[str]
@@ -46,7 +49,8 @@ class GrowthStrategy:
 
 @dataclass
 class EngagementOptimization:
-    """Engagement optimization recommendations"""
+    """
+Engagement optimization recommendations"""
     current_engagement_rate: float
     target_engagement_rate: float
     optimization_opportunities: List[str]
@@ -373,7 +377,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _analyze_engagement_quality(self, creator_profile: Dict[str, Any],
                                   content_data: List[Dict[str, Any]]) -> float:
-        """Analyze quality of engagement"""
+        """
+Analyze quality of engagement"""
         if not content_data:
             return 0.5  # Default score
         
@@ -405,7 +410,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _calculate_audience_loyalty(self, audience_data: Dict[str, Any],
                                   content_data: List[Dict[str, Any]]) -> float:
-        """Calculate audience loyalty score"""
+        """
+Calculate audience loyalty score"""
         loyalty_factors = []
         
         # Repeat engagement rate
@@ -433,7 +439,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
         return np.mean(loyalty_factors) if loyalty_factors else 0.5
 
     def _analyze_demographics(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience demographics"""
+        """
+Analyze audience demographics"""
         return {
             "age_distribution": audience_data.get('age_groups', {
                 "18-24": 0.25,
@@ -492,7 +499,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _analyze_behavior_patterns(self, audience_data: Dict[str, Any],
                                  content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze audience behavior patterns"""
+        """
+Analyze audience behavior patterns"""
         return {
             "peak_activity_times": audience_data.get('peak_hours', [
                 {"hour": 9, "activity": 0.8},
@@ -562,7 +570,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _identify_optimal_growth_channels(self, creator_profile: Dict[str, Any],
                                         growth_goals: Dict[str, Any]) -> List[str]:
-        """Identify optimal growth channels for creator"""
+        """
+Identify optimal growth channels for creator"""
         niche = creator_profile.get('niche', 'general')
         current_platforms = creator_profile.get('platforms', [])
         target_audience = creator_profile.get('target_audience', {})
@@ -852,7 +861,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
 
     def _identify_engagement_opportunities(self, creator_profile: Dict[str, Any],
                                         engagement_data: Dict[str, Any]) -> List[str]:
-        """Identify specific engagement optimization opportunities"""
+        """
+Identify specific engagement optimization opportunities"""
         opportunities = []
         
         current_engagement = creator_profile.get('engagement_rate', 0.03)
@@ -1272,7 +1282,8 @@ class AudienceDeveloperAgent(BaseAIAgent):
     # Segmentation helper methods
 
     def _create_demographic_segments(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create demographic-based audience segments"""
+        """
+Create demographic-based audience segments"""
         age_groups = audience_data.get('age_groups', {})
         locations = audience_data.get('top_locations', {})
         

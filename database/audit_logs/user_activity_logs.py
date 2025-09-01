@@ -14,6 +14,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Callable, Set
 import logging
 from datetime import datetime, timezone, timedelta
@@ -51,7 +52,8 @@ Base = declarative_base()
 
 
 class UserActivityType(Enum):
-    """Ultra-comprehensive user activity types for complete behavioral tracking."""
+    """
+Ultra-comprehensive user activity types for complete behavioral tracking."""
     
     # Authentication & Security Activities
     LOGIN_SUCCESS = "login_success"
@@ -423,6 +425,7 @@ class DeviceType(Enum):
 
 class ActivityPriority(IntEnum):
     """Activity priority levels for user actions."""
+
     
     CRITICAL = 1      # Critical business actions (payments, security)
     HIGH = 2          # High priority (content creation, collaboration)
@@ -432,7 +435,8 @@ class ActivityPriority(IntEnum):
 
 
 class ContentType(Enum):
-    """Content types for IA Influencer platform (Business Logic)."""
+    """
+Content types for IA Influencer platform (Business Logic)."""
     
     # Audio Content
     AUDIO_MUSIC = "audio_music"
@@ -660,7 +664,8 @@ class UserContext:
         return result
     
     def get_device_info(self) -> Dict[str, Any]:
-        """Extract device information from user agent."""
+        """
+Extract device information from user agent."""
         if not self.user_agent:
             return {}
         

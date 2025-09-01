@@ -8,7 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -80,12 +80,14 @@ def get_manager(name: str) -> Optional[Any]:
     return _MANAGER_REGISTRY.get(name)
 
 def get_all_managers() -> Dict[str, Any]:
-    """Get all registered managers"""
+    """
+Get all registered managers"""
     return _MANAGER_REGISTRY.copy()
 
 # Initialize all managers for enterprise deployment
 async def initialize_all_managers() -> bool:
-    """Initialize all enterprise managers for production deployment
+    """
+Initialize all enterprise managers for production deployment
     
     Returns:
         bool: True if all managers initialized successfully

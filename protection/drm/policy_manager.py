@@ -5,7 +5,7 @@ Advanced geographical, device, and temporal policy management system for
 comprehensive digital rights enforcement and compliance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import json
@@ -39,7 +40,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class PolicyType(str, Enum):
-    """Types of DRM policies."""
+    """
+Types of DRM policies."""
+
     GEOGRAPHICAL = "geographical"
     DEVICE = "device"
     TEMPORAL = "temporal"
@@ -50,6 +53,7 @@ class PolicyType(str, Enum):
 
 class PolicyAction(str, Enum):
     """Actions for policy enforcement."""
+
     ALLOW = "allow"
     DENY = "deny"
     RESTRICT = "restrict"
@@ -59,6 +63,7 @@ class PolicyAction(str, Enum):
 
 class DeviceCategory(str, Enum):
     """Device categories for policies."""
+
     MOBILE = "mobile"
     TABLET = "tablet"
     DESKTOP = "desktop"
@@ -69,6 +74,7 @@ class DeviceCategory(str, Enum):
 
 class NetworkType(str, Enum):
     """Network types for policies."""
+
     CELLULAR = "cellular"
     WIFI = "wifi"
     ETHERNET = "ethernet"
@@ -92,7 +98,8 @@ class GeographicalPolicy:
 
 @dataclass
 class DevicePolicy:
-    """Device restriction policy."""
+    """
+Device restriction policy."""
     policy_id: str
     allowed_categories: Set[DeviceCategory] = field(default_factory=set)
     denied_categories: Set[DeviceCategory] = field(default_factory=set)
@@ -109,7 +116,8 @@ class DevicePolicy:
 
 @dataclass
 class TemporalPolicy:
-    """Time-based restriction policy."""
+    """
+Time-based restriction policy."""
     policy_id: str
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
@@ -137,7 +145,8 @@ class UsagePolicy:
 
 @dataclass
 class PolicyViolation:
-    """Policy violation record."""
+    """
+Policy violation record."""
     violation_id: str
     policy_id: str
     policy_type: PolicyType
@@ -153,7 +162,8 @@ class PolicyManager:
     """Advanced DRM policy management system."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize policy manager with configuration."""
+        """
+Initialize policy manager with configuration."""
         self.config = config
         self.policies: Dict[str, Dict[str, Any]] = {}
         self.violations: List[PolicyViolation] = []
@@ -701,7 +711,8 @@ class PolicyManager:
             return 0
     
     async def _check_time_windows(self, timestamp: datetime, time_windows: List[Dict[str, Any]]) -> bool:
-        """Check if timestamp falls within allowed time windows."""
+        """
+Check if timestamp falls within allowed time windows."""
         for window in time_windows:
             start_time = datetime.fromisoformat(window["start"]).time()
             end_time = datetime.fromisoformat(window["end"]).time()
@@ -730,25 +741,29 @@ class PolicyManager:
         return 0
     
     async def _get_daily_usage(self, user_id: str, content_id: str, timestamp: datetime) -> timedelta:
-        """Get daily usage for user and content."""
+        """
+Get daily usage for user and content."""
         # This would integrate with usage tracking system
         # For now, return a placeholder value
         return timedelta(0)
     
     def _detect_vpn(self, ip_address: str) -> bool:
-        """Detect if IP address is from a VPN."""
+        """
+Detect if IP address is from a VPN."""
         # This would integrate with VPN detection service
         # For now, return a placeholder value
         return False
     
     def _detect_proxy(self, ip_address: str) -> bool:
-        """Detect if IP address is from a proxy."""
+        """
+Detect if IP address is from a proxy."""
         # This would integrate with proxy detection service
         # For now, return a placeholder value
         return False
     
     async def _log_violations(self, violations: List[PolicyViolation]) -> None:
-        """Log policy violations."""
+        """
+Log policy violations."""
         for violation in violations:
             logger.warning(f"Policy violation: {violation.violation_id} - {violation.violation_details}")
             self.violations.append(violation)
@@ -825,7 +840,8 @@ class PolicyManager:
         return filtered_violations
     
     async def get_policy_statistics(self) -> Dict[str, Any]:
-        """Get policy enforcement statistics."""
+        """
+Get policy enforcement statistics."""
         try:
             stats = {
                 "total_policies": sum(len(policies) for policies in self.policies.values()),

@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any, Tuple
@@ -361,7 +362,8 @@ class MatchingService:
         criteria: Dict[str, Any], 
         db: Session
     ) -> List[User]:
-        """Find potential collaboration partners based on criteria."""
+        """
+Find potential collaboration partners based on criteria."""
         query = db.query(User).filter(
             and_(
                 User.id != user.id,
@@ -445,7 +447,8 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate genre/category compatibility score."""
+        """
+Calculate genre/category compatibility score."""
         try:
             # Get recent content for both users
             user1_contents = db.query(Content).filter(
@@ -567,7 +570,8 @@ class MatchingService:
         return overlap_score / total_weight if total_weight > 0 else 0.5
     
     def _compare_gender_distribution(self, gender1: Dict, gender2: Dict) -> float:
-        """Compare gender distributions."""
+        """
+Compare gender distributions."""
         if not gender1 or not gender2:
             return 0.5
         
@@ -614,7 +618,8 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate score based on collaboration history and success."""
+        """
+Calculate score based on collaboration history and success."""
         try:
             # Check if users have collaborated before
             previous_collaborations = db.query(Collaboration).filter(
@@ -730,7 +735,8 @@ class MatchingService:
         return score / total_fields
     
     def _calculate_activity_score(self, user: User) -> float:
-        """Calculate user activity score based on recent activity."""
+        """
+Calculate user activity score based on recent activity."""
         if not user.last_activity_at:
             return 0.0
         
@@ -753,7 +759,8 @@ class MatchingService:
         user2: User, 
         compatibility_score: float
     ) -> List[str]:
-        """Generate human-readable match reasons."""
+        """
+Generate human-readable match reasons."""
         reasons = []
         
         # Format compatibility
@@ -932,7 +939,8 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate cross-promotion potential."""
+        """
+Calculate cross-promotion potential."""
         try:
             # Factors: audience size difference, audience overlap, content complementarity
             follower1 = user1.follower_count or 0

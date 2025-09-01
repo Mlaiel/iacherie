@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import yaml
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
@@ -31,6 +34,7 @@ class AlertSeverity(Enum):
 
 class NotificationChannel(Enum):
     """Notification channels"""
+
     SLACK = "slack"
     EMAIL = "email"
     WEBHOOK = "webhook"
@@ -54,7 +58,8 @@ class AlertRule:
 
 @dataclass
 class NotificationReceiver:
-    """Alertmanager notification receiver configuration"""
+    """
+Alertmanager notification receiver configuration"""
     name: str
     channel: NotificationChannel
     config: Dict[str, Any]
@@ -63,7 +68,8 @@ class NotificationReceiver:
 
 @dataclass
 class AlertRoute:
-    """Alertmanager routing configuration"""
+    """
+Alertmanager routing configuration"""
     receiver: str
     group_by: List[str] = field(default_factory=list)
     group_wait: str = "10s"

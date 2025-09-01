@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class PatreonCreator:
-    """Patreon creator information"""
+    """
+Patreon creator information"""
     creator_id: str
     full_name: str
     first_name: str
@@ -90,7 +92,8 @@ class PatreonCreator:
 
 @dataclass
 class PatreonCampaign:
-    """Patreon campaign information"""
+    """
+Patreon campaign information"""
     campaign_id: str
     creator_id: str
     creation_name: str
@@ -133,7 +136,8 @@ class PatreonCampaign:
 
 @dataclass
 class PatreonPost:
-    """Patreon post information"""
+    """
+Patreon post information"""
     post_id: str
     creator_id: str
     campaign_id: str
@@ -173,7 +177,8 @@ class PatreonPost:
 
 @dataclass
 class PatreonReward:
-    """Patreon reward tier information"""
+    """
+Patreon reward tier information"""
     reward_id: str
     campaign_id: str
     amount: int
@@ -205,7 +210,8 @@ class PatreonReward:
 
 @dataclass
 class PatreonPledge:
-    """Patreon pledge information"""
+    """
+Patreon pledge information"""
     pledge_id: str
     amount_cents: int
     created_at: datetime
@@ -231,7 +237,8 @@ class PatreonPledge:
 
 @dataclass
 class PatreonGoal:
-    """Patreon goal information"""
+    """
+Patreon goal information"""
     goal_id: str
     campaign_id: str
     amount_cents: int
@@ -800,7 +807,8 @@ class PatreonCrawler(PlatformCrawler):
         return posts
     
     async def _get_mock_rewards(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock reward data"""
+        """
+Generate mock reward data"""
         rewards = []
         
         for i in range(min(max_results, 20)):
@@ -832,7 +840,8 @@ class PatreonCrawler(PlatformCrawler):
         return rewards
     
     async def _get_mock_pledges(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock pledge data"""
+        """
+Generate mock pledge data"""
         pledges = []
         
         for i in range(min(max_results, 10)):  # Limited for privacy
@@ -859,7 +868,8 @@ class PatreonCrawler(PlatformCrawler):
         return pledges
     
     async def _get_mock_goals(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock goal data"""
+        """
+Generate mock goal data"""
         goals = []
         
         for i in range(min(max_results, 10)):
@@ -882,7 +892,8 @@ class PatreonCrawler(PlatformCrawler):
         return goals
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
+        """
+Get trending content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -897,7 +908,8 @@ class PatreonCrawler(PlatformCrawler):
         return content
     
     async def _get_featured_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get featured content"""
+        """
+Get featured content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -914,7 +926,8 @@ class PatreonCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_creator_data(self, creator_data: Dict[str, Any]) -> Optional[PatreonCreator]:
-        """Parse creator data"""
+        """
+Parse creator data"""
         try:
             published_at = datetime.fromisoformat(creator_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             created_at = datetime.fromisoformat(creator_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))

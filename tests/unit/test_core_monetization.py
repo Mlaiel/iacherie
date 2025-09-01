@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Core Monetization Module Unit Tests
+"""
+Core Monetization Module Unit Tests
 ==================================
 
 Real unit tests for the monetization module to address critical testing gap.
@@ -21,6 +23,7 @@ These tests validate actual business logic and provide quality assurance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Implement centralized unit tests for production quality validation
 """
+
 import pytest
 import sys
 import os
@@ -35,10 +38,12 @@ from datetime import datetime, timedelta
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 class TestLicensingManager:
-    """Test suite for LicensingManager core functionality"""
+    """
+Test suite for LicensingManager core functionality"""
     
     def test_licensing_manager_import(self):
-        """Test that LicensingManager can be imported successfully"""
+        """
+Test that LicensingManager can be imported successfully"""
         try:
             from monetization import LicensingManager
             assert LicensingManager is not None
@@ -87,14 +92,16 @@ class TestLicensingManagerInstance:
     """Test LicensingManager instance creation and basic methods"""
     
     def test_licensing_manager_creation(self):
-        """Test LicensingManager can be instantiated"""
+        """
+Test LicensingManager can be instantiated"""
         from monetization import LicensingManager
         
         manager = LicensingManager()
         assert manager is not None
     
     def test_global_licensing_manager(self):
-        """Test global licensing manager instance"""
+        """
+Test global licensing manager instance"""
         from monetization import get_licensing_manager
         
         manager1 = get_licensing_manager()
@@ -105,7 +112,8 @@ class TestLicensingManagerInstance:
     
     @patch('monetization.LicensingManager')
     def test_create_license_function(self, mock_manager_class):
-        """Test license creation function"""
+        """
+Test license creation function"""
         from monetization import create_license
         
         mock_manager = Mock()
@@ -128,7 +136,8 @@ class TestRoyaltyCalculation:
     """Test royalty calculation logic"""
     
     def test_royalty_calculation_streaming(self):
-        """Test streaming royalty calculation"""
+        """
+Test streaming royalty calculation"""
         from monetization import LICENSING_CONFIG
         
         streaming_rate = LICENSING_CONFIG["royalty_rates"]["streaming"]
@@ -156,7 +165,8 @@ class TestUsageTracking:
     
     @patch('monetization.LicensingManager')
     def test_track_usage_function(self, mock_manager_class):
-        """Test usage tracking function"""
+        """
+Test usage tracking function"""
         from monetization import track_usage
         
         mock_manager = Mock()

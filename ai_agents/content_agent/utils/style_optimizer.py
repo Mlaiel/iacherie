@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import json
@@ -57,7 +58,9 @@ settings = get_settings()
 
 
 class StyleDimension(str, Enum):
-    """Style dimensions for analysis and optimization"""
+    """
+Style dimensions for analysis and optimization"""
+
     FORMALITY = "formality"
     COMPLEXITY = "complexity"
     EMOTIONALITY = "emotionality"
@@ -72,6 +75,7 @@ class StyleDimension(str, Enum):
 
 class PersonalityType(str, Enum):
     """Personality types for content matching"""
+
     ANALYTICAL = "analytical"
     DRIVER = "driver"
     EXPRESSIVE = "expressive"
@@ -84,6 +88,7 @@ class PersonalityType(str, Enum):
 
 class BrandVoice(str, Enum):
     """Brand voice types"""
+
     CORPORATE = "corporate"
     STARTUP = "startup"
     LUXURY = "luxury"
@@ -117,7 +122,8 @@ class StyleProfile:
 
 @dataclass
 class StyleOptimizationRequest:
-    """Request for style optimization"""
+    """
+Request for style optimization"""
     content: str
     target_style: StyleProfile
     optimization_goals: List[str]
@@ -358,7 +364,8 @@ class StyleOptimizer:
         return scores
     
     async def _analyze_formality(self, content: str) -> float:
-        """Analyze formality level of content"""
+        """
+Analyze formality level of content"""
         formal_indicators = self._style_patterns.get('formal_words', [])
         informal_indicators = self._style_patterns.get('informal_words', [])
         
@@ -379,7 +386,8 @@ class StyleOptimizer:
         return max(0.0, min(formality_score, 1.0))
     
     async def _analyze_complexity(self, content: str) -> float:
-        """Analyze complexity level of content"""
+        """
+Analyze complexity level of content"""
         # Readability-based complexity
         try:
             flesch_score = flesch_reading_ease(content) / 100.0
@@ -402,7 +410,8 @@ class StyleOptimizer:
         return max(0.0, min(complexity_score, 1.0))
     
     async def _analyze_emotionality(self, content: str) -> float:
-        """Analyze emotional content level"""
+        """
+Analyze emotional content level"""
         if self._sentiment_analyzer:
             scores = self._sentiment_analyzer.polarity_scores(content)
             # High emotionality indicated by strong positive or negative sentiment
@@ -417,7 +426,8 @@ class StyleOptimizer:
         return emotionality
     
     async def _analyze_persuasiveness(self, content: str) -> float:
-        """Analyze persuasive elements in content"""
+        """
+Analyze persuasive elements in content"""
         persuasive_indicators = [
             'you should', 'you must', 'you need to', 'imagine', 'consider',
             'benefits', 'advantage', 'proven', 'guaranteed', 'results',
@@ -447,7 +457,8 @@ class StyleOptimizer:
         return max(0.0, min(persuasive_score, 1.0))
     
     async def _analyze_creativity(self, content: str) -> float:
-        """Analyze creative elements in content"""
+        """
+Analyze creative elements in content"""
         creative_indicators = [
             'imagine', 'picture', 'visualize', 'dream', 'create', 'innovate',
             'unique', 'original', 'creative', 'artistic', 'inspired'
@@ -474,7 +485,8 @@ class StyleOptimizer:
         return max(0.0, min(creativity_score, 1.0))
     
     async def _analyze_clarity(self, content: str) -> float:
-        """Analyze clarity of content"""
+        """
+Analyze clarity of content"""
         try:
             # Readability as clarity indicator
             readability = flesch_reading_ease(content) / 100.0
@@ -501,7 +513,8 @@ class StyleOptimizer:
             return 0.5  # Default if calculation fails
     
     async def _analyze_engagement(self, content: str) -> float:
-        """Analyze engagement potential of content"""
+        """
+Analyze engagement potential of content"""
         engagement_indicators = [
             'you', 'your', 'we', 'us', 'our', 'together',
             'discover', 'learn', 'explore', 'find out', 'check out'
@@ -531,7 +544,8 @@ class StyleOptimizer:
         return max(0.0, min(engagement_score, 1.0))
     
     async def _analyze_authority(self, content: str) -> float:
-        """Analyze authority/expertise indicators"""
+        """
+Analyze authority/expertise indicators"""
         authority_indicators = [
             'research shows', 'studies indicate', 'evidence suggests',
             'proven', 'demonstrated', 'established', 'confirmed',
@@ -560,7 +574,8 @@ class StyleOptimizer:
         return max(0.0, min(authority_score, 1.0))
     
     async def _analyze_personality(self, content: str) -> PersonalityType:
-        """Analyze personality type that matches the content style"""
+        """
+Analyze personality type that matches the content style"""
         # Simplified personality analysis based on style indicators
         scores = {}
         
@@ -588,7 +603,8 @@ class StyleOptimizer:
         return PersonalityType.PROFESSIONAL  # Default
     
     async def _detect_brand_voice(self, content: str) -> Optional[BrandVoice]:
-        """Detect brand voice from content style"""
+        """
+Detect brand voice from content style"""
         # Simplified brand voice detection
         voice_indicators = {
             BrandVoice.CORPORATE: ['professional', 'industry', 'enterprise', 'business'],
@@ -611,7 +627,8 @@ class StyleOptimizer:
         return None
     
     def _generate_cache_key(self, content: str, operation: str) -> str:
-        """Generate cache key for style operations"""
+        """
+Generate cache key for style operations"""
         content_hash = hashlib.md5(content.encode()).hexdigest()[:16]
         return f"style_{operation}_{content_hash}"
 
@@ -758,7 +775,8 @@ class PersonalityMatcher:
         content_profile: StyleProfile,
         target_personalities: List[PersonalityType]
     ) -> List[str]:
-        """Generate recommendations for personality matching"""
+        """
+Generate recommendations for personality matching"""
         recommendations = []
         
         for personality in target_personalities:

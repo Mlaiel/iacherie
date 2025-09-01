@@ -16,6 +16,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import os
 import sys
 import asyncio
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModuleHealthCheck:
-    """Comprehensive health check system for content management module."""
+    """
+Comprehensive health check system for content management module."""
     
     def __init__(self):
         self.start_time = time.time()
@@ -63,7 +65,8 @@ class ContentModuleHealthCheck:
         }
     
     async def run_comprehensive_health_check(self) -> Dict[str, Any]:
-        """Execute comprehensive health check across all systems."""
+        """
+Execute comprehensive health check across all systems."""
         logger.info("🔍 Starting Comprehensive Health Check...")
         
         # Phase 1: Module Integrity Check
@@ -326,7 +329,8 @@ class ContentModuleHealthCheck:
             }
     
     async def _benchmark_json_processing(self) -> Dict[str, Any]:
-        """Benchmark JSON processing."""
+        """
+Benchmark JSON processing."""
         try:
             # Create test data
             test_data = {
@@ -356,7 +360,8 @@ class ContentModuleHealthCheck:
             }
     
     async def _run_integration_tests(self) -> Dict[str, Any]:
-        """Run basic integration tests."""
+        """
+Run basic integration tests."""
         logger.info("🔗 Running Integration Tests...")
         
         results = {

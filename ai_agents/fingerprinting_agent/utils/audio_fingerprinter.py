@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 from enum import Enum
 
 class AudioFingerprintQuality(Enum):
-    """Audio fingerprint quality levels"""
+    """
+Audio fingerprint quality levels"""
+
     BASIC = "basic"          # Chromaprint only
     STANDARD = "standard"    # Chromaprint + spectral features
     ADVANCED = "advanced"    # + MFCC, chroma, tempo analysis
@@ -60,6 +63,7 @@ class AudioFingerprintQuality(Enum):
 
 class AudioFeatureType(Enum):
     """Types of audio features extracted"""
+
     CHROMAPRINT = "chromaprint"
     SPECTRAL = "spectral"
     MFCC = "mfcc"
@@ -72,6 +76,7 @@ class AudioFeatureType(Enum):
 
 class AudioSegmentType(Enum):
     """Audio segment types for analysis"""
+
     FULL_TRACK = "full_track"
     INTRO = "intro"
     CHORUS = "chorus"
@@ -92,7 +97,8 @@ class AudioFeatureVector:
 
 @dataclass
 class AudioFingerprint:
-    """Complete audio fingerprint structure"""
+    """
+Complete audio fingerprint structure"""
     fingerprint_id: str
     audio_hash: str
     chromaprint: str
@@ -346,7 +352,8 @@ class AudioFingerprinter:
         return hashlib.sha256(hash_bytes).hexdigest()
     
     async def _extract_chromaprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
-        """Extract Chromaprint acoustic fingerprint"""
+        """
+Extract Chromaprint acoustic fingerprint"""
         try:
             # Convert to format expected by chromaprint
             if audio_array.dtype != np.int16:
@@ -807,7 +814,8 @@ class AudioFingerprinter:
         return serialized
     
     def _update_processing_stats(self, processing_time: float, quality_metrics: Dict[str, float]):
-        """Update internal processing statistics"""
+        """
+Update internal processing statistics"""
         self.processing_stats['total_processed'] += 1
         self.processing_stats['processing_times'].append(processing_time)
         
@@ -822,7 +830,8 @@ class AudioFingerprinter:
             self.processing_stats['quality_scores'] = self.processing_stats['quality_scores'][-max_history:]
     
     async def _initialize_wav2vec2(self):
-        """Initialize Wav2Vec2 model for deep embeddings"""
+        """
+Initialize Wav2Vec2 model for deep embeddings"""
         try:
             model_name = self.config.get('wav2vec2_model', 'facebook/wav2vec2-base-960h')
             
@@ -915,7 +924,8 @@ class AudioFingerprinter:
         return stats
     
     async def cleanup(self):
-        """Clean up resources"""
+        """
+Clean up resources"""
         try:
             # Clean up models
             if hasattr(self, 'wav2vec2_model') and self.wav2vec2_model is not None:
@@ -946,7 +956,8 @@ class AudioFingerprinter:
         ]
     
     async def validate_audio_input(self, audio_data: Union[str, np.ndarray, bytes]) -> bool:
-        """Validate audio input before processing"""
+        """
+Validate audio input before processing"""
         try:
             if isinstance(audio_data, str):
                 # Check file exists and format
@@ -1140,7 +1151,8 @@ class AudioFingerprinter:
         return audio
     
     async def _generate_chromaprint(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Generate Chromaprint acoustic fingerprint"""
+        """
+Generate Chromaprint acoustic fingerprint"""
         try:
             # Convert to int16 for Chromaprint
             audio_int16 = (audio * 32767).astype(np.int16)
@@ -1215,7 +1227,8 @@ class AudioFingerprinter:
         return combined_features
     
     async def _extract_essentia_features(self, audio: np.ndarray, sr: int) -> Dict[str, np.ndarray]:
-        """Extract advanced features using Essentia"""
+        """
+Extract advanced features using Essentia"""
         try:
             # Ensure we have Essentia algorithms initialized
             if not self.essentia_algorithms:
@@ -1422,7 +1435,8 @@ class AudioFingerprinter:
         return high_freq_ratio > 0.3  # Threshold for noise detection
     
     async def _reduce_noise(self, audio: np.ndarray, sr: int) -> np.ndarray:
-        """Basic noise reduction"""
+        """
+Basic noise reduction"""
         # Simple spectral subtraction for noise reduction
         stft = librosa.stft(audio)
         magnitude = np.abs(stft)
@@ -1442,7 +1456,8 @@ class AudioFingerprinter:
         return clean_audio
     
     async def _estimate_snr(self, audio: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio"""
+        """
+Estimate signal-to-noise ratio"""
         # Simple SNR estimation
         signal_power = np.mean(audio**2)
         
@@ -1465,7 +1480,8 @@ class AudioFingerprinter:
         return max(snr_db, 0)  # Ensure non-negative
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         # Clear models to free memory
         self.wav2vec2_model = None
         self.wav2vec2_processor = None

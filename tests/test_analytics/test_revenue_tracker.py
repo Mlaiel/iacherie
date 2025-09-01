@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Revenue Tracker module.
+"""
+Test suite for Revenue Tracker module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
@@ -26,9 +29,11 @@ import json
 
 
 class TestRevenueTracker(unittest.TestCase):
-    """Test suite for RevenueTracker class"""
+    """
+Test suite for RevenueTracker class"""
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         # Import the actual revenue tracker
         import sys
         import os
@@ -147,7 +152,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertEqual(roi_percentage, 50.0)  # 50% ROI
 
     def test_revenue_forecasting_trend(self):
-        """Test revenue forecasting trend calculation"""
+        """
+Test revenue forecasting trend calculation"""
         # Historical daily revenue data
         daily_revenues = [100, 110, 105, 120, 115, 130, 125, 140, 135, 150]
         
@@ -179,7 +185,8 @@ class TestRevenueTracker(unittest.TestCase):
             self.assertGreaterEqual(forecasts[i], forecasts[i-1])
 
     def test_revenue_correlation_analysis(self):
-        """Test correlation between different revenue factors"""
+        """
+Test correlation between different revenue factors"""
         # Sample data: engagement rate vs revenue
         data_points = [
             {"engagement": 0.05, "revenue": 100},
@@ -246,7 +253,8 @@ class TestRevenueTracker(unittest.TestCase):
         self.assertAlmostEqual(decline_rate, -16.67, places=2)  # ~16.67% decline
 
     def test_revenue_segmentation_analysis(self):
-        """Test revenue segmentation and analysis"""
+        """
+Test revenue segmentation and analysis"""
         content_revenues = {
             "music_track_1": 250.0,
             "music_track_2": 180.0,

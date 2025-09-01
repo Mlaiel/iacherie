@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import asyncio
 import psutil
 import logging
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status levels"""
+    """
+Health status levels"""
+
     HEALTHY = "HEALTHY"         # All systems operating normally
     WARNING = "WARNING"         # Some issues detected but system functional
     CRITICAL = "CRITICAL"       # Critical issues requiring immediate attention
@@ -57,6 +60,7 @@ class HealthStatus(Enum):
 
 class MetricType(Enum):
     """Types of health metrics"""
+
     COUNTER = "COUNTER"         # Monotonically increasing value
     GAUGE = "GAUGE"             # Current value
     HISTOGRAM = "HISTOGRAM"     # Distribution of values
@@ -87,7 +91,8 @@ class HealthMetric:
             return HealthStatus.HEALTHY
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'name': self.name,
             'value': self.value,
@@ -103,7 +108,8 @@ class HealthMetric:
 
 @dataclass
 class HealthCheckResult:
-    """Result of a health check"""
+    """
+Result of a health check"""
     check_name: str
     status: HealthStatus
     message: str
@@ -114,7 +120,8 @@ class HealthCheckResult:
     details: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'check_name': self.check_name,
             'status': self.status.value,
@@ -129,7 +136,8 @@ class HealthCheckResult:
 
 @dataclass
 class SystemHealthReport:
-    """Comprehensive system health report"""
+    """
+Comprehensive system health report"""
     overall_status: HealthStatus
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     check_results: List[HealthCheckResult] = field(default_factory=list)
@@ -152,7 +160,8 @@ class SystemHealthReport:
 
 
 class MetricsCollector:
-    """Metrics collection and aggregation system"""
+    """
+Metrics collection and aggregation system"""
     
     def __init__(self, max_history: int = 1000):
         self.max_history = max_history
@@ -160,7 +169,8 @@ class MetricsCollector:
         self.lock = threading.RLock()
         
     def record_metric(self, metric: HealthMetric) -> None:
-        """Record a metric value"""
+        """
+Record a metric value"""
         with self.lock:
             self.metrics_history[metric.name].append({
                 'value': metric.value,
@@ -169,7 +179,8 @@ class MetricsCollector:
             })
     
     def get_metric_history(self, metric_name: str, duration: Optional[timedelta] = None) -> List[Dict[str, Any]]:
-        """Get metric history for specified duration"""
+        """
+Get metric history for specified duration"""
         with self.lock:
             history = list(self.metrics_history[metric_name])
             
@@ -183,7 +194,8 @@ class MetricsCollector:
             return history
     
     def get_metric_statistics(self, metric_name: str, duration: Optional[timedelta] = None) -> Dict[str, float]:
-        """Get statistical analysis of metric"""
+        """
+Get statistical analysis of metric"""
         history = self.get_metric_history(metric_name, duration)
         
         if not history:
@@ -203,7 +215,8 @@ class MetricsCollector:
         }
     
     def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all current metrics"""
+        """
+Get all current metrics"""
         with self.lock:
             all_metrics = {}
             
@@ -440,7 +453,8 @@ class TransactionHealthChecker:
         return metrics
     
     async def get_creator_health_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get health metrics specific to a creator"""
+        """
+Get health metrics specific to a creator"""
         
         creator_metrics = {
             'creator_id': creator_id,
@@ -462,7 +476,8 @@ class TransactionHealthChecker:
         return creator_metrics
     
     async def get_content_protection_health(self) -> Dict[str, Any]:
-        """Get content protection system health metrics"""
+        """
+Get content protection system health metrics"""
         
         protection_metrics = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -482,7 +497,8 @@ class TransactionHealthChecker:
         return protection_metrics
     
     async def get_revenue_system_health(self) -> Dict[str, Any]:
-        """Get revenue system health metrics"""
+        """
+Get revenue system health metrics"""
         
         revenue_metrics = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -502,7 +518,8 @@ class TransactionHealthChecker:
         return revenue_metrics
     
     def _register_default_checks(self) -> None:
-        """Register default health checks"""
+        """
+Register default health checks"""
         
         self.health_checks.update({
             'system_resources': self._check_system_resources,
@@ -518,7 +535,8 @@ class TransactionHealthChecker:
         })
     
     async def _check_system_resources(self) -> HealthCheckResult:
-        """Check system resource utilization"""
+        """
+Check system resource utilization"""
         
         metrics = []
         status = HealthStatus.HEALTHY
@@ -1143,7 +1161,8 @@ class TransactionHealthChecker:
             return HealthStatus.HEALTHY
     
     def _generate_summary_metrics(self, check_results: List[HealthCheckResult]) -> Dict[str, float]:
-        """Generate summary metrics from check results"""
+        """
+Generate summary metrics from check results"""
         
         total_checks = len(check_results)
         healthy_checks = sum(1 for result in check_results if result.status == HealthStatus.HEALTHY)
@@ -1157,7 +1176,8 @@ class TransactionHealthChecker:
         }
     
     def _generate_recommendations(self, check_results: List[HealthCheckResult]) -> List[str]:
-        """Generate health recommendations based on check results"""
+        """
+Generate health recommendations based on check results"""
         
         recommendations = []
         
@@ -1252,7 +1272,8 @@ class TransactionHealthChecker:
         }
     
     def _calculate_recent_performance(self) -> Dict[str, float]:
-        """Calculate recent performance statistics"""
+        """
+Calculate recent performance statistics"""
         
         # Mock performance calculations
         # In a real implementation, this would analyze actual metrics
@@ -1264,7 +1285,8 @@ class TransactionHealthChecker:
         }
     
     def _calculate_trends(self) -> Dict[str, str]:
-        """Calculate performance trends"""
+        """
+Calculate performance trends"""
         
         trends = {}
         
@@ -1301,19 +1323,22 @@ class TransactionHealthChecker:
         return 85.5  # Mock score (0-100)
     
     def _calculate_protection_effectiveness(self) -> float:
-        """Calculate content protection effectiveness score"""
+        """
+Calculate content protection effectiveness score"""
         
         # Mock effectiveness calculation
         return 92.3  # Mock score (0-100)
     
     def _calculate_revenue_reliability(self) -> float:
-        """Calculate revenue system reliability score"""
+        """
+Calculate revenue system reliability score"""
         
         # Mock reliability calculation
         return 97.8  # Mock score (0-100)
     
     async def _monitoring_loop(self) -> None:
-        """Background monitoring loop"""
+        """
+Background monitoring loop"""
         
         while self._monitoring:
             try:
@@ -1369,7 +1394,8 @@ async def quick_health_check(health_checker: TransactionHealthChecker) -> bool:
 
 
 async def get_system_status(health_checker: TransactionHealthChecker) -> Dict[str, str]:
-    """Get simplified system status"""
+    """
+Get simplified system status"""
     
     report = await health_checker.run_all_health_checks()
     

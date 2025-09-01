@@ -9,6 +9,7 @@ Any unauthorized use, reproduction, or distribution without explicit
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import shutil
@@ -30,7 +31,9 @@ from .elasticsearch_manager import ElasticsearchManager
 
 
 class RetentionPeriod(str, Enum):
-    """Log retention periods"""
+    """
+Log retention periods"""
+
     DAYS_7 = "7d"
     DAYS_30 = "30d"
     DAYS_90 = "90d"
@@ -41,6 +44,7 @@ class RetentionPeriod(str, Enum):
 
 class CompressionType(str, Enum):
     """Compression types for archived logs"""
+
     GZIP = "gzip"
     BZIP2 = "bzip2"
     XZ = "xz"
@@ -50,6 +54,7 @@ class CompressionType(str, Enum):
 
 class StorageTier(str, Enum):
     """Storage tiers for log archival"""
+
     HOT = "hot"          # Immediate access
     WARM = "warm"        # Infrequent access
     COLD = "cold"        # Archive
@@ -72,16 +77,19 @@ class RetentionPolicy:
     enabled: bool = True
     
     def get_retention_days(self, period: RetentionPeriod) -> int:
-        """Convert retention period to days"""
+        """
+Convert retention period to days"""
         return int(period.value[:-1])
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 class LogFile:
-    """Log file metadata and operations"""
+    """
+Log file metadata and operations"""
     
     def __init__(self, path: Path):
         self.path = path
@@ -95,7 +103,8 @@ class LogFile:
         self._load_metadata()
     
     def _load_metadata(self):
-        """Load file metadata"""
+        """
+Load file metadata"""
         if self.path.exists():
             stat = self.path.stat()
             self.size = stat.st_size
@@ -105,28 +114,33 @@ class LogFile:
             self.is_compressed = self.path.suffix in ['.gz', '.bz2', '.xz']
     
     def get_age_days(self) -> int:
-        """Get file age in days"""
+        """
+Get file age in days"""
         if self.created_at:
             return (datetime.now(timezone.utc) - self.created_at).days
         return 0
     
     def get_size_mb(self) -> float:
-        """Get file size in MB"""
+        """
+Get file size in MB"""
         return self.size / (1024 * 1024)
     
     def matches_pattern(self, pattern: str) -> bool:
-        """Check if file matches pattern"""
+        """
+Check if file matches pattern"""
         return self.path.match(pattern)
 
 
 class LogCompressor:
-    """Log file compression utilities"""
+    """
+Log file compression utilities"""
     
     @staticmethod
     async def compress_file(file_path: Path, 
                            compression: CompressionType = CompressionType.GZIP,
                            remove_original: bool = True) -> Path:
-        """Compress a log file"""
+        """
+Compress a log file"""
         
         def _compress():
             if compression == CompressionType.GZIP:
@@ -319,7 +333,8 @@ class RetentionRule:
             self.archiver = S3Archiver(policy.s3_bucket)
     
     async def process_files(self, base_directory: Path) -> Dict[str, Any]:
-        """Process files according to retention policy"""
+        """
+Process files according to retention policy"""
         
         results = {
             "processed": 0,
@@ -544,7 +559,8 @@ class LogRetentionManager:
         self.policies.append(policy)
     
     def remove_policy(self, policy_name: str) -> bool:
-        """Remove retention policy by name"""
+        """
+Remove retention policy by name"""
         for i, policy in enumerate(self.policies):
             if policy.name == policy_name:
                 del self.policies[i]
@@ -552,14 +568,16 @@ class LogRetentionManager:
         return False
     
     def get_policy(self, policy_name: str) -> Optional[RetentionPolicy]:
-        """Get retention policy by name"""
+        """
+Get retention policy by name"""
         for policy in self.policies:
             if policy.name == policy_name:
                 return policy
         return None
     
     async def run_retention(self, log_directory: Path) -> Dict[str, Any]:
-        """Run retention policies on log directory"""
+        """
+Run retention policies on log directory"""
         
         if not log_directory.exists():
             raise RetentionError(f"Log directory does not exist: {log_directory}")

@@ -9,8 +9,9 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Union
 from datetime import datetime
@@ -22,7 +23,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for multi-format analysis"""
+    """
+Supported content types for multi-format analysis"""
+
     MUSIC = "music"
     VIDEO = "video" 
     IMAGE = "image"
@@ -52,7 +55,8 @@ class ContentMetadata:
     collaboration_score: float
 
 class ContentAnalysisEngine:
-    """Advanced multi-format content analysis with AI processing capabilities"""
+    """
+Advanced multi-format content analysis with AI processing capabilities"""
     
     def __init__(self):
         self.supported_formats = {
@@ -67,7 +71,8 @@ class ContentAnalysisEngine:
         }
         
     async def analyze_content(self, content_data: bytes, metadata: Dict[str, Any]) -> ContentMetadata:
-        """Perform comprehensive multi-format content analysis"""
+        """
+Perform comprehensive multi-format content analysis"""
         try:
             content_type = self._detect_content_type(metadata.get('filename', ''))
             fingerprint = await self._generate_content_fingerprint(content_data)
@@ -107,13 +112,15 @@ class ContentAnalysisEngine:
         return ContentType.BLOG  # Default fallback
     
     async def _generate_content_fingerprint(self, content_data: bytes) -> str:
-        """Generate unique content fingerprint for copyright protection"""
+        """
+Generate unique content fingerprint for copyright protection"""
         hasher = hashlib.sha256()
         hasher.update(content_data)
         return hasher.hexdigest()
     
     async def _perform_ai_analysis(self, content_data: bytes, content_type: ContentType) -> Dict[str, Any]:
-        """Perform AI-powered content analysis based on type"""
+        """
+Perform AI-powered content analysis based on type"""
         analysis_result = {
             'tags': [],
             'sentiment': 'neutral',
@@ -134,7 +141,8 @@ class ContentAnalysisEngine:
         return analysis_result
     
     async def _analyze_audio_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Advanced audio content analysis"""
+        """
+Advanced audio content analysis"""
         return {
             'genre': 'detected_genre',
             'tempo': 120,
@@ -146,7 +154,8 @@ class ContentAnalysisEngine:
         }
     
     async def _analyze_video_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Advanced video content analysis"""
+        """
+Advanced video content analysis"""
         return {
             'scenes': ['intro', 'main_content', 'outro'],
             'objects_detected': ['person', 'background'],
@@ -156,7 +165,8 @@ class ContentAnalysisEngine:
         }
     
     async def _analyze_image_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Advanced image content analysis"""
+        """
+Advanced image content analysis"""
         return {
             'objects': ['person', 'background'],
             'colors': ['blue', 'white', 'red'],
@@ -166,7 +176,8 @@ class ContentAnalysisEngine:
         }
     
     async def _analyze_text_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Advanced text content analysis"""
+        """
+Advanced text content analysis"""
         try:
             text = content_data.decode('utf-8')
             return {
@@ -180,7 +191,8 @@ class ContentAnalysisEngine:
             return {'tags': ['binary', 'file']}
     
     async def _extract_seo_keywords(self, content_data: bytes, metadata: Dict[str, Any]) -> List[str]:
-        """Extract SEO-optimized keywords from content"""
+        """
+Extract SEO-optimized keywords from content"""
         base_keywords = []
         
         # Extract from title and description
@@ -199,7 +211,8 @@ class ContentAnalysisEngine:
         return list(set(base_keywords))[:20]  # Limit to 20 unique keywords
     
     async def _assess_quality(self, content_data: bytes, content_type: ContentType) -> str:
-        """Assess content quality using AI metrics"""
+        """
+Assess content quality using AI metrics"""
         # Advanced quality assessment logic
         file_size = len(content_data)
         
@@ -222,7 +235,8 @@ class ContentAnalysisEngine:
         return 'medium'  # Default
     
     async def _calculate_monetization_potential(self, ai_analysis: Dict[str, Any]) -> float:
-        """Calculate content monetization potential score"""
+        """
+Calculate content monetization potential score"""
         base_score = 0.5
         
         # Boost based on quality metrics
@@ -238,7 +252,8 @@ class ContentAnalysisEngine:
         return min(base_score, 1.0)  # Cap at 1.0
     
     async def _calculate_collaboration_score(self, ai_analysis: Dict[str, Any]) -> float:
-        """Calculate collaboration potential score"""
+        """
+Calculate collaboration potential score"""
         base_score = 0.6
         
         # Professional content gets higher collaboration score
@@ -252,7 +267,8 @@ class ContentAnalysisEngine:
         return min(base_score, 1.0)  # Cap at 1.0
     
     def _generate_content_id(self, fingerprint: str) -> str:
-        """Generate unique content identifier"""
+        """
+Generate unique content identifier"""
         timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"content_{timestamp}_{fingerprint[:8]}"
 
@@ -264,7 +280,8 @@ class ContentProcessor:
         self.processing_queue = asyncio.Queue()
         
     async def process_upload(self, content_data: bytes, metadata: Dict[str, Any]) -> ContentMetadata:
-        """Process uploaded content through complete analysis pipeline"""
+        """
+Process uploaded content through complete analysis pipeline"""
         try:
             # Validate content
             await self._validate_content(content_data, metadata)

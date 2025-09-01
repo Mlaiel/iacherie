@@ -19,6 +19,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set, Callable
 import logging
 from datetime import datetime, timezone, timedelta
@@ -63,7 +64,8 @@ Base = declarative_base()
 
 
 class IntegrationType(Enum):
-    """Comprehensive integration types for enterprise connectivity."""
+    """
+Comprehensive integration types for enterprise connectivity."""
     
     # Social Media Platforms
     YOUTUBE_API = "youtube_api"
@@ -144,6 +146,7 @@ class IntegrationType(Enum):
 
 class IntegrationStatus(Enum):
     """Integration operational status tracking."""
+
     
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -371,7 +374,8 @@ class EnterpriseIntegrationEngine:
     """Ultra-advanced enterprise integration and API management engine."""
     
     def __init__(self, db_session: Session):
-        """Initialize the enterprise integration engine."""
+        """
+Initialize the enterprise integration engine."""
         self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         

@@ -14,6 +14,7 @@ Advanced feature extraction engine for comprehensive content analysis providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import numpy as np
 import cv2
 import librosa
@@ -38,7 +39,9 @@ import io
 logger = logging.getLogger(__name__)
 
 class FeatureType(Enum):
-    """Types of features that can be extracted"""
+    """
+Types of features that can be extracted"""
+
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_TEMPORAL = "audio_temporal"
     AUDIO_SEMANTIC = "audio_semantic"
@@ -53,6 +56,7 @@ class FeatureType(Enum):
 
 class ExtractionMode(Enum):
     """Feature extraction modes"""
+
     FAST = "fast"           # Basic features, optimized for speed
     BALANCED = "balanced"   # Good balance of features and performance
     COMPREHENSIVE = "comprehensive"  # All available features
@@ -70,7 +74,8 @@ class FeatureConfig:
 
 @dataclass
 class ExtractedFeatures:
-    """Container for extracted features"""
+    """
+Container for extracted features"""
     content_id: str
     feature_vectors: Dict[str, np.ndarray]
     feature_metadata: Dict[str, Any]
@@ -140,7 +145,8 @@ class FeatureExtractionEngine:
     
     def extract_features(self, content_data: Any, content_type: str, 
                         config: FeatureConfig, content_id: str = None) -> ExtractedFeatures:
-        """Extract features from content using specified configuration"""
+        """
+Extract features from content using specified configuration"""
         import time
         start_time = time.time()
         
@@ -647,7 +653,8 @@ class FeatureExtractionEngine:
         return features
     
     def _extract_color_histogram(self, image: np.ndarray) -> np.ndarray:
-        """Extract color histogram features"""
+        """
+Extract color histogram features"""
         # Calculate histogram for each channel
         hist_b = cv2.calcHist([image], [0], None, [32], [0, 256])
         hist_g = cv2.calcHist([image], [1], None, [32], [0, 256])
@@ -660,7 +667,8 @@ class FeatureExtractionEngine:
         return hist
     
     def _extract_texture_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract texture features using Local Binary Patterns"""
+        """
+Extract texture features using Local Binary Patterns"""
         from skimage.feature import local_binary_pattern
         
         # Resize for consistency
@@ -677,7 +685,8 @@ class FeatureExtractionEngine:
         return hist
     
     def _extract_shape_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Extract shape features from image"""
+        """
+Extract shape features from image"""
         # Find contours
         contours, _ = cv2.findContours(gray_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         
@@ -710,13 +719,15 @@ class FeatureExtractionEngine:
         return features
     
     def _extract_motion_features(self, video_data: Any) -> np.ndarray:
-        """Extract motion features from video"""
+        """
+Extract motion features from video"""
         # Simplified motion feature extraction
         # In production, implement optical flow analysis
         return np.array([0.5, 0.3, 0.7])  # Placeholder motion features
     
     def _sample_video_frames(self, video_data: Any, num_frames: int = 5) -> List[np.ndarray]:
-        """Sample frames from video for analysis"""
+        """
+Sample frames from video for analysis"""
         frames = []
         
         try:
@@ -763,7 +774,8 @@ class FeatureExtractionEngine:
     
     def _reduce_dimensions(self, feature_vectors: Dict[str, np.ndarray], 
                           target_dims: int) -> Dict[str, np.ndarray]:
-        """Reduce feature dimensions using PCA"""
+        """
+Reduce feature dimensions using PCA"""
         reduced_features = {}
         
         for feature_type, features in feature_vectors.items():
@@ -779,7 +791,8 @@ class FeatureExtractionEngine:
         return reduced_features
     
     def get_feature_statistics(self) -> Dict[str, Any]:
-        """Get statistics about extracted features"""
+        """
+Get statistics about extracted features"""
         stats = {
             'total_extractions': len(self.feature_cache),
             'feature_types_used': set(),

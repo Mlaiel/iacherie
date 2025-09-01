@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List, Union, Callable
 from pydantic import BaseSettings, Field, validator
@@ -23,7 +24,9 @@ from datetime import datetime, timedelta
 
 
 class MonitoringLevel(str, Enum):
-    """Monitoring intensity levels."""
+    """
+Monitoring intensity levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -32,6 +35,7 @@ class MonitoringLevel(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -41,6 +45,7 @@ class AlertSeverity(str, Enum):
 
 class MetricType(str, Enum):
     """Types of metrics to collect."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -50,6 +55,7 @@ class MetricType(str, Enum):
 
 class HealthStatus(str, Enum):
     """Service health status."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -87,7 +93,8 @@ class MetricConfig:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""
+    """
+Alert rule configuration."""
     name: str
     description: str
     metric_name: str
@@ -256,7 +263,8 @@ class MonitoringManager:
         self._initialize_default_monitoring()
     
     def _initialize_default_monitoring(self):
-        """Initialize default monitoring configurations."""
+        """
+Initialize default monitoring configurations."""
         # Default health checks
         if self.config.spotify_health_check_enabled:
             self.register_health_check(HealthCheckConfig(
@@ -317,27 +325,33 @@ class MonitoringManager:
         self.health_checks[health_check.service_name] = health_check
     
     def register_metric(self, metric: MetricConfig):
-        """Register a metric configuration."""
+        """
+Register a metric configuration."""
         self.metrics[metric.name] = metric
     
     def register_alert_rule(self, alert_rule: AlertRule):
-        """Register an alert rule."""
+        """
+Register an alert rule."""
         self.alert_rules[alert_rule.name] = alert_rule
     
     def get_health_status(self, service_name: str) -> HealthStatus:
-        """Get health status for a service."""
+        """
+Get health status for a service."""
         return self.service_status.get(service_name, HealthStatus.UNKNOWN)
     
     def update_health_status(self, service_name: str, status: HealthStatus):
-        """Update health status for a service."""
+        """
+Update health status for a service."""
         self.service_status[service_name] = status
     
     def get_all_health_status(self) -> Dict[str, HealthStatus]:
-        """Get health status for all monitored services."""
+        """
+Get health status for all monitored services."""
         return self.service_status.copy()
     
     def get_service_config(self, service_name: str) -> Dict[str, Any]:
-        """Get monitoring configuration for a service."""
+        """
+Get monitoring configuration for a service."""
         health_check = self.health_checks.get(service_name)
         related_metrics = [
             metric for metric in self.metrics.values()

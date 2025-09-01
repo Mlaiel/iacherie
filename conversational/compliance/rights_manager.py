@@ -5,8 +5,9 @@ including intellectual property protection, copyright compliance, and usage righ
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import hashlib
 import logging
@@ -22,7 +23,9 @@ from ..content_protection.fingerprinting import ContentFingerprinter
 
 
 class RightsViolationType(Enum):
-    """Types of rights violations"""
+    """
+Types of rights violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     PATENT_INFRINGEMENT = "patent_infringement"
@@ -35,6 +38,7 @@ class RightsViolationType(Enum):
 
 class RightsStatus(Enum):
     """Rights compliance status"""
+
     COMPLIANT = "compliant"
     VIOLATION_DETECTED = "violation_detected"
     REVIEW_REQUIRED = "review_required"
@@ -45,6 +49,7 @@ class RightsStatus(Enum):
 
 class ContentType(Enum):
     """Types of content for rights management"""
+
     TEXT = "text"
     AUDIO = "audio"
     VIDEO = "video"
@@ -70,7 +75,8 @@ class RightsViolation:
 
 @dataclass
 class RightsAssessment:
-    """Rights assessment result structure"""
+    """
+Rights assessment result structure"""
     content_id: str
     content_type: ContentType
     rights_status: RightsStatus
@@ -86,7 +92,8 @@ class RightsAssessment:
 
 @dataclass
 class ContentLicense:
-    """Content license information"""
+    """
+Content license information"""
     license_id: str
     content_reference: str
     license_type: str
@@ -140,7 +147,7 @@ class RightsManager:
         """Load copyright detection patterns"""
         return [
             {
-                "pattern": r"©\s*\d{4}",
+                "pattern": r"(c)\s*\d{4}",
                 "description": "Copyright notice with year",
                 "confidence": 0.9
             },
@@ -160,7 +167,7 @@ class RightsManager:
                 "confidence": 0.8
             },
             {
-                "pattern": r"trademark|™|®",
+                "pattern": r"trademark|(TM)|(R)",
                 "description": "Trademark indicators",
                 "confidence": 0.7
             }
@@ -175,7 +182,7 @@ class RightsManager:
                 "confidence": 0.9
             },
             {
-                "pattern": r"\b\w+\s*™|\b\w+\s*®",
+                "pattern": r"\b\w+\s*(TM)|\b\w+\s*(R)",
                 "description": "Trademarked terms",
                 "confidence": 0.8
             }
@@ -397,7 +404,8 @@ class RightsManager:
         ai_response: str,
         context: Optional[Dict[str, Any]]
     ) -> List[RightsViolation]:
-        """Detect potential copyright violations"""
+        """
+Detect potential copyright violations"""
         violations = []
         combined_content = user_input + " " + ai_response
         
@@ -677,7 +685,8 @@ class RightsManager:
         return True
     
     def _generate_rights_recommendations(self, assessment: RightsAssessment) -> List[str]:
-        """Generate rights compliance recommendations"""
+        """
+Generate rights compliance recommendations"""
         recommendations = []
         
         if assessment.violations:
@@ -727,12 +736,14 @@ class RightsManager:
         return hashlib.sha256(content.encode('utf-8')).hexdigest()
     
     def _determine_content_type(self, content: str) -> ContentType:
-        """Determine content type from content analysis"""
+        """
+Determine content type from content analysis"""
         # For conversational AI, primarily text content
         return ContentType.TEXT
     
     async def _store_rights_assessment(self, assessment: RightsAssessment) -> None:
-        """Store rights assessment results"""
+        """
+Store rights assessment results"""
         try:
             query = """
                 INSERT INTO rights_assessments 

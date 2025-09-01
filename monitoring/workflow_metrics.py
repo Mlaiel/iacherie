@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, Any, Optional
 import asyncio
@@ -11,13 +12,15 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowMetrics:
-    """Workflow metrics collection"""
+    """
+Workflow metrics collection"""
     
     def __init__(self):
         self.metrics = {}
     
     async def setup_content_tracking(self, config: Dict[str, Any]):
-        """Setup content tracking configuration"""
+        """
+Setup content tracking configuration"""
         workflow_id = config.get("workflow_id")
         content_id = config.get("content_id")
         
@@ -39,7 +42,8 @@ class NotificationService:
         self.notifications = []
     
     async def send_notification(self, notification_data: Dict[str, Any]):
-        """Send notification to user"""
+        """
+Send notification to user"""
         workflow_id = notification_data.get("workflow_id")
         creator_id = notification_data.get("creator_id")
         title = notification_data.get("title")

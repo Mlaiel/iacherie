@@ -38,6 +38,7 @@ Health Monitoring Guarantees:
 - Real-time creator impact assessment
 - Automated escalation for business-critical issues
 """
+
 import asyncio
 import logging
 import time
@@ -63,7 +64,9 @@ from email.mime.multipart import MIMEMultipart
 
 
 class HealthStatus(Enum):
-    """Cache health status levels with business impact classification"""
+    """
+Cache health status levels with business impact classification"""
+
     EXCELLENT = "excellent"      # >99.9% performance, no issues
     GOOD = "good"               # >95% performance, minor issues
     WARNING = "warning"         # >90% performance, attention needed
@@ -75,6 +78,7 @@ class HealthStatus(Enum):
 
 class HealthMetric(Enum):
     """Comprehensive health monitoring metrics"""
+
     AVAILABILITY = "availability"              # System uptime and accessibility
     PERFORMANCE = "performance"                # Response time and throughput
     MEMORY_USAGE = "memory_usage"             # Memory consumption and efficiency
@@ -93,6 +97,7 @@ class HealthMetric(Enum):
 
 class BusinessImpact(Enum):
     """Business impact levels for health issues"""
+
     MINIMAL = "minimal"          # No creator impact
     LOW = "low"                 # Minor creator inconvenience
     MEDIUM = "medium"           # Some creators affected
@@ -103,6 +108,7 @@ class BusinessImpact(Enum):
 
 class AlertChannel(Enum):
     """Alert notification channels"""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -129,7 +135,8 @@ class HealthCheckResult:
 
 @dataclass
 class SystemHealthReport:
-    """Comprehensive system health report"""
+    """
+Comprehensive system health report"""
     overall_status: HealthStatus
     overall_score: float  # 0-100
     individual_metrics: Dict[HealthMetric, HealthCheckResult]
@@ -145,7 +152,8 @@ class SystemHealthReport:
 
 @dataclass
 class CreatorImpactAssessment:
-    """Assessment of health issues impact on creators"""
+    """
+Assessment of health issues impact on creators"""
     total_creators_affected: int
     by_tier: Dict[str, int]  # creator tier -> count
     by_region: Dict[str, int]  # region -> count
@@ -156,7 +164,8 @@ class CreatorImpactAssessment:
 
 
 class PredictiveFailureDetector:
-    """AI-powered predictive failure detection system"""
+    """
+AI-powered predictive failure detection system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -169,7 +178,8 @@ class PredictiveFailureDetector:
         self._initialize_prediction_models()
     
     def _initialize_prediction_models(self):
-        """Initialize machine learning models for failure prediction"""
+        """
+Initialize machine learning models for failure prediction"""
         
         # Different models for different types of failures
         model_configs = {
@@ -407,7 +417,8 @@ class PredictiveFailureDetector:
         return numerator / denominator
     
     def _calculate_risk_level(self, anomaly_score: float, failure_type: str) -> str:
-        """Calculate risk level based on anomaly score"""
+        """
+Calculate risk level based on anomaly score"""
         
         # Risk thresholds vary by failure type
         thresholds = {
@@ -446,7 +457,8 @@ class PredictiveFailureDetector:
         return None
     
     def _get_failure_prevention_actions(self, failure_type: str, risk_level: str) -> List[str]:
-        """Get recommended actions to prevent failure"""
+        """
+Get recommended actions to prevent failure"""
         
         action_map = {
             "memory_failure": {
@@ -488,7 +500,8 @@ class AutomatedRecoverySystem:
         self._register_recovery_actions()
     
     def _register_recovery_actions(self):
-        """Register available recovery actions"""
+        """
+Register available recovery actions"""
         
         self.recovery_actions = {
             "restart_cache_service": self._restart_cache_service,
@@ -773,7 +786,8 @@ class AutomatedRecoverySystem:
         return True
     
     async def _assess_business_continuity(self) -> bool:
-        """Assess if business continuity has been restored"""
+        """
+Assess if business continuity has been restored"""
         
         # This would check business continuity metrics
         # For now, return True to indicate successful restoration
@@ -792,6 +806,7 @@ class CacheHealthMonitor:
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -800,6 +815,7 @@ class AlertSeverity(Enum):
 
 class RecoveryAction(Enum):
     """Automated recovery actions"""
+
     RESTART_SERVICE = "restart_service"
     CLEAR_CACHE = "clear_cache"
     INCREASE_MEMORY = "increase_memory"
@@ -824,7 +840,8 @@ class HealthCheckResult:
 
 @dataclass
 class HealthAlert:
-    """Health monitoring alert"""
+    """
+Health monitoring alert"""
     alert_id: str
     severity: AlertSeverity
     metric: HealthMetric
@@ -839,7 +856,8 @@ class HealthAlert:
 
 @dataclass
 class HealthScore:
-    """Overall health score calculation"""
+    """
+Overall health score calculation"""
     overall_score: float
     component_scores: Dict[HealthMetric, float]
     status: HealthStatus
@@ -850,7 +868,8 @@ class HealthScore:
 
 @dataclass
 class DiagnosticReport:
-    """Comprehensive diagnostic report"""
+    """
+Comprehensive diagnostic report"""
     report_id: str
     generated_at: datetime
     health_score: HealthScore
@@ -1526,7 +1545,8 @@ class CacheHealthMonitor:
         }
 
     async def _handle_restart_service(self, parameters: Dict[str, Any]) -> bool:
-        """Handle service restart recovery action"""
+        """
+Handle service restart recovery action"""
         try:
             # Simulate service restart
             self.logger.info("Simulating service restart")
@@ -1554,26 +1574,31 @@ class CacheHealthMonitor:
         return True
 
     async def _handle_scale_out(self, parameters: Dict[str, Any]) -> bool:
-        """Handle scale out recovery action"""
+        """
+Handle scale out recovery action"""
         # Placeholder implementation
         return True
 
     async def _handle_failover(self, parameters: Dict[str, Any]) -> bool:
-        """Handle failover recovery action"""
+        """
+Handle failover recovery action"""
         # Placeholder implementation
         return True
 
     async def _handle_circuit_breaker(self, parameters: Dict[str, Any]) -> bool:
-        """Handle circuit breaker recovery action"""
+        """
+Handle circuit breaker recovery action"""
         # Placeholder implementation
         return True
 
     async def _handle_throttle_traffic(self, parameters: Dict[str, Any]) -> bool:
-        """Handle traffic throttling recovery action"""
+        """
+Handle traffic throttling recovery action"""
         # Placeholder implementation
         return True
 
     async def _handle_notify_admin(self, parameters: Dict[str, Any]) -> bool:
-        """Handle admin notification recovery action"""
+        """
+Handle admin notification recovery action"""
         # Placeholder implementation
         return True

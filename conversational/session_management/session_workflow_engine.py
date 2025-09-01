@@ -24,6 +24,7 @@ Team Specialists:
 - DevOps: Workflow Scalability & Performance
 - IA Prompt Engineer: Conversational Workflow Intelligence
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -56,7 +57,9 @@ logger = get_logger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -68,6 +71,7 @@ class WorkflowStatus(Enum):
 
 class TaskStatus(Enum):
     """Individual task status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -79,6 +83,7 @@ class TaskStatus(Enum):
 
 class TaskType(Enum):
     """Types of workflow tasks"""
+
     CONTENT_CREATION = "content_creation"
     CONTENT_ANALYSIS = "content_analysis"
     CONTENT_OPTIMIZATION = "content_optimization"
@@ -94,6 +99,7 @@ class TaskType(Enum):
 
 class TriggerType(Enum):
     """Workflow trigger types"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_BASED = "event_based"
@@ -105,6 +111,7 @@ class TriggerType(Enum):
 
 class ConditionOperator(Enum):
     """Condition operators for workflow logic"""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -167,7 +174,8 @@ class WorkflowExecution(BaseModel):
 
 
 class WorkflowDefinition(BaseModel):
-    """Complete workflow definition"""
+    """
+Complete workflow definition"""
     workflow_id: str = Field(default_factory=lambda: str(uuid4()))
     workflow_name: str
     workflow_description: str = ""
@@ -227,7 +235,8 @@ class WorkflowAnalytics(BaseModel):
 
 @dataclass
 class WorkflowEngineConfig:
-    """Workflow engine configuration"""
+    """
+Workflow engine configuration"""
     max_concurrent_executions: int = 100
     default_task_timeout: int = 300  # seconds
     max_retry_attempts: int = 3
@@ -243,7 +252,8 @@ class WorkflowEngineConfig:
 
 
 class TaskExecutor:
-    """Executes individual workflow tasks"""
+    """
+Executes individual workflow tasks"""
     
     def __init__(self, config: WorkflowEngineConfig):
         self.config = config
@@ -257,7 +267,8 @@ class TaskExecutor:
         self._register_default_tasks()
     
     def _register_default_tasks(self):
-        """Register default task functions"""
+        """
+Register default task functions"""
         
         self.task_functions.update({
             "content_analysis": self._content_analysis_task,
@@ -743,7 +754,8 @@ class WorkflowOrchestrator:
         trigger_data: Dict[str, Any] = None,
         execution_context: Dict[str, Any] = None
     ) -> WorkflowExecution:
-        """Execute workflow"""
+        """
+Execute workflow"""
         
         try:
             # Create workflow execution
@@ -907,7 +919,8 @@ class WorkflowOrchestrator:
         return task_graph
     
     async def pause_workflow_execution(self, execution_id: str) -> bool:
-        """Pause workflow execution"""
+        """
+Pause workflow execution"""
         
         try:
             if execution_id in self.active_executions:

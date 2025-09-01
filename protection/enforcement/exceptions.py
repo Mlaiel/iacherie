@@ -1,6 +1,7 @@
 """Exception Handling and Error Management for Copyright Enforcement
 Professional error handling, custom exceptions, and error recovery
 """
+
 import logging
 import traceback
 from typing import Dict, List, Optional, Any, Union, Type, Set, Callable
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""
+    """
+Error severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -26,6 +29,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Error categories"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
@@ -48,6 +52,7 @@ class ErrorCategory(Enum):
 
 class RecoveryStrategy(Enum):
     """Error recovery strategies"""
+
     RETRY = "retry"
     FALLBACK = "fallback"
     ESCALATE = "escalate"
@@ -69,7 +74,8 @@ class ErrorContext:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'operation': self.operation,
             'user_id': self.user_id,
@@ -83,7 +89,8 @@ class ErrorContext:
 
 
 class BaseEnforcementException(Exception, ABC):
-    """Base exception for all enforcement-related errors"""
+    """
+Base exception for all enforcement-related errors"""
     
     def __init__(
         self,
@@ -107,7 +114,8 @@ class BaseEnforcementException(Exception, ABC):
         self.traceback_info = traceback.format_exc() if sys.exc_info()[0] else None
     
     def _generate_error_code(self) -> str:
-        """Generate unique error code"""
+        """
+Generate unique error code"""
         return f"{self.category.value.upper()}_{self.__class__.__name__.upper()}_{int(self.timestamp.timestamp())}"
     
     def to_dict(self) -> Dict[str, Any]:
@@ -125,17 +133,20 @@ class BaseEnforcementException(Exception, ABC):
         }
     
     def to_json(self) -> str:
-        """Convert exception to JSON"""
+        """
+Convert exception to JSON"""
         return json.dumps(self.to_dict(), indent=2)
     
     @abstractmethod
     def get_user_message(self) -> str:
-        """Get user-friendly error message"""
+        """
+Get user-friendly error message"""
         pass
 
 
 class AuthenticationError(BaseEnforcementException):
-    """Authentication-related errors"""
+    """
+Authentication-related errors"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -467,7 +478,8 @@ class ErrorSummary:
 
 
 class ErrorTracker:
-    """Track and analyze error patterns"""
+    """
+Track and analyze error patterns"""
     
     def __init__(self):
         self.error_summaries: Dict[str, ErrorSummary] = {}
@@ -475,7 +487,8 @@ class ErrorTracker:
         self.max_history_size = 1000
         
     def track_error(self, error: BaseEnforcementException):
-        """Track an error occurrence"""
+        """
+Track an error occurrence"""
         try:
             # Add to history
             self.error_history.append(error)
@@ -616,7 +629,8 @@ class ErrorHandler:
         self.notification_handlers: List[Callable] = []
         
     def register_recovery_handler(self, category: ErrorCategory, handler: Callable):
-        """Register error recovery handler"""
+        """
+Register error recovery handler"""
         self.recovery_handlers[category] = handler
         logger.info(f"Registered recovery handler for category {category.value}")
     
@@ -733,7 +747,8 @@ def get_error_tracker() -> ErrorTracker:
 
 
 def get_error_handler() -> ErrorHandler:
-    """Get global error handler instance"""
+    """
+Get global error handler instance"""
     return error_handler
 
 

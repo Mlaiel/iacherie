@@ -38,6 +38,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -153,7 +154,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringStackMode(Enum):
-    """Monitoring stack operation modes"""
+    """
+Monitoring stack operation modes"""
+
     MINIMAL = "minimal"           # Essential monitoring only
     STANDARD = "standard"         # Core + business metrics
     ADVANCED = "advanced"         # Full stack with AI analytics
@@ -249,7 +252,8 @@ class MonitoringStack:
                 setattr(self.config, key, value)
     
     def _build_orchestrator_config(self) -> Dict[str, Any]:
-        """Build orchestrator configuration from stack config"""
+        """
+Build orchestrator configuration from stack config"""
         mode_mapping = {
             MonitoringStackMode.MINIMAL: MonitoringMode.LIGHTWEIGHT,
             MonitoringStackMode.STANDARD: MonitoringMode.ESSENTIAL,
@@ -314,7 +318,8 @@ class MonitoringStack:
         return self._components.get(name)
     
     def get_metrics_collector(self) -> Optional[MetricsCollector]:
-        """Get the metrics collector component"""
+        """
+Get the metrics collector component"""
         return self.get_component("metrics_collector")
     
     def get_health_monitor(self) -> Optional[HealthMonitor]:
@@ -410,20 +415,24 @@ class MonitoringStack:
             )
     
     def is_running(self) -> bool:
-        """Check if monitoring stack is running"""
+        """
+Check if monitoring stack is running"""
         return self._running
     
     def get_configuration(self) -> MonitoringStackConfig:
-        """Get current monitoring stack configuration"""
+        """
+Get current monitoring stack configuration"""
         return self.config
 
 
 class MonitoringFactory:
-    """Factory for creating monitoring stack configurations"""
+    """
+Factory for creating monitoring stack configurations"""
     
     @staticmethod
     def create_development_stack() -> MonitoringStack:
-        """Create monitoring stack optimized for development"""
+        """
+Create monitoring stack optimized for development"""
         config = MonitoringStackConfig(
             mode=MonitoringStackMode.DEVELOPMENT,
             collection_interval=60,
@@ -437,7 +446,8 @@ class MonitoringFactory:
     
     @staticmethod
     def create_production_stack() -> MonitoringStack:
-        """Create monitoring stack optimized for production"""
+        """
+Create monitoring stack optimized for production"""
         config = MonitoringStackConfig(
             mode=MonitoringStackMode.ENTERPRISE,
             collection_interval=30,
@@ -452,7 +462,8 @@ class MonitoringFactory:
     
     @staticmethod
     def create_minimal_stack() -> MonitoringStack:
-        """Create minimal monitoring stack for resource-constrained environments"""
+        """
+Create minimal monitoring stack for resource-constrained environments"""
         config = MonitoringStackConfig(
             mode=MonitoringStackMode.MINIMAL,
             collection_interval=120,
@@ -470,7 +481,8 @@ class MonitoringFactory:
         mode: MonitoringStackMode,
         **kwargs
     ) -> MonitoringStack:
-        """Create custom monitoring stack with specific configuration"""
+        """
+Create custom monitoring stack with specific configuration"""
         config = MonitoringStackConfig(mode=mode, **kwargs)
         return MonitoringStack(config)
 
@@ -502,7 +514,8 @@ async def setup_monitoring_stack(
 
 
 async def quick_monitoring_setup(redis_client=None, db_engine=None) -> MonitoringStack:
-    """Ultra-quick monitoring setup with sensible defaults"""
+    """
+Ultra-quick monitoring setup with sensible defaults"""
     return await setup_monitoring_stack("standard", redis_client, db_engine)
 
 

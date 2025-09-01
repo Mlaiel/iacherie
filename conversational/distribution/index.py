@@ -5,11 +5,12 @@ Provides unified access to all distribution components and services.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -82,7 +83,8 @@ class DistributionService:
         self.is_initialized = False
         
     async def initialize(self, db: Session) -> None:
-        """Initialize the distribution service"""
+        """
+Initialize the distribution service"""
         try:
             logger.info("Initializing Distribution Service...")
             
@@ -313,7 +315,8 @@ async def get_distribution_service() -> DistributionService:
 
 
 async def initialize_distribution_service(db: Session) -> DistributionService:
-    """Initialize the distribution service"""
+    """
+Initialize the distribution service"""
     service = await get_distribution_service()
     
     if not service.is_initialized:
@@ -323,7 +326,8 @@ async def initialize_distribution_service(db: Session) -> DistributionService:
 
 
 async def shutdown_distribution_service() -> None:
-    """Shutdown the distribution service"""
+    """
+Shutdown the distribution service"""
     global _distribution_service
     
     if _distribution_service and _distribution_service.is_initialized:
@@ -334,7 +338,8 @@ async def shutdown_distribution_service() -> None:
 # FastAPI lifespan manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Manage FastAPI application lifespan"""
+    """
+Manage FastAPI application lifespan"""
     # Startup
     logger.info("Starting Distribution Service...")
     
@@ -360,7 +365,8 @@ async def quick_distribute(
     platforms: List[str],
     db: Session
 ) -> Dict[str, Any]:
-    """Quick content distribution function"""
+    """
+Quick content distribution function"""
     service = await initialize_distribution_service(db)
     return await service.distribute_content(user_id, content_id, platforms)
 
@@ -370,7 +376,8 @@ async def quick_analytics(
     time_range: str,
     db: Session
 ) -> Dict[str, Any]:
-    """Quick analytics retrieval function"""
+    """
+Quick analytics retrieval function"""
     service = await initialize_distribution_service(db)
     return await service.get_analytics(user_id, time_range)
 
@@ -382,14 +389,16 @@ async def quick_schedule(
     schedule_time: datetime,
     db: Session
 ) -> Dict[str, Any]:
-    """Quick content scheduling function"""
+    """
+Quick content scheduling function"""
     service = await initialize_distribution_service(db)
     return await service.schedule_content(user_id, content_id, platforms, schedule_time)
 
 
 # Module status and health
 async def get_distribution_status() -> Dict[str, Any]:
-    """Get distribution module status"""
+    """
+Get distribution module status"""
     if _distribution_manager:
         return await _distribution_manager.get_module_status()
     else:

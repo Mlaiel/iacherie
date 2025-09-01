@@ -4,10 +4,11 @@ High-level subscription management orchestrator providing unified interface
 for subscription operations, feature access control, and business logic coordination.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List, Tuple
@@ -51,7 +52,8 @@ class SubscriptionManager:
     """
     
     def __init__(self):
-        """Initialize subscription manager with required services."""
+        """
+Initialize subscription manager with required services."""
         self.service = SubscriptionService()
         self.billing = BillingEngine()
         self.payment = PaymentProcessor()
@@ -565,7 +567,8 @@ class SubscriptionManager:
         subscription: UserSubscription, 
         db: Session
     ) -> None:
-        """Update subscription for next billing cycle."""
+        """
+Update subscription for next billing cycle."""
         # Calculate next billing date
         if subscription.billing_cycle == BillingCycleType.MONTHLY.value:
             subscription.next_billing_date += timedelta(days=30)
@@ -586,7 +589,8 @@ class SubscriptionManager:
         billing_result: Dict[str, Any],
         db: Session
     ) -> None:
-        """Handle billing failure scenarios."""
+        """
+Handle billing failure scenarios."""
         # Update subscription status
         subscription.status = SubscriptionStatus.SUSPENDED.value
         subscription.updated_at = datetime.utcnow()

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import hashlib
@@ -40,7 +41,9 @@ Base = declarative_base()
 
 
 class SessionStatus(Enum):
-    """Session status enumeration"""
+    """
+Session status enumeration"""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -50,6 +53,7 @@ class SessionStatus(Enum):
 
 class DeviceType(Enum):
     """Device type enumeration"""
+
     DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
@@ -457,7 +461,8 @@ class SessionManager:
         return hashlib.sha256(uuid.uuid4().hex.encode()).hexdigest()[:32]
     
     def _enforce_concurrent_session_limits(self, user_id: str):
-        """Enforce maximum concurrent sessions per user"""
+        """
+Enforce maximum concurrent sessions per user"""
         active_sessions = self.db_session.query(SessionStore).filter(
             SessionStore.user_id == user_id,
             SessionStore.status == "active",
@@ -571,6 +576,7 @@ class SessionManager:
         )
     
     def _log_security_violation(self, session_id: str, violation_type: str):
-        """Log security violations for monitoring"""
+        """
+Log security violations for monitoring"""
         # Implementation would integrate with security monitoring system
         pass

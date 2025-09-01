@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Distribution Prompts Tests
+"""
+Advanced Distribution Prompts Tests
 Ultra-professional test suite for Distribution Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -42,11 +45,13 @@ from ai.prompts.distribution_prompts import (
 
 
 class TestDistributionPrompts:
-    """Ultra-comprehensive test suite for Distribution Prompts"""
+    """
+Ultra-comprehensive test suite for Distribution Prompts"""
     
     @pytest.fixture
     async def distribution_prompts(self):
-        """Create a fresh DistributionPrompts instance for each test"""
+        """
+Create a fresh DistributionPrompts instance for each test"""
         prompts = DistributionPrompts()
         await prompts.initialize()
         yield prompts
@@ -54,7 +59,8 @@ class TestDistributionPrompts:
     
     @pytest.fixture
     def sample_music_distribution_context(self):
-        """Create sample music distribution context for testing"""
+        """
+Create sample music distribution context for testing"""
         return DistributionContext(
             content_type=ContentType.MUSIC,
             release_type=ReleaseType.SINGLE,
@@ -228,7 +234,8 @@ class TestDistributionPrompts:
     
     @pytest.mark.asyncio
     async def test_distribution_registry_loading(self, distribution_prompts):
-        """Test that distribution registry is properly loaded"""
+        """
+Test that distribution registry is properly loaded"""
         registry = DISTRIBUTION_PROMPTS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)

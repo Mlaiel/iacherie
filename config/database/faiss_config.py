@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import pickle
 import numpy as np
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class FAISSEnvironment(Enum):
-    """FAISS environment configurations"""
+    """
+FAISS environment configurations"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -42,6 +45,7 @@ class FAISSEnvironment(Enum):
 
 class FAISSIndexType(Enum):
     """FAISS index types for different use cases"""
+
     FLAT_L2 = "flat_l2"  # Exact search, small datasets
     IVF_FLAT = "ivf_flat"  # Fast search with clustering
     HNSW_FLAT = "hnsw_flat"  # Hierarchical graph-based
@@ -52,6 +56,7 @@ class FAISSIndexType(Enum):
 
 class FAISSContentType(Enum):
     """Content types for vector indexing"""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -76,7 +81,8 @@ class FAISSIndexConfig:
 
 @dataclass
 class FAISSPerformanceConfig:
-    """FAISS performance optimization settings"""
+    """
+FAISS performance optimization settings"""
     batch_size: int = 1000
     max_memory_mb: int = 1024
     parallel_search_threads: int = 4
@@ -89,7 +95,8 @@ class FAISSPerformanceConfig:
 
 @dataclass
 class FAISSStorageConfig:
-    """FAISS storage and persistence configuration"""
+    """
+FAISS storage and persistence configuration"""
     base_path: str = "/data/faiss_indexes"
     backup_enabled: bool = True
     backup_interval_hours: int = 24
@@ -122,7 +129,8 @@ class FAISSConfig:
         self._configure_faiss()
 
     def _setup_logging(self) -> None:
-        """Setup FAISS-specific logging"""
+        """
+Setup FAISS-specific logging"""
         self.logger = logging.getLogger(f"faiss.{self.environment.value}.{self.content_type.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
@@ -217,7 +225,8 @@ class FAISSConfig:
         return configs
 
     def _get_performance_config(self) -> FAISSPerformanceConfig:
-        """Get performance configuration based on environment"""
+        """
+Get performance configuration based on environment"""
         configs = {
             FAISSEnvironment.DEVELOPMENT: FAISSPerformanceConfig(
                 batch_size=100,
@@ -249,7 +258,8 @@ class FAISSConfig:
         return configs.get(self.environment, FAISSPerformanceConfig())
 
     def _get_storage_config(self) -> FAISSStorageConfig:
-        """Get storage configuration based on environment"""
+        """
+Get storage configuration based on environment"""
         base_path = os.getenv(f"FAISS_STORAGE_PATH_{self.environment.value.upper()}", 
                              f"/data/faiss_{self.environment.value}")
         

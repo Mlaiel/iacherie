@@ -19,6 +19,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from ...monitoring.notification_monitoring import NotificationMonitoringService
 
 
 class NotificationType(Enum):
-    """Comprehensive notification types for IA Influencer platform"""
+    """
+Comprehensive notification types for IA Influencer platform"""
+
     CONTENT_UPLOAD = "content_upload"
     AI_PROTECTION_ALERT = "ai_protection_alert"
     COLLABORATION_MATCH = "collaboration_match"
@@ -59,6 +62,7 @@ class NotificationType(Enum):
 
 class NotificationDeliveryStatus(Enum):
     """Notification delivery status tracking"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -82,7 +86,8 @@ class NotificationContext:
 
 @dataclass
 class NotificationConfiguration:
-    """Advanced notification configuration"""
+    """
+Advanced notification configuration"""
     enabled_channels: List[NotificationChannel]
     priority_rules: Dict[str, NotificationPriority]
     template_preferences: Dict[str, str]
@@ -143,7 +148,8 @@ class NotificationAgent(BaseAgent):
         }
         
     def _initialize_core_components(self):
-        """Initialize core notification components"""
+        """
+Initialize core notification components"""
         self.notification_storage = {}
         self.user_preferences = {}
         self.template_cache = {}
@@ -151,12 +157,14 @@ class NotificationAgent(BaseAgent):
         self.retry_queue = asyncio.Queue()
         
     def _initialize_ai_personalizer(self):
-        """Initialize AI-driven notification personalization"""
+        """
+Initialize AI-driven notification personalization"""
         from ...ai.personalization.notification_personalizer import NotificationPersonalizer
         return NotificationPersonalizer(self.config.get('ai_personalization', {}))
         
     async def start_agent(self):
-        """Start the notification agent with all processing tasks"""
+        """
+Start the notification agent with all processing tasks"""
         try:
             self.logger.info("Starting NotificationAgent with advanced processing capabilities")
             
@@ -535,7 +543,8 @@ class NotificationAgent(BaseAgent):
         notification: NotificationModel,
         channel: NotificationChannel
     ) -> Dict[str, Any]:
-        """Prepare channel-specific content formatting"""
+        """
+Prepare channel-specific content formatting"""
         try:
             base_content = notification.content
             
@@ -744,7 +753,8 @@ class NotificationAgent(BaseAgent):
         return retry_limits.get(priority, 3)
         
     async def _cleanup_expired_notifications(self):
-        """Clean up expired notifications and delivery history"""
+        """
+Clean up expired notifications and delivery history"""
         while True:
             try:
                 current_time = datetime.utcnow()
@@ -820,7 +830,8 @@ class NotificationAgent(BaseAgent):
         return effectiveness
         
     async def _calculate_user_engagement(self) -> Dict[str, Any]:
-        """Calculate user engagement metrics"""
+        """
+Calculate user engagement metrics"""
         # This would analyze read rates, response rates, etc.
         return {
             "average_read_rate": 0.75,  # Placeholder
@@ -889,17 +900,20 @@ class NotificationAgentManager:
         self.health_monitor = self._initialize_health_monitor()
         
     def _initialize_load_balancer(self):
-        """Initialize intelligent load balancing system"""
+        """
+Initialize intelligent load balancing system"""
         from ...infrastructure.load_balancer import NotificationLoadBalancer
         return NotificationLoadBalancer(self.config.get('load_balancer', {}))
         
     def _initialize_health_monitor(self):
-        """Initialize agent health monitoring system"""
+        """
+Initialize agent health monitoring system"""
         from ...monitoring.agent_health_monitor import AgentHealthMonitor
         return AgentHealthMonitor(self.config.get('health_monitor', {}))
         
     async def create_agent(self, agent_id: str, agent_config: Dict[str, Any]) -> bool:
-        """Create and start a new notification agent instance"""
+        """
+Create and start a new notification agent instance"""
         try:
             agent = NotificationAgent(agent_config)
             success = await agent.start_agent()

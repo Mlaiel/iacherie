@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive AutoML capabilities including automated model selection,
 hyperparameter optimization, and neural architecture search.
 """
+
 import logging
 import numpy as np
 import json
@@ -20,7 +21,9 @@ import random
 logger = logging.getLogger(__name__)
 
 class OptimizationAlgorithm(Enum):
-    """Hyperparameter optimization algorithms"""
+    """
+Hyperparameter optimization algorithms"""
+
     RANDOM_SEARCH = "random_search"
     GRID_SEARCH = "grid_search"
     BAYESIAN = "bayesian"
@@ -29,6 +32,7 @@ class OptimizationAlgorithm(Enum):
 
 class ModelType(Enum):
     """Supported model types for AutoML"""
+
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
@@ -37,6 +41,7 @@ class ModelType(Enum):
 
 class NASStrategy(Enum):
     """Neural Architecture Search strategies"""
+
     RANDOM_SEARCH = "random_search"
     EVOLUTIONARY = "evolutionary"
     REINFORCEMENT_LEARNING = "reinforcement_learning"
@@ -54,7 +59,8 @@ class HyperparameterSpace:
 
 @dataclass
 class AutoMLConfig:
-    """Configuration for AutoML pipeline"""
+    """
+Configuration for AutoML pipeline"""
     task_type: ModelType
     max_trials: int = 100
     max_time_minutes: int = 60
@@ -77,7 +83,8 @@ class TrialResult:
     metadata: Dict[str, Any]
 
 class AutoMLEngine:
-    """Main AutoML engine for automated model selection and training"""
+    """
+Main AutoML engine for automated model selection and training"""
     
     def __init__(self, config: AutoMLConfig):
         self.config = config
@@ -303,7 +310,8 @@ class AutoMLEngine:
             return new_score < current_best
     
     def get_best_model_config(self) -> Optional[Dict[str, Any]]:
-        """Get configuration of the best model found"""
+        """
+Get configuration of the best model found"""
         if self.best_trial is None:
             return None
         
@@ -441,7 +449,8 @@ class HyperparameterOptimizer:
         return self._random_search_sample(search_space)
     
     def _bayesian_sample(self, search_space: List[HyperparameterSpace], trial: int) -> Dict[str, Any]:
-        """Sample parameters using Bayesian optimization (simplified)"""
+        """
+Sample parameters using Bayesian optimization (simplified)"""
         # Simplified Bayesian - in production would use proper Bayesian optimization
         if trial < 5:  # Random exploration phase
             return self._random_search_sample(search_space)
@@ -450,7 +459,8 @@ class HyperparameterOptimizer:
         return self._random_search_sample(search_space)
 
 class NeuralArchitectureSearch:
-    """Neural Architecture Search for automated neural network design"""
+    """
+Neural Architecture Search for automated neural network design"""
     
     def __init__(self, strategy: NASStrategy = NASStrategy.RANDOM_SEARCH):
         self.strategy = strategy

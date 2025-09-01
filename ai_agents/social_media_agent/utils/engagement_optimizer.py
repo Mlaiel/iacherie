@@ -23,6 +23,7 @@ Expert Development Team Specialties:
 - AI Prompt Engineering Expert - Natural language processing and content generation
 - Content Protection Specialist - Protected content engagement tracking and optimization
 """
+
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Set, Union
 from dataclasses import dataclass, field
@@ -47,7 +48,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class EngagementMetric(Enum):
-    """Comprehensive engagement metrics across all platforms"""
+    """
+Comprehensive engagement metrics across all platforms"""
     # Basic Engagement
     LIKES = "likes"
     SHARES = "shares" 
@@ -99,6 +101,7 @@ class EngagementMetric(Enum):
 
 class OptimizationStrategy(Enum):
     """AI optimization strategies for different objectives"""
+
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_CONVERSIONS = "maximize_conversions"
@@ -112,6 +115,7 @@ class OptimizationStrategy(Enum):
 
 class ContentOptimizationType(Enum):
     """Types of content optimization techniques"""
+
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
     CAPTION_OPTIMIZATION = "caption_optimization"
     TIMING_OPTIMIZATION = "timing_optimization"
@@ -125,6 +129,7 @@ class ContentOptimizationType(Enum):
 
 class MLModelType(Enum):
     """Machine learning models for engagement prediction"""
+
     GRADIENT_BOOSTING = "gradient_boosting"
     RANDOM_FOREST = "random_forest"
     NEURAL_NETWORK = "neural_network"
@@ -141,6 +146,7 @@ class MLModelType(Enum):
 
 class OptimizationTarget(Enum):
     """Optimization targets"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     REACH_MAXIMIZATION = "reach_maximization"
     CONVERSION_RATE = "conversion_rate"
@@ -150,6 +156,7 @@ class OptimizationTarget(Enum):
 
 class ContentCategory(Enum):
     """Content categories for optimization"""
+
     EDUCATIONAL = "educational"
     ENTERTAINMENT = "entertainment"
     PROMOTIONAL = "promotional"
@@ -174,7 +181,8 @@ class EngagementData:
 
 @dataclass
 class OptimizationRecommendation:
-    """Content optimization recommendation"""
+    """
+Content optimization recommendation"""
     aspect: str  # hashtags, timing, content_type, etc.
     current_value: Any
     recommended_value: Any
@@ -185,7 +193,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content analysis"""
+    """
+Comprehensive content analysis"""
     content_id: str
     platform: str
     predicted_engagement: Dict[EngagementMetric, float]
@@ -199,7 +208,8 @@ class ContentAnalysis:
     analyzed_at: datetime = field(default_factory=datetime.utcnow)
 
 class ContentFeatureExtractor:
-    """Extract features from content for ML analysis"""
+    """
+Extract features from content for ML analysis"""
     
     def __init__(self):
         self.sentiment_analyzer = None
@@ -208,7 +218,8 @@ class ContentFeatureExtractor:
         self._initialize_nlp_models()
     
     def _initialize_nlp_models(self):
-        """Initialize NLP models for content analysis"""
+        """
+Initialize NLP models for content analysis"""
         try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
@@ -308,7 +319,8 @@ class ContentFeatureExtractor:
         return total_syllables / len(words)
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score (simplified Flesch score)"""
+        """
+Calculate readability score (simplified Flesch score)"""
         sentences = len(text.split('.'))
         words = len(text.split())
         syllables = sum(max(1, len(re.findall(r'[aeiouy]+', word.lower()))) 
@@ -322,7 +334,8 @@ class ContentFeatureExtractor:
         return max(0, min(100, score))
     
     def extract_media_features(self, media_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from media content"""
+        """
+Extract features from media content"""
         features = {}
         
         media_types = media_data.get('types', [])
@@ -350,7 +363,8 @@ class ContentFeatureExtractor:
         return features
     
     def extract_timing_features(self, timestamp: datetime) -> Dict[str, Any]:
-        """Extract timing-related features"""
+        """
+Extract timing-related features"""
         features = {}
         
         features['hour'] = timestamp.hour
@@ -371,7 +385,8 @@ class ContentFeatureExtractor:
         return features
 
 class EngagementPredictor:
-    """ML model for predicting engagement metrics"""
+    """
+ML model for predicting engagement metrics"""
     
     def __init__(self):
         self.models: Dict[str, Any] = {}
@@ -381,7 +396,8 @@ class EngagementPredictor:
         
     def train_engagement_model(self, training_data: List[EngagementData], 
                              target_metric: EngagementMetric) -> bool:
-        """Train ML model to predict engagement metrics"""
+        """
+Train ML model to predict engagement metrics"""
         try:
             if len(training_data) < 100:
                 logger.warning(f"Insufficient data for training {target_metric.value} model")
@@ -486,7 +502,8 @@ class EngagementPredictor:
     
     def predict_engagement(self, content_features: Dict[str, Any], 
                          metrics: List[EngagementMetric]) -> Dict[EngagementMetric, float]:
-        """Predict engagement for given content features"""
+        """
+Predict engagement for given content features"""
         predictions = {}
         
         for metric in metrics:
@@ -532,7 +549,8 @@ class HashtagOptimizer:
         self.hashtag_combinations: Dict[str, Dict[str, float]] = {}
     
     def analyze_hashtag_performance(self, engagement_data: List[EngagementData]):
-        """Analyze hashtag performance across historical data"""
+        """
+Analyze hashtag performance across historical data"""
         platform_stats = {}
         
         for data in engagement_data:
@@ -564,7 +582,8 @@ class HashtagOptimizer:
     
     def get_optimal_hashtags(self, platform: str, content_category: ContentCategory,
                            current_hashtags: List[str], count: int = 10) -> List[str]:
-        """Get optimal hashtags for given content"""
+        """
+Get optimal hashtags for given content"""
         if platform not in self.hashtag_performance:
             return current_hashtags[:count]
         
@@ -599,7 +618,8 @@ class HashtagOptimizer:
         return optimal_hashtags[:count]
     
     def _is_relevant_to_category(self, hashtag: str, category: ContentCategory) -> bool:
-        """Check if hashtag is relevant to content category"""
+        """
+Check if hashtag is relevant to content category"""
         category_keywords = {
             ContentCategory.EDUCATIONAL: ['learn', 'tip', 'how', 'guide', 'tutorial', 'knowledge'],
             ContentCategory.ENTERTAINMENT: ['fun', 'funny', 'comedy', 'entertainment', 'viral'],
@@ -616,7 +636,8 @@ class HashtagOptimizer:
     
     def suggest_hashtag_combinations(self, platform: str, base_hashtags: List[str],
                                    max_combinations: int = 5) -> List[List[str]]:
-        """Suggest effective hashtag combinations"""
+        """
+Suggest effective hashtag combinations"""
         if platform not in self.hashtag_performance:
             return [base_hashtags]
         
@@ -654,7 +675,8 @@ class EngagementOptimizer:
         self.platform_benchmarks: Dict[str, Dict[str, float]] = {}
         
     async def initialize(self, historical_data: List[EngagementData] = None):
-        """Initialize optimizer with historical data"""
+        """
+Initialize optimizer with historical data"""
         if historical_data:
             self.historical_data = historical_data
             await self._train_models()
@@ -719,7 +741,8 @@ class EngagementOptimizer:
                             media_data: Dict[str, Any] = None,
                             current_hashtags: List[str] = None,
                             target_audience: Dict[str, Any] = None) -> ContentAnalysis:
-        """Comprehensive content analysis and optimization"""
+        """
+Comprehensive content analysis and optimization"""
         
         # Extract content features
         text_features = self.feature_extractor.extract_text_features(text)
@@ -793,7 +816,8 @@ class EngagementOptimizer:
     
     def _calculate_optimization_score(self, predicted_engagement: Dict[EngagementMetric, float],
                                     platform: str) -> float:
-        """Calculate overall optimization score (0-100)"""
+        """
+Calculate overall optimization score (0-100)"""
         if platform not in self.platform_benchmarks:
             return 50.0  # Default score
         
@@ -816,7 +840,8 @@ class EngagementOptimizer:
                                       predictions: Dict[EngagementMetric, float],
                                       platform: str, text: str, hashtags: List[str],
                                       media_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = []
         
         # Text length optimization
@@ -900,7 +925,8 @@ class EngagementOptimizer:
         return optimal_lengths.get(platform.lower(), 150)
     
     def _get_optimal_hashtag_count(self, platform: str) -> int:
-        """Get optimal hashtag count for platform"""
+        """
+Get optimal hashtag count for platform"""
         optimal_counts = {
             'twitter': 2,
             'instagram': 11,
@@ -911,7 +937,8 @@ class EngagementOptimizer:
         return optimal_counts.get(platform.lower(), 5)
     
     def _get_optimal_hours(self, platform: str) -> List[int]:
-        """Get optimal posting hours for platform"""
+        """
+Get optimal posting hours for platform"""
         optimal_hours = {
             'instagram': [11, 12, 13, 17, 18, 19],
             'facebook': [9, 10, 15, 20, 21],
@@ -923,7 +950,8 @@ class EngagementOptimizer:
     
     def _calculate_audience_fit(self, features: Dict[str, Any], 
                               target_audience: Dict[str, Any]) -> float:
-        """Calculate how well content fits target audience"""
+        """
+Calculate how well content fits target audience"""
         if not target_audience:
             return 0.7  # Default fit
         
@@ -956,7 +984,8 @@ class EngagementOptimizer:
     
     def _calculate_viral_potential(self, predictions: Dict[EngagementMetric, float],
                                  features: Dict[str, Any]) -> float:
-        """Calculate viral potential score"""
+        """
+Calculate viral potential score"""
         viral_score = 0.0
         
         # High share prediction indicates viral potential
@@ -986,7 +1015,8 @@ class EngagementOptimizer:
         return min(1.0, viral_score)
     
     def _suggest_optimal_time(self, platform: str, features: Dict[str, Any]) -> datetime:
-        """Suggest optimal posting time"""
+        """
+Suggest optimal posting time"""
         now = datetime.utcnow()
         optimal_hours = self._get_optimal_hours(platform)
         
@@ -1009,7 +1039,8 @@ class EngagementOptimizer:
     
     async def _suggest_content_improvements(self, text: str, features: Dict[str, Any],
                                           predictions: Dict[EngagementMetric, float]) -> List[str]:
-        """Suggest specific content improvements"""
+        """
+Suggest specific content improvements"""
         improvements = []
         
         # Text improvements
@@ -1050,7 +1081,8 @@ class EngagementOptimizer:
             asyncio.create_task(self._train_models())
     
     def get_optimization_insights(self, platform: str = None) -> Dict[str, Any]:
-        """Get insights about optimization performance"""
+        """
+Get insights about optimization performance"""
         insights = {
             'total_analyses': len(self.optimization_cache),
             'model_performance': self.engagement_predictor.training_history,

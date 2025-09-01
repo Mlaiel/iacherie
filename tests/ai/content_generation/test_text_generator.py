@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Text Generator Tests
+"""
+Text Generator Tests
 
 Comprehensive tests for the TextGenerator class that handles
 advanced text content generation with AI models.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -47,7 +50,8 @@ class TestTextGenerator:
     
     @pytest.fixture
     def generator(self):
-        """Create a text generator instance"""
+        """
+Create a text generator instance"""
         config = {
             "model_name": "test_model",
             "max_tokens": 1000,
@@ -118,7 +122,8 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_generate_blog_post(self, generator, blog_request, mock_ai_client):
-        """Test blog post generation"""
+        """
+Test blog post generation"""
         with patch.object(generator, 'ai_client', mock_ai_client):
             result = await generator.generate_content(blog_request)
             
@@ -129,7 +134,8 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_generate_social_media_post(self, generator, social_request, mock_ai_client):
-        """Test social media post generation"""
+        """
+Test social media post generation"""
         with patch.object(generator, 'ai_client', mock_ai_client):
             mock_ai_client.generate_text.return_value = "Motivational post content #motivation #success"
             
@@ -501,7 +507,8 @@ class TestTextGeneratorConfiguration:
     
     @pytest.fixture
     def generator(self):
-        """Create a generator for configuration testing"""
+        """
+Create a generator for configuration testing"""
         config = {
             "model_name": "test_model",
             "max_tokens": 1000,

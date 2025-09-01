@@ -7,6 +7,7 @@ Addresses the requirement: "Identifier crawlers avec implémentation réelle vs 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import os
 import ast
 import re
@@ -16,7 +17,8 @@ from typing import Dict, List, Any, Optional
 from datetime import datetime
 
 class CrawlerCritique:
-    """Enhanced crawler verification with implementation and functionality analysis."""
+    """
+Enhanced crawler verification with implementation and functionality analysis."""
     
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
@@ -98,7 +100,8 @@ class CrawlerCritique:
         return sum(1 for indicator in indicators if indicator in content.lower())
     
     def _count_stub_indicators(self, content: str) -> int:
-        """Count indicators of stub implementation."""
+        """
+Count indicators of stub implementation."""
         indicators = [
             r'^\s*pass\s*$',
             r'^\s*\.\.\.\s*$', 
@@ -117,12 +120,14 @@ class CrawlerCritique:
         return count
     
     def _has_type_hints(self, content: str) -> bool:
-        """Check if the file has comprehensive type hints."""
+        """
+Check if the file has comprehensive type hints."""
         type_patterns = ['List[', 'Dict[', 'Optional[', 'Union[', 'AsyncGenerator[', '-> ']
         return sum(1 for pattern in type_patterns if pattern in content) >= 3
     
     def _analyze_api_integration(self, content: str) -> Dict[str, Any]:
-        """Analyze API integration capabilities."""
+        """
+Analyze API integration capabilities."""
         api_libraries = ['aiohttp', 'requests', 'urllib', 'httpx']
         platform_apis = ['spotipy', 'googleapiclient', 'selenium', 'instagram']
         

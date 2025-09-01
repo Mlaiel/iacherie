@@ -4,7 +4,7 @@ Advanced AI system for cross-platform content optimization, distribution intelli
 and platform-specific content adaptation for maximum reach and engagement.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This revolutionary multi-platform AI system is proprietary intellectual property.
@@ -12,6 +12,7 @@ Any unauthorized access, copying, or distribution will result in severe legal co
 
 Business Logic: Content Creation → Platform Analysis → Format Adaptation → Distribution Optimization → Performance Tracking → Cross-Platform Synergy
 """
+
 import asyncio
 import json
 import uuid
@@ -61,7 +62,9 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported social media platforms"""
+    """
+Supported social media platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -80,6 +83,7 @@ class Platform(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     VIDEO_SHORT = "video_short"  # <60s
     VIDEO_LONG = "video_long"    # >60s
     IMAGE_SINGLE = "image_single"
@@ -97,6 +101,7 @@ class ContentFormat(Enum):
 
 class OptimizationStrategy(Enum):
     """Content optimization strategies"""
+
     VIRAL_MAXIMIZATION = "viral_maximization"
     ENGAGEMENT_FOCUSED = "engagement_focused"
     REACH_EXPANSION = "reach_expansion"
@@ -109,6 +114,7 @@ class OptimizationStrategy(Enum):
 
 class ContentAdaptationType(Enum):
     """Types of content adaptation"""
+
     ASPECT_RATIO = "aspect_ratio"
     DURATION = "duration"
     TEXT_LENGTH = "text_length"
@@ -412,7 +418,8 @@ class PlatformSpecsManager:
         self.platform_specs = self._initialize_platform_specs()
     
     def _initialize_platform_specs(self) -> Dict[Platform, PlatformSpecs]:
-        """Initialize platform specifications"""
+        """
+Initialize platform specifications"""
         specs = {}
         
         # YouTube specifications
@@ -536,7 +543,8 @@ class PlatformSpecsManager:
     def is_content_compliant(self, 
                            content: ContentPiece,
                            platform: Platform) -> Tuple[bool, List[str]]:
-        """Check if content complies with platform specifications"""
+        """
+Check if content complies with platform specifications"""
         specs = self.get_platform_specs(platform)
         if not specs:
             return False, ["Platform specifications not available"]
@@ -582,7 +590,8 @@ class ContentAdaptationEngine:
                                        content: ContentPiece,
                                        target_platform: Platform,
                                        optimization_strategy: OptimizationStrategy = OptimizationStrategy.ENGAGEMENT_FOCUSED) -> AdaptedContent:
-        """Adapt content for a specific platform"""
+        """
+Adapt content for a specific platform"""
         try:
             # Get platform specifications
             specs = self.specs_manager.get_platform_specs(target_platform)
@@ -717,7 +726,8 @@ class ContentAdaptationEngine:
                          video_path: str,
                          duration: Optional[int],
                          specs: PlatformSpecs) -> Tuple[Optional[str], List[ContentAdaptationType]]:
-        """Adapt video for platform specifications"""
+        """
+Adapt video for platform specifications"""
         adaptations = []
         adapted_path = video_path
         
@@ -1207,7 +1217,8 @@ class MultiPlatformDistributionEngine:
                                      target_platforms: List[Platform],
                                      strategy: OptimizationStrategy = OptimizationStrategy.ENGAGEMENT_FOCUSED,
                                      staggered_release: bool = False) -> DistributionPlan:
-        """Create comprehensive distribution plan"""
+        """
+Create comprehensive distribution plan"""
         try:
             # Create base distribution plan
             plan = DistributionPlan(

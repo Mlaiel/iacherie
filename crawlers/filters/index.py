@@ -24,6 +24,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import inspect
@@ -39,7 +40,9 @@ from .config import FilterConfigManager
 
 
 class FilterCategory(Enum):
-    """Filter categories for organization."""
+    """
+Filter categories for organization."""
+
     CONTENT_ANALYSIS = "content_analysis"
     QUALITY_ASSURANCE = "quality_assurance"
     SECURITY_VALIDATION = "security_validation"
@@ -52,6 +55,7 @@ class FilterCategory(Enum):
 
 class FilterCapability(Enum):
     """Filter capabilities for matching."""
+
     AUDIO_PROCESSING = "audio_processing"
     VIDEO_PROCESSING = "video_processing"
     IMAGE_PROCESSING = "image_processing"
@@ -83,7 +87,8 @@ class FilterModuleInfo:
     enterprise_ready: bool
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
+        """
+Convert to dictionary representation."""
         return {
             "name": self.name,
             "class_name": self.class_type.__name__,
@@ -104,7 +109,8 @@ class FilterModuleRegistry:
     """Registry for all available filter modules."""
     
     def __init__(self):
-        """Initialize the filter module registry."""
+        """
+Initialize the filter module registry."""
         self.logger = logging.getLogger(__name__)
         self._modules: Dict[str, FilterModuleInfo] = {}
         self._categories: Dict[FilterCategory, List[str]] = {}
@@ -112,7 +118,8 @@ class FilterModuleRegistry:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize the registry with all available modules."""
+        """
+Initialize the registry with all available modules."""
         try:
             if self._initialized:
                 return
@@ -414,17 +421,20 @@ class FilterModuleRegistry:
         return self._modules.get(name)
     
     def get_modules_by_category(self, category: FilterCategory) -> List[FilterModuleInfo]:
-        """Get all modules in a specific category."""
+        """
+Get all modules in a specific category."""
         module_names = self._categories.get(category, [])
         return [self._modules[name] for name in module_names]
     
     def get_modules_by_capability(self, capability: FilterCapability) -> List[FilterModuleInfo]:
-        """Get all modules with a specific capability."""
+        """
+Get all modules with a specific capability."""
         module_names = self._capabilities.get(capability, [])
         return [self._modules[name] for name in module_names]
     
     def get_modules_by_format(self, file_format: str) -> List[FilterModuleInfo]:
-        """Get all modules that support a specific file format."""
+        """
+Get all modules that support a specific file format."""
         compatible_modules = []
         for module_info in self._modules.values():
             if file_format.lower() in [fmt.lower() for fmt in module_info.supported_formats] or "*" in module_info.supported_formats:
@@ -436,11 +446,13 @@ class FilterModuleRegistry:
         return [info for info in self._modules.values() if info.enterprise_ready]
     
     def get_all_modules(self) -> Dict[str, FilterModuleInfo]:
-        """Get all registered modules."""
+        """
+Get all registered modules."""
         return self._modules.copy()
     
     def search_modules(self, query: str) -> List[FilterModuleInfo]:
-        """Search modules by name or description."""
+        """
+Search modules by name or description."""
         query_lower = query.lower()
         results = []
         
@@ -452,7 +464,8 @@ class FilterModuleRegistry:
         return results
     
     def get_module_statistics(self) -> Dict[str, Any]:
-        """Get registry statistics."""
+        """
+Get registry statistics."""
         total_modules = len(self._modules)
         enterprise_modules = len(self.get_enterprise_modules())
         
@@ -491,12 +504,14 @@ class FilterDiscoveryService:
     """Service for discovering and recommending filters."""
     
     def __init__(self, registry: FilterModuleRegistry):
-        """Initialize the discovery service."""
+        """
+Initialize the discovery service."""
         self.registry = registry
         self.logger = logging.getLogger(__name__)
     
     async def recommend_filters_for_content(self, content_item: ContentItem) -> List[FilterModuleInfo]:
-        """Recommend appropriate filters for a content item."""
+        """
+Recommend appropriate filters for a content item."""
         try:
             recommendations = []
             
@@ -594,31 +609,36 @@ async def get_filter_registry() -> FilterModuleRegistry:
     return _registry
 
 async def get_discovery_service() -> FilterDiscoveryService:
-    """Get the global discovery service instance."""
+    """
+Get the global discovery service instance."""
     if not _registry._initialized:
         await _registry.initialize()
     return _discovery_service
 
 # Convenience functions
 async def list_available_filters() -> List[str]:
-    """List all available filter names."""
+    """
+List all available filter names."""
     registry = await get_filter_registry()
     return list(registry.get_all_modules().keys())
 
 async def get_filter_info(filter_name: str) -> Optional[Dict[str, Any]]:
-    """Get information about a specific filter."""
+    """
+Get information about a specific filter."""
     registry = await get_filter_registry()
     module_info = registry.get_module_info(filter_name)
     return module_info.to_dict() if module_info else None
 
 async def recommend_filters(content_item: ContentItem) -> List[Dict[str, Any]]:
-    """Recommend filters for a content item."""
+    """
+Recommend filters for a content item."""
     discovery = await get_discovery_service()
     recommendations = await discovery.recommend_filters_for_content(content_item)
     return [module.to_dict() for module in recommendations]
 
 async def get_registry_stats() -> Dict[str, Any]:
-    """Get registry statistics."""
+    """
+Get registry statistics."""
     registry = await get_filter_registry()
     return registry.get_module_statistics()
 
@@ -644,10 +664,12 @@ from .performance_filters import (
 
 
 class FilterRegistry:
-    """Registry for all available content filters."""
+    """
+Registry for all available content filters."""
     
     def __init__(self):
-        """Initialize filter registry."""
+        """
+Initialize filter registry."""
         self.logger = logging.getLogger(__name__)
         self._filters: Dict[FilterType, Type] = {
             FilterType.AUDIO: AudioContentFilter,
@@ -662,7 +684,8 @@ class FilterRegistry:
         }
     
     def get_filter(self, filter_type: FilterType) -> Type:
-        """Get filter class by type."""
+        """
+Get filter class by type."""
         if filter_type not in self._filters:
             raise ValueError(f"Unknown filter type: {filter_type}")
         return self._filters[filter_type]
@@ -672,21 +695,25 @@ class FilterRegistry:
         return list(self._filters.keys())
     
     def is_filter_available(self, filter_type: FilterType) -> bool:
-        """Check if filter type is available."""
+        """
+Check if filter type is available."""
         return filter_type in self._filters
 
 
 class FilterFactory:
-    """Factory for creating filter instances."""
+    """
+Factory for creating filter instances."""
     
     def __init__(self, config_manager: FilterConfigManager = None):
-        """Initialize filter factory."""
+        """
+Initialize filter factory."""
         self.config = config_manager or filter_config
         self.registry = FilterRegistry()
         self.logger = logging.getLogger(__name__)
     
     def create_filter(self, filter_type: FilterType):
-        """Create filter instance by type."""
+        """
+Create filter instance by type."""
         filter_class = self.registry.get_filter(filter_type)
         
         # Create filter with appropriate configuration
@@ -707,7 +734,8 @@ class FilterFactory:
             return filter_class()
     
     def create_engine(self) -> ContentFilterEngine:
-        """Create complete filtering engine."""
+        """
+Create complete filtering engine."""
         return ContentFilterEngine(self.config)
 
 
@@ -717,17 +745,20 @@ filter_factory = FilterFactory()
 
 
 def get_filter_engine() -> ContentFilterEngine:
-    """Get configured filter engine instance."""
+    """
+Get configured filter engine instance."""
     return filter_factory.create_engine()
 
 
 def get_available_filter_types() -> List[FilterType]:
-    """Get list of all available filter types."""
+    """
+Get list of all available filter types."""
     return filter_registry.get_available_filters()
 
 
 def create_filter(filter_type: FilterType, config_manager: FilterConfigManager = None):
-    """Create specific filter instance."""
+    """
+Create specific filter instance."""
     factory = FilterFactory(config_manager)
     return factory.create_filter(filter_type)
 

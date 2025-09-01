@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import json
 from pathlib import Path
 
 class StorageBackend(Enum):
-    """Storage backend types."""
+    """
+Storage backend types."""
+
     LOCAL = "local"
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
@@ -36,6 +39,7 @@ class StorageBackend(Enum):
 
 class DatabaseType(Enum):
     """Database types for different data."""
+
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     MONGODB = "mongodb"
@@ -48,6 +52,7 @@ class DatabaseType(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms."""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -57,6 +62,7 @@ class CompressionType(Enum):
 
 class EncryptionType(Enum):
     """Encryption algorithms."""
+
     NONE = "none"
     AES_128 = "aes-128"
     AES_256 = "aes-256"
@@ -66,6 +72,7 @@ class EncryptionType(Enum):
 
 class DataLifecycleStage(Enum):
     """Data lifecycle stages."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ARCHIVED = "archived"
@@ -74,6 +81,7 @@ class DataLifecycleStage(Enum):
 
 class BackupType(Enum):
     """Backup types."""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -106,7 +114,8 @@ class StorageCredentials:
 
 @dataclass
 class CompressionConfig:
-    """Configuration for data compression."""
+    """
+Configuration for data compression."""
     enabled: bool = True
     algorithm: CompressionType = CompressionType.GZIP
     level: int = 6  # Compression level (1-9 for most algorithms)
@@ -126,7 +135,8 @@ class CompressionConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Configuration for data encryption."""
+    """
+Configuration for data encryption."""
     enabled: bool = True
     algorithm: EncryptionType = EncryptionType.AES_256
     key_derivation_function: str = "pbkdf2"
@@ -308,7 +318,8 @@ class DataLifecycleConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for storage monitoring."""
+    """
+Configuration for storage monitoring."""
     enabled: bool = True
     
     # Metrics collection
@@ -335,7 +346,8 @@ class MonitoringConfig:
 
 @dataclass
 class StorageConfig:
-    """Complete storage configuration."""
+    """
+Complete storage configuration."""
     # Core configurations
     file_storage: FileStorageConfig = field(default_factory=FileStorageConfig)
     database: DatabaseConfig = field(default_factory=DatabaseConfig)
@@ -365,7 +377,8 @@ class StorageConfigManager:
     """Manager for storage configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize storage config manager."""
+        """
+Initialize storage config manager."""
         self.config_dir = Path(config_dir or os.getenv("STORAGE_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
@@ -480,7 +493,8 @@ class StorageConfigManager:
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         config_file = self.config_dir / "storage_config.json"
         config_dict = self._serialize_config(self.config)
         with open(config_file, 'w') as f:

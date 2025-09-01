@@ -5,7 +5,7 @@ with AI-powered rule generation, multi-level rule hierarchies, and real-time ada
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class RuleType(Enum):
-    """Types of protection rules"""
+    """
+Types of protection rules"""
+
     SIMILARITY_THRESHOLD = "similarity_threshold"
     PLATFORM_SPECIFIC = "platform_specific"
     CONTENT_TYPE_FILTER = "content_type_filter"
@@ -59,6 +62,7 @@ class RuleType(Enum):
 
 class RulePriority(Enum):
     """Rule priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -68,6 +72,7 @@ class RulePriority(Enum):
 
 class RuleStatus(Enum):
     """Rule status types"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -78,6 +83,7 @@ class RuleStatus(Enum):
 
 class ActionType(Enum):
     """Types of actions rules can trigger"""
+
     ALERT_CREATION = "alert_creation"
     AUTOMATIC_TAKEDOWN = "automatic_takedown"
     ESCALATION = "escalation"
@@ -730,7 +736,8 @@ class ProtectionRulesRepository:
         content_context: Dict[str, Any],
         rule_categories: Optional[List[str]] = None
     ) -> List[ProtectionRule]:
-        """Get rules applicable to content"""
+        """
+Get rules applicable to content"""
         query = self.db_session.query(ProtectionRule).filter(
             ProtectionRule.status == RuleStatus.ACTIVE.value
         )
@@ -746,7 +753,8 @@ class ProtectionRulesRepository:
         content_data: Dict[str, Any],
         content_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute individual protection rule"""
+        """
+Execute individual protection rule"""
         execution_start = datetime.now()
         
         try:
@@ -915,7 +923,8 @@ class ProtectionRulesRepository:
         template: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process rule template with parameters"""
+        """
+Process rule template with parameters"""
         # Implementation would substitute template variables with parameters
         processed = template.copy()
         

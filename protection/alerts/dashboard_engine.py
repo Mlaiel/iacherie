@@ -10,6 +10,7 @@ Ultra-advanced dashboard engine for real-time alert visualization, business inte
 executive reporting, and interactive analytics for content protection operations.
 Business Logic: Alert data → visualization → business insights → decision support → action
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class DashboardType(Enum):
-    """Types of dashboard views"""
+    """
+Types of dashboard views"""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     OPERATIONAL_DASHBOARD = "operational_dashboard"
     THREAT_INTELLIGENCE = "threat_intelligence"
@@ -58,6 +61,7 @@ class DashboardType(Enum):
 
 class VisualizationType(Enum):
     """Types of visualizations available"""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -147,7 +151,8 @@ class AdvancedDashboardEngine:
         self.dash_app = None
         
     async def initialize(self):
-        """Initialize dashboard engine"""
+        """
+Initialize dashboard engine"""
         await self.alert_manager.initialize()
         await self.threat_intelligence.initialize()
         await self.metrics_collector.initialize()
@@ -766,7 +771,8 @@ class AdvancedDashboardEngine:
         return layout
     
     async def _get_widget_data(self, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for specific widget"""
+        """
+Get data for specific widget"""
         if widget.data_source == "alert_statistics":
             return await self._get_alert_statistics_data()
         elif widget.data_source == "threat_level":
@@ -789,7 +795,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _get_threat_level_data(self) -> Dict[str, Any]:
-        """Get current threat level data"""
+        """
+Get current threat level data"""
         return {
             'threat_level': 'medium',
             'threat_score': 65,
@@ -797,7 +804,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _get_alert_trends_data(self) -> Dict[str, Any]:
-        """Get alert trends data"""
+        """
+Get alert trends data"""
         # Generate sample trend data
         dates = [(datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30, 0, -1)]
         values = [50 + i * 2 + (i % 7) * 5 for i in range(30)]
@@ -809,7 +817,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _get_alerts_by_severity_data(self) -> Dict[str, Any]:
-        """Get alerts by severity data"""
+        """
+Get alerts by severity data"""
         return {
             'critical': 25,
             'high': 120,
@@ -820,7 +829,8 @@ class AdvancedDashboardEngine:
     # Chart creation methods
     
     async def _create_line_chart(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create line chart configuration"""
+        """
+Create line chart configuration"""
         return {
             'type': 'line',
             'data': {
@@ -844,7 +854,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _create_bar_chart(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create bar chart configuration"""
+        """
+Create bar chart configuration"""
         return {
             'type': 'bar',
             'data': {
@@ -867,7 +878,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _create_pie_chart(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create pie chart configuration"""
+        """
+Create pie chart configuration"""
         return {
             'type': 'pie',
             'data': {
@@ -894,7 +906,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _create_heatmap(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create heatmap configuration"""
+        """
+Create heatmap configuration"""
         return {
             'type': 'heatmap',
             'data': data,
@@ -910,7 +923,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _create_geographic_map(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create geographic map configuration"""
+        """
+Create geographic map configuration"""
         return {
             'type': 'choropleth',
             'data': data,
@@ -926,7 +940,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _create_gauge_chart(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create gauge chart configuration"""
+        """
+Create gauge chart configuration"""
         return {
             'type': 'gauge',
             'data': {
@@ -946,7 +961,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _create_timeline(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create timeline configuration"""
+        """
+Create timeline configuration"""
         return {
             'type': 'timeline',
             'data': data,
@@ -962,13 +978,15 @@ class AdvancedDashboardEngine:
         }
     
     async def _create_default_chart(self, widget: DashboardWidget, data: Dict[str, Any], theme: str) -> Dict[str, Any]:
-        """Create default chart configuration"""
+        """
+Create default chart configuration"""
         return await self._create_bar_chart(widget, data, theme)
     
     # Background tasks
     
     async def _real_time_data_collector(self):
-        """Background task to collect real-time data"""
+        """
+Background task to collect real-time data"""
         while True:
             try:
                 # Collect real-time metrics
@@ -1016,7 +1034,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _get_alerts_by_category(self) -> Dict[str, int]:
-        """Get alert count by category"""
+        """
+Get alert count by category"""
         return {
             'copyright_infringement': 400,
             'trademark_violation': 150,
@@ -1025,7 +1044,8 @@ class AdvancedDashboardEngine:
         }
     
     async def _get_alerts_by_platform(self) -> Dict[str, int]:
-        """Get alert count by platform"""
+        """
+Get alert count by platform"""
         return {
             'youtube': 250,
             'instagram': 180,
@@ -1035,14 +1055,16 @@ class AdvancedDashboardEngine:
         }
     
     async def _get_alert_trends(self) -> Dict[str, List[int]]:
-        """Get alert trends over time"""
+        """
+Get alert trends over time"""
         return {
             'last_7_days': [45, 52, 48, 61, 55, 58, 62],
             'last_30_days': list(range(40, 70))
         }
     
     async def _get_resolution_metrics(self) -> Dict[str, float]:
-        """Get alert resolution metrics"""
+        """
+Get alert resolution metrics"""
         return {
             'average_resolution_time_hours': 4.5,
             'median_resolution_time_hours': 3.2,
@@ -1053,15 +1075,18 @@ class AdvancedDashboardEngine:
     # Additional utility methods would be implemented here...
     
     async def _aggregate_metrics(self):
-        """Aggregate collected metrics"""
+        """
+Aggregate collected metrics"""
         pass
     
     async def _clean_expired_cache(self):
-        """Clean expired cache entries"""
+        """
+Clean expired cache entries"""
         pass
     
     async def _get_file_size(self, file_path: str) -> float:
-        """Get file size in MB"""
+        """
+Get file size in MB"""
         return 1.5  # Placeholder
 
 

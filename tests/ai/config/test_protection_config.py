@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for ProtectionConfig module ensuring 100% copyright
 protection, watermarking, and anti-piracy capabilities for content creators.
 """
+
 import pytest
 import sys
 import os
@@ -72,7 +73,8 @@ class TestProtectionConfig:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.config = ProtectionConfig()
         self.test_env = test_environment
         self.sample_image_data = self._generate_sample_image()
@@ -86,12 +88,14 @@ class TestProtectionConfig:
         return b'\x89PNG\r\n\x1a\n' + b'0' * 1000  # PNG header + data
     
     def _generate_sample_audio(self) -> bytes:
-        """Génère des données audio de test."""
+        """
+Génère des données audio de test."""
         # Simulation d'un fichier WAV
         return b'RIFF' + b'0' * 1000 + b'WAVE'
     
     def _generate_sample_text(self) -> str:
-        """Génère du texte de test."""
+        """
+Génère du texte de test."""
         return """
         Test article for copyright protection validation.
         This content is created for testing purposes only.
@@ -115,7 +119,7 @@ class TestProtectionConfig:
         # Test filigrane pour image
         watermarked_image = self.config.add_image_watermark(
             image_data=self.sample_image_data,
-            watermark_text="© 2025 Test Creator",
+            watermark_text="(c) 2025 Test Creator",
             position="bottom_right",
             opacity=0.7,
             creator_id="test_creator_001"
@@ -157,7 +161,7 @@ class TestProtectionConfig:
         # Créer un contenu avec filigrane
         watermarked_result = self.config.add_image_watermark(
             image_data=self.sample_image_data,
-            watermark_text="© Test Creator 2025",
+            watermark_text="(c) Test Creator 2025",
             position="center",
             opacity=0.6
         )
@@ -457,13 +461,15 @@ class TestProtectionConfig:
         return data[::2] + b'\x00' * (len(data) // 2)
     
     def _simulate_resize(self, data: bytes, scale: float) -> bytes:
-        """Simule le redimensionnement d'image.""" 
+        """
+Simule le redimensionnement d'image.""" 
         # Simulation simplifiée
         new_size = int(len(data) * scale)
         return data[:new_size]
     
     def _add_noise(self, data: bytes, noise_level: float) -> bytes:
-        """Ajoute du bruit aux données."""
+        """
+Ajoute du bruit aux données."""
         # Simulation simplifiée
         noise_bytes = int(len(data) * noise_level)
         return data + b'\xFF' * noise_bytes
@@ -663,7 +669,8 @@ class TestWatermarkEngine:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.watermark_engine = WatermarkEngine()
     
     @pytest_marks["unit"]
@@ -708,7 +715,8 @@ class TestCopyrightDetector:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.copyright_detector = CopyrightDetector()
     
     @pytest_marks["unit"]
@@ -754,7 +762,7 @@ class TestPerformanceAndScalability:
         for i in range(1000):
             result = config.add_image_watermark(
                 image_data=b'test_image_data' + str(i).encode(),
-                watermark_text=f"© Creator {i}",
+                watermark_text=f"(c) Creator {i}",
                 position="corner"
             )
             if result["success"]:

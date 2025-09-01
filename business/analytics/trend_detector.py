@@ -7,6 +7,7 @@ viral trends, hashtag analysis, and content opportunity detection for creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
-    """Categories of trends"""
+    """
+Categories of trends"""
+
     HASHTAG = "hashtag"
     TOPIC = "topic"
     FORMAT = "format"
@@ -55,7 +58,8 @@ class TrendDetectionEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize trend detection engine"""
+        """
+Initialize trend detection engine"""
         try:
             await self._setup_database_tables()
             logger.info("Trend Detection Engine initialized successfully")
@@ -86,7 +90,8 @@ class TrendDetectionEngine:
             """)
 
     async def detect_trending_content(self) -> List[TrendData]:
-        """Detect currently trending content and topics"""
+        """
+Detect currently trending content and topics"""
         try:
             trends = []
             

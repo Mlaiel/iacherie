@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple
@@ -22,7 +23,9 @@ from .config import ReplicationConfig
 
 
 class NodeRole(Enum):
-    """Database node roles in replication topology"""
+    """
+Database node roles in replication topology"""
+
     PRIMARY = "primary"
     SECONDARY = "secondary"
     STANDBY = "standby"
@@ -32,6 +35,7 @@ class NodeRole(Enum):
 
 class NodeStatus(Enum):
     """Database node status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     FAILED = "failed"
@@ -60,7 +64,8 @@ class DatabaseNode:
 
 @dataclass
 class ReplicationTopology:
-    """Complete replication topology configuration"""
+    """
+Complete replication topology configuration"""
     primary_region: str
     secondary_regions: List[str]
     nodes: Dict[str, DatabaseNode] = field(default_factory=dict)
@@ -319,7 +324,8 @@ class TopologyManager:
                     self._handle_node_health_update(node, result)
     
     async def _check_node_health(self, node: DatabaseNode) -> Dict[str, Any]:
-        """Check health of a specific node"""
+        """
+Check health of a specific node"""
         try:
             health_data = {
                 "node_id": node.id,
@@ -544,7 +550,8 @@ class TopologyManager:
             self._mark_node_failed(node)
     
     def _mark_node_failed(self, node: DatabaseNode) -> None:
-        """Mark node as failed and remove from active nodes"""
+        """
+Mark node as failed and remove from active nodes"""
         if node.id in self.active_nodes:
             del self.active_nodes[node.id]
             self.failed_nodes.add(node.id)
@@ -589,7 +596,8 @@ class TopologyManager:
         return candidates[0]
     
     async def _promote_secondary_to_primary(self, candidate: DatabaseNode, failed_primary: DatabaseNode) -> None:
-        """Promote secondary node to primary"""
+        """
+Promote secondary node to primary"""
         try:
             self.logger.info(f"Promoting {candidate.id} to primary for {failed_primary.database_type}")
             

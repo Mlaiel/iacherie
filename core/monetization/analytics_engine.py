@@ -2,8 +2,9 @@
 Advanced revenue analytics, predictions, and business intelligence
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from ...core.cache import CacheManager
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
+    """
+Analytics timeframe options"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -34,6 +37,7 @@ class AnalyticsTimeframe(Enum):
 
 class RevenueMetricType(Enum):
     """Types of revenue metrics"""
+
     TOTAL_REVENUE = "total_revenue"
     NET_REVENUE = "net_revenue"
     PLATFORM_FEES = "platform_fees"
@@ -46,6 +50,7 @@ class RevenueMetricType(Enum):
 
 class TrendDirection(Enum):
     """Trend direction indicators"""
+
     UPWARD = "upward"
     DOWNWARD = "downward"
     STABLE = "stable"
@@ -74,7 +79,8 @@ class AnalyticsQuery:
 
 @dataclass
 class RevenueDataPoint:
-    """Single revenue data point"""
+    """
+Single revenue data point"""
     date: datetime
     value: Decimal
     platform: Optional[str] = None
@@ -85,7 +91,8 @@ class RevenueDataPoint:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
+    """
+Trend analysis result"""
     direction: TrendDirection
     strength: float  # 0-1 scale
     slope: float
@@ -100,7 +107,8 @@ class TrendAnalysis:
 
 @dataclass
 class RevenueInsight:
-    """Revenue insight and recommendation"""
+    """
+Revenue insight and recommendation"""
     insight_type: str
     title: str
     description: str
@@ -113,7 +121,8 @@ class RevenueInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     user_id: int
     query: AnalyticsQuery
     generated_at: datetime
@@ -128,7 +137,8 @@ class AnalyticsReport:
 
 
 class MonetizationAnalytics:
-    """Advanced monetization analytics engine"""
+    """
+Advanced monetization analytics engine"""
     
     def __init__(
         self,
@@ -146,7 +156,8 @@ class MonetizationAnalytics:
         query: AnalyticsQuery,
         session: AsyncSession
     ) -> AnalyticsReport:
-        """Generate comprehensive revenue analytics report"""
+        """
+Generate comprehensive revenue analytics report"""
         try:
             # Validate query
             if not query.validate():
@@ -781,7 +792,8 @@ class MonetizationAnalytics:
         return start_date, end_date
     
     def _generate_cache_key(self, query: AnalyticsQuery) -> str:
-        """Generate cache key for analytics query"""
+        """
+Generate cache key for analytics query"""
         import hashlib
         
         key_data = f"{query.user_id}_{query.timeframe.value}_{query.start_date}_{query.end_date}_{query.platforms}_{query.metrics}"
@@ -868,7 +880,8 @@ class MonetizationAnalytics:
         user_id: int,
         session: AsyncSession
     ) -> Decimal:
-        """Calculate lifetime value projection"""
+        """
+Calculate lifetime value projection"""
         try:
             # Simple LTV calculation: average monthly revenue * 24 months
             end_date = datetime.now()
@@ -899,7 +912,8 @@ class RevenueAnalyzer:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get comprehensive dashboard data"""
+        """
+Get comprehensive dashboard data"""
         try:
             # Current month data
             current_query = AnalyticsQuery(

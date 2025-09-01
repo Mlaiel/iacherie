@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Union, Callable, Any
 import asyncio
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class TransactionStatus(Enum):
-    """Transaction execution status."""
+    """
+Transaction execution status."""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -61,10 +64,12 @@ class TransactionResult:
     
 
 class TransactionManager:
-    """Professional transaction management and execution system."""
+    """
+Professional transaction management and execution system."""
     
     def __init__(self, web3: Web3, account: Account, gas_optimizer=None):
-        """Initialize transaction manager.
+        """
+Initialize transaction manager.
         
         Args:
             web3: Web3 instance for blockchain interaction
@@ -85,7 +90,8 @@ class TransactionManager:
         tx_request: TransactionRequest,
         callback: Optional[Callable] = None
     ) -> TransactionResult:
-        """Send a transaction with optimal gas parameters.
+        """
+Send a transaction with optimal gas parameters.
         
         Args:
             tx_request: Transaction parameters
@@ -475,7 +481,8 @@ class NonceManager:
     """Professional nonce management for transaction ordering."""
     
     def __init__(self, web3: Web3, address: str):
-        """Initialize nonce manager.
+        """
+Initialize nonce manager.
         
         Args:
             web3: Web3 instance
@@ -487,7 +494,8 @@ class NonceManager:
         self.nonce_lock = asyncio.Lock()
     
     async def get_next_nonce(self) -> int:
-        """Get next available nonce."""
+        """
+Get next available nonce."""
         async with self.nonce_lock:
             try:
                 # Get current network nonce
@@ -515,7 +523,8 @@ class NonceManager:
         self.local_nonce = None
     
     async def sync_nonce(self) -> int:
-        """Synchronize with network nonce."""
+        """
+Synchronize with network nonce."""
         async with self.nonce_lock:
             network_nonce = self.web3.eth.get_transaction_count(self.address, "pending")
             self.local_nonce = network_nonce

@@ -23,6 +23,7 @@ Enterprise Features:
 - Viral content prediction with algorithm favorability scoring
 - Comprehensive competitive intelligence and benchmarking
 """
+
 import asyncio
 import logging
 import time
@@ -79,7 +80,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions available"""
+    """
+Types of predictions available"""
+
     CONTENT_PERFORMANCE = "content_performance"
     REVENUE_FORECAST = "revenue_forecast"
     AUDIENCE_GROWTH = "audience_growth"
@@ -91,13 +94,16 @@ class PredictionType(Enum):
 
 class ForecastHorizon(Enum):
     """Forecast time horizons"""
+
     SHORT_TERM = 7   # 1 week
     MEDIUM_TERM = 30  # 1 month
     LONG_TERM = 90    # 3 months
     STRATEGIC = 365   # 1 year
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""
+    """
+Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -105,6 +111,7 @@ class RiskLevel(Enum):
 
 class ModelType(Enum):
     """Supported ML model types"""
+
     PROPHET = "prophet"
     LSTM = "lstm"
     XGBOOST = "xgboost"
@@ -190,7 +197,8 @@ class RiskAssessment:
 
 @dataclass
 class OpportunityAnalysis:
-    """Opportunity analysis result"""
+    """
+Opportunity analysis result"""
     analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     opportunities: List[Dict[str, Any]] = field(default_factory=list)
     priority_ranking: List[str] = field(default_factory=list)
@@ -203,7 +211,8 @@ class OpportunityAnalysis:
 
 @dataclass
 class PredictionConfig:
-    """Prediction engine configuration"""
+    """
+Prediction engine configuration"""
     ensemble_models: List[ModelType] = field(default_factory=lambda: [ModelType.PROPHET, ModelType.XGBOOST, ModelType.RANDOM_FOREST])
     ensemble_weights: Dict[str, float] = field(default_factory=dict)
     minimum_data_points: int = 30
@@ -265,7 +274,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
     - Enterprise security with end-to-end encryption
     """
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize the Predictive Analytics Agent with enterprise configurations"""
+        """
+Initialize the Predictive Analytics Agent with enterprise configurations"""
         
         # Define agent capabilities
         agent_config = {
@@ -882,7 +892,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         return features
 
     async def _extract_revenue_features(self, request: PredictionRequest) -> Dict[str, Any]:
-        """Extract features for revenue prediction"""
+        """
+Extract features for revenue prediction"""
         return {
             'current_monthly_revenue': request.historical_data.get('monthly_revenue', 0),
             'revenue_streams_count': len(request.historical_data.get('revenue_streams', [])),
@@ -894,7 +905,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _predict_with_prophet(self, features: Dict[str, Any], request: PredictionRequest) -> Dict[str, Any]:
-        """Generate prediction using Prophet time series model"""
+        """
+Generate prediction using Prophet time series model"""
         # Simulate Prophet prediction (in production, use actual historical data)
         base_prediction = features.get('avg_views_30d', 1000)
         growth_factor = 1 + (features.get('algorithm_favorability', 0.5) - 0.5) * 0.2
@@ -909,7 +921,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _predict_with_xgboost(self, features: Dict[str, Any], request: PredictionRequest) -> Dict[str, Any]:
-        """Generate prediction using XGBoost model"""
+        """
+Generate prediction using XGBoost model"""
         # Simulate XGBoost prediction
         feature_importance_weighted_score = (
             features.get('content_quality_score', 0.5) * 0.3 +
@@ -934,7 +947,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _predict_with_random_forest(self, features: Dict[str, Any], request: PredictionRequest) -> Dict[str, Any]:
-        """Generate prediction using Random Forest model"""
+        """
+Generate prediction using Random Forest model"""
         # Simulate Random Forest prediction
         ensemble_factors = [
             features.get('content_quality_score', 0.5),
@@ -954,7 +968,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _ensemble_predictions(self, predictions: Dict[str, Dict[str, Any]], request: PredictionRequest) -> Dict[str, Any]:
-        """Combine predictions from multiple models using weighted ensemble"""
+        """
+Combine predictions from multiple models using weighted ensemble"""
         if not predictions:
             return {'predicted_views': 1000, 'ensemble_confidence': 0.5}
         
@@ -996,7 +1011,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _calculate_confidence_score(self, predictions: Dict[str, Dict[str, Any]], ensemble_prediction: Dict[str, Any]) -> float:
-        """Calculate confidence score based on model agreement and historical accuracy"""
+        """
+Calculate confidence score based on model agreement and historical accuracy"""
         if not predictions or len(predictions) < 2:
             return 0.6  # Low confidence with single model
         
@@ -1020,7 +1036,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         return min(max(confidence_score, 0.0), 1.0)
 
     async def _assess_content_risk(self, request: PredictionRequest, prediction: Dict[str, Any]) -> RiskAssessment:
-        """Assess risks associated with content performance prediction"""
+        """
+Assess risks associated with content performance prediction"""
         risk_factors = {}
         
         # Algorithm dependency risk
@@ -1185,7 +1202,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
                                                prediction: Dict[str, Any], 
                                                risk_assessment: RiskAssessment = None, 
                                                opportunities: List[Dict[str, Any]] = None) -> List[str]:
-        """Generate actionable recommendations for content optimization"""
+        """
+Generate actionable recommendations for content optimization"""
         recommendations = []
         
         # Performance-based recommendations

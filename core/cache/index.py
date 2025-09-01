@@ -14,6 +14,7 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
       Microservices Architect + Audio Processing Expert + DevOps Engineer + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import os
@@ -321,7 +322,8 @@ class GlobalCacheManager:
         memory_config: Optional[MemoryCacheConfig] = None,
         vector_config: Optional[VectorCacheConfig] = None
     ) -> bool:
-        """Initialize global cache instances"""
+        """
+Initialize global cache instances"""
         
         global _global_cache_instances
         
@@ -357,47 +359,56 @@ class GlobalCacheManager:
     
     @staticmethod
     def get_redis_cache() -> Optional[RedisCache]:
-        """Get global Redis cache instance"""
+        """
+Get global Redis cache instance"""
         return _global_cache_instances.get('redis')
     
     @staticmethod
     def get_memory_cache() -> Optional[EnterpriseMemoryCache]:
-        """Get global memory cache instance"""
+        """
+Get global memory cache instance"""
         return _global_cache_instances.get('memory')
     
     @staticmethod
     def get_vector_cache() -> Optional[Union[VectorCache, FAISSCache]]:
-        """Get global vector cache instance"""
+        """
+Get global vector cache instance"""
         return _global_cache_instances.get('vector')
     
     @staticmethod
     def get_content_cache() -> Optional[ContentCache]:
-        """Get global content cache instance"""
+        """
+Get global content cache instance"""
         return _global_cache_instances.get('content')
     
     @staticmethod
     def get_analytics_cache() -> Optional[AnalyticsCache]:
-        """Get global analytics cache instance"""
+        """
+Get global analytics cache instance"""
         return _global_cache_instances.get('analytics')
     
     @staticmethod
     def get_creator_cache() -> Optional[CreatorContentCache]:
-        """Get global creator cache instance"""
+        """
+Get global creator cache instance"""
         return _global_cache_instances.get('creator')
     
     @staticmethod
     def get_ai_cache() -> Optional[AIProcessingCache]:
-        """Get global AI processing cache instance"""
+        """
+Get global AI processing cache instance"""
         return _global_cache_instances.get('ai_processing')
     
     @staticmethod
     def get_revenue_cache() -> Optional[RevenueAnalyticsCache]:
-        """Get global revenue cache instance"""
+        """
+Get global revenue cache instance"""
         return _global_cache_instances.get('revenue')
     
     @staticmethod
     async def shutdown_global_caches() -> bool:
-        """Shutdown all global cache instances"""
+        """
+Shutdown all global cache instances"""
         global _global_cache_instances
         
         success = await CacheFactory.shutdown_cache_stack(_global_cache_instances)
@@ -454,7 +465,8 @@ async def cache_revenue_metrics(
     revenue_data: Any,
     revenue_impact: float
 ) -> bool:
-    """Cache revenue metrics"""
+    """
+Cache revenue metrics"""
     revenue_cache = GlobalCacheManager.get_revenue_cache()
     if revenue_cache:
         return revenue_cache.cache_revenue_data(
@@ -471,7 +483,8 @@ async def search_similar_content(
     creator_id: Optional[str] = None,
     top_k: int = 10
 ) -> list:
-    """Search for similar content using vector cache"""
+    """
+Search for similar content using vector cache"""
     vector_cache = GlobalCacheManager.get_vector_cache()
     if vector_cache:
         return await vector_cache.search_similar(
@@ -483,7 +496,8 @@ async def search_similar_content(
     return []
 
 async def get_creator_analytics(creator_id: str) -> Dict[str, Any]:
-    """Get comprehensive analytics for a creator"""
+    """
+Get comprehensive analytics for a creator"""
     analytics = {}
     
     # Get creator cache stats
@@ -508,7 +522,8 @@ async def get_creator_analytics(creator_id: str) -> Dict[str, Any]:
     return analytics
 
 async def invalidate_creator_cache(creator_id: str) -> bool:
-    """Invalidate all cache entries for a creator"""
+    """
+Invalidate all cache entries for a creator"""
     success = True
     
     # Clear from all specialized caches
@@ -577,7 +592,8 @@ async def health_check() -> Dict[str, Any]:
     return health_status
 
 async def get_cache_metrics() -> Dict[str, Any]:
-    """Get comprehensive metrics from all cache components"""
+    """
+Get comprehensive metrics from all cache components"""
     metrics = {
         'timestamp': datetime.utcnow().isoformat(),
         'components': {}

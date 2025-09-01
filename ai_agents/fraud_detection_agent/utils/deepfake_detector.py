@@ -6,6 +6,7 @@ advanced machine learning models for audio, video, and image analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -44,7 +45,9 @@ from ...ml.models.deepfake_models import (
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content types for deepfake detection"""
+    """
+Content types for deepfake detection"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -52,6 +55,7 @@ class ContentType(Enum):
 
 class ManipulationType(Enum):
     """Types of content manipulation"""
+
     FACE_SWAP = "face_swap"
     VOICE_CLONING = "voice_cloning"
     LIP_SYNC = "lip_sync"
@@ -200,7 +204,8 @@ class DeepfakeDetector:
             return ContentType.IMAGE
 
     async def _analyze_video_content(self, content_data: Dict[str, Any]) -> DeepfakeAnalysisResult:
-        """Analyze video content for deepfake manipulation"""
+        """
+Analyze video content for deepfake manipulation"""
         try:
             # Extract video data
             video_bytes = self._extract_content_bytes(content_data)
@@ -780,7 +785,8 @@ class DeepfakeDetector:
         )
 
     async def _calculate_video_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite video deepfake score"""
+        """
+Calculate composite video deepfake score"""
         scores = []
         weights = []
         
@@ -807,7 +813,8 @@ class DeepfakeDetector:
         return min(1.0, weighted_score)
 
     async def _calculate_audio_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite audio deepfake score"""
+        """
+Calculate composite audio deepfake score"""
         scores = []
         weights = []
         
@@ -828,7 +835,8 @@ class DeepfakeDetector:
         return min(1.0, weighted_score)
 
     async def _calculate_image_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite image manipulation score"""
+        """
+Calculate composite image manipulation score"""
         scores = []
         weights = []
         
@@ -854,7 +862,8 @@ class DeepfakeDetector:
         temporal_result: Dict, 
         landmark_result: Dict
     ) -> List[ManipulationType]:
-        """Identify specific video manipulation types"""
+        """
+Identify specific video manipulation types"""
         manipulation_types = []
         
         if neural_result.get('deepfake_score', 0) > 0.7:
@@ -874,7 +883,8 @@ class DeepfakeDetector:
         spectral_result: Dict,
         prosodic_result: Dict
     ) -> List[ManipulationType]:
-        """Identify specific audio manipulation types"""
+        """
+Identify specific audio manipulation types"""
         manipulation_types = []
         
         if neural_result.get('deepfake_score', 0) > 0.7:
@@ -891,7 +901,8 @@ class DeepfakeDetector:
         pixel_result: Dict,
         metadata_result: Dict
     ) -> List[ManipulationType]:
-        """Identify specific image manipulation types"""
+        """
+Identify specific image manipulation types"""
         manipulation_types = []
         
         if neural_result.get('manipulation_score', 0) > 0.7:
@@ -906,7 +917,8 @@ class DeepfakeDetector:
         return manipulation_types
 
     def _extract_video_indicators(self, analysis_results: Dict[str, Dict]) -> List[str]:
-        """Extract video manipulation indicators"""
+        """
+Extract video manipulation indicators"""
         indicators = []
         
         if analysis_results.get('neural', {}).get('deepfake_score', 0) > 0.5:
@@ -988,39 +1000,48 @@ class DeepfakeDetector:
         return {'confidence': 0.5, 'prosodic_anomaly': 0.1}
 
     async def _voice_consistency_analysis(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze voice consistency throughout audio"""
+        """
+Analyze voice consistency throughout audio"""
         return {'confidence': 0.6, 'consistency_score': 0.9}
 
     async def _neural_image_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Neural network-based image manipulation detection"""
+        """
+Neural network-based image manipulation detection"""
         return {'confidence': 0.8, 'manipulation_score': 0.1}
 
     async def _pixel_inconsistency_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze pixel-level inconsistencies"""
+        """
+Analyze pixel-level inconsistencies"""
         return {'confidence': 0.7, 'inconsistency_score': 0.1}
 
     async def _metadata_analysis(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze metadata for manipulation indicators"""
+        """
+Analyze metadata for manipulation indicators"""
         return {'confidence': 0.6, 'modification_detected': False}
 
     async def _compression_signature_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze compression signatures"""
+        """
+Analyze compression signatures"""
         return {'confidence': 0.5, 'compression_anomaly': 0.1}
 
     async def _linguistic_analysis(self, text: str) -> Dict[str, Any]:
-        """Analyze linguistic patterns for AI generation"""
+        """
+Analyze linguistic patterns for AI generation"""
         return {'confidence': 0.7, 'ai_probability': 0.2}
 
     async def _style_analysis(self, text: str) -> Dict[str, Any]:
-        """Analyze writing style consistency"""
+        """
+Analyze writing style consistency"""
         return {'confidence': 0.6, 'consistency_score': 0.8}
 
     async def _coherence_analysis(self, text: str) -> Dict[str, Any]:
-        """Analyze text coherence and flow"""
+        """
+Analyze text coherence and flow"""
         return {'confidence': 0.5, 'coherence_score': 0.9}
 
     async def _calculate_text_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite text AI generation score"""
+        """
+Calculate composite text AI generation score"""
         scores = []
         weights = []
         
@@ -1039,7 +1060,8 @@ class DeepfakeDetector:
         return min(1.0, weighted_score)
 
     async def _analyze_key_frames(self, frames: List[np.ndarray]) -> List[Dict[str, Any]]:
-        """Analyze key frames in detail"""
+        """
+Analyze key frames in detail"""
         frame_analyses = []
         
         for i, frame in enumerate(frames):

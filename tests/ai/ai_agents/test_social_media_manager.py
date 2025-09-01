@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for SocialMediaManagerAgent
+"""
+Comprehensive Tests for SocialMediaManagerAgent
 
 Industrial-grade testing for social media management including cross-platform posting,
 engagement optimization, hashtag strategies, optimal timing, and audience analysis.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -43,11 +46,13 @@ logger = logging.getLogger(__name__)
 
 
 class TestSocialMediaManagerAgent:
-    """Comprehensive test suite for SocialMediaManagerAgent"""
+    """
+Comprehensive test suite for SocialMediaManagerAgent"""
     
     @pytest.fixture
     def social_media_config(self) -> AgentConfiguration:
-        """Social media manager agent configuration"""
+        """
+Social media manager agent configuration"""
         return AgentConfiguration(
             agent_id="social_media_test",
             agent_name="Test Social Media Manager",
@@ -84,7 +89,8 @@ class TestSocialMediaManagerAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, social_media_config):
-        """Test social media manager initialization"""
+        """
+Test social media manager initialization"""
         agent = SocialMediaManagerAgent(social_media_config)
         
         # Before initialization

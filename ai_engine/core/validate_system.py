@@ -5,10 +5,11 @@ Comprehensive validation suite for the IA-Influencer-Agent AI core system.
 Tests all components, workflows, and integrations to ensure enterprise-grade quality.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import sys
 import traceback
@@ -396,7 +397,7 @@ async def run_validation():
     
     print("=" * 60)
     print(f"Validation completed at: {datetime.utcnow()}")
-    print("© 2025 Fahed Mlaiel - IA-Influencer-Agent AI Core System")
+    print("(c) 2025 Fahed Mlaiel - IA-Influencer-Agent AI Core System")
     print("=" * 60)
     
     return exit_code

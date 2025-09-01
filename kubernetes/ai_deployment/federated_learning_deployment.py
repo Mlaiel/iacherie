@@ -6,8 +6,9 @@ for distributed AI training across multiple edge devices and data sources
 while preserving privacy and data sovereignty.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class FederatedStrategy(Enum):
-    """Federated learning strategies"""
+    """
+Federated learning strategies"""
+
     FEDERATED_AVERAGING = "federated_averaging"
     FEDERATED_SGD = "federated_sgd"
     FEDERATED_PROX = "federated_prox"
@@ -42,6 +45,7 @@ class FederatedStrategy(Enum):
 
 class AggregationMethod(Enum):
     """Model aggregation methods"""
+
     WEIGHTED_AVERAGE = "weighted_average"
     SIMPLE_AVERAGE = "simple_average"
     MEDIAN_AGGREGATION = "median_aggregation"
@@ -53,6 +57,7 @@ class AggregationMethod(Enum):
 
 class PrivacyTechnique(Enum):
     """Privacy-preserving techniques"""
+
     DIFFERENTIAL_PRIVACY = "differential_privacy"
     HOMOMORPHIC_ENCRYPTION = "homomorphic_encryption"
     SECURE_MULTIPARTY = "secure_multiparty"
@@ -63,6 +68,7 @@ class PrivacyTechnique(Enum):
 
 class ClientSelectionStrategy(Enum):
     """Client selection strategies"""
+
     RANDOM_SELECTION = "random_selection"
     STRATIFIED_SAMPLING = "stratified_sampling"
     RESOURCE_AWARE = "resource_aware"

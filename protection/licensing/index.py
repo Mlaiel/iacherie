@@ -6,13 +6,14 @@ This module provides easy access to all licensing components and services.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech + Music Business + Blockchain + Security Experts
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
 Unauthorized reproduction, distribution, or reverse engineering is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization requests.
 """
+
 import logging
 from typing import Dict, Any, Optional
 
@@ -296,7 +297,7 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Contact mlaiel@live.de for licensing"
 
 # Quick start example
@@ -317,4 +318,4 @@ if __name__ == "__main__":
     print(f"Supported Territories: {len(components['supported_territories'])} territories")
     
     print("\n⚠️  Contact mlaiel@live.de for licensing and configuration assistance")
-    print("© 2025 Fahed Mlaiel - All rights reserved")
+    print("(c) 2025 Fahed Mlaiel - All rights reserved")

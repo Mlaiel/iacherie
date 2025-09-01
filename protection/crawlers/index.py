@@ -31,6 +31,7 @@ Any violation will result in IMMEDIATE LEGAL ACTION under:
 
 WE MONITOR FOR UNAUTHORIZED USE - YOU WILL BE CAUGHT AND PROSECUTED
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -136,7 +137,8 @@ class CrawlerServiceManager:
     """
     
     def __init__(self, config: CrawlerServiceConfig):
-        """Initialize the crawler service manager."""
+        """
+Initialize the crawler service manager."""
         self.config = config
         self.logger = setup_crawler_logger("crawler_service_manager")
         self.metrics = MetricsCollector()
@@ -553,7 +555,8 @@ class CrawlerServiceAPI:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the crawler service API."""
+        """
+Initialize the crawler service API."""
         self.config = self._load_config(config_path)
         self.service_manager = CrawlerServiceManager(self.config)
         self.logger = setup_crawler_logger("crawler_api")
@@ -568,11 +571,13 @@ class CrawlerServiceAPI:
             return CrawlerServiceConfig.from_environment()
     
     async def start(self) -> bool:
-        """Start the crawler service."""
+        """
+Start the crawler service."""
         return await self.service_manager.start_service()
     
     async def stop(self) -> bool:
-        """Stop the crawler service."""
+        """
+Stop the crawler service."""
         return await self.service_manager.stop_service()
     
     async def crawl_youtube(
@@ -723,7 +728,8 @@ class CrawlerServiceAPI:
         return [trend.to_dict() for trend in trends]
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get service status."""
+        """
+Get service status."""
         return await self.service_manager.get_service_status()
 
 

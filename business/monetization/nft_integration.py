@@ -8,6 +8,7 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class NftIntegrationStatus(Enum):
-    """Statuts du module Nft Integration"""
+    """
+Statuts du module Nft Integration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -39,27 +42,32 @@ class NftIntegrationConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class INftIntegrationService(ABC):
-    """Interface du service Nft Integration"""
+    """
+Interface du service Nft Integration"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
+        """
+Initialisation du service"""
         pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
+        """
+Traitement principal"""
         pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
+        """
+Validation des données"""
         pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class NftIntegrationManager:
-    """Gestionnaire principal Nft Integration"""
+    """
+Gestionnaire principal Nft Integration"""
     
     def __init__(self, config: NftIntegrationConfig):
         self.config = config
@@ -134,7 +142,8 @@ class NftIntegrationService(INftIntegrationService):
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
+        """
+Exécution de la logique métier spécifique"""
         # Implement NFT integration consolidated business logic
         nft_data = data.get('nft', {})
         content_id = nft_data.get('content_id')
@@ -205,7 +214,8 @@ async def create_nftintegration_service(config: Optional[NftIntegrationConfig] =
     return service
 
 def get_nftintegration_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
+    """
+Récupération du statut du module"""
     return {
         "module": "Nft Integration",
         "version": "1.0.0",
@@ -223,7 +233,8 @@ class NftIntegrationAPI:
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
+        """
+Vérification de santé du module"""
         return {
             "status": "healthy",
             "module": "Nft Integration",

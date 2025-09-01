@@ -11,8 +11,9 @@ This inference engine and optimization techniques are the exclusive intellectual
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 """
+
 import asyncio
 import logging
 import time
@@ -82,7 +83,9 @@ from prometheus_client import Counter, Histogram, Gauge
 logger = logging.getLogger(__name__)
 
 class InferenceMode(Enum):
-    """Inference execution modes"""
+    """
+Inference execution modes"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -92,6 +95,7 @@ class InferenceMode(Enum):
 
 class ModelFormat(Enum):
     """Supported model formats"""
+
     SKLEARN = "sklearn"
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch" 
@@ -101,6 +105,7 @@ class ModelFormat(Enum):
 
 class ProcessingStrategy(Enum):
     """Data processing strategies"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     VECTORIZED = "vectorized"
@@ -145,7 +150,8 @@ class InferenceConfig:
 
 @dataclass
 class InferenceMetrics:
-    """Comprehensive inference performance metrics"""
+    """
+Comprehensive inference performance metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -180,7 +186,8 @@ class InferenceMetrics:
 
 @dataclass
 class InferenceResult:
-    """Comprehensive inference result"""
+    """
+Comprehensive inference result"""
     request_id: str
     model_name: str
     model_version: str
@@ -669,7 +676,8 @@ class ModelInference:
             return ModelFormat.CUSTOM
 
     async def _load_model_by_format(self, model_path: Path, model_format: ModelFormat) -> Dict[str, Any]:
-        """Load model based on detected format"""
+        """
+Load model based on detected format"""
         try:
             if model_format == ModelFormat.SKLEARN:
                 model = joblib.load(model_path)
@@ -917,7 +925,8 @@ class ModelInference:
         return await self._real_time_inference(model_info, input_data, config)
 
     async def _gpu_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
-        """Execute GPU-accelerated inference"""
+        """
+Execute GPU-accelerated inference"""
         if not self.gpu_available:
             logger.warning("GPU inference requested but no GPU available, falling back to CPU")
             return await self._real_time_inference(model_info, input_data, config)
@@ -929,7 +938,8 @@ class ModelInference:
         return await self._real_time_inference(model_info, input_data, config)
 
     async def _postprocess_output(self, predictions: Dict[str, Any], model_info: Dict[str, Any], config: InferenceConfig) -> Dict[str, Any]:
-        """Postprocess model output"""
+        """
+Postprocess model output"""
         try:
             processed_predictions = predictions.copy()
             
@@ -995,7 +1005,8 @@ class ModelInference:
         self.CACHE_HIT_RATE.labels(model_name=model_name).set(metrics.cache_hit_rate)
 
     async def _monitor_inference_performance(self):
-        """Background performance monitoring"""
+        """
+Background performance monitoring"""
         while True:
             try:
                 for model_name, metrics in self.inference_metrics.items():

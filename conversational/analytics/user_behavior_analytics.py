@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class BehaviorType(Enum):
-    """User behavior types for analysis"""
+    """
+User behavior types for analysis"""
+
     CONSUMPTION = "consumption"
     CREATION = "creation"
     INTERACTION = "interaction"
@@ -48,6 +51,7 @@ class BehaviorType(Enum):
 
 class UserSegment(Enum):
     """User segmentation categories"""
+
     HEAVY_USERS = "heavy_users"
     REGULAR_USERS = "regular_users"
     CASUAL_USERS = "casual_users"
@@ -395,7 +399,8 @@ class UserBehaviorAnalytics:
         self,
         behavior_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate behavior metrics"""
+        """
+Calculate behavior metrics"""
         # Implementation for behavior metrics calculation
         pass
     
@@ -403,18 +408,21 @@ class UserBehaviorAnalytics:
         self,
         behavior_data: Dict[str, Any]
     ) -> List[str]:
-        """Analyze behavior patterns"""
+        """
+Analyze behavior patterns"""
         # Implementation for pattern analysis
         pass
 
 
 # User Behavior Analytics Factory
 class UserBehaviorAnalyticsFactory:
-    """Factory for creating user behavior analytics instances"""
+    """
+Factory for creating user behavior analytics instances"""
     
     @staticmethod
     def create_analytics_engine() -> UserBehaviorAnalytics:
-        """Create a new user behavior analytics engine"""
+        """
+Create a new user behavior analytics engine"""
         return UserBehaviorAnalytics()
 
 

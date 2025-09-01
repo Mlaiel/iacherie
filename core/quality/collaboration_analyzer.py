@@ -9,7 +9,7 @@ Creator profile → Collaboration analysis → Compatibility scoring →
 Matching algorithms → Partnership recommendations → Quality metrics
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -18,6 +18,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creator collaborations"""
+    """
+Types of creator collaborations"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     CROSS_PROMOTION = "cross_promotion"
@@ -49,6 +52,7 @@ class CollaborationType(Enum):
 
 class CreatorCategory(Enum):
     """Creator categories for matching"""
+
     MUSICIAN = "musician"
     VIDEO_CREATOR = "video_creator"
     PHOTOGRAPHER = "photographer"
@@ -63,6 +67,7 @@ class CreatorCategory(Enum):
 
 class CompatibilityLevel(Enum):
     """Collaboration compatibility levels"""
+
     EXCELLENT = "excellent"  # 90-100
     GOOD = "good"           # 80-89
     MODERATE = "moderate"   # 60-79
@@ -72,6 +77,7 @@ class CompatibilityLevel(Enum):
 
 class CollaborationStage(Enum):
     """Stages of collaboration"""
+
     DISCOVERY = "discovery"
     INITIAL_CONTACT = "initial_contact"
     NEGOTIATION = "negotiation"
@@ -162,7 +168,8 @@ class CompatibilityFactors:
     genre_alignment: List[str] = field(default_factory=list)
     
     def calculate_overall_compatibility(self) -> float:
-        """Calculate weighted overall compatibility score"""
+        """
+Calculate weighted overall compatibility score"""
         weights = {
             'audience': 0.25,
             'content': 0.20,
@@ -207,7 +214,8 @@ class CompatibilityFactors:
 
 @dataclass
 class CollaborationOpportunity:
-    """Specific collaboration opportunity recommendation"""
+    """
+Specific collaboration opportunity recommendation"""
     opportunity_id: str
     collaboration_type: CollaborationType
     partner_creator: CreatorProfile
@@ -475,7 +483,8 @@ class CollaborationQualityAnalyzer:
         self,
         past_collaborations: List[Dict[str, Any]]
     ) -> float:
-        """Calculate collaboration success rate from history"""
+        """
+Calculate collaboration success rate from history"""
         if not past_collaborations:
             return 50.0  # Default neutral score
         
@@ -490,7 +499,8 @@ class CollaborationQualityAnalyzer:
         self,
         creator_profile: CreatorProfile
     ) -> float:
-        """Calculate overall collaboration readiness score"""
+        """
+Calculate overall collaboration readiness score"""
         readiness_score = 0.0
         
         # Content quality factor (25%)
@@ -524,7 +534,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         potential_partners: List[Dict[str, Any]]
     ) -> List[CollaborationOpportunity]:
-        """Analyze and generate collaboration opportunities"""
+        """
+Analyze and generate collaboration opportunities"""
         opportunities = []
         
         for partner_data in potential_partners:
@@ -620,7 +631,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate audience alignment score"""
+        """
+Calculate audience alignment score"""
         score = 0.0
         
         # Audience size compatibility
@@ -665,7 +677,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate content synergy score"""
+        """
+Calculate content synergy score"""
         score = 0.0
         
         # Content theme overlap
@@ -704,7 +717,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate brand compatibility score"""
+        """
+Calculate brand compatibility score"""
         score = 75.0  # Base compatibility score
         
         # Creator category compatibility
@@ -742,7 +756,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate communication compatibility score"""
+        """
+Calculate communication compatibility score"""
         score = 50.0  # Base score
         
         # Language compatibility
@@ -769,7 +784,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate budget compatibility score"""
+        """
+Calculate budget compatibility score"""
         creator_min, creator_max = creator_profile.collaboration_budget_range
         partner_min, partner_max = partner_profile.collaboration_budget_range
         
@@ -798,7 +814,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate geographic compatibility score"""
+        """
+Calculate geographic compatibility score"""
         creator_geo = set(creator_profile.geographical_preferences)
         partner_geo = set(partner_profile.geographical_preferences)
         
@@ -818,7 +835,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate experience level compatibility"""
+        """
+Calculate experience level compatibility"""
         creator_experience = len(creator_profile.past_collaborations)
         partner_experience = len(partner_profile.past_collaborations)
         
@@ -838,7 +856,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ) -> float:
-        """Calculate estimated audience overlap percentage"""
+        """
+Calculate estimated audience overlap percentage"""
         # This would typically use actual audience data analysis
         # For now, use demographic and content similarity as proxy
         
@@ -881,7 +900,8 @@ class CollaborationQualityAnalyzer:
         partner_profile: CreatorProfile,
         compatibility: CompatibilityFactors
     ) -> List[CollaborationType]:
-        """Suggest best collaboration types for the creator pair"""
+        """
+Suggest best collaboration types for the creator pair"""
         
         suggestions = []
         compatibility_score = compatibility.calculate_overall_compatibility()
@@ -938,7 +958,8 @@ class CollaborationQualityAnalyzer:
         partner_profile: CreatorProfile,
         compatibility: CompatibilityFactors
     ) -> CollaborationOpportunity:
-        """Create detailed collaboration opportunity"""
+        """
+Create detailed collaboration opportunity"""
         
         opportunity = CollaborationOpportunity(
             opportunity_id=f"{collaboration_type.value}_{creator_profile.creator_id}_{partner_profile.creator_id}_{int(time.time())}",
@@ -1040,7 +1061,8 @@ class CollaborationQualityAnalyzer:
         creator_profile: CreatorProfile,
         partner_profile: CreatorProfile
     ):
-        """Analyze risk and success factors for collaboration"""
+        """
+Analyze risk and success factors for collaboration"""
         
         compatibility = opportunity.compatibility_factors
         
@@ -1199,7 +1221,8 @@ class CollaborationQualityAnalyzer:
         analysis: CollaborationQualityAnalysis,
         market_data: Optional[Dict[str, Any]]
     ):
-        """Generate strategic insights and recommendations"""
+        """
+Generate strategic insights and recommendations"""
         
         creator_profile = analysis.creator_profile
         

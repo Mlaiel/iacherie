@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 HYPERPARAMETER TUNING AVANCÉ
@@ -15,6 +15,7 @@ Optimisation automatique des hyperparamètres
 - Early stopping et pruning intelligent
 - Parallel trials et distributed tuning
 """
+
 import asyncio
 import logging
 import time
@@ -38,12 +39,15 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 logger = logging.getLogger(__name__)
 
 class OptimizationDirection(Enum):
-    """Direction d'optimisation"""
+    """
+Direction d'optimisation"""
+
     MAXIMIZE = "maximize"
     MINIMIZE = "minimize"
 
 class SamplerType(Enum):
     """Types de samplers Optuna"""
+
     TPE = "tpe"
     CMAES = "cmaes"
     RANDOM = "random"
@@ -51,6 +55,7 @@ class SamplerType(Enum):
 
 class PrunerType(Enum):
     """Types de pruners Optuna"""
+
     MEDIAN = "median"
     HYPERBAND = "hyperband"
     NONE = "none"
@@ -68,7 +73,8 @@ class HyperparameterSpace:
 
 @dataclass
 class OptimizationConfig:
-    """Configuration d'optimisation"""
+    """
+Configuration d'optimisation"""
     n_trials: int = 100
     timeout: Optional[int] = None
     direction: OptimizationDirection = OptimizationDirection.MAXIMIZE
@@ -82,7 +88,8 @@ class OptimizationConfig:
 
 @dataclass
 class OptimizationResult:
-    """Résultat d'optimisation"""
+    """
+Résultat d'optimisation"""
     study_name: str
     best_value: float
     best_params: Dict[str, Any]
@@ -92,7 +99,8 @@ class OptimizationResult:
     trials_df: pd.DataFrame
 
 class HyperparameterTuner:
-    """Tuner d'hyperparamètres avancé"""
+    """
+Tuner d'hyperparamètres avancé"""
     
     def __init__(self, config: OptimizationConfig):
         self.config = config
@@ -105,7 +113,8 @@ class HyperparameterTuner:
     def create_study(self, 
                     study_name: Optional[str] = None,
                     load_if_exists: bool = True) -> optuna.Study:
-        """Crée ou charge une étude Optuna"""
+        """
+Crée ou charge une étude Optuna"""
         
         if study_name is None:
             study_name = f"study_{uuid.uuid4().hex[:8]}"
@@ -145,7 +154,8 @@ class HyperparameterTuner:
             return optuna.samplers.RandomSampler(seed=self.config.random_state)
     
     def _create_pruner(self) -> optuna.pruners.BasePruner:
-        """Crée un pruner selon la configuration"""
+        """
+Crée un pruner selon la configuration"""
         if self.config.pruner_type == PrunerType.MEDIAN:
             return MedianPruner(
                 n_startup_trials=5,
@@ -168,7 +178,8 @@ class HyperparameterTuner:
                            y: np.ndarray,
                            scoring: str = 'accuracy',
                            study_name: Optional[str] = None) -> OptimizationResult:
-        """Optimise les hyperparamètres d'un modèle"""
+        """
+Optimise les hyperparamètres d'un modèle"""
         
         start_time = time.time()
         
@@ -304,7 +315,8 @@ class HyperparameterTuner:
         return self.studies.get(study_name)
     
     def plot_optimization_history(self, study_name: str) -> Any:
-        """Trace l'historique d'optimisation"""
+        """
+Trace l'historique d'optimisation"""
         study = self.studies.get(study_name)
         if study:
             try:
@@ -335,7 +347,8 @@ class HyperparameterTuner:
         return {}
     
     def export_study_results(self, study_name: str, filepath: str):
-        """Exporte les résultats d'une étude"""
+        """
+Exporte les résultats d'une étude"""
         study = self.studies.get(study_name)
         if study:
             try:
@@ -486,7 +499,8 @@ class CommonParameterSpaces:
     
     @staticmethod
     def random_forest_space() -> List[HyperparameterSpace]:
-        """Espace de paramètres pour Random Forest"""
+        """
+Espace de paramètres pour Random Forest"""
         return [
             HyperparameterSpace("n_estimators", "int", low=50, high=500),
             HyperparameterSpace("max_depth", "int", low=3, high=20),

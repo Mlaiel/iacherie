@@ -15,7 +15,7 @@ Features:
 - Tax optimization strategies
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
@@ -34,7 +34,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class TaxType(Enum):
-    """Types de taxes supportés"""
+    """
+Types de taxes supportés"""
+
     VAT = "vat"
     GST = "gst"
     HST = "hst"  # Harmonized Sales Tax (Canada)
@@ -47,6 +49,7 @@ class TaxType(Enum):
 
 class ComplianceStatus(Enum):
     """Statuts de conformité fiscale"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -295,7 +298,8 @@ class EnhancedTaxComplianceEngine:
             """)
     
     async def _load_enhanced_tax_rules(self):
-        """Charge les règles fiscales pour les 67 pays"""
+        """
+Charge les règles fiscales pour les 67 pays"""
         try:
             async with self.db_pool.acquire() as conn:
                 for country_code, country_data in self.supported_countries.items():

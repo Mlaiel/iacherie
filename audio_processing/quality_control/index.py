@@ -5,7 +5,7 @@ to all quality management components with intelligent routing and coordination.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QualityControlConfig:
-    """Quality Control System Configuration"""
+    """
+Quality Control System Configuration"""
     enable_real_time_monitoring: bool = True
     enable_optimization: bool = True
     enable_compliance_checking: bool = True
@@ -71,7 +73,8 @@ class ProcessingRequest:
 
 @dataclass
 class ProcessingResult:
-    """Complete processing result"""
+    """
+Complete processing result"""
     request_id: str
     success: bool
     audio_file: str
@@ -422,7 +425,8 @@ class QualityControlSystem:
         quality_report: QualityReport,
         request: ProcessingRequest
     ) -> List[QualityGateResult]:
-        """Check quality gates"""
+        """
+Check quality gates"""
         
         if not self.gate_manager:
             return []
@@ -434,7 +438,8 @@ class QualityControlSystem:
         request: ProcessingRequest,
         quality_report: QualityReport
     ) -> List[OptimizationResult]:
-        """Optimize audio quality"""
+        """
+Optimize audio quality"""
         
         if not self.optimizer:
             return []
@@ -598,7 +603,8 @@ class QualityControlSystem:
         return await self.dashboard.get_dashboard_data()
 
     def get_active_alerts(self) -> List[QualityAlert]:
-        """Get all active quality alerts"""
+        """
+Get all active quality alerts"""
         
         if not self.monitor:
             return []
@@ -606,7 +612,8 @@ class QualityControlSystem:
         return self.monitor.get_active_alerts()
 
     async def shutdown(self):
-        """Graceful system shutdown"""
+        """
+Graceful system shutdown"""
         
         logger.info("Initiating Quality Control System shutdown...")
         
@@ -664,11 +671,13 @@ async def quick_quality_check(
 # System factory for different use cases
 
 class QualityControlFactory:
-    """Factory for creating pre-configured Quality Control Systems"""
+    """
+Factory for creating pre-configured Quality Control Systems"""
     
     @staticmethod
     async def create_streaming_system() -> QualityControlSystem:
-        """Create system optimized for streaming platforms"""
+        """
+Create system optimized for streaming platforms"""
         
         config = QualityControlConfig(
             enable_real_time_monitoring=True,

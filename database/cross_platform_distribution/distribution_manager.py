@@ -36,6 +36,7 @@ All violations will be prosecuted to the FULL EXTENT of international copyright 
 Legal action will be taken immediately against any infringement.
 Contact: mlaiel@live.de for authorized licensing only.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union, Set, Callable
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -70,7 +71,9 @@ active_distributions = Gauge('active_distributions', 'Currently active distribut
 platform_success_rate = Gauge('platform_success_rate', 'Platform success rate', ['platform'])
 
 class DistributionStatus(str, Enum):
-    """Enhanced distribution job status with granular tracking"""
+    """
+Enhanced distribution job status with granular tracking"""
+
     PENDING = "pending"
     QUEUED = "queued"
     SCHEDULED = "scheduled"
@@ -92,6 +95,7 @@ class DistributionStatus(str, Enum):
 
 class DistributionPriority(str, Enum):
     """Enhanced priority levels with business impact"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -103,6 +107,7 @@ class DistributionPriority(str, Enum):
 
 class ContentFormat(str, Enum):
     """Comprehensive content format support"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -126,6 +131,7 @@ class ContentFormat(str, Enum):
 
 class TargetPlatform(str, Enum):
     """Comprehensive platform support"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -159,6 +165,7 @@ class TargetPlatform(str, Enum):
 
 class OptimizationStrategy(str, Enum):
     """Advanced optimization strategies"""
+
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
@@ -176,6 +183,7 @@ class OptimizationStrategy(str, Enum):
 
 class DistributionJobType(str, Enum):
     """Distribution job types"""
+
     SINGLE_UPLOAD = "single_upload"
     BATCH_UPLOAD = "batch_upload"
     SCHEDULED_CAMPAIGN = "scheduled_campaign"
@@ -188,6 +196,7 @@ class DistributionJobType(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categories for better organization"""
+
     MUSIC = "music"
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
@@ -375,7 +384,8 @@ class BatchDistributionManager:
         job_configs: List[Dict[str, Any]], 
         batch_uuid: str
     ) -> List[Dict[str, Any]]:
-        """Execute jobs sequentially"""
+        """
+Execute jobs sequentially"""
         
         results = []
         for config in job_configs:
@@ -797,7 +807,8 @@ class DistributionQueueManager:
         return base_score - time_score
     
     def _celery_priority_from_enum(self, priority: DistributionPriority) -> int:
-        """Convert priority enum to Celery priority integer"""
+        """
+Convert priority enum to Celery priority integer"""
         
         priority_mapping = {
             DistributionPriority.EMERGENCY: 9,
@@ -1473,7 +1484,8 @@ class WorkflowEngine:
         user_id: int,
         campaign_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create a workflow for distribution campaign"""
+        """
+Create a workflow for distribution campaign"""
         
         workflow_uuid = str(uuid.uuid4())
         

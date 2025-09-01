@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -27,7 +28,8 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 
 # Production-ready engines for brand management
 class BrandAnalyticsEngine:
-    """Advanced brand analytics and performance tracking engine"""
+    """
+Advanced brand analytics and performance tracking engine"""
     
     def __init__(self):
         self.initialized = False
@@ -146,7 +148,8 @@ class BrandAnalyticsEngine:
         return comparison
     
     def _identify_improvement_areas(self, metrics: Dict[str, float]) -> List[str]:
-        """Identify areas that need improvement"""
+        """
+Identify areas that need improvement"""
         improvement_areas = []
         
         for metric_name, score in metrics.items():
@@ -238,7 +241,8 @@ class BrandRecognitionEngine:
             return 'low_quality'
     
     async def detect_brand_colors(self, visual_content: Any, brand_id: str) -> Dict[str, Any]:
-        """Detect brand colors in visual content"""
+        """
+Detect brand colors in visual content"""
         try:
             # Mock color detection - would use actual color analysis
             dominant_colors = [
@@ -381,12 +385,14 @@ class VisualConsistencyAnalyzer:
         return np.random.uniform(0.7, 0.9)
     
     async def _analyze_layout_consistency(self, content_items: List[Dict[str, Any]]) -> float:
-        """Analyze layout consistency (mock implementation)"""
+        """
+Analyze layout consistency (mock implementation)"""
         # Mock layout analysis - would analyze actual layouts in production
         return np.random.uniform(0.6, 0.8)
     
     def _generate_consistency_recommendations(self, scores: Dict[str, float]) -> List[str]:
-        """Generate recommendations for improving visual consistency"""
+        """
+Generate recommendations for improving visual consistency"""
         recommendations = []
         
         if scores.get('color', 0) < 0.7:
@@ -485,7 +491,8 @@ class BrandVoiceAnalyzer:
         return tone_scores
     
     def _analyze_personality(self, text: str) -> Dict[str, float]:
-        """Analyze personality traits in text"""
+        """
+Analyze personality traits in text"""
         # Mock personality analysis - would use NLP models in production
         return {
             'authoritative': np.random.uniform(0.4, 0.8),
@@ -495,7 +502,8 @@ class BrandVoiceAnalyzer:
         }
     
     def _analyze_emotion(self, text: str) -> Dict[str, float]:
-        """Analyze emotional characteristics in text"""
+        """
+Analyze emotional characteristics in text"""
         # Mock emotion analysis - would use sentiment analysis models
         return {
             'enthusiastic': np.random.uniform(0.4, 0.8),
@@ -505,7 +513,8 @@ class BrandVoiceAnalyzer:
         }
     
     def _analyze_style(self, text: str) -> Dict[str, float]:
-        """Analyze style characteristics in text"""
+        """
+Analyze style characteristics in text"""
         words = len(text.split())
         sentences = len([s for s in text.split('.') if s.strip()])
         avg_sentence_length = words / max(sentences, 1)
@@ -518,7 +527,8 @@ class BrandVoiceAnalyzer:
         }
     
     def _create_voice_profile(self, voice_analysis: Dict[str, Dict[str, float]]) -> Dict[str, str]:
-        """Create a voice profile based on analysis"""
+        """
+Create a voice profile based on analysis"""
         profile = {}
         
         for category, scores in voice_analysis.items():
@@ -529,12 +539,14 @@ class BrandVoiceAnalyzer:
         return profile
     
     def _calculate_voice_consistency(self, voice_analysis: Dict[str, Dict[str, float]]) -> float:
-        """Calculate overall voice consistency score"""
+        """
+Calculate overall voice consistency score"""
         # Mock consistency calculation - would compare against brand guidelines
         return np.random.uniform(0.7, 0.9)
     
     def _generate_voice_recommendations(self, voice_analysis: Dict[str, Dict[str, float]]) -> List[str]:
-        """Generate recommendations for voice improvement"""
+        """
+Generate recommendations for voice improvement"""
         recommendations = []
         
         # Analyze tone balance
@@ -558,6 +570,7 @@ logger = logging.getLogger(__name__)
 
 class BrandElement(Enum):
     """Brand elements to manage"""
+
     LOGO = "logo"
     COLORS = "colors"
     TYPOGRAPHY = "typography"
@@ -572,6 +585,7 @@ class BrandElement(Enum):
 
 class ConsistencyLevel(Enum):
     """Brand consistency levels"""
+
     EXCELLENT = "excellent"    # 90-100%
     GOOD = "good"             # 80-89%
     ACCEPTABLE = "acceptable"  # 70-79%
@@ -581,6 +595,7 @@ class ConsistencyLevel(Enum):
 
 class BrandViolationType(Enum):
     """Types of brand violations"""
+
     COLOR_MISMATCH = "color_mismatch"
     FONT_VIOLATION = "font_violation"
     LOGO_MISUSE = "logo_misuse"
@@ -609,7 +624,8 @@ class BrandGuideline:
 
 @dataclass
 class BrandViolation:
-    """Brand violation detected"""
+    """
+Brand violation detected"""
     violation_id: str
     violation_type: BrandViolationType
     element: BrandElement
@@ -623,7 +639,8 @@ class BrandViolation:
 
 @dataclass
 class BrandConsistencyReport:
-    """Comprehensive brand consistency analysis"""
+    """
+Comprehensive brand consistency analysis"""
     report_id: str
     content_id: str
     platform: str
@@ -639,7 +656,8 @@ class BrandConsistencyReport:
 
 @dataclass
 class BrandProfile:
-    """Complete brand profile"""
+    """
+Complete brand profile"""
     brand_id: str
     brand_name: str
     industry: str

@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, NamedTuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -36,7 +37,9 @@ from .content_models import Base, ContentType, ContentStatus
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprinting algorithms"""
+    """
+Types of fingerprinting algorithms"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"
     SPECTROGRAM_HASH = "spectrogram_hash"
@@ -74,6 +77,7 @@ class FingerprintAlgorithm(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity measurement methods"""
+
     COSINE_SIMILARITY = "cosine"
     EUCLIDEAN_DISTANCE = "euclidean"
     HAMMING_DISTANCE = "hamming"
@@ -91,19 +95,22 @@ class FingerprintVector:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_bytes(self) -> bytes:
-        """Convert vector to bytes for storage"""
+        """
+Convert vector to bytes for storage"""
         return self.vector.tobytes()
     
     @classmethod
     def from_bytes(cls, data: bytes, algorithm: FingerprintAlgorithm, 
                    dimension: int, confidence: float = 1.0) -> 'FingerprintVector':
-        """Restore vector from bytes"""
+        """
+Restore vector from bytes"""
         vector = np.frombuffer(data, dtype=np.float32).reshape(-1)
         return cls(vector, algorithm, dimension, confidence)
 
 @dataclass
 class SimilarityResult:
-    """Container for similarity comparison results"""
+    """
+Container for similarity comparison results"""
     fingerprint_id: str
     similarity_score: float
     metric_used: SimilarityMetric
@@ -112,7 +119,8 @@ class SimilarityResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class ContentFingerprint(Base):
-    """Database model for content fingerprints"""
+    """
+Database model for content fingerprints"""
     __tablename__ = "content_fingerprints"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -425,7 +433,8 @@ class FingerprintProcessor:
     
     async def compare_fingerprints(self, fp1: FingerprintVector, fp2: FingerprintVector,
                                  metric: SimilarityMetric = SimilarityMetric.COSINE_SIMILARITY) -> SimilarityResult:
-        """Compare two fingerprint vectors using specified metric"""
+        """
+Compare two fingerprint vectors using specified metric"""
         try:
             if fp1.algorithm != fp2.algorithm:
                 raise ValueError("Cannot compare fingerprints from different algorithms")
@@ -478,7 +487,8 @@ class FingerprintProcessor:
         return results
 
 class FingerprintManager:
-    """High-level fingerprint management interface"""
+    """
+High-level fingerprint management interface"""
     
     def __init__(self, processor: FingerprintProcessor = None):
         self.processor = processor or FingerprintProcessor()

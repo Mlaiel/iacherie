@@ -5,7 +5,7 @@ Advanced query processing and optimization engine for vector database operations
 Supports complex multi-criteria queries with intelligent optimization and caching.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
 =====================================
@@ -16,6 +16,7 @@ des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class QueryType(Enum):
-    """Supported query types"""
+    """
+Supported query types"""
+
     SIMILARITY_SEARCH = "similarity_search"
     RANGE_SEARCH = "range_search" 
     KNN_SEARCH = "knn_search"
@@ -45,6 +48,7 @@ class QueryType(Enum):
 
 class QueryPriority(Enum):
     """Query execution priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -53,7 +57,8 @@ class QueryPriority(Enum):
 
 @dataclass
 class QueryFilter:
-    """Advanced query filtering configuration"""
+    """
+Advanced query filtering configuration"""
     content_types: Optional[List[str]] = None
     creators: Optional[List[str]] = None
     date_range: Optional[Tuple[str, str]] = None
@@ -67,7 +72,8 @@ class QueryFilter:
 
 @dataclass
 class QueryRequest:
-    """Complete query request specification"""
+    """
+Complete query request specification"""
     query_id: str
     query_type: QueryType
     query_vector: Optional[np.ndarray] = None
@@ -96,7 +102,8 @@ class QueryRequest:
 
 @dataclass
 class QueryResult:
-    """Query execution result with metadata"""
+    """
+Query execution result with metadata"""
     query_id: str
     matches: List[Dict[str, Any]]
     total_matches: int
@@ -107,7 +114,8 @@ class QueryResult:
 
 
 class QueryOptimizer:
-    """Intelligent query optimization engine"""
+    """
+Intelligent query optimization engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -175,7 +183,8 @@ class QueryOptimizer:
         return hashlib.md5(signature_str.encode()).hexdigest()
     
     async def record_performance(self, query_id: str, execution_time_ms: float, result_count: int):
-        """Record query performance for optimization learning"""
+        """
+Record query performance for optimization learning"""
         try:
             # Store performance data
             perf_data = {
@@ -292,14 +301,16 @@ class QueryCache:
         await self._evict(lru_key)
     
     async def _evict(self, cache_key: str):
-        """Remove cache entry"""
+        """
+Remove cache entry"""
         if cache_key in self.cache:
             del self.cache[cache_key]
             del self.cache_metadata[cache_key]
             self.eviction_count += 1
     
     def _estimate_size(self, result: QueryResult) -> int:
-        """Estimate memory size of cached result"""
+        """
+Estimate memory size of cached result"""
         try:
             # Simple estimation based on number of matches
             base_size = 1024  # Base overhead
@@ -309,7 +320,8 @@ class QueryCache:
             return 1024  # Default estimate
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""
+        """
+Get cache performance statistics"""
         total_requests = self.hit_count + self.miss_count
         hit_rate = self.hit_count / total_requests if total_requests > 0 else 0
         
@@ -324,7 +336,8 @@ class QueryCache:
 
 
 class QueryExecutor:
-    """Main query execution engine with optimization and caching"""
+    """
+Main query execution engine with optimization and caching"""
     
     def __init__(self, vector_store, config: Dict[str, Any]):
         self.vector_store = vector_store
@@ -443,7 +456,8 @@ class QueryExecutor:
         return await self._execute_similarity_search(request)
     
     async def _execute_hybrid_search(self, request: QueryRequest) -> QueryResult:
-        """Execute hybrid search combining multiple strategies"""
+        """
+Execute hybrid search combining multiple strategies"""
         # Combine vector similarity with text matching
         vector_results = await self._execute_similarity_search(request)
         
@@ -453,7 +467,8 @@ class QueryExecutor:
         return vector_results
     
     async def _execute_multi_modal_search(self, request: QueryRequest) -> QueryResult:
-        """Execute cross-modal search"""
+        """
+Execute cross-modal search"""
         if not request.cross_modal:
             return await self._execute_similarity_search(request)
         
@@ -463,14 +478,16 @@ class QueryExecutor:
         return await self._execute_similarity_search(request)
     
     async def _execute_duplicate_detection(self, request: QueryRequest) -> QueryResult:
-        """Execute duplicate detection with high similarity threshold"""
+        """
+Execute duplicate detection with high similarity threshold"""
         # Use high similarity threshold for duplicate detection
         request.similarity_threshold = max(request.similarity_threshold, 0.95)
         
         return await self._execute_similarity_search(request)
     
     def _build_metadata_filter(self, filters: Optional[QueryFilter]) -> Optional[Dict[str, Any]]:
-        """Build metadata filter from query filters"""
+        """
+Build metadata filter from query filters"""
         if not filters:
             return None
         
@@ -500,7 +517,8 @@ class QueryExecutor:
         return metadata_filter if metadata_filter else None
     
     def _format_match(self, match) -> Dict[str, Any]:
-        """Format search result match"""
+        """
+Format search result match"""
         if hasattr(match, '__dict__'):
             # Convert dataclass to dict
             return {
@@ -516,7 +534,8 @@ class QueryExecutor:
             return match
     
     def _generate_cache_key(self, request: QueryRequest) -> str:
-        """Generate unique cache key for query"""
+        """
+Generate unique cache key for query"""
         key_data = {
             'type': request.query_type.value,
             'vector_hash': hashlib.md5(request.query_vector.tobytes()).hexdigest() if request.query_vector is not None else None,
@@ -533,7 +552,8 @@ class QueryExecutor:
         return hashlib.sha256(key_str.encode()).hexdigest()
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get query execution performance statistics"""
+        """
+Get query execution performance statistics"""
         avg_execution_time = (
             self.total_execution_time / self.total_queries 
             if self.total_queries > 0 else 0

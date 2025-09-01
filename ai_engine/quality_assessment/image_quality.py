@@ -4,7 +4,7 @@ Advanced image quality analysis for photographers, visual content creators, and 
 Implements professional image metrics and industry-standard quality assessment.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Supported image formats"""
+    """
+Supported image formats"""
+
     JPEG = "jpeg"
     PNG = "png"
     TIFF = "tiff"
@@ -45,6 +48,7 @@ class ImageFormat(Enum):
 
 class ImageSharpness(Enum):
     """Image sharpness categories"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -54,6 +58,7 @@ class ImageSharpness(Enum):
 
 class ColorAccuracy(Enum):
     """Color accuracy categories"""
+
     PROFESSIONAL = "professional"
     ACCURATE = "accurate"
     ACCEPTABLE = "acceptable"
@@ -88,7 +93,8 @@ class CompositionAnalysis:
 
 @dataclass
 class ImageQualityProfile:
-    """Comprehensive image quality profile"""
+    """
+Comprehensive image quality profile"""
     # Basic properties
     width: int = field(default=0)
     height: int = field(default=0)
@@ -189,7 +195,8 @@ class ImageQualityAnalyzer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize image quality analyzer"""
+        """
+Initialize image quality analyzer"""
         super().__init__(config or ModelConfig(
             name="image_quality_analyzer",
             model_type=ModelType.IMAGE_MODEL,
@@ -391,11 +398,13 @@ class ImageQualityAnalyzer(BaseAIModel):
         return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from image processing services."""
+        """
+Disconnect from image processing services."""
         return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image quality assessment."""
+        """
+Process image quality assessment."""
         return await self.analyze_image_quality(data.get('image_data', b''), 
                                                data.get('profile', ImageQualityProfile()))
     
@@ -405,7 +414,8 @@ class ImageQualityAnalyzer(BaseAIModel):
         image_path: Path,
         profile: ImageQualityProfile
     ):
-        """Extract basic image properties"""
+        """
+Extract basic image properties"""
         try:
             profile.width, profile.height = pil_image.size
             profile.megapixels = (profile.width * profile.height) / 1000000
@@ -533,7 +543,8 @@ class ImageQualityAnalyzer(BaseAIModel):
         cv_image: np.ndarray,
         profile: ImageQualityProfile
     ):
-        """Analyze color quality and accuracy"""
+        """
+Analyze color quality and accuracy"""
         try:
             # Convert to different color spaces for analysis
             hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)

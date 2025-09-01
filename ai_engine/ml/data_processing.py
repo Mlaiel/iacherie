@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -73,7 +74,9 @@ except:
 
 
 class DataType(Enum):
-    """Data type categories"""
+    """
+Data type categories"""
+
     NUMERICAL = "numerical"
     CATEGORICAL = "categorical"
     TEXT = "text"
@@ -87,6 +90,7 @@ class DataType(Enum):
 
 class ProcessingStrategy(Enum):
     """Data processing strategies"""
+
     BATCH = "batch"
     STREAM = "stream"
     INCREMENTAL = "incremental"
@@ -96,6 +100,7 @@ class ProcessingStrategy(Enum):
 
 class FeatureType(Enum):
     """Feature types for extraction"""
+
     STATISTICAL = "statistical"
     STRUCTURAL = "structural"
     TEMPORAL = "temporal"
@@ -171,7 +176,8 @@ class ProcessingResult:
 
 
 class DataValidator:
-    """Data validation and quality checking"""
+    """
+Data validation and quality checking"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -241,7 +247,8 @@ class DataValidator:
         return quality_report
     
     def validate_schema(self, data: pd.DataFrame, expected_schema: Dict[str, str]) -> Tuple[bool, List[str]]:
-        """Validate data against expected schema"""
+        """
+Validate data against expected schema"""
         errors = []
         
         # Check columns exist
@@ -264,21 +271,25 @@ class DataTransformer(ABC):
     
     @abstractmethod
     def fit(self, data: Any, **kwargs) -> 'DataTransformer':
-        """Fit transformer to data"""
+        """
+Fit transformer to data"""
         pass
     
     @abstractmethod
     def transform(self, data: Any, **kwargs) -> Any:
-        """Transform data"""
+        """
+Transform data"""
         pass
     
     def fit_transform(self, data: Any, **kwargs) -> Any:
-        """Fit and transform data"""
+        """
+Fit and transform data"""
         return self.fit(data, **kwargs).transform(data, **kwargs)
 
 
 class NumericalTransformer(DataTransformer):
-    """Transformer for numerical data"""
+    """
+Transformer for numerical data"""
     
     def __init__(self, config: ProcessingConfig):
         self.config = config
@@ -377,7 +388,8 @@ class NumericalTransformer(DataTransformer):
         return transformed_data
     
     def _remove_outliers(self, data: np.ndarray) -> np.ndarray:
-        """Remove outliers from numerical data"""
+        """
+Remove outliers from numerical data"""
         if self.config.outlier_method == "iqr":
             Q1 = np.percentile(data, 25, axis=0)
             Q3 = np.percentile(data, 75, axis=0)
@@ -449,7 +461,8 @@ class CategoricalTransformer(DataTransformer):
 
 
 class TextTransformer(DataTransformer):
-    """Transformer for text data"""
+    """
+Transformer for text data"""
     
     def __init__(self, config: ProcessingConfig):
         self.config = config
@@ -508,7 +521,8 @@ class TextTransformer(DataTransformer):
             return self._transform_with_traditional_methods(data)
     
     def _transform_with_transformers(self, texts: List[str]) -> np.ndarray:
-        """Transform text using transformer models"""
+        """
+Transform text using transformer models"""
         embeddings = []
         
         for text in texts:
@@ -531,7 +545,8 @@ class TextTransformer(DataTransformer):
         return np.array(embeddings)
     
     def _transform_with_traditional_methods(self, texts: List[str]) -> List[str]:
-        """Transform text using traditional NLP methods"""
+        """
+Transform text using traditional NLP methods"""
         processed_texts = []
         
         for text in texts:
@@ -566,7 +581,8 @@ class TextTransformer(DataTransformer):
         return processed_texts
     
     def extract_features(self, texts: List[str]) -> Dict[str, Any]:
-        """Extract statistical features from text"""
+        """
+Extract statistical features from text"""
         features = {
             'char_count': [],
             'word_count': [],
@@ -607,7 +623,8 @@ class TextTransformer(DataTransformer):
 
 
 class ImageTransformer(DataTransformer):
-    """Transformer for image data"""
+    """
+Transformer for image data"""
     
     def __init__(self, config: ProcessingConfig):
         self.config = config
@@ -618,7 +635,8 @@ class ImageTransformer(DataTransformer):
         return self
     
     def transform(self, image_paths: List[str], **kwargs) -> np.ndarray:
-        """Transform images to numerical arrays"""
+        """
+Transform images to numerical arrays"""
         images = []
         
         for image_path in image_paths:
@@ -694,7 +712,8 @@ class AudioTransformer(DataTransformer):
         return self
     
     def transform(self, audio_paths: List[str], **kwargs) -> np.ndarray:
-        """Transform audio files to feature arrays"""
+        """
+Transform audio files to feature arrays"""
         features = []
         
         for audio_path in audio_paths:
@@ -895,7 +914,8 @@ class DataProcessor:
         transformer: TextTransformer,
         **kwargs
     ) -> Union[np.ndarray, List[str]]:
-        """Process text data"""
+        """
+Process text data"""
         # Fit and transform
         transformer.fit(data, **kwargs)
         processed_data = transformer.transform(data, **kwargs)
@@ -912,7 +932,8 @@ class DataProcessor:
         data: List[str],
         transformer: ImageTransformer
     ) -> np.ndarray:
-        """Process image data"""
+        """
+Process image data"""
         return transformer.fit_transform(data)
     
     async def _process_audio_data(
@@ -920,11 +941,13 @@ class DataProcessor:
         data: List[str],
         transformer: AudioTransformer
     ) -> np.ndarray:
-        """Process audio data"""
+        """
+Process audio data"""
         return transformer.fit_transform(data)
     
     def _validate_input_data(self, data: Any, data_type: DataType) -> Dict[str, Any]:
-        """Validate input data quality"""
+        """
+Validate input data quality"""
         if data_type == DataType.TABULAR and isinstance(data, pd.DataFrame):
             return self.validator.validate_data_quality(data)
         else:
@@ -937,7 +960,8 @@ class DataProcessor:
 
 
 class FeatureExtractor:
-    """Advanced feature extraction for different data types"""
+    """
+Advanced feature extraction for different data types"""
     
     def __init__(self, config: ProcessingConfig):
         self.config = config
@@ -958,7 +982,8 @@ class FeatureExtractor:
         }
     
     def extract_temporal_features(self, time_series: np.ndarray) -> Dict[str, float]:
-        """Extract temporal features from time series data"""
+        """
+Extract temporal features from time series data"""
         features = {}
         
         # Trend analysis
@@ -976,32 +1001,37 @@ class FeatureExtractor:
         return features
     
     def _calculate_skewness(self, data: np.ndarray) -> float:
-        """Calculate skewness of data"""
+        """
+Calculate skewness of data"""
         mean = np.mean(data)
         std = np.std(data)
         return np.mean(((data - mean) / std) ** 3)
     
     def _calculate_kurtosis(self, data: np.ndarray) -> float:
-        """Calculate kurtosis of data"""
+        """
+Calculate kurtosis of data"""
         mean = np.mean(data)
         std = np.std(data)
         return np.mean(((data - mean) / std) ** 4) - 3
     
     def _calculate_trend_slope(self, time_series: np.ndarray) -> float:
-        """Calculate trend slope using linear regression"""
+        """
+Calculate trend slope using linear regression"""
         x = np.arange(len(time_series))
         coeffs = np.polyfit(x, time_series, 1)
         return float(coeffs[0])
     
     def _calculate_seasonality_strength(self, time_series: np.ndarray) -> float:
-        """Calculate seasonality strength"""
+        """
+Calculate seasonality strength"""
         # Simple seasonality detection using FFT
         fft = np.fft.fft(time_series)
         power_spectrum = np.abs(fft) ** 2
         return float(np.max(power_spectrum[1:len(power_spectrum)//2]))
     
     def _calculate_autocorrelation(self, time_series: np.ndarray, lag: int) -> float:
-        """Calculate autocorrelation at specified lag"""
+        """
+Calculate autocorrelation at specified lag"""
         if len(time_series) <= lag:
             return 0.0
         

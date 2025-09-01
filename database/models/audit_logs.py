@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class ActionType(Enum):
-    """Audit action types"""
+    """
+Audit action types"""
+
     CREATE = "create"
     READ = "read"
     UPDATE = "update"
@@ -86,6 +89,7 @@ class ActionType(Enum):
 
 class EntityType(Enum):
     """Entity types being audited"""
+
     USER = "user"
     CONTENT = "content"
     FINGERPRINT = "fingerprint"
@@ -112,6 +116,7 @@ class EntityType(Enum):
 
 class Severity(Enum):
     """Log severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -122,6 +127,7 @@ class Severity(Enum):
 
 class Status(Enum):
     """Action status"""
+
     SUCCESS = "success"
     FAILURE = "failure"
     PARTIAL = "partial"
@@ -134,6 +140,7 @@ class Status(Enum):
 
 class Source(Enum):
     """Audit log sources"""
+
     WEB_APP = "web_app"
     MOBILE_APP = "mobile_app"
     API = "api"
@@ -477,7 +484,8 @@ class AuditLog(Base):
         )
     
     def get_risk_score(self) -> float:
-        """Calculate overall risk score for this event"""
+        """
+Calculate overall risk score for this event"""
         score = 0.0
         
         # Severity weight
@@ -511,7 +519,8 @@ class AuditLog(Base):
         return min(score, 100.0)  # Cap at 100
     
     def should_alert(self) -> bool:
-        """Determine if this event should trigger an alert"""
+        """
+Determine if this event should trigger an alert"""
         return (
             self.get_risk_score() > 15.0 or
             self.severity in [Severity.CRITICAL, Severity.HIGH] or
@@ -524,7 +533,8 @@ class AuditLog(Base):
     
     @classmethod
     def create_log(cls, log_data: Dict[str, Any], user_id: str = None) -> 'AuditLog':
-        """Create AuditLog from event data"""
+        """
+Create AuditLog from event data"""
         return cls(
             user_id=user_id,
             action_type=ActionType(log_data.get('action_type', 'read')),

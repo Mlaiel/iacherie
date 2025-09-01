@@ -1,7 +1,7 @@
 """Revenue Benchmarker - Competitive analysis and industry benchmarking system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class BenchmarkCategory(Enum):
-    """Benchmark categories"""
+    """
+Benchmark categories"""
+
     PLATFORM_REVENUE = "platform_revenue"
     CONTENT_TYPE = "content_type"
     GEOGRAPHIC = "geographic"
@@ -59,6 +62,7 @@ class BenchmarkCategory(Enum):
 
 class BenchmarkMetric(Enum):
     """Benchmark metrics"""
+
     REVENUE_PER_STREAM = "revenue_per_stream"
     REVENUE_PER_VIEW = "revenue_per_view"
     REVENUE_PER_FOLLOWER = "revenue_per_follower"
@@ -73,6 +77,7 @@ class BenchmarkMetric(Enum):
 
 class CompetitorTier(Enum):
     """Competitor tiers"""
+
     DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     ASPIRATIONAL_TARGET = "aspirational_target"
@@ -96,13 +101,15 @@ class BenchmarkData:
     
     @property
     def age_days(self) -> int:
-        """Get age of benchmark data in days"""
+        """
+Get age of benchmark data in days"""
         return (datetime.utcnow() - self.timestamp).days
 
 
 @dataclass
 class CompetitorProfile:
-    """Competitor profile"""
+    """
+Competitor profile"""
     competitor_id: str
     name: str
     tier: CompetitorTier
@@ -118,7 +125,8 @@ class CompetitorProfile:
 
 @dataclass
 class BenchmarkMetrics:
-    """Benchmark analysis metrics"""
+    """
+Benchmark analysis metrics"""
     metric: BenchmarkMetric
     category: BenchmarkCategory
     percentile_25: Decimal
@@ -134,13 +142,15 @@ class BenchmarkMetrics:
     
     @property
     def performance_range(self) -> Decimal:
-        """Get performance range (75th - 25th percentile)"""
+        """
+Get performance range (75th - 25th percentile)"""
         return self.percentile_75 - self.percentile_25
 
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis results"""
+    """
+Competitor analysis results"""
     user_position: Dict[str, Any]
     competitor_rankings: List[Dict[str, Any]]
     market_gaps: List[Dict[str, Any]]
@@ -151,7 +161,8 @@ class CompetitorAnalysis:
 
 
 class RevenueBenchmarker:
-    """Advanced revenue benchmarking and competitive analysis system"""
+    """
+Advanced revenue benchmarking and competitive analysis system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -161,7 +172,8 @@ class RevenueBenchmarker:
         self.scaler = StandardScaler()
         
     async def initialize(self) -> None:
-        """Initialize benchmarker"""
+        """
+Initialize benchmarker"""
         try:
             # Load benchmark data sources
             await self._load_benchmark_data()
@@ -274,7 +286,8 @@ class RevenueBenchmarker:
             }
     
     def _find_optimal_clusters(self, data: np.ndarray, max_k: int = 10) -> int:
-        """Find optimal number of clusters using elbow method and silhouette score"""
+        """
+Find optimal number of clusters using elbow method and silhouette score"""
         if len(data) < 2:
             return 1
         
@@ -297,7 +310,8 @@ class RevenueBenchmarker:
         metric: BenchmarkMetric,
         filters: Optional[Dict[str, Any]] = None
     ) -> BenchmarkMetrics:
-        """Generate benchmark metrics for specific category and metric"""
+        """
+Generate benchmark metrics for specific category and metric"""
         try:
             # Filter benchmark data
             filtered_data = self._filter_benchmark_data(category, metric, filters)
@@ -391,7 +405,8 @@ class RevenueBenchmarker:
         categories: List[BenchmarkCategory],
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Benchmark user performance against market data"""
+        """
+Benchmark user performance against market data"""
         try:
             results = {}
             
@@ -466,7 +481,8 @@ class RevenueBenchmarker:
         return category_metrics.get(category, list(BenchmarkMetric))
     
     def _calculate_percentile_position(self, user_value: Decimal, benchmark: BenchmarkMetrics) -> float:
-        """Calculate user's percentile position in benchmark distribution"""
+        """
+Calculate user's percentile position in benchmark distribution"""
         # Simple percentile calculation based on quartiles
         if user_value <= benchmark.percentile_25:
             return 25.0 * float(user_value / benchmark.percentile_25)
@@ -480,7 +496,8 @@ class RevenueBenchmarker:
             return min(100.0, 90.0 + 10.0 * float((user_value - benchmark.percentile_90) / benchmark.percentile_90))
     
     def _determine_performance_tier(self, percentile_position: float) -> str:
-        """Determine performance tier based on percentile position"""
+        """
+Determine performance tier based on percentile position"""
         if percentile_position >= 90:
             return "Exceptional"
         elif percentile_position >= 75:
@@ -628,7 +645,8 @@ class RevenueBenchmarker:
         }
     
     async def _rank_competitors(self, competitors: List[CompetitorProfile]) -> List[Dict[str, Any]]:
-        """Rank competitors by multiple criteria"""
+        """
+Rank competitors by multiple criteria"""
         ranked_competitors = []
         
         for comp in competitors:
@@ -666,7 +684,8 @@ class RevenueBenchmarker:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> List[Dict[str, Any]]:
-        """Identify market gaps and underserved segments"""
+        """
+Identify market gaps and underserved segments"""
         gaps = []
         
         # Platform gap analysis

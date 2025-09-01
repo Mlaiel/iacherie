@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, Optional
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RateLimitInfo:
-    """Rate limit information structure."""
+    """
+Rate limit information structure."""
     requests_made: int
     requests_remaining: int
     reset_time: datetime
@@ -55,7 +57,8 @@ class RateLimiter:
         max_backoff: float = 300.0,
         redis_client: Optional[redis.Redis] = None
     ):
-        """Initialize rate limiter."""
+        """
+Initialize rate limiter."""
         self.max_requests_per_minute = max_requests_per_minute
         self.burst_limit = burst_limit
         self.base_delay = base_delay
@@ -111,7 +114,8 @@ class RateLimiter:
             self.request_times.popleft()
     
     def _calculate_burst_wait(self) -> float:
-        """Calculate wait time for burst protection."""
+        """
+Calculate wait time for burst protection."""
         if len(self.request_times) < self.burst_limit:
             return 0
         
@@ -121,7 +125,8 @@ class RateLimiter:
         return max(0, oldest_request + burst_window - time.time())
     
     def _calculate_minute_wait(self, current_time: float) -> float:
-        """Calculate wait time for minute-based rate limiting."""
+        """
+Calculate wait time for minute-based rate limiting."""
         if len(self.request_times) < self.max_requests_per_minute:
             return 0
         
@@ -130,7 +135,8 @@ class RateLimiter:
         return max(0, oldest_request + 60 - current_time)
     
     def _calculate_adaptive_delay(self) -> float:
-        """Calculate adaptive delay based on recent rate limiting."""
+        """
+Calculate adaptive delay based on recent rate limiting."""
         base_delay = self.current_delay
         
         # Increase delay if we've been rate limited recently
@@ -141,7 +147,8 @@ class RateLimiter:
         return base_delay
     
     async def _check_distributed_rate_limit(self, identifier: str) -> None:
-        """Check distributed rate limiting using Redis."""
+        """
+Check distributed rate limiting using Redis."""
         try:
             key = f"rate_limit:{self.__class__.__name__}:{identifier}"
             current_time = time.time()
@@ -186,7 +193,8 @@ class RateLimiter:
         self.current_delay = self.base_delay
     
     async def _update_distributed_usage(self, identifier: str, count: int, timestamp: float) -> None:
-        """Update distributed usage in Redis."""
+        """
+Update distributed usage in Redis."""
         try:
             key = f"rate_limit:{self.__class__.__name__}:{identifier}"
             
@@ -245,7 +253,8 @@ class RateLimiter:
         )
 
 class YouTubeRateLimiter(RateLimiter):
-    """YouTube-specific rate limiter."""
+    """
+YouTube-specific rate limiter."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -259,7 +268,8 @@ class YouTubeRateLimiter(RateLimiter):
         self.daily_quota_limit = 10000  # YouTube API quota
 
 class InstagramRateLimiter(RateLimiter):
-    """Instagram-specific rate limiter."""
+    """
+Instagram-specific rate limiter."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -272,7 +282,8 @@ class InstagramRateLimiter(RateLimiter):
         )
 
 class TikTokRateLimiter(RateLimiter):
-    """TikTok-specific rate limiter."""
+    """
+TikTok-specific rate limiter."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -285,7 +296,8 @@ class TikTokRateLimiter(RateLimiter):
         )
 
 class TwitterRateLimiter(RateLimiter):
-    """Twitter-specific rate limiter."""
+    """
+Twitter-specific rate limiter."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -298,7 +310,8 @@ class TwitterRateLimiter(RateLimiter):
         )
 
 class FacebookRateLimiter(RateLimiter):
-    """Facebook-specific rate limiter."""
+    """
+Facebook-specific rate limiter."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -311,7 +324,8 @@ class FacebookRateLimiter(RateLimiter):
         )
 
 class SpotifyRateLimiter(RateLimiter):
-    """Spotify-specific rate limiter."""
+    """
+Spotify-specific rate limiter."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -324,7 +338,8 @@ class SpotifyRateLimiter(RateLimiter):
         )
 
 class SubstackRateLimiter(RateLimiter):
-    """Substack-specific rate limiter."""
+    """
+Substack-specific rate limiter."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -337,7 +352,8 @@ class SubstackRateLimiter(RateLimiter):
         )
 
 class GenericRateLimiter(RateLimiter):
-    """Generic rate limiter for unknown platforms."""
+    """
+Generic rate limiter for unknown platforms."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         super().__init__(
@@ -374,7 +390,8 @@ class AdaptiveRateLimiter(RateLimiter):
         self.adaptation_factor = 0.1
     
     async def record_response(self, response_time: float, success: bool) -> None:
-        """Record response metrics for adaptation."""
+        """
+Record response metrics for adaptation."""
         self.response_times.append(response_time)
         self.recent_successes.append(success)
         
@@ -394,13 +411,15 @@ class AdaptiveRateLimiter(RateLimiter):
         self.current_delay = max(self.min_delay, min(self.max_backoff, self.current_delay))
     
     def get_average_response_time(self) -> float:
-        """Get average response time."""
+        """
+Get average response time."""
         if not self.response_times:
             return 0.0
         return sum(self.response_times) / len(self.response_times)
     
     def get_performance_metrics(self) -> Dict:
-        """Get detailed performance metrics."""
+        """
+Get detailed performance metrics."""
         return {
             'success_rate': self.success_rate,
             'average_response_time': self.get_average_response_time(),

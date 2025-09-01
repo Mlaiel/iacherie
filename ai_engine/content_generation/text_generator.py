@@ -4,11 +4,12 @@ Professional text content generator for influencers and content creators
 supporting multiple formats, styles, and platforms.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import openai
@@ -23,7 +24,8 @@ from .seo_optimizer import SEOOptimizer
 
 
 class TextGenerationOptions:
-    """Configuration options for text generation"""
+    """
+Configuration options for text generation"""
     
     def __init__(self, **kwargs):
         self.max_tokens = kwargs.get('max_tokens', 1000)
@@ -56,7 +58,8 @@ class TextContentGenerator(BaseContentGenerator):
     """
     
     def _setup_models(self) -> None:
-        """Setup AI models and dependencies"""
+        """
+Setup AI models and dependencies"""
         try:
             # Initialize OpenAI client
             self.openai_client = openai.AsyncOpenAI(
@@ -98,7 +101,8 @@ class TextContentGenerator(BaseContentGenerator):
         self.rate_limit_tpm = self.config.get('rate_limit_tpm', 50000)
     
     def _setup_validation_rules(self) -> None:
-        """Setup content validation rules"""
+        """
+Setup content validation rules"""
         self.validation_rules = {
             'min_length': 10,
             'max_length': 10000,
@@ -226,7 +230,8 @@ class TextContentGenerator(BaseContentGenerator):
         prompt: str,
         options: TextGenerationOptions
     ) -> str:
-        """Determine the appropriate content format"""
+        """
+Determine the appropriate content format"""
         # Check explicit format in options
         if options.format_type and options.format_type in self.supported_formats:
             return options.format_type
@@ -265,7 +270,8 @@ class TextContentGenerator(BaseContentGenerator):
         options: TextGenerationOptions,
         content_format: str
     ) -> str:
-        """Build enhanced prompt with context and formatting instructions"""
+        """
+Build enhanced prompt with context and formatting instructions"""
         # Get format-specific template
         if content_format in ['instagram_post', 'tiktok_caption', 'twitter_post']:
             template = self.social_templates.get_template(content_format)
@@ -329,7 +335,8 @@ Please generate high-quality, engaging content that follows the template structu
         options: TextGenerationOptions,
         format_type: str
     ) -> str:
-        """Generate social media specific content"""
+        """
+Generate social media specific content"""
         # Adjust parameters for social content
         social_options = {
             'model': options.model_name,
@@ -359,7 +366,8 @@ Please generate high-quality, engaging content that follows the template structu
         context: ContentGenerationContext,
         options: TextGenerationOptions
     ) -> str:
-        """Generate blog article content"""
+        """
+Generate blog article content"""
         blog_options = {
             'model': options.model_name,
             'messages': [
@@ -388,7 +396,8 @@ Please generate high-quality, engaging content that follows the template structu
         context: ContentGenerationContext,
         options: TextGenerationOptions
     ) -> str:
-        """Generate marketing and sales content"""
+        """
+Generate marketing and sales content"""
         marketing_options = {
             'model': options.model_name,
             'messages': [
@@ -417,7 +426,8 @@ Please generate high-quality, engaging content that follows the template structu
         context: ContentGenerationContext,
         options: TextGenerationOptions
     ) -> str:
-        """Generate general text content"""
+        """
+Generate general text content"""
         general_options = {
             'model': options.model_name,
             'messages': [
@@ -447,7 +457,8 @@ Please generate high-quality, engaging content that follows the template structu
         options: TextGenerationOptions,
         format_type: str
     ) -> str:
-        """Apply post-processing to generated content"""
+        """
+Apply post-processing to generated content"""
         processed = content
         
         # Apply format-specific processing
@@ -462,7 +473,8 @@ Please generate high-quality, engaging content that follows the template structu
         return processed
     
     async def _process_social_content(self, content: str, options: TextGenerationOptions) -> str:
-        """Process social media content"""
+        """
+Process social media content"""
         # Ensure proper hashtag formatting
         if options.include_hashtags and '#' not in content:
             # Add relevant hashtags if none present
@@ -482,7 +494,8 @@ Please generate high-quality, engaging content that follows the template structu
         return content
     
     async def _apply_general_improvements(self, content: str, context: ContentGenerationContext) -> str:
-        """Apply general content improvements"""
+        """
+Apply general content improvements"""
         # Remove excessive whitespace
         content = ' '.join(content.split())
         
@@ -497,7 +510,8 @@ Please generate high-quality, engaging content that follows the template structu
         return content
     
     def _get_general_template(self, format_type: str) -> str:
-        """Get general template for content format"""
+        """
+Get general template for content format"""
         templates = {
             'general': "Create engaging, high-quality content that provides value to the reader.",
             'script': "Write a compelling script with clear structure: introduction, main content, and conclusion.",
@@ -514,7 +528,8 @@ Please generate high-quality, engaging content that follows the template structu
         return round(word_count / 225, 1)
     
     async def _analyze_content_grade(self, content: str) -> str:
-        """Analyze content readability grade"""
+        """
+Analyze content readability grade"""
         # Simplified readability analysis
         sentences = content.count('.') + content.count('!') + content.count('?')
         words = len(content.split())
@@ -549,7 +564,8 @@ Please generate high-quality, engaging content that follows the template structu
         return positive_count / total_sentiment_words
     
     async def _calculate_seo_score(self, content: str, context: ContentGenerationContext) -> float:
-        """Calculate basic SEO score"""
+        """
+Calculate basic SEO score"""
         score = 0.5  # Base score
         
         # Check content length (good for SEO)
@@ -571,7 +587,8 @@ Please generate high-quality, engaging content that follows the template structu
         return min(1.0, score)
     
     async def _check_content_quality(self, content: str) -> bool:
-        """Check overall content quality"""
+        """
+Check overall content quality"""
         # Basic quality checks
         word_count = len(content.split())
         
@@ -593,7 +610,8 @@ Please generate high-quality, engaging content that follows the template structu
         return True
     
     def _count_tokens(self, text: str) -> int:
-        """Count tokens in text"""
+        """
+Count tokens in text"""
         try:
             return len(self.tokenizer.encode(text))
         except:
@@ -601,11 +619,13 @@ Please generate high-quality, engaging content that follows the template structu
             return len(text.split()) * 1.3
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if generator supports the specified content type"""
+        """
+Check if generator supports the specified content type"""
         return content_type == 'text'
     
     def _validate_generated_content(self, content: str) -> Dict[str, Any]:
-        """Validate generated content against rules"""
+        """
+Validate generated content against rules"""
         validation_result = {
             'is_valid': True,
             'errors': [],
@@ -640,7 +660,8 @@ Please generate high-quality, engaging content that follows the template structu
         }
     
     def update_model_config(self, config: Dict[str, Any]) -> bool:
-        """Update model configuration"""
+        """
+Update model configuration"""
         try:
             # Mock implementation - would update actual config
             self.logger.info(f"Model config updated: {config}")
@@ -659,11 +680,13 @@ Please generate high-quality, engaging content that follows the template structu
             return False
     
     def get_post_processors(self) -> List[str]:
-        """Get list of available post processors"""
+        """
+Get list of available post processors"""
         return ['grammar_check', 'spell_check', 'seo_optimize', 'readability_enhance']
     
     def get_writing_styles(self) -> List[str]:
-        """Get available writing styles"""
+        """
+Get available writing styles"""
         return [
             "professional", "casual", "formal", "conversational",
             "persuasive", "informative", "creative", "technical",
@@ -911,7 +934,8 @@ Please generate high-quality, engaging content that follows the template structu
             return 70.0  # Default score
     
     async def _release_model_resources(self) -> None:
-        """Release model-specific resources"""
+        """
+Release model-specific resources"""
         # Close OpenAI client connections if needed
         if hasattr(self.openai_client, 'close'):
             await self.openai_client.close()

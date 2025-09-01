@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Callable, Awaitable
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(Enum):
-    """Types of scheduled tasks"""
+    """
+Types of scheduled tasks"""
+
     ONE_TIME = "one_time"
     RECURRING = "recurring"
     CRON = "cron"
@@ -45,6 +48,7 @@ class ScheduleType(Enum):
 
 class TaskStatus(Enum):
     """Status of scheduled tasks"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -55,6 +59,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -64,7 +69,8 @@ class TaskPriority(Enum):
 
 @dataclass
 class ScheduleConfig:
-    """Schedule configuration"""
+    """
+Schedule configuration"""
     schedule_type: ScheduleType
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -86,7 +92,8 @@ class ScheduleConfig:
 
 @dataclass
 class TaskContext:
-    """Context for task execution"""
+    """
+Context for task execution"""
     task_id: str
     execution_count: int
     last_execution: Optional[datetime]
@@ -96,7 +103,8 @@ class TaskContext:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task definition"""
+    """
+Scheduled task definition"""
     task_id: str
     name: str
     description: str
@@ -126,7 +134,8 @@ class ScheduledTask:
     last_error: Optional[str] = None
     
     def __post_init__(self):
-        """Post-initialization processing"""
+        """
+Post-initialization processing"""
         if not self.task_id:
             self.task_id = str(uuid.uuid4())
         
@@ -182,27 +191,31 @@ class ScheduledTask:
         return now >= self.next_execution
     
     def mark_execution_start(self):
-        """Mark task execution as started"""
+        """
+Mark task execution as started"""
         self.status = TaskStatus.RUNNING
         self.last_execution = datetime.utcnow()
         self.execution_count += 1
     
     def mark_execution_complete(self, result: Any = None):
-        """Mark task execution as completed"""
+        """
+Mark task execution as completed"""
         self.status = TaskStatus.COMPLETED
         self.last_result = result
         self.last_error = None
         self._calculate_next_execution()
     
     def mark_execution_failed(self, error: str):
-        """Mark task execution as failed"""
+        """
+Mark task execution as failed"""
         self.status = TaskStatus.FAILED
         self.last_error = error
         self.last_result = None
         self._calculate_next_execution()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'task_id': self.task_id,
             'name': self.name,
@@ -229,7 +242,8 @@ class ScheduledTask:
 
 
 class PlatformScheduler:
-    """Advanced scheduler for platform operations"""
+    """
+Advanced scheduler for platform operations"""
     
     def __init__(self, check_interval: int = 10):
         """
@@ -246,7 +260,8 @@ class PlatformScheduler:
         self.content_distributor: Optional[PlatformDistributor] = None
     
     def set_content_distributor(self, distributor: PlatformDistributor):
-        """Set content distributor for distribution tasks"""
+        """
+Set content distributor for distribution tasks"""
         self.content_distributor = distributor
     
     def schedule_content_distribution(
@@ -259,7 +274,8 @@ class PlatformScheduler:
         distribution_strategy: DistributionStrategy = DistributionStrategy.SMART_ROUTING,
         priority: TaskPriority = TaskPriority.NORMAL
     ) -> str:
-        """Schedule content distribution task"""
+        """
+Schedule content distribution task"""
         
         task = ScheduledTask(
             task_id=str(uuid.uuid4()),
@@ -316,7 +332,8 @@ class PlatformScheduler:
         """Schedule platform health check"""
         
         async def health_check_function():
-            """Health check function"""
+            """
+Health check function"""
             results = {}
             # Implementation would depend on having access to platform manager
             return results
@@ -337,7 +354,8 @@ class PlatformScheduler:
         """Schedule metrics collection"""
         
         async def metrics_collection_function():
-            """Metrics collection function"""
+            """
+Metrics collection function"""
             results = {}
             # Implementation would depend on having access to metrics collector
             return results
@@ -418,7 +436,8 @@ class PlatformScheduler:
         task_type: str = None,
         priority: TaskPriority = None
     ) -> List[ScheduledTask]:
-        """Get filtered list of tasks"""
+        """
+Get filtered list of tasks"""
         tasks = list(self.tasks.values())
         
         if status:
@@ -433,14 +452,16 @@ class PlatformScheduler:
         return tasks
     
     def get_pending_tasks(self) -> List[ScheduledTask]:
-        """Get tasks ready for execution"""
+        """
+Get tasks ready for execution"""
         return [
             task for task in self.tasks.values()
             if task.should_execute()
         ]
     
     async def execute_task(self, task: ScheduledTask) -> Any:
-        """Execute a single task"""
+        """
+Execute a single task"""
         task.mark_execution_start()
         
         try:
@@ -615,7 +636,8 @@ class PlatformScheduler:
         }
     
     def export_tasks(self) -> Dict[str, Any]:
-        """Export all tasks data"""
+        """
+Export all tasks data"""
         return {
             'export_timestamp': datetime.utcnow().isoformat(),
             'scheduler_stats': self.get_scheduler_stats(),
@@ -628,7 +650,8 @@ _global_scheduler: Optional[PlatformScheduler] = None
 
 
 def get_scheduler() -> PlatformScheduler:
-    """Get global scheduler instance"""
+    """
+Get global scheduler instance"""
     global _global_scheduler
     
     if _global_scheduler is None:
@@ -638,13 +661,15 @@ def get_scheduler() -> PlatformScheduler:
 
 
 async def start_scheduler():
-    """Start global scheduler"""
+    """
+Start global scheduler"""
     scheduler = get_scheduler()
     await scheduler.start()
 
 
 async def stop_scheduler():
-    """Stop global scheduler"""
+    """
+Stop global scheduler"""
     global _global_scheduler
     
     if _global_scheduler:

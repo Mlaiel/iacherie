@@ -12,6 +12,7 @@ This opportunity detection system and its algorithms are the exclusive intellect
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -35,7 +36,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class OpportunityType(Enum):
-    """Types of opportunities"""
+    """
+Types of opportunities"""
+
     COLLABORATION = "collaboration"
     MONETIZATION = "monetization"
     GROWTH_STRATEGY = "growth_strategy"
@@ -49,6 +52,7 @@ class OpportunityType(Enum):
 
 class OpportunityPriority(Enum):
     """Priority levels for opportunities"""
+
     CRITICAL = "critical"      # Must act immediately
     HIGH = "high"             # Act within 1 week
     MEDIUM = "medium"         # Act within 1 month
@@ -57,6 +61,7 @@ class OpportunityPriority(Enum):
 
 class OpportunityStage(Enum):
     """Stages of opportunity development"""
+
     EMERGING = "emerging"      # Just identified
     VALIDATED = "validated"    # Research confirms viability
     READY = "ready"           # Ready for implementation
@@ -187,7 +192,8 @@ class OpportunityDetector:
     """
     
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the opportunity detector"""
+        """
+Initialize the opportunity detector"""
         self.cache_manager = cache_manager or CacheManager("opportunity_detector")
         
         # Opportunity detection configuration
@@ -694,7 +700,8 @@ class OpportunityDetector:
     async def _rank_opportunities(self, 
                                 opportunities: List[GrowthOpportunity], 
                                 creator_data: Dict[str, Any]) -> List[GrowthOpportunity]:
-        """Rank opportunities by overall score"""
+        """
+Rank opportunities by overall score"""
         
         for opp in opportunities:
             # Calculate comprehensive opportunity score
@@ -739,13 +746,15 @@ class OpportunityDetector:
 
 
 class CollaborationOpportunityFinder:
-    """Specialized collaboration opportunity finder"""
+    """
+Specialized collaboration opportunity finder"""
     
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def find_brand_collaboration_opportunities(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find brand collaboration opportunities"""
+        """
+Find brand collaboration opportunities"""
         return [
             {
                 'brand': 'Tech Company A',
@@ -756,13 +765,15 @@ class CollaborationOpportunityFinder:
         ]
 
 class MonetizationOptimizer:
-    """Specialized monetization optimization component"""
+    """
+Specialized monetization optimization component"""
     
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def optimize_pricing_strategy(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize pricing for creator services and products"""
+        """
+Optimize pricing for creator services and products"""
         return {
             'recommended_sponsorship_rate': 2500,
             'product_pricing_optimization': {
@@ -778,13 +789,15 @@ class MonetizationOptimizer:
         }
 
 class GrowthOpportunityAnalyzer:
-    """Specialized growth opportunity analyzer"""
+    """
+Specialized growth opportunity analyzer"""
     
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def analyze_viral_growth_opportunities(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze opportunities for viral growth"""
+        """
+Analyze opportunities for viral growth"""
         return [
             {
                 'opportunity': 'Trend participation',
@@ -795,13 +808,15 @@ class GrowthOpportunityAnalyzer:
         ]
 
 class TrendOpportunityIdentifier:
-    """Specialized trend opportunity identifier"""
+    """
+Specialized trend opportunity identifier"""
     
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def identify_emerging_trend_opportunities(self, trend_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify opportunities in emerging trends"""
+        """
+Identify opportunities in emerging trends"""
         return [
             {
                 'trend': 'AI content creation',

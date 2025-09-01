@@ -9,7 +9,7 @@ Module: backend/business/surveillance/fingerprinting_engine.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -28,6 +28,7 @@ Fingerprint Generation → Vector Encoding → Database Storage →
 Similarity Indexing → Match Detection → Confidence Scoring → 
 Results Ranking → Content Identification
 """
+
 import asyncio
 import logging
 import hashlib
@@ -70,7 +71,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Types of digital fingerprints"""
+    """
+Types of digital fingerprints"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_MFCC = "audio_mfcc"
     AUDIO_SPECTRAL = "audio_spectral"
@@ -90,6 +93,7 @@ class FingerprintType(Enum):
 
 class SimilarityAlgorithm(Enum):
     """Similarity calculation algorithms"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -102,6 +106,7 @@ class SimilarityAlgorithm(Enum):
 
 class MatchConfidence(Enum):
     """Match confidence levels"""
+
     IDENTICAL = "identical"  # 95-100%
     VERY_HIGH = "very_high"  # 85-95%
     HIGH = "high"  # 70-85%
@@ -142,7 +147,8 @@ class ContentFingerprint:
         }
     
     def _serialize_data(self, data: Any) -> Optional[str]:
-        """Serialize data for storage"""
+        """
+Serialize data for storage"""
         if data is None:
             return None
         if isinstance(data, np.ndarray):
@@ -156,7 +162,8 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result"""
+    """
+Similarity match result"""
     match_id: str
     source_fingerprint_id: str
     target_fingerprint_id: str
@@ -182,7 +189,8 @@ class FingerprintingResult:
 
 
 class AudioFingerprintExtractor:
-    """Advanced audio fingerprinting"""
+    """
+Advanced audio fingerprinting"""
     
     def __init__(self):
         self.sample_rate = 22050
@@ -192,7 +200,8 @@ class AudioFingerprintExtractor:
         self.n_mfcc = 13
     
     def extract_chromaprint(self, audio_path: str) -> Optional[str]:
-        """Extract Chromaprint fingerprint"""
+        """
+Extract Chromaprint fingerprint"""
         try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
@@ -269,7 +278,8 @@ class VideoFingerprintExtractor:
         self.target_resolution = (224, 224)
     
     def extract_perceptual_hash(self, video_path: str) -> Optional[List[str]]:
-        """Extract perceptual hashes from video frames"""
+        """
+Extract perceptual hashes from video frames"""
         try:
             clip = VideoFileClip(video_path)
             frame_hashes = []
@@ -395,7 +405,8 @@ class ImageFingerprintExtractor:
             self.device = torch.device('cpu')
     
     def extract_perceptual_hashes(self, image_path: str) -> Optional[Dict[str, str]]:
-        """Extract multiple perceptual hashes"""
+        """
+Extract multiple perceptual hashes"""
         try:
             image = Image.open(image_path)
             
@@ -579,7 +590,8 @@ class FingerprintingEngine:
         storage_path: Optional[Path] = None,
         faiss_index_path: Optional[Path] = None
     ):
-        """Initialize fingerprinting engine"""
+        """
+Initialize fingerprinting engine"""
         self.redis_client = redis_client or redis.Redis(decode_responses=False)
         self.database_url = database_url
         self.storage_path = storage_path or Path("fingerprints")
@@ -662,7 +674,8 @@ class FingerprintingEngine:
                 conn.execute(text(tables_sql))
     
     def _load_faiss_indices(self):
-        """Load existing FAISS indices"""
+        """
+Load existing FAISS indices"""
         try:
             for index_file in self.faiss_index_path.glob("*.faiss"):
                 index_name = index_file.stem
@@ -820,7 +833,8 @@ class FingerprintingEngine:
         content_id: str,
         fingerprint_type: FingerprintType
     ) -> Optional[ContentFingerprint]:
-        """Generate a single fingerprint"""
+        """
+Generate a single fingerprint"""
         try:
             start_time = datetime.now()
             fingerprint_data = None
@@ -1165,7 +1179,8 @@ class FingerprintingEngine:
         content_list: List[Tuple[str, str]],  # (content_path, content_id)
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> List[FingerprintingResult]:
-        """Generate fingerprints for multiple content items"""
+        """
+Generate fingerprints for multiple content items"""
         try:
             results = []
             

@@ -12,8 +12,9 @@ This model registry system and methodologies are the exclusive intellectual prop
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 """
+
 import asyncio
 import logging
 import time
@@ -83,7 +84,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ModelStatus(Enum):
-    """Model lifecycle status"""
+    """
+Model lifecycle status"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -93,6 +96,7 @@ class ModelStatus(Enum):
 
 class ModelType(Enum):
     """Model types"""
+
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
@@ -105,6 +109,7 @@ class ModelType(Enum):
 
 class ModelFramework(Enum):
     """Supported ML frameworks"""
+
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     SKLEARN = "sklearn"
@@ -115,6 +120,7 @@ class ModelFramework(Enum):
 
 class DeploymentTarget(Enum):
     """Deployment targets"""
+
     CLOUD = "cloud"
     EDGE = "edge"
     MOBILE = "mobile"

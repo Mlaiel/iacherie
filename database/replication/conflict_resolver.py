@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple, Union
@@ -22,7 +23,9 @@ from .config import ReplicationConfig
 
 
 class ConflictType(Enum):
-    """Types of replication conflicts"""
+    """
+Types of replication conflicts"""
+
     INSERT_INSERT = "insert_insert"
     UPDATE_UPDATE = "update_update"
     UPDATE_DELETE = "update_delete"
@@ -35,6 +38,7 @@ class ConflictType(Enum):
 
 class ResolutionStrategy(Enum):
     """Conflict resolution strategies"""
+
     LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MANUAL_RESOLUTION = "manual_resolution"
@@ -46,6 +50,7 @@ class ResolutionStrategy(Enum):
 
 class ConflictSeverity(Enum):
     """Conflict severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -76,7 +81,8 @@ class ConflictRecord:
 
 @dataclass
 class ConflictResolutionRule:
-    """Conflict resolution rule configuration"""
+    """
+Conflict resolution rule configuration"""
     table_pattern: str
     conflict_types: List[ConflictType]
     strategy: ResolutionStrategy

@@ -22,6 +22,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Set, Any
 from dataclasses import dataclass, field
@@ -29,7 +30,9 @@ from enum import Enum
 
 
 class CreatorType(Enum):
-    """Content creator types supported by the platform."""
+    """
+Content creator types supported by the platform."""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -42,6 +45,7 @@ class CreatorType(Enum):
 
 class SubscriptionTier(Enum):
     """Subscription tiers with different permission levels."""
+
     FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
@@ -95,6 +99,7 @@ class Permission(Enum):
 
 class Role(Enum):
     """System roles with predefined permission sets."""
+
     GUEST = "guest"
     CREATOR_FREE = "creator_free"
     CREATOR_BASIC = "creator_basic"
@@ -125,7 +130,8 @@ class ResourceAccess:
 
 @dataclass
 class RoleDefinition:
-    """Role definition with permissions and constraints."""
+    """
+Role definition with permissions and constraints."""
     name: str
     display_name: str
     description: str
@@ -149,7 +155,8 @@ class RoleDefinition:
 
 @dataclass
 class CreatorPermissionMatrix:
-    """Permission matrix for different creator types and tiers."""
+    """
+Permission matrix for different creator types and tiers."""
     
     # Free tier permissions by creator type
     free_permissions: Dict[CreatorType, Set[Permission]] = field(default_factory=lambda: {
@@ -212,7 +219,8 @@ class CreatorPermissionMatrix:
 
 @dataclass
 class ResourceQuotas:
-    """Resource usage quotas by subscription tier."""
+    """
+Resource usage quotas by subscription tier."""
     
     quotas_by_tier: Dict[SubscriptionTier, Dict[str, Any]] = field(default_factory=lambda: {
         SubscriptionTier.FREE: {
@@ -330,7 +338,8 @@ class SecurityPolicies:
 
 @dataclass
 class AuthorizationConfig:
-    """Main authorization configuration container."""
+    """
+Main authorization configuration container."""
     
     # Core configuration
     permission_matrix: CreatorPermissionMatrix = field(default_factory=CreatorPermissionMatrix)
@@ -402,7 +411,8 @@ def get_authorization_config() -> AuthorizationConfig:
 
 
 def get_creator_permissions(creator_type: CreatorType, tier: SubscriptionTier) -> Set[Permission]:
-    """Get permissions for a specific creator type and subscription tier."""
+    """
+Get permissions for a specific creator type and subscription tier."""
     config = get_authorization_config()
     
     # Start with base permissions for creator type
@@ -419,20 +429,23 @@ def get_creator_permissions(creator_type: CreatorType, tier: SubscriptionTier) -
 
 
 def get_resource_quotas(tier: SubscriptionTier) -> Dict[str, Any]:
-    """Get resource quotas for a subscription tier."""
+    """
+Get resource quotas for a subscription tier."""
     config = get_authorization_config()
     return config.resource_quotas.quotas_by_tier.get(tier, {})
 
 
 def check_platform_access(tier: SubscriptionTier, platform: str) -> bool:
-    """Check if a subscription tier has access to a specific platform."""
+    """
+Check if a subscription tier has access to a specific platform."""
     config = get_authorization_config()
     allowed_platforms = config.platform_access.platform_access.get(tier, [])
     return platform in allowed_platforms
 
 
 def validate_authorization_config(config: AuthorizationConfig) -> bool:
-    """Validate authorization configuration settings."""
+    """
+Validate authorization configuration settings."""
     # Validate that all roles have valid permissions
     for role_def in config.roles.values():
         for permission in role_def.permissions:

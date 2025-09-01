@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Set, Union
 from enum import Enum
@@ -23,7 +24,9 @@ from ..utils.metrics import MetricsCollector
 
 
 class StateTransitionType(Enum):
-    """Types of state transitions."""
+    """
+Types of state transitions."""
+
     INITIALIZATION = "initialization"
     STAGE_COMPLETION = "stage_completion"
     ERROR_HANDLING = "error_handling"
@@ -36,6 +39,7 @@ class StateTransitionType(Enum):
 
 class PersistenceLevel(Enum):
     """Levels of state persistence."""
+
     NONE = "none"  # In-memory only
     CHECKPOINT = "checkpoint"  # Save at checkpoints
     STAGE = "stage"  # Save after each stage
@@ -76,12 +80,14 @@ class StateSnapshot:
         return self.checksum == expected_checksum
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'StateSnapshot':
-        """Create from dictionary."""
+        """
+Create from dictionary."""
         data["timestamp"] = datetime.fromisoformat(data["timestamp"])
         return cls(**data)
 
@@ -101,7 +107,8 @@ class StateTransition:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             **asdict(self),
             "timestamp": self.timestamp.isoformat(),
@@ -240,7 +247,8 @@ class WorkflowStateManager:
         workflow_id: str,
         updates: Dict[str, Any]
     ) -> WorkflowState:
-        """Update workflow state."""
+        """
+Update workflow state."""
         async with self.workflow_state_lock(workflow_id):
             state = await self.get_workflow_state(workflow_id)
             if not state:
@@ -616,7 +624,8 @@ class WorkflowStateManager:
         error: Optional[str] = None,
         duration_ms: int = 0
     ):
-        """Record state transition."""
+        """
+Record state transition."""
         transition_id = f"{workflow_id}_{uuid.uuid4().hex[:8]}"
         
         transition = StateTransition(
@@ -753,7 +762,8 @@ class WorkflowStateManager:
             await self._save_state(workflow_id)
     
     async def _save_snapshot(self, snapshot: StateSnapshot):
-        """Save snapshot to persistence."""
+        """
+Save snapshot to persistence."""
         try:
             # Store snapshot in persistent storage
             snapshot_data = {
@@ -828,7 +838,8 @@ class WorkflowStateManager:
             return max(workflow_snapshots, key=lambda s: s.timestamp)
     
     async def _delete_persisted_state(self, workflow_id: str):
-        """Delete persisted state data."""
+        """
+Delete persisted state data."""
         try:
             # Delete from persistent storage
             if hasattr(self, '_state_storage') and workflow_id in self._state_storage:

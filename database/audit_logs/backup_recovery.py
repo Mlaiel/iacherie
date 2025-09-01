@@ -19,6 +19,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 import logging
 from datetime import datetime, timezone, timedelta
@@ -64,7 +65,8 @@ Base = declarative_base()
 
 
 class BackupType(Enum):
-    """Comprehensive backup types for different data protection strategies."""
+    """
+Comprehensive backup types for different data protection strategies."""
     
     # Database backups
     FULL_DATABASE_BACKUP = "full_database_backup"
@@ -99,6 +101,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status tracking."""
+
     
     PENDING = "pending"
     RUNNING = "running"
@@ -114,6 +117,7 @@ class BackupStatus(Enum):
 
 class StorageProvider(Enum):
     """Supported cloud storage providers for backup storage."""
+
     
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
@@ -126,6 +130,7 @@ class StorageProvider(Enum):
 
 class RecoveryType(Enum):
     """Disaster recovery types for different scenarios."""
+
     
     POINT_IN_TIME_RECOVERY = "point_in_time_recovery"
     FULL_SYSTEM_RECOVERY = "full_system_recovery"
@@ -342,7 +347,8 @@ class BackupRecoveryManager:
     """Ultra-advanced backup and disaster recovery management system."""
     
     def __init__(self, db_session: Session):
-        """Initialize the backup and recovery manager."""
+        """
+Initialize the backup and recovery manager."""
         self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         
@@ -360,7 +366,8 @@ class BackupRecoveryManager:
         self._initialize_storage_providers()
     
     def _initialize_storage_providers(self):
-        """Initialize cloud storage provider clients."""
+        """
+Initialize cloud storage provider clients."""
         try:
             if HAS_AWS:
                 self.aws_client = boto3.client('s3')

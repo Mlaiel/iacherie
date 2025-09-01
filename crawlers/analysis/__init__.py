@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import hashlib
@@ -62,7 +63,9 @@ from .realtime_violation_detector import (
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types of content violations."""
+    """
+Types of content violations."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     CONTENT_THEFT = "content_theft"
@@ -74,6 +77,7 @@ class ViolationType(Enum):
 
 class AnalysisMethod(Enum):
     """Content analysis methods."""
+
     TEXT_SIMILARITY = "text_similarity"
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
@@ -101,7 +105,8 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result."""
+    """
+Similarity match result."""
     original_id: str
     suspected_id: str
     similarity_score: float
@@ -113,7 +118,8 @@ class SimilarityMatch:
 
 @dataclass
 class AnalysisResult:
-    """Content analysis result."""
+    """
+Content analysis result."""
     content_id: str
     analysis_methods: List[AnalysisMethod]
     fingerprint: ContentFingerprint
@@ -141,7 +147,8 @@ class ContentAnalyzer:
     """
     
     def __init__(self):
-        """Initialize content analyzer."""
+        """
+Initialize content analyzer."""
         # Fingerprint database
         self.fingerprint_db: Dict[str, ContentFingerprint] = {}
         self.text_index: Dict[str, Set[str]] = {}  # hash -> content_ids
@@ -165,9 +172,10 @@ class ContentAnalyzer:
         self.false_positive_count = 0
     
     def _load_copyright_patterns(self) -> List[str]:
-        """Load copyright violation patterns."""
+        """
+Load copyright violation patterns."""
         return [
-            r'©\s*\d{4}',  # Copyright symbol with year
+            r'(c)\s*\d{4}',  # Copyright symbol with year
             r'copyright\s+\d{4}',
             r'all\s+rights\s+reserved',
             r'proprietary\s+content',
@@ -177,10 +185,11 @@ class ContentAnalyzer:
         ]
     
     def _load_trademark_patterns(self) -> List[str]:
-        """Load trademark violation patterns."""
+        """
+Load trademark violation patterns."""
         return [
-            r'™',  # Trademark symbol
-            r'®',  # Registered trademark
+            r'(TM)',  # Trademark symbol
+            r'(R)',  # Registered trademark
             r'trademark\s+of',
             r'registered\s+trademark',
             r'brand\s+name',
@@ -188,7 +197,8 @@ class ContentAnalyzer:
         ]
     
     def _load_sensitive_keywords(self) -> List[str]:
-        """Load sensitive keywords for detection."""
+        """
+Load sensitive keywords for detection."""
         return [
             'unauthorized', 'stolen', 'copied', 'plagiarized',
             'infringement', 'violation', 'pirated', 'bootleg',
@@ -303,7 +313,8 @@ class ContentAnalyzer:
         return fingerprint
     
     def _extract_text_content(self, content_data: Dict[str, Any]) -> str:
-        """Extract text content from data."""
+        """
+Extract text content from data."""
         text_parts = []
         
         # Common text fields
@@ -316,7 +327,8 @@ class ContentAnalyzer:
         return ' '.join(text_parts).strip()
     
     def _generate_text_hash(self, text: str) -> str:
-        """Generate hash for text content."""
+        """
+Generate hash for text content."""
         # Normalize text
         normalized = re.sub(r'\s+', ' ', text.lower().strip())
         normalized = re.sub(r'[^\w\s]', '', normalized)
@@ -325,7 +337,8 @@ class ContentAnalyzer:
         return hashlib.sha256(normalized.encode()).hexdigest()
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text."""
+        """
+Extract keywords from text."""
         # Simple keyword extraction (could be enhanced with NLP)
         words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
         
@@ -349,7 +362,8 @@ class ContentAnalyzer:
         return [word for word, freq in sorted_words[:20]]
     
     def _extract_patterns(self, text: str) -> List[str]:
-        """Extract patterns from text."""
+        """
+Extract patterns from text."""
         patterns = []
         
         # Check copyright patterns
@@ -365,7 +379,8 @@ class ContentAnalyzer:
         return list(set(patterns))
     
     async def _generate_audio_hash(self, content_data: Dict[str, Any]) -> str:
-        """Generate audio fingerprint hash."""
+        """
+Generate audio fingerprint hash."""
         # Placeholder for audio fingerprinting
         # In production, this would use actual audio analysis libraries
         audio_url = content_data.get('audio_url', '')
@@ -399,7 +414,8 @@ class ContentAnalyzer:
         return None
     
     def _extract_metadata(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract metadata for fingerprinting."""
+        """
+Extract metadata for fingerprinting."""
         metadata = {}
         
         # Common metadata fields
@@ -416,13 +432,15 @@ class ContentAnalyzer:
         return metadata
     
     def _generate_metadata_hash(self, metadata: Dict[str, Any]) -> str:
-        """Generate metadata hash."""
+        """
+Generate metadata hash."""
         # Sort metadata for consistent hashing
         sorted_metadata = json.dumps(metadata, sort_keys=True)
         return hashlib.md5(sorted_metadata.encode()).hexdigest()
     
     def _index_fingerprint(self, fingerprint: ContentFingerprint) -> None:
-        """Index fingerprint for fast searching."""
+        """
+Index fingerprint for fast searching."""
         content_id = fingerprint.content_id
         
         # Index text hash
@@ -442,7 +460,8 @@ class ContentAnalyzer:
         fingerprint: ContentFingerprint,
         content_data: Dict[str, Any]
     ) -> List[SimilarityMatch]:
-        """Detect content violations."""
+        """
+Detect content violations."""
         violations = []
         
         # Text similarity detection
@@ -472,7 +491,8 @@ class ContentAnalyzer:
         return violations
     
     async def _detect_text_violations(self, fingerprint: ContentFingerprint) -> List[SimilarityMatch]:
-        """Detect text-based violations."""
+        """
+Detect text-based violations."""
         violations = []
         
         if not fingerprint.text_hash:
@@ -502,7 +522,8 @@ class ContentAnalyzer:
         return violations
     
     async def _find_keyword_similarities(self, fingerprint: ContentFingerprint) -> List[SimilarityMatch]:
-        """Find content with similar keywords."""
+        """
+Find content with similar keywords."""
         matches = []
         
         if not fingerprint.keywords:
@@ -555,7 +576,8 @@ class ContentAnalyzer:
         return matches
     
     async def _detect_audio_violations(self, fingerprint: ContentFingerprint) -> List[SimilarityMatch]:
-        """Detect audio-based violations."""
+        """
+Detect audio-based violations."""
         violations = []
         
         if not fingerprint.audio_hash:
@@ -585,7 +607,8 @@ class ContentAnalyzer:
         return violations
     
     async def _detect_video_violations(self, fingerprint: ContentFingerprint) -> List[SimilarityMatch]:
-        """Detect video-based violations."""
+        """
+Detect video-based violations."""
         violations = []
         
         if not fingerprint.video_hash:
@@ -615,7 +638,8 @@ class ContentAnalyzer:
         return violations
     
     async def _detect_image_violations(self, fingerprint: ContentFingerprint) -> List[SimilarityMatch]:
-        """Detect image-based violations."""
+        """
+Detect image-based violations."""
         violations = []
         
         if not fingerprint.image_hash:
@@ -645,7 +669,8 @@ class ContentAnalyzer:
         return violations
     
     async def _detect_metadata_violations(self, fingerprint: ContentFingerprint) -> List[SimilarityMatch]:
-        """Detect metadata-based violations."""
+        """
+Detect metadata-based violations."""
         violations = []
         
         if not fingerprint.metadata_hash:
@@ -679,7 +704,8 @@ class ContentAnalyzer:
         fingerprint: ContentFingerprint,
         content_data: Dict[str, Any]
     ) -> List[SimilarityMatch]:
-        """Detect keyword-based violations."""
+        """
+Detect keyword-based violations."""
         violations = []
         
         text_content = self._extract_text_content(content_data)
@@ -752,7 +778,8 @@ class ContentAnalyzer:
         violations: List[SimilarityMatch],
         risk_score: float
     ) -> List[str]:
-        """Generate recommendations based on analysis."""
+        """
+Generate recommendations based on analysis."""
         recommendations = []
         
         if risk_score >= 0.8:
@@ -814,7 +841,8 @@ class ContentAnalyzer:
         content_id: str,
         limit: int = 10
     ) -> List[SimilarityMatch]:
-        """Find content similar to specified content."""
+        """
+Find content similar to specified content."""
         fingerprint = self.fingerprint_db.get(content_id)
         if not fingerprint:
             return []
@@ -831,7 +859,8 @@ class ContentAnalyzer:
         self,
         content_batch: List[Tuple[str, Dict[str, Any], str, str]]
     ) -> List[AnalysisResult]:
-        """Analyze multiple content items in batch."""
+        """
+Analyze multiple content items in batch."""
         tasks = []
         
         for content_id, content_data, platform, content_type in content_batch:
@@ -863,7 +892,8 @@ class ContentAnalyzer:
         }
     
     def mark_false_positive(self, suspected_id: str, original_id: str) -> None:
-        """Mark a detection as false positive for learning."""
+        """
+Mark a detection as false positive for learning."""
         self.false_positive_count += 1
         logger.info(f"Marked false positive: {suspected_id} vs {original_id}")
     

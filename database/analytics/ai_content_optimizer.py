@@ -10,6 +10,7 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 """
+
 from typing import Dict, List, Optional, Tuple, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -35,7 +36,9 @@ Base = declarative_base()
 
 
 class OptimizationType(Enum):
-    """Types of content optimization"""
+    """
+Types of content optimization"""
+
     TITLE_OPTIMIZATION = "title_optimization"
     DESCRIPTION_OPTIMIZATION = "description_optimization"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
@@ -50,6 +53,7 @@ class OptimizationType(Enum):
 
 class ContentElement(Enum):
     """Content elements that can be optimized"""
+
     TITLE = "title"
     DESCRIPTION = "description"
     TAGS = "tags"
@@ -64,6 +68,7 @@ class ContentElement(Enum):
 
 class OptimizationPriority(Enum):
     """Priority levels for optimization recommendations"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -183,7 +188,8 @@ class AIContentOptimizer:
         asyncio.create_task(self._initialize_ai_models())
     
     async def _initialize_ai_models(self):
-        """Initialize all AI models for content optimization"""
+        """
+Initialize all AI models for content optimization"""
         try:
             # Load pre-trained models for different optimization types
             self.models['engagement_predictor'] = self._load_engagement_model()
@@ -215,7 +221,8 @@ class AIContentOptimizer:
         return model
     
     def _load_title_optimization_model(self) -> GradientBoostingRegressor:
-        """Load title optimization model"""
+        """
+Load title optimization model"""
         model = GradientBoostingRegressor(
             n_estimators=100,
             learning_rate=0.1,
@@ -225,7 +232,8 @@ class AIContentOptimizer:
         return model
     
     def _load_timing_model(self) -> RandomForestRegressor:
-        """Load optimal timing prediction model"""
+        """
+Load optimal timing prediction model"""
         model = RandomForestRegressor(
             n_estimators=50,
             max_depth=8,
@@ -234,7 +242,8 @@ class AIContentOptimizer:
         return model
     
     def _load_hashtag_model(self) -> KMeans:
-        """Load hashtag clustering model"""
+        """
+Load hashtag clustering model"""
         model = KMeans(n_clusters=20, random_state=42)
         return model
     
@@ -242,7 +251,8 @@ class AIContentOptimizer:
                                                    user_id: str, 
                                                    content_id: str, 
                                                    content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content and identify optimization opportunities"""
+        """
+Analyze content and identify optimization opportunities"""
         
         optimization_analysis = {
             "content_id": content_id,
@@ -354,7 +364,8 @@ class AIContentOptimizer:
         return max(0.0, min(100.0, flesch_score))
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
+        """
+Count syllables in a word (simplified)"""
         word = word.lower()
         vowels = "aeiouy"
         syllable_count = 0

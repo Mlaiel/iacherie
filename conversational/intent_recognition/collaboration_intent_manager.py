@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creative collaboration"""
+    """
+Types of creative collaboration"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     PHOTO_COLLABORATION = "photo_collaboration"
@@ -44,6 +47,7 @@ class CollaborationType(Enum):
 
 class CollaborationStage(Enum):
     """Stages of collaboration process"""
+
     DISCOVERY = "discovery"
     INITIAL_CONTACT = "initial_contact"
     NEGOTIATION = "negotiation"
@@ -57,6 +61,7 @@ class CollaborationStage(Enum):
 
 class PermissionLevel(Enum):
     """Permission levels for collaborative work"""
+
     VIEW_ONLY = "view_only"
     COMMENT = "comment"
     EDIT = "edit"
@@ -66,6 +71,7 @@ class PermissionLevel(Enum):
 
 class WorkflowRole(Enum):
     """Roles in creative workflow"""
+
     CREATOR = "creator"
     COLLABORATOR = "collaborator"
     REVIEWER = "reviewer"
@@ -200,7 +206,8 @@ class CollaborationIntentManager:
         self.compatibility_engine = self._initialize_compatibility_engine()
     
     def _initialize_collaboration_patterns(self) -> Dict[str, re.Pattern]:
-        """Initialize collaboration pattern matching"""
+        """
+Initialize collaboration pattern matching"""
         return {
             "collaboration_seek": re.compile(
                 r'\b(collaborate|collab|work together|partner|team up|join forces)\b',
@@ -524,7 +531,8 @@ class CollaborationIntentManager:
         return filtered_opportunities[:5]  # Return top 5
     
     def _generate_music_opportunities(self, user_profile: Dict[str, Any]) -> List[CollaborationOpportunity]:
-        """Generate music collaboration opportunities"""
+        """
+Generate music collaboration opportunities"""
         
         opportunities = []
         user_genres = user_profile.get("genres", ["pop"])
@@ -1005,7 +1013,8 @@ class TeamWorkflowIntents:
         message_text: str,
         team_context: Dict[str, Any]
     ) -> TeamWorkflowIntent:
-        """Process team workflow specific intents"""
+        """
+Process team workflow specific intents"""
         
         text_lower = message_text.lower()
         
@@ -1053,7 +1062,8 @@ class PermissionIntentHandler:
         user_context: Dict[str, Any],
         resource_context: Dict[str, Any]
     ) -> PermissionRequest:
-        """Process permission-related intents"""
+        """
+Process permission-related intents"""
         
         text_lower = message_text.lower()
         

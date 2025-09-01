@@ -5,6 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -16,7 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 class RightType(Enum):
-    """Types of digital rights"""
+    """
+Types of digital rights"""
+
     REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution" 
     PUBLIC_PERFORMANCE = "public_performance"
@@ -31,6 +34,7 @@ class RightType(Enum):
 
 class LicenseType(Enum):
     """License types for content usage"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -40,6 +44,7 @@ class LicenseType(Enum):
 
 class UsageType(Enum):
     """Types of content usage"""
+
     COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     EDUCATIONAL = "educational"
@@ -599,7 +604,8 @@ class AdvancedRightsManager:
             )
             
     def _calculate_usage_revenue(self, usage: UsageTracking) -> float:
-        """Calculate revenue for specific usage"""
+        """
+Calculate revenue for specific usage"""
         content_id = usage.content_id
         platform = usage.platform
         
@@ -627,7 +633,8 @@ class AdvancedRightsManager:
         return creator_revenue
         
     def _update_license_usage(self, license_id: str, usage: UsageTracking):
-        """Update license usage limits"""
+        """
+Update license usage limits"""
         if license_id in self.licenses:
             license_obj = self.licenses[license_id]
             # Update usage tracking in license metadata
@@ -640,7 +647,8 @@ class AdvancedRightsManager:
             })
             
     def _calculate_revenue_distribution(self, content_id: str, total_revenue: float) -> Dict:
-        """Calculate revenue distribution among stakeholders"""
+        """
+Calculate revenue distribution among stakeholders"""
         # Get all licenses for content
         content_licenses = [
             license for license in self.licenses.values()
@@ -665,7 +673,8 @@ class AdvancedRightsManager:
         
     def _calculate_performance_metrics(self, content_id: str, usage_records: List[UsageTracking], 
                                      total_revenue: float) -> Dict:
-        """Calculate performance metrics for content"""
+        """
+Calculate performance metrics for content"""
         if not usage_records:
             return {}
             
@@ -694,7 +703,8 @@ class AdvancedRightsManager:
         return metrics
         
     def _dynamic_pricing_strategy(self, content_id: str, config: Dict) -> Dict:
-        """Implement dynamic pricing strategy"""
+        """
+Implement dynamic pricing strategy"""
         return {
             'strategy': 'dynamic',
             'factors': ['demand', 'competition', 'time_of_day', 'geographic_location'],
@@ -702,7 +712,8 @@ class AdvancedRightsManager:
         }
         
     def _fixed_pricing_strategy(self, content_id: str, config: Dict) -> Dict:
-        """Implement fixed pricing strategy"""
+        """
+Implement fixed pricing strategy"""
         return {
             'strategy': 'fixed',
             'base_price': config.get('base_price', 1.0),
@@ -710,7 +721,8 @@ class AdvancedRightsManager:
         }
         
     def _tiered_pricing_strategy(self, content_id: str, config: Dict) -> Dict:
-        """Implement tiered pricing strategy"""
+        """
+Implement tiered pricing strategy"""
         return {
             'strategy': 'tiered',
             'tiers': config.get('tiers', {
@@ -721,7 +733,8 @@ class AdvancedRightsManager:
         }
         
     def _auction_pricing_strategy(self, content_id: str, config: Dict) -> Dict:
-        """Implement auction-based pricing strategy"""
+        """
+Implement auction-based pricing strategy"""
         return {
             'strategy': 'auction',
             'reserve_price': config.get('reserve_price', 0.1),
@@ -729,7 +742,8 @@ class AdvancedRightsManager:
         }
         
     def _estimate_revenue_potential(self, content_id: str) -> Dict:
-        """Estimate revenue potential for content"""
+        """
+Estimate revenue potential for content"""
         return {
             'daily_estimate': 10.0,
             'monthly_estimate': 300.0,
@@ -738,7 +752,8 @@ class AdvancedRightsManager:
         }
         
     def _analyze_historical_performance(self, content_id: str) -> Dict:
-        """Analyze historical performance data"""
+        """
+Analyze historical performance data"""
         content_usage = [u for u in self.usage_tracking if u.content_id == content_id]
         
         if not content_usage:
@@ -755,7 +770,8 @@ class AdvancedRightsManager:
         }
         
     def _perform_market_analysis(self, content_id: str) -> Dict:
-        """Perform market analysis for pricing optimization"""
+        """
+Perform market analysis for pricing optimization"""
         return {
             'market_demand': 'moderate',
             'competition_level': 'medium',
@@ -764,7 +780,8 @@ class AdvancedRightsManager:
         }
         
     def _generate_pricing_recommendations(self, historical_data: Dict, market_analysis: Dict) -> Dict:
-        """Generate AI-powered pricing recommendations"""
+        """
+Generate AI-powered pricing recommendations"""
         return {
             'recommended_strategy': 'dynamic',
             'price_adjustments': {
@@ -776,7 +793,8 @@ class AdvancedRightsManager:
         }
         
     def _calculate_pricing_impact(self, content_id: str, recommendations: Dict) -> Dict:
-        """Calculate potential revenue impact of pricing changes"""
+        """
+Calculate potential revenue impact of pricing changes"""
         return {
             'current_monthly_revenue': 300.0,
             'projected_monthly_revenue': 345.0,
@@ -785,7 +803,8 @@ class AdvancedRightsManager:
         }
         
     def _check_usage_limit_violations(self, license: License) -> List[Dict]:
-        """Check for usage limit violations"""
+        """
+Check for usage limit violations"""
         violations = []
         
         if license.usage_limits:
@@ -820,7 +839,8 @@ class AdvancedRightsManager:
         return violations
         
     def _check_revenue_compliance(self, license: License) -> List[Dict]:
-        """Check revenue sharing compliance"""
+        """
+Check revenue sharing compliance"""
         violations = []
         
         # Check if minimum guarantee is met
@@ -837,7 +857,8 @@ class AdvancedRightsManager:
         return violations
         
     def _take_compliance_actions(self, license: License, issues: List[Dict]) -> List[Dict]:
-        """Take automated compliance actions"""
+        """
+Take automated compliance actions"""
         actions = []
         
         for issue in issues:

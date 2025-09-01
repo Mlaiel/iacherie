@@ -23,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class OWASPCategory(Enum):
-    """OWASP Top 10 2021 categories."""
+    """
+OWASP Top 10 2021 categories."""
+
     A01_BROKEN_ACCESS_CONTROL = "A01:2021-Broken Access Control"
     A02_CRYPTOGRAPHIC_FAILURES = "A02:2021-Cryptographic Failures"
     A03_INJECTION = "A03:2021-Injection"
@@ -38,6 +40,7 @@ class OWASPCategory(Enum):
 
 class SecurityTestSeverity(Enum):
     """Security test severity levels."""
+
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
@@ -78,12 +81,14 @@ class IndustrialOWASPTester:
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Cleanup session."""
+        """
+Cleanup session."""
         if self.session:
             await self.session.close()
 
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Tuple[int, str, Dict[str, str], float]:
-        """Make HTTP request and return status, content, headers, and response time."""
+        """
+Make HTTP request and return status, content, headers, and response time."""
         url = f"{self.base_url}{endpoint}"
         start_time = time.time()
         

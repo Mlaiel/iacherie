@@ -13,6 +13,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulingStrategy(Enum):
-    """Task scheduling strategies."""
+    """
+Task scheduling strategies."""
+
     FIFO = "first_in_first_out"
     PRIORITY = "priority_based"
     SJF = "shortest_job_first"
@@ -53,6 +56,7 @@ class SchedulingStrategy(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -61,7 +65,9 @@ class TaskPriority(Enum):
 
 
 class ResourceRequirement(Enum):
-    """Resource requirement types."""
+    """
+Resource requirement types."""
+
     CPU_INTENSIVE = "cpu_intensive"
     GPU_INTENSIVE = "gpu_intensive"
     MEMORY_INTENSIVE = "memory_intensive"
@@ -85,7 +91,8 @@ class SchedulingConfig:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task with metadata."""
+    """
+Scheduled task with metadata."""
     task: ProcessingTask
     priority: TaskPriority
     resource_requirement: ResourceRequirement
@@ -104,7 +111,8 @@ class ScheduledTask:
 
 @dataclass
 class ResourcePool:
-    """Resource pool for task execution."""
+    """
+Resource pool for task execution."""
     pool_id: str
     resource_type: ResourceRequirement
     capacity: int
@@ -126,7 +134,8 @@ class AIProcessingScheduler:
     """
     
     def __init__(self, config: SchedulingConfig):
-        """Initialize AI processing scheduler."""
+        """
+Initialize AI processing scheduler."""
         self.config = config
         self.task_queue = []  # Priority queue (heapq)
         self.active_tasks: Dict[str, ScheduledTask] = {}
@@ -152,7 +161,8 @@ class AIProcessingScheduler:
         self._initialize_scheduler()
     
     async def _initialize_scheduler(self):
-        """Initialize scheduler components."""
+        """
+Initialize scheduler components."""
         try:
             # Initialize Redis for persistence
             self.redis_client = aioredis.from_url(
@@ -329,7 +339,8 @@ class AIProcessingScheduler:
         return ResourceRequirement.BALANCED
     
     def _calculate_priority_score(self, scheduled_task: ScheduledTask) -> float:
-        """Calculate priority score for heap ordering (lower = higher priority)."""
+        """
+Calculate priority score for heap ordering (lower = higher priority)."""
         base_score = scheduled_task.priority.value
         
         # Age factor (older tasks get higher priority)
@@ -352,7 +363,8 @@ class AIProcessingScheduler:
         return max(0.1, final_score)  # Ensure positive score
     
     def _get_resource_availability_factor(self, resource_requirement: ResourceRequirement) -> float:
-        """Get resource availability factor for priority calculation."""
+        """
+Get resource availability factor for priority calculation."""
         pool_id = self._get_pool_for_resource(resource_requirement)
         pool = self.resource_pools.get(pool_id)
         
@@ -363,7 +375,8 @@ class AIProcessingScheduler:
         return (1.0 - availability_ratio) * 0.5  # Lower penalty for more available resources
     
     def _get_pool_for_resource(self, resource_requirement: ResourceRequirement) -> str:
-        """Get resource pool ID for requirement type."""
+        """
+Get resource pool ID for requirement type."""
         pool_mapping = {
             ResourceRequirement.CPU_INTENSIVE: 'cpu_pool',
             ResourceRequirement.GPU_INTENSIVE: 'gpu_pool',
@@ -374,7 +387,8 @@ class AIProcessingScheduler:
         return pool_mapping.get(resource_requirement, 'balanced_pool')
     
     async def _scheduler_loop(self):
-        """Main scheduler loop for task execution."""
+        """
+Main scheduler loop for task execution."""
         while True:
             try:
                 # Process pending tasks
@@ -751,7 +765,8 @@ class AIProcessingScheduler:
         }
     
     async def get_scheduler_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive scheduler statistics."""
+        """
+Get comprehensive scheduler statistics."""
         try:
             # Resource pool stats
             pool_stats = {}
@@ -833,7 +848,8 @@ def create_scheduler(strategy: str = "priority") -> AIProcessingScheduler:
 
 
 def create_high_performance_scheduler() -> AIProcessingScheduler:
-    """Create high-performance scheduler configuration."""
+    """
+Create high-performance scheduler configuration."""
     config = SchedulingConfig(
         strategy=SchedulingStrategy.RESOURCE_OPTIMIZED,
         max_concurrent_tasks=100,

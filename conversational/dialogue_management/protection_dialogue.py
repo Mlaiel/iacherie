@@ -63,6 +63,7 @@ For licensing inquiries or authorized usage: mlaiel@live.de
 Legal compliance verification and security clearance required before any access.
 All system access and usage is monitored and tracked for security and compliance.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -85,7 +86,9 @@ from .content_creator_flows import CreatorProfile, Platform, ContentFormat
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -94,6 +97,7 @@ class ProtectionLevel(Enum):
 
 class ContentType(Enum):
     """Types of content for protection"""
+
     ORIGINAL_MUSIC = "original_music"
     COVER_SONGS = "cover_songs"
     INSTRUMENTAL = "instrumental"
@@ -107,6 +111,7 @@ class ContentType(Enum):
 
 class InfringementType(Enum):
     """Types of content infringement"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     PARTIAL_COPYING = "partial_copying"
     REMIXING_WITHOUT_PERMISSION = "remixing_without_permission"
@@ -118,6 +123,7 @@ class InfringementType(Enum):
 
 class ProtectionGoal(Enum):
     """Content protection goals"""
+
     PREVENT_UNAUTHORIZED_USE = "prevent_unauthorized_use"
     MONETIZE_USAGE = "monetize_usage"
     MAINTAIN_ATTRIBUTION = "maintain_attribution"
@@ -129,6 +135,7 @@ class ProtectionGoal(Enum):
 
 class ResponseAction(Enum):
     """Actions for infringement response"""
+
     AUTOMATED_TAKEDOWN = "automated_takedown"
     MONETIZATION_CLAIM = "monetization_claim"
     LICENSING_OFFER = "licensing_offer"
@@ -210,7 +217,8 @@ class ProtectionDialogueHandler:
         self.protection_flows = self._initialize_protection_flows()
         
     def _initialize_protection_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize protection conversation flows"""
+        """
+Initialize protection conversation flows"""
         return {
             "protection_assessment_flow": {
                 "name": "Content Protection Assessment",
@@ -795,7 +803,8 @@ class ProtectionDialogueHandler:
         self,
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Get comprehensive protection dashboard data"""
+        """
+Get comprehensive protection dashboard data"""
         # Get protection status
         protection_status = await self.protection_service.get_protection_status(
             creator_profile.creator_id

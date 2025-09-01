@@ -20,12 +20,15 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_geographic_regions_enum():
-    """Test that GeographicRegion enum has all required primary regions"""
+    """
+Test that GeographicRegion enum has all required primary regions"""
     try:
         from enum import Enum
         
         class GeographicRegion(Enum):
-            """Primary geographic regions for global deployment"""
+            """
+Primary geographic regions for global deployment"""
+
             US_EAST = "us-east"
             US_WEST = "us-west"
             EU_WEST = "eu-west"
@@ -65,7 +68,9 @@ def test_region_codes_enum():
         from enum import Enum
         
         class RegionCode(Enum):
-            """AWS region codes for primary deployment regions"""
+            """
+AWS region codes for primary deployment regions"""
+
             US_EAST = "us-east-1"
             US_WEST = "us-west-2"
             EU_WEST = "eu-west-1"

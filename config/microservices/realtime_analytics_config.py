@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     COUNTER = "counter"
     GAUGE = "gauge" 
     HISTOGRAM = "histogram"
@@ -36,6 +39,7 @@ class MetricType(Enum):
 
 class AnalyticsScope(Enum):
     """Analytics data scope"""
+
     USER = "user"
     CONTENT = "content"
     PLATFORM = "platform"
@@ -46,6 +50,7 @@ class AnalyticsScope(Enum):
 
 class DataRetentionPeriod(Enum):
     """Data retention periods"""
+
     REAL_TIME = "1h"      # 1 hour
     SHORT_TERM = "24h"    # 24 hours  
     MEDIUM_TERM = "7d"    # 7 days
@@ -286,14 +291,16 @@ class AnalyticsEventProcessor:
     """Real-time analytics event processor"""
     
     def __init__(self, config: AnalyticsEngineConfig):
-        """Initialize event processor"""
+        """
+Initialize event processor"""
         self.config = config
         self.metrics_definitions = CORE_METRICS
         self.event_buffer = []
         self.logger = logging.getLogger(__name__)
     
     async def process_event(self, event: Dict[str, Any]) -> bool:
-        """Process analytics event"""
+        """
+Process analytics event"""
         try:
             # Validate event structure
             if not self._validate_event(event):
@@ -403,14 +410,16 @@ class RealTimeAnalyticsOrchestrator:
     """Real-time analytics orchestrator"""
     
     def __init__(self, config: AnalyticsEngineConfig = None):
-        """Initialize analytics orchestrator"""
+        """
+Initialize analytics orchestrator"""
         self.config = config or AnalyticsEngineConfig()
         self.event_processor = AnalyticsEventProcessor(self.config)
         self.active_streams = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_analytics(self) -> bool:
-        """Initialize analytics engine"""
+        """
+Initialize analytics engine"""
         try:
             self.logger.info("Initializing real-time analytics engine...")
             
@@ -551,17 +560,20 @@ async def initialize_analytics_engine() -> bool:
 
 
 async def collect_analytics_metric(metric_name: str, value: float, dimensions: Dict[str, str] = None) -> bool:
-    """Collect analytics metric"""
+    """
+Collect analytics metric"""
     return await analytics_orchestrator.collect_metric(metric_name, value, dimensions)
 
 
 async def get_analytics_health() -> Dict[str, Any]:
-    """Get analytics health status"""
+    """
+Get analytics health status"""
     return await analytics_orchestrator.get_analytics_health()
 
 
 def get_analytics_summary() -> Dict[str, Any]:
-    """Get analytics configuration summary"""
+    """
+Get analytics configuration summary"""
     return analytics_orchestrator.get_configuration_summary()
 
 

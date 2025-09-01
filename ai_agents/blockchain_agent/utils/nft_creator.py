@@ -15,6 +15,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ from .smart_contracts import SmartContractsManager
 
 
 class ContentType(Enum):
-    """Supported content types for NFT creation."""
+    """
+Supported content types for NFT creation."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -59,6 +62,7 @@ class ContentType(Enum):
 
 class NFTStandard(Enum):
     """Supported NFT standards."""
+
     ERC721 = "erc721"
     ERC1155 = "erc1155"
     SPL_TOKEN = "spl_token"  # Solana
@@ -67,6 +71,7 @@ class NFTStandard(Enum):
 
 class MarketplaceType(Enum):
     """Supported NFT marketplaces."""
+
     OPENSEA = "opensea"
     RARIBLE = "rarible"
     FOUNDATION = "foundation"
@@ -79,6 +84,7 @@ class MarketplaceType(Enum):
 
 class RarityTier(Enum):
     """NFT rarity tiers based on attributes."""
+
     COMMON = "common"
     UNCOMMON = "uncommon"
     RARE = "rare"
@@ -109,7 +115,8 @@ class ContentMetadata:
 
 @dataclass
 class NFTCollection:
-    """NFT collection definition and management."""
+    """
+NFT collection definition and management."""
     id: str
     name: str
     symbol: str
@@ -144,7 +151,8 @@ class NFTRoyalty:
 
 @dataclass
 class MarketplaceListing:
-    """NFT marketplace listing information."""
+    """
+NFT marketplace listing information."""
     marketplace: MarketplaceType
     token_id: str
     listing_price: Decimal
@@ -171,7 +179,8 @@ class NFTCreator:
     """
     
     def __init__(self, blockchain_agent, smart_contracts_manager: SmartContractsManager, config: Optional[Dict] = None):
-        """Initialize the NFT Creator system."""
+        """
+Initialize the NFT Creator system."""
         self.blockchain_agent = blockchain_agent
         self.smart_contracts = smart_contracts_manager
         self.config = config or {}
@@ -613,7 +622,8 @@ class NFTCreator:
         return nft_metadata
     
     async def _generate_nft_attributes(self, metadata: ContentMetadata, content_info: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate NFT attributes for marketplace compatibility."""
+        """
+Generate NFT attributes for marketplace compatibility."""
         attributes = []
         
         # Basic attributes
@@ -734,7 +744,8 @@ class NFTCreator:
         self.royalties[token_id] = royalty
     
     async def _calculate_minting_cost(self, network: BlockchainNetwork) -> Dict[str, Any]:
-        """Calculate estimated minting cost."""
+        """
+Calculate estimated minting cost."""
         gas_estimates = {
             BlockchainNetwork.ETHEREUM: {'gas': 150000, 'price_gwei': 50},
             BlockchainNetwork.POLYGON: {'gas': 150000, 'price_gwei': 30},
@@ -752,7 +763,8 @@ class NFTCreator:
         }
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file content."""
+        """
+Calculate SHA-256 hash of file content."""
         sha256_hash = hashlib.sha256()
         with open(file_path, "rb") as f:
             for byte_block in iter(lambda: f.read(4096), b""):
@@ -778,7 +790,8 @@ class NFTCreator:
         return mime_types.get(file_format, 'application/octet-stream')
     
     def _extract_color_palette(self, image: Image.Image) -> List[str]:
-        """Extract dominant color palette from image."""
+        """
+Extract dominant color palette from image."""
         if not image:
             return []
         
@@ -804,7 +817,8 @@ class NFTCreator:
         return []
     
     async def get_nft_info(self, nft_id: str) -> Dict[str, Any]:
-        """Get comprehensive information about an NFT."""
+        """
+Get comprehensive information about an NFT."""
         if nft_id not in self.nfts:
             raise ValueError(f"NFT not found: {nft_id}")
         
@@ -878,7 +892,8 @@ class NFTCreator:
         }
     
     def _calculate_average_minting_cost(self) -> Dict[str, float]:
-        """Calculate average minting costs across all NFTs."""
+        """
+Calculate average minting costs across all NFTs."""
         costs = []
         for nft in self.nfts.values():
             if 'minting_cost' in nft and isinstance(nft['minting_cost'], dict):

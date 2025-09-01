@@ -6,7 +6,7 @@ currencies, and global payout capabilities. Handles Stripe, PayPal, Wise,
 cryptocurrency, and bank transfers with advanced fraud detection.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Revenue Generation → Payment Processing → Security Validation → Payout Distribution
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
+    """
+Supported payment methods"""
+
     STRIPE_CARD = "stripe_card"
     STRIPE_BANK = "stripe_bank"
     PAYPAL = "paypal"
@@ -56,6 +59,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -68,6 +72,7 @@ class PaymentStatus(Enum):
 
 class PaymentCurrency(Enum):
     """Supported payment currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -85,6 +90,7 @@ class PaymentCurrency(Enum):
 
 class PaymentType(Enum):
     """Payment transaction types"""
+
     REVENUE_PAYOUT = "revenue_payout"
     COLLABORATION_SPLIT = "collaboration_split"
     LICENSING_FEE = "licensing_fee"
@@ -119,7 +125,8 @@ class PaymentTransaction:
 
 @dataclass
 class PayoutDetails:
-    """Payout destination details"""
+    """
+Payout destination details"""
     payout_id: str
     user_id: str
     payment_method: PaymentMethod
@@ -345,7 +352,8 @@ class PaymentSecurityValidator:
         return False
     
     async def _check_amount_patterns(self, transaction: PaymentTransaction) -> bool:
-        """Check for unusual amount patterns"""
+        """
+Check for unusual amount patterns"""
         # Implementation would analyze amount patterns
         return False
     
@@ -354,18 +362,21 @@ class PaymentSecurityValidator:
         transaction: PaymentTransaction,
         user_context: Dict[str, Any]
     ) -> bool:
-        """Check for geographic anomalies"""
+        """
+Check for geographic anomalies"""
         # Implementation would analyze location patterns
         return False
     
     async def _check_device_fingerprint(self, user_context: Dict[str, Any]) -> bool:
-        """Check device fingerprint for suspicious activity"""
+        """
+Check device fingerprint for suspicious activity"""
         # Implementation would analyze device patterns
         return False
 
 
 class MultiCurrencyProcessor:
-    """Multi-currency processing and conversion system"""
+    """
+Multi-currency processing and conversion system"""
     
     def __init__(self):
         self.exchange_rates = {}
@@ -679,7 +690,8 @@ class PayoutManager:
         transaction: PaymentTransaction,
         destination_account: str
     ) -> Dict[str, Any]:
-        """Process payout through PayPal"""
+        """
+Process payout through PayPal"""
         # Implementation would use PayPal API
         return {
             'status': PaymentStatus.PROCESSING.value,
@@ -691,7 +703,8 @@ class PayoutManager:
         transaction: PaymentTransaction,
         destination_account: str
     ) -> Dict[str, Any]:
-        """Process payout through Wise"""
+        """
+Process payout through Wise"""
         # Implementation would use Wise API
         return {
             'status': PaymentStatus.PROCESSING.value,
@@ -700,7 +713,8 @@ class PayoutManager:
     
     # Helper methods
     async def _get_user_balance(self, user_id: str, currency: PaymentCurrency) -> Decimal:
-        """Get user's available balance in specified currency"""
+        """
+Get user's available balance in specified currency"""
         try:
             # This would query the database for user balance
             return Decimal('1000')  # Placeholder
@@ -828,11 +842,13 @@ class PaymentProcessor:
         )
     
     async def batch_payout(self, payout_requests: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Process batch payouts using payout manager"""
+        """
+Process batch payouts using payout manager"""
         return await self.payout_manager.batch_payout(payout_requests)
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get current status of payment transaction"""
+        """
+Get current status of payment transaction"""
         try:
             # This would query the database for transaction status
             return {

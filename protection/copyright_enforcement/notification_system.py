@@ -27,6 +27,7 @@ ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import smtplib
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(Enum):
-    """Available notification channels"""
+    """
+Available notification channels"""
+
     EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
@@ -77,6 +80,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -87,6 +91,7 @@ class NotificationPriority(Enum):
 
 class MessageType(Enum):
     """Types of messages/notifications"""
+
     VIOLATION_ALERT = "violation_alert"
     DMCA_STATUS_UPDATE = "dmca_status_update"
     LEGAL_ACTION_NOTICE = "legal_action_notice"
@@ -101,6 +106,7 @@ class MessageType(Enum):
 
 class DeliveryStatus(Enum):
     """Message delivery status"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -140,7 +146,8 @@ class NotificationRule:
 
 @dataclass
 class MessageContent:
-    """Message content structure"""
+    """
+Message content structure"""
     subject: str
     body: str
     template_id: Optional[str] = None
@@ -151,7 +158,8 @@ class MessageContent:
 
 @dataclass
 class NotificationRequest:
-    """Notification request structure"""
+    """
+Notification request structure"""
     message_type: MessageType
     priority: NotificationPriority
     recipients: List[NotificationRecipient]
@@ -164,7 +172,8 @@ class NotificationRequest:
 
 
 class AdvancedNotificationEngine:
-    """Ultra-advanced notification and communication engine"""
+    """
+Ultra-advanced notification and communication engine"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -195,7 +204,8 @@ class AdvancedNotificationEngine:
         self.notification_tasks = set()
     
     def _initialize_channels(self) -> None:
-        """Initialize communication channel clients"""
+        """
+Initialize communication channel clients"""
         try:
             # Email configuration
             if self.settings.smtp_host:
@@ -678,7 +688,8 @@ class AdvancedNotificationEngine:
         return color_map.get(priority, 0x3498db)
     
     async def _prepare_message_content(self, content: MessageContent) -> MessageContent:
-        """Prepare and render message content using templates"""
+        """
+Prepare and render message content using templates"""
         try:
             if content.template_id:
                 # Load template
@@ -727,7 +738,8 @@ class AdvancedNotificationEngine:
         return channels
     
     def _generate_notification_id(self) -> str:
-        """Generate unique notification ID"""
+        """
+Generate unique notification ID"""
         import uuid
         return f"notif_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{str(uuid.uuid4())[:8]}"
     
@@ -858,7 +870,8 @@ class AdvancedNotificationEngine:
         dmca_data: Dict[str, Any],
         recipients: List[str]
     ) -> Dict[str, Any]:
-        """Create and send DMCA status update notification"""
+        """
+Create and send DMCA status update notification"""
         try:
             # Determine priority based on status
             status = dmca_data.get('status', '')
@@ -927,7 +940,8 @@ class AdvancedNotificationEngine:
         """
     
     def _get_dmca_next_steps(self, status: str) -> str:
-        """Get next steps based on DMCA status"""
+        """
+Get next steps based on DMCA status"""
         steps = {
             'submitted': '<ul><li>Monitor for platform acknowledgment</li><li>Prepare evidence for potential disputes</li></ul>',
             'acknowledged': '<ul><li>Wait for platform review</li><li>Monitor for compliance</li></ul>',
@@ -940,7 +954,8 @@ class AdvancedNotificationEngine:
 
 
 class EscalationManager:
-    """Automated escalation management for notifications"""
+    """
+Automated escalation management for notifications"""
     
     def __init__(self):
         self.notification_engine = AdvancedNotificationEngine()
@@ -953,7 +968,8 @@ class EscalationManager:
         escalation_chain: List[Dict[str, Any]],
         escalation_delays: List[timedelta]
     ) -> bool:
-        """Setup automated escalation rule"""
+        """
+Setup automated escalation rule"""
         try:
             self.escalation_rules[rule_id] = {
                 "trigger_conditions": trigger_conditions,

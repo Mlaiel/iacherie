@@ -14,6 +14,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnterpriseServiceStatus(Enum):
-    """Enterprise service status enumeration"""
+    """
+Enterprise service status enumeration"""
+
     INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
@@ -42,6 +45,7 @@ class EnterpriseServiceStatus(Enum):
 
 class EnterpriseServiceType(Enum):
     """Enterprise service type enumeration"""
+
     WHITE_LABEL = "white_label"
     BRANDING = "branding"
     SSO = "sso"
@@ -67,7 +71,8 @@ class EnterpriseServiceInfo:
 
 
 class EnterpriseServiceRegistry:
-    """Registry for enterprise services with dependency management"""
+    """
+Registry for enterprise services with dependency management"""
     
     def __init__(self):
         self._services: Dict[str, EnterpriseServiceInfo] = {}
@@ -83,7 +88,8 @@ class EnterpriseServiceRegistry:
         dependencies: Optional[List[str]] = None,
         configuration: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Register an enterprise service"""
+        """
+Register an enterprise service"""
         try:
             with self._lock:
                 service_info = EnterpriseServiceInfo(
@@ -111,7 +117,8 @@ class EnterpriseServiceRegistry:
             return self._services.get(service_id)
     
     def get_services_by_type(self, service_type: EnterpriseServiceType) -> List[EnterpriseServiceInfo]:
-        """Get all services of specific type"""
+        """
+Get all services of specific type"""
         with self._lock:
             return [
                 service for service in self._services.values()
@@ -119,7 +126,8 @@ class EnterpriseServiceRegistry:
             ]
     
     def update_service_status(self, service_id: str, status: EnterpriseServiceStatus) -> bool:
-        """Update service status"""
+        """
+Update service status"""
         try:
             with self._lock:
                 if service_id in self._services:
@@ -198,7 +206,8 @@ class EnterpriseOrchestrator:
         return ordered_services
     
     async def _initialize_single_service(self, service_id: str, config: Dict[str, Any]) -> bool:
-        """Initialize a single enterprise service"""
+        """
+Initialize a single enterprise service"""
         try:
             service_type_str = config.get('type', '')
             service_type = EnterpriseServiceType(service_type_str)
@@ -302,7 +311,8 @@ class EnterpriseOrchestrator:
             return 0.0  # Failed health check
     
     async def get_enterprise_status(self) -> Dict[str, Any]:
-        """Get comprehensive enterprise system status"""
+        """
+Get comprehensive enterprise system status"""
         services_status = {}
         
         for service_id, service_info in self.registry._services.items():
@@ -323,7 +333,8 @@ class EnterpriseOrchestrator:
         }
     
     async def shutdown(self):
-        """Graceful shutdown of enterprise services"""
+        """
+Graceful shutdown of enterprise services"""
         logger.info("Shutting down enterprise orchestrator...")
         
         self._shutdown_event.set()
@@ -347,7 +358,8 @@ class EnterpriseIndex:
         self._initialized = False
         
     async def initialize(self, configuration: Optional[Dict[str, Any]] = None) -> bool:
-        """Initialize enterprise index with configuration"""
+        """
+Initialize enterprise index with configuration"""
         try:
             if configuration is None:
                 configuration = self._get_default_configuration()
@@ -409,7 +421,8 @@ class EnterpriseIndex:
         }
     
     async def get_service(self, service_type: str) -> Optional[Any]:
-        """Get enterprise service by type"""
+        """
+Get enterprise service by type"""
         if not self._initialized:
             logger.warning("Enterprise index not initialized")
             return None
@@ -438,7 +451,8 @@ class EnterpriseIndex:
         return await self.orchestrator.get_enterprise_status()
     
     async def shutdown(self):
-        """Shutdown enterprise index"""
+        """
+Shutdown enterprise index"""
         await self.orchestrator.shutdown()
         self._initialized = False
 
@@ -447,7 +461,8 @@ class EnterpriseIndex:
 _enterprise_index = None
 
 def get_enterprise_index() -> EnterpriseIndex:
-    """Get global enterprise index instance"""
+    """
+Get global enterprise index instance"""
     global _enterprise_index
     if _enterprise_index is None:
         _enterprise_index = EnterpriseIndex()

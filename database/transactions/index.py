@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import asyncio
 import logging
 import time
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TransactionConfig:
-    """Transaction configuration settings"""
+    """
+Transaction configuration settings"""
     coordinator_max_concurrent: int = 1000
     distributed_redis_url: str = "redis://localhost:6379"
     atomicity_max_operations: int = 100
@@ -470,7 +472,8 @@ class TransactionManager:
         }
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system performance metrics"""
+        """
+Get comprehensive system performance metrics"""
         
         metrics = {
             'active_transactions': len(self.active_transactions),
@@ -490,7 +493,8 @@ class TransactionManager:
         return metrics
     
     def _validate_creator_access(self, creator_id: str, security_context: SecurityContext) -> bool:
-        """Validate creator access permissions"""
+        """
+Validate creator access permissions"""
         
         # Check if user has access to this creator account
         if security_context.user_id != creator_id:
@@ -502,7 +506,8 @@ class TransactionManager:
         return True
     
     async def _generate_content_fingerprint(self, content_file: bytes, content_type: str) -> Dict[str, Any]:
-        """Generate content fingerprint (placeholder for actual implementation)"""
+        """
+Generate content fingerprint (placeholder for actual implementation)"""
         # This would integrate with the actual fingerprinting engines
         await asyncio.sleep(0.1)  # Simulate processing
         return {
@@ -512,17 +517,20 @@ class TransactionManager:
         }
     
     async def _store_content_vectors(self, transaction_id: str) -> bool:
-        """Store content vectors in vector database (placeholder)"""
+        """
+Store content vectors in vector database (placeholder)"""
         await asyncio.sleep(0.05)  # Simulate storage
         return True
     
     async def _register_content_protection(self, transaction_id: str, metadata: Optional[Dict[str, Any]]) -> bool:
-        """Register content for protection monitoring (placeholder)"""
+        """
+Register content for protection monitoring (placeholder)"""
         await asyncio.sleep(0.05)  # Simulate registration
         return True
     
     async def _cleanup_fingerprint_data(self, transaction_id: str) -> None:
-        """Cleanup fingerprint data on rollback"""
+        """
+Cleanup fingerprint data on rollback"""
         logger.debug("Cleaning up fingerprint data for transaction: %s", transaction_id)
     
     async def _cleanup_vector_data(self, transaction_id: str) -> None:
@@ -544,7 +552,8 @@ class TransactionManager:
         })
     
     async def _handle_content_upload(self, transaction_info: Dict[str, Any]) -> None:
-        """Handle content upload completion"""
+        """
+Handle content upload completion"""
         logger.info("Content upload completed for transaction: %s", 
                    transaction_info['context'].transaction_id)
     
@@ -664,7 +673,8 @@ _global_transaction_manager: Optional[TransactionManager] = None
 
 
 async def get_transaction_manager() -> TransactionManager:
-    """Get global transaction manager instance"""
+    """
+Get global transaction manager instance"""
     global _global_transaction_manager
     
     if _global_transaction_manager is None:

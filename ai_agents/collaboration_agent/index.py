@@ -22,6 +22,7 @@ Team Specialties:
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
 """
+
 from typing import Dict, List, Any, Optional
 import asyncio
 import logging
@@ -96,7 +97,8 @@ class CollaborationHub:
         self.initialized = False
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all collaboration components"""
+        """
+Initialize all collaboration components"""
         try:
             start_time = datetime.utcnow()
             
@@ -204,7 +206,8 @@ class CollaborationHub:
             }
     
     async def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information"""
+        """
+Get comprehensive module information"""
         return {
             'module': {
                 'name': MODULE_NAME,
@@ -252,7 +255,8 @@ async def get_collaboration_hub(config: Dict[str, Any] = None) -> CollaborationH
     return collaboration_hub
 
 async def quick_match(creator_id: str, preferences: Dict[str, Any] = None) -> Dict[str, Any]:
-    """Quick creator matching interface"""
+    """
+Quick creator matching interface"""
     hub = await get_collaboration_hub()
     matcher = await hub.get_service('creator_matcher')
     
@@ -267,7 +271,8 @@ async def create_collaboration(
     target_id: str,
     collaboration_details: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Quick collaboration creation interface"""
+    """
+Quick collaboration creation interface"""
     hub = await get_collaboration_hub()
     manager = await hub.get_service('collaboration_manager')
     
@@ -289,7 +294,8 @@ async def get_collaboration_analytics(
     creator_id: str = None,
     project_id: str = None
 ) -> Dict[str, Any]:
-    """Quick analytics interface"""
+    """
+Quick analytics interface"""
     hub = await get_collaboration_hub()
     manager = await hub.get_service('collaboration_manager')
     
@@ -300,15 +306,18 @@ async def get_collaboration_analytics(
 
 # Convenience functions for common operations
 async def find_matches(creator_id: str, **kwargs):
-    """Find collaboration matches for a creator"""
+    """
+Find collaboration matches for a creator"""
     return await quick_match(creator_id, kwargs)
 
 async def start_collaboration(initiator_id: str, target_id: str, **details):
-    """Start new collaboration between creators"""
+    """
+Start new collaboration between creators"""
     return await create_collaboration(initiator_id, target_id, details)
 
 async def get_analytics(creator_id: str = None, project_id: str = None):
-    """Get collaboration analytics"""
+    """
+Get collaboration analytics"""
     return await get_collaboration_analytics(creator_id, project_id)
 
 # Module exports

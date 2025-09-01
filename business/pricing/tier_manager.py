@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -36,6 +36,7 @@ Creator Registration → Tier Assessment → Dynamic Pricing → Feature Access 
 Usage Monitoring → Tier Optimization → Revenue Maximization
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -64,7 +65,9 @@ logger = logging.getLogger(__name__)
 
 
 class TierFeature(Enum):
-    """Available features across different tiers"""
+    """
+Available features across different tiers"""
+
     BASIC_UPLOAD = "basic_upload"
     MULTI_FORMAT_UPLOAD = "multi_format_upload"
     AI_PROTECTION = "ai_protection"
@@ -83,6 +86,7 @@ class TierFeature(Enum):
 
 class UsageMetric(Enum):
     """Usage metrics for tier limitations"""
+
     MONTHLY_UPLOADS = "monthly_uploads"
     STORAGE_GB = "storage_gb"
     BANDWIDTH_GB = "bandwidth_gb"
@@ -110,7 +114,8 @@ class TierLimits:
 
 @dataclass
 class TierConfiguration:
-    """Complete tier configuration"""
+    """
+Complete tier configuration"""
     tier_name: PricingTier
     display_name: str
     description: str
@@ -131,7 +136,8 @@ class TierConfiguration:
         geographic_market: str = 'EU',
         creator_type: Optional[ContentType] = None
     ) -> Decimal:
-        """Calculate effective price with adjustments"""
+        """
+Calculate effective price with adjustments"""
         base_price = self.base_annual_price if billing_cycle == 'annual' else self.base_monthly_price
         
         # Geographic adjustment
@@ -186,7 +192,8 @@ class TierManager:
         self._executor = ThreadPoolExecutor(max_workers=5)
         
     async def initialize(self):
-        """Initialize async components"""
+        """
+Initialize async components"""
         self._redis_client = redis.from_url('redis://localhost')
         logger.info("Tier manager initialized successfully")
         
@@ -568,7 +575,8 @@ class TierManager:
         content_types: List[ContentType],
         target_revenue: Optional[Decimal]
     ) -> float:
-        """Calculate how well a tier fits creator's needs"""
+        """
+Calculate how well a tier fits creator's needs"""
         
         score = 0.0
         
@@ -596,12 +604,14 @@ class TierManager:
         return score
         
     async def _get_creator_tier(self, creator_id: str) -> PricingTier:
-        """Get creator's current tier from database"""
+        """
+Get creator's current tier from database"""
         # Mock implementation - replace with actual database query
         return PricingTier.PROFESSIONAL
         
     def _get_next_tier(self, current_tier: PricingTier) -> Optional[PricingTier]:
-        """Get the next tier up from current tier"""
+        """
+Get the next tier up from current tier"""
         tier_order = [
             PricingTier.STARTER,
             PricingTier.PROFESSIONAL,
@@ -620,7 +630,8 @@ class TierManager:
         return None
         
     def _get_recommended_action(self, status: str, metric: UsageMetric) -> str:
-        """Get recommended action based on usage status"""
+        """
+Get recommended action based on usage status"""
         actions = {
             'exceeded': f"Immediate upgrade required - {metric.value} limit exceeded",
             'critical': f"Consider upgrading soon - approaching {metric.value} limit",
@@ -645,7 +656,8 @@ class TierManager:
         target_config: TierConfiguration,
         price_difference: Decimal
     ) -> Dict[str, Any]:
-        """Calculate ROI for tier upgrade"""
+        """
+Calculate ROI for tier upgrade"""
         
         # Estimate revenue impact from new features
         feature_revenue_impact = len(target_config.features - current_config.features) * 50.0

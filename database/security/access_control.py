@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class AccessLevel(Enum):
-    """Database access levels"""
+    """
+Database access levels"""
+
     NONE = 0
     READ = 1
     WRITE = 2
@@ -53,7 +56,9 @@ class AccessLevel(Enum):
 
 
 class PermissionType(Enum):
-    """Permission types"""
+    """
+Permission types"""
+
     SELECT = "SELECT"
     INSERT = "INSERT"
     UPDATE = "UPDATE"
@@ -69,6 +74,7 @@ class PermissionType(Enum):
 
 class ResourceType(Enum):
     """Database resource types"""
+
     DATABASE = "database"
     SCHEMA = "schema"
     TABLE = "table"
@@ -82,6 +88,7 @@ class ResourceType(Enum):
 
 class PolicyEffect(Enum):
     """Access policy effects"""
+
     ALLOW = "allow"
     DENY = "deny"
     CONDITIONAL = "conditional"
@@ -89,6 +96,7 @@ class PolicyEffect(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication methods"""
+
     PASSWORD = "password"
     API_KEY = "api_key"
     JWT_TOKEN = "jwt_token"
@@ -113,7 +121,8 @@ class Principal:
 
 @dataclass
 class Permission:
-    """Database permission definition"""
+    """
+Database permission definition"""
     permission_id: str
     permission_type: PermissionType
     resource_type: ResourceType
@@ -144,7 +153,8 @@ class AccessPolicy:
 
 @dataclass
 class AccessRequest:
-    """Access request context"""
+    """
+Access request context"""
     request_id: str
     principal_id: str
     resource_type: ResourceType
@@ -159,7 +169,8 @@ class AccessRequest:
 
 @dataclass
 class AccessDecision:
-    """Access control decision"""
+    """
+Access control decision"""
     request_id: str
     decision: PolicyEffect
     reason: str
@@ -170,7 +181,8 @@ class AccessDecision:
 
 
 class AccessMetrics:
-    """Access control metrics and monitoring"""
+    """
+Access control metrics and monitoring"""
     
     def __init__(self):
         self.total_requests: int = 0
@@ -183,7 +195,8 @@ class AccessMetrics:
         self.principal_activity: Dict[str, int] = {}
         
     def record_access_decision(self, decision: AccessDecision):
-        """Record access control decision"""
+        """
+Record access control decision"""
         self.total_requests += 1
         
         if decision.decision == PolicyEffect.ALLOW:
@@ -213,7 +226,8 @@ class DatabaseAccessControl:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize access control manager"""
+        """
+Initialize access control manager"""
         self.config = config or {}
         self.principals: Dict[str, Principal] = {}
         self.permissions: Dict[str, Permission] = {}
@@ -551,7 +565,8 @@ class DatabaseAccessControl:
         return applicable_policies
     
     async def _get_principal_roles(self, principal_id: str) -> Set[str]:
-        """Get all roles for a principal including inherited roles"""
+        """
+Get all roles for a principal including inherited roles"""
         roles = set()
         
         principal = self.principals.get(principal_id)
@@ -579,7 +594,8 @@ class DatabaseAccessControl:
         return False
     
     async def _match_resource_pattern(self, resource_name: str, pattern: str) -> bool:
-        """Match resource name against pattern (supports wildcards)"""
+        """
+Match resource name against pattern (supports wildcards)"""
         if pattern == "*":
             return True
         
@@ -684,22 +700,26 @@ class DatabaseAccessControl:
         return True
     
     async def _check_resource_visibility(self, request: AccessRequest, required_visibility: str) -> bool:
-        """Check resource visibility level"""
+        """
+Check resource visibility level"""
         # This would check resource metadata for visibility
         return True
     
     async def _check_creator_ownership(self, request: AccessRequest) -> bool:
-        """Check if creator owns the content"""
+        """
+Check if creator owns the content"""
         # This would verify creator ownership in content tables
         return True
     
     async def _check_admin_scope(self, request: AccessRequest) -> bool:
-        """Check if operation is within admin scope"""
+        """
+Check if operation is within admin scope"""
         # This would verify admin permissions for the operation
         return True
     
     async def _check_mfa_verification(self, request: AccessRequest, required: bool) -> bool:
-        """Check MFA verification status"""
+        """
+Check MFA verification status"""
         mfa_verified = request.attributes.get("mfa_verified", False)
         return not required or mfa_verified
     
@@ -709,12 +729,14 @@ class DatabaseAccessControl:
         return True
     
     async def _check_ip_restriction(self, request: AccessRequest, restriction: Dict[str, Any]) -> bool:
-        """Check IP-based access restrictions"""
+        """
+Check IP-based access restrictions"""
         # Implement IP-based access control
         return True
     
     async def _log_access_decision(self, request: AccessRequest, decision: AccessDecision):
-        """Log access control decision for audit"""
+        """
+Log access control decision for audit"""
         log_entry = {
             "timestamp": datetime.now().isoformat(),
             "request_id": request.request_id,

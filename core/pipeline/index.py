@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Central Access → Component Discovery → Health Validation → Quick Utilities
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Type
 from datetime import datetime
@@ -109,11 +110,13 @@ def get_component(component_name: str) -> Optional[Type]:
     return COMPONENT_REGISTRY.get(component_name)
 
 def list_components() -> List[str]:
-    """List all available components"""
+    """
+List all available components"""
     return list(COMPONENT_REGISTRY.keys())
 
 def get_component_info(component_name: str) -> Dict[str, Any]:
-    """Get component information"""
+    """
+Get component information"""
     component = get_component(component_name)
     if not component:
         return {}
@@ -127,7 +130,8 @@ def get_component_info(component_name: str) -> Dict[str, Any]:
     }
 
 def create_default_pipeline() -> Optional[MasterPipelineOrchestrator]:
-    """Create pipeline with default configuration"""
+    """
+Create pipeline with default configuration"""
     if not IMPORT_SUCCESS:
         logger.error("Cannot create pipeline - import errors exist")
         return None
@@ -185,7 +189,8 @@ def validate_pipeline_health() -> Dict[str, Any]:
     return health_report
 
 def get_pipeline_status() -> Dict[str, Any]:
-    """Get comprehensive pipeline status"""
+    """
+Get comprehensive pipeline status"""
     return {
         'version': '3.0.0',
         'author': 'Fahed Mlaiel',
@@ -625,15 +630,18 @@ def create_content_workflow(content_type: str) -> WorkflowDefinition:
     return WorkflowFactory.create_content_processing_workflow(content_type)
 
 def create_protection_workflow() -> WorkflowDefinition:
-    """Quick function to create protection workflow"""
+    """
+Quick function to create protection workflow"""
     return WorkflowFactory.create_protection_workflow()
 
 def create_distribution_workflow() -> WorkflowDefinition:
-    """Quick function to create distribution workflow"""
+    """
+Quick function to create distribution workflow"""
     return WorkflowFactory.create_distribution_workflow()
 
 def get_all_pipeline_components():
-    """Get all available pipeline components"""
+    """
+Get all available pipeline components"""
     return {
         'orchestrators': [MasterPipelineOrchestrator],
         'pipelines': [
@@ -666,7 +674,8 @@ def get_all_pipeline_components():
 
 # Development and debugging helpers
 def get_pipeline_health_status():
-    """Get overall pipeline health status"""
+    """
+Get overall pipeline health status"""
     return {
         'status': 'healthy',
         'components_loaded': len(__all__),
@@ -675,7 +684,8 @@ def get_pipeline_health_status():
     }
 
 def validate_pipeline_setup():
-    """Validate pipeline setup and dependencies"""
+    """
+Validate pipeline setup and dependencies"""
     validation_results = {
         'dependencies_available': True,
         'configurations_valid': True,

@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any, Tuple
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class RevenueType(str, Enum):
-    """Types of revenue sources."""
+    """
+Types of revenue sources."""
+
     LICENSING = "licensing"
     VIOLATION_RECOVERY = "violation_recovery"
     COLLABORATION = "collaboration"
@@ -42,6 +45,7 @@ class RevenueType(str, Enum):
 
 class PaymentStatus(str, Enum):
     """Payment processing statuses."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -51,6 +55,7 @@ class PaymentStatus(str, Enum):
 
 class LicenseType(str, Enum):
     """Content license types."""
+
     STANDARD = "standard"
     EXTENDED = "extended"
     EXCLUSIVE = "exclusive"

@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, List, Optional, Set, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,7 +23,9 @@ from datetime import datetime
 
 
 class WatermarkType(str, Enum):
-    """Types of watermarks."""
+    """
+Types of watermarks."""
+
     INVISIBLE = "invisible"
     SEMI_VISIBLE = "semi_visible"
     VISIBLE = "visible"
@@ -63,6 +66,7 @@ class WatermarkAlgorithm(str, Enum):
 
 class EmbeddingStrength(str, Enum):
     """Watermark embedding strength levels."""
+
     MINIMAL = "minimal"      # Barely detectable
     LOW = "low"             # Light embedding
     MEDIUM = "medium"       # Balanced
@@ -85,7 +89,8 @@ class WatermarkPayload:
 
 @dataclass
 class AudioWatermarkConfig:
-    """Audio watermarking configuration."""
+    """
+Audio watermarking configuration."""
     algorithm: WatermarkAlgorithm = WatermarkAlgorithm.SPREAD_SPECTRUM
     watermark_type: WatermarkType = WatermarkType.INVISIBLE
     embedding_strength: EmbeddingStrength = EmbeddingStrength.MEDIUM
@@ -213,7 +218,8 @@ class ExtractionConfig:
 
 @dataclass
 class QualityAssessmentConfig:
-    """Quality assessment configuration."""
+    """
+Quality assessment configuration."""
     enable_quality_metrics: bool = True
     perceptual_quality_enabled: bool = True
     objective_quality_enabled: bool = True
@@ -269,7 +275,8 @@ class WatermarkConfig:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
+        """
+Load configuration from environment variables."""
         # General settings
         self.enable_watermarking = os.getenv("WATERMARK_ENABLED", "true").lower() == "true"
         
@@ -310,7 +317,7 @@ class WatermarkConfig:
             owner_id=owner_id,
             content_id=content_id,
             timestamp=datetime.now(),
-            copyright_info=kwargs.get("copyright_info", f"© {datetime.now().year} {owner_id}"),
+            copyright_info=kwargs.get("copyright_info", f"(c) {datetime.now().year} {owner_id}"),
             license_type=kwargs.get("license_type", "All Rights Reserved"),
             custom_data=kwargs.get("custom_data", {}),
             expiry_date=kwargs.get("expiry_date"),
@@ -425,7 +432,8 @@ class WatermarkConfig:
         self.text.word_selection_ratio = 0.05
     
     def optimize_for_robustness(self) -> None:
-        """Optimize configuration for maximum robustness."""
+        """
+Optimize configuration for maximum robustness."""
         self.default_embedding_strength = EmbeddingStrength.HIGH
         
         # Audio optimization

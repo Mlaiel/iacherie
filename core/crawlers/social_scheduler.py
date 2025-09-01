@@ -4,6 +4,7 @@ AI-Powered Social Media Content Scheduling and Optimization System
 This module provides comprehensive social media scheduling capabilities including
 optimal timing analysis, multi-platform posting, content optimization, and performance tracking.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class SocialPlatform(str, Enum):
-    """Supported social media platforms"""
+    """
+Supported social media platforms"""
+
     TWITTER = "twitter"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -47,6 +50,7 @@ class SocialPlatform(str, Enum):
 
 class PostType(str, Enum):
     """Types of social media posts"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -61,6 +65,7 @@ class PostType(str, Enum):
 
 class SchedulingStrategy(str, Enum):
     """Content scheduling strategies"""
+
     OPTIMAL_TIMING = "optimal_timing"
     CONSISTENT_INTERVALS = "consistent_intervals"
     PEAK_ENGAGEMENT = "peak_engagement"
@@ -72,6 +77,7 @@ class SchedulingStrategy(str, Enum):
 
 class PostStatus(str, Enum):
     """Status of scheduled posts"""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
@@ -84,6 +90,7 @@ class PostStatus(str, Enum):
 
 class OptimizationGoal(str, Enum):
     """Content optimization goals"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     CLICKS = "clicks"
@@ -200,7 +207,8 @@ class PostingResult(BaseModel):
 
 
 class OptimalTimingAnalysis(BaseModel):
-    """Analysis of optimal posting times"""
+    """
+Analysis of optimal posting times"""
     analysis_id: str
     platform: SocialPlatform
     analysis_period: str
@@ -227,7 +235,8 @@ class OptimalTimingAnalysis(BaseModel):
 
 
 class ContentCalendar(BaseModel):
-    """Content calendar with scheduled posts"""
+    """
+Content calendar with scheduled posts"""
     calendar_id: str
     calendar_name: str
     creation_timestamp: datetime
@@ -902,7 +911,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         return post
 
     async def _predict_post_performance(self, post: ScheduledPost) -> Dict[str, Any]:
-        """Predict post performance metrics"""
+        """
+Predict post performance metrics"""
         # Simplified performance prediction (would use ML models)
         base_engagement = 100
         base_reach = 1000
@@ -925,7 +935,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def _check_approval_requirements(self, post: ScheduledPost) -> bool:
-        """Check if post requires approval"""
+        """
+Check if post requires approval"""
         # Simple approval rules
         if len(post.text_content) > 500:
             return True
@@ -936,17 +947,20 @@ class AdvancedSocialScheduler(BaseCrawler):
         return False
 
     async def _optimize_calendar_timing(self, calendar: ContentCalendar, platforms: List[SocialPlatform]) -> ContentCalendar:
-        """Optimize calendar timing based on platform analytics"""
+        """
+Optimize calendar timing based on platform analytics"""
         # Implementation for calendar timing optimization
         return calendar
 
     async def _optimize_for_peak_engagement(self, calendar: ContentCalendar, platforms: List[SocialPlatform]) -> ContentCalendar:
-        """Optimize calendar for peak engagement times"""
+        """
+Optimize calendar for peak engagement times"""
         # Implementation for peak engagement optimization
         return calendar
 
     async def _get_historical_engagement_data(self, platform: SocialPlatform, period: str) -> List[Dict[str, Any]]:
-        """Get historical engagement data for analysis"""
+        """
+Get historical engagement data for analysis"""
         # Simplified historical data (would fetch from analytics APIs)
         data_points = []
         
@@ -969,7 +983,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         return data_points
 
     async def _analyze_audience_activity(self, platform: SocialPlatform, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze audience activity patterns"""
+        """
+Analyze audience activity patterns"""
         if not historical_data:
             return {}
         
@@ -1010,7 +1025,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def _calculate_optimal_times(self, historical_data: List[Dict[str, Any]], patterns: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Calculate optimal posting times"""
+        """
+Calculate optimal posting times"""
         optimal_times = []
         
         for hour in patterns.get('peak_hours', []):
@@ -1025,7 +1041,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         return optimal_times
 
     async def _analyze_content_type_timing(self, historical_data: List[Dict[str, Any]], content_type: PostType) -> Dict[PostType, List[str]]:
-        """Analyze optimal timing for different content types"""
+        """
+Analyze optimal timing for different content types"""
         # Simplified content type timing analysis
         return {
             PostType.TEXT: ['09:00', '12:00', '18:00'],
@@ -1034,7 +1051,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def _calculate_timing_confidence(self, historical_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate confidence metrics for timing analysis"""
+        """
+Calculate confidence metrics for timing analysis"""
         return {
             'accuracy': 0.85,
             'confidence': 0.9,
@@ -1042,7 +1060,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def _suggest_hashtags(self, content: str, platform: SocialPlatform) -> List[str]:
-        """Suggest relevant hashtags for content"""
+        """
+Suggest relevant hashtags for content"""
         # Simplified hashtag suggestion (would use AI/ML)
         words = content.lower().split()
         suggestions = []
@@ -1062,18 +1081,21 @@ class AdvancedSocialScheduler(BaseCrawler):
         return suggestions[:3]
 
     async def _get_optimal_time_for_content(self, post: ScheduledPost) -> Optional[datetime]:
-        """Get optimal time for specific content"""
+        """
+Get optimal time for specific content"""
         # Would analyze content and return optimal time
         return None
 
     def _is_optimal_time(self, scheduled_time: datetime) -> bool:
-        """Check if scheduled time is optimal"""
+        """
+Check if scheduled time is optimal"""
         # Simplified optimal time check
         hour = scheduled_time.hour
         return 9 <= hour <= 17  # Business hours
 
     async def get_calendar_analytics(self, calendar_id: str) -> Dict[str, Any]:
-        """Get analytics for content calendar"""
+        """
+Get analytics for content calendar"""
         if calendar_id not in self.active_calendars:
             return {}
         
@@ -1097,7 +1119,8 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def close(self):
-        """Close scheduler and cleanup resources"""
+        """
+Close scheduler and cleanup resources"""
         try:
             await self.stop_scheduler()
             await self.cache_manager.close()

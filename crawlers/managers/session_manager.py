@@ -7,6 +7,7 @@ authentication, cookies, and multi-domain session handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -35,7 +36,9 @@ from ...models.crawler_session import CrawlerSession, SessionCookie
 
 
 class SessionState(Enum):
-    """Session state enumeration."""
+    """
+Session state enumeration."""
+
     INACTIVE = "inactive"
     ACTIVE = "active"
     AUTHENTICATING = "authenticating"
@@ -47,6 +50,7 @@ class SessionState(Enum):
 
 class AuthenticationType(Enum):
     """Authentication type enumeration."""
+
     NONE = "none"
     BASIC = "basic"
     BEARER = "bearer"
@@ -73,7 +77,8 @@ class SessionCredentials:
 
 @dataclass
 class SessionConfiguration:
-    """Session configuration settings."""
+    """
+Session configuration settings."""
     domain: str
     max_connections: int = 10
     timeout: int = 30
@@ -112,7 +117,8 @@ class ManagedSession:
     """
     
     def __init__(self, session_id: str, config: SessionConfiguration):
-        """Initialize managed session."""
+        """
+Initialize managed session."""
         self.session_id = session_id
         self.config = config
         self.logger = get_logger(f"Session-{session_id[:8]}")
@@ -247,7 +253,8 @@ class ManagedSession:
         return False
         
     async def _authenticate_form_login(self, auth_config: SessionCredentials) -> bool:
-        """Authenticate using form login."""
+        """
+Authenticate using form login."""
         try:
             # Perform form login
             if not auth_config.form_data:
@@ -271,12 +278,14 @@ class ManagedSession:
         return True
         
     async def _authenticate_cookies(self, auth_config: SessionCredentials) -> bool:
-        """Authenticate using cookies."""
+        """
+Authenticate using cookies."""
         # Cookie-based authentication would load existing cookies
         return True
         
     async def request(self, method: str, url: str, **kwargs) -> aiohttp.ClientResponse:
-        """Make HTTP request through managed session."""
+        """
+Make HTTP request through managed session."""
         if not self.http_session:
             raise RuntimeError("Session not initialized")
             
@@ -323,23 +332,27 @@ class ManagedSession:
         )
         
     def is_expired(self) -> bool:
-        """Check if session is expired."""
+        """
+Check if session is expired."""
         return datetime.utcnow() > self.expires_at
         
     def is_auth_expired(self) -> bool:
-        """Check if authentication is expired."""
+        """
+Check if authentication is expired."""
         if not self.auth_expires_at:
             return False
         return datetime.utcnow() > self.auth_expires_at
         
     async def renew(self):
-        """Renew session."""
+        """
+Renew session."""
         self.expires_at = datetime.utcnow() + timedelta(seconds=self.config.session_lifetime)
         if self.config.auth_config and self.is_auth_expired():
             await self.authenticate()
             
     async def close(self):
-        """Close the session."""
+        """
+Close the session."""
         try:
             if self.http_session:
                 await self.http_session.close()
@@ -363,7 +376,8 @@ class SessionManager:
     """
     
     def __init__(self, config: Optional[SessionConfig] = None):
-        """Initialize session manager."""
+        """
+Initialize session manager."""
         self.config = config or SessionConfig()
         self.logger = get_logger(self.__class__.__name__)
         
@@ -396,7 +410,8 @@ class SessionManager:
             self._initialize_persistence()
             
     def _initialize_persistence(self):
-        """Initialize session persistence storage."""
+        """
+Initialize session persistence storage."""
         try:
             self.persistence_db = self.config.PERSISTENCE_PATH
             Path(self.persistence_db).parent.mkdir(parents=True, exist_ok=True)
@@ -531,7 +546,8 @@ class SessionManager:
         return None
         
     async def _create_session(self, domain: str, config: Optional[SessionConfiguration] = None) -> ManagedSession:
-        """Create new managed session."""
+        """
+Create new managed session."""
         try:
             # Use provided config or get default
             if config:
@@ -570,7 +586,8 @@ class SessionManager:
         )
         
     def _generate_session_id(self, domain: str) -> str:
-        """Generate unique session ID."""
+        """
+Generate unique session ID."""
         timestamp = str(int(time.time()))
         random_part = secrets.token_hex(8)
         domain_hash = hashlib.md5(domain.encode()).hexdigest()[:8]
@@ -724,7 +741,8 @@ class SessionManager:
         return None
         
     async def get_domain_metrics(self, domain: str) -> Dict[str, Any]:
-        """Get aggregated metrics for a domain."""
+        """
+Get aggregated metrics for a domain."""
         domain_sessions = self.session_pools.get(domain, [])
         
         if not domain_sessions:
@@ -748,7 +766,8 @@ class SessionManager:
         }
         
     async def get_manager_stats(self) -> Dict[str, Any]:
-        """Get session manager statistics."""
+        """
+Get session manager statistics."""
         # Update current stats
         self.stats['active_sessions'] = len(self.active_sessions)
         
@@ -761,7 +780,8 @@ class SessionManager:
         
     @asynccontextmanager
     async def session_context(self, domain: str, config: Optional[SessionConfiguration] = None):
-        """Context manager for session usage."""
+        """
+Context manager for session usage."""
         session = None
         try:
             session = await self.get_session(domain, config)
@@ -771,7 +791,8 @@ class SessionManager:
                 await self.close_session(session.session_id)
                 
     async def shutdown(self):
-        """Shutdown session manager."""
+        """
+Shutdown session manager."""
         try:
             # Cancel cleanup task
             if self.cleanup_task:
@@ -829,7 +850,8 @@ def create_session_manager(config: Optional[SessionConfig] = None) -> SessionMan
 
 # Utility functions
 async def create_authenticated_session(domain: str, credentials: SessionCredentials) -> ManagedSession:
-    """Create an authenticated session for a domain."""
+    """
+Create an authenticated session for a domain."""
     config = SessionConfiguration(
         domain=domain,
         auth_config=credentials
@@ -840,7 +862,8 @@ async def create_authenticated_session(domain: str, credentials: SessionCredenti
 
 
 async def bulk_authenticate_domains(domain_credentials: Dict[str, SessionCredentials]) -> Dict[str, bool]:
-    """Authenticate multiple domains in bulk."""
+    """
+Authenticate multiple domains in bulk."""
     manager = create_session_manager()
     results = {}
     

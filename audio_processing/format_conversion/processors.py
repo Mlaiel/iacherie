@@ -6,6 +6,7 @@ Provides professional-grade audio processing capabilities for format conversion.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Tuple, Union
@@ -34,7 +35,8 @@ class AudioProcessor(ABC):
     """
     
     def __init__(self, name: str, config: Optional[Dict[str, Any]] = None):
-        """Initialize processor"""
+        """
+Initialize processor"""
         self.name = name
         self.config = config or {}
         self.enabled = True
@@ -59,7 +61,8 @@ class AudioProcessor(ABC):
         pass
     
     async def validate_input(self, audio_data: np.ndarray, sample_rate: int) -> bool:
-        """Validate input parameters"""
+        """
+Validate input parameters"""
         if audio_data is None or len(audio_data) == 0:
             return False
         
@@ -69,11 +72,13 @@ class AudioProcessor(ABC):
         return True
     
     def set_enabled(self, enabled: bool):
-        """Enable/disable processor"""
+        """
+Enable/disable processor"""
         self.enabled = enabled
     
     def set_bypass(self, bypass: bool):
-        """Set bypass mode"""
+        """
+Set bypass mode"""
         self.bypass = bypass
 
 
@@ -86,7 +91,8 @@ class NormalizationProcessor(AudioProcessor):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize normalization processor"""
+        """
+Initialize normalization processor"""
         super().__init__("Normalization", config)
         self.normalization_type = self.config.get('type', 'peak')  # peak, rms, lufs
         self.target_level = self.config.get('target_level', -3.0)  # dB
@@ -148,7 +154,8 @@ class NormalizationProcessor(AudioProcessor):
         return normalized_audio, info
     
     async def _rms_normalize(self, audio_data: np.ndarray) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """RMS normalization"""
+        """
+RMS normalization"""
         rms_level = np.sqrt(np.mean(audio_data ** 2))
         if rms_level == 0:
             return audio_data, {'gain_applied': 0.0, 'original_rms': -float('inf')}
@@ -175,7 +182,8 @@ class NormalizationProcessor(AudioProcessor):
         return normalized_audio, info
     
     async def _lufs_normalize(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """LUFS (Loudness Units relative to Full Scale) normalization"""
+        """
+LUFS (Loudness Units relative to Full Scale) normalization"""
         # Simplified LUFS calculation - in production use pyloudnorm
         # This is a basic implementation
         
@@ -222,7 +230,8 @@ class LimiterProcessor(AudioProcessor):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize limiter processor"""
+        """
+Initialize limiter processor"""
         super().__init__("Limiter", config)
         self.threshold = self.config.get('threshold', -0.1)  # dB
         self.release_time = self.config.get('release_time', 0.05)  # seconds
@@ -311,7 +320,8 @@ class EqualizerProcessor(AudioProcessor):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize equalizer processor"""
+        """
+Initialize equalizer processor"""
         super().__init__("Equalizer", config)
         self.bands = self.config.get('bands', [])  # List of EQ bands
         self.high_pass_freq = self.config.get('high_pass_freq', None)
@@ -387,7 +397,8 @@ class EqualizerProcessor(AudioProcessor):
                            audio_data: np.ndarray, 
                            sample_rate: int, 
                            freq: float) -> np.ndarray:
-        """Apply low-pass filter"""
+        """
+Apply low-pass filter"""
         nyquist = sample_rate / 2
         normalized_freq = freq / nyquist
         
@@ -401,7 +412,8 @@ class EqualizerProcessor(AudioProcessor):
                            audio_data: np.ndarray, 
                            sample_rate: int, 
                            band: Dict[str, Any]) -> np.ndarray:
-        """Apply single EQ band"""
+        """
+Apply single EQ band"""
         freq = band.get('frequency', 1000)
         gain = band.get('gain', 0)
         q = band.get('q', 1.0)
@@ -487,7 +499,8 @@ class DitheringProcessor(AudioProcessor):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize dithering processor"""
+        """
+Initialize dithering processor"""
         super().__init__("Dithering", config)
         self.target_bits = self.config.get('target_bits', 16)
         self.dither_type = self.config.get('type', 'triangular')  # triangular, rectangular, shaped
@@ -594,7 +607,8 @@ class ProcessorChain:
     """
     
     def __init__(self, config: Optional[ProcessingConfig] = None):
-        """Initialize processing chain"""
+        """
+Initialize processing chain"""
         self.config = config or ProcessingConfig()
         self.processors: List[AudioProcessor] = []
         self.processing_history: List[Dict[str, Any]] = []
@@ -602,7 +616,8 @@ class ProcessorChain:
         self.max_workers = 4
         
     def add_processor(self, processor: AudioProcessor, position: Optional[int] = None):
-        """Add processor to chain"""
+        """
+Add processor to chain"""
         if position is None:
             self.processors.append(processor)
         else:
@@ -627,7 +642,8 @@ class ProcessorChain:
         return None
     
     def reorder_processors(self, processor_names: List[str]):
-        """Reorder processors in chain"""
+        """
+Reorder processors in chain"""
         new_order = []
         
         for name in processor_names:
@@ -817,7 +833,8 @@ class EffectsProcessor(AudioProcessor):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize effects processor"""
+        """
+Initialize effects processor"""
         super().__init__("Effects", config)
         self.effect_type = self.config.get('type', 'none')
         self.effect_params = self.config.get('params', {})
@@ -879,7 +896,8 @@ class EffectsProcessor(AudioProcessor):
         }
     
     async def _apply_delay(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply delay effect"""
+        """
+Apply delay effect"""
         delay_time = self.effect_params.get('delay_time', 0.25)  # seconds
         feedback = self.effect_params.get('feedback', 0.3)
         wet_level = self.effect_params.get('wet_level', 0.3)
@@ -911,7 +929,8 @@ class EffectsProcessor(AudioProcessor):
         }
     
     async def _apply_chorus(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply chorus effect"""
+        """
+Apply chorus effect"""
         rate = self.effect_params.get('rate', 1.0)  # Hz
         depth = self.effect_params.get('depth', 0.005)  # seconds
         wet_level = self.effect_params.get('wet_level', 0.5)

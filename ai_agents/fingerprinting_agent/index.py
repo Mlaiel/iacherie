@@ -11,6 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 from .fingerprinting_agent import FingerprintingAgent, FingerprintType, FingerprintQuality
 from .audio_fingerprinter import AudioFingerprinter, AudioFingerprintQuality
 from .video_fingerprinter import VideoFingerprinter, VideoFingerprintQuality
@@ -145,7 +146,7 @@ def get_module_info() -> dict:
         "quality_levels": QUALITY_LEVELS,
         "benchmarks": PERFORMANCE_BENCHMARKS,
         "business_integration": BUSINESS_INTEGRATION,
-        "copyright_notice": "© 2025 Fahed Mlaiel. All rights reserved."
+        "copyright_notice": "(c) 2025 Fahed Mlaiel. All rights reserved."
     }
 
 def validate_content_type(content_type: str) -> bool:
@@ -153,7 +154,8 @@ def validate_content_type(content_type: str) -> bool:
     return content_type in SUPPORTED_CONTENT_TYPES
 
 def get_recommended_quality(content_type: str, use_case: str) -> str:
-    """Get recommended quality level based on content type and use case"""
+    """
+Get recommended quality level based on content type and use case"""
     recommendations = {
         "audio": {
             "music_protection": "ultra",

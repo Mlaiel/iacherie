@@ -19,6 +19,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Tuple, Union
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""
+    """
+Supported monetization platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -55,6 +58,7 @@ class PlatformType(Enum):
 
 class RevenueType(Enum):
     """Types of revenue streams"""
+
     ADVERTISING = "advertising"
     SUBSCRIPTIONS = "subscriptions"
     DONATIONS = "donations"
@@ -67,6 +71,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -77,6 +82,7 @@ class PaymentStatus(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -104,7 +110,8 @@ class RevenueRecord:
     verified: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             "revenue_id": self.revenue_id,
             "tenant_id": self.tenant_id,

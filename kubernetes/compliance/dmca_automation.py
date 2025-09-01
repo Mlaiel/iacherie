@@ -4,6 +4,7 @@ Automated Digital Millennium Copyright Act compliance and takedown management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class DMCARequestType(str, Enum):
-    """DMCA request types"""
+    """
+DMCA request types"""
+
     TAKEDOWN = "takedown"
     COUNTER_NOTICE = "counter_notice"
     REPEAT_INFRINGER = "repeat_infringer"
@@ -37,6 +40,7 @@ class DMCARequestType(str, Enum):
 
 class TakedownStatus(str, Enum):
     """DMCA takedown status"""
+
     PENDING = "pending"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
@@ -48,6 +52,7 @@ class TakedownStatus(str, Enum):
 
 class InfringementType(str, Enum):
     """Copyright infringement types"""
+
     EXACT_COPY = "exact_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     DERIVATIVE_WORK = "derivative_work"
@@ -72,7 +77,8 @@ class InfringementEvidence:
 
 @dataclass
 class DMCANoticeTemplate:
-    """DMCA takedown notice template"""
+    """
+DMCA takedown notice template"""
     template_id: str
     name: str
     subject_line: str
@@ -85,7 +91,8 @@ class DMCANoticeTemplate:
 
 
 class DMCAAutomation:
-    """Automated DMCA compliance and takedown system"""
+    """
+Automated DMCA compliance and takedown system"""
     
     def __init__(self):
         self.logger = logger

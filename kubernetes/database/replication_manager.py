@@ -10,6 +10,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import psycopg2
 from typing import Dict, List, Optional, Any, Union
@@ -28,7 +29,9 @@ from .postgresql_manager import get_postgresql_manager
 
 
 class ReplicationMode(Enum):
-    """Database replication modes"""
+    """
+Database replication modes"""
+
     STREAMING = "streaming"
     LOGICAL = "logical"
     SYNCHRONOUS = "synchronous"
@@ -37,6 +40,7 @@ class ReplicationMode(Enum):
 
 class ReplicaStatus(Enum):
     """Replica server status"""
+
     HEALTHY = "healthy"
     LAGGING = "lagging"
     DISCONNECTED = "disconnected"
@@ -47,6 +51,7 @@ class ReplicaStatus(Enum):
 
 class FailoverStatus(Enum):
     """Failover operation status"""
+
     STANDBY = "standby"
     PROMOTING = "promoting"
     ACTIVE = "active"
@@ -109,7 +114,8 @@ class ReplicationManager:
         self._initialize_replication_settings()
     
     def _initialize_replication_settings(self) -> None:
-        """Initialize replication configuration"""
+        """
+Initialize replication configuration"""
         try:
             # Check if we're on primary or replica
             self.is_primary = self._check_if_primary()

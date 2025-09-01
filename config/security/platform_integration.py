@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -28,7 +29,9 @@ from enum import Enum
 
 
 class Platform(Enum):
-    """Supported content and social media platforms."""
+    """
+Supported content and social media platforms."""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -44,6 +47,7 @@ class Platform(Enum):
 
 class AuthFlow(Enum):
     """OAuth2 authentication flow types."""
+
     AUTHORIZATION_CODE = "authorization_code"
     CLIENT_CREDENTIALS = "client_credentials"
     DEVICE_CODE = "device_code"
@@ -52,6 +56,7 @@ class AuthFlow(Enum):
 
 class SecurityLevel(Enum):
     """Security levels for platform integrations."""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -60,6 +65,7 @@ class SecurityLevel(Enum):
 
 class WebhookEvent(Enum):
     """Webhook event types for platform notifications."""
+
     CONTENT_UPLOADED = "content_uploaded"
     CONTENT_REMOVED = "content_removed"
     REVENUE_UPDATE = "revenue_update"
@@ -474,12 +480,14 @@ platform_integration_security_config = PlatformIntegrationSecurityConfig()
 
 
 def get_platform_integration_security_config() -> PlatformIntegrationSecurityConfig:
-    """Get the platform integration security configuration instance."""
+    """
+Get the platform integration security configuration instance."""
     return platform_integration_security_config
 
 
 def validate_platform_integration_config(config: PlatformIntegrationSecurityConfig) -> bool:
-    """Validate platform integration security configuration settings."""
+    """
+Validate platform integration security configuration settings."""
     # Validate rate limits
     if config.rate_limiting.requests_per_minute <= 0:
         raise ValueError("Requests per minute must be positive")

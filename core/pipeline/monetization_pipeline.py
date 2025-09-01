@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Content Analysis → Revenue Estimation → Licensing Setup → Platform Integration → Payout Processing → Optimization
 """
+
 import asyncio
 import logging
 import time
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationStage(Enum):
-    """Monetization pipeline stages"""
+    """
+Monetization pipeline stages"""
+
     CONTENT_VALUATION = "content_valuation"
     REVENUE_ESTIMATION = "revenue_estimation"
     LICENSING_SETUP = "licensing_setup"
@@ -38,6 +41,7 @@ class MonetizationStage(Enum):
 
 class RevenueModel(Enum):
     """Revenue models"""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
     ADVERTISING = "advertising"
@@ -50,6 +54,7 @@ class RevenueModel(Enum):
 
 class PlatformType(Enum):
     """Platform types"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
     SOCIAL_MEDIA = "social_media"
@@ -60,6 +65,7 @@ class PlatformType(Enum):
 
 class PayoutFrequency(Enum):
     """Payout frequencies"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -366,7 +372,8 @@ class RevenueCalculator:
 
 
 class PayoutProcessor:
-    """Automated payout processing system"""
+    """
+Automated payout processing system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -1182,11 +1189,13 @@ class MonetizationPipeline:
         return self.active_monetizations.get(monetization_id) or self.completed_monetizations.get(monetization_id)
     
     def get_active_monetizations(self) -> Dict[str, MonetizationResult]:
-        """Get all active monetizations"""
+        """
+Get all active monetizations"""
         return self.active_monetizations.copy()
     
     def get_monetization_metrics(self) -> Dict[str, Any]:
-        """Get monetization metrics"""
+        """
+Get monetization metrics"""
         completed_monetizations = list(self.completed_monetizations.values())
         
         return {

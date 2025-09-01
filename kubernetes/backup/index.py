@@ -11,6 +11,7 @@ WARNING: This code and concept are the exclusive intellectual property of Fahed 
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -476,19 +477,22 @@ def create_backup_platform(config: Dict[str, Any]) -> BackupPlatform:
 
 # Convenience functions for common operations
 async def quick_full_backup(config: Dict[str, Any]) -> str:
-    """Quick full platform backup."""
+    """
+Quick full platform backup."""
     platform = create_backup_platform(config)
     return await platform.create_full_platform_backup()
 
 
 async def quick_content_backup(config: Dict[str, Any]) -> str:
-    """Quick content-only backup."""
+    """
+Quick content-only backup."""
     platform = create_backup_platform(config)
     return await platform.create_content_only_backup()
 
 
 async def quick_restore(config: Dict[str, Any], backup_id: str) -> bool:
-    """Quick platform restore."""
+    """
+Quick platform restore."""
     platform = create_backup_platform(config)
     return await platform.restore_platform(backup_id)
 

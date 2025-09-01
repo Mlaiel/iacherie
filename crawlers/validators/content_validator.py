@@ -5,7 +5,7 @@ Advanced content validation system for the IA Influencer Agent Platform
 providing comprehensive content integrity, quality, and compliance validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 Features:
@@ -15,6 +15,7 @@ Features:
 - Business rule enforcement
 - Security threat detection
 """
+
 import re
 import hashlib
 import mimetypes
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for validation"""
+    """
+Content type enumeration for validation"""
+
     TEXT = "text"
     HTML = "html"
     JSON = "json"
@@ -49,6 +52,7 @@ class ContentType(Enum):
 
 class ValidationLevel(Enum):
     """Validation strictness levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -57,6 +61,7 @@ class ValidationLevel(Enum):
 
 class ValidationStatus(Enum):
     """Validation result status"""
+
     VALID = "valid"
     WARNING = "warning"
     ERROR = "error"
@@ -77,7 +82,8 @@ class ValidationIssue:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for validation"""
+    """
+Content metadata for validation"""
     title: Optional[str] = None
     description: Optional[str] = None
     author: Optional[str] = None
@@ -95,7 +101,8 @@ class ContentMetadata:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result"""
+    """
+Comprehensive validation result"""
     is_valid: bool
     status: ValidationStatus
     content_type: ContentType
@@ -112,23 +119,27 @@ class ValidationResult:
     
     @property
     def has_errors(self) -> bool:
-        """Check if validation has errors"""
+        """
+Check if validation has errors"""
         return any(issue.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED] 
                   for issue in self.issues)
     
     @property
     def has_warnings(self) -> bool:
-        """Check if validation has warnings"""
+        """
+Check if validation has warnings"""
         return any(issue.level == ValidationStatus.WARNING for issue in self.issues)
     
     @property
     def error_count(self) -> int:
-        """Count of error-level issues"""
+        """
+Count of error-level issues"""
         return len([i for i in self.issues if i.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED]])
     
     @property
     def warning_count(self) -> int:
-        """Count of warning-level issues"""
+        """
+Count of warning-level issues"""
         return len([i for i in self.issues if i.level == ValidationStatus.WARNING])
 
 
@@ -306,7 +317,8 @@ class ContentValidator:
             self._validate_media_content(content, content_type, result)
     
     def _validate_html_content(self, content: str, result: ValidationResult) -> None:
-        """Validate HTML content structure and safety"""
+        """
+Validate HTML content structure and safety"""
         
         # Check for basic HTML structure
         if not re.search(r'<html[^>]*>', content, re.IGNORECASE):
@@ -567,7 +579,8 @@ class ContentValidator:
         )
     
     def _determine_final_status(self, result: ValidationResult) -> None:
-        """Determine final validation status"""
+        """
+Determine final validation status"""
         
         if result.has_errors:
             result.is_valid = False
@@ -583,7 +596,8 @@ class ContentValidator:
             result.status = ValidationStatus.VALID
     
     def _generate_recommendations(self, result: ValidationResult) -> None:
-        """Generate improvement recommendations"""
+        """
+Generate improvement recommendations"""
         
         if result.quality_score < 0.7:
             result.recommendations.append("Consider improving content quality and structure")
@@ -619,7 +633,8 @@ class ContentValidator:
         return depth
     
     def _is_suspicious_url(self, url: str) -> bool:
-        """Check if URL is potentially suspicious"""
+        """
+Check if URL is potentially suspicious"""
         suspicious_patterns = [
             r'bit\.ly|tinyurl|t\.co',  # URL shorteners
             r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+',  # IP addresses
@@ -630,7 +645,8 @@ class ContentValidator:
         return any(re.search(pattern, url, re.IGNORECASE) for pattern in suspicious_patterns)
     
     def _assess_readability(self, content: str) -> float:
-        """Assess content readability (simplified implementation)"""
+        """
+Assess content readability (simplified implementation)"""
         sentences = len(re.findall(r'[.!?]+', content))
         words = len(content.split())
         
@@ -648,7 +664,8 @@ class ContentValidator:
             return max(0.3, 1.0 - (avg_sentence_length - 25) * 0.02)
     
     def _assess_structure(self, content: str, content_type: ContentType) -> float:
-        """Assess content structure quality"""
+        """
+Assess content structure quality"""
         structure_score = 0.5  # Base score
         
         if content_type == ContentType.HTML:
@@ -675,7 +692,8 @@ class ContentValidator:
         return min(1.0, structure_score)
     
     def _assess_uniqueness(self, content: str) -> float:
-        """Assess content uniqueness (simplified implementation)"""
+        """
+Assess content uniqueness (simplified implementation)"""
         # Count repeated phrases
         words = content.lower().split()
         if len(words) < 10:
@@ -688,7 +706,8 @@ class ContentValidator:
         return min(1.0, uniqueness_ratio * 1.2)
     
     def _assess_metadata_completeness(self, metadata: ContentMetadata) -> float:
-        """Assess metadata completeness"""
+        """
+Assess metadata completeness"""
         required_fields = ['title', 'description', 'language']
         optional_fields = ['author', 'keywords', 'created_at']
         
@@ -699,7 +718,8 @@ class ContentValidator:
         return (required_score + optional_score) / total_possible if total_possible > 0 else 0
     
     def _validate_html_tag_balance(self, content: str, result: ValidationResult) -> None:
-        """Validate HTML tag balance"""
+        """
+Validate HTML tag balance"""
         # Simplified tag balance check
         opening_tags = re.findall(r'<([a-z][a-z0-9]*)[^>]*>', content, re.IGNORECASE)
         closing_tags = re.findall(r'</([a-z][a-z0-9]*)>', content, re.IGNORECASE)
@@ -865,7 +885,8 @@ class ContentValidator:
         return True  # Default to passing unknown requirements
     
     def _load_business_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load business rules configuration"""
+        """
+Load business rules configuration"""
         return {
             'text': {
                 'min_length': 10,
@@ -911,7 +932,8 @@ class ContentValidator:
         }
     
     def _load_security_patterns(self) -> Dict[str, str]:
-        """Load security threat patterns"""
+        """
+Load security threat patterns"""
         return {
             'xss_script': r'<script[^>]*>.*?</script>',
             'javascript_url': r'javascript:',
@@ -926,7 +948,8 @@ class ContentValidator:
         }
     
     def _load_quality_metrics(self) -> Dict[str, Any]:
-        """Load quality assessment metrics"""
+        """
+Load quality assessment metrics"""
         return {
             'optimal_length': {
                 'text': (50, 5000),
@@ -945,7 +968,8 @@ class ContentValidator:
         }
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific requirements"""
+        """
+Load platform-specific requirements"""
         return {
             'twitter': {
                 'content_length': {

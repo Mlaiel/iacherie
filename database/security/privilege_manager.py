@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class PrivilegeType(Enum):
-    """Database privilege types"""
+    """
+Database privilege types"""
+
     SELECT = "SELECT"
     INSERT = "INSERT"
     UPDATE = "UPDATE"
@@ -60,6 +63,7 @@ class PrivilegeType(Enum):
 
 class ResourceType(Enum):
     """Database resource types"""
+
     DATABASE = "database"
     SCHEMA = "schema"
     TABLE = "table"
@@ -74,6 +78,7 @@ class ResourceType(Enum):
 
 class GrantOption(Enum):
     """Grant option types"""
+
     NONE = "none"
     GRANT_OPTION = "grant_option"
     ADMIN_OPTION = "admin_option"
@@ -81,6 +86,7 @@ class GrantOption(Enum):
 
 class PrivilegeScope(Enum):
     """Privilege scope levels"""
+
     GLOBAL = "global"
     DATABASE = "database"
     SCHEMA = "schema"
@@ -105,7 +111,8 @@ class DatabaseResource:
 
 @dataclass
 class PrivilegeGrant:
-    """Database privilege grant"""
+    """
+Database privilege grant"""
     grant_id: str
     principal_id: str
     principal_type: str  # user, role, group
@@ -156,7 +163,8 @@ class User:
 
 @dataclass
 class AccessRequest:
-    """Privilege access request"""
+    """
+Privilege access request"""
     request_id: str
     requester_id: str
     user_id: str
@@ -197,7 +205,8 @@ class PrivilegeEngine(ABC):
         privilege_type: PrivilegeType,
         grant_option: GrantOption = GrantOption.NONE
     ) -> bool:
-        """Grant privilege to principal"""
+        """
+Grant privilege to principal"""
         pass
     
     @abstractmethod
@@ -207,7 +216,8 @@ class PrivilegeEngine(ABC):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> bool:
-        """Revoke privilege from principal"""
+        """
+Revoke privilege from principal"""
         pass
     
     @abstractmethod
@@ -217,12 +227,14 @@ class PrivilegeEngine(ABC):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> bool:
-        """Check if principal has privilege on resource"""
+        """
+Check if principal has privilege on resource"""
         pass
 
 
 class PostgreSQLPrivilegeEngine(PrivilegeEngine):
-    """PostgreSQL-specific privilege engine"""
+    """
+PostgreSQL-specific privilege engine"""
     
     def __init__(self, connection_config: Dict[str, Any]):
         self.connection_config = connection_config
@@ -235,7 +247,8 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         privilege_type: PrivilegeType,
         grant_option: GrantOption = GrantOption.NONE
     ) -> bool:
-        """Grant PostgreSQL privilege"""
+        """
+Grant PostgreSQL privilege"""
         try:
             # Construct GRANT statement
             grant_sql = self._build_grant_statement(
@@ -349,7 +362,8 @@ class PrivilegeManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize privilege manager"""
+        """
+Initialize privilege manager"""
         self.config = config or {}
         self.users: Dict[str, User] = {}
         self.roles: Dict[str, Role] = {}
@@ -857,7 +871,8 @@ class PrivilegeManager:
         return False
     
     async def _get_all_user_roles(self, user_id: str) -> List[str]:
-        """Get all roles for user including inherited roles"""
+        """
+Get all roles for user including inherited roles"""
         if user_id not in self.users:
             return []
         
@@ -882,7 +897,8 @@ class PrivilegeManager:
         return list(all_roles)
     
     def _get_principal_type(self, principal_id: str) -> str:
-        """Determine principal type"""
+        """
+Determine principal type"""
         if principal_id in self.users:
             return "user"
         elif principal_id in self.roles:
@@ -931,7 +947,8 @@ class PrivilegeManager:
             self.audit_records = self.audit_records[-10000:]
     
     def get_user_privileges(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive privilege summary for user"""
+        """
+Get comprehensive privilege summary for user"""
         if user_id not in self.users:
             return {"error": "User not found"}
         

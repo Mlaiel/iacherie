@@ -13,7 +13,7 @@ Features:
 - Risk assessment and scenario planning
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
@@ -46,7 +46,9 @@ from scipy.signal import find_peaks
 logger = logging.getLogger(__name__)
 
 class ForecastHorizon(Enum):
-    """Horizons de prédiction"""
+    """
+Horizons de prédiction"""
+
     NEXT_DAY = "1d"
     NEXT_WEEK = "7d"
     NEXT_MONTH = "30d"
@@ -55,6 +57,7 @@ class ForecastHorizon(Enum):
 
 class SeasonalPattern(Enum):
     """Types de patterns saisonniers"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -81,7 +84,8 @@ class RevenueForecast:
 
 @dataclass
 class SeasonalComponent:
-    """Composante saisonnière"""
+    """
+Composante saisonnière"""
     pattern_type: SeasonalPattern
     strength: float  # 0.0 à 1.0
     peak_periods: List[str]
@@ -259,7 +263,8 @@ class AdvancedRevenuePredictionEngine:
         return df
     
     async def _analyze_seasonal_patterns(self, df: pd.DataFrame) -> List[SeasonalComponent]:
-        """Analyse les patterns saisonniers"""
+        """
+Analyse les patterns saisonniers"""
         seasonal_components = []
         
         try:
@@ -319,7 +324,8 @@ class AdvancedRevenuePredictionEngine:
         )
     
     def _analyze_monthly_seasonality(self, df: pd.DataFrame) -> SeasonalComponent:
-        """Analyse la saisonnalité mensuelle"""
+        """
+Analyse la saisonnalité mensuelle"""
         # Grouper par jour du mois
         monthly_avg = df.groupby('day_of_month')['amount'].mean()
         overall_avg = df['amount'].mean()
@@ -663,7 +669,8 @@ class AdvancedRevenuePredictionEngine:
         return factors[:5]  # Maximum 5 facteurs
     
     def _calculate_model_accuracy(self, features_df: pd.DataFrame) -> float:
-        """Calcule la précision moyenne des modèles"""
+        """
+Calcule la précision moyenne des modèles"""
         accuracies = []
         
         for model_name, performance in self.model_performance.items():
@@ -673,7 +680,8 @@ class AdvancedRevenuePredictionEngine:
         return float(np.mean(accuracies)) if accuracies else 0.0
     
     def _calculate_confidence_score(self, confidence_intervals: Tuple[float, float], prediction: float) -> float:
-        """Calcule le score de confiance basé sur la largeur de l'intervalle"""
+        """
+Calcule le score de confiance basé sur la largeur de l'intervalle"""
         if prediction == 0:
             return 0.0
             

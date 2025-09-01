@@ -10,14 +10,15 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
 MISSION: Index central du système core remix IA-Influencer-Agent
 LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → SEO pro → 
 Matching collaboration + gamifications → Distribution multi-plateformes → Remix IA professionnel
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
@@ -39,7 +40,8 @@ class CoreRemixIndex:
     """
     
     def __init__(self):
-        """Initialize core remix index."""
+        """
+Initialize core remix index."""
         self.services = {}
         self.performance_metrics = {}
         self.security_status = "initialized"

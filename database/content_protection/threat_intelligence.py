@@ -5,7 +5,7 @@ with real-time threat detection, attack pattern analysis, and automated response
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
+    """
+Threat severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -56,6 +59,7 @@ class ThreatLevel(Enum):
 
 class ThreatCategory(Enum):
     """Threat categories"""
+
     COPYRIGHT_PIRACY = "copyright_piracy"
     ORGANIZED_PIRACY_RING = "organized_piracy_ring"
     AUTOMATED_SCRAPING = "automated_scraping"
@@ -71,6 +75,7 @@ class ThreatCategory(Enum):
 
 class AttackVector(Enum):
     """Attack vectors"""
+
     AUTOMATED_BOT = "automated_bot"
     MANUAL_UPLOAD = "manual_upload"
     API_EXPLOITATION = "api_exploitation"
@@ -83,6 +88,7 @@ class AttackVector(Enum):
 
 class IndicatorType(Enum):
     """Threat indicator types"""
+
     IP_ADDRESS = "ip_address"
     DOMAIN = "domain"
     URL = "url"
@@ -660,7 +666,8 @@ class ThreatIntelligenceSystem:
             return ThreatLevel.INFO
     
     async def _store_threat_intelligence(self, intelligence_data: Dict[str, Any]) -> None:
-        """Store threat intelligence in database"""
+        """
+Store threat intelligence in database"""
         try:
             threat_intel = ThreatIntelligence(
                 id=uuid4(),

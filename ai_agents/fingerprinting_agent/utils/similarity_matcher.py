@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -54,7 +55,9 @@ from ...utils.similarity_utils import SimilarityCalculator
 logger = logging.getLogger(__name__)
 
 class SimilarityType(Enum):
-    """Types of similarity analysis"""
+    """
+Types of similarity analysis"""
+
     EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     STRUCTURAL_SIMILAR = "structural_similar"
@@ -64,6 +67,7 @@ class SimilarityType(Enum):
 
 class MatchConfidence(Enum):
     """Confidence levels for similarity matches"""
+
     VERY_HIGH = "very_high"    # >0.95
     HIGH = "high"              # 0.85-0.95
     MEDIUM = "medium"          # 0.70-0.85
@@ -132,7 +136,8 @@ class SimilarityMatcher:
         }
         
     async def initialize(self):
-        """Initialize similarity matching system"""
+        """
+Initialize similarity matching system"""
         try:
             # Initialize similarity calculator
             await self.similarity_calculator.initialize()
@@ -830,7 +835,8 @@ class SimilarityMatcher:
                                       candidate_fingerprints: List[Dict[str, Any]],
                                       content_type: str,
                                       threshold: float = 0.5) -> List[Dict[str, Any]]:
-        """Perform batch similarity analysis against multiple candidates"""
+        """
+Perform batch similarity analysis against multiple candidates"""
         try:
             results = []
             
@@ -919,12 +925,14 @@ class SimilarityMatcher:
         return 0.5  # Placeholder
     
     async def _calculate_motion_similarity(self, motion1: Dict, motion2: Dict) -> float:
-        """Calculate similarity between motion features"""
+        """
+Calculate similarity between motion features"""
         # Implementation for motion vector comparison
         return 0.5  # Placeholder
     
     async def _calculate_perceptual_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between perceptual hashes"""
+        """
+Calculate similarity between perceptual hashes"""
         try:
             # Convert hex strings to integers and calculate Hamming distance
             h1 = int(hash1, 16)
@@ -1532,7 +1540,8 @@ class SimilarityMatcher:
             return 0.0
     
     async def _analyze_image_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Analyze image-specific features"""
+        """
+Analyze image-specific features"""
         try:
             # Simplified image feature analysis
             return 1 - cosine(features1, features2) if len(features1) == len(features2) else 0.0
@@ -1540,7 +1549,8 @@ class SimilarityMatcher:
             return 0.0
     
     async def _analyze_text_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Analyze text-specific features"""
+        """
+Analyze text-specific features"""
         try:
             # Simplified text feature analysis
             return 1 - cosine(features1, features2) if len(features1) == len(features2) else 0.0
@@ -1549,24 +1559,29 @@ class SimilarityMatcher:
     
     # Content-specific similarity methods (simplified)
     async def _analyze_audio_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Audio-specific similarity analysis"""
+        """
+Audio-specific similarity analysis"""
         return {'audio_specific': 0.5}  # Placeholder
     
     async def _analyze_video_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Video-specific similarity analysis"""
+        """
+Video-specific similarity analysis"""
         return {'video_specific': 0.5}  # Placeholder
     
     async def _analyze_image_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Image-specific similarity analysis"""
+        """
+Image-specific similarity analysis"""
         return {'image_specific': 0.5}  # Placeholder
     
     async def _analyze_text_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Text-specific similarity analysis"""
+        """
+Text-specific similarity analysis"""
         return {'text_specific': 0.5}  # Placeholder
     
     async def _validate_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any], 
                                    content_type: str):
-        """Validate fingerprint inputs"""
+        """
+Validate fingerprint inputs"""
         if not fp1 or not fp2:
             raise ValidationError("Both fingerprints are required")
         

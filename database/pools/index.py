@@ -17,6 +17,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import sys
@@ -62,7 +63,8 @@ from database.pools import (
 logger = logging.getLogger(__name__)
 
 def print_banner():
-    """Print application banner"""
+    """
+Print application banner"""
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
     ║                Database Connection Pools                     ║
@@ -72,13 +74,14 @@ def print_banner():
     ║  with real-time monitoring and automated scaling            ║
     ║                                                              ║
     ║  Author: Fahed Mlaiel <mlaiel@live.de>                      ║
-    ║  © 2025 All Rights Reserved                                  ║
+    ║  (c) 2025 All Rights Reserved                                  ║
     ╚══════════════════════════════════════════════════════════════╝
     """
     print(banner)
 
 async def run_health_check():
-    """Run comprehensive health check on all pools"""
+    """
+Run comprehensive health check on all pools"""
     print("🔍 Running comprehensive pool health check...")
     
     try:

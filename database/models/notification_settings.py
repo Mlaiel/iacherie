@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY, Time
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class NotificationType(Enum):
-    """Notification type enumeration"""
+    """
+Notification type enumeration"""
+
     CONTENT_PROTECTION = "content_protection"
     COPYRIGHT_VIOLATION = "copyright_violation"
     COLLABORATION_REQUEST = "collaboration_request"
@@ -70,6 +73,7 @@ class NotificationType(Enum):
 
 class Channel(Enum):
     """Notification delivery channel"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
@@ -86,6 +90,7 @@ class Channel(Enum):
 
 class Priority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -95,6 +100,7 @@ class Priority(Enum):
 
 class Frequency(Enum):
     """Notification frequency settings"""
+
     IMMEDIATE = "immediate"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -107,6 +113,7 @@ class Frequency(Enum):
 
 class Status(Enum):
     """Notification setting status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -117,6 +124,7 @@ class Status(Enum):
 
 class DeliveryTime(Enum):
     """Preferred delivery time"""
+
     ANYTIME = "anytime"
     BUSINESS_HOURS = "business_hours"
     EVENING = "evening"
@@ -372,7 +380,8 @@ class NotificationSettings(Base):
         return True
     
     def should_send_notification(self, context: Dict[str, Any] = None) -> bool:
-        """Determine if notification should be sent based on filters and conditions"""
+        """
+Determine if notification should be sent based on filters and conditions"""
         if not self.is_active or self.status != Status.ACTIVE:
             return False
         
@@ -403,7 +412,8 @@ class NotificationSettings(Base):
         return True
     
     def get_optimal_channel(self, context: Dict[str, Any] = None) -> Channel:
-        """Get optimal delivery channel based on AI optimization and context"""
+        """
+Get optimal delivery channel based on AI optimization and context"""
         if not self.ai_optimization:
             return self.primary_channel
         
@@ -424,7 +434,8 @@ class NotificationSettings(Base):
         return self.primary_channel
     
     def update_performance_metrics(self, delivered: bool, opened: bool = False, clicked: bool = False) -> None:
-        """Update performance metrics based on notification interaction"""
+        """
+Update performance metrics based on notification interaction"""
         # This would be implemented with proper statistical tracking
         # Simplified version here
         
@@ -443,7 +454,8 @@ class NotificationSettings(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def schedule_next_notification(self) -> Optional[datetime]:
-        """Calculate next notification time based on frequency settings"""
+        """
+Calculate next notification time based on frequency settings"""
         if self.frequency == Frequency.NEVER:
             return None
         
@@ -476,7 +488,8 @@ class NotificationSettings(Base):
         return next_time
     
     def get_notification_template_data(self, context: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Get template data for notification rendering"""
+        """
+Get template data for notification rendering"""
         return {
             'user_preferences': {
                 'language': self.language,
@@ -495,7 +508,8 @@ class NotificationSettings(Base):
         }
     
     def clone_settings(self, new_notification_type: NotificationType) -> 'NotificationSettings':
-        """Clone settings for a different notification type"""
+        """
+Clone settings for a different notification type"""
         new_settings = NotificationSettings(
             user_id=self.user_id,
             creator_profile_id=self.creator_profile_id,

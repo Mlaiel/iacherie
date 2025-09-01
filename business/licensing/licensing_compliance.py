@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -29,7 +30,9 @@ from ..ai.compliance_intelligence import ComplianceIntelligenceEngine
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks and standards"""
+    """
+Compliance frameworks and standards"""
+
     GDPR = "gdpr"                           # General Data Protection Regulation
     CCPA = "ccpa"                           # California Consumer Privacy Act
     DMCA = "dmca"                           # Digital Millennium Copyright Act
@@ -45,6 +48,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceLevel(Enum):
     """Compliance assessment levels"""
+
     FULLY_COMPLIANT = "fully_compliant"
     MOSTLY_COMPLIANT = "mostly_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -55,6 +59,7 @@ class ComplianceLevel(Enum):
 
 class ViolationSeverity(Enum):
     """Compliance violation severity levels"""
+
     CRITICAL = "critical"        # Immediate action required
     HIGH = "high"                # Action required within 24h
     MEDIUM = "medium"            # Action required within 1 week
@@ -75,7 +80,8 @@ class ComplianceMetrics:
 
 
 class ComplianceAssessmentRequest(BaseModel):
-    """Compliance assessment request"""
+    """
+Compliance assessment request"""
     entity_type: str = Field(..., description="Type of entity to assess (user, content, agreement)")
     entity_id: str = Field(..., description="ID of entity to assess")
     frameworks: List[ComplianceFramework] = Field(..., description="Frameworks to assess against")
@@ -551,7 +557,8 @@ class LicensingComplianceService:
         framework: ComplianceFramework, 
         scope: str
     ) -> Dict[str, Any]:
-        """Assess compliance against specific framework"""
+        """
+Assess compliance against specific framework"""
         # Implementation for framework-specific assessment
         pass
     
@@ -559,6 +566,7 @@ class LicensingComplianceService:
         self, 
         framework_assessments: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate overall compliance score from framework assessments"""
+        """
+Calculate overall compliance score from framework assessments"""
         # Implementation for overall score calculation
         pass

@@ -4,7 +4,7 @@ Advanced AI system for intelligent creator matching, partnership optimization,
 and collaborative opportunity identification for maximum synergy and growth.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This cutting-edge collaboration intelligence system is protected proprietary technology.
@@ -12,6 +12,7 @@ Any unauthorized use, copying, or distribution will trigger immediate legal acti
 
 Business Logic: Profile Analysis → Compatibility Assessment → Partnership Discovery → Collaboration Optimization → Synergy Maximization → Growth Amplification
 """
+
 import asyncio
 import json
 import uuid
@@ -56,7 +57,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     CONTENT_EXCHANGE = "content_exchange"
     JOINT_PROJECT = "joint_project"
     CROSS_PROMOTION = "cross_promotion"
@@ -73,6 +76,7 @@ class CollaborationType(Enum):
 
 class CreatorCategory(Enum):
     """Creator categories for matching"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -92,6 +96,7 @@ class CreatorCategory(Enum):
 
 class CompatibilityFactor(Enum):
     """Factors for compatibility assessment"""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_SYNERGY = "content_synergy"
     BRAND_ALIGNMENT = "brand_alignment"
@@ -106,6 +111,7 @@ class CompatibilityFactor(Enum):
 
 class PartnershipStatus(Enum):
     """Partnership status"""
+
     DISCOVERED = "discovered"
     CONTACTED = "contacted"
     NEGOTIATING = "negotiating"
@@ -435,7 +441,8 @@ class CreatorCompatibilityEngine:
         self._initialize_nlp()
     
     def _initialize_nlp(self):
-        """Initialize NLP processing capabilities"""
+        """
+Initialize NLP processing capabilities"""
         if NLP_SIMILARITY_AVAILABLE:
             try:
                 # Initialize spaCy model for semantic analysis

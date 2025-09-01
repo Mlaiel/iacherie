@@ -5,7 +5,7 @@ Configuration and fixtures for testing data models.
 Provides database setup, test data, and common utilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import pytest
 import uuid
 from datetime import datetime, date, timedelta
@@ -78,7 +79,8 @@ def db_session(database_engine):
 
 @pytest.fixture
 def sample_user_data():
-    """Sample user data for testing"""
+    """
+Sample user data for testing"""
     return {
         'id': str(uuid.uuid4()),
         'username': 'test_creator_2025',
@@ -111,7 +113,8 @@ def sample_user_data():
 
 @pytest.fixture
 def sample_content_data(sample_user_data):
-    """Sample content data for testing"""
+    """
+Sample content data for testing"""
     return {
         'id': str(uuid.uuid4()),
         'user_id': sample_user_data['id'],
@@ -164,7 +167,8 @@ def sample_content_data(sample_user_data):
 
 @pytest.fixture
 def sample_fingerprint_data(sample_content_data):
-    """Sample fingerprint data for testing"""
+    """
+Sample fingerprint data for testing"""
     return {
         'id': str(uuid.uuid4()),
         'content_id': sample_content_data['id'],
@@ -193,7 +197,8 @@ def sample_fingerprint_data(sample_content_data):
 
 @pytest.fixture
 def sample_revenue_data(sample_user_data, sample_content_data):
-    """Sample revenue data for testing"""
+    """
+Sample revenue data for testing"""
     return {
         'id': str(uuid.uuid4()),
         'user_id': sample_user_data['id'],
@@ -226,7 +231,8 @@ def sample_revenue_data(sample_user_data, sample_content_data):
 
 @pytest.fixture
 def sample_analytics_data(sample_user_data, sample_content_data):
-    """Sample analytics data for testing"""
+    """
+Sample analytics data for testing"""
     return {
         'id': str(uuid.uuid4()),
         'user_id': sample_user_data['id'],
@@ -259,7 +265,8 @@ def sample_analytics_data(sample_user_data, sample_content_data):
 
 @pytest.fixture
 def sample_protection_data(sample_user_data, sample_content_data, sample_fingerprint_data):
-    """Sample protection data for testing"""
+    """
+Sample protection data for testing"""
     return {
         'id': str(uuid.uuid4()),
         'user_id': sample_user_data['id'],
@@ -292,7 +299,8 @@ def sample_protection_data(sample_user_data, sample_content_data, sample_fingerp
 
 @pytest.fixture
 def sample_licensing_data(sample_user_data, sample_content_data):
-    """Sample licensing data for testing"""
+    """
+Sample licensing data for testing"""
     return {
         'id': str(uuid.uuid4()),
         'user_id': sample_user_data['id'],
@@ -329,7 +337,8 @@ def sample_licensing_data(sample_user_data, sample_content_data):
 
 @pytest.fixture
 def create_test_user(db_session, sample_user_data):
-    """Create a test user in database"""
+    """
+Create a test user in database"""
     def _create_user(**overrides):
         data = {**sample_user_data, **overrides}
         user = UserModel(**data)
@@ -341,7 +350,8 @@ def create_test_user(db_session, sample_user_data):
 
 @pytest.fixture
 def create_test_content(db_session, sample_content_data):
-    """Create test content in database"""
+    """
+Create test content in database"""
     def _create_content(**overrides):
         data = {**sample_content_data, **overrides}
         content = ContentModel(**data)
@@ -356,7 +366,8 @@ def full_test_dataset(db_session, sample_user_data, sample_content_data,
                       sample_fingerprint_data, sample_revenue_data,
                       sample_analytics_data, sample_protection_data,
                       sample_licensing_data):
-    """Create complete test dataset with all related models"""
+    """
+Create complete test dataset with all related models"""
     
     # Create user
     user = UserModel(**sample_user_data)
@@ -407,11 +418,13 @@ def full_test_dataset(db_session, sample_user_data, sample_content_data,
 
 
 class TestHelpers:
-    """Helper utilities for testing"""
+    """
+Helper utilities for testing"""
     
     @staticmethod
     def assert_model_fields(model_instance, expected_fields: Dict[str, Any]):
-        """Assert that model instance has expected field values"""
+        """
+Assert that model instance has expected field values"""
         for field_name, expected_value in expected_fields.items():
             actual_value = getattr(model_instance, field_name)
             assert actual_value == expected_value, (
@@ -434,29 +447,34 @@ class TestHelpers:
     
     @staticmethod
     def create_uuid() -> str:
-        """Generate UUID for testing"""
+        """
+Generate UUID for testing"""
         return str(uuid.uuid4())
     
     @staticmethod
     def create_future_date(days: int = 30) -> date:
-        """Create future date for testing"""
+        """
+Create future date for testing"""
         return date.today() + timedelta(days=days)
     
     @staticmethod
     def create_past_date(days: int = 30) -> date:
-        """Create past date for testing"""
+        """
+Create past date for testing"""
         return date.today() - timedelta(days=days)
 
 
 @pytest.fixture
 def test_helpers():
-    """Provide test helper utilities"""
+    """
+Provide test helper utilities"""
     return TestHelpers
 
 
 # Pytest markers for organizing tests
 def pytest_configure(config):
-    """Configure pytest markers"""
+    """
+Configure pytest markers"""
     config.addinivalue_line("markers", "unit: Unit tests")
     config.addinivalue_line("markers", "integration: Integration tests")
     config.addinivalue_line("markers", "model: Model-specific tests")

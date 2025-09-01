@@ -4,7 +4,7 @@
 Enterprise-grade DMCA notice template engine with legal compliance validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 This module provides:
@@ -14,6 +14,7 @@ This module provides:
 - Legal validation framework
 - Template customization system
 """
+
 import logging
 import secrets
 from typing import Dict, List, Optional, Any, Union, Protocol, TypedDict
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class JurisdictionType(Enum):
-    """Legal jurisdictions for DMCA compliance"""
+    """
+Legal jurisdictions for DMCA compliance"""
+
     US_FEDERAL = "us_federal"
     EU_GDPR = "eu_gdpr"
     UK_COPYRIGHT = "uk_copyright"
@@ -51,6 +54,7 @@ class JurisdictionType(Enum):
 
 class TemplateCategory(Enum):
     """Professional template categories"""
+
     TAKEDOWN_STANDARD = "takedown_standard"
     TAKEDOWN_URGENT = "takedown_urgent"
     TAKEDOWN_REPEAT_OFFENDER = "takedown_repeat_offender"
@@ -71,6 +75,7 @@ class TemplateCategory(Enum):
 
 class EvidenceLevel(Enum):
     """Evidence strength classifications"""
+
     CONCLUSIVE = "conclusive"      # >95% similarity, exact match
     STRONG = "strong"              # 80-95% similarity, clear infringement
     MODERATE = "moderate"          # 60-80% similarity, likely infringement
@@ -594,7 +599,8 @@ class AdvancedTemplateProcessor:
         return base64.b64encode(self.encryptor.encrypt(content.encode())).decode()
     
     def _generate_security_hash(self, content: str) -> str:
-        """Generate security hash for content integrity"""
+        """
+Generate security hash for content integrity"""
         return hashlib.sha256(content.encode()).hexdigest()
     
     def _generate_metadata(
@@ -603,7 +609,8 @@ class AdvancedTemplateProcessor:
         context: 'TemplateContext',
         jurisdiction: JurisdictionType
     ) -> Dict[str, Any]:
-        """Generate comprehensive metadata for the notice"""
+        """
+Generate comprehensive metadata for the notice"""
         return {
             "notice_id": context.notice_id,
             "template_category": template_category.value,
@@ -636,7 +643,8 @@ class AdvancedTemplateProcessor:
         return template_category in follow_up_categories
     
     def _calculate_legal_deadline(self, template_category: TemplateCategory) -> Optional[str]:
-        """Calculate legal response deadline"""
+        """
+Calculate legal response deadline"""
         deadlines = {
             TemplateCategory.TAKEDOWN_URGENT: (datetime.utcnow() + timedelta(hours=2)).isoformat(),
             TemplateCategory.TAKEDOWN_STANDARD: (datetime.utcnow() + timedelta(hours=24)).isoformat(),
@@ -648,7 +656,8 @@ class AdvancedTemplateProcessor:
 
 @dataclass
 class LegalValidationResult:
-    """Legal compliance validation result"""
+    """
+Legal compliance validation result"""
     is_valid: bool
     jurisdiction: JurisdictionType
     compliance_score: float
@@ -660,7 +669,8 @@ class LegalValidationResult:
 
 @dataclass
 class TemplateContext:
-    """Enhanced template context with legal metadata"""
+    """
+Enhanced template context with legal metadata"""
     notice_id: str
     jurisdiction: JurisdictionType
     template_category: TemplateCategory
@@ -1175,7 +1185,8 @@ class ProfessionalTemplateEngine:
         """
     
     async def _generate_pdf_base64(self, content: str) -> str:
-        """Generate PDF version and return as base64"""
+        """
+Generate PDF version and return as base64"""
         # PDF generation service integration
         logger.info("Generating PDF format")
         return base64.b64encode(content.encode()).decode()  # Placeholder
@@ -1273,7 +1284,8 @@ class ProfessionalTemplateEngine:
         self,
         templates: List[TemplateCategory]
     ) -> Dict[str, str]:
-        """Generate recommended action timeline"""
+        """
+Generate recommended action timeline"""
         timeline = {}
         current_date = datetime.utcnow()
         
@@ -1294,7 +1306,8 @@ class EvidenceIntegrator:
     """
     
     async def enhance_context_with_evidence(self, context: TemplateContext) -> TemplateContext:
-        """Enhance template context with evidence data"""
+        """
+Enhance template context with evidence data"""
         # This would integrate with fingerprinting and evidence systems
         return context
     
@@ -1303,7 +1316,8 @@ class EvidenceIntegrator:
         context: TemplateContext,
         evidence_level: EvidenceLevel
     ) -> Dict[str, Any]:
-        """Generate detailed evidence report"""
+        """
+Generate detailed evidence report"""
         return {
             "evidence_level": evidence_level.value,
             "report_generated": datetime.utcnow().isoformat(),
@@ -1325,7 +1339,8 @@ class FollowUpScheduler:
         notice_id: str,
         jurisdiction: JurisdictionType
     ) -> Dict[str, Any]:
-        """Create automated follow-up schedule"""
+        """
+Create automated follow-up schedule"""
         schedules = {
             TemplateCategory.TAKEDOWN_STANDARD: [
                 {"action": "check_compliance", "days": 3},
@@ -1368,7 +1383,8 @@ class EmailNotificationService:
         delivery_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Schedule professional email delivery"""
+        """
+Schedule professional email delivery"""
         return {
             "delivery_scheduled": True,
             "delivery_method": "professional_email",
@@ -1990,7 +2006,8 @@ class LegalReferenceDatabase:
         content: str,
         jurisdiction: JurisdictionType
     ) -> Dict[str, Any]:
-        """Analyze content alignment with legal precedents"""
+        """
+Analyze content alignment with legal precedents"""
         # This would integrate with a legal database
         return {
             "alignment_score": 85.0,
@@ -2014,7 +2031,8 @@ class ContentAnalysisEngine:
     """
     
     async def analyze_content_quality(self, content: str) -> Dict[str, Any]:
-        """Perform AI-powered content quality analysis"""
+        """
+Perform AI-powered content quality analysis"""
         return {
             "quality_score": 88.5,
             "professional_language_score": 92.0,
@@ -2036,7 +2054,8 @@ class ContentAnalysisEngine:
         """Configure Jinja2 environment with legal-specific filters"""
         
         def format_legal_date(date_obj: datetime) -> str:
-            """Format date for legal documents"""
+            """
+Format date for legal documents"""
             if not date_obj:
                 return "Not specified"
             return date_obj.strftime("%B %d, %Y")
@@ -2116,7 +2135,8 @@ class ContentAnalysisEngine:
     def generate_notice(self, 
                        context: TemplateContext,
                        validate_legal: bool = True) -> Dict[str, Any]:
-        """Generate professional DMCA notice with legal validation"""
+        """
+Generate professional DMCA notice with legal validation"""
         
         try:
             # Select appropriate template
@@ -2219,7 +2239,8 @@ class ContentAnalysisEngine:
         }
     
     def _get_legal_references(self, jurisdiction: JurisdictionType) -> List[Dict[str, str]]:
-        """Get relevant legal references for jurisdiction"""
+        """
+Get relevant legal references for jurisdiction"""
         
         references = {
             JurisdictionType.US_FEDERAL: [
@@ -2251,7 +2272,8 @@ class ContentAnalysisEngine:
         return references.get(jurisdiction, [])
     
     def _format_evidence_summary(self, context: TemplateContext) -> str:
-        """Format evidence summary for legal document"""
+        """
+Format evidence summary for legal document"""
         
         evidence_points = []
         
@@ -2314,7 +2336,8 @@ class ContentAnalysisEngine:
     
     def _get_standard_takedown_template(self) -> str:
         """Standard DMCA takedown notice template"""
-        return """Subject: DMCA Takedown Notice - Copyright Infringement Claim
+        return """
+Subject: DMCA Takedown Notice - Copyright Infringement Claim
 
 To Whom It May Concern:
 
@@ -2417,12 +2440,14 @@ This notice is submitted in good faith and with the understanding that misrepres
 
 ---
 Generated by IA-Influencer-Agent DMCA System v2.0
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
         """
     
     def _get_urgent_takedown_template(self) -> str:
-        """Urgent DMCA takedown notice template"""
-        return """Subject: URGENT DMCA Takedown Notice - Immediate Action Required
+        """
+Urgent DMCA takedown notice template"""
+        return """
+Subject: URGENT DMCA Takedown Notice - Immediate Action Required
 
 **⚠️ URGENT - IMMEDIATE ACTION REQUIRED ⚠️**
 
@@ -2461,8 +2486,10 @@ Please contact us immediately upon receipt at {{ authorized_agent.email }} or {{
         """
     
     def _get_counter_notice_template(self) -> str:
-        """Counter-notice response template"""
-        return """Subject: DMCA Counter-Notice Response - {{ notice_id }}
+        """
+Counter-notice response template"""
+        return """
+Subject: DMCA Counter-Notice Response - {{ notice_id }}
 
 Dear {{ counter_notice_sender }},
 
@@ -2498,8 +2525,10 @@ As permitted under Section 512(g) of the DMCA, we hereby notify you of our inten
         """
     
     def _get_formal_escalation_template(self) -> str:
-        """Formal escalation notice template"""
-        return """Subject: DMCA Compliance Escalation - Failure to Respond
+        """
+Formal escalation notice template"""
+        return """
+Subject: DMCA Compliance Escalation - Failure to Respond
 
 To Whom It May Concern:
 
@@ -2539,8 +2568,10 @@ We demand immediate removal of the infringing content and written confirmation w
         """
     
     def _get_legal_escalation_template(self) -> str:
-        """Legal threat escalation template"""
-        return """Subject: NOTICE OF INTENT TO PURSUE LEGAL ACTION - DMCA Non-Compliance
+        """
+Legal threat escalation template"""
+        return """
+Subject: NOTICE OF INTENT TO PURSUE LEGAL ACTION - DMCA Non-Compliance
 
 To Whom It May Concern:
 
@@ -2574,7 +2605,8 @@ We remain open to resolving this matter without litigation. Please contact our l
         """
     
     def _get_compliance_report_template(self) -> str:
-        """Compliance report template"""
+        """
+Compliance report template"""
         return """**DMCA COMPLIANCE REPORT**
 {{ notice_id }}
 Generated: {{ notice_date | legal_date }}
@@ -2595,8 +2627,10 @@ Generated: {{ notice_date | legal_date }}
         """
     
     def _get_settlement_offer_template(self) -> str:
-        """Settlement offer template"""
-        return """Subject: Settlement Offer - Copyright Infringement Resolution
+        """
+Settlement offer template"""
+        return """
+Subject: Settlement Offer - Copyright Infringement Resolution
 
 Dear {{ infringing_party }},
 
@@ -2614,8 +2648,10 @@ This offer remains open for {{ settlement_deadline | legal_date }}.
         """
     
     def _get_cease_desist_template(self) -> str:
-        """Cease and desist template"""
-        return """Subject: CEASE AND DESIST - Copyright Infringement
+        """
+Cease and desist template"""
+        return """
+Subject: CEASE AND DESIST - Copyright Infringement
 
 {{ infringing_party_name }}:
 
@@ -2635,13 +2671,15 @@ Failure to comply will result in immediate legal action seeking maximum damages 
 **URGENT LEGAL MATTER - IMMEDIATE COMPLIANCE REQUIRED**
         """
 class LegalComplianceValidator:
-    """Legal compliance validation for DMCA notices"""
+    """
+Legal compliance validation for DMCA notices"""
     
     def __init__(self):
         self.validation_rules = self._load_validation_rules()
     
     def validate_notice(self, content: str, context: TemplateContext) -> LegalValidationResult:
-        """Validate DMCA notice for legal compliance"""
+        """
+Validate DMCA notice for legal compliance"""
         
         issues = []
         recommendations = []
@@ -2744,17 +2782,20 @@ def create_notice_generator() -> ProfessionalTemplateEngine:
 
 
 def create_advanced_template_processor() -> AdvancedTemplateProcessor:
-    """Create advanced template processor with AI features"""
+    """
+Create advanced template processor with AI features"""
     return AdvancedTemplateProcessor()
 
 
 def create_legal_compliance_validator() -> LegalComplianceValidator:
-    """Create comprehensive legal compliance validator"""
+    """
+Create comprehensive legal compliance validator"""
     return LegalComplianceValidator()
 
 
 def create_evidence_integrator() -> EvidenceIntegrator:
-    """Create evidence integration system"""
+    """
+Create evidence integration system"""
     return EvidenceIntegrator()
 
 

@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -48,7 +49,9 @@ from ...monitoring.notifications import AIInsightsNotificationManager
 
 
 class InsightType(Enum):
-    """Types of AI insights"""
+    """
+Types of AI insights"""
+
     PERFORMANCE_PREDICTION = "performance_prediction"
     ANOMALY_DETECTION = "anomaly_detection"
     PATTERN_RECOGNITION = "pattern_recognition"
@@ -61,6 +64,7 @@ class InsightType(Enum):
 
 class AnomalyType(Enum):
     """Types of anomalies detected"""
+
     PERFORMANCE_DEGRADATION = "performance_degradation"
     UNUSUAL_QUERY_PATTERN = "unusual_query_pattern"
     RESOURCE_SPIKE = "resource_spike"
@@ -72,6 +76,7 @@ class AnomalyType(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for predictions"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -96,7 +101,8 @@ class AIInsight:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'insight_id': self.insight_id,
             'timestamp': self.timestamp.isoformat(),
@@ -116,7 +122,8 @@ class AIInsight:
 
 @dataclass
 class AnomalyDetection:
-    """Anomaly detection result"""
+    """
+Anomaly detection result"""
     anomaly_id: str
     timestamp: datetime
     anomaly_type: AnomalyType
@@ -129,7 +136,8 @@ class AnomalyDetection:
     recommended_actions: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'anomaly_id': self.anomaly_id,
             'timestamp': self.timestamp.isoformat(),
@@ -146,7 +154,8 @@ class AnomalyDetection:
 
 @dataclass
 class PredictionResult:
-    """Performance prediction result"""
+    """
+Performance prediction result"""
     prediction_id: str
     timestamp: datetime
     target_metric: str
@@ -175,7 +184,8 @@ class PredictionResult:
 
 
 class DatabaseAIInsights:
-    """Advanced AI-powered database insights system"""
+    """
+Advanced AI-powered database insights system"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
@@ -206,7 +216,8 @@ class DatabaseAIInsights:
         asyncio.create_task(self._initialize_ml_models())
         
     async def _initialize_ml_models(self):
-        """Initialize machine learning models"""
+        """
+Initialize machine learning models"""
         try:
             # Initialize anomaly detection models
             self.models['performance_anomaly'] = IsolationForest(
@@ -1238,29 +1249,34 @@ class PredictiveAnalyzer:
         self.logger = logging.getLogger(__name__)
         
     async def predict_performance_degradation(self, metrics: List[Dict]) -> Dict[str, Any]:
-        """Predict potential performance degradation"""
+        """
+Predict potential performance degradation"""
         # Implementation for performance degradation prediction
         pass
         
     async def forecast_capacity_needs(self, usage_trends: List[Dict]) -> Dict[str, Any]:
-        """Forecast future capacity requirements"""
+        """
+Forecast future capacity requirements"""
         # Implementation for capacity forecasting
         pass
 
 
 class AnomalyDetector:
-    """Advanced anomaly detection engine"""
+    """
+Advanced anomaly detection engine"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def detect_performance_anomalies(self, metrics: List[Dict]) -> List[AnomalyDetection]:
-        """Detect performance anomalies"""
+        """
+Detect performance anomalies"""
         # Implementation for performance anomaly detection
         pass
         
     async def detect_security_anomalies(self, security_events: List[Dict]) -> List[AnomalyDetection]:
-        """Detect security anomalies"""
+        """
+Detect security anomalies"""
         # Implementation for security anomaly detection
         pass

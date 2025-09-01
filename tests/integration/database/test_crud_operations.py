@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Database Integration Tests - CRUD Operations
+"""
+Database Integration Tests - CRUD Operations
 
 Tests database operations including create, read, update, delete
 operations across all models with proper transaction handling.
@@ -20,6 +22,7 @@ operations across all models with proper transaction handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -105,7 +108,8 @@ async def test_session(test_engine):
 
 @pytest.fixture
 async def sample_user(test_session):
-    """Create a sample user for testing."""
+    """
+Create a sample user for testing."""
     user = User(
         id=str(uuid.uuid4())[:32],
         email=f"test_{uuid.uuid4()}@example.com",
@@ -131,7 +135,8 @@ class TestUserCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_create_user(self, test_session):
-        """Test creating a new user."""
+        """
+Test creating a new user."""
         user_data = {
             "id": str(uuid.uuid4())[:32],
             "email": f"create_test_{uuid.uuid4()}@example.com",
@@ -186,7 +191,8 @@ class TestUserCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_update_user(self, test_session, sample_user):
-        """Test updating a user."""
+        """
+Test updating a user."""
         original_updated_at = sample_user.updated_at
         
         # Update user data
@@ -234,7 +240,8 @@ class TestUserCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_user_unique_constraints(self, test_session, sample_user):
-        """Test unique constraints on user email and username."""
+        """
+Test unique constraints on user email and username."""
         # Try to create user with same email
         duplicate_email_user = User(
             id=str(uuid.uuid4())[:32],
@@ -278,7 +285,8 @@ class TestContentCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_create_content(self, test_session, sample_user):
-        """Test creating content associated with a user."""
+        """
+Test creating content associated with a user."""
         content_data = {
             "id": str(uuid.uuid4()),
             "user_id": sample_user.id,
@@ -362,7 +370,8 @@ class TestTransactionHandling:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_transaction_rollback(self, test_session):
-        """Test transaction rollback functionality."""
+        """
+Test transaction rollback functionality."""
         # Count initial users
         initial_result = await test_session.execute(select(User))
         initial_count = len(initial_result.all())
@@ -455,7 +464,8 @@ class TestDataIntegrityAndConstraints:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_required_fields(self, test_session):
-        """Test that required fields are enforced."""
+        """
+Test that required fields are enforced."""
         # Try to create user without required fields
         incomplete_user = User(
             id=str(uuid.uuid4())[:32],
@@ -470,7 +480,8 @@ class TestDataIntegrityAndConstraints:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_data_type_validation(self, test_session):
-        """Test data type validation."""
+        """
+Test data type validation."""
         # Try to create user with invalid data types
         with pytest.raises(Exception):
             invalid_user = User(

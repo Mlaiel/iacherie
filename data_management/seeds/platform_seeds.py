@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(str, Enum):
-    """Types of external platforms integrated."""
+    """
+Types of external platforms integrated."""
+
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     AUDIO_PLATFORM = "audio_platform"
@@ -34,6 +37,7 @@ class PlatformType(str, Enum):
 
 class IntegrationType(str, Enum):
     """Type of integration with external platforms."""
+
     API_INTEGRATION = "api_integration"
     WEBHOOK_INTEGRATION = "webhook_integration"
     OAUTH_INTEGRATION = "oauth_integration"
@@ -48,6 +52,7 @@ class IntegrationType(str, Enum):
 
 class AuthenticationType(str, Enum):
     """Authentication methods for platform integration."""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT_TOKEN = "jwt_token"
@@ -60,6 +65,7 @@ class AuthenticationType(str, Enum):
 
 class DataSyncFrequency(str, Enum):
     """Data synchronization frequencies."""
+
     REAL_TIME = "real_time"
     EVERY_MINUTE = "every_minute"
     EVERY_5_MINUTES = "every_5_minutes"
@@ -72,6 +78,7 @@ class DataSyncFrequency(str, Enum):
 
 class PlatformStatus(str, Enum):
     """Platform integration status."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -99,7 +106,8 @@ class PlatformConfiguration:
 
 @dataclass 
 class ApiEndpointConfig:
-    """API endpoint configuration."""
+    """
+API endpoint configuration."""
     endpoint_name: str
     method: str
     url_pattern: str
@@ -128,7 +136,8 @@ class PlatformSeedsManager:
     """
     
     def __init__(self):
-        """Initialize platform seeds manager with enterprise configurations."""
+        """
+Initialize platform seeds manager with enterprise configurations."""
         self.platform_configurations = {}
         self.api_endpoints = {}
         self.authentication_configs = {}
@@ -141,7 +150,8 @@ class PlatformSeedsManager:
         self.content_format_mappings = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all platform integration seed data with full enterprise support."""
+        """
+Initialize all platform integration seed data with full enterprise support."""
         logger.info("Initializing comprehensive platform integration seeds data...")
         start_time = datetime.now(timezone.utc)
         
@@ -755,7 +765,8 @@ class PlatformSeedsManager:
         }
     
     async def _initialize_api_configurations(self) -> Dict[str, Any]:
-        """Initialize API endpoint configurations for external platforms."""
+        """
+Initialize API endpoint configurations for external platforms."""
         api_configs = {
             'youtube_api': {
                 'base_url': 'https://www.googleapis.com/youtube/v3',
@@ -865,7 +876,8 @@ class PlatformSeedsManager:
         }
     
     async def _initialize_authentication_configurations(self) -> Dict[str, Any]:
-        """Initialize authentication configurations for platform integrations."""
+        """
+Initialize authentication configurations for platform integrations."""
         auth_configs = {
             'oauth2_configurations': {
                 'youtube': {
@@ -979,7 +991,8 @@ class PlatformSeedsManager:
         }
     
     async def _initialize_sync_configurations(self) -> Dict[str, Any]:
-        """Initialize data synchronization configurations between platforms."""
+        """
+Initialize data synchronization configurations between platforms."""
         sync_configs = {
             'content_synchronization': {
                 'youtube_to_platforms': {
@@ -1071,7 +1084,8 @@ class PlatformSeedsManager:
         }
     
     async def _initialize_content_distribution(self) -> Dict[str, Any]:
-        """Initialize content distribution rules and strategies."""
+        """
+Initialize content distribution rules and strategies."""
         distribution_configs = {
             'distribution_strategies': {
                 'waterfall_distribution': {
@@ -1157,7 +1171,8 @@ class PlatformSeedsManager:
         }
     
     async def _initialize_rate_limiting(self) -> Dict[str, Any]:
-        """Initialize rate limiting configurations for API calls."""
+        """
+Initialize rate limiting configurations for API calls."""
         rate_limits = {
             'platform_rate_limits': {
                 'youtube_api': {
@@ -1234,7 +1249,8 @@ class PlatformSeedsManager:
         }
     
     async def _initialize_webhook_configurations(self) -> Dict[str, Any]:
-        """Initialize webhook configurations for real-time platform updates."""
+        """
+Initialize webhook configurations for real-time platform updates."""
         webhook_configs = {
             'webhook_endpoints': {
                 'youtube_webhooks': {
@@ -1323,7 +1339,8 @@ class PlatformSeedsManager:
         }
     
     async def _initialize_platform_features(self) -> Dict[str, Any]:
-        """Initialize platform-specific features and capabilities."""
+        """
+Initialize platform-specific features and capabilities."""
         platform_features = {
             'social_media_features': {
                 'content_scheduling': {
@@ -1411,7 +1428,8 @@ class PlatformSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all platform integration seed data (use with caution)."""
+        """
+Reset all platform integration seed data (use with caution)."""
         logger.warning("Resetting platform integration seeds data...")
         
         self.platform_configurations.clear()

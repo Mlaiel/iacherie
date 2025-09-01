@@ -5,12 +5,13 @@ Real-time analytics processing and streaming for live content performance monito
 Provides instant insights, alerts, and recommendations for content optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
 
 
 class MetricType(Enum):
-    """Real-time metric types"""
+    """
+Real-time metric types"""
+
     VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
@@ -48,6 +51,7 @@ class MetricType(Enum):
 
 class AlertType(Enum):
     """Alert types for real-time monitoring"""
+
     VIRAL_CONTENT = "viral_content"
     ENGAGEMENT_SPIKE = "engagement_spike"
     REVENUE_MILESTONE = "revenue_milestone"
@@ -60,6 +64,7 @@ class AlertType(Enum):
 
 class StreamingPlatform(Enum):
     """Streaming platforms for real-time data"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -86,7 +91,8 @@ class RealTimeMetric:
 
 @dataclass
 class RealTimeAlert:
-    """Real-time alert notification"""
+    """
+Real-time alert notification"""
     alert_id: str
     user_id: str
     alert_type: AlertType
@@ -114,7 +120,8 @@ class LiveDashboardData:
 
 @dataclass
 class StreamingEvent:
-    """Real-time streaming event"""
+    """
+Real-time streaming event"""
     event_id: str
     user_id: str
     event_type: str

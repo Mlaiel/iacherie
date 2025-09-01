@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -47,7 +48,9 @@ from ...integrations.ai.contract_ai import ContractAnalysisAI
 logger = logging.getLogger(__name__)
 
 class ContractType(Enum):
-    """Types of license contracts"""
+    """
+Types of license contracts"""
+
     MUSIC_LICENSE = "music_license"
     VIDEO_LICENSE = "video_license"
     IMAGE_LICENSE = "image_license"
@@ -66,6 +69,7 @@ class ContractType(Enum):
 
 class ContractTemplate(Enum):
     """Available contract templates"""
+
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -77,6 +81,7 @@ class ContractTemplate(Enum):
 
 class DocumentFormat(Enum):
     """Output document formats"""
+
     PDF = "pdf"
     DOCX = "docx"
     HTML = "html"
@@ -129,7 +134,8 @@ class ContractGenerationRequest:
 
 @dataclass
 class GeneratedContract:
-    """Generated contract with metadata"""
+    """
+Generated contract with metadata"""
     contract_id: str
     contract_type: ContractType
     template_used: str
@@ -620,7 +626,8 @@ class LicenseGenerator:
         return html_content.encode('utf-8')
 
     async def _generate_smart_contract(self, contract_content: Dict[str, Any]) -> bytes:
-        """Generate Solidity smart contract"""
+        """
+Generate Solidity smart contract"""
         # This would generate actual smart contract code
         smart_contract_code = f"""
         // SPDX-License-Identifier: MIT
@@ -637,7 +644,8 @@ class LicenseGenerator:
         return smart_contract_code.encode('utf-8')
 
     def _calculate_contract_expiry(self, duration: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate contract expiry date"""
+        """
+Calculate contract expiry date"""
         if not duration:
             return None
         
@@ -663,7 +671,8 @@ class LicenseGenerator:
         return min(weighted_sum, 1.0)
 
     def _categorize_risk_level(self, risk_score: float) -> str:
-        """Categorize risk level based on score"""
+        """
+Categorize risk level based on score"""
         if risk_score < 0.3:
             return "LOW"
         elif risk_score < 0.6:
@@ -774,6 +783,7 @@ class ContractAutomator:
 
 class ClauseType(Enum):
     """Types of contract clauses"""
+
     GRANT_OF_RIGHTS = "grant_of_rights"
     TERRITORY = "territory"
     DURATION = "duration"
@@ -805,7 +815,8 @@ class ContractTemplate:
 
 @dataclass
 class ContractParameters:
-    """Parameters for contract generation"""
+    """
+Parameters for contract generation"""
     licensor_info: Dict[str, Any]
     licensee_info: Dict[str, Any]
     content_details: Dict[str, Any]
@@ -818,7 +829,8 @@ class ContractParameters:
 
 @dataclass
 class GeneratedContract:
-    """Generated contract result"""
+    """
+Generated contract result"""
     contract_id: str
     template_id: str
     contract_type: ContractType
@@ -1226,7 +1238,8 @@ class LicenseGenerator:
         self.clause_sets = await self.clause_library.load_clauses()
 
     async def _load_jurisdiction_rules(self):
-        """Load jurisdiction-specific legal rules"""
+        """
+Load jurisdiction-specific legal rules"""
         self.jurisdiction_rules = {
             "EU": {
                 "required_clauses": ["governing_law", "dispute_resolution"],
@@ -1268,7 +1281,8 @@ class ContractAutomator:
         self,
         workflow_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Automate entire contract generation and approval workflow with multi-stage processing"""
+        """
+Automate entire contract generation and approval workflow with multi-stage processing"""
         try:
             workflow_id = str(uuid.uuid4())
             logger.info(f"Starting automated contract workflow {workflow_id}")

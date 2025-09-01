@@ -5,12 +5,13 @@ Advanced performance tracking system with real-time monitoring, predictive analy
 and comprehensive reporting for campaign effectiveness measurement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -30,7 +31,9 @@ from backend.utils.data_aggregator import DataAggregator
 
 
 class MetricType(str, Enum):
-    """Performance metric types"""
+    """
+Performance metric types"""
+
     REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
@@ -46,6 +49,7 @@ class MetricType(str, Enum):
 
 class TrackingFrequency(str, Enum):
     """Performance tracking frequencies"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -55,6 +59,7 @@ class TrackingFrequency(str, Enum):
 
 class AlertLevel(str, Enum):
     """Performance alert levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -76,7 +81,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert information"""
+    """
+Performance alert information"""
     alert_id: str
     campaign_id: str
     metric_type: MetricType
@@ -91,7 +97,8 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data"""
+    """
+Performance benchmark data"""
     campaign_type: str
     industry: str
     benchmarks: Dict[MetricType, Dict[str, float]]
@@ -102,7 +109,8 @@ class PerformanceBenchmark:
 
 @dataclass
 class PerformanceInsight:
-    """AI-generated performance insight"""
+    """
+AI-generated performance insight"""
     insight_id: str
     campaign_id: str
     insight_type: str
@@ -709,7 +717,8 @@ class PerformanceTracker:
         campaign_id: str,
         metric_type: MetricType
     ) -> Optional[float]:
-        """Get previous value for a metric"""
+        """
+Get previous value for a metric"""
         if campaign_id not in self._performance_data:
             return None
         

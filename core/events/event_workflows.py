@@ -5,7 +5,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
 Contact autorisations : mlaiel@live.de
@@ -17,6 +17,7 @@ Description:
     - Orchestration collaboration et matching
     - Gestion des processus de takedown et revenus
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Statut d'un workflow"""
+    """
+Statut d'un workflow"""
+
     PENDING = "pending"
     RUNNING = "running"
     WAITING = "waiting"  # En attente d'événement
@@ -47,6 +50,7 @@ class WorkflowStatus(Enum):
 
 class StepStatus(Enum):
     """Statut d'une étape de workflow"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -57,6 +61,7 @@ class StepStatus(Enum):
 
 class StepType(Enum):
     """Types d'étapes de workflow"""
+
     ACTION = "action"  # Exécution d'une action
     WAIT_EVENT = "wait_event"  # Attente d'un événement
     CONDITION = "condition"  # Vérification de condition
@@ -198,7 +203,8 @@ class WorkflowDefinition:
         return self
     
     def validate(self) -> List[str]:
-        """Valide la définition du workflow"""
+        """
+Valide la définition du workflow"""
         errors = []
         
         if not self.start_step:
@@ -242,14 +248,16 @@ class WorkflowStepExecutor(ABC):
 
 
 class ActionStepExecutor(WorkflowStepExecutor):
-    """Exécuteur pour les étapes d'action"""
+    """
+Exécuteur pour les étapes d'action"""
     
     def __init__(self, event_bus: EventBus):
         self.event_bus = event_bus
         self.actions: Dict[str, Callable] = {}
     
     def register_action(self, action_name: str, handler: Callable):
-        """Enregistre une action"""
+        """
+Enregistre une action"""
         self.actions[action_name] = handler
     
     async def execute(
@@ -258,7 +266,8 @@ class ActionStepExecutor(WorkflowStepExecutor):
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Exécute une action"""
+        """
+Exécute une action"""
         action_name = step.config.get("action")
         if not action_name:
             return False, {"error": "No action specified"}
@@ -319,7 +328,8 @@ class WaitEventStepExecutor(WorkflowStepExecutor):
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Configure l'attente d'événement"""
+        """
+Configure l'attente d'événement"""
         event_type = step.config.get("event_type")
         if not event_type:
             return False, {"error": "No event type specified"}
@@ -433,7 +443,8 @@ class WorkflowEngine:
         tenant_id: Optional[str] = None,
         correlation_id: Optional[str] = None
     ) -> Optional[str]:
-        """Démarre une instance de workflow"""
+        """
+Démarre une instance de workflow"""
         if workflow_id not in self.definitions:
             logger.error("Unknown workflow: %s", workflow_id)
             return None
@@ -621,7 +632,8 @@ class WorkflowEngine:
         return step.next_steps[0]
     
     async def _handle_event(self, event: Event):
-        """Gère les événements pour les workflows en attente"""
+        """
+Gère les événements pour les workflows en attente"""
         # Vérification des déclencheurs de nouveaux workflows
         await self._check_workflow_triggers(event)
         
@@ -629,7 +641,8 @@ class WorkflowEngine:
         await self._check_waiting_workflows(event)
     
     async def _check_workflow_triggers(self, event: Event):
-        """Vérifie si l'événement déclenche de nouveaux workflows"""
+        """
+Vérifie si l'événement déclenche de nouveaux workflows"""
         for definition in self.definitions.values():
             if not definition.enabled:
                 continue
@@ -706,14 +719,16 @@ class WorkflowEngine:
         return self.instances.get(instance_id)
     
     def get_instances_by_workflow(self, workflow_id: str) -> List[WorkflowInstance]:
-        """Retourne toutes les instances d'un workflow"""
+        """
+Retourne toutes les instances d'un workflow"""
         return [
             instance for instance in self.instances.values()
             if instance.workflow_id == workflow_id
         ]
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques"""
+        """
+Retourne les statistiques"""
         return {
             "stats": self.stats.copy(),
             "definitions_count": len(self.definitions),

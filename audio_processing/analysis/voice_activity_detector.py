@@ -4,8 +4,9 @@ Professional voice activity detection engine for speech/music discrimination,
 vocal segment identification, and voice quality analysis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple
@@ -15,7 +16,8 @@ import librosa
 
 @dataclass
 class VoiceSegment:
-    """Voice activity segment"""
+    """
+Voice activity segment"""
     start_time: float
     end_time: float
     confidence: float
@@ -23,7 +25,8 @@ class VoiceSegment:
 
 
 class VoiceActivityDetector:
-    """Professional voice activity detection engine"""
+    """
+Professional voice activity detection engine"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)

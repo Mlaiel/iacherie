@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, List, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -21,7 +22,9 @@ import os
 
 
 class DetectionMode(str, Enum):
-    """Detection operation modes."""
+    """
+Detection operation modes."""
+
     REALTIME = "realtime"
     BATCH = "batch"
     HYBRID = "hybrid"
@@ -29,6 +32,7 @@ class DetectionMode(str, Enum):
 
 class DetectionLevel(str, Enum):
     """Detection sensitivity levels."""
+
     LOW = "low"          # Basic detection, high performance
     MEDIUM = "medium"    # Balanced detection and performance
     HIGH = "high"        # Maximum detection accuracy
@@ -37,6 +41,7 @@ class DetectionLevel(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categories for detection."""
+
     MUSIC = "music"
     PODCAST = "podcast"
     VOICE = "voice"
@@ -124,7 +129,8 @@ class VideoDetectionConfig:
 
 @dataclass
 class ImageDetectionConfig:
-    """Image content detection configuration."""
+    """
+Image content detection configuration."""
     engines: List[DetectionEngine] = field(default_factory=lambda: [
         DetectionEngine.CLIP, DetectionEngine.RESNET
     ])
@@ -179,7 +185,8 @@ class RealTimeConfig:
 
 @dataclass
 class BatchConfig:
-    """Batch processing configuration."""
+    """
+Batch processing configuration."""
     batch_size: int = 32
     max_batch_duration_minutes: int = 60
     enable_parallel_processing: bool = True
@@ -192,7 +199,8 @@ class BatchConfig:
 
 @dataclass
 class MachineLearningConfig:
-    """Machine learning models configuration."""
+    """
+Machine learning models configuration."""
     model_precision: str = "fp16"  # fp32, fp16, int8
     enable_gpu_acceleration: bool = True
     model_caching: bool = True

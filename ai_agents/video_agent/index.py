@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -115,20 +116,23 @@ class VideoAgentIndex:
     
     async def convert_video(self, input_path: str, output_format: str, 
                           preset: str = None, **kwargs) -> Dict[str, Any]:
-        """Convert video to different format"""
+        """
+Convert video to different format"""
         return await self.format_converter.convert_video(
             input_path, output_format, preset=preset, **kwargs
         )
     
     async def compress_video(self, input_path: str, target_size_mb: float = None, 
                            target_quality: str = None, **kwargs) -> Dict[str, Any]:
-        """Optimize video compression"""
+        """
+Optimize video compression"""
         return await self.compression_optimizer.optimize_compression(
             input_path, target_size_mb, target_quality, **kwargs
         )
     
     async def generate_video(self, generation_type: str, **kwargs) -> Dict[str, Any]:
-        """Generate video using AI"""
+        """
+Generate video using AI"""
         if generation_type == "text_to_video":
             return await self.ai_generator.generate_video_from_text(**kwargs)
         elif generation_type == "images_to_video":
@@ -145,11 +149,13 @@ class VideoAgentIndex:
     
     async def process_video(self, input_path: str, operations: List[str], 
                           **kwargs) -> Dict[str, Any]:
-        """Process video with multiple operations"""
+        """
+Process video with multiple operations"""
         return await self.video_processor.process_video(input_path, operations, **kwargs)
     
     async def batch_process(self, jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Process multiple video jobs in batch"""
+        """
+Process multiple video jobs in batch"""
         results = []
         
         # Group jobs by type for efficient processing
@@ -199,7 +205,8 @@ class VideoAgentIndex:
         )
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get list of supported input and output formats"""
+        """
+Get list of supported input and output formats"""
         return {
             "input_formats": [
                 "mp4", "avi", "mov", "wmv", "flv", "mkv", "webm", "m4v",
@@ -297,7 +304,8 @@ async def enhance_video(input_path: str, enhancements: List[str],
 
 async def convert_video(input_path: str, output_format: str, 
                        preset: str = None) -> Dict[str, Any]:
-    """Quick video conversion function"""
+    """
+Quick video conversion function"""
     index = VideoAgentIndex()
     try:
         return await index.convert_video(input_path, output_format, preset)

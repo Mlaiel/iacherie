@@ -7,6 +7,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, reprod
 or distribution without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from backend.deployment.infrastructure.container_orchestration import ContainerO
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy types"""
+    """
+Deployment strategy types"""
+
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING = "rolling"
@@ -36,6 +39,7 @@ class DeploymentStrategy(Enum):
 
 class DeploymentEnvironment(Enum):
     """Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -45,6 +49,7 @@ class DeploymentEnvironment(Enum):
 
 class DeploymentStatus(Enum):
     """Deployment status indicators"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
@@ -78,7 +83,8 @@ class DeploymentConfig:
 
 @dataclass
 class DeploymentResult:
-    """Deployment execution result"""
+    """
+Deployment execution result"""
     deployment_id: str
     status: DeploymentStatus
     started_at: datetime
@@ -123,7 +129,8 @@ class DeploymentOrchestrator:
         self.health_checkers: Dict[str, Callable] = {}
     
     async def initialize(self) -> None:
-        """Initialize deployment orchestrator"""
+        """
+Initialize deployment orchestrator"""
         try:
             self.logger.info("Initializing deployment orchestrator")
             
@@ -345,7 +352,8 @@ class DeploymentOrchestrator:
         return sorted(filtered_deployments, key=lambda x: x.started_at, reverse=True)
     
     async def _execute_deployment_strategy(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Execute deployment using specified strategy"""
+        """
+Execute deployment using specified strategy"""
         handler = self.strategy_handlers.get(config.strategy)
         if not handler:
             raise DeploymentError(f"Unsupported deployment strategy: {config.strategy}")
@@ -560,12 +568,14 @@ class DeploymentOrchestrator:
         pass
     
     async def _register_health_checkers(self) -> None:
-        """Register custom health check functions"""
+        """
+Register custom health check functions"""
         # Implementation for registering health checkers
         pass
     
     def _find_deployment_in_history(self, deployment_id: str) -> Optional[DeploymentResult]:
-        """Find deployment in history by ID"""
+        """
+Find deployment in history by ID"""
         for deployment in self.deployment_history:
             if deployment.deployment_id == deployment_id:
                 return deployment
@@ -573,26 +583,31 @@ class DeploymentOrchestrator:
     
     async def _create_rollback_config(self, deployment: DeploymentResult, 
                                     target_version: Optional[str]) -> DeploymentConfig:
-        """Create rollback configuration"""
+        """
+Create rollback configuration"""
         # Implementation for creating rollback configuration
         pass
     
     async def _verify_green_environment_health(self, deployment_id: str) -> None:
-        """Verify green environment health in blue-green deployment"""
+        """
+Verify green environment health in blue-green deployment"""
         # Implementation for green environment health verification
         pass
     
     async def _monitor_canary_deployment(self, deployment_id: str, duration: timedelta) -> None:
-        """Monitor canary deployment for specified duration"""
+        """
+Monitor canary deployment for specified duration"""
         # Implementation for canary monitoring
         pass
     
     async def _gradually_increase_canary_traffic(self, service_name: str, canary_deployment_id: str) -> None:
-        """Gradually increase canary traffic if healthy"""
+        """
+Gradually increase canary traffic if healthy"""
         # Implementation for gradual traffic increase
         pass
     
     async def _get_previous_successful_version(self, service_name: str) -> Optional[str]:
-        """Get previous successful deployment version"""
+        """
+Get previous successful deployment version"""
         # Implementation for finding previous successful version
         return None

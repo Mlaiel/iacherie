@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,9 +13,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Performance and Load Tests for Production Readiness
+"""
+Performance and Load Tests for Production Readiness
 Ensures system can handle production workloads efficiently
 """
+
 import pytest
 import sys
 import os
@@ -27,11 +30,13 @@ import json
 
 
 class TestPerformanceBenchmarks:
-    """Performance benchmark tests for critical components"""
+    """
+Performance benchmark tests for critical components"""
     
     @pytest.mark.asyncio
     async def test_concurrent_uploads_performance(self):
-        """Test concurrent content upload performance"""
+        """
+Test concurrent content upload performance"""
         upload_count = 10
         max_concurrent = 5
         
@@ -138,7 +143,8 @@ class TestScalabilityTests:
     
     @pytest.mark.asyncio
     async def test_user_load_scaling(self):
-        """Test system behavior under increasing user load"""
+        """
+Test system behavior under increasing user load"""
         user_loads = [10, 50, 100, 200]
         max_response_degradation = 2.0  # Max 2x slower under high load
         
@@ -218,7 +224,8 @@ class TestCachePerformance:
     """Cache performance and efficiency tests"""
     
     def test_cache_hit_ratio(self):
-        """Test cache hit ratio performance"""
+        """
+Test cache hit ratio performance"""
         cache = {}  # Simple dict cache for testing
         cache_hits = 0
         cache_misses = 0
@@ -295,7 +302,8 @@ class TestDatabasePerformance:
     """Database performance tests"""
     
     def test_connection_pooling_efficiency(self):
-        """Test database connection pooling efficiency"""
+        """
+Test database connection pooling efficiency"""
         pool_size = 5
         active_connections = []
         available_connections = list(range(pool_size))
@@ -330,7 +338,8 @@ class TestDatabasePerformance:
         assert len(active_connections) == 0
     
     def test_query_optimization(self):
-        """Test query optimization strategies"""
+        """
+Test query optimization strategies"""
         # Mock query execution times
         queries = {
             "SELECT * FROM users": 0.1,  # Unoptimized
@@ -377,7 +386,8 @@ class TestResourceUtilization:
     """Resource utilization tests"""
     
     def test_cpu_utilization_efficiency(self):
-        """Test CPU utilization efficiency"""
+        """
+Test CPU utilization efficiency"""
         import psutil
         
         # Get initial CPU usage
@@ -403,7 +413,8 @@ class TestResourceUtilization:
         assert final_cpu >= 0 and final_cpu <= 100
     
     def test_io_operation_efficiency(self):
-        """Test I/O operation efficiency"""
+        """
+Test I/O operation efficiency"""
         import tempfile
         import os
         

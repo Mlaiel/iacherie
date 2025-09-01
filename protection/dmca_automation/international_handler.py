@@ -7,8 +7,9 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
-Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
+Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import uuid
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class Jurisdiction(Enum):
-    """Supported jurisdictions"""
+    """
+Supported jurisdictions"""
+
     US = "US"          # United States (DMCA)
     EU = "EU"          # European Union (GDPR, DSA)
     UK = "UK"          # United Kingdom (Copyright Act)
@@ -48,6 +51,7 @@ class Jurisdiction(Enum):
 
 class LegalFramework(Enum):
     """Legal frameworks and treaties"""
+
     DMCA = "dmca"                    # US Digital Millennium Copyright Act
     EU_DSA = "eu_dsa"               # EU Digital Services Act
     EU_COPYRIGHT = "eu_copyright"    # EU Copyright Directive
@@ -74,7 +78,8 @@ class JurisdictionConfig:
 
 @dataclass
 class InternationalComplianceCheck:
-    """International compliance validation result"""
+    """
+International compliance validation result"""
     jurisdiction: Jurisdiction
     compliant: bool
     missing_requirements: List[str]
@@ -97,7 +102,8 @@ class InternationalHandler:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize international handler"""
+        """
+Initialize international handler"""
         self.config = config or {}
         self.db = get_database()
         self.legal_framework = InternationalLegalFramework(config)
@@ -607,7 +613,8 @@ class InternationalHandler:
         # Additional jurisdictions would be configured similarly...
     
     async def _get_base_notice(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve base notice for internationalization"""
+        """
+Retrieve base notice for internationalization"""
         try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
@@ -645,7 +652,8 @@ class InternationalHandler:
                                               jurisdiction: Jurisdiction,
                                               platform: str,
                                               notice: TakedownNotice) -> Dict[str, Any]:
-        """Check if jurisdiction is compatible with platform and notice"""
+        """
+Check if jurisdiction is compatible with platform and notice"""
         # Check if platform operates in this jurisdiction
         platform_jurisdictions = self.platform_jurisdictions.get(platform, [])
         
@@ -673,7 +681,8 @@ class InternationalHandler:
                                           jurisdiction: Jurisdiction,
                                           platform_requirements: Dict[str, Any],
                                           platform_specific: bool) -> InternationalNotice:
-        """Generate jurisdiction-specific notice"""
+        """
+Generate jurisdiction-specific notice"""
         jurisdiction_config = self.jurisdictions[jurisdiction]
         
         # Translate notice if required
@@ -718,7 +727,8 @@ class InternationalHandler:
                                            content: str,
                                            jurisdiction: Jurisdiction,
                                            config: JurisdictionConfig) -> str:
-        """Adapt notice content for specific jurisdiction requirements"""
+        """
+Adapt notice content for specific jurisdiction requirements"""
         adapted_content = content
         
         # Add jurisdiction-specific legal elements
@@ -751,7 +761,8 @@ class InternationalHandler:
     async def _validate_international_compliance(self, 
                                                notice: InternationalNotice,
                                                jurisdiction: Jurisdiction) -> InternationalComplianceCheck:
-        """Validate notice compliance with international requirements"""
+        """
+Validate notice compliance with international requirements"""
         jurisdiction_config = self.jurisdictions[jurisdiction]
         missing_requirements = []
         recommendations = []

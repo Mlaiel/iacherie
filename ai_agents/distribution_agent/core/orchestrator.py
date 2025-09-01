@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -49,7 +50,9 @@ from ....workflow.state_machine import WorkflowStateMachine
 logger = logging.getLogger(__name__)
 
 class JobPriority(Enum):
-    """Advanced job priority levels with business logic"""
+    """
+Advanced job priority levels with business logic"""
+
     EMERGENCY = 0      # System-critical distributions
     CRITICAL = 1       # Live events, trending content
     HIGH = 2          # Premium users, scheduled campaigns
@@ -58,7 +61,9 @@ class JobPriority(Enum):
     BULK = 5          # Mass distribution operations
 
 class ResourceType(Enum):
-    """System resource types for monitoring"""
+    """
+System resource types for monitoring"""
+
     CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
@@ -68,6 +73,7 @@ class ResourceType(Enum):
 
 class OrchestrationStrategy(Enum):
     """Distribution orchestration strategies"""
+
     IMMEDIATE = "immediate"           # Process immediately
     OPTIMIZED_TIMING = "optimized"    # AI-optimized timing
     BATCH_PROCESSING = "batch"        # Group similar jobs
@@ -89,7 +95,8 @@ class ResourceMetrics:
 
 @dataclass
 class JobExecution:
-    """Job execution tracking and metrics"""
+    """
+Job execution tracking and metrics"""
     job_id: str
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     status: DistributionStatus = DistributionStatus.PENDING
@@ -108,7 +115,8 @@ class JobExecution:
 
 @dataclass
 class WorkerPool:
-    """Distribution worker pool configuration"""
+    """
+Distribution worker pool configuration"""
     pool_id: str
     worker_count: int
     specialization: Optional[str] = None  # e.g., "video", "audio", "social"
@@ -206,7 +214,8 @@ class DistributionOrchestrator:
             self.worker_pools[pool.pool_id] = pool
 
     def _initialize_distribution_engines(self) -> None:
-        """Initialize distribution engines for each worker pool"""
+        """
+Initialize distribution engines for each worker pool"""
         for pool_id, pool in self.worker_pools.items():
             for i in range(pool.worker_count):
                 engine_id = f"{pool_id}_engine_{i}"
@@ -333,7 +342,8 @@ class DistributionOrchestrator:
         return base_time
 
     async def _estimate_job_duration(self, job: DistributionJob) -> float:
-        """Estimate job processing duration using ML models"""
+        """
+Estimate job processing duration using ML models"""
         try:
             # Factors for estimation
             factors = {
@@ -400,7 +410,8 @@ class DistributionOrchestrator:
         await self.job_queue.put((priority, timestamp, execution_id, job))
 
     async def _find_optimal_worker_pool(self, job: DistributionJob) -> Optional[WorkerPool]:
-        """Find the most suitable worker pool for the job"""
+        """
+Find the most suitable worker pool for the job"""
         # Determine job characteristics
         content_type = job.content_metadata.format.lower() if job.content_metadata.format else ""
         
@@ -545,7 +556,8 @@ class DistributionOrchestrator:
         return sum(score_factors)
 
     async def _update_pool_performance(self, pool: WorkerPool, execution: JobExecution) -> None:
-        """Update worker pool performance rating based on job execution"""
+        """
+Update worker pool performance rating based on job execution"""
         if execution.performance_score:
             # Exponential moving average
             alpha = 0.1
@@ -553,7 +565,8 @@ class DistributionOrchestrator:
                                      (1 - alpha) * pool.performance_rating)
 
     async def _schedule_job_retry(self, execution_id: str, job: DistributionJob) -> None:
-        """Schedule intelligent job retry with exponential backoff"""
+        """
+Schedule intelligent job retry with exponential backoff"""
         execution = self.execution_tracker[execution_id]
         execution.retry_count += 1
         
@@ -612,7 +625,8 @@ class DistributionOrchestrator:
         )
 
     async def _check_resource_alerts(self, metrics: ResourceMetrics) -> None:
-        """Check for resource alerts and trigger appropriate actions"""
+        """
+Check for resource alerts and trigger appropriate actions"""
         alerts = []
         
         if metrics.cpu_usage > 85:
@@ -636,7 +650,8 @@ class DistributionOrchestrator:
             await self._scale_down_workers()
 
     async def _scale_up_workers(self) -> None:
-        """Scale up worker capacity"""
+        """
+Scale up worker capacity"""
         # Implementation would add more workers to pools
         logger.info("Scaling up worker capacity")
 
@@ -686,7 +701,8 @@ class DistributionOrchestrator:
         # Additional performance analysis would be implemented here
 
     async def _optimize_worker_pools(self) -> None:
-        """Optimize worker pool configurations based on performance data"""
+        """
+Optimize worker pool configurations based on performance data"""
         for pool in self.worker_pools.values():
             # Analyze pool performance
             if pool.performance_rating > 0.9 and pool.current_load == pool.max_concurrent_jobs:
@@ -702,7 +718,8 @@ class DistributionOrchestrator:
         pass
 
     async def _health_check_loop(self) -> None:
-        """Continuous health monitoring of all system components"""
+        """
+Continuous health monitoring of all system components"""
         logger.info("Health check loop started")
         
         while self.is_running:
@@ -737,7 +754,8 @@ class DistributionOrchestrator:
             return False
 
     async def _handle_unhealthy_engine(self, engine_id: str) -> None:
-        """Handle unhealthy distribution engine"""
+        """
+Handle unhealthy distribution engine"""
         logger.warning(f"Engine {engine_id} is unhealthy, attempting recovery")
         
         # Attempt to restart engine
@@ -854,7 +872,8 @@ class DistributionOrchestrator:
         return self.execution_tracker.get(execution_id)
 
     async def cancel_job(self, execution_id: str) -> bool:
-        """Cancel a pending or processing job"""
+        """
+Cancel a pending or processing job"""
         execution = self.execution_tracker.get(execution_id)
         if not execution:
             return False
@@ -889,7 +908,8 @@ class DistributionOrchestrator:
         }
 
     async def get_performance_analytics(self) -> Dict[str, Any]:
-        """Get detailed performance analytics"""
+        """
+Get detailed performance analytics"""
         # Calculate additional analytics
         recent_executions = [
             exec for exec in self.execution_tracker.values()
@@ -907,33 +927,39 @@ class DistributionOrchestrator:
         return analytics
 
     async def _calculate_resource_efficiency(self) -> float:
-        """Calculate overall resource efficiency score"""
+        """
+Calculate overall resource efficiency score"""
         # Implementation would calculate efficiency based on resource usage vs. output
         return 0.85  # Placeholder
 
     async def _get_user_quota(self, user_id: str) -> Dict[str, int]:
-        """Get user quota information"""
+        """
+Get user quota information"""
         # Implementation would fetch from database
         return {'current_usage': 50, 'limit': 100}  # Placeholder
 
     async def _get_platform_quota(self, platform) -> Dict[str, int]:
-        """Get platform quota information"""
+        """
+Get platform quota information"""
         # Implementation would fetch platform-specific quotas
         return {'current_usage': 80, 'limit': 1000}  # Placeholder
 
     def _get_current_system_load(self) -> float:
-        """Get current system load as a percentage"""
+        """
+Get current system load as a percentage"""
         active_jobs = sum(len(pool.active_jobs) for pool in self.worker_pools.values())
         max_capacity = sum(pool.max_concurrent_jobs for pool in self.worker_pools.values())
         return active_jobs / max_capacity if max_capacity > 0 else 0
 
     async def _get_historical_performance(self, user_id: str) -> Dict[str, float]:
-        """Get historical performance data for user"""
+        """
+Get historical performance data for user"""
         # Implementation would fetch from analytics database
         return {'avg_success_rate': 0.95, 'avg_duration': 120.0}  # Placeholder
 
     async def _update_queue_metrics(self) -> None:
-        """Update queue-related metrics"""
+        """
+Update queue-related metrics"""
         queue_size = self.job_queue.qsize()
         await self.metrics_collector.record_queue_metrics({
             'queue_size': queue_size,
@@ -941,7 +967,8 @@ class DistributionOrchestrator:
         })
 
     async def _update_job_completion_metrics(self, execution: JobExecution) -> None:
-        """Update metrics when a job completes"""
+        """
+Update metrics when a job completes"""
         self.performance_metrics['total_jobs_processed'] += 1
         
         if execution.status == DistributionStatus.PUBLISHED:
@@ -957,7 +984,8 @@ class DistributionOrchestrator:
             self.performance_metrics['average_processing_time'] = total_time / self.performance_metrics['total_jobs_processed']
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the orchestration system"""
+        """
+Graceful shutdown of the orchestration system"""
         logger.info("Shutting down DistributionOrchestrator...")
         
         self.is_running = False

@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BankAccount:
-    """Bank account information structure."""
+    """
+Bank account information structure."""
     account_id: str
     account_name: str
     account_type: str  # checking, savings, etc.
@@ -69,7 +71,8 @@ class BankConnectionResult:
 
 @dataclass  
 class DirectDebitResult:
-    """Direct debit setup and execution result."""
+    """
+Direct debit setup and execution result."""
     success: bool
     mandate_id: Optional[str] = None
     debit_id: Optional[str] = None

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for NLP Utils Module
+"""
+Comprehensive Tests for NLP Utils Module
 
 Industrial-grade tests for NLP utility functions, helpers, and shared components
 with real implementations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -41,10 +44,12 @@ from ai.nlp.utils import (
 logger = logging.getLogger(__name__)
 
 class TestPlatform:
-    """Test Platform enumeration and utilities"""
+    """
+Test Platform enumeration and utilities"""
     
     def test_platform_enum_values(self):
-        """Test platform enum values"""
+        """
+Test platform enum values"""
         assert Platform.INSTAGRAM.value == 'instagram'
         assert Platform.TWITTER.value == 'twitter'
         assert Platform.LINKEDIN.value == 'linkedin'
@@ -53,7 +58,8 @@ class TestPlatform:
         assert Platform.FACEBOOK.value == 'facebook'
     
     def test_platform_from_string(self):
-        """Test creating platform from string"""
+        """
+Test creating platform from string"""
         platforms = ['instagram', 'twitter', 'linkedin', 'youtube', 'tiktok']
         
         for platform_str in platforms:
@@ -61,7 +67,8 @@ class TestPlatform:
             assert platform.value == platform_str
     
     def test_platform_properties(self):
-        """Test platform-specific properties"""
+        """
+Test platform-specific properties"""
         # Instagram properties
         instagram_props = Platform.INSTAGRAM.get_properties()
         assert 'character_limit' in instagram_props
@@ -80,10 +87,12 @@ class TestPlatform:
         assert linkedin_props['supports_articles'] is True
 
 class TestLanguage:
-    """Test Language enumeration and utilities"""
+    """
+Test Language enumeration and utilities"""
     
     def test_language_enum_values(self):
-        """Test language enum values"""
+        """
+Test language enum values"""
         assert Language.ENGLISH.value == 'english'
         assert Language.GERMAN.value == 'german'
         assert Language.FRENCH.value == 'french'
@@ -91,7 +100,8 @@ class TestLanguage:
         assert Language.ITALIAN.value == 'italian'
     
     def test_language_iso_codes(self):
-        """Test language ISO codes"""
+        """
+Test language ISO codes"""
         assert Language.ENGLISH.iso_code() == 'en'
         assert Language.GERMAN.iso_code() == 'de'
         assert Language.FRENCH.iso_code() == 'fr'
@@ -99,7 +109,8 @@ class TestLanguage:
         assert Language.ITALIAN.iso_code() == 'it'
     
     def test_language_from_iso_code(self):
-        """Test creating language from ISO code"""
+        """
+Test creating language from ISO code"""
         test_cases = [
             ('en', Language.ENGLISH),
             ('de', Language.GERMAN),
@@ -113,7 +124,8 @@ class TestLanguage:
             assert language == expected_language
     
     def test_language_properties(self):
-        """Test language-specific properties"""
+        """
+Test language-specific properties"""
         # English properties
         en_props = Language.ENGLISH.get_properties()
         assert 'writing_direction' in en_props
@@ -126,10 +138,12 @@ class TestLanguage:
         assert de_props['case_sensitive'] is True
 
 class TestContentType:
-    """Test ContentType enumeration and utilities"""
+    """
+Test ContentType enumeration and utilities"""
     
     def test_content_type_enum_values(self):
-        """Test content type enum values"""
+        """
+Test content type enum values"""
         assert ContentType.POST.value == 'post'
         assert ContentType.STORY.value == 'story'
         assert ContentType.REEL.value == 'reel'
@@ -138,7 +152,8 @@ class TestContentType:
         assert ContentType.CAPTION.value == 'caption'
     
     def test_content_type_properties(self):
-        """Test content type properties"""
+        """
+Test content type properties"""
         # Post properties
         post_props = ContentType.POST.get_properties()
         assert 'is_ephemeral' in post_props
@@ -155,11 +170,13 @@ class TestContentType:
         assert thread_props['supports_continuation'] is True
 
 class TestTextProcessor:
-    """Test text processing utilities"""
+    """
+Test text processing utilities"""
     
     @pytest.mark.asyncio
     async def test_text_cleaning(self):
-        """Test text cleaning functionality"""
+        """
+Test text cleaning functionality"""
         processor = TextProcessor()
         
         test_cases = [
@@ -190,7 +207,8 @@ class TestTextProcessor:
     
     @pytest.mark.asyncio
     async def test_text_tokenization(self):
-        """Test text tokenization"""
+        """
+Test text tokenization"""
         processor = TextProcessor()
         
         test_text = "This is a sample text for tokenization testing."
@@ -241,7 +259,8 @@ class TestTextProcessor:
     
     @pytest.mark.asyncio
     async def test_social_media_processing(self):
-        """Test social media specific text processing"""
+        """
+Test social media specific text processing"""
         processor = TextProcessor()
         
         social_text = "Check out @username's amazing post! #AI #MachineLearning https://example.com 🚀"
@@ -280,7 +299,8 @@ class TestDataValidator:
     """Test data validation utilities"""
     
     def test_text_validation(self):
-        """Test text validation"""
+        """
+Test text validation"""
         validator = DataValidator()
         
         # Valid text
@@ -382,7 +402,8 @@ class TestConfigManager:
     """Test configuration management utilities"""
     
     def test_config_loading(self):
-        """Test configuration loading"""
+        """
+Test configuration loading"""
         config_manager = ConfigManager()
         
         # Test default configuration
@@ -400,7 +421,8 @@ class TestConfigManager:
         assert dev_config['nlp_settings']['debug_mode'] is True
     
     def test_config_validation(self):
-        """Test configuration validation"""
+        """
+Test configuration validation"""
         config_manager = ConfigManager()
         
         # Valid configuration
@@ -429,7 +451,8 @@ class TestConfigManager:
         assert invalid_result['is_valid'] is False
     
     def test_config_merging(self):
-        """Test configuration merging"""
+        """
+Test configuration merging"""
         config_manager = ConfigManager()
         
         base_config = {
@@ -450,11 +473,13 @@ class TestConfigManager:
         assert merged_config['setting3'] == 'value3'
 
 class TestCacheManager:
-    """Test caching utilities"""
+    """
+Test caching utilities"""
     
     @pytest.mark.asyncio
     async def test_cache_operations(self):
-        """Test basic cache operations"""
+        """
+Test basic cache operations"""
         cache_manager = CacheManager()
         
         # Test cache set and get
@@ -479,7 +504,8 @@ class TestCacheManager:
     
     @pytest.mark.asyncio
     async def test_cache_patterns(self):
-        """Test cache patterns and strategies"""
+        """
+Test cache patterns and strategies"""
         cache_manager = CacheManager()
         
         # Test cache-aside pattern
@@ -523,7 +549,8 @@ class TestPerformanceProfiler:
     
     @pytest.mark.asyncio
     async def test_execution_timing(self):
-        """Test execution timing"""
+        """
+Test execution timing"""
         profiler = PerformanceProfiler()
         
         # Test function timing
@@ -564,7 +591,8 @@ class TestPerformanceProfiler:
         profiler.stop_memory_profiling()
     
     def test_performance_metrics(self):
-        """Test performance metrics collection"""
+        """
+Test performance metrics collection"""
         profiler = PerformanceProfiler()
         
         # Record custom metrics
@@ -591,10 +619,12 @@ class TestPerformanceProfiler:
         assert response_time_metrics['average'] == 0.5
 
 class TestLogger:
-    """Test logging utilities"""
+    """
+Test logging utilities"""
     
     def test_logger_configuration(self):
-        """Test logger configuration"""
+        """
+Test logger configuration"""
         logger_util = Logger('test_nlp_logger')
         
         # Test different log levels
@@ -636,7 +666,8 @@ class TestErrorHandler:
     
     @pytest.mark.asyncio
     async def test_error_handling_decorator(self):
-        """Test error handling decorator"""
+        """
+Test error handling decorator"""
         error_handler = ErrorHandler()
         
         @error_handler.handle_errors
@@ -733,7 +764,8 @@ class TestUtilsIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_text_processing_pipeline(self):
-        """Test complete text processing pipeline"""
+        """
+Test complete text processing pipeline"""
         # Initialize components
         processor = TextProcessor()
         validator = DataValidator()
@@ -827,7 +859,8 @@ class TestUtilsPerformance:
     
     @pytest.mark.asyncio
     async def test_cache_performance(self):
-        """Test cache performance under load"""
+        """
+Test cache performance under load"""
         cache_manager = CacheManager()
         
         # Test cache performance with many operations
@@ -855,7 +888,8 @@ class TestUtilsPerformance:
     
     @pytest.mark.asyncio
     async def test_text_processing_performance(self):
-        """Test text processing performance"""
+        """
+Test text processing performance"""
         processor = TextProcessor()
         
         # Generate test data

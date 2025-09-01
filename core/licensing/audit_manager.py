@@ -14,6 +14,7 @@ Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
 """
+
 from typing import Dict, Any, List, Optional
 import logging
 import json
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Types d'événements d'audit."""
+    """
+Types d'événements d'audit."""
+
     LICENSE_CREATION = "license_creation"
     LICENSE_MODIFICATION = "license_modification"
     LICENSE_ACTIVATION = "license_activation"
@@ -43,6 +46,7 @@ class AuditEventType(Enum):
 
 class AuditSeverity(Enum):
     """Niveaux de sévérité d'audit."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -52,6 +56,7 @@ class AuditSeverity(Enum):
 
 class ComplianceStandard(Enum):
     """Standards de conformité supportés."""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"

@@ -26,6 +26,7 @@ aggregation methodologies, and statistical analysis frameworks developed by Fahe
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All data consolidation processes and metrics calculations are protected intellectual property.
 """
+
 import asyncio
 import pandas as pd
 import numpy as np
@@ -58,7 +59,9 @@ from .storage import TimeSeriesStore, MetricsWarehouse
 
 
 class AggregationType(Enum):
-    """Types of metric aggregations supported."""
+    """
+Types of metric aggregations supported."""
+
     SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
@@ -78,6 +81,7 @@ class AggregationType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity levels for aggregation."""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -89,6 +93,7 @@ class TimeGranularity(Enum):
 
 class DataSource(Enum):
     """Data sources for metrics aggregation."""
+
     USER_ANALYTICS = "user_analytics"
     CONTENT_ANALYTICS = "content_analytics"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -119,7 +124,8 @@ class MetricDefinition:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result with metadata."""
+    """
+Aggregated metric result with metadata."""
     metric_id: str
     value: Union[float, int, Dict[str, Any]]
     timestamp: datetime
@@ -177,7 +183,8 @@ class AdvancedMetricsAggregator:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize the metrics aggregation system."""
+        """
+Initialize the metrics aggregation system."""
         try:
             # Initialize Redis connection
             self.redis_client = redis.Redis(
@@ -542,7 +549,8 @@ class AdvancedMetricsAggregator:
         }
     
     async def _register_data_sources(self):
-        """Register data source connectors."""
+        """
+Register data source connectors."""
         self.data_sources = {
             DataSource.USER_ANALYTICS: self._get_user_analytics_data,
             DataSource.CONTENT_ANALYTICS: self._get_content_analytics_data,
@@ -552,7 +560,8 @@ class AdvancedMetricsAggregator:
         }
     
     async def _load_metric_definitions(self):
-        """Load metric definitions from storage."""
+        """
+Load metric definitions from storage."""
         # Default metric definitions
         default_metrics = [
             MetricDefinition(
@@ -593,7 +602,8 @@ class AdvancedMetricsAggregator:
             self.dependency_graph[metric_id] = metric_def.dependencies
     
     async def _validate_metric_definition(self, metric_def: MetricDefinition) -> bool:
-        """Validate metric definition."""
+        """
+Validate metric definition."""
         # Check required fields
         if not metric_def.metric_id or not metric_def.name:
             return False
@@ -605,17 +615,20 @@ class AdvancedMetricsAggregator:
         return True
     
     async def _validate_aggregation_formula(self, formula: str) -> bool:
-        """Validate aggregation formula syntax."""
+        """
+Validate aggregation formula syntax."""
         # Basic validation - in production, this would be more sophisticated
         allowed_functions = ['SUM', 'COUNT', 'AVG', 'MIN', 'MAX', 'DISTINCT']
         return any(func in formula.upper() for func in allowed_functions)
     
     async def _update_dependency_graph(self, metric_def: MetricDefinition):
-        """Update dependency graph with new metric."""
+        """
+Update dependency graph with new metric."""
         self.dependency_graph[metric_def.metric_id] = metric_def.dependencies
     
     async def _store_metric_definition(self, metric_def: MetricDefinition):
-        """Store metric definition in persistent storage."""
+        """
+Store metric definition in persistent storage."""
         try:
             # Create metric definition document
             metric_doc = {
@@ -675,7 +688,8 @@ class AdvancedMetricsAggregator:
         dimensions: List[str],
         filters: Dict[str, Any]
     ) -> str:
-        """Generate cache key for aggregation results."""
+        """
+Generate cache key for aggregation results."""
         key_data = {
             'metrics': sorted(metric_ids),
             'start': time_range.get('start').isoformat() if time_range.get('start') else None,
@@ -689,7 +703,8 @@ class AdvancedMetricsAggregator:
         return hashlib.md5(key_string.encode()).hexdigest()
     
     async def _get_cached_aggregation(self, cache_key: str) -> Optional[List[AggregatedMetric]]:
-        """Get cached aggregation results."""
+        """
+Get cached aggregation results."""
         try:
             cached_data = await self.cache_manager.get(f"aggregation:{cache_key}")
             if cached_data:
@@ -745,7 +760,8 @@ class AdvancedMetricsAggregator:
         dimensions: List[str],
         filters: Dict[str, Any]
     ) -> Optional[AggregatedMetric]:
-        """Aggregate a single metric."""
+        """
+Aggregate a single metric."""
         try:
             metric_def = self.metric_definitions.get(metric_id)
             if not metric_def:
@@ -835,7 +851,8 @@ class AdvancedMetricsAggregator:
             return df.reset_index()
     
     async def _calculate_data_quality_score(self, df: pd.DataFrame) -> float:
-        """Calculate data quality score for the dataset."""
+        """
+Calculate data quality score for the dataset."""
         if df.empty:
             return 0.0
         
@@ -869,7 +886,8 @@ class AdvancedMetricsAggregator:
         dimensions: List[str],
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get user analytics data."""
+        """
+Get user analytics data."""
         # Placeholder implementation
         return [
             {'timestamp': datetime.now(), 'value': 100, 'user_id': 'user1'},
@@ -883,7 +901,8 @@ class AdvancedMetricsAggregator:
         dimensions: List[str],
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get content analytics data."""
+        """
+Get content analytics data."""
         return []
     
     async def _get_revenue_analytics_data(
@@ -893,7 +912,8 @@ class AdvancedMetricsAggregator:
         dimensions: List[str],
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get revenue analytics data."""
+        """
+Get revenue analytics data."""
         return []
     
     async def _get_protection_analytics_data(
@@ -903,7 +923,8 @@ class AdvancedMetricsAggregator:
         dimensions: List[str],
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get protection analytics data."""
+        """
+Get protection analytics data."""
         return []
     
     async def _get_system_metrics_data(
@@ -913,7 +934,8 @@ class AdvancedMetricsAggregator:
         dimensions: List[str],
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get system metrics data."""
+        """
+Get system metrics data."""
         return []
     
     # Additional helper methods would continue...
@@ -922,15 +944,18 @@ class AdvancedMetricsAggregator:
         metric_id: str,
         time_range: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
-        """Get historical data for trend analysis."""
+        """
+Get historical data for trend analysis."""
         return []
     
     async def _validate_job_config(self, job_config: AggregationJob) -> bool:
-        """Validate aggregation job configuration."""
+        """
+Validate aggregation job configuration."""
         return True
     
     async def _schedule_job(self, job_config: AggregationJob):
-        """Schedule aggregation job for later execution."""
+        """
+Schedule aggregation job for later execution."""
         try:
             # Create job document for persistent storage
             job_doc = {

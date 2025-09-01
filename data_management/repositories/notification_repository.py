@@ -8,7 +8,7 @@ Responsibility: Advanced multi-channel notification system with AI-powered targe
 ===================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -21,6 +21,7 @@ Event Detection → Rule Engine → Template Selection →
 Personalization → Channel Routing → Delivery Tracking → 
 Performance Analytics → Optimization
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -33,7 +34,9 @@ from enum import Enum
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
+    """
+Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -46,6 +49,7 @@ class NotificationChannel(Enum):
 
 class NotificationType(Enum):
     """Types of notifications"""
+
     PROTECTION_ALERT = "protection_alert"
     CONTENT_VIOLATION = "content_violation"
     REVENUE_UPDATE = "revenue_update"
@@ -59,6 +63,7 @@ class NotificationType(Enum):
 
 class Priority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -67,6 +72,7 @@ class Priority(Enum):
 
 class DeliveryStatus(Enum):
     """Delivery status tracking"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -95,7 +101,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRule:
-    """Notification rule configuration"""
+    """
+Notification rule configuration"""
     rule_id: str
     name: str
     description: str
@@ -112,7 +119,8 @@ class NotificationRule:
 
 @dataclass
 class NotificationPreferences:
-    """User notification preferences"""
+    """
+User notification preferences"""
     user_id: str
     channel_preferences: Dict[NotificationChannel, bool]
     type_preferences: Dict[NotificationType, bool]
@@ -126,7 +134,8 @@ class NotificationPreferences:
 
 @dataclass
 class NotificationEvent:
-    """Notification event data"""
+    """
+Notification event data"""
     event_id: str
     event_type: str
     source: str
@@ -139,7 +148,8 @@ class NotificationEvent:
 
 @dataclass
 class Notification:
-    """Individual notification"""
+    """
+Individual notification"""
     notification_id: str
     user_id: str
     notification_type: NotificationType
@@ -160,7 +170,8 @@ class Notification:
 
 @dataclass
 class DeliveryReceipt:
-    """Delivery receipt tracking"""
+    """
+Delivery receipt tracking"""
     receipt_id: str
     notification_id: str
     channel: NotificationChannel
@@ -173,7 +184,8 @@ class DeliveryReceipt:
 
 @dataclass
 class NotificationCampaign:
-    """Notification campaign management"""
+    """
+Notification campaign management"""
     campaign_id: str
     name: str
     description: str
@@ -225,7 +237,8 @@ class NotificationRepository(BaseRepository):
         self.rate_limit_per_minute = 100
 
     def create(self, entity, **kwargs):
-        """Create notification entity"""
+        """
+Create notification entity"""
         self._validate_entity(entity)
         
         # Generate ID if not provided
@@ -263,7 +276,8 @@ class NotificationRepository(BaseRepository):
         return created_entity
 
     def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get notification entity by ID"""
+        """
+Get notification entity by ID"""
         if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_notification_by_id", entity_id=entity_id)
             cached_result = self.cache.get(cache_key)
@@ -700,57 +714,67 @@ class NotificationRepository(BaseRepository):
         return None
 
     def _store_notification_entity(self, entity):
-        """Store notification entity in database"""
+        """
+Store notification entity in database"""
         # Implementation would store in database
         return entity
 
     def _process_notification(self, notification: Notification):
-        """Process notification for delivery"""
+        """
+Process notification for delivery"""
         # Implementation would process notification
         pass
 
     def _fetch_notification_by_id(self, entity_id: str):
-        """Fetch notification entity by ID"""
+        """
+Fetch notification entity by ID"""
         # Implementation would fetch from database
         return None
 
     def _update_notification_entity(self, entity):
-        """Update notification entity in database"""
+        """
+Update notification entity in database"""
         # Implementation would update database
         return entity
 
     def _delete_notification_entity(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete notification entity"""
+        """
+Delete notification entity"""
         # Implementation would delete from database
         return True
 
     def _fetch_notification_list(self, filters, limit, offset, order_by):
-        """Fetch notification entities list"""
+        """
+Fetch notification entities list"""
         # Implementation would fetch from database
         return []
 
     def _get_preferred_channels(self, preferences: NotificationPreferences, 
                               notification_type: NotificationType) -> List[NotificationChannel]:
-        """Get preferred channels for user and notification type"""
+        """
+Get preferred channels for user and notification type"""
         # Implementation would determine preferred channels
         return [NotificationChannel.EMAIL]
 
     def _filter_channels_by_preferences(self, channels: List[NotificationChannel],
                                        preferences: NotificationPreferences,
                                        notification_type: NotificationType) -> List[NotificationChannel]:
-        """Filter channels by user preferences"""
+        """
+Filter channels by user preferences"""
         # Implementation would filter channels
         return channels
 
     def _get_template(self, notification_type: NotificationType, channel: NotificationChannel) -> Optional[NotificationTemplate]:
-        """Get template for notification type and channel"""
+        """
+Get template for notification type and channel"""
         # Implementation would get template
         return None
 
     def _create_notification_from_template(self, user_id: str, notification_type: NotificationType,
                                           channel: NotificationChannel, template,
                                           data: Dict[str, Any], priority: Priority) -> Notification:
-        """Create notification from template"""
+        """
+Create notification from template"""
         # Implementation would create notification
         return Notification(
             notification_id=self._generate_notification_id(),
@@ -778,62 +802,74 @@ class NotificationRepository(BaseRepository):
         return []
 
     def _should_trigger_rule(self, rule: NotificationRule, event: NotificationEvent) -> bool:
-        """Check if rule should trigger for event"""
+        """
+Check if rule should trigger for event"""
         # Implementation would check conditions
         return True
 
     def _get_target_users(self, rule: NotificationRule, event: NotificationEvent) -> List[str]:
-        """Get target users for rule"""
+        """
+Get target users for rule"""
         # Implementation would get target users
         return []
 
     def _check_frequency_limits(self, user_id: str, rule: NotificationRule) -> bool:
-        """Check frequency limits for user and rule"""
+        """
+Check frequency limits for user and rule"""
         # Implementation would check frequency limits
         return True
 
     def _update_event(self, event: NotificationEvent):
-        """Update event in database"""
+        """
+Update event in database"""
         # Implementation would update event
         pass
 
     def _validate_template(self, template: NotificationTemplate):
-        """Validate template configuration"""
+        """
+Validate template configuration"""
         # Implementation would validate template
         pass
 
     def _validate_rule(self, rule: NotificationRule):
-        """Validate rule configuration"""
+        """
+Validate rule configuration"""
         # Implementation would validate rule
         pass
 
     def _fetch_user_preferences(self, user_id: str) -> Optional[NotificationPreferences]:
-        """Fetch user preferences from database"""
+        """
+Fetch user preferences from database"""
         # Implementation would fetch preferences
         return None
 
     def _get_campaign_target_users(self, campaign: NotificationCampaign) -> List[str]:
-        """Get target users for campaign"""
+        """
+Get target users for campaign"""
         # Implementation would get target users
         return []
 
     def _user_consents_to_campaign(self, preferences: NotificationPreferences, campaign: NotificationCampaign) -> bool:
-        """Check if user consents to campaign"""
+        """
+Check if user consents to campaign"""
         # Implementation would check consent
         return True
 
     def _prepare_campaign_notification_data(self, campaign: NotificationCampaign, user_id: str) -> Dict[str, Any]:
-        """Prepare notification data for campaign"""
+        """
+Prepare notification data for campaign"""
         # Implementation would prepare data
         return {}
 
     def _fetch_delivery_receipts(self, filters: Dict[str, Any]) -> List[DeliveryReceipt]:
-        """Fetch delivery receipts"""
+        """
+Fetch delivery receipts"""
         # Implementation would fetch receipts
         return []
 
     def _calculate_channel_breakdown(self, notifications: List[Notification]) -> Dict[str, int]:
-        """Calculate channel breakdown"""
+        """
+Calculate channel breakdown"""
         breakdown = {}
         for notification in notifications:
             channel = notification.channel.value
@@ -841,7 +877,8 @@ class NotificationRepository(BaseRepository):
         return breakdown
 
     def _calculate_type_breakdown(self, notifications: List[Notification]) -> Dict[str, int]:
-        """Calculate type breakdown"""
+        """
+Calculate type breakdown"""
         breakdown = {}
         for notification in notifications:
             notif_type = notification.notification_type.value
@@ -849,7 +886,8 @@ class NotificationRepository(BaseRepository):
         return breakdown
 
     def _calculate_status_breakdown(self, notifications: List[Notification]) -> Dict[str, int]:
-        """Calculate status breakdown"""
+        """
+Calculate status breakdown"""
         breakdown = {}
         for notification in notifications:
             status = notification.status.value
@@ -857,27 +895,32 @@ class NotificationRepository(BaseRepository):
         return breakdown
 
     def _calculate_delivery_rates(self, receipts: List[DeliveryReceipt]) -> Dict[str, float]:
-        """Calculate delivery rates"""
+        """
+Calculate delivery rates"""
         # Implementation would calculate delivery rates
         return {}
 
     def _calculate_engagement_rates(self, receipts: List[DeliveryReceipt]) -> Dict[str, float]:
-        """Calculate engagement rates"""
+        """
+Calculate engagement rates"""
         # Implementation would calculate engagement rates
         return {}
 
     def _calculate_performance_trends(self, notifications: List[Notification], receipts: List[DeliveryReceipt]) -> Dict[str, Any]:
-        """Calculate performance trends"""
+        """
+Calculate performance trends"""
         # Implementation would calculate trends
         return {}
 
     def _get_top_performing_templates(self, notifications: List[Notification], receipts: List[DeliveryReceipt]) -> List[Dict[str, Any]]:
-        """Get top performing templates"""
+        """
+Get top performing templates"""
         # Implementation would get top templates
         return []
 
     def _identify_optimization_opportunities(self, notifications: List[Notification], receipts: List[DeliveryReceipt]) -> List[str]:
-        """Identify optimization opportunities"""
+        """
+Identify optimization opportunities"""
         # Implementation would identify opportunities
         return []
 
@@ -909,7 +952,8 @@ class AsyncNotificationRepository(AsyncBaseRepository):
         )
 
     async def create(self, entity, **kwargs):
-        """Create notification entity asynchronously"""
+        """
+Create notification entity asynchronously"""
         await self._validate_entity(entity)
         
         # Generate ID if not provided
@@ -947,7 +991,8 @@ class AsyncNotificationRepository(AsyncBaseRepository):
         return created_entity
 
     async def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get notification entity by ID asynchronously"""
+        """
+Get notification entity by ID asynchronously"""
         if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_notification_by_id", entity_id=entity_id)
             cached_result = await self.cache.get_async(cache_key)
@@ -1124,32 +1169,38 @@ class AsyncNotificationRepository(AsyncBaseRepository):
         return entity
 
     async def _process_notification_async(self, notification: Notification):
-        """Process notification for delivery asynchronously"""
+        """
+Process notification for delivery asynchronously"""
         # Implementation would process notification
         pass
 
     async def _fetch_notification_by_id_async(self, entity_id: str):
-        """Fetch notification entity by ID asynchronously"""
+        """
+Fetch notification entity by ID asynchronously"""
         # Implementation would fetch from database
         return None
 
     async def _update_notification_entity_async(self, entity):
-        """Update notification entity in database asynchronously"""
+        """
+Update notification entity in database asynchronously"""
         # Implementation would update database
         return entity
 
     async def _delete_notification_entity_async(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete notification entity asynchronously"""
+        """
+Delete notification entity asynchronously"""
         # Implementation would delete from database
         return True
 
     async def _fetch_notification_list_async(self, filters, limit, offset, order_by):
-        """Fetch notification entities list asynchronously"""
+        """
+Fetch notification entities list asynchronously"""
         # Implementation would fetch from database
         return []
 
     async def get_user_preferences_async(self, user_id: str) -> Optional[NotificationPreferences]:
-        """Get user notification preferences asynchronously"""
+        """
+Get user notification preferences asynchronously"""
         try:
             # Check cache first
             if self._cache_enabled and self.cache:
@@ -1179,7 +1230,8 @@ class AsyncNotificationRepository(AsyncBaseRepository):
     async def _create_notification_from_template_async(self, user_id: str, notification_type: NotificationType,
                                                      channel: NotificationChannel, template,
                                                      data: Dict[str, Any], priority: Priority) -> Notification:
-        """Create notification from template asynchronously"""
+        """
+Create notification from template asynchronously"""
         # Implementation would create notification
         return Notification(
             notification_id=self.sync_repo._generate_notification_id(),

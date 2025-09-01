@@ -27,6 +27,7 @@ Creator content upload → Scheduler coordination → AI processing →
 Protection layer → Multi-platform distribution → Performance optimization → 
 Revenue maximization → User satisfaction → Business growth → Market leadership
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -175,7 +176,8 @@ class SchedulerAPI:
         self.is_initialized = False
         
     async def initialize(self, configuration: Optional[SchedulerConfiguration] = None) -> None:
-        """Initialize the scheduler system."""
+        """
+Initialize the scheduler system."""
         try:
             self.manager = await initialize_schedulers(configuration)
             self.is_initialized = True
@@ -483,7 +485,8 @@ async def get_scheduler_api() -> SchedulerAPI:
 
 
 async def get_content_protection_api() -> ContentProtectionAPI:
-    """Get content protection API instance."""
+    """
+Get content protection API instance."""
     scheduler_api = await get_scheduler_api()
     return ContentProtectionAPI(scheduler_api)
 

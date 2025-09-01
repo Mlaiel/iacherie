@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,15 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Security Audit and Compliance Test Suite
+"""
+Comprehensive Security Audit and Compliance Test Suite
 Tests for security audit trail, monitoring, and compliance features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 """
+
 import asyncio
 import pytest
 import sys
@@ -45,16 +48,19 @@ from security.vulnerability_scanner import SecurityScanner, VulnerabilitySeverit
 
 
 class TestSecurityAuditTrail:
-    """Test security audit trail functionality"""
+    """
+Test security audit trail functionality"""
     
     @pytest.fixture
     async def audit_trail(self):
-        """Create audit trail instance for testing"""
+        """
+Create audit trail instance for testing"""
         return SecurityAuditTrail()
     
     @pytest.mark.asyncio
     async def test_log_security_event(self, audit_trail):
-        """Test logging security events"""
+        """
+Test logging security events"""
         
         event_id = await audit_trail.log_security_event(
             action="test_login",
@@ -200,12 +206,14 @@ class TestSecurityMonitoring:
     
     @pytest.fixture
     async def monitoring_dashboard(self):
-        """Create monitoring dashboard instance for testing"""
+        """
+Create monitoring dashboard instance for testing"""
         return SecurityMonitoringDashboard()
     
     @pytest.mark.asyncio
     async def test_create_incident(self, monitoring_dashboard):
-        """Test security incident creation"""
+        """
+Test security incident creation"""
         
         incident_id = await monitoring_dashboard.create_incident(
             title="Suspicious Login Activity",
@@ -356,12 +364,14 @@ class TestSecurityPolicies:
     
     @pytest.fixture
     async def policy_manager(self):
-        """Create policy manager instance for testing"""
+        """
+Create policy manager instance for testing"""
         return SecurityPolicyManager()
     
     @pytest.mark.asyncio
     async def test_get_standard_policies(self, policy_manager):
-        """Test retrieval of standard policies"""
+        """
+Test retrieval of standard policies"""
         
         policies = await policy_manager.get_all_policies()
         assert len(policies) >= 5  # Should have at least 5 standard policies
@@ -438,7 +448,8 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_policy_compliance_report(self, policy_manager):
-        """Test policy compliance report generation"""
+        """
+Test policy compliance report generation"""
         
         report = await policy_manager.generate_policy_compliance_report()
         
@@ -525,7 +536,8 @@ class TestSecurityIntegration:
     
     @pytest.mark.asyncio
     async def test_end_to_end_incident_workflow(self):
-        """Test complete incident workflow from detection to resolution"""
+        """
+Test complete incident workflow from detection to resolution"""
         
         # 1. Create security incident
         incident_id = await create_security_incident(

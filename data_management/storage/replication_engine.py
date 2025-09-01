@@ -8,7 +8,7 @@ Advanced multi-cloud replication engine for high availability,
 disaster recovery, and geographic distribution of content.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -27,6 +27,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 import logging
 import asyncio
@@ -43,7 +44,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ReplicationStrategy(Enum):
-    """Replication strategies"""
+    """
+Replication strategies"""
+
     SYNCHRONOUS = "sync"
     ASYNCHRONOUS = "async"
     EVENTUAL_CONSISTENCY = "eventual"
@@ -51,6 +54,7 @@ class ReplicationStrategy(Enum):
 
 class ReplicationTier(Enum):
     """Replication tiers based on importance"""
+
     CRITICAL = "critical"      # 3+ replicas, immediate sync
     HIGH = "high"             # 2-3 replicas, fast async
     STANDARD = "standard"     # 2 replicas, standard async
@@ -58,6 +62,7 @@ class ReplicationTier(Enum):
 
 class ReplicationStatus(Enum):
     """Replication status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -67,6 +72,7 @@ class ReplicationStatus(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MANUAL_REVIEW = "manual_review"
@@ -88,7 +94,8 @@ class ReplicationRule:
     created_at: datetime = field(default_factory=datetime.now)
     
 class ReplicationJob:
-    """Replication job tracking"""
+    """
+Replication job tracking"""
     
     def __init__(
         self,
@@ -115,7 +122,8 @@ class ReplicationJob:
 
 @dataclass
 class ReplicationNode:
-    """Replication node information"""
+    """
+Replication node information"""
     node_id: str
     provider: str
     region: str
@@ -144,7 +152,8 @@ class StorageReplicationEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize replication engine"""
+        """
+Initialize replication engine"""
         self.config = config
         
         # Storage managers for different providers
@@ -691,7 +700,8 @@ class StorageReplicationEngine:
         return applicable_rules
     
     def _matches_filters(self, metadata: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if metadata matches content filters"""
+        """
+Check if metadata matches content filters"""
         
         for filter_key, filter_value in filters.items():
             if filter_key not in metadata:
@@ -713,7 +723,8 @@ class StorageReplicationEngine:
         rule: ReplicationRule,
         content_id: str
     ) -> List[str]:
-        """Select optimal target locations for replication"""
+        """
+Select optimal target locations for replication"""
         
         target_locations = []
         
@@ -764,7 +775,8 @@ class StorageReplicationEngine:
             return 1
     
     async def _replication_worker(self) -> None:
-        """Background worker for processing replication jobs"""
+        """
+Background worker for processing replication jobs"""
         
         while True:
             try:
@@ -1034,7 +1046,8 @@ class StorageReplicationEngine:
         return replica_info.get('checksum', 'unknown')
     
     async def _calculate_metadata_hash(self, metadata: Dict[str, Any]) -> str:
-        """Calculate hash of metadata"""
+        """
+Calculate hash of metadata"""
         
         metadata_str = json.dumps(metadata, sort_keys=True)
         return hashlib.sha256(metadata_str.encode()).hexdigest()
@@ -1044,7 +1057,8 @@ class StorageReplicationEngine:
         content_id: str,
         verification_result: Dict[str, Any]
     ) -> None:
-        """Handle consistency violation"""
+        """
+Handle consistency violation"""
         
         logger.warning(f"Consistency violation for {content_id}: {verification_result}")
         
@@ -1084,7 +1098,8 @@ class StorageReplicationEngine:
         self,
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> Tuple[str, str]:
-        """Resolve conflict using first write wins strategy"""
+        """
+Resolve conflict using first write wins strategy"""
         
         earliest_write = None
         earliest_checksum = None
@@ -1106,7 +1121,8 @@ class StorageReplicationEngine:
         content_id: str,
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> Dict[str, Any]:
-        """Queue conflict for manual review"""
+        """
+Queue conflict for manual review"""
         
         conflict = {
             'content_id': content_id,
@@ -1128,7 +1144,8 @@ class StorageReplicationEngine:
         self,
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> Tuple[str, str]:
-        """Resolve conflict using custom logic"""
+        """
+Resolve conflict using custom logic"""
         
         # Default to largest replica
         largest_size = 0
@@ -1151,7 +1168,8 @@ class StorageReplicationEngine:
         winner: Tuple[str, str],
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> None:
-        """Propagate winning version to all replicas"""
+        """
+Propagate winning version to all replicas"""
         
         winner_location, winner_checksum = winner
         
@@ -1187,7 +1205,8 @@ class StorageReplicationEngine:
         }
     
     async def _calculate_avg_node_latency(self) -> float:
-        """Calculate average node latency"""
+        """
+Calculate average node latency"""
         
         if not self.nodes:
             return 0.0
@@ -1196,7 +1215,8 @@ class StorageReplicationEngine:
         return total_latency / len(self.nodes)
     
     def _calculate_success_rate(self) -> float:
-        """Calculate replication success rate"""
+        """
+Calculate replication success rate"""
         
         total = self.metrics['total_replications']
         if total == 0:

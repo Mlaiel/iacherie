@@ -27,6 +27,7 @@ Resource monitoring → Intelligent allocation → Performance optimization →
 Scaling decisions → Cost optimization → SLA compliance → 
 Quality assurance → Business continuity → Revenue protection
 """
+
 import asyncio
 import logging
 import time
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class ResourceType(Enum):
-    """Types of system resources."""
+    """
+Types of system resources."""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -60,6 +63,7 @@ class ResourceType(Enum):
 
 class AllocationStrategy(Enum):
     """Resource allocation strategies."""
+
     FAIR_SHARE = "fair_share"
     PRIORITY_BASED = "priority_based"
     PERFORMANCE_BASED = "performance_based"
@@ -71,6 +75,7 @@ class AllocationStrategy(Enum):
 
 class ResourceStatus(Enum):
     """Resource availability status."""
+
     AVAILABLE = "available"
     ALLOCATED = "allocated"
     OVERLOADED = "overloaded"
@@ -81,6 +86,7 @@ class ResourceStatus(Enum):
 
 class ScalingAction(Enum):
     """Auto-scaling actions."""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
@@ -106,7 +112,8 @@ class ResourceQuota:
 
 @dataclass
 class ResourceUsage:
-    """Current resource usage statistics."""
+    """
+Current resource usage statistics."""
     cpu_percent: float = 0.0
     memory_percent: float = 0.0
     disk_percent: float = 0.0
@@ -121,7 +128,8 @@ class ResourceUsage:
 
 @dataclass
 class ResourcePool:
-    """Resource pool configuration."""
+    """
+Resource pool configuration."""
     pool_id: str
     resource_type: ResourceType
     total_capacity: ResourceQuota
@@ -140,7 +148,8 @@ class ResourcePool:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation record."""
+    """
+Resource allocation record."""
     allocation_id: str
     task_id: str
     pool_id: str
@@ -157,7 +166,8 @@ class ResourceAllocation:
 
 @dataclass
 class ScalingEvent:
-    """Auto-scaling event record."""
+    """
+Auto-scaling event record."""
     event_id: str
     pool_id: str
     action: ScalingAction
@@ -175,7 +185,8 @@ class ScalingEvent:
 
 @dataclass
 class ResourceMetrics:
-    """Resource scheduler performance metrics."""
+    """
+Resource scheduler performance metrics."""
     total_allocations: int = 0
     successful_allocations: int = 0
     failed_allocations: int = 0
@@ -212,7 +223,8 @@ class ResourceScheduler:
         scaling_cooldown: int = 300,  # seconds
         resource_history_size: int = 1000
     ):
-        """Initialize resource scheduler."""
+        """
+Initialize resource scheduler."""
         self.enable_auto_scaling = enable_auto_scaling
         self.enable_cost_optimization = enable_cost_optimization
         self.enable_predictive_scaling = enable_predictive_scaling
@@ -545,7 +557,8 @@ class ResourceScheduler:
         allocation_plan: Dict[str, Any],
         priority: int
     ) -> Optional[ResourceAllocation]:
-        """Execute the resource allocation plan."""
+        """
+Execute the resource allocation plan."""
         try:
             allocated_quota = ResourceQuota()
             pool_allocations = {}
@@ -611,7 +624,8 @@ class ResourceScheduler:
                 setattr(pool.available_capacity, resource_type, current_available + amount)
     
     async def deallocate_resources(self, allocation_id: str) -> bool:
-        """Deallocate resources."""
+        """
+Deallocate resources."""
         try:
             allocation = self.active_allocations.get(allocation_id)
             if not allocation:
@@ -675,7 +689,8 @@ class ResourceScheduler:
             self.resource_usage_history[allocation_id].append(usage)
     
     async def _resource_monitoring_loop(self) -> None:
-        """Resource monitoring background loop."""
+        """
+Resource monitoring background loop."""
         while self.is_running:
             try:
                 await self._monitor_system_resources()
@@ -731,7 +746,8 @@ class ResourceScheduler:
             return ResourceStatus.AVAILABLE
     
     async def _monitor_pool_health(self) -> None:
-        """Monitor health of resource pools."""
+        """
+Monitor health of resource pools."""
         for pool_id, pool in self.resource_pools.items():
             try:
                 # Calculate utilization
@@ -799,7 +815,8 @@ class ResourceScheduler:
         action: ScalingAction,
         current_utilization: float
     ) -> None:
-        """Trigger scaling action for a pool."""
+        """
+Trigger scaling action for a pool."""
         try:
             self.scaling_in_progress.add(pool.pool_id)
             self.last_scaling_time[pool.pool_id] = datetime.utcnow()
@@ -949,7 +966,8 @@ class ResourceScheduler:
         return cpu_cost + memory_cost + network_cost
     
     async def _optimize_allocation(self, allocation: ResourceAllocation) -> None:
-        """Optimize a specific allocation."""
+        """
+Optimize a specific allocation."""
         # This could involve:
         # 1. Reducing allocated resources if underutilized
         # 2. Moving to cheaper resource pool
@@ -988,7 +1006,8 @@ class ResourceScheduler:
         self.metrics.last_updated = datetime.utcnow()
     
     async def _evaluate_scaling_decisions(self) -> None:
-        """Evaluate and make scaling decisions."""
+        """
+Evaluate and make scaling decisions."""
         if not self.enable_predictive_scaling:
             return
         
@@ -997,7 +1016,8 @@ class ResourceScheduler:
         pass
     
     async def get_resource_status(self) -> Dict[str, Any]:
-        """Get comprehensive resource status."""
+        """
+Get comprehensive resource status."""
         pool_status = {}
         
         for pool_id, pool in self.resource_pools.items():
@@ -1037,11 +1057,13 @@ class ResourceScheduler:
         }
     
     def add_callback(self, event_type: str, callback: Callable) -> None:
-        """Add event callback."""
+        """
+Add event callback."""
         self.event_callbacks[event_type].append(callback)
     
     async def _call_callbacks(self, event_type: str, *args) -> None:
-        """Call registered callbacks for an event."""
+        """
+Call registered callbacks for an event."""
         for callback in self.event_callbacks.get(event_type, []):
             try:
                 if asyncio.iscoroutinefunction(callback):

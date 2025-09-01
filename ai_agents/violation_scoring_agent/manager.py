@@ -1,4 +1,5 @@
 """Violation Scoring Manager - AI-Powered Violation Assessment"""
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -110,7 +111,8 @@ class ViolationScoringManager(BaseAgent):
         return ['severity_weights', 'confidence_threshold']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""
+        """
+Main request processing logic"""
         action = request.action.lower()
         
         try:
@@ -278,7 +280,8 @@ class ViolationScoringManager(BaseAgent):
         return factors
     
     def _compute_weighted_score(self, factors: Dict[str, float]) -> float:
-        """Compute weighted violation score"""
+        """
+Compute weighted violation score"""
         weighted_sum = 0.0
         total_weight = 0.0
         
@@ -294,7 +297,8 @@ class ViolationScoringManager(BaseAgent):
             return 0.0
     
     def _determine_severity_level(self, score: float) -> str:
-        """Determine severity level from score"""
+        """
+Determine severity level from score"""
         if score >= 0.9:
             return "critical"
         elif score >= 0.7:
@@ -351,7 +355,8 @@ class ViolationScoringManager(BaseAgent):
         risk_level: RiskLevel, 
         violation_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate automated action recommendations"""
+        """
+Generate automated action recommendations"""
         recommendations = []
         
         # High-priority actions for critical violations
@@ -417,7 +422,8 @@ class ViolationScoringManager(BaseAgent):
         return historical[-50:]  # Return last 50 violations
     
     async def _analyze_patterns(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze violation patterns for content or timeframe"""
+        """
+Analyze violation patterns for content or timeframe"""
         content_id = data.get('content_id')
         timeframe_days = data.get('timeframe_days', 30)
         
@@ -472,7 +478,8 @@ class ViolationScoringManager(BaseAgent):
         return patterns
     
     async def _assess_risk(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess overall risk level for content or platform"""
+        """
+Assess overall risk level for content or platform"""
         content_id = data.get('content_id')
         platform = data.get('platform')
         
@@ -520,7 +527,8 @@ class ViolationScoringManager(BaseAgent):
         }
     
     async def _batch_score(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Score multiple violations in batch"""
+        """
+Score multiple violations in batch"""
         violations = data.get('violations', [])
         
         if not violations:
@@ -611,7 +619,8 @@ class ViolationScoringManager(BaseAgent):
         }
     
     async def _recommend_actions(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get action recommendations based on violation scores"""
+        """
+Get action recommendations based on violation scores"""
         violation_ids = data.get('violation_ids', [])
         
         if not violation_ids:
@@ -671,7 +680,8 @@ class ViolationScoringManager(BaseAgent):
         }
     
     def _estimate_success_probability(self, score_obj: ViolationScore) -> float:
-        """Estimate probability of successful action"""
+        """
+Estimate probability of successful action"""
         # Base probability on confidence and severity
         base_probability = score_obj.confidence_score * 0.7
         

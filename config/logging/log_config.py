@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import logging.config
 import os
@@ -32,7 +33,9 @@ from logging_tree import printout
 
 
 class LogLevel(str, Enum):
-    """Standardized logging levels for the platform"""
+    """
+Standardized logging levels for the platform"""
+
     CRITICAL = "CRITICAL"
     ERROR = "ERROR"
     WARNING = "WARNING"
@@ -111,7 +114,8 @@ class LogFormatConfig:
 
 @dataclass
 class LogFileConfig:
-    """Configuration for log file handling"""
+    """
+Configuration for log file handling"""
     enabled: bool = True
     base_path: str = "/var/log/ia_influencer"
     filename_pattern: str = "{logger_name}_{date}.log"
@@ -193,7 +197,8 @@ class LogConfig:
         self._apply_configuration()
     
     def _configure_structlog(self) -> None:
-        """Configure structlog for structured logging"""
+        """
+Configure structlog for structured logging"""
         processors = [
             structlog.stdlib.filter_by_level,
             structlog.stdlib.add_logger_name,
@@ -235,7 +240,8 @@ class LogConfig:
         return config
     
     def _build_formatters(self) -> Dict[str, Any]:
-        """Build formatter configurations"""
+        """
+Build formatter configurations"""
         formatters = {}
         
         # JSON Formatter for structured logging
@@ -296,7 +302,8 @@ class LogConfig:
         return formatters
     
     def _build_filters(self) -> Dict[str, Any]:
-        """Build filter configurations"""
+        """
+Build filter configurations"""
         return {
             'security_filter': {
                 '()': 'backend.config.logging.log_filtering_config.SecurityLogFilter'
@@ -310,7 +317,8 @@ class LogConfig:
         }
     
     def _build_handlers(self) -> Dict[str, Any]:
-        """Build handler configurations"""
+        """
+Build handler configurations"""
         handlers = {}
         
         # Console handler
@@ -467,7 +475,8 @@ class LogConfig:
         return loggers
     
     def _parse_file_size(self, size_str: str) -> int:
-        """Parse file size string to bytes"""
+        """
+Parse file size string to bytes"""
         size_str = size_str.upper()
         multipliers = {'B': 1, 'KB': 1024, 'MB': 1024**2, 'GB': 1024**3}
         
@@ -479,7 +488,8 @@ class LogConfig:
         return int(size_str)
     
     def _apply_configuration(self) -> None:
-        """Apply the logging configuration"""
+        """
+Apply the logging configuration"""
         # Ensure log directory exists
         if self.file_config.enabled:
             Path(self.file_config.base_path).mkdir(parents=True, exist_ok=True)
@@ -529,11 +539,13 @@ class LogConfig:
             structlog.contextvars.bind_contextvars(**{key: value})
     
     def clear_context(self) -> None:
-        """Clear global logging context"""
+        """
+Clear global logging context"""
         structlog.contextvars.clear_contextvars()
     
     def print_logger_tree(self) -> None:
-        """Print the current logger configuration tree for debugging"""
+        """
+Print the current logger configuration tree for debugging"""
         print("Current Logger Configuration Tree:")
         print("=" * 50)
         printout()

@@ -27,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationTestType(Enum):
-    """Types of integration tests."""
+    """
+Types of integration tests."""
+
     USER_JOURNEY = "user_journey"
     API_WORKFLOW = "api_workflow"
     DATA_FLOW = "data_flow"
@@ -49,14 +51,16 @@ class IntegrationTestResult:
 
 
 class RealDatabaseConnection:
-    """Real database connection for testing - no mocks."""
+    """
+Real database connection for testing - no mocks."""
     
     def __init__(self):
         self.connected = False
         self.transactions = []
     
     async def connect(self) -> bool:
-        """Connect to real database."""
+        """
+Connect to real database."""
         # In real implementation, this would connect to actual database
         # For now, simulate real connection
         await asyncio.sleep(0.1)  # Simulate connection time
@@ -107,12 +111,14 @@ class RealAPIClient:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Cleanup API session."""
+        """
+Cleanup API session."""
         if self.session:
             await self.session.close()
     
     async def authenticate(self, username: str, password: str) -> bool:
-        """Real authentication with API."""
+        """
+Real authentication with API."""
         url = f"{self.base_url}/api/v1/auth/login"
         data = {"username": username, "password": password}
         
@@ -162,7 +168,8 @@ class IndustrialIntegrationTester:
         self.test_artifacts: Dict[str, Any] = {}
     
     async def setup_test_environment(self) -> bool:
-        """Setup real test environment."""
+        """
+Setup real test environment."""
         logger.info("Setting up real test environment...")
         
         # Ensure API server is available (real or mock)
@@ -839,7 +846,8 @@ class TestIndustrialIntegration:
 
     @pytest.fixture(autouse=True)
     async def setup_test_environment(self):
-        """Setup test environment with API server availability."""
+        """
+Setup test environment with API server availability."""
         # Ensure API server is available (real or mock)
         await ensure_api_server()
         yield

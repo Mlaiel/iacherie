@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class VulnerabilityType(Enum):
-    """Types of security vulnerabilities"""
+    """
+Types of security vulnerabilities"""
+
     SQL_INJECTION = "sql_injection"
     WEAK_AUTHENTICATION = "weak_authentication"
     PRIVILEGE_ESCALATION = "privilege_escalation"
@@ -66,6 +69,7 @@ class VulnerabilityType(Enum):
 
 class SeverityLevel(Enum):
     """Vulnerability severity levels"""
+
     INFO = 0
     LOW = 1
     MEDIUM = 2
@@ -74,7 +78,9 @@ class SeverityLevel(Enum):
 
 
 class ScanType(Enum):
-    """Security scan types"""
+    """
+Security scan types"""
+
     QUICK = "quick"
     COMPREHENSIVE = "comprehensive"
     TARGETED = "targeted"
@@ -84,6 +90,7 @@ class ScanType(Enum):
 
 class ScanStatus(Enum):
     """Scan execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -142,7 +149,8 @@ class ScanConfiguration:
 
 @dataclass
 class ScanResult:
-    """Security scan result"""
+    """
+Security scan result"""
     scan_id: str
     scan_config: ScanConfiguration
     status: ScanStatus
@@ -156,34 +164,40 @@ class ScanResult:
 
 
 class SecurityCheck(ABC):
-    """Abstract base class for security checks"""
+    """
+Abstract base class for security checks"""
     
     @property
     @abstractmethod
     def check_id(self) -> str:
-        """Unique check identifier"""
+        """
+Unique check identifier"""
         pass
     
     @property
     @abstractmethod
     def vulnerability_type(self) -> VulnerabilityType:
-        """Type of vulnerability this check detects"""
+        """
+Type of vulnerability this check detects"""
         pass
     
     @property
     @abstractmethod
     def description(self) -> str:
-        """Check description"""
+        """
+Check description"""
         pass
     
     @abstractmethod
     async def execute(self, target: ScanTarget) -> List[Vulnerability]:
-        """Execute security check on target"""
+        """
+Execute security check on target"""
         pass
 
 
 class DatabaseConfigurationCheck(SecurityCheck):
-    """Database configuration security check"""
+    """
+Database configuration security check"""
     
     @property
     def check_id(self) -> str:
@@ -257,28 +271,33 @@ class DatabaseConfigurationCheck(SecurityCheck):
         return []
     
     async def _check_network_exposure(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check for unnecessary network exposure"""
+        """
+Check for unnecessary network exposure"""
         # Implement network exposure checking
         return []
     
     async def _check_encryption_settings(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check encryption configuration"""
+        """
+Check encryption configuration"""
         # Implement encryption checking
         return []
     
     async def _check_logging_configuration(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check audit logging configuration"""
+        """
+Check audit logging configuration"""
         # Implement logging configuration checking
         return []
     
     async def _check_backup_security(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check backup security settings"""
+        """
+Check backup security settings"""
         # Implement backup security checking
         return []
 
 
 class SQLInjectionCheck(SecurityCheck):
-    """SQL injection vulnerability check"""
+    """
+SQL injection vulnerability check"""
     
     @property
     def check_id(self) -> str:
@@ -384,23 +403,27 @@ class AccessControlCheck(SecurityCheck):
         return []
     
     async def _check_role_based_access(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check role-based access control"""
+        """
+Check role-based access control"""
         # Implement RBAC checking
         return []
     
     async def _check_authentication_mechanisms(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check authentication mechanisms"""
+        """
+Check authentication mechanisms"""
         # Implement authentication checking
         return []
     
     async def _check_session_management(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check session management security"""
+        """
+Check session management security"""
         # Implement session security checking
         return []
 
 
 class NetworkSecurityCheck(SecurityCheck):
-    """Network security vulnerability check"""
+    """
+Network security vulnerability check"""
     
     @property
     def check_id(self) -> str:
@@ -485,17 +508,20 @@ class NetworkSecurityCheck(SecurityCheck):
             return False
     
     async def _check_ssl_configuration(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check SSL/TLS configuration"""
+        """
+Check SSL/TLS configuration"""
         # Implement SSL configuration checking
         return []
     
     async def _check_firewall_rules(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check firewall configuration"""
+        """
+Check firewall configuration"""
         # Implement firewall rules checking
         return []
     
     async def _check_network_segmentation(self, target: ScanTarget) -> List[Vulnerability]:
-        """Check network segmentation"""
+        """
+Check network segmentation"""
         # Implement network segmentation checking
         return []
 
@@ -513,7 +539,8 @@ class DatabaseSecurityScanner:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize security scanner"""
+        """
+Initialize security scanner"""
         self.config = config or {}
         self.security_checks: Dict[str, SecurityCheck] = {}
         self.scan_results: Dict[str, ScanResult] = {}
@@ -733,7 +760,8 @@ class DatabaseSecurityScanner:
         vulnerabilities: List[Vulnerability], 
         config: ScanConfiguration
     ) -> List[Vulnerability]:
-        """Filter and deduplicate vulnerabilities"""
+        """
+Filter and deduplicate vulnerabilities"""
         filtered_vulnerabilities = []
         seen_vulnerabilities = set()
         
@@ -879,14 +907,16 @@ class DatabaseSecurityScanner:
         return self.scan_results.get(scan_id)
     
     def list_active_scans(self) -> List[str]:
-        """List active scan IDs"""
+        """
+List active scan IDs"""
         return [
             scan_id for scan_id, result in self.scan_results.items()
             if result.status in [ScanStatus.PENDING, ScanStatus.RUNNING]
         ]
     
     async def cancel_scan(self, scan_id: str) -> bool:
-        """Cancel running scan"""
+        """
+Cancel running scan"""
         try:
             if scan_id in self.scan_results:
                 scan_result = self.scan_results[scan_id]

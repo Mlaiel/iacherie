@@ -4,8 +4,9 @@ Advanced instrument identification engine using machine learning and signal proc
 to detect and classify musical instruments in audio signals.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -16,7 +17,9 @@ import librosa
 
 
 class InstrumentCategory(Enum):
-    """Musical instrument categories"""
+    """
+Musical instrument categories"""
+
     STRINGS = "strings"
     WOODWINDS = "woodwinds" 
     BRASS = "brass"
@@ -37,7 +40,8 @@ class InstrumentDetection:
 
 
 class InstrumentIdentifier:
-    """Professional instrument identification engine"""
+    """
+Professional instrument identification engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)

@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import time
@@ -63,7 +64,9 @@ logger = logging.getLogger(__name__)
 
 
 class InferenceMode(Enum):
-    """Inference execution modes"""
+    """
+Inference execution modes"""
+
     BATCH = "batch"
     STREAM = "stream"
     REAL_TIME = "real_time"
@@ -74,6 +77,7 @@ class InferenceMode(Enum):
 
 class OptimizationLevel(Enum):
     """Model optimization levels"""
+
     NONE = "none"
     BASIC = "basic"
     ADVANCED = "advanced"
@@ -85,6 +89,7 @@ class OptimizationLevel(Enum):
 
 class InferenceBackend(Enum):
     """Inference backends"""
+
     PYTORCH = "pytorch"
     ONNX = "onnx"
     TENSORRT = "tensorrt"
@@ -154,7 +159,8 @@ class InferenceResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""
+        """
+Convert result to dictionary"""
         return {
             'predictions': self.predictions.tolist() if isinstance(self.predictions, np.ndarray) else self.predictions,
             'confidence': self.confidence,
@@ -169,29 +175,35 @@ class InferenceResult:
 
 
 class ModelBackend(ABC):
-    """Abstract base class for inference backends"""
+    """
+Abstract base class for inference backends"""
     
     @abstractmethod
     def load_model(self, model_path: str, config: InferenceConfig) -> Any:
-        """Load model for inference"""
+        """
+Load model for inference"""
         pass
     
     @abstractmethod
     def predict(self, model: Any, inputs: Any) -> Any:
-        """Run prediction"""
+        """
+Run prediction"""
         pass
     
     @abstractmethod
     def predict_batch(self, model: Any, inputs: List[Any]) -> List[Any]:
-        """Run batch prediction"""
+        """
+Run batch prediction"""
         pass
 
 
 class PyTorchBackend(ModelBackend):
-    """PyTorch inference backend"""
+    """
+PyTorch inference backend"""
     
     def load_model(self, model_path: str, config: InferenceConfig) -> torch.nn.Module:
-        """Load PyTorch model"""
+        """
+Load PyTorch model"""
         device = self._get_device(config.device)
         
         if model_path.endswith('.pt') or model_path.endswith('.pth'):
@@ -227,14 +239,16 @@ class PyTorchBackend(ModelBackend):
             return model(inputs)
     
     def predict_batch(self, model: torch.nn.Module, inputs: List[torch.Tensor]) -> List[torch.Tensor]:
-        """Run batch prediction"""
+        """
+Run batch prediction"""
         with torch.no_grad():
             batch_tensor = torch.stack(inputs)
             outputs = model(batch_tensor)
             return [outputs[i] for i in range(outputs.size(0))]
     
     def _get_device(self, device_str: str) -> torch.device:
-        """Get appropriate device"""
+        """
+Get appropriate device"""
         if device_str == "auto":
             return torch.device("cuda" if torch.cuda.is_available() else "cpu")
         return torch.device(device_str)
@@ -246,7 +260,8 @@ if ONNX_AVAILABLE:
         """ONNX Runtime inference backend"""
         
         def load_model(self, model_path: str, config: InferenceConfig) -> ort.InferenceSession:
-            """Load ONNX model"""
+            """
+Load ONNX model"""
             providers = self._get_providers(config.device)
             
             session_options = ort.SessionOptions()
@@ -265,12 +280,14 @@ if ONNX_AVAILABLE:
             return session
         
         def predict(self, model: ort.InferenceSession, inputs: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
-            """Run single prediction"""
+            """
+Run single prediction"""
             outputs = model.run(None, inputs)
             return {name: output for name, output in zip([o.name for o in model.get_outputs()], outputs)}
         
         def predict_batch(self, model: ort.InferenceSession, inputs: List[Dict[str, np.ndarray]]) -> List[Dict[str, np.ndarray]]:
-            """Run batch prediction"""
+            """
+Run batch prediction"""
             results = []
             for input_dict in inputs:
                 result = self.predict(model, input_dict)
@@ -278,7 +295,8 @@ if ONNX_AVAILABLE:
             return results
         
         def _get_providers(self, device_str: str) -> List[str]:
-            """Get ONNX providers based on device"""
+            """
+Get ONNX providers based on device"""
             if device_str == "auto":
                 if torch.cuda.is_available():
                     return ['CUDAExecutionProvider', 'CPUExecutionProvider']
@@ -309,7 +327,8 @@ class TransformersBackend(ModelBackend):
     """Hugging Face Transformers backend"""
     
     def load_model(self, model_path: str, config: InferenceConfig) -> pipeline:
-        """Load Transformers model"""
+        """
+Load Transformers model"""
         device = 0 if torch.cuda.is_available() and config.device != "cpu" else -1
         
         # Determine task type from model path or config
@@ -329,12 +348,14 @@ class TransformersBackend(ModelBackend):
         return model(inputs)
     
     def predict_batch(self, model: pipeline, inputs: List[str]) -> List[Dict[str, Any]]:
-        """Run batch prediction"""
+        """
+Run batch prediction"""
         return model(inputs)
 
 
 class InferenceCache:
-    """Caching system for inference results"""
+    """
+Caching system for inference results"""
     
     def __init__(self, config: InferenceConfig):
         self.config = config
@@ -432,27 +453,31 @@ class BatchProcessor:
         self.worker_thread = None
     
     def start(self):
-        """Start batch processing"""
+        """
+Start batch processing"""
         if not self.processing:
             self.processing = True
             self.worker_thread = threading.Thread(target=self._process_batches)
             self.worker_thread.start()
     
     def stop(self):
-        """Stop batch processing"""
+        """
+Stop batch processing"""
         self.processing = False
         if self.worker_thread:
             self.worker_thread.join()
     
     def add_request(self, request_id: str, inputs: Any) -> Queue:
-        """Add inference request to batch"""
+        """
+Add inference request to batch"""
         result_queue = Queue()
         self.result_queues[request_id] = result_queue
         self.batch_queue.put((request_id, inputs))
         return result_queue
     
     def _process_batches(self):
-        """Process batches in background thread"""
+        """
+Process batches in background thread"""
         while self.processing:
             batch = []
             batch_ids = []
@@ -481,7 +506,8 @@ class BatchProcessor:
                         del self.result_queues[request_id]
     
     def _process_batch_impl(self, batch: List[Any]) -> List[Any]:
-        """Implement batch processing (to be overridden)"""
+        """
+Implement batch processing (to be overridden)"""
         # Placeholder implementation
         return [f"result_{i}" for i in range(len(batch))]
 
@@ -628,18 +654,21 @@ class InferenceEngine:
         return await loop.run_in_executor(self.executor, self.predict, inputs, **kwargs)
     
     async def predict_batch_async(self, inputs: List[Any], **kwargs) -> List[InferenceResult]:
-        """Run asynchronous batch inference"""
+        """
+Run asynchronous batch inference"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, self.predict_batch, inputs, **kwargs)
     
     async def predict_stream(self, input_stream: AsyncGenerator[Any, None], **kwargs) -> AsyncGenerator[InferenceResult, None]:
-        """Run streaming inference"""
+        """
+Run streaming inference"""
         async for inputs in input_stream:
             result = await self.predict_async(inputs, **kwargs)
             yield result
     
     def predict_with_dynamic_batching(self, inputs: Any, **kwargs) -> InferenceResult:
-        """Run inference with dynamic batching"""
+        """
+Run inference with dynamic batching"""
         if not self.batch_processor:
             return self.predict(inputs, **kwargs)
         

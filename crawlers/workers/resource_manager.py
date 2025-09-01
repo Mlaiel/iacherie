@@ -8,7 +8,7 @@ Technologies: ML Resource Prediction, Dynamic Allocation, Cost Optimization
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Resource monitoring → ML prediction → Dynamic allocation → 
 Cost optimization → Performance tuning → Capacity planning → Auto-scaling
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
 import logging
 import asyncio
@@ -47,7 +48,9 @@ settings = get_settings()
 
 
 class ResourceType(Enum):
-    """Types of resources managed"""
+    """
+Types of resources managed"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -59,6 +62,7 @@ class ResourceType(Enum):
 
 class AllocationStrategy(Enum):
     """Resource allocation strategies"""
+
     STATIC = "static"
     DYNAMIC = "dynamic"
     PREDICTIVE = "predictive"
@@ -69,6 +73,7 @@ class AllocationStrategy(Enum):
 
 class ResourceStatus(Enum):
     """Resource availability status"""
+
     AVAILABLE = "available"
     ALLOCATED = "allocated"
     OVERALLOCATED = "overallocated"
@@ -93,7 +98,8 @@ class ResourceLimit:
 
 @dataclass
 class ResourceUsage:
-    """Current resource usage metrics"""
+    """
+Current resource usage metrics"""
     resource_type: ResourceType
     current_usage: float
     peak_usage: float
@@ -106,7 +112,8 @@ class ResourceUsage:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation record"""
+    """
+Resource allocation record"""
     allocation_id: str
     worker_id: str
     resource_type: ResourceType
@@ -118,7 +125,8 @@ class ResourceAllocation:
 
 @dataclass
 class ResourcePrediction:
-    """ML-based resource prediction"""
+    """
+ML-based resource prediction"""
     resource_type: ResourceType
     prediction_horizon: timedelta
     predicted_usage: float
@@ -1126,7 +1134,8 @@ def get_resource_manager(allocation_strategy: AllocationStrategy = AllocationStr
 
 
 async def initialize_resource_manager(allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED) -> bool:
-    """Initialize global resource manager"""
+    """
+Initialize global resource manager"""
     try:
         manager = get_resource_manager(allocation_strategy)
         return await manager.start()

@@ -8,7 +8,7 @@ Technologies: AsyncIO, Worker Pools, Load Balancing, Health Monitoring
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Worker initialization → Task assignment → Platform specialization → 
 Load balancing → Health monitoring → Performance optimization → Scaling decisions
 """
+
 from typing import Any, Dict, List, Optional, Set, Callable, Tuple
 import logging
 import asyncio
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkerStatus(Enum):
-    """Worker status states"""
+    """
+Worker status states"""
+
     INITIALIZING = "initializing"
     IDLE = "idle"
     BUSY = "busy"
@@ -48,6 +51,7 @@ class WorkerStatus(Enum):
 
 class WorkerType(Enum):
     """Specialized worker types"""
+
     GENERAL_PURPOSE = "general_purpose"
     PLATFORM_SPECIALIZED = "platform_specialized"
     PROTECTION_MONITOR = "protection_monitor"
@@ -89,7 +93,8 @@ class WorkerMetrics:
 
 @dataclass
 class WorkerCapacity:
-    """Worker capacity and resource limits"""
+    """
+Worker capacity and resource limits"""
     max_concurrent_tasks: int = 5
     max_memory_mb: int = 512
     max_cpu_percent: float = 80.0
@@ -99,7 +104,8 @@ class WorkerCapacity:
 
 @dataclass
 class WorkerConfig:
-    """Worker configuration"""
+    """
+Worker configuration"""
     worker_type: WorkerType = WorkerType.GENERAL_PURPOSE
     platform_specialty: Optional[PlatformType] = None
     capacity: WorkerCapacity = field(default_factory=WorkerCapacity)
@@ -163,7 +169,8 @@ class CrawlerWorker:
         self._health_status_callback: Optional[Callable] = None
     
     async def initialize(self) -> bool:
-        """Initialize worker"""
+        """
+Initialize worker"""
         try:
             self.status = WorkerStatus.INITIALIZING
             self._is_running = True
@@ -327,11 +334,13 @@ class CrawlerWorker:
         self._task_completion_callback = callback
     
     def set_health_callback(self, callback: Callable):
-        """Set health status callback"""
+        """
+Set health status callback"""
         self._health_status_callback = callback
     
     async def _can_accept_task(self, task: CrawlerTask) -> bool:
-        """Check if worker can accept new task"""
+        """
+Check if worker can accept new task"""
         # Check current capacity
         if len(self.current_tasks) >= self.config.capacity.max_concurrent_tasks:
             return False
@@ -355,7 +364,8 @@ class CrawlerWorker:
         return True
     
     async def _execute_task_by_platform(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute task based on platform type"""
+        """
+Execute task based on platform type"""
         try:
             if task.platform == PlatformType.YOUTUBE:
                 return await self._execute_youtube_crawl(task)
@@ -470,7 +480,8 @@ class CrawlerWorker:
             await self._task_completion_callback(self.worker_id, task, True)
     
     async def _update_failure_metrics(self, task: CrawlerTask, error: str):
-        """Update metrics after task failure"""
+        """
+Update metrics after task failure"""
         self.metrics.tasks_failed += 1
         self.metrics.error_counts[error] += 1
         self.metrics.last_error = error
@@ -485,7 +496,8 @@ class CrawlerWorker:
             await self._task_completion_callback(self.worker_id, task, False)
     
     async def _update_system_metrics(self):
-        """Update system resource metrics"""
+        """
+Update system resource metrics"""
         try:
             # CPU usage
             self.metrics.cpu_usage_percent = psutil.cpu_percent(interval=0.1)
@@ -748,7 +760,8 @@ class QueueWorkersManager:
         worker_type: WorkerType, 
         platform_specialty: Optional[PlatformType] = None
     ) -> Optional[str]:
-        """Create new worker"""
+        """
+Create new worker"""
         try:
             if len(self.workers) >= self.max_workers:
                 return None
@@ -826,7 +839,8 @@ class QueueWorkersManager:
         return await self._create_worker(WorkerType.GENERAL_PURPOSE)
     
     async def _worker_health_monitor(self):
-        """Monitor worker health and restart unhealthy workers"""
+        """
+Monitor worker health and restart unhealthy workers"""
         while self._is_running:
             try:
                 unhealthy_workers = []
@@ -913,17 +927,20 @@ class QueueWorkersManager:
         pass
     
     async def _scale_workers_based_on_demand(self):
-        """Scale workers based on current demand"""
+        """
+Scale workers based on current demand"""
         # Implementation for auto-scaling
         pass
     
     async def _optimize_worker_performance(self):
-        """Optimize worker performance"""
+        """
+Optimize worker performance"""
         # Implementation for performance optimization
         pass
     
     async def _on_task_completion(self, worker_id: str, task: CrawlerTask, success: bool):
-        """Callback for task completion"""
+        """
+Callback for task completion"""
         # Cleanup assignment
         self.worker_assignments.pop(task.task_id, None)
         

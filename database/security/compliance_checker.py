@@ -23,6 +23,7 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
@@ -55,6 +58,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance check status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -64,6 +68,7 @@ class ComplianceStatus(Enum):
 
 class ViolationSeverity(Enum):
     """Compliance violation severity"""
+
     INFO = 1
     LOW = 2
     MEDIUM = 3
@@ -72,7 +77,9 @@ class ViolationSeverity(Enum):
 
 
 class DataCategory(Enum):
-    """Data classification categories"""
+    """
+Data classification categories"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -153,18 +160,21 @@ class DataInventoryItem:
 
 
 class ComplianceChecker(ABC):
-    """Abstract compliance checker interface"""
+    """
+Abstract compliance checker interface"""
     
     @property
     @abstractmethod
     def framework(self) -> ComplianceFramework:
-        """Compliance framework this checker handles"""
+        """
+Compliance framework this checker handles"""
         pass
     
     @property
     @abstractmethod
     def rules(self) -> List[ComplianceRule]:
-        """List of compliance rules to check"""
+        """
+List of compliance rules to check"""
         pass
     
     @abstractmethod
@@ -173,12 +183,14 @@ class ComplianceChecker(ABC):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> ComplianceAssessment:
-        """Check compliance and return assessment"""
+        """
+Check compliance and return assessment"""
         pass
 
 
 class GDPRComplianceChecker(ComplianceChecker):
-    """GDPR compliance checker implementation"""
+    """
+GDPR compliance checker implementation"""
     
     @property
     def framework(self) -> ComplianceFramework:
@@ -186,7 +198,8 @@ class GDPRComplianceChecker(ComplianceChecker):
     
     @property
     def rules(self) -> List[ComplianceRule]:
-        """GDPR compliance rules"""
+        """
+GDPR compliance rules"""
         return [
             ComplianceRule(
                 rule_id="gdpr_art_32_encryption",
@@ -488,7 +501,8 @@ class PCIDSSComplianceChecker(ComplianceChecker):
     
     @property
     def rules(self) -> List[ComplianceRule]:
-        """PCI-DSS compliance rules"""
+        """
+PCI-DSS compliance rules"""
         return [
             ComplianceRule(
                 rule_id="pci_req_3_encryption",
@@ -723,20 +737,24 @@ class ComplianceCheckerRegistry:
         self._register_default_checkers()
     
     def _register_default_checkers(self):
-        """Register default compliance checkers"""
+        """
+Register default compliance checkers"""
         self.register_checker(GDPRComplianceChecker())
         self.register_checker(PCIDSSComplianceChecker())
     
     def register_checker(self, checker: ComplianceChecker):
-        """Register a compliance checker"""
+        """
+Register a compliance checker"""
         self.checkers[checker.framework] = checker
     
     def get_checker(self, framework: ComplianceFramework) -> Optional[ComplianceChecker]:
-        """Get compliance checker for framework"""
+        """
+Get compliance checker for framework"""
         return self.checkers.get(framework)
     
     def list_supported_frameworks(self) -> List[ComplianceFramework]:
-        """List supported compliance frameworks"""
+        """
+List supported compliance frameworks"""
         return list(self.checkers.keys())
 
 
@@ -750,7 +768,8 @@ class DatabaseComplianceChecker:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize compliance checker"""
+        """
+Initialize compliance checker"""
         self.config = config or {}
         self.checker_registry = ComplianceCheckerRegistry()
         self.data_inventory: List[DataInventoryItem] = []
@@ -973,7 +992,8 @@ class DatabaseComplianceChecker:
         self, 
         frameworks: List[ComplianceFramework]
     ) -> Dict[str, Any]:
-        """Generate comprehensive remediation plan"""
+        """
+Generate comprehensive remediation plan"""
         plan = {
             "plan_id": str(uuid.uuid4()),
             "generated_at": datetime.now().isoformat(),
@@ -1053,7 +1073,8 @@ class DatabaseComplianceChecker:
         return self.checker_registry.list_supported_frameworks()
     
     def get_compliance_metrics(self) -> Dict[str, Any]:
-        """Get compliance checking metrics"""
+        """
+Get compliance checking metrics"""
         if not self.assessments:
             return {"total_assessments": 0, "frameworks": []}
         

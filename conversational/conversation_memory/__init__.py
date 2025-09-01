@@ -40,6 +40,7 @@ Project Team Specialties:
 • IA Prompt Engineer: Advanced prompt engineering & optimization
 ---
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 
@@ -155,14 +156,16 @@ def get_conversation_memory_manager() -> ConversationMemoryManager:
     return conversation_memory_manager
 
 def get_conversation_history_manager() -> ConversationHistoryManager:
-    """Get singleton instance of conversation history manager"""
+    """
+Get singleton instance of conversation history manager"""
     global conversation_history_manager
     if conversation_history_manager is None:
         conversation_history_manager = ConversationHistoryManager()
     return conversation_history_manager
 
 def get_memory_indexer() -> MemoryIndexer:
-    """Get singleton instance of memory indexer"""
+    """
+Get singleton instance of memory indexer"""
     global memory_indexer
     if memory_indexer is None:
         memory_indexer = MemoryIndexer()

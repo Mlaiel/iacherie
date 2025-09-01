@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Advanced data loading systems for distributed content delivery,
 platform integration, and intelligent storage management.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncGenerator
@@ -40,7 +41,8 @@ from ..utils.compression import CompressionManager
 
 @dataclass
 class LoadingJob:
-    """Data loading job specification."""
+    """
+Data loading job specification."""
     job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_data: Dict[str, Any] = field(default_factory=dict)
     destination: str = ""
@@ -207,7 +209,8 @@ class DistributedLoader:
         return prepared_content
     
     async def _optimize_for_youtube(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply YouTube-specific optimizations."""
+        """
+Apply YouTube-specific optimizations."""
         
         if content.get('type') == 'video':
             # YouTube video optimizations
@@ -223,7 +226,8 @@ class DistributedLoader:
         return content
     
     async def _optimize_for_instagram(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Instagram-specific optimizations."""
+        """
+Apply Instagram-specific optimizations."""
         
         if content.get('type') in ['image', 'video']:
             # Instagram format optimizations
@@ -237,7 +241,8 @@ class DistributedLoader:
         return content
     
     async def _optimize_for_tiktok(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply TikTok-specific optimizations."""
+        """
+Apply TikTok-specific optimizations."""
         
         if content.get('type') == 'video':
             # TikTok video optimizations
@@ -251,7 +256,8 @@ class DistributedLoader:
         return content
     
     async def _optimize_for_spotify(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Spotify-specific optimizations."""
+        """
+Apply Spotify-specific optimizations."""
         
         if content.get('type') == 'audio':
             # Spotify audio optimizations
@@ -273,7 +279,8 @@ class DistributedLoader:
         package_id: str,
         platform: str
     ) -> Dict[str, str]:
-        """Upload content to distributed storage systems."""
+        """
+Upload content to distributed storage systems."""
         
         storage_urls = {}
         upload_tasks = []
@@ -338,7 +345,8 @@ class DistributedLoader:
         package_id: str,
         storage_type: str
     ) -> str:
-        """Upload content to specific storage system."""
+        """
+Upload content to specific storage system."""
         
         if storage_type == 's3':
             return await self._upload_to_s3(content, package_id)
@@ -672,7 +680,8 @@ class StorageLoader:
         }
     
     async def _upsert_data(self, data: Dict[str, Any], table_name: str) -> Dict[str, Any]:
-        """Insert or update data using UPSERT operation."""
+        """
+Insert or update data using UPSERT operation."""
         
         # Implementation would use actual database connection
         # This is a simplified example
@@ -685,7 +694,8 @@ class StorageLoader:
         }
     
     async def _bulk_load_data(self, data: List[Dict[str, Any]], table_name: str) -> Dict[str, Any]:
-        """Bulk load data for high-performance scenarios."""
+        """
+Bulk load data for high-performance scenarios."""
         
         # Implementation would use actual database connection
         # This is a simplified example

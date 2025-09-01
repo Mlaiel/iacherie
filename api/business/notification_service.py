@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class NotificationType(str, Enum):
-    """Notification types for the platform."""
+    """
+Notification types for the platform."""
+
     COLLABORATION_REQUEST = "collaboration_request"
     COLLABORATION_ACCEPTED = "collaboration_accepted"
     COLLABORATION_COMPLETED = "collaboration_completed"
@@ -49,6 +52,7 @@ class NotificationType(str, Enum):
 
 class NotificationPriority(str, Enum):
     """Notification priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -56,6 +60,7 @@ class NotificationPriority(str, Enum):
 
 class NotificationChannel(str, Enum):
     """Notification delivery channels."""
+
     IN_APP = "in_app"
     EMAIL = "email"
     PUSH = "push"
@@ -838,7 +843,8 @@ class NotificationService:
         recipient: User,
         channels: List[NotificationChannel]
     ) -> Dict[str, Any]:
-        """Deliver notification through specified channels."""
+        """
+Deliver notification through specified channels."""
         delivery_results = {}
         
         for channel in channels:

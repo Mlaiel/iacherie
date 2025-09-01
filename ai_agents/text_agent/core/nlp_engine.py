@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -55,7 +56,9 @@ except LookupError:
 logger = logging.getLogger(__name__)
 
 class AnalysisType(Enum):
-    """NLP analysis types"""
+    """
+NLP analysis types"""
+
     SENTIMENT = "sentiment"
     EMOTION = "emotion"
     INTENT = "intent"
@@ -67,6 +70,7 @@ class AnalysisType(Enum):
 
 class SentimentPolarity(Enum):
     """Sentiment polarity levels"""
+
     VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
@@ -75,6 +79,7 @@ class SentimentPolarity(Enum):
 
 class EmotionType(Enum):
     """Basic emotion types"""
+
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -96,7 +101,8 @@ class SentimentResult:
 
 @dataclass
 class EntityResult:
-    """Named entity recognition result"""
+    """
+Named entity recognition result"""
     text: str
     label: str
     start: int
@@ -106,7 +112,8 @@ class EntityResult:
 
 @dataclass
 class TopicResult:
-    """Topic modeling result"""
+    """
+Topic modeling result"""
     topic_id: int
     keywords: List[str]
     coherence_score: float
@@ -114,7 +121,8 @@ class TopicResult:
 
 @dataclass
 class SemanticResult:
-    """Semantic analysis result"""
+    """
+Semantic analysis result"""
     embeddings: np.ndarray
     similarity_scores: Dict[str, float]
     semantic_concepts: List[str]
@@ -558,7 +566,8 @@ class NLPEngine:
             return 0.0, 0.5, 0.0
     
     async def _determine_sentiment_label(self, polarity: float) -> SentimentPolarity:
-        """Determine sentiment label based on polarity score"""
+        """
+Determine sentiment label based on polarity score"""
         if polarity >= 0.6:
             return SentimentPolarity.VERY_POSITIVE
         elif polarity >= 0.2:
@@ -571,7 +580,8 @@ class NLPEngine:
             return SentimentPolarity.VERY_NEGATIVE
     
     async def _analyze_emotions(self, text: str) -> Dict[str, float]:
-        """Extract emotional content from text"""
+        """
+Extract emotional content from text"""
         try:
             if not self.emotion_analyzer:
                 return {}
@@ -852,7 +862,8 @@ class SentimentAnalyzer:
         return max(-1.0, min(1.0, adjusted_score))
     
     def _track_sentiment_trend(self, sentiment_score: float):
-        """Track sentiment trends over time"""
+        """
+Track sentiment trends over time"""
         self.sentiment_history.append({
             'score': sentiment_score,
             'timestamp': time.time()

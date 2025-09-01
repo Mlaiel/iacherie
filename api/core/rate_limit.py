@@ -2,8 +2,9 @@
 Professional rate limiting with multiple algorithms and storage backends.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Dict, Optional, Union, Tuple, List
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -17,7 +18,9 @@ from collections import defaultdict, deque
 
 
 class RateLimitAlgorithm(Enum):
-    """Rate limiting algorithms."""
+    """
+Rate limiting algorithms."""
+
     TOKEN_BUCKET = "token_bucket"
     SLIDING_WINDOW = "sliding_window"
     FIXED_WINDOW = "fixed_window"
@@ -26,6 +29,7 @@ class RateLimitAlgorithm(Enum):
 
 class RateLimitScope(Enum):
     """Rate limit scopes."""
+
     USER = "user"
     IP_ADDRESS = "ip"
     API_KEY = "api_key"
@@ -52,7 +56,8 @@ class RateLimitConfig:
 
 @dataclass
 class RateLimitResult:
-    """Result of rate limit check."""
+    """
+Result of rate limit check."""
     allowed: bool
     limit: int
     remaining: int
@@ -62,7 +67,8 @@ class RateLimitResult:
     window_seconds: int = 0
     
     def to_headers(self) -> Dict[str, str]:
-        """Convert to HTTP headers."""
+        """
+Convert to HTTP headers."""
         headers = {
             "X-RateLimit-Limit": str(self.limit),
             "X-RateLimit-Remaining": str(self.remaining),
@@ -81,34 +87,40 @@ class IRateLimitStorage(ABC):
     
     @abstractmethod
     async def get_usage(self, key: str) -> Tuple[int, datetime]:
-        """Get current usage and reset time for key."""
+        """
+Get current usage and reset time for key."""
         pass
     
     @abstractmethod
     async def increment_usage(self, key: str, window_seconds: int) -> Tuple[int, datetime]:
-        """Increment usage counter and return new count with reset time."""
+        """
+Increment usage counter and return new count with reset time."""
         pass
     
     @abstractmethod
     async def reset_usage(self, key: str) -> bool:
-        """Reset usage counter for key."""
+        """
+Reset usage counter for key."""
         pass
     
     @abstractmethod
     async def cleanup_expired(self) -> int:
-        """Clean up expired entries and return count removed."""
+        """
+Clean up expired entries and return count removed."""
         pass
 
 
 class InMemoryRateLimitStorage(IRateLimitStorage):
-    """In-memory rate limit storage for single instance deployments."""
+    """
+In-memory rate limit storage for single instance deployments."""
     
     def __init__(self):
         self._usage: Dict[str, List[datetime]] = defaultdict(list)
         self._lock = threading.RLock()
     
     async def get_usage(self, key: str) -> Tuple[int, datetime]:
-        """Get current usage count and next reset time."""
+        """
+Get current usage count and next reset time."""
         with self._lock:
             now = datetime.now(timezone.utc)
             timestamps = self._usage.get(key, [])
@@ -122,7 +134,8 @@ class InMemoryRateLimitStorage(IRateLimitStorage):
             return recent_count, next_reset
     
     async def increment_usage(self, key: str, window_seconds: int) -> Tuple[int, datetime]:
-        """Increment usage counter within sliding window."""
+        """
+Increment usage counter within sliding window."""
         with self._lock:
             now = datetime.now(timezone.utc)
             window_start = now - timedelta(seconds=window_seconds)
@@ -142,7 +155,8 @@ class InMemoryRateLimitStorage(IRateLimitStorage):
             return len(self._usage[key]), next_reset
     
     async def reset_usage(self, key: str) -> bool:
-        """Reset usage counter for key."""
+        """
+Reset usage counter for key."""
         with self._lock:
             if key in self._usage:
                 del self._usage[key]
@@ -150,7 +164,8 @@ class InMemoryRateLimitStorage(IRateLimitStorage):
             return False
     
     async def cleanup_expired(self) -> int:
-        """Clean up expired entries."""
+        """
+Clean up expired entries."""
         with self._lock:
             now = datetime.now(timezone.utc)
             cutoff = now - timedelta(hours=24)  # Keep last 24 hours
@@ -170,7 +185,8 @@ class InMemoryRateLimitStorage(IRateLimitStorage):
 
 
 class TokenBucketRateLimit:
-    """Token bucket rate limiting algorithm."""
+    """
+Token bucket rate limiting algorithm."""
     
     def __init__(self, capacity: int, refill_rate: float):
         self.capacity = capacity
@@ -180,7 +196,8 @@ class TokenBucketRateLimit:
         self._lock = threading.RLock()
     
     def consume(self, tokens: int = 1) -> bool:
-        """Try to consume tokens from bucket."""
+        """
+Try to consume tokens from bucket."""
         with self._lock:
             now = time.time()
             
@@ -200,7 +217,8 @@ class TokenBucketRateLimit:
             return False
     
     def get_wait_time(self, tokens: int = 1) -> float:
-        """Get seconds to wait for tokens to be available."""
+        """
+Get seconds to wait for tokens to be available."""
         with self._lock:
             if self.tokens >= tokens:
                 return 0.0
@@ -210,7 +228,8 @@ class TokenBucketRateLimit:
 
 
 class RateLimiter:
-    """Professional rate limiter with multiple algorithms and scopes."""
+    """
+Professional rate limiter with multiple algorithms and scopes."""
     
     def __init__(self, storage: IRateLimitStorage):
         self.storage = storage
@@ -219,12 +238,14 @@ class RateLimiter:
         self._lock = threading.RLock()
     
     def add_rate_limit(self, config: RateLimitConfig) -> None:
-        """Add rate limit configuration."""
+        """
+Add rate limit configuration."""
         with self._lock:
             self._configs[config.name] = config
     
     def remove_rate_limit(self, name: str) -> bool:
-        """Remove rate limit configuration."""
+        """
+Remove rate limit configuration."""
         with self._lock:
             if name in self._configs:
                 del self._configs[name]
@@ -303,7 +324,8 @@ class RateLimiter:
         key: str,
         tokens: int
     ) -> RateLimitResult:
-        """Check rate limit using sliding window algorithm."""
+        """
+Check rate limit using sliding window algorithm."""
         current_usage, reset_time = await self.storage.increment_usage(
             key, config.window_seconds
         )
@@ -331,7 +353,8 @@ class RateLimiter:
         key: str,
         tokens: int
     ) -> RateLimitResult:
-        """Check rate limit using fixed window algorithm."""
+        """
+Check rate limit using fixed window algorithm."""
         now = datetime.now(timezone.utc)
         
         # Calculate current window
@@ -489,7 +512,8 @@ async def check_rate_limit(
     identifier: str,
     tokens: int = 1
 ) -> RateLimitResult:
-    """Check rate limit using global limiter."""
+    """
+Check rate limit using global limiter."""
     return await _rate_limiter.check_rate_limit(config_name, identifier, tokens)
 
 
@@ -498,7 +522,8 @@ def rate_limit(
     scope: RateLimitScope = RateLimitScope.USER,
     key_extractor: Optional[Callable] = None
 ):
-    """Decorator for automatic rate limiting."""
+    """
+Decorator for automatic rate limiting."""
     def decorator(func):
         async def async_wrapper(*args, **kwargs):
             from .context import get_current_context

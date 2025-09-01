@@ -4,6 +4,7 @@ AI-Powered Multimedia Content Processing and Enhancement System
 This module provides comprehensive media processing capabilities including
 image/video/audio enhancement, format conversion, content analysis, and optimization.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class MediaType(str, Enum):
-    """Media content types"""
+    """
+Media content types"""
+
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -42,6 +45,7 @@ class MediaType(str, Enum):
 
 class ProcessingOperation(str, Enum):
     """Media processing operations"""
+
     RESIZE = "resize"
     CROP = "crop"
     ROTATE = "rotate"
@@ -62,6 +66,7 @@ class ProcessingOperation(str, Enum):
 
 class ImageFormat(str, Enum):
     """Supported image formats"""
+
     JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
@@ -74,6 +79,7 @@ class ImageFormat(str, Enum):
 
 class VideoFormat(str, Enum):
     """Supported video formats"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -86,6 +92,7 @@ class VideoFormat(str, Enum):
 
 class AudioFormat(str, Enum):
     """Supported audio formats"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -97,6 +104,7 @@ class AudioFormat(str, Enum):
 
 class QualityLevel(str, Enum):
     """Quality levels for processing"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -106,6 +114,7 @@ class QualityLevel(str, Enum):
 
 class ProcessingPriority(str, Enum):
     """Processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -133,7 +142,8 @@ class MediaMetadata(BaseModel):
 
 
 class ProcessingParameters(BaseModel):
-    """Parameters for media processing operations"""
+    """
+Parameters for media processing operations"""
     operation: ProcessingOperation
     target_format: Optional[str] = None
     quality_level: QualityLevel = QualityLevel.HIGH
@@ -198,7 +208,8 @@ class ProcessingRequest(BaseModel):
 
 
 class ProcessingResult(BaseModel):
-    """Result of media processing operation"""
+    """
+Result of media processing operation"""
     operation: ProcessingOperation
     success: bool
     processing_time_ms: int
@@ -219,7 +230,8 @@ class ProcessingResult(BaseModel):
 
 
 class MediaAnalysis(BaseModel):
-    """Comprehensive media analysis result"""
+    """
+Comprehensive media analysis result"""
     analysis_id: str
     media_type: MediaType
     analysis_timestamp: datetime
@@ -257,7 +269,8 @@ class MediaAnalysis(BaseModel):
 
 
 class ProcessingJob(BaseModel):
-    """Complete processing job with all operations"""
+    """
+Complete processing job with all operations"""
     job_id: str
     request: ProcessingRequest
     status: str  # "pending", "processing", "completed", "failed"
@@ -921,32 +934,38 @@ class AdvancedMediaProcessor(BaseCrawler):
         return media_data
 
     async def _resize_media(self, media_data: bytes, params: ProcessingParameters) -> bytes:
-        """Resize media"""
+        """
+Resize media"""
         # Simplified resize operation
         return media_data
 
     async def _crop_media(self, media_data: bytes, params: ProcessingParameters) -> bytes:
-        """Crop media"""
+        """
+Crop media"""
         # Simplified crop operation
         return media_data
 
     async def _enhance_media(self, media_data: bytes, params: ProcessingParameters) -> bytes:
-        """Enhance media"""
+        """
+Enhance media"""
         # Simplified enhancement
         return media_data
 
     async def _convert_media(self, media_data: bytes, params: ProcessingParameters) -> bytes:
-        """Convert media format"""
+        """
+Convert media format"""
         # Simplified format conversion
         return media_data
 
     async def _compress_media(self, media_data: bytes, params: ProcessingParameters) -> bytes:
-        """Compress media"""
+        """
+Compress media"""
         # Simplified compression
         return media_data
 
     async def _add_watermark(self, media_data: bytes, params: ProcessingParameters) -> bytes:
-        """Add watermark to media"""
+        """
+Add watermark to media"""
         # Simplified watermarking
         return media_data
 
@@ -957,7 +976,8 @@ class AdvancedMediaProcessor(BaseCrawler):
         target_format: str,
         quality_settings: Dict[str, Any]
     ) -> bytes:
-        """Convert between formats"""
+        """
+Convert between formats"""
         # Simplified format conversion
         return media_data
 
@@ -968,12 +988,14 @@ class AdvancedMediaProcessor(BaseCrawler):
         width: int,
         height: int
     ) -> bytes:
-        """Generate thumbnail"""
+        """
+Generate thumbnail"""
         # Simplified thumbnail generation
         return media_data[:1000]  # Return smaller data for thumbnail
 
     async def _save_processed_media(self, media_data: bytes, format_type: str, suffix: str) -> Path:
-        """Save processed media to storage"""
+        """
+Save processed media to storage"""
         filename = f"{hashlib.md5(media_data).hexdigest()}_{suffix}.{format_type}"
         file_path = self.output_storage_path / filename
         
@@ -1001,7 +1023,8 @@ class AdvancedMediaProcessor(BaseCrawler):
         enhanced_data: bytes,
         media_type: MediaType
     ) -> float:
-        """Calculate enhancement quality score"""
+        """
+Calculate enhancement quality score"""
         # Simplified quality calculation
         return 0.9
 
@@ -1010,7 +1033,8 @@ class AdvancedMediaProcessor(BaseCrawler):
         original_metadata: MediaMetadata,
         compressed_metadata: MediaMetadata
     ) -> float:
-        """Calculate compression ratio"""
+        """
+Calculate compression ratio"""
         if original_metadata.file_size == 0:
             return 0.0
         return compressed_metadata.file_size / original_metadata.file_size
@@ -1020,13 +1044,15 @@ class AdvancedMediaProcessor(BaseCrawler):
         original_metadata: MediaMetadata,
         processed_metadata: MediaMetadata
     ) -> float:
-        """Calculate size reduction percentage"""
+        """
+Calculate size reduction percentage"""
         if original_metadata.file_size == 0:
             return 0.0
         return (original_metadata.file_size - processed_metadata.file_size) / original_metadata.file_size
 
     def _update_performance_metrics(self, job: ProcessingJob):
-        """Update performance metrics"""
+        """
+Update performance metrics"""
         self.performance_metrics['total_jobs_processed'] += 1
         
         # Update success rate
@@ -1063,7 +1089,8 @@ class AdvancedMediaProcessor(BaseCrawler):
         return self.performance_metrics.copy()
 
     async def cleanup_old_files(self, max_age_hours: int = 24):
-        """Cleanup old temporary and output files"""
+        """
+Cleanup old temporary and output files"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             

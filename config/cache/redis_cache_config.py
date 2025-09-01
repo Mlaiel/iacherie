@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import ssl
 from typing import Dict, Optional, List, Any
 from dataclasses import dataclass, field
@@ -26,7 +27,9 @@ from pydantic import BaseModel, validator
 
 
 class RedisMode(str, Enum):
-    """Redis deployment modes"""
+    """
+Redis deployment modes"""
+
     STANDALONE = "standalone"
     CLUSTER = "cluster"
     SENTINEL = "sentinel"
@@ -34,6 +37,7 @@ class RedisMode(str, Enum):
 
 class RedisCompressionType(str, Enum):
     """Redis compression algorithms"""
+
     GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
@@ -75,7 +79,8 @@ class RedisPoolConfig:
 
 @dataclass
 class RedisSentinelConfig:
-    """Redis Sentinel configuration for high availability"""
+    """
+Redis Sentinel configuration for high availability"""
     sentinels: List[tuple] = field(default_factory=list)
     service_name: str = "mymaster"
     sentinel_kwargs: Dict[str, Any] = field(default_factory=dict)

@@ -12,7 +12,8 @@ import os
 sys.path.insert(0, '/home/runner/work/Ainflue/Ainflue')
 
 async def test_crawlers():
-    """Test all platform crawlers."""
+    """
+Test all platform crawlers."""
     try:
         # Import the crawlers
         from crawlers.main_platform_crawlers import CrawlerOrchestrator

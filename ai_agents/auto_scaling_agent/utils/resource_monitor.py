@@ -5,8 +5,9 @@ and real-time analytics for optimal system performance and scaling decisions.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-© 2025 All Rights Reserved
+(c) 2025 All Rights Reserved
 """
+
 import asyncio
 import logging
 import psutil
@@ -37,7 +38,9 @@ from ...core.monitoring import get_metrics_client
 
 
 class MetricType(Enum):
-    """Types of metrics to monitor"""
+    """
+Types of metrics to monitor"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -50,6 +53,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -69,7 +73,8 @@ class MetricValue:
 
 @dataclass
 class ResourceThreshold:
-    """Resource threshold configuration"""
+    """
+Resource threshold configuration"""
     metric_name: str
     metric_type: MetricType
     warning_threshold: float
@@ -80,7 +85,8 @@ class ResourceThreshold:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
+    """
+Alert rule configuration"""
     rule_id: str
     name: str
     metric_name: str
@@ -597,7 +603,8 @@ class ResourceMonitor(BaseAgent):
             return [metric for metric in metrics_deque if metric.timestamp >= cutoff_time]
 
     def _get_system_info(self) -> Dict[str, Any]:
-        """Get system information"""
+        """
+Get system information"""
         try:
             return {
                 "platform": psutil.LINUX if hasattr(psutil, 'LINUX') else "unknown",

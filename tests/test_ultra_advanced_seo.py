@@ -29,11 +29,13 @@ from business.influencer_ai.seo_config import (
 )
 
 class TestUltraAdvancedSEOAPIs:
-    """Tests pour les APIs SEO ultra-avancées"""
+    """
+Tests pour les APIs SEO ultra-avancées"""
     
     @pytest.fixture
     def api_config(self):
-        """Configuration de test pour les APIs"""
+        """
+Configuration de test pour les APIs"""
         return APIConfig(
             provider=APIProvider.GOOGLE_KEYWORD_PLANNER,
             api_key="test_key",
@@ -55,7 +57,8 @@ class TestUltraAdvancedSEOAPIs:
         }
     
     def test_api_config_creation(self):
-        """Test de création de configuration API"""
+        """
+Test de création de configuration API"""
         config = create_api_config(
             APIProvider.GOOGLE_KEYWORD_PLANNER,
             api_key="test_key",
@@ -77,7 +80,8 @@ class TestUltraAdvancedSEOAPIs:
     
     @pytest.mark.asyncio
     async def test_google_keyword_planner_connector(self, api_config):
-        """Test du connecteur Google Keyword Planner"""
+        """
+Test du connecteur Google Keyword Planner"""
         connector = GoogleKeywordPlannerConnector(api_config)
         
         # Mock de la session HTTP
@@ -115,7 +119,8 @@ class TestUltraAdvancedSEOAPIs:
     
     @pytest.mark.asyncio
     async def test_semrush_connector(self, api_config):
-        """Test du connecteur SEMrush"""
+        """
+Test du connecteur SEMrush"""
         api_config.provider = APIProvider.SEMRUSH
         api_config.base_url = "https://api.semrush.com"
         connector = SEMrushConnector(api_config)
@@ -236,7 +241,8 @@ class TestSEOMarketingManagerAdvanced:
     
     @pytest.fixture
     def seo_config(self):
-        """Configuration SEO de test"""
+        """
+Configuration SEO de test"""
         return SEOMarketingConfig(
             enabled=True,
             use_real_apis=True,
@@ -249,7 +255,8 @@ class TestSEOMarketingManagerAdvanced:
     
     @pytest.mark.asyncio
     async def test_seo_manager_initialization(self, seo_config):
-        """Test d'initialisation du gestionnaire SEO"""
+        """
+Test d'initialisation du gestionnaire SEO"""
         manager = SEOMarketingManager(seo_config)
         
         # Mock des APIs
@@ -268,7 +275,8 @@ class TestSEOMarketingManagerAdvanced:
     
     @pytest.mark.asyncio
     async def test_ultra_advanced_keyword_research(self, seo_config):
-        """Test de recherche de mots-clés ultra-avancée"""
+        """
+Test de recherche de mots-clés ultra-avancée"""
         manager = SEOMarketingManager(seo_config)
         
         # Mock des connecteurs API
@@ -317,7 +325,8 @@ class TestSEOMarketingManagerAdvanced:
     
     @pytest.mark.asyncio
     async def test_real_time_trend_monitoring(self, seo_config):
-        """Test de surveillance des tendances en temps réel"""
+        """
+Test de surveillance des tendances en temps réel"""
         manager = SEOMarketingManager(seo_config)
         
         # Mock du connecteur Google Trends
@@ -347,7 +356,8 @@ class TestSEOMarketingManagerAdvanced:
     
     @pytest.mark.asyncio
     async def test_advanced_competitor_analysis(self, seo_config):
-        """Test d'analyse concurrentielle avancée"""
+        """
+Test d'analyse concurrentielle avancée"""
         manager = SEOMarketingManager(seo_config)
         
         # Mock du connecteur Ahrefs
@@ -385,7 +395,8 @@ class TestSEOMarketingManagerAdvanced:
     
     @pytest.mark.asyncio
     async def test_api_health_monitoring(self, seo_config):
-        """Test de surveillance de l'état de santé des APIs"""
+        """
+Test de surveillance de l'état de santé des APIs"""
         manager = SEOMarketingManager(seo_config)
         
         # Mock du gestionnaire d'APIs
@@ -407,15 +418,18 @@ class TestSEOMarketingManagerAdvanced:
 
 
 class TestSEOConfiguration:
-    """Tests pour la configuration SEO ultra-avancée"""
+    """
+Tests pour la configuration SEO ultra-avancée"""
     
     def test_seo_config_loading(self):
-        """Test de chargement de la configuration"""
+        """
+Test de chargement de la configuration"""
         config = load_seo_config()
         assert isinstance(config, UltraAdvancedSEOConfig)
     
     def test_api_validation(self):
-        """Test de validation des APIs"""
+        """
+Test de validation des APIs"""
         config = UltraAdvancedSEOConfig(
             google_ads_api_key='test_key',
             google_ads_developer_token='test_token',
@@ -429,7 +443,8 @@ class TestSEOConfiguration:
         assert validation['any_configured'] == True
     
     def test_configured_apis_detection(self):
-        """Test de détection des APIs configurées"""
+        """
+Test de détection des APIs configurées"""
         config = UltraAdvancedSEOConfig(
             google_ads_api_key='test_key',
             semrush_api_key='test_semrush'
@@ -442,11 +457,13 @@ class TestSEOConfiguration:
 
 
 class TestIntegrationComplete:
-    """Tests d'intégration complets"""
+    """
+Tests d'intégration complets"""
     
     @pytest.mark.asyncio
     async def test_complete_seo_workflow(self):
-        """Test du workflow SEO complet avec APIs"""
+        """
+Test du workflow SEO complet avec APIs"""
         
         # Configuration avec APIs simulées
         config = SEOMarketingConfig(

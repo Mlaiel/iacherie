@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -72,7 +73,9 @@ logger = logging.getLogger(__name__)
 
 
 class InitializationStatus(str, Enum):
-    """Initialization status for microservices components."""
+    """
+Initialization status for microservices components."""
+
     NOT_STARTED = "not_started"
     INITIALIZING = "initializing"
     READY = "ready"
@@ -109,7 +112,8 @@ class MicroservicesOrchestrator:
         self._initialize_component_status()
     
     def _initialize_component_status(self):
-        """Initialize status tracking for all components."""
+        """
+Initialize status tracking for all components."""
         components = [
             "service_discovery",
             "load_balancer",
@@ -350,7 +354,8 @@ class MicroservicesOrchestrator:
         return self.components.get(component_name)
     
     async def _initialize_specialized_systems(self):
-        """Initialize specialized microservice systems"""
+        """
+Initialize specialized microservice systems"""
         logger.info("Initializing specialized microservice systems...")
         
         # Initialize content protection system
@@ -441,22 +446,26 @@ async def initialize_microservices() -> bool:
 
 
 async def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive system status."""
+    """
+Get comprehensive system status."""
     return await orchestrator.get_system_status()
 
 
 async def shutdown_microservices():
-    """Shutdown all microservices components."""
+    """
+Shutdown all microservices components."""
     await orchestrator.shutdown_all()
 
 
 def is_system_ready() -> bool:
-    """Check if the microservices system is ready."""
+    """
+Check if the microservices system is ready."""
     return orchestrator.is_ready()
 
 
 def get_configuration_summary() -> Dict[str, Any]:
-    """Get configuration summary."""
+    """
+Get configuration summary."""
     return CONFIGURATION_SUMMARY.copy()
 
 

@@ -15,6 +15,7 @@ legal action. Contact mlaiel@live.de for licensing.
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
+
 import asyncio
 import logging
 import time
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ExtractionStatus(Enum):
-    """Extraction status enumeration"""
+    """
+Extraction status enumeration"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -47,6 +50,7 @@ class ExtractionStatus(Enum):
 
 class ExtractionPriority(Enum):
     """Extraction priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -54,7 +58,9 @@ class ExtractionPriority(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types"""
+    """
+Supported content types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -86,7 +92,8 @@ class ExtractionRequest:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def __post_init__(self):
-        """Validate request after initialization"""
+        """
+Validate request after initialization"""
         if not any([self.source_url, self.source_path, self.source_data]):
             raise ValueError("At least one source must be provided")
         
@@ -111,7 +118,8 @@ class ExtractionResult:
     completed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""
+        """
+Convert result to dictionary"""
         result = asdict(self)
         result['status'] = self.status.value
         if self.completed_at:
@@ -119,12 +127,14 @@ class ExtractionResult:
         return result
     
     def is_successful(self) -> bool:
-        """Check if extraction was successful"""
+        """
+Check if extraction was successful"""
         return self.status == ExtractionStatus.COMPLETED and bool(self.extracted_data)
 
 
 class BaseExtractor(ABC):
-    """Abstract base class for all extractors"""
+    """
+Abstract base class for all extractors"""
     
     def __init__(self, name: str = None):
         self.name = name or self.__class__.__name__
@@ -143,11 +153,13 @@ class BaseExtractor(ABC):
     
     @abstractmethod
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Perform data extraction"""
+        """
+Perform data extraction"""
         pass
     
     async def validate_request(self, request: ExtractionRequest) -> bool:
-        """Validate extraction request"""
+        """
+Validate extraction request"""
         try:
             if not request.request_id:
                 return False
@@ -173,7 +185,8 @@ class BaseExtractor(ABC):
         return stats
     
     def _update_stats(self, success: bool, extraction_time: float):
-        """Update extractor statistics"""
+        """
+Update extractor statistics"""
         self._stats['total_extractions'] += 1
         self._stats['total_time'] += extraction_time
         
@@ -184,7 +197,8 @@ class BaseExtractor(ABC):
 
 
 class ExtractionEngine:
-    """High-performance data extraction engine"""
+    """
+High-performance data extraction engine"""
     
     def __init__(self, 
                  max_workers: int = 10,
@@ -374,7 +388,8 @@ class ExtractionEngine:
         return None
     
     async def _worker_loop(self, worker_name: str):
-        """Main worker loop for processing extraction queue"""
+        """
+Main worker loop for processing extraction queue"""
         
         self.logger.info(f"Worker {worker_name} started")
         
@@ -426,7 +441,8 @@ class ExtractionEngine:
             del self._active_extractions[request_id]
     
     def _generate_cache_key(self, request: ExtractionRequest) -> str:
-        """Generate cache key for request"""
+        """
+Generate cache key for request"""
         
         # Create unique identifier from request components
         key_data = {
@@ -446,7 +462,8 @@ class ExtractionEngine:
         return hashlib.sha256(key_str.encode()).hexdigest()
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive engine metrics and performance data"""
+        """
+Get comprehensive engine metrics and performance data"""
         metrics = self._metrics.copy()
         metrics['queue_size'] = self._extraction_queue.qsize()
         metrics['active_tasks'] = len(self._active_extractions)
@@ -473,13 +490,15 @@ class ExtractionEngine:
         return metrics
     
     def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate percentage"""
+        """
+Calculate cache hit rate percentage"""
         total_requests = self._metrics.get('total_requests', 0)
         cache_hits = self._metrics.get('cache_hits', 0)
         return (cache_hits / total_requests * 100) if total_requests > 0 else 0.0
     
     def _calculate_throughput(self) -> float:
-        """Calculate requests throughput per minute"""
+        """
+Calculate requests throughput per minute"""
         if not hasattr(self, '_start_time'):
             return 0.0
         
@@ -488,13 +507,15 @@ class ExtractionEngine:
         return completed / uptime_minutes if uptime_minutes > 0 else 0.0
     
     def _calculate_error_rate(self) -> float:
-        """Calculate error rate percentage"""
+        """
+Calculate error rate percentage"""
         total = self._metrics.get('total_requests', 0)
         failed = self._metrics.get('failed_requests', 0)
         return (failed / total * 100) if total > 0 else 0.0
     
     def _get_resource_utilization(self) -> Dict[str, float]:
-        """Get current resource utilization metrics"""
+        """
+Get current resource utilization metrics"""
         return {
             'cpu_usage': self._get_cpu_usage(),
             'memory_usage': self._get_memory_usage(),
@@ -503,7 +524,8 @@ class ExtractionEngine:
         }
     
     def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage"""
+        """
+Get current CPU usage percentage"""
         try:
             import psutil
             return psutil.cpu_percent(interval=1)
@@ -511,7 +533,8 @@ class ExtractionEngine:
             return 0.0
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage percentage"""
+        """
+Get current memory usage percentage"""
         try:
             import psutil
             return psutil.virtual_memory().percent
@@ -519,7 +542,8 @@ class ExtractionEngine:
             return 0.0
     
     def get_extractor_stats(self) -> Dict[str, Dict[str, Any]]:
-        """Get comprehensive statistics for all registered extractors"""
+        """
+Get comprehensive statistics for all registered extractors"""
         stats = {}
         for name, extractor in self._extractors.items():
             extractor_stats = extractor.get_stats()
@@ -529,7 +553,8 @@ class ExtractionEngine:
         return stats
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
+        """
+Perform comprehensive system health check"""
         health_status = {
             'status': 'healthy',
             'timestamp': datetime.utcnow().isoformat(),
@@ -640,7 +665,8 @@ class ExtractionEngine:
         return len(expired_keys)
     
     def _cleanup_completed_tasks(self) -> int:
-        """Clean up completed async tasks"""
+        """
+Clean up completed async tasks"""
         completed_tasks = [
             request_id for request_id, task in self._active_extractions.items()
             if task.done()
@@ -652,7 +678,8 @@ class ExtractionEngine:
         return len(completed_tasks)
     
     async def _optimize_queue(self):
-        """Optimize extraction queue by reordering high-priority items"""
+        """
+Optimize extraction queue by reordering high-priority items"""
         queue_items = []
         
         # Extract all items from queue
@@ -672,7 +699,8 @@ class ExtractionEngine:
     
     @asynccontextmanager
     async def extraction_context(self):
-        """Context manager for engine lifecycle with proper resource management"""
+        """
+Context manager for engine lifecycle with proper resource management"""
         self._start_time = datetime.utcnow()
         await self.start()
         try:
@@ -809,7 +837,8 @@ class ExtractionEngine:
 
 # Factory functions for common extraction scenarios
 async def create_content_extraction_engine() -> ExtractionEngine:
-    """Factory function to create a content-focused extraction engine"""
+    """
+Factory function to create a content-focused extraction engine"""
     engine = ExtractionEngine(
         max_workers=20,
         max_concurrent_extractions=100,
@@ -822,7 +851,8 @@ async def create_content_extraction_engine() -> ExtractionEngine:
 
 
 async def create_realtime_extraction_engine() -> ExtractionEngine:
-    """Factory function to create a real-time extraction engine"""
+    """
+Factory function to create a real-time extraction engine"""
     engine = ExtractionEngine(
         max_workers=50,
         max_concurrent_extractions=200,
@@ -833,7 +863,8 @@ async def create_realtime_extraction_engine() -> ExtractionEngine:
 
 
 async def create_batch_extraction_engine() -> ExtractionEngine:
-    """Factory function to create a batch processing extraction engine"""
+    """
+Factory function to create a batch processing extraction engine"""
     engine = ExtractionEngine(
         max_workers=10,
         max_concurrent_extractions=500,

@@ -14,6 +14,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import sys
@@ -171,7 +172,8 @@ def print_analytics_banner():
 
 
 class AnalyticsEventsOrchestrator:
-    """Ultra-advanced orchestrator for all analytics events"""
+    """
+Ultra-advanced orchestrator for all analytics events"""
     
     def __init__(self):
         self.handlers = {}
@@ -188,7 +190,8 @@ class AnalyticsEventsOrchestrator:
         }
     
     async def initialize_system(self) -> bool:
-        """Initialize the complete analytics events system"""
+        """
+Initialize the complete analytics events system"""
         try:
             logger.info("🚀 Initializing Ultra-Advanced Analytics Events System...")
             
@@ -505,22 +508,26 @@ async def initialize_analytics_system() -> bool:
 
 
 async def get_analytics_status() -> Dict[str, Any]:
-    """Get analytics system status"""
+    """
+Get analytics system status"""
     return await global_analytics_orchestrator.get_system_status()
 
 
 async def demo_analytics_capabilities() -> Dict[str, Any]:
-    """Demonstrate analytics capabilities with sample data"""
+    """
+Demonstrate analytics capabilities with sample data"""
     return await global_analytics_orchestrator.process_sample_events()
 
 
 async def test_analytics_system() -> Dict[str, Any]:
-    """Test the analytics system comprehensively"""
+    """
+Test the analytics system comprehensively"""
     return await global_analytics_orchestrator.run_comprehensive_tests()
 
 
 def print_help():
-    """Print help information for analytics events"""
+    """
+Print help information for analytics events"""
     help_text = """🆘 Analytics Events System - Help
 ════════════════════════════════
 
@@ -559,7 +566,8 @@ def print_help():
 
 
 async def main():
-    """Main entry point for analytics events system"""
+    """
+Main entry point for analytics events system"""
     print_analytics_banner()
     
     if not IMPORTS_SUCCESSFUL:

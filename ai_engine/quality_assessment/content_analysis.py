@@ -4,7 +4,7 @@ Advanced multi-dimensional content analysis for creators and influencers.
 Provides comprehensive content intelligence and performance insights.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentCategory(Enum):
-    """Content category classifications"""
+    """
+Content category classifications"""
+
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     LIFESTYLE = "lifestyle"
@@ -53,6 +56,7 @@ class ContentCategory(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     VIDEO_SHORT = "video_short"  # < 60 seconds
     VIDEO_MEDIUM = "video_medium"  # 1-10 minutes
     VIDEO_LONG = "video_long"  # > 10 minutes
@@ -67,6 +71,7 @@ class ContentFormat(Enum):
 
 class AudienceSegment(Enum):
     """Target audience segments"""
+
     GEN_Z = "gen_z"  # 16-24
     MILLENNIALS = "millennials"  # 25-40
     GEN_X = "gen_x"  # 41-56
@@ -80,6 +85,7 @@ class AudienceSegment(Enum):
 
 class EngagementType(Enum):
     """Types of engagement patterns"""
+
     VIRAL = "viral"
     EDUCATIONAL = "educational"
     INSPIRATIONAL = "inspirational"
@@ -107,7 +113,8 @@ class TrendAnalysis:
 
 @dataclass
 class AudienceAnalysis:
-    """Target audience analysis"""
+    """
+Target audience analysis"""
     primary_audience: AudienceSegment = field(default=AudienceSegment.MILLENNIALS)
     secondary_audiences: List[AudienceSegment] = field(default_factory=list)
     audience_match_score: float = field(default=50.0)
@@ -125,7 +132,8 @@ class AudienceAnalysis:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitive landscape analysis"""
+    """
+Competitive landscape analysis"""
     content_saturation: float = field(default=50.0)
     differentiation_score: float = field(default=50.0)
     competitive_advantage: List[str] = field(default_factory=list)
@@ -138,7 +146,8 @@ class CompetitorAnalysis:
 
 @dataclass
 class ContentTheme:
-    """Content thematic analysis"""
+    """
+Content thematic analysis"""
     primary_theme: str = field(default="general")
     secondary_themes: List[str] = field(default_factory=list)
     emotional_themes: List[str] = field(default_factory=list)
@@ -201,7 +210,8 @@ class ContentAnalysisProfile:
 
 @dataclass
 class ContentAnalysisMetrics:
-    """Content analysis metrics container"""
+    """
+Content analysis metrics container"""
     profile: ContentAnalysisProfile = field(default_factory=ContentAnalysisProfile)
     
     # Performance indicators
@@ -239,7 +249,8 @@ class ContentAnalyzer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize content analyzer"""
+        """
+Initialize content analyzer"""
         super().__init__(config or ModelConfig(
             model_name="content_analyzer",
             provider="internal",

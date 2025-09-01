@@ -5,6 +5,7 @@ regional platform preferences, and enhanced RTL support.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import pytest
 import asyncio
 from unittest.mock import Mock, patch
@@ -34,7 +35,8 @@ from core.i18n.rtl_language_support import (
 
 
 class TestCulturalKeywordAdapter:
-    """Test cultural keyword adaptation functionality"""
+    """
+Test cultural keyword adaptation functionality"""
     
     @pytest.fixture
     def adapter(self):
@@ -42,7 +44,8 @@ class TestCulturalKeywordAdapter:
     
     @pytest.mark.asyncio
     async def test_adapt_keywords_culturally_arabic(self, adapter):
-        """Test adapting keywords for Arabic culture"""
+        """
+Test adapting keywords for Arabic culture"""
         keywords = ["business", "technology", "family"]
         
         results = await adapter.adapt_keywords_culturally(
@@ -111,7 +114,8 @@ class TestCulturalKeywordAdapter:
 
 
 class TestRegionalPlatformPreferences:
-    """Test regional platform preferences functionality"""
+    """
+Test regional platform preferences functionality"""
     
     @pytest.fixture
     def preferences_engine(self):
@@ -119,7 +123,8 @@ class TestRegionalPlatformPreferences:
     
     @pytest.mark.asyncio
     async def test_get_platform_recommendations_mena(self, preferences_engine):
-        """Test getting platform recommendations for MENA region"""
+        """
+Test getting platform recommendations for MENA region"""
         recommendations = await preferences_engine.get_platform_recommendations(
             region="MENA",
             content_type="lifestyle",
@@ -183,7 +188,8 @@ class TestRegionalPlatformPreferences:
 
 
 class TestEnhancedRTLSupport:
-    """Test enhanced RTL language support"""
+    """
+Test enhanced RTL language support"""
     
     @pytest.fixture
     def rtl_support(self):
@@ -191,7 +197,8 @@ class TestEnhancedRTLSupport:
     
     @pytest.mark.asyncio
     async def test_arabic_rtl_detection(self, rtl_support):
-        """Test Arabic RTL text detection"""
+        """
+Test Arabic RTL text detection"""
         arabic_text = "مرحبا بكم في منصة عين فلو"
         
         direction = await rtl_support.detect_text_direction(arabic_text)
@@ -278,7 +285,8 @@ class TestEnhancedRTLSupport:
 
 
 class TestIntegrationScenarios:
-    """Test integration scenarios combining multiple features"""
+    """
+Test integration scenarios combining multiple features"""
     
     @pytest.fixture
     def cultural_adapter(self):
@@ -294,7 +302,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_complete_mena_optimization(self, cultural_adapter, platform_preferences, rtl_support):
-        """Test complete optimization workflow for MENA region"""
+        """
+Test complete optimization workflow for MENA region"""
         
         # 1. Adapt keywords culturally
         keywords = ["business", "technology", "lifestyle"]

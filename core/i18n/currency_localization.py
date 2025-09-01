@@ -8,7 +8,7 @@ Technologies: Python, Currency APIs, Regional Standards, Financial Formatting
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Currency input → Regional detection → Format conversion → Cultural adaptation → 
 Compliance validation → Exchange rate processing → Localized display
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class CurrencyCode(Enum):
-    """ISO 4217 Currency Codes"""
+    """
+ISO 4217 Currency Codes"""
     # Major World Currencies
     USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
@@ -82,6 +84,7 @@ class CurrencyCode(Enum):
 
 class NumberingSystem(Enum):
     """Numbering systems for different locales"""
+
     WESTERN = "western"      # 0123456789
     ARABIC_INDIC = "arabic"  # ٠١٢٣٤٥٦٧٨٩
     PERSIAN = "persian"      # ۰۱۲۳۴۵۶۷۸۹
@@ -92,6 +95,7 @@ class NumberingSystem(Enum):
 
 class CurrencyPosition(Enum):
     """Currency symbol position"""
+
     BEFORE = "before"        # $100
     AFTER = "after"          # 100$
     BEFORE_WITH_SPACE = "before_space"  # $ 100
@@ -100,6 +104,7 @@ class CurrencyPosition(Enum):
 
 class GroupingSeparator(Enum):
     """Thousands separator types"""
+
     COMMA = ","      # 1,000
     PERIOD = "."     # 1.000
     SPACE = " "      # 1 000
@@ -109,6 +114,7 @@ class GroupingSeparator(Enum):
 
 class DecimalSeparator(Enum):
     """Decimal separator types"""
+
     PERIOD = "."     # 1.50
     COMMA = ","      # 1,50
     ARABIC = "٫"     # Arabic decimal separator
@@ -134,7 +140,8 @@ class CurrencyFormat:
 
 @dataclass
 class RegionalCurrency:
-    """Regional currency preferences"""
+    """
+Regional currency preferences"""
     region_code: str
     country_codes: List[str]
     primary_currency: CurrencyCode
@@ -149,7 +156,8 @@ class RegionalCurrency:
 
 @dataclass
 class ExchangeRate:
-    """Exchange rate information"""
+    """
+Exchange rate information"""
     from_currency: CurrencyCode
     to_currency: CurrencyCode
     rate: Decimal
@@ -163,7 +171,8 @@ class ExchangeRate:
 
 @dataclass
 class CurrencyConversion:
-    """Currency conversion result"""
+    """
+Currency conversion result"""
     original_amount: Decimal
     original_currency: CurrencyCode
     converted_amount: Decimal
@@ -786,7 +795,8 @@ class CurrencyLocalization:
         currency_code: str,
         region_code: str = None
     ) -> Dict[str, Any]:
-        """Validate currency amount according to regional rules"""
+        """
+Validate currency amount according to regional rules"""
         try:
             if not isinstance(amount, Decimal):
                 amount = Decimal(str(amount))

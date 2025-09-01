@@ -4,11 +4,12 @@ Advanced content analysis capabilities for sentiment analysis, topic detection,
 engagement prediction, and content performance optimization for creators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AnalysisResult:
-    """Result of content analysis"""
+    """
+Result of content analysis"""
     content_id: str
     analysis_type: str
     results: Dict[str, Any]
@@ -37,7 +39,8 @@ class AnalysisResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class ContentAnalyzer(ABC):
-    """Abstract base class for content analyzers"""
+    """
+Abstract base class for content analyzers"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -47,11 +50,13 @@ class ContentAnalyzer(ABC):
     
     @abstractmethod
     async def analyze(self, content: str, metadata: Dict[str, Any] = None) -> AnalysisResult:
-        """Analyze content and return results"""
+        """
+Analyze content and return results"""
         pass
     
     def _generate_content_id(self, content: str) -> str:
-        """Generate unique content ID"""
+        """
+Generate unique content ID"""
         import hashlib
         return hashlib.md5(content.encode()).hexdigest()[:12]
 
@@ -159,7 +164,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         return {'positive': 0.0, 'negative': 0.0, 'neutral': 1.0}
     
     async def _detect_emotions(self, content: str) -> Dict[str, float]:
-        """Detect emotions in content"""
+        """
+Detect emotions in content"""
         emotions = {}
         
         for emotion, patterns in self.emotion_patterns.items():
@@ -174,7 +180,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         return emotions
     
     async def _calculate_sentiment_intensity(self, content: str) -> Dict[str, float]:
-        """Calculate sentiment intensity"""
+        """
+Calculate sentiment intensity"""
         # Intensity indicators
         intensifiers = ['very', 'extremely', 'incredibly', 'absolutely', 'completely', 'totally']
         diminishers = ['slightly', 'somewhat', 'fairly', 'rather', 'quite']
@@ -206,7 +213,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         }
     
     async def _analyze_contextual_sentiment(self, content: str) -> Dict[str, Any]:
-        """Analyze sentiment in different contexts"""
+        """
+Analyze sentiment in different contexts"""
         sentences = content.split('.')
         sentence_sentiments = []
         
@@ -233,7 +241,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         }
     
     async def _detect_sentiment_shifts(self, content: str) -> List[Dict[str, Any]]:
-        """Detect sentiment shifts in content"""
+        """
+Detect sentiment shifts in content"""
         sentences = content.split('.')
         shifts = []
         
@@ -267,7 +276,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         return shifts
     
     def _load_sentiment_lexicon(self) -> Dict[str, float]:
-        """Load sentiment lexicon (simplified version)"""
+        """
+Load sentiment lexicon (simplified version)"""
         # In production, load from comprehensive sentiment lexicon
         return {
             # Positive words
@@ -285,7 +295,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         }
     
     def _load_emotion_patterns(self) -> Dict[str, List[str]]:
-        """Load emotion detection patterns"""
+        """
+Load emotion detection patterns"""
         return {
             'joy': [r'\b(happy|joy|excited|thrilled|delighted|cheerful)\b', r':\)|😊|😄|😃'],
             'anger': [r'\b(angry|mad|furious|irritated|annoyed)\b', r'😠|😡|🤬'],
@@ -296,7 +307,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         }
     
     def _predict_engagement_from_sentiment(self, sentiment: Dict[str, float], emotions: Dict[str, float]) -> Dict[str, float]:
-        """Predict engagement based on sentiment and emotions"""
+        """
+Predict engagement based on sentiment and emotions"""
         # High engagement emotions
         engagement_emotions = ['joy', 'anger', 'surprise']
         
@@ -317,7 +329,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         }
     
     def _assess_brand_sentiment_alignment(self, sentiment: Dict[str, float]) -> Dict[str, Any]:
-        """Assess sentiment alignment with brand safety"""
+        """
+Assess sentiment alignment with brand safety"""
         positive_ratio = sentiment['positive']
         negative_ratio = sentiment['negative']
         
@@ -339,7 +352,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         }
     
     def _calculate_sentiment_confidence(self, results: Dict[str, Any]) -> float:
-        """Calculate confidence in sentiment analysis"""
+        """
+Calculate confidence in sentiment analysis"""
         # Factors that affect confidence
         confidence_factors = []
         
@@ -363,7 +377,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         return np.mean(confidence_factors) if confidence_factors else 0.5
     
     def _calculate_sentiment_trend(self, progression: List[float]) -> str:
-        """Calculate overall sentiment trend"""
+        """
+Calculate overall sentiment trend"""
         if len(progression) < 2:
             return 'stable'
         
@@ -379,7 +394,8 @@ class SentimentAnalyzer(ContentAnalyzer):
             return 'stable'
     
     def _identify_engagement_factors(self, sentiment: Dict[str, float], emotions: Dict[str, float]) -> List[str]:
-        """Identify factors that drive engagement"""
+        """
+Identify factors that drive engagement"""
         factors = []
         
         if sentiment['positive'] > 0.7:
@@ -394,7 +410,8 @@ class SentimentAnalyzer(ContentAnalyzer):
         return factors
     
     def _get_brand_recommendation(self, alignment: str) -> str:
-        """Get brand safety recommendation"""
+        """
+Get brand safety recommendation"""
         recommendations = {
             'positive_brand_safe': 'Excellent for brand campaigns and partnerships',
             'negative_risk': 'Review content for brand safety concerns',
@@ -593,7 +610,8 @@ class TopicAnalyzer(ContentAnalyzer):
         }
     
     async def _analyze_trends(self, content: str, keywords: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze trending topics and keywords"""
+        """
+Analyze trending topics and keywords"""
         # Simple trend analysis based on current trending topics
         trending_keywords = []
         seasonal_relevance = {}
@@ -623,7 +641,8 @@ class TopicAnalyzer(ContentAnalyzer):
         }
     
     async def _analyze_topic_fit(self, content: str, topics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze how well content fits identified topics"""
+        """
+Analyze how well content fits identified topics"""
         if not topics.get('topics'):
             return {'fit_score': 0.0, 'analysis': 'No topics identified'}
         
@@ -655,7 +674,8 @@ class TopicAnalyzer(ContentAnalyzer):
         }
     
     def _load_influencer_categories(self) -> Dict[str, List[str]]:
-        """Load influencer category keywords"""
+        """
+Load influencer category keywords"""
         return {
             'lifestyle': ['lifestyle', 'daily', 'routine', 'life', 'living', 'home', 'family', 'personal'],
             'fashion': ['fashion', 'style', 'outfit', 'clothing', 'designer', 'brand', 'trendy', 'wardrobe'],
@@ -672,7 +692,8 @@ class TopicAnalyzer(ContentAnalyzer):
         }
     
     def _simple_keyword_extraction(self, content: str) -> Dict[str, Any]:
-        """Fallback simple keyword extraction"""
+        """
+Fallback simple keyword extraction"""
         words = content.lower().split()
         
         # Remove stop words
@@ -690,7 +711,8 @@ class TopicAnalyzer(ContentAnalyzer):
         }
     
     def _calculate_keyword_density(self, content: str, keywords: List[str]) -> Dict[str, float]:
-        """Calculate keyword density metrics"""
+        """
+Calculate keyword density metrics"""
         words = content.lower().split()
         densities = {}
         
@@ -701,7 +723,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return densities
     
     def _calculate_topic_coherence(self, topic_words: List[str], content: str) -> float:
-        """Calculate topic coherence score"""
+        """
+Calculate topic coherence score"""
         content_words = set(content.lower().split())
         topic_word_set = set(topic_words)
         
@@ -712,7 +735,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return float(coherence)
     
     def _get_document_topic_distribution(self, lda_model, doc_term_matrix) -> List[Dict[str, float]]:
-        """Get topic distribution for documents"""
+        """
+Get topic distribution for documents"""
         doc_topic_dist = lda_model.transform(doc_term_matrix)
         
         distributions = []
@@ -725,7 +749,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return distributions
     
     def _determine_content_niche(self, categories: Dict[str, Any], keywords: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine the specific niche of the content"""
+        """
+Determine the specific niche of the content"""
         primary_category = categories.get('primary_category', 'general')
         confidence = categories.get('confidence', 0.0)
         
@@ -740,7 +765,8 @@ class TopicAnalyzer(ContentAnalyzer):
         }
     
     def _identify_collaboration_opportunities(self, categories: Dict[str, Any], topics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities"""
+        """
+Identify potential collaboration opportunities"""
         opportunities = []
         primary_category = categories.get('primary_category', 'general')
         
@@ -767,7 +793,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return opportunities
     
     def _get_seasonal_keywords(self, month: int) -> List[str]:
-        """Get seasonal keywords for the given month"""
+        """
+Get seasonal keywords for the given month"""
         seasonal_mapping = {
             12: ['christmas', 'holiday', 'winter', 'new year', 'gift'],
             1: ['new year', 'resolution', 'fresh start', 'winter'],
@@ -786,7 +813,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return seasonal_mapping.get(month, [])
     
     def _calculate_trend_alignment(self, trending_keywords: List[Dict[str, Any]]) -> float:
-        """Calculate alignment with current trends"""
+        """
+Calculate alignment with current trends"""
         if not trending_keywords:
             return 0.0
         
@@ -794,7 +822,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return min(1.0, total_alignment / len(trending_keywords))
     
     def _assess_virality_potential(self, content: str, trending_keywords: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Assess potential for viral content"""
+        """
+Assess potential for viral content"""
         viral_indicators = {
             'trending_alignment': len(trending_keywords) > 0,
             'emotional_triggers': self._has_emotional_triggers(content),
@@ -822,7 +851,8 @@ class TopicAnalyzer(ContentAnalyzer):
         }
     
     def _assess_content_coherence(self, topic_fits: List[Dict[str, Any]]) -> str:
-        """Assess overall content coherence"""
+        """
+Assess overall content coherence"""
         if not topic_fits:
             return 'unclear'
         
@@ -836,7 +866,8 @@ class TopicAnalyzer(ContentAnalyzer):
             return 'low'
     
     def _detect_sub_niches(self, primary_category: str, keywords: List[Tuple[str, float]]) -> List[str]:
-        """Detect sub-niches within primary category"""
+        """
+Detect sub-niches within primary category"""
         sub_niche_mapping = {
             'fashion': ['streetwear', 'luxury', 'sustainable', 'vintage'],
             'beauty': ['skincare', 'makeup', 'haircare', 'natural'],
@@ -856,7 +887,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return sub_niches
     
     def _calculate_niche_specificity(self, categories: Dict[str, Any], keywords: Dict[str, Any]) -> float:
-        """Calculate how specific the content is to its niche"""
+        """
+Calculate how specific the content is to its niche"""
         category_scores = categories.get('category_scores', {})
         
         if not category_scores:
@@ -873,7 +905,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return min(1.0, specificity)
     
     def _calculate_collaboration_potential(self, categories: Dict[str, Any], target_niche: str) -> float:
-        """Calculate potential for collaboration with target niche"""
+        """
+Calculate potential for collaboration with target niche"""
         # Simple scoring based on category overlap and complementarity
         category_scores = categories.get('category_scores', {})
         
@@ -920,7 +953,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return any(trigger in content_lower for trigger in emotional_triggers)
     
     def _assess_shareability(self, content: str) -> bool:
-        """Assess content shareability"""
+        """
+Assess content shareability"""
         shareable_indicators = [
             'tip', 'hack', 'guide', 'how to', 'tutorial',
             'share', 'tag', 'comment', 'thoughts',
@@ -931,7 +965,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return any(indicator in content_lower for indicator in shareable_indicators)
     
     def _assess_controversy_potential(self, content: str) -> bool:
-        """Assess potential for controversial content"""
+        """
+Assess potential for controversial content"""
         controversial_indicators = [
             'controversial', 'debate', 'argue', 'disagree',
             'wrong', 'right', 'opinion', 'unpopular'
@@ -941,7 +976,8 @@ class TopicAnalyzer(ContentAnalyzer):
         return any(indicator in content_lower for indicator in controversial_indicators)
     
     def _get_virality_recommendation(self, score: float) -> str:
-        """Get recommendation based on virality score"""
+        """
+Get recommendation based on virality score"""
         if score > 0.7:
             return "High viral potential - optimize for maximum reach"
         elif score > 0.4:
@@ -977,20 +1013,23 @@ class TopicAnalyzer(ContentAnalyzer):
 
 # Utility functions for quick analysis
 async def quick_sentiment_analysis(content: str) -> Dict[str, Any]:
-    """Quick sentiment analysis"""
+    """
+Quick sentiment analysis"""
     analyzer = SentimentAnalyzer()
     result = await analyzer.analyze(content)
     return result.results
 
 async def quick_topic_analysis(content: str) -> Dict[str, Any]:
-    """Quick topic analysis"""
+    """
+Quick topic analysis"""
     analyzer = TopicAnalyzer()
     result = await analyzer.analyze(content)
     return result.results
 
 # Analysis pipeline
 class ContentAnalysisPipeline:
-    """Pipeline for comprehensive content analysis"""
+    """
+Pipeline for comprehensive content analysis"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -1000,7 +1039,8 @@ class ContentAnalysisPipeline:
         }
     
     async def analyze_comprehensive(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, AnalysisResult]:
-        """Perform comprehensive analysis"""
+        """
+Perform comprehensive analysis"""
         results = {}
         
         tasks = [

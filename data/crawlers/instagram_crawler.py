@@ -5,12 +5,14 @@ Professional Instagram content crawler for copyright protection and content moni
 Integrates with Instagram Basic Display API and Graph API for comprehensive content detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, 
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
-"""import asyncio
+"""
+
+import asyncio
 import re
 import json
 from datetime import datetime, timedelta
@@ -560,7 +562,8 @@ class InstagramCrawler(PlatformCrawler):
         return None
     
     def get_rate_limit_status(self) -> Dict[str, Any]:
-        """Get current rate limiting status"""
+        """
+Get current rate limiting status"""
         return {
             'platform': 'instagram',
             'scraping_delay': self.scraping_delay,
@@ -570,6 +573,7 @@ class InstagramCrawler(PlatformCrawler):
         }
     
     async def close(self):
-        """Cleanup crawler resources"""
+        """
+Cleanup crawler resources"""
         await self.cleanup_selenium()
         await self.cleanup_session()

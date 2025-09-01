@@ -29,6 +29,7 @@ Features:
 - Revenue tracking metrics
 - Resource utilization monitoring
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -56,7 +57,8 @@ settings = get_settings()
 
 @dataclass
 class MetricDefinition:
-    """Metric definition structure"""
+    """
+Metric definition structure"""
     name: str
     metric_type: str  # counter, histogram, gauge, summary, info
     description: str
@@ -87,7 +89,8 @@ class PrometheusManager:
         self._setup_custom_collectors()
         
     def _initialize_core_metrics(self) -> None:
-        """Initialize core application metrics"""
+        """
+Initialize core application metrics"""
         
         # Application Performance Metrics
         self.http_requests_total = Counter(
@@ -249,7 +252,8 @@ class PrometheusManager:
         })
     
     def _setup_custom_collectors(self) -> None:
-        """Setup custom metric collectors"""
+        """
+Setup custom metric collectors"""
         self.registry.register(SystemResourceCollector())
         self.registry.register(DatabaseMetricsCollector())
     
@@ -261,7 +265,8 @@ class PrometheusManager:
         duration: float,
         tenant_id: str
     ) -> None:
-        """Record HTTP request metrics"""
+        """
+Record HTTP request metrics"""
         try:
             self.http_requests_total.labels(
                 method=method,
@@ -572,7 +577,8 @@ class SystemResourceCollector:
     """Custom collector for system resource metrics"""
     
     def collect(self):
-        """Collect system resource metrics"""
+        """
+Collect system resource metrics"""
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1, percpu=True)
@@ -619,7 +625,8 @@ class DatabaseMetricsCollector:
     """Custom collector for database metrics"""
     
     def collect(self):
-        """Collect database metrics"""
+        """
+Collect database metrics"""
         try:
             # Database connection metrics would be implemented here
             # This is a placeholder for the actual implementation

@@ -4,6 +4,7 @@ Creator challenges, achievements, and engagement gamification.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -16,7 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChallengeType(Enum):
-    """Challenge types"""
+    """
+Challenge types"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -26,6 +29,7 @@ class ChallengeType(Enum):
 
 class AchievementTier(Enum):
     """Achievement tiers"""
+
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -50,7 +54,8 @@ class Challenge:
 
 @dataclass
 class Achievement:
-    """Achievement definition"""
+    """
+Achievement definition"""
     id: str
     title: str
     description: str
@@ -63,7 +68,8 @@ class Achievement:
 
 @dataclass
 class UserProgress:
-    """User progress tracking"""
+    """
+User progress tracking"""
     user_id: str
     level: int
     experience_points: int
@@ -75,7 +81,8 @@ class UserProgress:
 
 
 class GamificationSystem:
-    """Creator gamification and engagement system"""
+    """
+Creator gamification and engagement system"""
     
     def __init__(self):
         self.challenges = {}
@@ -95,7 +102,8 @@ class GamificationSystem:
         rewards: Dict[str, Any],
         duration_days: int = 7
     ) -> str:
-        """Create a new challenge"""
+        """
+Create a new challenge"""
         try:
             challenge_id = f"challenge_{int(datetime.now().timestamp())}"
             

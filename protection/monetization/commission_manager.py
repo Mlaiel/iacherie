@@ -4,6 +4,7 @@ Handles revenue sharing, affiliate programs, and commission calculations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class CommissionType(Enum):
-    """Types of commission structures."""
+    """
+Types of commission structures."""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED = "tiered"
@@ -28,6 +31,7 @@ class CommissionType(Enum):
 
 class CommissionStatus(Enum):
     """Commission payment status."""
+
     PENDING = "pending"
     APPROVED = "approved"
     PAID = "paid"
@@ -38,6 +42,7 @@ class CommissionStatus(Enum):
 
 class AffiliateStatus(Enum):
     """Affiliate account status."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -47,6 +52,7 @@ class AffiliateStatus(Enum):
 
 class PayoutMethod(Enum):
     """Available payout methods."""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -238,12 +244,14 @@ class CommissionCalculator(ABC):
         rule: CommissionRule, 
         metadata: Dict[str, Any] = None
     ) -> Decimal:
-        """Calculate commission amount."""
+        """
+Calculate commission amount."""
         pass
 
 
 class StandardCommissionCalculator(CommissionCalculator):
-    """Standard commission calculation implementation."""
+    """
+Standard commission calculation implementation."""
     
     def calculate(
         self, 
@@ -251,7 +259,8 @@ class StandardCommissionCalculator(CommissionCalculator):
         rule: CommissionRule, 
         metadata: Dict[str, Any] = None
     ) -> Decimal:
-        """Calculate commission using standard rules."""
+        """
+Calculate commission using standard rules."""
         return rule.calculate_commission(amount, metadata)
 
 
@@ -618,14 +627,16 @@ class CommissionManager:
         return self.affiliates.get(affiliate_id)
     
     def get_affiliate_by_code(self, referral_code: str) -> Optional[Affiliate]:
-        """Get affiliate by referral code."""
+        """
+Get affiliate by referral code."""
         for affiliate in self.affiliates.values():
             if affiliate.referral_code == referral_code:
                 return affiliate
         return None
     
     def get_commission(self, commission_id: str) -> Optional[Commission]:
-        """Get commission by ID."""
+        """
+Get commission by ID."""
         return self.commissions.get(commission_id)
     
     def list_affiliate_commissions(
@@ -633,7 +644,8 @@ class CommissionManager:
         affiliate_id: str, 
         status: Optional[CommissionStatus] = None
     ) -> List[Commission]:
-        """List all commissions for an affiliate."""
+        """
+List all commissions for an affiliate."""
         commissions = [
             c for c in self.commissions.values()
             if c.affiliate_id == affiliate_id
@@ -645,7 +657,8 @@ class CommissionManager:
         return sorted(commissions, key=lambda x: x.created_at, reverse=True)
     
     def _generate_referral_code(self, name: str) -> str:
-        """Generate unique referral code."""
+        """
+Generate unique referral code."""
         base_code = name.upper().replace(" ", "")[:6]
         timestamp = str(int(datetime.utcnow().timestamp()))[-4:]
         return f"{base_code}{timestamp}"

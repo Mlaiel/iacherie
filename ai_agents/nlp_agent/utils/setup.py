@@ -6,6 +6,7 @@ Advanced Natural Language Processing System for content analysis and protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from setuptools import setup, find_packages
 import os
 

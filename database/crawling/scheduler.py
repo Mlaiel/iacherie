@@ -13,6 +13,7 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -34,7 +35,9 @@ from ..core.exceptions import (
 
 
 class SchedulePriority(Enum):
-    """Crawler job priority levels."""
+    """
+Crawler job priority levels."""
+
     CRITICAL = "critical"      # Real-time monitoring, copyright alerts
     HIGH = "high"             # Content discovery, trending analysis
     MEDIUM = "medium"         # Regular monitoring, analytics
@@ -44,6 +47,7 @@ class SchedulePriority(Enum):
 
 class ScheduleStatus(Enum):
     """Crawler schedule status."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     DISABLED = "disabled"
@@ -54,6 +58,7 @@ class ScheduleStatus(Enum):
 
 class ExecutionMode(Enum):
     """Crawler execution modes."""
+
     IMMEDIATE = "immediate"       # Execute immediately
     SCHEDULED = "scheduled"       # Execute at specific time
     RECURRING = "recurring"       # Recurring schedule
@@ -63,6 +68,7 @@ class ExecutionMode(Enum):
 
 class QueueType(Enum):
     """Different types of crawler queues."""
+
     REAL_TIME = "real_time"       # High-frequency, low-latency
     BATCH = "batch"               # Bulk processing operations
     PRIORITY = "priority"         # Priority-based processing
@@ -84,7 +90,8 @@ class CrawlerSchedulingManager(DatabaseManager):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize crawler scheduling manager."""
+        """
+Initialize crawler scheduling manager."""
         super().__init__(db_session)
         self.active_schedules = {}
         self.execution_queues = {}
@@ -495,7 +502,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         expression: str,
         priority: SchedulePriority
     ) -> None:
-        """Add schedule to active tracking system."""
+        """
+Add schedule to active tracking system."""
         self.active_schedules[schedule_id] = {
             "expression": expression,
             "priority": priority.value,
@@ -610,12 +618,14 @@ class CrawlerSchedulingManager(DatabaseManager):
         pass
     
     async def _wait_for_job_completion(self, job_id: str) -> None:
-        """Wait for a specific job to complete."""
+        """
+Wait for a specific job to complete."""
         # Implementation would poll job status until completion
         pass
     
     async def _wait_for_all_jobs_completion(self, job_ids: List[str]) -> None:
-        """Wait for all jobs in list to complete."""
+        """
+Wait for all jobs in list to complete."""
         # Implementation would poll all job statuses until completion
         pass
     
@@ -626,7 +636,8 @@ class CrawlerSchedulingManager(DatabaseManager):
         step_index: int,
         error: Exception
     ) -> None:
-        """Handle workflow step execution error."""
+        """
+Handle workflow step execution error."""
         error_handling = workflow.error_handling
         
         if error_handling.get("strategy") == "retry":

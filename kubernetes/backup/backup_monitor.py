@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -23,7 +24,9 @@ from ...core.exceptions import MonitoringError
 
 
 class MonitoringLevel(Enum):
-    """Monitoring level enumeration."""
+    """
+Monitoring level enumeration."""
+
     BASIC = "basic"
     DETAILED = "detailed"
     COMPREHENSIVE = "comprehensive"
@@ -31,6 +34,7 @@ class MonitoringLevel(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity enumeration."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -59,7 +63,8 @@ class BackupMetrics:
 
 @dataclass
 class SystemMetrics:
-    """System-wide backup metrics."""
+    """
+System-wide backup metrics."""
     timestamp: datetime
     active_backups: int
     total_backup_size: int
@@ -74,7 +79,8 @@ class SystemMetrics:
 
 @dataclass
 class HealthStatus:
-    """Backup system health status."""
+    """
+Backup system health status."""
     overall_status: str
     backup_service_status: str
     storage_status: str
@@ -125,7 +131,8 @@ class BackupMonitor:
         self._is_monitoring = False
 
     async def start_monitoring(self) -> None:
-        """Start backup monitoring services."""
+        """
+Start backup monitoring services."""
         if self._is_monitoring:
             self.logger.warning("Monitoring is already running")
             return
@@ -486,7 +493,8 @@ class BackupMonitor:
         )
 
     async def _system_metrics_loop(self) -> None:
-        """Collect system metrics periodically."""
+        """
+Collect system metrics periodically."""
         while self._is_monitoring:
             try:
                 # Collect current system metrics
@@ -640,17 +648,20 @@ class BackupMonitor:
         return disk_info.used / (1024 * 1024)
 
     async def _get_storage_utilization(self) -> float:
-        """Get backup storage utilization percentage."""
+        """
+Get backup storage utilization percentage."""
         disk_info = psutil.disk_usage('/')
         return disk_info.percent
 
     async def _calculate_total_backup_size(self) -> int:
-        """Calculate total size of all backups."""
+        """
+Calculate total size of all backups."""
         # This would be implemented based on actual storage backend
         return 0
 
     async def _get_daily_backup_count(self) -> int:
-        """Get number of backups completed today."""
+        """
+Get number of backups completed today."""
         today = datetime.now().date()
         count = 0
         
@@ -661,7 +672,8 @@ class BackupMonitor:
         return count
 
     async def _calculate_success_rate(self) -> float:
-        """Calculate backup success rate."""
+        """
+Calculate backup success rate."""
         if not self.backup_metrics:
             return 100.0
         
@@ -681,7 +693,8 @@ class BackupMonitor:
         return (len(successful_backups) / len(completed_backups)) * 100
 
     async def _calculate_average_duration(self) -> float:
-        """Calculate average backup duration."""
+        """
+Calculate average backup duration."""
         completed_backups = [
             m for m in self.backup_metrics.values() 
             if m.duration_seconds is not None
@@ -694,16 +707,19 @@ class BackupMonitor:
         return sum(durations) / len(durations)
 
     async def _get_backup_queue_size(self) -> int:
-        """Get number of backups in queue."""
+        """
+Get number of backups in queue."""
         # This would be implemented based on actual queue system
         return 0
 
     async def _get_alerts_count_24h(self) -> int:
-        """Get number of alerts sent in last 24 hours."""
+        """
+Get number of alerts sent in last 24 hours."""
         return await self.alert_manager.get_alerts_count_24h()
 
     async def _evaluate_system_alerts(self) -> None:
-        """Evaluate system-level alert conditions."""
+        """
+Evaluate system-level alert conditions."""
         current_metrics = await self._collect_current_system_metrics()
         
         # High CPU usage alert

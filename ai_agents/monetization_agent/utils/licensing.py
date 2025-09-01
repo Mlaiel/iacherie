@@ -22,6 +22,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Infrastructure automation and deployment pipelines
 - AI Prompt Engineer: Advanced AI interaction and optimization systems
 """
+
 import asyncio
 import logging
 import uuid
@@ -60,7 +61,9 @@ from ...utils.encryption import EncryptionManager
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     SYNCHRONIZATION = "synchronization"  # Music sync for video/film
     MECHANICAL = "mechanical"  # Physical/digital reproduction
     PERFORMANCE = "performance"  # Public performance rights
@@ -74,6 +77,7 @@ class LicenseType(Enum):
 
 class RightsType(Enum):
     """Types of intellectual property rights"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PUBLICITY_RIGHTS = "publicity_rights"
@@ -85,6 +89,7 @@ class RightsType(Enum):
 
 class ContractStatus(Enum):
     """Contract lifecycle statuses"""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     UNDER_NEGOTIATION = "under_negotiation"
@@ -97,6 +102,7 @@ class ContractStatus(Enum):
 
 class RoyaltyType(Enum):
     """Types of royalty calculations"""
+
     PERCENTAGE = "percentage"
     FLAT_FEE = "flat_fee"
     PER_UNIT = "per_unit"
@@ -132,7 +138,8 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyCalculation:
-    """Detailed royalty calculation"""
+    """
+Detailed royalty calculation"""
     calculation_id: str
     license_id: str
     reporting_period_start: date
@@ -150,7 +157,8 @@ class RoyaltyCalculation:
 
 @dataclass
 class ContractTerms:
-    """Standardized contract terms"""
+    """
+Standardized contract terms"""
     payment_schedule: str
     reporting_frequency: str
     audit_rights: bool
@@ -209,7 +217,8 @@ class LicenseManager:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize the licensing management system"""
+        """
+Initialize the licensing management system"""
         try:
             # Initialize repositories
             await self.license_repository.initialize()
@@ -580,7 +589,8 @@ class LicenseManager:
         }
     
     async def _start_background_tasks(self):
-        """Start background licensing management tasks"""
+        """
+Start background licensing management tasks"""
         
         # License expiration monitoring
         asyncio.create_task(self._monitor_license_expirations())
@@ -595,7 +605,8 @@ class LicenseManager:
         asyncio.create_task(self._optimize_pricing_models())
     
     async def cleanup(self):
-        """Cleanup licensing resources"""
+        """
+Cleanup licensing resources"""
         self.license_cache.clear()
         self.pricing_cache.clear()
         self.rights_registry.clear()
@@ -622,7 +633,8 @@ class RoyaltyCalculator:
         self.rounding_mode = ROUND_HALF_UP
     
     async def initialize(self):
-        """Initialize royalty calculation models"""
+        """
+Initialize royalty calculation models"""
         
         # Initialize calculation models
         await self._initialize_calculation_models()
@@ -752,7 +764,8 @@ class RoyaltyCalculator:
         net_revenue: Decimal,
         revenue_terms: Dict[str, Any]
     ) -> Decimal:
-        """Calculate tiered royalty structure"""
+        """
+Calculate tiered royalty structure"""
         
         tiers = revenue_terms.get('tiers', [])
         total_royalty = Decimal('0')
@@ -777,7 +790,8 @@ class RoyaltyCalculator:
         return total_royalty.quantize(Decimal('0.01'), rounding=self.rounding_mode)
     
     async def _initialize_calculation_models(self):
-        """Initialize different royalty calculation models"""
+        """
+Initialize different royalty calculation models"""
         
         # Percentage-based model
         self.calculation_models[RoyaltyType.PERCENTAGE] = self._calculate_percentage_royalty
@@ -814,7 +828,8 @@ class ContractManager:
         self.legal_terms: Dict[str, Dict[str, Any]] = {}
     
     async def initialize(self):
-        """Initialize contract management system"""
+        """
+Initialize contract management system"""
         
         # Load contract templates
         await self._load_contract_templates()
@@ -853,7 +868,8 @@ class ContractManager:
         return contract_document
     
     async def _load_contract_templates(self):
-        """Load contract templates for different license types"""
+        """
+Load contract templates for different license types"""
         
         # This would typically load from a database or file system
         self.contract_templates[LicenseType.SYNCHRONIZATION] = "sync_license_template.txt"

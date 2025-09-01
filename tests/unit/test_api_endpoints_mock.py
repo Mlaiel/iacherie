@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Mock-based Unit Tests for API Endpoints
+"""
+Mock-based Unit Tests for API Endpoints
 =======================================
 
 Mock-based tests for API endpoints that work without FastAPI dependencies.
@@ -20,6 +22,7 @@ Mock-based tests for API endpoints that work without FastAPI dependencies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete API test coverage without external dependencies
 """
+
 import pytest
 import sys
 import os
@@ -30,7 +33,8 @@ import json
 from datetime import datetime, timedelta
 
 class MockResponse:
-    """Mock HTTP response"""
+    """
+Mock HTTP response"""
     
     def __init__(self, status_code: int, json_data: Dict = None, text: str = ""):
         self.status_code = status_code
@@ -155,7 +159,8 @@ class TestAPIAuthentication:
         return MockAPIClient()
     
     def test_successful_authentication(self, api_client):
-        """Test successful user authentication"""
+        """
+Test successful user authentication"""
         response = api_client.authenticate("test_user", "test_pass")
         
         assert response.status_code == 200
@@ -361,7 +366,8 @@ class TestAPIRateLimiting:
     """Test API rate limiting (mock implementation)"""
     
     def test_rate_limit_simulation(self):
-        """Test rate limiting behavior"""
+        """
+Test rate limiting behavior"""
         client = MockAPIClient()
         client.authenticate("test_user", "test_pass")
         

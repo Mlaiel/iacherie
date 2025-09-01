@@ -12,6 +12,7 @@ Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -42,7 +43,9 @@ Base = declarative_base()
 
 
 class FraudType(Enum):
-    """Types de fraudes détectées"""
+    """
+Types de fraudes détectées"""
+
     FAKE_STREAMS = "fake_streams"
     BOT_TRAFFIC = "bot_traffic"
     CLICK_FRAUD = "click_fraud"
@@ -59,6 +62,7 @@ class FraudType(Enum):
 
 class FraudSeverity(Enum):
     """Niveaux de sévérité des fraudes"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -67,6 +71,7 @@ class FraudSeverity(Enum):
 
 class FraudStatus(Enum):
     """Status des incidents de fraude"""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -77,6 +82,7 @@ class FraudStatus(Enum):
 
 class ActionTaken(Enum):
     """Actions prises contre les fraudes"""
+
     MONITORING = "monitoring"
     WARNING_ISSUED = "warning_issued"
     ACCOUNT_SUSPENDED = "account_suspended"

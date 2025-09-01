@@ -6,6 +6,7 @@ comprehensive tracking and forensic capabilities for the IA Influencer Agent pla
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Types of audit events."""
+    """
+Types of audit events."""
+
     COMPLIANCE_CHECK = "compliance_check"
     COPYRIGHT_REGISTRATION = "copyright_registration"
     GDPR_CONSENT = "gdpr_consent"
@@ -40,6 +43,7 @@ class AuditEventType(Enum):
 
 class AuditLevel(Enum):
     """Audit logging levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -49,6 +53,7 @@ class AuditLevel(Enum):
 
 class DataSensitivity(Enum):
     """Data sensitivity levels for audit logs."""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -69,7 +74,8 @@ class AuditSession:
 
 @dataclass
 class AuditEvent:
-    """Audit event record structure."""
+    """
+Audit event record structure."""
     event_id: str
     session_id: Optional[str]
     event_type: AuditEventType
@@ -712,7 +718,8 @@ class AuditLogger:
         return calculated_checksum == event.checksum
     
     def _serialize_audit_event(self, event: AuditEvent) -> Dict[str, Any]:
-        """Serialize audit event for external consumption."""
+        """
+Serialize audit event for external consumption."""
         return {
             "event_id": event.event_id,
             "session_id": event.session_id,
@@ -738,7 +745,8 @@ class AuditLogger:
         ])
     
     def _analyze_event_patterns(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in audit events."""
+        """
+Analyze patterns in audit events."""
         event_types = {}
         users_involved = set()
         integrity_violations = 0

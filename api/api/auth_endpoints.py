@@ -16,6 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 import logging
@@ -109,6 +110,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 # Enums for better API documentation
 class UserRole(str, Enum):
     """User roles in the system"""
+
     GUEST = "guest"
     CREATOR = "creator"
     BRAND = "brand"
@@ -118,6 +120,7 @@ class UserRole(str, Enum):
 
 class SubscriptionTier(str, Enum):
     """Available subscription tiers"""
+
     FREE = "free"
     BASIC = "basic"
     PRO = "pro"
@@ -125,6 +128,7 @@ class SubscriptionTier(str, Enum):
 
 class ContentFormat(str, Enum):
     """Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -133,6 +137,7 @@ class ContentFormat(str, Enum):
 
 class TwoFactorMethod(str, Enum):
     """Two-factor authentication methods"""
+
     TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"

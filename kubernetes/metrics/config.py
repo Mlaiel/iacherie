@@ -12,6 +12,7 @@ Features:
 - Alert configuration templates
 - Dashboard configuration presets
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ settings = get_settings()
 
 
 class MetricsEnvironment(Enum):
-    """Metrics environment types"""
+    """
+Metrics environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -65,7 +68,8 @@ class AlertConfig:
 
 @dataclass
 class MetricsRetentionConfig:
-    """Metrics retention configuration"""
+    """
+Metrics retention configuration"""
     realtime_retention: int = 300    # 5 minutes
     fast_retention: int = 3600       # 1 hour
     normal_retention: int = 86400    # 24 hours
@@ -83,7 +87,8 @@ class MetricsConfiguration:
         self._load_configuration()
     
     def _load_configuration(self) -> None:
-        """Load configuration based on environment"""
+        """
+Load configuration based on environment"""
         
         # Prometheus Configuration
         self.prometheus = PrometheusConfig(
@@ -149,7 +154,8 @@ class MetricsConfiguration:
         self.prometheus.max_samples = 1000000  # 1M samples
     
     def _apply_staging_settings(self) -> None:
-        """Apply staging environment settings"""
+        """
+Apply staging environment settings"""
         # Medium retention for staging
         self.retention.realtime_retention = 180     # 3 minutes
         self.retention.fast_retention = 1800        # 30 minutes
@@ -164,7 +170,8 @@ class MetricsConfiguration:
         self.prometheus.max_samples = 10000000  # 10M samples
     
     def _apply_production_settings(self) -> None:
-        """Apply production environment settings"""
+        """
+Apply production environment settings"""
         # Full retention for production
         # (using default values)
         
@@ -175,7 +182,8 @@ class MetricsConfiguration:
         self.grafana.enabled = True
     
     def get_metric_retention(self, metric_name: str) -> int:
-        """Get retention period for specific metric"""
+        """
+Get retention period for specific metric"""
         # Business metrics get longer retention
         if any(keyword in metric_name.lower() for keyword in ["revenue", "user", "business"]):
             return self.retention.aggregated_retention

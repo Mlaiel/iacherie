@@ -4,7 +4,7 @@
 Configuration management for vector database backends and operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ COPYRIGHT WARNING ⚠️
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
@@ -13,6 +13,7 @@ Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal ac
 
 For licensing and authorization requests, contact: mlaiel@live.de
 """
+
 import os
 import json
 from typing import Dict, Any, Optional, List
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EmbeddingConfig:
-    """Configuration for embedding models and engines."""
+    """
+Configuration for embedding models and engines."""
     text_model: str = "all-MiniLM-L6-v2"
     audio_model: str = "facebook/wav2vec2-base-960h"
     image_model: str = "openai/clip-vit-base-patch32"
@@ -86,7 +88,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security and access control."""
+    """
+Configuration for security and access control."""
     encryption_enabled: bool = True
     encryption_key_path: Optional[str] = None
     access_logs_enabled: bool = True
@@ -97,7 +100,8 @@ class SecurityConfig:
 
 @dataclass
 class VectorDBConfig:
-    """Complete vector database configuration."""
+    """
+Complete vector database configuration."""
     backend: str = "faiss"  # faiss, chroma
     data_directory: str = "./vector_data"
     embedding: EmbeddingConfig = None
@@ -133,7 +137,8 @@ class VectorDBConfig:
             }
 
 class ConfigManager:
-    """Manager for vector database configuration."""
+    """
+Manager for vector database configuration."""
     
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or os.getenv(
@@ -143,7 +148,8 @@ class ConfigManager:
         self.config = self._load_config()
     
     def _load_config(self) -> VectorDBConfig:
-        """Load configuration from file or create default."""
+        """
+Load configuration from file or create default."""
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -225,11 +231,13 @@ class ConfigManager:
         return asdict(self.config.embedding)
     
     def get_search_config(self) -> Dict[str, Any]:
-        """Get search configuration."""
+        """
+Get search configuration."""
         return asdict(self.config.search)
     
     def validate_config(self) -> List[str]:
-        """Validate configuration and return list of issues."""
+        """
+Validate configuration and return list of issues."""
         issues = []
         
         # Validate backend

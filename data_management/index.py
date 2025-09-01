@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 from .analytics import AnalyticsEngine, DataAnalyzer, ReportGenerator
 from .archiving import ArchiveManager, CompressionService, StorageOptimizer
 from .backups import BackupManager, BackupScheduler, RestoreService
@@ -48,7 +49,7 @@ from .validation import ValidationService, RuleEngine, ComplianceValidator
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
 # Module exports
 __all__ = [
@@ -246,6 +247,7 @@ logger = logging.getLogger(__name__)
 
 class ModuleStatus(Enum):
     """Statuts des modules de data management"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     INITIALIZING = "initializing"
@@ -255,6 +257,7 @@ class ModuleStatus(Enum):
 
 class PipelineStage(Enum):
     """Étapes de la pipeline de traitement"""
+
     VALIDATION = "validation"
     TRANSFORMATION = "transformation"
     FINGERPRINTING = "fingerprinting"
@@ -281,7 +284,8 @@ class ModuleInfo:
 
 @dataclass
 class PipelineMetrics:
-    """Métriques de performance de la pipeline"""
+    """
+Métriques de performance de la pipeline"""
     total_processed: int = 0
     success_rate: float = 100.0
     avg_processing_time: float = 0.0
@@ -539,16 +543,19 @@ class DataManagementIndex:
         return self.modules.get(module_name)
 
     def get_all_modules_status(self) -> Dict[str, ModuleInfo]:
-        """Retourne le statut de tous les modules"""
+        """
+Retourne le statut de tous les modules"""
         with self._lock:
             return self.modules.copy()
 
     def get_pipeline_metrics(self) -> PipelineMetrics:
-        """Retourne les métriques de la pipeline"""
+        """
+Retourne les métriques de la pipeline"""
         return self.pipeline_metrics
 
     def get_health_report(self) -> Dict[str, Any]:
-        """Génère un rapport de santé complet"""
+        """
+Génère un rapport de santé complet"""
         with self._lock:
             active_modules = sum(1 for info in self.modules.values() if info.status == ModuleStatus.ACTIVE)
             error_modules = sum(1 for info in self.modules.values() if info.status == ModuleStatus.ERROR)
@@ -649,7 +656,8 @@ def get_data_management_index() -> DataManagementIndex:
     return _global_index
 
 def initialize_data_management_index(config: Optional[DataManagementConfig] = None) -> DataManagementIndex:
-    """Initialise l'index global avec une configuration spécifique"""
+    """
+Initialise l'index global avec une configuration spécifique"""
     global _global_index
     _global_index = DataManagementIndex(config)
     return _global_index

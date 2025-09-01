@@ -11,6 +11,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
 """
+
 from typing import Dict, List, Set, Optional, Union
 from enum import Enum, IntEnum
 from dataclasses import dataclass
@@ -18,7 +19,9 @@ import mimetypes
 
 
 class ContentFormat(Enum):
-    """Supported content format categories"""
+    """
+Supported content format categories"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -29,6 +32,7 @@ class ContentFormat(Enum):
 
 class AudioFormat(Enum):
     """Professional audio format support"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -45,6 +49,7 @@ class AudioFormat(Enum):
 
 class VideoFormat(Enum):
     """Professional video format support"""
+
     MP4 = "mp4"
     AVI = "avi"
     MKV = "mkv"
@@ -65,6 +70,7 @@ class VideoFormat(Enum):
 
 class ImageFormat(Enum):
     """Professional image format support"""
+
     JPEG = "jpeg"
     JPG = "jpg"
     PNG = "png"
@@ -89,6 +95,7 @@ class ImageFormat(Enum):
 
 class QualityLevel(IntEnum):
     """Content quality levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -97,7 +104,9 @@ class QualityLevel(IntEnum):
 
 
 class CompressionType(Enum):
-    """Compression algorithms"""
+    """
+Compression algorithms"""
+
     LOSSLESS = "lossless"
     LOSSY = "lossy"
     HYBRID = "hybrid"
@@ -120,7 +129,8 @@ class FormatSpecification:
 
 @dataclass
 class AudioSpecification(FormatSpecification):
-    """Audio format specifications"""
+    """
+Audio format specifications"""
     max_sample_rate: Optional[int] = None
     max_bit_depth: Optional[int] = None
     max_channels: Optional[int] = None
@@ -131,7 +141,8 @@ class AudioSpecification(FormatSpecification):
 
 @dataclass
 class VideoSpecification(FormatSpecification):
-    """Video format specifications"""
+    """
+Video format specifications"""
     max_resolution: Optional[tuple] = None
     max_fps: Optional[int] = None
     supports_hdr: bool = False
@@ -143,7 +154,8 @@ class VideoSpecification(FormatSpecification):
 
 @dataclass
 class ImageSpecification(FormatSpecification):
-    """Image format specifications"""
+    """
+Image format specifications"""
     max_resolution: Optional[tuple] = None
     supports_transparency: bool = False
     supports_animation: bool = False
@@ -153,7 +165,9 @@ class ImageSpecification(FormatSpecification):
 
 
 class SupportedFormats:
-    """Comprehensive format support definitions"""
+    """
+Comprehensive format support definitions"""
+
     
     AUDIO_FORMATS = {
         AudioFormat.MP3: AudioSpecification(
@@ -375,7 +389,8 @@ class SupportedFormats:
     
     @classmethod
     def get_format_by_mime_type(cls, mime_type: str) -> Optional[Union[AudioFormat, VideoFormat, ImageFormat]]:
-        """Get format enum by MIME type"""
+        """
+Get format enum by MIME type"""
         mime_type = mime_type.lower()
         
         for format_enum, spec in cls.AUDIO_FORMATS.items():
@@ -394,28 +409,32 @@ class SupportedFormats:
     
     @classmethod
     def is_audio_format(cls, format_or_extension: Union[str, AudioFormat]) -> bool:
-        """Check if format is audio"""
+        """
+Check if format is audio"""
         if isinstance(format_or_extension, AudioFormat):
             return True
         return cls.get_format_by_extension(format_or_extension) in cls.AUDIO_FORMATS
     
     @classmethod
     def is_video_format(cls, format_or_extension: Union[str, VideoFormat]) -> bool:
-        """Check if format is video"""
+        """
+Check if format is video"""
         if isinstance(format_or_extension, VideoFormat):
             return True
         return cls.get_format_by_extension(format_or_extension) in cls.VIDEO_FORMATS
     
     @classmethod
     def is_image_format(cls, format_or_extension: Union[str, ImageFormat]) -> bool:
-        """Check if format is image"""
+        """
+Check if format is image"""
         if isinstance(format_or_extension, ImageFormat):
             return True
         return cls.get_format_by_extension(format_or_extension) in cls.IMAGE_FORMATS
     
     @classmethod
     def get_supported_extensions(cls) -> Set[str]:
-        """Get all supported file extensions"""
+        """
+Get all supported file extensions"""
         extensions = set()
         
         for spec in cls.AUDIO_FORMATS.values():
@@ -429,7 +448,8 @@ class SupportedFormats:
     
     @classmethod
     def get_mime_types(cls) -> Set[str]:
-        """Get all supported MIME types"""
+        """
+Get all supported MIME types"""
         mime_types = set()
         
         for spec in cls.AUDIO_FORMATS.values():
@@ -443,7 +463,8 @@ class SupportedFormats:
     
     @classmethod
     def get_professional_formats(cls) -> Dict[ContentFormat, List]:
-        """Get professional-grade formats by category"""
+        """
+Get professional-grade formats by category"""
         return {
             ContentFormat.AUDIO: [
                 fmt for fmt, spec in cls.AUDIO_FORMATS.items() 

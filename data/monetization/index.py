@@ -5,7 +5,7 @@ Central index for IA Influencer Agent monetization system.
 Provides unified access to all monetization components and services.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
@@ -24,6 +24,7 @@ LEGAL NOTICE: Any attempt to steal, copy, reverse engineer, or use this intellec
 property without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) 
 will result in immediate legal action under German and international copyright law.
 """
+
 from typing import Dict, Any, Optional
 import asyncio
 import logging
@@ -134,7 +135,8 @@ class MonetizationService:
     """
     
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """Initialize monetization service with all components."""
+        """
+Initialize monetization service with all components."""
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -143,7 +145,8 @@ class MonetizationService:
         self._initialize_components()
     
     def _initialize_components(self):
-        """Initialize all monetization components."""
+        """
+Initialize all monetization components."""
         try:
             # Core manager
             self.manager = MonetizationManager(
@@ -336,7 +339,7 @@ def get_monetization_info() -> Dict[str, Any]:
         "system": "IA Influencer Agent Monetization Engine",
         "version": MONETIZATION_VERSION,
         "author": "Fahed Mlaiel <mlaiel@live.de>",
-        "copyright": "© 2025 Fahed Mlaiel - All Rights Reserved",
+        "copyright": "(c) 2025 Fahed Mlaiel - All Rights Reserved",
         "configuration": MONETIZATION_CONFIG,
         "components": {
             "revenue_calculator": "Advanced revenue calculation and projection",

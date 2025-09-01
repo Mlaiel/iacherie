@@ -5,9 +5,10 @@ Advanced video transformation, conversion, and enhancement capabilities
 for creators' video content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import os
@@ -35,6 +36,7 @@ logger = logging.getLogger(__name__)
 
 class VideoFormat(Enum):
     """Supported video formats."""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -47,6 +49,7 @@ class VideoFormat(Enum):
 
 class VideoQuality(Enum):
     """Video quality presets."""
+
     LOW = "low"          # 480p, low bitrate
     MEDIUM = "medium"    # 720p, medium bitrate
     HIGH = "high"        # 1080p, high bitrate
@@ -57,6 +60,7 @@ class VideoQuality(Enum):
 
 class VideoCodec(Enum):
     """Video codecs."""
+
     H264 = "libx264"
     H265 = "libx265"
     VP9 = "libvpx-vp9"
@@ -67,6 +71,7 @@ class VideoCodec(Enum):
 
 class VideoProfile(Enum):
     """Video encoding profiles."""
+
     BASELINE = "baseline"
     MAIN = "main"
     HIGH = "high"
@@ -101,7 +106,8 @@ class VideoSettings:
 
 @dataclass
 class VideoMetadata:
-    """Video file metadata."""
+    """
+Video file metadata."""
     title: Optional[str] = None
     duration: Optional[float] = None
     width: Optional[int] = None
@@ -735,7 +741,8 @@ class VideoTransformer:
         settings: VideoSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
+        """
+Generate output file path."""
         if requested_output:
             return Path(requested_output)
         
@@ -775,7 +782,8 @@ class VideoConverter:
 
 
 class VideoEnhancer:
-    """Simplified video enhancer interface."""
+    """
+Simplified video enhancer interface."""
     
     def __init__(self, transformer: Optional[VideoTransformer] = None):
         self.transformer = transformer or VideoTransformer()
@@ -786,5 +794,6 @@ class VideoEnhancer:
         output_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Enhance video quality."""
+        """
+Enhance video quality."""
         return await self.transformer.enhance(input_path, output_path, options)

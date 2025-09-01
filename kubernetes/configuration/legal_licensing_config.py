@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade legal and licensing configuration management system.
 ===============================================================
 """
+
 from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
@@ -30,7 +31,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Types of licenses"""
+    """
+Types of licenses"""
+
     COPYRIGHT = "copyright"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -49,6 +52,7 @@ class LicenseType(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdictions"""
+
     UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
     GERMANY = "germany"
@@ -66,6 +70,7 @@ class LegalJurisdiction(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
@@ -81,6 +86,7 @@ class ComplianceFramework(Enum):
 
 class ContractType(Enum):
     """Contract types"""
+
     ARTIST_AGREEMENT = "artist_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
     LICENSING_AGREEMENT = "licensing_agreement"
@@ -97,6 +103,7 @@ class ContractType(Enum):
 
 class LegalDocumentStatus(Enum):
     """Legal document status"""
+
     DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
@@ -164,7 +171,7 @@ class LicenseConfiguration:
     
     # Attribution requirements
     attribution_required: bool = True
-    attribution_format: str = "© {year} {creator_name}"
+    attribution_format: str = "(c) {year} {creator_name}"
     credit_placement: str = "visible"
     logo_placement_required: bool = False
     
@@ -278,7 +285,8 @@ class ComplianceConfiguration:
 
 @dataclass
 class ContractManagementConfig:
-    """Contract management configuration"""
+    """
+Contract management configuration"""
     enabled: bool = True
     
     # Contract lifecycle
@@ -325,7 +333,8 @@ class ContractManagementConfig:
 
 @dataclass
 class IntellectualPropertyConfig:
-    """Intellectual property configuration"""
+    """
+Intellectual property configuration"""
     enabled: bool = True
     
     # IP types
@@ -365,7 +374,8 @@ class IntellectualPropertyConfig:
 
 @dataclass
 class LegalLicensingConfiguration:
-    """Master legal and licensing configuration"""
+    """
+Master legal and licensing configuration"""
     # Core configurations
     license_configs: Dict[LicenseType, LicenseConfiguration] = field(default_factory=dict)
     dmca_config: DMCAConfiguration = field(default_factory=DMCAConfiguration)
@@ -437,7 +447,8 @@ class LegalLicensingConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize legal licensing configuration manager"""
+        """
+Initialize legal licensing configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -529,7 +540,8 @@ class LegalLicensingConfigManager:
         self.last_updated = datetime.now()
     
     def add_license_configuration(self, license_type: LicenseType, config: LicenseConfiguration) -> bool:
-        """Add license configuration"""
+        """
+Add license configuration"""
         try:
             self._config.license_configs[license_type] = config
             self._config.updated_at = datetime.now()
@@ -545,14 +557,16 @@ class LegalLicensingConfigManager:
         return self._config.license_configs.get(license_type)
     
     def get_available_licenses(self) -> List[LicenseType]:
-        """Get list of available license types"""
+        """
+Get list of available license types"""
         return [
             license_type for license_type, config in self._config.license_configs.items()
             if config.enabled
         ]
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         try:

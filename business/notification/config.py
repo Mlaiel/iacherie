@@ -15,6 +15,7 @@ Processing Level: Enterprise Configuration Management
 Business Logic Integration: Complete Configuration Control
 Configuration Design: Multi-Environment with Business Context
 """
+
 import os
 import json
 import yaml
@@ -26,7 +27,9 @@ from pathlib import Path
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration."""
+    """
+Environment types for configuration."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -36,6 +39,7 @@ class EnvironmentType(Enum):
 
 class ConfigurationCategory(Enum):
     """Configuration categories."""
+
     BUSINESS_RULES = "business_rules"
     NOTIFICATION_SETTINGS = "notification_settings"
     CHANNEL_CONFIG = "channel_config"
@@ -76,7 +80,8 @@ class BusinessRuleConfig:
 
 @dataclass
 class ChannelConfiguration:
-    """Channel-specific configuration."""
+    """
+Channel-specific configuration."""
     channel_name: str
     provider: str
     enabled: bool = True
@@ -110,7 +115,8 @@ class ChannelConfiguration:
 
 @dataclass
 class TemplateConfiguration:
-    """Template system configuration."""
+    """
+Template system configuration."""
     template_engine: str = "jinja2"
     template_directory: str = "templates"
     cache_enabled: bool = True
@@ -499,7 +505,8 @@ class ChannelConfig:
 
 @dataclass
 class AIConfig:
-    """AI features configuration."""
+    """
+AI features configuration."""
     enabled: bool = True
     priority_classification_enabled: bool = True
     personalization_enabled: bool = True
@@ -558,7 +565,8 @@ class AnalyticsConfig:
 
 @dataclass
 class WorkflowConfig:
-    """Workflow orchestration configuration."""
+    """
+Workflow orchestration configuration."""
     enabled: bool = True
     max_workflow_steps: int = 20
     step_timeout: int = 300  # seconds
@@ -576,7 +584,8 @@ class WorkflowConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""
+    """
+Performance optimization configuration."""
     caching_enabled: bool = True
     cache_ttl: int = 3600  # seconds
     cache_max_size: int = 10000
@@ -864,7 +873,8 @@ class NotificationConfig:
         deep_merge(self._config, override_config)
     
     def _set_nested_config(self, path: str, value: Any):
-        """Set nested configuration value using dot notation."""
+        """
+Set nested configuration value using dot notation."""
         keys = path.split('.')
         current = self._config
         
@@ -876,7 +886,8 @@ class NotificationConfig:
         current[keys[-1]] = value
     
     def _initialize_component_configs(self):
-        """Initialize typed configuration objects for components."""
+        """
+Initialize typed configuration objects for components."""
         # Channel configurations
         self.channels = {}
         for channel_name, channel_config in self._config.get("channels", {}).items():
@@ -945,11 +956,13 @@ class NotificationConfig:
             return default
     
     def get_channel_config(self, channel: str) -> Optional[ChannelConfig]:
-        """Get configuration for specific channel."""
+        """
+Get configuration for specific channel."""
         return self.channels.get(channel)
     
     def get_business_rules(self) -> Dict[str, Any]:
-        """Get business rules configuration."""
+        """
+Get business rules configuration."""
         return self._config.get("business_rules", {})
     
     def get_business_rule(self, rule_name: str) -> Dict[str, Any]:
@@ -962,19 +975,23 @@ class NotificationConfig:
         return channel_config.enabled if channel_config else False
     
     def is_ai_enabled(self) -> bool:
-        """Check if AI features are enabled."""
+        """
+Check if AI features are enabled."""
         return self.ai.enabled
     
     def is_analytics_enabled(self) -> bool:
-        """Check if analytics are enabled."""
+        """
+Check if analytics are enabled."""
         return self.analytics.enabled
     
     def is_workflows_enabled(self) -> bool:
-        """Check if workflows are enabled."""
+        """
+Check if workflows are enabled."""
         return self.workflows.enabled
     
     def update_config(self, updates: Dict[str, Any]):
-        """Update configuration at runtime."""
+        """
+Update configuration at runtime."""
         self._apply_config_override(updates)
         self._initialize_component_configs()
         logger.info("Configuration updated at runtime")
@@ -1019,5 +1036,6 @@ class NotificationConfig:
         return self._config.copy()
     
     def __str__(self) -> str:
-        """String representation of configuration."""
+        """
+String representation of configuration."""
         return f"NotificationConfig(environment={self.environment}, channels={len(self.channels)}, ai_enabled={self.ai.enabled})"

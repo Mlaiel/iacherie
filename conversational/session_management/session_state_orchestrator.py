@@ -24,6 +24,7 @@ Team Specialists:
 - DevOps: State Scalability & Performance
 - IA Prompt Engineer: Conversational State Optimization
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -53,7 +54,9 @@ logger = get_logger(__name__)
 
 
 class ConversationState(Enum):
-    """Enhanced conversation state types"""
+    """
+Enhanced conversation state types"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     WAITING_INPUT = "waiting_input"
@@ -82,7 +85,8 @@ class StateTransitionRule(BaseModel):
 
 
 class SessionContext(BaseModel):
-    """Comprehensive session context"""
+    """
+Comprehensive session context"""
     session_id: str
     user_id: str
     current_state: ConversationState
@@ -110,7 +114,8 @@ class SessionContext(BaseModel):
 
 @dataclass
 class StateOrchestrationConfig:
-    """State orchestration configuration"""
+    """
+State orchestration configuration"""
     max_state_history: int = 100
     auto_save_interval: int = 30
     state_timeout_default: int = 300  # 5 minutes
@@ -122,7 +127,8 @@ class StateOrchestrationConfig:
 
 
 class ConversationStateManager:
-    """Advanced conversation state management"""
+    """
+Advanced conversation state management"""
     
     def __init__(self, config: StateOrchestrationConfig):
         self.config = config
@@ -143,7 +149,8 @@ class ConversationStateManager:
         self._setup_default_transitions()
     
     def _setup_default_transitions(self):
-        """Setup default state transition rules"""
+        """
+Setup default state transition rules"""
         
         default_rules = [
             # Initialization flow
@@ -471,7 +478,8 @@ class ConversationStateManager:
         return False
     
     async def _execute_state_handler(self, state: ConversationState, context: SessionContext):
-        """Execute state-specific handler"""
+        """
+Execute state-specific handler"""
         
         try:
             if state in self.state_handlers:
@@ -486,13 +494,15 @@ class ConversationStateManager:
         self.state_handlers[state] = handler
     
     async def add_transition_rule(self, rule: StateTransitionRule):
-        """Add custom transition rule"""
+        """
+Add custom transition rule"""
         
         self.transition_rules.append(rule)
         self.transition_rules.sort(key=lambda r: r.priority, reverse=True)
     
     async def get_state_statistics(self) -> Dict[str, Any]:
-        """Get state management statistics"""
+        """
+Get state management statistics"""
         
         try:
             # Count states
@@ -529,7 +539,8 @@ class SessionContextManager:
         self.logger = get_logger(self.__class__.__name__)
     
     async def create_context(self, session_id: str, user_id: str) -> SessionContext:
-        """Create new session context"""
+        """
+Create new session context"""
         
         context = SessionContext(
             session_id=session_id,
@@ -545,7 +556,8 @@ class SessionContextManager:
         session_id: str,
         conversation_data: Dict[str, Any]
     ) -> bool:
-        """Update conversation stack"""
+        """
+Update conversation stack"""
         
         try:
             context = await self.state_manager.get_session_context(session_id)
@@ -709,7 +721,8 @@ class StateTransitionController:
         self.processing_task: Optional[asyncio.Task] = None
     
     async def start_transition_processor(self):
-        """Start background transition processor"""
+        """
+Start background transition processor"""
         
         self.processing_task = asyncio.create_task(self._process_transitions())
         self.logger.info("State transition processor started")
@@ -838,7 +851,8 @@ class SessionStateOrchestrator:
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize the orchestrator"""
+        """
+Initialize the orchestrator"""
         
         await self.transition_controller.start_transition_processor()
         self.logger.info("Session state orchestrator initialized")

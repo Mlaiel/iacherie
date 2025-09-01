@@ -1,7 +1,7 @@
 """Revenue Analysis Engine - Advanced revenue data analysis and insights generation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -10,6 +10,7 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalysisType(Enum):
-    """Revenue analysis types"""
+    """
+Revenue analysis types"""
+
     TREND_ANALYSIS = "trend_analysis"
     COMPARATIVE_ANALYSIS = "comparative_analysis"
     SEASONALITY_ANALYSIS = "seasonality_analysis"
@@ -50,6 +53,7 @@ class AnalysisType(Enum):
 
 class TrendDirection(Enum):
     """Trend direction classifications"""
+
     STRONG_UPWARD = "strong_upward"
     MODERATE_UPWARD = "moderate_upward"
     SLIGHT_UPWARD = "slight_upward"
@@ -73,13 +77,15 @@ class TrendAnalysis:
     
     @property
     def is_significant(self) -> bool:
-        """Check if trend is statistically significant"""
+        """
+Check if trend is statistically significant"""
         return self.confidence_level >= 0.95 and abs(self.slope) > 0.1
 
 
 @dataclass
 class AnalysisReport:
-    """Comprehensive analysis report"""
+    """
+Comprehensive analysis report"""
     report_id: str
     analysis_type: AnalysisType
     period_start: datetime
@@ -96,7 +102,8 @@ class AnalysisReport:
 
 @dataclass
 class SeasonalityPattern:
-    """Seasonality pattern analysis"""
+    """
+Seasonality pattern analysis"""
     pattern_type: str  # daily, weekly, monthly, yearly
     strength: float
     peak_periods: List[str]
@@ -107,7 +114,8 @@ class SeasonalityPattern:
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric analysis"""
+    """
+Performance metric analysis"""
     metric_name: str
     current_value: float
     baseline_value: float
@@ -117,7 +125,8 @@ class PerformanceMetric:
 
 
 class RevenueAnalyzer:
-    """Advanced revenue analysis engine"""
+    """
+Advanced revenue analysis engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -125,7 +134,8 @@ class RevenueAnalyzer:
         self.cached_reports = {}
         
     async def initialize(self) -> None:
-        """Initialize revenue analyzer"""
+        """
+Initialize revenue analyzer"""
         try:
             # Setup analysis configuration
             self.analysis_config = self.config.get('analysis', {

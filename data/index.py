@@ -14,9 +14,10 @@ Architecture Enterprise 3-Niveaux:
 - NIVEAU 3: Core Services (/core/)
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
+
 from typing import Dict, Any, Optional, List, Union
 import logging
 import asyncio
@@ -119,7 +120,7 @@ from .vector_db import (
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary - Unauthorized use prohibited"
 
 logger = logging.getLogger(__name__)
@@ -503,7 +504,8 @@ class DataManagementSystem:
         return min(self.processed_content_count / 10000.0, 1.0)
     
     def _get_memory_usage(self) -> float:
-        """Obtient l'utilisation mémoire en MB."""
+        """
+Obtient l'utilisation mémoire en MB."""
         try:
             import psutil
             process = psutil.Process()
@@ -512,7 +514,8 @@ class DataManagementSystem:
             return 0.0
     
     def _get_storage_usage(self) -> float:
-        """Obtient l'utilisation stockage en GB."""
+        """
+Obtient l'utilisation stockage en GB."""
         if self.storage:
             return self.storage.get_usage_stats().get('total_size_gb', 0.0)
         return 0.0
@@ -523,7 +526,8 @@ data_management_system: Optional[DataManagementSystem] = None
 
 
 def get_system() -> Optional[DataManagementSystem]:
-    """Obtient l'instance globale du système de gestion des données."""
+    """
+Obtient l'instance globale du système de gestion des données."""
     return data_management_system
 
 
@@ -644,22 +648,26 @@ MODULE_INFO = {
 
 
 def get_module_info() -> Dict[str, Any]:
-    """Obtient les informations complètes du module enterprise."""
+    """
+Obtient les informations complètes du module enterprise."""
     return MODULE_INFO
 
 
 def get_supported_creator_types() -> List[str]:
-    """Obtient la liste des types de créateurs supportés."""
+    """
+Obtient la liste des types de créateurs supportés."""
     return list(MODULE_INFO['creator_types'].keys())
 
 
 def get_supported_platforms() -> List[str]:
-    """Obtient la liste des plateformes intégrées."""
+    """
+Obtient la liste des plateformes intégrées."""
     return MODULE_INFO['platforms_supported']
 
 
 def get_ai_capabilities() -> Dict[str, List[str]]:
-    """Obtient les capacités IA disponibles."""
+    """
+Obtient les capacités IA disponibles."""
     return MODULE_INFO['ai_features']
 
 

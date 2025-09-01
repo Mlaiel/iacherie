@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -55,7 +56,9 @@ logger = get_logger(__name__)
 
 
 class TranslationProvider(Enum):
-    """Translation service providers"""
+    """
+Translation service providers"""
+
     GOOGLE_TRANSLATE = "google_translate"
     DEEPL = "deepl"
     MICROSOFT_TRANSLATOR = "microsoft_translator"
@@ -66,6 +69,7 @@ class TranslationProvider(Enum):
 
 class TranslationQuality(Enum):
     """Translation quality levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -75,6 +79,7 @@ class TranslationQuality(Enum):
 
 class LocalizationContext(Enum):
     """Localization contexts for cultural adaptation"""
+
     SOCIAL_MEDIA = "social_media"
     BUSINESS_FORMAL = "business_formal"
     MARKETING = "marketing"
@@ -121,7 +126,8 @@ class TranslationResult:
 
 @dataclass
 class MultilingualContent:
-    """Multilingual content structure"""
+    """
+Multilingual content structure"""
     original_text: str
     original_language: SupportedLanguage
     translations: Dict[SupportedLanguage, TranslationResult] = field(default_factory=dict)
@@ -131,7 +137,8 @@ class MultilingualContent:
 
 
 class TranslationEngine:
-    """Advanced translation engine with multiple providers"""
+    """
+Advanced translation engine with multiple providers"""
     
     def __init__(self):
         self.providers = {}
@@ -142,7 +149,8 @@ class TranslationEngine:
         self._load_cultural_data()
         
     def _initialize_providers(self):
-        """Initialize translation providers"""
+        """
+Initialize translation providers"""
         try:
             # Google Translate
             self.providers[TranslationProvider.GOOGLE_TRANSLATE] = GoogleTranslator()

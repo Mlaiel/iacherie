@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class RumbleVideo:
-    """Rumble video information"""
+    """
+Rumble video information"""
     video_id: str
     title: str
     description: str
@@ -91,7 +93,8 @@ class RumbleVideo:
 
 @dataclass
 class RumbleChannel:
-    """Rumble channel information"""
+    """
+Rumble channel information"""
     channel_id: str
     name: str
     display_name: str
@@ -135,7 +138,8 @@ class RumbleChannel:
 
 @dataclass
 class RumbleUser:
-    """Rumble user information"""
+    """
+Rumble user information"""
     user_id: str
     username: str
     display_name: str
@@ -168,7 +172,8 @@ class RumbleUser:
 
 @dataclass
 class RumbleComment:
-    """Rumble comment information"""
+    """
+Rumble comment information"""
     comment_id: str
     video_id: str
     user_id: str
@@ -199,7 +204,8 @@ class RumbleComment:
 
 @dataclass
 class RumbleLiveStream:
-    """Rumble live stream information"""
+    """
+Rumble live stream information"""
     stream_id: str
     video_id: str
     channel_id: str
@@ -823,7 +829,8 @@ class RumbleCrawler(PlatformCrawler):
         return streams
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
+        """
+Get trending content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -838,7 +845,8 @@ class RumbleCrawler(PlatformCrawler):
         return content
     
     async def _get_featured_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get featured content"""
+        """
+Get featured content"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -855,7 +863,8 @@ class RumbleCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_video_data(self, video_data: Dict[str, Any]) -> Optional[RumbleVideo]:
-        """Parse video data"""
+        """
+Parse video data"""
         try:
             uploaded_at = datetime.fromisoformat(video_data.get('uploaded_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             published_at = datetime.fromisoformat(video_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))

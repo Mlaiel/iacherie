@@ -28,6 +28,7 @@ sera poursuivie selon la loi allemande et internationale.
 
 Contact autorisé: mlaiel@live.de
 """
+
 import os
 import re
 import hashlib
@@ -51,7 +52,8 @@ from backend.deployment.database.schema import SchemaMigration
 
 @dataclass
 class Migration:
-    """Migration metadata and execution details"""
+    """
+Migration metadata and execution details"""
     version: str
     name: str
     filepath: str
@@ -230,7 +232,8 @@ class MigrationRunner:
                     self.dependency_graph[version] = [prev_version]
     
     def _calculate_execution_order(self) -> None:
-        """Calculate optimal execution order using topological sort"""
+        """
+Calculate optimal execution order using topological sort"""
         try:
             # Topological sort with Kahn's algorithm
             in_degree = {v: 0 for v in self.discovered_migrations.keys()}
@@ -957,7 +960,9 @@ from .postgresql_manager import get_postgresql_manager
 
 
 class MigrationStatus(Enum):
-    """Migration execution status"""
+    """
+Migration execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -980,7 +985,8 @@ class MigrationFile:
 
 @dataclass
 class MigrationRecord:
-    """Migration execution record"""
+    """
+Migration execution record"""
     version: str
     name: str
     checksum: str
@@ -1045,7 +1051,8 @@ class MigrationRunner:
         return hashlib.md5(content.encode('utf-8')).hexdigest()
     
     def _parse_migration_file(self, filepath: Path) -> MigrationFile:
-        """Parse migration file and extract metadata"""
+        """
+Parse migration file and extract metadata"""
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -1154,7 +1161,8 @@ class MigrationRunner:
             return (version,)
     
     def get_migration_records(self) -> List[MigrationRecord]:
-        """Get all migration execution records"""
+        """
+Get all migration execution records"""
         try:
             query = f"""
                 SELECT version, name, checksum, status, executed_at, 
@@ -1225,7 +1233,8 @@ class MigrationRunner:
         return True
     
     def _record_migration_start(self, migration: MigrationFile) -> None:
-        """Record migration start in tracking table"""
+        """
+Record migration start in tracking table"""
         try:
             query = f"""
                 INSERT INTO {self.migrations_table} 

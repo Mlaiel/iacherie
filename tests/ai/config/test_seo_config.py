@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for SEOConfig module ensuring 100% search optimization,
 multi-platform SEO, and content discoverability for all creator types.
 """
+
 import pytest
 import sys
 import os
@@ -69,7 +70,8 @@ class TestSEOConfig:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.config = SEOConfig()
         self.test_env = test_environment
         self.sample_content = self._generate_sample_content()
@@ -656,7 +658,8 @@ class TestKeywordAnalyzer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.keyword_analyzer = KeywordAnalyzer()
     
     @pytest_marks["unit"]
@@ -700,7 +703,8 @@ class TestContentOptimizer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.content_optimizer = ContentOptimizer()
     
     @pytest_marks["unit"]

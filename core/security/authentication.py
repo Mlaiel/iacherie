@@ -11,6 +11,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import jwt
 import bcrypt
 import pyotp
@@ -38,7 +39,8 @@ from backend.core.logging import SecurityLogger
 
 @dataclass
 class AuthToken:
-    """Authentication token data structure"""
+    """
+Authentication token data structure"""
     access_token: str
     refresh_token: str
     token_type: str = "bearer"
@@ -63,12 +65,14 @@ class AuthUser:
 
 
 class AuthenticationError(Exception):
-    """Custom authentication exception"""
+    """
+Custom authentication exception"""
     pass
 
 
 class TokenManager:
-    """Advanced JWT token management with rotation and security"""
+    """
+Advanced JWT token management with rotation and security"""
     
     def __init__(self, settings=None):
         self.settings = settings or get_settings()
@@ -285,20 +289,23 @@ class MultiTenantAuth:
         pass
     
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Verify password using bcrypt"""
+        """
+Verify password using bcrypt"""
         return bcrypt.checkpw(
             plain_password.encode('utf-8'), 
             hashed_password.encode('utf-8')
         )
     
     async def update_last_login(self, user_id: str, tenant_id: str):
-        """Update user's last login timestamp"""
+        """
+Update user's last login timestamp"""
         # Implementation depends on your user model
         pass
 
 
 class OAuth2Manager:
-    """OAuth2 integration for third-party authentication"""
+    """
+OAuth2 integration for third-party authentication"""
     
     def __init__(self):
         self.logger = SecurityLogger("OAuth2Manager")
@@ -413,7 +420,8 @@ class TwoFactorAuth:
         return pyotp.random_base32()
     
     def generate_qr_code(self, secret: str, user_email: str) -> bytes:
-        """Generate QR code for TOTP setup"""
+        """
+Generate QR code for TOTP setup"""
         totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
             user_email,
             issuer_name="IA Influencer Agent"
@@ -434,7 +442,8 @@ class TwoFactorAuth:
         return totp.verify(token, valid_window=1)
     
     async def enable_2fa(self, user_id: str, secret: str) -> bool:
-        """Enable 2FA for user"""
+        """
+Enable 2FA for user"""
         try:
             # Store secret securely in database
             # Implementation depends on your user model
@@ -522,14 +531,16 @@ class AuthenticationManager:
         pass
     
     async def verify_mfa(self, user_id: str, token: str) -> bool:
-        """Verify MFA token for user"""
+        """
+Verify MFA token for user"""
         # Get user's MFA secret and verify
         # Implementation depends on your user model
         return True  # Placeholder
 
 
 class JWTManager:
-    """Dedicated JWT management with advanced features"""
+    """
+Dedicated JWT management with advanced features"""
     
     def __init__(self):
         self.logger = SecurityLogger("JWTManager")

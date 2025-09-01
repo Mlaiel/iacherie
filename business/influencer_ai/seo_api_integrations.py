@@ -43,7 +43,9 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & DATA CLASSES ===============
 
 class APIProvider(Enum):
-    """Fournisseurs d'API SEO"""
+    """
+Fournisseurs d'API SEO"""
+
     GOOGLE_KEYWORD_PLANNER = "google_keyword_planner"
     SEMRUSH = "semrush"
     AHREFS = "ahrefs"
@@ -51,6 +53,7 @@ class APIProvider(Enum):
 
 class APIStatus(Enum):
     """Statut des API"""
+
     ACTIVE = "active"
     RATE_LIMITED = "rate_limited"
     ERROR = "error"
@@ -144,18 +147,21 @@ class BaseAPIConnector(ABC):
     
     @abstractmethod
     async def _test_connection(self) -> bool:
-        """Tester la connexion API"""
+        """
+Tester la connexion API"""
         pass
     
     @abstractmethod
     async def _make_request(self, endpoint: str, params: Dict = None) -> Dict:
-        """Effectuer une requête API avec gestion des erreurs"""
+        """
+Effectuer une requête API avec gestion des erreurs"""
         pass
 
 # =============== RATE LIMITER ===============
 
 class RateLimiter:
-    """Gestionnaire de limitation de taux pour les APIs"""
+    """
+Gestionnaire de limitation de taux pour les APIs"""
     
     def __init__(self, requests_per_hour: int):
         self.requests_per_hour = requests_per_hour
@@ -163,7 +169,8 @@ class RateLimiter:
         self.lock = asyncio.Lock()
     
     async def wait_if_needed(self):
-        """Attendre si nécessaire pour respecter les limites"""
+        """
+Attendre si nécessaire pour respecter les limites"""
         async with self.lock:
             now = datetime.utcnow()
             
@@ -195,7 +202,8 @@ class GoogleKeywordPlannerConnector(BaseAPIConnector):
         self.customer_id = None
         
     async def _test_connection(self) -> bool:
-        """Tester la connexion Google Ads API"""
+        """
+Tester la connexion Google Ads API"""
         try:
             # Test avec un appel simple à l'API Google Ads
             test_endpoint = f"{self.config.base_url}/customers"
@@ -298,7 +306,8 @@ class GoogleKeywordPlannerConnector(BaseAPIConnector):
         return competition_map.get(competition_str.upper(), 0.5)
     
     def _generate_fallback_keywords(self, seed: str) -> List[KeywordMetrics]:
-        """Générer des mots-clés de fallback en cas d'échec API"""
+        """
+Générer des mots-clés de fallback en cas d'échec API"""
         import random
         
         variations = [
@@ -329,7 +338,8 @@ class SEMrushConnector(BaseAPIConnector):
         super().__init__(config)
         
     async def _test_connection(self) -> bool:
-        """Tester la connexion SEMrush API"""
+        """
+Tester la connexion SEMrush API"""
         try:
             # Test avec un appel simple à l'API SEMrush
             test_params = {
@@ -435,13 +445,15 @@ class SEMrushConnector(BaseAPIConnector):
 # =============== AHREFS API ===============
 
 class AhrefsConnector(BaseAPIConnector):
-    """Connecteur pour Ahrefs API"""
+    """
+Connecteur pour Ahrefs API"""
     
     def __init__(self, config: APIConfig):
         super().__init__(config)
         
     async def _test_connection(self) -> bool:
-        """Tester la connexion Ahrefs API"""
+        """
+Tester la connexion Ahrefs API"""
         try:
             headers = {
                 'Authorization': f'Bearer {self.config.api_key}',
@@ -573,7 +585,8 @@ class GoogleTrendsConnector(BaseAPIConnector):
         super().__init__(config)
         
     async def _test_connection(self) -> bool:
-        """Tester la connexion Google Trends"""
+        """
+Tester la connexion Google Trends"""
         try:
             # Google Trends ne nécessite pas d'authentification
             # Test avec une requête simple
@@ -682,7 +695,8 @@ class GoogleTrendsConnector(BaseAPIConnector):
                 return 1000.0  # Valeur par défaut
     
     def _generate_trends_fallback(self) -> List[TrendingKeyword]:
-        """Générer des tendances de fallback"""
+        """
+Générer des tendances de fallback"""
         import random
         
         trending_topics = [
@@ -749,11 +763,13 @@ class SEOAPIManager:
             await connector.close()
     
     def get_connector(self, provider: APIProvider) -> Optional[BaseAPIConnector]:
-        """Obtenir un connecteur spécifique"""
+        """
+Obtenir un connecteur spécifique"""
         return self.connectors.get(provider)
     
     async def health_check(self) -> Dict[APIProvider, APIStatus]:
-        """Vérifier l'état de santé de toutes les APIs"""
+        """
+Vérifier l'état de santé de toutes les APIs"""
         health_status = {}
         
         for provider, connector in self.connectors.items():

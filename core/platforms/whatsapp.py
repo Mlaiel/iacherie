@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class WhatsAppPlatform(PlatformBase):
-    """WhatsApp Business platform integration"""
+    """
+WhatsApp Business platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize WhatsApp Business platform"""
+        """
+Initialize WhatsApp Business platform"""
         super().__init__(config)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.phone_number_id = self.config.credentials.get('phone_number_id')
@@ -40,7 +43,8 @@ class WhatsAppPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with WhatsApp Business API"""
+        """
+Authenticate with WhatsApp Business API"""
         try:
             access_token = self.config.credentials.get('access_token')
             
@@ -75,7 +79,8 @@ class WhatsAppPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to WhatsApp Business API"""
+        """
+Make authenticated request to WhatsApp Business API"""
         try:
             session = await self._get_session()
             

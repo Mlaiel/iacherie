@@ -8,10 +8,11 @@ Responsibility: Monitoring temps réel et analytics des sauvegardes
 =====================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertLevel(Enum):
-    """Niveaux d'alerte"""
+    """
+Niveaux d'alerte"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -42,6 +45,7 @@ class AlertLevel(Enum):
 
 class MetricType(Enum):
     """Types de métriques"""
+
     COUNTER = "counter"           # Compteur incrémental
     GAUGE = "gauge"              # Valeur instantanée
     HISTOGRAM = "histogram"       # Distribution de valeurs
@@ -64,7 +68,8 @@ class Alert:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "alert_id": self.alert_id,
             "level": self.level.value,
@@ -92,7 +97,8 @@ class Metric:
     description: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "name": self.name,
             "type": self.type.value,
@@ -118,7 +124,8 @@ class PerformanceStats:
     timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "cpu_usage": self.cpu_usage,
             "memory_usage": self.memory_usage,
@@ -144,7 +151,8 @@ class MonitoringConfig:
     metrics_buffer_size: int = 1000
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "collection_interval": self.collection_interval,
             "retention_days": self.retention_days,
@@ -586,7 +594,8 @@ class AlertManager:
         return True
     
     def _is_duplicate_alert(self, new_alert: Alert) -> bool:
-        """Vérifie si l'alerte est un doublon"""
+        """
+Vérifie si l'alerte est un doublon"""
         for existing_alert in self.active_alerts.values():
             if (existing_alert.source == new_alert.source and
                 existing_alert.metric_name == new_alert.metric_name and
@@ -599,7 +608,8 @@ class AlertManager:
         return False
     
     def _send_notifications(self, alert: Alert):
-        """Envoie les notifications d'alerte"""
+        """
+Envoie les notifications d'alerte"""
         for callback in self.notification_callbacks:
             try:
                 callback(alert)

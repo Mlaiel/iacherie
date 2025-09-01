@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -43,7 +44,8 @@ Base = declarative_base()
 
 
 class Platform(Enum):
-    """Supported content platforms"""
+    """
+Supported content platforms"""
     # Music platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
@@ -97,6 +99,7 @@ class Platform(Enum):
 
 class ConnectionStatus(Enum):
     """Platform connection status"""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -109,6 +112,7 @@ class ConnectionStatus(Enum):
 
 class DataSyncFrequency(Enum):
     """Data synchronization frequency options"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -636,7 +640,8 @@ def platform_connection_before_update(mapper, connection, target):
 
 @event.listens_for(PlatformSyncLog, 'before_update')
 def sync_log_before_update(mapper, connection, target):
-    """Calculate duration and update statistics"""
+    """
+Calculate duration and update statistics"""
     if target.completed_at and target.started_at:
         target.duration_seconds = int((target.completed_at - target.started_at).total_seconds())
 

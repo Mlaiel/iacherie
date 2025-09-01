@@ -8,7 +8,7 @@ Responsibility: Demonstration of ultra-robust video fingerprinting features
 ==============================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -32,7 +32,9 @@ from enum import Enum
 sys.path.append(str(Path(__file__).parent))
 
 class VideoQuality(Enum):
-    """Qualités vidéo supportées"""
+    """
+Qualités vidéo supportées"""
+
     LOW = "240p"
     MEDIUM = "480p"
     HIGH = "720p"
@@ -41,6 +43,7 @@ class VideoQuality(Enum):
 
 class FrameExtractionMode(Enum):
     """Modes d'extraction de frames"""
+
     UNIFORM = "uniform"
     KEYFRAMES = "keyframes" 
     SCENE_CHANGES = "scene_changes"
@@ -49,6 +52,7 @@ class FrameExtractionMode(Enum):
 
 class VideoCodec(Enum):
     """Codecs vidéo supportés"""
+
     H264 = "h264"
     H265 = "h265"
     VP9 = "vp9"

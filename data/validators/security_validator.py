@@ -5,9 +5,10 @@ Comprehensive security validation system with malware detection, content analysi
 and threat assessment for creator content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security validation levels."""
+    """
+Security validation levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -34,6 +37,7 @@ class SecurityLevel(Enum):
 
 class ThreatType(Enum):
     """Types of security threats."""
+
     MALWARE = "malware"
     VIRUS = "virus"
     TROJAN = "trojan"
@@ -48,6 +52,7 @@ class ThreatType(Enum):
 
 class SecurityStatus(Enum):
     """Security validation status."""
+
     SAFE = "safe"
     SUSPICIOUS = "suspicious"
     DANGEROUS = "dangerous"
@@ -57,6 +62,7 @@ class SecurityStatus(Enum):
 
 class SecurityThreat(Enum):
     """Security threat categories."""
+
     MALWARE = "malware"
     VIRUS = "virus"
     INJECTION = "injection"
@@ -373,7 +379,8 @@ class ThreatDetector:
             return 0.0
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data."""
+        """
+Calculate Shannon entropy of data."""
         try:
             if len(data) == 0:
                 return 0.0
@@ -398,7 +405,8 @@ class ThreatDetector:
             return 0.0
     
     def _contains_executable_code(self, data: bytes) -> bool:
-        """Check if data contains executable code."""
+        """
+Check if data contains executable code."""
         try:
             # Check for common executable signatures
             executable_signatures = [
@@ -418,7 +426,8 @@ class ThreatDetector:
             return False
     
     def _load_malware_signatures(self) -> Dict[bytes, Dict[str, str]]:
-        """Load malware signatures database."""
+        """
+Load malware signatures database."""
         # In production, this would load from external threat intelligence feeds
         return {
             b'\x4d\x5a\x90\x00\x03\x00\x00\x00': {
@@ -695,7 +704,9 @@ class InputSanitizer:
             r'eval\s*\(',
             r'document\.write\s*\('
         ]
-    """Security validation status."""
+    """
+Security validation status."""
+
     SAFE = "safe"
     SUSPICIOUS = "suspicious"
     DANGEROUS = "dangerous"
@@ -726,7 +737,8 @@ class SecurityThreat:
 
 @dataclass
 class SecurityScanResult:
-    """Comprehensive security scan result."""
+    """
+Comprehensive security scan result."""
     is_safe: bool
     status: SecurityStatus
     security_level: SecurityLevel
@@ -1569,7 +1581,8 @@ class SecurityValidator:
             return 50.0  # Default moderate risk
     
     async def _calculate_content_risk_score(self, result: SecurityScanResult) -> float:
-        """Calculate risk score for content analysis."""
+        """
+Calculate risk score for content analysis."""
         try:
             risk_score = 0.0
             
@@ -1590,7 +1603,8 @@ class SecurityValidator:
             return 25.0
     
     async def _generate_security_recommendations(self, result: SecurityScanResult):
-        """Generate security recommendations."""
+        """
+Generate security recommendations."""
         recommendations = []
         
         try:
@@ -1653,7 +1667,8 @@ class SecurityValidator:
             return 0.0
     
     def _extract_urls(self, text: str) -> List[str]:
-        """Extract URLs from text."""
+        """
+Extract URLs from text."""
         try:
             url_pattern = r'https?://(?:[-\w.])+(?:[:\d]+)?(?:/(?:[\w/_.])*(?:\?(?:[\w&=%.])*)?(?:#(?:[\w.])*)?)?'
             urls = re.findall(url_pattern, text, re.IGNORECASE)
@@ -1663,7 +1678,8 @@ class SecurityValidator:
             return []
     
     async def _is_malicious_url(self, url: str) -> bool:
-        """Check if URL is malicious."""
+        """
+Check if URL is malicious."""
         try:
             # Basic malicious URL patterns
             malicious_patterns = [
@@ -1687,7 +1703,8 @@ class SecurityValidator:
             return False
     
     async def _validate_file_signature(self, file_data: bytes, filename: str) -> bool:
-        """Validate file signature matches extension."""
+        """
+Validate file signature matches extension."""
         try:
             if len(file_data) < 10:
                 return False
@@ -1718,7 +1735,8 @@ class SecurityValidator:
             return False
     
     def _has_embedded_files(self, file_data: bytes) -> bool:
-        """Check if file contains embedded files."""
+        """
+Check if file contains embedded files."""
         try:
             # Look for common file signatures within the data
             embedded_signatures = [
@@ -1740,7 +1758,8 @@ class SecurityValidator:
             return False
     
     async def _detect_steganography(self, file_data: bytes, filename: str) -> bool:
-        """Detect possible steganography."""
+        """
+Detect possible steganography."""
         try:
             # Basic steganography detection
             file_ext = Path(filename).suffix.lower()
@@ -1767,7 +1786,8 @@ class SecurityValidator:
         file_data: bytes,
         filename: str
     ) -> List[SecurityThreat]:
-        """Analyze file metadata for security threats."""
+        """
+Analyze file metadata for security threats."""
         threats = []
         
         try:
@@ -1853,7 +1873,8 @@ class SecurityValidator:
         }
     
     def _init_safe_file_types(self) -> Set[str]:
-        """Initialize safe file types."""
+        """
+Initialize safe file types."""
         return {
             '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp',
             '.mp4', '.avi', '.mov', '.mkv', '.webm',
@@ -1862,7 +1883,8 @@ class SecurityValidator:
         }
     
     def _init_risk_weights(self) -> Dict[str, float]:
-        """Initialize risk assessment weights."""
+        """
+Initialize risk assessment weights."""
         return {
             "large_file": 0.1,
             "high_entropy": 0.2,

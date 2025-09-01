@@ -25,6 +25,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 from typing import Dict, Any, List, Optional, Union, Set, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -62,7 +63,9 @@ from ..core.models import BaseModel
 
 
 class CrawlerType(Enum):
-    """Types of web crawlers."""
+    """
+Types of web crawlers."""
+
     SOCIAL_MEDIA = "social_media"
     E_COMMERCE = "e_commerce"
     NEWS_MEDIA = "news_media"
@@ -77,6 +80,7 @@ class CrawlerType(Enum):
 
 class CrawlingStrategy(Enum):
     """Crawling strategy approaches."""
+
     BREADTH_FIRST = "breadth_first"
     DEPTH_FIRST = "depth_first"
     FOCUSED_CRAWLING = "focused_crawling"
@@ -86,6 +90,7 @@ class CrawlingStrategy(Enum):
 
 class ContentType(Enum):
     """Types of content to extract."""
+
     TEXT = "text"
     IMAGES = "images"
     VIDEOS = "videos"
@@ -100,6 +105,7 @@ class ContentType(Enum):
 
 class PlatformType(Enum):
     """Supported platforms for crawling."""
+
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     FACEBOOK = "facebook"
@@ -136,7 +142,8 @@ class CrawlTarget:
 
 @dataclass
 class CrawlResult:
-    """Result from crawling operation."""
+    """
+Result from crawling operation."""
     crawl_id: str
     target_id: str
     url: str
@@ -155,7 +162,8 @@ class CrawlResult:
 
 @dataclass
 class CrawlSession:
-    """Crawling session tracking."""
+    """
+Crawling session tracking."""
     session_id: str
     target_id: str
     crawler_type: CrawlerType
@@ -542,7 +550,8 @@ class WebCrawler:
         visited_urls: Set[str],
         semaphore: asyncio.Semaphore
     ):
-        """Recursive depth-first crawling."""
+        """
+Recursive depth-first crawling."""
         if (url in visited_urls or 
             depth > target.max_depth or 
             session.pages_crawled >= target.max_pages):
@@ -568,7 +577,8 @@ class WebCrawler:
         session: CrawlSession,
         target: CrawlTarget
     ):
-        """Execute focused crawling strategy based on content relevance."""
+        """
+Execute focused crawling strategy based on content relevance."""
         url_queue = asyncio.PriorityQueue()
         visited_urls: Set[str] = set()
         
@@ -621,7 +631,8 @@ class WebCrawler:
         session: CrawlSession,
         target: CrawlTarget
     ):
-        """Execute adaptive crawling strategy that adjusts based on results."""
+        """
+Execute adaptive crawling strategy that adjusts based on results."""
         # Start with breadth-first approach
         await self._execute_breadth_first_crawl(session, target)
         
@@ -706,7 +717,8 @@ class WebCrawler:
         )
     
     def _prepare_request_headers(self, target: CrawlTarget) -> Dict[str, str]:
-        """Prepare HTTP request headers with anti-detection measures."""
+        """
+Prepare HTTP request headers with anti-detection measures."""
         headers = {
             'User-Agent': random.choice(self.user_agents),
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -823,7 +835,8 @@ class WebCrawler:
         content_type: ContentType,
         target_types: List[ContentType]
     ) -> str:
-        """Extract content based on specified content types."""
+        """
+Extract content based on specified content types."""
         if content_type not in target_types:
             return ""
         
@@ -961,7 +974,8 @@ class WebCrawler:
         base_url: str,
         target_types: List[ContentType]
     ) -> List[str]:
-        """Extract media URLs from page."""
+        """
+Extract media URLs from page."""
         media_urls = []
         
         if ContentType.IMAGES in target_types:
@@ -990,7 +1004,8 @@ class WebCrawler:
         return list(set(media_urls))[:50]  # Remove duplicates and limit
     
     def _calculate_content_similarity(self, content_hash: str) -> float:
-        """Calculate content similarity score for potential infringement detection."""
+        """
+Calculate content similarity score for potential infringement detection."""
         if content_hash in self.content_hashes:
             return 1.0  # Exact match
         
@@ -1034,7 +1049,8 @@ class WebCrawler:
         parent_result: CrawlResult,
         target: CrawlTarget
     ) -> float:
-        """Calculate priority score for link in focused crawling."""
+        """
+Calculate priority score for link in focused crawling."""
         priority = 0.0
         
         # Base priority from parent result similarity
@@ -1070,7 +1086,8 @@ class WebCrawler:
         target_id: str,
         filters: Dict[str, Any] = None
     ) -> List[CrawlResult]:
-        """Get crawl results with optional filtering."""
+        """
+Get crawl results with optional filtering."""
         if target_id not in self.crawl_results:
             return []
         
@@ -1088,7 +1105,8 @@ class WebCrawler:
         return filtered_results
     
     def _matches_filters(self, result: CrawlResult, filters: Dict[str, Any]) -> bool:
-        """Check if crawl result matches specified filters."""
+        """
+Check if crawl result matches specified filters."""
         # Minimum similarity score filter
         if 'min_similarity' in filters:
             if result.similarity_score < filters['min_similarity']:

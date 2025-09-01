@@ -4,8 +4,9 @@ Handles secure payment processing, escrow services, transaction validation,
 and fraud detection for marketplace transactions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,7 +20,9 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceTransaction
 
 
 class TransactionStatus(Enum):
-    """Transaction status enumeration."""
+    """
+Transaction status enumeration."""
+
     INITIATED = "initiated"
     PENDING = "pending"
     PROCESSING = "processing"
@@ -32,6 +35,7 @@ class TransactionStatus(Enum):
 
 class PaymentMethod(Enum):
     """Supported payment methods."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
@@ -44,6 +48,7 @@ class PaymentMethod(Enum):
 
 class EscrowStatus(Enum):
     """Escrow service status."""
+
     NOT_REQUIRED = "not_required"
     PENDING = "pending"
     HELD = "held"
@@ -590,7 +595,8 @@ class TransactionProcessor:
         return random.randint(100000, 999999)
 
     async def _store_transaction(self, transaction: MarketplaceTransaction) -> None:
-        """Store transaction in database."""
+        """
+Store transaction in database."""
         try:
             # Implementation would store in actual database
             self.active_transactions[transaction.id] = transaction

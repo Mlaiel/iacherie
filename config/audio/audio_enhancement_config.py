@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementType(Enum):
-    """Audio enhancement types"""
+    """
+Audio enhancement types"""
+
     NOISE_REDUCTION = "noise_reduction"         # Noise suppression and reduction
     EQUALIZATION = "equalization"               # Frequency equalization
     DYNAMICS = "dynamics"                       # Compression, limiting, gating
@@ -42,6 +45,7 @@ class EnhancementType(Enum):
 
 class NoiseReductionAlgorithm(Enum):
     """Noise reduction algorithms"""
+
     SPECTRAL_SUBTRACTION = "spectral_subtraction"
     WIENER_FILTERING = "wiener_filtering"
     KALMAN_FILTERING = "kalman_filtering"
@@ -54,6 +58,7 @@ class NoiseReductionAlgorithm(Enum):
 
 class EqualizerType(Enum):
     """Equalizer types"""
+
     PARAMETRIC = "parametric"                   # Parametric EQ
     GRAPHIC = "graphic"                         # Graphic EQ
     SHELVING = "shelving"                       # High/Low shelf filters
@@ -65,6 +70,7 @@ class EqualizerType(Enum):
 
 class DynamicsProcessorType(Enum):
     """Dynamics processor types"""
+
     COMPRESSOR = "compressor"                   # Standard compressor
     LIMITER = "limiter"                         # Peak limiter
     EXPANDER = "expander"                       # Downward expander
@@ -77,6 +83,7 @@ class DynamicsProcessorType(Enum):
 
 class SpatialAudioType(Enum):
     """Spatial audio processing types"""
+
     STEREO_WIDENING = "stereo_widening"        # Stereo field widening
     BINAURAL = "binaural"                      # Binaural processing
     SURROUND_UPMIX = "surround_upmix"         # Surround sound upmixing
@@ -88,6 +95,7 @@ class SpatialAudioType(Enum):
 
 class ProcessingQuality(Enum):
     """Processing quality levels"""
+
     DRAFT = "draft"                            # Fast, low quality
     GOOD = "good"                              # Balanced quality/speed
     HIGH = "high"                              # High quality
@@ -115,7 +123,8 @@ class NoiseReductionConfig:
 
 @dataclass
 class EqualizerBand:
-    """Individual equalizer band configuration"""
+    """
+Individual equalizer band configuration"""
     frequency: float                           # Center frequency in Hz
     gain_db: float                            # Gain in dB
     q_factor: float                           # Q factor (bandwidth)
@@ -138,7 +147,8 @@ class EqualizerConfig:
 
 @dataclass
 class DynamicsConfig:
-    """Dynamics processor configuration"""
+    """
+Dynamics processor configuration"""
     enabled: bool = True
     processor_type: DynamicsProcessorType = DynamicsProcessorType.COMPRESSOR
     threshold_db: float = -20.0
@@ -156,7 +166,8 @@ class DynamicsConfig:
 
 @dataclass
 class SpatialAudioConfig:
-    """Spatial audio processing configuration"""
+    """
+Spatial audio processing configuration"""
     enabled: bool = False
     processing_type: SpatialAudioType = SpatialAudioType.STEREO_WIDENING
     width_factor: float = 1.5                 # 0.0 to 2.0
@@ -190,7 +201,8 @@ class AudioEnhancementConfig:
     """
     
     def __init__(self):
-        """Initialize audio enhancement configuration"""
+        """
+Initialize audio enhancement configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core enhancement components

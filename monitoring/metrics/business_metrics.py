@@ -7,6 +7,7 @@ Tracks revenue, user engagement, content performance, and licensing analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of business metrics"""
+    """
+Types of business metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -32,6 +35,7 @@ class MetricType(Enum):
 
 class MetricPeriod(Enum):
     """Metric aggregation periods"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -53,7 +57,8 @@ class BusinessMetric:
 
 @dataclass
 class MetricAggregation:
-    """Aggregated metric data"""
+    """
+Aggregated metric data"""
     metric_name: str
     period: MetricPeriod
     start_time: datetime
@@ -82,7 +87,8 @@ class BusinessMetricsCollector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize business metrics collector"""
+        """
+Initialize business metrics collector"""
         self.config = config or {}
         
         # Metric storage

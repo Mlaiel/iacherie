@@ -4,11 +4,12 @@ Advanced processing capabilities for multiple content formats including audio,
 video, images, and text content for creators, influencers, and multimedia platforms.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import io
@@ -34,7 +35,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class ContentFormat(Enum):
-    """Supported content formats"""
+    """
+Supported content formats"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -44,6 +47,7 @@ class ContentFormat(Enum):
 
 class ProcessingPipeline(Enum):
     """Processing pipeline types"""
+
     TRANSCRIPTION = "transcription"
     DESCRIPTION = "description"
     EXTRACTION = "extraction"
@@ -67,7 +71,8 @@ class MediaMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Multi-format content processing result"""
+    """
+Multi-format content processing result"""
     content_id: str
     original_format: ContentFormat
     processed_content: Dict[str, Any] = field(default_factory=dict)
@@ -85,7 +90,8 @@ class ProcessingResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class ContentProcessor(ABC):
-    """Abstract base class for content processors"""
+    """
+Abstract base class for content processors"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -93,12 +99,14 @@ class ContentProcessor(ABC):
         
     @abstractmethod
     async def process(self, content: Any, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process content and return result"""
+        """
+Process content and return result"""
         pass
     
     @abstractmethod
     def supports_format(self, format: ContentFormat) -> bool:
-        """Check if processor supports the given format"""
+        """
+Check if processor supports the given format"""
         pass
 
 class MultiFormatProcessor:
@@ -122,7 +130,8 @@ class MultiFormatProcessor:
         self.is_initialized = False
         
     async def initialize(self):
-        """Initialize all processors and models"""
+        """
+Initialize all processors and models"""
         try:
             logger.info("Initializing multi-format processor...")
             
@@ -176,7 +185,8 @@ class MultiFormatProcessor:
         metadata: Dict[str, Any] = None,
         pipeline: List[ProcessingPipeline] = None
     ) -> ProcessingResult:
-        """Process content based on format and pipeline"""
+        """
+Process content based on format and pipeline"""
         try:
             if not self.is_initialized:
                 await self.initialize()
@@ -246,7 +256,8 @@ class TextProcessor(ContentProcessor):
         self.nlp_pipeline = None
         
     async def initialize(self):
-        """Initialize NLP pipeline"""
+        """
+Initialize NLP pipeline"""
         try:
             from ..core import AdvancedNLPEngine
             self.nlp_engine = AdvancedNLPEngine(self.config)
@@ -332,7 +343,8 @@ class TextProcessor(ContentProcessor):
         return min(coherence, 1.0)
 
 class ImageProcessor(ContentProcessor):
-    """Advanced image content processor"""
+    """
+Advanced image content processor"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -340,7 +352,8 @@ class ImageProcessor(ContentProcessor):
         self.image_captioning_processor = None
         
     async def initialize(self):
-        """Initialize image processing models"""
+        """
+Initialize image processing models"""
         try:
             # Initialize image captioning model
             model_name = self.config.get('image_description_model', 'Salesforce/blip-image-captioning-base')
@@ -548,7 +561,8 @@ class ImageProcessor(ContentProcessor):
         return quality_metrics.get('overall_quality', 0.5)
 
 class AudioProcessor(ContentProcessor):
-    """Advanced audio content processor"""
+    """
+Advanced audio content processor"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -556,7 +570,8 @@ class AudioProcessor(ContentProcessor):
         self.speech_recognizer = None
         
     async def initialize(self):
-        """Initialize audio processing models"""
+        """
+Initialize audio processing models"""
         try:
             # Initialize Whisper model for transcription
             model_name = self.config.get('whisper_model', 'base')
@@ -773,13 +788,15 @@ class AudioProcessor(ContentProcessor):
         return quality_metrics.get('overall_quality', 0.5)
 
 class VideoProcessor(ContentProcessor):
-    """Advanced video content processor"""
+    """
+Advanced video content processor"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         
     async def initialize(self):
-        """Initialize video processing capabilities"""
+        """
+Initialize video processing capabilities"""
         try:
             logger.info("Video processor initialized successfully")
         except Exception as e:
@@ -952,13 +969,15 @@ class VideoProcessor(ContentProcessor):
         return quality_metrics.get('overall_quality', 0.5)
 
 class DocumentProcessor(ContentProcessor):
-    """Advanced document content processor"""
+    """
+Advanced document content processor"""
     
     def supports_format(self, format: ContentFormat) -> bool:
         return format == ContentFormat.DOCUMENT
     
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process document content"""
+        """
+Process document content"""
         try:
             start_time = datetime.utcnow()
             

@@ -5,6 +5,7 @@ Core engine for dispute resolution operations with AI-powered dispute resolution
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DisputeResolutionJob:
-    """Dispute Resolution operation job"""
+    """
+Dispute Resolution operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class DisputeResolutionJob:
 
 @dataclass
 class DisputeResolutionResult:
-    """Dispute Resolution operation result"""
+    """
+Dispute Resolution operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class DisputeResolutionResult:
     completed_at: datetime = None
 
 class DisputeResolutionEngine:
-    """Core dispute resolution processing engine"""
+    """
+Core dispute resolution processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

@@ -5,13 +5,14 @@ Configuration management for content parsers in the IA Influencer Agent platform
 Provides centralized configuration for all parsing operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -20,7 +21,9 @@ from pathlib import Path
 
 
 class ParserType(Enum):
-    """Enumeration of parser types"""
+    """
+Enumeration of parser types"""
+
     PLATFORM = "platform"
     MEDIA = "media"
     METADATA = "metadata"
@@ -33,6 +36,7 @@ class ParserType(Enum):
 
 class PlatformType(Enum):
     """Enumeration of supported platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -103,7 +107,8 @@ class PlatformConfig:
 
 @dataclass
 class MediaConfig:
-    """Configuration for media parsers"""
+    """
+Configuration for media parsers"""
     supported_formats: List[MediaFormat] = field(default_factory=list)
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     quality_threshold: float = 0.7
@@ -119,7 +124,8 @@ class MediaConfig:
 
 @dataclass
 class FingerprintConfig:
-    """Configuration for fingerprint parsing"""
+    """
+Configuration for fingerprint parsing"""
     enable_audio_fingerprint: bool = True
     enable_video_fingerprint: bool = True
     enable_image_fingerprint: bool = True
@@ -147,7 +153,8 @@ class FingerprintConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Configuration for analytics parsers"""
+    """
+Configuration for analytics parsers"""
     date_range_days: int = 30
     metrics_to_collect: List[str] = field(default_factory=lambda: [
         "views", "likes", "shares", "comments", "engagement_rate"
@@ -212,7 +219,8 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for parser performance"""
+    """
+Configuration for parser performance"""
     max_concurrent_requests: int = 10
     request_timeout: float = 30.0
     connection_pool_size: int = 100
@@ -224,14 +232,16 @@ class PerformanceConfig:
 
 
 class ParserConfig:
-    """Main configuration class for all parsers"""
+    """
+Main configuration class for all parsers"""
     
     def __init__(self, config_file: Optional[str] = None):
         self.config_file = config_file
         self._load_config()
     
     def _load_config(self):
-        """Load configuration from file or environment"""
+        """
+Load configuration from file or environment"""
         # Default configurations
         self.platform = self._get_platform_configs()
         self.media = MediaConfig()
@@ -251,7 +261,8 @@ class ParserConfig:
         self._load_from_env()
     
     def _get_platform_configs(self) -> Dict[PlatformType, PlatformConfig]:
-        """Get default platform configurations"""
+        """
+Get default platform configurations"""
         return {
             PlatformType.YOUTUBE: PlatformConfig(
                 platform=PlatformType.YOUTUBE,
@@ -372,11 +383,13 @@ class ParserConfig:
         pass
     
     def get_platform_config(self, platform: PlatformType) -> PlatformConfig:
-        """Get configuration for specific platform"""
+        """
+Get configuration for specific platform"""
         return self.platform.get(platform, PlatformConfig(platform=platform))
     
     def validate_config(self) -> bool:
-        """Validate configuration settings"""
+        """
+Validate configuration settings"""
         try:
             # Validate platform configs
             for platform_type, config in self.platform.items():

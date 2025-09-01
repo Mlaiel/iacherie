@@ -11,6 +11,7 @@ This module provides advanced data integrity validation:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ from backend.security.encryption import EncryptionManager
 
 
 class IntegrityCheckType(Enum):
-    """Types of integrity checks"""
+    """
+Types of integrity checks"""
+
     CHECKSUM_VALIDATION = "checksum_validation"
     HASH_VERIFICATION = "hash_verification"
     STRUCTURE_VALIDATION = "structure_validation"
@@ -43,6 +46,7 @@ class IntegrityCheckType(Enum):
 
 class IntegrityStatus(Enum):
     """Data integrity status"""
+
     VALID = "valid"
     CORRUPTED = "corrupted"
     SUSPICIOUS = "suspicious"
@@ -53,6 +57,7 @@ class IntegrityStatus(Enum):
 
 class CorruptionSeverity(Enum):
     """Corruption severity levels"""
+
     MINOR = "minor"          # Recoverable, non-critical
     MODERATE = "moderate"    # Important data affected
     SEVERE = "severe"        # Critical data compromised
@@ -77,7 +82,8 @@ class IntegrityRule:
 
 @dataclass
 class IntegrityViolation:
-    """Data integrity violation record"""
+    """
+Data integrity violation record"""
     violation_id: str
     rule_id: str
     data_identifier: str
@@ -95,7 +101,8 @@ class IntegrityViolation:
 
 @dataclass
 class IntegrityReport:
-    """Comprehensive integrity validation report"""
+    """
+Comprehensive integrity validation report"""
     report_id: str
     scan_start: datetime
     scan_end: Optional[datetime]
@@ -157,7 +164,8 @@ class DataIntegrityValidator:
         self._initialize_core_integrity_rules()
 
     def _initialize_core_integrity_rules(self):
-        """Initialize core data integrity rules for content protection platform"""
+        """
+Initialize core data integrity rules for content protection platform"""
         core_rules = [
             {
                 'rule_id': 'content_fingerprint_integrity',
@@ -594,7 +602,8 @@ class DataIntegrityValidator:
             }
 
     def _generate_integrity_recommendations(self, report: IntegrityReport) -> List[str]:
-        """Generate integrity improvement recommendations"""
+        """
+Generate integrity improvement recommendations"""
         recommendations = []
         
         # Analyze violation patterns
@@ -641,7 +650,8 @@ class DataIntegrityValidator:
             )
 
     async def execute_emergency_validation(self) -> Dict[str, Any]:
-        """Execute emergency data integrity validation"""
+        """
+Execute emergency data integrity validation"""
         try:
             emergency_id = f"emergency_validation_{int(datetime.utcnow().timestamp())}"
             
@@ -877,16 +887,19 @@ class DataIntegrityValidator:
         return []
 
     async def _check_vector_index_consistency(self) -> List[Dict[str, Any]]:
-        """Check vector index consistency"""
+        """
+Check vector index consistency"""
         # Placeholder implementation
         return []
 
     async def _check_content_file_checksums(self) -> List[Dict[str, Any]]:
-        """Check content file checksums"""
+        """
+Check content file checksums"""
         # Placeholder implementation
         return []
 
     async def _check_backup_checksums(self) -> List[Dict[str, Any]]:
-        """Check backup checksums"""
+        """
+Check backup checksums"""
         # Placeholder implementation
         return []

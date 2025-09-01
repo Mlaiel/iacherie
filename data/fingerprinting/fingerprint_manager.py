@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -47,7 +48,9 @@ from .performance import PerformanceMonitor, performance_timer
 
 
 class ContentType(Enum):
-    """Supported content types"""
+    """
+Supported content types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -57,6 +60,7 @@ class ContentType(Enum):
 
 class FingerprintStatus(Enum):
     """Fingerprint processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -85,7 +89,8 @@ class FingerprintJob:
 
 @dataclass
 class FingerprintResult:
-    """Complete fingerprint result"""
+    """
+Complete fingerprint result"""
     content_id: str
     content_type: ContentType
     fingerprints: Dict[str, Any]  # Type -> fingerprint data
@@ -758,7 +763,8 @@ class FingerprintManager:
         return defaults.get(content_type, [])
     
     def _generate_cache_key(self, content_id: str, content_path: str, fingerprint_types: Optional[List[str]]) -> str:
-        """Generate cache key for fingerprint result"""
+        """
+Generate cache key for fingerprint result"""
         components = [content_id, content_path]
         if fingerprint_types:
             components.extend(sorted(fingerprint_types))
@@ -767,7 +773,8 @@ class FingerprintManager:
         return hashlib.sha256(cache_string.encode()).hexdigest()
     
     def _calculate_job_progress(self, job: FingerprintJob) -> int:
-        """Calculate job progress percentage"""
+        """
+Calculate job progress percentage"""
         if job.status == FingerprintStatus.PENDING:
             return 0
         elif job.status == FingerprintStatus.PROCESSING:
@@ -786,7 +793,8 @@ class FingerprintManager:
             return 0
     
     def _calculate_confidence_score(self, fingerprints: Dict[str, Any]) -> float:
-        """Calculate overall confidence score for fingerprints"""
+        """
+Calculate overall confidence score for fingerprints"""
         try:
             if not fingerprints:
                 return 0.0
@@ -950,7 +958,8 @@ def get_fingerprint_manager(config: Optional[FingerprintingSystemConfig] = None)
     return _manager_instance
 
 def reset_fingerprint_manager():
-    """Reset global fingerprint manager instance"""
+    """
+Reset global fingerprint manager instance"""
     global _manager_instance
     if _manager_instance:
         asyncio.create_task(_manager_instance.close())

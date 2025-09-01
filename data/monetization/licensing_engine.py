@@ -6,11 +6,12 @@ Handles automatic licensing, royalty distribution, compliance tracking,
 and legal protection for multi-format content monetization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,7 +31,9 @@ from .revenue_calculator import Currency
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -43,6 +46,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status"""
+
     ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -53,6 +57,7 @@ class LicenseStatus(Enum):
 
 class ContentType(Enum):
     """Types of licensable content"""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -65,6 +70,7 @@ class ContentType(Enum):
 
 class UsageType(Enum):
     """Content usage types"""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     BROADCAST = "broadcast"
@@ -96,7 +102,8 @@ class LicenseTerms:
 
 @dataclass
 class LicenseAgreement:
-    """Complete license agreement"""
+    """
+Complete license agreement"""
     license_id: str
     content_id: str
     licensor_id: str  # Content owner
@@ -112,7 +119,8 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment record"""
+    """
+Royalty payment record"""
     payment_id: str
     license_id: str
     period_start: datetime
@@ -126,7 +134,8 @@ class RoyaltyPayment:
 
 @dataclass
 class LicenseReport:
-    """License performance report"""
+    """
+License performance report"""
     content_id: str
     total_licenses: int
     active_licenses: int
@@ -654,7 +663,8 @@ class LicensingEngine:
         return final_fee.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _store_license_agreement(self, agreement: LicenseAgreement):
-        """Store license agreement in database"""
+        """
+Store license agreement in database"""
         # Implementation would store in database
         license_record = LicenseModel(
             id=agreement.license_id,
@@ -675,13 +685,15 @@ class LicensingEngine:
         await self.db_session.commit()
     
     async def _get_license_agreement(self, license_id: str) -> Optional[LicenseAgreement]:
-        """Get license agreement from database"""
+        """
+Get license agreement from database"""
         # Implementation would query database
         # Placeholder implementation
         return None
     
     async def _index_license_offer(self, offer: LicenseAgreement):
-        """Index license offer for search"""
+        """
+Index license offer for search"""
         # Implementation would index in search engine
         search_doc = {
             'license_id': offer.license_id,
@@ -704,7 +716,8 @@ class LicensingEngine:
         return []
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""
+        """
+Get data from cache"""
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -712,7 +725,8 @@ class LicensingEngine:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
@@ -728,21 +742,25 @@ class LicensingEngine:
         return license_offer
     
     async def _process_license_payment(self, license_agreement: LicenseAgreement) -> bool:
-        """Process license payment"""
+        """
+Process license payment"""
         # Implementation would process payment through payment processor
         return True
     
     async def _setup_royalty_tracking(self, license_agreement: LicenseAgreement):
-        """Setup royalty tracking for license"""
+        """
+Setup royalty tracking for license"""
         # Implementation would setup tracking
         pass
     
     async def _send_license_notifications(self, license_agreement: LicenseAgreement, event: str):
-        """Send license notifications"""
+        """
+Send license notifications"""
         # Implementation would send notifications
         pass
     
     async def _create_initial_royalty_record(self, license_agreement: LicenseAgreement):
-        """Create initial royalty record"""
+        """
+Create initial royalty record"""
         # Implementation would create royalty tracking record
         pass

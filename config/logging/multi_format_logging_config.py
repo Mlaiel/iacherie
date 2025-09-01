@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -29,7 +30,8 @@ from pythonjsonlogger import jsonlogger
 
 
 class ContentFormat(str, Enum):
-    """Supported content formats"""
+    """
+Supported content formats"""
     # Audio formats
     MP3 = "mp3"
     WAV = "wav"
@@ -84,6 +86,7 @@ class ContentFormat(str, Enum):
 
 class ProcessingOperation(str, Enum):
     """Content processing operations"""
+
     UPLOAD = "upload"
     CONVERSION = "conversion"
     COMPRESSION = "compression"
@@ -102,6 +105,7 @@ class ProcessingOperation(str, Enum):
 
 class QualityLevel(str, Enum):
     """Content quality levels"""
+
     ULTRA_HIGH = "ultra_high"  # 4K+, Lossless audio
     HIGH = "high"              # 1080p, High bitrate
     MEDIUM = "medium"          # 720p, Standard quality
@@ -154,14 +158,16 @@ class MultiFormatLogConfig:
 
 
 class MultiFormatLogger:
-    """Specialized logger for multi-format content operations"""
+    """
+Specialized logger for multi-format content operations"""
     
     def __init__(self, config: MultiFormatLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for multi-format content"""
+        """
+Setup structured logger for multi-format content"""
         structlog.configure(
             processors=[
                 structlog.threadlocal.merge_threadlocal_context,
@@ -581,12 +587,14 @@ class MultiFormatLoggingConfig:
     
     @staticmethod
     def create_default_config() -> MultiFormatLogConfig:
-        """Create default multi-format logging configuration"""
+        """
+Create default multi-format logging configuration"""
         return MultiFormatLogConfig()
     
     @staticmethod
     def create_high_performance_config() -> MultiFormatLogConfig:
-        """Create high-performance multi-format logging configuration"""
+        """
+Create high-performance multi-format logging configuration"""
         return MultiFormatLogConfig(
             enable_format_conversion_logging=True,
             enable_quality_tracking=True,

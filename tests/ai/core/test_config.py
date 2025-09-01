@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive AI Core Configuration Tests
+"""
+Comprehensive AI Core Configuration Tests
 
 Ultra-advanced enterprise-grade test suite for AI core configuration management.
 Tests environment-based configuration, validation, defaults, and business logic settings.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
@@ -34,6 +36,7 @@ Team Expertise:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -72,7 +75,8 @@ class TestAIEngineConfig:
     """Test suite for AIEngineConfig class"""
     
     def test_ai_engine_config_defaults(self):
-        """Test AI engine configuration default values"""
+        """
+Test AI engine configuration default values"""
         config = AIEngineConfig()
         
         assert config.max_concurrent_models == 5
@@ -163,7 +167,8 @@ class TestValidationConfig:
     """Test suite for ValidationConfig class"""
     
     def test_validation_config_defaults(self):
-        """Test validation configuration default values"""
+        """
+Test validation configuration default values"""
         config = ValidationConfig()
         
         assert config.enable_security_validation is True
@@ -251,7 +256,8 @@ class TestPerformanceConfig:
     """Test suite for PerformanceConfig class"""
     
     def test_performance_config_defaults(self):
-        """Test performance configuration default values"""
+        """
+Test performance configuration default values"""
         config = PerformanceConfig()
         
         assert config.monitoring_interval == 30
@@ -268,7 +274,8 @@ class TestPerformanceConfig:
         assert config.response_time_critical == 5.0
     
     def test_performance_config_thresholds(self):
-        """Test performance configuration threshold settings"""
+        """
+Test performance configuration threshold settings"""
         # Conservative thresholds
         conservative_config = PerformanceConfig(
             cpu_warning_threshold=50.0,
@@ -302,7 +309,8 @@ class TestPerformanceConfig:
         assert aggressive_config.memory_critical_threshold == 95.0
     
     def test_performance_config_monitoring_settings(self):
-        """Test performance configuration monitoring settings"""
+        """
+Test performance configuration monitoring settings"""
         config = PerformanceConfig(
             monitoring_interval=10,
             history_size=5000,
@@ -316,7 +324,8 @@ class TestPerformanceConfig:
         assert config.enable_predictions is False
     
     def test_performance_config_to_dict(self):
-        """Test performance configuration dictionary conversion"""
+        """
+Test performance configuration dictionary conversion"""
         config = PerformanceConfig(
             monitoring_interval=15,
             cpu_warning_threshold=60.0
@@ -334,7 +343,8 @@ class TestMetricsConfig:
     """Test suite for MetricsConfig class"""
     
     def test_metrics_config_defaults(self):
-        """Test metrics configuration default values"""
+        """
+Test metrics configuration default values"""
         config = MetricsConfig()
         
         assert config.max_entries == 10000
@@ -383,7 +393,8 @@ class TestMetricsConfig:
         assert long_retention_config.auto_flush_interval == 3600
     
     def test_metrics_config_selective_metrics(self):
-        """Test metrics configuration with selective metric collection"""
+        """
+Test metrics configuration with selective metric collection"""
         config = MetricsConfig(
             enable_system_metrics=False,
             enable_business_metrics=True
@@ -393,7 +404,8 @@ class TestMetricsConfig:
         assert config.enable_business_metrics is True
     
     def test_metrics_config_to_dict(self):
-        """Test metrics configuration dictionary conversion"""
+        """
+Test metrics configuration dictionary conversion"""
         config = MetricsConfig(
             max_entries=20000,
             enable_prometheus_export=True
@@ -411,7 +423,8 @@ class TestPipelineConfig:
     """Test suite for PipelineConfig class"""
     
     def test_pipeline_config_defaults(self):
-        """Test pipeline configuration default values"""
+        """
+Test pipeline configuration default values"""
         config = PipelineConfig()
         
         assert config.max_concurrent_pipelines == 10
@@ -454,7 +467,8 @@ class TestPipelineConfig:
         assert conservative_config.max_retries == 1
     
     def test_pipeline_config_required_stages(self):
-        """Test pipeline configuration required stages"""
+        """
+Test pipeline configuration required stages"""
         # Custom required stages
         custom_config = PipelineConfig(
             required_stages=["validation", "protection", "seo_enhancement", "distribution"]
@@ -518,7 +532,8 @@ class TestCoreConfig:
     """Test suite for CoreConfig class"""
     
     def test_core_config_defaults(self):
-        """Test core configuration default values"""
+        """
+Test core configuration default values"""
         config = CoreConfig()
         
         assert config.environment == "development"
@@ -606,7 +621,8 @@ class TestCoreConfig:
         assert minimal_features_config.enable_content_protection is True
     
     def test_core_config_security_settings(self):
-        """Test core configuration security settings"""
+        """
+Test core configuration security settings"""
         secure_config = CoreConfig(
             enable_encryption=True,
             api_rate_limit=500,
@@ -628,7 +644,8 @@ class TestCoreConfig:
         assert high_security_config.max_request_size_mb == 10.0
     
     def test_core_config_component_integration(self):
-        """Test core configuration component integration"""
+        """
+Test core configuration component integration"""
         # Custom component configurations
         custom_ai_engine = AIEngineConfig(max_concurrent_models=15)
         custom_validation = ValidationConfig(min_quality_score=90.0)
@@ -645,7 +662,8 @@ class TestCoreConfig:
         assert config.performance.monitoring_interval == 15
     
     def test_core_config_to_dict(self):
-        """Test core configuration dictionary conversion"""
+        """
+Test core configuration dictionary conversion"""
         config = CoreConfig(
             environment="testing",
             debug_mode=True,
@@ -670,17 +688,20 @@ class TestConfigManager:
     """Test suite for ConfigManager class"""
     
     def setup_method(self):
-        """Setup config manager for testing"""
+        """
+Setup config manager for testing"""
         self.config_manager = ConfigManager()
     
     def test_config_manager_initialization(self):
-        """Test config manager initialization"""
+        """
+Test config manager initialization"""
         assert hasattr(self.config_manager, '_configs')
         assert isinstance(self.config_manager._configs, dict)
         assert hasattr(self.config_manager, '_config_paths')
     
     def test_config_manager_registration(self):
-        """Test config manager configuration registration"""
+        """
+Test config manager configuration registration"""
         test_config = CoreConfig(environment="test")
         
         self.config_manager.register_config("test", test_config)
@@ -788,7 +809,8 @@ class TestConfigurationFunctions:
     """Test suite for standalone configuration functions"""
     
     def test_load_config_function(self):
-        """Test load_config standalone function"""
+        """
+Test load_config standalone function"""
         test_config_data = {
             "environment": "function_test",
             "debug_mode": True,
@@ -912,7 +934,8 @@ class TestConfigurationValidation:
     """Test suite for configuration validation logic"""
     
     def test_configuration_boundary_values(self):
-        """Test configuration with boundary values"""
+        """
+Test configuration with boundary values"""
         # Minimum values
         min_config = CoreConfig(
             api_rate_limit=1,
@@ -942,7 +965,8 @@ class TestConfigurationValidation:
         assert is_valid is True  # Should accept maximum reasonable values
     
     def test_configuration_invalid_values(self):
-        """Test configuration with invalid values"""
+        """
+Test configuration with invalid values"""
         # Negative values
         negative_config = CoreConfig(
             api_rate_limit=-1,
@@ -966,7 +990,8 @@ class TestConfigurationValidation:
         assert len(errors) > 0
     
     def test_configuration_business_logic_validation(self):
-        """Test configuration validation for business logic requirements"""
+        """
+Test configuration validation for business logic requirements"""
         # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
         
         # Configuration without content protection (should be invalid for business)
@@ -1003,7 +1028,8 @@ class TestConfigurationIntegration:
     """Integration tests for configuration system"""
     
     def test_configuration_environment_override(self):
-        """Test configuration with environment variable overrides"""
+        """
+Test configuration with environment variable overrides"""
         base_config = CoreConfig(
             environment="development",
             debug_mode=False,

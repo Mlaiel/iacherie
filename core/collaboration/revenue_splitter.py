@@ -29,6 +29,7 @@ Features:
 - Regulatory Compliance (GDPR, PCI-DSS, KYC/AML)
 - Integration with Major Payment Processors
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ import paypal
 logger = logging.getLogger(__name__)
 
 class SplitType(Enum):
-    """Advanced revenue split type enumeration"""
+    """
+Advanced revenue split type enumeration"""
+
     FIXED_PERCENTAGE = "fixed_percentage"
     PERFORMANCE_BASED = "performance_based"
     MILESTONE_BASED = "milestone_based"
@@ -67,6 +70,7 @@ class SplitType(Enum):
 
 class PayoutFrequency(Enum):
     """Payout frequency enumeration"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -80,6 +84,7 @@ class PayoutFrequency(Enum):
 
 class PaymentMethod(Enum):
     """Payment method enumeration"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -93,6 +98,7 @@ class PaymentMethod(Enum):
 
 class CurrencyType(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -106,6 +112,7 @@ class CurrencyType(Enum):
 
 class TransactionStatus(Enum):
     """Transaction status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -119,6 +126,7 @@ class TransactionStatus(Enum):
 
 class TaxRegion(Enum):
     """Tax regions for compliance"""
+
     EU = "eu"
     US = "us"
     UK = "uk"
@@ -168,7 +176,8 @@ class PayoutSchedule:
 
 @dataclass
 class RevenueTransaction:
-    """Individual revenue transaction"""
+    """
+Individual revenue transaction"""
     transaction_id: str
     partnership_id: str
     source_platform: str
@@ -187,7 +196,8 @@ class RevenueTransaction:
 
 @dataclass
 class PayoutRecord:
-    """Individual payout record"""
+    """
+Individual payout record"""
     payout_id: str
     recipient_id: str
     partnership_id: str
@@ -598,7 +608,8 @@ class RevenueSplitter:
             return base_amount
             
     async def _execute_payout(self, payout: PayoutRecord) -> bool:
-        """Execute payout through payment processor"""
+        """
+Execute payout through payment processor"""
         try:
             # Get recipient payment details
             payment_details = await self._get_payment_details(payout.recipient_id)
@@ -682,15 +693,18 @@ class RevenueSplitter:
         pass
         
     async def _get_active_payout_schedules(self, partnership_id: str) -> List[PayoutSchedule]:
-        """Get active payout schedules"""
+        """
+Get active payout schedules"""
         return []
         
     async def _get_pending_amounts(self, schedule: PayoutSchedule) -> Dict[str, Dict[str, Any]]:
-        """Get pending amounts for payout"""
+        """
+Get pending amounts for payout"""
         return {}
         
     async def _create_payout_record(self, recipient_id: str, schedule: PayoutSchedule, amount: Decimal, transactions: List) -> PayoutRecord:
-        """Create payout record"""
+        """
+Create payout record"""
         return PayoutRecord(
             payout_id=str(uuid.uuid4()),
             recipient_id=recipient_id,
@@ -701,7 +715,8 @@ class RevenueSplitter:
         )
         
     async def _calculate_next_payout_date(self, schedule: PayoutSchedule) -> datetime:
-        """Calculate next payout date"""
+        """
+Calculate next payout date"""
         if schedule.frequency == PayoutFrequency.WEEKLY:
             return datetime.utcnow() + timedelta(weeks=1)
         elif schedule.frequency == PayoutFrequency.MONTHLY:
@@ -710,7 +725,8 @@ class RevenueSplitter:
             return datetime.utcnow() + timedelta(days=7)
             
     async def _update_payout_schedule(self, schedule: PayoutSchedule) -> None:
-        """Update payout schedule"""
+        """
+Update payout schedule"""
         pass
         
     # Additional placeholder methods
@@ -877,6 +893,7 @@ class RevenueSplitter:
             logger.error(f"❌ Failed to save financial report for {partnership_id}: {e}")
             raise
     """Payout frequency options"""
+
     IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -887,6 +904,7 @@ class RevenueSplitter:
 
 class PayoutStatus(Enum):
     """Payout status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -897,6 +915,7 @@ class PayoutStatus(Enum):
 
 class CurrencyType(Enum):
     """Supported currency types"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -923,7 +942,8 @@ class SplitRule:
 
 @dataclass
 class PayoutSchedule:
-    """Payout schedule configuration"""
+    """
+Payout schedule configuration"""
     schedule_id: str
     frequency: PayoutFrequency
     participants: List[str]
@@ -936,7 +956,8 @@ class PayoutSchedule:
     tax_withholding: Dict[str, Decimal] = field(default_factory=dict)
 
 class RevenueSplitter:
-    """Advanced revenue distribution and splitting system"""
+    """
+Advanced revenue distribution and splitting system"""
     
     def __init__(self, db_session, payment_processor, escrow_service, tax_service, analytics_tracker):
         self.db_session = db_session
@@ -954,7 +975,8 @@ class RevenueSplitter:
         conditions: Optional[Dict[str, Any]] = None,
         performance_metrics: Optional[Dict[str, Any]] = None
     ) -> SplitRule:
-        """Create a new revenue split rule"""
+        """
+Create a new revenue split rule"""
         try:
             logger.info(f"Creating split rule for partnership {partnership_id}")
             
@@ -1335,7 +1357,8 @@ class RevenueSplitter:
         ))
         
     async def _get_active_split_rules(self, partnership_id: str) -> List[SplitRule]:
-        """Get active split rules for partnership"""
+        """
+Get active split rules for partnership"""
         query = """
         SELECT * FROM revenue_split_rules 
         WHERE partnership_id = %s AND is_active = true
@@ -1366,15 +1389,18 @@ class RevenueSplitter:
         
     # Placeholder methods for complex operations
     async def _log_split_rule_creation(self, partnership_id: str, split_rule: SplitRule, created_by: str) -> None:
-        """Log split rule creation"""
+        """
+Log split rule creation"""
         pass
         
     async def _select_applicable_rule(self, rules: List[SplitRule], revenue_source: str, performance_data: Optional[Dict[str, Any]]) -> SplitRule:
-        """Select most applicable rule"""
+        """
+Select most applicable rule"""
         return rules[0] if rules else None
         
     async def _calculate_base_split(self, rule: SplitRule, total_revenue: Decimal, performance_data: Optional[Dict[str, Any]]) -> Dict[str, Decimal]:
-        """Calculate base revenue split"""
+        """
+Calculate base revenue split"""
         base_split = {}
         for participant_id, percentage in rule.participants.items():
             if rule.split_type == SplitType.FIXED_PERCENTAGE:
@@ -1385,23 +1411,28 @@ class RevenueSplitter:
         return base_split
         
     async def _apply_performance_adjustments(self, base_split: Dict[str, Decimal], rule: SplitRule, performance_data: Optional[Dict[str, Any]]) -> Dict[str, Decimal]:
-        """Apply performance-based adjustments"""
+        """
+Apply performance-based adjustments"""
         return base_split  # Placeholder - would implement performance adjustments
         
     async def _apply_deductions(self, split: Dict[str, Decimal], partnership_id: str, revenue_source: str) -> Dict[str, Decimal]:
-        """Apply platform fees and other deductions"""
+        """
+Apply platform fees and other deductions"""
         return split  # Placeholder - would apply fees/deductions
         
     async def _calculate_taxes(self, split: Dict[str, Decimal], currency: CurrencyType) -> Dict[str, Dict[str, Decimal]]:
-        """Calculate taxes for each participant"""
+        """
+Calculate taxes for each participant"""
         return {}  # Placeholder - would calculate taxes
         
     async def _save_split_calculation(self, calculation: Dict[str, Any]) -> None:
-        """Save split calculation to database"""
+        """
+Save split calculation to database"""
         pass
         
     async def _check_payout_eligibility(self, final_split: Dict[str, Decimal], schedule: PayoutSchedule) -> List[str]:
-        """Check which participants are eligible for payout"""
+        """
+Check which participants are eligible for payout"""
         eligible = []
         for participant_id, amount in final_split.items():
             if amount >= schedule.minimum_threshold:
@@ -1409,31 +1440,38 @@ class RevenueSplitter:
         return eligible
         
     async def _save_payout_record(self, record: Dict[str, Any]) -> None:
-        """Save payout record to database"""
+        """
+Save payout record to database"""
         pass
         
     async def _hold_in_escrow(self, payout_records: List[Dict[str, Any]], schedule: PayoutSchedule) -> None:
-        """Hold funds in escrow"""
+        """
+Hold funds in escrow"""
         pass
         
     async def _process_immediate_payouts(self, payout_records: List[Dict[str, Any]]) -> None:
-        """Process immediate payouts"""
+        """
+Process immediate payouts"""
         pass
         
     async def _update_next_payout_date(self, partnership_id: str, schedule: PayoutSchedule) -> None:
-        """Update next payout date"""
+        """
+Update next payout date"""
         pass
         
     async def _get_ready_payouts(self) -> List[Dict[str, Any]]:
-        """Get payouts ready for processing"""
+        """
+Get payouts ready for processing"""
         return []
         
     async def _process_individual_payout(self, payout: Dict[str, Any]) -> Dict[str, Any]:
-        """Process individual payout"""
+        """
+Process individual payout"""
         return {'success': True}
         
     async def _update_payout_status(self, payout_id: str, status: PayoutStatus, result: Optional[Dict[str, Any]] = None) -> None:
-        """Update payout status"""
+        """
+Update payout status"""
         pass
         
     # Analytics methods (placeholders)
@@ -1463,7 +1501,8 @@ class RevenueSplitter:
         return {}
         
     async def _validate_dispute_authority(self, payout: Dict[str, Any], disputing_party: str) -> None:
-        """Validate that the disputing party has authority to dispute this payout"""
+        """
+Validate that the disputing party has authority to dispute this payout"""
         try:
             # Check if disputing party is a participant in the payout
             participants = payout.get('participants', [])

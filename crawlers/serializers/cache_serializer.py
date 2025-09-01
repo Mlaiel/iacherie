@@ -29,6 +29,7 @@ Expertise combinée:
 - DevOps: Monitoring et scaling automatique des systèmes de cache
 - IA Prompt Engineer: Cache intelligent pour réponses IA optimisées
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class CacheType(Enum):
-    """Types of cache storage."""
+    """
+Types of cache storage."""
+
     MEMORY = "memory"
     REDIS = "redis"
     DISK = "disk"
@@ -51,6 +54,7 @@ class CacheType(Enum):
 
 class CacheStrategy(Enum):
     """Cache eviction strategies."""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
@@ -59,6 +63,7 @@ class CacheStrategy(Enum):
 
 class CompressionAlgorithm(Enum):
     """Compression algorithms for cache data."""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -79,7 +84,8 @@ class CacheMetrics:
 
 @dataclass
 class CacheEntry:
-    """Individual cache entry."""
+    """
+Individual cache entry."""
     key: str
     data: Any
     created_at: datetime = field(default_factory=datetime.now)
@@ -162,7 +168,8 @@ class CacheSerializer:
     """
     
     def __init__(self):
-        """Initialize cache serializer."""
+        """
+Initialize cache serializer."""
         self.serialization_cache = {}  # Internal cache for serialization
         self.max_entry_size = 10 * 1024 * 1024  # 10MB per entry
         
@@ -407,7 +414,8 @@ class CacheSerializer:
         return CacheEntry(**data)
     
     def _serialize_cache_metrics(self, metrics: CacheMetrics) -> Dict[str, Any]:
-        """Serialize cache metrics."""
+        """
+Serialize cache metrics."""
         return {
             'hit_count': metrics.hit_count,
             'miss_count': metrics.miss_count,
@@ -420,11 +428,13 @@ class CacheSerializer:
         }
     
     def _deserialize_cache_metrics(self, data: Dict[str, Any]) -> CacheMetrics:
-        """Deserialize cache metrics."""
+        """
+Deserialize cache metrics."""
         return CacheMetrics(**data)
     
     def _compress_entry_data(self, data: Any) -> str:
-        """Compress cache entry data."""
+        """
+Compress cache entry data."""
         try:
             import gzip
             import pickle

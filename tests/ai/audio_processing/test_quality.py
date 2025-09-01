@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -22,8 +23,9 @@ Comprehensive testing for audio quality evaluation including:
 - Quality enhancement validation
 
 Created by Expert Team: Audio Quality Engineer + DSP Specialist + Testing Expert
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -73,7 +75,8 @@ class TestQualityAnalyzer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
@@ -100,7 +103,8 @@ class TestQualityAnalyzer:
         assert hasattr(analyzer, 'degradation_detector')
     
     def test_analyze_quality_clean_audio(self):
-        """Test quality analysis on clean audio"""
+        """
+Test quality analysis on clean audio"""
         # Load clean test audio
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
@@ -135,7 +139,8 @@ class TestQualityAnalyzer:
         assert quality_result.noise_level > 0.05  # Detectable noise
     
     def test_analyze_quality_distorted_audio(self):
-        """Test quality analysis on distorted audio"""
+        """
+Test quality analysis on distorted audio"""
         # Create distorted audio (clipping)
         clean_audio = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         distorted_audio = np.clip(clean_audio * 2, -0.8, 0.8)  # Clipping distortion
@@ -150,7 +155,8 @@ class TestQualityAnalyzer:
         assert quality_result.dynamic_range < 40  # Reduced dynamic range
     
     def test_batch_quality_analysis(self):
-        """Test batch quality analysis"""
+        """
+Test batch quality analysis"""
         # Create multiple audio samples
         audio_samples = []
         for freq in [220, 440, 880]:
@@ -167,7 +173,8 @@ class TestQualityAnalyzer:
             assert 0.0 <= result.overall_score <= 1.0
     
     def test_quality_comparison(self):
-        """Test quality comparison between audio samples"""
+        """
+Test quality comparison between audio samples"""
         # Create reference and test audio
         reference = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         
@@ -189,7 +196,8 @@ class TestQualityAnalyzer:
         assert comparison.quality_difference > 0
     
     def test_quality_enhancement_recommendation(self):
-        """Test quality enhancement recommendations"""
+        """
+Test quality enhancement recommendations"""
         # Create audio with known issues
         noisy_audio = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         noisy_audio += np.random.normal(0, 0.1, len(noisy_audio))
@@ -221,12 +229,14 @@ class TestPerceptualQualityAssessor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.assessor = PerceptualQualityAssessor()
     
     def test_initialization(self):
-        """Test PerceptualQualityAssessor initialization"""
+        """
+Test PerceptualQualityAssessor initialization"""
         assessor = PerceptualQualityAssessor()
         
         assert assessor is not None
@@ -235,7 +245,8 @@ class TestPerceptualQualityAssessor:
         assert hasattr(assessor, 'masking_threshold')
     
     def test_loudness_measurement(self):
-        """Test loudness measurement"""
+        """
+Test loudness measurement"""
         # Create test tones with different amplitudes
         low_amplitude = 0.1 * np.sin(2 * np.pi * 1000 * np.linspace(0, 1, 44100))
         high_amplitude = 0.8 * np.sin(2 * np.pi * 1000 * np.linspace(0, 1, 44100))
@@ -250,7 +261,8 @@ class TestPerceptualQualityAssessor:
         assert high_loudness > low_loudness  # Higher amplitude should be louder
     
     def test_masking_threshold_analysis(self):
-        """Test masking threshold analysis"""
+        """
+Test masking threshold analysis"""
         # Create complex audio with masking effects
         fundamental = np.sin(2 * np.pi * 1000 * np.linspace(0, 1, 44100))
         harmonic = 0.3 * np.sin(2 * np.pi * 2000 * np.linspace(0, 1, 44100))
@@ -266,7 +278,8 @@ class TestPerceptualQualityAssessor:
         assert hasattr(masking_result, 'effective_bits')
     
     def test_perceptual_distortion_measurement(self):
-        """Test perceptual distortion measurement"""
+        """
+Test perceptual distortion measurement"""
         # Create reference and distorted signals
         reference = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         
@@ -283,7 +296,8 @@ class TestPerceptualQualityAssessor:
         assert distortion_score > 0.1  # Should detect distortion
     
     def test_frequency_domain_analysis(self):
-        """Test frequency domain perceptual analysis"""
+        """
+Test frequency domain perceptual analysis"""
         # Create audio with specific frequency content
         frequencies = [220, 440, 880, 1760]
         audio = np.zeros(44100)
@@ -346,12 +360,14 @@ class TestObjectiveQualityMeasurement:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.measurement = ObjectiveQualityMeasurement()
     
     def test_initialization(self):
-        """Test ObjectiveQualityMeasurement initialization"""
+        """
+Test ObjectiveQualityMeasurement initialization"""
         measurement = ObjectiveQualityMeasurement()
         
         assert measurement is not None
@@ -360,7 +376,8 @@ class TestObjectiveQualityMeasurement:
         assert hasattr(measurement, 'frequency_analyzer')
     
     def test_snr_calculation(self):
-        """Test Signal-to-Noise Ratio calculation"""
+        """
+Test Signal-to-Noise Ratio calculation"""
         # Create signal with known SNR
         signal_power = 1.0
         noise_power = 0.01  # -20 dB SNR
@@ -382,7 +399,8 @@ class TestObjectiveQualityMeasurement:
         assert calculated_snr > 15  # Should be reasonably high
     
     def test_thd_calculation(self):
-        """Test Total Harmonic Distortion calculation"""
+        """
+Test Total Harmonic Distortion calculation"""
         # Create signal with known harmonics
         fundamental_freq = 1000
         sample_rate = 44100
@@ -408,7 +426,8 @@ class TestObjectiveQualityMeasurement:
         assert thd_percent > 5  # Should detect harmonics
     
     def test_frequency_response_analysis(self):
-        """Test frequency response analysis"""
+        """
+Test frequency response analysis"""
         # Create broadband signal
         sample_rate = 44100
         duration = 1.0
@@ -472,7 +491,8 @@ class TestObjectiveQualityMeasurement:
         assert dynamic_range_db > 30  # Should be substantial
     
     def test_peak_to_rms_ratio(self):
-        """Test peak-to-RMS ratio measurement"""
+        """
+Test peak-to-RMS ratio measurement"""
         # Test with different signal types
         
         # Sine wave (known crest factor = √2 ≈ 1.414, or 3 dB)
@@ -506,12 +526,14 @@ class TestAudioQualityEnhancer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.enhancer = AudioQualityEnhancer()
     
     def test_initialization(self):
-        """Test AudioQualityEnhancer initialization"""
+        """
+Test AudioQualityEnhancer initialization"""
         enhancer = AudioQualityEnhancer()
         
         assert enhancer is not None
@@ -520,7 +542,8 @@ class TestAudioQualityEnhancer:
         assert hasattr(enhancer, 'frequency_corrector')
     
     def test_noise_reduction(self):
-        """Test noise reduction functionality"""
+        """
+Test noise reduction functionality"""
         # Create noisy signal
         clean_signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         noise = 0.1 * np.random.normal(0, 1, len(clean_signal))
@@ -542,7 +565,8 @@ class TestAudioQualityEnhancer:
             assert enhanced_snr >= original_snr  # SNR should improve or stay same
     
     def test_dynamic_range_enhancement(self):
-        """Test dynamic range enhancement"""
+        """
+Test dynamic range enhancement"""
         # Create signal with compressed dynamics
         original_signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         
@@ -563,7 +587,8 @@ class TestAudioQualityEnhancer:
         assert enhanced_range >= compressed_range  # Should maintain or improve range
     
     def test_frequency_correction(self):
-        """Test frequency response correction"""
+        """
+Test frequency response correction"""
         # Create signal with frequency imbalance
         sample_rate = 44100
         t = np.linspace(0, 1, sample_rate)
@@ -593,7 +618,8 @@ class TestAudioQualityEnhancer:
             assert high_corrected >= high_orig * 0.8
     
     def test_harmonic_restoration(self):
-        """Test harmonic restoration"""
+        """
+Test harmonic restoration"""
         # Create signal with missing harmonics
         fundamental_freq = 220
         sample_rate = 44100
@@ -621,7 +647,8 @@ class TestAudioQualityEnhancer:
                 assert fft_restored[harm_idx] > np.mean(fft_restored) * 0.1
     
     def test_adaptive_enhancement(self):
-        """Test adaptive enhancement based on content analysis"""
+        """
+Test adaptive enhancement based on content analysis"""
         # Create different types of audio content
         sample_rate = 44100
         
@@ -661,12 +688,14 @@ class TestDegradationDetector:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.detector = DegradationDetector()
     
     def test_initialization(self):
-        """Test DegradationDetector initialization"""
+        """
+Test DegradationDetector initialization"""
         detector = DegradationDetector()
         
         assert detector is not None
@@ -675,7 +704,8 @@ class TestDegradationDetector:
         assert hasattr(detector, 'bandwidth_analyzer')
     
     def test_clipping_detection(self):
-        """Test clipping detection"""
+        """
+Test clipping detection"""
         # Create clipped signal
         original = 2 * np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         clipped = np.clip(original, -0.8, 0.8)
@@ -803,7 +833,8 @@ class TestQualityConfig:
     """Test QualityConfig data structure"""
     
     def test_config_creation(self):
-        """Test QualityConfig creation"""
+        """
+Test QualityConfig creation"""
         config = QualityConfig(
             enable_perceptual=True,
             enable_objective=True,
@@ -819,7 +850,8 @@ class TestQualityConfig:
         assert config.analysis_window_size == 2048
     
     def test_config_validation(self):
-        """Test config validation"""
+        """
+Test config validation"""
         # Valid config
         valid_config = QualityConfig(sample_rate=44100)
         assert valid_config.is_valid()
@@ -836,7 +868,8 @@ class TestQualityIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         self.processor = AudioProcessor()

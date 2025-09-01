@@ -46,13 +46,14 @@ Lead Platform Intelligence Engineer : Fahed Mlaiel <mlaiel@live.de>
 This platform intelligence system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic Flow:
 Multi-Platform Integration → AI Context Analysis → Performance Optimization → 
 Cross-Platform Strategy → Content Distribution → Revenue Maximization → 
 Competitive Intelligence → Global Expansion → Continuous Optimization
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -75,7 +76,9 @@ from ...ai.recommendation.platform_optimizer import PlatformOptimizer
 
 
 class SupportedPlatform(Enum):
-    """Supported social media platforms"""
+    """
+Supported social media platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -95,6 +98,7 @@ class SupportedPlatform(Enum):
 
 class PlatformFeature(Enum):
     """Platform-specific features"""
+
     STORIES = "stories"
     REELS = "reels"
     LIVE_STREAMING = "live_streaming"
@@ -113,6 +117,7 @@ class PlatformFeature(Enum):
 
 class ContentFormat(Enum):
     """Content formats per platform"""
+
     PHOTO = "photo"
     VIDEO = "video"
     AUDIO = "audio"
@@ -128,6 +133,7 @@ class ContentFormat(Enum):
 
 class EngagementType(Enum):
     """Types of platform engagement"""
+
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -160,7 +166,8 @@ class PlatformMetrics:
 
 @dataclass
 class PlatformBehavior:
-    """User behavior patterns on specific platform"""
+    """
+User behavior patterns on specific platform"""
     platform: SupportedPlatform
     posting_frequency: float
     content_preferences: Dict[str, float]
@@ -176,7 +183,8 @@ class PlatformBehavior:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform content and engagement strategy"""
+    """
+Cross-platform content and engagement strategy"""
     creator_id: str
     primary_platforms: List[SupportedPlatform]
     content_adaptation_strategy: Dict[str, Any]
@@ -191,7 +199,8 @@ class CrossPlatformStrategy:
 
 @dataclass
 class PlatformContext:
-    """Comprehensive platform context for user"""
+    """
+Comprehensive platform context for user"""
     user_id: str
     platform: SupportedPlatform
     account_data: Dict[str, Any]
@@ -1085,7 +1094,8 @@ class PlatformContextManager:
         return min(max(consistency_score, 0.0), 1.0)
 
     def _assess_engagement_quality(self, context: PlatformContext) -> float:
-        """Assess engagement quality and rate"""
+        """
+Assess engagement quality and rate"""
         engagement_rate = context.current_metrics.engagement_rate
         
         # Platform-specific benchmarks
@@ -1103,7 +1113,8 @@ class PlatformContextManager:
         return engagement_score
 
     def _assess_feature_utilization(self, context: PlatformContext) -> float:
-        """Assess utilization of platform-specific features"""
+        """
+Assess utilization of platform-specific features"""
         feature_usage = context.behavior_patterns.get('feature_usage', {})
         total_features = len(feature_usage)
         used_features = sum(1 for usage in feature_usage.values() if usage.get('frequency', 0) > 0)
@@ -1112,7 +1123,8 @@ class PlatformContextManager:
         return min(max(utilization_score, 0.0), 1.0)
 
     async def _generate_platform_action_recommendations(self, context: PlatformContext) -> List[Dict[str, Any]]:
-        """Generate specific actionable platform recommendations"""
+        """
+Generate specific actionable platform recommendations"""
         try:
             recommendations = []
             

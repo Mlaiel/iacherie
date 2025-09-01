@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,14 +13,16 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test Response Handler Module
+"""
+Test Response Handler Module
 
 Tests for API response processing, validation, and normalization.
 
 Author: Fahed Mlaiel (Legal Copyright)
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
 """
+
 import pytest
 import sys
 import os
@@ -46,9 +49,11 @@ from crawlers.handlers.response_handler import (
 
 
 class TestPlatformResponse:
-    """Test suite for platform response models."""
+    """
+Test suite for platform response models."""
     def test_youtube_response_creation(self):
-        """Test YouTube response model."""
+        """
+Test YouTube response model."""
         response = YouTubeResponse(
             video_id="abc123",
             title="Test Video",
@@ -138,13 +143,15 @@ class TestPlatformResponse:
 class TestResponseValidator:
     """Test suite for ResponseValidator class."""
     def test_validator_initialization(self):
-        """Test validator setup."""
+        """
+Test validator setup."""
         validator = ResponseValidator()
         assert validator.schemas is not None
         assert len(validator.schemas) > 0
 
     def test_validate_youtube_response(self):
-        """Test YouTube response validation."""
+        """
+Test YouTube response validation."""
         validator = ResponseValidator()
         
         valid_data = {
@@ -241,13 +248,15 @@ class TestResponseValidator:
 class TestResponseNormalizer:
     """Test suite for ResponseNormalizer class."""
     def test_normalizer_initialization(self):
-        """Test normalizer setup."""
+        """
+Test normalizer setup."""
         normalizer = ResponseNormalizer()
         assert hasattr(normalizer, 'field_mappings')
         assert 'youtube' in normalizer.field_mappings
 
     def test_normalize_youtube_response(self):
-        """Test YouTube response normalization."""
+        """
+Test YouTube response normalization."""
         normalizer = ResponseNormalizer()
         
         youtube_data = YouTubeResponse(
@@ -366,14 +375,16 @@ class TestResponseNormalizer:
 class TestResponseProcessor:
     """Test suite for ResponseProcessor class."""
     def test_processor_initialization(self):
-        """Test processor setup."""
+        """
+Test processor setup."""
         processor = ResponseProcessor()
         assert processor.validator is not None
         assert processor.normalizer is not None
 
     @pytest.mark.asyncio
     async def test_process_youtube_response(self):
-        """Test complete YouTube response processing."""
+        """
+Test complete YouTube response processing."""
         processor = ResponseProcessor()
         
         raw_response = {
@@ -528,7 +539,8 @@ class TestIntegration:
     """Integration tests for response handling system."""
     @pytest.mark.asyncio
     async def test_end_to_end_processing(self):
-        """Test complete response processing pipeline."""
+        """
+Test complete response processing pipeline."""
         processor = ResponseProcessor()
         
         # Simulate YouTube API response

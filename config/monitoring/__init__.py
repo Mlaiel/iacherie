@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from .prometheus_config import PrometheusConfig, MetricType, PrometheusMetric, PrometheusJobConfig
 from .grafana_config import (
     GrafanaConfig, DashboardType, VisualizationType, 
@@ -180,7 +181,8 @@ class MonitoringConfiguration:
     """
     
     def __init__(self):
-        """Initialize unified monitoring configuration"""
+        """
+Initialize unified monitoring configuration"""
         self.prometheus = PrometheusConfig()
         self.grafana = GrafanaConfig()
         self.alerting = AlertingConfig()
@@ -195,7 +197,8 @@ class MonitoringConfiguration:
         self.business_intelligence = business_intelligence_config
     
     def get_unified_config(self) -> Dict[str, Any]:
-        """Get unified monitoring configuration for all components"""
+        """
+Get unified monitoring configuration for all components"""
         return {
             "prometheus": self.prometheus.export_configuration(),
             "grafana": self.grafana.export_configuration(),
@@ -263,7 +266,8 @@ class MonitoringConfiguration:
         pass
     
     def get_monitoring_health(self) -> Dict[str, Any]:
-        """Get health status of all monitoring components"""
+        """
+Get health status of all monitoring components"""
         return {
             "timestamp": datetime.utcnow().isoformat(),
             "overall_status": "healthy",

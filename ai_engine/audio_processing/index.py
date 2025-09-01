@@ -4,7 +4,7 @@ Industrial-Grade Audio Intelligence Engine for IA Influencer Agent Platform
 Comprehensive API access point for all audio processing capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
 This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
@@ -13,6 +13,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 STRICTLY PROHIBITED and will result in immediate legal action.
 All rights reserved. Patent pending.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -149,7 +150,8 @@ class AudioProcessingAPI:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize all audio processing components"""
+        """
+Initialize all audio processing components"""
         if self._initialized:
             return
         
@@ -606,7 +608,8 @@ class AudioProcessingAPI:
             return {'error': str(e), 'timestamp': datetime.now().isoformat()}
     
     async def _ensure_initialized(self):
-        """Ensure API is initialized"""
+        """
+Ensure API is initialized"""
         if not self._initialized:
             await self.initialize()
 
@@ -631,21 +634,24 @@ async def create_audio_processing_api(config_path: Optional[Path] = None,
 
 # Quick access functions
 async def quick_audio_analysis(audio_path: Path) -> Dict[str, Any]:
-    """Quick audio analysis"""
+    """
+Quick audio analysis"""
     api = await create_audio_processing_api()
     analyzer = AudioAnalyzer(api.config)
     return await analyzer.analyze_comprehensive(audio_path)
 
 
 async def quick_audio_enhancement(audio_path: Path, output_path: Path) -> Dict[str, Any]:
-    """Quick audio enhancement"""
+    """
+Quick audio enhancement"""
     api = await create_audio_processing_api()
     enhancer = AudioEnhancer(api.config)
     return await enhancer.enhance_complete(audio_path, output_path)
 
 
 async def quick_copyright_check(audio_path: Path) -> Dict[str, Any]:
-    """Quick copyright violation check"""
+    """
+Quick copyright violation check"""
     api = await create_audio_processing_api()
     return await api.copyright_manager.check_content_protection(
         audio_path, {'uploader': 'test_user'}
@@ -748,6 +754,7 @@ __email__ = "mlaiel@live.de"
 # Audio Processing Enums
 class AudioFormat(Enum):
     """Supported audio formats."""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -759,6 +766,7 @@ class AudioFormat(Enum):
 
 class ProcessingType(Enum):
     """Types of audio processing."""
+
     MUSIC_ANALYSIS = "music_analysis"
     VOICE_PROCESSING = "voice_processing"
     ENHANCEMENT = "enhancement"
@@ -770,6 +778,7 @@ class ProcessingType(Enum):
 
 class AudioQualityLevel(Enum):
     """Audio quality levels."""
+
     LOSSY = "lossy"
     LOSSLESS = "lossless"
     HIGH_RESOLUTION = "high_resolution"
@@ -926,7 +935,8 @@ class AudioProcessingFramework:
         self.capabilities = self._initialize_capabilities()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize audio processing capabilities."""
+        """
+Initialize audio processing capabilities."""
         capabilities = {}
         
         for category, components in self.architecture.items():
@@ -951,7 +961,8 @@ class AudioProcessingFramework:
     async def process_audio_comprehensive(self, audio_data: np.ndarray, 
                                         sample_rate: int, 
                                         processing_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process audio with comprehensive analysis and enhancement."""
+        """
+Process audio with comprehensive analysis and enhancement."""
         results = {}
         
         # Core audio processing
@@ -978,7 +989,8 @@ class AudioProcessingFramework:
         return results
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of all supported audio formats."""
+        """
+Get list of all supported audio formats."""
         formats = set()
         for category in self.architecture.values():
             for capability in category.values():
@@ -986,7 +998,8 @@ class AudioProcessingFramework:
         return sorted(list(formats))
     
     def get_processing_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive processing capabilities information."""
+        """
+Get comprehensive processing capabilities information."""
         total_capabilities = sum(len(category) for category in self.architecture.values())
         real_time_capabilities = sum(
             1 for category in self.architecture.values()
@@ -1017,7 +1030,8 @@ class AudioProcessingFramework:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
+        """
+Validate complete business logic coverage."""
         required_business_logic = [
             'foundational_audio_processing_engine',
             'professional_audio_engine_management',
@@ -1043,25 +1057,29 @@ audio_processing_framework = AudioProcessingFramework()
 
 # Audio Processing Utilities
 async def create_audio_pipeline(config: Dict[str, Any]) -> AudioPipeline:
-    """Create optimized audio processing pipeline."""
+    """
+Create optimized audio processing pipeline."""
     pipeline = AudioPipeline(config)
     await pipeline.initialize()
     return pipeline
 
 async def analyze_audio_professional(file_path: str) -> Dict[str, Any]:
-    """Perform professional audio analysis."""
+    """
+Perform professional audio analysis."""
     analyzer = AudioAnalyzer()
     return await analyzer.analyze_file(file_path)
 
 async def enhance_audio_quality(audio_data: np.ndarray, 
                               sample_rate: int, 
                               enhancement_config: Dict[str, Any]) -> np.ndarray:
-    """Enhance audio quality with professional algorithms."""
+    """
+Enhance audio quality with professional algorithms."""
     enhancer = AudioEnhancer()
     return await enhancer.enhance(audio_data, sample_rate, enhancement_config)
 
 def validate_audio_format_support(format_name: str) -> bool:
-    """Validate if audio format is supported."""
+    """
+Validate if audio format is supported."""
     try:
         AudioFormat(format_name.lower())
         return True

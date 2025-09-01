@@ -6,7 +6,7 @@ This document provides detailed implementation specifications, API references, a
 integration guidelines for developers and system architects.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
@@ -449,7 +449,7 @@ PROJECT_SUMMARY = {
     "copyright_protection": {
         "author": "Fahed Mlaiel",
         "email": "mlaiel@live.de", 
-        "copyright": "© 2025 Fahed Mlaiel - All Rights Reserved",
+        "copyright": "(c) 2025 Fahed Mlaiel - All Rights Reserved",
         "legal_notice": "Unauthorized use prohibited under German and international law",
         "protection_measures": "Legal warnings in all files and documentation"
     }

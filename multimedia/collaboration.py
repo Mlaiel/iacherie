@@ -15,6 +15,7 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,9 @@ settings = get_settings()
 
 
 class CreatorType(Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
@@ -63,6 +66,7 @@ class CreatorType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaboration"""
+
     CREATIVE_PARTNERSHIP = "creative_partnership"
     SKILL_EXCHANGE = "skill_exchange"
     CONTENT_CREATION = "content_creation"
@@ -76,6 +80,7 @@ class CollaborationType(Enum):
 
 class SkillLevel(Enum):
     """Skill proficiency levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -85,6 +90,7 @@ class SkillLevel(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration requests"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
@@ -167,7 +173,8 @@ class CollaborationRequest:
 
 @dataclass
 class MatchScore:
-    """Creator matching score details"""
+    """
+Creator matching score details"""
     creator_id: str
     overall_score: float
     compatibility_scores: Dict[str, float] = field(default_factory=dict)
@@ -178,7 +185,8 @@ class MatchScore:
 
 @dataclass
 class CollaborationOpportunity:
-    """Recommended collaboration opportunity"""
+    """
+Recommended collaboration opportunity"""
     opportunity_id: str
     creators: List[str]  # User IDs
     collaboration_type: CollaborationType
@@ -197,7 +205,8 @@ class CollaborationOpportunity:
 
 
 class CreatorMatcher:
-    """AI-powered creator matching system"""
+    """
+AI-powered creator matching system"""
     
     def __init__(self):
         self.tokenizer = None
@@ -207,7 +216,8 @@ class CreatorMatcher:
         self.creator_graph = nx.Graph()
         
     async def initialize_models(self):
-        """Initialize AI models for matching"""
+        """
+Initialize AI models for matching"""
         try:
             # Load sentence transformer for profile embeddings
             self.tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -852,7 +862,8 @@ class CollaborationManager:
         target_creator_id: str,
         collaboration_details: Dict[str, Any]
     ) -> CollaborationRequest:
-        """Create a new collaboration request"""
+        """
+Create a new collaboration request"""
         try:
             request_id = f"collab_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{requester_profile.user_id[:8]}"
             
@@ -1142,7 +1153,8 @@ class CollaborationManager:
         return timelines.get(collaboration_type, 30)
     
     async def _get_creator_profile(self, user_id: str) -> Optional[CreatorProfile]:
-        """Get creator profile from database"""
+        """
+Get creator profile from database"""
         try:
             async with get_session() as session:
                 stmt = select("creator_profiles").where("user_id" == user_id)

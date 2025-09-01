@@ -29,6 +29,7 @@ Features:
 - Live streaming overlay generation
 - Social media story creation
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -100,7 +101,9 @@ logger = logging.getLogger(__name__)
 
 
 class MediaType(Enum):
-    """Supported media types for multimodal generation"""
+    """
+Supported media types for multimodal generation"""
+
     TEXT = "text"
     AUDIO = "audio"
     IMAGE = "image"
@@ -115,6 +118,7 @@ class MediaType(Enum):
 
 class AudioFormat(Enum):
     """Supported audio formats"""
+
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -125,6 +129,7 @@ class AudioFormat(Enum):
 
 class VisualFormat(Enum):
     """Supported visual formats"""
+
     PNG = "png"
     JPEG = "jpeg"
     GIF = "gif"
@@ -137,6 +142,7 @@ class VisualFormat(Enum):
 
 class GenerationStyle(Enum):
     """Content generation styles"""
+
     PROFESSIONAL = "professional"
     CREATIVE = "creative"
     EDUCATIONAL = "educational"
@@ -193,7 +199,8 @@ class MultimodalRequest(BaseModel):
 
 
 class MultimodalResponse(BaseModel):
-    """Multimodal content generation response"""
+    """
+Multimodal content generation response"""
     response_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     generated_assets: List[MediaAsset]
     primary_content: Optional[MediaAsset] = None
@@ -209,7 +216,8 @@ class MultimodalResponse(BaseModel):
 
 
 class MultiModalResponseGenerator:
-    """Core multimodal response generation engine"""
+    """
+Core multimodal response generation engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -232,7 +240,8 @@ class MultiModalResponseGenerator:
         self.generation_configs = self._initialize_generation_configs()
     
     def _initialize_generation_configs(self) -> Dict[MediaType, Dict[str, Any]]:
-        """Initialize generation configurations for different media types"""
+        """
+Initialize generation configurations for different media types"""
         return {
             MediaType.TEXT: {
                 "max_length": 2000,
@@ -533,7 +542,8 @@ class AudioResponseGenerator:
         self,
         request: MultimodalRequest
     ) -> Optional[MediaAsset]:
-        """Generate audio content asset"""
+        """
+Generate audio content asset"""
         try:
             # Determine audio type from content description
             audio_type = await self._determine_audio_type(request.content_description)
@@ -645,7 +655,8 @@ class VisualResponseGenerator:
         request: MultimodalRequest,
         media_type: MediaType
     ) -> Optional[MediaAsset]:
-        """Generate visual content asset"""
+        """
+Generate visual content asset"""
         try:
             if media_type == MediaType.IMAGE:
                 return await self._generate_image_asset(request)
@@ -749,7 +760,8 @@ class TextResponseGenerator:
         self,
         request: MultimodalRequest
     ) -> Optional[MediaAsset]:
-        """Generate text content asset"""
+        """
+Generate text content asset"""
         try:
             # Extract text parameters
             text_params = await self._extract_text_parameters(request)
@@ -798,7 +810,8 @@ class MediaResponseOrchestrator:
         request: MultimodalRequest,
         generation_plan: Dict[str, Any]
     ) -> List[MediaAsset]:
-        """Orchestrate complex multimodal content generation"""
+        """
+Orchestrate complex multimodal content generation"""
         try:
             # Coordinate parallel generation
             coordinated_assets = await self.coordination_engine.coordinate_generation(
@@ -826,7 +839,8 @@ class MediaCoordinationEngine:
 
 
 class MediaSynchronizationManager:
-    """Media synchronization manager"""
+    """
+Media synchronization manager"""
     
     async def synchronize_media(self, assets, request):
         return assets

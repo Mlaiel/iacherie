@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import base64
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChartType(Enum):
-    """Chart types for visualization"""
+    """
+Chart types for visualization"""
+
     LINE = "line"
     BAR = "bar"
     PIE = "pie"
@@ -55,6 +58,7 @@ class ChartType(Enum):
 
 class OutputFormat(Enum):
     """Output formats for visualizations"""
+
     PNG = "png"
     JPEG = "jpeg"
     SVG = "svg"
@@ -66,6 +70,7 @@ class OutputFormat(Enum):
 
 class ColorScheme(Enum):
     """Color schemes for visualizations"""
+
     DEFAULT = "default"
     VIRIDIS = "viridis"
     PLASMA = "plasma"
@@ -127,13 +132,15 @@ class ChartConfig:
 
 @dataclass
 class ChartData:
-    """Chart data structure"""
+    """
+Chart data structure"""
     labels: List[str]
     datasets: List[Dict[str, Any]]
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'labels': self.labels,
             'datasets': self.datasets,
@@ -143,7 +150,8 @@ class ChartData:
 
 @dataclass
 class VisualizationResult:
-    """Visualization generation result"""
+    """
+Visualization generation result"""
     chart_id: str
     config: ChartConfig
     data: ChartData
@@ -154,7 +162,8 @@ class VisualizationResult:
     generated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'chart_id': self.chart_id,
             'config': self.config.to_dict(),
@@ -168,20 +177,24 @@ class VisualizationResult:
 
 
 class BaseChartGenerator:
-    """Base class for chart generators"""
+    """
+Base class for chart generators"""
     
     def __init__(self, name: str):
-        """Initialize chart generator"""
+        """
+Initialize chart generator"""
         self.name = name
         self.supported_types = set()
     
     def supports_chart_type(self, chart_type: ChartType) -> bool:
-        """Check if this generator supports the chart type"""
+        """
+Check if this generator supports the chart type"""
         return chart_type in self.supported_types
     
     async def generate(self, config: ChartConfig, data: ChartData, 
                       output_format: OutputFormat) -> VisualizationResult:
-        """Generate chart visualization - base implementation"""
+        """
+Generate chart visualization - base implementation"""
         try:
             chart_id = f"base_{int(datetime.now(timezone.utc).timestamp())}"
             
@@ -260,7 +273,8 @@ class MatplotlibGenerator(BaseChartGenerator):
     """Matplotlib-based chart generator"""
     
     def __init__(self):
-        """Initialize matplotlib generator"""
+        """
+Initialize matplotlib generator"""
         super().__init__("matplotlib")
         self.supported_types = {
             ChartType.LINE, ChartType.BAR, ChartType.PIE, ChartType.SCATTER,
@@ -417,12 +431,14 @@ class MatplotlibGenerator(BaseChartGenerator):
     
     async def _generate_histogram(self, config: ChartConfig, data: ChartData, 
                                 output_format: OutputFormat) -> str:
-        """Generate histogram"""
+        """
+Generate histogram"""
         return await self._generate_default_chart(config, data, output_format)
     
     async def _generate_default_chart(self, config: ChartConfig, data: ChartData, 
                                     output_format: OutputFormat) -> str:
-        """Generate default chart visualization"""
+        """
+Generate default chart visualization"""
         return f"Simulated {config.chart_type.value} chart - Generated with {self.name}"
 
 
@@ -430,7 +446,8 @@ class PlotlyGenerator(BaseChartGenerator):
     """Plotly-based chart generator"""
     
     def __init__(self):
-        """Initialize plotly generator"""
+        """
+Initialize plotly generator"""
         super().__init__("plotly")
         self.supported_types = {
             ChartType.LINE, ChartType.BAR, ChartType.PIE, ChartType.SCATTER,
@@ -554,7 +571,8 @@ class D3Generator(BaseChartGenerator):
     """D3.js-based chart generator"""
     
     def __init__(self):
-        """Initialize D3 generator"""
+        """
+Initialize D3 generator"""
         super().__init__("d3")
         self.supported_types = {
             ChartType.LINE, ChartType.BAR, ChartType.PIE, ChartType.SCATTER,
@@ -750,7 +768,8 @@ class VisualizationEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize visualization engine"""
+        """
+Initialize visualization engine"""
         self.config = config or {}
         
         # Chart generators
@@ -774,7 +793,8 @@ class VisualizationEngine:
         self._initialize_templates()
     
     def _initialize_generators(self):
-        """Initialize chart generators"""
+        """
+Initialize chart generators"""
         try:
             # Register available generators
             self.generators['matplotlib'] = MatplotlibGenerator()
@@ -1029,7 +1049,8 @@ class VisualizationEngine:
         return self.chart_templates.get(template_name)
     
     def register_chart_template(self, name: str, config: ChartConfig):
-        """Register new chart template"""
+        """
+Register new chart template"""
         try:
             self.chart_templates[name] = config
             logger.info(f"Registered chart template: {name}")
@@ -1116,11 +1137,13 @@ class BusinessVisualization:
     """Business-specific visualization utilities"""
     
     def __init__(self, visualization_engine: VisualizationEngine):
-        """Initialize business visualization"""
+        """
+Initialize business visualization"""
         self.viz_engine = visualization_engine
     
     async def create_revenue_dashboard(self, revenue_data: Dict[str, Any]) -> List[VisualizationResult]:
-        """Create revenue dashboard charts"""
+        """
+Create revenue dashboard charts"""
         charts = []
         
         # Revenue trend chart
@@ -1197,11 +1220,13 @@ class TechnicalVisualization:
     """Technical monitoring visualization utilities"""
     
     def __init__(self, visualization_engine: VisualizationEngine):
-        """Initialize technical visualization"""
+        """
+Initialize technical visualization"""
         self.viz_engine = visualization_engine
     
     async def create_performance_charts(self, performance_data: Dict[str, Any]) -> List[VisualizationResult]:
-        """Create performance monitoring charts"""
+        """
+Create performance monitoring charts"""
         charts = []
         
         # Response time chart

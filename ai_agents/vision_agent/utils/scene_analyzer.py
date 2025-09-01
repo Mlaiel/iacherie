@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import cv2
@@ -38,7 +39,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class SceneCategory:
-    """Scene categories for classification"""
+    """
+Scene categories for classification"""
+
     INDOOR = "indoor"
     OUTDOOR = "outdoor"
     URBAN = "urban"
@@ -156,14 +159,16 @@ class SceneAnalyzer(BaseAgent):
         }
 
     async def _initialize_texture_analyzer(self) -> Dict[str, Any]:
-        """Initialize texture analysis components"""
+        """
+Initialize texture analysis components"""
         return {
             'texture_features': ['smoothness', 'roughness', 'regularity', 'directionality'],
             'texture_patterns': ['uniform', 'random', 'structured', 'organic']
         }
 
     async def _initialize_composition_analyzer(self) -> Dict[str, Any]:
-        """Initialize composition analysis components"""
+        """
+Initialize composition analysis components"""
         return {
             'grid_divisions': (3, 3),  # Rule of thirds grid
             'balance_threshold': 0.3,
@@ -342,7 +347,8 @@ class SceneAnalyzer(BaseAgent):
         return False
 
     def _contains_nature_colors(self, dominant_hues: List[int]) -> bool:
-        """Check if dominant hues contain nature-like colors"""
+        """
+Check if dominant hues contain nature-like colors"""
         # Nature hues: green (40-80), brown (10-25), earth tones
         nature_hue_ranges = [(40, 80), (10, 25)]
         
@@ -353,7 +359,8 @@ class SceneAnalyzer(BaseAgent):
         return False
 
     def _contains_indoor_indicators(self, image: np.ndarray) -> bool:
-        """Check for indoor scene indicators"""
+        """
+Check for indoor scene indicators"""
         try:
             # Simple heuristics for indoor detection
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image
@@ -947,7 +954,8 @@ class SceneAnalyzer(BaseAgent):
         }
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             await self.performance_monitor.close()
             logger.info("Scene Analyzer cleanup completed")

@@ -4,8 +4,9 @@ Defines interfaces for user management, preferences, collaboration,
 security and analytics functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
@@ -13,7 +14,9 @@ from enum import Enum
 
 
 class UserRole(Enum):
-    """User roles in the system."""
+    """
+User roles in the system."""
+
     CREATOR = "creator"
     COLLABORATOR = "collaborator"
     MANAGER = "manager"
@@ -26,6 +29,7 @@ class UserRole(Enum):
 
 class AccountStatus(Enum):
     """User account status."""
+
     ACTIVE = "active"
     PENDING = "pending"
     SUSPENDED = "suspended"
@@ -37,6 +41,7 @@ class AccountStatus(Enum):
 
 class PreferenceCategory(Enum):
     """User preference categories."""
+
     NOTIFICATION = "notification"
     PRIVACY = "privacy"
     CONTENT = "content"
@@ -48,6 +53,7 @@ class PreferenceCategory(Enum):
 
 class PrivacyLevel(Enum):
     """User privacy levels."""
+
     PUBLIC = "public"
     FRIENDS = "friends"
     PRIVATE = "private"
@@ -82,7 +88,8 @@ class UserManagerInterface(ABC):
         user_id: str,
         profile_updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update user profile information."""
+        """
+Update user profile information."""
         pass
     
     @abstractmethod
@@ -91,7 +98,8 @@ class UserManagerInterface(ABC):
         user_id: str,
         include_private: bool = False
     ) -> Dict[str, Any]:
-        """Retrieve user profile data."""
+        """
+Retrieve user profile data."""
         pass
     
     @abstractmethod
@@ -100,7 +108,8 @@ class UserManagerInterface(ABC):
         user_id: str,
         deletion_reason: str
     ) -> bool:
-        """Permanently delete user account and data."""
+        """
+Permanently delete user account and data."""
         pass
     
     @abstractmethod
@@ -110,7 +119,8 @@ class UserManagerInterface(ABC):
         suspension_reason: str,
         duration: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Suspend user account temporarily."""
+        """
+Suspend user account temporarily."""
         pass
     
     @abstractmethod
@@ -119,12 +129,14 @@ class UserManagerInterface(ABC):
         user_id: str,
         verification_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Verify user identity for enhanced features."""
+        """
+Verify user identity for enhanced features."""
         pass
 
 
 class UserPreferencesInterface(ABC):
-    """Interface for user preferences management."""
+    """
+Interface for user preferences management."""
     
     @abstractmethod
     async def set_user_preferences(
@@ -150,7 +162,8 @@ class UserPreferencesInterface(ABC):
         user_id: str,
         category: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get user preferences, optionally filtered by category."""
+        """
+Get user preferences, optionally filtered by category."""
         pass
     
     @abstractmethod
@@ -159,7 +172,8 @@ class UserPreferencesInterface(ABC):
         user_id: str,
         notification_config: Dict[str, bool]
     ) -> bool:
-        """Update user notification preferences."""
+        """
+Update user notification preferences."""
         pass
     
     @abstractmethod
@@ -168,7 +182,8 @@ class UserPreferencesInterface(ABC):
         user_id: str,
         privacy_config: Dict[str, PrivacyLevel]
     ) -> bool:
-        """Configure user privacy settings."""
+        """
+Configure user privacy settings."""
         pass
     
     @abstractmethod
@@ -177,7 +192,8 @@ class UserPreferencesInterface(ABC):
         user_id: str,
         content_preferences: Dict[str, Any]
     ) -> bool:
-        """Manage content creation and consumption preferences."""
+        """
+Manage content creation and consumption preferences."""
         pass
     
     @abstractmethod
@@ -186,12 +202,14 @@ class UserPreferencesInterface(ABC):
         user_id: str,
         collaboration_settings: Dict[str, Any]
     ) -> bool:
-        """Set preferences for collaboration features."""
+        """
+Set preferences for collaboration features."""
         pass
 
 
 class UserCollaborationInterface(ABC):
-    """Interface for user collaboration management."""
+    """
+Interface for user collaboration management."""
     
     @abstractmethod
     async def create_collaboration_request(
@@ -221,7 +239,8 @@ class UserCollaborationInterface(ABC):
         response: str,
         response_message: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Respond to collaboration request (accept/decline)."""
+        """
+Respond to collaboration request (accept/decline)."""
         pass
     
     @abstractmethod
@@ -230,7 +249,8 @@ class UserCollaborationInterface(ABC):
         user_id: str,
         include_pending: bool = True
     ) -> List[Dict[str, Any]]:
-        """Get user's collaboration history and active projects."""
+        """
+Get user's collaboration history and active projects."""
         pass
     
     @abstractmethod
@@ -239,7 +259,8 @@ class UserCollaborationInterface(ABC):
         user_id: str,
         collaboration_criteria: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration partners based on criteria."""
+        """
+Find potential collaboration partners based on criteria."""
         pass
     
     @abstractmethod
@@ -249,12 +270,14 @@ class UserCollaborationInterface(ABC):
         user_id: str,
         terms: Dict[str, Any]
     ) -> bool:
-        """Manage terms and conditions for collaboration."""
+        """
+Manage terms and conditions for collaboration."""
         pass
 
 
 class UserSecurityInterface(ABC):
-    """Interface for user security management."""
+    """
+Interface for user security management."""
     
     @abstractmethod
     async def setup_two_factor_auth(
@@ -280,7 +303,8 @@ class UserSecurityInterface(ABC):
         user_id: str,
         verification_code: str
     ) -> bool:
-        """Verify two-factor authentication code."""
+        """
+Verify two-factor authentication code."""
         pass
     
     @abstractmethod
@@ -288,7 +312,8 @@ class UserSecurityInterface(ABC):
         self,
         user_id: str
     ) -> List[str]:
-        """Generate account recovery codes for user."""
+        """
+Generate account recovery codes for user."""
         pass
     
     @abstractmethod
@@ -296,7 +321,8 @@ class UserSecurityInterface(ABC):
         self,
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """Audit active and recent user sessions."""
+        """
+Audit active and recent user sessions."""
         pass
     
     @abstractmethod
@@ -305,7 +331,8 @@ class UserSecurityInterface(ABC):
         user_id: str,
         session_ids: Optional[List[str]] = None
     ) -> bool:
-        """Revoke user sessions (all or specific)."""
+        """
+Revoke user sessions (all or specific)."""
         pass
     
     @abstractmethod
@@ -313,12 +340,14 @@ class UserSecurityInterface(ABC):
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """Check for security threats to user account."""
+        """
+Check for security threats to user account."""
         pass
 
 
 class UserAnalyticsInterface(ABC):
-    """Interface for user analytics and insights."""
+    """
+Interface for user analytics and insights."""
     
     @abstractmethod
     async def get_user_activity_analytics(
@@ -344,7 +373,8 @@ class UserAnalyticsInterface(ABC):
         user_id: str,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Analyze performance of user's content portfolio."""
+        """
+Analyze performance of user's content portfolio."""
         pass
     
     @abstractmethod
@@ -352,7 +382,8 @@ class UserAnalyticsInterface(ABC):
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """Track success metrics of user's collaborations."""
+        """
+Track success metrics of user's collaborations."""
         pass
     
     @abstractmethod
@@ -361,7 +392,8 @@ class UserAnalyticsInterface(ABC):
         user_id: str,
         focus_areas: List[str]
     ) -> List[Dict[str, Any]]:
-        """Generate personalized growth insights and recommendations."""
+        """
+Generate personalized growth insights and recommendations."""
         pass
     
     @abstractmethod
@@ -370,7 +402,8 @@ class UserAnalyticsInterface(ABC):
         user_id: str,
         content_features: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Predict user engagement with different content types."""
+        """
+Predict user engagement with different content types."""
         pass
     
     @abstractmethod
@@ -379,5 +412,6 @@ class UserAnalyticsInterface(ABC):
         user_id: str,
         comparison_group: str
     ) -> Dict[str, Any]:
-        """Benchmark user performance against similar creators."""
+        """
+Benchmark user performance against similar creators."""
         pass

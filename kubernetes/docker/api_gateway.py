@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional API Gateway Docker configuration for high-performance
 multi-format content processing and real-time AI protection services.
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class APIGatewayDockerConfig:
-    """Enterprise API Gateway Docker configuration"""
+    """
+Enterprise API Gateway Docker configuration"""
     
     # Container Configuration
     image_name: str = "ia-influencer/api-gateway"
@@ -152,7 +154,8 @@ ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "server.js"]
 """
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""
+        """
+Generate docker-compose service configuration"""
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -345,7 +348,8 @@ http {{
 """
     
     def _generate_upstream_configs(self) -> str:
-        """Generate upstream server configurations"""
+        """
+Generate upstream server configurations"""
         upstreams = []
         for service, url in self.backend_services.items():
             upstreams.append(f"""

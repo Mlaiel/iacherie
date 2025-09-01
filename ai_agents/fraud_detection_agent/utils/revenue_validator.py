@@ -6,6 +6,7 @@ and payment anomalies in the IA-Influencer ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -35,7 +36,9 @@ from ...integrations.payment_processors import PaymentProcessorManager
 logger = logging.getLogger(__name__)
 
 class RevenueAnomalyType(Enum):
-    """Types of revenue anomalies"""
+    """
+Types of revenue anomalies"""
+
     AMOUNT_MANIPULATION = "amount_manipulation"
     FREQUENCY_ABUSE = "frequency_abuse"
     SOURCE_SPOOFING = "source_spoofing"
@@ -65,7 +68,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueValidationResult:
-    """Revenue validation result"""
+    """
+Revenue validation result"""
     anomaly_detected: bool
     anomaly_types: List[RevenueAnomalyType]
     confidence: float
@@ -282,7 +286,8 @@ class RevenueValidator:
         user_id: str, 
         platform: str
     ) -> Dict[str, Any]:
-        """Get user's historical revenue baselines"""
+        """
+Get user's historical revenue baselines"""
         try:
             cache_key = f"revenue_baseline:{user_id}:{platform}"
             cached_baseline = await self.redis_client.get(cache_key)
@@ -377,7 +382,8 @@ class RevenueValidator:
         current_metrics: RevenueMetrics,
         historical_baselines: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Detect amount manipulation anomalies"""
+        """
+Detect amount manipulation anomalies"""
         try:
             baseline_avg = historical_baselines.get('avg_transaction_amount', 0)
             current_avg = float(current_metrics.average_amount)
@@ -730,7 +736,8 @@ class RevenueValidator:
         self, 
         anomalies: Dict[RevenueAnomalyType, Dict[str, Any]]
     ) -> float:
-        """Calculate validation confidence score"""
+        """
+Calculate validation confidence score"""
         if not anomalies:
             return 1.0
             
@@ -742,7 +749,8 @@ class RevenueValidator:
         self, 
         anomalies: Dict[RevenueAnomalyType, Dict[str, Any]]
     ) -> List[str]:
-        """Extract irregularity descriptions from anomalies"""
+        """
+Extract irregularity descriptions from anomalies"""
         irregularities = []
         
         for anomaly_type, anomaly_data in anomalies.items():
@@ -782,7 +790,8 @@ class RevenueValidator:
         anomalies: Dict[RevenueAnomalyType, Dict[str, Any]],
         current_metrics: RevenueMetrics
     ) -> List[str]:
-        """Extract key risk indicators"""
+        """
+Extract key risk indicators"""
         indicators = []
         
         # High-impact indicators

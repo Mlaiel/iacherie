@@ -2,7 +2,7 @@
 Enterprise-Grade AI-Powered Content Fingerprinting for Multi-Format Protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides advanced content fingerprinting pipeline management for the IA Influencer Agent
 platform, enabling real-time multi-format content protection through AI-powered fingerprinting
@@ -26,6 +26,7 @@ Technologies:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -72,7 +73,9 @@ except ImportError:
     VECTOR_SIMILARITY_AVAILABLE = False
 
 class ContentType(Enum):
-    """Content type enumeration for fingerprinting"""
+    """
+Content type enumeration for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -81,6 +84,7 @@ class ContentType(Enum):
 
 class FingerprintingMethod(Enum):
     """Fingerprinting method types"""
+
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -90,6 +94,7 @@ class FingerprintingMethod(Enum):
 
 class ProcessingQuality(Enum):
     """Content processing quality levels"""
+
     FAST = "fast"
     BALANCED = "balanced"
     HIGH_PRECISION = "high_precision"
@@ -116,7 +121,8 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintingJob:
-    """Fingerprinting job configuration"""
+    """
+Fingerprinting job configuration"""
     job_id: str
     content_path: str
     content_type: ContentType
@@ -131,7 +137,8 @@ class FingerprintingJob:
             self.metadata = {}
 
 class AudioFingerprintProcessor:
-    """Advanced audio fingerprinting processor"""
+    """
+Advanced audio fingerprinting processor"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioProcessor")
@@ -490,7 +497,8 @@ class VectorSimilarityEngine:
         self.index = faiss.IndexFlatL2(self.dimension)
         
     def add_fingerprint(self, fingerprint: ContentFingerprint):
-        """Add fingerprint to similarity index"""
+        """
+Add fingerprint to similarity index"""
         if not VECTOR_SIMILARITY_AVAILABLE or fingerprint.vector_embedding is None:
             return
             
@@ -509,7 +517,8 @@ class VectorSimilarityEngine:
         
     def find_similar(self, query_fingerprint: ContentFingerprint, 
                     k: int = 10, threshold: float = 0.8) -> List[Tuple[str, float]]:
-        """Find similar fingerprints using vector similarity"""
+        """
+Find similar fingerprints using vector similarity"""
         if not VECTOR_SIMILARITY_AVAILABLE or query_fingerprint.vector_embedding is None:
             return []
             
@@ -581,7 +590,8 @@ class ContentFingerprintingPipelineManager:
         }
         
     async def submit_fingerprinting_job(self, job: FingerprintingJob) -> str:
-        """Submit content fingerprinting job for processing"""
+        """
+Submit content fingerprinting job for processing"""
         self.active_jobs[job.job_id] = job
         self.logger.info(f"Submitted fingerprinting job: {job.job_id}")
         
@@ -674,7 +684,8 @@ class ContentFingerprintingPipelineManager:
     async def search_similar_content(self, query_content_path: str, 
                                    content_type: ContentType,
                                    similarity_threshold: float = 0.8) -> List[Dict[str, Any]]:
-        """Search for similar content using fingerprint matching"""
+        """
+Search for similar content using fingerprint matching"""
         # Generate fingerprint for query content
         methods = self._get_default_methods_for_type(content_type)
         
@@ -703,7 +714,8 @@ class ContentFingerprintingPipelineManager:
         ]
         
     def _get_default_methods_for_type(self, content_type: ContentType) -> List[FingerprintingMethod]:
-        """Get default fingerprinting methods for content type"""
+        """
+Get default fingerprinting methods for content type"""
         method_mapping = {
             ContentType.AUDIO: [FingerprintingMethod.CHROMAPRINT, FingerprintingMethod.SPECTRAL_HASH],
             ContentType.VIDEO: [FingerprintingMethod.FRAME_ANALYSIS],
@@ -714,7 +726,8 @@ class ContentFingerprintingPipelineManager:
         return method_mapping.get(content_type, [])
         
     def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get status of fingerprinting job"""
+        """
+Get status of fingerprinting job"""
         if job_id in self.active_jobs:
             return {
                 'status': 'processing',
@@ -731,7 +744,8 @@ class ContentFingerprintingPipelineManager:
             }
             
     def get_system_capabilities(self) -> Dict[str, bool]:
-        """Get system fingerprinting capabilities"""
+        """
+Get system fingerprinting capabilities"""
         return {
             'audio_fingerprinting': AUDIO_FINGERPRINTING_AVAILABLE,
             'video_image_fingerprinting': VIDEO_IMAGE_FINGERPRINTING_AVAILABLE,
@@ -740,7 +754,8 @@ class ContentFingerprintingPipelineManager:
         }
         
     def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get processing performance statistics"""
+        """
+Get processing performance statistics"""
         return {
             **self.processing_stats,
             'active_jobs': len(self.active_jobs),
@@ -752,7 +767,8 @@ class ContentFingerprintingPipelineManager:
 fingerprinting_pipeline_manager = ContentFingerprintingPipelineManager()
 
 async def initialize_fingerprinting_system(config: Optional[Dict[str, Any]] = None) -> ContentFingerprintingPipelineManager:
-    """Initialize content fingerprinting system"""
+    """
+Initialize content fingerprinting system"""
     global fingerprinting_pipeline_manager
     
     if config:
@@ -765,5 +781,6 @@ async def initialize_fingerprinting_system(config: Optional[Dict[str, Any]] = No
     return fingerprinting_pipeline_manager
 
 def get_fingerprinting_pipeline_manager() -> ContentFingerprintingPipelineManager:
-    """Get global fingerprinting pipeline manager instance"""
+    """
+Get global fingerprinting pipeline manager instance"""
     return fingerprinting_pipeline_manager

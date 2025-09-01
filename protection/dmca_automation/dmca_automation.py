@@ -11,8 +11,9 @@ Ultra-advanced automated DMCA takedown notice generation and management:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Legal Tech Expert + Compliance Specialist + Automation Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple
@@ -38,7 +39,9 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class DMCAStatus(Enum):
-    """DMCA notice status"""
+    """
+DMCA notice status"""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     SUBMITTED = "submitted"
@@ -51,6 +54,7 @@ class DMCAStatus(Enum):
 
 class PlatformType(Enum):
     """Platform types for DMCA submissions"""
+
     GOOGLE = "google"
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
@@ -65,6 +69,7 @@ class PlatformType(Enum):
 
 class NoticeType(Enum):
     """Types of DMCA notices"""
+
     TAKEDOWN = "takedown"
     COUNTER_NOTICE = "counter_notice"
     REPEAT_INFRINGER = "repeat_infringer"
@@ -92,7 +97,8 @@ class DMCANotice:
 
 @dataclass
 class PlatformResponse:
-    """Platform response to DMCA notice"""
+    """
+Platform response to DMCA notice"""
     response_id: str
     notice_id: str
     platform: PlatformType
@@ -193,7 +199,8 @@ class DMCAAutomationSystem:
         """Initialize legal document templates"""
         try:
             # DMCA Takedown Notice Template
-            self.legal_templates['takedown_notice'] = """DMCA TAKEDOWN NOTICE
+            self.legal_templates['takedown_notice'] = """
+DMCA TAKEDOWN NOTICE
 
 To: {{ platform_name }} Legal Department
 Date: {{ current_date }}
@@ -233,7 +240,8 @@ Sincerely,
             """
             
             # Counter-Notice Template
-            self.legal_templates['counter_notice'] = """DMCA COUNTER-NOTIFICATION
+            self.legal_templates['counter_notice'] = """
+DMCA COUNTER-NOTIFICATION
 
 To: {{ platform_name }} Legal Department
 Date: {{ current_date }}
@@ -267,7 +275,8 @@ Sincerely,
             """
             
             # Follow-up Notice Template
-            self.legal_templates['follow_up_notice'] = """DMCA FOLLOW-UP NOTICE
+            self.legal_templates['follow_up_notice'] = """
+DMCA FOLLOW-UP NOTICE
 
 To: {{ platform_name }} Legal Department
 Date: {{ current_date }}
@@ -842,7 +851,8 @@ Sincerely,
         return None
     
     def _detect_platform_type(self, url: str) -> PlatformType:
-        """Detect platform type from URL"""
+        """
+Detect platform type from URL"""
         url_lower = url.lower()
         
         if 'youtube.com' in url_lower or 'youtu.be' in url_lower:
@@ -865,7 +875,8 @@ Sincerely,
             return PlatformType.GENERIC_WEBSITE
     
     def _generate_good_faith_statement(self) -> str:
-        """Generate standard good faith statement"""
+        """
+Generate standard good faith statement"""
         return ("I have a good faith belief that use of the copyrighted material described above "
                 "is not authorized by the copyright owner, its agent, or the law.")
     
@@ -905,7 +916,8 @@ Sincerely,
             return False
     
     def _extract_youtube_video_id(self, url: str) -> str:
-        """Extract YouTube video ID from URL"""
+        """
+Extract YouTube video ID from URL"""
         import re
         
         patterns = [

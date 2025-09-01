@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 import json
@@ -39,7 +40,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class FingerprintEngineMetrics:
-    """Fingerprinting engine performance metrics"""
+    """
+Fingerprinting engine performance metrics"""
     engine_type: str
     processing_speed_fps: float
     accuracy_score: float
@@ -52,7 +54,8 @@ class FingerprintEngineMetrics:
 
 @dataclass
 class CrawlerMetrics:
-    """Content crawler performance metrics"""
+    """
+Content crawler performance metrics"""
     crawler_name: str
     target_platform: str
     pages_crawled_24h: int

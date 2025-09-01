@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive API Integration Tests
+"""
+Comprehensive API Integration Tests
 Tests all API endpoints for functionality, error handling, and response formats.
 
 Author: AI Assistant
 Purpose: Complete integration test coverage for API endpoints
 """
+
 import pytest
 import sys
 import os
@@ -86,7 +89,8 @@ class APIEndpoints:
         self._setup_routes()
     
     def _setup_routes(self):
-        """Setup API routes"""
+        """
+Setup API routes"""
         
         @self.app.get("/api/v1/health")
         async def health_check():
@@ -217,13 +221,15 @@ class TestAPIHealthAndStatus:
     
     @pytest.fixture
     def api_client(self):
-        """Create API client for testing"""
+        """
+Create API client for testing"""
         return APIEndpoints()
     
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_health_check_endpoint(self, api_client):
-        """Test health check endpoint"""
+        """
+Test health check endpoint"""
         health_func = api_client.app.routes["GET:/api/v1/health"]
         response = await health_func()
         
@@ -263,7 +269,8 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_list_creators_endpoint(self, api_client):
-        """Test listing creators endpoint"""
+        """
+Test listing creators endpoint"""
         list_func = api_client.app.routes["GET:/api/v1/creators"]
         response = await list_func()
         
@@ -384,7 +391,8 @@ class TestContentEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_upload_content_success(self, api_client):
-        """Test successful content upload"""
+        """
+Test successful content upload"""
         upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
         
         upload_data = {
@@ -471,7 +479,8 @@ class TestAnalyticsEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_analytics_dashboard(self, api_client):
-        """Test analytics dashboard endpoint"""
+        """
+Test analytics dashboard endpoint"""
         dashboard_func = api_client.app.routes["GET:/api/v1/analytics/dashboard"]
         
         response = await dashboard_func()
@@ -512,7 +521,8 @@ class TestAPIErrorHandling:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_404_errors(self, api_client):
-        """Test 404 error handling for non-existent resources"""
+        """
+Test 404 error handling for non-existent resources"""
         # Test non-existent creator
         get_creator_func = api_client.app.routes["GET:/api/v1/creators/{creator_id}"]
         creator_response = await get_creator_func("nonexistent")
@@ -566,7 +576,8 @@ class TestAPIPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_concurrent_requests(self, api_client):
-        """Test handling concurrent API requests"""
+        """
+Test handling concurrent API requests"""
         import time
         
         health_func = api_client.app.routes["GET:/api/v1/health"]
@@ -622,7 +633,8 @@ class TestAPIDataValidation:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_creator_data_validation(self, api_client):
-        """Test creator data validation"""
+        """
+Test creator data validation"""
         create_func = api_client.app.routes["POST:/api/v1/creators"]
         
         # Test with valid data
@@ -679,7 +691,8 @@ class TestAPIIntegrationScenarios:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_complete_creator_workflow(self, api_client):
-        """Test complete creator workflow from creation to content upload"""
+        """
+Test complete creator workflow from creation to content upload"""
         # 1. Create a creator
         create_func = api_client.app.routes["POST:/api/v1/creators"]
         creator_data = {

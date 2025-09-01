@@ -4,8 +4,9 @@ Advanced AI-powered audio classification for music, podcasts, and audio content.
 Provides genre detection, mood analysis, quality assessment, and similarity matching.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import librosa
 import torch
@@ -41,7 +42,8 @@ class AudioContentClassifier:
     """
     
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize audio classifier with ML models."""
+        """
+Initialize audio classifier with ML models."""
         self.settings = get_settings()
         self.ml_engine = MLEngine()
         self.audio_processor = AudioProcessor()
@@ -65,7 +67,8 @@ class AudioContentClassifier:
         self._setup_feature_extractors()
         
     def _initialize_models(self, model_path: Optional[str] = None) -> None:
-        """Load pre-trained classification models."""
+        """
+Load pre-trained classification models."""
         try:
             base_path = Path(model_path) if model_path else Path(self.settings.MODEL_PATH) / 'audio'
             
@@ -416,7 +419,8 @@ class AudioContentClassifier:
         return np.array(feature_list)
     
     def _heuristic_genre_classification(self, features: Dict[str, np.ndarray]) -> np.ndarray:
-        """Heuristic genre classification based on audio features."""
+        """
+Heuristic genre classification based on audio features."""
         # Simple heuristic rules - in production, use trained models
         genres = ['rock', 'pop', 'jazz', 'classical', 'electronic', 'hip-hop', 'folk', 'blues']
         probabilities = np.random.dirichlet(np.ones(len(genres)))  # Placeholder
@@ -434,7 +438,8 @@ class AudioContentClassifier:
         return probabilities
     
     def _heuristic_mood_analysis(self, features: Dict[str, np.ndarray]) -> np.ndarray:
-        """Heuristic mood analysis based on audio features."""
+        """
+Heuristic mood analysis based on audio features."""
         moods = ['happy', 'sad', 'energetic', 'calm', 'aggressive', 'romantic', 'melancholic', 'uplifting']
         probabilities = np.random.dirichlet(np.ones(len(moods)))  # Placeholder
         
@@ -453,7 +458,8 @@ class AudioContentClassifier:
         return probabilities
     
     def _calculate_valence(self, features: Dict[str, np.ndarray]) -> float:
-        """Calculate valence (positive/negative emotion)."""
+        """
+Calculate valence (positive/negative emotion)."""
         # Simplified valence calculation
         valence = 0.5  # Neutral starting point
         
@@ -471,7 +477,8 @@ class AudioContentClassifier:
         return np.clip(valence, 0.0, 1.0)
     
     def _calculate_arousal(self, features: Dict[str, np.ndarray]) -> float:
-        """Calculate arousal (energy/activation level)."""
+        """
+Calculate arousal (energy/activation level)."""
         arousal = 0.5  # Neutral starting point
         
         if 'tempo' in features:
@@ -485,7 +492,8 @@ class AudioContentClassifier:
         return np.clip(arousal, 0.0, 1.0)
     
     def _determine_emotional_quadrant(self, valence: float, arousal: float) -> str:
-        """Determine emotional quadrant based on valence and arousal."""
+        """
+Determine emotional quadrant based on valence and arousal."""
         if valence > 0.5 and arousal > 0.5:
             return "happy/excited"
         elif valence > 0.5 and arousal <= 0.5:
@@ -509,7 +517,8 @@ class AudioContentClassifier:
         return 30.0  # Default moderate SNR
     
     def _analyze_frequency_balance(self, features: Dict[str, np.ndarray]) -> Dict[str, float]:
-        """Analyze frequency balance across spectrum."""
+        """
+Analyze frequency balance across spectrum."""
         balance = {}
         
         if 'mfcc' in features:
@@ -527,7 +536,8 @@ class AudioContentClassifier:
         return balance
     
     def _detect_clipping(self, features: Dict[str, np.ndarray]) -> bool:
-        """Detect audio clipping artifacts."""
+        """
+Detect audio clipping artifacts."""
         if 'dynamic_range' in features:
             # Simple clipping detection based on dynamic range
             return features['dynamic_range'] < 0.1
@@ -535,7 +545,8 @@ class AudioContentClassifier:
         return False
     
     def _calculate_quality_score(self, quality_metrics: Dict[str, Any]) -> float:
-        """Calculate overall quality score from metrics."""
+        """
+Calculate overall quality score from metrics."""
         score = 50.0  # Base score
         
         # SNR contribution
@@ -553,7 +564,8 @@ class AudioContentClassifier:
         return float(np.clip(score, 0, 100))
     
     def _grade_quality(self, score: float) -> str:
-        """Convert quality score to letter grade."""
+        """
+Convert quality score to letter grade."""
         if score >= 90:
             return "A"
         elif score >= 80:
@@ -612,7 +624,8 @@ class AudioContentClassifier:
         return np.array(similarity_features)
     
     def _generate_perceptual_hash(self, features: np.ndarray) -> str:
-        """Generate perceptual hash from features."""
+        """
+Generate perceptual hash from features."""
         # Simple hash generation - in production use more sophisticated methods
         feature_bytes = (features * 255).astype(np.uint8)
         hash_value = hash(feature_bytes.tobytes())
@@ -709,7 +722,8 @@ class AudioContentClassifier:
         return similarity
     
     def _calculate_cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity between embedding vectors."""
+        """
+Calculate cosine similarity between embedding vectors."""
         dot_product = np.dot(vec1, vec2)
         norm1 = np.linalg.norm(vec1)
         norm2 = np.linalg.norm(vec2)
@@ -721,11 +735,13 @@ class AudioContentClassifier:
         return float(similarity)
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported audio formats."""
+        """
+Get list of supported audio formats."""
         return ['mp3', 'wav', 'flac', 'aac', 'm4a', 'ogg', 'wma']
     
     def get_classification_categories(self) -> Dict[str, List[str]]:
-        """Get available classification categories."""
+        """
+Get available classification categories."""
         return {
             'genres': ['rock', 'pop', 'jazz', 'classical', 'electronic', 'hip-hop', 'folk', 'blues', 'country', 'reggae'],
             'moods': ['happy', 'sad', 'energetic', 'calm', 'aggressive', 'romantic', 'melancholic', 'uplifting'],

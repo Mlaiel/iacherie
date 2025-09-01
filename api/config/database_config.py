@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 from typing import Dict, Optional, List, Any
 from dataclasses import dataclass, field
@@ -17,7 +18,8 @@ from elasticsearch import Elasticsearch
 
 @dataclass
 class DatabaseConfig:
-    """PostgreSQL database configuration"""
+    """
+PostgreSQL database configuration"""
     
     # Connection Parameters
     host: str = field(default_factory=lambda: os.getenv("DB_HOST", "localhost"))
@@ -191,7 +193,8 @@ class RedisConfig:
 
 @dataclass
 class MongoDBConfig:
-    """MongoDB configuration for document storage"""
+    """
+MongoDB configuration for document storage"""
     
     # Connection Parameters
     host: str = field(default_factory=lambda: os.getenv("MONGODB_HOST", "localhost"))
@@ -404,7 +407,8 @@ class VectorDatabaseConfig:
         os.makedirs(self.metadata_path, exist_ok=True)
     
     def get_index_path(self, content_type: str) -> str:
-        """Get index file path for specific content type"""
+        """
+Get index file path for specific content type"""
         return os.path.join(self.index_path, f"{content_type}_index.faiss")
     
     def get_metadata_path(self, content_type: str) -> str:

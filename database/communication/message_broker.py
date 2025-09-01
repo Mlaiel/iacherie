@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import asyncio
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class MessagePriority(Enum):
-    """Message priority levels"""
+    """
+Message priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -53,6 +56,7 @@ class MessagePriority(Enum):
 
 class MessageStatus(Enum):
     """Message processing status"""
+
     QUEUED = "queued"
     PROCESSING = "processing"
     DELIVERED = "delivered"
@@ -63,6 +67,7 @@ class MessageStatus(Enum):
 
 class QueueType(Enum):
     """Message queue types"""
+
     REAL_TIME = "real_time"
     BACKGROUND = "background"
     DELAYED = "delayed"
@@ -88,7 +93,8 @@ class MessageHeader:
 
 @dataclass
 class MessagePayload:
-    """Message payload structure"""
+    """
+Message payload structure"""
     content_type: str
     data: Dict[str, Any]
     attachments: List[Dict[str, Any]]
@@ -98,7 +104,8 @@ class MessagePayload:
 
 
 class MessageQueue(Base):
-    """Message queue persistence model"""
+    """
+Message queue persistence model"""
     __tablename__ = "message_queues"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -190,7 +197,8 @@ class MessageBroker:
         self.worker_tasks: List[asyncio.Task] = []
         
     async def initialize(self):
-        """Initialize message broker"""
+        """
+Initialize message broker"""
         try:
             # Load queue configurations from database
             await self._load_queue_configs()
@@ -494,7 +502,8 @@ class MessageBroker:
         )
     
     async def _initialize_queue_redis(self, queue_name: str, queue_type: QueueType):
-        """Initialize Redis structures for queue"""
+        """
+Initialize Redis structures for queue"""
         # Initialize queue lists
         await self.redis.delete(f"queue:{queue_name}")
         await self.redis.delete(f"priority:{queue_name}")

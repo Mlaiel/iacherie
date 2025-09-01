@@ -16,6 +16,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type categories"""
+    """
+Content type categories"""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
@@ -45,6 +48,7 @@ class ContentType(Enum):
 
 class CreatorType(Enum):
     """Creator type categories"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -56,6 +60,7 @@ class CreatorType(Enum):
 
 class ProcessStage(Enum):
     """Business process stages"""
+
     UPLOAD = "upload"
     AI_ANALYSIS = "ai_analysis"
     PROTECTION = "protection"
@@ -69,6 +74,7 @@ class ProcessStage(Enum):
 
 class ProcessStatus(Enum):
     """Process execution status"""
+
     INITIATED = "initiated"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -79,6 +85,7 @@ class ProcessStatus(Enum):
 
 class DistributionPlatform(Enum):
     """Distribution platforms"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -116,7 +123,8 @@ class ContentProcessingMetric:
 
 @dataclass
 class BusinessProcessInsight:
-    """Business process insight"""
+    """
+Business process insight"""
     insight_type: str
     stage: ProcessStage
     message: str
@@ -129,7 +137,8 @@ class BusinessProcessInsight:
 
 
 class ContentProcessingMonitor:
-    """Monitor for content processing pipeline"""
+    """
+Monitor for content processing pipeline"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -152,7 +161,8 @@ class ContentProcessingMonitor:
                                      stage: ProcessStage,
                                      status: ProcessStatus,
                                      **kwargs) -> None:
-        """Track content processing through pipeline"""
+        """
+Track content processing through pipeline"""
         try:
             metric = ContentProcessingMetric(
                 content_id=content_id,
@@ -625,7 +635,8 @@ class BusinessProcessOrchestrator:
         self._active = True
     
     async def get_comprehensive_business_report(self) -> Dict[str, Any]:
-        """Get comprehensive business intelligence report"""
+        """
+Get comprehensive business intelligence report"""
         try:
             # Gather reports from all monitors
             pipeline_report = await self.content_monitor.get_pipeline_performance_report()

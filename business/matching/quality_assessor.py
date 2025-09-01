@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityLevel(Enum):
-    """Quality level enumeration"""
+    """
+Quality level enumeration"""
+
     EXCEPTIONAL = "exceptional"
     HIGH = "high"
     GOOD = "good"
@@ -64,6 +67,7 @@ class QualityLevel(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status enumeration"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     REQUIRES_REVIEW = "requires_review"
@@ -88,7 +92,8 @@ class QualityMetrics:
 
 @dataclass
 class ComplianceReport:
-    """Compliance validation report"""
+    """
+Compliance validation report"""
     compliance_id: str
     assessment_type: str
     overall_status: ComplianceStatus
@@ -102,7 +107,8 @@ class ComplianceReport:
 
 
 class QualityAssessor:
-    """Advanced quality assessment and scoring system"""
+    """
+Advanced quality assessment and scoring system"""
     
     def __init__(self, db_session, ml_models, content_analyzer):
         self.db = db_session

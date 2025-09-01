@@ -6,7 +6,7 @@ Advanced WebSocket-based content streaming with chunk processing, real-time vali
 and intelligent buffering for enterprise-grade content ingestion pipelines.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
@@ -23,6 +23,7 @@ PROJECT TEAM SPECIALTIES:
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
 """
+
 import asyncio
 import logging
 import json
@@ -64,7 +65,9 @@ from ...core.security.auth_manager import AuthManager
 
 
 class StreamingMode(Enum):
-    """Streaming ingestion modes"""
+    """
+Streaming ingestion modes"""
+
     PROGRESSIVE = "progressive"  # Progressive upload with processing
     REALTIME = "realtime"       # Real-time streaming processing
     BUFFERED = "buffered"       # Buffered streaming with optimization
@@ -73,6 +76,7 @@ class StreamingMode(Enum):
 
 class StreamingQuality(Enum):
     """Streaming quality levels"""
+
     LOW = "low"          # 64kbps audio, 500kbps video
     STANDARD = "standard"  # 128kbps audio, 1Mbps video
     HIGH = "high"        # 256kbps audio, 2Mbps video
@@ -81,6 +85,7 @@ class StreamingQuality(Enum):
 
 class StreamingPriority(IntEnum):
     """Streaming processing priority"""
+
     LOW = 1
     NORMAL = 3
     HIGH = 5
@@ -89,7 +94,9 @@ class StreamingPriority(IntEnum):
 
 
 class ChunkStatus(Enum):
-    """Chunk processing status"""
+    """
+Chunk processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -114,7 +121,8 @@ class StreamingChunk:
 
 @dataclass
 class StreamingSession:
-    """Streaming session management"""
+    """
+Streaming session management"""
     session_id: str
     user_id: str
     websocket: WebSocketServerProtocol
@@ -159,7 +167,8 @@ class StreamingResult:
 
 
 class StreamingConfiguration(BaseModel):
-    """Streaming engine configuration"""
+    """
+Streaming engine configuration"""
     
     # WebSocket settings
     host: str = Field(default="0.0.0.0", description="WebSocket server host")
@@ -638,7 +647,8 @@ class StreamingIngestionEngine:
             }
     
     def _process_image_chunk(self, chunk_data: bytes) -> Dict[str, Any]:
-        """Process image chunk data"""
+        """
+Process image chunk data"""
         try:
             # Try to load as image
             import io

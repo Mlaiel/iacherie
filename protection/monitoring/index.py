@@ -13,7 +13,7 @@ Industrial Features:
 - Production-ready scalability and reliability
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -21,6 +21,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 security = HTTPBearer()
 
 class MonitoringIndexStatus(str, Enum):
-    """Status of the monitoring index service."""
+    """
+Status of the monitoring index service."""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     STOPPING = "stopping"
@@ -63,6 +66,7 @@ class MonitoringIndexStatus(str, Enum):
 
 class ServiceHealth(str, Enum):
     """Health status for individual services."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -79,7 +83,8 @@ class ServiceStatus:
     metrics: Dict[str, Any] = None
 
 class MonitoringRequest(BaseModel):
-    """Request model for starting monitoring."""
+    """
+Request model for starting monitoring."""
     fingerprint_id: str
     user_id: int
     platforms: List[str]
@@ -102,7 +107,8 @@ class DashboardRequest(BaseModel):
     widgets: Optional[List[Dict[str, Any]]] = None
 
 class PerformanceOptimizationRequest(BaseModel):
-    """Request model for performance optimization."""
+    """
+Request model for performance optimization."""
     optimization_type: str = "auto"
     target_resources: Optional[List[str]] = None
     aggressive_mode: bool = False
@@ -247,7 +253,8 @@ class MonitoringIndex:
         
         @asynccontextmanager
         async def lifespan(app: FastAPI):
-            """FastAPI lifespan manager."""
+            """
+FastAPI lifespan manager."""
             # Startup
             logger.info("Starting Monitoring API...")
             yield
@@ -715,7 +722,7 @@ class MonitoringIndex:
         status = {
             "version": "3.0.0",
             "author": "Fahed Mlaiel",
-            "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+            "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
             "status": self.status.value,
             "uptime_seconds": (datetime.utcnow() - self.start_time).total_seconds(),
             "services": {}
@@ -850,7 +857,8 @@ class MonitoringIndex:
         )
 
     def _load_default_config(self) -> Dict[str, Any]:
-        """Load default configuration."""
+        """
+Load default configuration."""
         return {
             "cors_origins": ["*"],
             "analytics": {
@@ -984,7 +992,7 @@ is strictly prohibited and will result in immediate legal action.
 
 For licensing inquiries, contact: mlaiel@live.de
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """# Export main classes and functions
 __all__ = [
     "MonitoringIndex",

@@ -4,6 +4,7 @@ Automated revenue distribution and multi-creator payment system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionType(Enum):
-    """Distribution types"""
+    """
+Distribution types"""
+
     EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CONTRIBUTION_BASED = "contribution_based"
@@ -27,6 +30,7 @@ class DistributionType(Enum):
 
 class PayoutSchedule(Enum):
     """Payout schedule options"""
+
     IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -62,7 +66,8 @@ class DistributionRule:
 
 @dataclass
 class DistributionEvent:
-    """Distribution event record"""
+    """
+Distribution event record"""
     id: str
     content_id: str
     total_revenue: float
@@ -515,7 +520,8 @@ class DistributionEngine:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get distribution analytics"""
+        """
+Get distribution analytics"""
         try:
             filtered_events = []
             

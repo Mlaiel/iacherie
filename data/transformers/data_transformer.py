@@ -5,9 +5,10 @@ Professional data transformation coordinator handling multi-format content proce
 encoding, and format conversion workflows for creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for transformation."""
+    """
+Supported content types for transformation."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -44,6 +47,7 @@ class ContentType(Enum):
 
 class TransformationMode(Enum):
     """Transformation processing modes."""
+
     SINGLE = "single"
     BATCH = "batch"
     REALTIME = "realtime"
@@ -52,6 +56,7 @@ class TransformationMode(Enum):
 
 class QualityLevel(Enum):
     """Quality levels for transformation."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -77,7 +82,8 @@ class TransformationRequest:
 
 @dataclass
 class TransformationResult:
-    """Transformation result with metrics."""
+    """
+Transformation result with metrics."""
     success: bool
     output_path: Optional[str] = None
     processing_time: float = 0.0
@@ -380,7 +386,8 @@ class DataTransformer:
         return await self.transform(request)
     
     async def _route_transformation(self, request: TransformationRequest) -> TransformationResult:
-        """Route transformation request to appropriate transformer."""
+        """
+Route transformation request to appropriate transformer."""
         if request.content_type == ContentType.AUDIO:
             return await self.audio_transformer.transform(request)
         elif request.content_type == ContentType.VIDEO:
@@ -465,7 +472,8 @@ class DataTransformer:
         return self.metrics.copy()
     
     def clear_cache(self):
-        """Clear transformation cache."""
+        """
+Clear transformation cache."""
         if self._cache:
             self._cache.clear()
             logger.info("Transformation cache cleared")

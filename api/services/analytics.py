@@ -9,6 +9,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -94,7 +95,8 @@ class AnalyticsService:
         }
 
     def _get_cache_key(self, key_type: str, asset_id: int, **kwargs) -> str:
-        """Generate Redis cache key"""
+        """
+Generate Redis cache key"""
         extra = "_".join(f"{k}_{v}" for k, v in kwargs.items())
         return f"analytics:{key_type}:{asset_id}:{extra}" if extra else f"analytics:{key_type}:{asset_id}"
 
@@ -192,7 +194,8 @@ class AnalyticsService:
         }
 
     async def _calculate_engagement_metrics(self, db: Session, asset: ContentAsset) -> Dict[str, Any]:
-        """Calculate advanced engagement metrics with ML predictions"""
+        """
+Calculate advanced engagement metrics with ML predictions"""
         base_views = (await self._calculate_base_metrics(db, asset))['views']
         
         # Content-type specific engagement rates
@@ -222,7 +225,8 @@ class AnalyticsService:
         }
 
     async def _calculate_revenue_metrics(self, db: Session, asset: ContentAsset) -> Dict[str, float]:
-        """Calculate revenue and conversion metrics"""
+        """
+Calculate revenue and conversion metrics"""
         # Get actual revenue data from database
         revenue_records = db.query(RevenueTracking).filter(
             RevenueTracking.content_id == asset.id
@@ -240,7 +244,8 @@ class AnalyticsService:
         }
 
     async def _calculate_protection_metrics(self, db: Session, asset: ContentAsset) -> Dict[str, float]:
-        """Calculate content protection effectiveness metrics"""
+        """
+Calculate content protection effectiveness metrics"""
         # Get protection alerts for this asset
         protection_alerts = db.query(ProtectionAlert).filter(
             ProtectionAlert.fingerprint_id == asset.id
@@ -263,7 +268,8 @@ class AnalyticsService:
         }
 
     async def _calculate_seo_metrics(self, asset: ContentAsset) -> Dict[str, float]:
-        """Calculate SEO optimization score"""
+        """
+Calculate SEO optimization score"""
         try:
             seo_analysis = await self.seo_optimizer.analyze_content_seo(
                 title=asset.title,
@@ -326,7 +332,8 @@ class AnalyticsService:
         return sum(factors) / len(factors) if factors else 1.0
 
     async def get_predictive_insights(self, db: Session, asset: ContentAsset) -> PredictiveInsights:
-        """Generate AI-powered predictive insights and recommendations"""
+        """
+Generate AI-powered predictive insights and recommendations"""
         cache_key = self._get_cache_key("predictive", asset.id)
         
         cached_insights = await self._cache_get(cache_key)
@@ -373,7 +380,8 @@ class AnalyticsService:
         return max(0.0, base_growth + quality_bonus - age_penalty)
 
     async def _analyze_viral_potential(self, asset: ContentAsset, metrics: AnalyticsMetrics) -> Dict[str, Any]:
-        """Analyze viral potential using multiple factors"""
+        """
+Analyze viral potential using multiple factors"""
         viral_indicators = []
         
         # High engagement rate
@@ -410,7 +418,8 @@ class AnalyticsService:
         }
 
     async def _generate_optimization_recommendations(self, asset: ContentAsset, metrics: AnalyticsMetrics) -> List[str]:
-        """Generate actionable optimization recommendations"""
+        """
+Generate actionable optimization recommendations"""
         recommendations = []
         
         if metrics.engagement_rate < 0.08:
@@ -543,7 +552,8 @@ class AnalyticsService:
 
     # Legacy method for backward compatibility
     def metrics(self, asset: ContentAsset) -> Dict:
-        """Legacy metrics method - deprecated, use get_comprehensive_metrics instead"""
+        """
+Legacy metrics method - deprecated, use get_comprehensive_metrics instead"""
         logger.warning("Using deprecated metrics method. Switch to get_comprehensive_metrics")
         
         # Deterministic pseudo-metrics (original implementation)

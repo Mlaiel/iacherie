@@ -5,7 +5,7 @@ Industrial-grade schema validation system for the IA Influencer Agent Platform
 providing comprehensive data structure validation and integrity checking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 Features:
@@ -15,6 +15,7 @@ Features:
 - Data type validation and coercion
 - Cross-field validation
 """
+
 import json
 import re
 from enum import Enum
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class SchemaType(Enum):
-    """Schema validation types"""
+    """
+Schema validation types"""
+
     JSON_SCHEMA = "json_schema"
     PYDANTIC = "pydantic"
     CUSTOM = "custom"
@@ -53,6 +56,7 @@ class SchemaType(Enum):
 
 class ValidationSeverity(Enum):
     """Validation issue severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -75,7 +79,8 @@ class SchemaValidationIssue:
 
 @dataclass
 class SchemaValidationResult:
-    """Comprehensive schema validation result"""
+    """
+Comprehensive schema validation result"""
     is_valid: bool
     schema_type: SchemaType
     issues: List[SchemaValidationIssue] = field(default_factory=list)
@@ -91,35 +96,41 @@ class SchemaValidationResult:
     
     @property
     def has_errors(self) -> bool:
-        """Check if validation has errors"""
+        """
+Check if validation has errors"""
         return any(issue.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL] 
                   for issue in self.issues)
     
     @property
     def has_warnings(self) -> bool:
-        """Check if validation has warnings"""
+        """
+Check if validation has warnings"""
         return any(issue.severity == ValidationSeverity.WARNING for issue in self.issues)
     
     @property
     def error_count(self) -> int:
-        """Count of error-level issues"""
+        """
+Count of error-level issues"""
         return len([i for i in self.issues if i.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL]])
     
     @property
     def warning_count(self) -> int:
-        """Count of warning-level issues"""
+        """
+Count of warning-level issues"""
         return len([i for i in self.issues if i.severity == ValidationSeverity.WARNING])
     
     @property
     def success_rate(self) -> float:
-        """Calculate field validation success rate"""
+        """
+Calculate field validation success rate"""
         if self.fields_validated == 0:
             return 0.0
         return self.fields_passed / self.fields_validated
 
 
 class CustomValidationRule:
-    """Custom validation rule definition"""
+    """
+Custom validation rule definition"""
     
     def __init__(
         self,
@@ -537,7 +548,8 @@ class SchemaValidator:
     # Helper methods
     
     def _parse_jsonschema_error(self, error: JsonSchemaValidationError) -> SchemaValidationIssue:
-        """Parse JSON Schema validation error"""
+        """
+Parse JSON Schema validation error"""
         field_path = ".".join(str(x) for x in error.absolute_path) or "root"
         
         return SchemaValidationIssue(
@@ -573,7 +585,8 @@ class SchemaValidator:
         return count
     
     def _extract_field_value(self, data: Any, field_path: str) -> Any:
-        """Extract field value using dot notation path"""
+        """
+Extract field value using dot notation path"""
         keys = field_path.split('.')
         value = data
         
@@ -606,7 +619,8 @@ class SchemaValidator:
         return True  # Unknown type, pass validation
     
     def _validate_constraint(self, value: Any, constraint: Dict[str, Any], field_path: str) -> Optional[SchemaValidationIssue]:
-        """Validate field constraint"""
+        """
+Validate field constraint"""
         constraint_type = constraint.get('type')
         
         if constraint_type == 'min_length' and isinstance(value, str):
@@ -799,7 +813,8 @@ class SchemaValidator:
         }
     
     def _initialize_format_validators(self) -> Dict[str, Callable[[str], bool]]:
-        """Initialize format validation functions"""
+        """
+Initialize format validation functions"""
         def validate_email(value: str) -> bool:
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
             return re.match(pattern, value) is not None

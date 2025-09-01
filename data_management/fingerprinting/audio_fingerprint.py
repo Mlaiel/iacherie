@@ -8,7 +8,7 @@ Responsibility: Advanced audio fingerprinting with Chromaprint, Essentia, and sp
 ===========================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -28,6 +28,7 @@ AUDIO FINGERPRINTING TECHNOLOGIES:
 ├── ⚡ Real-time Processing (Stream + Batch)
 └── 🛡️ Protection System (Monitoring + Alerts)
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
@@ -121,7 +122,8 @@ class AudioProcessor(ABC):
     
     @abstractmethod
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
-        """Process audio file and generate fingerprint"""
+        """
+Process audio file and generate fingerprint"""
         logger.warning(f"process method not implemented in {self.__class__.__name__}")
         
         # Return basic fingerprint data structure
@@ -211,7 +213,8 @@ class ChromaprintProcessor(AudioProcessor):
             return 0.5  # Score neutre en cas d'erreur
 
 class EssentiaProcessor(AudioProcessor):
-    """Processeur Essentia pour l'analyse musicale avancée"""
+    """
+Processeur Essentia pour l'analyse musicale avancée"""
     
     def __init__(self):
         if not ESSENTIA_AVAILABLE:
@@ -347,7 +350,8 @@ class SpectralHashProcessor(AudioProcessor):
     """Processeur pour les hash spectraux avancés"""
     
     def __init__(self):
-        """Initialise le processeur de hash spectraux"""
+        """
+Initialise le processeur de hash spectraux"""
         if not LIBROSA_AVAILABLE:
             raise ImportError("librosa library not available for spectral hash processing")
         self.name = "spectral_hash"
@@ -473,7 +477,8 @@ class SpectralHashProcessor(AudioProcessor):
             return 0.0
     
     def _calculate_kurtosis(self, data: np.ndarray) -> float:
-        """Calcule l'aplatissement"""
+        """
+Calcule l'aplatissement"""
         try:
             mean = np.mean(data)
             std = np.std(data)
@@ -484,10 +489,12 @@ class SpectralHashProcessor(AudioProcessor):
             return 0.0
 
 class MelSpectrogramProcessor(AudioProcessor):
-    """Processeur pour spectrogrammes mel avancés"""
+    """
+Processeur pour spectrogrammes mel avancés"""
     
     def __init__(self):
-        """Initialise le processeur de spectrogrammes mel"""
+        """
+Initialise le processeur de spectrogrammes mel"""
         if not LIBROSA_AVAILABLE:
             raise ImportError("librosa library not available for mel spectrogram processing")
         self.name = "mel_spectrogram"

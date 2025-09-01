@@ -6,6 +6,7 @@ and content platforms, optimizing content for each platform's unique requirement
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -16,7 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms for SEO optimization"""
+    """
+Supported platforms for SEO optimization"""
+
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -43,7 +46,8 @@ class PlatformSEOConfig:
 
 @dataclass
 class PlatformOptimizationResult:
-    """Result of platform-specific optimization"""
+    """
+Result of platform-specific optimization"""
     platform: Platform
     optimized_title: str
     optimized_description: str
@@ -55,31 +59,37 @@ class PlatformOptimizationResult:
 
 
 class BasePlatformAdapter(ABC):
-    """Base class for platform-specific SEO adapters"""
+    """
+Base class for platform-specific SEO adapters"""
     
     @abstractmethod
     def get_config(self) -> PlatformSEOConfig:
-        """Get platform-specific configuration"""
+        """
+Get platform-specific configuration"""
         pass
     
     @abstractmethod
     def optimize_content(self, content: str, keywords: List[str]) -> str:
-        """Optimize content for the platform"""
+        """
+Optimize content for the platform"""
         pass
     
     @abstractmethod
     def generate_hashtags(self, content: str, keywords: List[str]) -> List[str]:
-        """Generate platform-appropriate hashtags"""
+        """
+Generate platform-appropriate hashtags"""
         pass
     
     @abstractmethod
     def calculate_seo_score(self, content: str, metadata: Dict[str, Any]) -> float:
-        """Calculate platform-specific SEO score"""
+        """
+Calculate platform-specific SEO score"""
         pass
 
 
 class InstagramAdapter(BasePlatformAdapter):
-    """Instagram SEO adapter"""
+    """
+Instagram SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -125,7 +135,8 @@ class InstagramAdapter(BasePlatformAdapter):
         return '\n'.join(optimized_lines)
     
     def generate_hashtags(self, content: str, keywords: List[str]) -> List[str]:
-        """Generate Instagram hashtags"""
+        """
+Generate Instagram hashtags"""
         hashtags = []
         
         # Add keyword-based hashtags
@@ -178,7 +189,8 @@ class InstagramAdapter(BasePlatformAdapter):
 
 
 class YouTubeAdapter(BasePlatformAdapter):
-    """YouTube SEO adapter"""
+    """
+YouTube SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -270,7 +282,8 @@ class YouTubeAdapter(BasePlatformAdapter):
 
 
 class TwitterAdapter(BasePlatformAdapter):
-    """Twitter SEO adapter"""
+    """
+Twitter SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -309,7 +322,8 @@ class TwitterAdapter(BasePlatformAdapter):
         return content
     
     def generate_hashtags(self, content: str, keywords: List[str]) -> List[str]:
-        """Generate Twitter hashtags"""
+        """
+Generate Twitter hashtags"""
         hashtags = []
         
         # Twitter works best with 1-2 focused hashtags
@@ -356,7 +370,8 @@ class TwitterAdapter(BasePlatformAdapter):
 
 
 class LinkedInAdapter(BasePlatformAdapter):
-    """LinkedIn SEO adapter"""
+    """
+LinkedIn SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -444,7 +459,8 @@ class PlatformSEOAdapter:
     """
     
     def __init__(self):
-        """Initialize the platform SEO adapter with all supported platforms"""
+        """
+Initialize the platform SEO adapter with all supported platforms"""
         self.adapters = {
             Platform.INSTAGRAM: InstagramAdapter(),
             Platform.YOUTUBE: YouTubeAdapter(),
@@ -646,7 +662,8 @@ class PlatformSEOAdapter:
         return list(self.adapters.keys())
     
     def get_platform_config(self, platform: Platform) -> PlatformSEOConfig:
-        """Get configuration for a specific platform"""
+        """
+Get configuration for a specific platform"""
         if platform not in self.adapters:
             raise ValueError(f"Platform {platform} not supported")
         return self.adapters[platform].get_config()

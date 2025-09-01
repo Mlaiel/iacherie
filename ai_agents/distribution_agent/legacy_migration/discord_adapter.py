@@ -4,6 +4,7 @@ Handles community content distribution, server management, and engagement.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DiscordCredentials:
-    """Discord API credentials configuration."""
+    """
+Discord API credentials configuration."""
     bot_token: str
     client_id: str
     client_secret: str
@@ -35,6 +37,7 @@ class DiscordAdapter(BasePlatformAdapter):
     Advanced Discord platform adapter for community content distribution.
     Supports messages, embeds, file uploads, and server management.
     """
+
     
     PLATFORM_NAME = "discord"
     API_BASE_URL = "https://discord.com/api/v10"

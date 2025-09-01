@@ -6,6 +6,7 @@ title tags, meta descriptions, Open Graph tags, Twitter cards, and schema markup
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetaTagType(Enum):
-    """Types of meta tags"""
+    """
+Types of meta tags"""
+
     TITLE = "title"
     DESCRIPTION = "description"
     KEYWORDS = "keywords"
@@ -31,6 +34,7 @@ class MetaTagType(Enum):
 
 class ContentType(Enum):
     """Content types for meta optimization"""
+
     ARTICLE = "article"
     PRODUCT = "product"
     VIDEO = "video"
@@ -54,7 +58,8 @@ class MetaTag:
 
 @dataclass
 class MetaOptimizationResult:
-    """Result of meta optimization"""
+    """
+Result of meta optimization"""
     optimized_title: str
     optimized_description: str
     optimized_keywords: List[str]
@@ -287,7 +292,8 @@ class MetaOptimizer:
         image_url: str, 
         content_type: ContentType
     ) -> Dict[str, str]:
-        """Generate Open Graph meta tags"""
+        """
+Generate Open Graph meta tags"""
         og_tags = {
             "og:title": title,
             "og:description": description,
@@ -623,7 +629,8 @@ class MetaOptimizer:
         return min(max_score, score)
 
     def _generate_meta_recommendations(self, meta_tags: List[MetaTag], seo_score: float) -> List[str]:
-        """Generate recommendations for meta tag improvements"""
+        """
+Generate recommendations for meta tag improvements"""
         
         recommendations = []
         

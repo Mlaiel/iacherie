@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import time
@@ -61,7 +62,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
+    """
+Pipeline execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -73,6 +76,7 @@ class PipelineStatus(Enum):
 
 class StepStatus(Enum):
     """Pipeline step status"""
+
     WAITING = "waiting"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -83,6 +87,7 @@ class StepStatus(Enum):
 
 class ExecutionMode(Enum):
     """Pipeline execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     DISTRIBUTED = "distributed"
@@ -93,6 +98,7 @@ class ExecutionMode(Enum):
 
 class ResourceType(Enum):
     """Resource types for pipeline steps"""
+
     CPU = "cpu"
     GPU = "gpu"
     MEMORY = "memory"
@@ -123,7 +129,8 @@ class ResourceRequirement:
 
 @dataclass
 class StepMetrics:
-    """Metrics for pipeline step execution"""
+    """
+Metrics for pipeline step execution"""
     step_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -152,7 +159,8 @@ class StepMetrics:
 
 @dataclass
 class PipelineConfig:
-    """Configuration for ML pipeline"""
+    """
+Configuration for ML pipeline"""
     name: str
     version: str = "1.0.0"
     description: str = ""
@@ -238,15 +246,18 @@ class PipelineStep(ABC):
         pass
     
     def validate_inputs(self, inputs: Dict[str, Any]) -> bool:
-        """Validate step inputs"""
+        """
+Validate step inputs"""
         return True
     
     def validate_outputs(self, outputs: Dict[str, Any]) -> bool:
-        """Validate step outputs"""
+        """
+Validate step outputs"""
         return True
     
     async def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Run the step with error handling and metrics"""
+        """
+Run the step with error handling and metrics"""
         self.status = StepStatus.RUNNING
         self.start_time = datetime.now()
         
@@ -318,7 +329,8 @@ class PipelineStep(ABC):
 
 
 class DataLoadingStep(PipelineStep):
-    """Data loading pipeline step"""
+    """
+Data loading pipeline step"""
     
     def __init__(self, step_id: str, data_source: str, **kwargs):
         super().__init__(step_id, f"Load Data from {data_source}", **kwargs)
@@ -761,7 +773,8 @@ class MLPipeline:
         return asyncio.run(self.execute_step(step_id, inputs))
     
     def _prepare_step_inputs(self, step_id: str, all_outputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare inputs for a specific step"""
+        """
+Prepare inputs for a specific step"""
         step = self.steps[step_id]
         step_inputs = {}
         
@@ -777,7 +790,8 @@ class MLPipeline:
         return step_inputs
     
     def _check_resources(self, step: PipelineStep) -> bool:
-        """Check if resources are available for step execution"""
+        """
+Check if resources are available for step execution"""
         # Simple resource check implementation
         req = step.resource_requirements
         
@@ -793,7 +807,8 @@ class MLPipeline:
         return True
     
     def _store_step_artifacts(self, step_id: str, outputs: Dict[str, Any]):
-        """Store step artifacts for later retrieval"""
+        """
+Store step artifacts for later retrieval"""
         artifact_path = Path(self.config.artifact_storage_path) / self.execution_id / step_id
         artifact_path.mkdir(parents=True, exist_ok=True)
         
@@ -886,7 +901,8 @@ class MLPipeline:
         }
     
     def _store_pipeline_results(self, results: Dict[str, Any]):
-        """Store final pipeline results"""
+        """
+Store final pipeline results"""
         results_path = Path(self.config.artifact_storage_path) / self.execution_id / "pipeline_results.json"
         results_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -925,7 +941,8 @@ class MLPipeline:
     
     @classmethod
     def from_yaml(cls, config_path: str) -> 'MLPipeline':
-        """Create pipeline from YAML configuration"""
+        """
+Create pipeline from YAML configuration"""
         with open(config_path, 'r') as f:
             config_dict = yaml.safe_load(f)
         

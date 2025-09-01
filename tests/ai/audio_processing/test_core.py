@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -23,8 +24,9 @@ Comprehensive testing for core audio processing functionality including:
 - Memory management validation
 
 Created by Expert Team: Audio Developer + Backend Senior + ML Engineer
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -70,7 +72,8 @@ class TestAudioProcessor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.processor = AudioProcessor()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
@@ -85,7 +88,8 @@ class TestAudioProcessor:
         assert processor.sample_rate == 44100  # Default
     
     def test_load_audio_wav_format(self):
-        """Test loading WAV audio files"""
+        """
+Test loading WAV audio files"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -148,7 +152,8 @@ class TestAudioProcessor:
         assert len(trimmed) >= len(signal) * 0.9  # Should preserve most of the signal
     
     def test_convert_to_mono(self):
-        """Test stereo to mono conversion"""
+        """
+Test stereo to mono conversion"""
         # Create stereo audio data
         mono_signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 4410))
         stereo_signal = np.column_stack([mono_signal, mono_signal * 0.8])
@@ -160,7 +165,8 @@ class TestAudioProcessor:
         assert mono_converted.dtype == np.float32
     
     def test_save_audio(self):
-        """Test audio saving functionality"""
+        """
+Test audio saving functionality"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -223,7 +229,8 @@ class TestAudioAnalyzer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.analyzer = AudioAnalyzer()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
@@ -236,7 +243,8 @@ class TestAudioAnalyzer:
         assert hasattr(analyzer, 'frame_size')
     
     def test_extract_mfcc_features(self):
-        """Test MFCC feature extraction"""
+        """
+Test MFCC feature extraction"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
@@ -362,7 +370,8 @@ class TestAudioEnhancer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.enhancer = AudioEnhancer()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
@@ -375,7 +384,8 @@ class TestAudioEnhancer:
         assert hasattr(enhancer, 'enhancement_settings')
     
     def test_noise_reduction(self):
-        """Test noise reduction effectiveness"""
+        """
+Test noise reduction effectiveness"""
         # Load noisy audio
         noisy_file = self.test_data_dir / "white_noise.wav"
         processor = AudioProcessor()
@@ -504,7 +514,8 @@ class TestAudioMetadata:
     """
     
     def test_metadata_creation(self):
-        """Test AudioMetadata creation"""
+        """
+Test AudioMetadata creation"""
         metadata = AudioMetadata(
             duration=5.0,
             sample_rate=44100,
@@ -553,7 +564,8 @@ class TestAudioFeatures:
     """
     
     def test_features_creation(self):
-        """Test AudioFeatures creation"""
+        """
+Test AudioFeatures creation"""
         mfcc = np.random.randn(13, 100)
         spectral_features = {"spectral_centroid": np.random.randn(100)}
         temporal_features = {"rms_energy": np.random.randn(100)}
@@ -596,7 +608,8 @@ class TestCoreIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     

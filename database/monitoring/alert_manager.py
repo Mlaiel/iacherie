@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -32,7 +33,9 @@ from ...utils.template_engine import TemplateEngine
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -41,6 +44,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert status types"""
+
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
@@ -49,6 +53,7 @@ class AlertStatus(Enum):
 
 class NotificationType(Enum):
     """Notification channel types"""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -119,7 +124,8 @@ class AlertRule:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['severity'] = self.severity.value
         data['conditions'] = [asdict(condition) for condition in self.conditions]
@@ -128,7 +134,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
+    """
+Alert instance"""
     alert_id: str
     rule_id: str
     rule_name: str
@@ -147,7 +154,8 @@ class Alert:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['severity'] = self.severity.value
         data['status'] = self.status.value
@@ -161,7 +169,8 @@ class Alert:
 
 @dataclass
 class NotificationChannel:
-    """Notification channel configuration"""
+    """
+Notification channel configuration"""
     channel_id: str
     name: str
     channel_type: NotificationType
@@ -170,7 +179,8 @@ class NotificationChannel:
     rate_limit_per_hour: int = 60
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['channel_type'] = self.channel_type.value
         return data
@@ -852,5 +862,6 @@ class DatabaseAlertManager:
         return [rule.to_dict() for rule in self.alert_rules.values()]
     
     async def get_notification_channels(self) -> List[Dict[str, Any]]:
-        """Get all notification channels"""
+        """
+Get all notification channels"""
         return [channel.to_dict() for channel in self.notification_channels.values()]

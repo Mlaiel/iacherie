@@ -5,7 +5,7 @@ Central index file for IA Influencer Agent data models.
 Provides easy access to all models, utilities, and helper functions.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Type, Any, Optional
 from datetime import datetime
 import importlib
@@ -61,15 +62,18 @@ class ModelManager:
         self._engine = None
     
     def get_model(self, name: str) -> Optional[Type]:
-        """Get model class by name"""
+        """
+Get model class by name"""
         return self.models.get(name)
     
     def get_all_model_names(self) -> List[str]:
-        """Get all registered model names"""
+        """
+Get all registered model names"""
         return list(self.models.keys())
     
     def get_model_info(self, model_name: str) -> Dict[str, Any]:
-        """Get detailed information about a model"""
+        """
+Get detailed information about a model"""
         model_class = self.get_model(model_name)
         if not model_class:
             return {}
@@ -98,7 +102,8 @@ class ModelManager:
         }
     
     def validate_model_data(self, model_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data against model schema"""
+        """
+Validate data against model schema"""
         model_class = self.get_model(model_name)
         if not model_class:
             return {'valid': False, 'errors': [f'Model {model_name} not found']}
@@ -136,7 +141,8 @@ class ModelManager:
         }
     
     def create_model_instance(self, model_name: str, **kwargs) -> Optional[Any]:
-        """Create an instance of a model with provided data"""
+        """
+Create an instance of a model with provided data"""
         model_class = self.get_model(model_name)
         if not model_class:
             raise ValueError(f'Model {model_name} not found')
@@ -169,7 +175,8 @@ class ModelManager:
         return relationships
     
     def get_enum_values(self, enum_class_name: str) -> List[str]:
-        """Get all possible values for an enum"""
+        """
+Get all possible values for an enum"""
         enum_mapping = {
             'ContentType': ContentType,
             'ContentStatus': ContentStatus,
@@ -206,7 +213,8 @@ class ModelManager:
         return []
     
     def setup_database(self, database_url: str, **kwargs):
-        """Setup database connection and session"""
+        """
+Setup database connection and session"""
         if not SQLALCHEMY_AVAILABLE:
             raise ImportError("SQLAlchemy is required for database operations")
         
@@ -230,7 +238,8 @@ class ModelManager:
         return self._session
     
     def close_session(self):
-        """Close current database session"""
+        """
+Close current database session"""
         if self._session:
             self._session.close()
             self._session = None
@@ -247,7 +256,8 @@ class ModelQueryBuilder:
         self.manager = ModelManager()
     
     def get_user_content_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get summary of user's content across all types"""
+        """
+Get summary of user's content across all types"""
         if not self.session:
             raise RuntimeError("Database session not available")
         
@@ -322,7 +332,8 @@ class ModelQueryBuilder:
         return overview
     
     def get_protection_alerts(self, user_id: str, severity_levels: List[str] = None) -> List[Dict[str, Any]]:
-        """Get active protection alerts for user"""
+        """
+Get active protection alerts for user"""
         query = self.session.query(ProtectionModel).filter(
             ProtectionModel.user_id == user_id,
             ProtectionModel.is_deleted == False,
@@ -357,19 +368,23 @@ model_manager = ModelManager()
 
 # Convenience functions
 def get_model(name: str):
-    """Get model class by name"""
+    """
+Get model class by name"""
     return model_manager.get_model(name)
 
 def create_instance(model_name: str, **kwargs):
-    """Create model instance with validation"""
+    """
+Create model instance with validation"""
     return model_manager.create_model_instance(model_name, **kwargs)
 
 def get_enum_values(enum_name: str):
-    """Get enum values"""
+    """
+Get enum values"""
     return model_manager.get_enum_values(enum_name)
 
 def setup_database(database_url: str, **kwargs):
-    """Setup database connection"""
+    """
+Setup database connection"""
     return model_manager.setup_database(database_url, **kwargs)
 
 # Export all for easy access

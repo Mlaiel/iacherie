@@ -6,6 +6,7 @@ including audio, video, images, and text for IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, BinaryIO, Tuple
 from uuid import UUID, uuid4
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 class SupportedFormat(str, Enum):
-    """Supported content formats by type."""
+    """
+Supported content formats by type."""
     # Audio formats
     MP3 = "mp3"
     WAV = "wav" 
@@ -491,7 +493,8 @@ class ContentManager:
             return None, file_extension
             
     def _get_file_size(self, file_stream: BinaryIO) -> int:
-        """Get file size from stream."""
+        """
+Get file size from stream."""
         current_pos = file_stream.tell()
         file_stream.seek(0, 2)  # Seek to end
         size = file_stream.tell()
@@ -504,7 +507,8 @@ class ContentManager:
         content_id: UUID,
         file_extension: str
     ) -> str:
-        """Generate storage path for content file."""
+        """
+Generate storage path for content file."""
         date_path = datetime.utcnow().strftime("%Y/%m/%d")
         return f"content/{client_id}/{date_path}/{content_id}.{file_extension}"
         
@@ -527,7 +531,8 @@ class ContentManager:
         return int(base_times[content_type] * (1 + size_factor))
         
     async def _format_content_data(self, content: Content) -> Dict[str, Any]:
-        """Format content data for API response."""
+        """
+Format content data for API response."""
         return {
             "id": str(content.id),
             "title": content.title,
@@ -566,21 +571,25 @@ class ContentManager:
         return {}
         
     async def _generate_thumbnails(self, content: Content) -> List[str]:
-        """Generate thumbnails for content."""
+        """
+Generate thumbnails for content."""
         # Implementation would generate thumbnails based on content type
         return []
         
     async def _optimize_for_seo(self, content: Content) -> Dict[str, Any]:
-        """Optimize content metadata for SEO."""
+        """
+Optimize content metadata for SEO."""
         # Implementation would generate SEO-optimized metadata
         return {}
         
     async def _get_thumbnail_url(self, content: Content) -> Optional[str]:
-        """Get thumbnail URL for content."""
+        """
+Get thumbnail URL for content."""
         # Implementation would return thumbnail URL
         return None
         
     async def _get_download_url(self, content: Content) -> Optional[str]:
-        """Get download URL for content."""
+        """
+Get download URL for content."""
         # Implementation would return secure download URL
         return None

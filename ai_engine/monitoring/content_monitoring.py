@@ -4,10 +4,11 @@ Enterprise-grade monitoring for content processing pipelines supporting multi-fo
 Tracks upload, protection, SEO, collaboration, and distribution workflows.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 import json
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content supported by the platform"""
+    """
+Types of content supported by the platform"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -49,6 +52,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content processing status"""
+
     UPLOADED = "uploaded"
     VALIDATING = "validating"
     ANALYZING = "analyzing"
@@ -64,6 +68,7 @@ class ContentStatus(Enum):
 
 class QualityLevel(Enum):
     """Content quality assessment levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -95,7 +100,8 @@ class ContentMetrics:
 
 @dataclass
 class PipelineFlow:
-    """Complete pipeline flow tracking"""
+    """
+Complete pipeline flow tracking"""
     flow_id: str
     user_id: str
     content_id: str
@@ -113,7 +119,8 @@ class PipelineFlow:
 
 @dataclass
 class UserJourney:
-    """User journey and engagement tracking"""
+    """
+User journey and engagement tracking"""
     user_id: str
     session_id: str
     journey_start: datetime
@@ -599,7 +606,8 @@ class ContentProcessingMonitor:
         return stage_status_map.get(stage, ContentStatus.UPLOADED)
         
     async def _store_content_metrics(self, metrics: ContentMetrics) -> None:
-        """Store content metrics"""
+        """
+Store content metrics"""
         # Store in memory
         self.content_metrics[metrics.content_id].append(metrics)
         
@@ -704,7 +712,8 @@ class ContentProcessingMonitor:
         return total_satisfaction / len(self.user_journeys)
         
     async def _identify_common_pain_points(self) -> List[str]:
-        """Identify common user pain points"""
+        """
+Identify common user pain points"""
         pain_point_counts = defaultdict(int)
         
         for journey in self.user_journeys.values():
@@ -715,7 +724,8 @@ class ContentProcessingMonitor:
         return sorted(pain_point_counts.items(), key=lambda x: x[1], reverse=True)[:5]
         
     async def _archive_flow(self, flow: PipelineFlow) -> None:
-        """Archive completed flow to storage"""
+        """
+Archive completed flow to storage"""
         try:
             archive_file = self.storage_path / f"flow_{flow.flow_id}.json"
             
@@ -792,7 +802,8 @@ class ContentProcessingMonitor:
         return sum(health_factors) if health_factors else 0.0
         
     async def _cleanup_old_data(self) -> None:
-        """Clean up old tracking data"""
+        """
+Clean up old tracking data"""
         cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         # Clean up user journeys
@@ -810,7 +821,8 @@ class ContentProcessingMonitor:
                 metrics_queue.popleft()
                 
     async def _generate_optimization_suggestions(self) -> None:
-        """Generate optimization suggestions for active flows"""
+        """
+Generate optimization suggestions for active flows"""
         for flow_id, flow in self.active_flows.items():
             suggestions = []
             

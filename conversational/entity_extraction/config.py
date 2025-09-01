@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
@@ -19,7 +20,8 @@ from pathlib import Path
 
 @dataclass
 class EntityExtractionConfig:
-    """Comprehensive configuration for entity extraction system"""
+    """
+Comprehensive configuration for entity extraction system"""
     
     # Model Configuration
     MODEL_CACHE_DIR: str = "/tmp/entity_models"
@@ -125,7 +127,8 @@ class EntityExtractionConfig:
         )
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         return {
             'model_config': {
                 'cache_dir': self.MODEL_CACHE_DIR,
@@ -183,7 +186,8 @@ class EntityExtractionConfig:
         }
     
     def validate(self) -> bool:
-        """Validate configuration settings"""
+        """
+Validate configuration settings"""
         try:
             # Validate paths
             Path(self.MODEL_CACHE_DIR).mkdir(parents=True, exist_ok=True)

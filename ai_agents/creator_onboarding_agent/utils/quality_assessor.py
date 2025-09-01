@@ -5,6 +5,7 @@ multi-dimensional quality metrics, and optimization recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -33,7 +34,9 @@ from ...utils.performance_metrics import PerformanceMetrics
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""
+    """
+Quality assessment dimensions"""
+
     TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     CONTENT = "content"
@@ -43,6 +46,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Content quality levels"""
+
     POOR = "poor"           # 0.0 - 0.3
     FAIR = "fair"           # 0.3 - 0.5
     GOOD = "good"           # 0.5 - 0.7
@@ -160,7 +164,8 @@ class QualityAssessor:
         }
     
     def _initialize_industry_standards(self) -> Dict[str, Dict[str, float]]:
-        """Initialize industry quality standards."""
+        """
+Initialize industry quality standards."""
         return {
             'musician': {
                 'audio_quality_weight': 0.4,
@@ -651,7 +656,8 @@ class QualityAssessor:
         assessment.overall_score = sum(weighted_scores)
     
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Determine quality level based on overall score."""
+        """
+Determine quality level based on overall score."""
         if overall_score >= 0.9:
             return QualityLevel.EXCEPTIONAL
         elif overall_score >= 0.7:
@@ -665,7 +671,8 @@ class QualityAssessor:
     
     async def _generate_quality_recommendations(self, assessment: QualityAssessment,
                                               creator_type: str = None) -> None:
-        """Generate specific quality improvement recommendations."""
+        """
+Generate specific quality improvement recommendations."""
         recommendations = []
         technical_improvements = []
         aesthetic_improvements = []
@@ -765,7 +772,8 @@ class QualityAssessor:
         assessment.improvement_potential = (1.0 - assessment.overall_score) * 100
     
     def _identify_strengths_weaknesses(self, assessment: QualityAssessment) -> None:
-        """Identify content strengths and weaknesses."""
+        """
+Identify content strengths and weaknesses."""
         scores = {
             'technical': assessment.technical_score,
             'aesthetic': assessment.aesthetic_score,
@@ -801,7 +809,8 @@ class QualityAssessor:
             return max(0.1, value / minimum * 0.5)
     
     def _score_frame_rate(self, fps: float) -> float:
-        """Score frame rate for video content."""
+        """
+Score frame rate for video content."""
         if fps >= 60:
             return 1.0
         elif fps >= 30:
@@ -812,7 +821,8 @@ class QualityAssessor:
             return 0.4
     
     def _generate_default_technical_scores(self, content_type: str) -> Dict[str, float]:
-        """Generate default technical scores when analysis is not available."""
+        """
+Generate default technical scores when analysis is not available."""
         defaults = {
             'audio': {
                 'bitrate_score': 0.6,
@@ -848,7 +858,8 @@ class QualityAssessor:
         return defaults.get(content_type, {'overall': 0.6})
     
     def _generate_default_aesthetic_scores(self, content_type: str) -> Dict[str, float]:
-        """Generate default aesthetic scores when analysis is not available."""
+        """
+Generate default aesthetic scores when analysis is not available."""
         defaults = {
             'image': {
                 'composition_score': 0.6,

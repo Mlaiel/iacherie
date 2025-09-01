@@ -4,6 +4,7 @@ FAISS-powered similarity search and vector database management.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import numpy as np
 import faiss
@@ -22,7 +23,8 @@ from ...config import settings
 
 @dataclass
 class VectorMatch:
-    """Vector match result"""
+    """
+Vector match result"""
     content_id: str
     similarity_score: float
     distance: float
@@ -31,7 +33,8 @@ class VectorMatch:
 
 @dataclass
 class IndexConfig:
-    """FAISS index configuration"""
+    """
+FAISS index configuration"""
     index_type: str = "HNSW32"  # HNSW, IVF, Flat, LSH
     dimension: int = 512
     metric: str = "cosine"  # cosine, l2, inner_product

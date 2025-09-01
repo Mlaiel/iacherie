@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Example Implementations
+"""
+Comprehensive Tests for Example Implementations
 
 Industrial-grade testing for example implementations, usage patterns,
 best practices, and integration examples for AI agents.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -52,11 +55,13 @@ logger = logging.getLogger(__name__)
 
 
 class TestBasicExamples:
-    """Test basic usage examples for AI agents"""
+    """
+Test basic usage examples for AI agents"""
     
     @pytest.fixture
     async def example_runner(self) -> ExampleRunner:
-        """Create example runner for testing"""
+        """
+Create example runner for testing"""
         runner = ExampleRunner()
         await runner.initialize()
         
@@ -65,7 +70,8 @@ class TestBasicExamples:
         await runner.shutdown()
     
     async def test_content_creator_basic_example(self, example_runner):
-        """Test basic content creator agent example"""
+        """
+Test basic content creator agent example"""
         # Define basic content creation example
         content_example = {
             "name": "basic_content_creation",
@@ -244,11 +250,13 @@ class TestIntermediateExamples:
     
     @pytest.fixture
     def usage_demonstrator(self):
-        """Create usage demonstrator for testing"""
+        """
+Create usage demonstrator for testing"""
         return UsageDemonstrator()
     
     async def test_multi_agent_workflow_example(self, usage_demonstrator):
-        """Test multi-agent workflow example"""
+        """
+Test multi-agent workflow example"""
         workflow_example = {
             "name": "content_to_social_workflow",
             "description": "Complete workflow from content creation to social media posting",
@@ -540,7 +548,8 @@ class TestAdvancedExamples:
     
     @pytest.fixture
     async def integration_examples(self) -> IntegrationExamples:
-        """Create integration examples for testing"""
+        """
+Create integration examples for testing"""
         examples = IntegrationExamples()
         await examples.initialize()
         
@@ -549,7 +558,8 @@ class TestAdvancedExamples:
         await examples.shutdown()
     
     async def test_enterprise_integration_example(self, integration_examples):
-        """Test enterprise-level integration example"""
+        """
+Test enterprise-level integration example"""
         enterprise_example = {
             "name": "enterprise_ai_pipeline",
             "description": "Complete enterprise AI pipeline with multiple agents and external integrations",
@@ -871,7 +881,8 @@ class AIAgentEcosystem:
         return execution_results
     
     def measure_collective_intelligence(self):
-        '''Measure the collective intelligence level of the ecosystem'''
+        '''
+Measure the collective intelligence level of the ecosystem'''
         
         intelligence_metrics = {
             'knowledge_diversity': self.calculate_knowledge_diversity(),
@@ -935,11 +946,13 @@ class TestBestPracticesValidation:
     
     @pytest.fixture
     def best_practices_validator(self):
-        """Create best practices validator for testing"""
+        """
+Create best practices validator for testing"""
         return BestPracticesValidator()
     
     def test_code_quality_validation(self, best_practices_validator):
-        """Test code quality validation for examples"""
+        """
+Test code quality validation for examples"""
         # Good example code
         good_example = """# Well-structured example with proper error handling
 import asyncio
@@ -1015,6 +1028,7 @@ def bad_example():
         """Test security practices validation"""
         # Secure example
         secure_example = """
+
 import os
 from cryptography.fernet import Fernet
 
@@ -1091,6 +1105,7 @@ def insecure_example():
         """Test performance practices validation"""
         # Optimized example
         optimized_example = """
+
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
@@ -1177,7 +1192,8 @@ class TestTutorialGeneration:
     
     @pytest.fixture
     async def tutorial_generator(self) -> TutorialGenerator:
-        """Create tutorial generator for testing"""
+        """
+Create tutorial generator for testing"""
         generator = TutorialGenerator()
         await generator.initialize()
         
@@ -1186,7 +1202,8 @@ class TestTutorialGeneration:
         await generator.shutdown()
     
     async def test_beginner_tutorial_generation(self, tutorial_generator):
-        """Test generation of beginner-level tutorials"""
+        """
+Test generation of beginner-level tutorials"""
         tutorial_request = {
             "target_audience": "beginners",
             "topic": "getting_started_with_ai_agents",
@@ -1302,7 +1319,8 @@ class TestExamplesIntegration:
     
     @pytest.fixture
     async def examples_system(self):
-        """Create complete examples system for integration testing"""
+        """
+Create complete examples system for integration testing"""
         from ai.ai_agents.examples import ExamplesSystem
         
         system = ExamplesSystem()
@@ -1313,7 +1331,8 @@ class TestExamplesIntegration:
         await system.shutdown()
     
     async def test_complete_examples_lifecycle(self, examples_system):
-        """Test complete lifecycle of examples system"""
+        """
+Test complete lifecycle of examples system"""
         # 1. Create new example
         new_example = {
             "name": "integration_test_example",

@@ -13,6 +13,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import os
 import ssl
 import json
@@ -31,7 +32,8 @@ from cryptography.hazmat.backends import default_backend
 
 
 class TLSVersion(Enum):
-    """TLS version enumeration"""
+    """
+TLS version enumeration"""
     TLSv1_0 = "TLSv1.0"
     TLSv1_1 = "TLSv1.1"
     TLSv1_2 = "TLSv1.2"
@@ -40,6 +42,7 @@ class TLSVersion(Enum):
 
 class SecurityLevel(Enum):
     """TLS security level enumeration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -48,6 +51,7 @@ class SecurityLevel(Enum):
 
 class CipherSuite(Enum):
     """TLS cipher suite categories"""
+
     MODERN = "modern"
     INTERMEDIATE = "intermediate"
     OLD = "old"
@@ -168,7 +172,8 @@ class ApacheTLSConfig:
 
 
 class TLSConfigError(Exception):
-    """TLS configuration exception"""
+    """
+TLS configuration exception"""
     pass
 
 

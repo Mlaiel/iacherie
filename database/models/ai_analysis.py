@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class AnalysisType(Enum):
-    """AI analysis type enumeration"""
+    """
+AI analysis type enumeration"""
+
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     TREND_DETECTION = "trend_detection"
     AUDIENCE_ANALYSIS = "audience_analysis"
@@ -56,6 +59,7 @@ class AnalysisType(Enum):
 
 class AnalysisStatus(Enum):
     """Analysis processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -70,6 +74,7 @@ class AnalysisStatus(Enum):
 
 class ConfidenceLevel(Enum):
     """AI confidence level enumeration"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MODERATE = "moderate"
@@ -80,6 +85,7 @@ class ConfidenceLevel(Enum):
 
 class AIModel(Enum):
     """AI model enumeration"""
+
     BERT = "bert"
     ROBERTA = "roberta"
     GPT4 = "gpt4"
@@ -98,6 +104,7 @@ class AIModel(Enum):
 
 class SentimentType(Enum):
     """Sentiment analysis types"""
+
     POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
@@ -109,6 +116,7 @@ class SentimentType(Enum):
 
 class TrendDirection(Enum):
     """Trend direction enumeration"""
+
     RISING = "rising"
     FALLING = "falling"
     STABLE = "stable"
@@ -326,7 +334,8 @@ class AIAnalysis(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def add_recommendation(self, recommendation_type: str, recommendations: List[Dict[str, Any]]) -> None:
-        """Add AI recommendations"""
+        """
+Add AI recommendations"""
         current_suggestions = self.optimization_suggestions or {}
         current_suggestions[recommendation_type] = {
             'recommendations': recommendations,
@@ -336,7 +345,8 @@ class AIAnalysis(Base):
         self.optimization_suggestions = current_suggestions
     
     def calculate_overall_score(self) -> float:
-        """Calculate overall AI analysis score"""
+        """
+Calculate overall AI analysis score"""
         scores = []
         
         if self.sentiment_score is not None:
@@ -362,14 +372,16 @@ class AIAnalysis(Base):
         return self.overall_score
     
     def is_high_confidence(self) -> bool:
-        """Check if analysis has high confidence"""
+        """
+Check if analysis has high confidence"""
         return (
             self.confidence_level in [ConfidenceLevel.HIGH, ConfidenceLevel.VERY_HIGH, ConfidenceLevel.EXPERT] and
             self.confidence_score >= 0.8
         )
     
     def get_recommendations_summary(self) -> Dict[str, Any]:
-        """Get summary of all recommendations"""
+        """
+Get summary of all recommendations"""
         return {
             'optimization_suggestions': self.optimization_suggestions or {},
             'keyword_recommendations': self.keyword_recommendations or [],

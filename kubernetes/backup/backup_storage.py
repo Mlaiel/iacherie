@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import shutil
@@ -24,7 +25,9 @@ from ...core.exceptions import StorageError
 
 
 class StorageBackend(Enum):
-    """Storage backend enumeration."""
+    """
+Storage backend enumeration."""
+
     LOCAL = "local"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
@@ -36,6 +39,7 @@ class StorageBackend(Enum):
 
 class StorageStatus(Enum):
     """Storage status enumeration."""
+
     AVAILABLE = "available"
     UNAVAILABLE = "unavailable"
     DEGRADED = "degraded"
@@ -58,7 +62,8 @@ class StorageConfig:
 
 @dataclass
 class BackupMetadata:
-    """Backup metadata container."""
+    """
+Backup metadata container."""
     backup_id: str
     created_at: datetime
     size_bytes: int
@@ -72,7 +77,8 @@ class BackupMetadata:
 
 @dataclass
 class StorageLocation:
-    """Storage location information."""
+    """
+Storage location information."""
     backend: StorageBackend
     path: str
     size_bytes: int
@@ -82,7 +88,8 @@ class StorageLocation:
 
 
 class StorageBackendInterface(ABC):
-    """Abstract storage backend interface."""
+    """
+Abstract storage backend interface."""
     
     @abstractmethod
     async def store_backup(
@@ -91,45 +98,54 @@ class StorageBackendInterface(ABC):
         data: Union[bytes, Dict[str, Any]],
         metadata: BackupMetadata
     ) -> bool:
-        """Store backup data."""
+        """
+Store backup data."""
         pass
     
     @abstractmethod
     async def retrieve_backup(self, backup_id: str) -> Optional[Union[bytes, Dict[str, Any]]]:
-        """Retrieve backup data."""
+        """
+Retrieve backup data."""
         pass
     
     @abstractmethod
     async def delete_backup(self, backup_id: str) -> bool:
-        """Delete backup data."""
+        """
+Delete backup data."""
         pass
     
     @abstractmethod
     async def list_backups(self) -> List[str]:
-        """List available backups."""
+        """
+List available backups."""
         pass
     
     @abstractmethod
     async def get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Get backup metadata."""
+        """
+Get backup metadata."""
         pass
     
     @abstractmethod
     async def verify_backup(self, backup_id: str) -> bool:
-        """Verify backup integrity."""
+        """
+Verify backup integrity."""
         pass
     
     @abstractmethod
     async def get_storage_usage(self) -> Dict[str, Any]:
-        """Get storage usage information."""
+        """
+Get storage usage information."""
         pass
 
 
 class LocalStorageBackend(StorageBackendInterface):
-    """Local filesystem storage backend."""
+    """
+Local filesystem storage backend."""
     
     def __init__(self, config: StorageConfig):
-        """Initialize local storage backend."""
+        """
+Initialize local storage backend."""
         self.config = config
         self.base_path = Path(config.connection_params.get("path", "/tmp/backups"))
         self.base_path.mkdir(parents=True, exist_ok=True)
@@ -319,7 +335,8 @@ class BackupStorage:
         self._initialize_backends()
 
     def _initialize_backends(self):
-        """Initialize storage backends from configurations."""
+        """
+Initialize storage backends from configurations."""
         for i, config in enumerate(self.storage_configs):
             backend_id = f"{config.backend.value}_{i}"
             

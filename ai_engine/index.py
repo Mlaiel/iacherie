@@ -3,12 +3,13 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 
 Main entry point for AI-powered content analysis and processing.
 
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
 Business Logic Flow:
 Upload → AI Analysis → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -34,7 +35,9 @@ from .config import AIModuleConfig
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration for processing pipeline"""
+    """
+Content type enumeration for processing pipeline"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -44,6 +47,7 @@ class ContentType(Enum):
 
 class ProcessingStage(Enum):
     """Processing pipeline stages"""
+
     UPLOAD = "upload"
     ANALYSIS = "analysis"
     PROTECTION = "protection"
@@ -75,7 +79,8 @@ class AIModuleIndex:
     """
     
     def __init__(self):
-        """Initialize AI Module Index with all subsystems"""
+        """
+Initialize AI Module Index with all subsystems"""
         self.config = AIModuleConfig()
         
         # Initialize core AI engines
@@ -441,15 +446,18 @@ ai_module_index = AIModuleIndex()
 
 # Export main interface functions
 async def process_content(*args, **kwargs) -> ProcessingResult:
-    """Global content processing function"""
+    """
+Global content processing function"""
     return await ai_module_index.process_content(*args, **kwargs)
 
 async def initialize_ai_module() -> bool:
-    """Global AI module initialization"""
+    """
+Global AI module initialization"""
     return await ai_module_index.initialize()
 
 async def health_check() -> Dict[str, Any]:
-    """Global health check function"""
+    """
+Global health check function"""
     return await ai_module_index.health_check()
 
 # Module exports
@@ -478,7 +486,8 @@ class AIModuleIndex:
     """
     
     def __init__(self):
-        """Initialize the AI module index."""
+        """
+Initialize the AI module index."""
         self.module_registry = self._build_module_registry()
         logger.info("AI Module Index initialized successfully")
     
@@ -707,11 +716,13 @@ class AIModuleIndex:
         return self.module_registry.get(module_name, {})
     
     def list_all_modules(self) -> List[str]:
-        """Get list of all available AI modules."""
+        """
+Get list of all available AI modules."""
         return list(self.module_registry.keys())
     
     def get_capabilities_summary(self) -> Dict[str, List[str]]:
-        """Get summary of capabilities for all modules."""
+        """
+Get summary of capabilities for all modules."""
         return {
             module: info.get("capabilities", [])
             for module, info in self.module_registry.items()

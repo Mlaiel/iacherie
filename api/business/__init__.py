@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from .user_service import UserService
 from .content_service import ContentService
 from .ai_processing_service import AIProcessingService
@@ -95,15 +96,18 @@ async def initialize_business_services():
 
 # Service shutdown helper  
 async def shutdown_business_services():
-    """Shutdown all business services gracefully."""
+    """
+Shutdown all business services gracefully."""
     await service_registry.shutdown_services()
 
 # Health check helper
 def get_business_services_health():
-    """Get health status of all business services."""
+    """
+Get health status of all business services."""
     return service_registry.get_service_health()
 
 # Metrics helper
 def get_business_services_metrics():
-    """Get performance metrics for all business services."""
+    """
+Get performance metrics for all business services."""
     return service_registry.get_service_metrics()

@@ -4,8 +4,9 @@ Advanced metadata extraction engine for comprehensive audio file information,
 technical specifications, and content analysis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, Any
@@ -15,7 +16,8 @@ import librosa
 
 @dataclass
 class AudioMetadata:
-    """Complete audio metadata"""
+    """
+Complete audio metadata"""
     duration: float
     sample_rate: int
     channels: int
@@ -27,7 +29,8 @@ class AudioMetadata:
 
 
 class AudioMetadataExtractor:
-    """Professional audio metadata extraction engine"""
+    """
+Professional audio metadata extraction engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)

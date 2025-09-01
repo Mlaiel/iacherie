@@ -8,7 +8,7 @@ Technologies: AsyncIO, Event Sourcing, CQRS, WebSockets, Message Queues
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Event ingestion → Event validation → Event routing → 
 Processing pipeline → State management → Notification → Audit trail
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
@@ -45,7 +46,9 @@ T = TypeVar('T')
 
 
 class EventType(Enum):
-    """Types of events in the system"""
+    """
+Types of events in the system"""
+
     WORKER_STARTED = "worker_started"
     WORKER_STOPPED = "worker_stopped"
     WORKER_STATUS_CHANGED = "worker_status_changed"
@@ -68,6 +71,7 @@ class EventType(Enum):
 
 class EventPriority(Enum):
     """Event processing priorities"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -76,7 +80,9 @@ class EventPriority(Enum):
 
 
 class EventStatus(Enum):
-    """Event processing status"""
+    """
+Event processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -87,6 +93,7 @@ class EventStatus(Enum):
 
 class ProcessingMode(Enum):
     """Event processing modes"""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     BATCH = "batch"
@@ -115,7 +122,8 @@ class WorkerEvent:
 
 @dataclass
 class EventProcessingResult:
-    """Result of event processing"""
+    """
+Result of event processing"""
     event_id: str
     status: EventStatus
     result_data: Optional[Dict[str, Any]] = None
@@ -127,7 +135,8 @@ class EventProcessingResult:
 
 @dataclass
 class EventHandler:
-    """Event handler registration"""
+    """
+Event handler registration"""
     handler_id: str
     event_types: List[EventType]
     handler_func: Callable[[WorkerEvent], Any]
@@ -818,7 +827,8 @@ class WorkerEventFactory:
     """Factory for creating worker events"""
     @staticmethod
     def create_worker_started_event(worker_id: str, worker_config: Dict[str, Any]) -> WorkerEvent:
-        """Create worker started event"""
+        """
+Create worker started event"""
         return WorkerEvent(
             event_id=str(uuid.uuid4()),
             event_type=EventType.WORKER_STARTED,
@@ -900,7 +910,8 @@ def get_event_processor(processor_id: str = "default") -> EventProcessor:
 
 
 async def initialize_event_processing() -> bool:
-    """Initialize global event processing"""
+    """
+Initialize global event processing"""
     try:
         processor = get_event_processor()
         return await processor.start()

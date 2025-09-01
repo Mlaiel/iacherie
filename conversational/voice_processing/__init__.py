@@ -46,6 +46,7 @@ LEGAL CONSEQUENCES FOR VIOLATIONS:
 For official licensing inquiries ONLY: mlaiel@live.de
 Subject: "IA-Influencer Voice Processing Licensing Request"
 """
+
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass
@@ -253,7 +254,7 @@ __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel"
+__copyright__ = "(c) 2025 Fahed Mlaiel"
 
 # Performance and capability metrics
 PERFORMANCE_METRICS = {

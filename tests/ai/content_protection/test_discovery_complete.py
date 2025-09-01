@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -35,6 +36,7 @@ and will result in immediate legal action under German and International copyrig
 Comprehensive test suite for the complete discovery module, validating all components
 and their interactions with industrial-grade rigor.
 """
+
 import pytest
 import sys
 import os
@@ -72,11 +74,13 @@ from core.discovery.performance_tracker import (
 )
 
 class TestDiscoveryModuleComplete:
-    """Comprehensive test suite for the complete discovery module"""
+    """
+Comprehensive test suite for the complete discovery module"""
     
     @pytest.fixture
     async def discovery_manager(self):
-        """Create discovery manager instance for testing"""
+        """
+Create discovery manager instance for testing"""
         config = {
             'database_url': 'sqlite:///:memory:',
             'elasticsearch_url': 'http://localhost:9200',
@@ -93,7 +97,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.fixture
     async def mock_content_data(self):
-        """Mock content data for testing"""
+        """
+Mock content data for testing"""
         return {
             'content_id': str(uuid.uuid4()),
             'title': 'Test AI Music Track',
@@ -115,7 +120,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_discovery_manager_initialization(self, discovery_manager):
-        """Test discovery manager initialization"""
+        """
+Test discovery manager initialization"""
         assert discovery_manager is not None
         assert discovery_manager.content_explorer is not None
         assert discovery_manager.creator_finder is not None
@@ -127,7 +133,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_content_exploration_complete(self, discovery_manager, mock_content_data):
-        """Test complete content exploration functionality"""
+        """
+Test complete content exploration functionality"""
         # Test content indexing
         indexing_success = await discovery_manager.content_explorer.index_content(mock_content_data)
         assert indexing_success is True
@@ -195,7 +202,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_opportunity_detection_engine(self, discovery_manager):
-        """Test business opportunity detection"""
+        """
+Test business opportunity detection"""
         opportunity_filter = OpportunityFilter(
             market_segments=[MarketSegment.AI_CREATORS, MarketSegment.MUSIC_PRODUCERS],
             min_revenue_potential=1000,
@@ -218,7 +226,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_trend_analysis_prediction(self, discovery_manager):
-        """Test trend analysis and prediction capabilities"""
+        """
+Test trend analysis and prediction capabilities"""
         # Test trend detection
         trends = await discovery_manager.analyze_trends(
             category=TrendCategory.AI_MUSIC,
@@ -241,7 +250,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_recommendation_engine_personalization(self, discovery_manager):
-        """Test personalized recommendation generation"""
+        """
+Test personalized recommendation generation"""
         # Mock user preferences
         user_context = {
             'user_id': 'user_123',
@@ -277,7 +287,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_semantic_search_multimodal(self, discovery_manager):
-        """Test multi-modal semantic search capabilities"""
+        """
+Test multi-modal semantic search capabilities"""
         # Test text-based semantic search
         text_query = SemanticQuery(
             query_text="innovative AI music with emotional depth",
@@ -344,7 +355,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_discovery_session_management(self, discovery_manager):
-        """Test discovery session lifecycle management"""
+        """
+Test discovery session lifecycle management"""
         # Create discovery session
         session_id = await discovery_manager.create_session(
             user_id='user_123',
@@ -393,7 +405,8 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_integration_end_to_end(self, discovery_manager, mock_content_data):
-        """Test complete end-to-end discovery integration"""
+        """
+Test complete end-to-end discovery integration"""
         # Step 1: Index content
         await discovery_manager.content_explorer.index_content(mock_content_data)
         
@@ -539,7 +552,8 @@ class TestDiscoveryPerformance:
     
     @pytest.mark.asyncio
     async def test_discovery_response_time(self, discovery_manager):
-        """Test discovery response time under normal load"""
+        """
+Test discovery response time under normal load"""
         start_time = datetime.now()
         
         session_id = await discovery_manager.create_session(

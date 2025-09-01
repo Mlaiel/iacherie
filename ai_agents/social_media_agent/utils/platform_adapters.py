@@ -23,6 +23,7 @@ Expert Development Team Specialties:
 - AI Prompt Engineering Expert - Natural language processing and content generation
 - Content Protection Specialist - AI fingerprinting and copyright protection systems
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, Any, List, Optional, Tuple, Union, Type
@@ -41,7 +42,8 @@ import mimetypes
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Comprehensive supported social media platforms"""
+    """
+Comprehensive supported social media platforms"""
     # Major Social Media Platforms
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -186,7 +188,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentPayload:
-    """Unified content payload for all platforms"""
+    """
+Unified content payload for all platforms"""
     platform: PlatformType
     format: ContentFormat
     title: Optional[str] = None
@@ -205,7 +208,8 @@ class ContentPayload:
 
 @dataclass
 class PublishResult:
-    """Result of content publication"""
+    """
+Result of content publication"""
     success: bool
     platform: PlatformType
     content_id: Optional[str] = None
@@ -218,7 +222,8 @@ class PublishResult:
 
 @dataclass 
 class AnalyticsData:
-    """Platform analytics data"""
+    """
+Platform analytics data"""
     platform: PlatformType
     content_id: str
     metrics: Dict[str, Union[int, float]]
@@ -240,67 +245,80 @@ class BasePlatformAdapter(ABC):
     @property
     @abstractmethod
     def supported_capabilities(self) -> List[AdapterCapability]:
-        """Get list of supported capabilities"""
+        """
+Get list of supported capabilities"""
         pass
     
     @property
     @abstractmethod
     def supported_formats(self) -> List[ContentFormat]:
-        """Get list of supported content formats"""
+        """
+Get list of supported content formats"""
         pass
     
     @property
     @abstractmethod
     def platform_limits(self) -> Dict[str, Any]:
-        """Get platform-specific limits"""
+        """
+Get platform-specific limits"""
         pass
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""
+        """
+Authenticate with the platform"""
         pass
     
     @abstractmethod
     async def publish_content(self, payload: ContentPayload) -> PublishResult:
-        """Publish content to the platform"""
+        """
+Publish content to the platform"""
         pass
     
     @abstractmethod
     async def get_analytics(self, content_id: str, metrics: List[str],
                           start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get analytics for specific content"""
+        """
+Get analytics for specific content"""
         pass
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from platform"""
+        """
+Delete content from platform"""
         return False  # Default implementation
     
     async def update_content(self, content_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing content"""
+        """
+Update existing content"""
         return False  # Default implementation
     
     async def get_profile_info(self) -> Dict[str, Any]:
-        """Get account/profile information"""
+        """
+Get account/profile information"""
         return {}  # Default implementation
     
     async def refresh_token(self) -> bool:
-        """Refresh authentication token"""
+        """
+Refresh authentication token"""
         return False  # Default implementation
     
     async def _ensure_session(self):
-        """Ensure HTTP session is available"""
+        """
+Ensure HTTP session is available"""
         if not self.session:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(timeout=timeout)
     
     async def _close_session(self):
-        """Close HTTP session"""
+        """
+Close HTTP session"""
         if self.session:
             await self.session.close()
             self.session = None
     
     async def _rate_limit_wait(self, endpoint: str):
-        """Wait if rate limit would be exceeded"""
+        """
+Wait if rate limit would be exceeded"""
         if endpoint not in self.rate_limits:
             return
         
@@ -322,7 +340,9 @@ class BasePlatformAdapter(ABC):
         self.last_request_times[endpoint] = now
 
 class InstagramAdapter(BasePlatformAdapter):
-    """Instagram platform adapter"""
+    """
+Instagram platform adapter"""
+
     
     BASE_URL = "https://graph.facebook.com/v18.0"
     
@@ -462,7 +482,8 @@ class InstagramAdapter(BasePlatformAdapter):
         return {'valid': True}
     
     async def _upload_media(self, media_file: Dict[str, Any]) -> Optional[str]:
-        """Upload media file to Instagram"""
+        """
+Upload media file to Instagram"""
         try:
             media_type = media_file.get('type', 'IMAGE')
             media_url = media_file.get('url')
@@ -623,6 +644,7 @@ class InstagramAdapter(BasePlatformAdapter):
 
 class TwitterAdapter(BasePlatformAdapter):
     """Twitter platform adapter"""
+
     
     BASE_URL = "https://api.twitter.com/2"
     UPLOAD_URL = "https://upload.twitter.com/1.1"
@@ -771,7 +793,8 @@ class TwitterAdapter(BasePlatformAdapter):
         return {'valid': True}
     
     async def _upload_media(self, media_file: Dict[str, Any]) -> Optional[str]:
-        """Upload media file to Twitter"""
+        """
+Upload media file to Twitter"""
         try:
             # This is a simplified version - actual implementation would handle
             # chunked uploads for larger files
@@ -869,6 +892,7 @@ class TwitterAdapter(BasePlatformAdapter):
 
 class LinkedInAdapter(BasePlatformAdapter):
     """LinkedIn platform adapter"""
+
     
     BASE_URL = "https://api.linkedin.com/v2"
     
@@ -906,7 +930,8 @@ class LinkedInAdapter(BasePlatformAdapter):
         return True
     
     async def publish_content(self, payload: ContentPayload) -> PublishResult:
-        """Publish content to LinkedIn"""
+        """
+Publish content to LinkedIn"""
         # Implementation for LinkedIn posting
         return PublishResult(
             success=True,
@@ -917,7 +942,8 @@ class LinkedInAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, content_id: str, metrics: List[str],
                           start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get LinkedIn analytics"""
+        """
+Get LinkedIn analytics"""
         return AnalyticsData(
             platform=self.platform,
             content_id=content_id,
@@ -943,7 +969,8 @@ class PlatformAdapters:
         
     async def register_platform(self, platform: PlatformType, 
                               credentials: PlatformCredentials) -> bool:
-        """Register a platform with credentials"""
+        """
+Register a platform with credentials"""
         try:
             adapter_class = self.adapter_classes.get(platform)
             if not adapter_class:
@@ -984,12 +1011,14 @@ class PlatformAdapters:
         return list(self.adapters.keys())
     
     def is_platform_registered(self, platform: PlatformType) -> bool:
-        """Check if platform is registered"""
+        """
+Check if platform is registered"""
         return platform in self.adapters
     
     async def publish_content(self, platforms: List[PlatformType], 
                             payload: ContentPayload) -> Dict[PlatformType, PublishResult]:
-        """Publish content to multiple platforms"""
+        """
+Publish content to multiple platforms"""
         results = {}
         
         # Create tasks for concurrent publishing
@@ -1151,7 +1180,8 @@ class PlatformAdapters:
         }
     
     async def delete_content(self, platform: PlatformType, content_id: str) -> bool:
-        """Delete content from platform"""
+        """
+Delete content from platform"""
         adapter = self.adapters.get(platform)
         if not adapter:
             logger.error(f"No adapter found for platform {platform.value}")
@@ -1172,7 +1202,8 @@ class PlatformAdapters:
         return adapter.supported_capabilities
     
     def get_platform_limits(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get limits for specific platform"""
+        """
+Get limits for specific platform"""
         adapter = self.adapters.get(platform)
         if not adapter:
             return {}
@@ -1180,7 +1211,8 @@ class PlatformAdapters:
         return adapter.platform_limits
     
     def get_supported_formats(self, platform: PlatformType) -> List[ContentFormat]:
-        """Get supported content formats for platform"""
+        """
+Get supported content formats for platform"""
         adapter = self.adapters.get(platform)
         if not adapter:
             return []
@@ -1188,7 +1220,8 @@ class PlatformAdapters:
         return adapter.supported_formats
     
     async def refresh_all_tokens(self) -> Dict[PlatformType, bool]:
-        """Refresh authentication tokens for all platforms"""
+        """
+Refresh authentication tokens for all platforms"""
         results = {}
         
         for platform, adapter in self.adapters.items():

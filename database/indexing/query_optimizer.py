@@ -15,7 +15,7 @@ cost-based optimization, and adaptive query execution strategies.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 import json
@@ -40,7 +41,9 @@ from ..security.query_security import QuerySecurityManager
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimizations available"""
+    """
+Types of optimizations available"""
+
     QUERY_REWRITE = "query_rewrite"
     INDEX_SELECTION = "index_selection"
     JOIN_OPTIMIZATION = "join_optimization"
@@ -51,6 +54,7 @@ class OptimizationType(Enum):
 
 class QueryComplexity(Enum):
     """Query complexity levels"""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -72,7 +76,8 @@ class QueryPlan:
 
 @dataclass
 class ExecutionStatistics:
-    """Query execution statistics"""
+    """
+Query execution statistics"""
     query_id: str
     actual_time: float
     estimated_time: float
@@ -101,7 +106,8 @@ class QueryOptimizer:
     """
     
     def __init__(self):
-        """Initialize query optimizer"""
+        """
+Initialize query optimizer"""
         self.performance_tracker = PerformanceTracker()
         self.security_manager = QuerySecurityManager()
         
@@ -298,7 +304,8 @@ class QueryOptimizer:
     async def _generate_optimization_candidates(self, query: Dict[str, Any], 
                                               complexity: QueryComplexity,
                                               context: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate multiple optimization candidates"""
+        """
+Generate multiple optimization candidates"""
         candidates = []
         
         try:
@@ -722,26 +729,31 @@ class QueryOptimizer:
         return 50.0 + len(str(query)) * 0.1
     
     async def _estimate_base_time(self, query: Dict[str, Any]) -> float:
-        """Estimate base execution time for query"""
+        """
+Estimate base execution time for query"""
         return 0.5 + len(str(query)) * 0.001
     
     async def _load_optimization_rules(self):
-        """Load optimization rules"""
+        """
+Load optimization rules"""
         # Implementation would load rules from configuration
         pass
     
     async def _load_historical_statistics(self):
-        """Load historical performance statistics"""
+        """
+Load historical performance statistics"""
         # Implementation would load from persistent storage
         pass
     
     async def _initialize_ml_components(self):
-        """Initialize machine learning components"""
+        """
+Initialize machine learning components"""
         # Implementation would initialize ML models for optimization
         pass
     
     async def _generate_cache_key(self, query: Dict[str, Any], context: Optional[Dict[str, Any]]) -> str:
-        """Generate cache key for query"""
+        """
+Generate cache key for query"""
         return f"query_{hash(json.dumps(query, sort_keys=True))}"
     
     async def _get_cached_plan(self, cache_key: str) -> Optional[QueryPlan]:
@@ -749,12 +761,14 @@ class QueryOptimizer:
         return self.plan_cache.get(cache_key)
     
     async def _is_plan_valid(self, plan: QueryPlan) -> bool:
-        """Check if cached plan is still valid"""
+        """
+Check if cached plan is still valid"""
         age = (datetime.now() - plan.created_at).total_seconds()
         return age < self.cache_ttl
     
     async def _cache_plan(self, cache_key: str, plan: QueryPlan):
-        """Cache execution plan"""
+        """
+Cache execution plan"""
         if len(self.plan_cache) >= self.cache_size_limit:
             # Remove oldest entry
             oldest_key = min(self.plan_cache.keys(), key=lambda k: self.plan_cache[k].created_at)
@@ -763,19 +777,23 @@ class QueryOptimizer:
         self.plan_cache[cache_key] = plan
     
     async def _optimize_filters(self, filters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize filter conditions"""
+        """
+Optimize filter conditions"""
         return filters  # Simplified implementation
     
     async def _optimize_field_selection(self, fields: List[str]) -> List[str]:
-        """Optimize field selection"""
+        """
+Optimize field selection"""
         return fields[:10]  # Simplified: limit to 10 fields
     
     async def _optimize_sort_fields(self, sort_fields: List[str]) -> List[str]:
-        """Optimize sort fields"""
+        """
+Optimize sort fields"""
         return sort_fields[:3]  # Simplified: limit to 3 sort fields
     
     async def _get_available_indexes(self, query: Dict[str, Any], context: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Get available indexes for query"""
+        """
+Get available indexes for query"""
         return [
             {'indexes': ['primary'], 'cost_factor': 1.0, 'time_factor': 1.0, 'confidence': 0.8},
             {'indexes': ['content_gin'], 'cost_factor': 0.8, 'time_factor': 0.9, 'confidence': 0.7},
@@ -783,31 +801,38 @@ class QueryOptimizer:
         ]
     
     def _has_joins(self, query: Dict[str, Any]) -> bool:
-        """Check if query has joins"""
+        """
+Check if query has joins"""
         return 'joins' in query and len(query['joins']) > 0
     
     async def _optimize_join_order(self, joins: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Optimize join order"""
+        """
+Optimize join order"""
         return joins  # Simplified implementation
     
     async def _push_down_predicates(self, filters: Dict[str, Any], joins: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Push down predicates to reduce data early"""
+        """
+Push down predicates to reduce data early"""
         return filters  # Simplified implementation
     
     async def _can_parallelize(self, query: Dict[str, Any]) -> bool:
-        """Check if query can be parallelized"""
+        """
+Check if query can be parallelized"""
         return len(str(query)) > 200  # Simplified heuristic
     
     async def _calculate_optimal_workers(self, query: Dict[str, Any]) -> int:
-        """Calculate optimal number of workers"""
+        """
+Calculate optimal number of workers"""
         return min(4, max(1, len(str(query)) // 100))
     
     async def _find_similar_queries(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find similar historical queries"""
+        """
+Find similar historical queries"""
         return []  # Simplified implementation
     
     async def _get_technique_effectiveness(self, technique: OptimizationType) -> float:
-        """Get historical effectiveness of optimization technique"""
+        """
+Get historical effectiveness of optimization technique"""
         if technique in self.optimization_effectiveness:
             stats = self.optimization_effectiveness[technique]
             if stats['total_count'] > 0:
@@ -815,7 +840,8 @@ class QueryOptimizer:
         return 0.5  # Default effectiveness
     
     async def _cleanup_old_history(self):
-        """Clean up old execution history"""
+        """
+Clean up old execution history"""
         if len(self.execution_history) > self.learning_window:
             # Keep only recent entries
             sorted_entries = sorted(
@@ -826,7 +852,8 @@ class QueryOptimizer:
             self.execution_history = dict(sorted_entries[:self.learning_window])
     
     async def get_optimization_statistics(self) -> Dict[str, Any]:
-        """Get optimization performance statistics"""
+        """
+Get optimization performance statistics"""
         try:
             return {
                 'total_optimizations': len(self.execution_history),

@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import hashlib
 import mimetypes
@@ -35,7 +36,8 @@ import json
 
 @dataclass
 class ContentResult:
-    """Structured content extraction result."""
+    """
+Structured content extraction result."""
     url: str
     title: str
     content: str
@@ -59,7 +61,8 @@ class ContentResult:
 
 @dataclass
 class MediaContent:
-    """Media content information."""
+    """
+Media content information."""
     url: str
     type: str  # image, video, audio
     title: str
@@ -90,7 +93,8 @@ class ContentScraper:
         self.extraction_engines = ['trafilatura', 'newspaper', 'goose', 'beautifulsoup']
         
     def extract_content(self, url: str, html: str) -> ContentResult:
-        """Extract content using multiple engines with fallback."""
+        """
+Extract content using multiple engines with fallback."""
         results = {}
         
         # Try each extraction engine
@@ -134,7 +138,8 @@ class ContentScraper:
         }
         
     def _extract_with_newspaper(self, url: str) -> Dict[str, Any]:
-        """Extract content using Newspaper3k."""
+        """
+Extract content using Newspaper3k."""
         try:
             article = newspaper.Article(url)
             article.download()
@@ -346,7 +351,8 @@ class ContentScraper:
         )
         
     def _detect_language(self, text: str) -> str:
-        """Detect content language."""
+        """
+Detect content language."""
         try:
             if len(text) > 50:
                 detected = langdetect.detect(text)
@@ -390,7 +396,8 @@ class ContentScraper:
         return max(1, word_count // words_per_minute)
         
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score."""
+        """
+Calculate readability score."""
         try:
             if len(text) > 100:
                 # Use Flesch Reading Ease score (0-100, higher is easier)
@@ -437,7 +444,8 @@ class ContentScraper:
         return '. '.join(top_sentences) + '.'
         
     def _generate_fingerprint(self, content: str) -> str:
-        """Generate content fingerprint for similarity detection."""
+        """
+Generate content fingerprint for similarity detection."""
         # Normalize content
         normalized = re.sub(r'\s+', ' ', content.lower().strip())
         
@@ -446,7 +454,8 @@ class ContentScraper:
         
     def _calculate_quality_score(self, content: str, title: str, 
                                 word_count: int, readability: float) -> float:
-        """Calculate content quality score (0-100)."""
+        """
+Calculate content quality score (0-100)."""
         score = 0
         
         # Content length score (30 points)
@@ -483,7 +492,8 @@ class ContentScraper:
         return min(100, score)
         
     def _extract_tags(self, content: str) -> List[str]:
-        """Extract potential tags from content."""
+        """
+Extract potential tags from content."""
         # Simple keyword extraction
         words = re.findall(r'\b[A-Za-z]{3,}\b', content.lower())
         word_freq = {}
@@ -497,7 +507,8 @@ class ContentScraper:
         return [word for word, freq in sorted_words[:10] if freq >= 2]
         
     def _detect_content_type(self, html: str) -> str:
-        """Detect content type from HTML structure."""
+        """
+Detect content type from HTML structure."""
         soup = BeautifulSoup(html, 'html.parser')
         
         # Check for common content types
@@ -515,7 +526,8 @@ class ContentScraper:
             return 'webpage'
             
     def _extract_metadata(self, html: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from HTML."""
+        """
+Extract comprehensive metadata from HTML."""
         soup = BeautifulSoup(html, 'html.parser')
         metadata = {}
         
@@ -607,7 +619,8 @@ class ContentScraper:
         return similarity >= threshold
         
     def extract_contact_info(self, content: str) -> Dict[str, List[str]]:
-        """Extract contact information from content."""
+        """
+Extract contact information from content."""
         contact_info = {
             'emails': [],
             'phones': [],

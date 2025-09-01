@@ -4,11 +4,12 @@ Advanced integration configuration for microservices architecture, API managemen
 external service connections, and enterprise-grade system integration.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of microservices"""
+    """
+Types of microservices"""
+
     GATEWAY = "gateway"
     AUTH = "auth"
     USER_MANAGEMENT = "user_management"
@@ -43,6 +46,7 @@ class ServiceType(Enum):
 
 class IntegrationType(Enum):
     """Types of external integrations"""
+
     PAYMENT_GATEWAY = "payment_gateway"
     SOCIAL_MEDIA = "social_media"
     CLOUD_STORAGE = "cloud_storage"
@@ -59,6 +63,7 @@ class IntegrationType(Enum):
 
 class CommunicationProtocol(Enum):
     """Communication protocols between services"""
+
     REST_API = "rest_api"
     GRAPHQL = "graphql"
     GRPC = "grpc"

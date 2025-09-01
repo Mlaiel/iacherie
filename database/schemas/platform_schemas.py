@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class PlatformTypeEnum(str, Enum):
-    """Types of supported platforms"""
+    """
+Types of supported platforms"""
+
     SOCIAL_MEDIA = "social_media"
     STREAMING_MUSIC = "streaming_music"
     STREAMING_VIDEO = "streaming_video"
@@ -37,6 +40,7 @@ class PlatformTypeEnum(str, Enum):
 
 class IntegrationStatusEnum(str, Enum):
     """Platform integration status"""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -52,6 +56,7 @@ class IntegrationStatusEnum(str, Enum):
 
 class AuthMethodEnum(str, Enum):
     """Authentication methods"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -63,6 +68,7 @@ class AuthMethodEnum(str, Enum):
 
 class SyncFrequencyEnum(str, Enum):
     """Data synchronization frequencies"""
+
     REAL_TIME = "real_time"
     EVERY_5_MINUTES = "every_5_minutes"
     EVERY_15_MINUTES = "every_15_minutes"
@@ -76,6 +82,7 @@ class SyncFrequencyEnum(str, Enum):
 
 class ContentFormatEnum(str, Enum):
     """Content formats supported by platforms"""
+
     AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"

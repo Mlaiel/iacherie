@@ -9,6 +9,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 from typing import Dict, List, Optional, Tuple, Any
 from enum import Enum
 from dataclasses import dataclass
@@ -20,7 +21,9 @@ from pydantic import BaseModel, Field
 logger = logging.getLogger(__name__)
 
 class ContentCreatorType(Enum):
-    """Content creator types supported by the platform"""
+    """
+Content creator types supported by the platform"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -32,6 +35,7 @@ class ContentCreatorType(Enum):
 
 class ContentFormat(Enum):
     """Content formats supported"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -40,6 +44,7 @@ class ContentFormat(Enum):
 
 class PromptCategory(Enum):
     """Prompt categories for content creation"""
+
     CREATION = "creation"
     PROTECTION = "protection"
     OPTIMIZATION = "optimization"
@@ -58,16 +63,19 @@ class PromptContext:
     market_trends: Dict[str, Any]
 
 class ContentCreatorPrompts:
-    """Professional Content Creator Prompts System"""
+    """
+Professional Content Creator Prompts System"""
     
     def __init__(self):
-        """Initialize the content creator prompts system"""
+        """
+Initialize the content creator prompts system"""
         self.prompts_cache = {}
         self.personalization_engine = PersonalizationEngine()
         self._load_prompt_templates()
     
     def _load_prompt_templates(self) -> None:
-        """Load and initialize prompt templates"""
+        """
+Load and initialize prompt templates"""
         self.base_prompts = {
             ContentCreatorType.MUSICIAN: {
                 PromptCategory.CREATION: [
@@ -399,12 +407,14 @@ class PersonalizationEngine:
     """Advanced personalization engine for prompts"""
     
     def __init__(self):
-        """Initialize personalization engine"""
+        """
+Initialize personalization engine"""
         self.user_models = {}
         self.learning_data = {}
     
     def personalize(self, prompt: Dict, context: PromptContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Personalize prompt based on user context and preferences"""
+        """
+Personalize prompt based on user context and preferences"""
         personalized = prompt.copy()
         
         # Apply user preferences
@@ -426,7 +436,8 @@ class PersonalizationEngine:
         return personalized
     
     def _apply_user_preferences(self, prompt: Dict, preferences: Dict) -> Dict:
-        """Apply user preferences to prompt"""
+        """
+Apply user preferences to prompt"""
         # Implementation for user preference application
         modified_prompt = prompt.copy()
         
@@ -503,7 +514,8 @@ def create_prompt_context(
     platform_requirements: Optional[Dict] = None,
     market_trends: Optional[Dict] = None
 ) -> PromptContext:
-    """Create a prompt context for content generation"""
+    """
+Create a prompt context for content generation"""
     return PromptContext(
         creator_type=ContentCreatorType(creator_type),
         content_format=ContentFormat(content_format),

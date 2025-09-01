@@ -4,6 +4,7 @@ AI-powered content and collaboration recommendations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation structure"""
+    """
+Content recommendation structure"""
     content_id: str
     title: str
     creator: str
@@ -28,7 +30,8 @@ class ContentRecommendation:
 
 @dataclass
 class CollaborationRecommendation:
-    """Collaboration recommendation structure"""
+    """
+Collaboration recommendation structure"""
     target_user_id: str
     username: str
     compatibility_score: float
@@ -39,7 +42,8 @@ class CollaborationRecommendation:
 
 @dataclass
 class TrendRecommendation:
-    """Trend recommendation structure"""
+    """
+Trend recommendation structure"""
     trend_id: str
     trend_name: str
     category: str
@@ -50,7 +54,8 @@ class TrendRecommendation:
 
 
 class RecommendationEngine:
-    """AI-powered recommendation system for content and collaborations"""
+    """
+AI-powered recommendation system for content and collaborations"""
     
     def __init__(self):
         self.user_profiles = {}
@@ -63,7 +68,8 @@ class RecommendationEngine:
         user_id: str,
         interaction_data: Dict[str, Any]
     ):
-        """Update user profile based on interactions"""
+        """
+Update user profile based on interactions"""
         try:
             if user_id not in self.user_profiles:
                 self.user_profiles[user_id] = {

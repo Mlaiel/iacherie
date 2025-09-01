@@ -5,8 +5,9 @@ The ContentSynchronizer ensures data consistency across platforms,
 manages real-time updates, and handles conflict resolution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -25,7 +26,9 @@ from ..events.event_publisher import EventPublisher
 
 
 class SyncStatus(Enum):
-    """Synchronization status enumeration"""
+    """
+Synchronization status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -36,6 +39,7 @@ class SyncStatus(Enum):
 
 class ConflictResolutionStrategy(Enum):
     """Conflict resolution strategy enumeration"""
+
     LATEST_WINS = "latest_wins"
     SOURCE_PRIORITY = "source_priority"
     MANUAL_REVIEW = "manual_review"
@@ -61,7 +65,8 @@ class SyncTask:
 
 @dataclass
 class SyncConflict:
-    """Content synchronization conflict container"""
+    """
+Content synchronization conflict container"""
     conflict_id: str
     content_id: str
     platform_a: str
@@ -75,7 +80,8 @@ class SyncConflict:
 
 @dataclass
 class SyncResult:
-    """Content synchronization result container"""
+    """
+Content synchronization result container"""
     task_id: str
     content_id: str
     success: bool
@@ -611,7 +617,8 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict by merging non-conflicting changes"""
+        """
+Resolve conflict by merging non-conflicting changes"""
         merged_content = self._content_to_dict(local_content)
         
         # Merge fields that don't conflict
@@ -627,7 +634,8 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict by preserving local content"""
+        """
+Resolve conflict by preserving local content"""
         return self._content_to_dict(local_content)
 
     async def _resolve_conflict_preserve_remote(
@@ -636,13 +644,15 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict by preserving remote/platform content"""
+        """
+Resolve conflict by preserving remote/platform content"""
         return platform_content
 
     # Helper methods
 
     def _load_platform_sync_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific synchronization configurations"""
+        """
+Load platform-specific synchronization configurations"""
         return {
             "youtube": {
                 "field_mappings": {
@@ -714,7 +724,8 @@ class ContentSynchronizer:
         return None
 
     async def _get_configured_platforms(self, content_id: str) -> List[str]:
-        """Get configured platforms for content"""
+        """
+Get configured platforms for content"""
         return ["youtube", "instagram"]
 
     async def _sync_needed(self, content_id: str, platforms: List[str]) -> bool:
@@ -722,11 +733,13 @@ class ContentSynchronizer:
         return True
 
     async def _log_sync_operation(self, sync_task: SyncTask, sync_result: SyncResult) -> None:
-        """Log synchronization operation"""
+        """
+Log synchronization operation"""
         pass
 
     def _serialize_sync_result(self, result: SyncResult) -> Dict[str, Any]:
-        """Convert sync result to serializable format"""
+        """
+Convert sync result to serializable format"""
         return {
             "task_id": result.task_id,
             "content_id": result.content_id,

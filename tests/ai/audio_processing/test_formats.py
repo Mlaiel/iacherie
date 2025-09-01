@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -23,8 +24,9 @@ Comprehensive testing for audio format conversion and optimization including:
 - FFmpeg integration testing
 
 Created by Expert Team: Audio Developer + Backend Senior + DevOps Engineer
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -71,7 +73,8 @@ class TestFormatConverter:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.converter = FormatConverter()
         self.processor = AudioProcessor()
@@ -87,7 +90,8 @@ class TestFormatConverter:
         assert hasattr(converter, 'supported_formats')
     
     def test_supported_formats(self):
-        """Test supported format enumeration"""
+        """
+Test supported format enumeration"""
         # Check AudioFormat enum
         assert hasattr(AudioFormat, 'WAV')
         assert hasattr(AudioFormat, 'MP3')
@@ -103,7 +107,8 @@ class TestFormatConverter:
         assert hasattr(QualityLevel, 'LOSSLESS')
     
     def test_convert_wav_to_mp3(self):
-        """Test WAV to MP3 conversion"""
+        """
+Test WAV to MP3 conversion"""
         input_file = self.test_data_dir / "pure_tone_440hz.wav"
         output_file = self.temp_output_dir / "test_output.mp3"
         
@@ -362,7 +367,8 @@ class TestQualityOptimizer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         self.optimizer = QualityOptimizer()
         self.processor = AudioProcessor()
@@ -378,7 +384,8 @@ class TestQualityOptimizer:
         assert hasattr(optimizer, 'optimization_rules')
     
     def test_analyze_audio_quality(self):
-        """Test audio quality analysis"""
+        """
+Test audio quality analysis"""
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -544,7 +551,8 @@ class TestQualityOptimizer:
         assert 'gain_adjustment' in optimized_settings
     
     def test_frequency_response_optimization(self):
-        """Test frequency response optimization"""
+        """
+Test frequency response optimization"""
         audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
@@ -605,7 +613,8 @@ class TestConversionSettings:
     """Test ConversionSettings data structure"""
     
     def test_settings_creation(self):
-        """Test ConversionSettings creation"""
+        """
+Test ConversionSettings creation"""
         settings = ConversionSettings(
             bitrate=192,
             sample_rate=44100,
@@ -621,7 +630,8 @@ class TestConversionSettings:
         assert settings.enable_vbr is True
     
     def test_settings_validation(self):
-        """Test settings validation"""
+        """
+Test settings validation"""
         # Valid settings
         valid_settings = ConversionSettings(
             bitrate=128,
@@ -642,10 +652,12 @@ class TestConversionSettings:
 
 
 class TestConversionResult:
-    """Test ConversionResult data structure"""
+    """
+Test ConversionResult data structure"""
     
     def test_result_creation(self):
-        """Test ConversionResult creation"""
+        """
+Test ConversionResult creation"""
         result = ConversionResult(
             success=True,
             output_path="/path/to/output.mp3",
@@ -670,7 +682,8 @@ class TestFormatsIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         self.temp_output_dir = TEST_CONFIG["temp_output_dir"]

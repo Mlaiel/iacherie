@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import gzip
 import bz2
@@ -32,7 +33,9 @@ from ..core.metrics import MetricsCollector
 
 
 class CompressionAlgorithm(Enum):
-    """Supported compression algorithms"""
+    """
+Supported compression algorithms"""
+
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -45,6 +48,7 @@ class CompressionAlgorithm(Enum):
 
 class CompressionLevel(Enum):
     """Compression level presets"""
+
     FASTEST = 1
     FAST = 3
     BALANCED = 6
@@ -53,7 +57,9 @@ class CompressionLevel(Enum):
 
 
 class ContentType(Enum):
-    """Content type for optimization"""
+    """
+Content type for optimization"""
+
     TEXT = "text"
     BINARY = "binary"
     AUDIO = "audio"
@@ -78,12 +84,14 @@ class CompressionResult:
     
     @property
     def space_saved(self) -> int:
-        """Calculate space saved in bytes"""
+        """
+Calculate space saved in bytes"""
         return self.original_size - self.compressed_size
     
     @property
     def space_saved_percentage(self) -> float:
-        """Calculate space saved percentage"""
+        """
+Calculate space saved percentage"""
         if self.original_size == 0:
             return 0.0
         return (self.space_saved / self.original_size) * 100
@@ -91,7 +99,8 @@ class CompressionResult:
 
 @dataclass
 class CompressionProfile:
-    """Compression profile for specific use cases"""
+    """
+Compression profile for specific use cases"""
     name: str
     algorithm: CompressionAlgorithm
     level: CompressionLevel
@@ -201,7 +210,8 @@ class CompressionEngine:
         return availability
     
     def _create_default_profiles(self) -> Dict[str, CompressionProfile]:
-        """Create default compression profiles"""
+        """
+Create default compression profiles"""
         return {
             "fast_text": CompressionProfile(
                 name="fast_text",
@@ -814,7 +824,8 @@ class CompressionEngine:
         compressed_size: int,
         compression_time: float
     ):
-        """Update compression statistics"""
+        """
+Update compression statistics"""
         self.compression_stats["total_operations"] += 1
         self.compression_stats["total_original_size"] += original_size
         self.compression_stats["total_compressed_size"] += compressed_size
@@ -887,7 +898,8 @@ async def compress_text(
     text: str,
     algorithm: CompressionAlgorithm = CompressionAlgorithm.ZSTD
 ) -> CompressionResult:
-    """Compress text data"""
+    """
+Compress text data"""
     engine = await get_compression_engine()
     return await engine.compress(
         text.encode('utf-8'),
@@ -900,7 +912,8 @@ async def compress_json(
     data: Dict[str, Any],
     algorithm: CompressionAlgorithm = CompressionAlgorithm.ZSTD
 ) -> CompressionResult:
-    """Compress JSON data"""
+    """
+Compress JSON data"""
     import json
     engine = await get_compression_engine()
     json_bytes = json.dumps(data, separators=(',', ':')).encode('utf-8')
@@ -915,7 +928,8 @@ async def compress_binary(
     data: bytes,
     algorithm: CompressionAlgorithm = CompressionAlgorithm.ZSTD
 ) -> CompressionResult:
-    """Compress binary data"""
+    """
+Compress binary data"""
     engine = await get_compression_engine()
     return await engine.compress(
         data,

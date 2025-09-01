@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 from .rate_limiter import (
     RateLimiter,
     YouTubeRateLimiter,
@@ -358,7 +359,8 @@ def validate_crawler_config(config: dict) -> bool:
     return True
 
 async def test_platform_connectivity(platform: str) -> bool:
-    """Test connectivity to specific platform."""
+    """
+Test connectivity to specific platform."""
     test_urls = {
         "youtube": "https://www.youtube.com",
         "instagram": "https://www.instagram.com",

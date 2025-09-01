@@ -9,7 +9,7 @@ Module: backend/business/surveillance/realtime_monitor.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -28,6 +28,7 @@ Threat Detection → Instant Alerts → Automated Response →
 Evidence Collection → Legal Action → Performance Tracking → 
 System Optimization
 """
+
 import asyncio
 import logging
 import json
@@ -73,7 +74,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringMode(Enum):
-    """Real-time monitoring modes"""
+    """
+Real-time monitoring modes"""
+
     PASSIVE = "passive"
     ACTIVE = "active"
     AGGRESSIVE = "aggressive"
@@ -83,6 +86,7 @@ class MonitoringMode(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels"""
+
     MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
@@ -93,6 +97,7 @@ class ThreatLevel(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring system status"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -103,6 +108,7 @@ class MonitoringStatus(Enum):
 
 class AlertPriority(Enum):
     """Alert priority levels"""
+
     INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
@@ -132,7 +138,8 @@ class MonitoringTarget:
 
 @dataclass
 class ThreatDetection:
-    """Real-time threat detection result"""
+    """
+Real-time threat detection result"""
     detection_id: str
     target_id: str
     threat_type: str
@@ -167,7 +174,8 @@ class SystemMetrics:
 
 @dataclass
 class MonitoringConfiguration:
-    """Real-time monitoring configuration"""
+    """
+Real-time monitoring configuration"""
     monitoring_interval: float = 30.0  # seconds
     max_concurrent_monitors: int = 100
     similarity_threshold: float = 0.8
@@ -202,7 +210,8 @@ class RealtimeMonitor:
         websocket_port: int = 8765,
         metrics_port: int = 9090
     ):
-        """Initialize real-time surveillance monitor"""
+        """
+Initialize real-time surveillance monitor"""
         self.config = config
         self.redis_client = redis_client or redis.Redis(decode_responses=True)
         self.database_url = database_url
@@ -258,7 +267,8 @@ class RealtimeMonitor:
         }
     
     def _initialize_database(self):
-        """Initialize database connection and tables"""
+        """
+Initialize database connection and tables"""
         try:
             if self.database_url:
                 self.engine = create_engine(self.database_url)
@@ -331,7 +341,8 @@ class RealtimeMonitor:
                 conn.execute(text(tables_sql))
     
     def _setup_notification_services(self):
-        """Setup notification services"""
+        """
+Setup notification services"""
         try:
             # Email service
             self.notification_services['email'] = {
@@ -634,7 +645,8 @@ class RealtimeMonitor:
         return intervals.get(priority, 1800)
     
     async def monitor_platform(self, target: MonitoringTarget, platform: str) -> List[ThreatDetection]:
-        """Monitor content on a specific platform"""
+        """
+Monitor content on a specific platform"""
         try:
             detections = []
             
@@ -740,22 +752,26 @@ class RealtimeMonitor:
         return []
     
     async def monitor_twitter(self, target: MonitoringTarget) -> List[ThreatDetection]:
-        """Monitor Twitter for content violations"""
+        """
+Monitor Twitter for content violations"""
         # Similar implementation to other platforms
         return []
     
     async def monitor_facebook(self, target: MonitoringTarget) -> List[ThreatDetection]:
-        """Monitor Facebook for content violations"""
+        """
+Monitor Facebook for content violations"""
         # Similar implementation to other platforms
         return []
     
     async def monitor_generic_web(self, target: MonitoringTarget, domain: str) -> List[ThreatDetection]:
-        """Monitor generic web domains"""
+        """
+Monitor generic web domains"""
         # Generic web scraping and monitoring logic
         return []
     
     async def simulate_youtube_search(self, query: str) -> List[Dict[str, Any]]:
-        """Simulate YouTube API search (replace with real API calls)"""
+        """
+Simulate YouTube API search (replace with real API calls)"""
         # This would be replaced with actual YouTube API calls
         return [
             {
@@ -771,7 +787,8 @@ class RealtimeMonitor:
         ]
     
     async def simulate_tiktok_search(self, query: str) -> List[Dict[str, Any]]:
-        """Simulate TikTok API search"""
+        """
+Simulate TikTok API search"""
         return [
             {
                 'id': f'tiktok_{i}',
@@ -789,7 +806,8 @@ class RealtimeMonitor:
         target: MonitoringTarget,
         content_data: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between target and found content"""
+        """
+Calculate similarity between target and found content"""
         try:
             # This would integrate with the fingerprinting engine
             # For now, simulate based on title/description similarity
@@ -834,7 +852,8 @@ class RealtimeMonitor:
             return ThreatLevel.MINIMAL
     
     def get_threat_score(self, threat_level: ThreatLevel) -> int:
-        """Get numeric score for threat level"""
+        """
+Get numeric score for threat level"""
         scores = {
             ThreatLevel.MINIMAL: 1,
             ThreatLevel.LOW: 2,
@@ -846,7 +865,8 @@ class RealtimeMonitor:
         return scores.get(threat_level, 1)
     
     async def process_detections(self):
-        """Process threat detections queue"""
+        """
+Process threat detections queue"""
         try:
             while self.status == MonitoringStatus.ACTIVE:
                 try:

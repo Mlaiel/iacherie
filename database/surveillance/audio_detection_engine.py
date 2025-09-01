@@ -5,12 +5,13 @@ Advanced audio fingerprinting and detection engine for music content surveillanc
 Implements state-of-the-art audio analysis and matching algorithms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure."""
+    """
+Audio fingerprint data structure."""
     fingerprint_id: str
     user_id: str
     title: str
@@ -44,7 +46,8 @@ class AudioFingerprint:
 
 @dataclass
 class AudioMatch:
-    """Audio match result structure."""
+    """
+Audio match result structure."""
     original_fingerprint_id: str
     detected_url: str
     similarity_score: float
@@ -57,7 +60,8 @@ class AudioMatch:
 
 
 class AudioFeatureExtractor:
-    """Advanced audio feature extraction for fingerprinting."""
+    """
+Advanced audio feature extraction for fingerprinting."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -510,7 +514,8 @@ class AudioDetectionEngine:
         input_features: Dict[str, Any],
         stored_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence level for match."""
+        """
+Calculate confidence level for match."""
         try:
             # Base confidence from overall similarity
             confidence = similarity_score

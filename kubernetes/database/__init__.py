@@ -237,6 +237,7 @@ SUPPORT ET MAINTENANCE:
 - Feature flags pour adoption progressive
 - Automated rollback sur détection d'anomalies
 """
+
 from typing import Dict, Any, Optional, List
 import asyncio
 from datetime import datetime
@@ -794,7 +795,8 @@ def get_database_manager(config: Optional[Dict[str, Any]] = None) -> DatabaseMan
 
 
 async def initialize_database_system(config: Optional[Dict[str, Any]] = None, force_reinit: bool = False) -> bool:
-    """Initialize the complete database system"""
+    """
+Initialize the complete database system"""
     try:
         manager = get_database_manager(config)
         return await manager.initialize(force_reinit=force_reinit)

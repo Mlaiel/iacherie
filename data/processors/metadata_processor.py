@@ -22,6 +22,7 @@ Features:
 - Automated content description generation
 - Metadata validation and quality assessment
 """
+
 import asyncio
 import logging
 import hashlib
@@ -134,7 +135,8 @@ class ContentMetadata:
 
 @dataclass
 class MetadataQuality:
-    """Metadata quality assessment"""
+    """
+Metadata quality assessment"""
     completeness_score: float
     accuracy_score: float
     consistency_score: float
@@ -144,7 +146,8 @@ class MetadataQuality:
     recommendations: List[str] = field(default_factory=list)
 
 class MetadataProcessor:
-    """Universal metadata extraction and enrichment engine"""
+    """
+Universal metadata extraction and enrichment engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -183,7 +186,8 @@ class MetadataProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize metadata extraction engines"""
+        """
+Initialize metadata extraction engines"""
         try:
             # Initialize content type mappings
             self.content_type_mapping = {
@@ -650,7 +654,8 @@ class MetadataProcessor:
         """Extract GPS coordinates from EXIF GPS data"""
         try:
             def convert_to_degrees(value):
-                """Convert GPS coordinate to decimal degrees"""
+                """
+Convert GPS coordinate to decimal degrees"""
                 d, m, s = value
                 return d + (m / 60.0) + (s / 3600.0)
             
@@ -1123,7 +1128,8 @@ class UniversalMetadata:
     raw_metadata: Optional[Dict[str, Any]] = None
 
 class MetadataProcessor:
-    """Professional metadata extraction and processing engine"""
+    """
+Professional metadata extraction and processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -1155,7 +1161,8 @@ class MetadataProcessor:
         }
     
     def _initialize_processors(self):
-        """Initialize metadata processing components"""
+        """
+Initialize metadata processing components"""
         try:
             # Initialize format-specific processors
             self.audio_processor = AudioMetadataProcessor()
@@ -1581,7 +1588,8 @@ class MetadataProcessor:
             return None
     
     def _get_mime_type(self, file_format: str) -> str:
-        """Get MIME type for file format"""
+        """
+Get MIME type for file format"""
         mime_types = {
             'mp3': 'audio/mpeg',
             'wav': 'audio/wav',
@@ -1612,7 +1620,8 @@ class MetadataProcessor:
         file_paths: List[str],
         config: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """Extract metadata from multiple files in bulk"""
+        """
+Extract metadata from multiple files in bulk"""
         tasks = []
         
         for file_path in file_paths:
@@ -1638,35 +1647,40 @@ class MetadataProcessor:
 
 # Placeholder classes for format-specific processors
 class AudioMetadataProcessor:
-    """Audio metadata extraction"""
+    """
+Audio metadata extraction"""
     async def extract_metadata(self, content_data, file_path, config):
         metadata = UniversalMetadata(content_type='audio')
         # Implementation would go here
         return metadata
 
 class VideoMetadataProcessor:
-    """Video metadata extraction"""
+    """
+Video metadata extraction"""
     async def extract_metadata(self, content_data, file_path, config):
         metadata = UniversalMetadata(content_type='video')
         # Implementation would go here
         return metadata
 
 class ImageMetadataProcessor:
-    """Image metadata extraction"""
+    """
+Image metadata extraction"""
     async def extract_metadata(self, content_data, file_path, config):
         metadata = UniversalMetadata(content_type='image')
         # Implementation would go here
         return metadata
 
 class TextMetadataProcessor:
-    """Text metadata extraction"""
+    """
+Text metadata extraction"""
     async def extract_metadata(self, content_data, file_path, config):
         metadata = UniversalMetadata(content_type='text')
         # Implementation would go here
         return metadata
 
 class MetadataValidator:
-    """Metadata validation and quality checks"""
+    """
+Metadata validation and quality checks"""
     async def validate(self, metadata: UniversalMetadata) -> Dict[str, Any]:
         return {
             'is_valid': True,

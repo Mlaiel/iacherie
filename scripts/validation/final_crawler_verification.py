@@ -13,6 +13,7 @@ This suite combines:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import os
 import ast
 import json
@@ -23,7 +24,8 @@ from datetime import datetime
 from unittest.mock import Mock, MagicMock, patch
 
 class FinalCrawlerVerifier:
-    """Comprehensive crawler verification suite."""
+    """
+Comprehensive crawler verification suite."""
     
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)

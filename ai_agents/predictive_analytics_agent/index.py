@@ -11,6 +11,7 @@ This module index and integration framework are the exclusive intellectual prope
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -71,7 +72,8 @@ class PredictiveAnalyticsModule:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize the complete predictive analytics module"""
+        """
+Initialize the complete predictive analytics module"""
         
         self.config = config or {}
         self.module_info = MODULE_METADATA
@@ -380,7 +382,8 @@ class PredictiveAnalyticsModule:
         }
     
     def get_supported_features(self) -> Dict[str, List[str]]:
-        """Get list of all supported features by component"""
+        """
+Get list of all supported features by component"""
         
         return {
             'predictive_forecasting': [
@@ -430,7 +433,8 @@ class PredictiveAnalyticsModule:
     async def _generate_executive_summary(self, 
                                         creator_id: str, 
                                         analysis_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary of analysis results"""
+        """
+Generate executive summary of analysis results"""
         
         try:
             # Extract key metrics
@@ -501,7 +505,8 @@ class PredictiveAnalyticsModule:
             return 0.5  # Default neutral score
     
     async def _get_current_performance_status(self, creator_data: Dict[str, Any]) -> Dict[str, str]:
-        """Get current performance status indicators"""
+        """
+Get current performance status indicators"""
         
         engagement_rate = creator_data.get('engagement_rate', 0.0)
         growth_rate = creator_data.get('follower_growth_rate', 0.0)
@@ -529,18 +534,21 @@ async def analyze_creator(creator_id: str, creator_data: Dict[str, Any], analysi
     )
 
 async def get_quick_insights(creator_id: str, creator_data: Dict[str, Any]):
-    """Direct access function for quick insights"""
+    """
+Direct access function for quick insights"""
     return await predictive_analytics_module.quick_insights(
         creator_id=creator_id,
         creator_data=creator_data
     )
 
 def get_module_info():
-    """Get module information and status"""
+    """
+Get module information and status"""
     return predictive_analytics_module.get_module_status()
 
 def get_features():
-    """Get supported features list"""
+    """
+Get supported features list"""
     return predictive_analytics_module.get_supported_features()
 
 # Export everything for external usage

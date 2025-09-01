@@ -6,7 +6,7 @@ This module implements the specific challenge types required:
 - Global Competitions for special events
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
@@ -22,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class SpecializedChallengeType(Enum):
-    """Specialized challenge types for the platform requirements"""
+    """
+Specialized challenge types for the platform requirements"""
+
     MONTHLY_CREATIVE = "monthly_creative"
     TECHNICAL_SEO = "technical_seo"
     TECHNICAL_REVENUE = "technical_revenue"
@@ -32,6 +34,7 @@ class SpecializedChallengeType(Enum):
 
 class ChallengeRewardType(Enum):
     """Types of rewards for challenges"""
+
     POINTS = "points"
     BADGE = "badge"
     CASH_PRIZE = "cash_prize"
@@ -409,7 +412,8 @@ class SpecializedChallengeManager:
         return active
     
     async def get_active_technical_challenges(self) -> List[TechnicalChallenge]:
-        """Get all active technical challenges"""
+        """
+Get all active technical challenges"""
         now = datetime.now(timezone.utc)
         active = []
         
@@ -420,7 +424,8 @@ class SpecializedChallengeManager:
         return active
     
     async def get_active_global_competitions(self) -> List[GlobalCompetition]:
-        """Get all active global competitions"""
+        """
+Get all active global competitions"""
         now = datetime.now(timezone.utc)
         active = []
         
@@ -432,7 +437,8 @@ class SpecializedChallengeManager:
         return active
     
     async def get_challenge_analytics(self) -> Dict[str, Any]:
-        """Get analytics for specialized challenges"""
+        """
+Get analytics for specialized challenges"""
         return {
             "monthly_challenges": {
                 "total": len(self.monthly_challenges),

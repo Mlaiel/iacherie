@@ -7,6 +7,7 @@ Monitors system health, performance, and security indicators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class TechnicalMetric(Enum):
-    """Technical metrics for monitoring"""
+    """
+Technical metrics for monitoring"""
+
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
@@ -39,6 +42,7 @@ class TechnicalMetric(Enum):
 
 class SecurityThreatLevel(Enum):
     """Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -105,7 +109,8 @@ class TechnicalAlertManager:
     """
     
     def __init__(self, alert_manager: IntelligentAlertManager):
-        """Initialize technical alert manager"""
+        """
+Initialize technical alert manager"""
         self.alert_manager = alert_manager
         self.technical_metrics_history: List[TechnicalMetrics] = []
         self.security_events: List[SecurityEvent] = []

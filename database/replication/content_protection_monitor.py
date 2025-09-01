@@ -2,6 +2,7 @@
 IA Influencer Agent + Content Protection Platform
 Real-time monitoring and alerting for worldwide content protection
 """
+
 import asyncio
 import logging
 import time
@@ -28,7 +29,9 @@ import requests
 import websockets
 
 class AlertSeverity(Enum):
-    """Alert severity levels for content protection monitoring"""
+    """
+Alert severity levels for content protection monitoring"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -37,6 +40,7 @@ class AlertSeverity(Enum):
 
 class MonitoringComponent(Enum):
     """Components being monitored in the content protection system"""
+
     REPLICATION = "replication"
     FINGERPRINTING = "fingerprinting"
     VIOLATION_DETECTION = "violation_detection"
@@ -58,7 +62,8 @@ class MetricData:
     region: str
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary for serialization"""
+        """
+Convert metric to dictionary for serialization"""
         return {
             'timestamp': self.timestamp.isoformat(),
             'component': self.component.value,
@@ -71,7 +76,8 @@ class MetricData:
 
 @dataclass
 class Alert:
-    """Alert structure for content protection incidents"""
+    """
+Alert structure for content protection incidents"""
     id: str
     severity: AlertSeverity
     component: MonitoringComponent
@@ -99,7 +105,8 @@ class Alert:
         }
 
 class PrometheusMetrics:
-    """Prometheus metrics for content protection monitoring"""
+    """
+Prometheus metrics for content protection monitoring"""
     
     def __init__(self):
         # Replication metrics
@@ -160,7 +167,8 @@ class PrometheusMetrics:
         )
 
 class ContentProtectionMonitor:
-    """Advanced monitoring system for content protection replication"""
+    """
+Advanced monitoring system for content protection replication"""
     
     def __init__(self, config_path: str = "content_protection_config.yml"):
         self.config = self._load_config(config_path)
@@ -207,7 +215,8 @@ class ContentProtectionMonitor:
         }
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup structured logging for monitoring"""
+        """
+Setup structured logging for monitoring"""
         logger = logging.getLogger('content_protection_monitor')
         logger.setLevel(logging.INFO)
         
@@ -229,7 +238,8 @@ class ContentProtectionMonitor:
         return logger
     
     async def initialize_connections(self):
-        """Initialize connections to all monitored databases"""
+        """
+Initialize connections to all monitored databases"""
         try:
             # Initialize Redis connections for each region
             for region, config in self.config.get('regions', {}).items():
@@ -865,7 +875,8 @@ class ContentProtectionMonitor:
             }
     
     async def _check_mongodb_health(self, region: str) -> Dict[str, Any]:
-        """Check MongoDB health for a specific region"""
+        """
+Check MongoDB health for a specific region"""
         try:
             client = self.mongo_clients[region]
             
@@ -892,7 +903,8 @@ class ContentProtectionMonitor:
             }
     
     async def _check_elasticsearch_health(self, region: str) -> Dict[str, Any]:
-        """Check Elasticsearch health for a specific region"""
+        """
+Check Elasticsearch health for a specific region"""
         try:
             client = self.es_clients[region]
             
@@ -918,7 +930,8 @@ class ContentProtectionMonitor:
             }
     
     async def _check_api_health(self) -> Dict[str, Any]:
-        """Check API health across all endpoints"""
+        """
+Check API health across all endpoints"""
         # Simplified API health check
         return {
             'status': 'healthy',
@@ -928,7 +941,8 @@ class ContentProtectionMonitor:
         }
     
     async def _check_security_status(self) -> Dict[str, Any]:
-        """Check security status and compliance"""
+        """
+Check security status and compliance"""
         return {
             'status': 'secure',
             'failed_auth_attempts_last_hour': 2,
@@ -938,7 +952,8 @@ class ContentProtectionMonitor:
         }
     
     async def _check_performance_metrics(self) -> Dict[str, Any]:
-        """Check system performance metrics"""
+        """
+Check system performance metrics"""
         # System metrics
         cpu_percent = psutil.cpu_percent(interval=1)
         memory = psutil.virtual_memory()
@@ -952,7 +967,8 @@ class ContentProtectionMonitor:
         }
     
     def _calculate_health_score(self, health_status: Dict[str, Any]) -> float:
-        """Calculate overall system health score"""
+        """
+Calculate overall system health score"""
         try:
             scores = []
             
@@ -1141,7 +1157,8 @@ class ContentProtectionMonitor:
 
 # Example usage and demonstration
 async def run_monitoring_demo():
-    """Demonstration of the content protection monitoring system"""
+    """
+Demonstration of the content protection monitoring system"""
     print("🚀 Starting IA Influencer Agent Content Protection Monitoring Demo")
     print("=" * 70)
     

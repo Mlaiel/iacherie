@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive compliance capabilities including
 regulatory compliance, data governance, model auditing, and ethics checking.
 """
+
 import logging
 import json
 import os
@@ -20,7 +21,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks and regulations"""
+    """
+Compliance frameworks and regulations"""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
@@ -32,6 +35,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -40,6 +44,7 @@ class ComplianceStatus(Enum):
 
 class RiskLevel(Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -58,7 +63,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceResult:
-    """Result of compliance check"""
+    """
+Result of compliance check"""
     rule_id: str
     status: ComplianceStatus
     risk_level: RiskLevel
@@ -68,7 +74,8 @@ class ComplianceResult:
     checked_at: datetime
 
 class ComplianceChecker:
-    """Main compliance checking and validation system"""
+    """
+Main compliance checking and validation system"""
     
     def __init__(self, frameworks: List[ComplianceFramework] = None):
         self.frameworks = frameworks or [ComplianceFramework.GDPR, ComplianceFramework.AI_ACT_EU]
@@ -300,7 +307,8 @@ class ComplianceChecker:
     
     # Compliance check functions
     def _check_data_minimization(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check GDPR data minimization compliance"""
+        """
+Check GDPR data minimization compliance"""
         # Simulate data minimization check
         if metadata and "data_fields" in metadata:
             fields_count = len(metadata["data_fields"])

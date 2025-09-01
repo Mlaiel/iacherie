@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,10 +13,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit tests for monitoring.workflow_metrics module
+"""
+Unit tests for monitoring.workflow_metrics module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -26,15 +29,18 @@ from monitoring.workflow_metrics import WorkflowMetrics, NotificationService
 
 
 class TestWorkflowMetrics:
-    """Test cases for WorkflowMetrics class"""
+    """
+Test cases for WorkflowMetrics class"""
     def test_init(self):
-        """Test WorkflowMetrics initialization"""
+        """
+Test WorkflowMetrics initialization"""
         metrics = WorkflowMetrics()
         assert metrics.metrics == {}
 
     @pytest.mark.asyncio
     async def test_setup_content_tracking_basic(self):
-        """Test basic content tracking setup"""
+        """
+Test basic content tracking setup"""
         metrics = WorkflowMetrics()
         
         config = {
@@ -100,13 +106,15 @@ class TestWorkflowMetrics:
 class TestNotificationService:
     """Test cases for NotificationService class"""
     def test_init(self):
-        """Test NotificationService initialization"""
+        """
+Test NotificationService initialization"""
         service = NotificationService()
         assert service.notifications == []
 
     @pytest.mark.asyncio
     async def test_send_notification_basic(self):
-        """Test basic notification sending"""
+        """
+Test basic notification sending"""
         service = NotificationService()
         
         notification_data = {

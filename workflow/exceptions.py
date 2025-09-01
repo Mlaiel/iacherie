@@ -4,12 +4,14 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Optional, Dict, Any, List
 from enum import Enum
 
 
 class WorkflowErrorCode(Enum):
-    """Standardized workflow error codes."""
+    """
+Standardized workflow error codes."""
     # General workflow errors (1000-1099)
     WORKFLOW_INITIALIZATION_FAILED = "WF1000"
     WORKFLOW_EXECUTION_FAILED = "WF1001"
@@ -73,7 +75,8 @@ class WorkflowException(Exception):
         self.timestamp = None
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/serialization."""
+        """
+Convert exception to dictionary for logging/serialization."""
         return {
             "error_type": self.__class__.__name__,
             "message": self.message,
@@ -210,7 +213,8 @@ class ScheduleCronException(SchedulingException):
 
 
 class ScheduleConflictException(SchedulingException):
-    """Exception for scheduling conflicts."""
+    """
+Exception for scheduling conflicts."""
     
     def __init__(
         self,
@@ -467,7 +471,8 @@ def is_retryable_exception(exception: Exception) -> bool:
 
 
 def extract_error_context(exception: Exception) -> Dict[str, Any]:
-    """Extract context information from any exception for debugging."""
+    """
+Extract context information from any exception for debugging."""
     context = {
         "exception_type": exception.__class__.__name__,
         "message": str(exception),

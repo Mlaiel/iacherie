@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessIntentCategory(Enum):
-    """Business intent categories for creative professionals"""
+    """
+Business intent categories for creative professionals"""
+
     MONETIZATION = "monetization"
     REVENUE_TRACKING = "revenue_tracking"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -44,6 +47,7 @@ class BusinessIntentCategory(Enum):
 
 class RevenueStreamType(Enum):
     """Types of revenue streams for creators"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     BRAND_SPONSORSHIPS = "brand_sponsorships"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -60,6 +64,7 @@ class RevenueStreamType(Enum):
 
 class BusinessPriority(Enum):
     """Business priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -104,7 +109,8 @@ class BusinessIntentAnalysis:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity identification"""
+    """
+Monetization opportunity identification"""
     
     opportunity_type: RevenueStreamType
     potential_revenue: float
@@ -146,7 +152,8 @@ class BusinessIntentAnalyzer:
         self.market_data = self._load_market_data()
     
     def _initialize_business_patterns(self) -> Dict[str, re.Pattern]:
-        """Initialize business-related pattern matching"""
+        """
+Initialize business-related pattern matching"""
         return {
             "monetization": re.compile(
                 r'\b(monetize|revenue|income|earnings|profit|money|financial|payment)\b',

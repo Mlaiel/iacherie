@@ -95,6 +95,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Audit logging complet
 - Secure API integrations
 """
+
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta, date
@@ -118,7 +119,9 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class Platform(Enum):
-    """Revenue platforms"""
+    """
+Revenue platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -138,6 +141,7 @@ class Platform(Enum):
 
 class RevenueType(Enum):
     """Types of revenue"""
+
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     TIPS_DONATIONS = "tips_donations"
@@ -155,6 +159,7 @@ class RevenueType(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -179,6 +184,7 @@ class Currency(Enum):
 
 class PayoutStatus(Enum):
     """Payout status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -190,6 +196,7 @@ class PayoutStatus(Enum):
 
 class PaymentMethod(Enum):
     """Payment methods"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -218,7 +225,8 @@ class RevenueData:
 
 @dataclass
 class PayoutRequest:
-    """Payout request structure"""
+    """
+Payout request structure"""
     user_id: str
     amount: Decimal
     currency: Currency

@@ -7,6 +7,7 @@ manages workflows, and provides unified interface for text processing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingRequest:
-    """Request object for text processing"""
+    """
+Request object for text processing"""
     text: Union[str, List[str]]
     request_id: Optional[str] = None
     language: Optional[str] = None
@@ -52,7 +54,8 @@ class ProcessingRequest:
 
 @dataclass
 class ProcessingResult:
-    """Comprehensive result from NLP processing"""
+    """
+Comprehensive result from NLP processing"""
     request_id: str
     text: str
     language: Optional[LanguageResult] = None
@@ -76,7 +79,8 @@ class NLPOrchestrator:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize NLP Orchestrator"""
+        """
+Initialize NLP Orchestrator"""
         self.config = config or default_config
         self.components = {}
         self.executor = ThreadPoolExecutor(max_workers=self.config.performance.max_workers)
@@ -415,7 +419,8 @@ class NLPOrchestrator:
         return True
     
     def _generate_request_id(self) -> str:
-        """Generate unique request ID"""
+        """
+Generate unique request ID"""
         import uuid
         return f"nlp_{uuid.uuid4().hex[:8]}"
     
@@ -468,7 +473,8 @@ class NLPOrchestrator:
         return results
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get processing statistics"""
+        """
+Get processing statistics"""
         return {
             **self.processing_stats,
             "components_loaded": len(self.components),

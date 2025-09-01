@@ -8,7 +8,7 @@ Responsibility: Revenue and monetization data models
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ REVENUE MODEL ARCHITECTURE:
 Revenue Tracking → Platform Integration → Payment Processing → 
 Tax Calculations → Currency Exchange → Performance Analytics → Automated Payouts
 """
+
 from typing import Dict, List, Optional, Any, Union
 from decimal import Decimal
 from datetime import datetime, timezone
@@ -29,7 +30,9 @@ import json
 import uuid
 
 class RevenueType(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -47,6 +50,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -58,6 +62,7 @@ class PaymentStatus(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -143,7 +148,8 @@ class RevenueModel:
             self.payout_amount = self.net_amount - self.tax_amount
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'revenue_id': self.revenue_id,
             'creator_id': self.creator_id,
@@ -178,7 +184,8 @@ class RevenueModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'RevenueModel':
-        """Create instance from dictionary"""
+        """
+Create instance from dictionary"""
         # Convert string timestamps back to datetime objects
         if 'timestamp' in data and isinstance(data['timestamp'], str):
             data['timestamp'] = datetime.fromisoformat(data['timestamp'].replace('Z', '+00:00'))
@@ -211,7 +218,8 @@ class RevenueModel:
         return cls(**data)
     
     def validate(self) -> List[str]:
-        """Validate model data and return list of errors"""
+        """
+Validate model data and return list of errors"""
         errors = []
         
         if not self.revenue_id:
@@ -242,14 +250,16 @@ class RevenueModel:
         return len(self.validate()) == 0
     
     def calculate_effective_rate(self) -> Decimal:
-        """Calculate effective revenue rate after all fees"""
+        """
+Calculate effective revenue rate after all fees"""
         if self.gross_amount == 0:
             return Decimal('0.00')
         
         return (self.payout_amount / self.gross_amount * 100).quantize(Decimal('0.01'))
     
     def get_fee_breakdown(self) -> Dict[str, Decimal]:
-        """Get detailed fee breakdown"""
+        """
+Get detailed fee breakdown"""
         return {
             'platform_fee': self.platform_fee,
             'service_fee': self.service_fee,
@@ -260,7 +270,8 @@ class RevenueModel:
 
 @dataclass
 class RevenueSummaryModel:
-    """Revenue summary for analytics and reporting"""
+    """
+Revenue summary for analytics and reporting"""
     summary_id: str = field(default_factory=lambda: f"summary_{uuid.uuid4().hex[:12]}")
     creator_id: str = ""
     period_start: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
@@ -312,7 +323,8 @@ class RevenueSummaryModel:
                                   for k, v in self.revenue_by_content.items()}
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'summary_id': self.summary_id,
             'creator_id': self.creator_id,
@@ -339,7 +351,8 @@ class RevenueSummaryModel:
 
 @dataclass
 class PaymentRequestModel:
-    """Payment request tracking model"""
+    """
+Payment request tracking model"""
     request_id: str = field(default_factory=lambda: f"pay_{uuid.uuid4().hex[:12]}")
     creator_id: str = ""
     amount: Decimal = field(default=Decimal('0.00'))
@@ -376,7 +389,8 @@ class PaymentRequestModel:
         self.amount = Decimal(str(self.amount)).quantize(Decimal('0.01'))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'request_id': self.request_id,
             'creator_id': self.creator_id,
@@ -399,25 +413,29 @@ class PaymentRequestModel:
         }
     
     def can_retry(self) -> bool:
-        """Check if payment can be retried"""
+        """
+Check if payment can be retried"""
         return (self.status == PaymentStatus.FAILED and 
                 self.retry_count < self.max_retries)
     
     def mark_failed(self, reason: str):
-        """Mark payment as failed"""
+        """
+Mark payment as failed"""
         self.status = PaymentStatus.FAILED
         self.failure_reason = reason
         self.retry_count += 1
     
     def mark_completed(self, transaction_id: str):
-        """Mark payment as completed"""
+        """
+Mark payment as completed"""
         self.status = PaymentStatus.COMPLETED
         self.transaction_id = transaction_id
         self.completed_at = datetime.now(timezone.utc)
 
 @dataclass
 class PlatformConfigModel:
-    """Platform configuration for revenue calculations"""
+    """
+Platform configuration for revenue calculations"""
     platform_id: str = ""
     platform_name: str = ""
     

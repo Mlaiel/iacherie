@@ -5,8 +5,9 @@ Intelligent advisory system for content creators.
 Provides strategic guidance, mentorship, and expert recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class AdvisoryCategory(Enum):
-    """Advisory categories"""
+    """
+Advisory categories"""
+
     CAREER_DEVELOPMENT = "career_development"
     CONTENT_STRATEGY = "content_strategy"
     BUSINESS_GROWTH = "business_growth"
@@ -39,6 +42,7 @@ class AdvisoryCategory(Enum):
 
 class AdvisoryLevel(Enum):
     """Advisory depth levels"""
+
     QUICK_TIP = "quick_tip"
     DETAILED_GUIDANCE = "detailed_guidance"
     COMPREHENSIVE_PLAN = "comprehensive_plan"
@@ -47,6 +51,7 @@ class AdvisoryLevel(Enum):
 
 class ExpertiseArea(Enum):
     """Areas of expertise"""
+
     MUSIC_PRODUCTION = "music_production"
     VIDEO_CREATION = "video_creation"
     PHOTOGRAPHY = "photography"
@@ -77,7 +82,8 @@ class CreatorProfile:
 
 @dataclass
 class AdvisoryRequest:
-    """Advisory request structure"""
+    """
+Advisory request structure"""
     request_id: str
     user_id: str
     category: AdvisoryCategory
@@ -91,7 +97,8 @@ class AdvisoryRequest:
 
 @dataclass
 class AdvisoryResponse:
-    """Advisory response structure"""
+    """
+Advisory response structure"""
     response_id: str
     request_id: str
     category: AdvisoryCategory
@@ -126,7 +133,8 @@ class CreatorAdvisor:
         self._advisory_templates = {}
         
     async def initialize(self) -> None:
-        """Initialize the creator advisor"""
+        """
+Initialize the creator advisor"""
         try:
             await self.ai_models.load_advisory_models()
             await self.performance_tracker.initialize()

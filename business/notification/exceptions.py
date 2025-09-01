@@ -16,6 +16,7 @@ Processing Level: Industrial-Grade Error Management
 Creation Pattern: Enterprise Exception Handling
 Business Logic Integration: Complete Error Tracking and Recovery
 """
+
 import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
@@ -24,7 +25,9 @@ from enum import Enum
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels for business operations."""
+    """
+Error severity levels for business operations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -34,6 +37,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Categorization of business errors."""
+
     VALIDATION = "validation"
     CONFIGURATION = "configuration"
     BUSINESS_RULE = "business_rule"
@@ -64,7 +68,8 @@ class ErrorContext:
 
 @dataclass
 class BusinessImpact:
-    """Assessment of business impact for errors."""
+    """
+Assessment of business impact for errors."""
     revenue_impact: float  # Estimated revenue impact in USD
     user_affected_count: int  # Number of users affected
     service_disruption: bool  # Whether service is disrupted
@@ -105,7 +110,8 @@ class NotificationBusinessException(Exception):
         self.occurred_at = datetime.utcnow()
     
     def _create_default_context(self) -> ErrorContext:
-        """Create default error context."""
+        """
+Create default error context."""
         return ErrorContext(
             error_id=f"ERR_{datetime.utcnow().strftime('%Y%m%d_%H%M%S_%f')}",
             timestamp=datetime.utcnow(),
@@ -151,7 +157,8 @@ class NotificationBusinessException(Exception):
         return self.message
     
     def get_technical_details(self) -> Dict[str, Any]:
-        """Get technical details for debugging."""
+        """
+Get technical details for debugging."""
         return {
             "error_code": self.error_code,
             "category": self.category.value,
@@ -804,7 +811,8 @@ class ErrorHandlerRegistry:
         handler_func,
         priority: int = 100
     ):
-        """Register an error handler for a specific error type."""
+        """
+Register an error handler for a specific error type."""
         if error_type not in self._handlers:
             self._handlers[error_type] = []
         

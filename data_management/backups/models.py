@@ -8,10 +8,11 @@ Responsibility: Modèles de données centralisés pour système de sauvegarde
 ======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
@@ -21,7 +22,9 @@ from pathlib import Path
 
 
 class BackupType(Enum):
-    """Types de sauvegarde"""
+    """
+Types de sauvegarde"""
+
     FULL = "full"                    # Sauvegarde complète
     INCREMENTAL = "incremental"      # Sauvegarde incrémentale
     DIFFERENTIAL = "differential"    # Sauvegarde différentielle
@@ -33,6 +36,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """États de sauvegarde"""
+
     PENDING = "pending"             # En attente
     RUNNING = "running"             # En cours
     PAUSED = "paused"              # En pause
@@ -46,6 +50,7 @@ class BackupStatus(Enum):
 
 class BackupPriority(Enum):
     """Priorités de sauvegarde"""
+
     CRITICAL = "critical"          # Critique (immédiat)
     HIGH = "high"                  # Haute priorité
     NORMAL = "normal"              # Priorité normale
@@ -55,6 +60,7 @@ class BackupPriority(Enum):
 
 class StorageClass(Enum):
     """Classes de stockage"""
+
     HOT = "hot"                    # Accès immédiat (SSD)
     WARM = "warm"                  # Accès rapide (HDD)
     COLD = "cold"                  # Accès lent (tape/cloud)
@@ -64,6 +70,7 @@ class StorageClass(Enum):
 
 class CompressionAlgorithm(Enum):
     """Algorithmes de compression"""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -74,6 +81,7 @@ class CompressionAlgorithm(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Algorithmes de chiffrement"""
+
     NONE = "none"
     AES_128 = "aes-128"
     AES_256 = "aes-256"
@@ -180,7 +188,8 @@ class BackupJob:
     created_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "job_id": self.job_id,
             "user_id": self.user_id,
@@ -230,28 +239,32 @@ class BackupProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Pourcentage de progression"""
+        """
+Pourcentage de progression"""
         if self.files_total == 0:
             return 0.0
         return (self.files_processed / self.files_total) * 100
     
     @property
     def bytes_percentage(self) -> float:
-        """Pourcentage de bytes traités"""
+        """
+Pourcentage de bytes traités"""
         if self.bytes_total == 0:
             return 0.0
         return (self.bytes_processed / self.bytes_total) * 100
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Durée d'exécution"""
+        """
+Durée d'exécution"""
         if not self.started_at:
             return None
         end_time = self.completed_at or datetime.now()
         return end_time - self.started_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "backup_id": self.backup_id,
             "job_id": self.job_id,
@@ -344,17 +357,20 @@ class BackupMetadata:
     
     @property
     def is_failed(self) -> bool:
-        """Vérifie si la sauvegarde a échoué"""
+        """
+Vérifie si la sauvegarde a échoué"""
         return self.status in [BackupStatus.FAILED, BackupStatus.CORRUPTED]
     
     @property
     def is_running(self) -> bool:
-        """Vérifie si la sauvegarde est en cours"""
+        """
+Vérifie si la sauvegarde est en cours"""
         return self.status in [BackupStatus.RUNNING, BackupStatus.VERIFYING]
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Durée d'exécution"""
+        """
+Durée d'exécution"""
         if not self.started_at:
             return None
         end_time = self.completed_at or datetime.now()
@@ -362,16 +378,19 @@ class BackupMetadata:
     
     @property
     def size_gb(self) -> float:
-        """Taille en GB"""
+        """
+Taille en GB"""
         return self.total_size / (1024**3)
     
     @property
     def compressed_size_gb(self) -> float:
-        """Taille compressée en GB"""
+        """
+Taille compressée en GB"""
         return self.compressed_size / (1024**3)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "backup_id": self.backup_id,
             "user_id": self.user_id,
@@ -505,7 +524,8 @@ class BackupSchedule:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "schedule_id": self.schedule_id,
             "user_id": self.user_id,
@@ -565,7 +585,8 @@ class BackupStats:
     
     @property
     def success_rate(self) -> float:
-        """Taux de réussite en pourcentage"""
+        """
+Taux de réussite en pourcentage"""
         total = self.total_backups
         if total == 0:
             return 0.0
@@ -573,16 +594,19 @@ class BackupStats:
     
     @property
     def total_size_gb(self) -> float:
-        """Taille totale en GB"""
+        """
+Taille totale en GB"""
         return self.total_size_bytes / (1024**3)
     
     @property
     def compressed_size_gb(self) -> float:
-        """Taille compressée en GB"""
+        """
+Taille compressée en GB"""
         return self.compressed_size_bytes / (1024**3)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
+        """
+Convertit en dictionnaire"""
         return {
             "total_backups": self.total_backups,
             "successful_backups": self.successful_backups,

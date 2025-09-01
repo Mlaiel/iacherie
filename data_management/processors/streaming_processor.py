@@ -8,7 +8,7 @@ Responsibility: Intégration complète plateformes streaming multi-formats avec 
 =================================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER STREAMING:
 Stream Setup → Quality Optimization → Multi-Platform Broadcasting → Real-time Analytics → 
 Audience Engagement → Content Recording → Stream Health Monitoring → Post-Stream Analysis
 """
+
 import json
 import logging
 import asyncio
@@ -40,7 +41,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 @dataclass
 class StreamConfig:
-    """Configuration de streaming"""
+    """
+Configuration de streaming"""
     platform: str
     stream_key: str
     rtmp_url: str
@@ -54,7 +56,8 @@ class StreamConfig:
 
 @dataclass
 class StreamMetrics:
-    """Métriques de streaming en temps réel"""
+    """
+Métriques de streaming en temps réel"""
     viewers_count: int
     bitrate_current: int
     fps_current: int
@@ -67,7 +70,8 @@ class StreamMetrics:
 
 
 class StreamingProcessor(BaseProcessor):
-    """Processeur streaming multi-plateformes - Production Enterprise"""
+    """
+Processeur streaming multi-plateformes - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -179,7 +183,8 @@ class StreamingProcessor(BaseProcessor):
         self.audio_device = None
         
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite les opérations de streaming"""
+        """
+Traite les opérations de streaming"""
         operation = input_data.get('operation', 'start_stream')
         
         result = {
@@ -494,7 +499,8 @@ class StreamingProcessor(BaseProcessor):
             del self.stream_threads[stream_id]
     
     def _update_stream_metrics(self, stream_id: str):
-        """Met à jour les métriques du stream"""
+        """
+Met à jour les métriques du stream"""
         if stream_id not in self.stream_metrics:
             return
         
@@ -955,7 +961,8 @@ class StreamingProcessor(BaseProcessor):
 
 
 class AsyncStreamingProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur streaming"""
+    """
+Version asynchrone du processeur streaming"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -963,7 +970,8 @@ class AsyncStreamingProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=8)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone du streaming"""
+        """
+Traitement asynchrone du streaming"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -972,5 +980,6 @@ class AsyncStreamingProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
+        """
+Validation asynchrone"""
         return self.sync_processor.validate_input(input_data)

@@ -5,8 +5,9 @@ High-performance vector database using Facebook AI Similarity Search (FAISS).
 Optimized for real-time similarity search across millions of content fingerprints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import asyncio
 import logging
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class IndexType(Enum):
-    """FAISS index types"""
+    """
+FAISS index types"""
+
     FLAT_L2 = "IndexFlatL2"
     FLAT_IP = "IndexFlatIP"
     IVF_FLAT = "IndexIVFFlat"
@@ -52,7 +55,8 @@ class SearchResult:
 
 @dataclass
 class IndexStats:
-    """FAISS index statistics"""
+    """
+FAISS index statistics"""
     total_vectors: int
     index_type: str
     dimension: int
@@ -62,7 +66,8 @@ class IndexStats:
 
 
 class FaissVectorStore:
-    """FAISS-based vector storage and search engine"""
+    """
+FAISS-based vector storage and search engine"""
     
     def __init__(self, config: Dict[str, Any]):
         if not FAISS_AVAILABLE:
@@ -183,7 +188,8 @@ class FaissVectorStore:
         self,
         vectors_data: List[Tuple[str, np.ndarray, Optional[Dict[str, Any]]]]
     ) -> List[bool]:
-        """Add multiple vectors in batch"""
+        """
+Add multiple vectors in batch"""
         try:
             # Validate all vectors first
             for vector_id, vector, _ in vectors_data:
@@ -255,7 +261,8 @@ class FaissVectorStore:
         similarity_threshold: Optional[float] = None,
         metadata_filter: Optional[Dict[str, Any]] = None
     ) -> List[SearchResult]:
-        """Search for similar vectors"""
+        """
+Search for similar vectors"""
         try:
             # Validate query vector
             if query_vector.shape[0] != self.dimension:
@@ -321,7 +328,8 @@ class FaissVectorStore:
         return self.index.search(query_vector, k)
     
     def _matches_filter(self, metadata: Dict[str, Any], filter_criteria: Dict[str, Any]) -> bool:
-        """Check if metadata matches filter criteria"""
+        """
+Check if metadata matches filter criteria"""
         for key, value in filter_criteria.items():
             if key not in metadata:
                 return False
@@ -335,7 +343,8 @@ class FaissVectorStore:
         return True
     
     async def remove_vector(self, vector_id: str) -> bool:
-        """Remove a vector from the index"""
+        """
+Remove a vector from the index"""
         try:
             if vector_id not in self.reverse_id_mapping:
                 self.logger.warning(f"Vector {vector_id} not found in index")
@@ -375,7 +384,8 @@ class FaissVectorStore:
         return self.index.ntotal if self.index else 0
     
     async def get_stats(self) -> IndexStats:
-        """Get index statistics"""
+        """
+Get index statistics"""
         try:
             # Calculate memory usage (approximate)
             if hasattr(self.index, 'sa_encode'):

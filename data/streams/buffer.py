@@ -5,8 +5,9 @@ High-performance buffering system for stream data with intelligent
 caching, compression, and memory-efficient storage strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Iterator
@@ -30,7 +31,9 @@ settings = get_settings()
 
 
 class BufferType(str, Enum):
-    """Buffer storage types"""
+    """
+Buffer storage types"""
+
     MEMORY = "memory"
     DISK = "disk"
     REDIS = "redis"
@@ -39,6 +42,7 @@ class BufferType(str, Enum):
 
 class CompressionType(str, Enum):
     """Data compression types"""
+
     NONE = "none"
     GZIP = "gzip"
     ZLIB = "zlib"
@@ -47,6 +51,7 @@ class CompressionType(str, Enum):
 
 class EvictionPolicy(str, Enum):
     """Buffer eviction policies"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In, First Out
@@ -70,7 +75,8 @@ class BufferConfig:
 
 @dataclass
 class BufferItem:
-    """Buffer item with metadata"""
+    """
+Buffer item with metadata"""
     key: str
     data: Any
     size_bytes: int
@@ -82,7 +88,8 @@ class BufferItem:
 
 
 class BufferStats(BaseModel):
-    """Buffer performance statistics"""
+    """
+Buffer performance statistics"""
     total_items: int = Field(default=0, description="Total items in buffer")
     total_size_mb: float = Field(default=0.0, description="Total size in MB")
     hit_ratio: float = Field(default=0.0, description="Cache hit ratio")
@@ -110,7 +117,8 @@ class StreamBuffer:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream buffer"""
+        """
+Initialize stream buffer"""
         try:
             # Load persisted data if enabled
             if self.config.enable_persistence and self.config.persistence_path:
@@ -241,7 +249,8 @@ class StreamBuffer:
             return not self._is_expired(self.items[key])
             
     async def delete(self, key: str) -> bool:
-        """Delete item from buffer"""
+        """
+Delete item from buffer"""
         try:
             with self._lock:
                 if key in self.items:
@@ -314,7 +323,8 @@ class StreamBuffer:
             return self.stats
             
     async def optimize(self) -> None:
-        """Optimize buffer performance"""
+        """
+Optimize buffer performance"""
         try:
             with self._lock:
                 # Compress uncompressed items if beneficial
@@ -343,7 +353,8 @@ class StreamBuffer:
         self.access_frequency[key] = self.access_frequency.get(key, 0) + 1
         
     def _is_expired(self, item: BufferItem) -> bool:
-        """Check if item has expired"""
+        """
+Check if item has expired"""
         ttl = self.config.ttl_seconds
         if ttl <= 0:
             return False
@@ -352,7 +363,8 @@ class StreamBuffer:
         return age > ttl
         
     async def _ensure_capacity(self) -> None:
-        """Ensure buffer has capacity for new items"""
+        """
+Ensure buffer has capacity for new items"""
         # Check size limit
         while self.stats.total_size_mb > self.config.max_size_mb and self.items:
             await self._evict_item()
@@ -362,7 +374,8 @@ class StreamBuffer:
             await self._evict_item()
             
     async def _evict_item(self) -> None:
-        """Evict item based on configured policy"""
+        """
+Evict item based on configured policy"""
         try:
             if not self.items:
                 return
@@ -410,7 +423,8 @@ class StreamBuffer:
         self.stats.total_size_mb = sum(item.size_bytes for item in self.items.values()) / (1024 * 1024)
         
     async def _compress_data(self, data: Any) -> tuple[Any, bool]:
-        """Compress data based on configuration"""
+        """
+Compress data based on configuration"""
         if self.config.compression == CompressionType.NONE:
             return data, False
             
@@ -467,7 +481,8 @@ class StreamBuffer:
                     self.stats.compressions += 1
                     
     async def _cleanup_expired(self) -> None:
-        """Remove expired items"""
+        """
+Remove expired items"""
         expired_keys = []
         for key, item in self.items.items():
             if self._is_expired(item):
@@ -490,7 +505,8 @@ class StreamBuffer:
             )
             
     async def _save_to_disk(self) -> None:
-        """Save buffer to disk"""
+        """
+Save buffer to disk"""
         if not self.config.persistence_path:
             return
             

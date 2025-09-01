@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Real-Time Alerts Tests - Industrial Grade
+"""
+Advanced Real-Time Alerts Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for real-time alerting system.
 Tests alert generation, notification delivery, escalation chains, and alert management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -64,11 +67,13 @@ from .fixtures import (
 
 
 class TestRealTimeAlertsCore:
-    """Core functionality tests for real-time alerting system."""
+    """
+Core functionality tests for real-time alerting system."""
     
     @pytest.fixture
     async def alerts_system(self):
-        """Create and initialize real-time alerts system."""
+        """
+Create and initialize real-time alerts system."""
         system = RealTimeAlerts(
             config={
                 "alert_processing_enabled": True,
@@ -353,7 +358,8 @@ class TestAlertingPerformance:
     
     @pytest.fixture
     async def performance_alerts_system(self):
-        """Create high-performance alerting system."""
+        """
+Create high-performance alerting system."""
         system = RealTimeAlerts(
             config={
                 "high_performance_mode": True,
@@ -457,7 +463,8 @@ class TestRealTimeAlerts:
     
     @pytest.fixture
     async def alert_system(self):
-        """Create Real-Time Alerts instance."""
+        """
+Create Real-Time Alerts instance."""
         alerts = RealTimeAlerts()
         await alerts.initialize()
         yield alerts
@@ -465,7 +472,8 @@ class TestRealTimeAlerts:
     
     @pytest.fixture
     def alert_test_config(self):
-        """Alert system configuration for testing."""
+        """
+Alert system configuration for testing."""
         return {
             "notification_channels": {
                 "email": {
@@ -556,7 +564,8 @@ class TestRealTimeAlerts:
         assert alert_system.suppression_manager is not None
     
     async def test_alert_rule_configuration(self, alert_system, alert_test_config):
-        """Test alert rule configuration and validation."""
+        """
+Test alert rule configuration and validation."""
         # Configure alert rules
         for rule_config in alert_test_config["alert_rules"]:
             rule = AlertRule(

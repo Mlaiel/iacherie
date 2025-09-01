@@ -11,6 +11,7 @@ ANY unauthorized use, copying, or theft without explicit written authorization i
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from datetime import datetime, timedelta, timezone
 from enum import Enum, IntEnum
@@ -65,7 +66,9 @@ active_licenses_gauge = Gauge('active_licenses_total', 'Total active licenses')
 logger = logging.getLogger(__name__)
 
 class AutomationLevel(IntEnum):
-    """Advanced automation levels with priority scoring"""
+    """
+Advanced automation levels with priority scoring"""
+
     MANUAL = 1
     RULE_BASED = 2
     SEMI_AUTOMATED = 3
@@ -76,7 +79,9 @@ class AutomationLevel(IntEnum):
     AUTONOMOUS = 8
 
 class RequestStatus(Enum):
-    """Comprehensive request status tracking"""
+    """
+Comprehensive request status tracking"""
+
     SUBMITTED = "submitted"
     VALIDATED = "validated"
     UNDER_REVIEW = "under_review"
@@ -98,6 +103,7 @@ class RequestStatus(Enum):
 
 class LicenseType(Enum):
     """Comprehensive license types"""
+
     STANDARD = "standard"
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
@@ -115,6 +121,7 @@ class LicenseType(Enum):
 
 class PricingModel(Enum):
     """Advanced pricing models"""
+
     FIXED_RATE = "fixed_rate"
     USAGE_BASED = "usage_based"
     ROYALTY_PERCENTAGE = "royalty_percentage"
@@ -128,6 +135,7 @@ class PricingModel(Enum):
 
 class NegotiationStrategy(Enum):
     """AI negotiation strategies"""
+
     CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
@@ -150,7 +158,8 @@ class LicensingMetrics:
     legal_compliance_rate: float = 100.0
     
     def approval_rate(self) -> float:
-        """Calculate approval rate percentage"""
+        """
+Calculate approval rate percentage"""
         if self.total_requests == 0:
             return 0.0
 class LicenseNegotiation(BaseModel, TimestampMixin, AuditMixin):
@@ -479,7 +488,8 @@ class AutomatedLicensingService:
         return request
     
     async def _analyze_request_with_ai(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Comprehensive AI analysis of license request"""
+        """
+Comprehensive AI analysis of license request"""
         analysis_tasks = [
             self._analyze_content_rights(request),
             self._analyze_market_pricing(request),
@@ -506,7 +516,8 @@ class AutomatedLicensingService:
         return combined_analysis
     
     async def _determine_automation_level(self, request: LicenseRequest, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine appropriate automation level based on AI analysis"""
+        """
+Determine appropriate automation level based on AI analysis"""
         automation_score = Decimal('0.0')
         factors = []
         
@@ -577,11 +588,13 @@ class AutomatedLicensingService:
         }
     
     async def _analyze_market_pricing(self, request: LicenseRequest) -> Dict[str, Any]:
-        """AI-powered market pricing analysis"""
+        """
+AI-powered market pricing analysis"""
         return await self.pricing_optimizer.analyze_pricing(request)
     
     async def _assess_risk_factors(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Comprehensive risk assessment"""
+        """
+Comprehensive risk assessment"""
         return {
             'overall_risk': 0.3,
             'legal_risk': 0.2,
@@ -591,11 +604,13 @@ class AutomatedLicensingService:
         }
     
     async def _check_compliance_requirements(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Check legal and regulatory compliance"""
+        """
+Check legal and regulatory compliance"""
         return await self.legal_service.check_compliance(request)
     
     async def _evaluate_negotiation_potential(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Evaluate potential for automated negotiation"""
+        """
+Evaluate potential for automated negotiation"""
         return {
             'negotiation_likelihood': 0.4,
             'price_flexibility': 0.3,
@@ -604,7 +619,8 @@ class AutomatedLicensingService:
         }
     
     async def _get_historical_success_rate(self, request: LicenseRequest) -> float:
-        """Get historical success rate for similar requests"""
+        """
+Get historical success rate for similar requests"""
         # Query historical data for similar requests
         similar_requests = self.db.query(LicenseRequest).filter(
             and_(
@@ -623,7 +639,8 @@ class AutomatedLicensingService:
         return successful_requests / total_requests if total_requests > 0 else 0.5
     
     def _get_automation_recommendation(self, level: AutomationLevel) -> str:
-        """Get human-readable automation recommendation"""
+        """
+Get human-readable automation recommendation"""
         recommendations = {
             AutomationLevel.MANUAL: "Manual review required - complex case",
             AutomationLevel.SEMI_AUTOMATED: "Automated pre-processing with human approval",
@@ -661,7 +678,8 @@ class AutomatedLicensingService:
         }
     
     async def _execute_ai_processing_pipeline(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Execute comprehensive AI processing pipeline"""
+        """
+Execute comprehensive AI processing pipeline"""
         pipeline_steps = [
             ('content_verification', self._verify_content_authenticity),
             ('rights_validation', self._validate_usage_rights),
@@ -703,27 +721,32 @@ class AutomatedLicensingService:
         return {'success': True, 'authenticity_score': 0.95}
     
     async def _validate_usage_rights(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Validate requested usage rights against available rights"""
+        """
+Validate requested usage rights against available rights"""
         return {'success': True, 'rights_available': True}
     
     async def _optimize_pricing(self, request: LicenseRequest) -> Dict[str, Any]:
-        """AI-optimized pricing calculation"""
+        """
+AI-optimized pricing calculation"""
         optimized_price = await self.pricing_optimizer.calculate_optimal_price(request)
         request.offered_amount = optimized_price
         return {'success': True, 'optimized_price': float(optimized_price)}
     
     async def _generate_license_terms(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Generate customized license terms"""
+        """
+Generate customized license terms"""
         terms = await self.contract_analyzer.generate_terms(request)
         return {'success': True, 'terms': terms}
     
     async def _final_compliance_check(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Final compliance verification"""
+        """
+Final compliance verification"""
         compliance_result = await self.legal_service.final_compliance_check(request)
         return compliance_result
     
     async def _generate_smart_contract(self, request: LicenseRequest) -> SmartContract:
-        """Generate blockchain smart contract for license"""
+        """
+Generate blockchain smart contract for license"""
         contract_terms = {
             'licensor': str(request.licensor_id),
             'licensee': str(request.licensee_id),
@@ -752,7 +775,8 @@ class AutomatedLicensingService:
         return contract
     
     async def _deploy_smart_contract(self, contract: SmartContract):
-        """Deploy smart contract to blockchain"""
+        """
+Deploy smart contract to blockchain"""
         try:
             deployment_result = await self.blockchain_service.deploy_contract(contract)
             contract.contract_address = deployment_result['address']
@@ -958,7 +982,8 @@ class AutomationRule(BaseModel, TimestampMixin, AuditMixin):
         return self._evaluate_conditions(context)
     
     def _evaluate_conditions(self, context: Dict[str, Any]) -> bool:
-        """Evaluate rule conditions against provided context"""
+        """
+Evaluate rule conditions against provided context"""
         try:
             # Simple JSON-based conditions
             for key, expected_value in self.conditions.items():
@@ -1102,7 +1127,8 @@ class LicenseRequest(BaseModel, TimestampMixin, AuditMixin):
             not self.is_expired
         )
 class PricingStrategy:
-    """Stratégie de tarification automatique"""
+    """
+Stratégie de tarification automatique"""
     base_price: Decimal
     pricing_model: PricingModel
     tier_multipliers: Optional[Dict[str, Decimal]] = None
@@ -1405,7 +1431,8 @@ class AutomatedLicenseRequest(BaseModel):
             return 0.5  # Réputation conservatrice en cas d'erreur
     
     def _analyze_license_history(self) -> Decimal:
-        """Analyse l'historique des licences pour évaluer le risque"""
+        """
+Analyse l'historique des licences pour évaluer le risque"""
         try:
             # Simulation de l'analyse de l'historique
             if hasattr(self, 'user_id'):
@@ -1671,7 +1698,8 @@ class AutomatedLicensingManager:
         automation_rules: List[AutomationRule],
         automation_level: AutomationLevel = AutomationLevel.SEMI_AUTOMATED
     ) -> LicenseTemplate:
-        """Crée un nouveau template de licence"""
+        """
+Crée un nouveau template de licence"""
         
         try:
             template = LicenseTemplate(

@@ -12,7 +12,7 @@ Configuration Entreprise:
 - Suite de tests automatisés complète
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import json
 from typing import Dict, Any, List
 from datetime import datetime
@@ -33,7 +34,7 @@ ULTRA_ADVANCED_MONITORING_CONFIG: Dict[str, Any] = {
         "deployment_level": "Production-Ready",
         "author": "Fahed Mlaiel",
         "contact": "mlaiel@live.de",
-        "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+        "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
         "legal_status": "Proprietary - Unauthorized use strictly prohibited"
     },
     
@@ -340,7 +341,7 @@ def get_system_architecture_summary() -> Dict[str, Any]:
         },
         "legal_compliance": "Full International Copyright Protection",
         "author": "Fahed Mlaiel (mlaiel@live.de)",
-        "copyright": "© 2025 Fahed Mlaiel. All rights reserved."
+        "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved."
     }
 
 def validate_system_completeness() -> Dict[str, Any]:
@@ -413,6 +414,6 @@ if __name__ == "__main__":
     
     print("\n⚖️ LEGAL NOTICE")
     print("=" * 60)
-    print("© 2025 Fahed Mlaiel. All rights reserved.")
+    print("(c) 2025 Fahed Mlaiel. All rights reserved.")
     print("Contact: mlaiel@live.de")
     print("Unauthorized use strictly prohibited.")

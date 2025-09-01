@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Configuration Management
+"""
+Comprehensive Tests for Configuration Management
 
 Industrial-grade testing for configuration handling, validation,
 environment management, and dynamic configuration updates.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -55,10 +58,12 @@ logger = logging.getLogger(__name__)
 
 
 class TestAgentConfig:
-    """Test agent configuration management"""
+    """
+Test agent configuration management"""
     
     def test_agent_config_creation(self):
-        """Test creating agent configuration"""
+        """
+Test creating agent configuration"""
         config = AgentConfig(
             agent_id="test_agent_001",
             agent_type="ContentCreatorAgent",
@@ -195,7 +200,8 @@ class TestSystemConfig:
     """Test system configuration management"""
     
     def test_system_config_creation(self):
-        """Test creating system configuration"""
+        """
+Test creating system configuration"""
         config = SystemConfig(
             environment=Environment.DEVELOPMENT,
             debug_mode=True,
@@ -298,7 +304,8 @@ class TestDatabaseConfig:
     """Test database configuration management"""
     
     def test_database_config_creation(self):
-        """Test creating database configuration"""
+        """
+Test creating database configuration"""
         config = DatabaseConfig(
             host="db.example.com",
             port=5432,
@@ -396,7 +403,8 @@ class TestSecurityConfig:
     """Test security configuration management"""
     
     def test_security_config_creation(self):
-        """Test creating security configuration"""
+        """
+Test creating security configuration"""
         config = SecurityConfig(
             encryption_enabled=True,
             jwt_secret="super_secret_jwt_key",
@@ -511,13 +519,15 @@ class TestConfigManager:
     
     @pytest.fixture
     def temp_config_dir(self):
-        """Create temporary directory for configuration files"""
+        """
+Create temporary directory for configuration files"""
         with tempfile.TemporaryDirectory() as temp_dir:
             yield Path(temp_dir)
     
     @pytest.fixture
     async def config_manager(self, temp_config_dir) -> ConfigManager:
-        """Create configuration manager for testing"""
+        """
+Create configuration manager for testing"""
         manager = ConfigManager(config_directory=temp_config_dir)
         await manager.initialize()
         
@@ -526,7 +536,8 @@ class TestConfigManager:
         await manager.shutdown()
     
     async def test_config_manager_initialization(self, temp_config_dir):
-        """Test configuration manager initialization"""
+        """
+Test configuration manager initialization"""
         manager = ConfigManager(config_directory=temp_config_dir)
         
         assert not manager.initialized
@@ -538,7 +549,8 @@ class TestConfigManager:
         assert not manager.initialized
     
     async def test_config_loading_and_saving(self, config_manager, temp_config_dir):
-        """Test loading and saving configurations"""
+        """
+Test loading and saving configurations"""
         # Create test configuration
         test_config = SystemConfig(
             environment=Environment.TESTING,
@@ -789,7 +801,8 @@ class TestConfigValidator:
     """Test configuration validation functionality"""
     
     def test_schema_validation(self):
-        """Test configuration schema validation"""
+        """
+Test configuration schema validation"""
         validator = ConfigValidator()
         
         # Define schema for agent configuration

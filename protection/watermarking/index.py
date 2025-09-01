@@ -9,6 +9,7 @@ Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Securit
 This watermarking system and all associated code are the exclusive intellectual property 
 of Fahed Mlaiel. Unauthorized use is strictly prohibited.
 """
+
 from .service_manager import (
     WatermarkServiceManager,
     WatermarkRequest, 
@@ -88,7 +89,8 @@ async def verify_ownership(
     content_type: str,
     claimed_owner: str
 ) -> WatermarkResponse:
-    """Quick ownership verification function"""
+    """
+Quick ownership verification function"""
     manager = await create_watermark_service()
     
     request = WatermarkRequest(
@@ -105,7 +107,8 @@ async def forensic_analysis(
     content_type: str,
     claimed_owner: str
 ) -> WatermarkResponse:
-    """Quick forensic analysis function"""
+    """
+Quick forensic analysis function"""
     manager = await create_watermark_service()
     
     request = WatermarkRequest(

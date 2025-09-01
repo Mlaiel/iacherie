@@ -16,6 +16,7 @@ Enterprise-grade secrets management for secure credential storage
 → encrypted storage → key rotation → access control → audit logging.
 ==================================================================
 """
+
 import logging
 import asyncio
 import hashlib
@@ -31,7 +32,9 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import json
 
 class SecretType(Enum):
-    """Secret types"""
+    """
+Secret types"""
+
     PASSWORD = "password"
     API_KEY = "api_key"
     CERTIFICATE = "certificate"
@@ -44,6 +47,7 @@ class SecretType(Enum):
 
 class RotationStrategy(Enum):
     """Secret rotation strategies"""
+
     MANUAL = "manual"
     AUTOMATIC = "automatic"
     ON_DEMAND = "on_demand"
@@ -52,6 +56,7 @@ class RotationStrategy(Enum):
 
 class StorageBackend(Enum):
     """Secret storage backends"""
+
     VAULT = "vault"
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
     AZURE_KEY_VAULT = "azure_key_vault"
@@ -61,6 +66,7 @@ class StorageBackend(Enum):
 
 class AccessLevel(Enum):
     """Access levels for secrets"""
+
     READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     ADMIN = "admin"
@@ -82,7 +88,8 @@ class SecretPolicy:
 
 @dataclass
 class RotationConfig:
-    """Secret rotation configuration"""
+    """
+Secret rotation configuration"""
     strategy: RotationStrategy = RotationStrategy.TIME_BASED
     interval_days: int = 90
     advance_notice_days: int = 7
@@ -93,7 +100,8 @@ class RotationConfig:
 
 @dataclass
 class AccessControl:
-    """Access control for secrets"""
+    """
+Access control for secrets"""
     users: List[str] = field(default_factory=list)
     groups: List[str] = field(default_factory=list)
     services: List[str] = field(default_factory=list)
@@ -103,7 +111,8 @@ class AccessControl:
 
 @dataclass
 class SecretMetadata:
-    """Secret metadata"""
+    """
+Secret metadata"""
     name: str
     secret_type: SecretType
     description: str = ""
@@ -146,7 +155,8 @@ class SecretsManager:
     """
     
     def __init__(self, master_key: Optional[str] = None):
-        """Initialize secrets manager"""
+        """
+Initialize secrets manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Encryption setup
@@ -182,7 +192,8 @@ class SecretsManager:
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _initialize_encryption(self) -> Fernet:
-        """Initialize encryption cipher"""
+        """
+Initialize encryption cipher"""
         key_bytes = base64.urlsafe_b64decode(self.master_key.encode())
         return Fernet(base64.urlsafe_b64encode(key_bytes))
     
@@ -237,7 +248,8 @@ class SecretsManager:
             await self._initialize_file_backend()
     
     async def _initialize_vault(self) -> None:
-        """Initialize HashiCorp Vault backend"""
+        """
+Initialize HashiCorp Vault backend"""
         # Implementation would setup Vault client
         self.logger.info("Vault backend initialized")
     
@@ -305,7 +317,8 @@ class SecretsManager:
                     await self._send_rotation_notice(secret_name, next_rotation)
     
     async def _initialize_monitoring(self) -> None:
-        """Initialize secrets monitoring"""
+        """
+Initialize secrets monitoring"""
         asyncio.create_task(self._monitor_secret_usage())
         self.logger.info("Secrets monitoring initialized")
     
@@ -331,7 +344,8 @@ class SecretsManager:
         pass
     
     async def _check_policy_violations(self) -> None:
-        """Check for policy violations"""
+        """
+Check for policy violations"""
         for secret_name, secret_entry in self.secrets.items():
             policy = secret_entry.policy
             metadata = secret_entry.metadata
@@ -453,7 +467,8 @@ class SecretsManager:
         return True
     
     async def _store_secret_in_backend(self, name: str, secret_entry: SecretEntry) -> None:
-        """Store secret in configured backend"""
+        """
+Store secret in configured backend"""
         # Implementation would store in actual backend
         pass
     
@@ -685,7 +700,8 @@ class SecretsManager:
         await self.rotate_secret(name)
     
     async def _generate_secret_value(self, secret_entry: SecretEntry) -> str:
-        """Generate new secret value based on type and policy"""
+        """
+Generate new secret value based on type and policy"""
         secret_type = secret_entry.metadata.secret_type
         policy = secret_entry.policy
         
@@ -699,7 +715,8 @@ class SecretsManager:
             return self._generate_random_string(policy.min_length)
     
     def _generate_password(self, policy: SecretPolicy) -> str:
-        """Generate password according to policy"""
+        """
+Generate password according to policy"""
         import string
         
         chars = ""
@@ -723,15 +740,18 @@ class SecretsManager:
         return secrets.token_urlsafe(length)
     
     def _generate_jwt_secret(self) -> str:
-        """Generate JWT secret"""
+        """
+Generate JWT secret"""
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _generate_random_string(self, length: int) -> str:
-        """Generate random string"""
+        """
+Generate random string"""
         return secrets.token_hex(length // 2)
     
     async def _deploy_rotated_secret(self, name: str) -> None:
-        """Deploy rotated secret to services"""
+        """
+Deploy rotated secret to services"""
         # Implementation would deploy secret to services/applications
         self.logger.info(f"Deployed rotated secret: {name}")
     
@@ -820,7 +840,8 @@ class SecretsManager:
         return self.access_logs
     
     async def get_secrets_status(self) -> Dict[str, Any]:
-        """Get comprehensive secrets status"""
+        """
+Get comprehensive secrets status"""
         now = datetime.now()
         
         # Calculate secrets needing rotation

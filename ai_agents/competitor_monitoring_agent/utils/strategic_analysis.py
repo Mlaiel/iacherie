@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,7 +33,8 @@ from ...utils.statistical_analyzer import StatisticalAnalyzer
 
 @dataclass
 class SWOTAnalysis:
-    """SWOT analysis structure."""
+    """
+SWOT analysis structure."""
     competitor_id: str
     strengths: List[Dict[str, Any]]
     weaknesses: List[Dict[str, Any]]
@@ -46,7 +48,8 @@ class SWOTAnalysis:
 
 @dataclass
 class MarketPosition:
-    """Market position analysis."""
+    """
+Market position analysis."""
     competitor_id: str
     market_segment: str
     current_position: int
@@ -63,7 +66,8 @@ class MarketPosition:
 
 @dataclass
 class CompetitiveThreat:
-    """Competitive threat assessment."""
+    """
+Competitive threat assessment."""
     competitor_id: str
     threat_level: str  # low, medium, high, critical
     threat_score: float
@@ -77,7 +81,8 @@ class CompetitiveThreat:
 
 @dataclass
 class StrategicRecommendation:
-    """Strategic recommendation structure."""
+    """
+Strategic recommendation structure."""
     recommendation_id: str
     category: str
     title: str
@@ -101,7 +106,8 @@ class StrategicAnalysisEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the strategic analysis engine."""
+        """
+Initialize the strategic analysis engine."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

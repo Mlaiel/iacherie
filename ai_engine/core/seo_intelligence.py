@@ -4,7 +4,7 @@ Advanced AI-powered SEO optimization system for content creators platform.
 Maximizes discoverability, engagement, and organic reach across all platforms.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This cutting-edge SEO AI system is protected intellectual property.
@@ -12,6 +12,7 @@ Any unauthorized copying, distribution, or use will result in immediate legal ac
 
 Business Logic: Content Analysis → SEO Optimization → Platform Targeting → Performance Tracking → Continuous Improvement
 """
+
 import asyncio
 import json
 import uuid
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class SEOStrategy(Enum):
-    """SEO optimization strategies"""
+    """
+SEO optimization strategies"""
+
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     SEMANTIC_SEO = "semantic_seo"
     LONG_TAIL_TARGETING = "long_tail_targeting"
@@ -65,6 +68,7 @@ class SEOStrategy(Enum):
 
 class PlatformType(Enum):
     """Platform types for optimization"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -82,6 +86,7 @@ class PlatformType(Enum):
 
 class ContentOptimizationGoal(Enum):
     """Content optimization goals"""
+
     MAXIMIZE_REACH = "maximize_reach"
     INCREASE_ENGAGEMENT = "increase_engagement"
     IMPROVE_DISCOVERABILITY = "improve_discoverability"
@@ -130,7 +135,8 @@ class SEORecommendation:
 
 @dataclass
 class ContentOptimizationPlan:
-    """Comprehensive content optimization plan"""
+    """
+Comprehensive content optimization plan"""
     plan_id: str
     content_id: str
     content_type: ContentType
@@ -151,7 +157,8 @@ class ContentOptimizationPlan:
 
 
 class KeywordResearchEngine:
-    """Advanced keyword research and analysis"""
+    """
+Advanced keyword research and analysis"""
     
     def __init__(self):
         self.keyword_database = {}
@@ -159,7 +166,8 @@ class KeywordResearchEngine:
         self._initialize_nlp_models()
     
     def _initialize_nlp_models(self):
-        """Initialize NLP models for keyword analysis"""
+        """
+Initialize NLP models for keyword analysis"""
         if NLP_AVAILABLE:
             try:
                 # Initialize sentiment analyzer
@@ -770,7 +778,8 @@ class ContentTitleOptimizer:
         return min(1.0, score)
     
     def _score_power_words(self, title: str) -> float:
-        """Score presence of power words"""
+        """
+Score presence of power words"""
         score = 0.0
         
         for power_word in self.power_words:
@@ -780,7 +789,8 @@ class ContentTitleOptimizer:
         return min(1.0, score)
     
     def _score_platform_optimization(self, title: str, platform: str) -> float:
-        """Score platform-specific optimization"""
+        """
+Score platform-specific optimization"""
         platform_preferences = {
             "youtube": ["tutorial", "how to", "review", "guide"],
             "instagram": ["photo", "style", "inspiration", "aesthetic"],
@@ -833,7 +843,8 @@ class HashtagOptimizer:
                                         keywords: List[str],
                                         platform: str,
                                         target_audience: str = None) -> List[str]:
-        """Generate optimized hashtags for content"""
+        """
+Generate optimized hashtags for content"""
         try:
             hashtags = set()
             
@@ -1004,7 +1015,8 @@ class SEOOptimizationEngine:
                                      optimization_goal: ContentOptimizationGoal,
                                      target_audience: str = None,
                                      competitor_urls: List[str] = None) -> ContentOptimizationPlan:
-        """Create comprehensive content optimization plan"""
+        """
+Create comprehensive content optimization plan"""
         try:
             # Keyword research and analysis
             keywords = await self.keyword_engine.analyze_keywords(

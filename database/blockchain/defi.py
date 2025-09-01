@@ -25,6 +25,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -43,7 +44,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class DeFiProtocol(Enum):
-    """Supported DeFi protocols."""
+    """
+Supported DeFi protocols."""
+
     UNISWAP_V3 = "uniswap_v3"
     SUSHISWAP = "sushiswap"
     COMPOUND = "compound"
@@ -55,6 +58,7 @@ class DeFiProtocol(Enum):
 
 class PoolType(Enum):
     """Types of liquidity pools."""
+
     LIQUIDITY_POOL = "liquidity_pool"
     LENDING_POOL = "lending_pool"
     STAKING_POOL = "staking_pool"
@@ -63,6 +67,7 @@ class PoolType(Enum):
 
 class RiskLevel(Enum):
     """Risk levels for DeFi strategies."""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -71,6 +76,7 @@ class RiskLevel(Enum):
 
 class StrategyType(Enum):
     """DeFi strategy types."""
+
     YIELD_FARMING = "yield_farming"
     LIQUIDITY_PROVISION = "liquidity_provision"
     LENDING = "lending"
@@ -99,7 +105,8 @@ class DeFiPosition:
 
 @dataclass
 class YieldFarmingStrategy:
-    """Yield farming strategy configuration."""
+    """
+Yield farming strategy configuration."""
     strategy_id: str
     protocol: DeFiProtocol
     pool_address: str
@@ -113,7 +120,8 @@ class YieldFarmingStrategy:
 
 @dataclass
 class LiquidityPoolInfo:
-    """Liquidity pool information."""
+    """
+Liquidity pool information."""
     pool_address: str
     protocol: DeFiProtocol
     token0: str
@@ -128,7 +136,8 @@ class LiquidityPoolInfo:
 
 @dataclass
 class ArbitrageOpportunity:
-    """Arbitrage opportunity detection."""
+    """
+Arbitrage opportunity detection."""
     opportunity_id: str
     token: str
     buy_protocol: DeFiProtocol
@@ -164,7 +173,8 @@ class DeFiIntegration:
         self._initialize_protocols()
     
     def _initialize_protocols(self) -> None:
-        """Initialize connections to DeFi protocols."""
+        """
+Initialize connections to DeFi protocols."""
         protocol_configs = self.config.get("protocols", {})
         
         for protocol_name, protocol_config in protocol_configs.items():
@@ -326,7 +336,8 @@ class DeFiIntegration:
         allocation_amount: Decimal,
         risk_level: RiskLevel
     ) -> Decimal:
-        """Calculate maximum allocation percentage based on risk level."""
+        """
+Calculate maximum allocation percentage based on risk level."""
         risk_limits = {
             RiskLevel.VERY_LOW: Decimal("10"),
             RiskLevel.LOW: Decimal("20"),
@@ -399,7 +410,8 @@ class DeFiIntegration:
         }
     
     async def _get_token_price_usd(self, token_address: str) -> Decimal:
-        """Get current USD price for a token."""
+        """
+Get current USD price for a token."""
         # Mock implementation - in production, would use price oracles
         return Decimal("1500.0")  # Mock ETH price
     
@@ -542,7 +554,8 @@ class DeFiIntegration:
         current: Dict[StrategyType, Decimal],
         target: Dict[StrategyType, Decimal]
     ) -> List[Dict[str, Any]]:
-        """Calculate required rebalancing actions."""
+        """
+Calculate required rebalancing actions."""
         actions = []
         tolerance = Decimal("2.0")  # 2% tolerance
         

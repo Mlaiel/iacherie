@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import os
@@ -53,7 +54,9 @@ from ...models.video_models import EnhancementJob, QualityMetrics
 logger = logging.getLogger(__name__)
 
 class EnhancementType:
-    """Types of video enhancement operations"""
+    """
+Types of video enhancement operations"""
+
     UPSCALE = "upscale"
     DENOISE = "denoise"
     SHARPEN = "sharpen"
@@ -67,6 +70,7 @@ class EnhancementType:
 
 class QualityLevel:
     """Quality enhancement levels"""
+
     LIGHT = {"strength": 0.3, "processing_time": "fast"}
     MEDIUM = {"strength": 0.6, "processing_time": "medium"}
     STRONG = {"strength": 0.9, "processing_time": "slow"}
@@ -74,6 +78,7 @@ class QualityLevel:
 
 class StabilizationMethod:
     """Video stabilization methods"""
+
     OPTICAL_FLOW = "optical_flow"
     FEATURE_TRACKING = "feature_tracking"
     PHASE_CORRELATION = "phase_correlation"
@@ -828,7 +833,8 @@ class FrameStabilizer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize FrameStabilizer"""
+        """
+Initialize FrameStabilizer"""
         self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "frame_stabilizer" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
@@ -972,17 +978,20 @@ class FrameStabilizer:
         return smoothed
     
     async def _feature_tracking_stabilization(self, input_path: str, output_path: str) -> Dict[str, Any]:
-        """Stabilize using feature point tracking"""
+        """
+Stabilize using feature point tracking"""
         # Implementation placeholder - would use SIFT/ORB features
         return await self._simple_stabilization(input_path, output_path)
     
     async def _phase_correlation_stabilization(self, input_path: str, output_path: str) -> Dict[str, Any]:
-        """Stabilize using phase correlation"""
+        """
+Stabilize using phase correlation"""
         # Implementation placeholder - would use FFT-based phase correlation
         return await self._simple_stabilization(input_path, output_path)
     
     async def _simple_stabilization(self, input_path: str, output_path: str) -> Dict[str, Any]:
-        """Simple stabilization using ffmpeg deshake filter"""
+        """
+Simple stabilization using ffmpeg deshake filter"""
         try:
             input_stream = ffmpeg.input(input_path)
             output_stream = ffmpeg.output(

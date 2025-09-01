@@ -5,7 +5,7 @@ Comprehensive usage tracking, analytics, and reporting system for DRM
 with real-time monitoring, advanced insights, and predictive analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class UsageEventType(str, Enum):
-    """Types of content usage events."""
+    """
+Types of content usage events."""
+
     VIEW = "view"
     DOWNLOAD = "download"
     STREAM = "stream"
@@ -55,6 +58,7 @@ class UsageEventType(str, Enum):
 
 class DeviceType(str, Enum):
     """Types of devices used for content access."""
+
     DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
@@ -65,6 +69,7 @@ class DeviceType(str, Enum):
 
 class Platform(str, Enum):
     """Platforms where content is accessed."""
+
     WEB = "web"
     MOBILE_APP = "mobile_app"
     DESKTOP_APP = "desktop_app"
@@ -74,6 +79,7 @@ class Platform(str, Enum):
 
 class MetricType(str, Enum):
     """Types of analytics metrics."""
+
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     REVENUE = "revenue"
@@ -105,7 +111,8 @@ class UsageEvent:
 
 @dataclass
 class UsageSession:
-    """User session tracking."""
+    """
+User session tracking."""
     session_id: str
     user_id: int
     start_time: datetime
@@ -120,7 +127,8 @@ class UsageSession:
 
 @dataclass
 class ContentMetrics:
-    """Metrics for individual content."""
+    """
+Metrics for individual content."""
     content_id: str
     total_views: int = 0
     unique_viewers: int = 0
@@ -141,7 +149,8 @@ class ContentMetrics:
 
 @dataclass
 class UserMetrics:
-    """Metrics for individual user."""
+    """
+Metrics for individual user."""
     user_id: int
     total_sessions: int = 0
     total_session_time: int = 0  # seconds
@@ -175,7 +184,8 @@ class UsageTracker:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Usage Tracker."""
+        """
+Initialize the Usage Tracker."""
         self.config = config
         self._initialized = False
         
@@ -372,7 +382,8 @@ class UsageTracker:
         return session
 
     async def _finalize_session(self, session_id: str) -> None:
-        """Finalize and archive a user session."""
+        """
+Finalize and archive a user session."""
         if session_id not in self.active_sessions:
             return
         
@@ -430,7 +441,8 @@ class UsageTracker:
         self._invalidate_cache(event.content_id, event.user_id)
 
     async def _update_content_metrics(self, event: UsageEvent) -> None:
-        """Update content-specific metrics."""
+        """
+Update content-specific metrics."""
         content_id = event.content_id
         
         if content_id not in self.content_metrics:
@@ -480,7 +492,8 @@ class UsageTracker:
         metrics.last_updated = datetime.utcnow()
 
     async def _update_user_metrics(self, event: UsageEvent) -> None:
-        """Update user-specific metrics."""
+        """
+Update user-specific metrics."""
         user_id = event.user_id
         
         if user_id not in self.user_metrics:
@@ -507,7 +520,8 @@ class UsageTracker:
         metrics.loyalty_score = await self._calculate_user_loyalty_score(user_id)
 
     async def _update_user_session_metrics(self, session: UsageSession) -> None:
-        """Update user metrics from completed session."""
+        """
+Update user metrics from completed session."""
         user_id = session.user_id
         
         if user_id not in self.user_metrics:
@@ -519,7 +533,8 @@ class UsageTracker:
         metrics.content_consumed += len(session.content_accessed)
 
     async def _update_user_preferences(self, metrics: UserMetrics, event: UsageEvent) -> None:
-        """Update user preferences based on usage patterns."""
+        """
+Update user preferences based on usage patterns."""
         # Update preferred platforms
         platform_counts = Counter()
         device_counts = Counter()
@@ -541,7 +556,8 @@ class UsageTracker:
         metrics.preferred_devices = [device for device, _ in device_counts.most_common(3)]
 
     async def _calculate_content_engagement_score(self, content_id: str) -> float:
-        """Calculate engagement score for content."""
+        """
+Calculate engagement score for content."""
         if content_id not in self.content_metrics:
             return 0.0
         
@@ -567,7 +583,8 @@ class UsageTracker:
         return float(engagement_score)
 
     async def _calculate_user_engagement_score(self, user_id: int) -> float:
-        """Calculate engagement score for user."""
+        """
+Calculate engagement score for user."""
         user_events = [e for e in self.usage_events.values() if e.user_id == user_id]
         
         if not user_events:
@@ -595,7 +612,8 @@ class UsageTracker:
         return min(engagement_score, 100)
 
     async def _calculate_user_loyalty_score(self, user_id: int) -> float:
-        """Calculate loyalty score for user."""
+        """
+Calculate loyalty score for user."""
         if user_id not in self.user_metrics:
             return 0.0
         
@@ -628,7 +646,8 @@ class UsageTracker:
         return min(loyalty_score, 100)
 
     def _invalidate_cache(self, content_id: str, user_id: int) -> None:
-        """Invalidate relevant cache entries."""
+        """
+Invalidate relevant cache entries."""
         keys_to_remove = []
         
         for cache_key in self.metrics_cache:
@@ -643,7 +662,8 @@ class UsageTracker:
         content_id: str,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics for content."""
+        """
+Get comprehensive analytics for content."""
         cache_key = f"content_analytics_{content_id}_{date_range}"
         
         if cache_key in self.metrics_cache:
@@ -799,7 +819,8 @@ class UsageTracker:
         return dict(daily_counts)
 
     async def _calculate_audience_insights(self, events: List[UsageEvent]) -> Dict[str, Any]:
-        """Calculate audience insights from events."""
+        """
+Calculate audience insights from events."""
         if not events:
             return {}
         
@@ -864,7 +885,8 @@ class UsageTracker:
         content_id: str,
         events: List[UsageEvent]
     ) -> Dict[str, Any]:
-        """Generate predictions for content performance."""
+        """
+Generate predictions for content performance."""
         # Placeholder for ML predictions
         # In production, this would use trained models
         

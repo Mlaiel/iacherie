@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class MetricType(Enum):
-    """Engagement metric type enumeration"""
+    """
+Engagement metric type enumeration"""
+
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -61,6 +64,7 @@ class MetricType(Enum):
 
 class Platform(Enum):
     """Platform enumeration"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -90,6 +94,7 @@ class Platform(Enum):
 
 class TimeFrame(Enum):
     """Time frame for metrics aggregation"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -102,6 +107,7 @@ class TimeFrame(Enum):
 
 class AudienceSegment(Enum):
     """Audience segment enumeration"""
+
     ALL = "all"
     AGE_13_17 = "age_13_17"
     AGE_18_24 = "age_18_24"
@@ -122,6 +128,7 @@ class AudienceSegment(Enum):
 
 class EngagementQuality(Enum):
     """Engagement quality enumeration"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -136,6 +143,7 @@ class EngagementQuality(Enum):
 
 class TrendDirection(Enum):
     """Trend direction enumeration"""
+
     RISING = "rising"
     FALLING = "falling"
     STABLE = "stable"
@@ -362,7 +370,8 @@ class EngagementMetrics(Base):
         return self.percentage_change
     
     def calculate_engagement_rate(self, total_followers: int) -> float:
-        """Calculate engagement rate based on followers"""
+        """
+Calculate engagement rate based on followers"""
         if total_followers > 0:
             self.rate = (self.value / total_followers) * 100
         else:
@@ -371,7 +380,8 @@ class EngagementMetrics(Base):
         return self.rate
     
     def detect_anomaly(self, threshold: float = 2.0) -> bool:
-        """Detect if metric value is anomalous using z-score"""
+        """
+Detect if metric value is anomalous using z-score"""
         if self.z_score and abs(self.z_score) > threshold:
             self.is_anomaly = True
             self.anomaly_score = abs(self.z_score)
@@ -383,7 +393,8 @@ class EngagementMetrics(Base):
         return self.is_anomaly
     
     def update_trend_analysis(self, historical_values: List[int]) -> None:
-        """Update trend analysis based on historical data"""
+        """
+Update trend analysis based on historical data"""
         if len(historical_values) < 2:
             return
         
@@ -408,7 +419,8 @@ class EngagementMetrics(Base):
             self.trend_velocity = (historical_values[-1] - historical_values[-2]) / max(1, historical_values[-2])
     
     def calculate_performance_score(self) -> float:
-        """Calculate overall performance score (0-100)"""
+        """
+Calculate overall performance score (0-100)"""
         scores = []
         
         # Percentile rank contribution
@@ -444,7 +456,8 @@ class EngagementMetrics(Base):
         return sum(scores) / len(scores) if scores else 0.0
     
     def get_audience_insights(self) -> Dict[str, Any]:
-        """Get comprehensive audience insights"""
+        """
+Get comprehensive audience insights"""
         return {
             'demographics': {
                 'unique_users': self.unique_users,
@@ -471,7 +484,8 @@ class EngagementMetrics(Base):
         }
     
     def predict_future_engagement(self, days_ahead: int = 7) -> Dict[str, Any]:
-        """Predict future engagement based on trends"""
+        """
+Predict future engagement based on trends"""
         base_value = self.value
         
         # Simple trend-based prediction
@@ -499,7 +513,8 @@ class EngagementMetrics(Base):
         }
     
     def compare_with_benchmark(self, benchmark_value: int) -> Dict[str, Any]:
-        """Compare performance with benchmark"""
+        """
+Compare performance with benchmark"""
         self.benchmark_value = benchmark_value
         
         if benchmark_value > 0:

@@ -8,14 +8,16 @@ Technologies: Health scoring, Diagnostic algorithms, Recovery automation, Perfor
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
 LOGIQUE MÉTIER:
 Health data collection → Diagnostic analysis → Problem identification → 
 Recovery planning → Automated healing → Performance verification → Continuous improvement
-"""from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
+"""
+
+from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -38,6 +40,7 @@ logger = logging.getLogger(__name__)
 
 class HealthStatus(Enum):
     """Health status levels"""
+
     EXCELLENT = "excellent"        # 90-100%
     GOOD = "good"                 # 70-89%
     DEGRADED = "degraded"         # 50-69%
@@ -47,6 +50,7 @@ class HealthStatus(Enum):
 
 class DiagnosticCategory(Enum):
     """Diagnostic categories"""
+
     PERFORMANCE = "performance"
     RELIABILITY = "reliability"
     SCALABILITY = "scalability"
@@ -59,6 +63,7 @@ class DiagnosticCategory(Enum):
 
 class RecoveryStrategy(Enum):
     """Recovery strategy types"""
+
     IMMEDIATE = "immediate"        # Emergency fixes
     SCHEDULED = "scheduled"        # Planned maintenance
     GRADUAL = "gradual"           # Phased improvements
@@ -67,6 +72,7 @@ class RecoveryStrategy(Enum):
 
 class DiagnosticSeverity(Enum):
     """Diagnostic issue severity"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -106,7 +112,8 @@ class DiagnosticIssue:
 
 @dataclass
 class RecoveryAction:
-    """Recovery action specification"""
+    """
+Recovery action specification"""
     action_id: str
     title: str
     description: str
@@ -152,7 +159,8 @@ class HealthReport:
 
 @dataclass
 class DiagnosticConfig:
-    """Diagnostic system configuration"""
+    """
+Diagnostic system configuration"""
     diagnostic_interval_seconds: int = 300  # 5 minutes
     health_check_interval_seconds: int = 60
     metric_collection_window_minutes: int = 30
@@ -165,7 +173,8 @@ class DiagnosticConfig:
 
 
 class ComponentHealthAnalyzer:
-    """Individual component health analyzer"""
+    """
+Individual component health analyzer"""
     
     def __init__(self, component_name: str):
         self.component_name = component_name
@@ -174,7 +183,8 @@ class ComponentHealthAnalyzer:
         self.baseline_performance: Dict[str, float] = {}
         
     async def add_metric(self, metric: HealthMetric):
-        """Add health metric for component"""
+        """
+Add health metric for component"""
         self.metrics[metric.metric_name] = metric
         
         # Update baseline if this is a new metric
@@ -182,7 +192,8 @@ class ComponentHealthAnalyzer:
             self.baseline_performance[metric.metric_name] = metric.current_value
     
     async def calculate_health_score(self) -> float:
-        """Calculate overall health score for component"""
+        """
+Calculate overall health score for component"""
         
         if not self.metrics:
             return 0.5  # Default neutral score
@@ -211,7 +222,8 @@ class ComponentHealthAnalyzer:
         return health_score
     
     async def _calculate_metric_score(self, metric: HealthMetric) -> float:
-        """Calculate score for individual metric"""
+        """
+Calculate score for individual metric"""
         
         current = metric.current_value
         target = metric.target_value
@@ -241,7 +253,8 @@ class ComponentHealthAnalyzer:
                 return max(0.1, 1.0 - (degradation * 0.5))
     
     async def detect_anomalies(self) -> List[str]:
-        """Detect anomalies in component behavior"""
+        """
+Detect anomalies in component behavior"""
         
         anomalies = []
         
@@ -379,7 +392,8 @@ class RootCauseAnalyzer:
     async def _identify_potential_causes(self, 
                                        issue: DiagnosticIssue, 
                                        metrics: List[HealthMetric]) -> List[str]:
-        """Identify potential root causes for an issue"""
+        """
+Identify potential root causes for an issue"""
         
         potential_causes = []
         
@@ -517,7 +531,8 @@ class AutomatedRecoveryEngine:
                                     plan: RecoveryPlan,
                                     queue_manager: Optional[IntelligentQueueManager],
                                     distribution_engine: Optional[TaskDistributionEngine]):
-        """Execute individual recovery steps"""
+        """
+Execute individual recovery steps"""
         
         execution_log = {
             'plan_id': plan.plan_id,
@@ -599,7 +614,8 @@ class AutomatedRecoveryEngine:
                                   action: RecoveryAction,
                                   queue_manager: Optional[IntelligentQueueManager],
                                   distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Scale workers recovery action"""
+        """
+Scale workers recovery action"""
         
         try:
             # This would interface with actual scaling systems
@@ -764,7 +780,8 @@ class AutomatedRecoveryEngine:
         }
     
     def _calculate_success_rate(self) -> float:
-        """Calculate recovery success rate"""
+        """
+Calculate recovery success rate"""
         
         if not self.recovery_history:
             return 0.0
@@ -774,7 +791,8 @@ class AutomatedRecoveryEngine:
 
 
 class QueueHealthDiagnostics:
-    """Main queue health diagnostics system"""
+    """
+Main queue health diagnostics system"""
     
     def __init__(self, 
                  config: DiagnosticConfig,
@@ -876,7 +894,8 @@ class QueueHealthDiagnostics:
         await self._collect_system_metrics()
     
     async def _collect_queue_manager_metrics(self):
-        """Collect queue manager health metrics"""
+        """
+Collect queue manager health metrics"""
         
         analyzer = self.component_analyzers['queue_manager']
         
@@ -1135,7 +1154,8 @@ class QueueHealthDiagnostics:
             return HealthStatus.EMERGENCY
     
     async def _detect_issues(self, metrics: List[HealthMetric]) -> List[DiagnosticIssue]:
-        """Detect diagnostic issues from metrics"""
+        """
+Detect diagnostic issues from metrics"""
         
         issues = []
         
@@ -1257,7 +1277,8 @@ class QueueHealthDiagnostics:
         return recovery_plans
     
     async def _create_recovery_plan(self, issue: DiagnosticIssue) -> Optional[RecoveryPlan]:
-        """Create recovery plan for specific issue"""
+        """
+Create recovery plan for specific issue"""
         
         actions = []
         
@@ -1477,7 +1498,8 @@ class QueueHealthDiagnostics:
         return self.current_health_report
     
     async def get_diagnostic_status(self) -> Dict[str, Any]:
-        """Get diagnostic system status"""
+        """
+Get diagnostic system status"""
         
         component_health = {}
         for name, analyzer in self.component_analyzers.items():
@@ -1513,7 +1535,8 @@ def create_queue_health_diagnostics(
     distribution_engine: Optional[TaskDistributionEngine] = None,
     monitor: Optional[RealtimeQueueMonitor] = None
 ) -> QueueHealthDiagnostics:
-    """Create and configure queue health diagnostics system"""
+    """
+Create and configure queue health diagnostics system"""
     
     if config is None:
         config = DiagnosticConfig()

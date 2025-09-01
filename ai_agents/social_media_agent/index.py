@@ -23,6 +23,7 @@ Expert Development Team Specialties:
 - AI Prompt Engineering Expert - NLP, conversational AI, and content generation systems
 - Content Protection Specialist - AI fingerprinting, copyright protection, and anti-piracy
 """
+
 from typing import Dict, Any, List, Optional, Type, Union, Callable, Tuple, Set
 import asyncio
 import logging
@@ -79,7 +80,9 @@ from ...security.access_control import RoleBasedAccessControl
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """Service operational status"""
+    """
+Service operational status"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     RUNNING = "running"
@@ -90,6 +93,7 @@ class ServiceStatus(Enum):
 
 class ComponentType(Enum):
     """Component type classification"""
+
     CORE_AGENT = "core_agent"
     PLATFORM_MANAGER = "platform_manager"
     SCHEDULER = "scheduler"
@@ -126,13 +130,15 @@ class SocialMediaAgentRegistry:
     _initialized: bool = False
     
     def __new__(cls) -> 'SocialMediaAgentRegistry':
-        """Singleton pattern implementation"""
+        """
+Singleton pattern implementation"""
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self):
-        """Initialize the service registry"""
+        """
+Initialize the service registry"""
         if self._initialized:
             return
             
@@ -192,7 +198,8 @@ class SocialMediaAgentRegistry:
         return None
 
     def unregister_service(self, name: str) -> bool:
-        """Unregister a service from the registry"""
+        """
+Unregister a service from the registry"""
         try:
             if name not in self.services:
                 logger.warning(f"Service {name} not found for unregistration")
@@ -295,7 +302,8 @@ class SocialMediaAgentRegistry:
         return result
 
     async def health_check_all_services(self) -> Dict[str, Dict[str, Any]]:
-        """Perform health checks on all services"""
+        """
+Perform health checks on all services"""
         results = {}
         
         for name, registration in self.services.items():
@@ -344,7 +352,8 @@ class SocialMediaAgentRegistry:
         return {name: list(deps) for name, deps in self.dependency_graph.items()}
 
     async def shutdown_all_services(self) -> Dict[str, bool]:
-        """Shutdown all services in reverse dependency order"""
+        """
+Shutdown all services in reverse dependency order"""
         shutdown_results = {}
         
         # Reverse the startup order for shutdown
@@ -491,7 +500,8 @@ def get_global_registry() -> SocialMediaAgentRegistry:
     return _global_registry
 
 def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
-    """Set the global registry instance"""
+    """
+Set the global registry instance"""
     global _global_registry
     _global_registry = registry
     def __init__(self):
@@ -570,25 +580,29 @@ registry = SocialMediaAgentRegistry()
 
 # Convenience functions for quick access
 def get_social_media_agent(config: Optional[Dict] = None) -> SocialMediaAgent:
-    """Get or create the main social media agent"""
+    """
+Get or create the main social media agent"""
     if not registry.initialized:
         registry.initialize_all({'agent': config or {}})
     return registry.get_component('agent')
 
 def get_platform_manager(config: Optional[Dict] = None) -> PlatformManager:
-    """Get or create the platform manager"""
+    """
+Get or create the platform manager"""
     if not registry.initialized:
         registry.initialize_all({'platforms': config or {}})
     return registry.get_component('platform_manager')
 
 def get_content_scheduler(config: Optional[Dict] = None) -> ContentScheduler:
-    """Get or create the content scheduler"""
+    """
+Get or create the content scheduler"""
     if not registry.initialized:
         registry.initialize_all({'scheduler': config or {}})
     return registry.get_component('scheduler')
 
 def get_engagement_optimizer(config: Optional[Dict] = None) -> EngagementOptimizer:
-    """Get or create the engagement optimizer"""
+    """
+Get or create the engagement optimizer"""
     if not registry.initialized:
         registry.initialize_all({'optimizer': config or {}})
     return registry.get_component('optimizer')

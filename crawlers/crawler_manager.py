@@ -7,6 +7,7 @@ Coordinates multiple platform crawlers for comprehensive content monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Union
@@ -28,7 +29,9 @@ from ..utils.rate_limiter import RateLimiter
 logger = logging.getLogger(__name__)
 
 class CrawlerStatus(Enum):
-    """Crawler status types."""
+    """
+Crawler status types."""
+
     IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
@@ -37,6 +40,7 @@ class CrawlerStatus(Enum):
 
 class SurveillanceMode(Enum):
     """Surveillance mode types."""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -54,7 +58,8 @@ class CrawlResult:
 
 @dataclass
 class SurveillanceTask:
-    """Surveillance task data structure."""
+    """
+Surveillance task data structure."""
     id: str
     content_id: int
     platforms: List[str]
@@ -79,7 +84,8 @@ class CrawlerManager:
     """
     
     def __init__(self):
-        """Initialize crawler manager."""
+        """
+Initialize crawler manager."""
         # Initialize platform crawlers
         self.crawlers = {
             "youtube": YouTubeCrawler(),

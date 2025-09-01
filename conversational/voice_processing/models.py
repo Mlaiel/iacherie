@@ -40,6 +40,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 """
+
 import uuid
 import hashlib
 import numpy as np
@@ -67,7 +68,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class VoiceGender(Enum):
-    """Advanced voice gender classification with confidence levels."""
+    """
+Advanced voice gender classification with confidence levels."""
+
     MALE = "male"
     FEMALE = "female"
     NON_BINARY = "non_binary"
@@ -109,6 +112,7 @@ class EmotionCategory(Enum):
 
 class AudioQuality(IntEnum):
     """Audio quality levels with technical specifications."""
+
     POOR = 1          # < 8kHz, high noise
     FAIR = 2          # 8-16kHz, moderate noise
     GOOD = 3          # 16-22kHz, low noise
@@ -116,7 +120,9 @@ class AudioQuality(IntEnum):
     STUDIO = 5        # 44-96kHz, professional grade
 
 class SecurityLevel(IntEnum):
-    """Voice security and protection levels."""
+    """
+Voice security and protection levels."""
+
     BASIC = 1         # Basic fingerprinting
     STANDARD = 2      # Enhanced protection
     HIGH = 3          # Biometric verification
@@ -124,7 +130,9 @@ class SecurityLevel(IntEnum):
     QUANTUM = 5       # Quantum-resistant encryption
 
 class ProcessingStatus(Enum):
-    """Voice processing job status tracking."""
+    """
+Voice processing job status tracking."""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -161,6 +169,7 @@ class VoiceEngine(Enum):
 
 class LanguageCode(Enum):
     """Comprehensive language codes with dialects."""
+
     EN_US = "en-US"
     EN_GB = "en-GB"
     FR_FR = "fr-FR"
@@ -217,7 +226,8 @@ class AudioMetadata:
     analyzed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
+        """
+Convert to dictionary for serialization."""
         result = asdict(self)
         
         # Handle numpy arrays
@@ -235,7 +245,8 @@ class AudioMetadata:
 
 @dataclass
 class VoiceFingerprint:
-    """Forensic-grade voice fingerprint for content protection."""
+    """
+Forensic-grade voice fingerprint for content protection."""
     fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     algorithm: str = "chromaprint_v2"
     hash_value: str = ""
@@ -274,7 +285,8 @@ class VoiceFingerprint:
         return hash_object.hexdigest()
     
     def _extract_fingerprint_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive features for fingerprinting."""
+        """
+Extract comprehensive features for fingerprinting."""
         features = {}
         
         # MFCC features
@@ -298,7 +310,8 @@ class VoiceFingerprint:
 
 @dataclass
 class BiometricVoiceProfile:
-    """Comprehensive biometric voice profile for speaker identification."""
+    """
+Comprehensive biometric voice profile for speaker identification."""
     profile_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     speaker_id: str = ""
     enrollment_status: str = "pending"  # pending, enrolled, verified, rejected
@@ -356,7 +369,8 @@ class BiometricVoiceProfile:
         self.enrollment_sessions.append(datetime.utcnow())
     
     def calculate_similarity(self, other_embedding: np.ndarray) -> float:
-        """Calculate cosine similarity with another embedding."""
+        """
+Calculate cosine similarity with another embedding."""
         if self.speaker_embedding is None:
             return 0.0
         
@@ -372,7 +386,8 @@ class BiometricVoiceProfile:
 
 @dataclass
 class EmotionAnalysisResult:
-    """Comprehensive emotion analysis results."""
+    """
+Comprehensive emotion analysis results."""
     analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
@@ -421,14 +436,16 @@ class EmotionAnalysisResult:
         return sorted_emotions[:top_k]
     
     def is_emotional_event(self, threshold: float = 0.7) -> bool:
-        """Determine if this represents a significant emotional event."""
+        """
+Determine if this represents a significant emotional event."""
         return (self.emotion_confidence > threshold and 
                 self.emotion_intensity > threshold and
                 self.primary_emotion != EmotionCategory.NEUTRAL)
 
 @dataclass
 class VoiceSynthesisRequest:
-    """Comprehensive voice synthesis request specification."""
+    """
+Comprehensive voice synthesis request specification."""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     text_content: str = ""

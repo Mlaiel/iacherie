@@ -14,6 +14,7 @@ Industrial-grade content protection engine providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import hashlib
 import numpy as np
 import cv2
@@ -36,7 +37,9 @@ import base64
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content types for protection"""
+    """
+Content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -45,6 +48,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Protection level settings"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -52,6 +56,7 @@ class ProtectionLevel(Enum):
 
 class InfringementType(Enum):
     """Types of content infringement"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -72,7 +77,8 @@ class ContentFingerprint:
 
 @dataclass
 class InfringementDetection:
-    """Detected infringement case"""
+    """
+Detected infringement case"""
     detection_id: str
     original_content_id: str
     infringing_url: str
@@ -158,7 +164,8 @@ class RightsProtectionEngine:
     
     def create_content_fingerprint(self, content_path: str, content_type: ContentType, 
                                  creator_id: str, metadata: Dict[str, Any] = None) -> ContentFingerprint:
-        """Create comprehensive digital fingerprint for content"""
+        """
+Create comprehensive digital fingerprint for content"""
         try:
             content_id = self._generate_content_id(content_path, creator_id)
             
@@ -396,7 +403,8 @@ class RightsProtectionEngine:
     
     def _create_ownership_proof(self, content_id: str, creator_id: str, 
                                fingerprint_data: Dict[str, Any]) -> str:
-        """Create blockchain-based ownership proof"""
+        """
+Create blockchain-based ownership proof"""
         # Simplified ownership proof - in production, integrate with blockchain
         proof_data = {
             'content_id': content_id,
@@ -411,7 +419,8 @@ class RightsProtectionEngine:
         return proof_hash
     
     def _detect_language(self, text: str) -> str:
-        """Detect language of text"""
+        """
+Detect language of text"""
         # Simplified language detection
         try:
             from langdetect import detect
@@ -420,7 +429,8 @@ class RightsProtectionEngine:
             return 'unknown'
     
     async def monitor_content(self, content_id: str) -> List[InfringementDetection]:
-        """Monitor content for infringement across platforms"""
+        """
+Monitor content for infringement across platforms"""
         try:
             if content_id not in self.fingerprint_database:
                 raise ValueError(f"Content {content_id} not found in database")
@@ -533,7 +543,8 @@ class RightsProtectionEngine:
     def _calculate_content_similarity(self, original_fp: Dict[str, Any], 
                                     suspected_fp: Dict[str, Any], 
                                     content_type: ContentType) -> float:
-        """Calculate similarity between two content fingerprints"""
+        """
+Calculate similarity between two content fingerprints"""
         try:
             if content_type == ContentType.AUDIO:
                 return self._calculate_audio_similarity(original_fp, suspected_fp)
@@ -689,7 +700,8 @@ class RightsProtectionEngine:
             return InfringementType.PIRACY
     
     def _calculate_confidence(self, similarity_score: float, content_type: ContentType) -> float:
-        """Calculate confidence in infringement detection"""
+        """
+Calculate confidence in infringement detection"""
         base_confidence = similarity_score
         
         # Adjust confidence based on content type reliability
@@ -705,7 +717,8 @@ class RightsProtectionEngine:
     
     def _get_comparison_details(self, original_fp: Dict[str, Any], 
                               suspected_fp: Dict[str, Any]) -> Dict[str, Any]:
-        """Get detailed comparison information"""
+        """
+Get detailed comparison information"""
         return {
             'features_compared': list(original_fp.keys()),
             'matching_features': [
@@ -718,7 +731,8 @@ class RightsProtectionEngine:
     
     def _update_protection_analytics(self, content_id: str, 
                                    infringements: List[InfringementDetection]) -> None:
-        """Update protection analytics"""
+        """
+Update protection analytics"""
         if content_id not in self.protection_analytics:
             self.protection_analytics[content_id] = {
                 'total_scans': 0,
@@ -732,7 +746,8 @@ class RightsProtectionEngine:
         analytics['last_scan'] = datetime.now()
     
     def get_protection_report(self, content_id: str) -> ProtectionReport:
-        """Generate protection report for content"""
+        """
+Generate protection report for content"""
         try:
             if content_id not in self.protection_analytics:
                 return ProtectionReport(
@@ -777,12 +792,14 @@ class RightsProtectionEngine:
         ])
     
     def _calculate_revenue_recovered(self, content_id: str) -> float:
-        """Calculate revenue recovered through protection actions"""
+        """
+Calculate revenue recovered through protection actions"""
         # Implement revenue calculation logic
         return 0.0
     
     async def initiate_takedown_request(self, infringement: InfringementDetection) -> bool:
-        """Initiate DMCA takedown request"""
+        """
+Initiate DMCA takedown request"""
         try:
             # Implement DMCA takedown automation
             logger.info(f"Initiating takedown for {infringement.detection_id}")

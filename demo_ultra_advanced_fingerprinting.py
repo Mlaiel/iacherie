@@ -4,8 +4,9 @@ Demonstration of industrial-grade audio fingerprinting system
 showcasing all ultra-advanced features and capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import time
 import math
@@ -37,7 +38,8 @@ class AudioFingerprintingDemo:
         self.fingerprint_engine = None
         
     async def initialize_demo(self):
-        """Initialize the demo environment"""
+        """
+Initialize the demo environment"""
         print("🎵 Ultra-Advanced Audio Fingerprinting Demo")
         print("=" * 60)
         print("🔧 Initializing industrial-grade fingerprinting system...")

@@ -10,6 +10,7 @@ and AI Model Performance tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import sys
 import os
@@ -21,7 +22,8 @@ import json
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 async def demo_monitoring_system():
-    """Comprehensive demo of the monitoring & analytics system"""
+    """
+Comprehensive demo of the monitoring & analytics system"""
     
     print("🎯 AINFLUE MONITORING & ANALYTICS SYSTEM DEMO")
     print("=" * 60)

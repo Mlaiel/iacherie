@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -296,23 +297,28 @@ async def create_brand_agent(brand_id: str, config: Optional[Dict[str, Any]] = N
     return await brand_factory.create_brand_agent(brand_id, config)
 
 async def create_monitoring_suite(brand_id: str, config: Optional[Dict[str, Any]] = None) -> BrandMonitor:
-    """Create a brand monitoring suite"""
+    """
+Create a brand monitoring suite"""
     return await brand_factory.create_monitoring_suite(brand_id, config)
 
 async def create_intelligence_engine(brand_id: str, competitors: List[str] = None) -> BrandIntelligenceEngine:
-    """Create a competitive intelligence engine"""
+    """
+Create a competitive intelligence engine"""
     return await brand_factory.create_intelligence_engine(brand_id, competitors)
 
 async def create_monetization_engine(brand_id: str, config: Optional[Dict[str, Any]] = None) -> BrandMonetizationEngine:
-    """Create a monetization engine"""
+    """
+Create a monetization engine"""
     return await brand_factory.create_monetization_engine(brand_id, config)
 
 async def create_complete_brand_suite(brand_id: str, config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Create complete brand management suite"""
+    """
+Create complete brand management suite"""
     return await brand_factory.create_complete_brand_suite(brand_id, config)
 
 async def get_brand_overview(brand_id: str) -> Dict[str, Any]:
-    """Get brand status overview"""
+    """
+Get brand status overview"""
     return await brand_factory.get_brand_status_overview(brand_id)
 
 # Brand Agent System Information

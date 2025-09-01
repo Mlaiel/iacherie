@@ -8,7 +8,7 @@ Enterprise synchronization engine for bidirectional data sync,
 conflict resolution, and distributed storage coordination.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 ÉQUIPE PROJET - SPÉCIALITÉS:
@@ -17,6 +17,7 @@ Contact: mlaiel@live.de
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
 import logging
 import asyncio
@@ -37,7 +38,9 @@ import threading
 logger = logging.getLogger(__name__)
 
 class SyncDirection(Enum):
-    """Synchronization directions"""
+    """
+Synchronization directions"""
+
     BIDIRECTIONAL = "bidirectional"
     UPLOAD_ONLY = "upload_only"
     DOWNLOAD_ONLY = "download_only"
@@ -45,6 +48,7 @@ class SyncDirection(Enum):
 
 class SyncStatus(Enum):
     """Synchronization status"""
+
     IDLE = "idle"
     SYNCING = "syncing"
     PAUSED = "paused"
@@ -54,6 +58,7 @@ class SyncStatus(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     MANUAL = "manual"
     LOCAL_WINS = "local_wins"
     REMOTE_WINS = "remote_wins"
@@ -64,6 +69,7 @@ class ConflictResolution(Enum):
 
 class SyncEvent(Enum):
     """Synchronization events"""
+
     FILE_ADDED = "file_added"
     FILE_MODIFIED = "file_modified"
     FILE_DELETED = "file_deleted"
@@ -140,7 +146,8 @@ class SyncProfile:
 
 @dataclass
 class SyncOperation:
-    """Represents a sync operation"""
+    """
+Represents a sync operation"""
     operation_id: str
     profile_id: str
     operation_type: str  # upload, download, delete, move
@@ -170,7 +177,8 @@ class SyncOperation:
 
 @dataclass
 class SyncConflict:
-    """Represents a synchronization conflict"""
+    """
+Represents a synchronization conflict"""
     conflict_id: str
     profile_id: str
     file_path: str
@@ -239,7 +247,8 @@ class SyncEngine:
     """
     
     def __init__(self, config: SyncConfig):
-        """Initialize sync engine"""
+        """
+Initialize sync engine"""
         self.config = config
         self.sync_profiles: Dict[str, SyncProfile] = {}
         self.sync_endpoints: Dict[str, SyncEndpoint] = {}
@@ -674,7 +683,8 @@ class SyncEngine:
         self.event_handlers[event].append(handler)
     
     async def shutdown(self) -> None:
-        """Shutdown sync engine"""
+        """
+Shutdown sync engine"""
         try:
             logger.info("Shutting down sync engine...")
             
@@ -991,11 +1001,13 @@ class EndpointManager:
     """Manages sync endpoints and connections"""
     
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize endpoint manager"""
+        """
+Initialize endpoint manager"""
         self.sync_engine = sync_engine
     
     async def test_connection(self, endpoint: SyncEndpoint) -> Dict[str, Any]:
-        """Test connection to endpoint"""
+        """
+Test connection to endpoint"""
         try:
             if endpoint.endpoint_type == "local":
                 # Test local filesystem access
@@ -1041,7 +1053,8 @@ class ConflictResolver:
     """Resolves synchronization conflicts"""
     
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize conflict resolver"""
+        """
+Initialize conflict resolver"""
         self.sync_engine = sync_engine
     
     async def resolve_conflict(
@@ -1050,7 +1063,8 @@ class ConflictResolver:
         strategy: ConflictResolution,
         custom_resolution: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Resolve conflict using specified strategy"""
+        """
+Resolve conflict using specified strategy"""
         try:
             if strategy == ConflictResolution.MANUAL:
                 if not custom_resolution:
@@ -1100,7 +1114,8 @@ class ConflictResolver:
         }
     
     async def _resolve_local_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping local version"""
+        """
+Resolve conflict by keeping local version"""
         return {
             'success': True,
             'result': {
@@ -1110,7 +1125,8 @@ class ConflictResolver:
         }
     
     async def _resolve_remote_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping remote version"""
+        """
+Resolve conflict by keeping remote version"""
         return {
             'success': True,
             'result': {
@@ -1120,7 +1136,8 @@ class ConflictResolver:
         }
     
     async def _resolve_timestamp_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping newer version"""
+        """
+Resolve conflict by keeping newer version"""
         local_time = conflict.local_version.get('modified_time', 0)
         remote_time = conflict.remote_version.get('modified_time', 0)
         
@@ -1130,7 +1147,8 @@ class ConflictResolver:
             return await self._resolve_remote_wins(conflict)
     
     async def _resolve_size_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by keeping larger version"""
+        """
+Resolve conflict by keeping larger version"""
         local_size = conflict.local_version.get('size', 0)
         remote_size = conflict.remote_version.get('size', 0)
         
@@ -1140,7 +1158,8 @@ class ConflictResolver:
             return await self._resolve_remote_wins(conflict)
     
     async def _resolve_backup_and_replace(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Resolve conflict by backing up local and using remote"""
+        """
+Resolve conflict by backing up local and using remote"""
         # Create backup of local version
         backup_path = f"{conflict.file_path}.backup.{int(time.time())}"
         
@@ -1158,25 +1177,29 @@ class ChangeDetector:
     """Detects file system changes for synchronization"""
     
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize change detector"""
+        """
+Initialize change detector"""
         self.sync_engine = sync_engine
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
         self.file_cache: Dict[str, Dict[str, Any]] = {}
     
     async def start_monitoring(self, sync_profile: SyncProfile) -> None:
-        """Start real-time monitoring for a profile"""
+        """
+Start real-time monitoring for a profile"""
         if sync_profile.profile_id not in self.monitoring_tasks:
             task = asyncio.create_task(self._monitor_profile(sync_profile))
             self.monitoring_tasks[sync_profile.profile_id] = task
     
     async def stop_monitoring(self, profile_id: str) -> None:
-        """Stop monitoring for a profile"""
+        """
+Stop monitoring for a profile"""
         if profile_id in self.monitoring_tasks:
             self.monitoring_tasks[profile_id].cancel()
             del self.monitoring_tasks[profile_id]
     
     async def stop(self) -> None:
-        """Stop all monitoring"""
+        """
+Stop all monitoring"""
         for task in self.monitoring_tasks.values():
             task.cancel()
         self.monitoring_tasks.clear()
@@ -1186,7 +1209,8 @@ class ChangeDetector:
         endpoint: SyncEndpoint,
         sync_profile: SyncProfile
     ) -> Dict[str, Any]:
-        """Scan endpoint for changes"""
+        """
+Scan endpoint for changes"""
         try:
             changes = []
             
@@ -1335,7 +1359,8 @@ class ChangeDetector:
         return True
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""
+        """
+Calculate SHA-256 hash of file"""
         try:
             hash_sha256 = hashlib.sha256()
             
@@ -1353,7 +1378,8 @@ class TransferManager:
     """Manages file transfers between endpoints"""
     
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize transfer manager"""
+        """
+Initialize transfer manager"""
         self.sync_engine = sync_engine
     
     async def transfer_file(
@@ -1363,7 +1389,8 @@ class TransferManager:
         target_endpoint: SyncEndpoint,
         sync_profile: SyncProfile
     ) -> Dict[str, Any]:
-        """Transfer file between endpoints"""
+        """
+Transfer file between endpoints"""
         try:
             operation.status = SyncStatus.SYNCING
             
@@ -1491,17 +1518,20 @@ class SyncScheduler:
     """Manages sync profile scheduling"""
     
     def __init__(self, sync_engine: SyncEngine):
-        """Initialize sync scheduler"""
+        """
+Initialize sync scheduler"""
         self.sync_engine = sync_engine
         self.scheduled_profiles: Dict[str, asyncio.Task] = {}
         self.scheduler_task = None
     
     async def start(self) -> None:
-        """Start the scheduler"""
+        """
+Start the scheduler"""
         self.scheduler_task = asyncio.create_task(self._scheduler_loop())
     
     async def stop(self) -> None:
-        """Stop the scheduler"""
+        """
+Stop the scheduler"""
         if self.scheduler_task:
             self.scheduler_task.cancel()
         
@@ -1509,7 +1539,8 @@ class SyncScheduler:
             task.cancel()
     
     async def add_profile(self, sync_profile: SyncProfile) -> None:
-        """Add profile to scheduler"""
+        """
+Add profile to scheduler"""
         if sync_profile.sync_schedule and sync_profile.enabled:
             # For this example, we'll simulate cron scheduling
             logger.info(f"Scheduled sync profile: {sync_profile.profile_id}")

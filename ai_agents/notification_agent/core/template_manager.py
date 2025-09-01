@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from ...monitoring.template_monitoring import TemplateMonitoringService
 
 
 class TemplateType(Enum):
-    """Comprehensive template types for IA Influencer platform"""
+    """
+Comprehensive template types for IA Influencer platform"""
+
     CONTENT_UPLOAD_CONFIRMATION = "content_upload_confirmation"
     AI_PROTECTION_ALERT = "ai_protection_alert"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
@@ -62,6 +65,7 @@ class TemplateType(Enum):
 
 class TemplateFormat(Enum):
     """Template output formats"""
+
     HTML = "html"
     PLAIN_TEXT = "plain_text"
     MARKDOWN = "markdown"
@@ -71,6 +75,7 @@ class TemplateFormat(Enum):
 
 class TemplateLanguage(Enum):
     """Supported template languages"""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -99,7 +104,8 @@ class TemplateContext:
 
 @dataclass
 class TemplateConfiguration:
-    """Advanced template configuration"""
+    """
+Advanced template configuration"""
     template_id: str
     template_type: TemplateType
     supported_formats: List[TemplateFormat]
@@ -175,7 +181,8 @@ class TemplateManager:
         self.channel_templates: Dict[NotificationChannel, Dict[str, str]] = defaultdict(dict)
         
     def _initialize_jinja_environment(self) -> Environment:
-        """Initialize Jinja2 template environment with custom filters and functions"""
+        """
+Initialize Jinja2 template environment with custom filters and functions"""
         try:
             env = Environment(
                 loader=BaseLoader(),
@@ -208,12 +215,14 @@ class TemplateManager:
         return ABTestManager(self.config.get('ab_testing', {}))
         
     def _initialize_translation_service(self):
-        """Initialize translation service for multi-language support"""
+        """
+Initialize translation service for multi-language support"""
         from ...ai.translation.translation_service import TranslationService
         return TranslationService(self.config.get('translation', {}))
         
     async def start_manager(self):
-        """Start template manager with all background services"""
+        """
+Start template manager with all background services"""
         try:
             self.logger.info("Starting TemplateManager")
             
@@ -556,7 +565,8 @@ class TemplateManager:
         }
         
     async def _create_sms_variant(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Create SMS-optimized template variant"""
+        """
+Create SMS-optimized template variant"""
         message = content.get('title', '') + ': ' + content.get('message', '')
         
         # Truncate to SMS limits
@@ -579,7 +589,8 @@ class TemplateManager:
         }
         
     async def _create_in_app_variant(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Create in-app notification optimized template variant"""
+        """
+Create in-app notification optimized template variant"""
         return {
             'title': content.get('title', ''),
             'message': content.get('message', ''),
@@ -593,7 +604,8 @@ class TemplateManager:
         content: Dict[str, str],
         languages: List[TemplateLanguage]
     ) -> Dict[str, Dict[str, str]]:
-        """Create multi-language template variants"""
+        """
+Create multi-language template variants"""
         try:
             variants = {}
             
@@ -876,7 +888,8 @@ class TemplateManager:
             return str(date)
             
     def _truncate_smart_filter(self, text: str, length: int = 100) -> str:
-        """Smart truncation that preserves word boundaries"""
+        """
+Smart truncation that preserves word boundaries"""
         try:
             if len(text) <= length:
                 return text
@@ -903,7 +916,8 @@ class TemplateManager:
             return text
             
     def _sanitize_html_filter(self, text: str) -> str:
-        """Sanitize HTML content"""
+        """
+Sanitize HTML content"""
         try:
             # Remove potentially dangerous HTML tags
             import html
@@ -913,7 +927,8 @@ class TemplateManager:
             return text
             
     async def _get_user_preference(self, user_id: str, preference_key: str, default=None):
-        """Get user preference value"""
+        """
+Get user preference value"""
         try:
             # This would typically query a user preferences service
             # For now, return default
@@ -922,7 +937,8 @@ class TemplateManager:
             return default
             
     async def _get_localized_string(self, key: str, language: str = 'en', **kwargs):
-        """Get localized string"""
+        """
+Get localized string"""
         try:
             # This would typically query a localization service
             # For now, return the key
@@ -931,7 +947,8 @@ class TemplateManager:
             return key
             
     def _generate_tracking_url(self, base_url: str, campaign: str, user_id: str) -> str:
-        """Generate tracking URL for analytics"""
+        """
+Generate tracking URL for analytics"""
         try:
             import urllib.parse
             
@@ -1217,7 +1234,8 @@ class MessageGenerator:
         context: TemplateContext,
         preferences: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Generate complete message from template with full optimization"""
+        """
+Generate complete message from template with full optimization"""
         try:
             # Set defaults from preferences
             target_format = TemplateFormat(preferences.get('format', 'html')) if preferences else TemplateFormat.HTML
@@ -1377,7 +1395,8 @@ class TemplateConfiguration:
 
 @dataclass
 class RenderedTemplate:
-    """Result of template rendering"""
+    """
+Result of template rendering"""
     template_id: str
     rendered_content: Dict[str, str]  # format -> content
     used_variables: Dict[str, Any]
@@ -1390,7 +1409,8 @@ class RenderedTemplate:
 
 
 class TemplateLoader(BaseLoader):
-    """Custom Jinja2 template loader for notification templates"""
+    """
+Custom Jinja2 template loader for notification templates"""
     
     def __init__(self, templates: Dict[str, str]):
         self.templates = templates
@@ -1457,7 +1477,8 @@ class TemplateManager:
         self.translation_cache = {}
         
     async def initialize_manager(self):
-        """Initialize the template manager with all components"""
+        """
+Initialize the template manager with all components"""
         try:
             self.logger.info("Initializing TemplateManager with AI-driven capabilities")
             
@@ -2029,7 +2050,8 @@ class TemplateManager:
         self,
         template_content: Dict[str, str]
     ) -> List[TemplateVariable]:
-        """Extract variables from template content"""
+        """
+Extract variables from template content"""
         try:
             variables = set()
             
@@ -2081,7 +2103,8 @@ class TemplateManager:
             return 'string'  # Default type
             
     def _is_variable_required(self, var_name: str) -> bool:
-        """Determine if variable is required based on name"""
+        """
+Determine if variable is required based on name"""
         required_keywords = ['name', 'id', 'user', 'title', 'subject']
         return any(keyword in var_name.lower() for keyword in required_keywords)
 

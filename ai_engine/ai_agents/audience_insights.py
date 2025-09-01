@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudienceSegment(Enum):
-    """Audience segmentation categories"""
+    """
+Audience segmentation categories"""
+
     DEMOGRAPHIC = "demographic"
     BEHAVIORAL = "behavioral"
     PSYCHOGRAPHIC = "psychographic"
@@ -44,6 +47,7 @@ class AudienceSegment(Enum):
 
 class EngagementPattern(Enum):
     """Audience engagement patterns"""
+
     HIGH_FREQUENCY = "high_frequency"
     BINGE_CONSUMER = "binge_consumer"
     CASUAL_BROWSER = "casual_browser"
@@ -84,7 +88,8 @@ class BehavioralProfile:
 
 @dataclass
 class PsychographicProfile:
-    """Audience psychographic insights"""
+    """
+Audience psychographic insights"""
     interests: Dict[str, float] = field(default_factory=dict)
     values: Dict[str, float] = field(default_factory=dict)
     lifestyle_indicators: Dict[str, float] = field(default_factory=dict)
@@ -96,7 +101,8 @@ class PsychographicProfile:
 
 @dataclass
 class AudienceInsight:
-    """Comprehensive audience insight"""
+    """
+Comprehensive audience insight"""
     insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     segment_name: str = ""
     segment_type: AudienceSegment = AudienceSegment.DEMOGRAPHIC
@@ -176,7 +182,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         return MockAudienceAnalyzer()
     
     def _create_mock_predictor(self):
-        """Create mock demographic predictor for testing compatibility"""
+        """
+Create mock demographic predictor for testing compatibility"""
         class MockDemographicPredictor:
             async def predict_demographics(self, behavioral_data): return {}
             async def predict_engagement(self, demographic_data): return 0.0
@@ -235,7 +242,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         return audience_data
     
     async def _collect_platform_data(self, platform: SocialPlatform, request: AudienceAnalysisRequest) -> Dict[str, Any]:
-        """Collect platform-specific audience data"""
+        """
+Collect platform-specific audience data"""
         # Mock data collection - in production, this would integrate with platform APIs
         return {
             'followers_count': 10000 + hash(request.creator_id) % 50000,
@@ -246,7 +254,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         }
     
     def _generate_mock_demographics(self) -> Dict[str, Any]:
-        """Generate realistic mock demographic data"""
+        """
+Generate realistic mock demographic data"""
         return {
             'age_distribution': {
                 '18-24': 0.25,
@@ -263,7 +272,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         }
     
     def _generate_mock_activity_patterns(self) -> Dict[str, Any]:
-        """Generate realistic activity pattern data"""
+        """
+Generate realistic activity pattern data"""
         return {
             'peak_hours': [19, 20, 21],  # 7-9 PM
             'active_days': ['Monday', 'Wednesday', 'Friday', 'Sunday'],
@@ -272,7 +282,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         }
     
     def _generate_mock_content_performance(self) -> Dict[str, Any]:
-        """Generate content performance insights"""
+        """
+Generate content performance insights"""
         return {
             'top_content_types': {
                 ContentType.VIDEO.value: 0.4,
@@ -287,7 +298,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         }
     
     async def _perform_audience_segmentation(self, audience_data: Dict[str, Any], request: AudienceAnalysisRequest) -> List[Dict[str, Any]]:
-        """Perform intelligent audience segmentation"""
+        """
+Perform intelligent audience segmentation"""
         segments = []
         
         # Demographic-based segments
@@ -305,7 +317,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         return segments[:10]  # Return top 10 most significant segments
     
     def _create_age_based_segments(self, audience_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Create age-based audience segments"""
+        """
+Create age-based audience segments"""
         return [
             {
                 'name': 'Gen Z Creators',
@@ -324,7 +337,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         ]
     
     def _create_behavioral_segments(self, audience_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Create behavior-based segments"""
+        """
+Create behavior-based segments"""
         return [
             {
                 'name': 'Heavy Consumers',
@@ -343,7 +357,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         ]
     
     def _create_engagement_segments(self, audience_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Create engagement-based segments"""
+        """
+Create engagement-based segments"""
         return [
             {
                 'name': 'Super Fans',
@@ -362,7 +377,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         ]
     
     async def _generate_segment_insight(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any], request: AudienceAnalysisRequest) -> AudienceInsight:
-        """Generate comprehensive insight for audience segment"""
+        """
+Generate comprehensive insight for audience segment"""
         
         # Create demographic profile
         demographic_profile = self._build_demographic_profile(segment_data, audience_data)
@@ -396,7 +412,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         )
     
     def _build_demographic_profile(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any]) -> DemographicProfile:
-        """Build detailed demographic profile"""
+        """
+Build detailed demographic profile"""
         return DemographicProfile(
             age_range=segment_data.get('criteria', {}).get('age_range', '25-34'),
             gender_distribution={'female': 0.55, 'male': 0.40, 'other': 0.05},
@@ -406,7 +423,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         )
     
     def _build_behavioral_profile(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any]) -> BehavioralProfile:
-        """Build comprehensive behavioral profile"""
+        """
+Build comprehensive behavioral profile"""
         return BehavioralProfile(
             content_preferences={
                 ContentType.VIDEO: 0.45,
@@ -422,7 +440,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         )
     
     def _build_psychographic_profile(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any]) -> PsychographicProfile:
-        """Build psychographic profile"""
+        """
+Build psychographic profile"""
         return PsychographicProfile(
             interests={'music': 0.8, 'technology': 0.6, 'lifestyle': 0.7},
             values={'authenticity': 0.9, 'creativity': 0.85, 'community': 0.75},
@@ -431,7 +450,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         )
     
     def _generate_content_recommendations(self, segment_data: Dict[str, Any]) -> List[str]:
-        """Generate tailored content recommendations"""
+        """
+Generate tailored content recommendations"""
         base_recommendations = [
             "Create authentic behind-the-scenes content",
             "Share personal stories and experiences",
@@ -469,7 +489,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         }
     
     def _calculate_monetization_potential(self, segment_data: Dict[str, Any]) -> float:
-        """Calculate monetization potential for segment"""
+        """
+Calculate monetization potential for segment"""
         base_potential = 0.5
         
         # Increase based on engagement characteristics
@@ -484,7 +505,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         return min(base_potential, 1.0)
     
     def _calculate_confidence_score(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any]) -> float:
-        """Calculate confidence score for insights"""
+        """
+Calculate confidence score for insights"""
         # Base confidence based on data completeness
         data_completeness = len(audience_data.keys()) / 5  # 5 expected data categories
         segment_size = segment_data.get('size', 0)
@@ -494,7 +516,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         return round(confidence, 2)
     
     def _determine_engagement_pattern(self, segment_data: Dict[str, Any]) -> EngagementPattern:
-        """Determine engagement pattern for segment"""
+        """
+Determine engagement pattern for segment"""
         characteristics = segment_data.get('characteristics', [])
         
         if 'high_engagement' in characteristics:
@@ -509,7 +532,8 @@ class AudienceInsightsAgent(BaseAIAgent):
             return EngagementPattern.CASUAL_BROWSER
     
     async def get_segment_performance(self, segment_id: str) -> Dict[str, float]:
-        """Get performance metrics for specific segment"""
+        """
+Get performance metrics for specific segment"""
         if segment_id in self.segment_performance:
             return self.segment_performance[segment_id]
         
@@ -525,7 +549,8 @@ class AudienceInsightsAgent(BaseAIAgent):
         return performance
     
     async def predict_audience_behavior(self, segment_id: str, time_horizon_days: int = 30) -> Dict[str, Any]:
-        """Predict future audience behavior patterns"""
+        """
+Predict future audience behavior patterns"""
         if segment_id not in self.audience_segments:
             return {}
         

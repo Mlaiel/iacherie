@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,9 +13,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Critical Code Path Tests for >85% Test Coverage Requirement
+"""
+Critical Code Path Tests for >85% Test Coverage Requirement
 Tests core business logic, security, and performance critical paths
 """
+
 import pytest
 import sys
 import os
@@ -29,10 +32,12 @@ sys.path.append('/home/runner/work/Ainflue/Ainflue')
 
 @pytest.mark.asyncio
 class TestCriticalAPIRoutes:
-    """Test critical API endpoints and response handling"""
+    """
+Test critical API endpoints and response handling"""
     
     async def test_api_authentication_flow(self):
-        """Test critical authentication flow"""
+        """
+Test critical authentication flow"""
         # Mock authentication components
         with patch('auth.jwt_handler.verify_token') as mock_verify:
             mock_verify.return_value = {'user_id': 'test_user', 'permissions': ['read', 'write']}
@@ -42,7 +47,8 @@ class TestCriticalAPIRoutes:
             assert 'read' in mock_verify.return_value['permissions']
     
     async def test_content_upload_critical_path(self):
-        """Test critical content upload and processing path"""
+        """
+Test critical content upload and processing path"""
         # Mock content processing pipeline
         with patch('api.content.upload_handler.process_content') as mock_process:
             mock_process.return_value = {
@@ -56,7 +62,8 @@ class TestCriticalAPIRoutes:
             assert result['processing_time_ms'] < 2000  # Under 2s SLA
     
     async def test_api_error_handling(self):
-        """Test critical error handling paths"""
+        """
+Test critical error handling paths"""
         # Test error response structure
         error_response = {
             'error': True,
@@ -73,10 +80,12 @@ class TestCriticalAPIRoutes:
 
 @pytest.mark.asyncio
 class TestDatabaseOperations:
-    """Test critical database operations and transactions"""
+    """
+Test critical database operations and transactions"""
     
     async def test_database_connection_handling(self):
-        """Test database connection management"""
+        """
+Test database connection management"""
         # Mock database connection
         with patch('database.connection.get_connection') as mock_conn:
             mock_conn.return_value = Mock()
@@ -86,7 +95,8 @@ class TestDatabaseOperations:
             assert connection.is_connected()
     
     async def test_transaction_rollback_handling(self):
-        """Test transaction rollback on errors"""
+        """
+Test transaction rollback on errors"""
         # Mock transaction handling
         with patch('database.transaction.execute_transaction') as mock_transaction:
             # Test successful transaction
@@ -116,10 +126,12 @@ class TestDatabaseOperations:
 
 @pytest.mark.asyncio
 class TestAIModelOperations:
-    """Test critical AI model operations and inference"""
+    """
+Test critical AI model operations and inference"""
     
     async def test_content_analysis_accuracy(self):
-        """Test AI content analysis accuracy"""
+        """
+Test AI content analysis accuracy"""
         # Mock AI model inference
         with patch('ai.models.content_analyzer.analyze') as mock_analyze:
             mock_analyze.return_value = {
@@ -133,7 +145,8 @@ class TestAIModelOperations:
             assert result['processing_time_ms'] < 1000  # Performance threshold
     
     async def test_model_fallback_mechanism(self):
-        """Test AI model fallback on failures"""
+        """
+Test AI model fallback on failures"""
         # Test primary model failure and fallback
         with patch('ai.models.primary_model.predict') as mock_primary:
             with patch('ai.models.fallback_model.predict') as mock_fallback:
@@ -159,7 +172,8 @@ class TestSecurityCriticalPaths:
     """Test security-critical code paths"""
     
     async def test_input_validation_and_sanitization(self):
-        """Test input validation prevents injection attacks"""
+        """
+Test input validation prevents injection attacks"""
         # Test SQL injection prevention
         malicious_input = "'; DROP TABLE users; --"
         
@@ -189,7 +203,8 @@ class TestSecurityCriticalPaths:
             assert blocked_result['allowed'] is False
     
     async def test_encryption_operations(self):
-        """Test data encryption/decryption operations"""
+        """
+Test data encryption/decryption operations"""
         # Mock encryption operations
         with patch('security.encryption.encrypt') as mock_encrypt:
             with patch('security.encryption.decrypt') as mock_decrypt:
@@ -209,7 +224,8 @@ class TestCacheOperations:
     """Test critical caching layer operations"""
     
     async def test_cache_hit_ratio_optimization(self):
-        """Test cache hit ratio meets performance targets"""
+        """
+Test cache hit ratio meets performance targets"""
         # Mock cache operations
         with patch('cache.redis_client.get') as mock_get:
             with patch('cache.redis_client.set') as mock_set:
@@ -242,10 +258,12 @@ class TestCacheOperations:
 
 @pytest.mark.asyncio
 class TestContentProcessingPipeline:
-    """Test critical content processing pipeline"""
+    """
+Test critical content processing pipeline"""
     
     async def test_content_fingerprinting_speed(self):
-        """Test content fingerprinting meets <500ms requirement"""
+        """
+Test content fingerprinting meets <500ms requirement"""
         # Mock fingerprinting process
         with patch('content.fingerprinting.generate_fingerprint') as mock_fingerprint:
             mock_fingerprint.return_value = {
@@ -259,7 +277,8 @@ class TestContentProcessingPipeline:
             assert len(result['fingerprint']) > 0
     
     async def test_multi_platform_distribution(self):
-        """Test multi-platform content distribution"""
+        """
+Test multi-platform content distribution"""
         # Mock platform distribution
         platforms = ['youtube', 'tiktok', 'instagram', 'twitter', 'facebook']
         
@@ -276,7 +295,8 @@ class TestContentProcessingPipeline:
             assert result['total_time_ms'] < 5000  # Reasonable time
     
     async def test_content_validation_accuracy(self):
-        """Test content validation accuracy"""
+        """
+Test content validation accuracy"""
         # Mock content validation
         with patch('content.validator.validate_content') as mock_validate:
             mock_validate.return_value = {
@@ -294,10 +314,12 @@ class TestContentProcessingPipeline:
 
 @pytest.mark.asyncio 
 class TestMonitoringAndAlerting:
-    """Test critical monitoring and alerting systems"""
+    """
+Test critical monitoring and alerting systems"""
     
     async def test_health_check_endpoints(self):
-        """Test system health check responsiveness"""
+        """
+Test system health check responsiveness"""
         # Mock health check
         with patch('monitoring.health.check_system_health') as mock_health:
             mock_health.return_value = {
@@ -317,7 +339,8 @@ class TestMonitoringAndAlerting:
             assert all(status == 'healthy' for status in result['services'].values())
     
     async def test_alert_generation_speed(self):
-        """Test alert generation and delivery speed"""
+        """
+Test alert generation and delivery speed"""
         # Mock alerting system
         with patch('monitoring.alerts.send_alert') as mock_alert:
             mock_alert.return_value = {
@@ -334,10 +357,12 @@ class TestMonitoringAndAlerting:
 
 @pytest.mark.asyncio
 class TestScalabilityOperations:
-    """Test scalability and auto-scaling operations"""
+    """
+Test scalability and auto-scaling operations"""
     
     async def test_load_balancer_distribution(self):
-        """Test load balancer request distribution"""
+        """
+Test load balancer request distribution"""
         # Mock load balancing
         with patch('infrastructure.load_balancer.distribute_request') as mock_lb:
             mock_lb.return_value = {
@@ -352,7 +377,8 @@ class TestScalabilityOperations:
             assert result['routing_time_ms'] < 10  # Fast routing
     
     async def test_auto_scaling_trigger_speed(self):
-        """Test auto-scaling trigger responsiveness"""
+        """
+Test auto-scaling trigger responsiveness"""
         # Mock auto-scaling decision
         with patch('kubernetes.auto_scaling.evaluate_scaling') as mock_scaling:
             mock_scaling.return_value = {
@@ -370,10 +396,12 @@ class TestScalabilityOperations:
 
 # Test Coverage Calculation Helper
 class TestCoverageCalculator:
-    """Helper class to ensure test coverage meets >85% requirement"""
+    """
+Helper class to ensure test coverage meets >85% requirement"""
     
     def test_coverage_metrics(self):
-        """Verify test coverage calculation"""
+        """
+Verify test coverage calculation"""
         # This would integrate with coverage.py in real scenario
         total_lines = 1000  # Example total lines of critical code
         covered_lines = 870  # Lines covered by tests

@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 import hashlib
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class VersionType(Enum):
-    """Content version types"""
+    """
+Content version types"""
+
     MAJOR = "major"
     MINOR = "minor"
     PATCH = "patch"
@@ -44,6 +47,7 @@ class VersionType(Enum):
 
 class VersionStatus(Enum):
     """Version status"""
+
     ACTIVE = "active"
     DEPRECATED = "deprecated"
     ARCHIVED = "archived"
@@ -53,6 +57,7 @@ class VersionStatus(Enum):
 
 class ChangeType(Enum):
     """Change types for version tracking"""
+
     CONTENT_UPDATE = "content_update"
     METADATA_UPDATE = "metadata_update"
     STRUCTURE_CHANGE = "structure_change"
@@ -65,6 +70,7 @@ class ChangeType(Enum):
 
 class MergeStrategy(Enum):
     """Version merge strategies"""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     THREE_WAY = "three_way"
@@ -91,7 +97,8 @@ class VersionDelta:
 
 @dataclass
 class ContentVersion:
-    """Content version representation"""
+    """
+Content version representation"""
     version_id: str
     content_id: str
     version_number: str
@@ -119,7 +126,8 @@ class ContentVersion:
 
 @dataclass
 class VersionBranch:
-    """Version branch representation"""
+    """
+Version branch representation"""
     branch_id: str
     content_id: str
     branch_name: str
@@ -135,7 +143,8 @@ class VersionBranch:
 
 @dataclass
 class VersionConflict:
-    """Version merge conflict"""
+    """
+Version merge conflict"""
     conflict_id: str
     branch_a: str
     branch_b: str
@@ -150,7 +159,8 @@ class VersionConflict:
 
 @dataclass
 class VersionSnapshot:
-    """Version snapshot for backup/restore"""
+    """
+Version snapshot for backup/restore"""
     snapshot_id: str
     content_id: str
     version_id: str
@@ -164,7 +174,8 @@ class VersionSnapshot:
 
 
 class VersioningManager:
-    """Advanced content versioning and collaboration system"""
+    """
+Advanced content versioning and collaboration system"""
     
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
@@ -725,20 +736,23 @@ class VersioningManager:
         return hashlib.sha256(content_str.encode()).hexdigest()
     
     def _calculate_size(self, content_data: Dict[str, Any], metadata: Dict[str, Any]) -> int:
-        """Calculate total size of content and metadata"""
+        """
+Calculate total size of content and metadata"""
         content_str = json.dumps(content_data, default=str)
         metadata_str = json.dumps(metadata, default=str)
         return len(content_str.encode()) + len(metadata_str.encode())
     
     def _extract_file_references(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract file references from content data"""
+        """
+Extract file references from content data"""
         file_refs = []
         # This would contain logic to extract file references
         # Placeholder implementation
         return file_refs
     
     def _compare_data(self, data_a: Dict[str, Any], data_b: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Compare two data structures and return differences"""
+        """
+Compare two data structures and return differences"""
         differences = []
         
         # Simple diff implementation - would be more sophisticated in real system
@@ -783,7 +797,8 @@ class VersioningManager:
         return max(0.0, 1.0 - (size_diff / max_size))
     
     def _build_version_tree(self, versions: List[ContentVersion]) -> Dict[str, Any]:
-        """Build version tree structure"""
+        """
+Build version tree structure"""
         tree = {}
         version_map = {v.version_id: v for v in versions}
         
@@ -929,22 +944,26 @@ class VersioningManager:
         pass
     
     async def _load_version_from_db(self, version_id: str) -> Optional[ContentVersion]:
-        """Load version from database"""
+        """
+Load version from database"""
         # Placeholder implementation
         return None
     
     async def _update_current_version(self, content_id: str, version_id: str) -> None:
-        """Update current version pointer"""
+        """
+Update current version pointer"""
         # Placeholder implementation
         pass
     
     async def _mark_version_non_current(self, version_id: str) -> None:
-        """Mark version as non-current"""
+        """
+Mark version as non-current"""
         # Placeholder implementation
         pass
     
     async def _get_current_version_id_from_db(self, content_id: str) -> Optional[str]:
-        """Get current version ID from database"""
+        """
+Get current version ID from database"""
         # Placeholder implementation
         return None
     
@@ -955,37 +974,44 @@ class VersioningManager:
         limit: int,
         offset: int
     ) -> List[ContentVersion]:
-        """Fetch versions from database"""
+        """
+Fetch versions from database"""
         # Placeholder implementation
         return []
     
     async def _cleanup_old_versions(self, content_id: str) -> None:
-        """Clean up old versions based on retention policy"""
+        """
+Clean up old versions based on retention policy"""
         # Placeholder implementation
         pass
     
     async def _branch_exists(self, content_id: str, branch_name: str) -> bool:
-        """Check if branch exists"""
+        """
+Check if branch exists"""
         # Placeholder implementation
         return False
     
     async def _store_branch_in_db(self, branch: VersionBranch) -> None:
-        """Store branch in database"""
+        """
+Store branch in database"""
         # Placeholder implementation
         pass
     
     async def _get_branch(self, content_id: str, branch_name: str) -> Optional[VersionBranch]:
-        """Get branch by name"""
+        """
+Get branch by name"""
         # Placeholder implementation
         return None
     
     async def _update_branch_in_db(self, branch: VersionBranch) -> None:
-        """Update branch in database"""
+        """
+Update branch in database"""
         # Placeholder implementation
         pass
     
     async def _get_content_branches(self, content_id: str) -> List[VersionBranch]:
-        """Get all branches for content"""
+        """
+Get all branches for content"""
         # Placeholder implementation
         return []
     
@@ -994,7 +1020,8 @@ class VersioningManager:
         source_version: ContentVersion,
         target_version: ContentVersion
     ) -> List[VersionConflict]:
-        """Detect merge conflicts between versions"""
+        """
+Detect merge conflicts between versions"""
         # Placeholder implementation
         return []
     
@@ -1005,7 +1032,8 @@ class VersioningManager:
         conflicts: List[VersionConflict],
         resolutions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve merge conflicts"""
+        """
+Resolve merge conflicts"""
         # Placeholder implementation
         return {
             "content": source_version.content_data,
@@ -1037,11 +1065,13 @@ class VersioningManager:
         pass
     
     async def _load_snapshot(self, snapshot_id: str) -> Optional[bytes]:
-        """Load snapshot data"""
+        """
+Load snapshot data"""
         # Placeholder implementation
         return None
     
     async def _update_version_in_db(self, version: ContentVersion) -> None:
-        """Update version in database"""
+        """
+Update version in database"""
         # Placeholder implementation
         pass

@@ -27,6 +27,7 @@ Expert Project Team - Fahed Mlaiel:
 Business Logic Implementation:
 Multi-Format Creator → AI Processing → Protection → SEO → Collaboration → Distribution → Monetization
 """
+
 from typing import Dict, Type, Any, List, Optional, Union
 from enum import Enum
 import logging
@@ -79,7 +80,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelCategory(Enum):
-    """Categories for organizing database models"""
+    """
+Categories for organizing database models"""
+
     CONTENT_PROTECTION = "content_protection"
     AI_ANALYTICS = "ai_analytics"
     CREATOR_MANAGEMENT = "creator_management"
@@ -94,6 +97,7 @@ class ModelCategory(Enum):
 
 class BusinessProcess(Enum):
     """Business processes mapped to model usage"""
+
     CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
     RIGHTS_PROTECTION = "rights_protection"
@@ -209,7 +213,8 @@ class ModelFactory:
     
     @staticmethod
     def get_model_by_name(model_name: str) -> Type:
-        """Get model class by name from registry"""
+        """
+Get model class by name from registry"""
         if model_name not in MODEL_REGISTRY:
             raise ValueError(f"Model '{model_name}' not found in registry")
         return MODEL_REGISTRY[model_name]
@@ -236,7 +241,8 @@ class ModelFactory:
     
     @staticmethod
     def get_model_relationships(model_class: Type) -> Dict[str, Any]:
-        """Get relationship information for a model"""
+        """
+Get relationship information for a model"""
         relationships = {}
         
         if hasattr(model_class, '__mapper__'):
@@ -310,7 +316,8 @@ class ModelAnalyzer:
     
     @staticmethod
     def analyze_model_dependencies() -> Dict[str, Dict[str, Any]]:
-        """Analyze dependencies between models"""
+        """
+Analyze dependencies between models"""
         dependencies = {}
         
         for model_name, model_class in MODEL_REGISTRY.items():
@@ -360,7 +367,8 @@ class ModelAnalyzer:
     
     @staticmethod
     def generate_model_documentation() -> Dict[str, Dict[str, Any]]:
-        """Generate comprehensive model documentation"""
+        """
+Generate comprehensive model documentation"""
         documentation = {}
         
         for model_name, model_class in MODEL_REGISTRY.items():
@@ -390,7 +398,8 @@ class ModelAnalyzer:
     
     @staticmethod
     def _get_business_purpose(model_name: str) -> str:
-        """Get business purpose for a model"""
+        """
+Get business purpose for a model"""
         purposes = {
             'content_fingerprints': 'Core content identification and protection',
             'protection_alerts': 'Real-time copyright violation detection',
@@ -407,7 +416,8 @@ class ModelAnalyzer:
     
     @staticmethod
     def _get_usage_patterns(model_name: str) -> List[str]:
-        """Get typical usage patterns for a model"""
+        """
+Get typical usage patterns for a model"""
         patterns = {
             'content_fingerprints': ['High-frequency reads', 'Batch processing', 'Real-time matching'],
             'protection_alerts': ['Real-time notifications', 'Automated responses', 'Alert aggregation'],

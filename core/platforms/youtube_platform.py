@@ -4,6 +4,7 @@ AI-Powered YouTube Content Management and Analytics System
 This module provides comprehensive YouTube platform integration with advanced content management,
 analytics, monetization optimization, and AI-powered insights for influencer marketing.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class YouTubeContentType(str, Enum):
-    """YouTube content types"""
+    """
+YouTube content types"""
+
     VIDEO = "video"
     SHORT = "short"
     LIVE_STREAM = "live_stream"
@@ -49,6 +52,7 @@ class YouTubeContentType(str, Enum):
 
 class YouTubeVideoCategory(str, Enum):
     """YouTube video categories"""
+
     FILM_ANIMATION = "1"
     AUTOS_VEHICLES = "2"
     MUSIC = "10"
@@ -68,6 +72,7 @@ class YouTubeVideoCategory(str, Enum):
 
 class YouTubePrivacyStatus(str, Enum):
     """YouTube video privacy status"""
+
     PUBLIC = "public"
     UNLISTED = "unlisted"
     PRIVATE = "private"
@@ -76,6 +81,7 @@ class YouTubePrivacyStatus(str, Enum):
 
 class YouTubeEngagementType(str, Enum):
     """YouTube engagement types"""
+
     LIKE = "like"
     DISLIKE = "dislike"
     COMMENT = "comment"
@@ -278,7 +284,8 @@ class YouTubeAnalytics(BaseModel):
 
 
 class YouTubeOptimization(BaseModel):
-    """YouTube optimization recommendations"""
+    """
+YouTube optimization recommendations"""
     video_id: Optional[str] = None
     channel_id: str
     
@@ -1318,7 +1325,8 @@ class AdvancedYouTubePlatform(BasePlatform):
             return None
 
     async def _calculate_video_engagement_metrics(self, video: YouTubeVideo):
-        """Calculate engagement metrics for video"""
+        """
+Calculate engagement metrics for video"""
         try:
             if video.view_count > 0:
                 total_engagements = (video.like_count + video.dislike_count + 
@@ -1343,7 +1351,8 @@ class AdvancedYouTubePlatform(BasePlatform):
             return 0
 
     async def close(self):
-        """Close YouTube platform and cleanup resources"""
+        """
+Close YouTube platform and cleanup resources"""
         try:
             await self.stop_monitoring()
             await self.cache_manager.close()

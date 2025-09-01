@@ -30,12 +30,13 @@ Features:
 - Creator analytics and insights
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -72,7 +73,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformCredentials:
-    """Credentials for platform access."""
+    """
+Credentials for platform access."""
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -84,7 +86,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentItem:
-    """Platform content item."""
+    """
+Platform content item."""
     content_id: str
     platform: str
     content_type: str
@@ -101,10 +104,12 @@ class ContentItem:
     raw_data: Dict[str, Any] = None
 
 class PlatformAdapter(ABC):
-    """Base class for all platform adapters."""
+    """
+Base class for all platform adapters."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize platform adapter."""
+        """
+Initialize platform adapter."""
         self.credentials = credentials
         self.config = config
         self.platform_name = ""
@@ -142,11 +147,13 @@ class PlatformAdapter(ABC):
     
     @abstractmethod
     async def get_content_details(self, content_id: str) -> Optional[ContentItem]:
-        """Get detailed information about specific content."""
+        """
+Get detailed information about specific content."""
         pass
     
     async def initialize(self):
-        """Initialize the adapter."""
+        """
+Initialize the adapter."""
         self.session = aiohttp.ClientSession()
         success = await self.authenticate()
         if not success:
@@ -170,7 +177,8 @@ class PlatformAdapter(ABC):
             pass
     
     async def _wait_for_rate_limit(self):
-        """Wait if rate limit is exceeded."""
+        """
+Wait if rate limit is exceeded."""
         if self.rate_limit_remaining <= 1 and self.rate_limit_reset:
             wait_time = (self.rate_limit_reset - datetime.now()).total_seconds()
             if wait_time > 0:
@@ -181,7 +189,8 @@ class YouTubeAdapter(PlatformAdapter):
     """Adapter for YouTube platform."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize YouTube adapter."""
+        """
+Initialize YouTube adapter."""
         super().__init__(credentials, **config)
         self.platform_name = "YouTube"
         self.api_base_url = "https://www.googleapis.com/youtube/v3"
@@ -382,7 +391,8 @@ class SpotifyAdapter(PlatformAdapter):
     """Adapter for Spotify platform."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Spotify adapter."""
+        """
+Initialize Spotify adapter."""
         super().__init__(credentials, **config)
         self.platform_name = "Spotify"
         self.spotify_client = None
@@ -560,7 +570,8 @@ class InstagramAdapter(PlatformAdapter):
     """Adapter for Instagram platform."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Instagram adapter."""
+        """
+Initialize Instagram adapter."""
         super().__init__(credentials, **config)
         self.platform_name = "Instagram"
         self.loader = None
@@ -718,7 +729,8 @@ class TikTokAdapter(PlatformAdapter):
     """Adapter for TikTok platform."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize TikTok adapter."""
+        """
+Initialize TikTok adapter."""
         super().__init__(credentials, **config)
         self.platform_name = "TikTok"
         self.api_base_url = "https://open-api.tiktok.com"
@@ -785,7 +797,8 @@ class TwitterAdapter(PlatformAdapter):
     """Adapter for Twitter/X platform."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Twitter adapter."""
+        """
+Initialize Twitter adapter."""
         super().__init__(credentials, **config)
         self.platform_name = "Twitter"
         self.twitter_api = None
@@ -954,7 +967,8 @@ class FacebookAdapter(PlatformAdapter):
     """Adapter for Facebook platform."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize Facebook adapter."""
+        """
+Initialize Facebook adapter."""
         super().__init__(credentials, **config)
         self.platform_name = "Facebook"
         self.graph_api_url = "https://graph.facebook.com/v18.0"
@@ -1077,7 +1091,8 @@ class LinkedInAdapter(PlatformAdapter):
     """Adapter for LinkedIn platform."""
     
     def __init__(self, credentials: PlatformCredentials, **config):
-        """Initialize LinkedIn adapter."""
+        """
+Initialize LinkedIn adapter."""
         super().__init__(credentials, **config)
         self.platform_name = "LinkedIn"
         self.api_base_url = "https://api.linkedin.com/v2"

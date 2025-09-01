@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any
 from pydantic import BaseSettings, validator
 import torch
@@ -24,7 +25,9 @@ from dataclasses import dataclass
 
 
 class ModelType(str, Enum):
-    """Supported AI model types for content processing."""
+    """
+Supported AI model types for content processing."""
+
     
     NLP = "nlp"
     COMPUTER_VISION = "computer_vision"
@@ -38,6 +41,7 @@ class ModelType(str, Enum):
 
 class ModelProvider(str, Enum):
     """AI model providers and sources."""
+
     
     HUGGINGFACE = "huggingface"
     OPENAI = "openai"
@@ -161,7 +165,8 @@ class AIModelConfig(BaseSettings):
         return v
     
     def get_model_spec(self, model_name: str) -> Optional[ModelSpec]:
-        """Get model specification by name."""
+        """
+Get model specification by name."""
         model_specs = {
             # Audio Models
             "audio_fingerprint": ModelSpec(

@@ -6,8 +6,9 @@ de contenu protégé sur l'ensemble du web.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -31,7 +32,8 @@ from ...utils.proxy_manager import ProxyManager
 
 @dataclass
 class MonitoringTarget:
-    """Configuration d'une cible de surveillance"""
+    """
+Configuration d'une cible de surveillance"""
     url: str
     content_type: str  # 'video', 'audio', 'image', 'text'
     owner_id: str
@@ -44,7 +46,8 @@ class MonitoringTarget:
 
 @dataclass
 class ViolationAlert:
-    """Alerte de violation détectée"""
+    """
+Alerte de violation détectée"""
     target_url: str
     violation_url: str
     similarity_score: float

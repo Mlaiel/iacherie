@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -36,7 +37,9 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class ModalityType(Enum):
-    """Supported modality types"""
+    """
+Supported modality types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -48,6 +51,7 @@ class ModalityType(Enum):
 
 class FusionStrategy(Enum):
     """Multi-modal fusion strategies"""
+
     EARLY_FUSION = "early_fusion"          # Feature-level fusion
     LATE_FUSION = "late_fusion"            # Decision-level fusion  
     HYBRID_FUSION = "hybrid_fusion"        # Combination of both
@@ -75,7 +79,8 @@ class MultiModalConfig:
 
 @dataclass
 class ModalityEmbedding:
-    """Single modality embedding representation"""
+    """
+Single modality embedding representation"""
     modality: ModalityType
     embedding: np.ndarray
     confidence: float
@@ -86,7 +91,8 @@ class ModalityEmbedding:
 
 @dataclass
 class MultiModalResult:
-    """Multi-modal processing result"""
+    """
+Multi-modal processing result"""
     fused_embedding: np.ndarray
     modality_embeddings: List[ModalityEmbedding]
     fusion_weights: Dict[ModalityType, float]
@@ -244,7 +250,8 @@ class MultiModalTransformerFusion(nn.Module):
         )
     
     def _create_modality_encoder(self, modality: ModalityType) -> nn.Module:
-        """Create encoder for specific modality"""
+        """
+Create encoder for specific modality"""
         if modality == ModalityType.AUDIO:
             return nn.Sequential(
                 nn.Linear(768, self.config.embedding_dimension),  # Assuming wav2vec2 features
@@ -362,7 +369,8 @@ class MultiModalIntegrationEngine(BaseAIModel):
         self.sync_buffer = {modality: [] for modality in multimodal_config.enabled_modalities}
         
     def _initialize_pretrained_models(self):
-        """Initialize pre-trained models for each modality"""
+        """
+Initialize pre-trained models for each modality"""
         try:
             # Text processing
             if ModalityType.TEXT in self.multimodal_config.enabled_modalities:
@@ -670,7 +678,8 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return 0.5  # Default confidence
     
     def _assess_modality_quality(self, modality: ModalityType, embedding: np.ndarray) -> float:
-        """Assess quality of modality embedding"""
+        """
+Assess quality of modality embedding"""
         try:
             # Quality based on embedding distribution
             std_dev = np.std(embedding)
@@ -689,7 +698,8 @@ class MultiModalIntegrationEngine(BaseAIModel):
         modality_embeddings: List[ModalityEmbedding], 
         fusion_info: Dict
     ) -> Dict[ModalityType, float]:
-        """Calculate fusion weights for each modality"""
+        """
+Calculate fusion weights for each modality"""
         try:
             weights = {}
             

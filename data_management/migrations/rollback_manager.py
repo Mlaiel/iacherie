@@ -17,7 +17,7 @@ Technical Infrastructure:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 ==================================================
@@ -38,6 +38,7 @@ Business Logic Flow:
 Migration Failure → Risk Assessment → Rollback Strategy Selection → 
 Data Backup Verification → Rollback Execution → Integrity Validation → Recovery Confirmation
 """
+
 import asyncio
 import logging
 import traceback
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class RollbackStrategy(Enum):
-    """Rollback strategy types"""
+    """
+Rollback strategy types"""
+
     IMMEDIATE = "immediate"
     GRACEFUL = "graceful"
     SCHEDULED = "scheduled"
@@ -80,6 +83,7 @@ class RollbackStrategy(Enum):
 
 class RollbackRisk(Enum):
     """Risk levels for rollback operations"""
+
     MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
@@ -90,6 +94,7 @@ class RollbackRisk(Enum):
 
 class RecoveryType(Enum):
     """Types of recovery operations"""
+
     DATA_RECOVERY = "data_recovery"
     SCHEMA_RECOVERY = "schema_recovery"
     INDEX_RECOVERY = "index_recovery"
@@ -101,6 +106,7 @@ class RecoveryType(Enum):
 
 class RollbackStatus(Enum):
     """Status of rollback operations"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     VALIDATING = "validating"
@@ -133,7 +139,8 @@ class RollbackPlan:
 
 @dataclass
 class RollbackExecution:
-    """Rollback execution tracking"""
+    """
+Rollback execution tracking"""
     execution_id: str
     plan_id: str
     status: RollbackStatus = RollbackStatus.PENDING
@@ -165,7 +172,8 @@ class RecoveryCheckpoint:
 
 
 class RollbackRiskAssessment:
-    """Advanced risk assessment for rollback operations"""
+    """
+Advanced risk assessment for rollback operations"""
     
     def __init__(self):
         self.risk_factors = {
@@ -178,7 +186,8 @@ class RollbackRiskAssessment:
     
     def assess_rollback_risk(self, migration_id: str, plan: RollbackPlan, 
                            session: Session) -> Dict[str, Any]:
-        """Perform comprehensive risk assessment for rollback operation"""
+        """
+Perform comprehensive risk assessment for rollback operation"""
         risk_assessment = {
             'overall_risk': RollbackRisk.MEDIUM,
             'risk_score': 0.0,
@@ -285,7 +294,8 @@ class RollbackRiskAssessment:
             return 0.9
     
     def _assess_system_criticality(self, migration_id: str) -> float:
-        """Assess risk based on system criticality"""
+        """
+Assess risk based on system criticality"""
         critical_migrations = [
             'user_', 'security_', 'payment_', 'monetization_'
         ]
@@ -297,7 +307,8 @@ class RollbackRiskAssessment:
         return 0.4  # Medium criticality for other migrations
     
     def _assess_backup_availability(self, backup_requirements: Dict[str, Any]) -> float:
-        """Assess risk based on backup availability"""
+        """
+Assess risk based on backup availability"""
         if not backup_requirements:
             return 0.9  # High risk if no backup requirements
         
@@ -312,7 +323,8 @@ class RollbackRiskAssessment:
             return 0.9
     
     def _assess_execution_time_risk(self, estimated_duration: timedelta) -> float:
-        """Assess risk based on estimated execution time"""
+        """
+Assess risk based on estimated execution time"""
         hours = estimated_duration.total_seconds() / 3600
         
         if hours <= 0.5:  # 30 minutes
@@ -325,7 +337,8 @@ class RollbackRiskAssessment:
             return 0.9
     
     def _generate_risk_recommendations(self, risk_factors: Dict[str, float]) -> List[str]:
-        """Generate risk mitigation recommendations"""
+        """
+Generate risk mitigation recommendations"""
         recommendations = []
         
         if risk_factors.get('data_volume', 0) > 0.6:
@@ -362,7 +375,8 @@ class RecoveryValidator:
     
     async def validate_recovery(self, session: Session, 
                               original_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive recovery validation"""
+        """
+Perform comprehensive recovery validation"""
         validation_result = {
             'is_valid': True,
             'checks_passed': 0,
@@ -656,7 +670,8 @@ class RollbackManager:
     
     async def create_rollback_plan(self, migration: BaseMigration, 
                                  session: Session) -> RollbackPlan:
-        """Create comprehensive rollback plan for migration"""
+        """
+Create comprehensive rollback plan for migration"""
         plan_id = str(uuid.uuid4())
         
         # Determine rollback strategy based on migration type
@@ -699,7 +714,8 @@ class RollbackManager:
     
     async def execute_rollback(self, plan: RollbackPlan, session: Session, 
                              executed_by: str = None) -> RollbackExecution:
-        """Execute rollback plan with comprehensive monitoring"""
+        """
+Execute rollback plan with comprehensive monitoring"""
         execution_id = str(uuid.uuid4())
         
         execution = RollbackExecution(
@@ -758,7 +774,8 @@ class RollbackManager:
     
     def _estimate_rollback_duration(self, migration: BaseMigration, 
                                   session: Session) -> timedelta:
-        """Estimate rollback duration based on migration complexity"""
+        """
+Estimate rollback duration based on migration complexity"""
         base_duration = timedelta(minutes=30)
         
         # Adjust based on migration category
@@ -780,7 +797,8 @@ class RollbackManager:
     
     async def _generate_recovery_steps(self, migration: BaseMigration, 
                                      session: Session) -> List[Dict[str, Any]]:
-        """Generate recovery steps for rollback plan"""
+        """
+Generate recovery steps for rollback plan"""
         recovery_steps = []
         
         # Add pre-rollback steps
@@ -830,7 +848,8 @@ class RollbackManager:
         return recovery_steps
     
     def _generate_validation_steps(self, migration: BaseMigration) -> List[Dict[str, Any]]:
-        """Generate validation steps for rollback plan"""
+        """
+Generate validation steps for rollback plan"""
         return [
             {
                 'step_id': 'schema_validation',
@@ -863,7 +882,8 @@ class RollbackManager:
         ]
     
     async def _capture_database_state(self, session: Session) -> Dict[str, Any]:
-        """Capture current database state for validation"""
+        """
+Capture current database state for validation"""
         state = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'tables': [],
@@ -938,7 +958,8 @@ class RollbackManager:
         return validation_result
     
     async def _execute_backup_step(self, step: Dict[str, Any], session: Session):
-        """Execute backup step"""
+        """
+Execute backup step"""
         logger.info("Creating pre-rollback backup...")
         # In production, this would create an actual database backup
         # For now, we'll simulate the backup process

@@ -63,6 +63,7 @@ logger = logging.getLogger(__name__)
 
 class DetectionType(Enum):
     """Types of detection operations"""
+
     OBJECT = "object"
     FACE = "face"
     TEXT = "text"
@@ -84,7 +85,8 @@ class BoundingBox:
 
 @dataclass
 class Confidence:
-    """Confidence score with additional metrics"""
+    """
+Confidence score with additional metrics"""
     score: float
     threshold: float
     normalized_score: float
@@ -103,7 +105,8 @@ class DetectionResult:
     warnings: List[str] = field(default_factory=list)
 
 class BaseDetector(ABC):
-    """Abstract base class for all detection engines"""
+    """
+Abstract base class for all detection engines"""
     
     def __init__(self, confidence_threshold: float = 0.5):
         self.confidence_threshold = confidence_threshold
@@ -117,11 +120,13 @@ class BaseDetector(ABC):
     
     @abstractmethod
     def detect(self, image: np.ndarray) -> DetectionResult:
-        """Perform detection on image"""
+        """
+Perform detection on image"""
         pass
     
     def _create_confidence(self, score: float) -> Confidence:
-        """Create confidence object with reliability assessment"""
+        """
+Create confidence object with reliability assessment"""
         normalized_score = min(1.0, max(0.0, score))
         
         if normalized_score >= 0.8:
@@ -163,7 +168,8 @@ class ObjectDetector(BaseDetector):
         super().__init__(confidence_threshold)
     
     def _init_detector(self):
-        """Initialize object detection model"""
+        """
+Initialize object detection model"""
         try:
             if self.model_type == "yolov8":
                 model_names = {
@@ -209,7 +215,8 @@ class ObjectDetector(BaseDetector):
         """Create a production-ready YOLO-based detection model"""
         
         class ProductionYOLOModel(nn.Module):
-            """Production-grade YOLO implementation for object detection"""
+            """
+Production-grade YOLO implementation for object detection"""
             
             def __init__(self, num_classes=80, input_size=640):
                 super().__init__()
@@ -248,7 +255,8 @@ class ObjectDetector(BaseDetector):
                 ])}
                 
             def _build_csp_darknet(self):
-                """Build CSPDarkNet53 backbone"""
+                """
+Build CSPDarkNet53 backbone"""
                 return nn.Sequential(
                     # Stem
                     nn.Conv2d(3, 32, 6, 2, 2, bias=False),
@@ -287,13 +295,15 @@ class ObjectDetector(BaseDetector):
                 )
                 
             def _make_csp_layer(self, in_channels, out_channels, num_blocks):
-                """Create CSP (Cross Stage Partial) layer"""
+                """
+Create CSP (Cross Stage Partial) layer"""
                 return nn.Sequential(
                     *[self._bottleneck_block(out_channels, out_channels) for _ in range(num_blocks)]
                 )
                 
             def _bottleneck_block(self, in_channels, out_channels):
-                """Bottleneck block with residual connection"""
+                """
+Bottleneck block with residual connection"""
                 return nn.Sequential(
                     nn.Conv2d(in_channels, out_channels//2, 1, bias=False),
                     nn.BatchNorm2d(out_channels//2),
@@ -304,7 +314,8 @@ class ObjectDetector(BaseDetector):
                 )
                 
             def _build_panet(self):
-                """Build PANet neck for feature fusion"""
+                """
+Build PANet neck for feature fusion"""
                 return nn.ModuleList([
                     nn.Conv2d(1024, 512, 1, 1, 0, bias=False),
                     nn.Conv2d(512, 256, 1, 1, 0, bias=False),
@@ -312,7 +323,8 @@ class ObjectDetector(BaseDetector):
                 ])
                 
             def _build_yolo_head(self):
-                """Build YOLO detection head"""
+                """
+Build YOLO detection head"""
                 return nn.ModuleList([
                     nn.Conv2d(128, 3 * (self.num_classes + 5), 1),  # Small objects
                     nn.Conv2d(256, 3 * (self.num_classes + 5), 1),  # Medium objects  
@@ -320,7 +332,8 @@ class ObjectDetector(BaseDetector):
                 ])
                 
             def forward(self, x):
-                """Forward pass through YOLO model"""
+                """
+Forward pass through YOLO model"""
                 # Backbone feature extraction
                 features = []
                 for i, layer in enumerate(self.backbone):
@@ -346,7 +359,8 @@ class ObjectDetector(BaseDetector):
                 return outputs
                 
             def predict(self, image, conf_threshold=0.5, iou_threshold=0.45):
-                """Predict objects in image with NMS post-processing"""
+                """
+Predict objects in image with NMS post-processing"""
                 # Preprocess image
                 if isinstance(image, np.ndarray):
                     image_tensor = torch.from_numpy(image).permute(2, 0, 1).float() / 255.0
@@ -375,7 +389,8 @@ class ObjectDetector(BaseDetector):
                 return results
                 
             def _post_process(self, predictions, conf_threshold, iou_threshold):
-                """Post-process model predictions with NMS"""
+                """
+Post-process model predictions with NMS"""
                 batch_detections = []
                 
                 for pred in predictions:
@@ -407,7 +422,8 @@ class ObjectDetector(BaseDetector):
                 return batch_detections
                 
             def _xywh_to_xyxy(self, boxes):
-                """Convert from center format (x,y,w,h) to corner format (x1,y1,x2,y2)"""
+                """
+Convert from center format (x,y,w,h) to corner format (x1,y1,x2,y2)"""
                 x_center, y_center, width, height = boxes.unbind(-1)
                 x1 = x_center - width / 2
                 y1 = y_center - height / 2
@@ -416,7 +432,8 @@ class ObjectDetector(BaseDetector):
                 return torch.stack([x1, y1, x2, y2], dim=-1)
                 
             def _nms(self, boxes, scores, iou_threshold):
-                """Non-Maximum Suppression"""
+                """
+Non-Maximum Suppression"""
                 return torch.ops.torchvision.nms(boxes, scores, iou_threshold)
         
         # Initialize and return model
@@ -436,7 +453,8 @@ class ObjectDetector(BaseDetector):
         return model
 
     def _create_custom_detection_model(self) -> nn.Module:
-        """Create custom object detection model"""
+        """
+Create custom object detection model"""
         class CustomObjectDetector(nn.Module):
             def __init__(self, num_classes=80):
                 super().__init__()
@@ -645,7 +663,8 @@ class FaceDetector(BaseDetector):
         super().__init__(confidence_threshold)
     
     def _init_detector(self):
-        """Initialize face detection components"""
+        """
+Initialize face detection components"""
         try:
             # Initialize face detection
             if self.detection_method == "opencv":
@@ -965,7 +984,8 @@ class TextDetector(BaseDetector):
         super().__init__(confidence_threshold)
     
     def _init_detector(self):
-        """Initialize text detection components"""
+        """
+Initialize text detection components"""
         try:
             if self.ocr_engine == "tesseract":
                 # Configure Tesseract
@@ -1101,7 +1121,8 @@ class TextDetector(BaseDetector):
         return text_regions
     
     def _perform_ocr(self, image: np.ndarray, text_regions: List[Tuple[int, int, int, int]]) -> Tuple[List[BoundingBox], List[Confidence]]:
-        """Perform OCR on detected text regions"""
+        """
+Perform OCR on detected text regions"""
         bounding_boxes = []
         confidence_scores = []
         
@@ -1191,7 +1212,8 @@ class TextDetector(BaseDetector):
         }
     
     def _mock_ocr(self, text_roi: np.ndarray) -> Dict[str, Any]:
-        """Mock OCR for demonstration"""
+        """
+Mock OCR for demonstration"""
         # Generate mock text based on region size
         area = text_roi.shape[0] * text_roi.shape[1]
         
@@ -1252,7 +1274,8 @@ class HandGestureDetector(BaseDetector):
         super().__init__(min_detection_confidence)
     
     def _init_detector(self):
-        """Initialize gesture detection components"""
+        """
+Initialize gesture detection components"""
         try:
             if not MEDIAPIPE_AVAILABLE:
                 logger.warning("MediaPipe not available. HandGestureDetector will have limited functionality.")
@@ -1419,7 +1442,8 @@ class HandGestureDetector(BaseDetector):
         return landmarks
     
     def _calculate_hand_bbox(self, landmarks: List[Tuple[float, float, float]]) -> Tuple[int, int, int, int]:
-        """Calculate bounding box for hand landmarks"""
+        """
+Calculate bounding box for hand landmarks"""
         x_coords = [lm[0] for lm in landmarks]
         y_coords = [lm[1] for lm in landmarks]
         
@@ -1438,7 +1462,8 @@ class HandGestureDetector(BaseDetector):
         )
     
     def _classify_gesture(self, landmarks: List[Tuple[float, float, float]]) -> Dict[str, Any]:
-        """Classify gesture based on hand landmarks"""
+        """
+Classify gesture based on hand landmarks"""
         # Simple rule-based gesture recognition for demonstration
         # In production, use trained ML model
         
@@ -1513,7 +1538,8 @@ class SceneClassifier(BaseDetector):
         super().__init__(confidence_threshold=0.3)
     
     def _init_detector(self):
-        """Initialize scene classification model"""
+        """
+Initialize scene classification model"""
         try:
             if self.model_type == "resnet":
                 self.model = self._create_resnet_classifier()
@@ -1586,7 +1612,8 @@ class SceneClassifier(BaseDetector):
         return model
     
     def _create_vit_classifier(self) -> nn.Module:
-        """Create Vision Transformer classifier"""
+        """
+Create Vision Transformer classifier"""
         class ViTClassifier(nn.Module):
             def __init__(self, num_classes, patch_size=16, embed_dim=768):
                 super().__init__()
@@ -1622,7 +1649,8 @@ class SceneClassifier(BaseDetector):
         return model
     
     def _create_custom_classifier(self) -> nn.Module:
-        """Create custom scene classifier"""
+        """
+Create custom scene classifier"""
         class CustomSceneClassifier(nn.Module):
             def __init__(self, num_classes):
                 super().__init__()

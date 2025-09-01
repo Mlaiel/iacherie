@@ -5,9 +5,10 @@ Comprehensive compliance validation system with regulatory compliance checking,
 platform policy validation, and legal compliance assessment for creator content.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Set
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Regulatory compliance frameworks."""
+    """
+Regulatory compliance frameworks."""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
@@ -38,6 +41,7 @@ class ComplianceFramework(Enum):
 
 class PlatformPolicy(Enum):
     """Platform-specific policies."""
+
     YOUTUBE_COMMUNITY = "youtube_community"
     INSTAGRAM_TERMS = "instagram_terms"
     TIKTOK_COMMUNITY = "tiktok_community"
@@ -50,6 +54,7 @@ class PlatformPolicy(Enum):
 
 class ComplianceCategory(Enum):
     """Compliance assessment categories."""
+
     CONTENT_POLICY = "content_policy"
     DATA_PROTECTION = "data_protection"
     COPYRIGHT = "copyright"
@@ -64,6 +69,7 @@ class ComplianceCategory(Enum):
 
 class ViolationSeverity(Enum):
     """Compliance violation severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -103,7 +109,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Individual compliance violation."""
+    """
+Individual compliance violation."""
     rule_id: str
     rule_name: str
     violation_type: str
@@ -185,7 +192,8 @@ class ComplianceValidationResult:
     
     @property
     def high_violations(self) -> List[ComplianceViolation]:
-        """Get high severity violations."""
+        """
+Get high severity violations."""
         return [v for v in self.violations if v.severity == ViolationSeverity.HIGH]
 
 
@@ -784,7 +792,8 @@ class ComplianceValidator:
             return 0.0
     
     async def _assess_overall_risk(self, result: ComplianceValidationResult) -> str:
-        """Assess overall compliance risk level."""
+        """
+Assess overall compliance risk level."""
         try:
             if result.critical_violations:
                 return "critical"
@@ -810,7 +819,8 @@ class ComplianceValidator:
         return categories
     
     def _categorize_by_category(self, violations: List[ComplianceViolation]) -> Dict[str, int]:
-        """Categorize violations by category."""
+        """
+Categorize violations by category."""
         categories = {category.value: 0 for category in ComplianceCategory}
         for violation in violations:
             categories[violation.category.value] += 1
@@ -822,7 +832,8 @@ class ComplianceValidator:
         target_platforms: Optional[List[str]],
         geographical_scope: Optional[List[str]]
     ) -> List[ComplianceRule]:
-        """Get applicable compliance rules."""
+        """
+Get applicable compliance rules."""
         applicable_rules = []
         
         for rule in self.compliance_rules:
@@ -860,7 +871,8 @@ class ComplianceValidator:
         return applicable_rules
     
     def _create_error_result(self, error_message: str) -> ComplianceValidationResult:
-        """Create error validation result."""
+        """
+Create error validation result."""
         return ComplianceValidationResult(
             is_compliant=False,
             overall_risk_level="critical",
@@ -950,7 +962,7 @@ class ComplianceValidator:
             "personal_data": r"(ssn|social security|passport|driver.*license|credit card)",
             "inappropriate_content": r"(explicit|adult|nsfw|18\+|sexual)",
             "spam_indicators": r"(click here|limited time|act now|free money|guaranteed)",
-            "copyright_terms": r"(copyright|©|\(c\)|all rights reserved|trademark|®)"
+            "copyright_terms": r"(copyright|(c)|\(c\)|all rights reserved|trademark|(R))"
         }
     
     def _init_content_analyzers(self) -> Dict[str, Any]:
@@ -1439,7 +1451,7 @@ class ComplianceValidator:
                 risk_score += 30.0
             
             # Check for copyright indicators
-            if re.search(r"copyright|©|\(c\)|all rights reserved", text_lower):
+            if re.search(r"copyright|(c)|\(c\)|all rights reserved", text_lower):
                 risk_score += 10.0
             
             return min(100.0, risk_score)
@@ -1516,7 +1528,8 @@ class ComplianceValidator:
         platform_results: Dict[PlatformPolicy, ComplianceResult],
         content: Dict[str, Any]
     ) -> List[str]:
-        """Identify specific risk factors."""
+        """
+Identify specific risk factors."""
         risk_factors = []
         
         try:
@@ -1597,7 +1610,8 @@ class ComplianceValidator:
         platform_results: Dict[PlatformPolicy, ComplianceResult],
         risk_assessment: RiskAssessment
     ) -> List[str]:
-        """Generate compliance recommendations."""
+        """
+Generate compliance recommendations."""
         recommendations = []
         
         try:
@@ -1641,7 +1655,8 @@ class ComplianceValidator:
         return weights.get(framework, 0.5)
     
     def _get_platform_weight(self, platform: PlatformPolicy) -> float:
-        """Get weight for platform importance."""
+        """
+Get weight for platform importance."""
         weights = {
             PlatformPolicy.YOUTUBE_COMMUNITY: 1.0,
             PlatformPolicy.INSTAGRAM_TERMS: 0.9,
@@ -1652,7 +1667,8 @@ class ComplianceValidator:
         return weights.get(platform, 0.5)
     
     def _init_active_frameworks(self) -> List[ComplianceFramework]:
-        """Initialize active compliance frameworks."""
+        """
+Initialize active compliance frameworks."""
         return [
             ComplianceFramework.GDPR,
             ComplianceFramework.CCPA,
@@ -1661,7 +1677,8 @@ class ComplianceValidator:
         ]
     
     def _init_active_platforms(self) -> List[PlatformPolicy]:
-        """Initialize active platform policies."""
+        """
+Initialize active platform policies."""
         return [
             PlatformPolicy.YOUTUBE_COMMUNITY,
             PlatformPolicy.INSTAGRAM_TERMS,
@@ -1670,7 +1687,8 @@ class ComplianceValidator:
         ]
     
     def _init_risk_thresholds(self) -> Dict[str, float]:
-        """Initialize risk assessment thresholds."""
+        """
+Initialize risk assessment thresholds."""
         return {
             "critical": 20.0,
             "high": 40.0,

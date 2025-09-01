@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -45,7 +46,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class AnalyticsTimeRange(Enum):
-    """Time range options for analytics"""
+    """
+Time range options for analytics"""
+
     SHORT_TERM = "short_term"      # ~4 weeks
     MEDIUM_TERM = "medium_term"    # ~6 months  
     LONG_TERM = "long_term"        # ~years
@@ -53,6 +56,7 @@ class AnalyticsTimeRange(Enum):
 
 class MetricType(Enum):
     """Types of metrics for analysis"""
+
     STREAMS = "streams"
     LISTENERS = "listeners"
     SAVES = "saves"
@@ -81,7 +85,8 @@ class StreamingData:
 
 @dataclass
 class TrendAnalysisResult:
-    """Trend analysis results"""
+    """
+Trend analysis results"""
     metric: str
     trend_direction: str  # "increasing", "decreasing", "stable"
     trend_strength: float  # 0-1

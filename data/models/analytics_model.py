@@ -5,7 +5,7 @@ Professional analytics data model for comprehensive performance tracking.
 Advanced metrics, insights, and predictive analytics for content creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
@@ -28,7 +29,9 @@ Base = declarative_base()
 
 
 class AnalyticsType(Enum):
-    """Analytics type enumeration"""
+    """
+Analytics type enumeration"""
+
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
     ENGAGEMENT = "engagement"
@@ -45,6 +48,7 @@ class AnalyticsType(Enum):
 
 class MetricType(Enum):
     """Metric type enumeration"""
+
     VIEWS = "views"
     PLAYS = "plays"
     STREAMS = "streams"
@@ -67,6 +71,7 @@ class MetricType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity enumeration"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -298,22 +303,26 @@ class AnalyticsModel(Base):
     
     @property
     def is_performance_analytics(self) -> bool:
-        """Check if analytics is performance type"""
+        """
+Check if analytics is performance type"""
         return self.analytics_type == AnalyticsType.PERFORMANCE.value
     
     @property
     def is_audience_analytics(self) -> bool:
-        """Check if analytics is audience type"""
+        """
+Check if analytics is audience type"""
         return self.analytics_type == AnalyticsType.AUDIENCE.value
     
     @property
     def is_revenue_analytics(self) -> bool:
-        """Check if analytics is revenue type"""
+        """
+Check if analytics is revenue type"""
         return self.analytics_type == AnalyticsType.REVENUE.value
     
     @property
     def is_trending_up(self) -> bool:
-        """Check if metric is trending upward"""
+        """
+Check if metric is trending upward"""
         return self.trend_direction == "up"
     
     @property
@@ -330,7 +339,8 @@ class AnalyticsModel(Base):
     
     @property
     def value_formatted(self) -> str:
-        """Get formatted value with appropriate units"""
+        """
+Get formatted value with appropriate units"""
         if not self.value:
             return "0"
         
@@ -443,7 +453,8 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_retention_rate(self):
-        """Calculate content retention rate"""
+        """
+Calculate content retention rate"""
         if self.complete_plays_count and self.plays_count and self.plays_count > 0:
             self.retention_rate = (self.complete_plays_count / self.plays_count) * 100
         elif self.average_view_duration and self.content:
@@ -454,7 +465,8 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_demographic_data(self, demographics: Dict[str, Any]):
-        """Set demographic breakdown data"""
+        """
+Set demographic breakdown data"""
         if 'age' in demographics:
             self.age_demographics = demographics['age']
         if 'gender' in demographics:
@@ -467,7 +479,8 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_geographic_data(self, geographic: Dict[str, Any]):
-        """Set geographic breakdown data"""
+        """
+Set geographic breakdown data"""
         if 'countries' in geographic:
             self.top_countries = geographic['countries']
         if 'cities' in geographic:
@@ -478,7 +491,8 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_ai_insights(self, insights: List[str], scores: Dict[str, float] = None):
-        """Set AI-generated insights"""
+        """
+Set AI-generated insights"""
         self.ai_insights = {
             'insights': insights,
             'generated_at': datetime.utcnow().isoformat(),
@@ -496,7 +510,8 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def detect_anomaly(self, threshold: float = 2.0):
-        """Detect anomalies in metrics"""
+        """
+Detect anomalies in metrics"""
         if not self.previous_value or not self.value:
             return False
         
@@ -512,7 +527,8 @@ class AnalyticsModel(Base):
         return False
     
     def set_predictions(self, predictions: Dict[str, Any], confidence: float):
-        """Set predictive analytics data"""
+        """
+Set predictive analytics data"""
         self.predicted_metrics = predictions
         self.forecast_confidence = confidence
         
@@ -522,7 +538,8 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def compare_to_industry(self, industry_avg: Decimal, percentile: float):
-        """Set industry comparison data"""
+        """
+Set industry comparison data"""
         self.industry_average = industry_avg
         self.industry_percentile = percentile
         
@@ -565,7 +582,8 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def validate_data_quality(self):
-        """Validate and score data quality"""
+        """
+Validate and score data quality"""
         score = 100.0
         required_fields = ['value', 'period_start', 'period_end', 'analytics_type', 'metric_type']
         
@@ -592,13 +610,15 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def soft_delete(self):
-        """Soft delete analytics record"""
+        """
+Soft delete analytics record"""
         self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted analytics record"""
+        """
+Restore soft-deleted analytics record"""
         self.is_deleted = False
         self.deleted_at = None
         self.updated_at = datetime.utcnow()

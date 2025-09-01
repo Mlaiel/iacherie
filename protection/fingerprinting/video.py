@@ -9,13 +9,14 @@ Enterprise-grade video fingerprinting with advanced computer vision:
 - Temporal pattern analysis
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -63,7 +64,8 @@ class VideoMetadata:
     object_detections: Optional[Dict[str, int]]
 
 class PerceptualHashExtractor:
-    """Advanced perceptual hashing for video frames."""
+    """
+Advanced perceptual hashing for video frames."""
     
     def __init__(self, hash_size: int = 16):
         self.hash_size = hash_size
@@ -280,7 +282,8 @@ class OpticalFlowAnalyzer:
         return [min(int((v - min_val) / bin_size), bins - 1) for v in values]
 
 class ObjectDetectionAnalyzer:
-    """YOLO-based object detection for content analysis."""
+    """
+YOLO-based object detection for content analysis."""
     
     def __init__(self, model_name: str = "yolov8n.pt"):
         self.model_name = model_name
@@ -763,31 +766,36 @@ class VideoFingerprintingService:
         )
     
     async def _run_motion_analysis(self, video_path: str) -> Dict[str, Any]:
-        """Run motion analysis."""
+        """
+Run motion analysis."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.motion_analyzer.analyze_motion, video_path
         )
     
     async def _run_object_detection(self, video_path: str) -> Dict[str, Any]:
-        """Run object detection."""
+        """
+Run object detection."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.object_detector.detect_objects, video_path
         )
     
     async def _run_cnn_features(self, video_path: str) -> Dict[str, Any]:
-        """Run CNN feature extraction."""
+        """
+Run CNN feature extraction."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.cnn_extractor.extract_features, video_path
         )
     
     async def _run_scene_detection(self, video_path: str) -> Dict[str, Any]:
-        """Run scene change detection."""
+        """
+Run scene change detection."""
         return await asyncio.get_event_loop().run_in_executor(
             None, self.scene_detector.detect_scenes, video_path
         )
     
     def _generate_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Generate combined hash from all fingerprint components."""
+        """
+Generate combined hash from all fingerprint components."""
         hash_components = []
         
         # Extract key hash components
@@ -886,7 +894,8 @@ class VideoFingerprintingService:
         return matches / len(hash1)
     
     def _feature_similarity(self, feat1: List[float], feat2: List[float]) -> float:
-        """Calculate feature similarity using cosine similarity."""
+        """
+Calculate feature similarity using cosine similarity."""
         try:
             feat1_array = np.array(feat1)
             feat2_array = np.array(feat2)

@@ -37,6 +37,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, BinaryIO
@@ -71,6 +72,7 @@ logger = logging.getLogger(__name__)
 
 class StorageProvider(str, Enum):
     """Supported object storage providers"""
+
     AWS_S3 = "aws_s3"
     MINIO = "minio"
     GOOGLE_CLOUD = "google_cloud"
@@ -80,6 +82,7 @@ class StorageProvider(str, Enum):
 
 class StorageClass(str, Enum):
     """Storage classes for cost optimization"""
+
     STANDARD = "STANDARD"
     INFREQUENT_ACCESS = "STANDARD_IA"
     GLACIER = "GLACIER"
@@ -88,6 +91,7 @@ class StorageClass(str, Enum):
 
 class ContentType(str, Enum):
     """Content types for optimization"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -179,7 +183,8 @@ class UploadResult:
 # =============== STORAGE PROVIDER IMPLEMENTATIONS ===============
 
 class StorageProviderClient:
-    """Base class for storage provider clients"""
+    """
+Base class for storage provider clients"""
     
     def __init__(self, provider: StorageProvider, config: ObjectStorageConfig, connection_info: DatabaseConnectionInfo):
         self.provider = provider
@@ -189,7 +194,8 @@ class StorageProviderClient:
         self.session = None
     
     async def initialize(self) -> bool:
-        """Initialize storage client"""
+        """
+Initialize storage client"""
         if self.provider == StorageProvider.AWS_S3:
             return await self._initialize_aws_s3()
         elif self.provider == StorageProvider.MINIO:
@@ -369,7 +375,8 @@ class StorageProviderClient:
         return hash_sha256.hexdigest()
     
     async def download_file(self, storage_key: str, local_path: Optional[Union[str, Path]] = None) -> Union[bytes, str]:
-        """Download file from storage"""
+        """
+Download file from storage"""
         try:
             if self.provider in [StorageProvider.AWS_S3, StorageProvider.MINIO]:
                 async with self.client as s3:
@@ -527,21 +534,26 @@ class AWSS3Client(StorageProviderClient):
     """AWS S3 storage client implementation"""
     
     async def initialize(self) -> bool:
-        """Initialize AWS S3 client"""
+        """
+Initialize AWS S3 client"""
         return await self._initialize_aws_s3()
 
 class MinIOClient(StorageProviderClient):
-    """MinIO storage client implementation"""
+    """
+MinIO storage client implementation"""
     
     async def initialize(self) -> bool:
-        """Initialize MinIO client"""
+        """
+Initialize MinIO client"""
         return await self._initialize_minio()
 
 class AWSS3Client(StorageProviderClient):
-    """AWS S3 storage client"""
+    """
+AWS S3 storage client"""
     
     async def initialize(self) -> bool:
-        """Initialize AWS S3 client"""
+        """
+Initialize AWS S3 client"""
         try:
             # Create aiobotocore session
             self.session = get_session()
@@ -682,7 +694,8 @@ class AWSS3Client(StorageProviderClient):
         return ContentType.DOCUMENT
     
     async def download_file(self, storage_key: str, local_path: Optional[Union[str, Path]] = None) -> Union[bytes, str]:
-        """Download file from S3"""
+        """
+Download file from S3"""
         try:
             async with self.client as s3:
                 response = await s3.get_object(Bucket=self.config.bucket_name, Key=storage_key)
@@ -798,7 +811,8 @@ class MinIOClient(StorageProviderClient):
     """MinIO storage client (S3-compatible)"""
     
     async def initialize(self) -> bool:
-        """Initialize MinIO client"""
+        """
+Initialize MinIO client"""
         try:
             # MinIO uses S3-compatible API
             self.session = get_session()
@@ -856,13 +870,15 @@ class MinIOClient(StorageProviderClient):
         return await s3_client.download_file(storage_key, local_path)
     
     async def delete_file(self, storage_key: str) -> bool:
-        """Delete file from MinIO"""
+        """
+Delete file from MinIO"""
         s3_client = AWSS3Client(self.provider, self.config, self.connection_info)
         s3_client.client = self.client
         return await s3_client.delete_file(storage_key)
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
-        """Get MinIO object info"""
+        """
+Get MinIO object info"""
         s3_client = AWSS3Client(self.provider, self.config, self.connection_info)
         s3_client.client = self.client
         return await s3_client.get_file_info(storage_key)
@@ -881,7 +897,8 @@ class MinIOClient(StorageProviderClient):
         return await s3_client.generate_presigned_url(storage_key, expiry_seconds, method)
     
     async def close(self) -> None:
-        """Close MinIO client"""
+        """
+Close MinIO client"""
         try:
             if self.client:
                 await self.client.__aexit__(None, None, None)
@@ -996,7 +1013,8 @@ class ObjectStorageConnectionPool(IConnectionPool):
     async def upload_content(self, file_path: Union[str, Path], content_type: ContentType,
                            user_id: str, content_id: Optional[str] = None,
                            metadata: Optional[Dict] = None) -> UploadResult:
-        """Upload content with intelligent routing"""
+        """
+Upload content with intelligent routing"""
         async with self._upload_semaphore:
             start_time = asyncio.get_event_loop().time()
             
@@ -1368,7 +1386,8 @@ class GoogleCloudClient(StorageProviderClient):
     """Google Cloud Storage client implementation"""
     
     async def initialize(self) -> bool:
-        """Initialize Google Cloud Storage client"""
+        """
+Initialize Google Cloud Storage client"""
         try:
             logger.info(f"✅ Google Cloud Storage client initialized - Bucket: {self.config.bucket_name}")
             return True
@@ -1417,11 +1436,13 @@ class GoogleCloudClient(StorageProviderClient):
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
-        """Get file info from Google Cloud Storage (placeholder implementation)"""
+        """
+Get file info from Google Cloud Storage (placeholder implementation)"""
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
-        """Generate presigned URL for Google Cloud Storage (placeholder implementation)"""
+        """
+Generate presigned URL for Google Cloud Storage (placeholder implementation)"""
         return ""
     
     async def close(self) -> None:
@@ -1430,10 +1451,12 @@ class GoogleCloudClient(StorageProviderClient):
 
 
 class AzureBlobClient(StorageProviderClient):
-    """Azure Blob Storage client implementation"""
+    """
+Azure Blob Storage client implementation"""
     
     async def initialize(self) -> bool:
-        """Initialize Azure Blob Storage client"""
+        """
+Initialize Azure Blob Storage client"""
         try:
             logger.info(f"✅ Azure Blob Storage client initialized - Container: {self.config.bucket_name}")
             return True
@@ -1482,11 +1505,13 @@ class AzureBlobClient(StorageProviderClient):
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
-        """Get file info from Azure Blob Storage (placeholder implementation)"""
+        """
+Get file info from Azure Blob Storage (placeholder implementation)"""
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
-        """Generate presigned URL for Azure Blob Storage (placeholder implementation)"""
+        """
+Generate presigned URL for Azure Blob Storage (placeholder implementation)"""
         return ""
     
     async def close(self) -> None:
@@ -1495,10 +1520,12 @@ class AzureBlobClient(StorageProviderClient):
 
 
 class CloudflareR2Client(StorageProviderClient):
-    """Cloudflare R2 Storage client implementation"""
+    """
+Cloudflare R2 Storage client implementation"""
     
     async def initialize(self) -> bool:
-        """Initialize Cloudflare R2 Storage client"""
+        """
+Initialize Cloudflare R2 Storage client"""
         try:
             logger.info(f"✅ Cloudflare R2 Storage client initialized - Bucket: {self.config.bucket_name}")
             return True
@@ -1547,11 +1574,13 @@ class CloudflareR2Client(StorageProviderClient):
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
-        """Get file info from Cloudflare R2 Storage (placeholder implementation)"""
+        """
+Get file info from Cloudflare R2 Storage (placeholder implementation)"""
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
-        """Generate presigned URL for Cloudflare R2 Storage (placeholder implementation)"""
+        """
+Generate presigned URL for Cloudflare R2 Storage (placeholder implementation)"""
         return ""
     
     async def close(self) -> None:
@@ -1560,10 +1589,12 @@ class CloudflareR2Client(StorageProviderClient):
 
 
 class DigitalOceanClient(StorageProviderClient):
-    """DigitalOcean Spaces client implementation"""
+    """
+DigitalOcean Spaces client implementation"""
     
     async def initialize(self) -> bool:
-        """Initialize DigitalOcean Spaces client"""
+        """
+Initialize DigitalOcean Spaces client"""
         try:
             logger.info(f"✅ DigitalOcean Spaces client initialized - Space: {self.config.bucket_name}")
             return True
@@ -1612,11 +1643,13 @@ class DigitalOceanClient(StorageProviderClient):
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
-        """Get file info from DigitalOcean Spaces (placeholder implementation)"""
+        """
+Get file info from DigitalOcean Spaces (placeholder implementation)"""
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
-        """Generate presigned URL for DigitalOcean Spaces (placeholder implementation)"""
+        """
+Generate presigned URL for DigitalOcean Spaces (placeholder implementation)"""
         return ""
     
     async def close(self) -> None:
@@ -1625,10 +1658,12 @@ class DigitalOceanClient(StorageProviderClient):
 
 
 class MinimalStorageClient(StorageProviderClient):
-    """Minimal storage client for unsupported providers"""
+    """
+Minimal storage client for unsupported providers"""
     
     async def initialize(self) -> bool:
-        """Initialize minimal storage client"""
+        """
+Initialize minimal storage client"""
         logger.warning(f"⚠️ Using minimal storage client for unsupported provider: {self.provider}")
         return True
     
@@ -1667,11 +1702,13 @@ class MinimalStorageClient(StorageProviderClient):
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
-        """Minimal file info implementation"""
+        """
+Minimal file info implementation"""
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
-        """Minimal presigned URL implementation"""
+        """
+Minimal presigned URL implementation"""
         return ""
     
     async def close(self) -> None:

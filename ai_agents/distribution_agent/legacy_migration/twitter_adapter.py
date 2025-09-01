@@ -4,6 +4,7 @@ Handles content distribution, engagement tracking, and monetization on Twitter/X
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwitterCredentials:
-    """Twitter API v2 credentials configuration."""
+    """
+Twitter API v2 credentials configuration."""
     api_key: str
     api_secret: str
     access_token: str
@@ -38,6 +40,7 @@ class TwitterAdapter(BasePlatformAdapter):
     Advanced Twitter/X platform adapter for content distribution and engagement.
     Supports tweets, threads, media uploads, spaces, and revenue tracking.
     """
+
     
     PLATFORM_NAME = "twitter"
     MAX_IMAGE_SIZE_MB = 5

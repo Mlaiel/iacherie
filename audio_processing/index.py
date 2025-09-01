@@ -4,7 +4,7 @@ Professional audio processing hub that coordinates all audio capabilities
 across analysis, synthesis, enhancement, protection, and quality control.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Expert Development Team:
 - Lead Dev IA: Advanced AI algorithms and intelligent processing
@@ -26,6 +26,7 @@ and will result in legal action under German and International copyright law.
 
 For licensing inquiries: mlaiel@live.de
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -60,7 +61,8 @@ logger = logging.getLogger(__name__)
 
 
 class AudioCapability(Enum):
-    """Available audio processing capabilities."""
+    """
+Available audio processing capabilities."""
     # Analysis capabilities
     SPECTRAL_ANALYSIS = "spectral_analysis"
     GENRE_CLASSIFICATION = "genre_classification"
@@ -109,6 +111,7 @@ class AudioCapability(Enum):
 
 class AudioProcessingMode(Enum):
     """Audio processing execution modes."""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -149,7 +152,8 @@ class AudioEngineHub:
     """
     
     def __init__(self, config_path: Optional[Path] = None):
-        """Initialize the Audio Engine Hub."""
+        """
+Initialize the Audio Engine Hub."""
         self.config_path = config_path or Path("config/audio_hub.yaml")
         
         # Component managers
@@ -468,7 +472,8 @@ class AudioEngineHub:
         )
         
     async def _handle_analysis_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle audio analysis requests."""
+        """
+Handle audio analysis requests."""
         try:
             if request.capability == AudioCapability.SPECTRAL_ANALYSIS:
                 analyzer = self.analysis_engine['spectral_analyzer']
@@ -687,11 +692,13 @@ class AudioEngineHub:
         return audio_data
         
     def get_capabilities(self) -> List[str]:
-        """Get list of available audio capabilities."""
+        """
+Get list of available audio capabilities."""
         return [cap.value for cap, available in self.capabilities.items() if available]
         
     def get_hub_statistics(self) -> Dict[str, Any]:
-        """Get hub performance and usage statistics."""
+        """
+Get hub performance and usage statistics."""
         success_rate = (self.successful_requests / self.total_requests 
                        if self.total_requests > 0 else 0)
         
@@ -751,7 +758,8 @@ class AudioEngineHub:
         return health_status
         
     async def shutdown(self) -> None:
-        """Gracefully shutdown all audio engines."""
+        """
+Gracefully shutdown all audio engines."""
         logger.info("Shutting down Audio Engine Hub...")
         
         try:
@@ -826,19 +834,22 @@ async def process_audio(capability: AudioCapability,
 
 
 def list_audio_capabilities() -> List[str]:
-    """Get list of available audio capabilities."""
+    """
+Get list of available audio capabilities."""
     hub = get_audio_hub()
     return hub.get_capabilities()
 
 
 def get_audio_hub_health() -> Dict[str, Any]:
-    """Get audio hub health status."""
+    """
+Get audio hub health status."""
     hub = get_audio_hub()
     return hub.health_check()
 
 
 def get_audio_hub_stats() -> Dict[str, Any]:
-    """Get audio hub performance statistics."""
+    """
+Get audio hub performance statistics."""
     hub = get_audio_hub()
     return hub.get_hub_statistics()
 
@@ -866,4 +877,4 @@ __all__ = [
 # Module initialization
 logger.info("Audio Engine Hub Index loaded successfully")
 logger.info(f"Available audio capabilities: {[cap.value for cap in AudioCapability]}")
-logger.info("© 2025 Fahed Mlaiel - Professional Audio Intelligence System")
+logger.info("(c) 2025 Fahed Mlaiel - Professional Audio Intelligence System")

@@ -34,6 +34,7 @@ class BackupType(Enum):
     """
 Types of backups"""
 
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -44,6 +45,7 @@ Types of backups"""
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
 
     PENDING = "pending"
     RUNNING = "running"
@@ -56,6 +58,7 @@ class BackupStatus(Enum):
 class CompressionType(Enum):
     """Compression algorithms"""
 
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -65,6 +68,7 @@ class CompressionType(Enum):
 
 class StorageLocation(Enum):
     """Backup storage locations"""
+
 
     LOCAL = "local"
     S3 = "s3"

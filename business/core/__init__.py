@@ -8,21 +8,25 @@ Author: GitHub Copilot (auto-généré)
 Date: 2025-08-31
 """# Classes et fonctions de base pour les tests
 class BaseClass:
-    """Classe de base minimale"""
+    """
+Classe de base minimale"""
     pass
 
 class TestConfig:
-    """Configuration de test minimale"""
+    """
+Configuration de test minimale"""
     def __init__(self):
         self.test_mode = True
 
 # Fonctions utilitaires de base
 def get_default_config():
-    """Retourne une configuration par défaut"""
+    """
+Retourne une configuration par défaut"""
     return TestConfig()
 
 def initialize():
-    """Initialise le module"""
+    """
+Initialise le module"""
     pass
 
 # Exports minimaux

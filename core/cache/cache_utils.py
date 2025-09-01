@@ -4,6 +4,7 @@ Central configuration and utility functions for the cache system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import os
 import json
 from typing import Dict, Any, Optional
@@ -11,7 +12,8 @@ from dataclasses import dataclass
 
 @dataclass
 class GlobalCacheConfig:
-    """Global cache configuration"""
+    """
+Global cache configuration"""
     
     # Redis configuration
     redis_host: str = "localhost"
@@ -98,7 +100,8 @@ class GlobalCacheConfig:
     
     @classmethod
     def from_file(cls, config_path: str) -> 'GlobalCacheConfig':
-        """Create configuration from JSON file"""
+        """
+Create configuration from JSON file"""
         try:
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
@@ -158,19 +161,22 @@ class GlobalCacheConfig:
 _global_config: Optional[GlobalCacheConfig] = None
 
 def get_global_config() -> GlobalCacheConfig:
-    """Get global cache configuration"""
+    """
+Get global cache configuration"""
     global _global_config
     if _global_config is None:
         _global_config = GlobalCacheConfig.from_env()
     return _global_config
 
 def set_global_config(config: GlobalCacheConfig):
-    """Set global cache configuration"""
+    """
+Set global cache configuration"""
     global _global_config
     _global_config = config
 
 def reset_global_config():
-    """Reset global configuration to default"""
+    """
+Reset global configuration to default"""
     global _global_config
     _global_config = None
 
@@ -199,7 +205,8 @@ def extract_key_parts(cache_key: str, separator: str = ":") -> list:
 # Serialization utilities
 
 def serialize_cache_value(value: Any, compression: bool = False) -> bytes:
-    """Serialize value for caching"""
+    """
+Serialize value for caching"""
     import json
     import gzip
     
@@ -256,7 +263,8 @@ def calculate_object_size(obj: Any) -> int:
         return sys.getsizeof(obj)
 
 def format_bytes(size_bytes: int) -> str:
-    """Format bytes as human readable string"""
+    """
+Format bytes as human readable string"""
     if size_bytes == 0:
         return "0B"
     
@@ -293,7 +301,8 @@ def get_cache_recommendations(
     latency_ms: float,
     error_rate: float
 ) -> list:
-    """Get cache optimization recommendations"""
+    """
+Get cache optimization recommendations"""
     recommendations = []
     
     if hit_rate < 0.5:
@@ -354,19 +363,22 @@ def get_cache_recommendations(
 # Performance profiling utilities
 
 class CacheProfiler:
-    """Simple cache operation profiler"""
+    """
+Simple cache operation profiler"""
     
     def __init__(self):
         self.operation_times = {}
         self.operation_counts = {}
     
     def start_operation(self, operation_name: str):
-        """Start timing an operation"""
+        """
+Start timing an operation"""
         import time
         self.operation_times[operation_name] = time.time()
     
     def end_operation(self, operation_name: str):
-        """End timing an operation"""
+        """
+End timing an operation"""
         import time
         if operation_name in self.operation_times:
             elapsed = time.time() - self.operation_times[operation_name]
@@ -390,7 +402,8 @@ class CacheProfiler:
         return 0.0
     
     def get_stats(self) -> dict:
-        """Get profiling statistics"""
+        """
+Get profiling statistics"""
         stats = {}
         for operation, data in self.operation_counts.items():
             if data['count'] > 0:
@@ -404,7 +417,8 @@ class CacheProfiler:
         return stats
     
     def reset(self):
-        """Reset profiler statistics"""
+        """
+Reset profiler statistics"""
         self.operation_times.clear()
         self.operation_counts.clear()
 
@@ -412,7 +426,8 @@ class CacheProfiler:
 _global_profiler = CacheProfiler()
 
 def get_cache_profiler() -> CacheProfiler:
-    """Get global cache profiler"""
+    """
+Get global cache profiler"""
     return _global_profiler
 
 # Cache warming utilities
@@ -422,7 +437,8 @@ def generate_cache_warmup_plan(
     priority_weights: dict = None,
     batch_size: int = 100
 ) -> list:
-    """Generate cache warmup plan with batched operations"""
+    """
+Generate cache warmup plan with batched operations"""
     
     if priority_weights is None:
         priority_weights = {}
@@ -452,27 +468,33 @@ def generate_cache_warmup_plan(
 # Error handling utilities
 
 class CacheError(Exception):
-    """Base cache error"""
+    """
+Base cache error"""
     pass
 
 class CacheConnectionError(CacheError):
-    """Cache connection error"""
+    """
+Cache connection error"""
     pass
 
 class CacheTimeoutError(CacheError):
-    """Cache operation timeout"""
+    """
+Cache operation timeout"""
     pass
 
 class CacheSerializationError(CacheError):
-    """Cache serialization error"""
+    """
+Cache serialization error"""
     pass
 
 class CacheInvalidationError(CacheError):
-    """Cache invalidation error"""
+    """
+Cache invalidation error"""
     pass
 
 def handle_cache_error(func):
-    """Decorator for cache error handling"""
+    """
+Decorator for cache error handling"""
     import functools
     
     @functools.wraps(func)
@@ -515,7 +537,8 @@ class CacheMetricsCollector:
         self.metrics['start_time'] = time.time()
     
     def record_operation(self, operation_type: str, hit: bool, latency: float, error: bool = False):
-        """Record cache operation"""
+        """
+Record cache operation"""
         self.metrics['operations'] += 1
         
         if hit:
@@ -533,7 +556,8 @@ class CacheMetricsCollector:
         self.metrics['operations_by_type'][operation_type] += 1
     
     def get_summary(self) -> dict:
-        """Get metrics summary"""
+        """
+Get metrics summary"""
         import time
         uptime = time.time() - self.metrics['start_time']
         

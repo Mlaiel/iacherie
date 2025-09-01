@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -46,7 +47,9 @@ from ...security.encryption import encrypt_sensitive_data, decrypt_sensitive_dat
 logger = get_structured_logger(__name__)
 
 class DistributionType(str, Enum):
-    """Revenue distribution type enumeration"""
+    """
+Revenue distribution type enumeration"""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     BATCH = "batch"
@@ -56,6 +59,7 @@ class DistributionType(str, Enum):
 
 class SettlementMethod(str, Enum):
     """Settlement method enumeration"""
+
     BANK_TRANSFER = "bank_transfer"
     CRYPTO_WALLET = "crypto_wallet"
     DIGITAL_WALLET = "digital_wallet"
@@ -64,6 +68,7 @@ class SettlementMethod(str, Enum):
 
 class EscrowStatus(str, Enum):
     """Escrow status enumeration"""
+
     PENDING = "pending"
     ACTIVE = "active"
     RELEASED = "released"
@@ -113,7 +118,8 @@ class DistributionRequest(BaseModel):
     
     @validator('distribution_rules')
     def validate_distribution_rules(cls, v):
-        """Validate distribution rules sum to 100%"""
+        """
+Validate distribution rules sum to 100%"""
         total = sum(v.values())
         if abs(total - Decimal("1.0")) > Decimal("0.001"):  # Allow small rounding errors
             raise ValueError(f"Distribution rules must sum to 100% (got {total * 100}%)")
@@ -192,7 +198,8 @@ class RevenueDistributorEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Revenue Distributor Engine"""
+        """
+Initialize Revenue Distributor Engine"""
         self.config = config or {}
         
         # Components
@@ -596,18 +603,21 @@ class RevenueDistributorEngine:
         pass
     
     async def _store_batch_distribution(self, result: DistributionResult) -> None:
-        """Store batch distribution"""
+        """
+Store batch distribution"""
         # Implementation for batch distribution storage
         pass
     
     async def _store_recurring_distribution(self, result: DistributionResult) -> None:
-        """Store recurring distribution"""
+        """
+Store recurring distribution"""
         # Implementation for recurring distribution storage
         pass
     
     # Public API methods
     async def get_distribution_status(self, distribution_id: str) -> Optional[DistributionResult]:
-        """Get distribution status by ID"""
+        """
+Get distribution status by ID"""
         try:
             async with self._session_factory() as session:
                 # Query distribution from database
@@ -708,7 +718,8 @@ class SettlementProcessor:
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize settlement processor"""
+        """
+Initialize settlement processor"""
         pass
     
     async def process_settlement(
@@ -720,7 +731,8 @@ class SettlementProcessor:
         method: SettlementMethod,
         details: Dict[str, Any]
     ) -> str:
-        """Process individual settlement"""
+        """
+Process individual settlement"""
         # Generate settlement ID
         settlement_id = f"settle_{uuid.uuid4().hex}"
         
@@ -744,32 +756,38 @@ class SettlementProcessor:
         pass
     
     async def _process_crypto_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """Process crypto wallet settlement"""
+        """
+Process crypto wallet settlement"""
         # Implementation for crypto transfer
         pass
     
     async def _process_digital_wallet_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """Process digital wallet settlement"""
+        """
+Process digital wallet settlement"""
         # Implementation for digital wallet
         pass
     
     async def _process_platform_credit(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """Process platform credit settlement"""
+        """
+Process platform credit settlement"""
         # Implementation for platform credit
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown settlement processor"""
+        """
+Shutdown settlement processor"""
         pass
 
 class EscrowManager:
-    """Escrow management component"""
+    """
+Escrow management component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize escrow manager"""
+        """
+Initialize escrow manager"""
         pass
     
     async def create_escrow(
@@ -781,7 +799,8 @@ class EscrowManager:
         currency: Currency,
         conditions: Dict[str, Any]
     ) -> EscrowAccount:
-        """Create new escrow account"""
+        """
+Create new escrow account"""
         escrow_id = f"escrow_{uuid.uuid4().hex}"
         
         escrow_account = EscrowAccount(
@@ -807,49 +826,59 @@ class EscrowManager:
         return True
     
     async def shutdown(self) -> None:
-        """Shutdown escrow manager"""
+        """
+Shutdown escrow manager"""
         pass
 
 class ApprovalManager:
-    """Approval management component"""
+    """
+Approval management component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize approval manager"""
+        """
+Initialize approval manager"""
         pass
     
     async def approve_distribution(self, distribution_id: str, approver_id: str) -> bool:
-        """Approve distribution"""
+        """
+Approve distribution"""
         # Implementation for approval
         return True
     
     async def reject_distribution(self, distribution_id: str, approver_id: str, reason: str) -> bool:
-        """Reject distribution"""
+        """
+Reject distribution"""
         # Implementation for rejection
         return True
     
     async def shutdown(self) -> None:
-        """Shutdown approval manager"""
+        """
+Shutdown approval manager"""
         pass
 
 class PaymentGateway:
-    """Payment gateway component"""
+    """
+Payment gateway component"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize payment gateway"""
+        """
+Initialize payment gateway"""
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown payment gateway"""
+        """
+Shutdown payment gateway"""
         pass
 
-"""Professional Revenue Distributor Engine
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+"""
+Professional Revenue Distributor Engine
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides comprehensive revenue distribution capabilities with multi-party
 settlements, escrow management, and automated payouts.

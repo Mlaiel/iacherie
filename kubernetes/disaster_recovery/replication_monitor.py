@@ -11,6 +11,7 @@ This module provides comprehensive monitoring of data replication across:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,7 +31,9 @@ from backend.security.encryption import EncryptionManager
 
 
 class ReplicationType(Enum):
-    """Types of replication monitoring"""
+    """
+Types of replication monitoring"""
+
     DATABASE_MASTER_SLAVE = "database_master_slave"
     DATABASE_MASTER_MASTER = "database_master_master"
     STORAGE_CROSS_REGION = "storage_cross_region"
@@ -42,6 +45,7 @@ class ReplicationType(Enum):
 
 class ReplicationStatus(Enum):
     """Replication health status"""
+
     HEALTHY = "healthy"
     LAGGING = "lagging"
     INCONSISTENT = "inconsistent"
@@ -52,6 +56,7 @@ class ReplicationStatus(Enum):
 
 class ConsistencyLevel(Enum):
     """Data consistency levels"""
+
     EVENTUALLY_CONSISTENT = "eventually_consistent"
     STRONG_CONSISTENCY = "strong_consistency"
     CAUSAL_CONSISTENCY = "causal_consistency"
@@ -95,7 +100,8 @@ class ReplicationStream:
 
 @dataclass
 class ConsistencyCheck:
-    """Data consistency validation record"""
+    """
+Data consistency validation record"""
     check_id: str
     stream_id: str
     check_type: str
@@ -158,7 +164,8 @@ class ReplicationMonitor:
         self.repair_strategies = self._initialize_repair_strategies()
 
     def _initialize_repair_strategies(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize automated repair strategies for different inconsistency types"""
+        """
+Initialize automated repair strategies for different inconsistency types"""
         return {
             'missing_record': {
                 'strategy': 'copy_from_source',
@@ -563,7 +570,8 @@ class ReplicationMonitor:
             }
 
     async def force_consistency_check(self, stream_id: str) -> Dict[str, Any]:
-        """Force immediate consistency check for a stream"""
+        """
+Force immediate consistency check for a stream"""
         if stream_id not in self.replication_streams:
             return {'error': 'Stream not found'}
         
@@ -576,7 +584,8 @@ class ReplicationMonitor:
         return consistency_result
 
     async def suspend_replication(self, stream_id: str) -> bool:
-        """Suspend replication monitoring for a stream"""
+        """
+Suspend replication monitoring for a stream"""
         try:
             if stream_id in self.replication_streams:
                 self.replication_streams[stream_id].status = ReplicationStatus.SUSPENDED

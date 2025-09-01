@@ -10,6 +10,7 @@ for the Ainflue platform. This script demonstrates all three alert categories:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta

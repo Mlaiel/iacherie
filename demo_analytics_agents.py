@@ -23,7 +23,8 @@ from datetime import datetime
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'ai_agents'))
 
 def print_header(title):
-    """Print a formatted header."""
+    """
+Print a formatted header."""
     print(f"\n{'='*80}")
     print(f" {title}")
     print('='*80)

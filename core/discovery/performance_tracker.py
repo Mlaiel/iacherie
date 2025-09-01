@@ -34,6 +34,7 @@ Features:
 - Automated anomaly detection and alerting
 - Comprehensive analytics reporting and dashboards
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -61,7 +62,9 @@ from prometheus_client import Counter, Histogram, Gauge, start_http_server
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Performance metric types"""
+    """
+Performance metric types"""
+
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -75,6 +78,7 @@ class MetricType(Enum):
 
 class PerformanceLevel(Enum):
     """Performance level indicators"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -83,6 +87,7 @@ class PerformanceLevel(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -91,6 +96,7 @@ class AlertSeverity(Enum):
 
 class UserAction(Enum):
     """User action types for engagement tracking"""
+
     SEARCH = "search"
     VIEW_RESULT = "view_result"
     CLICK_CONTENT = "click_content"
@@ -123,7 +129,8 @@ class DiscoveryMetrics:
 
 @dataclass
 class SearchPerformance:
-    """Search-specific performance metrics"""
+    """
+Search-specific performance metrics"""
     query_id: str
     user_id: Optional[str]
     query_text: str
@@ -144,7 +151,8 @@ class SearchPerformance:
 
 @dataclass
 class UserEngagement:
-    """User engagement tracking"""
+    """
+User engagement tracking"""
     user_id: str
     session_id: str
     timestamp: datetime
@@ -195,7 +203,8 @@ class PerformanceTracker:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize performance tracker"""
+        """
+Initialize performance tracker"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -246,7 +255,8 @@ class PerformanceTracker:
         self._lock = threading.Lock()
 
     async def initialize(self) -> bool:
-        """Initialize performance tracker"""
+        """
+Initialize performance tracker"""
         try:
             # Initialize anomaly detection
             await self._setup_anomaly_detection()
@@ -628,7 +638,8 @@ class PerformanceTracker:
             buffer.popleft()
 
     async def _update_realtime_metrics(self, performance_data: SearchPerformance):
-        """Update real-time metrics with new performance data"""
+        """
+Update real-time metrics with new performance data"""
         try:
             # Update search count
             self.current_metrics.search_count += 1
@@ -875,7 +886,8 @@ class PerformanceTracker:
     # Additional helper methods for data analysis
 
     async def _analyze_top_queries(self, searches: List[SearchPerformance]) -> List[Dict[str, Any]]:
-        """Analyze top performing queries"""
+        """
+Analyze top performing queries"""
         query_stats = defaultdict(lambda: {'count': 0, 'avg_response_time': 0, 'success_rate': 0})
         
         for search in searches:
@@ -899,7 +911,8 @@ class PerformanceTracker:
         return sorted(top_queries, key=lambda x: x['count'], reverse=True)[:10]
 
     async def _analyze_performance_trends(self, searches: List[SearchPerformance]) -> Dict[str, List[float]]:
-        """Analyze performance trends over time"""
+        """
+Analyze performance trends over time"""
         # Group by hour and calculate metrics
         hourly_metrics = defaultdict(lambda: {'response_times': [], 'error_count': 0, 'total_count': 0})
         
@@ -929,7 +942,8 @@ class PerformanceTracker:
         return trends
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics"""
+        """
+Get comprehensive performance metrics"""
         try:
             return {
                 'realtime_metrics': await self.get_realtime_metrics(),

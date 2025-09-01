@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import yaml
 
 
 class PipelineStage(Enum):
-    """CI/CD pipeline stages"""
+    """
+CI/CD pipeline stages"""
+
     BUILD = "build"
     TEST = "test"
     SECURITY_SCAN = "security_scan"

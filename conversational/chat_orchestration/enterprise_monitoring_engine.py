@@ -20,12 +20,13 @@ Technologies:
 - Alerting: Multi-channel notification system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -53,7 +54,9 @@ from backend.conversational.chat_orchestration.advanced_content_protection impor
 
 
 class MonitoringType(Enum):
-    """Types of monitoring activities"""
+    """
+Types of monitoring activities"""
+
     PERFORMANCE = "performance"
     SECURITY = "security"
     CONTENT = "content"
@@ -66,6 +69,7 @@ class MonitoringType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -75,6 +79,7 @@ class AlertSeverity(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring system status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -84,6 +89,7 @@ class MonitoringStatus(Enum):
 
 class EventType(Enum):
     """Types of monitored events"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_VIEW = "content_view"
     CONTENT_SHARE = "content_share"
@@ -98,6 +104,7 @@ class EventType(Enum):
 
 class NotificationChannel(Enum):
     """Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -152,7 +159,8 @@ class AlertRule:
 
 @dataclass
 class MonitoringMetrics:
-    """System monitoring metrics"""
+    """
+System monitoring metrics"""
     timestamp: datetime
     monitoring_type: MonitoringType
     metrics: Dict[str, float]
@@ -164,7 +172,8 @@ class MonitoringMetrics:
 
 @dataclass
 class SystemHealth:
-    """Overall system health status"""
+    """
+Overall system health status"""
     status: MonitoringStatus
     health_score: float  # 0.0 to 1.0
     active_alerts: int
@@ -178,7 +187,8 @@ class SystemHealth:
 
 @dataclass
 class CreatorInsights:
-    """Creator-specific insights and recommendations"""
+    """
+Creator-specific insights and recommendations"""
     creator_id: str
     content_performance: Dict[str, float]
     engagement_metrics: Dict[str, float]
@@ -617,7 +627,8 @@ class EnterpriseMonitoringEngine:
                 await self._trigger_alert(event, rule)
     
     async def _event_matches_rule(self, event: MonitoringEvent, rule: AlertRule) -> bool:
-        """Check if event matches alert rule"""
+        """
+Check if event matches alert rule"""
         
         # Check monitoring type
         if event.monitoring_type != rule.monitoring_type:
@@ -646,7 +657,8 @@ class EnterpriseMonitoringEngine:
         return True
     
     async def _check_rule_conditions(self, event: MonitoringEvent, conditions: Dict[str, Any]) -> bool:
-        """Check custom rule conditions"""
+        """
+Check custom rule conditions"""
         
         try:
             for condition_key, condition_value in conditions.items():
@@ -680,7 +692,8 @@ class EnterpriseMonitoringEngine:
         return datetime.utcnow() < cooldown_end
     
     async def _trigger_alert(self, event: MonitoringEvent, rule: AlertRule) -> None:
-        """Trigger alert for rule"""
+        """
+Trigger alert for rule"""
         
         try:
             # Update rule trigger time
@@ -920,12 +933,14 @@ class EnterpriseMonitoringEngine:
         return max(0.0, score)
     
     async def _calculate_uptime_percentage(self) -> float:
-        """Calculate system uptime percentage"""
+        """
+Calculate system uptime percentage"""
         # Placeholder implementation
         return 99.95
     
     async def _identify_system_issues(self) -> List[str]:
-        """Identify current system issues"""
+        """
+Identify current system issues"""
         
         issues = []
         
@@ -975,28 +990,33 @@ class EnterpriseMonitoringEngine:
         pass
     
     async def _update_alert_rule(self, rule: AlertRule) -> None:
-        """Update alert rule in database"""
+        """
+Update alert rule in database"""
         # Implementation would update database
         pass
     
     async def _store_monitoring_event(self, event: MonitoringEvent) -> None:
-        """Store monitoring event in database"""
+        """
+Store monitoring event in database"""
         # Implementation would insert into database
         pass
     
     async def _store_monitoring_metrics(self, metrics: MonitoringMetrics) -> None:
-        """Store monitoring metrics in database"""
+        """
+Store monitoring metrics in database"""
         # Implementation would insert into database
         pass
     
     async def _store_creator_insights(self, insights: CreatorInsights) -> None:
-        """Store creator insights in database"""
+        """
+Store creator insights in database"""
         # Implementation would insert into database
         pass
     
     # Communication methods
     async def _broadcast_event(self, event: MonitoringEvent) -> None:
-        """Broadcast event to WebSocket connections"""
+        """
+Broadcast event to WebSocket connections"""
         
         if not self.websocket_connections:
             return
@@ -1031,22 +1051,26 @@ class EnterpriseMonitoringEngine:
         pass
     
     async def _send_sms_notification(self, data: Dict[str, Any]) -> None:
-        """Send SMS notification"""
+        """
+Send SMS notification"""
         # Implementation would send actual SMS
         pass
     
     async def _send_webhook_notification(self, data: Dict[str, Any]) -> None:
-        """Send webhook notification"""
+        """
+Send webhook notification"""
         # Implementation would send HTTP webhook
         pass
     
     async def _send_slack_notification(self, data: Dict[str, Any]) -> None:
-        """Send Slack notification"""
+        """
+Send Slack notification"""
         # Implementation would send to Slack
         pass
     
     async def _send_emergency_notification(self, creator_id: str, threat_data: Dict[str, Any]) -> None:
-        """Send emergency notification for critical threats"""
+        """
+Send emergency notification for critical threats"""
         # Implementation would send high-priority notifications
         pass
     
@@ -1058,7 +1082,8 @@ class EnterpriseMonitoringEngine:
         platform: str,
         days: int
     ) -> List[MonitoringMetrics]:
-        """Get historical metrics for analysis"""
+        """
+Get historical metrics for analysis"""
         # Implementation would query database
         return []
     
@@ -1068,12 +1093,14 @@ class EnterpriseMonitoringEngine:
         start_date: datetime,
         end_date: datetime
     ) -> List[MonitoringEvent]:
-        """Get threat alerts for creator"""
+        """
+Get threat alerts for creator"""
         # Implementation would query database
         return []
     
     async def _get_system_performance_metrics(self) -> Dict[str, float]:
-        """Get system performance metrics"""
+        """
+Get system performance metrics"""
         return {
             "cpu_usage": 45.2,
             "memory_usage": 62.8,
@@ -1201,15 +1228,18 @@ class EnterpriseMonitoringEngine:
         return self.system_metrics.copy()
     
     def get_active_events_count(self) -> int:
-        """Get count of active monitoring events"""
+        """
+Get count of active monitoring events"""
         return len([e for e in self.active_events.values() if not e.resolved])
     
     def get_alert_rules_count(self) -> int:
-        """Get count of configured alert rules"""
+        """
+Get count of configured alert rules"""
         return len(self.alert_rules)
     
     async def resolve_monitoring_event(self, event_id: str, resolution_notes: str) -> bool:
-        """Mark monitoring event as resolved"""
+        """
+Mark monitoring event as resolved"""
         
         if event_id in self.active_events:
             event = self.active_events[event_id]

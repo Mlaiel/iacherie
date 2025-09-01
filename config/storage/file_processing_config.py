@@ -14,13 +14,16 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
 from enum import Enum
 
 class ProcessingType(Enum):
-    """Types of file processing operations."""
+    """
+Types of file processing operations."""
+
     TRANSCODING = "transcoding"
     COMPRESSION = "compression"
     THUMBNAIL = "thumbnail"
@@ -94,7 +97,8 @@ class AudioProcessingConfig:
 
 @dataclass
 class VideoProcessingConfig:
-    """Video file processing configuration."""
+    """
+Video file processing configuration."""
     
     # Supported input formats
     supported_input_formats: List[str] = None
@@ -176,7 +180,8 @@ class VideoProcessingConfig:
 
 @dataclass
 class ImageProcessingConfig:
-    """Image file processing configuration."""
+    """
+Image file processing configuration."""
     
     # Supported input formats
     supported_input_formats: List[str] = None
@@ -241,7 +246,8 @@ class ImageProcessingConfig:
 
 @dataclass
 class DocumentProcessingConfig:
-    """Document file processing configuration."""
+    """
+Document file processing configuration."""
     
     # Supported input formats
     supported_input_formats: List[str] = None
@@ -320,7 +326,8 @@ class FileProcessingConfig:
     enable_quality_enhancement: bool = True
     
     def __post_init__(self):
-        """Initialize processing configurations if not provided."""
+        """
+Initialize processing configurations if not provided."""
         if self.audio_config is None:
             self.audio_config = AudioProcessingConfig()
         
@@ -342,7 +349,8 @@ class FileProcessingConfig:
             }
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get all supported input formats by content type."""
+        """
+Get all supported input formats by content type."""
         return {
             'audio': self.audio_config.supported_input_formats,
             'video': self.video_config.supported_input_formats,
@@ -351,7 +359,8 @@ class FileProcessingConfig:
         }
     
     def is_format_supported(self, content_type: str, file_extension: str) -> bool:
-        """Check if file format is supported for processing."""
+        """
+Check if file format is supported for processing."""
         supported_formats = self.get_supported_formats()
         
         if content_type not in supported_formats:
@@ -360,7 +369,8 @@ class FileProcessingConfig:
         return file_extension.lower().lstrip('.') in supported_formats[content_type]
     
     def get_output_formats(self, content_type: str) -> List[str]:
-        """Get available output formats for content type."""
+        """
+Get available output formats for content type."""
         if content_type == 'audio':
             return list(self.audio_config.output_formats.keys())
         elif content_type == 'video':
@@ -373,11 +383,13 @@ class FileProcessingConfig:
         return []
     
     def get_processing_priority(self, content_type: str) -> int:
-        """Get processing priority for content type."""
+        """
+Get processing priority for content type."""
         return self.priority_levels.get(content_type, 5)  # Default priority
     
     def get_max_processing_time(self, content_type: str, file_size_mb: float) -> int:
-        """Get estimated max processing time based on content type and file size."""
+        """
+Get estimated max processing time based on content type and file size."""
         base_time = self.processing_timeout_seconds
         
         # Adjust based on content type
@@ -397,7 +409,8 @@ class FileProcessingConfig:
     
     def validate_file_for_processing(self, content_type: str, file_path: str, 
                                    file_size_mb: float) -> Tuple[bool, str]:
-        """Validate file for processing."""
+        """
+Validate file for processing."""
         # Check file size
         if file_size_mb > self.max_file_size_mb:
             return False, f"File size ({file_size_mb}MB) exceeds limit ({self.max_file_size_mb}MB)"
@@ -437,7 +450,8 @@ class FileProcessingConfig:
     
     def _get_operation_config(self, content_type: str, 
                             operation: ProcessingType) -> Dict[str, Any]:
-        """Get configuration for specific processing operation."""
+        """
+Get configuration for specific processing operation."""
         if content_type == 'audio':
             config = self.audio_config
         elif content_type == 'video':
@@ -464,7 +478,8 @@ class FileProcessingConfig:
         return operation_configs.get(operation, {})
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export processing configuration to JSON-serializable format."""
+        """
+Export processing configuration to JSON-serializable format."""
         return {
             'max_file_size_mb': self.max_file_size_mb,
             'processing_timeout_seconds': self.processing_timeout_seconds,

@@ -6,7 +6,7 @@ text generation, image synthesis, audio creation, video production, and multi-mo
 content optimization for musicians, bloggers, photographers, influencers, and comedians.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -28,6 +28,7 @@ Business Logic Coverage:
 Content Request → AI Model Selection → Creative Generation → Quality Enhancement
 → SEO Optimization → Format Adaptation → Distribution Preparation → Performance Analytics
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
 import asyncio
 from pathlib import Path
@@ -194,6 +195,7 @@ __email__ = "mlaiel@live.de"
 # Content Generation Enums
 class ContentType(Enum):
     """Types of content that can be generated."""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -206,6 +208,7 @@ class ContentType(Enum):
 
 class GenerationStyle(Enum):
     """Styles of content generation."""
+
     PROFESSIONAL = "professional"
     CREATIVE = "creative"
     CASUAL = "casual"
@@ -217,6 +220,7 @@ class GenerationStyle(Enum):
 
 class QualityLevel(Enum):
     """Quality levels for generated content."""
+
     DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
@@ -226,6 +230,7 @@ class QualityLevel(Enum):
 
 class Platform(Enum):
     """Target platforms for content distribution."""
+
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
@@ -406,7 +411,8 @@ class ContentGenerationFramework:
         self.active_generators = {}
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize content generation capabilities."""
+        """
+Initialize content generation capabilities."""
         capabilities = {}
         
         for category, components in self.architecture.items():
@@ -434,7 +440,8 @@ class ContentGenerationFramework:
     
     async def generate_content_comprehensive(self, 
                                            generation_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content with comprehensive AI processing."""
+        """
+Generate content with comprehensive AI processing."""
         content_type = ContentType(generation_request['content_type'])
         generator_config = generation_request.get('config', {})
         
@@ -479,7 +486,8 @@ class ContentGenerationFramework:
     async def _select_optimal_generator(self, 
                                       content_type: ContentType, 
                                       config: Dict[str, Any]) -> Any:
-        """Select optimal generator based on content type and requirements."""
+        """
+Select optimal generator based on content type and requirements."""
         generator_mapping = {
             ContentType.TEXT: TextGenerator,
             ContentType.IMAGE: ImageGenerator,
@@ -496,15 +504,18 @@ class ContentGenerationFramework:
         return generator
     
     def get_supported_content_types(self) -> List[str]:
-        """Get list of all supported content types."""
+        """
+Get list of all supported content types."""
         return [ct.value for ct in ContentType]
     
     def get_available_platforms(self) -> List[str]:
-        """Get list of all available platforms."""
+        """
+Get list of all available platforms."""
         return [platform.value for platform in Platform]
     
     def get_generation_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive generation capabilities information."""
+        """
+Get comprehensive generation capabilities information."""
         total_capabilities = sum(len(category) for category in self.architecture.values())
         real_time_capabilities = sum(
             1 for category in self.architecture.values()
@@ -545,7 +556,8 @@ class ContentGenerationFramework:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
+        """
+Validate complete business logic coverage."""
         required_business_logic = [
             'professional_blog_content_creation',
             'intelligent_social_media_content_optimization',
@@ -570,7 +582,8 @@ content_generation_framework = ContentGenerationFramework()
 
 # Content Generation Utilities
 async def create_generation_pipeline(content_type: str, config: Dict[str, Any]) -> ContentPipeline:
-    """Create optimized content generation pipeline."""
+    """
+Create optimized content generation pipeline."""
     pipeline = ContentPipeline(content_type, config)
     await pipeline.initialize()
     return pipeline
@@ -578,7 +591,8 @@ async def create_generation_pipeline(content_type: str, config: Dict[str, Any]) 
 async def generate_multi_platform_content(base_content: str, 
                                         platforms: List[str], 
                                         optimization_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate optimized content for multiple platforms."""
+    """
+Generate optimized content for multiple platforms."""
     optimizer = PlatformOptimizer()
     results = {}
     
@@ -592,7 +606,8 @@ async def generate_multi_platform_content(base_content: str,
     return results
 
 async def assess_content_quality(content: Any, quality_criteria: Dict[str, Any]) -> Dict[str, float]:
-    """Assess content quality against specified criteria."""
+    """
+Assess content quality against specified criteria."""
     quality_assessor = ContentQualityAssessment()
     return await quality_assessor.assess(content, quality_criteria)
 

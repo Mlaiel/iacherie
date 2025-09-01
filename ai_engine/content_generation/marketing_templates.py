@@ -4,11 +4,12 @@ Comprehensive template system for creating high-converting marketing content
 across different channels and campaign types.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -30,13 +31,15 @@ class MarketingTemplates:
     """
     
     def __init__(self):
-        """Initialize marketing templates"""
+        """
+Initialize marketing templates"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Email Marketing Templates
         self.email_templates = {
             'welcome_series': {
-                'structure': """Subject: Welcome to {brand_name}! Here's what's next 👋
+                'structure': """
+Subject: Welcome to {brand_name}! Here's what's next 👋
 
 Hi {first_name},
 
@@ -577,7 +580,8 @@ Final URL: {final_url}""",
         return content
     
     def _fill_benefits_lists(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill benefits and features lists"""
+        """
+Fill benefits and features lists"""
         # Fill benefits list
         if '{benefits_list}' in content:
             benefits = content_data.get('benefits', [])
@@ -663,7 +667,8 @@ Final URL: {final_url}""",
         return content
     
     def _fill_ctas(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill call-to-action elements"""
+        """
+Fill call-to-action elements"""
         # Fill main CTA
         if '{call_to_action}' in content:
             cta_text = content_data.get('cta_text', 'Get Started Now')
@@ -720,7 +725,8 @@ Save {int(original_price.replace('$', '')) - int(price.replace('$', ''))}$ today
         """Get default template for marketing category"""
         default_templates = {
             'email': {
-                'structure': """Subject: {subject}
+                'structure': """
+Subject: {subject}
 
 Hi {first_name},
 
@@ -785,7 +791,8 @@ Best regards,
 *Questions? Just reach out - we're here to help!*"""
     
     def optimize_for_conversion(self, content: str, optimization_type: str = 'general') -> str:
-        """Apply conversion rate optimization to marketing content"""
+        """
+Apply conversion rate optimization to marketing content"""
         optimizations = {
             'urgency': [
                 'Limited time offer',
@@ -904,7 +911,8 @@ class CampaignTemplate:
         self.kpis = kwargs.get('kpis', [])
     
     def render(self, data: Dict[str, Any]) -> str:
-        """Render campaign template with data"""
+        """
+Render campaign template with data"""
         title = data.get('title', self.title)
         description = data.get('description', self.description)
         return f"# {title}\n\n{description}"
@@ -925,7 +933,9 @@ class CampaignTemplate:
 
 
 class CampaignType:
-    """Campaign type enumeration"""
+    """
+Campaign type enumeration"""
+
     EMAIL = "email"
     SOCIAL_MEDIA = "social_media"
     CONTENT = "content"

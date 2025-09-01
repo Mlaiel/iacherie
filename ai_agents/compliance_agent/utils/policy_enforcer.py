@@ -11,6 +11,7 @@ This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -56,7 +57,9 @@ from ...utils.rate_limiter import RateLimiter
 logger = logging.getLogger(__name__)
 
 class PolicyType(Enum):
-    """Types of compliance policies"""
+    """
+Types of compliance policies"""
+
     GDPR_POLICY = "gdpr_policy"
     DMCA_POLICY = "dmca_policy"
     PLATFORM_POLICY = "platform_policy"
@@ -68,6 +71,7 @@ class PolicyType(Enum):
 
 class EnforcementAction(Enum):
     """Types of enforcement actions"""
+
     WARN = "warn"
     BLOCK = "block"
     QUARANTINE = "quarantine"
@@ -80,6 +84,7 @@ class EnforcementAction(Enum):
 
 class ViolationSeverity(Enum):
     """Violation severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -89,6 +94,7 @@ class ViolationSeverity(Enum):
 
 class EnforcementContext(Enum):
     """Context where enforcement occurs"""
+
     USER_ACTION = "user_action"
     CONTENT_UPLOAD = "content_upload"
     DATA_ACCESS = "data_access"
@@ -114,7 +120,8 @@ class PolicyRule:
 
 @dataclass
 class PolicyViolation:
-    """Policy violation record"""
+    """
+Policy violation record"""
     id: str
     rule_id: str
     entity_type: str
@@ -131,7 +138,8 @@ class PolicyViolation:
 
 @dataclass
 class EnforcementResult:
-    """Result of policy enforcement"""
+    """
+Result of policy enforcement"""
     success: bool
     violations: List[PolicyViolation]
     actions_taken: List[str]
@@ -149,7 +157,8 @@ class PolicyEnforcer:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize policy enforcer with comprehensive rule engine"""
+        """
+Initialize policy enforcer with comprehensive rule engine"""
         self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
@@ -378,7 +387,8 @@ class PolicyEnforcer:
         }
     
     def _initialize_context_validators(self):
-        """Initialize context-specific validators"""
+        """
+Initialize context-specific validators"""
         self.context_validators = {
             EnforcementContext.USER_ACTION: self._validate_user_action,
             EnforcementContext.CONTENT_UPLOAD: self._validate_content_upload,
@@ -871,7 +881,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_content_upload(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content upload context"""
+        """
+Validate content upload context"""
         try:
             content = data.get('content', {})
             if not content.get('content_type'):
@@ -883,7 +894,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_data_access(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data access context"""
+        """
+Validate data access context"""
         try:
             access_data = data.get('access', {})
             if not access_data.get('resource'):
@@ -895,7 +907,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_api_call(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate API call context"""
+        """
+Validate API call context"""
         try:
             api_data = data.get('api', {})
             if not api_data.get('endpoint'):
@@ -907,7 +920,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_system_operation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate system operation context"""
+        """
+Validate system operation context"""
         try:
             operation = data.get('operation', {})
             if not operation.get('type'):
@@ -919,7 +933,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_external_request(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate external request context"""
+        """
+Validate external request context"""
         try:
             external_data = data.get('external', {})
             if not external_data.get('source'):
@@ -932,7 +947,8 @@ class PolicyEnforcer:
     
     # Helper methods for enforcement actions
     async def _send_policy_warning(self, violation: PolicyViolation, message: str):
-        """Send policy warning notification"""
+        """
+Send policy warning notification"""
         # Placeholder for notification system integration
         logger.info(f"Sending policy warning for violation {violation.id}: {message}")
     
@@ -1094,7 +1110,8 @@ class ViolationDetector:
         self.ml_models = {}
     
     async def detect_patterns(self, time_window_hours: int = 24) -> Dict[str, Any]:
-        """Detect violation patterns and anomalies"""
+        """
+Detect violation patterns and anomalies"""
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=time_window_hours)
             
@@ -1136,7 +1153,8 @@ class ViolationDetector:
         }
     
     def _analyze_entity_patterns(self, violations: List[PolicyViolation]) -> Dict[str, Any]:
-        """Analyze entity-based violation patterns"""
+        """
+Analyze entity-based violation patterns"""
         entity_counts = {}
         for violation in violations:
             entity_key = f"{violation.entity_type}:{violation.entity_id}"
@@ -1168,7 +1186,8 @@ class ViolationDetector:
         }
     
     def _detect_anomalies(self, violations: List[PolicyViolation]) -> List[Dict[str, Any]]:
-        """Detect anomalous violation patterns"""
+        """
+Detect anomalous violation patterns"""
         anomalies = []
         
         # Simple anomaly detection (would use ML in production)

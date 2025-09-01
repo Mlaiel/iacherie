@@ -19,6 +19,7 @@ Expert Team Specializations:
 - Workflow Orchestration Engineer
 - Performance Optimization Expert
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,9 @@ from ..base import BaseAgent
 
 
 class AgentType(Enum):
-    """Types of agents in the system."""
+    """
+Types of agents in the system."""
+
     AUDIO_AGENT = "audio_agent"
     VIDEO_AGENT = "video_agent"
     IMAGE_AGENT = "image_agent"
@@ -63,6 +66,7 @@ class AgentType(Enum):
 
 class AgentCapability(Enum):
     """Capabilities that agents can provide."""
+
     CONTENT_ANALYSIS = "content_analysis"
     CONTENT_GENERATION = "content_generation"
     CONTENT_OPTIMIZATION = "content_optimization"
@@ -82,6 +86,7 @@ class AgentCapability(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -90,7 +95,9 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status."""
+    """
+Task execution status."""
+
     PENDING = "pending"
     ASSIGNED = "assigned"
     IN_PROGRESS = "in_progress"
@@ -144,7 +151,8 @@ class CoordinationTask:
 
 @dataclass
 class WorkflowPlan:
-    """Execution plan for a multi-agent workflow."""
+    """
+Execution plan for a multi-agent workflow."""
     workflow_id: str
     tasks: List[CoordinationTask]
     execution_graph: nx.DiGraph
@@ -169,7 +177,8 @@ class AgentCoordinator:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Agent Coordinator with advanced orchestration capabilities."""
+        """
+Initialize the Agent Coordinator with advanced orchestration capabilities."""
         self.config = config or {}
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -286,7 +295,8 @@ class AgentCoordinator:
         }
     
     def _start_coordination_services(self):
-        """Start background coordination services."""
+        """
+Start background coordination services."""
         # Start task processing
         for priority in TaskPriority:
             task_name = f"task_processor_{priority.name.lower()}"
@@ -640,7 +650,8 @@ class AgentCoordinator:
             raise
     
     async def _execute_agent_task(self, agent_id: str, task: CoordinationTask) -> Dict[str, Any]:
-        """Execute task with a single agent."""
+        """
+Execute task with a single agent."""
         # Simulate agent execution (in real implementation, would call actual agent)
         await asyncio.sleep(0.1)  # Simulate processing time
         
@@ -864,7 +875,8 @@ class LoadBalancer:
         agents: List[str],
         tasks: List[CoordinationTask]
     ) -> Dict[str, List[str]]:
-        """Calculate optimal task distribution among agents."""
+        """
+Calculate optimal task distribution among agents."""
         # Simple round-robin for now (can be enhanced with ML)
         distribution = {agent_id: [] for agent_id in agents}
         
@@ -876,7 +888,8 @@ class LoadBalancer:
 
 
 class PerformanceOptimizer:
-    """Performance optimization utilities for agent coordination."""
+    """
+Performance optimization utilities for agent coordination."""
     
     def __init__(self):
         self.optimization_history: List[Dict[str, Any]] = []
@@ -886,7 +899,8 @@ class PerformanceOptimizer:
         agent_metrics: Dict[str, AgentInfo],
         task_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Suggest performance optimizations based on current metrics."""
+        """
+Suggest performance optimizations based on current metrics."""
         suggestions = []
         
         # Check for overloaded agents

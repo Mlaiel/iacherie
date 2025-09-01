@@ -12,6 +12,7 @@ License: Proprietary - Unauthorized use prohibited
 This security implementation contains proprietary algorithms and methods.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 """
+
 import asyncio
 import base64
 import json
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticatorTransport(Enum):
-    """FIDO2 authenticator transport methods"""
+    """
+FIDO2 authenticator transport methods"""
+
     USB = "usb"
     NFC = "nfc"
     BLE = "ble"
@@ -41,6 +44,7 @@ class AuthenticatorTransport(Enum):
 
 class AttestationConveyancePreference(Enum):
     """Attestation conveyance preference"""
+
     NONE = "none"
     INDIRECT = "indirect"
     DIRECT = "direct"
@@ -49,6 +53,7 @@ class AttestationConveyancePreference(Enum):
 
 class UserVerificationRequirement(Enum):
     """User verification requirement"""
+
     REQUIRED = "required"
     PREFERRED = "preferred"
     DISCOURAGED = "discouraged"
@@ -56,6 +61,7 @@ class UserVerificationRequirement(Enum):
 
 class AuthenticatorAttachment(Enum):
     """Authenticator attachment modality"""
+
     PLATFORM = "platform"
     CROSS_PLATFORM = "cross-platform"
 
@@ -70,7 +76,8 @@ class PublicKeyCredentialDescriptor:
 
 @dataclass
 class PublicKeyCredentialUserEntity:
-    """User entity for WebAuthn"""
+    """
+User entity for WebAuthn"""
     id: bytes
     name: str
     display_name: str
@@ -78,20 +85,23 @@ class PublicKeyCredentialUserEntity:
 
 @dataclass
 class PublicKeyCredentialRpEntity:
-    """Relying party entity for WebAuthn"""
+    """
+Relying party entity for WebAuthn"""
     name: str
     id: str
 
 
 @dataclass
 class PublicKeyCredentialParameters:
-    """Public key credential algorithm parameters"""
+    """
+Public key credential algorithm parameters"""
     type: str
     alg: int  # COSE algorithm identifier
 
 
 class RegistrationChallenge(BaseModel):
-    """FIDO2 registration challenge"""
+    """
+FIDO2 registration challenge"""
     challenge: str = Field(description="Base64 encoded challenge")
     rp: Dict[str, str] = Field(description="Relying party information")
     user: Dict[str, str] = Field(description="User information")
@@ -140,7 +150,8 @@ class FIDO2Manager:
         display_name: str,
         exclude_existing: bool = True
     ) -> RegistrationChallenge:
-        """Generate FIDO2 registration challenge for new authenticator"""
+        """
+Generate FIDO2 registration challenge for new authenticator"""
         await self.initialize()
         
         # Generate cryptographically secure challenge
@@ -500,7 +511,8 @@ class FIDO2Middleware:
         self.fido2_manager = fido2_manager
         
     async def authenticate_request(self, request: Request) -> Optional[str]:
-        """Authenticate request using FIDO2 if credentials present"""
+        """
+Authenticate request using FIDO2 if credentials present"""
         # Check for FIDO2 authentication headers
         fido2_credential = request.headers.get("X-FIDO2-Credential")
         fido2_response = request.headers.get("X-FIDO2-Response")

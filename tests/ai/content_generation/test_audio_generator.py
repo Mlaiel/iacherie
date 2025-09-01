@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Audio Generator Tests
+"""
+Audio Generator Tests
 
 Comprehensive tests for the AudioGenerator class that handles
 AI-powered audio content creation and voice synthesis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -54,7 +57,8 @@ class TestAudioGenerator:
     
     @pytest.fixture
     def generator(self):
-        """Create an audio generator instance"""
+        """
+Create an audio generator instance"""
         config = {
             "model_name": "test_model",
             "max_tokens": 1000,
@@ -81,7 +85,8 @@ class TestAudioGenerator:
     
     @pytest.fixture
     def voice_config(self):
-        """Create sample voice configuration"""
+        """
+Create sample voice configuration"""
         return VoiceConfig(
             voice_id="neural_voice_01",
             language="en-US",
@@ -110,7 +115,8 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_text_to_speech_basic(self, generator, voice_config):
-        """Test basic text-to-speech generation"""
+        """
+Test basic text-to-speech generation"""
         text = "Hello, this is a test of our audio generation system."
         
         with patch.object(generator, '_synthesize_speech') as mock_synthesis:
@@ -616,7 +622,8 @@ class TestVoiceConfig:
     """Test suite for VoiceConfig model"""
     
     def test_voice_config_creation(self):
-        """Test voice configuration creation - skipped until VoiceConfig is implemented"""
+        """
+Test voice configuration creation - skipped until VoiceConfig is implemented"""
         pytest.skip("VoiceConfig class not yet implemented in source code")
     
     def test_voice_config_validation(self):
@@ -628,7 +635,8 @@ class TestAudioFormat:
     """Test suite for AudioFormat enum"""
     
     def test_audio_format_values(self):
-        """Test audio format enum values - skipped until AudioFormat is implemented"""
+        """
+Test audio format enum values - skipped until AudioFormat is implemented"""
         pytest.skip("AudioFormat enum not yet implemented in source code")
 
 

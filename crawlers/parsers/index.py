@@ -5,7 +5,7 @@ Central index and initialization module for the parsers system.
 Provides unified entry point for all parsing operations and services.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
@@ -22,6 +22,7 @@ Development Team Specialties:
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -39,7 +40,8 @@ class ParsersIndex:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize parsers index"""
+        """
+Initialize parsers index"""
         self.logger = logging.getLogger(__name__)
         self.config = self._load_config(config_path)
         self.factory = ParserFactory(self.config)
@@ -47,7 +49,8 @@ class ParsersIndex:
         self._initialized = False
     
     def _load_config(self, config_path: Optional[str] = None) -> ParserConfig:
-        """Load parser configuration"""
+        """
+Load parser configuration"""
         try:
             if config_path:
                 return ParserConfig.from_file(config_path)
@@ -125,7 +128,8 @@ class ParsersIndex:
         return self.config
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all parsers"""
+        """
+Perform health check on all parsers"""
         if not self._initialized:
             return {"status": "not_initialized", "healthy": False}
         
@@ -165,12 +169,14 @@ async def get_parsers_index(config_path: Optional[str] = None) -> ParsersIndex:
 
 
 async def initialize_parsers(config_path: Optional[str] = None) -> ParsersIndex:
-    """Initialize parsers module"""
+    """
+Initialize parsers module"""
     return await get_parsers_index(config_path)
 
 
 async def shutdown_parsers() -> None:
-    """Shutdown parsers module"""
+    """
+Shutdown parsers module"""
     global _parsers_index
     
     if _parsers_index:

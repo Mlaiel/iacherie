@@ -51,8 +51,9 @@ This web surveillance system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Respects robots.txt and platform terms of service.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import base64
 import hashlib
@@ -117,7 +118,9 @@ from backend.utils.exceptions import (
 logger = logging.getLogger(__name__)
 
 class CrawlingStatus:
-    """Statuts de crawling."""
+    """
+Statuts de crawling."""
+
     SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -127,6 +130,7 @@ class CrawlingStatus:
 
 class DetectionType:
     """Types de détection."""
+
     EXACT_MATCH = "exact_match"
     HIGH_SIMILARITY = "high_similarity"
     PARTIAL_MATCH = "partial_match"
@@ -134,6 +138,7 @@ class DetectionType:
 
 class PlatformCrawler:
     """Crawlers spécialisés par plateforme."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -158,7 +163,8 @@ class WebCrawlerIntelligence:
     """
     
     def __init__(self):
-        """Initialisation du système de surveillance web."""
+        """
+Initialisation du système de surveillance web."""
         self.settings = get_settings()
         self.redis_client = None
         self.elasticsearch_client = None
@@ -871,13 +877,15 @@ class WebCrawlerIntelligence:
         return None
     
     async def _return_driver_to_pool(self, driver):
-        """Remet un driver dans le pool."""
+        """
+Remet un driver dans le pool."""
         if driver and len(self.driver_pool) < 5:
             self.driver_pool.append(driver)
     
     # Helper methods for data operations
     async def _get_campaign_data(self, campaign_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère les données de campagne."""
+        """
+Récupère les données de campagne."""
         try:
             redis_key = f"surveillance_campaign:{campaign_id}"
             data = await self.redis_client.get(redis_key)
@@ -915,7 +923,8 @@ class WebCrawlerIntelligence:
     
     # Storage methods
     async def _store_crawling_session(self, session_data: Dict[str, Any]):
-        """Stocke les données de session de crawling."""
+        """
+Stocke les données de session de crawling."""
         try:
             await self.elasticsearch_client.index(
                 index="crawling_sessions",
@@ -990,7 +999,8 @@ class YouTubeCrawler:
         self.config = parent.platform_configs[PlatformCrawler.YOUTUBE]
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche de contenu sur YouTube."""
+        """
+Recherche de contenu sur YouTube."""
         try:
             search_url = f"{self.config['base_url']}{self.config['search_endpoint']}{search_term}"
             
@@ -1040,7 +1050,8 @@ class InstagramCrawler:
         self.config = parent.platform_configs[PlatformCrawler.INSTAGRAM]
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche de contenu sur Instagram."""
+        """
+Recherche de contenu sur Instagram."""
         # Instagram requires more sophisticated handling due to anti-bot measures
         logger.info(f"Instagram search for: {search_term}")
         return []  # Placeholder
@@ -1053,7 +1064,8 @@ class TikTokCrawler:
         self.config = parent.platform_configs[PlatformCrawler.TIKTOK]
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche de contenu sur TikTok."""
+        """
+Recherche de contenu sur TikTok."""
         # TikTok requires specialized handling
         logger.info(f"TikTok search for: {search_term}")
         return []  # Placeholder
@@ -1065,7 +1077,8 @@ class GenericWebCrawler:
         self.parent = parent
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche générique sur le web."""
+        """
+Recherche générique sur le web."""
         try:
             # Use search engines for generic web crawling
             search_engines = [

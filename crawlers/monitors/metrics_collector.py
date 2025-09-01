@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
@@ -51,7 +52,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration, MonitoringMe
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Metric type enumeration."""
+    """
+Metric type enumeration."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -62,6 +65,7 @@ class MetricType(Enum):
 
 class MetricCategory(Enum):
     """Metric category enumeration."""
+
     SYSTEM = "system"
     BUSINESS = "business"
     USER = "user"
@@ -73,6 +77,7 @@ class MetricCategory(Enum):
 
 class AggregationType(Enum):
     """Aggregation type for metrics."""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -109,7 +114,8 @@ class MetricDataPoint:
 
 @dataclass
 class KPIDefinition:
-    """Key Performance Indicator definition."""
+    """
+Key Performance Indicator definition."""
     name: str
     description: str
     formula: str  # Mathematical formula using metric names
@@ -161,7 +167,8 @@ class MetricsCollector(MonitorEngine):
         self._initialize_kpi_definitions()
     
     def _initialize_system_collectors(self):
-        """Initialize system-level metric collectors."""
+        """
+Initialize system-level metric collectors."""
         system_metrics = [
             MetricDefinition(
                 name="cpu_usage_percent",
@@ -1031,11 +1038,13 @@ class KPICalculator:
         self.calculation_cache: Dict[str, Any] = {}
     
     def register_custom_function(self, name: str, function: Callable):
-        """Register custom function for KPI calculations."""
+        """
+Register custom function for KPI calculations."""
         self.custom_functions[name] = function
     
     async def calculate_advanced_kpi(self, formula: str, context: Dict[str, Any]) -> float:
-        """Calculate KPI with advanced formula support."""
+        """
+Calculate KPI with advanced formula support."""
         # Enhanced formula evaluation with custom functions
         enhanced_context = {**context, **self.custom_functions}
         
@@ -1085,7 +1094,8 @@ class KPICalculator:
         return forecast_y.tolist()
     
     def _calculate_anomaly_score(self, values: List[float], current_value: float) -> float:
-        """Calculate anomaly score for current value."""
+        """
+Calculate anomaly score for current value."""
         if len(values) < 3:
             return 0.0
         

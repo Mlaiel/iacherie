@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import json
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ from ..utils.security import SecurityManager
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     STREAMING = "streaming"
     SOCIAL_MEDIA = "social_media"
     MARKETPLACE = "marketplace"
@@ -54,6 +57,7 @@ class PlatformType(Enum):
 
 class SyncDirection(Enum):
     """Data synchronization directions"""
+
     BIDIRECTIONAL = "bidirectional"
     INBOUND = "inbound"
     OUTBOUND = "outbound"
@@ -63,6 +67,7 @@ class SyncDirection(Enum):
 
 class DataFormat(Enum):
     """Supported data formats"""
+
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -77,6 +82,7 @@ class DataFormat(Enum):
 
 class SyncStatus(Enum):
     """Synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -118,7 +124,8 @@ class PlatformIntegration:
 
 @dataclass
 class DataHarmonization:
-    """Data harmonization and transformation results"""
+    """
+Data harmonization and transformation results"""
     harmonization_id: str
     source_platform: str
     target_platforms: List[str]
@@ -143,7 +150,8 @@ class DataHarmonization:
 
 @dataclass
 class SyncOperation:
-    """Synchronization operation tracking"""
+    """
+Synchronization operation tracking"""
     operation_id: str
     source_platform: str
     target_platforms: List[str]
@@ -199,7 +207,8 @@ class CrossPlatformSynchronizer:
         self.harmonization_models: Dict[str, Any] = {}
         
     async def initialize_platform_integrations(self, integration_configs: List[Dict[str, Any]]):
-        """Initialize platform integrations from configuration"""
+        """
+Initialize platform integrations from configuration"""
         try:
             # Initialize HTTP session
             self.http_session = aiohttp.ClientSession(
@@ -625,7 +634,8 @@ class CrossPlatformSynchronizer:
         platform_name: str,
         data_scope: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Extract data from source platform"""
+        """
+Extract data from source platform"""
         try:
             integration = self.platform_integrations[platform_name]
             
@@ -668,7 +678,8 @@ class CrossPlatformSynchronizer:
         platform_name: str,
         data: Dict[str, Any]
     ) -> bool:
-        """Push harmonized data to target platform"""
+        """
+Push harmonized data to target platform"""
         try:
             integration = self.platform_integrations[platform_name]
             
@@ -746,7 +757,8 @@ class CrossPlatformSynchronizer:
         source_mapping: Dict[str, str],
         target_mapping: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Apply field mappings between platforms"""
+        """
+Apply field mappings between platforms"""
         mapped_data = {}
         
         # Create reverse mapping from source
@@ -768,7 +780,8 @@ class CrossPlatformSynchronizer:
         data: Dict[str, Any],
         target_format: DataFormat
     ) -> Dict[str, Any]:
-        """Normalize data to target format"""
+        """
+Normalize data to target format"""
         if target_format == DataFormat.JSON:
             return data
         elif target_format == DataFormat.XML:
@@ -782,7 +795,8 @@ class CrossPlatformSynchronizer:
         data: Dict[str, Any],
         validation_schema: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Validate harmonized data against schema"""
+        """
+Validate harmonized data against schema"""
         validation_results = {}
         
         for field, schema in validation_schema.items():
@@ -830,7 +844,8 @@ class CrossPlatformSynchronizer:
         source_mapping: Dict[str, str],
         target_mapping: Dict[str, str]
     ) -> List[Dict[str, Any]]:
-        """Identify conflicts in field mappings"""
+        """
+Identify conflicts in field mappings"""
         conflicts = []
         
         # Find fields that exist in both mappings with different paths
@@ -848,7 +863,8 @@ class CrossPlatformSynchronizer:
         return conflicts
     
     async def _calculate_sync_performance(self, operation: SyncOperation) -> Dict[str, float]:
-        """Calculate performance metrics for sync operation"""
+        """
+Calculate performance metrics for sync operation"""
         if operation.processing_time and operation.data_volume:
             throughput = operation.data_volume / operation.processing_time  # bytes per second
             success_rate = operation.records_successful / operation.records_processed if operation.records_processed > 0 else 0
@@ -863,17 +879,20 @@ class CrossPlatformSynchronizer:
         return {}
     
     async def _save_sync_operation(self, operation: SyncOperation):
-        """Save sync operation to database"""
+        """
+Save sync operation to database"""
         # Implementation would save to database
         pass
     
     async def _emit_sync_completion_event(self, operation: SyncOperation):
-        """Emit monitoring event for sync completion"""
+        """
+Emit monitoring event for sync completion"""
         # Implementation would emit event to monitoring system
         pass
     
     def _calculate_next_run_time(self, frequency: str) -> datetime:
-        """Calculate next run time based on frequency"""
+        """
+Calculate next run time based on frequency"""
         now = datetime.utcnow()
         
         if frequency == 'hourly':
@@ -886,7 +905,8 @@ class CrossPlatformSynchronizer:
             return now + timedelta(hours=1)  # Default to hourly
     
     async def _measure_response_time(self, integration: PlatformIntegration) -> float:
-        """Measure API response time for platform"""
+        """
+Measure API response time for platform"""
         try:
             start_time = datetime.utcnow()
             await self._perform_health_check(integration)
@@ -896,7 +916,8 @@ class CrossPlatformSynchronizer:
             return -1.0
     
     async def _get_rate_limit_status(self, integration: PlatformIntegration) -> Dict[str, int]:
-        """Get rate limit status for platform"""
+        """
+Get rate limit status for platform"""
         # Implementation would check actual rate limits
         return {
             'remaining': 50,
@@ -905,12 +926,14 @@ class CrossPlatformSynchronizer:
         }
     
     async def _calculate_error_rate(self, platform_name: str) -> float:
-        """Calculate error rate for platform"""
+        """
+Calculate error rate for platform"""
         # Implementation would calculate from historical data
         return 0.05  # 5% error rate example
     
     async def _calculate_uptime_percentage(self, platform_name: str) -> float:
-        """Calculate uptime percentage for platform"""
+        """
+Calculate uptime percentage for platform"""
         # Implementation would calculate from monitoring data
         return 99.9  # 99.9% uptime example
     
@@ -920,7 +943,8 @@ class CrossPlatformSynchronizer:
         original_data: Dict[str, Any],
         harmonized_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate data loss indicators during harmonization"""
+        """
+Calculate data loss indicators during harmonization"""
         original_fields = set(original_data.keys())
         harmonized_fields = set(harmonized_data.keys())
         
@@ -934,7 +958,8 @@ class CrossPlatformSynchronizer:
         }
     
     async def _get_applied_transformations(self, transformation_rules: List[Dict[str, Any]]) -> List[str]:
-        """Get list of applied transformations"""
+        """
+Get list of applied transformations"""
         return [rule.get('type', 'unknown') for rule in transformation_rules]
     
     async def _get_applied_enrichments(
@@ -942,7 +967,8 @@ class CrossPlatformSynchronizer:
         original_data: Dict[str, Any],
         harmonized_data: Dict[str, Any]
     ) -> List[str]:
-        """Get list of applied data enrichments"""
+        """
+Get list of applied data enrichments"""
         enrichments = []
         
         # Check for new fields that weren't in original data

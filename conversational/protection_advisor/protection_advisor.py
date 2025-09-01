@@ -29,13 +29,14 @@ protection guidance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary protection platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -71,7 +72,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
+    """
+Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -81,6 +84,7 @@ class ThreatLevel(Enum):
 
 class ProtectionStrategy(Enum):
     """Content protection strategies"""
+
     PROACTIVE_MONITORING = "proactive_monitoring"
     REACTIVE_ENFORCEMENT = "reactive_enforcement"
     LEGAL_DETERRENT = "legal_deterrent"
@@ -93,6 +97,7 @@ class ProtectionStrategy(Enum):
 
 class ComplianceFramework(Enum):
     """Legal compliance frameworks"""
+
     DMCA = "dmca"
     GDPR = "gdpr"
     CCPA = "ccpa"
@@ -126,7 +131,8 @@ class ProtectionProfile:
 
 @dataclass
 class ThreatAssessmentResult:
-    """Advanced threat assessment results"""
+    """
+Advanced threat assessment results"""
     assessment_id: str
     creator_id: str
     content_id: str
@@ -825,7 +831,8 @@ class UltraAdvancedProtectionAdvisor:
         pass
     
     async def _initialize_creator_monitoring(self, profile: ProtectionProfile):
-        """Initialize monitoring for creator"""
+        """
+Initialize monitoring for creator"""
         # Implementation would setup monitoring tasks
         pass
     
@@ -834,7 +841,8 @@ class UltraAdvancedProtectionAdvisor:
         content_data: Dict[str, Any], 
         profile: ProtectionProfile
     ) -> Dict[str, Any]:
-        """Analyze content vulnerabilities"""
+        """
+Analyze content vulnerabilities"""
         return {
             "uniqueness_score": 0.8,
             "commercial_value": "high",
@@ -894,7 +902,8 @@ class UltraAdvancedProtectionAdvisor:
         threat_level: ThreatLevel, 
         profile: ProtectionProfile
     ) -> Dict[str, Any]:
-        """Assess potential impact"""
+        """
+Assess potential impact"""
         return {
             "financial_impact": "high" if threat_level in [ThreatLevel.HIGH, ThreatLevel.CRITICAL] else "medium",
             "reputation_impact": "medium",

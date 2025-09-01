@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -13,13 +14,16 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""Simple pytest-compatible test
+"""
+Simple pytest-compatible test
 Created by: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import numpy as np
 
 def test_basic_audio():
-    """Test basic audio generation"""
+    """
+Test basic audio generation"""
     # Generate simple sine wave
     sr = 44100
     t = np.linspace(0, 1, sr)

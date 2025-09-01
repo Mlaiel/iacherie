@@ -19,6 +19,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import uuid
@@ -74,7 +75,9 @@ from ...services.notification import NotificationService
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of monetization optimization"""
+    """
+Types of monetization optimization"""
+
     REVENUE_MAXIMIZATION = "revenue_maximization"
     PROFIT_MAXIMIZATION = "profit_maximization"
     GROWTH_OPTIMIZATION = "growth_optimization"
@@ -84,6 +87,7 @@ class OptimizationType(Enum):
 
 class StrategyType(Enum):
     """Monetization strategy types"""
+
     PRICING_OPTIMIZATION = "pricing_optimization"
     PLATFORM_DIVERSIFICATION = "platform_diversification"
     CONTENT_OPTIMIZATION = "content_optimization"
@@ -95,6 +99,7 @@ class StrategyType(Enum):
 
 class ExperimentStatus(Enum):
     """A/B testing experiment status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -113,7 +118,8 @@ class OptimizationGoal:
 
 @dataclass
 class MonetizationRecommendation:
-    """AI-generated monetization recommendation"""
+    """
+AI-generated monetization recommendation"""
     recommendation_id: str
     user_id: str
     strategy_type: StrategyType
@@ -130,7 +136,8 @@ class MonetizationRecommendation:
 
 @dataclass
 class ProfitMaximizationResult:
-    """Results from profit maximization optimization"""
+    """
+Results from profit maximization optimization"""
     user_id: str
     optimization_run_id: str
     original_profit: Decimal
@@ -607,7 +614,8 @@ class MonetizationOptimizer:
         current_analysis: Dict[str, Any],
         constraints: Dict[str, Any]
     ) -> Optional[MonetizationRecommendation]:
-        """Generate specific monetization recommendation from opportunity"""
+        """
+Generate specific monetization recommendation from opportunity"""
         try:
             strategy_type = StrategyType(opportunity['type'])
             
@@ -821,7 +829,8 @@ class MonetizationOptimizer:
         recommendations: List[MonetizationRecommendation],
         constraints: Dict[str, Any]
     ) -> List[MonetizationRecommendation]:
-        """Validate recommendations against constraints"""
+        """
+Validate recommendations against constraints"""
         validated = []
         
         max_complexity = constraints.get('max_complexity', 'high')
@@ -847,7 +856,8 @@ class MonetizationOptimizer:
         return validated
 
     def _parse_timeline_estimate(self, timeline: str) -> int:
-        """Parse timeline estimate to weeks"""
+        """
+Parse timeline estimate to weeks"""
         # Simple parser for timeline estimates like "2-3 months", "4-6 weeks"
         if 'week' in timeline.lower():
             # Extract max weeks
@@ -904,7 +914,8 @@ class MonetizationOptimizer:
         current_data: Dict[str, Any],
         target_increase: float
     ) -> Dict[str, Any]:
-        """Define optimization problem parameters"""
+        """
+Define optimization problem parameters"""
         return {
             'objective': 'maximize_profit',
             'variables': ['pricing', 'costs', 'efficiency'],
@@ -917,7 +928,8 @@ class MonetizationOptimizer:
         problem: Dict[str, Any],
         max_iterations: int
     ) -> Dict[str, Any]:
-        """Run genetic algorithm optimization"""
+        """
+Run genetic algorithm optimization"""
         return await self.genetic_algorithm.optimize(problem, max_iterations)
 
     async def _run_simulated_annealing_optimization(
@@ -925,7 +937,8 @@ class MonetizationOptimizer:
         problem: Dict[str, Any],
         max_iterations: int
     ) -> Dict[str, Any]:
-        """Run simulated annealing optimization"""
+        """
+Run simulated annealing optimization"""
         return await self.simulated_annealing.optimize(problem, max_iterations)
 
     async def _run_hybrid_optimization(
@@ -933,7 +946,8 @@ class MonetizationOptimizer:
         problem: Dict[str, Any],
         max_iterations: int
     ) -> Dict[str, Any]:
-        """Run hybrid optimization approach"""
+        """
+Run hybrid optimization approach"""
         # Combine genetic algorithm and simulated annealing
         genetic_result = await self.genetic_algorithm.optimize(
             problem, max_iterations // 2
@@ -952,7 +966,8 @@ class MonetizationOptimizer:
         user_id: str,
         solution: Dict[str, Any]
     ) -> Decimal:
-        """Calculate profit with optimized parameters"""
+        """
+Calculate profit with optimized parameters"""
         # Implementation would calculate expected profit
         return Decimal('850.00')  # Placeholder
 
@@ -961,7 +976,8 @@ class MonetizationOptimizer:
         experiment_id: str,
         duration_days: int
     ) -> None:
-        """Monitor running experiment and collect results"""
+        """
+Monitor running experiment and collect results"""
         try:
             end_time = datetime.now(timezone.utc) + timedelta(days=duration_days)
             
@@ -1120,7 +1136,8 @@ class ProfitMaximizer:
         revenue_funcs: Dict[str, callable],
         constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Quadratic programming optimization"""
+        """
+Quadratic programming optimization"""
         # Implementation placeholder for quadratic programming
         return {'method': 'quadratic_programming', 'solution': {}}
 
@@ -1130,7 +1147,8 @@ class ProfitMaximizer:
         revenue_funcs: Dict[str, callable],
         constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Dynamic programming optimization"""
+        """
+Dynamic programming optimization"""
         # Implementation placeholder for dynamic programming
         return {'method': 'dynamic_programming', 'solution': {}}
 
@@ -1140,6 +1158,7 @@ class ProfitMaximizer:
         revenue_funcs: Dict[str, callable],
         constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Gradient descent optimization"""
+        """
+Gradient descent optimization"""
         # Implementation placeholder for gradient descent
         return {'method': 'gradient_descent', 'solution': {}}

@@ -6,6 +6,7 @@ database, and CDN layers with intelligent data placement and retrieval.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import pickle
@@ -30,14 +31,18 @@ import aiofiles
 logger = logging.getLogger(__name__)
 
 class StorageLevel(Enum):
-    """Storage tier levels"""
+    """
+Storage tier levels"""
+
     L1_MEMORY = 1
     L2_REDIS = 2
     L3_DATABASE = 3
     L4_S3_CDN = 4
 
 class CompressionType(Enum):
-    """Supported compression algorithms"""
+    """
+Supported compression algorithms"""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -88,7 +93,8 @@ class StorageMetrics:
     error_count: int = 0
 
 class CacheStorage(ABC):
-    """Abstract base class for cache storage implementations"""
+    """
+Abstract base class for cache storage implementations"""
     
     def __init__(self, config: StorageConfig):
         self.config = config
@@ -96,46 +102,55 @@ class CacheStorage(ABC):
         
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize storage backend"""
+        """
+Initialize storage backend"""
         pass
     
     @abstractmethod
     async def get(self, key: str) -> Optional[Any]:
-        """Retrieve value by key"""
+        """
+Retrieve value by key"""
         pass
     
     @abstractmethod
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Store value with optional TTL"""
+        """
+Store value with optional TTL"""
         pass
     
     @abstractmethod
     async def delete(self, key: str) -> bool:
-        """Delete value by key"""
+        """
+Delete value by key"""
         pass
     
     @abstractmethod
     async def exists(self, key: str) -> bool:
-        """Check if key exists"""
+        """
+Check if key exists"""
         pass
     
     @abstractmethod
     async def get_size(self) -> int:
-        """Get total storage size in bytes"""
+        """
+Get total storage size in bytes"""
         pass
     
     @abstractmethod
     async def clear(self) -> bool:
-        """Clear all stored data"""
+        """
+Clear all stored data"""
         pass
     
     @abstractmethod
     async def close(self):
-        """Close storage connections"""
+        """
+Close storage connections"""
         pass
 
 class MemoryStorage(CacheStorage):
-    """High-performance in-memory storage with intelligent eviction"""
+    """
+High-performance in-memory storage with intelligent eviction"""
     
     def __init__(self, config: StorageConfig):
         super().__init__(config)
@@ -146,7 +161,8 @@ class MemoryStorage(CacheStorage):
         self._lock = asyncio.Lock()
     
     async def initialize(self) -> bool:
-        """Initialize memory storage"""
+        """
+Initialize memory storage"""
         logger.info("MemoryStorage initialized")
         return True
     
@@ -180,7 +196,8 @@ class MemoryStorage(CacheStorage):
             return entry['value']
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Store value in memory with automatic compression and eviction"""
+        """
+Store value in memory with automatic compression and eviction"""
         try:
             serialized = pickle.dumps(value)
             size_bytes = len(serialized)
@@ -239,7 +256,8 @@ class MemoryStorage(CacheStorage):
             return False
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in memory"""
+        """
+Check if key exists in memory"""
         async with self._lock:
             if key not in self._storage:
                 return False
@@ -253,11 +271,13 @@ class MemoryStorage(CacheStorage):
             return True
     
     async def get_size(self) -> int:
-        """Get current memory usage"""
+        """
+Get current memory usage"""
         return self._current_size
     
     async def clear(self) -> bool:
-        """Clear all memory storage"""
+        """
+Clear all memory storage"""
         async with self._lock:
             self._storage.clear()
             self._access_times.clear()
@@ -266,7 +286,8 @@ class MemoryStorage(CacheStorage):
             return True
     
     async def close(self):
-        """Close memory storage (cleanup)"""
+        """
+Close memory storage (cleanup)"""
         await self.clear()
         logger.info("MemoryStorage closed")
     
@@ -281,7 +302,8 @@ class MemoryStorage(CacheStorage):
             self._access_times.pop(key, None)
     
     async def _evict_space(self, required_space: int):
-        """Evict entries to make space using LRU policy"""
+        """
+Evict entries to make space using LRU policy"""
         # Sort by access time (oldest first)
         sorted_keys = sorted(
             self._access_times.items(),
@@ -297,7 +319,8 @@ class MemoryStorage(CacheStorage):
             await self._remove_entry(key)
     
     async def _compress_data(self, data: bytes) -> bytes:
-        """Compress data based on configuration"""
+        """
+Compress data based on configuration"""
         if self.config.default_compression == CompressionType.GZIP:
             return gzip.compress(data)
         elif self.config.default_compression == CompressionType.LZ4:
@@ -317,7 +340,8 @@ class MemoryStorage(CacheStorage):
         self.metrics.average_read_time_by_level[level] = current_avg * 0.9 + read_time * 0.1
 
 class RedisStorage(CacheStorage):
-    """Redis-based distributed cache storage with advanced features"""
+    """
+Redis-based distributed cache storage with advanced features"""
     
     def __init__(self, config: StorageConfig):
         super().__init__(config)
@@ -325,7 +349,8 @@ class RedisStorage(CacheStorage):
         self._connection_pool: Optional[aioredis.ConnectionPool] = None
     
     async def initialize(self) -> bool:
-        """Initialize Redis connection with retry logic"""
+        """
+Initialize Redis connection with retry logic"""
         try:
             self._connection_pool = aioredis.ConnectionPool.from_url(
                 self.config.redis_url,
@@ -490,19 +515,22 @@ class RedisStorage(CacheStorage):
         return data
     
     async def _decompress_data(self, data: bytes) -> bytes:
-        """Decompress data from Redis"""
+        """
+Decompress data from Redis"""
         # Try to detect if data is compressed
         if data.startswith(b'\x1f\x8b'):  # Gzip magic number
             return gzip.decompress(data)
         return data
     
     def _update_average_read_time(self, level: StorageLevel, read_time: float):
-        """Update average read time metrics"""
+        """
+Update average read time metrics"""
         current_avg = self.metrics.average_read_time_by_level.get(level, 0.0)
         self.metrics.average_read_time_by_level[level] = current_avg * 0.9 + read_time * 0.1
 
 class DatabaseStorage(CacheStorage):
-    """Database-backed persistent cache storage"""
+    """
+Database-backed persistent cache storage"""
     
     def __init__(self, config: StorageConfig):
         super().__init__(config)
@@ -510,7 +538,8 @@ class DatabaseStorage(CacheStorage):
         self._session_factory = None
     
     async def initialize(self) -> bool:
-        """Initialize database connection and create table if needed"""
+        """
+Initialize database connection and create table if needed"""
         try:
             self._engine = create_engine(
                 self.config.database_url,
@@ -549,7 +578,8 @@ class DatabaseStorage(CacheStorage):
             conn.commit()
     
     async def get(self, key: str) -> Optional[Any]:
-        """Retrieve value from database"""
+        """
+Retrieve value from database"""
         start_time = time.time()
         
         try:
@@ -715,7 +745,8 @@ class DatabaseStorage(CacheStorage):
         self.metrics.average_read_time_by_level[level] = current_avg * 0.9 + read_time * 0.1
 
 class HybridStorage(CacheStorage):
-    """Multi-layer hybrid storage orchestrating all cache levels"""
+    """
+Multi-layer hybrid storage orchestrating all cache levels"""
     
     def __init__(self, config: StorageConfig):
         super().__init__(config)
@@ -723,7 +754,8 @@ class HybridStorage(CacheStorage):
         self._initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize all storage layers"""
+        """
+Initialize all storage layers"""
         try:
             # Initialize Memory (L1)
             self.storage_layers[StorageLevel.L1_MEMORY] = MemoryStorage(self.config)
@@ -755,14 +787,16 @@ class HybridStorage(CacheStorage):
         return await self.storage_layers[level].get(key)
     
     async def set_in_level(self, level: StorageLevel, key: str, entry: Any) -> bool:
-        """Set value in specific storage level"""
+        """
+Set value in specific storage level"""
         if level not in self.storage_layers:
             return False
         
         return await self.storage_layers[level].set(key, entry.value, entry.ttl)
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from storage hierarchy (L1->L2->L3->L4)"""
+        """
+Get value from storage hierarchy (L1->L2->L3->L4)"""
         # Try each level in order
         for level in [StorageLevel.L1_MEMORY, StorageLevel.L2_REDIS, 
                      StorageLevel.L3_DATABASE, StorageLevel.L4_S3_CDN]:
@@ -777,7 +811,8 @@ class HybridStorage(CacheStorage):
         return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set value across appropriate storage levels"""
+        """
+Set value across appropriate storage levels"""
         success = False
         
         # Store in all available levels (write-through strategy)
@@ -811,14 +846,16 @@ class HybridStorage(CacheStorage):
         return False
     
     async def get_size(self) -> int:
-        """Get total size across all levels"""
+        """
+Get total size across all levels"""
         total_size = 0
         for level in self.storage_layers:
             total_size += await self.storage_layers[level].get_size()
         return total_size
     
     async def clear(self) -> bool:
-        """Clear all storage levels"""
+        """
+Clear all storage levels"""
         success = True
         for level in self.storage_layers:
             if not await self.storage_layers[level].clear():
@@ -826,7 +863,8 @@ class HybridStorage(CacheStorage):
         return success
     
     async def close(self):
-        """Close all storage layers"""
+        """
+Close all storage layers"""
         for level in self.storage_layers:
             await self.storage_layers[level].close()
         logger.info("HybridStorage closed")

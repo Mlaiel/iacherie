@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 import json
 import logging
@@ -44,7 +45,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class NetworkFramework(str, Enum):
-    """Neural network framework enumeration."""
+    """
+Neural network framework enumeration."""
+
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     KERAS = "keras"
@@ -54,6 +57,7 @@ class NetworkFramework(str, Enum):
 
 class NetworkType(str, Enum):
     """Neural network type enumeration."""
+
     CNN = "cnn"
     RNN = "rnn"
     LSTM = "lstm"
@@ -69,6 +73,7 @@ class NetworkType(str, Enum):
 
 class LayerType(str, Enum):
     """Neural network layer type enumeration."""
+
     DENSE = "dense"
     CONV2D = "conv2d"
     CONV1D = "conv1d"
@@ -83,6 +88,7 @@ class LayerType(str, Enum):
 
 class ActivationFunction(str, Enum):
     """Activation function enumeration."""
+
     RELU = "relu"
     SIGMOID = "sigmoid"
     TANH = "tanh"
@@ -94,6 +100,7 @@ class ActivationFunction(str, Enum):
 
 class OptimizerType(str, Enum):
     """Optimizer type enumeration."""
+
     ADAM = "adam"
     SGD = "sgd"
     RMSPROP = "rmsprop"
@@ -116,7 +123,8 @@ class LayerConfiguration:
 
 @dataclass
 class NetworkArchitecture:
-    """Neural network architecture definition."""
+    """
+Neural network architecture definition."""
     architecture_id: str
     name: str
     description: str
@@ -133,7 +141,8 @@ class NetworkArchitecture:
 
 @dataclass
 class ModelWeights:
-    """Neural network model weights."""
+    """
+Neural network model weights."""
     weights_id: str
     model_id: str
     architecture_id: str
@@ -148,7 +157,8 @@ class ModelWeights:
 
 @dataclass
 class TrainingConfiguration:
-    """Neural network training configuration."""
+    """
+Neural network training configuration."""
     config_id: str
     optimizer: OptimizerType
     learning_rate: float
@@ -161,7 +171,8 @@ class TrainingConfiguration:
     hardware_config: Dict[str, Any]
 
 class NetworkModel(BaseModel):
-    """Neural network model schema."""
+    """
+Neural network model schema."""
     model_id: str = Field(..., min_length=1)
     name: str = Field(..., min_length=1, max_length=255)
     description: Optional[str] = Field(None, max_length=5000)
@@ -184,7 +195,8 @@ class NeuralNetworkRegistry:
     """
     
     def __init__(self):
-        """Initialize the neural network registry."""
+        """
+Initialize the neural network registry."""
         self.models = {}
         self.architectures = {}
         self.weights_store = {}
@@ -606,7 +618,8 @@ class DeepLearningModelManager:
     """
     
     def __init__(self, registry: NeuralNetworkRegistry):
-        """Initialize the deep learning model manager."""
+        """
+Initialize the deep learning model manager."""
         self.registry = registry
         self.ensemble_models = {}
         self.model_pipelines = {}
@@ -810,7 +823,8 @@ class NetworkArchitectureStore:
     """
     
     def __init__(self):
-        """Initialize the network architecture store."""
+        """
+Initialize the network architecture store."""
         self.architectures = {}
         self.architecture_versions = {}
         self.architecture_templates = {}
@@ -975,7 +989,8 @@ class NetworkArchitectureStore:
     
     async def _generate_from_template(self, template: Dict[str, Any],
                                     parameters: Dict[str, Any]) -> NetworkArchitecture:
-        """Generate architecture from template."""
+        """
+Generate architecture from template."""
         # Mock template generation
         architecture_id = f"arch_{int(time.time())}_{str(uuid.uuid4())[:8]}"
         
@@ -1034,7 +1049,8 @@ class WeightManagement:
     """
     
     def __init__(self):
-        """Initialize the weight management system."""
+        """
+Initialize the weight management system."""
         self.weights_store = {}
         self.weight_versions = {}
         self.compression_configs = {}
@@ -1153,7 +1169,8 @@ class WeightManagement:
         return hashlib.sha256(data).hexdigest()
     
     async def _compress_weights(self, data: bytes, compression_type: str) -> bytes:
-        """Compress weights data."""
+        """
+Compress weights data."""
         import gzip
         import lzma
         
@@ -1185,7 +1202,8 @@ class LayerConfigurationManager:
     """
     
     def __init__(self):
-        """Initialize the layer configuration manager."""
+        """
+Initialize the layer configuration manager."""
         self.layer_templates = {}
         self.layer_optimizations = {}
         self.custom_layers = {}

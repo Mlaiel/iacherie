@@ -3,11 +3,12 @@
 Specialized agents for content protection, copyright management, and security.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in content protection, copyright
 management, plagiarism detection, and intellectual property security.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -23,7 +24,8 @@ from ..neural_networks.protection_networks import ContentFingerprintingNetwork
 
 @dataclass
 class ProtectionAnalysis:
-    """Content protection analysis results"""
+    """
+Content protection analysis results"""
     risk_level: str  # low, medium, high, critical
     vulnerability_score: float
     threats_detected: List[str]
@@ -35,7 +37,8 @@ class ProtectionAnalysis:
 
 @dataclass
 class CopyrightClaim:
-    """Copyright claim structure"""
+    """
+Copyright claim structure"""
     claim_id: str
     content_id: str
     claimant: str

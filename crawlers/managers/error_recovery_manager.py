@@ -7,6 +7,7 @@ Provides intelligent retry logic, circuit breaker patterns, and automated recove
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -32,7 +33,9 @@ from ...monitoring.metrics_collector import MetricsCollector
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels."""
+    """
+Error severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -41,6 +44,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Error category classification."""
+
     NETWORK = "network"
     AUTHENTICATION = "authentication"
     RATE_LIMIT = "rate_limit"
@@ -56,6 +60,7 @@ class ErrorCategory(Enum):
 
 class RecoveryStrategy(Enum):
     """Recovery strategy types."""
+
     IMMEDIATE_RETRY = "immediate_retry"
     EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
@@ -69,6 +74,7 @@ class RecoveryStrategy(Enum):
 
 class RecoveryStatus(Enum):
     """Recovery attempt status."""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
@@ -98,7 +104,8 @@ class ErrorContext:
 
 @dataclass
 class RecoveryAttempt:
-    """Recovery attempt record."""
+    """
+Recovery attempt record."""
     attempt_id: str
     error_id: str
     strategy: RecoveryStrategy
@@ -112,7 +119,8 @@ class RecoveryAttempt:
 
 @dataclass
 class RecoveryMetrics:
-    """Recovery system metrics."""
+    """
+Recovery system metrics."""
     total_errors: int = 0
     recovered_errors: int = 0
     failed_recoveries: int = 0
@@ -130,7 +138,8 @@ class ErrorClassifier:
     """
     
     def __init__(self):
-        """Initialize error classifier."""
+        """
+Initialize error classifier."""
         self.logger = get_logger(self.__class__.__name__)
         
         # Classification patterns
@@ -160,7 +169,8 @@ class ErrorClassifier:
         ]
         
     def classify_error(self, error: Exception, context: Dict[str, Any] = None) -> Tuple[ErrorCategory, ErrorSeverity]:
-        """Classify error by category and severity."""
+        """
+Classify error by category and severity."""
         try:
             error_message = str(error).lower()
             error_type = type(error).__name__.lower()
@@ -218,7 +228,8 @@ class ErrorClassifier:
         return ErrorCategory.UNKNOWN
         
     def _determine_severity(self, error: Exception, category: ErrorCategory, context: Dict[str, Any] = None) -> ErrorSeverity:
-        """Determine error severity."""
+        """
+Determine error severity."""
         # Critical errors
         if category in [ErrorCategory.RESOURCE, ErrorCategory.CONFIGURATION]:
             return ErrorSeverity.CRITICAL
@@ -244,12 +255,14 @@ class RecoveryStrategySelector:
     """
     
     def __init__(self, config: RecoveryConfig):
-        """Initialize recovery strategy selector."""
+        """
+Initialize recovery strategy selector."""
         self.config = config
         self.logger = get_logger(self.__class__.__name__)
         
     def select_strategy(self, error_context: ErrorContext) -> RecoveryStrategy:
-        """Select appropriate recovery strategy."""
+        """
+Select appropriate recovery strategy."""
         try:
             category = error_context.category
             severity = error_context.severity
@@ -307,7 +320,8 @@ class ErrorRecoveryManager:
     """
     
     def __init__(self, config: Optional[RecoveryConfig] = None):
-        """Initialize error recovery manager."""
+        """
+Initialize error recovery manager."""
         self.config = config or RecoveryConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.metrics_collector = MetricsCollector()
@@ -344,7 +358,8 @@ class ErrorRecoveryManager:
         self.monitoring_active = False
         
     async def start(self):
-        """Start error recovery manager."""
+        """
+Start error recovery manager."""
         try:
             self.monitoring_active = True
             
@@ -649,7 +664,8 @@ class ErrorRecoveryManager:
             )
             
     async def _log_error(self, error_context: ErrorContext):
-        """Log error to database."""
+        """
+Log error to database."""
         try:
             if self.config.ENABLE_DATABASE_LOGGING:
                 async with get_database_session() as db:
@@ -799,12 +815,14 @@ class ErrorRecoveryManager:
         return None
         
     async def get_recovery_metrics(self) -> RecoveryMetrics:
-        """Get recovery system metrics."""
+        """
+Get recovery system metrics."""
         await self._update_metrics()
         return self.metrics
         
     async def get_circuit_breaker_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all circuit breakers."""
+        """
+Get status of all circuit breakers."""
         status = {}
         
         for key, circuit_breaker in self.circuit_breakers.items():
@@ -819,7 +837,8 @@ class ErrorRecoveryManager:
         return status
         
     async def force_recover_error(self, error_id: str) -> bool:
-        """Force recovery attempt for a specific error."""
+        """
+Force recovery attempt for a specific error."""
         try:
             if error_id not in self.active_errors:
                 return False
@@ -882,7 +901,8 @@ def create_error_recovery_manager(config: Optional[RecoveryConfig] = None) -> Er
 
 # Decorator for automatic error recovery
 def with_error_recovery(manager: ErrorRecoveryManager, operation: str, max_retries: int = 3):
-    """Decorator to add automatic error recovery to functions."""
+    """
+Decorator to add automatic error recovery to functions."""
     def decorator(func):
         async def wrapper(*args, **kwargs):
             async def retry_func():
@@ -910,7 +930,8 @@ def with_error_recovery(manager: ErrorRecoveryManager, operation: str, max_retri
 # Utility functions
 async def create_resilient_operation(operation_func: Callable, operation_name: str, 
                                    config: Optional[RecoveryConfig] = None) -> Callable:
-    """Create a resilient operation with automatic error recovery."""
+    """
+Create a resilient operation with automatic error recovery."""
     manager = create_error_recovery_manager(config)
     await manager.start()
     

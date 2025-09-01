@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, List, Optional, Any
@@ -24,7 +25,8 @@ from google.api_core import exceptions
 
 @dataclass
 class GCSBucketConfig:
-    """Google Cloud Storage bucket configuration for specific content types."""
+    """
+Google Cloud Storage bucket configuration for specific content types."""
     
     name: str
     location: str = 'EU'
@@ -73,7 +75,8 @@ class GCSConfig:
             self.buckets = self._get_default_bucket_config()
     
     def _get_default_bucket_config(self) -> Dict[str, GCSBucketConfig]:
-        """Default bucket configuration for different content types."""
+        """
+Default bucket configuration for different content types."""
         env = os.getenv('ENVIRONMENT', 'development')
         project_prefix = self.project_id.replace('_', '-').lower()
         
@@ -215,7 +218,8 @@ class GCSConfig:
             return None
     
     def get_client(self) -> storage.Client:
-        """Create and configure Google Cloud Storage client."""
+        """
+Create and configure Google Cloud Storage client."""
         credentials = self.get_credentials()
         
         if credentials:
@@ -228,7 +232,8 @@ class GCSConfig:
             return storage.Client(project=self.project_id)
     
     def validate_configuration(self) -> bool:
-        """Validate GCS configuration and connectivity."""
+        """
+Validate GCS configuration and connectivity."""
         try:
             client = self.get_client()
             # Test connectivity by listing buckets
@@ -257,12 +262,14 @@ class GCSConfig:
         return self.buckets[bucket_key].name
     
     def get_content_types(self) -> List[str]:
-        """Get list of supported content types."""
+        """
+Get list of supported content types."""
         return ['audio', 'video', 'image', 'document', 'model', 
                 'fingerprint', 'upload', 'backup', 'analytics']
     
     def get_storage_class_for_content(self, content_type: str) -> str:
-        """Get appropriate storage class for content type."""
+        """
+Get appropriate storage class for content type."""
         bucket_name = self.get_bucket_name(content_type)
         for bucket_config in self.buckets.values():
             if bucket_config.name == bucket_name:
@@ -270,7 +277,8 @@ class GCSConfig:
         return self.default_storage_class
     
     def get_signed_url_config(self) -> Dict[str, Any]:
-        """Get configuration for signed URL generation."""
+        """
+Get configuration for signed URL generation."""
         return {
             'method': 'GET',
             'expiration': 3600,  # 1 hour
@@ -279,7 +287,8 @@ class GCSConfig:
         }
     
     def get_transfer_manager_config(self) -> Dict[str, Any]:
-        """Get configuration for transfer manager (large file uploads)."""
+        """
+Get configuration for transfer manager (large file uploads)."""
         return {
             'chunk_size': self.chunk_size,
             'timeout': self.timeout,
@@ -288,7 +297,8 @@ class GCSConfig:
         }
     
     def get_bucket_iam_policy(self, bucket_name: str) -> Dict[str, Any]:
-        """Get IAM policy template for bucket security."""
+        """
+Get IAM policy template for bucket security."""
         return {
             'bindings': [
                 {

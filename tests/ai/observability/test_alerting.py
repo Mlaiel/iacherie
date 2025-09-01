@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test Suite for Intelligent Alerting System
+"""
+Test Suite for Intelligent Alerting System
 
 Comprehensive test suite for the alerting system ensuring proper functionality,
 performance, security, and business logic compliance.
@@ -53,6 +55,7 @@ Contact: mlaiel@live.de pour les demandes de licence.
 
 Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -79,10 +82,12 @@ from core.exceptions import ValidationError, ConfigurationError
 
 
 class TestAlertRule:
-    """Test cases for AlertRule dataclass"""
+    """
+Test cases for AlertRule dataclass"""
     
     def test_alert_rule_creation(self):
-        """Test AlertRule creation with all parameters"""
+        """
+Test AlertRule creation with all parameters"""
         rule = AlertRule(
             rule_id="cpu_high",
             name="High CPU Usage",
@@ -165,12 +170,14 @@ class TestAlertManager:
     
     @pytest.fixture
     def alert_manager(self):
-        """Create AlertManager instance for testing"""
+        """
+Create AlertManager instance for testing"""
         return AlertManager()
     
     @pytest.fixture
     def sample_alert_rule(self):
-        """Create sample alert rule for testing"""
+        """
+Create sample alert rule for testing"""
         return AlertRule(
             rule_id="test_rule",
             name="Test Alert Rule",
@@ -195,7 +202,8 @@ class TestAlertManager:
         assert alert_manager.notification_hub is not None
     
     def test_add_alert_rule(self, alert_manager, sample_alert_rule):
-        """Test adding an alert rule"""
+        """
+Test adding an alert rule"""
         result = alert_manager.add_rule(sample_alert_rule)
         
         assert result is True
@@ -211,7 +219,8 @@ class TestAlertManager:
         assert result is False
     
     def test_remove_alert_rule(self, alert_manager, sample_alert_rule):
-        """Test removing an alert rule"""
+        """
+Test removing an alert rule"""
         alert_manager.add_rule(sample_alert_rule)
         
         result = alert_manager.remove_rule("test_rule")
@@ -301,7 +310,8 @@ class TestAlertManager:
         assert alert_manager.is_running is False
     
     def test_suppress_alert(self, alert_manager, sample_alert_rule):
-        """Test alert suppression"""
+        """
+Test alert suppression"""
         alert_manager.add_rule(sample_alert_rule)
         
         # Suppress the alert
@@ -361,17 +371,20 @@ class TestThresholdMonitor:
     
     @pytest.fixture
     def threshold_monitor(self):
-        """Create ThresholdMonitor instance for testing"""
+        """
+Create ThresholdMonitor instance for testing"""
         return ThresholdMonitor()
     
     def test_threshold_monitor_initialization(self, threshold_monitor):
-        """Test ThresholdMonitor initialization"""
+        """
+Test ThresholdMonitor initialization"""
         assert isinstance(threshold_monitor.thresholds, dict)
         assert isinstance(threshold_monitor.metric_history, dict)
         assert isinstance(threshold_monitor.breach_history, list)
     
     def test_add_threshold(self, threshold_monitor):
-        """Test adding a threshold"""
+        """
+Test adding a threshold"""
         result = threshold_monitor.add_threshold(
             metric_name="cpu_usage",
             threshold_value=80.0,
@@ -498,18 +511,21 @@ class TestSecurityAlerts:
     
     @pytest.fixture
     def security_alerts(self):
-        """Create SecurityAlerts instance for testing"""
+        """
+Create SecurityAlerts instance for testing"""
         return SecurityAlerts()
     
     def test_security_alerts_initialization(self, security_alerts):
-        """Test SecurityAlerts initialization"""
+        """
+Test SecurityAlerts initialization"""
         assert isinstance(security_alerts.security_rules, dict)
         assert isinstance(security_alerts.threat_patterns, list)
         assert isinstance(security_alerts.security_incidents, list)
         assert len(security_alerts.threat_patterns) > 0  # Should have default patterns
     
     def test_add_security_rule(self, security_alerts):
-        """Test adding a security rule"""
+        """
+Test adding a security rule"""
         rule = {
             'rule_id': 'failed_login_attempts',
             'name': 'Multiple Failed Logins',
@@ -526,7 +542,8 @@ class TestSecurityAlerts:
         assert 'failed_login_attempts' in security_alerts.security_rules
     
     def test_detect_security_threat_basic(self, security_alerts):
-        """Test basic security threat detection"""
+        """
+Test basic security threat detection"""
         # Add a security rule
         rule = {
             'rule_id': 'suspicious_activity',
@@ -555,7 +572,8 @@ class TestSecurityAlerts:
         assert threats[0]['source_ip'] == '192.168.1.100'
     
     def test_analyze_threat_patterns(self, security_alerts):
-        """Test threat pattern analysis"""
+        """
+Test threat pattern analysis"""
         # Add security incidents
         now = datetime.now(timezone.utc)
         security_alerts.security_incidents.extend([
@@ -596,7 +614,8 @@ class TestSecurityAlerts:
         assert 'data_exfiltration' in analysis['incidents_by_type']
     
     def test_get_security_recommendations(self, security_alerts):
-        """Test getting security recommendations"""
+        """
+Test getting security recommendations"""
         # Add some incidents to analyze
         now = datetime.now(timezone.utc)
         security_alerts.security_incidents.extend([
@@ -619,22 +638,26 @@ class TestSecurityAlerts:
 
 
 class TestBusinessKPIAlerts:
-    """Test cases for BusinessKPIAlerts class"""
+    """
+Test cases for BusinessKPIAlerts class"""
     
     @pytest.fixture
     def business_alerts(self):
-        """Create BusinessKPIAlerts instance for testing"""
+        """
+Create BusinessKPIAlerts instance for testing"""
         return BusinessKPIAlerts()
     
     def test_business_alerts_initialization(self, business_alerts):
-        """Test BusinessKPIAlerts initialization"""
+        """
+Test BusinessKPIAlerts initialization"""
         assert isinstance(business_alerts.kpi_rules, dict)
         assert isinstance(business_alerts.kpi_history, dict)
         assert isinstance(business_alerts.business_events, list)
         assert len(business_alerts.kpi_rules) > 0  # Should have default KPI rules
     
     def test_add_kpi_rule(self, business_alerts):
-        """Test adding a KPI rule"""
+        """
+Test adding a KPI rule"""
         kpi_rule = {
             'kpi_id': 'user_engagement_rate',
             'name': 'User Engagement Rate',
@@ -653,7 +676,8 @@ class TestBusinessKPIAlerts:
         assert 'user_engagement_rate' in business_alerts.kpi_rules
     
     def test_evaluate_kpi_below_threshold(self, business_alerts):
-        """Test KPI evaluation below threshold"""
+        """
+Test KPI evaluation below threshold"""
         # Add KPI rule
         kpi_rule = {
             'kpi_id': 'conversion_rate',
@@ -678,7 +702,8 @@ class TestBusinessKPIAlerts:
         assert alerts[0]['severity'] == AlertSeverity.HIGH
     
     def test_evaluate_kpi_within_threshold(self, business_alerts):
-        """Test KPI evaluation within threshold"""
+        """
+Test KPI evaluation within threshold"""
         # Add KPI rule
         kpi_rule = {
             'kpi_id': 'revenue_growth',
@@ -700,7 +725,8 @@ class TestBusinessKPIAlerts:
         assert len(alerts) == 0  # No alerts should be generated
     
     def test_generate_business_insights(self, business_alerts):
-        """Test business insights generation"""
+        """
+Test business insights generation"""
         # Add some KPI history
         now = datetime.now(timezone.utc)
         business_alerts.kpi_history = {
@@ -724,7 +750,8 @@ class TestBusinessKPIAlerts:
         assert 'growth_metrics' in insights
     
     def test_get_stakeholder_alerts(self, business_alerts):
-        """Test getting alerts for specific stakeholders"""
+        """
+Test getting alerts for specific stakeholders"""
         # Add business events for different stakeholders
         now = datetime.now(timezone.utc)
         business_alerts.business_events.extend([
@@ -762,21 +789,25 @@ class TestBusinessKPIAlerts:
 
 
 class TestEscalationManager:
-    """Test cases for EscalationManager class"""
+    """
+Test cases for EscalationManager class"""
     
     @pytest.fixture
     def escalation_manager(self):
-        """Create EscalationManager instance for testing"""
+        """
+Create EscalationManager instance for testing"""
         return EscalationManager()
     
     def test_escalation_manager_initialization(self, escalation_manager):
-        """Test EscalationManager initialization"""
+        """
+Test EscalationManager initialization"""
         assert isinstance(escalation_manager.escalation_rules, dict)
         assert isinstance(escalation_manager.active_escalations, dict)
         assert isinstance(escalation_manager.escalation_history, list)
     
     def test_add_escalation_rule(self, escalation_manager):
-        """Test adding an escalation rule"""
+        """
+Test adding an escalation rule"""
         rule = {
             'rule_id': 'critical_system_alert',
             'name': 'Critical System Alert Escalation',
@@ -796,7 +827,8 @@ class TestEscalationManager:
     
     @pytest.mark.asyncio
     async def test_trigger_escalation(self, escalation_manager):
-        """Test triggering an escalation"""
+        """
+Test triggering an escalation"""
         # Add escalation rule
         rule = {
             'rule_id': 'high_priority_alert',
@@ -831,7 +863,8 @@ class TestEscalationManager:
             assert escalation['escalation_rule_id'] == 'high_priority_alert'
     
     def test_resolve_escalation(self, escalation_manager):
-        """Test resolving an escalation"""
+        """
+Test resolving an escalation"""
         # Add active escalation
         escalation_manager.active_escalations['alert_456'] = {
             'alert_id': 'alert_456',
@@ -852,7 +885,8 @@ class TestEscalationManager:
         assert history_entry['status'] == 'resolved'
     
     def test_get_escalation_statistics(self, escalation_manager):
-        """Test getting escalation statistics"""
+        """
+Test getting escalation statistics"""
         # Add escalation history
         now = datetime.now(timezone.utc)
         escalation_manager.escalation_history.extend([
@@ -887,22 +921,26 @@ class TestEscalationManager:
 
 
 class TestNotificationHub:
-    """Test cases for NotificationHub class"""
+    """
+Test cases for NotificationHub class"""
     
     @pytest.fixture
     def notification_hub(self):
-        """Create NotificationHub instance for testing"""
+        """
+Create NotificationHub instance for testing"""
         return NotificationHub()
     
     def test_notification_hub_initialization(self, notification_hub):
-        """Test NotificationHub initialization"""
+        """
+Test NotificationHub initialization"""
         assert isinstance(notification_hub.channels, dict)
         assert isinstance(notification_hub.notification_queue, list)
         assert isinstance(notification_hub.sent_notifications, list)
         assert notification_hub.is_running is False
     
     def test_configure_email_channel(self, notification_hub):
-        """Test configuring email channel"""
+        """
+Test configuring email channel"""
         email_config = {
             'smtp_server': 'smtp.gmail.com',
             'smtp_port': 587,
@@ -916,7 +954,8 @@ class TestNotificationHub:
         assert AlertChannel.EMAIL in notification_hub.channels
     
     def test_configure_slack_channel(self, notification_hub):
-        """Test configuring Slack channel"""
+        """
+Test configuring Slack channel"""
         slack_config = {
             'webhook_url': 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
             'default_channel': '#alerts',
@@ -929,7 +968,8 @@ class TestNotificationHub:
     
     @patch('smtplib.SMTP')
     def test_send_email_notification(self, mock_smtp, notification_hub):
-        """Test sending email notification"""
+        """
+Test sending email notification"""
         # Configure email channel
         email_config = {
             'smtp_server': 'smtp.example.com',
@@ -966,7 +1006,8 @@ class TestNotificationHub:
     
     @patch('requests.post')
     def test_send_slack_notification(self, mock_post, notification_hub):
-        """Test sending Slack notification"""
+        """
+Test sending Slack notification"""
         # Configure Slack channel
         slack_config = {
             'webhook_url': 'https://hooks.slack.com/services/TEST/WEBHOOK/URL',
@@ -1004,7 +1045,8 @@ class TestNotificationHub:
         assert alert['alert_id'] in payload['text']
     
     def test_queue_notification(self, notification_hub):
-        """Test queuing a notification"""
+        """
+Test queuing a notification"""
         alert = {
             'alert_id': 'queued_alert',
             'rule_id': 'queue_test_rule',
@@ -1029,7 +1071,8 @@ class TestNotificationHub:
         assert queued_notification['priority'] == 1
     
     def test_get_notification_statistics(self, notification_hub):
-        """Test getting notification statistics"""
+        """
+Test getting notification statistics"""
         # Add some sent notifications
         now = datetime.now(timezone.utc)
         notification_hub.sent_notifications.extend([
@@ -1072,11 +1115,13 @@ class TestNotificationHub:
 
 # Integration Tests
 class TestAlertingSystemIntegration:
-    """Integration tests for the complete alerting system"""
+    """
+Integration tests for the complete alerting system"""
     
     @pytest.fixture
     def full_alerting_system(self):
-        """Create complete alerting system for integration testing"""
+        """
+Create complete alerting system for integration testing"""
         alert_manager = AlertManager()
         
         # Configure notification hub

@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintingEventType(Enum):
-    """Types d'événements de fingerprinting"""
+    """
+Types d'événements de fingerprinting"""
+
     FINGERPRINT_GENERATED = "fingerprint_generated"
     SIMILARITY_DETECTED = "similarity_detected"
     QUALITY_ALERT = "quality_alert"
@@ -49,6 +52,7 @@ class FingerprintingEventType(Enum):
 
 class FingerprintQuality(Enum):
     """Niveaux de qualité d'empreintes"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     MEDIUM = "medium"
@@ -458,7 +462,8 @@ class FingerprintingIntegrationManager:
         content_type: str, 
         quality_level: FingerprintQuality
     ) -> List[str]:
-        """Retourne des suggestions d'amélioration de qualité"""
+        """
+Retourne des suggestions d'amélioration de qualité"""
         
         suggestions = {
             "audio": {
@@ -555,7 +560,8 @@ class FingerprintingIntegrationManager:
         return [dict(row) for row in rows]
 
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques du système de fingerprinting"""
+        """
+Retourne les métriques du système de fingerprinting"""
         
         # Métriques en temps réel depuis Redis
         redis_metrics = await self.redis.hgetall("fingerprint:metrics")
@@ -650,7 +656,8 @@ class FingerprintingIntegrationManager:
             await conn.execute(query, content_id, json.dumps(evidence_data))
 
     async def _notify_legal_team(self, data: FingerprintingNotificationData, evidence_data: Dict[str, Any]):
-        """Notifie l'équipe légale"""
+        """
+Notifie l'équipe légale"""
         logger.info(f"Notification équipe légale pour violation: {data.content_id}")
         # Intégration avec le système de notification légale
 

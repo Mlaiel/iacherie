@@ -5,9 +5,10 @@ Advanced audio transformation, conversion, and enhancement capabilities
 for creators' audio content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import os
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
     """Supported audio formats."""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -48,6 +50,7 @@ class AudioFormat(Enum):
 
 class AudioQuality(Enum):
     """Audio quality presets."""
+
     LOW = "low"          # 128 kbps
     MEDIUM = "medium"    # 192 kbps
     HIGH = "high"        # 256 kbps
@@ -57,6 +60,7 @@ class AudioQuality(Enum):
 
 class AudioCodec(Enum):
     """Audio codecs."""
+
     MP3_LAME = "libmp3lame"
     AAC = "aac"
     FLAC = "flac"
@@ -84,7 +88,8 @@ class AudioSettings:
 
 @dataclass
 class AudioMetadata:
-    """Audio file metadata."""
+    """
+Audio file metadata."""
     title: Optional[str] = None
     artist: Optional[str] = None
     album: Optional[str] = None
@@ -665,7 +670,8 @@ class AudioTransformer:
         settings: AudioSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
+        """
+Generate output file path."""
         if requested_output:
             return Path(requested_output)
         
@@ -705,7 +711,8 @@ class AudioConverter:
 
 
 class AudioEnhancer:
-    """Simplified audio enhancer interface."""
+    """
+Simplified audio enhancer interface."""
     
     def __init__(self, transformer: Optional[AudioTransformer] = None):
         self.transformer = transformer or AudioTransformer()
@@ -716,5 +723,6 @@ class AudioEnhancer:
         output_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Enhance audio quality."""
+        """
+Enhance audio quality."""
         return await self.transformer.enhance(input_path, output_path, options)

@@ -2,7 +2,7 @@
 =========================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 Unauthorized use, copying or distribution prohibited.
@@ -11,6 +11,7 @@ Advanced AI-powered violation detection system for content protection.
 Uses multiple algorithms including similarity matching, metadata analysis,
 and machine learning models to detect unauthorized content usage.
 """
+
 import logging
 import hashlib
 from datetime import datetime
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ViolationMatch:
-    """Represents a detected violation with detailed matching information."""
+    """
+Represents a detected violation with detailed matching information."""
     
     original_fingerprint_id: str
     detected_url: str
@@ -40,7 +42,8 @@ class ViolationMatch:
 
 @dataclass
 class ContentSignature:
-    """Multi-dimensional content signature for advanced matching."""
+    """
+Multi-dimensional content signature for advanced matching."""
     
     content_id: str
     content_type: ContentType
@@ -314,7 +317,8 @@ class ViolationDetector:
         )
     
     def _calculate_weighted_similarity(self, matching_results: List[Tuple[str, float]]) -> float:
-        """Calculate weighted similarity score from multiple matching algorithms."""
+        """
+Calculate weighted similarity score from multiple matching algorithms."""
         
         # Algorithm weights based on reliability and accuracy
         algorithm_weights = {
@@ -340,7 +344,8 @@ class ViolationDetector:
         return weighted_sum / total_weights if total_weights > 0 else 0.0
     
     def _determine_confidence_level(self, matching_results: List[Tuple[str, float]], total_score: float) -> str:
-        """Determine confidence level based on matching results."""
+        """
+Determine confidence level based on matching results."""
         
         # High confidence: exact hash or multiple strong matches
         if any(alg == 'exact_hash' for alg, _ in matching_results):
@@ -357,7 +362,8 @@ class ViolationDetector:
         return 'low'
     
     def _determine_match_type(self, matching_results: List[Tuple[str, float]]) -> str:
-        """Determine the type of match detected."""
+        """
+Determine the type of match detected."""
         
         algorithms = [alg for alg, _ in matching_results]
         
@@ -373,7 +379,8 @@ class ViolationDetector:
         return 'partial'
     
     def _assess_violation_severity(self, total_score: float, matching_results: List[Tuple[str, float]]) -> str:
-        """Assess the severity of the detected violation."""
+        """
+Assess the severity of the detected violation."""
         
         if total_score > 0.95:
             return 'critical'
@@ -385,7 +392,8 @@ class ViolationDetector:
             return 'low'
     
     def _meets_detection_threshold(self, match: ViolationMatch) -> bool:
-        """Check if violation match meets minimum detection thresholds."""
+        """
+Check if violation match meets minimum detection thresholds."""
         
         content_type = self._determine_content_type_from_url(match.detected_url)
         threshold = self.similarity_thresholds.get(content_type, 0.80)
@@ -399,7 +407,8 @@ class ViolationDetector:
         return match.similarity_score >= threshold
     
     def create_violation_record(self, crawled_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a structured violation record for database storage."""
+        """
+Create a structured violation record for database storage."""
         
         return {
             'detected_url': crawled_content.get('url'),
@@ -419,7 +428,8 @@ class ViolationDetector:
     # Helper methods
     
     def _determine_content_type(self, content: Dict[str, Any]) -> ContentType:
-        """Determine content type from crawled content."""
+        """
+Determine content type from crawled content."""
         
         content_type_str = content.get('content_type', '').lower()
         
@@ -435,7 +445,8 @@ class ViolationDetector:
             return ContentType.MIXED
     
     def _determine_content_type_from_url(self, url: str) -> ContentType:
-        """Determine content type from URL patterns."""
+        """
+Determine content type from URL patterns."""
         
         url_lower = url.lower()
         
@@ -449,7 +460,8 @@ class ViolationDetector:
             return ContentType.MIXED
     
     def _compute_primary_hash(self, content: Dict[str, Any]) -> str:
-        """Compute primary content hash."""
+        """
+Compute primary content hash."""
         
         # Use URL and key metadata for hash
         hash_input = f"{content.get('url', '')}{content.get('title', '')}{content.get('file_size', '')}"
@@ -469,7 +481,8 @@ class ViolationDetector:
         }
     
     def _extract_platform_from_url(self, url: str) -> str:
-        """Extract platform name from URL."""
+        """
+Extract platform name from URL."""
         
         url_lower = url.lower()
         
@@ -485,7 +498,8 @@ class ViolationDetector:
             return 'unknown'
     
     def _compare_durations(self, duration1: int, duration2: int) -> float:
-        """Compare duration similarity."""
+        """
+Compare duration similarity."""
         
         if not duration1 or not duration2:
             return 0.0
@@ -496,7 +510,8 @@ class ViolationDetector:
         return 1.0 - (diff / max_duration)
     
     def _load_protected_signature(self, fingerprint_id: str) -> Optional[ContentSignature]:
-        """Load protected content signature from database."""
+        """
+Load protected content signature from database."""
         
         # Implementation would load from database
         # This is a placeholder for the actual database query
@@ -520,12 +535,14 @@ class AudioViolationDetector:
     """Specialized detector for audio content violations."""
     
     def extract_fingerprint(self, content: Dict[str, Any]) -> Optional[bytes]:
-        """Extract audio fingerprint from content."""
+        """
+Extract audio fingerprint from content."""
         # Implementation would use libraries like chromaprint
         return None
     
     def compare_fingerprints(self, fp1: Optional[bytes], fp2: Optional[bytes]) -> float:
-        """Compare two audio fingerprints."""
+        """
+Compare two audio fingerprints."""
         if not fp1 or not fp2:
             return 0.0
         # Implementation would compare fingerprints
@@ -533,15 +550,18 @@ class AudioViolationDetector:
 
 
 class VideoViolationDetector:
-    """Specialized detector for video content violations."""
+    """
+Specialized detector for video content violations."""
     
     def extract_visual_features(self, content: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract visual features from video content."""
+        """
+Extract visual features from video content."""
         # Implementation would use OpenCV/YOLO for frame analysis
         return None
     
     def compare_visual_features(self, feat1: Optional[np.ndarray], feat2: Optional[np.ndarray]) -> float:
-        """Compare visual features between videos."""
+        """
+Compare visual features between videos."""
         if feat1 is None or feat2 is None:
             return 0.0
         # Implementation would compare feature vectors
@@ -549,27 +569,32 @@ class VideoViolationDetector:
 
 
 class ImageViolationDetector:
-    """Specialized detector for image content violations."""
+    """
+Specialized detector for image content violations."""
     
     def compute_perceptual_hash(self, content: Dict[str, Any]) -> Optional[str]:
-        """Compute perceptual hash for image."""
+        """
+Compute perceptual hash for image."""
         # Implementation would use pHash or similar
         return None
     
     def extract_visual_features(self, content: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract visual features from image."""
+        """
+Extract visual features from image."""
         # Implementation would use CLIP or similar
         return None
     
     def compare_perceptual_hashes(self, hash1: Optional[str], hash2: Optional[str]) -> float:
-        """Compare perceptual hashes."""
+        """
+Compare perceptual hashes."""
         if not hash1 or not hash2:
             return 0.0
         # Implementation would compare hashes
         return 0.0
     
     def compare_visual_features(self, feat1: Optional[np.ndarray], feat2: Optional[np.ndarray]) -> float:
-        """Compare visual features."""
+        """
+Compare visual features."""
         if feat1 is None or feat2 is None:
             return 0.0
         # Implementation would compare feature vectors
@@ -577,15 +602,18 @@ class ImageViolationDetector:
 
 
 class TextViolationDetector:
-    """Specialized detector for text content violations."""
+    """
+Specialized detector for text content violations."""
     
     def extract_text_embedding(self, content: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract text embedding from content."""
+        """
+Extract text embedding from content."""
         # Implementation would use BERT/RoBERTa
         return None
     
     def compare_text_embeddings(self, emb1: Optional[np.ndarray], emb2: Optional[np.ndarray]) -> float:
-        """Compare text embeddings."""
+        """
+Compare text embeddings."""
         if emb1 is None or emb2 is None:
             return 0.0
         # Implementation would compute cosine similarity
@@ -593,10 +621,12 @@ class TextViolationDetector:
 
 
 class MetadataAnalyzer:
-    """Analyzer for metadata-based matching."""
+    """
+Analyzer for metadata-based matching."""
     
     def compare_metadata(self, meta1: Optional[Dict[str, Any]], meta2: Optional[Dict[str, Any]]) -> float:
-        """Compare metadata signatures."""
+        """
+Compare metadata signatures."""
         if not meta1 or not meta2:
             return 0.0
         
@@ -612,7 +642,8 @@ class MetadataAnalyzer:
         return matches / total_fields if total_fields > 0 else 0.0
     
     def extract_matching_fields(self, meta1: Dict[str, Any], meta2: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract fields that match between metadata."""
+        """
+Extract fields that match between metadata."""
         matches = {}
         
         for key in ['title', 'author', 'duration', 'file_size']:

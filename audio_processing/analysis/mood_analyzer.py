@@ -4,8 +4,9 @@ Advanced mood and emotion analysis engine for identifying emotional
 characteristics and affective content in audio signals.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List
@@ -14,7 +15,9 @@ import librosa
 
 
 class MoodCategory(Enum):
-    """Musical mood categories"""
+    """
+Musical mood categories"""
+
     HAPPY = "happy"
     SAD = "sad"
     ENERGETIC = "energetic"
@@ -116,7 +119,8 @@ class MoodAnalyzer:
         return features
     
     def _compute_mood_score(self, features: Dict[str, float], characteristics: Dict) -> float:
-        """Compute mood score based on characteristics"""
+        """
+Compute mood score based on characteristics"""
         score = 0.0
         
         # Tempo score
@@ -148,7 +152,8 @@ class MoodAnalyzer:
         return min(1.0, score)
     
     def _compute_valence(self, features: Dict[str, float]) -> float:
-        """Compute valence (positive/negative emotion)"""
+        """
+Compute valence (positive/negative emotion)"""
         # Higher tempo, energy, and brightness = more positive
         tempo_valence = min(1.0, features.get('tempo', 120) / 150.0)
         energy_valence = features.get('energy', 0.5)
@@ -158,7 +163,8 @@ class MoodAnalyzer:
         return valence
     
     def _compute_arousal(self, features: Dict[str, float]) -> float:
-        """Compute arousal (energy/activation level)"""
+        """
+Compute arousal (energy/activation level)"""
         # Energy and tempo contribute to arousal
         energy_arousal = features.get('energy', 0.5)
         tempo_arousal = min(1.0, features.get('tempo', 120) / 180.0)
@@ -168,7 +174,8 @@ class MoodAnalyzer:
         return min(1.0, arousal)
     
     def _compute_dominance(self, features: Dict[str, float]) -> float:
-        """Compute dominance (control/power)"""
+        """
+Compute dominance (control/power)"""
         # Energy and low-frequency content contribute to dominance
         energy_dominance = features.get('energy', 0.5)
         bass_dominance = 1.0 - min(1.0, features.get('brightness', 1000) / 2000.0)

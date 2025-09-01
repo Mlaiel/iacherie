@@ -12,6 +12,7 @@ This module provides a complete validation of our enterprise security implementa
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import json
 import os
@@ -29,14 +30,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SecurityValidationSuite:
-    """Comprehensive security validation suite"""
+    """
+Comprehensive security validation suite"""
     
     def __init__(self):
         self.test_results = {}
         self.setup_test_environment()
     
     def setup_test_environment(self):
-        """Setup test environment with mock data"""
+        """
+Setup test environment with mock data"""
         logger.info("Setting up test environment...")
         
         # Ensure test directories exist

@@ -4,7 +4,7 @@ Advanced benchmarking and competitive analysis system for content creators and i
 Provides comprehensive performance comparison, industry standards, and competitive intelligence.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 import statistics
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class BenchmarkCategory(Enum):
-    """Benchmarking categories"""
+    """
+Benchmarking categories"""
+
     CONTENT_QUALITY = "content_quality"
     ENGAGEMENT_METRICS = "engagement_metrics"
     AUDIENCE_GROWTH = "audience_growth"
@@ -48,6 +51,7 @@ class BenchmarkCategory(Enum):
 
 class CompetitorTier(Enum):
     """Competitor tiers"""
+
     DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     INDUSTRY_LEADER = "industry_leader"
@@ -58,6 +62,7 @@ class CompetitorTier(Enum):
 
 class BenchmarkMetric(Enum):
     """Benchmark metrics"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     FOLLOWER_GROWTH = "follower_growth"
     CONTENT_FREQUENCY = "content_frequency"
@@ -72,6 +77,7 @@ class BenchmarkMetric(Enum):
 
 class PerformanceLevel(Enum):
     """Performance levels"""
+
     EXCEPTIONAL = "exceptional"      # Top 5%
     EXCELLENT = "excellent"          # Top 10%
     ABOVE_AVERAGE = "above_average"  # Top 25%
@@ -83,6 +89,7 @@ class PerformanceLevel(Enum):
 
 class IndustryVertical(Enum):
     """Industry verticals"""
+
     LIFESTYLE = "lifestyle"
     FITNESS = "fitness"
     BEAUTY = "beauty"
@@ -138,7 +145,8 @@ class CompetitorProfile:
 
 @dataclass
 class IndustryBenchmark:
-    """Industry benchmark data"""
+    """
+Industry benchmark data"""
     industry: IndustryVertical
     metric: BenchmarkMetric
     
@@ -166,7 +174,8 @@ class IndustryBenchmark:
 
 @dataclass
 class PerformanceComparison:
-    """Performance comparison results"""
+    """
+Performance comparison results"""
     metric: BenchmarkMetric
     user_value: float
     industry_benchmark: IndustryBenchmark
@@ -316,7 +325,8 @@ class BenchmarkingEngine(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize benchmarking engine"""
+        """
+Initialize benchmarking engine"""
         super().__init__(config or ModelConfig(
             model_name="benchmarking_engine",
             provider="internal",
@@ -401,7 +411,8 @@ class BenchmarkingEngine(BaseAIModel):
         }
     
     def _initialize_competitor_database(self):
-        """Initialize competitor database"""
+        """
+Initialize competitor database"""
         self.competitor_database = {
             IndustryVertical.LIFESTYLE: [
                 {
@@ -442,7 +453,8 @@ class BenchmarkingEngine(BaseAIModel):
         }
     
     def _initialize_performance_standards(self):
-        """Initialize performance level standards"""
+        """
+Initialize performance level standards"""
         self.performance_standards = {
             PerformanceLevel.EXCEPTIONAL: {'percentile_min': 95},
             PerformanceLevel.EXCELLENT: {'percentile_min': 90},

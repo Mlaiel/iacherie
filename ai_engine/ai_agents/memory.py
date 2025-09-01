@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class MemoryType(Enum):
-    """Types of memory storage."""
+    """
+Types of memory storage."""
+
     SHORT_TERM = "short_term"
     LONG_TERM = "long_term"
     WORKING = "working"
@@ -37,6 +40,7 @@ class MemoryType(Enum):
 
 class MemoryImportance(Enum):
     """Memory importance levels."""
+
     CRITICAL = 5
     HIGH = 4
     MEDIUM = 3
@@ -46,7 +50,8 @@ class MemoryImportance(Enum):
 
 @dataclass
 class MemoryItem:
-    """A single memory item."""
+    """
+A single memory item."""
     id: str
     content: Any
     memory_type: MemoryType
@@ -62,7 +67,8 @@ class MemoryItem:
 
 @dataclass
 class MemoryQuery:
-    """Query for memory retrieval."""
+    """
+Query for memory retrieval."""
     content: Optional[str] = None
     memory_type: Optional[MemoryType] = None
     importance_min: Optional[MemoryImportance] = None
@@ -73,14 +79,16 @@ class MemoryQuery:
 
 
 class MemoryManager:
-    """Advanced memory management system for AI agents."""
+    """
+Advanced memory management system for AI agents."""
     
     def __init__(self, 
                  max_short_term: int = 100,
                  max_working: int = 50,
                  max_long_term: int = 10000,
                  decay_factor: float = 0.95):
-        """Initialize the memory manager."""
+        """
+Initialize the memory manager."""
         self.max_short_term = max_short_term
         self.max_working = max_working
         self.max_long_term = max_long_term
@@ -460,7 +468,8 @@ class WorkingMemory:
     """Working memory for active processing."""
     
     def __init__(self, capacity: int = 7):
-        """Initialize working memory with limited capacity."""
+        """
+Initialize working memory with limited capacity."""
         self.capacity = capacity
         self.items: List[MemoryItem] = []
         self.memory_manager = MemoryManager()
@@ -492,11 +501,13 @@ class WorkingMemory:
         return memory_id
     
     def get_current_context(self) -> List[Any]:
-        """Get current working memory context."""
+        """
+Get current working memory context."""
         return [item.content for item in self.items]
     
     def clear(self):
-        """Clear working memory."""
+        """
+Clear working memory."""
         self.items.clear()
         logger.info("Working memory cleared")
 

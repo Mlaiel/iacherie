@@ -17,7 +17,8 @@ from tests.utils.mock_api_server import ensure_api_server
 @pytest.mark.performance
 @pytest.mark.asyncio
 async def test_health_endpoint_sub_100ms():
-    """Test health endpoint responds in <100ms."""
+    """
+Test health endpoint responds in <100ms."""
     # Ensure API server is available
     await ensure_api_server()
     

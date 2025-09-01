@@ -17,7 +17,7 @@ Technical Infrastructure:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 ==================================================
@@ -38,6 +38,7 @@ Business Logic Flow:
 User Registration → Profile Enhancement → Platform Integration → Collaboration Setup → 
 Monetization Configuration → Content Authorization → Analytics Tracking → Privacy Compliance
 """
+
 import asyncio
 import logging
 import traceback
@@ -67,7 +68,9 @@ logger = logging.getLogger(__name__)
 
 
 class UserType(Enum):
-    """User type enumeration for platform roles"""
+    """
+User type enumeration for platform roles"""
+
     CREATOR = "creator"
     MUSICIAN = "musician"
     BLOGGER = "blogger"
@@ -88,6 +91,7 @@ class UserType(Enum):
 
 class UserStatus(Enum):
     """User account status"""
+
     PENDING = "pending"
     ACTIVE = "active"
     VERIFIED = "verified"
@@ -99,6 +103,7 @@ class UserStatus(Enum):
 
 class CreatorTier(Enum):
     """Creator tier levels for platform features"""
+
     FREE = "free"
     STARTER = "starter"
     PROFESSIONAL = "professional"
@@ -109,6 +114,7 @@ class CreatorTier(Enum):
 
 class ContentGenre(Enum):
     """Content genres for creator specialization"""
+
     MUSIC = "music"
     PODCAST = "podcast"
     COMEDY = "comedy"
@@ -128,6 +134,7 @@ class ContentGenre(Enum):
 
 class PlatformType(Enum):
     """Supported platform integrations"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -144,6 +151,7 @@ class PlatformType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaborations between creators"""
+
     FEATURING = "featuring"
     REMIX = "remix"
     COVER = "cover"
@@ -185,7 +193,8 @@ class UserProfile:
 
 @dataclass
 class CreatorProfile:
-    """Enhanced creator-specific profile"""
+    """
+Enhanced creator-specific profile"""
     creator_id: str
     user_id: str
     creator_tier: CreatorTier = CreatorTier.FREE
@@ -207,7 +216,8 @@ class CreatorProfile:
 
 @dataclass
 class PlatformIntegration:
-    """Platform integration configuration"""
+    """
+Platform integration configuration"""
     integration_id: str
     user_id: str
     platform_type: PlatformType
@@ -261,11 +271,13 @@ class UserMigrationConfig:
 
 
 class UserDataValidator:
-    """Advanced user data validation and security"""
+    """
+Advanced user data validation and security"""
     
     @staticmethod
     def validate_email(email: str) -> bool:
-        """Validate email address format and deliverability"""
+        """
+Validate email address format and deliverability"""
         try:
             valid = validate_email(email)
             return True
@@ -274,7 +286,8 @@ class UserDataValidator:
     
     @staticmethod
     def validate_username(username: str) -> bool:
-        """Validate username format and restrictions"""
+        """
+Validate username format and restrictions"""
         if not username or len(username) < 3 or len(username) > 30:
             return False
         
@@ -284,7 +297,8 @@ class UserDataValidator:
     
     @staticmethod
     def validate_password(password: str) -> Dict[str, Any]:
-        """Validate password strength and return requirements"""
+        """
+Validate password strength and return requirements"""
         requirements = {
             'min_length': len(password) >= 8,
             'has_uppercase': bool(re.search(r'[A-Z]', password)),
@@ -318,12 +332,14 @@ class UserDataValidator:
     
     @staticmethod
     def verify_password(password: str, hashed: str) -> bool:
-        """Verify password against hash"""
+        """
+Verify password against hash"""
         return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
 
 
 class UserSecurityManager:
-    """User security and authentication management"""
+    """
+User security and authentication management"""
     
     def __init__(self, secret_key: str):
         self.secret_key = secret_key
@@ -341,7 +357,8 @@ class UserSecurityManager:
         return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
     
     def generate_refresh_token(self, user_id: str) -> str:
-        """Generate refresh token for token renewal"""
+        """
+Generate refresh token for token renewal"""
         payload = {
             'user_id': user_id,
             'exp': datetime.utcnow() + timedelta(days=30),
@@ -352,7 +369,8 @@ class UserSecurityManager:
         return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
     
     def verify_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Verify and decode JWT token"""
+        """
+Verify and decode JWT token"""
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return payload
@@ -368,7 +386,8 @@ class UserSecurityManager:
         return secrets.token_urlsafe(32)
     
     def generate_email_verification_token(self, email: str) -> str:
-        """Generate email verification token"""
+        """
+Generate email verification token"""
         payload = {
             'email': email,
             'exp': datetime.utcnow() + timedelta(hours=24),
@@ -379,7 +398,8 @@ class UserSecurityManager:
 
 
 class UserMigration(BaseMigration):
-    """Main user migration class for comprehensive user system evolution"""
+    """
+Main user migration class for comprehensive user system evolution"""
     
     def __init__(self, version: str, description: str, config: Optional[UserMigrationConfig] = None):
         super().__init__(version, description)
@@ -516,7 +536,8 @@ class UserMigration(BaseMigration):
         session.commit()
     
     async def _migrate_user_profiles(self, session: Session):
-        """Migrate existing user data to enhanced schema"""
+        """
+Migrate existing user data to enhanced schema"""
         # Check if old users table exists
         check_table_sql = """
         SELECT EXISTS (
@@ -568,7 +589,8 @@ class UserMigration(BaseMigration):
         session.commit()
     
     async def _enhance_security_features(self, session: Session):
-        """Enhance user security features and settings"""
+        """
+Enhance user security features and settings"""
         # Update default privacy settings
         privacy_update_sql = """
         UPDATE users_enhanced 
@@ -603,7 +625,8 @@ class UserMigration(BaseMigration):
         session.commit()
     
     async def _update_user_indexes(self, session: Session):
-        """Update and optimize user-related indexes"""
+        """
+Update and optimize user-related indexes"""
         index_sql = """
         -- Performance indexes for user queries
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_username 
@@ -669,7 +692,8 @@ class UserMigration(BaseMigration):
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback user migration changes"""
+        """
+Rollback user migration changes"""
         try:
             # Drop new tables
             rollback_sql = """
@@ -787,7 +811,8 @@ class CreatorMigration(UserMigration):
 
 
 class CollaborationMigration(BaseMigration):
-    """Collaboration system migration for enhanced team features"""
+    """
+Collaboration system migration for enhanced team features"""
     
     def __init__(self, version: str, description: str):
         super().__init__(version, description)
@@ -888,7 +913,8 @@ class CollaborationMigration(BaseMigration):
         session.commit()
     
     async def _setup_collaboration_workflows(self, session: Session):
-        """Set up collaboration workflow automations"""
+        """
+Set up collaboration workflow automations"""
         workflow_setup = """
         -- Create default collaboration templates
         CREATE TABLE IF NOT EXISTS collaboration_templates (
@@ -912,7 +938,8 @@ class CollaborationMigration(BaseMigration):
         session.commit()
     
     async def _create_collaboration_indexes(self, session: Session):
-        """Create indexes for collaboration tables"""
+        """
+Create indexes for collaboration tables"""
         index_sql = """
         -- Collaboration request indexes
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_collaboration_requests_initiator 
@@ -956,7 +983,8 @@ class CollaborationMigration(BaseMigration):
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback collaboration migration"""
+        """
+Rollback collaboration migration"""
         try:
             rollback_sql = """
             DROP TABLE IF EXISTS collaboration_messages CASCADE;

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests de reporting pour le système d'évaluation de qualité IA.
+"""
+Tests de reporting pour le système d'évaluation de qualité IA.
 Module de test complet pour la validation du système de reporting professionnel.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 Développement de Systèmes IA Professionnels
 """
+
 import pytest
 import sys
 import os
@@ -113,12 +116,14 @@ class TestReportGenerator:
     
     @pytest.fixture
     def report_generator(self):
-        """Fixture pour le générateur de rapports."""
+        """
+Fixture pour le générateur de rapports."""
         return ReportGenerator()
     
     @pytest.fixture
     def comprehensive_report_config(self):
-        """Configuration complète de rapport pour les tests."""
+        """
+Configuration complète de rapport pour les tests."""
         return {
             'report_id': 'comprehensive_analysis_2025_08_03',
             'report_type': 'comprehensive_analysis',
@@ -200,7 +205,8 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_comprehensive_report_generation(self, report_generator, comprehensive_report_config):
-        """Test de génération de rapport complet."""
+        """
+Test de génération de rapport complet."""
         result = await report_generator.generate_report(comprehensive_report_config)
         
         # Vérification de la structure de résultat
@@ -224,7 +230,8 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_report_with_real_data_simulation(self, report_generator):
-        """Test de génération de rapport avec simulation de données réelles."""
+        """
+Test de génération de rapport avec simulation de données réelles."""
         # Simulation de données réelles d'analyse
         real_data_config = {
             'report_id': 'real_data_simulation_report',
@@ -296,7 +303,8 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_report_generation_performance(self, report_generator):
-        """Test de performance de génération de rapport."""
+        """
+Test de performance de génération de rapport."""
         import time
         
         performance_config = {
@@ -337,11 +345,13 @@ class TestAnalyticsReporter:
     
     @pytest.fixture
     def analytics_reporter(self):
-        """Fixture pour le reporter d'analytics."""
+        """
+Fixture pour le reporter d'analytics."""
         return AnalyticsReporter()
     
     def test_content_analytics_report(self, analytics_reporter):
-        """Test de rapport d'analytics de contenu."""
+        """
+Test de rapport d'analytics de contenu."""
         analytics_data = {
             'content_performance': {
                 'total_content_analyzed': 2150,
@@ -427,7 +437,8 @@ class TestAnalyticsReporter:
             assert len(analytics_data['content_performance']['content_types']) == 3
     
     def test_user_behavior_analytics(self, analytics_reporter):
-        """Test d'analytics de comportement utilisateur."""
+        """
+Test d'analytics de comportement utilisateur."""
         user_behavior_data = {
             'audience_demographics': {
                 'age_distribution': {
@@ -505,15 +516,18 @@ class TestAnalyticsReporter:
 
 
 class TestPerformanceReporter:
-    """Tests pour le reporter de performance."""
+    """
+Tests pour le reporter de performance."""
     
     @pytest.fixture
     def performance_reporter(self):
-        """Fixture pour le reporter de performance."""
+        """
+Fixture pour le reporter de performance."""
         return PerformanceReporter()
     
     def test_system_performance_report(self, performance_reporter):
-        """Test de rapport de performance système."""
+        """
+Test de rapport de performance système."""
         performance_data = {
             'system_metrics': {
                 'processing_performance': {
@@ -605,7 +619,8 @@ class TestPerformanceReporter:
             assert metrics['error_rate'] < 1.0  # Faible taux d'erreur
     
     def test_scalability_analysis_report(self, performance_reporter):
-        """Test de rapport d'analyse de scalabilité."""
+        """
+Test de rapport d'analyse de scalabilité."""
         scalability_data = {
             'load_testing_results': {
                 'concurrent_users': [10, 25, 50, 100, 200, 500],
@@ -663,15 +678,18 @@ class TestPerformanceReporter:
 
 
 class TestBusinessReporter:
-    """Tests pour le reporter business."""
+    """
+Tests pour le reporter business."""
     
     @pytest.fixture
     def business_reporter(self):
-        """Fixture pour le reporter business."""
+        """
+Fixture pour le reporter business."""
         return BusinessReporter()
     
     def test_roi_analysis_report(self, business_reporter):
-        """Test de rapport d'analyse ROI."""
+        """
+Test de rapport d'analyse ROI."""
         roi_data = {
             'financial_metrics': {
                 'revenue_generated': {
@@ -757,7 +775,8 @@ class TestBusinessReporter:
             assert abs(calculated_roi - expected_roi) < 5.0  # Marge d'erreur acceptable
     
     def test_market_analysis_report(self, business_reporter):
-        """Test de rapport d'analyse de marché."""
+        """
+Test de rapport d'analyse de marché."""
         market_data = {
             'market_position': {
                 'market_share': 8.5,           # %
@@ -820,15 +839,18 @@ class TestBusinessReporter:
 
 
 class TestReportExporter:
-    """Tests pour l'exporteur de rapports."""
+    """
+Tests pour l'exporteur de rapports."""
     
     @pytest.fixture
     def report_exporter(self):
-        """Fixture pour l'exporteur de rapports."""
+        """
+Fixture pour l'exporteur de rapports."""
         return ReportExporter()
     
     def test_pdf_export(self, report_exporter):
-        """Test d'export PDF."""
+        """
+Test d'export PDF."""
         report_data = {
             'title': 'Rapport d\'Analyse de Qualité IA',
             'subtitle': 'Période: Juillet - Août 2025',
@@ -872,7 +894,8 @@ class TestReportExporter:
             assert len(report_data['sections']) > 0
     
     def test_excel_export(self, report_exporter):
-        """Test d'export Excel."""
+        """
+Test d'export Excel."""
         excel_data = {
             'workbook_name': 'Rapport_Analytics_IA_Influencer',
             'worksheets': [
@@ -928,7 +951,8 @@ class TestReportExporter:
                 assert 'data' in worksheet
     
     def test_json_export(self, report_exporter):
-        """Test d'export JSON."""
+        """
+Test d'export JSON."""
         json_data = {
             'report_metadata': {
                 'id': 'json_export_test',
@@ -994,7 +1018,8 @@ class TestReportIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_end_to_end_reporting_workflow(self):
-        """Test du workflow de reporting de bout en bout."""
+        """
+Test du workflow de reporting de bout en bout."""
         # Configuration complète de workflow
         workflow_config = {
             'workflow_id': 'e2e_reporting_test',
@@ -1063,7 +1088,8 @@ class TestReportIntegration:
     
     @pytest.mark.performance
     def test_reporting_system_performance(self):
-        """Test de performance du système de reporting."""
+        """
+Test de performance du système de reporting."""
         import time
         
         # Test de performance avec multiple rapports
@@ -1105,7 +1131,8 @@ class TestReportIntegration:
             assert result['status'] == 'generated'
     
     def test_report_quality_validation(self):
-        """Test de validation de qualité des rapports."""
+        """
+Test de validation de qualité des rapports."""
         # Critères de qualité pour un rapport
         quality_criteria = {
             'completeness': {

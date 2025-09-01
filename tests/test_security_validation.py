@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests for Security Validation System
+"""
+Tests for Security Validation System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -63,18 +66,21 @@ class TestSecurityValidator:
     
     @pytest.fixture
     def validator(self):
-        """Create a SecurityValidator instance for testing"""
+        """
+Create a SecurityValidator instance for testing"""
         return SecurityValidator()
     
     def test_validator_initialization(self, validator):
-        """Test that security validator initializes correctly"""
+        """
+Test that security validator initializes correctly"""
         assert validator is not None
         assert hasattr(validator, '_scan_malware')
         assert hasattr(validator, '_analyze_file_integrity')
         assert hasattr(validator, '_extract_security_metadata')
     
     def test_malware_scan_safe_file(self, validator):
-        """Test malware scanning on a safe file"""
+        """
+Test malware scanning on a safe file"""
         # Create a temporary safe text file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write("This is a safe text file for testing.")
@@ -238,7 +244,8 @@ class TestSecurityValidator:
             os.unlink(temp_path)
     
     def test_empty_file_handling(self, validator):
-        """Test handling of empty files"""
+        """
+Test handling of empty files"""
         # Create an empty temporary file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             # Don't write anything - file will be empty
@@ -260,17 +267,20 @@ class TestSecurityValidator:
 
 
 class TestThreatLevel:
-    """Test cases for ThreatLevel enum"""
+    """
+Test cases for ThreatLevel enum"""
     
     def test_threat_levels_exist(self):
-        """Test that all threat levels are defined"""
+        """
+Test that all threat levels are defined"""
         assert hasattr(ThreatLevel, 'LOW')
         assert hasattr(ThreatLevel, 'MEDIUM')
         assert hasattr(ThreatLevel, 'HIGH')
         assert hasattr(ThreatLevel, 'CRITICAL')
     
     def test_threat_level_values(self):
-        """Test threat level values"""
+        """
+Test threat level values"""
         assert ThreatLevel.LOW == "low"
         assert ThreatLevel.MEDIUM == "medium"
         assert ThreatLevel.HIGH == "high"

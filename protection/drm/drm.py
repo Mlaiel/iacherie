@@ -11,8 +11,9 @@ Ultra-advanced DRM protection and license management system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Cryptography Expert + DRM Specialist + Security Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -39,7 +40,9 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 class DRMProtectionLevel(Enum):
-    """DRM protection levels"""
+    """
+DRM protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -48,6 +51,7 @@ class DRMProtectionLevel(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats"""
+
     AUDIO_MP3 = "audio_mp3"
     AUDIO_FLAC = "audio_flac"
     AUDIO_WAV = "audio_wav"
@@ -61,6 +65,7 @@ class ContentFormat(Enum):
 
 class LicenseType(Enum):
     """License types"""
+
     SINGLE_USE = "single_use"
     TIME_LIMITED = "time_limited"
     DEVICE_BOUND = "device_bound"
@@ -71,6 +76,7 @@ class LicenseType(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -94,7 +100,8 @@ class DRMProtectedContent:
 
 @dataclass
 class DRMLicense:
-    """DRM license structure"""
+    """
+DRM license structure"""
     license_id: str
     content_id: str
     user_id: str
@@ -111,7 +118,8 @@ class DRMLicense:
 
 @dataclass
 class ContentKey:
-    """Content encryption key structure"""
+    """
+Content encryption key structure"""
     key_id: str
     content_id: str
     algorithm: EncryptionAlgorithm
@@ -732,12 +740,14 @@ class AdvancedDRMSystem:
         return os.urandom(32)  # 256-bit key
     
     def _generate_signing_key(self) -> bytes:
-        """Generate signing key for license tokens"""
+        """
+Generate signing key for license tokens"""
         return os.urandom(64)  # 512-bit key
     
     # Device and session management
     def _generate_device_fingerprint(self, device_info: Dict[str, Any]) -> str:
-        """Generate unique device fingerprint"""
+        """
+Generate unique device fingerprint"""
         try:
             # Combine device characteristics
             fingerprint_data = [
@@ -903,7 +913,8 @@ class AdvancedDRMSystem:
         return user_devices
     
     def _validate_geographic_access(self, location: Dict[str, Any]) -> bool:
-        """Validate geographic access restrictions"""
+        """
+Validate geographic access restrictions"""
         # Implement geographic validation logic
         # This is a placeholder implementation
         allowed_countries = self.config.get('allowed_countries', [])

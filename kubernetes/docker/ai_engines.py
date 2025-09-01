@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional AI engines Docker configuration for advanced content
 analysis, processing, and intelligent decision-making systems.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AIEnginesDockerConfig:
-    """Enterprise AI Engines Docker configuration"""
+    """
+Enterprise AI Engines Docker configuration"""
     
     # Container Configuration
     image_name: str = "ia-influencer/ai-engines"
@@ -211,9 +213,11 @@ CMD ["gunicorn", \\
      "main:app"]
 """
     def _generate_system_dependencies(self) -> str:
-        """Generate system dependencies based on configuration"""
+        """
+Generate system dependencies based on configuration"""
         if self.gpu_enabled:
-            return """RUN apt-get update && apt-get install -y \\
+            return """
+RUN apt-get update && apt-get install -y \\
     build-essential \\
     curl \\
     ca-certificates \\
@@ -242,7 +246,8 @@ CMD ["gunicorn", \\
     && apt-get clean
 """
         else:
-            return """RUN apt-get update && apt-get install -y \\
+            return """
+RUN apt-get update && apt-get install -y \\
     build-essential \\
     curl \\
     ca-certificates \\
@@ -262,7 +267,8 @@ CMD ["gunicorn", \\
     && apt-get clean
 """
     def _generate_cuda_env(self) -> str:
-        """Generate CUDA environment variables"""
+        """
+Generate CUDA environment variables"""
         return f"""# CUDA environment
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
@@ -272,7 +278,8 @@ ENV TF_FORCE_GPU_ALLOW_GROWTH=true
 ENV PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
 """
     def _generate_model_env_vars(self) -> str:
-        """Generate model-specific environment variables"""
+        """
+Generate model-specific environment variables"""
         env_vars = []
         for model, enabled in self.enabled_models.items():
             env_vars.append(f"ENV MODEL_{model.upper()}_ENABLED={str(enabled).lower()}")
@@ -474,7 +481,8 @@ onnxruntime-gpu==1.16.3
         return base_requirements
 
     def generate_model_download_script(self) -> str:
-        """Generate script to download AI models"""
+        """
+Generate script to download AI models"""
         return """#!/usr/bin/env python3
 \"\"\"
 AI Models Download Script - IA-Influencer-Agent
@@ -585,7 +593,8 @@ if __name__ == "__main__":
     logger.info("✅ Model download completed")
 """
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
+        """
+Save all configuration files to output directory"""
         import os
         from pathlib import Path
         

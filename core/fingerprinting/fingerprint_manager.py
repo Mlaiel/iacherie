@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import asyncio
 import logging
 import json
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for fingerprinting"""
+    """
+Supported content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -41,7 +44,8 @@ class FingerprintRequest:
 
 @dataclass
 class FingerprintResult:
-    """Result object for fingerprinting operations"""
+    """
+Result object for fingerprinting operations"""
     request_id: str
     file_path: str
     content_type: ContentType
@@ -58,7 +62,8 @@ class FingerprintManager:
     """
     
     def __init__(self):
-        """Initialize the fingerprint manager with all engines"""
+        """
+Initialize the fingerprint manager with all engines"""
         self.audio_engine = AudioFingerprintEngine()
         self.video_engine = VideoFingerprintEngine()
         self.image_engine = ImageFingerprintEngine()
@@ -387,7 +392,8 @@ class FingerprintManager:
         return self.results_cache.get(request_id)
     
     def clear_cache(self, older_than_hours: Optional[int] = None):
-        """Clear results cache, optionally only entries older than specified hours"""
+        """
+Clear results cache, optionally only entries older than specified hours"""
         try:
             if older_than_hours is None:
                 # Clear all cache

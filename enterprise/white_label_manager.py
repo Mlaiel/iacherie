@@ -13,6 +13,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThemeType(Enum):
-    """Theme type enumeration"""
+    """
+Theme type enumeration"""
+
     LIGHT = "light"
     DARK = "dark"
     HIGH_CONTRAST = "high_contrast"
@@ -45,6 +48,7 @@ class ThemeType(Enum):
 
 class BrandingStatus(Enum):
     """Branding configuration status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -53,6 +57,7 @@ class BrandingStatus(Enum):
 
 class AssetType(Enum):
     """Brand asset type enumeration"""
+
     LOGO = "logo"
     FAVICON = "favicon"
     BACKGROUND = "background"
@@ -77,7 +82,8 @@ class ColorPalette:
     info: str
     
     def __post_init__(self):
-        """Validate color formats"""
+        """
+Validate color formats"""
         for field_name, color_value in asdict(self).items():
             if not self._is_valid_color(color_value):
                 raise ValueError(f"Invalid color format for {field_name}: {color_value}")
@@ -135,7 +141,8 @@ class BrandAsset:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_optimized(self) -> bool:
-        """Check if asset is optimized"""
+        """
+Check if asset is optimized"""
         if self.asset_type == AssetType.LOGO:
             return self.file_size < 50000  # 50KB for logos
         elif self.asset_type == AssetType.BACKGROUND:
@@ -145,7 +152,8 @@ class BrandAsset:
 
 @dataclass
 class BrandingTheme:
-    """Complete branding theme configuration"""
+    """
+Complete branding theme configuration"""
     theme_id: str
     tenant_id: str
     theme_name: str
@@ -199,7 +207,8 @@ class CustomizationTemplate:
 
 @dataclass
 class WhiteLabelConfiguration:
-    """Complete white-label configuration"""
+    """
+Complete white-label configuration"""
     tenant_id: str
     organization_name: str
     active_theme: BrandingTheme
@@ -217,7 +226,8 @@ class WhiteLabelConfiguration:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def is_valid_configuration(self) -> Tuple[bool, List[str]]:
-        """Validate white-label configuration"""
+        """
+Validate white-label configuration"""
         errors = []
         
         if not self.organization_name.strip():
@@ -238,14 +248,16 @@ class WhiteLabelConfiguration:
         return re.match(pattern, domain) is not None
     
     def _is_valid_email(self, email: str) -> bool:
-        """Validate email format"""
+        """
+Validate email format"""
         import re
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
 
 
 class AssetProcessor:
-    """Advanced asset processing and optimization"""
+    """
+Advanced asset processing and optimization"""
     
     def __init__(self):
         self._supported_formats = {
@@ -254,7 +266,8 @@ class AssetProcessor:
         }
         
     async def process_logo(self, file_data: bytes, output_format: str = 'png') -> Dict[str, Any]:
-        """Process and optimize logo"""
+        """
+Process and optimize logo"""
         try:
             # Create different sizes
             sizes = [32, 64, 128, 256, 512]
@@ -323,7 +336,8 @@ class ThemeGenerator:
         }
     
     async def generate_theme_from_color(self, base_color: str, harmony_type: str = 'monochromatic') -> ColorPalette:
-        """Generate complete color palette from base color"""
+        """
+Generate complete color palette from base color"""
         try:
             rgb = ImageColor.getcolor(base_color, "RGB")
             hsv = colorsys.rgb_to_hsv(rgb[0]/255, rgb[1]/255, rgb[2]/255)
@@ -403,7 +417,8 @@ class WhiteLabelManager:
         asyncio.create_task(self._initialize_default_templates())
     
     async def _initialize_default_templates(self):
-        """Initialize default customization templates"""
+        """
+Initialize default customization templates"""
         try:
             default_templates = [
                 {
@@ -665,11 +680,13 @@ class WhiteLabelManager:
         return self._configurations.get(tenant_id)
     
     async def get_available_templates(self) -> List[CustomizationTemplate]:
-        """Get available customization templates"""
+        """
+Get available customization templates"""
         return list(self._templates.values())
     
     async def export_theme_configuration(self, tenant_id: str) -> Dict[str, Any]:
-        """Export theme configuration for backup/migration"""
+        """
+Export theme configuration for backup/migration"""
         try:
             if tenant_id not in self._configurations:
                 raise ValueError(f"Tenant configuration not found: {tenant_id}")

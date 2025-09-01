@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for EngagementSpecialistAgent
+"""
+Comprehensive Tests for EngagementSpecialistAgent
 
 Industrial-grade testing for engagement optimization, community management,
 interaction strategies, and audience retention capabilities.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -43,11 +46,13 @@ logger = logging.getLogger(__name__)
 
 
 class TestEngagementSpecialistAgent:
-    """Comprehensive test suite for EngagementSpecialistAgent"""
+    """
+Comprehensive test suite for EngagementSpecialistAgent"""
     
     @pytest.fixture
     def engagement_config(self) -> AgentConfiguration:
-        """Engagement specialist agent configuration"""
+        """
+Engagement specialist agent configuration"""
         return AgentConfiguration(
             agent_id="engagement_specialist_test",
             agent_name="Test Engagement Specialist Agent",
@@ -87,7 +92,8 @@ class TestEngagementSpecialistAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, engagement_config):
-        """Test engagement specialist agent initialization"""
+        """
+Test engagement specialist agent initialization"""
         agent = EngagementSpecialistAgent(engagement_config)
         
         # Before initialization

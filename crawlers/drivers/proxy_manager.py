@@ -20,6 +20,7 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
 """
+
 import asyncio
 import logging
 import random
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProxyType(Enum):
-    """Supported proxy types"""
+    """
+Supported proxy types"""
+
     HTTP = "http"
     HTTPS = "https"
     SOCKS4 = "socks4"
@@ -54,6 +57,7 @@ class ProxyType(Enum):
 
 class ProxyProvider(Enum):
     """Supported proxy providers"""
+
     RESIDENTIAL = "residential"
     DATACENTER = "datacenter"
     MOBILE = "mobile"
@@ -62,6 +66,7 @@ class ProxyProvider(Enum):
 
 class ProxyStatus(Enum):
     """Proxy operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     FAILED = "failed"
@@ -81,7 +86,8 @@ class ProxyCredentials:
 
 @dataclass
 class ProxyConfiguration:
-    """Comprehensive proxy configuration"""
+    """
+Comprehensive proxy configuration"""
     host: str
     port: int
     proxy_type: ProxyType = ProxyType.HTTP
@@ -118,7 +124,8 @@ class ProxyMetrics:
 
 @dataclass
 class ProxyInstance:
-    """Proxy instance with metrics and management"""
+    """
+Proxy instance with metrics and management"""
     config: ProxyConfiguration
     status: ProxyStatus = ProxyStatus.INACTIVE
     metrics: ProxyMetrics = field(default_factory=ProxyMetrics)
@@ -137,7 +144,8 @@ class ProxyInstance:
 
 
 class ProxyValidator:
-    """Proxy validation and testing utilities"""
+    """
+Proxy validation and testing utilities"""
     
     def __init__(self):
         self.test_urls = [
@@ -285,11 +293,13 @@ class ProxyRotator:
         return selected
     
     def _least_used_selection(self, proxies: List[ProxyInstance]) -> ProxyInstance:
-        """Select least used proxy"""
+        """
+Select least used proxy"""
         return min(proxies, key=lambda p: p.metrics.total_requests)
     
     def _performance_based_selection(self, proxies: List[ProxyInstance]) -> ProxyInstance:
-        """Select proxy based on performance metrics"""
+        """
+Select proxy based on performance metrics"""
         def score(proxy: ProxyInstance) -> float:
             # Weight factors: success rate (50%), response time (30%), health score (20%)
             success_weight = proxy.metrics.success_rate * 0.5
@@ -301,7 +311,8 @@ class ProxyRotator:
     
     def _geographic_selection(self, proxies: List[ProxyInstance], 
                             requirements: Dict[str, Any]) -> ProxyInstance:
-        """Select proxy based on geographic requirements"""
+        """
+Select proxy based on geographic requirements"""
         preferred_country = requirements.get('country')
         preferred_city = requirements.get('city')
         
@@ -319,7 +330,8 @@ class ProxyRotator:
     
     def _filter_by_requirements(self, proxies: List[ProxyInstance], 
                               requirements: Dict[str, Any]) -> List[ProxyInstance]:
-        """Filter proxies by specific requirements"""
+        """
+Filter proxies by specific requirements"""
         filtered = proxies
         
         # Filter by provider
@@ -652,7 +664,8 @@ class ProxyManager:
         self.stats['average_response_time'] = total_time / proxy_count if proxy_count > 0 else 0.0
     
     async def get_proxy_status(self, group: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive proxy status information"""
+        """
+Get comprehensive proxy status information"""
         if group:
             proxy_ids = self.proxy_groups.get(group, [])
             group_proxies = {pid: self.proxies[pid] for pid in proxy_ids if pid in self.proxies}
@@ -689,7 +702,8 @@ class ProxyManager:
         return best_proxies[:count]
     
     async def cleanup_failed_proxies(self, group: Optional[str] = None) -> int:
-        """Remove failed proxies from management"""
+        """
+Remove failed proxies from management"""
         proxies_to_remove = []
         
         if group:

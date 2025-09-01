@@ -16,6 +16,7 @@ Enterprise-grade deployment orchestration for multi-format content creators
 → AI processing → protection → monetization → collaboration platform.
 ==================================================================
 """
+
 import logging
 import asyncio
 import yaml
@@ -31,7 +32,9 @@ import hashlib
 import time
 
 class DeploymentStrategy(Enum):
-    """Advanced deployment strategies"""
+    """
+Advanced deployment strategies"""
+
     ROLLING = "rolling"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
@@ -43,6 +46,7 @@ class DeploymentStrategy(Enum):
 
 class DeploymentStatus(Enum):
     """Deployment status lifecycle"""
+
     PENDING = "pending"
     VALIDATING = "validating"
     PREPARING = "preparing"
@@ -57,6 +61,7 @@ class DeploymentStatus(Enum):
 
 class PlatformType(Enum):
     """Supported deployment platforms"""
+
     KUBERNETES = "kubernetes"
     DOCKER_SWARM = "docker_swarm"
     AWS_ECS = "aws_ecs"
@@ -72,6 +77,7 @@ class PlatformType(Enum):
 
 class DeploymentPhase(Enum):
     """Deployment execution phases"""
+
     PRE_VALIDATION = "pre_validation"
     ENVIRONMENT_PREPARATION = "environment_preparation"
     DEPENDENCY_DEPLOYMENT = "dependency_deployment"
@@ -87,6 +93,7 @@ class DeploymentPhase(Enum):
 
 class RollbackTrigger(Enum):
     """Rollback trigger conditions"""
+
     MANUAL = "manual"
     HEALTH_CHECK_FAILURE = "health_check_failure"
     ERROR_RATE_THRESHOLD = "error_rate_threshold"
@@ -122,7 +129,8 @@ class DeploymentMetrics:
 
 @dataclass
 class DeploymentConfiguration:
-    """Comprehensive deployment configuration"""
+    """
+Comprehensive deployment configuration"""
     # Basic deployment info
     name: str
     version: str
@@ -1074,7 +1082,8 @@ class DeploymentOrchestrator:
         return config
     
     def _dict_to_deployment_execution(self, data: Dict[str, Any]) -> DeploymentExecution:
-        """Convert dictionary to DeploymentExecution"""
+        """
+Convert dictionary to DeploymentExecution"""
         # Would implement proper conversion
         return DeploymentExecution(
             deployment_id=data["deployment_id"],
@@ -1190,7 +1199,8 @@ class DeploymentConfig:
 
 @dataclass
 class DeploymentStep:
-    """Individual deployment step"""
+    """
+Individual deployment step"""
     name: str
     command: str
     timeout: int = 300
@@ -1201,7 +1211,8 @@ class DeploymentStep:
 
 @dataclass
 class DeploymentPlan:
-    """Complete deployment execution plan"""
+    """
+Complete deployment execution plan"""
     id: str
     name: str
     environment: str
@@ -1215,7 +1226,8 @@ class DeploymentPlan:
 
 @dataclass
 class DeploymentExecution:
-    """Deployment execution tracking"""
+    """
+Deployment execution tracking"""
     id: str
     plan_id: str
     status: DeploymentStatus
@@ -1244,7 +1256,8 @@ class DeploymentOrchestrator:
     """
     
     def __init__(self):
-        """Initialize deployment orchestrator"""
+        """
+Initialize deployment orchestrator"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Deployment state
@@ -1785,7 +1798,8 @@ class DeploymentOrchestrator:
             await self._execute_deployment_step(validation_step, plan.platform, execution)
     
     async def _switch_traffic_to_green(self, platform: PlatformType, execution: DeploymentExecution) -> None:
-        """Switch traffic from blue to green environment"""
+        """
+Switch traffic from blue to green environment"""
         adapter = self.platform_adapters.get(platform)
         if adapter:
             await adapter.switch_traffic("blue", "green")
@@ -1861,7 +1875,8 @@ class DeploymentOrchestrator:
         return None
     
     async def cancel_deployment(self, deployment_id: str) -> bool:
-        """Cancel active deployment"""
+        """
+Cancel active deployment"""
         if deployment_id in self.active_deployments:
             execution = self.active_deployments[deployment_id]
             execution.status = DeploymentStatus.CANCELLED
@@ -1904,7 +1919,8 @@ class PlatformAdapter:
     """Base platform adapter"""
     
     async def initialize(self) -> None:
-        """Initialize platform adapter"""
+        """
+Initialize platform adapter"""
         pass
     
     async def execute_command(
@@ -1913,7 +1929,8 @@ class PlatformAdapter:
         timeout: int = 300,
         environment_variables: Optional[Dict[str, str]] = None
     ) -> Dict[str, Any]:
-        """Execute platform-specific command"""
+        """
+Execute platform-specific command"""
         # Simulate command execution
         await asyncio.sleep(1)
         return {"status": "success", "duration": 1.0}
@@ -1923,43 +1940,52 @@ class PlatformAdapter:
         pass
     
     async def adjust_traffic_split(self, target: str, percentage: int) -> None:
-        """Adjust traffic split percentage"""
+        """
+Adjust traffic split percentage"""
         pass
     
     async def stop_services(self) -> None:
-        """Stop services"""
+        """
+Stop services"""
         pass
     
     async def configure_traffic_split(self, splits: Dict[str, int]) -> None:
-        """Configure traffic splitting"""
+        """
+Configure traffic splitting"""
         pass
 
 
 class KubernetesAdapter(PlatformAdapter):
-    """Kubernetes platform adapter"""
+    """
+Kubernetes platform adapter"""
     pass
 
 
 class DockerSwarmAdapter(PlatformAdapter):
-    """Docker Swarm platform adapter"""
+    """
+Docker Swarm platform adapter"""
     pass
 
 
 class AWSECSAdapter(PlatformAdapter):
-    """AWS ECS platform adapter"""
+    """
+AWS ECS platform adapter"""
     pass
 
 
 class AWSFargateAdapter(PlatformAdapter):
-    """AWS Fargate platform adapter"""
+    """
+AWS Fargate platform adapter"""
     pass
 
 
 class GCPCloudRunAdapter(PlatformAdapter):
-    """GCP Cloud Run platform adapter"""
+    """
+GCP Cloud Run platform adapter"""
     pass
 
 
 class AzureACIAdapter(PlatformAdapter):
-    """Azure Container Instances adapter"""
+    """
+Azure Container Instances adapter"""
     pass

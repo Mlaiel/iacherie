@@ -23,6 +23,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -46,7 +47,7 @@ __title__ = "IA Influencer Agent Health Monitoring System"
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "Copyright © 2025 Fahed Mlaiel. All Rights Reserved."
+__copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All Rights Reserved."
 __license__ = "Proprietary"
 
 # Logging configuration
@@ -699,5 +700,5 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
       Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All Rights Reserved.
+Copyright (c) 2025 Fahed Mlaiel. All Rights Reserved.
 """

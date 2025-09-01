@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -21,7 +22,9 @@ from enum import Enum
 from datetime import datetime, timedelta
 
 class CollaborationType(Enum):
-    """Types of collaboration supported."""
+    """
+Types of collaboration supported."""
+
     MUSIC_PRODUCTION = "music_production"
     VIDEO_CREATION = "video_creation"
     PODCAST_PRODUCTION = "podcast_production"
@@ -33,6 +36,7 @@ class CollaborationType(Enum):
 
 class CollaboratorRole(Enum):
     """Roles available in collaboration."""
+
     OWNER = "owner"
     ADMIN = "admin"
     EDITOR = "editor"
@@ -43,6 +47,7 @@ class CollaboratorRole(Enum):
 
 class WorkspaceType(Enum):
     """Types of collaborative workspaces."""
+
     PRIVATE = "private"
     TEAM = "team"
     PUBLIC = "public"
@@ -189,7 +194,8 @@ class CreatorMatchingConfig:
 
 @dataclass
 class BrandCollaborationConfig:
-    """Configuration for brand collaboration and sponsored content management."""
+    """
+Configuration for brand collaboration and sponsored content management."""
     
     # Brand partnership storage
     brand_storage_config: Dict[str, Any] = field(default_factory=lambda: {
@@ -222,7 +228,8 @@ class BrandCollaborationConfig:
 
 @dataclass
 class CollaborationAnalyticsConfig:
-    """Configuration for collaboration analytics and performance tracking."""
+    """
+Configuration for collaboration analytics and performance tracking."""
     
     # Analytics collection
     analytics_collection: Dict[str, Any] = field(default_factory=lambda: {
@@ -262,7 +269,8 @@ collaboration_analytics_config = CollaborationAnalyticsConfig()
 
 # Configuration validation functions
 def validate_collaboration_storage_config() -> bool:
-    """Validate collaboration storage configuration."""
+    """
+Validate collaboration storage configuration."""
     try:
         # Validate required paths
         required_paths = [
@@ -290,7 +298,8 @@ def validate_collaboration_storage_config() -> bool:
         return False
 
 def validate_creator_matching_config() -> bool:
-    """Validate creator matching configuration."""
+    """
+Validate creator matching configuration."""
     try:
         # Validate matching configuration
         matching_config = creator_matching_config.matching_config
@@ -316,7 +325,8 @@ def create_collaboration_workspace(
     owner_id: str,
     workspace_name: str
 ) -> Optional[CollaborationWorkspaceConfig]:
-    """Create a new collaboration workspace configuration."""
+    """
+Create a new collaboration workspace configuration."""
     try:
         workspace_id = f"{owner_id}_{workspace_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         storage_path = f"{collaboration_storage_config.workspaces_path}/{workspace_id}"

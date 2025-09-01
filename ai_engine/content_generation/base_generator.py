@@ -4,11 +4,12 @@ Professional enterprise-grade content generation base class providing
 common functionality and patterns for all content generators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -23,7 +24,8 @@ from ..monitoring.metrics import MetricsCollector
 
 
 class GenerationMetrics(BaseModel):
-    """Performance metrics for content generation"""
+    """
+Performance metrics for content generation"""
     generation_time: float = Field(default=0.0, description="Time taken for generation in seconds")
     tokens_processed: int = Field(default=0, description="Number of tokens processed")
     quality_score: float = Field(default=0.0, description="Quality assessment score")
@@ -96,12 +98,14 @@ class BaseContentGenerator(ABC):
     
     @abstractmethod
     def _setup_resources(self) -> None:
-        """Setup computational resources"""
+        """
+Setup computational resources"""
         pass
     
     @abstractmethod
     def _setup_validation_rules(self) -> None:
-        """Setup content validation rules"""
+        """
+Setup content validation rules"""
         pass
     
     @abstractmethod
@@ -244,7 +248,8 @@ class BaseContentGenerator(ABC):
         return enhanced_result
     
     async def _calculate_quality_metrics(self, result: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate quality metrics for generated content"""
+        """
+Calculate quality metrics for generated content"""
         return {
             'coherence_score': 0.95,  # To be implemented with actual scoring
             'relevance_score': 0.92,
@@ -258,7 +263,8 @@ class BaseContentGenerator(ABC):
         result: Dict[str, Any],
         context: ContentGenerationContext
     ) -> Dict[str, bool]:
-        """Check content compliance with platform requirements"""
+        """
+Check content compliance with platform requirements"""
         return {
             'brand_guidelines_compliant': True,
             'platform_requirements_met': True,
@@ -267,12 +273,14 @@ class BaseContentGenerator(ABC):
         }
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if generator supports the specified content type"""
+        """
+Check if generator supports the specified content type"""
         # To be overridden by specific generators
         return True
     
     def _update_generation_metrics(self, generation_id: str, success: bool) -> None:
-        """Update internal generation metrics"""
+        """
+Update internal generation metrics"""
         if success:
             self._generation_stats.success_rate = min(100.0, self._generation_stats.success_rate + 1)
         else:
@@ -286,15 +294,18 @@ class BaseContentGenerator(ABC):
         )
     
     def get_generator_stats(self) -> GenerationMetrics:
-        """Get current generator performance statistics"""
+        """
+Get current generator performance statistics"""
         return self._generation_stats
     
     def get_active_generations(self) -> Dict[str, Any]:
-        """Get information about currently active generations"""
+        """
+Get information about currently active generations"""
         return self._active_generations.copy()
     
     async def cleanup_resources(self) -> None:
-        """Clean up generator resources"""
+        """
+Clean up generator resources"""
         try:
             # Cancel active generations
             for generation_id in list(self._active_generations.keys()):
@@ -318,7 +329,8 @@ class BaseContentGenerator(ABC):
             return 50.0  # Mock value if psutil not available
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics"""
+        """
+Get performance metrics"""
         return {
             'generations_count': len(self._active_generations),
             'memory_usage_mb': self.get_memory_usage(),
@@ -327,7 +339,8 @@ class BaseContentGenerator(ABC):
         }
     
     def _generate_cache_key(self, context: Union[ContentGenerationContext, str], prompt: str) -> str:
-        """Generate cache key for content caching"""
+        """
+Generate cache key for content caching"""
         import hashlib
         
         # Handle different context types
@@ -346,7 +359,8 @@ class BaseContentGenerator(ABC):
         return all(key in config for key in required_keys)
     
     async def generate_with_monitoring(self, context: ContentGenerationContext, prompt: str, options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Generate content with performance monitoring"""
+        """
+Generate content with performance monitoring"""
         start_time = datetime.now()
         generation_id = f"gen_{int(start_time.timestamp())}"
         
@@ -386,13 +400,16 @@ class BaseContentGenerator(ABC):
     
     @abstractmethod
     async def _release_model_resources(self) -> None:
-        """Release model-specific resources"""
+        """
+Release model-specific resources"""
         pass
     
     def __enter__(self):
-        """Context manager entry"""
+        """
+Context manager entry"""
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit with resource cleanup"""
+        """
+Context manager exit with resource cleanup"""
         asyncio.create_task(self.cleanup_resources())

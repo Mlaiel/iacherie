@@ -6,13 +6,14 @@ Combines official YouTube Data API v3 with advanced scraping techniques
 for comprehensive content surveillance and rights protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 import re
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideoData:
-    """Comprehensive YouTube video metadata structure."""
+    """
+Comprehensive YouTube video metadata structure."""
     
     video_id: str
     title: str
@@ -68,7 +70,8 @@ class YouTubeVideoData:
 
 @dataclass
 class YouTubeChannelData:
-    """YouTube channel comprehensive information."""
+    """
+YouTube channel comprehensive information."""
     
     channel_id: str
     title: str
@@ -87,10 +90,12 @@ class YouTubeChannelData:
     content_categories: List[str]
 
 class YouTubeAPIManager:
-    """Professional YouTube API management with advanced capabilities."""
+    """
+Professional YouTube API management with advanced capabilities."""
     
     def __init__(self, api_key: str, quota_manager: Optional[Any] = None):
-        """Initialize YouTube API service with quota management."""
+        """
+Initialize YouTube API service with quota management."""
         self.api_key = api_key
         self.service = None
         self.quota_manager = quota_manager
@@ -101,7 +106,8 @@ class YouTubeAPIManager:
         self._initialize_service()
     
     def _initialize_service(self):
-        """Initialize YouTube Data API v3 service."""
+        """
+Initialize YouTube Data API v3 service."""
         try:
             self.service = build('youtube', 'v3', developerKey=self.api_key)
             logger.info("YouTube API service initialized successfully")
@@ -257,7 +263,8 @@ class YouTubeContentExtractor:
     """Advanced YouTube content extraction using yt-dlp."""
     
     def __init__(self):
-        """Initialize yt-dlp extractor with optimized settings."""
+        """
+Initialize yt-dlp extractor with optimized settings."""
         self.ydl_opts = {
             'format': 'bestaudio/best',
             'extractaudio': True,
@@ -271,7 +278,8 @@ class YouTubeContentExtractor:
         }
     
     async def extract_audio_metadata(self, video_url: str) -> Dict[str, Any]:
-        """Extract detailed audio metadata from YouTube video."""
+        """
+Extract detailed audio metadata from YouTube video."""
         try:
             with yt_dlp.YoutubeDL(self.ydl_opts) as ydl:
                 info = ydl.extract_info(video_url, download=False)
@@ -338,7 +346,8 @@ class YouTubeCrawler(BaseCrawler):
     """Professional YouTube crawler with advanced monitoring capabilities."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize YouTube crawler with configuration."""
+        """
+Initialize YouTube crawler with configuration."""
         super().__init__(config)
         self.api_manager = YouTubeAPIManager(
             api_key=config.get('youtube_api_key')
@@ -347,7 +356,8 @@ class YouTubeCrawler(BaseCrawler):
         self.platform = 'youtube'
     
     async def crawl_video(self, video_id: str) -> Optional[CrawlResult]:
-        """Crawl comprehensive data for a specific YouTube video."""
+        """
+Crawl comprehensive data for a specific YouTube video."""
         try:
             # Get video metadata from API
             video_data = await self.api_manager.get_video_details(video_id)
@@ -478,7 +488,8 @@ class YouTubeCrawler(BaseCrawler):
         self,
         video_id: str
     ) -> Optional[str]:
-        """Download audio sample for fingerprinting analysis."""
+        """
+Download audio sample for fingerprinting analysis."""
         try:
             video_url = f"https://www.youtube.com/watch?v={video_id}"
             audio_path = await self.content_extractor.download_audio_sample(

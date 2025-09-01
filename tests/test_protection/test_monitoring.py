@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Protection Monitoring module.
+"""
+Test suite for Protection Monitoring module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
@@ -26,9 +29,11 @@ import json
 
 
 class TestProtectionMonitoring(unittest.TestCase):
-    """Test suite for ProtectionMonitor class"""
+    """
+Test suite for ProtectionMonitor class"""
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.monitor = None  # Will be mocked
         self.sample_monitoring_target = {
             "user_id": "user_123",
@@ -154,7 +159,8 @@ class TestProtectionMonitoring(unittest.TestCase):
             self.assertIn('rate_limit', crawlers[platform])
 
     def test_monitoring_frequency_check(self):
-        """Test monitoring frequency checking logic"""
+        """
+Test monitoring frequency checking logic"""
         target = {
             "content_id": "test_123",
             "monitoring_frequency": 24,  # hours
@@ -233,7 +239,8 @@ class TestProtectionMonitoring(unittest.TestCase):
             self.assertLess(score, alert_threshold)
 
     def test_platform_search_result_parsing(self):
-        """Test platform search result parsing"""
+        """
+Test platform search result parsing"""
         # Mock YouTube search results
         youtube_results = [
             {

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,15 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test SEO Optimization Engine
+"""
+Test SEO Optimization Engine
 
 This script demonstrates and tests the SEO Optimization Engine functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import sys
 import os
 
@@ -26,7 +29,8 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def test_content_seo_optimizer():
-    """Test the Content SEO Optimizer"""
+    """
+Test the Content SEO Optimizer"""
     print("Testing Content SEO Optimizer...")
     
     try:

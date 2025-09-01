@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -30,7 +31,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class AIEngineType(str, Enum):
-    """AI engine types for specialized logging"""
+    """
+AI engine types for specialized logging"""
+
     CONTENT_ANALYSIS = "content_analysis"
     AUDIO_PROCESSING = "audio_processing"
     VIDEO_PROCESSING = "video_processing"
@@ -50,6 +53,7 @@ class AIEngineType(str, Enum):
 
 class ProcessingStage(str, Enum):
     """AI processing pipeline stages"""
+
     INPUT_VALIDATION = "input_validation"
     PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
@@ -64,6 +68,7 @@ class ProcessingStage(str, Enum):
 
 class ModelType(str, Enum):
     """AI model types"""
+
     DEEP_LEARNING = "deep_learning"
     MACHINE_LEARNING = "machine_learning"
     NATURAL_LANGUAGE_PROCESSING = "nlp"
@@ -120,14 +125,16 @@ class AIProcessingLogConfig:
 
 
 class AIProcessingLogger:
-    """Specialized logger for AI processing operations"""
+    """
+Specialized logger for AI processing operations"""
     
     def __init__(self, config: AIProcessingLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for AI processing"""
+        """
+Setup structured logger for AI processing"""
         processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
@@ -482,12 +489,14 @@ class AIProcessingLoggingConfig:
     
     @staticmethod
     def create_default_config() -> AIProcessingLogConfig:
-        """Create default AI processing logging configuration"""
+        """
+Create default AI processing logging configuration"""
         return AIProcessingLogConfig()
     
     @staticmethod
     def create_production_config() -> AIProcessingLogConfig:
-        """Create production AI processing logging configuration"""
+        """
+Create production AI processing logging configuration"""
         return AIProcessingLogConfig(
             enable_model_performance_logging=True,
             enable_inference_logging=True,

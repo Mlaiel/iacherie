@@ -8,7 +8,7 @@ monetization, and collaboration systems.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This migration orchestration system is protected intellectual property.
@@ -18,6 +18,7 @@ Business Logic Integration:
 Creator Upload → Schema Evolution → Data Migration → Integrity Validation → 
 Protection Setup → Fingerprint Processing → Monetization Configuration → Platform Sync
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -359,19 +360,22 @@ def get_migration_orchestrator(database_url: str) -> MigrationOrchestrator:
 
 # Convenience functions for common migration operations
 async def execute_complete_migration(database_url: str) -> Dict[str, Any]:
-    """Execute complete migration suite"""
+    """
+Execute complete migration suite"""
     orchestrator = get_migration_orchestrator(database_url)
     return await orchestrator.execute_full_migration_suite()
 
 
 async def setup_content_protection(database_url: str) -> Dict[str, Any]:
-    """Setup content protection system"""
+    """
+Setup content protection system"""
     orchestrator = get_migration_orchestrator(database_url)
     return await orchestrator.setup_content_protection_system()
 
 
 async def setup_monetization(database_url: str) -> Dict[str, Any]:
-    """Setup monetization system"""
+    """
+Setup monetization system"""
     orchestrator = get_migration_orchestrator(database_url)
     return await orchestrator.setup_monetization_system()
 

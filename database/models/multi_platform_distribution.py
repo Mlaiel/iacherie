@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -38,7 +39,9 @@ Base = declarative_base()
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -68,6 +71,7 @@ class DistributionPlatform(Enum):
 
 class ContentFormat(Enum):
     """Content formats for distribution"""
+
     AUDIO_TRACK = "audio_track"
     MUSIC_VIDEO = "music_video"
     LYRIC_VIDEO = "lyric_video"
@@ -93,6 +97,7 @@ class ContentFormat(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status tracking"""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -111,6 +116,7 @@ class DistributionStatus(Enum):
 
 class OptimizationStrategy(Enum):
     """Platform optimization strategies"""
+
     MAXIMUM_REACH = "maximum_reach"
     ENGAGEMENT_FOCUSED = "engagement_focused"
     REVENUE_OPTIMIZED = "revenue_optimized"
@@ -127,6 +133,7 @@ class OptimizationStrategy(Enum):
 
 class PostingStrategy(Enum):
     """Content posting strategies"""
+
     SIMULTANEOUS = "simultaneous"
     STAGGERED = "staggered"
     SEQUENTIAL = "sequential"
@@ -350,7 +357,8 @@ class MultiPlatformDistribution(Base):
         return self.platform_metrics.get(platform.value, {})
     
     def calculate_overall_performance(self) -> Dict[str, float]:
-        """Calculate overall performance metrics"""
+        """
+Calculate overall performance metrics"""
         total_engagement = self.total_likes + self.total_shares + self.total_comments
         
         return {
@@ -419,7 +427,8 @@ class MultiPlatformDistribution(Base):
         return roi_data
     
     def update_platform_status(self, platform: DistributionPlatform, status: str, external_id: str = None):
-        """Update status for a specific platform"""
+        """
+Update status for a specific platform"""
         if not self.platform_statuses:
             self.platform_statuses = {}
         

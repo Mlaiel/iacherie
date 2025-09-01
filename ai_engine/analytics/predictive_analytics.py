@@ -10,6 +10,7 @@ prohibited and will result in severe legal consequences.
 This module provides advanced predictive analytics, machine learning forecasting,
 and AI-driven insights for content creators on the IA Influencer Agent platform.
 """
+
 import logging
 import numpy as np
 import pandas as pd
@@ -33,7 +34,9 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions available"""
+    """
+Types of predictions available"""
+
     ENGAGEMENT_RATE = "engagement_rate"
     VIEW_COUNT = "view_count"
     REVENUE = "revenue"
@@ -49,6 +52,7 @@ class PredictionType(Enum):
 
 class ModelType(Enum):
     """Types of ML models used"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     NEURAL_NETWORK = "neural_network"
@@ -58,6 +62,7 @@ class ModelType(Enum):
 
 class PredictionAccuracy(Enum):
     """Prediction accuracy levels"""
+
     LOW = "low"          # < 60% accuracy
     MEDIUM = "medium"    # 60-75% accuracy
     HIGH = "high"        # 75-85% accuracy
@@ -65,6 +70,7 @@ class PredictionAccuracy(Enum):
 
 class TimeHorizon(Enum):
     """Prediction time horizons"""
+
     SHORT_TERM = "short_term"      # 1-7 days
     MEDIUM_TERM = "medium_term"    # 1-4 weeks
     LONG_TERM = "long_term"        # 1-6 months
@@ -84,7 +90,8 @@ class PredictionInput:
 
 @dataclass
 class PredictionResult:
-    """Result of a prediction analysis"""
+    """
+Result of a prediction analysis"""
     prediction_id: str
     creator_id: str
     prediction_type: PredictionType
@@ -128,7 +135,8 @@ class ModelPerformance:
 
 @dataclass
 class ForecastingReport:
-    """Comprehensive forecasting report"""
+    """
+Comprehensive forecasting report"""
     report_id: str
     creator_id: str
     report_period: Dict[str, datetime]
@@ -153,10 +161,12 @@ class ForecastingReport:
     data_quality_assessment: Dict[str, float] = field(default_factory=dict)
 
 class PredictiveAnalyticsEngine:
-    """Advanced predictive analytics engine using machine learning"""
+    """
+Advanced predictive analytics engine using machine learning"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize predictive analytics engine"""
+        """
+Initialize predictive analytics engine"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -921,7 +931,8 @@ class PredictiveAnalyticsEngine:
         prediction_type: PredictionType,
         fallback_value: Union[float, str]
     ) -> PredictionResult:
-        """Create a fallback prediction when models fail"""
+        """
+Create a fallback prediction when models fail"""
         return PredictionResult(
             prediction_id=f"fallback_{prediction_type.value}_{prediction_input.creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
             creator_id=prediction_input.creator_id,
@@ -1089,7 +1100,8 @@ class PredictiveAnalyticsEngine:
         predicted_revenue: float,
         confidence: float
     ) -> Dict[str, float]:
-        """Calculate confidence intervals for revenue prediction"""
+        """
+Calculate confidence intervals for revenue prediction"""
         uncertainty = (1 - confidence) * 0.5  # Convert confidence to uncertainty
         
         return {
@@ -1103,7 +1115,8 @@ class PredictiveAnalyticsEngine:
         result: PredictionResult,
         features: Dict[str, float]
     ) -> List[str]:
-        """Identify risks that could affect engagement"""
+        """
+Identify risks that could affect engagement"""
         risks = []
         
         if features.get('audience_activity_score', 0.5) < 0.3:
@@ -1165,7 +1178,8 @@ class PredictiveAnalyticsEngine:
         )
     
     def _update_average_accuracy(self, new_accuracy: float):
-        """Update running average accuracy"""
+        """
+Update running average accuracy"""
         current_avg = self.engine_stats['average_accuracy']
         count = self.engine_stats['model_training_count']
         
@@ -1177,7 +1191,8 @@ class PredictiveAnalyticsEngine:
             self.engine_stats['average_accuracy'] = new_accuracy
     
     def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get predictive analytics engine statistics"""
+        """
+Get predictive analytics engine statistics"""
         stats = self.engine_stats.copy()
         stats['active_models'] = len(self.models)
         stats['cached_predictions'] = len(self.predictions_cache)
@@ -1189,7 +1204,8 @@ class PredictiveAnalyticsEngine:
         creator_id: str,
         predictions: List[PredictionResult]
     ) -> List[Dict[str, Any]]:
-        """Identify opportunities based on predictions"""
+        """
+Identify opportunities based on predictions"""
         opportunities = []
         
         # High engagement opportunity
@@ -1219,7 +1235,8 @@ class PredictiveAnalyticsEngine:
         creator_id: str,
         predictions: List[PredictionResult]
     ) -> List[Dict[str, Any]]:
-        """Identify threats based on predictions"""
+        """
+Identify threats based on predictions"""
         threats = []
         
         # Low confidence predictions
@@ -1238,7 +1255,8 @@ class PredictiveAnalyticsEngine:
         self,
         predictions: List[PredictionResult]
     ) -> List[str]:
-        """Generate strategic recommendations based on all predictions"""
+        """
+Generate strategic recommendations based on all predictions"""
         recommendations = []
         
         # Analyze prediction patterns
@@ -1265,7 +1283,8 @@ class PredictiveAnalyticsEngine:
         }
     
     async def _generate_scenario_analysis(self, creator_id: str) -> Dict[str, Dict[str, Any]]:
-        """Generate scenario planning analysis"""
+        """
+Generate scenario planning analysis"""
         return {
             'optimistic': {
                 'description': 'Best-case scenario with optimal execution',
@@ -1288,7 +1307,8 @@ class PredictiveAnalyticsEngine:
         }
     
     async def _assess_data_quality(self, prediction_input: PredictionInput) -> Dict[str, float]:
-        """Assess quality of data used for predictions"""
+        """
+Assess quality of data used for predictions"""
         return {
             'completeness': 0.8,      # How complete is the data
             'accuracy': 0.85,         # How accurate is the data

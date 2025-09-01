@@ -13,7 +13,7 @@ This module provides a comprehensive collection of professional audio processors
 - Professional mixing and mastering processors
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 =============================================================================
 CONFIDENTIAL - IA INFLUENCER AGENT PLATFORM
@@ -41,6 +41,7 @@ copyright law.
 Contact: Fahed Mlaiel (mlaiel@live.de)
 =============================================================================
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 import numpy as np
@@ -103,7 +104,9 @@ from .metering_system import (
 
 
 class ProcessingQuality(Enum):
-    """Audio processing quality levels"""
+    """
+Audio processing quality levels"""
+
     DRAFT = "draft"           # Fast processing, lower quality
     STANDARD = "standard"     # Balanced quality/performance
     HIGH = "high"            # High quality processing
@@ -112,6 +115,7 @@ class ProcessingQuality(Enum):
 
 class ProcessorType(Enum):
     """Available audio processor types"""
+
     EQUALIZER = "equalizer"
     COMPRESSOR = "compressor"
     REVERB = "reverb"
@@ -295,7 +299,8 @@ class EffectsChainProcessor:
         return audio_data
     
     def load_preset_chain(self, preset_name: str) -> bool:
-        """Load a predefined effects chain preset"""
+        """
+Load a predefined effects chain preset"""
         presets = self._get_chain_presets()
         
         if preset_name in presets:
@@ -332,7 +337,8 @@ class EffectsChainProcessor:
         }
     
     def analyze_audio_content(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze audio content and provide processing recommendations"""
+        """
+Analyze audio content and provide processing recommendations"""
         try:
             analysis_result = {}
             
@@ -432,7 +438,8 @@ class EffectsChainProcessor:
         return stats
     
     def export_chain_configuration(self) -> Dict[str, Any]:
-        """Export current effects chain configuration"""
+        """
+Export current effects chain configuration"""
         config = {
             'version': '1.0',
             'created_at': datetime.now().isoformat(),
@@ -455,7 +462,8 @@ class EffectsChainProcessor:
         return config
     
     def import_chain_configuration(self, config: Dict[str, Any]) -> bool:
-        """Import effects chain configuration"""
+        """
+Import effects chain configuration"""
         try:
             # Clear current chain
             self.effects_chain.clear()
@@ -491,23 +499,28 @@ def create_eq_processor(sample_rate: int = 44100, eq_type: EQType = EQType.PARAM
     return EqualizerProcessor(sample_rate, eq_type)
 
 def create_compressor(sample_rate: int = 44100, compressor_type: CompressorType = CompressorType.VCA) -> CompressorProcessor:
-    """Create a professional compressor processor"""
+    """
+Create a professional compressor processor"""
     return CompressorProcessor(sample_rate, compressor_type)
 
 def create_reverb(sample_rate: int = 44100, reverb_type: ReverbType = ReverbType.ALGORITHMIC) -> ReverbProcessor:
-    """Create a professional reverb processor"""
+    """
+Create a professional reverb processor"""
     return ReverbProcessor(sample_rate, reverb_type)
 
 def create_effects_chain(sample_rate: int = 44100, quality: ProcessingQuality = ProcessingQuality.HIGH) -> EffectsChainProcessor:
-    """Create a complete effects chain processor"""
+    """
+Create a complete effects chain processor"""
     return EffectsChainProcessor(sample_rate, quality)
 
 def get_available_processors() -> List[ProcessorType]:
-    """Get list of available processor types"""
+    """
+Get list of available processor types"""
     return list(ProcessorType)
 
 def get_processor_info(processor_type: ProcessorType) -> Dict[str, Any]:
-    """Get information about a specific processor type"""
+    """
+Get information about a specific processor type"""
     processor_info = {
         ProcessorType.EQUALIZER: {
             'name': 'Professional Equalizer',

@@ -5,6 +5,7 @@ cross-platform synchronization, and intelligent content distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -43,7 +44,9 @@ from ...security.token_manager import TokenManager
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -57,6 +60,7 @@ class PlatformType(Enum):
 
 class ConnectionStatus(Enum):
     """Platform connection status"""
+
     CONNECTED = "connected"
     PENDING = "pending"
     FAILED = "failed"
@@ -563,7 +567,8 @@ class PlatformConnector:
     # Helper methods for specific platform optimizations
     async def _optimize_spotify_for_musician(self, connection: PlatformConnection,
                                            profile_data: Dict[str, Any]) -> List[str]:
-        """Apply Spotify-specific optimizations for musicians."""
+        """
+Apply Spotify-specific optimizations for musicians."""
         optimizations = []
         
         # Artist profile optimization
@@ -692,28 +697,33 @@ class PlatformConnector:
     
     def _has_consistent_branding(self, connections: Dict[str, PlatformConnection],
                                profile_data: Dict[str, Any]) -> bool:
-        """Check if branding is consistent across platforms."""
+        """
+Check if branding is consistent across platforms."""
         # Simplified check - in production would analyze actual branding elements
         return len(set(conn.username for conn in connections.values())) == 1
     
     def _find_compatible_platforms(self, connections: Dict[str, PlatformConnection]) -> List[str]:
-        """Find platforms that are compatible for cross-promotion."""
+        """
+Find platforms that are compatible for cross-promotion."""
         # All connected platforms are potentially compatible
         return list(connections.keys())
     
     def _supports_automated_posting(self, connections: Dict[str, PlatformConnection]) -> bool:
-        """Check if platforms support automated posting."""
+        """
+Check if platforms support automated posting."""
         # Most modern platforms support some form of automated posting
         return len(connections) > 0
     
     # Storage and persistence methods
     async def _get_existing_connection(self, user_id: str, platform: PlatformType) -> Optional[PlatformConnection]:
-        """Get existing platform connection from database."""
+        """
+Get existing platform connection from database."""
         # Placeholder - would query database
         return None
     
     async def _should_refresh_connection(self, connection: PlatformConnection) -> bool:
-        """Check if connection needs refreshing."""
+        """
+Check if connection needs refreshing."""
         if not connection.token_expires_at:
             return False
         
@@ -721,7 +731,8 @@ class PlatformConnector:
         return connection.token_expires_at <= datetime.utcnow() + timedelta(hours=1)
     
     async def _refresh_platform_connection(self, connection: PlatformConnection) -> bool:
-        """Refresh platform connection tokens."""
+        """
+Refresh platform connection tokens."""
         try:
             # Placeholder - would refresh actual tokens
             connection.token_expires_at = datetime.utcnow() + timedelta(hours=1)

@@ -5,8 +5,9 @@ Advanced content analytics and metrics processing for multi-format content.
 Handles performance tracking, engagement analysis, and content optimization insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -38,6 +41,7 @@ class ContentType(Enum):
 
 class MetricType(Enum):
     """Analytics metric types"""
+
     VIEWS = "views"
     ENGAGEMENT = "engagement"
     SHARES = "shares"
@@ -64,7 +68,8 @@ class ContentMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     user_id: str
     period_start: datetime
     period_end: datetime
@@ -404,13 +409,15 @@ class ContentAnalytics:
         return result.scalar_one_or_none()
     
     async def _get_user_content(self, user_id: str) -> List[ContentModel]:
-        """Get all content for a user"""
+        """
+Get all content for a user"""
         query = select(ContentModel).where(ContentModel.user_id == user_id)
         result = await self.db_session.execute(query)
         return result.scalars().all()
     
     async def _update_metrics_cache(self, content_id: str, metrics: Dict[str, Any]):
-        """Update metrics in cache"""
+        """
+Update metrics in cache"""
         cache_key = f"current_metrics:{content_id}"
         await self.redis.setex(cache_key, self.cache_ttl, json.dumps(metrics))
     
@@ -428,7 +435,8 @@ class ContentAnalytics:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
+        """
+Save data to cache"""
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
@@ -618,7 +626,8 @@ class ContentAnalytics:
         }
     
     async def _get_latest_metrics(self, content_id: str) -> Dict[str, Any]:
-        """Get latest metrics for content"""
+        """
+Get latest metrics for content"""
         query = select(AnalyticsModel).where(
             AnalyticsModel.content_id == content_id
         ).order_by(AnalyticsModel.timestamp.desc()).limit(10)
@@ -632,7 +641,8 @@ class ContentAnalytics:
         return await self._aggregate_content_metrics(records)
     
     async def _get_content_vector(self, content_id: str) -> Optional[List[float]]:
-        """Get content performance vector for similarity analysis"""
+        """
+Get content performance vector for similarity analysis"""
         # Implementation would extract performance features as vector
         # This is a simplified placeholder
         metrics = await self._get_latest_metrics(content_id)
@@ -651,7 +661,8 @@ class ContentAnalytics:
         return vector
     
     async def _extract_prediction_features(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features for performance prediction"""
+        """
+Extract features for performance prediction"""
         # Implementation would extract relevant features
         return {
             'content_type': content_metadata.get('content_type'),
@@ -663,14 +674,16 @@ class ContentAnalytics:
         }
     
     async def _find_similar_historical_content(self, features: Dict[str, Any]) -> List[Dict]:
-        """Find similar historical content for prediction"""
+        """
+Find similar historical content for prediction"""
         # Implementation would use ML models or similarity search
         # Placeholder implementation
         return []
     
     async def _calculate_performance_predictions(self, features: Dict[str, Any], 
                                                similar_content: List[Dict]) -> Dict[str, Any]:
-        """Calculate performance predictions using ML models"""
+        """
+Calculate performance predictions using ML models"""
         # Implementation would use trained ML models
         # Placeholder with basic heuristics
         

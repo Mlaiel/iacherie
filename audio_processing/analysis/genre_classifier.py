@@ -4,8 +4,9 @@ Advanced machine learning-based music genre classification engine using
 multi-feature analysis and deep learning models for accurate genre identification.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -19,7 +20,9 @@ from sklearn.preprocessing import StandardScaler
 
 
 class GenreCategory(Enum):
-    """Music genre categories"""
+    """
+Music genre categories"""
+
     ELECTRONIC = "electronic"
     ROCK = "rock"
     POP = "pop"
@@ -57,7 +60,8 @@ class GenreClassifier:
     """
     
     def __init__(self):
-        """Initialize genre classifier"""
+        """
+Initialize genre classifier"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Genre definitions with characteristics
@@ -194,7 +198,8 @@ class GenreClassifier:
         return await asyncio.get_event_loop().run_in_executor(self.executor, extract)
     
     async def _compute_genre_scores(self, features: Dict[str, float]) -> Dict[GenreCategory, float]:
-        """Compute scores for each genre based on features"""
+        """
+Compute scores for each genre based on features"""
         def compute():
             scores = {}
             
@@ -250,7 +255,8 @@ class GenreClassifier:
     async def _compute_feature_contributions(self, 
                                            features: Dict[str, float], 
                                            primary_genre: GenreCategory) -> Dict[str, float]:
-        """Compute feature contributions to genre classification"""
+        """
+Compute feature contributions to genre classification"""
         def compute():
             contributions = {}
             
@@ -285,7 +291,8 @@ class GenreClassifier:
     async def _suggest_subgenres(self, 
                                primary_genre: GenreCategory, 
                                features: Dict[str, float]) -> List[str]:
-        """Suggest subgenres based on detailed analysis"""
+        """
+Suggest subgenres based on detailed analysis"""
         def suggest():
             subgenres = []
             

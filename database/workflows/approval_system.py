@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class ApprovalType(Enum):
-    """Types of approval requests"""
+    """
+Types of approval requests"""
+
     CONTENT_PUBLICATION = "content_publication"
     COLLABORATION_REQUEST = "collaboration_request"
     MONETIZATION_SETUP = "monetization_setup"
@@ -59,6 +62,7 @@ class ApprovalType(Enum):
 
 class ApprovalStatus(Enum):
     """Approval request status"""
+
     PENDING = "pending"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
@@ -72,6 +76,7 @@ class ApprovalStatus(Enum):
 
 class ApprovalPriority(Enum):
     """Approval priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -81,6 +86,7 @@ class ApprovalPriority(Enum):
 
 class ApproverRole(Enum):
     """Approver role types"""
+
     CONTENT_MANAGER = "content_manager"
     LEGAL_COUNSEL = "legal_counsel"
     COMPLIANCE_OFFICER = "compliance_officer"
@@ -104,7 +110,8 @@ class ApprovalCriteria:
 
 @dataclass
 class ApprovalAction:
-    """Approval workflow action"""
+    """
+Approval workflow action"""
     action_type: str
     parameters: Dict[str, Any]
     condition: Optional[str] = None
@@ -815,7 +822,8 @@ class ApprovalSystemManager:
         request: ApprovalRequest,
         workflow: ApprovalWorkflow
     ) -> List[str]:
-        """Determine who should approve this step"""
+        """
+Determine who should approve this step"""
         approvers = []
         
         # Add specific approvers
@@ -837,7 +845,8 @@ class ApprovalSystemManager:
         step: ApprovalStep,
         approver_id: str
     ) -> bool:
-        """Verify user is authorized to approve this step"""
+        """
+Verify user is authorized to approve this step"""
         if not step.assigned_approvers:
             return False
         
@@ -848,7 +857,8 @@ class ApprovalSystemManager:
         approver_id: str,
         step: ApprovalStep
     ) -> str:
-        """Get approver's role for this step"""
+        """
+Get approver's role for this step"""
         # Would query user's actual role
         return "content_manager"  # Simplified
     
@@ -866,7 +876,8 @@ class ApprovalSystemManager:
         roles: List[str],
         organization_id: str
     ) -> List[str]:
-        """Get users with specific roles in organization"""
+        """
+Get users with specific roles in organization"""
         # Would query user management system
         return []  # Simplified
     
@@ -875,7 +886,8 @@ class ApprovalSystemManager:
         step: ApprovalStep,
         auto_result: Dict[str, Any]
     ):
-        """Auto-complete step based on AI evaluation"""
+        """
+Auto-complete step based on AI evaluation"""
         step.status = "completed"
         step.step_decision = auto_result['decision']
         step.completed_at = datetime.now(timezone.utc)
@@ -906,7 +918,8 @@ class NotificationService:
         request: ApprovalRequest,
         step: ApprovalStep
     ):
-        """Notify approvers of pending approval"""
+        """
+Notify approvers of pending approval"""
         # Implementation would send notifications
         pass
     
@@ -915,13 +928,15 @@ class NotificationService:
         request: ApprovalRequest,
         decision: str
     ):
-        """Notify requester of completion"""
+        """
+Notify requester of completion"""
         # Implementation would send completion notification
         pass
 
 
 class AIApprovalEvaluator:
-    """AI-powered approval evaluation system"""
+    """
+AI-powered approval evaluation system"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -931,7 +946,8 @@ class AIApprovalEvaluator:
         request: ApprovalRequest,
         step: ApprovalStep
     ) -> Dict[str, Any]:
-        """Evaluate step using AI"""
+        """
+Evaluate step using AI"""
         # Simplified AI evaluation
         return {
             'decision': 'approved',
@@ -942,7 +958,8 @@ class AIApprovalEvaluator:
 
 
 class ComplianceChecker:
-    """Compliance checking system"""
+    """
+Compliance checking system"""
     
     async def check_decision_compliance(
         self,
@@ -950,6 +967,7 @@ class ComplianceChecker:
         decision: ApprovalStatus,
         approver_id: str
     ) -> bool:
-        """Check if decision meets compliance requirements"""
+        """
+Check if decision meets compliance requirements"""
         # Implementation would check compliance rules
         return True

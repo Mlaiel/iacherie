@@ -15,6 +15,7 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -58,7 +59,9 @@ settings = get_settings()
 
 
 class ViolationType(Enum):
-    """Types of content violations"""
+    """
+Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
@@ -71,6 +74,7 @@ class ViolationType(Enum):
 
 class PlatformType(Enum):
     """Monitored platform types"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -85,6 +89,7 @@ class PlatformType(Enum):
 
 class ActionType(Enum):
     """Actions to take on violations"""
+
     NOTIFY_USER = "notify_user"
     SEND_TAKEDOWN = "send_takedown"
     ESCALATE = "escalate"
@@ -115,7 +120,8 @@ class MonitoringConfig:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
+    """
+Content violation alert"""
     violation_id: str
     user_id: str
     original_content_id: str
@@ -158,7 +164,8 @@ class SearchResult:
 
 
 class BaseCrawler(ABC):
-    """Base class for platform crawlers"""
+    """
+Base class for platform crawlers"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -173,21 +180,25 @@ class BaseCrawler(ABC):
         content_type: Optional[str] = None,
         max_results: int = 100
     ) -> List[SearchResult]:
-        """Search for content on platform"""
+        """
+Search for content on platform"""
         pass
     
     @abstractmethod
     async def extract_content(self, url: str) -> Optional[bytes]:
-        """Extract content from URL"""
+        """
+Extract content from URL"""
         pass
     
     @abstractmethod
     async def get_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Get content metadata"""
+        """
+Get content metadata"""
         pass
     
     async def _init_session(self):
-        """Initialize HTTP session"""
+        """
+Initialize HTTP session"""
         if not self.session:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(
@@ -227,7 +238,9 @@ class BaseCrawler(ABC):
 
 
 class YouTubeCrawler(BaseCrawler):
-    """YouTube content crawler"""
+    """
+YouTube content crawler"""
+
     
     API_BASE_URL = "https://www.googleapis.com/youtube/v3"
     SEARCH_URL = "https://www.youtube.com/results"
@@ -432,6 +445,7 @@ class YouTubeCrawler(BaseCrawler):
 
 class InstagramCrawler(BaseCrawler):
     """Instagram content crawler"""
+
     
     BASE_URL = "https://www.instagram.com"
     
@@ -566,6 +580,7 @@ class InstagramCrawler(BaseCrawler):
 
 class TikTokCrawler(BaseCrawler):
     """TikTok content crawler"""
+
     
     BASE_URL = "https://www.tiktok.com"
     
@@ -688,7 +703,8 @@ class ContentMonitor:
         self.content_vectors = {}
         
     def _init_crawlers(self):
-        """Initialize platform crawlers"""
+        """
+Initialize platform crawlers"""
         for platform in self.config.platforms:
             if platform == PlatformType.YOUTUBE:
                 self.crawlers[platform] = YouTubeCrawler(self.config)
@@ -706,7 +722,8 @@ class ContentMonitor:
         content_format: ContentFormat,
         keywords: List[str] = None
     ) -> bool:
-        """Register content for monitoring"""
+        """
+Register content for monitoring"""
         try:
             # Generate fingerprints for the content
             fingerprints = await self.fingerprint_generator.generate_comprehensive_fingerprint(

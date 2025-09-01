@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators supported"""
+    """
+Types of content creators supported"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
@@ -47,6 +50,7 @@ class CreatorType(Enum):
 
 class ContentCategory(Enum):
     """Categories of content for specialized translation"""
+
     MUSIC_PRODUCTION = "music_production"
     BRAND_COLLABORATION = "brand_collaboration"
     RIGHTS_PROTECTION = "rights_protection"
@@ -61,6 +65,7 @@ class ContentCategory(Enum):
 
 class PlatformType(Enum):
     """Supported social media and content platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -222,7 +227,8 @@ class ContentCreatorCommunicationSpecialist:
         creator_profile: CreatorProfile,
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for brand collaboration communications"""
+        """
+Optimize content for brand collaboration communications"""
         
         # Apply brand collaboration terminology
         optimized_content = content
@@ -251,7 +257,8 @@ class ContentCreatorCommunicationSpecialist:
         content: str,
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for rights protection communications"""
+        """
+Optimize content for rights protection communications"""
         
         # Apply legal terminology precision
         legal_terms = self.rights_protection_terms.get(target_lang.value, {})
@@ -308,7 +315,8 @@ class ContentCreatorCommunicationSpecialist:
         keywords: List[str],
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for SEO in target language"""
+        """
+Optimize content for SEO in target language"""
         
         seo_patterns = self.seo_patterns.get(target_lang.value, {})
         optimized_content = content
@@ -667,7 +675,8 @@ class ContentCreatorCommunicationSpecialist:
         creator_profile: CreatorProfile,
         target_lang: SupportedLanguage
     ) -> str:
-        """Preserve brand voice in translated content"""
+        """
+Preserve brand voice in translated content"""
         
         brand_voice_patterns = self.brand_voice_patterns.get(
             creator_profile.brand_voice, 
@@ -715,7 +724,8 @@ class ContentCreatorCommunicationSpecialist:
         return found_terms
     
     def _get_legal_disclaimer(self, target_lang: SupportedLanguage) -> Optional[str]:
-        """Get legal disclaimer text for target language"""
+        """
+Get legal disclaimer text for target language"""
         disclaimers = {
             SupportedLanguage.ENGLISH: "This content is protected by copyright law.",
             SupportedLanguage.GERMAN: "Dieser Inhalt ist durch das Urheberrecht geschützt.",

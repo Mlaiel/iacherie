@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexRecord:
-    """Base index record structure"""
+    """
+Base index record structure"""
     content_id: str
     creator_id: str
     content_type: str
@@ -66,7 +68,8 @@ class VectorRecord:
 
 @dataclass
 class FingerprintRecord:
-    """Content fingerprint record structure"""
+    """
+Content fingerprint record structure"""
     fingerprint_id: str
     content_id: str
     fingerprint_type: str  # audio, image, video, text
@@ -79,7 +82,8 @@ class FingerprintRecord:
 
 @dataclass
 class SearchQuery:
-    """Search query structure"""
+    """
+Search query structure"""
     query_text: Optional[str] = None
     vector_query: Optional[List[float]] = None
     filters: Optional[Dict[str, Any]] = None
@@ -104,7 +108,8 @@ class BaseRepository(ABC):
     
     @abstractmethod
     async def create(self, record: Any) -> str:
-        """Create a new record"""
+        """
+Create a new record"""
         self.logger.error(f"create method not implemented in {self.__class__.__name__}")
         return ""
     
@@ -154,7 +159,8 @@ class IndexRepository(BaseRepository):
     """Repository for managing content index records"""
     
     async def create(self, record: IndexRecord) -> str:
-        """Create new index record"""
+        """
+Create new index record"""
         try:
             # Generate ID if not provided
             if not record.content_id:
@@ -502,7 +508,8 @@ class VectorRepository(BaseRepository):
         self.vector_mapping = {}  # vector_id -> faiss_index mapping
     
     async def create(self, record: VectorRecord) -> str:
-        """Create new vector record"""
+        """
+Create new vector record"""
         try:
             # Generate ID if not provided
             if not record.vector_id:
@@ -733,7 +740,8 @@ class FingerprintRepository(BaseRepository):
     """Repository for managing content fingerprints"""
     
     async def create(self, record: FingerprintRecord) -> str:
-        """Create new fingerprint record"""
+        """
+Create new fingerprint record"""
         try:
             # Generate ID if not provided
             if not record.fingerprint_id:
@@ -934,7 +942,8 @@ class FingerprintRepository(BaseRepository):
         return distance
     
     async def _index_fingerprint_hashes(self, record: FingerprintRecord) -> None:
-        """Index fingerprint hashes in Redis for fast lookup"""
+        """
+Index fingerprint hashes in Redis for fast lookup"""
         try:
             for algorithm, fingerprint_hash in record.fingerprint_data.items():
                 key = f"fp:{algorithm}:{fingerprint_hash}"
@@ -1042,7 +1051,8 @@ class SearchRepository:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def unified_search(self, query: SearchQuery) -> Dict[str, Any]:
-        """Perform unified search across all repository types"""
+        """
+Perform unified search across all repository types"""
         try:
             results = {
                 "text_results": [],

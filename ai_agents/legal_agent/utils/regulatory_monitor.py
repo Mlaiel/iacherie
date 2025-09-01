@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import json
@@ -52,7 +53,9 @@ from ...models.legal_models import RegulatoryUpdate, LawChange, ComplianceAlert
 logger = logging.getLogger(__name__)
 
 class RegulatorySource(Enum):
-    """Regulatory information sources"""
+    """
+Regulatory information sources"""
+
     FEDERAL_REGISTER = "federal_register"
     SEC_FILINGS = "sec_filings"
     FTC_UPDATES = "ftc_updates"
@@ -69,6 +72,7 @@ class RegulatorySource(Enum):
 
 class MonitoringPriority(Enum):
     """Priority levels for regulatory monitoring"""
+
     CRITICAL = "critical"      # Immediate action required
     HIGH = "high"             # Important changes affecting operations
     MEDIUM = "medium"         # Relevant changes for awareness
@@ -78,6 +82,7 @@ class MonitoringPriority(Enum):
 
 class ComplianceCategory(Enum):
     """Categories of compliance requirements"""
+
     CONTENT_PROTECTION = "content_protection"
     DATA_PRIVACY = "data_privacy"
     PLATFORM_COMPLIANCE = "platform_compliance"
@@ -471,7 +476,8 @@ class RegulatoryMonitor:
         return category_source_mapping.get(category, [])
     
     def _should_check_source(self, source: RegulatorySource) -> bool:
-        """Determine if source should be checked for updates"""
+        """
+Determine if source should be checked for updates"""
         if source.value not in self.monitoring_sources:
             return False
         
@@ -821,7 +827,8 @@ class LawTracker:
         self._initialize_law_tracking()
     
     def _initialize_law_tracking(self):
-        """Initialize law tracking system"""
+        """
+Initialize law tracking system"""
         try:
             # Define laws to track
             self.tracked_laws = {
@@ -894,12 +901,14 @@ class LawTracker:
         return []
     
     async def _check_enforcement_updates(self, law_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for enforcement guidance updates"""
+        """
+Check for enforcement guidance updates"""
         # Implementation for checking regulatory agency updates
         return []
     
     async def _check_judicial_interpretations(self, law_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for new court interpretations"""
+        """
+Check for new court interpretations"""
         # Implementation for checking court decisions
         return []
     PLATFORM_POLICIES = "platform_policies"
@@ -908,6 +917,7 @@ class LawTracker:
 
 class MonitoringPriority(Enum):
     """Monitoring priority levels"""
+
     CRITICAL = "critical"    # Immediate attention required
     HIGH = "high"           # High priority updates
     MEDIUM = "medium"       # Standard monitoring
@@ -915,6 +925,7 @@ class MonitoringPriority(Enum):
 
 class LegalArea(Enum):
     """Legal areas to monitor"""
+
     INTELLECTUAL_PROPERTY = "intellectual_property"
     DATA_PRIVACY = "data_privacy"
     CONTENT_REGULATION = "content_regulation"
@@ -1272,7 +1283,8 @@ class RegulatoryMonitor:
         }
 
     async def _validate_monitoring_config(self, config: MonitoringConfig):
-        """Validate monitoring configuration"""
+        """
+Validate monitoring configuration"""
         if not config.user_id:
             raise MonitoringError("User ID required for monitoring")
         if not config.legal_areas:
@@ -1378,7 +1390,8 @@ class RegulatoryMonitor:
         - Confidence levels for predictions
         """
     def _extract_compliance_deadline(self, content: str) -> Optional[datetime]:
-        """Extract compliance deadline from regulatory content"""
+        """
+Extract compliance deadline from regulatory content"""
         import re
         
         # Common deadline patterns
@@ -1417,7 +1430,8 @@ class LawTracker:
         law_identifier: str,
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Track evolution of specific law or regulation"""
+        """
+Track evolution of specific law or regulation"""
         
         try:
             # Initialize law tracking

@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Data Change → Conflict Detection → Resolution Strategy → Sync Execution → Verification
 """
+
 import asyncio
 import uuid
 import threading
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class SyncType(Enum):
-    """Types of synchronization operations"""
+    """
+Types of synchronization operations"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     PERIODIC = "periodic"
@@ -43,6 +46,7 @@ class SyncType(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies"""
+
     LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MERGE = "merge"
@@ -54,6 +58,7 @@ class ConflictResolution(Enum):
 
 class SyncStatus(Enum):
     """Synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -65,6 +70,7 @@ class SyncStatus(Enum):
 
 class DataSourceType(Enum):
     """Types of data sources"""
+
     DATABASE = "database"
     API = "api"
     FILE_SYSTEM = "file_system"
@@ -89,7 +95,8 @@ class DataSource:
 
 @dataclass
 class SyncConfiguration:
-    """Synchronization configuration"""
+    """
+Synchronization configuration"""
     sync_id: str
     name: str
     sync_type: SyncType
@@ -109,7 +116,8 @@ class SyncConfiguration:
 
 @dataclass
 class DataRecord:
-    """Individual data record"""
+    """
+Individual data record"""
     record_id: str
     source_id: str
     data: Dict[str, Any]
@@ -130,7 +138,8 @@ class DataRecord:
 
 @dataclass
 class ConflictRecord:
-    """Data conflict record"""
+    """
+Data conflict record"""
     conflict_id: str
     sync_id: str
     record_id: str
@@ -147,7 +156,8 @@ class ConflictRecord:
 
 @dataclass
 class SyncExecution:
-    """Synchronization execution tracking"""
+    """
+Synchronization execution tracking"""
     execution_id: str
     sync_id: str
     started_at: datetime
@@ -161,7 +171,8 @@ class SyncExecution:
 
 
 class SyncManager:
-    """Enterprise synchronization and conflict resolution system"""
+    """
+Enterprise synchronization and conflict resolution system"""
     
     def __init__(self, max_concurrent_syncs: int = 10):
         self.max_concurrent_syncs = max_concurrent_syncs
@@ -215,7 +226,8 @@ class SyncManager:
         self.conflict_resolvers[ConflictResolution.ABORT] = self._resolve_abort
     
     def _initialize_standard_sources(self):
-        """Initialize standard data source configurations"""
+        """
+Initialize standard data source configurations"""
         # User data source
         user_source = DataSource(
             source_id="user_database",
@@ -506,7 +518,8 @@ class SyncManager:
         return None
     
     async def _sync_processor(self):
-        """Process synchronization queue"""
+        """
+Process synchronization queue"""
         while True:
             try:
                 # Get sync from queue
@@ -886,7 +899,8 @@ class SyncManager:
         conflict: ConflictRecord, 
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
-        """Resolve conflict using first-write-wins strategy"""
+        """
+Resolve conflict using first-write-wins strategy"""
         if conflict.source_data.timestamp < conflict.target_data.timestamp:
             return conflict.source_data
         else:
@@ -897,7 +911,8 @@ class SyncManager:
         conflict: ConflictRecord, 
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
-        """Resolve conflict using merge strategy"""
+        """
+Resolve conflict using merge strategy"""
         try:
             # Create merged data
             merged_data = conflict.target_data.data.copy()
@@ -927,7 +942,8 @@ class SyncManager:
         return None
     
     async def _apply_change(self, change: Dict[str, Any], sync_config: SyncConfiguration) -> bool:
-        """Apply data change to target"""
+        """
+Apply data change to target"""
         try:
             # Simulate applying change
             await asyncio.sleep(0.01)
@@ -1056,11 +1072,13 @@ class SyncManager:
         self.event_handlers[event_type].append(handler)
     
     def register_conflict_listener(self, listener: Callable):
-        """Register conflict event listener"""
+        """
+Register conflict event listener"""
         self.conflict_listeners.append(listener)
     
     def shutdown(self):
-        """Shutdown sync manager and cleanup"""
+        """
+Shutdown sync manager and cleanup"""
         try:
             self.stop_scheduler()
             

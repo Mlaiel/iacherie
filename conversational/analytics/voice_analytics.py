@@ -10,6 +10,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ import base64
 
 
 class VoiceMetricType(Enum):
-    """Types of voice metrics for analysis."""
+    """
+Types of voice metrics for analysis."""
+
     PITCH = "pitch"
     TONE = "tone"
     PACE = "pace"
@@ -52,6 +55,7 @@ class VoiceMetricType(Enum):
 
 class EmotionalState(Enum):
     """Emotional states detectable through voice."""
+
     HAPPY = "happy"
     SAD = "sad"
     ANGRY = "angry"
@@ -81,7 +85,8 @@ class VoiceFeatures:
 
 @dataclass
 class VoiceAnalysisResult:
-    """Complete voice analysis result."""
+    """
+Complete voice analysis result."""
     analysis_id: str
     user_id: Optional[str]
     audio_duration: float

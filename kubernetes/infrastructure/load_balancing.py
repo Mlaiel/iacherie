@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -22,7 +23,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 class LoadBalancerType(Enum):
-    """Types of load balancers"""
+    """
+Types of load balancers"""
+
     APPLICATION_LOAD_BALANCER = "alb"  # Layer 7
     NETWORK_LOAD_BALANCER = "nlb"     # Layer 4
     NGINX_INGRESS = "nginx"
@@ -32,6 +35,7 @@ class LoadBalancerType(Enum):
 
 class BalancingAlgorithm(Enum):
     """Load balancing algorithms"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
@@ -40,6 +44,7 @@ class BalancingAlgorithm(Enum):
 
 class HealthCheckType(Enum):
     """Health check types"""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -80,7 +85,8 @@ class SSLConfig:
 
 @dataclass
 class LoadBalancerRule:
-    """Load balancer routing rule"""
+    """
+Load balancer routing rule"""
     priority: int
     conditions: Dict[str, Any]
     actions: Dict[str, Any]
@@ -88,7 +94,8 @@ class LoadBalancerRule:
 
 @dataclass
 class LoadBalancerSpec:
-    """Load balancer specification"""
+    """
+Load balancer specification"""
     name: str
     lb_type: LoadBalancerType
     algorithm: BalancingAlgorithm = BalancingAlgorithm.ROUND_ROBIN
@@ -101,30 +108,36 @@ class LoadBalancerSpec:
     idle_timeout: int = 60
 
 class LoadBalancerInterface(ABC):
-    """Abstract interface for load balancers"""
+    """
+Abstract interface for load balancers"""
     
     @abstractmethod
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create load balancer"""
+        """
+Create load balancer"""
         pass
     
     @abstractmethod
     async def update_load_balancer(self, name: str, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Update load balancer configuration"""
+        """
+Update load balancer configuration"""
         pass
     
     @abstractmethod
     async def delete_load_balancer(self, name: str) -> Dict[str, Any]:
-        """Delete load balancer"""
+        """
+Delete load balancer"""
         pass
     
     @abstractmethod
     async def get_load_balancer_status(self, name: str) -> Dict[str, Any]:
-        """Get load balancer status"""
+        """
+Get load balancer status"""
         pass
 
 class NginxIngressController(LoadBalancerInterface):
-    """NGINX Ingress Controller implementation"""
+    """
+NGINX Ingress Controller implementation"""
     
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
@@ -132,7 +145,8 @@ class NginxIngressController(LoadBalancerInterface):
         self.core_v1 = client.CoreV1Api() if k8s_client else None
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create NGINX Ingress load balancer"""
+        """
+Create NGINX Ingress load balancer"""
         try:
             # Create services for backend services
             for backend in spec.backend_services:
@@ -243,7 +257,8 @@ class NginxIngressController(LoadBalancerInterface):
         return ingress
     
     async def _create_backend_service(self, backend: BackendService) -> Dict[str, Any]:
-        """Create Kubernetes service for backend"""
+        """
+Create Kubernetes service for backend"""
         try:
             service = client.V1Service(
                 metadata=client.V1ObjectMeta(
@@ -337,7 +352,8 @@ class TraefikController(LoadBalancerInterface):
         self.k8s_client = k8s_client
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create Traefik load balancer"""
+        """
+Create Traefik load balancer"""
         try:
             # Implementation for Traefik IngressRoute
             logger.info(f"Creating Traefik load balancer: {spec.name}")
@@ -384,7 +400,8 @@ class IstioGateway(LoadBalancerInterface):
         self.k8s_client = k8s_client
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create Istio Gateway"""
+        """
+Create Istio Gateway"""
         try:
             # Implementation for Istio Gateway and VirtualService
             logger.info(f"Creating Istio Gateway: {spec.name}")
@@ -436,7 +453,8 @@ class LoadBalancerManager:
         }
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
-        """Create load balancer based on type"""
+        """
+Create load balancer based on type"""
         try:
             controller = self.controllers.get(spec.lb_type)
             if not controller:

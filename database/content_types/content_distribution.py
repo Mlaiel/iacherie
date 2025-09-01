@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class Platform(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
@@ -59,6 +62,7 @@ class Platform(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status on platforms"""
+
     NOT_DISTRIBUTED = "not_distributed"
     QUEUED = "queued"
     UPLOADING = "uploading"
@@ -74,6 +78,7 @@ class DistributionStatus(Enum):
 
 class ContentFormat(Enum):
     """Content format specifications for platforms"""
+
     AUDIO_ORIGINAL = "audio_original"
     AUDIO_COMPRESSED = "audio_compressed"
     VIDEO_HD = "video_hd"
@@ -89,6 +94,7 @@ class ContentFormat(Enum):
 
 class OptimizationType(Enum):
     """Content optimization types"""
+
     SEO = "seo"
     ALGORITHM = "algorithm"
     ENGAGEMENT = "engagement"
@@ -99,6 +105,7 @@ class OptimizationType(Enum):
 
 class SchedulingStrategy(Enum):
     """Content scheduling strategies"""
+
     IMMEDIATE = "immediate"
     OPTIMAL_TIME = "optimal_time"
     CUSTOM_SCHEDULE = "custom_schedule"
@@ -120,7 +127,8 @@ class PlatformRequirements:
     monetization_requirements: Dict[str, Any]
 
 class DistributionChannel(Base):
-    """Distribution channel configuration"""
+    """
+Distribution channel configuration"""
     __tablename__ = "distribution_channels"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -269,7 +277,8 @@ class DistributionEngine:
         self.platform_requirements = self._initialize_platform_requirements()
     
     def _initialize_platform_requirements(self) -> Dict[Platform, PlatformRequirements]:
-        """Initialize platform-specific requirements"""
+        """
+Initialize platform-specific requirements"""
         return {
             Platform.SPOTIFY: PlatformRequirements(
                 platform=Platform.SPOTIFY,
@@ -509,7 +518,8 @@ class DistributionEngine:
         genre: Optional[str] = None,
         mood: Optional[str] = None
     ) -> List[str]:
-        """Optimize hashtags for better discoverability"""
+        """
+Optimize hashtags for better discoverability"""
         try:
             optimized_hashtags = current_hashtags.copy()
             
@@ -711,15 +721,18 @@ class DistributionEngine:
         pass
     
     async def _get_content_data(self, content_id: str):
-        """Get content data from database"""
+        """
+Get content data from database"""
         pass
     
     async def _convert_content_format(self, content_data, target_format, requirements):
-        """Convert content to target format"""
+        """
+Convert content to target format"""
         pass
     
     async def _generate_platform_assets(self, content_data, platform, requirements):
-        """Generate platform-specific assets (thumbnails, etc.)"""
+        """
+Generate platform-specific assets (thumbnails, etc.)"""
         pass
 
 # Export classes and functions

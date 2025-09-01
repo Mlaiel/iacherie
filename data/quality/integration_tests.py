@@ -14,8 +14,9 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
                 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 import sys
@@ -40,7 +41,8 @@ class QualityModuleIntegrationTest:
     """
     
     def __init__(self):
-        """Initialize the integration test suite"""
+        """
+Initialize the integration test suite"""
         self.logger = logger
         self.test_results = []
         self.quality_system = None

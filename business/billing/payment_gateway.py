@@ -7,6 +7,7 @@ with unified interface, fraud detection, and automated failover.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class GatewayProvider(Enum):
-    """Supported payment gateway providers"""
+    """
+Supported payment gateway providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -33,6 +36,7 @@ class GatewayProvider(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -42,6 +46,7 @@ class PaymentStatus(Enum):
 
 class TransactionType(Enum):
     """Transaction types"""
+
     PAYMENT = "payment"
     REFUND = "refund"
     CHARGEBACK = "chargeback"
@@ -60,7 +65,8 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result"""
+    """
+Payment processing result"""
     transaction_id: str
     gateway_transaction_id: str
     status: PaymentStatus
@@ -84,7 +90,8 @@ class PaymentGatewayEngine:
         self.gateways = {}
         
     async def initialize(self) -> None:
-        """Initialize payment gateway engine"""
+        """
+Initialize payment gateway engine"""
         try:
             await self._setup_database_tables()
             await self._initialize_gateways()
@@ -149,7 +156,8 @@ class PaymentGatewayEngine:
             """)
 
     async def _initialize_gateways(self) -> None:
-        """Initialize individual gateway adapters"""
+        """
+Initialize individual gateway adapters"""
         # Initialize Stripe
         self.gateways[GatewayProvider.STRIPE] = StripeGatewayAdapter()
         
@@ -163,7 +171,8 @@ class PaymentGatewayEngine:
         self.gateways[GatewayProvider.SQUARE] = SquareGatewayAdapter()
 
     async def _load_gateway_configurations(self) -> None:
-        """Load gateway configurations from database"""
+        """
+Load gateway configurations from database"""
         try:
             async with self.db_pool.acquire() as conn:
                 # Load default configurations if not exists
@@ -235,7 +244,8 @@ class PaymentGatewayEngine:
             )
 
     async def process_payment(self, payment_request: PaymentRequest) -> PaymentResult:
-        """Process payment through optimal gateway"""
+        """
+Process payment through optimal gateway"""
         try:
             # Generate transaction ID
             transaction_id = self._generate_transaction_id()
@@ -605,13 +615,15 @@ class StripeGatewayAdapter:
     
     async def configure(self, config: Dict[str, Any], fees: Dict[str, Any], 
                        currencies: List[str]) -> None:
-        """Configure Stripe gateway"""
+        """
+Configure Stripe gateway"""
         self.api_key = config.get('api_key')
         self.fees = fees
         stripe.api_key = self.api_key
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment through Stripe"""
+        """
+Process payment through Stripe"""
         try:
             # Create payment intent
             intent = stripe.PaymentIntent.create(
@@ -635,7 +647,8 @@ class StripeGatewayAdapter:
             }
     
     async def process_refund(self, transaction_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Process refund through Stripe"""
+        """
+Process refund through Stripe"""
         try:
             refund = stripe.Refund.create(
                 payment_intent=transaction_id,
@@ -656,7 +669,8 @@ class StripeGatewayAdapter:
 
 
 class PayPalGatewayAdapter:
-    """PayPal payment gateway adapter"""
+    """
+PayPal payment gateway adapter"""
     
     def __init__(self):
         self.client_id = None
@@ -665,13 +679,15 @@ class PayPalGatewayAdapter:
     
     async def configure(self, config: Dict[str, Any], fees: Dict[str, Any], 
                        currencies: List[str]) -> None:
-        """Configure PayPal gateway"""
+        """
+Configure PayPal gateway"""
         self.client_id = config.get('client_id')
         self.client_secret = config.get('client_secret')
         self.fees = fees
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment through PayPal"""
+        """
+Process payment through PayPal"""
         try:
             # Mock PayPal payment processing
             transaction_id = f"paypal_{int(datetime.now().timestamp())}"
@@ -715,12 +731,14 @@ class WiseGatewayAdapter:
     
     async def configure(self, config: Dict[str, Any], fees: Dict[str, Any], 
                        currencies: List[str]) -> None:
-        """Configure Wise gateway"""
+        """
+Configure Wise gateway"""
         self.api_key = config.get('api_key')
         self.fees = fees
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment through Wise"""
+        """
+Process payment through Wise"""
         try:
             transaction_id = f"wise_{int(datetime.now().timestamp())}"
             
@@ -763,12 +781,14 @@ class SquareGatewayAdapter:
     
     async def configure(self, config: Dict[str, Any], fees: Dict[str, Any], 
                        currencies: List[str]) -> None:
-        """Configure Square gateway"""
+        """
+Configure Square gateway"""
         self.access_token = config.get('access_token')
         self.fees = fees
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment through Square"""
+        """
+Process payment through Square"""
         try:
             transaction_id = f"square_{int(datetime.now().timestamp())}"
             

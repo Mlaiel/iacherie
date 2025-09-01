@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class PricingStrategy(Enum):
-    """Dynamic pricing strategy types"""
+    """
+Dynamic pricing strategy types"""
+
     DEMAND_BASED = "demand_based"
     COMPETITOR_BASED = "competitor_based"
     VALUE_BASED = "value_based"
@@ -56,6 +59,7 @@ class PricingStrategy(Enum):
 
 class PriceAdjustmentType(Enum):
     """Price adjustment types"""
+
     INCREASE = "increase"
     DECREASE = "decrease"
     SURGE = "surge"
@@ -67,6 +71,7 @@ class PriceAdjustmentType(Enum):
 
 class MarketCondition(Enum):
     """Market condition indicators"""
+
     HIGH_DEMAND = "high_demand"
     LOW_DEMAND = "low_demand"
     PEAK_HOURS = "peak_hours"
@@ -143,7 +148,8 @@ class PricingRule(Base):
     )
 
 class DynamicPrice(Base):
-    """Current dynamic pricing for content/services"""
+    """
+Current dynamic pricing for content/services"""
     __tablename__ = 'dynamic_prices'
     
     # Primary identification
@@ -213,7 +219,8 @@ class DynamicPrice(Base):
     )
 
 class PriceHistory(Base):
-    """Historical price changes and performance"""
+    """
+Historical price changes and performance"""
     __tablename__ = 'price_history'
     
     # Primary identification
@@ -346,7 +353,8 @@ class MarketAnalysis(Base):
     )
 
 class CompetitorPricing(Base):
-    """Competitor pricing data for market analysis"""
+    """
+Competitor pricing data for market analysis"""
     __tablename__ = 'competitor_pricing'
     
     # Primary identification
@@ -410,7 +418,8 @@ class CompetitorPricing(Base):
 
 @dataclass
 class PricingRecommendation:
-    """AI-generated pricing recommendation"""
+    """
+AI-generated pricing recommendation"""
     recommended_price: float
     confidence_score: float
     expected_revenue_impact: float
@@ -421,7 +430,8 @@ class PricingRecommendation:
     implementation_timeline: str
 
 class PricingExperiment(Base):
-    """A/B testing for pricing strategies"""
+    """
+A/B testing for pricing strategies"""
     __tablename__ = 'pricing_experiments'
     
     # Primary identification

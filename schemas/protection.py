@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class ProtectionRequest(BaseSchema):
-    """Content protection request schema."""
+    """
+Content protection request schema."""
     
     content_id: UUID = Field(description="Content to protect")
     protection_level: str = Field(description="Protection level (basic, standard, premium, enterprise)")
@@ -94,7 +96,8 @@ class ProtectionOut(UUIDSchema, TimestampSchema):
 
 
 class FingerprintCreate(BaseSchema):
-    """Content fingerprint creation request schema."""
+    """
+Content fingerprint creation request schema."""
     
     content_id: UUID = Field(description="Content to fingerprint")
     fingerprint_type: str = Field(description="Type of fingerprint to generate")

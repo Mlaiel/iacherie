@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text, case
@@ -44,7 +45,8 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize Social Media Analytics Repository"""
+        """
+Initialize Social Media Analytics Repository"""
         super().__init__(db_session, SocialMediaAnalytics)
         
     def record_analytics_data(self, 
@@ -585,7 +587,8 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                                            user_metrics: Dict[str, Any],
                                            benchmark_engagement: float,
                                            benchmark_frequency: float) -> List[str]:
-        """Generate recommendations based on competitor analysis"""
+        """
+Generate recommendations based on competitor analysis"""
         recommendations = []
         
         if user_metrics['average_engagement_rate'] < benchmark_engagement:

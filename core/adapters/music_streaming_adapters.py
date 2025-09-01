@@ -20,6 +20,7 @@ Supported Platforms:
 - Tidal: Artist tools integration
 - Bandcamp: Fan funding, Direct sales
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -38,7 +39,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class MusicPlatform(Enum):
-    """Supported music streaming platforms."""
+    """
+Supported music streaming platforms."""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     SOUNDCLOUD = "soundcloud"
@@ -52,6 +55,7 @@ class MusicPlatform(Enum):
 
 class AudioFormat(Enum):
     """Supported audio formats."""
+
     MP3 = "mp3"
     FLAC = "flac"
     WAV = "wav"
@@ -62,6 +66,7 @@ class AudioFormat(Enum):
 
 class ReleaseType(Enum):
     """Music release types."""
+
     SINGLE = "single"
     EP = "ep"
     ALBUM = "album"
@@ -95,7 +100,8 @@ class AudioTrack:
 
 @dataclass
 class MusicAnalytics:
-    """Music streaming analytics and royalty data."""
+    """
+Music streaming analytics and royalty data."""
     streams: int = 0
     listeners: int = 0
     saves: int = 0
@@ -636,7 +642,8 @@ class MusicAdapterFactory:
     
     @classmethod
     def create_adapter(cls, platform: MusicPlatform, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified music platform."""
+        """
+Create adapter for specified music platform."""
         if platform not in cls._adapters:
             raise AdapterError(f"Unsupported music platform: {platform}")
         

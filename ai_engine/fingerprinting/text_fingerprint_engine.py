@@ -4,6 +4,7 @@ Text fingerprinting with BERT embeddings, semantic similarity, and plagiarism de
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import numpy as np
 import hashlib
@@ -46,7 +47,8 @@ except:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data structure"""
+    """
+Text fingerprint data structure"""
     file_id: str
     bert_embedding: List[float]
     sentence_embeddings: List[List[float]]

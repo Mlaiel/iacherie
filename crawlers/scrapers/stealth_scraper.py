@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import random
 import time
@@ -34,7 +35,8 @@ import hashlib
 
 @dataclass
 class StealthConfig:
-    """Stealth scraping configuration."""
+    """
+Stealth scraping configuration."""
     use_proxies: bool = True
     rotate_user_agents: bool = True
     randomize_headers: bool = True
@@ -51,7 +53,8 @@ class StealthConfig:
 
 @dataclass
 class ProxyConfig:
-    """Proxy configuration."""
+    """
+Proxy configuration."""
     host: str
     port: int
     username: Optional[str] = None
@@ -86,16 +89,19 @@ class StealthScraper:
         self.fingerprint_cache = {}
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self._cleanup()
         
     async def _initialize_session(self):
-        """Initialize stealth session."""
+        """
+Initialize stealth session."""
         if self.config.use_proxies:
             await self._load_proxy_pool()
             
@@ -115,7 +121,8 @@ class StealthScraper:
         )
         
     async def _cleanup(self):
-        """Cleanup resources."""
+        """
+Cleanup resources."""
         if self.session:
             await self.session.close()
             
@@ -123,7 +130,8 @@ class StealthScraper:
             self.driver.quit()
             
     async def _load_proxy_pool(self):
-        """Load and validate proxy pool."""
+        """
+Load and validate proxy pool."""
         # In production, load from secure proxy service
         # For now, using placeholder
         sample_proxies = [
@@ -177,7 +185,8 @@ class StealthScraper:
         return proxy
         
     def _generate_stealth_headers(self) -> Dict[str, str]:
-        """Generate randomized stealth headers."""
+        """
+Generate randomized stealth headers."""
         headers = {
             'Accept': random.choice([
                 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -231,13 +240,15 @@ class StealthScraper:
             return random.choice(fallback_agents)
             
     async def _add_behavioral_delay(self):
-        """Add human-like behavioral delay."""
+        """
+Add human-like behavioral delay."""
         if self.config.add_noise_delay:
             delay = random.uniform(self.config.min_delay, self.config.max_delay)
             await asyncio.sleep(delay)
             
     async def _check_session_rotation(self):
-        """Check if session should be rotated."""
+        """
+Check if session should be rotated."""
         self.request_count += 1
         
         if (self.request_count >= self.config.session_rotation_interval or
@@ -246,7 +257,8 @@ class StealthScraper:
             await self._rotate_session()
             
     async def _rotate_session(self):
-        """Rotate session to avoid detection."""
+        """
+Rotate session to avoid detection."""
         self.logger.info("Rotating session for stealth")
         
         if self.session:
@@ -385,7 +397,8 @@ class StealthScraper:
             """)
             
     def detect_captcha(self, html: str) -> bool:
-        """Detect CAPTCHA presence in HTML."""
+        """
+Detect CAPTCHA presence in HTML."""
         captcha_indicators = [
             'captcha', 'recaptcha', 'hcaptcha', 'cloudflare',
             'verify you are human', 'robot', 'automation',
@@ -396,7 +409,8 @@ class StealthScraper:
         return any(indicator in html_lower for indicator in captcha_indicators)
         
     def detect_bot_detection(self, html: str, status_code: int) -> bool:
-        """Detect bot detection mechanisms."""
+        """
+Detect bot detection mechanisms."""
         if status_code in [403, 429, 503]:
             return True
             
@@ -410,7 +424,8 @@ class StealthScraper:
         return any(indicator in html_lower for indicator in bot_detection_indicators)
         
     async def handle_challenge(self, url: str, html: str) -> Optional[str]:
-        """Handle anti-bot challenges."""
+        """
+Handle anti-bot challenges."""
         self.logger.warning(f"Challenge detected for {url}")
         
         if self.detect_captcha(html):
@@ -444,11 +459,13 @@ class StealthScraper:
             return await response.text()
             
     async def _retry_with_selenium(self, url: str) -> Optional[str]:
-        """Retry with Selenium."""
+        """
+Retry with Selenium."""
         return await self.stealth_selenium_get(url)
         
     async def _retry_with_different_proxy(self, url: str) -> Optional[str]:
-        """Retry with different proxy."""
+        """
+Retry with different proxy."""
         if self.proxy_pool and len(self.proxy_pool) > 1:
             # Force proxy rotation
             self.current_proxy_index = (self.current_proxy_index + 1) % len(self.proxy_pool)
@@ -459,7 +476,8 @@ class StealthScraper:
         return None
         
     def generate_session_fingerprint(self) -> str:
-        """Generate unique session fingerprint."""
+        """
+Generate unique session fingerprint."""
         components = [
             self._get_random_user_agent(),
             str(random.randint(1200, 1920)),  # screen width
@@ -473,7 +491,8 @@ class StealthScraper:
         return hashlib.md5(fingerprint_string.encode()).hexdigest()
         
     async def stealth_scrape(self, url: str, use_selenium: Optional[bool] = None) -> Optional[str]:
-        """Main stealth scraping method."""
+        """
+Main stealth scraping method."""
         use_sel = use_selenium if use_selenium is not None else self.config.use_selenium
         
         try:

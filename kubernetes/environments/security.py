@@ -15,6 +15,7 @@ Security environment configuration for protection and compliance.
 Handles authentication, authorization, encryption, and security monitoring.
 ==================================================
 """
+
 import os
 import logging
 import secrets
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security configuration levels"""
+    """
+Security configuration levels"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -38,6 +41,7 @@ class SecurityLevel(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Supported encryption algorithms"""
+
     AES_256_GCM = "aes-256-gcm"
     AES_256_CBC = "aes-256-cbc"
     CHACHA20_POLY1305 = "chacha20-poly1305"
@@ -104,7 +108,8 @@ class EncryptionConfig:
 
 @dataclass
 class NetworkSecurityConfig:
-    """Network security configuration"""
+    """
+Network security configuration"""
     https_only: bool = True
     tls_version_min: str = "1.2"
     tls_version_max: str = "1.3"
@@ -165,7 +170,8 @@ class ComplianceConfig:
 
 @dataclass
 class ThreatProtectionConfig:
-    """Threat protection configuration"""
+    """
+Threat protection configuration"""
     sql_injection_protection: bool = True
     xss_protection: bool = True
     csrf_protection: bool = True
@@ -583,7 +589,8 @@ class SecurityEnvironmentManager:
     
     # Private helper methods
     def _apply_security_level_config(self):
-        """Apply security level-specific configurations"""
+        """
+Apply security level-specific configurations"""
         if self.security_level == SecurityLevel.HIGH_SECURITY:
             self.authentication.jwt_expiration_minutes = 15
             self.authentication.password_min_length = 16
@@ -599,7 +606,8 @@ class SecurityEnvironmentManager:
             self.monitoring.log_retention_days = 2555  # 7 years
     
     def _get_security_posture(self) -> str:
-        """Get security posture level"""
+        """
+Get security posture level"""
         posture_levels = {
             SecurityLevel.DEVELOPMENT: "basic",
             SecurityLevel.TESTING: "standard",

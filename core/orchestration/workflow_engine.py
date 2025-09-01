@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status enumeration."""
+    """
+Workflow execution status enumeration."""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -36,6 +39,7 @@ class WorkflowStatus(Enum):
 
 class TaskStatus(Enum):
     """Individual task status enumeration."""
+
     WAITING = "waiting"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -46,6 +50,7 @@ class TaskStatus(Enum):
 
 class ExecutionMode(Enum):
     """Workflow execution mode options."""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     HYBRID = "hybrid"
@@ -70,7 +75,8 @@ class TaskDefinition:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition structure."""
+    """
+Complete workflow definition structure."""
     workflow_id: str
     name: str
     description: str
@@ -86,7 +92,8 @@ class WorkflowDefinition:
 
 @dataclass
 class TaskExecution:
-    """Task execution tracking information."""
+    """
+Task execution tracking information."""
     task_id: str
     workflow_id: str
     status: TaskStatus = TaskStatus.WAITING
@@ -102,7 +109,8 @@ class TaskExecution:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution tracking information."""
+    """
+Workflow execution tracking information."""
     workflow_id: str
     execution_id: str
     status: WorkflowStatus = WorkflowStatus.PENDING
@@ -368,7 +376,8 @@ class WorkflowEngine:
                 break
     
     async def _execute_parallel(self, execution_id: str) -> None:
-        """Execute all tasks in parallel."""
+        """
+Execute all tasks in parallel."""
         execution = self.active_executions[execution_id]
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
@@ -380,7 +389,8 @@ class WorkflowEngine:
         await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _execute_hybrid(self, execution_id: str) -> None:
-        """Execute with intelligent hybrid approach."""
+        """
+Execute with intelligent hybrid approach."""
         execution = self.active_executions[execution_id]
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
@@ -532,7 +542,8 @@ class WorkflowEngine:
             return False
     
     async def _check_task_dependencies(self, execution_id: str, task_id: str) -> bool:
-        """Check if task dependencies are satisfied."""
+        """
+Check if task dependencies are satisfied."""
         workflow_def = self.workflow_definitions[
             self.active_executions[execution_id].workflow_id
         ]
@@ -550,14 +561,16 @@ class WorkflowEngine:
         return True
     
     def _build_dependency_graph(self, tasks: List[TaskDefinition]) -> Dict[str, Set[str]]:
-        """Build task dependency graph."""
+        """
+Build task dependency graph."""
         graph = {}
         for task in tasks:
             graph[task.task_id] = set(task.dependencies)
         return graph
     
     def _has_circular_dependencies(self, tasks: List[TaskDefinition]) -> bool:
-        """Check for circular dependencies in task definitions."""
+        """
+Check for circular dependencies in task definitions."""
         # Simple cycle detection using DFS
         graph = self._build_dependency_graph(tasks)
         visited = set()
@@ -587,7 +600,8 @@ class WorkflowEngine:
         return False
     
     def _update_performance_stats(self) -> None:
-        """Update performance statistics."""
+        """
+Update performance statistics."""
         if self.execution_stats['total_workflows'] > 0:
             self.execution_stats['error_rate'] = (
                 self.execution_stats['failed_workflows'] / 
@@ -595,11 +609,13 @@ class WorkflowEngine:
             )
     
     async def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get current workflow execution status."""
+        """
+Get current workflow execution status."""
         return self.active_executions.get(execution_id)
     
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel running workflow execution."""
+        """
+Cancel running workflow execution."""
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]

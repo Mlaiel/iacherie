@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Callable
 from enum import Enum
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class EventPriority(Enum):
-    """Event processing priority levels"""
+    """
+Event processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"  
     HIGH = "high"
@@ -72,6 +75,7 @@ class EventType(Enum):
 
 class DeliveryGuarantee(Enum):
     """Message delivery guarantees"""
+
     AT_MOST_ONCE = "at_most_once"
     AT_LEAST_ONCE = "at_least_once"
     EXACTLY_ONCE = "exactly_once"
@@ -103,7 +107,8 @@ class EventSchema:
 
 @dataclass
 class EventStreamConfig:
-    """Event stream configuration"""
+    """
+Event stream configuration"""
     
     stream_name: str
     description: str
@@ -406,13 +411,15 @@ class EventPublisher:
     """Event publisher for publishing events to streams"""
     
     def __init__(self, config: EventDrivenConfig):
-        """Initialize event publisher"""
+        """
+Initialize event publisher"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._client = None
     
     async def initialize(self) -> bool:
-        """Initialize publisher connection"""
+        """
+Initialize publisher connection"""
         try:
             if self.config.broker_type == "kafka":
                 await self._initialize_kafka()
@@ -500,13 +507,15 @@ class EventPublisher:
         return str(uuid.uuid4())
     
     async def _encrypt_payload(self, payload: Dict[str, Any]) -> str:
-        """Encrypt sensitive payload data"""
+        """
+Encrypt sensitive payload data"""
         # Encryption implementation would go here
         # For now, return JSON string (in production, this would be encrypted)
         return json.dumps(payload)
     
     def _get_default_stream(self, event_type: EventType) -> str:
-        """Get default stream for event type"""
+        """
+Get default stream for event type"""
         stream_mapping = {
             EventType.CONTENT_UPLOADED: "content-processing",
             EventType.CONTENT_PROCESSED: "content-processing",
@@ -533,7 +542,8 @@ class EventConsumer:
     """Event consumer for processing events from streams"""
     
     def __init__(self, config: EventDrivenConfig, consumer_group: str):
-        """Initialize event consumer"""
+        """
+Initialize event consumer"""
         self.config = config
         self.consumer_group = consumer_group
         self.event_handlers: Dict[EventType, Callable] = {}
@@ -541,7 +551,8 @@ class EventConsumer:
         self._client = None
     
     async def initialize(self) -> bool:
-        """Initialize consumer connection"""
+        """
+Initialize consumer connection"""
         try:
             if self.config.broker_type == "kafka":
                 await self._initialize_kafka_consumer()
@@ -587,14 +598,16 @@ class EventDrivenOrchestrator:
     """Event-driven architecture orchestrator"""
     
     def __init__(self, config: EventDrivenConfig = None):
-        """Initialize orchestrator"""
+        """
+Initialize orchestrator"""
         self.config = config or EventDrivenConfig()
         self.publisher = EventPublisher(self.config)
         self.consumers: Dict[str, EventConsumer] = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_event_system(self) -> bool:
-        """Initialize event-driven system"""
+        """
+Initialize event-driven system"""
         try:
             self.logger.info("Initializing event-driven architecture...")
             
@@ -641,7 +654,8 @@ class EventDrivenOrchestrator:
         return await self.publisher.publish_event(event_type, payload)
     
     async def get_event_system_health(self) -> Dict[str, Any]:
-        """Get event system health status"""
+        """
+Get event system health status"""
         return {
             "publisher_status": "active",
             "streams": {
@@ -703,17 +717,20 @@ async def initialize_event_system() -> bool:
 
 
 async def publish_event(event_type: EventType, payload: Dict[str, Any]) -> bool:
-    """Publish event to system"""
+    """
+Publish event to system"""
     return await event_orchestrator.publish_event(event_type, payload)
 
 
 async def get_event_system_health() -> Dict[str, Any]:
-    """Get event system health"""
+    """
+Get event system health"""
     return await event_orchestrator.get_event_system_health()
 
 
 def get_event_system_summary() -> Dict[str, Any]:
-    """Get event system configuration summary"""
+    """
+Get event system configuration summary"""
     return event_orchestrator.get_configuration_summary()
 
 

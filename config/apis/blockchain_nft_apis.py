@@ -10,6 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -18,7 +19,9 @@ from decimal import Decimal
 
 
 class BlockchainNetwork(Enum):
-    """Blockchain networks enumeration."""
+    """
+Blockchain networks enumeration."""
+
     ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_GOERLI = "ethereum_goerli"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
@@ -34,6 +37,7 @@ class BlockchainNetwork(Enum):
 
 class TokenStandard(Enum):
     """Token standards enumeration."""
+
     ERC721 = "erc721"  # NFT standard
     ERC1155 = "erc1155"  # Multi-token standard
     ERC20 = "erc20"  # Fungible token standard
@@ -43,6 +47,7 @@ class TokenStandard(Enum):
 
 class ContractType(Enum):
     """Smart contract types."""
+
     NFT_COLLECTION = "nft_collection"
     MARKETPLACE = "marketplace"
     ROYALTY_SPLITTER = "royalty_splitter"
@@ -73,7 +78,8 @@ class BlockchainConfig:
 
 @dataclass
 class NFTMetadata:
-    """NFT metadata structure."""
+    """
+NFT metadata structure."""
     name: str
     description: str
     image: str
@@ -97,7 +103,8 @@ class NFTMetadata:
 
 @dataclass
 class SmartContractConfig:
-    """Smart contract configuration."""
+    """
+Smart contract configuration."""
     contract_type: ContractType
     contract_address: str
     abi: List[Dict[str, Any]]
@@ -114,10 +121,12 @@ class SmartContractConfig:
 
 
 class BlockchainAPIsConfig:
-    """Professional Blockchain & NFT APIs configuration."""
+    """
+Professional Blockchain & NFT APIs configuration."""
     
     def __init__(self):
-        """Initialize blockchain configuration."""
+        """
+Initialize blockchain configuration."""
         self.networks = self._get_network_configs()
         self.contracts = self._get_contract_configs()
         self.nft_collections = self._get_nft_collection_configs()
@@ -127,7 +136,8 @@ class BlockchainAPIsConfig:
         self.wallet_configs = self._get_wallet_configs()
     
     def _get_network_configs(self) -> Dict[BlockchainNetwork, BlockchainConfig]:
-        """Get blockchain network configurations."""
+        """
+Get blockchain network configurations."""
         return {
             BlockchainNetwork.ETHEREUM_MAINNET: BlockchainConfig(
                 network=BlockchainNetwork.ETHEREUM_MAINNET,
@@ -451,7 +461,8 @@ class BlockchainAPIsConfig:
         }
     
     def _get_wallet_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get wallet configurations."""
+        """
+Get wallet configurations."""
         return {
             'supported_wallets': {
                 'metamask': {
@@ -493,15 +504,18 @@ class BlockchainAPIsConfig:
         }
     
     def get_network_config(self, network: BlockchainNetwork) -> Optional[BlockchainConfig]:
-        """Get blockchain network configuration."""
+        """
+Get blockchain network configuration."""
         return self.networks.get(network)
     
     def get_contract_config(self, contract_name: str) -> Optional[SmartContractConfig]:
-        """Get smart contract configuration."""
+        """
+Get smart contract configuration."""
         return self.contracts.get(contract_name)
     
     def get_nft_collection_config(self, collection_name: str) -> Optional[Dict[str, Any]]:
-        """Get NFT collection configuration."""
+        """
+Get NFT collection configuration."""
         return self.nft_collections.get(collection_name)
 
 
@@ -510,17 +524,20 @@ blockchain_apis_config = BlockchainAPIsConfig()
 
 
 def get_blockchain_network(network: BlockchainNetwork) -> Optional[BlockchainConfig]:
-    """Get blockchain network configuration."""
+    """
+Get blockchain network configuration."""
     return blockchain_apis_config.get_network_config(network)
 
 
 def get_smart_contract(contract_name: str) -> Optional[SmartContractConfig]:
-    """Get smart contract configuration."""
+    """
+Get smart contract configuration."""
     return blockchain_apis_config.get_contract_config(contract_name)
 
 
 def get_nft_collection(collection_name: str) -> Optional[Dict[str, Any]]:
-    """Get NFT collection configuration."""
+    """
+Get NFT collection configuration."""
     return blockchain_apis_config.get_nft_collection_config(collection_name)
 
 

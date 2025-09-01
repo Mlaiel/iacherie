@@ -9,6 +9,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -106,6 +107,7 @@ class MultiPlatformDistributionService:
     Professional multi-platform distribution service with intelligent
     content optimization and automated publishing workflows
     """
+
     
     PLATFORM_CONFIGS = {
         Platform.YOUTUBE: PlatformConfig(
@@ -772,7 +774,8 @@ class MultiPlatformDistributionService:
         content_data: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> None:
-        """Store scheduled distribution job"""
+        """
+Store scheduled distribution job"""
         # This would create a scheduled task in the database
         logger.info(f"Scheduled distribution for asset {asset_id} to {platform.value} at {schedule_time}")
 
@@ -808,7 +811,8 @@ class MultiPlatformDistributionService:
         seo_data: Dict[str, Any],
         base_metadata: Dict[str, Any]
     ) -> str:
-        """Create optimized Instagram caption"""
+        """
+Create optimized Instagram caption"""
         caption_parts = []
         
         # Main description
@@ -827,7 +831,8 @@ class MultiPlatformDistributionService:
         return ''.join(caption_parts)
 
     def _create_tiktok_description(self, seo_data: Dict[str, Any]) -> str:
-        """Create optimized TikTok description"""
+        """
+Create optimized TikTok description"""
         description = seo_data.get('description', '')[:100]  # TikTok limit
         hashtags = seo_data.get('hashtags', [])[:5]  # Limited hashtags for TikTok
         
@@ -837,7 +842,8 @@ class MultiPlatformDistributionService:
         return description
 
     def _create_twitter_text(self, seo_data: Dict[str, Any]) -> str:
-        """Create optimized Twitter text"""
+        """
+Create optimized Twitter text"""
         text = seo_data.get('description', '')[:200]  # Leave room for hashtags
         hashtags = seo_data.get('hashtags', [])[:3]  # Limited hashtags for Twitter
         
@@ -854,7 +860,8 @@ class MultiPlatformDistributionService:
         asset_id: int,
         platform: Optional[Platform] = None
     ) -> Dict[str, Any]:
-        """Get distribution analytics for content"""
+        """
+Get distribution analytics for content"""
         try:
             # This would aggregate analytics from DistributionLog table
             analytics = {

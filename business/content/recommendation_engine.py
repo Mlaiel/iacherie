@@ -15,6 +15,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import asyncio
 import json
 import logging
@@ -49,7 +50,8 @@ settings = get_settings()
 
 
 class SmartRecommendationEngine:
-    """AI-powered content and strategy recommendation system."""
+    """
+AI-powered content and strategy recommendation system."""
     
     def __init__(self):
         self.db = get_database()
@@ -793,7 +795,8 @@ class SmartRecommendationEngine:
         }
     
     def _calculate_trend(self, df: pd.DataFrame, column: str) -> str:
-        """Calculate trend direction for a metric."""
+        """
+Calculate trend direction for a metric."""
         if len(df) < 3:
             return 'insufficient_data'
         
@@ -810,7 +813,8 @@ class SmartRecommendationEngine:
             return 'stable'
     
     def _calculate_consistency_score(self, df: pd.DataFrame) -> float:
-        """Calculate consistency score based on performance variance."""
+        """
+Calculate consistency score based on performance variance."""
         if len(df) < 2:
             return 0.5
         
@@ -823,7 +827,8 @@ class SmartRecommendationEngine:
         return float(np.clip(consistency, 0, 1))
     
     def _identify_creator_strengths(self, df: pd.DataFrame) -> List[str]:
-        """Identify creator's content strengths."""
+        """
+Identify creator's content strengths."""
         strengths = []
         
         # High engagement rate
@@ -845,7 +850,8 @@ class SmartRecommendationEngine:
         return strengths
     
     def _identify_improvement_areas(self, df: pd.DataFrame) -> List[str]:
-        """Identify areas for improvement."""
+        """
+Identify areas for improvement."""
         improvements = []
         
         # Low engagement
@@ -871,7 +877,8 @@ class SmartRecommendationEngine:
         creator_id: UUID,
         content_type: str
     ) -> Dict[str, Any]:
-        """Get performance benchmarks for creator's niche."""
+        """
+Get performance benchmarks for creator's niche."""
         try:
             creator_profile = await self.db.creator_profiles.get_by_id(creator_id)
             niche_categories = creator_profile.niche_categories if creator_profile else ['general']

@@ -5,7 +5,7 @@ This module provides deployment infrastructure for image fingerprinting
 services using CLIP, ImageHash, and perceptual hashing technologies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This code is the exclusive property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ImageHashingAlgorithm(Enum):
-    """Image hashing algorithms"""
+    """
+Image hashing algorithms"""
+
     PERCEPTUAL = "perceptual"
     AVERAGE = "average"
     DIFFERENCE = "difference"
@@ -44,6 +47,7 @@ class ImageHashingAlgorithm(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity calculation metrics"""
+
     HAMMING_DISTANCE = "hamming_distance"
     COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
@@ -53,6 +57,7 @@ class SimilarityMetric(Enum):
 
 class ProcessingPipeline(Enum):
     """Image processing pipelines"""
+
     REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     STREAMING = "streaming"

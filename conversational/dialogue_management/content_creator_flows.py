@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -37,7 +38,9 @@ from .state_manager import StateManager
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     PODCASTER = "podcaster"
     VIDEO_CREATOR = "video_creator"
@@ -51,6 +54,7 @@ class CreatorType(Enum):
 
 class ContentFormat(Enum):
     """Content formats supported"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -62,6 +66,7 @@ class ContentFormat(Enum):
 
 class Platform(Enum):
     """Supported platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -73,6 +78,7 @@ class Platform(Enum):
 
 class BusinessObjective(Enum):
     """Business objectives for creators"""
+
     CONTENT_PROTECTION = "content_protection"
     REVENUE_MAXIMIZATION = "revenue_maximization"
     AUDIENCE_GROWTH = "audience_growth"
@@ -129,7 +135,8 @@ class ContentCreatorFlowManager:
         self.creator_flows = self._initialize_creator_flows()
         
     def _initialize_creator_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize predefined creator workflow flows"""
+        """
+Initialize predefined creator workflow flows"""
         return {
             "content_upload_protection_flow": {
                 "flow_id": "content_upload_protection",
@@ -588,7 +595,8 @@ class ContentCreatorFlowManager:
         self,
         creator_profile: CreatorProfile
     ) -> List[str]:
-        """Suggest alternative flows for creator"""
+        """
+Suggest alternative flows for creator"""
         suggestions = []
         for flow_id, flow_def in self.creator_flows.items():
             if self._validate_creator_eligibility(flow_def, creator_profile):
@@ -600,7 +608,8 @@ class ContentCreatorFlowManager:
         creator_profile: CreatorProfile,
         business_priorities: List[BusinessObjective]
     ) -> List[Dict[str, Any]]:
-        """Get recommended flows based on creator profile and priorities"""
+        """
+Get recommended flows based on creator profile and priorities"""
         recommendations = []
         
         for flow_id, flow_def in self.creator_flows.items():

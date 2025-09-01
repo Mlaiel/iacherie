@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
@@ -22,7 +23,9 @@ from enum import Enum
 
 
 class MetricType(Enum):
-    """Prometheus metric types"""
+    """
+Prometheus metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -42,7 +45,8 @@ class PrometheusMetric:
 
 @dataclass
 class PrometheusJobConfig:
-    """Prometheus scraping job configuration"""
+    """
+Prometheus scraping job configuration"""
     job_name: str
     scrape_interval: str
     scrape_timeout: str
@@ -52,7 +56,8 @@ class PrometheusJobConfig:
 
 
 class PrometheusConfig:
-    """Professional Prometheus configuration for IA-Influencer platform"""
+    """
+Professional Prometheus configuration for IA-Influencer platform"""
     
     def __init__(self):
         self.prometheus_port = int(os.getenv("PROMETHEUS_PORT", "9090"))
@@ -86,7 +91,8 @@ class PrometheusConfig:
         ]
     
     def _get_application_scrape_config(self) -> Dict[str, Any]:
-        """Application metrics scraping configuration"""
+        """
+Application metrics scraping configuration"""
         return {
             "job_name": "ia-influencer-app",
             "scrape_interval": "10s",

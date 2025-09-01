@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IntelligenceJob:
-    """Job configuration for intelligence operations"""
+    """
+Job configuration for intelligence operations"""
     job_id: str
     data: Dict[str, Any]
     priority: int = 5
@@ -24,7 +26,8 @@ class IntelligenceJob:
 
 @dataclass 
 class IntelligenceResult:
-    """Result of intelligence operations"""
+    """
+Result of intelligence operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None

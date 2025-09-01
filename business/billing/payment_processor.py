@@ -7,6 +7,7 @@ payment gateways, including fraud detection and automated reconciliation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
+    """
+Supported payment methods"""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
@@ -34,6 +37,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -44,6 +48,7 @@ class PaymentStatus(Enum):
 
 class GatewayProvider(Enum):
     """Payment gateway providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -69,7 +74,8 @@ class PaymentData:
 
 @dataclass
 class RefundData:
-    """Refund transaction data"""
+    """
+Refund transaction data"""
     refund_id: str
     payment_id: str
     amount: Decimal
@@ -89,7 +95,8 @@ class PaymentProcessorEngine:
         self.gateway_configs = {}
         
     async def initialize(self) -> None:
-        """Initialize payment processor engine"""
+        """
+Initialize payment processor engine"""
         try:
             await self._setup_database_tables()
             await self._load_gateway_configurations()
@@ -155,7 +162,8 @@ class PaymentProcessorEngine:
             """)
 
     async def _load_gateway_configurations(self) -> None:
-        """Load payment gateway configurations"""
+        """
+Load payment gateway configurations"""
         try:
             # In production, these would come from secure environment variables
             self.gateway_configs = {

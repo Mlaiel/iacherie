@@ -17,6 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
+
 import os
 import secrets
 import hashlib
@@ -51,7 +52,9 @@ from backend.core.logging import SecurityLogger
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms with security levels"""
+    """
+Supported encryption algorithms with security levels"""
+
     AES_256_GCM = "aes_256_gcm"          # Authenticated encryption
     AES_256_CBC = "aes_256_cbc"          # Block cipher mode
     CHACHA20_POLY1305 = "chacha20_poly1305"  # Stream cipher with authentication
@@ -65,6 +68,7 @@ class EncryptionAlgorithm(Enum):
 
 class KeyType(Enum):
     """Types of cryptographic keys"""
+
     SYMMETRIC = "symmetric"
     ASYMMETRIC = "asymmetric"
     SIGNING = "signing"
@@ -86,7 +90,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptedData:
-    """Encrypted data container"""
+    """
+Encrypted data container"""
     data: bytes
     algorithm: EncryptionAlgorithm
     key_id: str
@@ -96,7 +101,8 @@ class EncryptedData:
 
 
 class KeyManager:
-    """Cryptographic key management system"""
+    """
+Cryptographic key management system"""
     
     def __init__(self):
         self.logger = SecurityLogger("KeyManager")
@@ -237,12 +243,14 @@ class KeyManager:
         return fernet.encrypt(key_data)
     
     def _decrypt_key(self, encrypted_key: bytes) -> bytes:
-        """Decrypt key with master key"""
+        """
+Decrypt key with master key"""
         fernet = Fernet(self.master_key)
         return fernet.decrypt(encrypted_key)
     
     async def _store_key(self, key_id: str, encrypted_key: bytes, metadata: EncryptionKey):
-        """Store encrypted key in database"""
+        """
+Store encrypted key in database"""
         try:
             # Store in cache for immediate access
             cache_key = f"encryption_key_data:{key_id}"

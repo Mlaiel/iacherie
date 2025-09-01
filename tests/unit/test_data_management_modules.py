@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit Tests for Data Management Modules
+"""
+Unit Tests for Data Management Modules
 =====================================
 
 Comprehensive unit tests for all data management modules including:
@@ -26,6 +28,7 @@ Comprehensive unit tests for all data management modules including:
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure data management reliability and quality
 """
+
 import pytest
 import sys
 import os
@@ -44,11 +47,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestDataValidation:
-    """Unit tests for data validation and processing"""
+    """
+Unit tests for data validation and processing"""
     
     @pytest.fixture
     def mock_data_validator(self):
-        """Mock data validation system"""
+        """
+Mock data validation system"""
         return Mock(
             validate_content_data=Mock(return_value={
                 'valid': True,
@@ -97,7 +102,8 @@ class TestDataValidation:
         )
     
     def test_content_data_validation(self, mock_data_validator):
-        """Test content data validation"""
+        """
+Test content data validation"""
         content_data = {
             'title': 'Test Song',
             'creator_id': 'cr_123',
@@ -116,7 +122,8 @@ class TestDataValidation:
         assert result['data_quality_metrics']['completeness'] == 98.5
         
     def test_user_data_validation(self, mock_data_validator):
-        """Test user data validation and privacy compliance"""
+        """
+Test user data validation and privacy compliance"""
         user_data = {
             'email': 'user@example.com',
             'name': 'Test User',
@@ -133,7 +140,8 @@ class TestDataValidation:
         assert result['retention_policy_applied'] is True
         
     def test_financial_data_validation(self, mock_data_validator):
-        """Test financial data validation and compliance"""
+        """
+Test financial data validation and compliance"""
         financial_data = {
             'amount': Decimal('1250.75'),
             'currency': 'USD',
@@ -150,7 +158,8 @@ class TestDataValidation:
         assert result['compliance_checks']['tax_reporting'] is True
         
     def test_metadata_validation(self, mock_data_validator):
-        """Test metadata validation and schema compliance"""
+        """
+Test metadata validation and schema compliance"""
         metadata = {
             'title': 'Test Content',
             'creator_id': 'cr_123',
@@ -169,7 +178,8 @@ class TestDataValidation:
         assert result['data_lineage_tracked'] is True
         
     def test_api_data_validation(self, mock_data_validator):
-        """Test API request data validation"""
+        """
+Test API request data validation"""
         api_request = {
             'endpoint': '/api/v1/content',
             'method': 'POST',
@@ -188,11 +198,13 @@ class TestDataValidation:
 
 
 class TestDataGovernance:
-    """Unit tests for data governance and compliance"""
+    """
+Unit tests for data governance and compliance"""
     
     @pytest.fixture
     def mock_data_governance(self):
-        """Mock data governance system"""
+        """
+Mock data governance system"""
         return Mock(
             enforce_data_policies=Mock(return_value={
                 'policies_enforced': ['data_retention', 'privacy_protection', 'access_control'],
@@ -247,7 +259,8 @@ class TestDataGovernance:
         )
     
     def test_data_policy_enforcement(self, mock_data_governance):
-        """Test data policy enforcement"""
+        """
+Test data policy enforcement"""
         policy_check = {
             'data_type': 'user_content',
             'operation': 'storage',
@@ -263,7 +276,8 @@ class TestDataGovernance:
         assert len(result['policy_exceptions']) == 0
         
     def test_data_lifecycle_management(self, mock_data_governance):
-        """Test data lifecycle management"""
+        """
+Test data lifecycle management"""
         data_info = {
             'data_id': 'data_123',
             'data_type': 'content_metadata',
@@ -279,7 +293,8 @@ class TestDataGovernance:
         assert result['compliance_status'] == 'compliant'
         
     def test_data_lineage_tracking(self, mock_data_governance):
-        """Test data lineage tracking and documentation"""
+        """
+Test data lineage tracking and documentation"""
         lineage_request = {
             'data_id': 'data_123',
             'trace_depth': 'full',
@@ -294,7 +309,8 @@ class TestDataGovernance:
         assert result['lineage_complete'] is True
         
     def test_data_quality_assurance(self, mock_data_governance):
-        """Test data quality assessment and monitoring"""
+        """
+Test data quality assessment and monitoring"""
         quality_check = {
             'dataset': 'content_metadata',
             'quality_dimensions': ['accuracy', 'completeness', 'consistency'],
@@ -309,7 +325,8 @@ class TestDataGovernance:
         assert 'standardize_tag_format' in result['improvement_recommendations']
         
     def test_consent_and_preference_management(self, mock_data_governance):
-        """Test consent and preference management"""
+        """
+Test consent and preference management"""
         consent_update = {
             'user_id': 'user_123',
             'consent_action': 'update_preferences',
@@ -330,11 +347,13 @@ class TestDataGovernance:
 
 
 class TestDataStorage:
-    """Unit tests for data storage and retrieval"""
+    """
+Unit tests for data storage and retrieval"""
     
     @pytest.fixture
     def mock_data_storage(self):
-        """Mock data storage system"""
+        """
+Mock data storage system"""
         return Mock(
             store_content_data=AsyncMock(return_value={
                 'storage_id': 'stor_123',
@@ -378,7 +397,8 @@ class TestDataStorage:
     
     @pytest.mark.asyncio
     async def test_content_data_storage(self, mock_data_storage):
-        """Test content data storage operations"""
+        """
+Test content data storage operations"""
         storage_request = {
             'content_id': 'ct_123',
             'creator_id': 'cr_123',
@@ -397,7 +417,8 @@ class TestDataStorage:
         
     @pytest.mark.asyncio
     async def test_content_data_retrieval(self, mock_data_storage):
-        """Test content data retrieval operations"""
+        """
+Test content data retrieval operations"""
         retrieval_request = {
             'content_id': 'ct_123',
             'access_context': 'user_download',
@@ -413,7 +434,8 @@ class TestDataStorage:
         assert result['access_logged'] is True
         
     def test_storage_tier_management(self, mock_data_storage):
-        """Test automated storage tier management"""
+        """
+Test automated storage tier management"""
         tier_management = {
             'policy': 'cost_optimization',
             'criteria': {
@@ -431,7 +453,8 @@ class TestDataStorage:
         assert result['performance_impact'] == 'minimal'
         
     def test_data_redundancy_management(self, mock_data_storage):
-        """Test data redundancy and backup management"""
+        """
+Test data redundancy and backup management"""
         redundancy_config = {
             'redundancy_level': 'triple',
             'geographic_distribution': True,
@@ -447,7 +470,8 @@ class TestDataStorage:
         assert result['recovery_time_objective'] == 15
         
     def test_data_compression_optimization(self, mock_data_storage):
-        """Test data compression and optimization"""
+        """
+Test data compression and optimization"""
         optimization_request = {
             'content_type': 'audio',
             'quality_target': 'high',
@@ -464,11 +488,13 @@ class TestDataStorage:
 
 
 class TestDataTransformation:
-    """Unit tests for data transformation and migration"""
+    """
+Unit tests for data transformation and migration"""
     
     @pytest.fixture
     def mock_data_transformer(self):
-        """Mock data transformation system"""
+        """
+Mock data transformation system"""
         return Mock(
             transform_content_format=AsyncMock(return_value={
                 'transformation_id': 'trans_123',
@@ -519,7 +545,8 @@ class TestDataTransformation:
     
     @pytest.mark.asyncio
     async def test_content_format_transformation(self, mock_data_transformer):
-        """Test content format transformation"""
+        """
+Test content format transformation"""
         transformation_request = {
             'content_id': 'ct_123',
             'source_format': 'wav',
@@ -537,7 +564,8 @@ class TestDataTransformation:
         
     @pytest.mark.asyncio
     async def test_data_schema_migration(self, mock_data_transformer):
-        """Test data schema migration"""
+        """
+Test data schema migration"""
         migration_request = {
             'target_schema': 'v1.3',
             'migration_strategy': 'incremental',
@@ -554,7 +582,8 @@ class TestDataTransformation:
         assert result['data_integrity_verified'] is True
         
     def test_metadata_enrichment(self, mock_data_transformer):
-        """Test automated metadata enrichment"""
+        """
+Test automated metadata enrichment"""
         enrichment_request = {
             'content_id': 'ct_123',
             'enrichment_types': ['genre_detection', 'mood_analysis', 'key_detection'],
@@ -569,7 +598,8 @@ class TestDataTransformation:
         assert result['metadata_quality_improvement'] == 85.5
         
     def test_data_format_normalization(self, mock_data_transformer):
-        """Test data format normalization"""
+        """
+Test data format normalization"""
         normalization_request = {
             'dataset': 'user_content_metadata',
             'normalization_rules': ['standardize_dates', 'normalize_currencies', 'clean_text'],
@@ -585,7 +615,8 @@ class TestDataTransformation:
         
     @pytest.mark.asyncio
     async def test_extract_transform_load(self, mock_data_transformer):
-        """Test extract, transform, and load (ETL) operations"""
+        """
+Test extract, transform, and load (ETL) operations"""
         etl_request = {
             'source_system': 'legacy_content_db',
             'target_system': 'modern_content_db',
@@ -603,11 +634,13 @@ class TestDataTransformation:
 
 
 class TestDataIntegration:
-    """Integration tests for data management modules working together"""
+    """
+Integration tests for data management modules working together"""
     
     @pytest.fixture
     def mock_integrated_data_management(self):
-        """Mock integrated data management system"""
+        """
+Mock integrated data management system"""
         return Mock(
             process_complete_data_pipeline=AsyncMock(return_value={
                 'pipeline_id': 'pipe_123',
@@ -637,7 +670,8 @@ class TestDataIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_data_pipeline_processing(self, mock_integrated_data_management):
-        """Test complete end-to-end data pipeline processing"""
+        """
+Test complete end-to-end data pipeline processing"""
         pipeline_request = {
             'data_source': 'user_content_upload',
             'processing_requirements': ['validation', 'enrichment', 'optimization'],
@@ -655,7 +689,8 @@ class TestDataIntegration:
         
     @pytest.mark.asyncio
     async def test_data_workflow_orchestration(self, mock_integrated_data_management):
-        """Test orchestration of complex data workflows"""
+        """
+Test orchestration of complex data workflows"""
         workflow_request = {
             'workflow_type': 'batch_content_processing',
             'parallelization_level': 'high',
@@ -672,7 +707,8 @@ class TestDataIntegration:
         
     @pytest.mark.asyncio
     async def test_end_to_end_data_integrity(self, mock_integrated_data_management):
-        """Test comprehensive end-to-end data integrity verification"""
+        """
+Test comprehensive end-to-end data integrity verification"""
         integrity_check = {
             'scope': 'full_system',
             'include_cross_references': True,

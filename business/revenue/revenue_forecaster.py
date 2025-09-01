@@ -6,7 +6,7 @@ statistical modeling, and predictive analytics to provide accurate
 revenue predictions for content creators.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Forecasting
 =============================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class ForecastHorizon(Enum):
-    """Forecast time horizons"""
+    """
+Forecast time horizons"""
+
     SHORT_TERM = "short_term"  # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"  # 1-12 months
@@ -54,6 +57,7 @@ class ForecastHorizon(Enum):
 
 class ForecastModel(Enum):
     """Available forecasting models"""
+
     ARIMA = "arima"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -137,7 +141,8 @@ class RevenueForecaster:
         self._forecast_cache = {}
         
     async def initialize(self):
-        """Initialize the revenue forecaster"""
+        """
+Initialize the revenue forecaster"""
         try:
             # Initialize ML pipeline
             await self.ml_pipeline.initialize()

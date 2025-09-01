@@ -8,8 +8,9 @@ This module provides advanced violation detection capabilities:
 - Evidence compilation for legal proceedings
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Set
@@ -43,7 +44,9 @@ settings = get_settings()
 
 
 class ViolationType(Enum):
-    """Types of content violations"""
+    """
+Types of content violations"""
+
     EXACT_DUPLICATE = "exact_duplicate"
     MODIFIED_CONTENT = "modified_content"
     PARTIAL_USAGE = "partial_usage"
@@ -55,6 +58,7 @@ class ViolationType(Enum):
 
 class ViolationSeverity(Enum):
     """Severity levels for violations"""
+
     CRITICAL = "critical"      # >95% similarity
     HIGH = "high"             # 85-95% similarity
     MEDIUM = "medium"         # 70-85% similarity
@@ -75,7 +79,8 @@ class SimilarityScore:
 
 @dataclass
 class ViolationEvidence:
-    """Evidence for a content violation"""
+    """
+Evidence for a content violation"""
     violation_id: str
     original_content_id: str
     detected_url: str
@@ -91,7 +96,8 @@ class ViolationEvidence:
 
 @dataclass
 class DetectionConfig:
-    """Configuration for violation detection"""
+    """
+Configuration for violation detection"""
     similarity_threshold: float = 0.75
     exact_match_threshold: float = 0.95
     partial_match_threshold: float = 0.60
@@ -104,7 +110,8 @@ class DetectionConfig:
 
 
 class SimilarityAnalyzer:
-    """Advanced similarity analysis for content comparison"""
+    """
+Advanced similarity analysis for content comparison"""
     
     def __init__(self):
         self.hash_similarity_cache = {}
@@ -114,7 +121,8 @@ class SimilarityAnalyzer:
                                original_fingerprints: List[FingerprintResult],
                                detected_content_url: str,
                                config: DetectionConfig) -> List[SimilarityScore]:
-        """Analyze similarity between original and detected content"""
+        """
+Analyze similarity between original and detected content"""
         similarity_scores = []
         
         try:
@@ -181,7 +189,8 @@ class SimilarityAnalyzer:
             return ContentType.TEXT
     
     async def _analyze_image_from_url(self, url: str) -> List[FingerprintResult]:
-        """Analyze image content from URL"""
+        """
+Analyze image content from URL"""
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -322,7 +331,8 @@ class SimilarityAnalyzer:
 
 
 class FalsePositiveFilter:
-    """Advanced false positive detection and filtering"""
+    """
+Advanced false positive detection and filtering"""
     
     def __init__(self):
         self.whitelist_domains = set()
@@ -330,7 +340,8 @@ class FalsePositiveFilter:
         self.user_confirmations = {}
     
     async def assess_false_positive_risk(self, evidence: ViolationEvidence) -> float:
-        """Assess the risk that a violation is a false positive"""
+        """
+Assess the risk that a violation is a false positive"""
         risk_factors = []
         
         # Domain-based assessment
@@ -355,7 +366,8 @@ class FalsePositiveFilter:
         return min(1.0, max(0.0, total_risk))
     
     def _assess_domain_risk(self, url: str) -> float:
-        """Assess false positive risk based on domain"""
+        """
+Assess false positive risk based on domain"""
         try:
             domain = urlparse(url).netloc.lower()
             
@@ -378,7 +390,8 @@ class FalsePositiveFilter:
             return 0.2
     
     def _assess_similarity_patterns(self, scores: List[SimilarityScore]) -> float:
-        """Assess false positive risk based on similarity patterns"""
+        """
+Assess false positive risk based on similarity patterns"""
         if not scores:
             return 0.5
         
@@ -397,7 +410,8 @@ class FalsePositiveFilter:
         return 0.2
     
     def _assess_metadata_risk(self, metadata: Dict[str, Any]) -> float:
-        """Assess false positive risk based on metadata"""
+        """
+Assess false positive risk based on metadata"""
         risk = 0.0
         
         # Check for attribution indicators
@@ -413,7 +427,8 @@ class FalsePositiveFilter:
         return min(1.0, risk)
     
     def _assess_temporal_risk(self, timestamp: datetime) -> float:
-        """Assess false positive risk based on timing"""
+        """
+Assess false positive risk based on timing"""
         # Recent detections might be more legitimate violations
         age_hours = (datetime.utcnow() - timestamp).total_seconds() / 3600
         
@@ -428,7 +443,8 @@ class FalsePositiveFilter:
 
 
 class ViolationDetector:
-    """Main violation detection engine"""
+    """
+Main violation detection engine"""
     
     def __init__(self):
         self.similarity_analyzer = SimilarityAnalyzer()
@@ -447,7 +463,8 @@ class ViolationDetector:
                               protected_content_id: str,
                               monitoring_results: List[MonitoringResult],
                               config: DetectionConfig) -> List[ViolationEvidence]:
-        """Detect violations from monitoring results"""
+        """
+Detect violations from monitoring results"""
         violations = []
         
         try:
@@ -550,7 +567,8 @@ class ViolationDetector:
             return ViolationType.UNAUTHORIZED_REMIX
     
     def _determine_severity(self, similarity: float) -> ViolationSeverity:
-        """Determine violation severity based on similarity score"""
+        """
+Determine violation severity based on similarity score"""
         if similarity > 0.95:
             return ViolationSeverity.CRITICAL
         elif similarity > 0.85:
@@ -563,7 +581,8 @@ class ViolationDetector:
             return ViolationSeverity.SUSPICIOUS
     
     async def _get_content_fingerprints(self, content_id: str) -> List[FingerprintResult]:
-        """Get fingerprints for protected content"""
+        """
+Get fingerprints for protected content"""
         # This would typically query the database
         # For now, return empty list as placeholder
         logger.info(f"Getting fingerprints for content {content_id}")

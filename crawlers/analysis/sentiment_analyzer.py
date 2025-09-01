@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -41,7 +42,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 logger = logging.getLogger(__name__)
 
 class SentimentPolarity(Enum):
-    """Sentiment polarity levels."""
+    """
+Sentiment polarity levels."""
+
     VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
@@ -50,6 +53,7 @@ class SentimentPolarity(Enum):
 
 class EmotionType(Enum):
     """Emotion types for classification."""
+
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -63,6 +67,7 @@ class EmotionType(Enum):
 
 class AnalysisLanguage(Enum):
     """Supported languages for sentiment analysis."""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -568,7 +573,8 @@ class SentimentAnalyzer:
         return text.strip()
     
     def _detect_language(self, text: str) -> AnalysisLanguage:
-        """Detect language of text content."""
+        """
+Detect language of text content."""
         # Simplified language detection
         english_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
         french_words = {'le', 'la', 'les', 'et', 'ou', 'mais', 'dans', 'sur', 'à', 'pour', 'de', 'avec'}
@@ -588,7 +594,8 @@ class SentimentAnalyzer:
             return AnalysisLanguage.GERMAN
     
     def _rule_based_sentiment(self, text: str) -> float:
-        """Calculate sentiment using rule-based approach."""
+        """
+Calculate sentiment using rule-based approach."""
         words = text.lower().split()
         
         positive_words = {
@@ -630,7 +637,8 @@ class SentimentAnalyzer:
         return np.clip(sentiment, -1.0, 1.0)
     
     def _map_emotion_label(self, label: str) -> Optional[EmotionType]:
-        """Map emotion labels from ML models to our emotion types."""
+        """
+Map emotion labels from ML models to our emotion types."""
         label_mapping = {
             'joy': EmotionType.JOY,
             'happiness': EmotionType.JOY,
@@ -646,7 +654,8 @@ class SentimentAnalyzer:
         return label_mapping.get(label.lower())
     
     def _rule_based_emotion_detection(self, text: str) -> Dict[EmotionType, float]:
-        """Detect emotions using rule-based keyword matching."""
+        """
+Detect emotions using rule-based keyword matching."""
         words = set(text.lower().split())
         emotion_scores = {}
         
@@ -658,7 +667,8 @@ class SentimentAnalyzer:
         return emotion_scores
     
     def _calculate_emotional_intensity(self, text: str, emotion_scores: Dict[EmotionType, float]) -> float:
-        """Calculate overall emotional intensity."""
+        """
+Calculate overall emotional intensity."""
         # Consider exclamation marks, capital letters, repeated characters
         exclamation_count = text.count('!')
         question_count = text.count('?')
@@ -692,7 +702,8 @@ class SentimentAnalyzer:
         return max(0.0, 1.0 - variance)
     
     def _calculate_emotion_complexity(self, emotion_scores: Dict[EmotionType, float]) -> float:
-        """Calculate emotion complexity (number of significant emotions)."""
+        """
+Calculate emotion complexity (number of significant emotions)."""
         significant_emotions = sum(1 for score in emotion_scores.values() if score > 0.3)
         
         # Normalize to 0-1 scale
@@ -703,7 +714,8 @@ class SentimentAnalyzer:
         emotion_scores: Dict[EmotionType, float],
         threshold: float = 0.4
     ) -> List[EmotionType]:
-        """Identify mixed emotions above threshold."""
+        """
+Identify mixed emotions above threshold."""
         return [emotion for emotion, score in emotion_scores.items() if score >= threshold]
     
     def _calculate_audience_appeal(
@@ -711,7 +723,8 @@ class SentimentAnalyzer:
         sentiment: SentimentScore,
         emotion: EmotionDetection
     ) -> float:
-        """Calculate audience appeal score."""
+        """
+Calculate audience appeal score."""
         factors = []
         
         # Positive sentiment generally has higher appeal
@@ -738,7 +751,8 @@ class SentimentAnalyzer:
         return np.mean(factors)
     
     def _calculate_engagement_potential(self, text: str, sentiment: SentimentScore) -> float:
-        """Calculate engagement potential based on content characteristics."""
+        """
+Calculate engagement potential based on content characteristics."""
         factors = []
         
         # Text length factor
@@ -774,7 +788,8 @@ class SentimentAnalyzer:
         sentiment: SentimentScore,
         emotion: EmotionDetection
     ) -> float:
-        """Calculate virality potential score."""
+        """
+Calculate virality potential score."""
         factors = []
         
         # Extreme emotions tend to go viral
@@ -807,7 +822,8 @@ class SentimentAnalyzer:
         return np.mean(factors)
     
     def _calculate_brand_safety(self, text: str, sentiment: SentimentScore) -> float:
-        """Calculate brand safety score."""
+        """
+Calculate brand safety score."""
         safety_factors = []
         
         # Positive sentiment is generally brand-safe
@@ -837,7 +853,8 @@ class SentimentAnalyzer:
         return np.mean(safety_factors)
     
     def _extract_trending_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract potentially trending keywords."""
+        """
+Extract potentially trending keywords."""
         # Remove stop words and extract meaningful keywords
         stop_words = {
             'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
@@ -855,7 +872,8 @@ class SentimentAnalyzer:
         return [word for word, count in word_counts.most_common(max_keywords)]
     
     def _analyze_hashtag_sentiment(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment of individual hashtags."""
+        """
+Analyze sentiment of individual hashtags."""
         hashtags = re.findall(r'#(\w+)', text.lower())
         hashtag_sentiment = {}
         

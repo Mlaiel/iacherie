@@ -20,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceRegulation(Enum):
-    """Compliance regulations."""
+    """
+Compliance regulations."""
+
     GDPR = "GDPR"
     CCPA = "CCPA"
     PIPEDA = "PIPEDA"
@@ -30,6 +32,7 @@ class ComplianceRegulation(Enum):
 
 class ComplianceTestType(Enum):
     """Types of compliance tests."""
+
     DATA_CONSENT = "data_consent"
     DATA_ACCESS = "data_access"
     DATA_DELETION = "data_deletion"
@@ -44,6 +47,7 @@ class ComplianceTestType(Enum):
 
 class ComplianceSeverity(Enum):
     """Compliance violation severity."""
+
     CRITICAL = "CRITICAL"  # Major compliance violation
     HIGH = "HIGH"         # Significant compliance risk
     MEDIUM = "MEDIUM"     # Moderate compliance issue
@@ -67,11 +71,13 @@ class ComplianceTestResult:
 
 
 class PersonalDataGenerator:
-    """Generate realistic personal data for compliance testing."""
+    """
+Generate realistic personal data for compliance testing."""
     
     @staticmethod
     def generate_user_data() -> Dict[str, Any]:
-        """Generate realistic user data for testing."""
+        """
+Generate realistic user data for testing."""
         user_id = str(uuid.uuid4())
         return {
             "user_id": user_id,
@@ -186,7 +192,8 @@ class RealComplianceValidator:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Cleanup compliance testing environment."""
+        """
+Cleanup compliance testing environment."""
         if self.session:
             await self.session.close()
         
@@ -194,7 +201,8 @@ class RealComplianceValidator:
         await self._cleanup_test_data()
     
     async def _make_api_request(self, method: str, endpoint: str, **kwargs) -> Tuple[int, Dict[str, Any], float]:
-        """Make API request and return status, response, and time."""
+        """
+Make API request and return status, response, and time."""
         url = f"{self.base_url}{endpoint}"
         start_time = time.time()
         

@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class TimeSeriesDBType(Enum):
-    """Supported time series database types"""
+    """
+Supported time series database types"""
+
     INFLUXDB = "influxdb"
     PROMETHEUS = "prometheus"
     TIMESCALE = "timescale"
@@ -40,6 +43,7 @@ class TimeSeriesDBType(Enum):
 
 class MetricType(Enum):
     """Metric types for different business domains"""
+
     CONTENT_PERFORMANCE = "content_performance"
     REVENUE_ANALYTICS = "revenue_analytics"
     PLATFORM_METRICS = "platform_metrics"
@@ -50,6 +54,7 @@ class MetricType(Enum):
 
 class AggregationType(Enum):
     """Data aggregation types"""
+
     SUM = "sum"
     AVERAGE = "avg"
     COUNT = "count"
@@ -204,7 +209,8 @@ class TimeSeriesManager:
         self._connection_pool = None
         
     async def initialize(self) -> bool:
-        """Initialize time series database connection"""
+        """
+Initialize time series database connection"""
         try:
             if self.config.db_type == TimeSeriesDBType.INFLUXDB:
                 await self._initialize_influxdb()
@@ -252,7 +258,8 @@ class TimeSeriesManager:
         fields: Dict[str, Union[int, float]],
         timestamp: Optional[datetime] = None
     ) -> bool:
-        """Write metrics to time series database"""
+        """
+Write metrics to time series database"""
         try:
             if not timestamp:
                 timestamp = datetime.utcnow()

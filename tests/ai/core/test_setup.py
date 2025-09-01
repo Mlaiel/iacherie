@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive AI Core Setup and Installation Tests
+"""
+Comprehensive AI Core Setup and Installation Tests
 
 Ultra-advanced enterprise-grade test suite for AI core setup, installation,
 and system initialization validation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
@@ -34,6 +36,7 @@ Team Expertise:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -61,7 +64,8 @@ class TestModuleImports:
     """Test suite for AI core module import validation"""
     
     def test_core_module_imports(self):
-        """Test core AI module imports"""
+        """
+Test core AI module imports"""
         try:
             import ai.core as core_module
             assert core_module is not None
@@ -188,7 +192,8 @@ class TestSystemRequirements:
     """Test suite for system requirements validation"""
     
     def test_python_version_requirements(self):
-        """Test Python version requirements"""
+        """
+Test Python version requirements"""
         python_version = sys.version_info
         
         # Require Python 3.8 or higher
@@ -261,7 +266,8 @@ class TestDependencyValidation:
     """Test suite for dependency validation"""
     
     def test_required_python_packages(self):
-        """Test required Python packages are available"""
+        """
+Test required Python packages are available"""
         required_packages = [
             "pytest",
             "psutil",
@@ -324,7 +330,8 @@ class TestInitializationSequence:
     """Test suite for system initialization sequence"""
     
     def test_config_system_initialization(self):
-        """Test configuration system initialization"""
+        """
+Test configuration system initialization"""
         try:
             from ai.core.config import CoreConfig, ConfigManager
             
@@ -410,7 +417,8 @@ class TestBusinessLogicSetup:
     """Test suite for business logic setup validation"""
     
     def test_creator_workflow_setup(self):
-        """Test creator workflow setup for different creator types"""
+        """
+Test creator workflow setup for different creator types"""
         creator_types = ["musician", "photographer", "blogger", "influencer", "comedian"]
         
         for creator_type in creator_types:
@@ -504,7 +512,8 @@ class TestInstallationValidation:
     """Test suite for installation validation"""
     
     def test_module_structure_validation(self):
-        """Test AI core module structure validation"""
+        """
+Test AI core module structure validation"""
         expected_modules = [
             "backend.ai.core.config",
             "backend.ai.core.exceptions",
@@ -570,7 +579,8 @@ class TestHealthChecks:
     """Test suite for system health checks"""
     
     def test_basic_functionality_health_check(self):
-        """Test basic functionality health check"""
+        """
+Test basic functionality health check"""
         try:
             from ai.core.config import CoreConfig
             from ai.core.metrics import MetricsCollector
@@ -661,7 +671,8 @@ class TestDocumentationValidation:
     """Test suite for documentation validation"""
     
     def test_readme_files_exist(self):
-        """Test README files exist and contain required information"""
+        """
+Test README files exist and contain required information"""
         test_dir = Path(__file__).parent
         
         readme_files = ["README.md", "README.de.md", "README.fr.md"]
@@ -698,7 +709,8 @@ class TestCompleteSystemValidation:
     """Complete system validation test suite"""
     
     def test_end_to_end_system_validation(self):
-        """Test complete end-to-end system validation"""
+        """
+Test complete end-to-end system validation"""
         try:
             # Step 1: Import all modules
             from ai.core.config import CoreConfig, ConfigManager

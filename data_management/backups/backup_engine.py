@@ -8,10 +8,11 @@ Responsibility: Moteurs de sauvegarde haute performance pour contenus multi-form
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BackupProgress:
-    """Suivi de progression d'une sauvegarde"""
+    """
+Suivi de progression d'une sauvegarde"""
     total_files: int = 0
     processed_files: int = 0
     total_size_bytes: int = 0
@@ -45,14 +47,16 @@ class BackupProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Calcule le pourcentage de progression"""
+        """
+Calcule le pourcentage de progression"""
         if self.total_files == 0:
             return 0.0
         return (self.processed_files / self.total_files) * 100
     
     @property
     def speed_mbps(self) -> float:
-        """Calcule la vitesse de traitement en MB/s"""
+        """
+Calcule la vitesse de traitement en MB/s"""
         if not self.start_time:
             return 0.0
         

@@ -4,6 +4,7 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 Advanced content optimization for distribution, SEO, metadata,
 and format optimization across multiple platforms.
 """
+
 import asyncio
 import json
 import re
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -32,6 +35,7 @@ class ContentType(Enum):
 
 class Platform(Enum):
     """Supported platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -59,7 +63,8 @@ class OptimizedContent:
 
 
 class ContentDistributionOptimizer(BaseEngine):
-    """Optimize content distribution across multiple platforms"""
+    """
+Optimize content distribution across multiple platforms"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -258,7 +263,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return lengths.get(platform, 100)
     
     def _get_optimal_description_length(self, platform: Platform) -> int:
-        """Get optimal description length for platform"""
+        """
+Get optimal description length for platform"""
         lengths = {
             Platform.YOUTUBE: 5000,
             Platform.INSTAGRAM: 2200,
@@ -272,7 +278,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return lengths.get(platform, 500)
     
     def _get_optimal_hashtag_count(self, platform: Platform) -> int:
-        """Get optimal hashtag count for platform"""
+        """
+Get optimal hashtag count for platform"""
         counts = {
             Platform.INSTAGRAM: 11,
             Platform.TIKTOK: 5,
@@ -286,7 +293,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return counts.get(platform, 3)
     
     def _get_optimal_posting_frequency(self, platform: Platform) -> str:
-        """Get optimal posting frequency for platform"""
+        """
+Get optimal posting frequency for platform"""
         frequencies = {
             Platform.INSTAGRAM: "1-2 times per day",
             Platform.TIKTOK: "1-4 times per day",
@@ -461,7 +469,8 @@ class SEOOptimizer(BaseEngine):
         return unique_keywords[:15]  # Top 15 keywords
     
     async def _optimize_title(self, title: str, keywords: List[str]) -> str:
-        """Optimize title for SEO"""
+        """
+Optimize title for SEO"""
         
         # Ensure primary keyword is in title
         primary_keyword = keywords[0] if keywords else ""
@@ -691,7 +700,8 @@ class MetadataOptimizer(BaseEngine):
         original_metadata: Dict[str, Any],
         target_platforms: List[Platform]
     ) -> Dict[str, Any]:
-        """Optimize metadata for multiple platforms"""
+        """
+Optimize metadata for multiple platforms"""
         
         optimized_metadata = {}
         
@@ -797,7 +807,8 @@ class FormatOptimizer(BaseEngine):
         source_file_path: str,
         target_platforms: List[Platform]
     ) -> Dict[Platform, Dict[str, Any]]:
-        """Optimize content formats for target platforms"""
+        """
+Optimize content formats for target platforms"""
         
         format_recommendations = {}
         
@@ -815,7 +826,8 @@ class FormatOptimizer(BaseEngine):
         platform: Platform,
         source_file: str
     ) -> Dict[str, Any]:
-        """Get format recommendations for specific platform"""
+        """
+Get format recommendations for specific platform"""
         
         if content_type == ContentType.AUDIO:
             return await self._get_audio_format_recommendations(platform, source_file)

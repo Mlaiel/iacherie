@@ -16,6 +16,7 @@ Handles automated backups, restore procedures, and disaster recovery
 for multi-format content, AI models, and monetization data.
 =================================================
 """
+
 import os
 import logging
 import asyncio
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Backup type enumeration"""
+    """
+Backup type enumeration"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -39,6 +42,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -64,7 +68,8 @@ class BackupConfiguration:
 
 @dataclass
 class DatabaseBackupConfig:
-    """Database backup configuration"""
+    """
+Database backup configuration"""
     backup_databases: List[str] = field(default_factory=lambda: [
         'ia_influencer_prod', 'ia_influencer_analytics', 'ia_influencer_content'
     ])
@@ -82,7 +87,8 @@ class DatabaseBackupConfig:
 
 @dataclass
 class StorageBackupConfig:
-    """Storage backup configuration"""
+    """
+Storage backup configuration"""
     s3_buckets: List[str] = field(default_factory=lambda: [
         'ia-influencer-content-prod', 'ia-influencer-fingerprints',
         'ia-influencer-models', 'ia-influencer-analytics'
@@ -368,7 +374,8 @@ class BackupEnvironmentManager:
         }
     
     def cleanup_old_backups(self) -> Dict[str, Any]:
-        """Cleanup old backups based on retention policy"""
+        """
+Cleanup old backups based on retention policy"""
         try:
             cutoff_date = datetime.now() - timedelta(days=self.backup_config.retention_policy_days)
             
@@ -419,7 +426,8 @@ class BackupEnvironmentManager:
     
     # Private helper methods
     async def _backup_databases(self, backup_id: str) -> bool:
-        """Backup databases"""
+        """
+Backup databases"""
         try:
             # Implement database backup logic
             logger.info(f"Starting database backup for {backup_id}")
@@ -610,7 +618,8 @@ class BackupEnvironmentManager:
         return None
     
     def _delete_backup_files(self, backup_id: str) -> bool:
-        """Delete backup files from storage"""
+        """
+Delete backup files from storage"""
         try:
             # Implement backup file deletion logic
             return True
@@ -627,12 +636,14 @@ class BackupEnvironmentManager:
         ])
     
     def _get_storage_usage_percent(self) -> float:
-        """Get backup storage usage percentage"""
+        """
+Get backup storage usage percentage"""
         # Implement storage usage calculation
         return 65.5
     
     def _get_last_successful_backup(self) -> str:
-        """Get timestamp of last successful backup"""
+        """
+Get timestamp of last successful backup"""
         latest = self._get_latest_backup()
         if latest:
             backup = next((b for b in self.backup_history if b['backup_id'] == latest), None)
@@ -641,7 +652,8 @@ class BackupEnvironmentManager:
         return ''
     
     def _get_next_scheduled_backup(self) -> str:
-        """Get next scheduled backup time"""
+        """
+Get next scheduled backup time"""
         # Calculate next backup time based on interval
         if self.backup_history:
             last_backup = max(self.backup_history, key=lambda x: x.get('started_at', datetime.min))
@@ -650,7 +662,8 @@ class BackupEnvironmentManager:
         return datetime.now().isoformat()
     
     def _check_retention_compliance(self) -> bool:
-        """Check if backup retention policy is compliant"""
+        """
+Check if backup retention policy is compliant"""
         cutoff = datetime.now() - timedelta(days=self.backup_config.retention_policy_days)
         old_backups = [
             backup for backup in self.backup_history
@@ -659,7 +672,8 @@ class BackupEnvironmentManager:
         return len(old_backups) == 0
     
     def _get_verification_success_rate(self) -> float:
-        """Get backup verification success rate"""
+        """
+Get backup verification success rate"""
         verified_backups = [
             backup for backup in self.backup_history
             if backup.get('status') == 'verified'
@@ -668,7 +682,8 @@ class BackupEnvironmentManager:
         return (len(verified_backups) / total_backups * 100) if total_backups > 0 else 0.0
     
     def _get_backup_storage_usage(self) -> Dict[str, Any]:
-        """Get backup storage usage statistics"""
+        """
+Get backup storage usage statistics"""
         return {
             'total_size_gb': 1250.5,
             'used_space_gb': 820.3,

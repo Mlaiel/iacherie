@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentProtectionMode(Enum):
-    """Content protection operation modes"""
+    """
+Content protection operation modes"""
+
     PASSIVE = "passive"              # Monitor only
     ACTIVE = "active"                # Monitor + automated actions
     AGGRESSIVE = "aggressive"        # Active + legal enforcement
@@ -35,6 +38,7 @@ class ContentProtectionMode(Enum):
 
 class FingerprintAlgorithm(Enum):
     """Supported fingerprinting algorithms"""
+
     CHROMAPRINT = "chromaprint"      # Audio fingerprinting
     PHASH = "phash"                  # Image perceptual hashing
     DHASH = "dhash"                  # Image difference hashing
@@ -358,13 +362,15 @@ class ContentProtectionOrchestrator:
     """Content protection microservices orchestrator"""
     
     def __init__(self, configs: Dict[str, Any] = None):
-        """Initialize orchestrator with configurations"""
+        """
+Initialize orchestrator with configurations"""
         self.configs = configs or CONTENT_PROTECTION_CONFIGS
         self.services_status = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_services(self) -> Dict[str, bool]:
-        """Initialize all content protection services"""
+        """
+Initialize all content protection services"""
         results = {}
         
         for service_name, config in self.configs.items():
@@ -564,12 +570,14 @@ async def initialize_content_protection_services() -> Dict[str, bool]:
 
 
 async def get_content_protection_health() -> Dict[str, Any]:
-    """Get content protection system health"""
+    """
+Get content protection system health"""
     return await content_protection_orchestrator.get_system_health()
 
 
 def get_content_protection_summary() -> Dict[str, Any]:
-    """Get content protection configuration summary"""
+    """
+Get content protection configuration summary"""
     return content_protection_orchestrator.get_configuration_summary()
 
 

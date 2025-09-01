@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(str, Enum):
-    """Types of content fingerprinting supported."""
+    """
+Types of content fingerprinting supported."""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -30,6 +33,7 @@ class FingerprintType(str, Enum):
 
 class FingerprintAlgorithm(str, Enum):
     """Fingerprinting algorithms available."""
+
     CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     WAVELET_HASH = "wavelet_hash"
@@ -43,6 +47,7 @@ class FingerprintAlgorithm(str, Enum):
 
 class SimilarityMetric(str, Enum):
     """Similarity metrics for fingerprint comparison."""
+
     HAMMING_DISTANCE = "hamming_distance"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     COSINE_SIMILARITY = "cosine_similarity"
@@ -53,6 +58,7 @@ class SimilarityMetric(str, Enum):
 
 class IndexingStrategy(str, Enum):
     """Indexing strategies for fast fingerprint search."""
+
     LSH_INDEX = "lsh_index"
     FAISS_INDEX = "faiss_index"
     ANNOY_INDEX = "annoy_index"
@@ -63,6 +69,7 @@ class IndexingStrategy(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categories for fingerprinting."""
+
     MUSIC = "music"
     SPEECH = "speech"
     VIDEO_CONTENT = "video_content"
@@ -119,7 +126,8 @@ class FingerprintSeedsManager:
     """
     
     def __init__(self):
-        """Initialize fingerprint seeds manager with enterprise configurations."""
+        """
+Initialize fingerprint seeds manager with enterprise configurations."""
         self.fingerprint_algorithms = {}
         self.similarity_configurations = {}
         self.indexing_strategies = {}
@@ -132,7 +140,8 @@ class FingerprintSeedsManager:
         self.blockchain_configs = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all fingerprinting-related seed data with full enterprise support."""
+        """
+Initialize all fingerprinting-related seed data with full enterprise support."""
         logger.info("Initializing comprehensive fingerprint seeds data...")
         start_time = datetime.now(timezone.utc)
         
@@ -558,7 +567,8 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_similarity_configurations(self) -> Dict[str, Any]:
-        """Initialize similarity metrics and comparison configurations."""
+        """
+Initialize similarity metrics and comparison configurations."""
         similarity_configs = {
             'distance_metrics': {
                 'hamming_distance': {
@@ -713,7 +723,8 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_indexing_strategies(self) -> Dict[str, Any]:
-        """Initialize indexing strategies for efficient fingerprint search."""
+        """
+Initialize indexing strategies for efficient fingerprint search."""
         indexing_strategies = {
             'vector_databases': {
                 'faiss_index': {
@@ -901,7 +912,8 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_detection_pipelines(self) -> Dict[str, Any]:
-        """Initialize content detection and matching pipelines."""
+        """
+Initialize content detection and matching pipelines."""
         detection_pipelines = {
             'real_time_detection_pipeline': {
                 'pipeline_name': 'Real-time Content Detection',
@@ -1069,7 +1081,8 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_feature_extraction(self) -> Dict[str, Any]:
-        """Initialize feature extraction configurations for different content types."""
+        """
+Initialize feature extraction configurations for different content types."""
         feature_extraction = {
             'audio_feature_extraction': {
                 'time_domain_features': {
@@ -1271,7 +1284,8 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_matching_configurations(self) -> Dict[str, Any]:
-        """Initialize matching configurations and strategies."""
+        """
+Initialize matching configurations and strategies."""
         matching_configs = {
             'exact_matching': {
                 'binary_fingerprint_matching': {
@@ -1377,7 +1391,8 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_performance_optimization(self) -> Dict[str, Any]:
-        """Initialize performance optimization configurations."""
+        """
+Initialize performance optimization configurations."""
         optimization_configs = {
             'computational_optimization': {
                 'parallel_processing': {
@@ -1472,7 +1487,8 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_quality_assessment(self) -> Dict[str, Any]:
-        """Initialize quality assessment configurations for fingerprinting systems."""
+        """
+Initialize quality assessment configurations for fingerprinting systems."""
         quality_assessment = {
             'accuracy_metrics': {
                 'precision_recall_analysis': {
@@ -1585,7 +1601,8 @@ class FingerprintSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all fingerprint seed data (use with caution)."""
+        """
+Reset all fingerprint seed data (use with caution)."""
         logger.warning("Resetting fingerprint seeds data...")
         
         self.fingerprint_algorithms.clear()

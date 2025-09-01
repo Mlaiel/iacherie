@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,16 +13,18 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test Suite for Metrics Collection Module
+"""
+Test Suite for Metrics Collection Module
 
 Comprehensive tests for enterprise-grade metrics collection and business intelligence.
 Tests metrics gathering, aggregation, and business analytics for all creator types.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -58,7 +61,8 @@ class TestMetricEntry:
     """Test cases for MetricEntry class"""
     
     def test_metric_entry_creation(self):
-        """Test basic metric entry creation"""
+        """
+Test basic metric entry creation"""
         timestamp = datetime.now()
         tags = {"user_type": "musician", "operation": "upload"}
         
@@ -117,18 +121,21 @@ class TestMetricsCollector:
     """Test cases for MetricsCollector class"""
     
     def setup_method(self):
-        """Setup for each test method"""
+        """
+Setup for each test method"""
         self.collector = MetricsCollector()
         
     def test_collector_initialization(self):
-        """Test metrics collector initialization"""
+        """
+Test metrics collector initialization"""
         assert isinstance(self.collector.metrics, list)
         assert len(self.collector.metrics) == 0
         assert self.collector.max_entries == 10000
         assert self.collector.auto_flush_interval == 300
         
     def test_record_simple_metric(self):
-        """Test recording a simple metric"""
+        """
+Test recording a simple metric"""
         self.collector.record_metric("test_counter", 1)
         
         assert len(self.collector.metrics) == 1
@@ -254,11 +261,13 @@ class TestTimerContext:
     """Test cases for TimerContext class"""
     
     def setup_method(self):
-        """Setup for each test method"""
+        """
+Setup for each test method"""
         self.collector = MetricsCollector()
         
     def test_timer_context_basic(self):
-        """Test basic timer context functionality"""
+        """
+Test basic timer context functionality"""
         with TimerContext(self.collector, "test_operation"):
             time.sleep(0.01)  # Sleep for 10ms
             
@@ -313,7 +322,8 @@ class TestMetricsAggregator:
     """Test cases for MetricsAggregator class"""
     
     def setup_method(self):
-        """Setup for each test method"""
+        """
+Setup for each test method"""
         self.collector = MetricsCollector()
         self.aggregator = MetricsAggregator(self.collector)
         
@@ -327,7 +337,8 @@ class TestMetricsAggregator:
         assert self.aggregator.collector == self.collector
         
     def test_aggregate_by_name(self):
-        """Test aggregating metrics by name"""
+        """
+Test aggregating metrics by name"""
         result = self.aggregator.aggregate_by_name("response_time", AggregationType.AVERAGE)
         
         # Should be average of 0.0, 0.1, 0.2, ..., 0.9 = 0.45
@@ -397,11 +408,13 @@ class TestBusinessMetricsTracker:
     """Test cases for BusinessMetricsTracker class"""
     
     def setup_method(self):
-        """Setup for each test method"""
+        """
+Setup for each test method"""
         self.tracker = BusinessMetricsTracker()
         
     def test_track_user_upload(self):
-        """Test tracking user upload events"""
+        """
+Test tracking user upload events"""
         self.tracker.track_user_upload("audio", 5242880, "musician")
         
         summary = self.tracker.get_business_summary()
@@ -540,12 +553,14 @@ class TestMetricsIntegration:
     """Test cases for metrics integration scenarios"""
     
     def setup_method(self):
-        """Setup for each test method"""
+        """
+Setup for each test method"""
         self.collector = MetricsCollector()
         self.business_tracker = BusinessMetricsTracker()
         
     def test_end_to_end_workflow_tracking(self):
-        """Test complete workflow tracking from upload to distribution"""
+        """
+Test complete workflow tracking from upload to distribution"""
         # Simulate musician uploading an audio track
         creator_type = "musician"
         content_type = "audio"
@@ -664,7 +679,8 @@ class TestMetricsExport:
     """Test cases for metrics export functionality"""
     
     def setup_method(self):
-        """Setup for each test method"""
+        """
+Setup for each test method"""
         self.collector = MetricsCollector()
         
         # Add sample data
@@ -728,7 +744,8 @@ class TestMetricsPerformance:
     
     @pytest.mark.performance
     def test_high_volume_metric_collection(self, performance_tracker):
-        """Test performance with high volume of metrics"""
+        """
+Test performance with high volume of metrics"""
         collector = MetricsCollector()
         
         performance_tracker.start()
@@ -811,7 +828,8 @@ class TestMetricsThreadSafety:
     
     @pytest.mark.slow
     def test_concurrent_metric_recording(self):
-        """Test thread safety of concurrent metric recording"""
+        """
+Test thread safety of concurrent metric recording"""
         import threading
         
         collector = MetricsCollector()

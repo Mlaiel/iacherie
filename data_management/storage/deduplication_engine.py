@@ -8,7 +8,7 @@ Intelligent deduplication engine for content optimization
 with advanced fingerprinting and similarity detection.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -27,6 +27,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import logging
 import asyncio
@@ -53,7 +54,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class DuplicateType(Enum):
-    """Types of duplicate detection"""
+    """
+Types of duplicate detection"""
+
     EXACT = "exact"                    # Bit-for-bit identical
     NEAR_DUPLICATE = "near_duplicate"  # Very similar content
     VARIANT = "variant"                # Same content, different format
@@ -61,6 +64,7 @@ class DuplicateType(Enum):
 
 class ContentFingerprint(Enum):
     """Content fingerprinting methods"""
+
     SHA256 = "sha256"              # Cryptographic hash
     MD5 = "md5"                    # Fast hash
     PERCEPTUAL = "perceptual"      # Content-aware hash
@@ -81,7 +85,8 @@ class DuplicationResult:
 
 @dataclass
 class ContentFingerprints:
-    """Content fingerprints for deduplication"""
+    """
+Content fingerprints for deduplication"""
     content_id: str
     sha256_hash: str
     md5_hash: str
@@ -109,11 +114,13 @@ class DeduplicationConfig:
     enable_text_similarity: bool = True
 
 class AudioFingerprinter:
-    """Audio content fingerprinting for similarity detection"""
+    """
+Audio content fingerprinting for similarity detection"""
     
     @staticmethod
     def extract_audio_features(audio_data: bytes) -> Optional[List[float]]:
-        """Extract audio features for similarity comparison"""
+        """
+Extract audio features for similarity comparison"""
         try:
             # Simplified audio feature extraction
             # In production, use librosa or similar for proper audio analysis
@@ -168,7 +175,8 @@ class ImageFingerprinter:
     
     @staticmethod
     def extract_perceptual_hash(image_data: bytes) -> Optional[str]:
-        """Extract perceptual hash for image similarity"""
+        """
+Extract perceptual hash for image similarity"""
         try:
             image = Image.open(io.BytesIO(image_data))
             
@@ -219,7 +227,8 @@ class TextSimilarityAnalyzer:
     
     @staticmethod
     def calculate_text_similarity(text1: str, text2: str) -> float:
-        """Calculate similarity between text content"""
+        """
+Calculate similarity between text content"""
         try:
             # Normalize texts
             normalized1 = TextSimilarityAnalyzer._normalize_text(text1)
@@ -274,7 +283,8 @@ class DeduplicationEngine:
     """
     
     def __init__(self, config: Optional[DeduplicationConfig] = None):
-        """Initialize deduplication engine"""
+        """
+Initialize deduplication engine"""
         self.config = config or DeduplicationConfig()
         
         # Content fingerprint storage
@@ -436,7 +446,8 @@ class DeduplicationEngine:
         ]
     
     async def get_duplicate_groups(self) -> Dict[str, List[str]]:
-        """Get groups of duplicate content"""
+        """
+Get groups of duplicate content"""
         duplicate_groups = defaultdict(list)
         
         # Group by exact hash
@@ -454,7 +465,8 @@ class DeduplicationEngine:
         return dict(duplicate_groups)
     
     async def optimize_storage(self) -> Dict[str, Any]:
-        """Optimize storage by consolidating duplicates"""
+        """
+Optimize storage by consolidating duplicates"""
         optimization_results = {
             'duplicate_groups_processed': 0,
             'total_space_saved_mb': 0.0,
@@ -574,7 +586,8 @@ class DeduplicationEngine:
         fingerprints: ContentFingerprints,
         content_type: str
     ) -> Optional[Dict[str, Any]]:
-        """Check for near-duplicates using perceptual/semantic analysis"""
+        """
+Check for near-duplicates using perceptual/semantic analysis"""
         
         best_match = None
         best_similarity = 0.0
@@ -629,7 +642,8 @@ class DeduplicationEngine:
         fingerprints: ContentFingerprints,
         content_type: str
     ) -> Optional[Dict[str, Any]]:
-        """Check for content variants (same content, different format)"""
+        """
+Check for content variants (same content, different format)"""
         
         # Check for variants by comparing base content characteristics
         # This is a simplified implementation - could be enhanced with more sophisticated analysis
@@ -652,7 +666,8 @@ class DeduplicationEngine:
         return None
     
     async def _store_fingerprints(self, fingerprints: ContentFingerprints) -> None:
-        """Store fingerprints and update indexes"""
+        """
+Store fingerprints and update indexes"""
         # Store fingerprints
         self.fingerprints[fingerprints.content_id] = fingerprints
         
@@ -667,7 +682,8 @@ class DeduplicationEngine:
         self.metrics['fingerprint_cache_size'] = len(self.fingerprints)
     
     async def _rebuild_indexes(self) -> None:
-        """Rebuild all indexes after optimization"""
+        """
+Rebuild all indexes after optimization"""
         self.sha256_index.clear()
         self.md5_index.clear()
         self.perceptual_index.clear()
@@ -680,7 +696,8 @@ class DeduplicationEngine:
                 self.perceptual_index[fingerprints.perceptual_hash] = content_id
     
     def _fingerprints_to_dict(self, fingerprints: ContentFingerprints) -> Dict[str, str]:
-        """Convert fingerprints object to dictionary"""
+        """
+Convert fingerprints object to dictionary"""
         return {
             'sha256': fingerprints.sha256_hash,
             'md5': fingerprints.md5_hash,
@@ -695,7 +712,8 @@ class DeduplicationEngine:
         data_size: int,
         processing_time: float
     ) -> None:
-        """Update deduplication metrics"""
+        """
+Update deduplication metrics"""
         self.metrics['total_analyses'] += 1
         
         if result_type == 'exact':
@@ -716,7 +734,8 @@ class DeduplicationEngine:
         )
     
     def get_deduplication_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive deduplication statistics"""
+        """
+Get comprehensive deduplication statistics"""
         total_duplicates = (
             self.metrics['exact_duplicates_found'] +
             self.metrics['near_duplicates_found'] +
@@ -745,7 +764,8 @@ class DeduplicationEngine:
         }
     
     async def check_duplicate(self, content_hash: str) -> Optional[Dict[str, Any]]:
-        """Quick check if content with given hash already exists"""
+        """
+Quick check if content with given hash already exists"""
         existing_content_id = self.sha256_index.get(content_hash)
         if existing_content_id and existing_content_id in self.fingerprints:
             fingerprints = self.fingerprints[existing_content_id]

@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import asyncio
 from typing import Optional, Dict, Any
@@ -367,7 +368,8 @@ async def get_payment_agent(config: Optional[PaymentConfig] = None) -> PaymentPr
 
 
 async def shutdown_service():
-    """Shutdown the global service instance"""
+    """
+Shutdown the global service instance"""
     global _service_instance
     
     if _service_instance:
@@ -377,13 +379,15 @@ async def shutdown_service():
 
 # Factory functions for individual components
 async def create_fraud_engine(config: Optional[PaymentConfig] = None) -> FraudDetectionEngine:
-    """Create fraud detection engine"""
+    """
+Create fraud detection engine"""
     config = config or PaymentConfig()
     return FraudDetectionEngine(config=config)
 
 
 async def create_compliance_manager(config: Optional[PaymentConfig] = None) -> ComplianceManager:
-    """Create compliance manager"""
+    """
+Create compliance manager"""
     config = config or PaymentConfig()
     manager = ComplianceManager(config=config)
     await manager.initialize()
@@ -394,7 +398,8 @@ async def create_analytics_engine(
     config: Optional[PaymentConfig] = None,
     cache: Optional[PerformanceCache] = None
 ) -> PaymentAnalytics:
-    """Create analytics engine"""
+    """
+Create analytics engine"""
     config = config or PaymentConfig()
     engine = PaymentAnalytics(config=config, cache=cache)
     await engine.initialize()
@@ -405,7 +410,8 @@ async def create_currency_converter(
     config: Optional[PaymentConfig] = None,
     cache: Optional[PerformanceCache] = None
 ) -> CurrencyConverter:
-    """Create currency converter"""
+    """
+Create currency converter"""
     config = config or PaymentConfig()
     converter = CurrencyConverter(config=config, cache=cache)
     await converter.initialize()
@@ -414,7 +420,8 @@ async def create_currency_converter(
 
 # CLI and testing utilities
 async def run_health_check():
-    """Run a comprehensive health check"""
+    """
+Run a comprehensive health check"""
     try:
         service = await get_service()
         health = await service.health_check()

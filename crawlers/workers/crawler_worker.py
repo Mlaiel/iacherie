@@ -8,7 +8,7 @@ Technologies: Celery, Redis, AsyncIO, Priority Queues, Resource Management
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Request crawler → Worker pool → Load balancing → 
 Platform extraction → Content protection → Result processing → Notification
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkerStatus(Enum):
-    """Crawler worker status states"""
+    """
+Crawler worker status states"""
+
     IDLE = "idle"
     RUNNING = "running"
     BUSY = "busy"
@@ -59,6 +62,7 @@ class WorkerStatus(Enum):
 
 class WorkerType(Enum):
     """Types of crawler workers"""
+
     GENERIC = "generic"
     SOCIAL_MEDIA = "social_media"
     CONTENT_PLATFORM = "content_platform"
@@ -70,6 +74,7 @@ class WorkerType(Enum):
 
 class TaskResult(Enum):
     """Task execution results"""
+
     SUCCESS = "success"
     FAILED = "failed"
     TIMEOUT = "timeout"
@@ -96,7 +101,8 @@ class WorkerConfig:
 
 @dataclass
 class WorkerMetrics:
-    """Worker performance metrics"""
+    """
+Worker performance metrics"""
     worker_id: str
     total_tasks_processed: int = 0
     successful_tasks: int = 0
@@ -112,7 +118,8 @@ class WorkerMetrics:
 
 @dataclass
 class CrawlerTask:
-    """Crawler task definition"""
+    """
+Crawler task definition"""
     task_id: str
     task_type: str
     target_url: str
@@ -133,7 +140,8 @@ class CrawlerTask:
 
 @dataclass
 class TaskExecution:
-    """Task execution context"""
+    """
+Task execution context"""
     task: CrawlerTask
     worker_id: str
     start_time: datetime
@@ -622,7 +630,8 @@ class CrawlerWorker:
         await self.task_queue.put(task)
 
     async def _handle_failed_task(self, execution: TaskExecution) -> None:
-        """Handle permanently failed task"""
+        """
+Handle permanently failed task"""
         try:
             # Store failed task
             self.failed_tasks.append(execution)
@@ -783,7 +792,8 @@ class CrawlerWorker:
             await asyncio.sleep(1)
 
     def __del__(self):
-        """Cleanup on deletion"""
+        """
+Cleanup on deletion"""
         try:
             if hasattr(self, 'thread_pool') and self.thread_pool:
                 self.thread_pool.shutdown(wait=False)

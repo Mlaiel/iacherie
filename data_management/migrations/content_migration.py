@@ -17,7 +17,7 @@ Technical Infrastructure:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 ==================================================
@@ -38,6 +38,7 @@ Business Logic Flow:
 Creator Upload → Content Analysis → Format Detection → Schema Migration → 
 Protection Setup → Fingerprint Generation → Metadata Extraction → Storage Optimization
 """
+
 import asyncio
 import logging
 import traceback
@@ -73,7 +74,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for migration handling"""
+    """
+Content type enumeration for migration handling"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -88,6 +91,7 @@ class ContentType(Enum):
 
 class AudioFormat(Enum):
     """Audio format standards for migration"""
+
     MP3 = "mp3"
     FLAC = "flac"
     WAV = "wav"
@@ -100,6 +104,7 @@ class AudioFormat(Enum):
 
 class VideoFormat(Enum):
     """Video format standards for migration"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -112,6 +117,7 @@ class VideoFormat(Enum):
 
 class ImageFormat(Enum):
     """Image format standards for migration"""
+
     JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
@@ -124,6 +130,7 @@ class ImageFormat(Enum):
 
 class ContentProtectionLevel(Enum):
     """Content protection levels for migration"""
+
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -158,7 +165,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentMigrationConfig:
-    """Configuration for content migration operations"""
+    """
+Configuration for content migration operations"""
     source_format: str
     target_format: str
     quality_settings: Dict[str, Any] = field(default_factory=dict)
@@ -175,7 +183,8 @@ class ContentMigrationConfig:
 
 @dataclass
 class ContentMigrationResult:
-    """Result of content migration operation"""
+    """
+Result of content migration operation"""
     content_id: str
     success: bool
     original_metadata: ContentMetadata
@@ -188,13 +197,15 @@ class ContentMigrationResult:
 
 
 class ContentAnalyzer:
-    """Advanced content analysis and metadata extraction"""
+    """
+Advanced content analysis and metadata extraction"""
     
     def __init__(self):
         self.magic_detector = magic.Magic(mime=True)
     
     async def analyze_content(self, file_path: Path) -> ContentMetadata:
-        """Analyze content and extract comprehensive metadata"""
+        """
+Analyze content and extract comprehensive metadata"""
         try:
             # Basic file information
             file_stats = file_path.stat()
@@ -331,7 +342,8 @@ class ContentAnalyzer:
             return ContentType.UNKNOWN
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calculate SHA-256 checksum for file integrity"""
+        """
+Calculate SHA-256 checksum for file integrity"""
         hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
@@ -348,7 +360,8 @@ class ContentTransformer:
         self.config = config
     
     async def transform_content(self, source_path: Path, target_path: Path, metadata: ContentMetadata) -> ContentMigrationResult:
-        """Transform content from source to target format"""
+        """
+Transform content from source to target format"""
         start_time = datetime.now()
         result = ContentMigrationResult(
             content_id=metadata.content_id,
@@ -588,7 +601,8 @@ class ProtectionMigration(BaseMigration):
         session.commit()
     
     async def _migrate_content_protection(self, session: Session):
-        """Migrate existing content to protection system"""
+        """
+Migrate existing content to protection system"""
         # Add protection records for existing content
         migration_sql = """
         INSERT INTO content_protection (content_id, protection_level, access_controls)
@@ -604,7 +618,8 @@ class ProtectionMigration(BaseMigration):
         session.commit()
     
     async def _optimize_protection_indexes(self, session: Session):
-        """Optimize indexes for protection queries"""
+        """
+Optimize indexes for protection queries"""
         index_sql = """
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_protection_composite 
         ON content_protection(content_id, protection_level);
@@ -618,7 +633,8 @@ class ProtectionMigration(BaseMigration):
 
 
 class ContentMigration(BaseMigration):
-    """Main content migration class for comprehensive content evolution"""
+    """
+Main content migration class for comprehensive content evolution"""
     
     def __init__(self, version: str, description: str, config: Optional[ContentMigrationConfig] = None):
         super().__init__(version, description)
@@ -685,7 +701,8 @@ class ContentMigration(BaseMigration):
         session.commit()
     
     async def _migrate_content_metadata(self, session: Session):
-        """Migrate and enhance content metadata"""
+        """
+Migrate and enhance content metadata"""
         # Get all content records that need metadata enhancement
         content_query = """
         SELECT id, file_path, content_type, created_at
@@ -751,7 +768,8 @@ class ContentMigration(BaseMigration):
         session.commit()
     
     async def _update_content_indexes(self, session: Session):
-        """Update and optimize content-related indexes"""
+        """
+Update and optimize content-related indexes"""
         index_sql = """
         -- Performance indexes for content queries
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_hash 
@@ -775,7 +793,8 @@ class ContentMigration(BaseMigration):
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback content migration changes"""
+        """
+Rollback content migration changes"""
         try:
             # Remove added columns
             rollback_sql = """

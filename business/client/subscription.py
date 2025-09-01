@@ -6,6 +6,7 @@ and feature access control for IA Influencer platform creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from uuid import UUID, uuid4
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class SubscriptionPlan(str, Enum):
-    """Available subscription plans."""
+    """
+Available subscription plans."""
+
     FREE = "free"
     CREATOR = "creator"
     PROFESSIONAL = "professional"
@@ -46,6 +49,7 @@ class SubscriptionPlan(str, Enum):
 
 class PaymentProvider(str, Enum):
     """Supported payment providers."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -68,7 +72,8 @@ class SubscriptionCreateData(BaseModel):
 
 
 class PaymentMethodData(BaseModel):
-    """Payment method data for subscription."""
+    """
+Payment method data for subscription."""
     provider: PaymentProvider
     token: str  # Payment provider token
     billing_address: Dict[str, str]
@@ -76,7 +81,8 @@ class PaymentMethodData(BaseModel):
 
 
 class UsageMetrics(BaseModel):
-    """Current period usage metrics."""
+    """
+Current period usage metrics."""
     content_uploads: int = 0
     storage_used_gb: Decimal = Decimal('0')
     fingerprints_created: int = 0
@@ -611,7 +617,8 @@ class SubscriptionManager:
             return start_date + timedelta(days=30)
             
     def _is_valid_upgrade(self, current_plan: SubscriptionPlan, new_plan: SubscriptionPlan) -> bool:
-        """Check if upgrade path is valid."""
+        """
+Check if upgrade path is valid."""
         plan_hierarchy = [
             SubscriptionPlan.FREE,
             SubscriptionPlan.CREATOR,
@@ -625,7 +632,8 @@ class SubscriptionManager:
         return new_index > current_index
         
     def _extend_subscription_period(self, subscription: Subscription) -> None:
-        """Extend subscription period for renewal."""
+        """
+Extend subscription period for renewal."""
         subscription.current_period_start = subscription.current_period_end
         subscription.current_period_end = self._calculate_period_end(
             subscription.current_period_end,
@@ -636,7 +644,8 @@ class SubscriptionManager:
         self.db.commit()
         
     async def _get_current_usage(self, client_id: UUID) -> Dict[str, int]:
-        """Get current period usage metrics for client."""
+        """
+Get current period usage metrics for client."""
         # Implementation would query usage from various services
         return {
             "content_uploads": 0,
@@ -704,11 +713,13 @@ class SubscriptionManager:
         return Decimal('0.00')
         
     async def _calculate_refund_amount(self, subscription: Subscription) -> Decimal:
-        """Calculate refund amount for cancelled subscription."""
+        """
+Calculate refund amount for cancelled subscription."""
         # Implementation would calculate refund amount
         return Decimal('0.00')
         
     async def _process_refund(self, subscription: Subscription, amount: Decimal) -> Dict[str, Any]:
-        """Process subscription refund."""
+        """
+Process subscription refund."""
         # Implementation would handle refund processing
         return {"success": True}

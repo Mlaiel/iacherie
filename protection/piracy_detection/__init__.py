@@ -31,7 +31,7 @@ Advanced Threat Coverage:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  MAXIMUM ANTI-PIRACY IP PROTECTION - INTERPOL COORDINATION ⚠️
 ================================================================
@@ -51,6 +51,7 @@ UNAUTHORIZED ACCESS IS INTERNATIONAL CRIMINAL OFFENSE:
 Contact mlaiel@live.de for MANDATORY law enforcement authorization.
 Unauthorized access triggers automatic Interpol investigation protocols.
 """
+
 import logging
 from typing import Optional, Dict, Any, List
 from datetime import datetime
@@ -119,7 +120,8 @@ class PiracyDetectionSystem:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the piracy detection system."""
+        """
+Initialize the piracy detection system."""
         self.config = {**DEFAULT_CONFIG, **(config or {})}
         self.logger = logging.getLogger(__name__)
         
@@ -135,7 +137,8 @@ class PiracyDetectionSystem:
         self.initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all system components."""
+        """
+Initialize all system components."""
         try:
             self.logger.info("Initializing Piracy Detection System...")
             
@@ -277,7 +280,8 @@ class PiracyDetectionSystem:
         return status
     
     async def close(self) -> None:
-        """Clean up all system components."""
+        """
+Clean up all system components."""
         try:
             components = [
                 self.detector, self.monitor, self.analyzer, self.enforcement,
@@ -364,7 +368,7 @@ logger = logging.getLogger(__name__)
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 # Legal notice
@@ -412,7 +416,8 @@ RESPONSE_TIME_TARGET_MS = 150
 PLATFORM_COVERAGE_COUNT = 500
 
 class DetectionConfig:
-    """Configuration for piracy detection system."""
+    """
+Configuration for piracy detection system."""
     
     def __init__(self, **kwargs):
         # Detection thresholds
@@ -441,7 +446,8 @@ class DetectionConfig:
         self.evidence_preservation = kwargs.get('evidence_preservation', True)
 
 class MonitoringConfig:
-    """Configuration for continuous monitoring."""
+    """
+Configuration for continuous monitoring."""
     
     def __init__(self, **kwargs):
         self.scan_frequency_hours = kwargs.get('scan_frequency_hours', 2)
@@ -451,7 +457,8 @@ class MonitoringConfig:
         self.revenue_tracking_enabled = kwargs.get('revenue_tracking_enabled', True)
 
 class EnforcementConfig:
-    """Configuration for automated enforcement."""
+    """
+Configuration for automated enforcement."""
     
     def __init__(self, **kwargs):
         self.auto_takedown_enabled = kwargs.get('auto_takedown_enabled', False)

@@ -4,6 +4,7 @@ Enterprise-grade mobile backend services with FastAPI integration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
 """
+
 import asyncio
 import logging
 import uuid
@@ -70,7 +71,8 @@ class MobileDevice:
 
 @dataclass
 class MobileSession:
-    """Mobile user session management."""
+    """
+Mobile user session management."""
     session_id: str
     user_id: str
     device_id: str
@@ -86,16 +88,19 @@ class MobileSession:
             self.last_activity = datetime.utcnow()
     
     def is_expired(self) -> bool:
-        """Check if session is expired."""
+        """
+Check if session is expired."""
         return datetime.utcnow() > self.expires_at
     
     def refresh_activity(self):
-        """Update last activity timestamp."""
+        """
+Update last activity timestamp."""
         self.last_activity = datetime.utcnow()
 
 
 class MobileDeviceManager:
-    """Professional mobile device management system."""
+    """
+Professional mobile device management system."""
     
     def __init__(self):
         self.logger = get_logger("mobile.device_manager")
@@ -169,14 +174,16 @@ class MobileDeviceManager:
         return self.devices.get(device_id)
     
     async def get_user_devices(self, user_id: str) -> List[MobileDevice]:
-        """Get all devices for a user."""
+        """
+Get all devices for a user."""
         return [
             device for device in self.devices.values()
             if device.user_id == user_id and device.is_active
         ]
     
     async def deactivate_device(self, device_id: str) -> bool:
-        """Deactivate a device."""
+        """
+Deactivate a device."""
         if device_id in self.devices:
             self.devices[device_id].is_active = False
             self.logger.info(f"Device deactivated: {device_id}")
@@ -490,14 +497,16 @@ def create_mobile_app() -> FastAPI:
 
 # Dependency injection functions
 def get_device_manager() -> MobileDeviceManager:
-    """Get device manager instance."""
+    """
+Get device manager instance."""
     return MobileDeviceManager()
 
 
 def get_auth_manager(
     device_manager: MobileDeviceManager = Depends(get_device_manager)
 ) -> MobileAuthManager:
-    """Get auth manager instance."""
+    """
+Get auth manager instance."""
     return MobileAuthManager(device_manager)
 
 
@@ -505,7 +514,8 @@ async def get_mobile_user(
     credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer()),
     auth_manager: MobileAuthManager = Depends(get_auth_manager)
 ) -> Dict[str, Any]:
-    """Dependency to get authenticated mobile user."""
+    """
+Dependency to get authenticated mobile user."""
     return await auth_manager.verify_mobile_token(credentials.credentials)
 
 

@@ -18,12 +18,13 @@ Features:
 - Automatic backoff strategies
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import time
@@ -39,7 +40,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class RateLimitType(str, Enum):
-    """Rate limit type enumeration."""
+    """
+Rate limit type enumeration."""
+
     REQUESTS_PER_SECOND = "requests_per_second"
     REQUESTS_PER_MINUTE = "requests_per_minute"
     REQUESTS_PER_HOUR = "requests_per_hour"
@@ -50,6 +53,7 @@ class RateLimitType(str, Enum):
 
 class Priority(str, Enum):
     """Request priority levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -58,6 +62,7 @@ class Priority(str, Enum):
 
 class RateLimitStrategy(str, Enum):
     """Rate limiting strategies."""
+
     FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
@@ -86,7 +91,8 @@ class RateLimitConfig:
 
 @dataclass
 class RateLimitStatus:
-    """Current rate limit status."""
+    """
+Current rate limit status."""
     platform: str
     current_usage: int
     limit_value: int
@@ -99,7 +105,8 @@ class RateLimitStatus:
 
 @dataclass
 class RequestMetrics:
-    """Request performance metrics."""
+    """
+Request performance metrics."""
     timestamp: datetime
     platform: str
     priority: Priority
@@ -112,13 +119,15 @@ class SlidingWindowCounter:
     """Sliding window counter implementation."""
     
     def __init__(self, window_size: int, limit: int):
-        """Initialize sliding window counter."""
+        """
+Initialize sliding window counter."""
         self.window_size = window_size
         self.limit = limit
         self.requests: deque = deque()
         
     def add_request(self, timestamp: float = None) -> bool:
-        """Add request and check if within limits."""
+        """
+Add request and check if within limits."""
         if timestamp is None:
             timestamp = time.time()
         
@@ -135,7 +144,8 @@ class SlidingWindowCounter:
         return True
     
     def get_current_count(self) -> int:
-        """Get current request count in window."""
+        """
+Get current request count in window."""
         current_time = time.time()
         cutoff_time = current_time - self.window_size
         
@@ -146,7 +156,8 @@ class SlidingWindowCounter:
         return len(self.requests)
     
     def get_reset_time(self) -> datetime:
-        """Get time when oldest request will expire."""
+        """
+Get time when oldest request will expire."""
         if not self.requests:
             return datetime.utcnow()
         
@@ -155,17 +166,20 @@ class SlidingWindowCounter:
         return datetime.utcfromtimestamp(reset_time)
 
 class TokenBucket:
-    """Token bucket rate limiter implementation."""
+    """
+Token bucket rate limiter implementation."""
     
     def __init__(self, capacity: int, refill_rate: float):
-        """Initialize token bucket."""
+        """
+Initialize token bucket."""
         self.capacity = capacity
         self.refill_rate = refill_rate  # tokens per second
         self.tokens = capacity
         self.last_refill = time.time()
         
     def consume(self, tokens: int = 1) -> bool:
-        """Consume tokens and check availability."""
+        """
+Consume tokens and check availability."""
         self._refill()
         
         if self.tokens >= tokens:
@@ -174,7 +188,8 @@ class TokenBucket:
         return False
     
     def _refill(self):
-        """Refill tokens based on time elapsed."""
+        """
+Refill tokens based on time elapsed."""
         now = time.time()
         elapsed = now - self.last_refill
         
@@ -184,12 +199,14 @@ class TokenBucket:
         self.last_refill = now
     
     def get_available_tokens(self) -> int:
-        """Get number of available tokens."""
+        """
+Get number of available tokens."""
         self._refill()
         return int(self.tokens)
     
     def get_wait_time(self, tokens: int = 1) -> float:
-        """Get wait time until enough tokens are available."""
+        """
+Get wait time until enough tokens are available."""
         self._refill()
         
         if self.tokens >= tokens:
@@ -199,10 +216,12 @@ class TokenBucket:
         return needed_tokens / self.refill_rate
 
 class AdaptiveRateLimiter:
-    """Adaptive rate limiter that adjusts based on performance."""
+    """
+Adaptive rate limiter that adjusts based on performance."""
     
     def __init__(self, base_config: RateLimitConfig):
-        """Initialize adaptive rate limiter."""
+        """
+Initialize adaptive rate limiter."""
         self.base_config = base_config
         self.current_limit = base_config.limit_value
         self.performance_history: deque = deque(maxlen=100)
@@ -210,7 +229,8 @@ class AdaptiveRateLimiter:
         self.last_adjustment = time.time()
         
     def record_performance(self, response_time: float, success: bool):
-        """Record request performance for adaptation."""
+        """
+Record request performance for adaptation."""
         self.performance_history.append({
             'timestamp': time.time(),
             'response_time': response_time,
@@ -221,7 +241,8 @@ class AdaptiveRateLimiter:
         self._adjust_rate_limit()
     
     def _adjust_rate_limit(self):
-        """Adjust rate limit based on recent performance."""
+        """
+Adjust rate limit based on recent performance."""
         if len(self.performance_history) < 10:
             return
         
@@ -259,17 +280,20 @@ class AdaptiveRateLimiter:
         return self.current_limit
 
 class PriorityQueue:
-    """Priority-based request queue."""
+    """
+Priority-based request queue."""
     
     def __init__(self):
-        """Initialize priority queue."""
+        """
+Initialize priority queue."""
         self.queues: Dict[Priority, deque] = {
             priority: deque() for priority in Priority
         }
         self.pending_count = 0
         
     async def put(self, item: Any, priority: Priority = Priority.MEDIUM):
-        """Add item to priority queue."""
+        """
+Add item to priority queue."""
         self.queues[priority].append({
             'item': item,
             'timestamp': time.time(),
@@ -278,7 +302,8 @@ class PriorityQueue:
         self.pending_count += 1
     
     async def get(self) -> Optional[Tuple[Any, Priority]]:
-        """Get highest priority item from queue."""
+        """
+Get highest priority item from queue."""
         # Check queues in priority order
         for priority in [Priority.CRITICAL, Priority.HIGH, Priority.MEDIUM, 
                         Priority.LOW, Priority.BACKGROUND]:
@@ -290,11 +315,13 @@ class PriorityQueue:
         return None
     
     def size(self) -> int:
-        """Get total queue size."""
+        """
+Get total queue size."""
         return self.pending_count
     
     def size_by_priority(self) -> Dict[Priority, int]:
-        """Get queue size by priority."""
+        """
+Get queue size by priority."""
         return {priority: len(queue) for priority, queue in self.queues.items()}
 
 class IntelligentRateLimiter:
@@ -310,7 +337,8 @@ class IntelligentRateLimiter:
     """
     
     def __init__(self):
-        """Initialize intelligent rate limiter."""
+        """
+Initialize intelligent rate limiter."""
         self.platform_configs: Dict[str, RateLimitConfig] = {}
         self.rate_limiters: Dict[str, Any] = {}
         self.status_cache: Dict[str, RateLimitStatus] = {}
@@ -473,7 +501,8 @@ class IntelligentRateLimiter:
         return await request_item['future']
     
     async def _start_queue_processor(self):
-        """Start background queue processor."""
+        """
+Start background queue processor."""
         if self._queue_processor_task and not self._queue_processor_task.done():
             return
         
@@ -481,7 +510,8 @@ class IntelligentRateLimiter:
         self._queue_processor_task = asyncio.create_task(self._process_queue())
     
     async def _process_queue(self):
-        """Process queued requests with rate limiting."""
+        """
+Process queued requests with rate limiting."""
         logger.info("Started rate limited queue processor")
         
         while self._processing_active:
@@ -554,7 +584,8 @@ class IntelligentRateLimiter:
         return 0.0
     
     def _update_status(self, platform: str, can_proceed: bool):
-        """Update platform rate limit status."""
+        """
+Update platform rate limit status."""
         if platform not in self.status_cache:
             return
         
@@ -573,7 +604,8 @@ class IntelligentRateLimiter:
         status.last_request_time = datetime.utcnow()
     
     async def _check_alert_conditions(self, platform: str, metrics: RequestMetrics):
-        """Check for alert conditions and trigger callbacks."""
+        """
+Check for alert conditions and trigger callbacks."""
         # Check high error rate
         recent_requests = [m for m in self.metrics_history 
                           if m.platform == platform and 
@@ -597,7 +629,8 @@ class IntelligentRateLimiter:
             })
     
     async def _trigger_alert(self, alert_type: str, data: Dict[str, Any]):
-        """Trigger alert callbacks."""
+        """
+Trigger alert callbacks."""
         alert_data = {
             'type': alert_type,
             'timestamp': datetime.utcnow(),
@@ -618,15 +651,18 @@ class IntelligentRateLimiter:
         self.alert_callbacks.append(callback)
     
     def get_platform_status(self, platform: str) -> Optional[RateLimitStatus]:
-        """Get current rate limit status for platform."""
+        """
+Get current rate limit status for platform."""
         return self.status_cache.get(platform)
     
     def get_all_status(self) -> Dict[str, RateLimitStatus]:
-        """Get rate limit status for all platforms."""
+        """
+Get rate limit status for all platforms."""
         return self.status_cache.copy()
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get current queue status."""
+        """
+Get current queue status."""
         return {
             'total_pending': self.request_queue.size(),
             'by_priority': self.request_queue.size_by_priority(),
@@ -634,7 +670,8 @@ class IntelligentRateLimiter:
         }
     
     def get_performance_metrics(self, platform: str = None) -> Dict[str, Any]:
-        """Get performance metrics."""
+        """
+Get performance metrics."""
         if platform:
             platform_metrics = [m for m in self.metrics_history if m.platform == platform]
         else:
@@ -661,7 +698,8 @@ class IntelligentRateLimiter:
         }
     
     async def shutdown(self):
-        """Shutdown rate limiter and cleanup resources."""
+        """
+Shutdown rate limiter and cleanup resources."""
         self._processing_active = False
         
         if self._queue_processor_task:

@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class CollaborationTypeEnum(str, Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     MUSICAL_COLLABORATION = "musical_collaboration"
     REMIX_PROJECT = "remix_project"
     FEATURED_ARTIST = "featured_artist"
@@ -39,6 +42,7 @@ class CollaborationTypeEnum(str, Enum):
 
 class CollaborationStatusEnum(str, Enum):
     """Collaboration request status"""
+
     DRAFT = "draft"
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
@@ -54,6 +58,7 @@ class CollaborationStatusEnum(str, Enum):
 
 class SkillLevelEnum(str, Enum):
     """Skill level classifications"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -64,6 +69,7 @@ class SkillLevelEnum(str, Enum):
 
 class AvailabilityEnum(str, Enum):
     """Availability status"""
+
     IMMEDIATELY = "immediately"
     WITHIN_WEEK = "within_week"
     WITHIN_MONTH = "within_month"
@@ -74,6 +80,7 @@ class AvailabilityEnum(str, Enum):
 
 class CommunicationMethodEnum(str, Enum):
     """Preferred communication methods"""
+
     EMAIL = "email"
     PHONE = "phone"
     VIDEO_CALL = "video_call"
@@ -88,6 +95,7 @@ class CommunicationMethodEnum(str, Enum):
 
 class RevenueShareTypeEnum(str, Enum):
     """Revenue sharing types"""
+
     EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CREDIT_BASED = "credit_based"

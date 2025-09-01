@@ -6,8 +6,9 @@ Validates that all monetization components are properly implemented and importab
 Performs comprehensive checks on module integrity and functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import sys
 import logging
 from typing import Dict, Any, List
@@ -17,7 +18,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def validate_imports() -> Dict[str, bool]:
-    """Validate all monetization module imports."""
+    """
+Validate all monetization module imports."""
     validation_results = {}
     
     try:

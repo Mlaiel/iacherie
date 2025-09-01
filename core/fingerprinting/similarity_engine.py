@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -43,7 +44,8 @@ class SimilarityMatch:
 
 @dataclass
 class VectorIndex:
-    """Vector index for similarity search"""
+    """
+Vector index for similarity search"""
     index_id: str
     content_type: ContentType
     vector_dimension: int
@@ -794,7 +796,8 @@ class SimilarityEngine:
             return 0.0
 
     def _mfcc_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Real MFCC similarity calculation."""
+        """
+Real MFCC similarity calculation."""
         try:
             mfcc1 = data1.get('coefficients', [])
             mfcc2 = data2.get('coefficients', [])
@@ -828,7 +831,8 @@ class SimilarityEngine:
             return 0.0
 
     def _perceptual_hash_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Real perceptual hash similarity."""
+        """
+Real perceptual hash similarity."""
         try:
             hash1 = data1.get('hash', '') or data1.get('phash', '')
             hash2 = data2.get('hash', '') or data2.get('phash', '')
@@ -853,7 +857,8 @@ class SimilarityEngine:
             return 0.0
 
     def _color_histogram_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Real color histogram similarity."""
+        """
+Real color histogram similarity."""
         try:
             hist1 = data1.get('histogram', []) or data1.get('color_histogram', [])
             hist2 = data2.get('histogram', []) or data2.get('color_histogram', [])
@@ -885,7 +890,8 @@ class SimilarityEngine:
             return 0.0
 
     def _semantic_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Real semantic similarity using embeddings."""
+        """
+Real semantic similarity using embeddings."""
         try:
             emb1 = data1.get('embedding', []) or data1.get('semantic_embedding', [])
             emb2 = data2.get('embedding', []) or data2.get('semantic_embedding', [])
@@ -918,7 +924,8 @@ class SimilarityEngine:
             return 0.0
 
     def _feature_descriptor_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Similarity for feature descriptors (SIFT, ORB, etc.)."""
+        """
+Similarity for feature descriptors (SIFT, ORB, etc.)."""
         try:
             # Compare number of features and their distributions
             count1 = data1.get('feature_count', 0) or data1.get('keypoint_count', 0)
@@ -946,7 +953,8 @@ class SimilarityEngine:
             return 0.0
 
     def _temporal_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Temporal similarity for video content."""
+        """
+Temporal similarity for video content."""
         try:
             # Compare temporal patterns
             pattern1 = data1.get('temporal_pattern', [])
@@ -974,7 +982,8 @@ class SimilarityEngine:
             return 0.0
 
     def _motion_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Motion similarity for video content."""
+        """
+Motion similarity for video content."""
         try:
             motion1 = data1.get('motion_vectors', [])
             motion2 = data2.get('motion_vectors', [])
@@ -1010,7 +1019,8 @@ class SimilarityEngine:
             return 0.0
 
     def _object_detection_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Object detection similarity."""
+        """
+Object detection similarity."""
         try:
             objects1 = set(data1.get('detected_objects', []))
             objects2 = set(data2.get('detected_objects', []))
@@ -1030,7 +1040,8 @@ class SimilarityEngine:
             return 0.0
 
     def _ngram_similarity(self, data1: Dict, data2: Dict) -> float:
-        """N-gram similarity for text."""
+        """
+N-gram similarity for text."""
         try:
             ngrams1 = set(data1.get('ngrams', []))
             ngrams2 = set(data2.get('ngrams', []))
@@ -1050,7 +1061,8 @@ class SimilarityEngine:
             return 0.0
 
     def _tfidf_similarity(self, data1: Dict, data2: Dict) -> float:
-        """TF-IDF similarity for text."""
+        """
+TF-IDF similarity for text."""
         try:
             tfidf1 = data1.get('tfidf_vector', [])
             tfidf2 = data2.get('tfidf_vector', [])
@@ -1067,7 +1079,8 @@ class SimilarityEngine:
             return 0.0
 
     def _spectral_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Spectral similarity for audio."""
+        """
+Spectral similarity for audio."""
         try:
             spec1 = data1.get('spectral_hash', '') or data1.get('hash', '')
             spec2 = data2.get('spectral_hash', '') or data2.get('hash', '')
@@ -1091,7 +1104,8 @@ class SimilarityEngine:
             return 0.0
 
     def _generic_similarity(self, data1: Dict, data2: Dict) -> float:
-        """Generic similarity fallback."""
+        """
+Generic similarity fallback."""
         try:
             # Convert data to strings and compare
             str1 = str(data1)

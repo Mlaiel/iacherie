@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 import json
@@ -37,7 +38,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class InfrastructureMetrics:
-    """Infrastructure component performance metrics"""
+    """
+Infrastructure component performance metrics"""
     component_name: str
     component_type: str
     status: str

@@ -5,8 +5,9 @@ The ContentIndexer creates and maintains searchable indexes of content
 using advanced AI techniques for semantic search and content discovery.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -602,7 +603,8 @@ class ContentIndexer:
         return []
 
     async def _build_user_profile_vector(self, interaction_history: List[Dict]) -> np.ndarray:
-        """Build user profile vector from interaction history"""
+        """
+Build user profile vector from interaction history"""
         if not interaction_history:
             # Return zero vector for new users
             return np.zeros(self.index_config["vector_dimension"])

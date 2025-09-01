@@ -5,11 +5,12 @@ Unified interface for vector database operations with advanced management,
 monitoring, and optimization capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class IndexStatus(Enum):
-    """Status of vector indices."""
+    """
+Status of vector indices."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     OFFLINE = "offline"
@@ -58,6 +61,7 @@ class IndexStatus(Enum):
 
 class BackupStatus(Enum):
     """Status of backup operations."""
+
     COMPLETED = "completed"
     IN_PROGRESS = "in_progress"
     FAILED = "failed"
@@ -69,6 +73,7 @@ class BackupStatus(Enum):
 
 class OperationType(Enum):
     """Types of database operations."""
+
     SEARCH = "search"
     INSERT = "insert"
     DELETE = "delete"
@@ -83,6 +88,7 @@ class OperationType(Enum):
 
 class MaintenanceType(Enum):
     """Types of maintenance operations."""
+
     GARBAGE_COLLECTION = "garbage_collection"
     INDEX_COMPACTION = "index_compaction"
     STATISTICS_UPDATE = "statistics_update"
@@ -107,7 +113,8 @@ class IndexMetrics:
 
 @dataclass
 class BackupInfo:
-    """Information about index backups."""
+    """
+Information about index backups."""
     backup_id: str
     index_name: str
     backup_path: str
@@ -119,7 +126,8 @@ class BackupInfo:
 
 @dataclass
 class PerformanceStats:
-    """Performance statistics for the vector database."""
+    """
+Performance statistics for the vector database."""
     total_queries: int
     avg_query_time_ms: float
     cache_hit_rate: float

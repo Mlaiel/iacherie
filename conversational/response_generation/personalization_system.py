@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class PersonalizationDimension(Enum):
-    """Personalization dimensions for content creators"""
+    """
+Personalization dimensions for content creators"""
+
     COMMUNICATION_STYLE = "communication_style"
     CONTENT_PREFERENCES = "content_preferences"
     TECHNICAL_LEVEL = "technical_level"
@@ -55,6 +58,7 @@ class PersonalizationDimension(Enum):
 
 class UserSegment(Enum):
     """User segments for content creators"""
+
     EMERGING_CREATOR = "emerging_creator"
     ESTABLISHED_CREATOR = "established_creator"
     PROFESSIONAL_CREATOR = "professional_creator"
@@ -67,6 +71,7 @@ class UserSegment(Enum):
 
 class PersonalizationStrategy(Enum):
     """Personalization strategies"""
+
     BEHAVIOR_BASED = "behavior_based"
     PREFERENCE_BASED = "preference_based"
     CONTENT_BASED = "content_based"
@@ -94,7 +99,8 @@ class UserPersonalityProfile:
 
 @dataclass
 class PersonalizationContext:
-    """Context for personalization decisions"""
+    """
+Context for personalization decisions"""
     current_interaction: Dict[str, Any]
     session_history: List[Dict[str, Any]] = field(default_factory=list)
     time_context: Dict[str, Any] = field(default_factory=dict)
@@ -104,7 +110,8 @@ class PersonalizationContext:
 
 
 class PersonalizedResponse(BaseModel):
-    """Personalized response structure"""
+    """
+Personalized response structure"""
     response_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     personalized_content: str
     personalization_score: float = Field(..., ge=0.0, le=1.0)
@@ -118,7 +125,8 @@ class PersonalizedResponse(BaseModel):
 
 
 class ResponsePersonalizer:
-    """Core response personalization engine"""
+    """
+Core response personalization engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -137,7 +145,8 @@ class ResponsePersonalizer:
         self.adaptation_patterns = self._initialize_adaptation_patterns()
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for personalization"""
+        """
+Initialize machine learning models for personalization"""
         try:
             self.behavior_predictor = UserBehaviorPredictor()
             self.preference_clusterer = PreferenceClusterer()
@@ -705,7 +714,8 @@ class UserPreferenceAdapter:
         self.preference_models = self._initialize_preference_models()
     
     def _initialize_preference_models(self):
-        """Initialize preference learning models"""
+        """
+Initialize preference learning models"""
         try:
             return {
                 'communication_style': self._load_communication_style_model(),
@@ -751,13 +761,15 @@ class UserPreferenceAdapter:
         content: str,
         preferences: Dict[str, Any]
     ) -> str:
-        """Apply preference-based content adaptations"""
+        """
+Apply preference-based content adaptations"""
         # Implement preference adaptation logic
         return content
 
 
 class PersonalizedResponseGenerator:
-    """High-level personalized response generation interface"""
+    """
+High-level personalized response generation interface"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -836,7 +848,8 @@ class ResponseCustomizationEngine:
         self.customization_rules = self._initialize_customization_rules()
     
     def _initialize_customization_rules(self) -> Dict[str, Any]:
-        """Initialize response customization rules"""
+        """
+Initialize response customization rules"""
         return {
             "creator_type_customizations": {
                 "musician": {
@@ -919,7 +932,8 @@ class ResponseCustomizationEngine:
         response: PersonalizedResponse,
         platform: str
     ) -> PersonalizedResponse:
-        """Apply platform specific customizations"""
+        """
+Apply platform specific customizations"""
         # Implement platform customization logic
         return response
     
@@ -928,6 +942,7 @@ class ResponseCustomizationEngine:
         response: PersonalizedResponse,
         business_stage: str
     ) -> PersonalizedResponse:
-        """Apply business stage specific customizations"""
+        """
+Apply business stage specific customizations"""
         # Implement business stage customization logic
         return response

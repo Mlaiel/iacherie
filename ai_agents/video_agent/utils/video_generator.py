@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import os
@@ -53,7 +54,9 @@ from ...models.video_models import GeneratedVideo, VideoTemplate
 logger = logging.getLogger(__name__)
 
 class VideoGenerationModel:
-    """Video generation model specifications"""
+    """
+Video generation model specifications"""
+
     STABLE_DIFFUSION = "stable_diffusion"
     DALLE_3 = "dalle_3"
     MIDJOURNEY = "midjourney"
@@ -62,6 +65,7 @@ class VideoGenerationModel:
 
 class VideoStyle:
     """Video style presets for generation"""
+
     CINEMATIC = "cinematic"
     DOCUMENTARY = "documentary"
     ANIMATION = "animation"
@@ -73,6 +77,7 @@ class VideoStyle:
 
 class GenerationQuality:
     """Quality levels for video generation"""
+
     DRAFT = {"resolution": (480, 360), "fps": 15, "duration": 10}
     STANDARD = {"resolution": (720, 480), "fps": 24, "duration": 30}
     HIGH = {"resolution": (1080, 720), "fps": 30, "duration": 60}
@@ -489,7 +494,8 @@ class AIVideoGenerator:
         return all_frames[:total_frames]
     
     async def _blend_frames(self, frame1: np.ndarray, frame2: np.ndarray, alpha: float) -> np.ndarray:
-        """Blend two frames using alpha blending"""
+        """
+Blend two frames using alpha blending"""
         # Ensure frames are the same size
         if frame1.shape != frame2.shape:
             frame2 = cv2.resize(frame2, (frame1.shape[1], frame1.shape[0]))
@@ -499,7 +505,8 @@ class AIVideoGenerator:
         return blended.astype(np.uint8)
     
     async def _create_video_from_frames(self, frames: List[np.ndarray], output_path: str, fps: float) -> bool:
-        """Create video file from list of frames"""
+        """
+Create video file from list of frames"""
         if not frames:
             return False
         
@@ -595,7 +602,8 @@ class AIVideoGenerator:
         return result
     
     async def _zoom_transition(self, frame1: np.ndarray, frame2: np.ndarray, alpha: float) -> np.ndarray:
-        """Create zoom transition effect"""
+        """
+Create zoom transition effect"""
         height, width = frame1.shape[:2]
         
         # Zoom out frame1 and zoom in frame2
@@ -615,7 +623,8 @@ class AIVideoGenerator:
         return await self._blend_frames(zoomed_frame1, zoomed_frame2, alpha)
     
     async def _create_fallback_frames(self, prompt: str, num_frames: int) -> List[np.ndarray]:
-        """Create simple colored frames when AI models are not available"""
+        """
+Create simple colored frames when AI models are not available"""
         frames = []
         
         # Extract color information from prompt
@@ -658,7 +667,8 @@ class AIVideoGenerator:
         return frames[0] if frames else np.zeros((*self.default_resolution[::-1], 3), dtype=np.uint8)
     
     async def _add_text_overlay(self, frame: np.ndarray, title: str, subtitle: str) -> np.ndarray:
-        """Add text overlay to frame"""
+        """
+Add text overlay to frame"""
         try:
             # Convert to PIL for text rendering
             pil_frame = Image.fromarray(frame)
@@ -789,23 +799,27 @@ class AIVideoGenerator:
         return sepia_frame.astype(np.uint8)
     
     async def _apply_grayscale(self, frame: np.ndarray) -> np.ndarray:
-        """Convert frame to grayscale"""
+        """
+Convert frame to grayscale"""
         gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
         return cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
     
     async def _adjust_brightness(self, frame: np.ndarray, factor: float) -> np.ndarray:
-        """Adjust frame brightness"""
+        """
+Adjust frame brightness"""
         bright_frame = frame.astype(np.float32) * factor
         return np.clip(bright_frame, 0, 255).astype(np.uint8)
     
     async def _adjust_contrast(self, frame: np.ndarray, factor: float) -> np.ndarray:
-        """Adjust frame contrast"""
+        """
+Adjust frame contrast"""
         mean = np.mean(frame)
         contrast_frame = (frame.astype(np.float32) - mean) * factor + mean
         return np.clip(contrast_frame, 0, 255).astype(np.uint8)
     
     async def cleanup(self):
-        """Cleanup temporary files and GPU memory"""
+        """
+Cleanup temporary files and GPU memory"""
         try:
             # Clear GPU memory
             if self.gpu_available:
@@ -828,7 +842,8 @@ class VideoSynthesizer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize VideoSynthesizer"""
+        """
+Initialize VideoSynthesizer"""
         self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "video_synthesizer" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
@@ -927,12 +942,14 @@ class VideoSynthesizer:
         return clips[0]  # Simplified for now
     
     async def _create_overlay_layout(self, clips: List) -> Any:
-        """Create overlay layout from multiple clips"""
+        """
+Create overlay layout from multiple clips"""
         # Implementation for overlay composition
         return clips[0]  # Simplified for now
     
     async def cleanup(self):
-        """Cleanup temporary files"""
+        """
+Cleanup temporary files"""
         try:
             if self.temp_dir.exists():
                 import shutil

@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -32,7 +33,9 @@ from mutagen.id3 import ID3NoHeaderError
 logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
-    """Supported audio formats with quality indicators"""
+    """
+Supported audio formats with quality indicators"""
+
     MP3 = {"ext": ".mp3", "lossy": True, "quality": "good", "compression": "high"}
     WAV = {"ext": ".wav", "lossy": False, "quality": "excellent", "compression": "none"}
     FLAC = {"ext": ".flac", "lossy": False, "quality": "excellent", "compression": "lossless"}
@@ -44,6 +47,7 @@ class AudioFormat(Enum):
 
 class AudioContentType(Enum):
     """Audio content classification types"""
+
     MUSIC = "music"
     SPEECH = "speech"
     PODCAST = "podcast"
@@ -117,7 +121,8 @@ class AudioMetadata:
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint for content identification and protection"""
+    """
+Audio fingerprint for content identification and protection"""
     content_id: str
     primary_hash: str
     perceptual_hash: str
@@ -394,7 +399,8 @@ class AudioContentManager:
         sample_rate: int,
         content_id: str
     ) -> AudioFingerprint:
-        """Generate comprehensive audio fingerprint for content protection"""
+        """
+Generate comprehensive audio fingerprint for content protection"""
         try:
             # Primary hash (raw audio data)
             primary_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()

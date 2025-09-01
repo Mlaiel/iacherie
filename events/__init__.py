@@ -27,6 +27,7 @@ Project Team Expertise:
 - Audio Engineer: Audio processing and music technology
 - Microservices Architect: Distributed systems and scalability
 """
+
 from typing import Dict, Any, Optional, List
 import logging
 from enum import Enum
@@ -77,7 +78,8 @@ from .analytics_events import (
 
 # Event types for IA Influencer business logic
 class EventType(Enum):
-    """Business event types for IA Influencer platform"""
+    """
+Business event types for IA Influencer platform"""
     
     # Content events
     CONTENT_UPLOADED = "content.uploaded"
@@ -127,6 +129,7 @@ class EventType(Enum):
 
 class EventSeverity(Enum):
     """Event severity levels for monitoring and alerting"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -136,6 +139,7 @@ class EventSeverity(Enum):
 
 class EventStatus(Enum):
     """Event processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"

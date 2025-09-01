@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -44,7 +45,9 @@ from backend.services.monetization.revenue_service import RevenueService
 logger = logging.getLogger(__name__)
 
 class DialogueState(Enum):
-    """Core dialogue states for IA Influencer platform"""
+    """
+Core dialogue states for IA Influencer platform"""
+
     IDLE = "idle"
     GREETING = "greeting"
     INTENT_DETECTION = "intent_detection"
@@ -108,6 +111,7 @@ class DialogueIntent(Enum):
 
 class CreatorType(Enum):
     """Content creator categories"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -174,7 +178,8 @@ class DialogueResponse:
 
 @dataclass
 class FlowTransition:
-    """Dialogue flow transition definition"""
+    """
+Dialogue flow transition definition"""
     from_state: DialogueState
     to_state: DialogueState
     trigger: str
@@ -1204,7 +1209,8 @@ class DialogueFlowManager:
         return list(self.active_contexts.keys())
 
     async def get_conversation_summary(self, conversation_id: str) -> Dict[str, Any]:
-        """Get summary of conversation for reporting"""
+        """
+Get summary of conversation for reporting"""
         analytics = await self.get_conversation_analytics(conversation_id)
         
         if "error" in analytics:
@@ -1246,7 +1252,8 @@ class FlowState:
 
 @dataclass 
 class FlowCondition:
-    """Flow condition with business logic"""
+    """
+Flow condition with business logic"""
     condition_id: str
     condition_type: str  # business_rule, user_input, system_state
     expression: str
@@ -1256,7 +1263,8 @@ class FlowCondition:
 
 @dataclass
 class DialogueMetrics:
-    """Comprehensive dialogue performance metrics"""
+    """
+Comprehensive dialogue performance metrics"""
     metrics_id: str
     conversation_id: str
     
@@ -1280,7 +1288,8 @@ class DialogueMetrics:
 
 @dataclass
 class FlowExecutionResult:
-    """Result of flow execution with detailed information"""
+    """
+Result of flow execution with detailed information"""
     execution_id: str
     flow_id: str
     success: bool
@@ -1303,7 +1312,8 @@ class FlowExecutionResult:
 
 @dataclass
 class ConversationFlow:
-    """High-level conversation flow definition"""
+    """
+High-level conversation flow definition"""
     flow_id: str
     flow_name: str
     flow_type: str  # business_workflow, support_flow, onboarding_flow
@@ -1328,7 +1338,8 @@ class ConversationFlow:
 
 @dataclass
 class DialogueFlow:
-    """Complete dialogue flow with all components"""
+    """
+Complete dialogue flow with all components"""
     dialogue_id: str
     conversation_flow: ConversationFlow
     current_context: DialogueContext

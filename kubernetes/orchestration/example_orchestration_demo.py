@@ -12,6 +12,7 @@ This example demonstrates:
 - Monitoring and observability setup
 - Disaster recovery capabilities
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -57,12 +58,14 @@ class OrchestrationDemo:
     Demonstration class for IA Influencer Agent orchestration capabilities.
     """
     def __init__(self):
-        """Initialize demonstration environment."""
+        """
+Initialize demonstration environment."""
         self.platform = OrchestrationPlatform()
         self.coordinator = OrchestrationCoordinator()
         
     async def demo_platform_initialization(self):
-        """Demonstrate platform initialization."""
+        """
+Demonstrate platform initialization."""
         logger.info("=" * 80)
         logger.info("IA INFLUENCER AGENT - ORCHESTRATION PLATFORM DEMO")
         logger.info("=" * 80)

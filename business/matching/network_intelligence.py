@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -53,7 +54,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NetworkNode:
-    """Individual network node representation"""
+    """
+Individual network node representation"""
     node_id: str
     node_type: str  # creator, brand, platform, event
     influence_score: float
@@ -65,7 +67,8 @@ class NetworkNode:
 
 @dataclass
 class NetworkEdge:
-    """Network relationship edge"""
+    """
+Network relationship edge"""
     source_id: str
     target_id: str
     relationship_type: str
@@ -78,7 +81,8 @@ class NetworkEdge:
 
 @dataclass
 class CommunityCluster:
-    """Network community cluster"""
+    """
+Network community cluster"""
     cluster_id: str
     members: List[str]
     cluster_theme: str
@@ -90,7 +94,8 @@ class CommunityCluster:
 
 
 class NetworkIntelligence:
-    """Advanced network intelligence and analysis system"""
+    """
+Advanced network intelligence and analysis system"""
     
     def __init__(self, db_session, graph_db, ml_models):
         self.db = db_session

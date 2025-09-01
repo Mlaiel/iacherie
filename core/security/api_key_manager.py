@@ -11,6 +11,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import secrets
 import hashlib
 import hmac
@@ -29,7 +30,9 @@ from backend.core.logging import SecurityLogger
 
 
 class APIKeyStatus(Enum):
-    """API key status values"""
+    """
+API key status values"""
+
     ACTIVE = "active"
     SUSPENDED = "suspended"
     EXPIRED = "expired"
@@ -38,6 +41,7 @@ class APIKeyStatus(Enum):
 
 class APIKeyType(Enum):
     """API key types with different permission levels"""
+
     READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     ADMIN = "admin"
@@ -65,7 +69,8 @@ class APIKey:
 
 @dataclass
 class APIKeyUsage:
-    """API key usage tracking"""
+    """
+API key usage tracking"""
     key_id: str
     timestamp: datetime
     endpoint: str
@@ -78,7 +83,8 @@ class APIKeyUsage:
 
 
 class APIKeyManager:
-    """Enterprise API key management system"""
+    """
+Enterprise API key management system"""
     
     def __init__(self):
         self.logger = SecurityLogger("APIKeyManager")
@@ -334,7 +340,8 @@ class APIKeyManager:
         return hashlib.sha256(api_key.encode()).hexdigest()
     
     def _is_valid_key_format(self, api_key: str) -> bool:
-        """Validate API key format"""
+        """
+Validate API key format"""
         if not api_key or not api_key.startswith(self.key_prefix):
             return False
         
@@ -350,7 +357,8 @@ class APIKeyManager:
             return False
     
     def _extract_key_id(self, api_key: str) -> Optional[str]:
-        """Extract key ID from API key"""
+        """
+Extract key ID from API key"""
         try:
             if not api_key.startswith(self.key_prefix):
                 return None
@@ -364,7 +372,8 @@ class APIKeyManager:
             return None
     
     async def _store_api_key(self, api_key: APIKey):
-        """Store API key data"""
+        """
+Store API key data"""
         try:
             # Cache for quick access
             cache_key = f"api_key:{api_key.key_id}"
@@ -500,6 +509,7 @@ async def generate_api_key(
 
 
 async def validate_api_key(api_key: str) -> Optional[APIKey]:
-    """Convenience function to validate API key"""
+    """
+Convenience function to validate API key"""
     manager = APIKeyManager()
     return await manager.validate_api_key(api_key)

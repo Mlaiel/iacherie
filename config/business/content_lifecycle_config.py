@@ -13,6 +13,7 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Tuple
 from dataclasses import dataclass
@@ -20,7 +21,9 @@ from datetime import datetime, timedelta
 
 
 class ContentStatus(str, Enum):
-    """Content lifecycle status states."""
+    """
+Content lifecycle status states."""
+
     DRAFT = "draft"
     UPLOADED = "uploaded"
     PROCESSING = "processing"
@@ -40,6 +43,7 @@ class ContentStatus(str, Enum):
 
 class ContentEvent(str, Enum):
     """Content lifecycle events that trigger state changes."""
+
     UPLOAD = "upload"
     VALIDATE = "validate"
     PROCESS = "process"
@@ -59,6 +63,7 @@ class ContentEvent(str, Enum):
 
 class ContentPriority(str, Enum):
     """Content processing priority levels."""
+
     ULTRA_HIGH = "ultra_high"
     HIGH = "high"
     NORMAL = "normal"
@@ -68,6 +73,7 @@ class ContentPriority(str, Enum):
 
 class ContentCategory(str, Enum):
     """Content categorization for business logic."""
+
     MUSIC_ORIGINAL = "music_original"
     MUSIC_COVER = "music_cover"
     MUSIC_REMIX = "music_remix"
@@ -99,7 +105,8 @@ class StateTransition:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure."""
+    """
+Content metadata structure."""
     title: str
     description: Optional[str] = None
     tags: List[str] = None
@@ -541,7 +548,8 @@ class ContentLifecycleConfig:
     @classmethod
     def can_transition(cls, current_status: ContentStatus, target_status: ContentStatus, 
                       user_permissions: Set[str], conditions: Dict[str, bool]) -> Tuple[bool, str]:
-        """Check if a state transition is valid."""
+        """
+Check if a state transition is valid."""
         valid_transitions = cls.get_valid_transitions(current_status)
         
         for transition in valid_transitions:
@@ -566,12 +574,14 @@ class ContentLifecycleConfig:
 
     @classmethod
     def get_category_rules(cls, category: ContentCategory) -> Dict:
-        """Get business rules for a specific content category."""
+        """
+Get business rules for a specific content category."""
         return cls.CATEGORY_RULES.get(category, {})
 
     @classmethod
     def is_status_expired(cls, status: ContentStatus, created_at: datetime) -> bool:
-        """Check if content in current status has exceeded time limits."""
+        """
+Check if content in current status has exceeded time limits."""
         config = cls.get_status_config(status)
         
         if "max_duration_days" in config and config["max_duration_days"] > 0:
@@ -591,7 +601,8 @@ class ContentLifecycleConfig:
 
     @classmethod
     def requires_review(cls, status: ContentStatus) -> bool:
-        """Check if status requires manual review."""
+        """
+Check if status requires manual review."""
         config = cls.get_status_config(status)
         return config.get("review_required", False)
 

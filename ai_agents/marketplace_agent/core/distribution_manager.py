@@ -4,8 +4,9 @@ Manages content distribution across multiple platforms and channels,
 orchestrating delivery, optimization, and performance tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -19,7 +20,9 @@ from .marketplace_agent import MarketplaceConfig, ContentType, PriceModel
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms."""
+    """
+Supported distribution platforms."""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -36,6 +39,7 @@ class DistributionPlatform(Enum):
 
 class DistributionStatus(Enum):
     """Content distribution status."""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -48,6 +52,7 @@ class DistributionStatus(Enum):
 
 class ContentOptimization(Enum):
     """Content optimization strategies."""
+
     AUTO_RESIZE = "auto_resize"
     QUALITY_ADAPTIVE = "quality_adaptive"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -71,7 +76,8 @@ class PlatformConfig:
 
 @dataclass
 class DistributionJob:
-    """Content distribution job."""
+    """
+Content distribution job."""
     id: str = ""
     content_id: str = ""
     creator_id: int = 0

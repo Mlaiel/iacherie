@@ -12,6 +12,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, List, Optional
 from sqlalchemy import text, create_engine
 from datetime import datetime
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class IndexDefinition:
-    """Definition for database index"""
+    """
+Definition for database index"""
     
     def __init__(
         self,
@@ -70,7 +72,8 @@ class PaymentIndexManager:
         self.indexes = self._define_payment_indexes()
     
     def _define_payment_indexes(self) -> List[IndexDefinition]:
-        """Define all payment processing indexes"""
+        """
+Define all payment processing indexes"""
         return [
             # Payment Transactions Indexes
             IndexDefinition(
@@ -592,6 +595,7 @@ def create_payment_indexes(engine) -> PaymentIndexManager:
 
 
 def setup_payment_indexes(engine) -> Dict[str, bool]:
-    """Setup all payment processing indexes"""
+    """
+Setup all payment processing indexes"""
     manager = PaymentIndexManager(engine)
     return manager.create_all_indexes()

@@ -4,8 +4,9 @@ Advanced audio quality assessment engine providing comprehensive quality metrics
 distortion analysis, dynamic range measurement, and professional standards compliance.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -19,7 +20,9 @@ from scipy import stats
 
 
 class QualityStandard(Enum):
-    """Audio quality standards"""
+    """
+Audio quality standards"""
+
     BROADCAST = "broadcast"
     MASTERING = "mastering"
     STREAMING = "streaming"
@@ -29,6 +32,7 @@ class QualityStandard(Enum):
 
 class QualityGrade(Enum):
     """Quality grades"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -55,7 +59,8 @@ class QualityMetrics:
 
 @dataclass
 class DistortionAnalysis:
-    """Distortion analysis results"""
+    """
+Distortion analysis results"""
     total_harmonic_distortion: float
     harmonic_distortion_spectrum: np.ndarray
     intermodulation_distortion: float
@@ -66,7 +71,8 @@ class DistortionAnalysis:
 
 @dataclass
 class QualityAssessmentResult:
-    """Complete quality assessment results"""
+    """
+Complete quality assessment results"""
     overall_grade: QualityGrade
     overall_score: float  # 0-100
     quality_metrics: QualityMetrics
@@ -287,7 +293,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute)
     
     async def _analyze_distortion(self, audio_data: np.ndarray) -> DistortionAnalysis:
-        """Analyze various types of distortion"""
+        """
+Analyze various types of distortion"""
         def analyze():
             # Convert to mono for analysis
             if audio_data.ndim == 2:
@@ -322,7 +329,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     def _compute_thd(self, audio_data: np.ndarray) -> Tuple[float, np.ndarray]:
-        """Compute total harmonic distortion"""
+        """
+Compute total harmonic distortion"""
         try:
             # FFT analysis
             fft_data = np.fft.fft(audio_data)
@@ -364,7 +372,8 @@ class AudioQualityAssessment:
         return float(clipping_percentage)
     
     def _detect_digital_artifacts(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Detect various digital artifacts"""
+        """
+Detect various digital artifacts"""
         artifacts = {}
         
         # Intersample peaks (simplified)
@@ -389,7 +398,8 @@ class AudioQualityAssessment:
         return artifacts
     
     def _detect_aliasing(self, audio_data: np.ndarray) -> float:
-        """Detect aliasing artifacts"""
+        """
+Detect aliasing artifacts"""
         # Simple aliasing detection based on high-frequency content
         fft_data = np.fft.fft(audio_data)
         magnitude = np.abs(fft_data[:len(fft_data)//2])
@@ -404,7 +414,8 @@ class AudioQualityAssessment:
         return float(aliasing_ratio)
     
     def _compute_imd(self, audio_data: np.ndarray) -> float:
-        """Compute intermodulation distortion (simplified)"""
+        """
+Compute intermodulation distortion (simplified)"""
         # This is a simplified IMD estimation
         # Real IMD would require injecting test tones
         
@@ -424,7 +435,8 @@ class AudioQualityAssessment:
         return float(imd_estimate * 100)  # Convert to percentage
     
     async def _analyze_loudness(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Analyze loudness metrics (LUFS, True Peak)"""
+        """
+Analyze loudness metrics (LUFS, True Peak)"""
         def analyze():
             loudness_metrics = {}
             
@@ -446,7 +458,8 @@ class AudioQualityAssessment:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     async def _analyze_frequency_response(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Analyze frequency response characteristics"""
+        """
+Analyze frequency response characteristics"""
         def analyze():
             freq_metrics = {}
             
@@ -486,7 +499,8 @@ class AudioQualityAssessment:
                         basic_metrics: Dict[str, float], 
                         loudness_metrics: Dict[str, float],
                         freq_metrics: Dict[str, float]) -> QualityMetrics:
-        """Combine all metrics into QualityMetrics object"""
+        """
+Combine all metrics into QualityMetrics object"""
         return QualityMetrics(
             snr=basic_metrics.get('snr', 0.0),
             thd=0.0,  # Will be filled from distortion analysis
@@ -503,7 +517,8 @@ class AudioQualityAssessment:
         )
     
     async def _assess_compliance(self, metrics: QualityMetrics) -> Dict[str, bool]:
-        """Assess compliance with quality standards"""
+        """
+Assess compliance with quality standards"""
         def assess():
             thresholds = self.quality_thresholds[self.quality_standard]
             
@@ -522,7 +537,8 @@ class AudioQualityAssessment:
     async def _generate_improvement_suggestions(self, 
                                               metrics: QualityMetrics, 
                                               distortion: DistortionAnalysis) -> List[str]:
-        """Generate improvement suggestions"""
+        """
+Generate improvement suggestions"""
         def generate():
             suggestions = []
             
@@ -639,7 +655,8 @@ class AudioQualityAssessment:
     async def _calculate_overall_quality(self, 
                                        metrics: QualityMetrics, 
                                        distortion: DistortionAnalysis) -> Tuple[float, QualityGrade]:
-        """Calculate overall quality score and grade"""
+        """
+Calculate overall quality score and grade"""
         def calculate():
             score_components = []
             

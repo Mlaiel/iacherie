@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import logging
@@ -26,7 +27,9 @@ from .performance_tracker import PerformanceTracker
 logger = logging.getLogger(__name__)
 
 class AnalyticsType(str, Enum):
-    """Available analytics types"""
+    """
+Available analytics types"""
+
     REVENUE = "revenue"
     CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_INTELLIGENCE = "audience_intelligence"
@@ -246,7 +249,8 @@ class AnalyticsFactory:
         return total_engagement / len(content_analytics)
     
     def _get_top_content_summary(self, content_analytics: List) -> List[Dict[str, Any]]:
-        """Get summary of top performing content"""
+        """
+Get summary of top performing content"""
         if not content_analytics:
             return []
         

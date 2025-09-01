@@ -5,7 +5,7 @@ Industrial-grade automated takedown and legal action orchestration.
 Handles DMCA notices, legal document generation, and enforcement campaigns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
@@ -13,6 +13,7 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from .platform_crawler import PlatformCrawler
 
 
 class TakedownStatus(Enum):
-    """Takedown request status"""
+    """
+Takedown request status"""
+
     PENDING = "pending"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
@@ -56,6 +59,7 @@ class TakedownStatus(Enum):
 
 class PlatformResponseType(Enum):
     """Platform response types"""
+
     AUTOMATED_REMOVAL = "automated_removal"
     MANUAL_REVIEW = "manual_review"
     COMPLIANCE_CONFIRMED = "compliance_confirmed"
@@ -67,6 +71,7 @@ class PlatformResponseType(Enum):
 
 class EscalationLevel(Enum):
     """Escalation levels for takedown campaigns"""
+
     INITIAL_NOTICE = "initial_notice"
     FOLLOW_UP = "follow_up"
     CEASE_DESIST = "cease_desist"
@@ -101,7 +106,8 @@ class TakedownRequest:
 
 @dataclass
 class PlatformResponse:
-    """Platform response to takedown request"""
+    """
+Platform response to takedown request"""
     response_id: str
     takedown_request_id: str
     platform: str
@@ -116,7 +122,8 @@ class PlatformResponse:
 
 @dataclass
 class EscalationCampaign:
-    """Escalation campaign for persistent violations"""
+    """
+Escalation campaign for persistent violations"""
     campaign_id: str
     violation_id: str
     current_level: EscalationLevel
@@ -626,7 +633,8 @@ class TakedownManager:
             return JurisdictionType.INTERNATIONAL
     
     def _calculate_response_deadline(self, platform: str, jurisdiction: JurisdictionType) -> datetime:
-        """Calculate response deadline based on platform and jurisdiction"""
+        """
+Calculate response deadline based on platform and jurisdiction"""
         platform_config = self.platform_configs.get(platform.lower(), {})
         jurisdiction_config = self.jurisdiction_requirements.get(jurisdiction, {})
         
@@ -638,7 +646,8 @@ class TakedownManager:
         return datetime.utcnow() + timedelta(hours=deadline_hours)
     
     def _generate_good_faith_statement(self) -> str:
-        """Generate good faith belief statement"""
+        """
+Generate good faith belief statement"""
         return ("I have a good faith belief that the use of the copyrighted material "
                 "described above is not authorized by the copyright owner, its agent, "
                 "or the law.")
@@ -809,7 +818,8 @@ class TakedownManager:
         return max(0.1, min(0.95, probability))  # Clamp between 10% and 95%
     
     async def _estimate_escalation_cost(self, violation_data: Dict, level: EscalationLevel) -> float:
-        """Estimate cost for escalation campaign"""
+        """
+Estimate cost for escalation campaign"""
         base_costs = {
             EscalationLevel.INITIAL_NOTICE: 0,
             EscalationLevel.FOLLOW_UP: 50,
@@ -822,7 +832,8 @@ class TakedownManager:
         return base_costs.get(level, 100)
     
     async def _generate_escalation_actions(self, violation_data: Dict, level: EscalationLevel) -> List[str]:
-        """Generate recommended escalation actions"""
+        """
+Generate recommended escalation actions"""
         actions = {
             EscalationLevel.INITIAL_NOTICE: [
                 "send_formal_dmca_notice",
@@ -1061,6 +1072,7 @@ from redis import Redis
 
 class TakedownType(Enum):
     """Takedown request types"""
+
     DMCA = "dmca"
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
@@ -1071,6 +1083,7 @@ class TakedownType(Enum):
 
 class TakedownStatus(Enum):
     """Takedown request status"""
+
     PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -1083,6 +1096,7 @@ class TakedownStatus(Enum):
 
 class PlatformTakedownMethod(Enum):
     """Platform takedown methods"""
+
     API_REQUEST = "api_request"
     WEB_FORM = "web_form"
     EMAIL_SUBMISSION = "email_submission"
@@ -1111,7 +1125,8 @@ class TakedownRequest:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice"""
+    """
+DMCA takedown notice"""
     notice_id: str
     takedown_request_id: str
     claimant_name: str
@@ -1129,7 +1144,8 @@ class DMCANotice:
 
 @dataclass
 class TakedownResponse:
-    """Platform takedown response"""
+    """
+Platform takedown response"""
     response_id: str
     takedown_request_id: str
     platform: str
@@ -1143,7 +1159,8 @@ class TakedownResponse:
 
 @dataclass
 class TakedownResult:
-    """Takedown operation result"""
+    """
+Takedown operation result"""
     result_id: str
     takedown_request_id: str
     success: bool
@@ -1565,21 +1582,25 @@ class TakedownManager:
         return True
     
     async def _store_takedown_request(self, request: TakedownRequest):
-        """Store takedown request in database"""
+        """
+Store takedown request in database"""
         # Implementation would store request in database
         pass
     
     async def _generate_dmca_notice(self, request: TakedownRequest, claimant_data: Dict) -> str:
-        """Generate DMCA notice for request"""
+        """
+Generate DMCA notice for request"""
         return await self.generate_dmca_notice(request, claimant_data)
     
     async def _generate_copyright_claim(self, request: TakedownRequest, claimant_data: Dict) -> str:
-        """Generate copyright claim for request"""
+        """
+Generate copyright claim for request"""
         # Implementation would generate copyright claim
         return str(uuid.uuid4())
     
     async def _submit_to_platform(self, request: TakedownRequest) -> Dict[str, Any]:
-        """Submit takedown request to platform"""
+        """
+Submit takedown request to platform"""
         platform_config = self.platform_configs.get(request.platform, {})
         
         if platform_config.get('method') == PlatformTakedownMethod.API_REQUEST:
@@ -1588,7 +1609,8 @@ class TakedownManager:
             return await self._submit_via_form(request, platform_config)
     
     async def _submit_via_api(self, request: TakedownRequest, config: Dict) -> Dict[str, Any]:
-        """Submit takedown via API"""
+        """
+Submit takedown via API"""
         # Implementation would submit via platform API
         return {'status': 'submitted', 'reference': f"API_{request.request_id[:8]}"}
     
@@ -1603,7 +1625,8 @@ class TakedownManager:
         pass
     
     async def _schedule_takedown_monitoring(self, request: TakedownRequest):
-        """Schedule monitoring for takedown request"""
+        """
+Schedule monitoring for takedown request"""
         monitoring_data = {
             'request_id': request.request_id,
             'platform': request.platform,
@@ -1638,7 +1661,8 @@ class TakedownManager:
     
     def _generate_basic_dmca_notice(self, notice: DMCANotice) -> str:
         """Generate basic DMCA notice without template"""
-        return f"""DMCA Takedown Notice
+        return f"""
+DMCA Takedown Notice
 
 To: Platform Copyright Team
 From: {notice.claimant_name} ({notice.claimant_email})
@@ -1658,7 +1682,8 @@ Address: {notice.claimant_address}
 """
     
     def _generate_good_faith_statement(self) -> str:
-        """Generate standard good faith statement"""
+        """
+Generate standard good faith statement"""
         return ("I have a good faith belief that use of the copyrighted materials described above "
                 "on the infringing web pages is not authorized by the copyright owner, or its agent, "
                 "or the law.")
@@ -1675,7 +1700,8 @@ Address: {notice.claimant_address}
         pass
     
     async def _store_notice_hash(self, notice_id: str, notice_hash: str):
-        """Store notice hash for integrity verification"""
+        """
+Store notice hash for integrity verification"""
         hash_key = f"notice_hash:{notice_id}"
         await self.redis.setex(hash_key, 86400 * 365, notice_hash)  # 1 year
     
@@ -1685,43 +1711,51 @@ Address: {notice.claimant_address}
         return None
     
     async def _get_latest_platform_response(self, request_id: str) -> Optional[TakedownResponse]:
-        """Get latest platform response for request"""
+        """
+Get latest platform response for request"""
         # Implementation would query latest response
         return None
     
     async def _get_takedown_result(self, request_id: str) -> Optional[TakedownResult]:
-        """Get takedown result if completed"""
+        """
+Get takedown result if completed"""
         # Implementation would query takedown result
         return None
     
     async def _check_follow_up_needed(self, request: TakedownRequest) -> bool:
-        """Check if manual follow-up is needed"""
+        """
+Check if manual follow-up is needed"""
         # Implementation would check various conditions
         return False
     
     async def _store_platform_response(self, response: TakedownResponse):
-        """Store platform response in database"""
+        """
+Store platform response in database"""
         # Implementation would store response
         pass
     
     async def _update_takedown_status_from_response(self, response: TakedownResponse):
-        """Update takedown status based on platform response"""
+        """
+Update takedown status based on platform response"""
         # Implementation would update status based on response
         pass
     
     async def _verify_takedown_completion(self, response: TakedownResponse):
-        """Verify that takedown was actually completed"""
+        """
+Verify that takedown was actually completed"""
         # Implementation would verify content removal
         pass
     
     async def _send_status_notifications(self, response: TakedownResponse):
-        """Send status update notifications"""
+        """
+Send status update notifications"""
         # Implementation would send notifications
         pass
     
     async def _get_takedown_statistics(self, user_id: str, start_date: datetime, 
                                      end_date: datetime) -> Dict[str, Any]:
-        """Get takedown statistics for period"""
+        """
+Get takedown statistics for period"""
         # Implementation would calculate statistics
         return {
             'total_requests': 25,
@@ -1733,7 +1767,8 @@ Address: {notice.claimant_address}
     
     async def _get_platform_breakdown(self, user_id: str, start_date: datetime,
                                     end_date: datetime) -> Dict[str, Any]:
-        """Get platform breakdown statistics"""
+        """
+Get platform breakdown statistics"""
         # Implementation would calculate platform breakdown
         return {
             'youtube': {'total': 10, 'success': 8},
@@ -1744,7 +1779,8 @@ Address: {notice.claimant_address}
     
     async def _calculate_success_rates(self, user_id: str, start_date: datetime,
                                      end_date: datetime) -> Dict[str, float]:
-        """Calculate success rates by platform"""
+        """
+Calculate success rates by platform"""
         # Implementation would calculate success rates
         return {
             'overall': 0.80,
@@ -1755,16 +1791,19 @@ Address: {notice.claimant_address}
         }
     
     async def _get_pending_requests(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get pending takedown requests for user"""
+        """
+Get pending takedown requests for user"""
         # Implementation would query pending requests
         return []
     
     async def _store_escalation_record(self, escalation_data: Dict[str, Any]):
-        """Store escalation record"""
+        """
+Store escalation record"""
         # Implementation would store escalation
         pass
     
     async def _send_escalation_notifications(self, request: TakedownRequest, reason: str):
-        """Send escalation notifications"""
+        """
+Send escalation notifications"""
         # Implementation would send notifications
         pass

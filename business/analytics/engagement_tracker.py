@@ -7,6 +7,7 @@ and engagement optimization for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class EngagementType(Enum):
-    """Types of engagement interactions"""
+    """
+Types of engagement interactions"""
+
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
@@ -55,7 +58,8 @@ class EngagementTrackingSystem:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize engagement tracking system"""
+        """
+Initialize engagement tracking system"""
         try:
             await self._setup_database_tables()
             logger.info("Engagement Tracking System initialized successfully")
@@ -85,7 +89,8 @@ class EngagementTrackingSystem:
             """)
 
     async def track_engagement(self, event: EngagementEvent) -> None:
-        """Track a real-time engagement event"""
+        """
+Track a real-time engagement event"""
         try:
             # Store in database
             await self._store_engagement_event(event)

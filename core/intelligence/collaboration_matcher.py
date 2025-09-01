@@ -7,10 +7,11 @@ based on audience compatibility, content synergy, and mutual growth potential.
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel - All rights reserved
+Copyright (c) 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -37,7 +38,9 @@ from ..cache.redis_cache import RedisCache
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PRODUCT = "joint_product"
@@ -50,6 +53,7 @@ class CollaborationType(Enum):
 
 class CompatibilityFactor(Enum):
     """Factors for collaboration compatibility"""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_SYNERGY = "content_synergy"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
@@ -86,7 +90,8 @@ class CollaborationMatch:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for matching"""
+    """
+Creator profile for matching"""
     creator_id: str
     name: str
     platform_handles: Dict[str, str]
@@ -107,7 +112,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity details"""
+    """
+Collaboration opportunity details"""
     opportunity_id: str
     collaboration_type: CollaborationType
     title: str
@@ -136,7 +142,8 @@ class CollaborationMatcher:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize collaboration matcher"""
+        """
+Initialize collaboration matcher"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -163,7 +170,8 @@ class CollaborationMatcher:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for collaboration matching"""
+        """
+Initialize ML models for collaboration matching"""
         try:
             # Creator embedding model
             self.creator_embedder = AutoModel.from_pretrained(
@@ -770,7 +778,8 @@ class CollaborationMatcher:
         creator_b: CreatorProfile,
         compatibility_score: float
     ) -> List[float]:
-        """Extract features for ML models"""
+        """
+Extract features for ML models"""
         features = []
         
         # Compatibility score
@@ -809,7 +818,8 @@ class CollaborationMatcher:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> CollaborationType:
-        """Suggest optimal collaboration type"""
+        """
+Suggest optimal collaboration type"""
         try:
             # Analyze creator profiles to suggest best collaboration type
             content_overlap = len(set(creator_a.content_categories) & set(creator_b.content_categories))
@@ -1142,7 +1152,8 @@ class CollaborationMatcher:
         return overlap
     
     def _calculate_gender_compatibility(self, gender_a: Dict[str, float], gender_b: Dict[str, float]) -> float:
-        """Calculate gender distribution compatibility"""
+        """
+Calculate gender distribution compatibility"""
         # For gender, we want similar distributions rather than exact overlap
         if not gender_a or not gender_b:
             return 0.5
@@ -1156,7 +1167,8 @@ class CollaborationMatcher:
         return similarity
     
     def _calculate_frequency_compatibility(self, freq_a: float, freq_b: float) -> float:
-        """Calculate posting frequency compatibility"""
+        """
+Calculate posting frequency compatibility"""
         if freq_a == 0 or freq_b == 0:
             return 0.3
         
@@ -1165,7 +1177,8 @@ class CollaborationMatcher:
         return ratio
     
     def _calculate_response_compatibility(self, response_a: float, response_b: float) -> float:
-        """Calculate audience response compatibility"""
+        """
+Calculate audience response compatibility"""
         # Similar response rates indicate compatible audiences
         if response_a == 0 or response_b == 0:
             return 0.3
@@ -1174,7 +1187,8 @@ class CollaborationMatcher:
         return similarity
     
     def _calculate_style_compatibility(self, style_a: str, style_b: str) -> float:
-        """Calculate content style compatibility"""
+        """
+Calculate content style compatibility"""
         # Define style compatibility matrix
         style_matrix = {
             'professional': {'professional': 1.0, 'creative': 0.7, 'casual': 0.5, 'humorous': 0.6},
@@ -1186,7 +1200,8 @@ class CollaborationMatcher:
         return style_matrix.get(style_a, {}).get(style_b, 0.5)
     
     async def _get_compatible_categories(self, categories: List[str]) -> List[str]:
-        """Get compatible content categories"""
+        """
+Get compatible content categories"""
         # Define category compatibility mapping
         category_compatibility = {
             'music': ['entertainment', 'lifestyle', 'dance', 'art'],
@@ -1206,7 +1221,8 @@ class CollaborationMatcher:
         return list(compatible)
     
     async def _search_creators(self, criteria: Dict[str, Any]) -> List[CreatorProfile]:
-        """Search for creators based on criteria"""
+        """
+Search for creators based on criteria"""
         # This would query your creator database
         # For now, return mock data
         return []
@@ -1216,7 +1232,8 @@ class CollaborationMatcher:
         creator_id: str,
         candidates: List[CreatorProfile]
     ) -> List[CreatorProfile]:
-        """Filter out creators with recent collaborations"""
+        """
+Filter out creators with recent collaborations"""
         # Check collaboration history and filter recent ones
         filtered = []
         
@@ -1234,7 +1251,8 @@ class CollaborationMatcher:
         return filtered
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Get creator profile from storage"""
+        """
+Get creator profile from storage"""
         try:
             # Try cache first
             cache_key = f"creator_profile:{creator_id}"
@@ -1294,7 +1312,8 @@ class CollaborationMatcher:
         }
     
     def _generate_id(self) -> str:
-        """Generate unique match ID"""
+        """
+Generate unique match ID"""
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
@@ -1307,7 +1326,8 @@ class CreatorMatchingEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize creator matching engine"""
+        """
+Initialize creator matching engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -1318,7 +1338,8 @@ class CreatorMatchingEngine:
         self._initialize_matching_models()
     
     def _initialize_matching_models(self):
-        """Initialize ML models for enhanced matching"""
+        """
+Initialize ML models for enhanced matching"""
         try:
             # Advanced matching neural network
             class AdvancedMatchingModel(nn.Module):

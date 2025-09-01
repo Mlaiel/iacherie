@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -41,7 +42,9 @@ TRAFFIC_PRIORITY_DISTRIBUTION = Gauge('traffic_priority_distribution', 'Traffic 
 
 
 class TrafficPriority(Enum):
-    """Traffic priority levels for QoS management"""
+    """
+Traffic priority levels for QoS management"""
+
     CRITICAL = 1      # Real-time AI agent responses, payment processing
     HIGH = 2          # Fingerprinting uploads, protection alerts
     MEDIUM = 3        # Content analysis, routine API calls
@@ -50,7 +53,9 @@ class TrafficPriority(Enum):
 
 
 class TrafficAction(Enum):
-    """Traffic shaping actions"""
+    """
+Traffic shaping actions"""
+
     ALLOW = "allow"
     THROTTLE = "throttle"
     DELAY = "delay"
@@ -61,6 +66,7 @@ class TrafficAction(Enum):
 
 class BandwidthDirection(Enum):
     """Bandwidth direction"""
+
     INGRESS = "ingress"
     EGRESS = "egress"
     BIDIRECTIONAL = "bidirectional"
@@ -128,7 +134,8 @@ class TrafficFlow:
 
 @dataclass
 class BandwidthPool:
-    """Bandwidth resource pool for traffic classes"""
+    """
+Bandwidth resource pool for traffic classes"""
     name: str
     total_bandwidth_mbps: float
     allocated_bandwidth_mbps: float = 0.0
@@ -152,7 +159,8 @@ class BandwidthPool:
 
 @dataclass
 class ShapingPolicy:
-    """Traffic shaping policy configuration"""
+    """
+Traffic shaping policy configuration"""
     name: str
     description: str
     enabled: bool = True

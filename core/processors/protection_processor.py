@@ -23,6 +23,7 @@ Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import hashlib
@@ -88,7 +89,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentProtectionType(str, Enum):
-    """Types of content protection"""
+    """
+Types of content protection"""
+
     FINGERPRINTING = "fingerprinting"
     COPYRIGHT_DETECTION = "copyright_detection"
     PLAGIARISM_CHECK = "plagiarism_check"
@@ -100,6 +103,7 @@ class ContentProtectionType(str, Enum):
 
 class FingerprintType(str, Enum):
     """Types of fingerprints"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_PERCEPTUAL = "video_perceptual"
@@ -112,6 +116,7 @@ class FingerprintType(str, Enum):
 
 class ProtectionStatus(str, Enum):
     """Protection status levels"""
+
     UNPROTECTED = "unprotected"
     PROCESSING = "processing"
     PROTECTED = "protected"
@@ -124,6 +129,7 @@ class ProtectionStatus(str, Enum):
 
 class SimilarityThreshold(str, Enum):
     """Similarity thresholds for matching"""
+
     EXACT = "exact"          # 95%+ similarity
     HIGH = "high"            # 85%+ similarity
     MEDIUM = "medium"        # 70%+ similarity
@@ -195,7 +201,8 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionAlert:
-    """Represents a protection violation alert"""
+    """
+Represents a protection violation alert"""
     alert_id: str
     original_fingerprint_id: str
     detected_url: str
@@ -226,7 +233,8 @@ class ProtectionResult:
 
 
 class AudioFingerprintEngine:
-    """AI-powered audio fingerprinting engine"""
+    """
+AI-powered audio fingerprinting engine"""
     
     def __init__(self, config: ProtectionConfig):
         self.config = config
@@ -421,7 +429,8 @@ class AudioFingerprintEngine:
         return 0.0
     
     def _compare_spectral_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Compare spectral feature vectors"""
+        """
+Compare spectral feature vectors"""
         if features1.size == 0 or features2.size == 0:
             return 0.0
         
@@ -433,7 +442,8 @@ class AudioFingerprintEngine:
 
 
 class VideoFingerprintEngine:
-    """AI-powered video fingerprinting engine"""
+    """
+AI-powered video fingerprinting engine"""
     
     def __init__(self, config: ProtectionConfig):
         self.config = config
@@ -521,7 +531,8 @@ class VideoFingerprintEngine:
         return frames
     
     def _create_frame_hash(self, frame: np.ndarray) -> str:
-        """Create hash for individual frame"""
+        """
+Create hash for individual frame"""
         # Convert to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
@@ -532,7 +543,8 @@ class VideoFingerprintEngine:
         return hashlib.md5(resized.tobytes()).hexdigest()
     
     def _create_perceptual_hash(self, frames: List[np.ndarray]) -> str:
-        """Create perceptual hash from multiple frames"""
+        """
+Create perceptual hash from multiple frames"""
         if not frames:
             return ""
         
@@ -591,7 +603,8 @@ class VideoFingerprintEngine:
         frames: List[np.ndarray],
         motion_features: np.ndarray
     ) -> np.ndarray:
-        """Create comprehensive video embedding"""
+        """
+Create comprehensive video embedding"""
         try:
             embedding_parts = []
             
@@ -835,7 +848,8 @@ class TextFingerprintEngine:
         return hashlib.sha256(structure_string.encode()).hexdigest()
     
     def _create_semantic_hash(self, text: str) -> str:
-        """Create hash based on semantic content"""
+        """
+Create hash based on semantic content"""
         # Extract key semantic elements
         words = text.lower().split()
         
@@ -850,7 +864,8 @@ class TextFingerprintEngine:
         return hashlib.sha256(semantic_string.encode()).hexdigest()
     
     def _create_ngram_hash(self, text: str, n: int = 3) -> str:
-        """Create hash based on n-grams"""
+        """
+Create hash based on n-grams"""
         words = text.lower().split()
         ngrams = []
         
@@ -866,7 +881,8 @@ class TextFingerprintEngine:
         return hashlib.sha256(ngram_string.encode()).hexdigest()
     
     def _create_text_embedding(self, text: str) -> np.ndarray:
-        """Create text embedding using TF-IDF and statistics"""
+        """
+Create text embedding using TF-IDF and statistics"""
         try:
             # TF-IDF features
             tfidf_matrix = self.vectorizer.fit_transform([text])
@@ -1311,7 +1327,8 @@ class ProtectionProcessor:
         fingerprint: ContentFingerprint
     ) -> str:
         """Generate DMCA notice text"""
-        return f"""DMCA Takedown Notice
+        return f"""
+DMCA Takedown Notice
 
 To: {alert.platform}
 From: Copyright Owner (User ID: {fingerprint.user_id})
@@ -1331,7 +1348,8 @@ Date: {alert.created_at.isoformat()}
 """
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on protection system"""
+        """
+Perform health check on protection system"""
         try:
             health_status = {
                 "status": "healthy",
@@ -1383,7 +1401,8 @@ Date: {alert.created_at.isoformat()}
             return False
     
     async def _test_database_connection(self) -> bool:
-        """Test database connection"""
+        """
+Test database connection"""
         try:
             # Would test actual database connection
             return True

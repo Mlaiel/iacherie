@@ -27,6 +27,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -62,7 +63,9 @@ from .exceptions import OptimizationError, UnsupportedPlatformError, AlgorithmEr
 
 
 class Platform(str, Enum):
-    """Comprehensive social media and streaming platforms with advanced support"""
+    """
+Comprehensive social media and streaming platforms with advanced support"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -87,6 +90,7 @@ class Platform(str, Enum):
 
 class ContentFormat(str, Enum):
     """Comprehensive content formats for all platforms and creator types"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -112,6 +116,7 @@ class ContentFormat(str, Enum):
 
 class CreatorType(str, Enum):
     """Creator types for specialized platform optimization"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -132,6 +137,7 @@ class CreatorType(str, Enum):
 
 class OptimizationStrategy(str, Enum):
     """Advanced optimization strategies"""
+
     VIRAL_MAXIMIZATION = "viral_maximization"
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"
     REVENUE_OPTIMIZATION = "revenue_optimization"
@@ -173,7 +179,8 @@ class PlatformSpecs:
 
 @dataclass
 class EngagementPrediction:
-    """Advanced engagement prediction with AI analysis"""
+    """
+Advanced engagement prediction with AI analysis"""
     views_prediction: float
     likes_prediction: float
     comments_prediction: float
@@ -190,7 +197,8 @@ class EngagementPrediction:
 
 @dataclass
 class SEOOptimization:
-    """Comprehensive SEO optimization results"""
+    """
+Comprehensive SEO optimization results"""
     optimized_title: str
     optimized_description: str
     hashtags: List[str]
@@ -205,7 +213,8 @@ class SEOOptimization:
 
 @dataclass
 class OptimizationRequest:
-    """Enterprise-grade platform optimization request with comprehensive configuration"""
+    """
+Enterprise-grade platform optimization request with comprehensive configuration"""
     content_id: str
     creator_id: str
     creator_type: CreatorType
@@ -606,7 +615,8 @@ class PlatformOptimizer:
         self,
         request: OptimizationRequest
     ) -> None:
-        """Validate that platform and format are supported"""
+        """
+Validate that platform and format are supported"""
         if request.target_platform not in self.platform_specs:
             raise UnsupportedPlatformError(
                 f"Platform not supported: {request.target_platform}"
@@ -644,7 +654,8 @@ class PlatformOptimizer:
         platform_specs: PlatformSpecs,
         content_format: ContentFormat
     ) -> Dict[str, Any]:
-        """Analyze content compatibility with platform requirements"""
+        """
+Analyze content compatibility with platform requirements"""
         compatibility_issues = []
         compatibility_score = 1.0
         
@@ -691,7 +702,8 @@ class PlatformOptimizer:
         strategy: Dict[str, Any],
         platform_specs: PlatformSpecs
     ) -> Dict[str, Any]:
-        """Apply technical optimizations to content"""
+        """
+Apply technical optimizations to content"""
         optimized_content = content.copy()
         
         # Apply technical optimizations based on strategy
@@ -711,7 +723,8 @@ class PlatformOptimizer:
         request: OptimizationRequest,
         platform_specs: PlatformSpecs
     ) -> Dict[str, Any]:
-        """Generate SEO-optimized metadata for platform"""
+        """
+Generate SEO-optimized metadata for platform"""
         template = self.seo_templates.get(request.target_platform, {})
         
         return {
@@ -728,7 +741,8 @@ class PlatformOptimizer:
         platform: Platform,
         seo_metadata: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Predict engagement performance using ML models"""
+        """
+Predict engagement performance using ML models"""
         # Simplified prediction logic
         # In production, this would use trained ML models
         return await self.predict_performance(content, platform)
@@ -739,7 +753,8 @@ class PlatformOptimizer:
         platform_specs: PlatformSpecs,
         content_format: ContentFormat
     ) -> float:
-        """Validate content compliance with platform policies"""
+        """
+Validate content compliance with platform policies"""
         compliance_score = 1.0
         
         # Check technical compliance
@@ -760,7 +775,8 @@ class PlatformOptimizer:
         engagement_predictions: Dict[str, float],
         compliance_score: float
     ) -> float:
-        """Calculate overall optimization score"""
+        """
+Calculate overall optimization score"""
         compatibility_weight = 0.3
         engagement_weight = 0.4
         compliance_weight = 0.3
@@ -777,7 +793,8 @@ class PlatformOptimizer:
         predictions: Dict[str, float],
         compliance_score: float
     ) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = []
         
         if predictions['overall_performance_score'] < 0.7:
@@ -852,7 +869,8 @@ class PlatformOptimizer:
         }
     
     def _load_algorithm_insights(self) -> Dict[Platform, Dict[str, Any]]:
-        """Load platform algorithm insights and preferences"""
+        """
+Load platform algorithm insights and preferences"""
         return {
             Platform.YOUTUBE: {
                 'favors': ['watch_time', 'click_through_rate', 'engagement'],
@@ -872,7 +890,8 @@ class PlatformOptimizer:
         }
     
     def _load_seo_templates(self) -> Dict[Platform, Dict[str, Any]]:
-        """Load SEO templates for different platforms"""
+        """
+Load SEO templates for different platforms"""
         return {
             Platform.YOUTUBE: {
                 'title_length': 60,
@@ -896,7 +915,8 @@ class PlatformOptimizer:
         platform: Platform,
         content_format: ContentFormat
     ) -> List[str]:
-        """Get platform-specific best practices"""
+        """
+Get platform-specific best practices"""
         practices = {
             Platform.YOUTUBE: [
                 "Create compelling thumbnails",
@@ -924,7 +944,8 @@ class PlatformOptimizer:
         return self.seo_templates.get(platform, {})
     
     async def _get_engagement_factors(self, platform: Platform) -> List[str]:
-        """Get engagement factors for platform"""
+        """
+Get engagement factors for platform"""
         return self.algorithm_insights.get(platform, {}).get('favors', [])
     
     async def _identify_required_optimizations(
@@ -932,7 +953,8 @@ class PlatformOptimizer:
         content: Dict[str, Any],
         platform_specs: PlatformSpecs
     ) -> List[str]:
-        """Identify required technical optimizations"""
+        """
+Identify required technical optimizations"""
         optimizations = []
         
         if content.get('size', 0) > platform_specs.max_file_size:
@@ -951,7 +973,8 @@ class PlatformOptimizer:
         content: Dict[str, Any],
         platform: Platform
     ) -> str:
-        """Generate SEO-optimized title for platform"""
+        """
+Generate SEO-optimized title for platform"""
         # Simplified title generation
         base_title = content.get('title', 'Untitled Content')
         template = self.seo_templates.get(platform, {})
@@ -964,7 +987,8 @@ class PlatformOptimizer:
         content: Dict[str, Any],
         platform: Platform
     ) -> str:
-        """Generate SEO-optimized description for platform"""
+        """
+Generate SEO-optimized description for platform"""
         # Simplified description generation
         return content.get('description', 'Generated description for optimized content')
     
@@ -973,7 +997,8 @@ class PlatformOptimizer:
         content: Dict[str, Any],
         platform: Platform
     ) -> List[str]:
-        """Generate relevant hashtags for platform"""
+        """
+Generate relevant hashtags for platform"""
         # Simplified hashtag generation
         return ['#content', '#creator', '#viral', '#trending']
     
@@ -982,7 +1007,8 @@ class PlatformOptimizer:
         content: Dict[str, Any],
         platform: Platform
     ) -> Dict[str, Any]:
-        """Optimize thumbnail for platform"""
+        """
+Optimize thumbnail for platform"""
         return {
             'optimized': True,
             'dimensions': self.platform_specs[platform].recommended_resolution,
@@ -994,7 +1020,8 @@ class PlatformOptimizer:
         content: Dict[str, Any],
         platform: Platform
     ) -> str:
-        """Suggest optimal category for content"""
+        """
+Suggest optimal category for content"""
         return content.get('category', 'Entertainment')
     
     async def _store_optimization_results(
@@ -1004,6 +1031,7 @@ class PlatformOptimizer:
         seo_metadata: Dict[str, Any],
         session: AsyncSession
     ) -> None:
-        """Store optimization results in database"""
+        """
+Store optimization results in database"""
         # Implementation would store in database
         pass

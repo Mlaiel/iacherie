@@ -19,7 +19,9 @@ from pathlib import Path
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -28,6 +30,7 @@ class DeploymentEnvironment(Enum):
 
 class OptimizationLevel(Enum):
     """Model optimization levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     ULTRA = "ultra"

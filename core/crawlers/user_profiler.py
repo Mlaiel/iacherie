@@ -4,6 +4,7 @@ AI-Powered User Behavior Analysis and Profiling System
 This module provides comprehensive user profiling capabilities including
 behavioral analysis, interest prediction, demographic inference, and personalization insights.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class UserType(str, Enum):
-    """Types of user profiles"""
+    """
+Types of user profiles"""
+
     CONSUMER = "consumer"
     CREATOR = "creator"
     INFLUENCER = "influencer"
@@ -44,6 +47,7 @@ class UserType(str, Enum):
 
 class EngagementPattern(str, Enum):
     """User engagement patterns"""
+
     PASSIVE = "passive"
     ACTIVE = "active"
     HIGHLY_ACTIVE = "highly_active"
@@ -56,6 +60,7 @@ class EngagementPattern(str, Enum):
 
 class PersonalityTrait(str, Enum):
     """Personality traits for analysis"""
+
     OPENNESS = "openness"
     CONSCIENTIOUSNESS = "conscientiousness"
     EXTRAVERSION = "extraversion"
@@ -68,6 +73,7 @@ class PersonalityTrait(str, Enum):
 
 class InterestCategory(str, Enum):
     """Categories of user interests"""
+
     TECHNOLOGY = "technology"
     ENTERTAINMENT = "entertainment"
     SPORTS = "sports"
@@ -166,7 +172,8 @@ class BehaviorMetrics(BaseModel):
 
 
 class InterestProfile(BaseModel):
-    """User interest and preference profile"""
+    """
+User interest and preference profile"""
     primary_interests: List[Tuple[InterestCategory, float]] = Field(default_factory=list)
     secondary_interests: List[Tuple[InterestCategory, float]] = Field(default_factory=list)
     
@@ -187,7 +194,8 @@ class InterestProfile(BaseModel):
 
 
 class PersonalityProfile(BaseModel):
-    """User personality analysis"""
+    """
+User personality analysis"""
     big_five_scores: Dict[PersonalityTrait, float] = Field(default_factory=dict)
     
     # Communication style
@@ -232,7 +240,8 @@ class SocialNetworkProfile(BaseModel):
 
 
 class UserProfile(BaseModel):
-    """Comprehensive user profile"""
+    """
+Comprehensive user profile"""
     profile_id: str
     user_id: str
     username: str
@@ -671,7 +680,8 @@ class AdvancedUserProfiler(BaseCrawler):
             profile.demographic_profile.age_range = data['age_range']
 
     async def _analyze_behavioral_patterns(self, profile: UserProfile, activity_data: List[Dict[str, Any]]):
-        """Analyze user behavioral patterns"""
+        """
+Analyze user behavioral patterns"""
         if not activity_data:
             return
         
@@ -710,7 +720,8 @@ class AdvancedUserProfiler(BaseCrawler):
             profile.behavior_metrics.avg_engagement_rate = min(avg_engagement / 100.0, 1.0)
 
     async def _analyze_user_interests(self, profile: UserProfile, activity_data: List[Dict[str, Any]]):
-        """Analyze user interests from activity data"""
+        """
+Analyze user interests from activity data"""
         # Extract keywords and topics from content
         content_texts = []
         for activity in activity_data:
@@ -746,7 +757,8 @@ class AdvancedUserProfiler(BaseCrawler):
         profile.interest_profile.secondary_interests = interest_scores[3:8]
 
     async def _infer_demographics(self, profile: UserProfile, activity_data: List[Dict[str, Any]]):
-        """Infer demographic information from user data"""
+        """
+Infer demographic information from user data"""
         # Simplified demographic inference (would use ML models)
         
         # Analyze language patterns for age inference
@@ -799,7 +811,8 @@ class AdvancedUserProfiler(BaseCrawler):
         profile.personality_profile.personality_confidence = 0.7
 
     async def _analyze_social_network(self, profile: UserProfile, activity_data: List[Dict[str, Any]]):
-        """Analyze social network patterns"""
+        """
+Analyze social network patterns"""
         # Extract interaction data
         mentions = []
         replies = []
@@ -831,7 +844,8 @@ class AdvancedUserProfiler(BaseCrawler):
             }
 
     async def _update_profile_classifications(self, profile: UserProfile):
-        """Update profile type and engagement pattern classifications"""
+        """
+Update profile type and engagement pattern classifications"""
         # Determine user type based on behavior metrics
         if profile.behavior_metrics.total_posts > 100:
             if profile.behavior_metrics.avg_engagement_rate > 0.1:
@@ -854,7 +868,8 @@ class AdvancedUserProfiler(BaseCrawler):
             profile.engagement_pattern = EngagementPattern.PASSIVE
 
     async def _generate_profile_insights(self, profile: UserProfile):
-        """Generate insights and recommendations for profile"""
+        """
+Generate insights and recommendations for profile"""
         insights = []
         recommendations = []
         
@@ -923,7 +938,8 @@ class AdvancedUserProfiler(BaseCrawler):
         }
 
     async def _detect_profile_changes(self, old_profile: UserProfile, new_profile: UserProfile) -> List[Dict[str, Any]]:
-        """Detect significant changes in profile"""
+        """
+Detect significant changes in profile"""
         changes = []
         
         # Check user type change
@@ -961,7 +977,8 @@ class AdvancedUserProfiler(BaseCrawler):
     # Additional helper methods for recommendations and comparisons...
     
     async def _generate_content_recommendations(self, profile: UserProfile) -> List[Dict[str, Any]]:
-        """Generate content recommendations based on profile"""
+        """
+Generate content recommendations based on profile"""
         recommendations = []
         
         # Based on interests
@@ -990,12 +1007,14 @@ class AdvancedUserProfiler(BaseCrawler):
         return []
 
     async def _generate_product_recommendations(self, profile: UserProfile) -> List[Dict[str, Any]]:
-        """Generate product recommendations"""
+        """
+Generate product recommendations"""
         # Simplified product recommendations
         return []
 
     async def _calculate_demographic_similarity(self, demo1: DemographicProfile, demo2: DemographicProfile) -> float:
-        """Calculate demographic similarity"""
+        """
+Calculate demographic similarity"""
         similarities = []
         
         if demo1.age_range and demo2.age_range:
@@ -1007,7 +1026,8 @@ class AdvancedUserProfiler(BaseCrawler):
         return np.mean(similarities) if similarities else 0.0
 
     async def _calculate_interest_similarity(self, interest1: InterestProfile, interest2: InterestProfile) -> float:
-        """Calculate interest similarity"""
+        """
+Calculate interest similarity"""
         interests1 = {interest[0] for interest in interest1.primary_interests}
         interests2 = {interest[0] for interest in interest2.primary_interests}
         
@@ -1020,7 +1040,8 @@ class AdvancedUserProfiler(BaseCrawler):
         return len(intersection) / len(union) if union else 0.0
 
     async def _calculate_personality_similarity(self, pers1: PersonalityProfile, pers2: PersonalityProfile) -> float:
-        """Calculate personality similarity"""
+        """
+Calculate personality similarity"""
         if not pers1.big_five_scores or not pers2.big_five_scores:
             return 0.0
         
@@ -1039,7 +1060,8 @@ class AdvancedUserProfiler(BaseCrawler):
         return np.mean(similarities)
 
     async def _calculate_behavior_similarity(self, behavior1: BehaviorMetrics, behavior2: BehaviorMetrics) -> float:
-        """Calculate behavior similarity"""
+        """
+Calculate behavior similarity"""
         # Simplified behavior similarity calculation
         similarities = []
         
@@ -1056,14 +1078,16 @@ class AdvancedUserProfiler(BaseCrawler):
         return np.mean(similarities) if similarities else 0.0
 
     async def _find_shared_interests(self, profile1: UserProfile, profile2: UserProfile) -> List[str]:
-        """Find shared interests between profiles"""
+        """
+Find shared interests between profiles"""
         interests1 = {interest[0].value for interest in profile1.interest_profile.primary_interests}
         interests2 = {interest[0].value for interest in profile2.interest_profile.primary_interests}
         
         return list(interests1.intersection(interests2))
 
     async def _identify_key_differences(self, profile1: UserProfile, profile2: UserProfile) -> List[str]:
-        """Identify key differences between profiles"""
+        """
+Identify key differences between profiles"""
         differences = []
         
         if profile1.user_type != profile2.user_type:
@@ -1082,7 +1106,8 @@ class AdvancedUserProfiler(BaseCrawler):
     # Insight generation methods...
     
     async def _get_demographic_insights(self, demographic: DemographicProfile) -> List[str]:
-        """Get demographic insights"""
+        """
+Get demographic insights"""
         insights = []
         
         if demographic.age_range:

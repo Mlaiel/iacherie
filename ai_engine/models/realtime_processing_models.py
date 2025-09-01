@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import asyncio
 import torch
 import numpy as np
@@ -34,7 +35,9 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class StreamingMode(Enum):
-    """Real-time streaming modes"""
+    """
+Real-time streaming modes"""
+
     LIVE = "live"
     BUFFERED = "buffered"
     BATCH = "batch"
@@ -44,6 +47,7 @@ class StreamingMode(Enum):
 
 class ProcessingLatency(Enum):
     """Processing latency requirements"""
+
     ULTRA_LOW = "ultra_low"  # < 10ms
     LOW = "low"              # < 50ms  
     MEDIUM = "medium"        # < 200ms
@@ -71,7 +75,8 @@ class StreamingConfig:
 
 @dataclass
 class StreamMetrics:
-    """Real-time streaming performance metrics"""
+    """
+Real-time streaming performance metrics"""
     current_fps: float
     avg_fps: float
     latency_ms: float
@@ -115,7 +120,8 @@ class RealTimeAudioProcessor(BaseAIModel):
         )
         
     def _initialize_feature_extractor(self) -> torch.nn.Module:
-        """Initialize optimized feature extractor for real-time processing"""
+        """
+Initialize optimized feature extractor for real-time processing"""
         class FastAudioFeatureExtractor(torch.nn.Module):
             def __init__(self):
                 super().__init__()
@@ -148,7 +154,8 @@ class RealTimeAudioProcessor(BaseAIModel):
         return model
     
     def _initialize_enhancer(self) -> torch.nn.Module:
-        """Initialize real-time audio enhancer"""
+        """
+Initialize real-time audio enhancer"""
         class RealTimeAudioEnhancer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
@@ -181,7 +188,8 @@ class RealTimeAudioProcessor(BaseAIModel):
         return model
     
     def _initialize_analyzer(self) -> torch.nn.Module:
-        """Initialize real-time audio analyzer"""
+        """
+Initialize real-time audio analyzer"""
         class FastAudioAnalyzer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
@@ -207,7 +215,8 @@ class RealTimeAudioProcessor(BaseAIModel):
         audio_source: Union[str, int, Callable],
         callback: Optional[Callable] = None
     ) -> None:
-        """Start real-time audio streaming and processing"""
+        """
+Start real-time audio streaming and processing"""
         try:
             self.is_streaming = True
             self.logger.info("Starting real-time audio streaming")
@@ -406,7 +415,8 @@ class RealTimeAudioProcessor(BaseAIModel):
         return thresholds.get(self.streaming_config.latency_requirement, 200.0)
     
     async def _adjust_quality_based_on_performance(self) -> None:
-        """Dynamically adjust processing quality based on performance"""
+        """
+Dynamically adjust processing quality based on performance"""
         if self.metrics.latency_ms > self._get_latency_threshold():
             # Reduce quality to meet latency requirements
             self.streaming_config.quality_vs_speed = max(0.0, self.streaming_config.quality_vs_speed - 0.1)
@@ -435,7 +445,8 @@ class RealTimeAudioProcessor(BaseAIModel):
             return 0.5  # Default quality score
     
     async def _metrics_update_loop(self) -> None:
-        """Update performance metrics periodically"""
+        """
+Update performance metrics periodically"""
         frame_times = deque(maxlen=100)
         last_frame_count = 0
         
@@ -523,7 +534,8 @@ class RealTimeVideoProcessor(BaseAIModel):
         )
     
     def _initialize_frame_analyzer(self) -> torch.nn.Module:
-        """Initialize optimized frame analyzer for real-time processing"""
+        """
+Initialize optimized frame analyzer for real-time processing"""
         class FastFrameAnalyzer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
@@ -554,7 +566,8 @@ class RealTimeVideoProcessor(BaseAIModel):
         return model
     
     def _initialize_video_enhancer(self) -> torch.nn.Module:
-        """Initialize real-time video enhancer"""
+        """
+Initialize real-time video enhancer"""
         class RealTimeVideoEnhancer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
@@ -575,7 +588,8 @@ class RealTimeVideoProcessor(BaseAIModel):
         return model
     
     def _initialize_object_detector(self) -> torch.nn.Module:
-        """Initialize fast object detector"""
+        """
+Initialize fast object detector"""
         class FastObjectDetector(torch.nn.Module):
             def __init__(self):
                 super().__init__()
@@ -606,7 +620,8 @@ class RealTimeVideoProcessor(BaseAIModel):
         video_source: Union[str, int, cv2.VideoCapture],
         callback: Optional[Callable] = None
     ) -> None:
-        """Start real-time video streaming and processing"""
+        """
+Start real-time video streaming and processing"""
         try:
             self.is_streaming = True
             self.logger.info("Starting real-time video streaming")
@@ -771,7 +786,8 @@ class RealTimeVideoProcessor(BaseAIModel):
             return 0.5
     
     async def _video_metrics_loop(self) -> None:
-        """Update video processing metrics"""
+        """
+Update video processing metrics"""
         frame_times = deque(maxlen=100)
         last_frame_count = 0
         

@@ -4,10 +4,11 @@ Feature access control and tier management system for subscription plans.
 Manages granular feature permissions, usage limits, and tier-based functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime
 from typing import Optional, Dict, Any, List, Set
 import logging
@@ -30,7 +31,9 @@ logger = get_logger(__name__)
 
 
 class FeatureCategory(Enum):
-    """Feature categories for the IA Influencer platform."""
+    """
+Feature categories for the IA Influencer platform."""
+
     AI_PROCESSING = "ai_processing"
     CONTENT_PROTECTION = "content_protection"
     ANALYTICS = "analytics"
@@ -59,7 +62,8 @@ class TierController:
     """
     
     def __init__(self):
-        """Initialize tier controller."""
+        """
+Initialize tier controller."""
         self.logger = get_logger(__name__)
         self.cache = CacheManager()
         

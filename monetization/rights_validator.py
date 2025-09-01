@@ -7,6 +7,7 @@ rights checking, ownership verification, and compliance validation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Set
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class RightType(Enum):
-    """Types of content rights"""
+    """
+Types of content rights"""
+
     COPYRIGHT = "copyright"
     LICENSING = "licensing"
     DISTRIBUTION = "distribution"
@@ -35,6 +38,7 @@ class RightType(Enum):
 
 class RightStatus(Enum):
     """Status of rights"""
+
     VALID = "valid"
     INVALID = "invalid"
     EXPIRED = "expired"
@@ -45,6 +49,7 @@ class RightStatus(Enum):
 
 class ValidationResult(Enum):
     """Results of rights validation"""
+
     APPROVED = "approved"
     REJECTED = "rejected"
     REQUIRES_REVIEW = "requires_review"
@@ -84,7 +89,8 @@ class RightsChain:
 
 @dataclass
 class ValidationRequest:
-    """Rights validation request"""
+    """
+Rights validation request"""
     request_id: str
     content_id: int
     requester_id: int
@@ -127,7 +133,8 @@ class RightsValidator:
     - Historical rights tracking
     """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize rights validator"""
+        """
+Initialize rights validator"""
         self.config = config or {}
         
         # Rights storage
@@ -500,7 +507,8 @@ class RightsValidator:
         return self.validation_reports.get(request_id)
     
     async def get_content_rights(self, content_id: int) -> Optional[Dict[str, Any]]:
-        """Get rights information for content"""
+        """
+Get rights information for content"""
         try:
             if content_id not in self.content_rights:
                 return None
@@ -561,7 +569,8 @@ class RightsValidator:
         requester_id: int,
         rights_chain: RightsChain
     ) -> bool:
-        """Verify ownership rights"""
+        """
+Verify ownership rights"""
         try:
             # Check if requester is current owner
             if rights_chain.current_owner == requester_id:

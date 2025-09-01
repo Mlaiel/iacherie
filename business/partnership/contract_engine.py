@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -308,7 +309,8 @@ class ContractEngine:
         contract_terms: Dict[str, Any],
         contract_type: ContractType
     ) -> List[ContractTerm]:
-        """Generate comprehensive contract terms"""
+        """
+Generate comprehensive contract terms"""
         terms = []
 
         # Core partnership terms
@@ -403,7 +405,8 @@ class ContractEngine:
         partnership: Partnership,
         contract_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate intellectual property terms"""
+        """
+Generate intellectual property terms"""
         return {
             'content_ownership': 'Creator retains full ownership',
             'usage_rights': {
@@ -425,7 +428,8 @@ class ContractEngine:
         }
 
     def _generate_termination_clauses(self, contract_terms: Dict[str, Any]) -> List[str]:
-        """Generate contract termination clauses"""
+        """
+Generate contract termination clauses"""
         return [
             f"Either party may terminate with {contract_terms.get('termination_notice', 30)} days written notice",
             "Immediate termination for material breach if not cured within 10 days",
@@ -572,12 +576,14 @@ class ContractEngine:
         return compliance_score
 
     async def _validate_amendment_permissions(self, contract: Contract, amended_by: str) -> bool:
-        """Validate permissions to amend contract"""
+        """
+Validate permissions to amend contract"""
         # In production, this would check user permissions
         return True
 
     async def _requires_legal_review(self, amendments: Dict[str, Any]) -> bool:
-        """Determine if amendments require legal review"""
+        """
+Determine if amendments require legal review"""
         high_risk_changes = [
             'commission_rate', 'exclusivity_clause', 'termination_terms',
             'intellectual_property', 'liability_limitations'
@@ -586,7 +592,8 @@ class ContractEngine:
         return any(key in amendments for key in high_risk_changes)
 
     async def _apply_amendments(self, contract: Contract, amendments: Dict[str, Any]):
-        """Apply amendments to contract terms"""
+        """
+Apply amendments to contract terms"""
         for amendment_key, amendment_value in amendments.items():
             # Find existing term and update
             existing_term = next(
@@ -622,7 +629,8 @@ class ContractEngine:
         return {'valid': valid}
 
     async def _generate_executed_contract_document(self, contract: Contract) -> str:
-        """Generate final executed contract document"""
+        """
+Generate final executed contract document"""
         return f"/contracts/{contract.contract_id}_executed.pdf"
 
     async def _notify_contract_execution(self, contract: Contract):
@@ -646,7 +654,8 @@ class ContractEngine:
         }
 
     async def _identify_contract_risks(self, contract: Contract) -> List[str]:
-        """Identify potential risks in contract"""
+        """
+Identify potential risks in contract"""
         return [
             'Payment delay risks due to complex approval processes',
             'Performance metric disputes without clear measurement criteria',

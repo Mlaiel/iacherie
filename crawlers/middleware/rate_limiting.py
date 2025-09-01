@@ -13,6 +13,7 @@ Business Logic Integration:
 - AI protection services have dedicated rate limit pools
 - Cross-platform distribution respects platform-specific limits
 """
+
 import asyncio
 import json
 import time
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class RateLimitStrategy(str, Enum):
-    """Rate limiting strategies"""
+    """
+Rate limiting strategies"""
+
     FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
@@ -45,6 +48,7 @@ class RateLimitStrategy(str, Enum):
 
 class RateLimitLevel(str, Enum):
     """Rate limit severity levels"""
+
     NORMAL = "normal"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -54,6 +58,7 @@ class RateLimitLevel(str, Enum):
 
 class UserTier(str, Enum):
     """User subscription tiers affecting rate limits"""
+
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -116,7 +121,8 @@ class SlidingWindowLimiter:
         self.redis_client = redis_client
         
     async def check_limit(self, key: str, limit: int, window_seconds: int) -> Tuple[bool, int, datetime]:
-        """Check rate limit using sliding window algorithm"""
+        """
+Check rate limit using sliding window algorithm"""
         now = time.time()
         pipeline = self.redis_client.pipeline()
         
@@ -142,13 +148,15 @@ class SlidingWindowLimiter:
 
 
 class TokenBucketLimiter:
-    """Token bucket rate limiter implementation"""
+    """
+Token bucket rate limiter implementation"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         
     async def check_limit(self, key: str, capacity: int, refill_rate: float) -> Tuple[bool, int, datetime]:
-        """Check rate limit using token bucket algorithm"""
+        """
+Check rate limit using token bucket algorithm"""
         now = time.time()
         bucket_key = f"bucket:{key}"
         
@@ -192,7 +200,8 @@ class AdaptiveLimiter:
         self.sliding_window = SlidingWindowLimiter(redis_client)
         
     async def check_limit(self, key: str, base_limit: int, window_seconds: int) -> Tuple[bool, int, datetime]:
-        """Check rate limit with adaptive adjustment"""
+        """
+Check rate limit with adaptive adjustment"""
         # Get system load metrics
         load_factor = await self.get_system_load_factor()
         
@@ -202,7 +211,8 @@ class AdaptiveLimiter:
         return await self.sliding_window.check_limit(key, adjusted_limit, window_seconds)
     
     async def get_system_load_factor(self) -> float:
-        """Get system load factor for adaptive limiting"""
+        """
+Get system load factor for adaptive limiting"""
         try:
             # Get system metrics from Redis
             metrics_key = "system_metrics"
@@ -235,7 +245,8 @@ class PriorityQueue:
         self.redis_client = redis_client
         
     async def enqueue_request(self, request_id: str, priority: int, user_id: str):
-        """Add request to priority queue"""
+        """
+Add request to priority queue"""
         queue_key = "priority_queue"
         score = priority * 1000 + time.time()  # Higher priority first, then FIFO
         
@@ -432,7 +443,8 @@ class RateLimitingMiddleware:
         )
     
     async def check_adaptive_limit(self, key: str, config: RateLimitConfig) -> RateLimitResult:
-        """Check adaptive rate limit"""
+        """
+Check adaptive rate limit"""
         allowed, current, reset_time = await self.adaptive_limiter.check_limit(
             f"{key}:adaptive", config.requests_per_minute, 60
         )
@@ -540,7 +552,8 @@ class RateLimitingMiddleware:
         )
     
     def calculate_rate_limit_level(self, current: int, limit: int) -> RateLimitLevel:
-        """Calculate rate limit severity level"""
+        """
+Calculate rate limit severity level"""
         usage_percentage = (current / limit) * 100
         
         if usage_percentage >= 95:
@@ -552,7 +565,8 @@ class RateLimitingMiddleware:
     
     async def log_rate_limit_event(self, request: RateLimitRequest, result: RateLimitResult, 
                                   duration: float):
-        """Log rate limiting events for monitoring"""
+        """
+Log rate limiting events for monitoring"""
         event = {
             "user_id": request.user_id,
             "endpoint": request.endpoint,
@@ -579,7 +593,8 @@ def get_rate_limiting_middleware() -> RateLimitingMiddleware:
 
 # Decorator for automatic rate limiting
 def rate_limit(requests_per_minute: int = 60, strategy: RateLimitStrategy = RateLimitStrategy.SLIDING_WINDOW):
-    """Decorator for automatic rate limiting"""
+    """
+Decorator for automatic rate limiting"""
     def decorator(func):
         async def wrapper(*args, **kwargs):
             # Extract user_id from function arguments

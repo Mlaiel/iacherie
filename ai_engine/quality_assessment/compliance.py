@@ -4,7 +4,7 @@ Advanced compliance and legal verification system for content creators and influ
 Ensures adherence to platform policies, legal requirements, and industry standards.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 import re
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceLevel(Enum):
-    """Compliance severity levels"""
+    """
+Compliance severity levels"""
+
     COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
@@ -42,6 +45,7 @@ class ComplianceLevel(Enum):
 
 class ViolationType(Enum):
     """Types of compliance violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     PRIVACY_VIOLATION = "privacy_violation"
@@ -62,6 +66,7 @@ class ViolationType(Enum):
 
 class Platform(Enum):
     """Supported platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -75,6 +80,7 @@ class Platform(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdictions"""
+
     UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
     UNITED_KINGDOM = "united_kingdom"
@@ -101,7 +107,8 @@ class ComplianceViolation:
 
 @dataclass
 class PlatformCompliance:
-    """Platform-specific compliance analysis"""
+    """
+Platform-specific compliance analysis"""
     platform: Platform
     compliance_score: float = field(default=100.0)
     violations: List[ComplianceViolation] = field(default_factory=list)
@@ -123,7 +130,8 @@ class PlatformCompliance:
 
 @dataclass
 class LegalCompliance:
-    """Legal compliance analysis"""
+    """
+Legal compliance analysis"""
     jurisdiction: LegalJurisdiction
     overall_compliance_score: float = field(default=100.0)
     
@@ -148,7 +156,8 @@ class LegalCompliance:
 
 @dataclass
 class ContentSafety:
-    """Content safety and moderation analysis"""
+    """
+Content safety and moderation analysis"""
     safety_score: float = field(default=100.0)
     
     # Safety categories
@@ -192,7 +201,8 @@ class IntellectualPropertyCompliance:
 
 @dataclass
 class ComplianceProfile:
-    """Comprehensive compliance profile"""
+    """
+Comprehensive compliance profile"""
     # Overall compliance
     overall_compliance_score: float = field(default=100.0)
     compliance_level: ComplianceLevel = field(default=ComplianceLevel.COMPLIANT)
@@ -220,7 +230,8 @@ class ComplianceProfile:
 
 @dataclass
 class ComplianceAnalysisMetrics:
-    """Compliance analysis metrics container"""
+    """
+Compliance analysis metrics container"""
     profile: ComplianceProfile = field(default_factory=ComplianceProfile)
     
     # Analysis metadata
@@ -253,7 +264,8 @@ class ComplianceAnalyzer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize compliance analyzer"""
+        """
+Initialize compliance analyzer"""
         super().__init__(config or ModelConfig(
             model_name="compliance_analyzer",
             provider="internal",
@@ -304,7 +316,8 @@ class ComplianceAnalyzer(BaseAIModel):
         }
     
     def _initialize_violation_patterns(self):
-        """Initialize violation detection patterns"""
+        """
+Initialize violation detection patterns"""
         self.violation_patterns = {
             ViolationType.HATE_SPEECH: {
                 'keywords': ['hate', 'racist', 'nazi', 'terrorist', 'kill'],
@@ -340,7 +353,8 @@ class ComplianceAnalyzer(BaseAIModel):
         }
     
     def _initialize_legal_requirements(self):
-        """Initialize legal requirements by jurisdiction"""
+        """
+Initialize legal requirements by jurisdiction"""
         self.legal_requirements = {
             LegalJurisdiction.UNITED_STATES: {
                 'ftc_disclosure_required': True,
@@ -700,7 +714,7 @@ class ComplianceAnalyzer(BaseAIModel):
             
             # Copyright analysis
             copyright_indicators = [
-                'copyrighted', 'all rights reserved', '©', 'copyright',
+                'copyrighted', 'all rights reserved', '(c)', 'copyright',
                 'music', 'song', 'artist', 'album', 'track'
             ]
             
@@ -734,7 +748,7 @@ class ComplianceAnalyzer(BaseAIModel):
             
             # Trademark analysis
             trademark_indicators = [
-                'trademark', '™', '®', 'brand', 'logo', 'company name'
+                'trademark', '(TM)', '(R)', 'brand', 'logo', 'company name'
             ]
             
             trademark_score = 100.0

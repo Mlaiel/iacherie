@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,9 @@ from sqlalchemy import select, func
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     RESPONSE_TIME = "response_time"
     RESOLUTION_TIME = "resolution_time"
     SATISFACTION_RATING = "satisfaction_rating"
@@ -52,6 +55,7 @@ class MetricType(Enum):
 
 class TimeInterval(Enum):
     """Time interval for analytics"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -78,7 +82,8 @@ class PerformanceMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     title: str
     time_period: Tuple[datetime, datetime]
@@ -101,7 +106,8 @@ class AnalyticsReport:
     benchmark_comparison: Optional[Dict[str, float]] = None
 
 class SupportAnalytics:
-    """Ultra-advanced support performance analytics system"""
+    """
+Ultra-advanced support performance analytics system"""
     
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis_client = redis_client
@@ -172,7 +178,8 @@ class SupportAnalytics:
         include_recommendations: bool = True,
         include_visualizations: bool = True
     ) -> AnalyticsReport:
-        """Generate comprehensive performance report"""
+        """
+Generate comprehensive performance report"""
         try:
             report_id = f"perf_report_{int(datetime.now().timestamp())}"
             
@@ -682,7 +689,8 @@ class SupportAnalytics:
         summary_metrics: Dict[str, float],
         trends: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable recommendations based on metrics and trends"""
+        """
+Generate actionable recommendations based on metrics and trends"""
         recommendations = []
         
         # Response time recommendations
@@ -894,7 +902,8 @@ class SupportAnalytics:
         start_time: datetime,
         end_time: datetime
     ) -> List[PerformanceMetric]:
-        """Collect knowledge base related metrics"""
+        """
+Collect knowledge base related metrics"""
         # This would collect metrics related to knowledge base usage
         # For now, return empty list - in real implementation would query actual data
         return []
@@ -903,7 +912,8 @@ class SupportAnalytics:
         self,
         performance_metrics: Dict[str, Dict[str, Any]]
     ) -> Tuple[List[str], List[str]]:
-        """Identify agent strengths and improvement areas"""
+        """
+Identify agent strengths and improvement areas"""
         strengths = []
         improvements = []
         

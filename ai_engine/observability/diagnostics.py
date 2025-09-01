@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -41,6 +42,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 class DiagnosticSeverity(Enum):
     """Severity levels for diagnostic issues"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -50,6 +52,7 @@ class DiagnosticSeverity(Enum):
 
 class DiagnosticCategory(Enum):
     """Categories of diagnostic issues"""
+
     PERFORMANCE = "performance"
     AVAILABILITY = "availability"
     SECURITY = "security"
@@ -63,6 +66,7 @@ class DiagnosticCategory(Enum):
 
 class DiagnosticStatus(Enum):
     """Status of diagnostic checks"""
+
     PASS = "pass"
     FAIL = "fail"
     WARNING = "warning"
@@ -73,6 +77,7 @@ class DiagnosticStatus(Enum):
 
 class RemediationStatus(Enum):
     """Status of remediation actions"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESS = "success"
@@ -101,7 +106,8 @@ class DiagnosticResult:
     stack_trace: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         result = asdict(self)
         result['category'] = self.category.value
         result['severity'] = self.severity.value
@@ -110,22 +116,26 @@ class DiagnosticResult:
         return result
     
     def is_healthy(self) -> bool:
-        """Check if result indicates healthy state"""
+        """
+Check if result indicates healthy state"""
         return self.status in [DiagnosticStatus.PASS, DiagnosticStatus.SKIPPED]
     
     def requires_attention(self) -> bool:
-        """Check if result requires attention"""
+        """
+Check if result requires attention"""
         return self.status in [DiagnosticStatus.FAIL, DiagnosticStatus.WARNING]
     
     def is_critical(self) -> bool:
-        """Check if result is critical"""
+        """
+Check if result is critical"""
         return (self.severity == DiagnosticSeverity.CRITICAL and 
                 self.status == DiagnosticStatus.FAIL)
 
 
 @dataclass
 class RemediationAction:
-    """Remediation action for diagnostic issues"""
+    """
+Remediation action for diagnostic issues"""
     action_id: str
     name: str
     description: str
@@ -142,7 +152,8 @@ class RemediationAction:
     parameters: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary (excluding functions)"""
+        """
+Convert to dictionary (excluding functions)"""
         result = asdict(self)
         result['category'] = self.category.value
         # Remove function references for serialization
@@ -153,7 +164,8 @@ class RemediationAction:
 
 @dataclass
 class RemediationResult:
-    """Result of a remediation action"""
+    """
+Result of a remediation action"""
     action_id: str
     status: RemediationStatus
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -174,7 +186,8 @@ class RemediationResult:
 
 
 class BaseDiagnosticCheck(ABC):
-    """Base class for diagnostic checks"""
+    """
+Base class for diagnostic checks"""
     
     def __init__(self, check_id: str, name: str, description: str,
                  category: DiagnosticCategory, severity: DiagnosticSeverity):
@@ -195,7 +208,8 @@ class BaseDiagnosticCheck(ABC):
         pass
     
     async def run_check(self) -> DiagnosticResult:
-        """Run the diagnostic check with error handling"""
+        """
+Run the diagnostic check with error handling"""
         if not self.enabled:
             return DiagnosticResult(
                 check_id=self.check_id,
@@ -889,7 +903,8 @@ class DiagnosticEngine:
         return valid_results
     
     async def execute_remediation(self, action_id: str, parameters: Dict[str, Any] = None) -> RemediationResult:
-        """Execute a remediation action"""
+        """
+Execute a remediation action"""
         if action_id not in self.remediation_actions:
             return RemediationResult(
                 action_id=action_id,
@@ -966,7 +981,8 @@ class DiagnosticEngine:
         return True
     
     async def _restart_high_cpu_processes(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
-        """Restart processes with high CPU usage"""
+        """
+Restart processes with high CPU usage"""
         try:
             high_cpu_processes = []
             threshold = parameters.get("cpu_threshold", 50.0)
@@ -1129,7 +1145,8 @@ class DiagnosticEngine:
         return total_score / total_weight if total_weight > 0 else 100.0
     
     def get_remediation_recommendations(self, results: List[DiagnosticResult] = None) -> List[Dict[str, Any]]:
-        """Get remediation recommendations based on diagnostic results"""
+        """
+Get remediation recommendations based on diagnostic results"""
         if results is None:
             # Use recent results from history
             cutoff_time = datetime.utcnow() - timedelta(hours=1)

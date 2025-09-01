@@ -32,6 +32,7 @@ Features:
 - Automated invoicing and payment processing
 - Revenue protection and loss prevention
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -91,7 +92,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream classifications"""
+    """
+Revenue stream classifications"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     DIGITAL_SALES = "digital_sales"
     PHYSICAL_SALES = "physical_sales"
@@ -110,6 +113,7 @@ class RevenueStream(Enum):
 
 class RevenueFrequency(Enum):
     """Revenue payment frequency"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -344,7 +348,8 @@ class RevenueIntelligenceEngine:
         self, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Analyze revenue by stream type"""
+        """
+Analyze revenue by stream type"""
         # Implementation details...
         pass
     
@@ -352,7 +357,8 @@ class RevenueIntelligenceEngine:
         self, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Analyze platform performance comparison"""
+        """
+Analyze platform performance comparison"""
         # Implementation details...
         pass
     
@@ -361,7 +367,8 @@ class RevenueIntelligenceEngine:
         user_id: str, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Analyze revenue growth trends"""
+        """
+Analyze revenue growth trends"""
         # Implementation details...
         pass
     
@@ -370,7 +377,8 @@ class RevenueIntelligenceEngine:
         revenue_data: List[RevenueData],
         stream_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify revenue optimization opportunities"""
+        """
+Identify revenue optimization opportunities"""
         # Implementation details...
         pass
     
@@ -379,7 +387,8 @@ class RevenueIntelligenceEngine:
         user_id: str, 
         revenue_data: List[RevenueData]
     ) -> Dict[str, Any]:
-        """Generate revenue forecasting"""
+        """
+Generate revenue forecasting"""
         # Implementation details...
         pass
 

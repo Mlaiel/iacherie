@@ -11,6 +11,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This monitoring module contains proprietary metrics and algorithms
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
 """
+
 import time
 import asyncio
 import threading
@@ -30,7 +31,9 @@ from functools import wraps
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -40,6 +43,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -58,7 +62,8 @@ class MetricPoint:
 
 @dataclass
 class Alert:
-    """System alert"""
+    """
+System alert"""
     id: str
     name: str
     message: str
@@ -73,7 +78,8 @@ class Alert:
 
 @dataclass
 class PerformanceStats:
-    """Performance statistics"""
+    """
+Performance statistics"""
     requests_per_second: float = 0.0
     average_response_time: float = 0.0
     p95_response_time: float = 0.0
@@ -89,7 +95,8 @@ class PerformanceStats:
 
 @dataclass
 class BusinessMetrics:
-    """Business-specific metrics"""
+    """
+Business-specific metrics"""
     total_matches_created: int = 0
     successful_collaborations: int = 0
     average_match_score: float = 0.0
@@ -102,7 +109,8 @@ class BusinessMetrics:
 
 
 class MetricsCollector:
-    """Advanced metrics collection system"""
+    """
+Advanced metrics collection system"""
     
     def __init__(self, max_data_points: int = 10000):
         self.max_data_points = max_data_points
@@ -115,7 +123,8 @@ class MetricsCollector:
         self._lock = threading.Lock()
         
     def increment_counter(self, name: str, value: int = 1, labels: Optional[Dict[str, str]] = None) -> None:
-        """Increment a counter metric"""
+        """
+Increment a counter metric"""
         with self._lock:
             self.counters[name] += value
             if labels:
@@ -123,7 +132,8 @@ class MetricsCollector:
             self._add_metric_point(name, self.counters[name], MetricType.COUNTER, labels)
     
     def set_gauge(self, name: str, value: float, labels: Optional[Dict[str, str]] = None) -> None:
-        """Set a gauge metric value"""
+        """
+Set a gauge metric value"""
         with self._lock:
             self.gauges[name] = value
             if labels:
@@ -131,7 +141,8 @@ class MetricsCollector:
             self._add_metric_point(name, value, MetricType.GAUGE, labels)
     
     def record_histogram(self, name: str, value: float, labels: Optional[Dict[str, str]] = None) -> None:
-        """Record a histogram metric value"""
+        """
+Record a histogram metric value"""
         with self._lock:
             self.histograms[name].append(value)
             # Keep only recent values
@@ -142,7 +153,8 @@ class MetricsCollector:
             self._add_metric_point(name, value, MetricType.HISTOGRAM, labels)
     
     def record_timer(self, name: str, duration: float, labels: Optional[Dict[str, str]] = None) -> None:
-        """Record a timer metric value"""
+        """
+Record a timer metric value"""
         with self._lock:
             self.timers[name].append(duration)
             # Keep only recent values
@@ -153,7 +165,8 @@ class MetricsCollector:
             self._add_metric_point(name, duration, MetricType.TIMER, labels)
     
     def _add_metric_point(self, name: str, value: float, metric_type: MetricType, labels: Optional[Dict[str, str]]) -> None:
-        """Add a metric point to the time series"""
+        """
+Add a metric point to the time series"""
         point = MetricPoint(
             name=name,
             value=value,
@@ -164,7 +177,8 @@ class MetricsCollector:
         self.metrics[name].append(point)
     
     def get_metric_summary(self, name: str) -> Dict[str, Any]:
-        """Get summary statistics for a metric"""
+        """
+Get summary statistics for a metric"""
         with self._lock:
             if name not in self.metrics:
                 return {}
@@ -205,7 +219,8 @@ class MetricsCollector:
             return {name: self.get_metric_summary(name) for name in self.metrics.keys()}
     
     def reset_metrics(self) -> None:
-        """Reset all metrics"""
+        """
+Reset all metrics"""
         with self._lock:
             self.metrics.clear()
             self.counters.clear()
@@ -216,7 +231,8 @@ class MetricsCollector:
 
 
 class PerformanceMonitor:
-    """System performance monitoring"""
+    """
+System performance monitoring"""
     
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics = metrics_collector
@@ -228,7 +244,8 @@ class PerformanceMonitor:
         self._monitor_thread: Optional[threading.Thread] = None
     
     def start_monitoring(self, interval: float = 10.0) -> None:
-        """Start performance monitoring"""
+        """
+Start performance monitoring"""
         if self._monitoring:
             return
         
@@ -241,13 +258,15 @@ class PerformanceMonitor:
         self._monitor_thread.start()
     
     def stop_monitoring(self) -> None:
-        """Stop performance monitoring"""
+        """
+Stop performance monitoring"""
         self._monitoring = False
         if self._monitor_thread:
             self._monitor_thread.join(timeout=5.0)
     
     def _monitor_loop(self, interval: float) -> None:
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         while self._monitoring:
             try:
                 self._collect_system_metrics()
@@ -338,7 +357,8 @@ class PerformanceMonitor:
 
 
 class AlertManager:
-    """Alert management system"""
+    """
+Alert management system"""
     
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics = metrics_collector
@@ -364,7 +384,8 @@ class AlertManager:
         self.alert_callbacks.append(callback)
     
     def start_alert_checking(self, interval: float = 30.0) -> None:
-        """Start alert checking"""
+        """
+Start alert checking"""
         if self._checking:
             return
         
@@ -377,13 +398,15 @@ class AlertManager:
         self._check_thread.start()
     
     def stop_alert_checking(self) -> None:
-        """Stop alert checking"""
+        """
+Stop alert checking"""
         self._checking = False
         if self._check_thread:
             self._check_thread.join(timeout=5.0)
     
     def _check_alerts_loop(self, interval: float) -> None:
-        """Main alert checking loop"""
+        """
+Main alert checking loop"""
         while self._checking:
             try:
                 self._check_all_rules()
@@ -470,12 +493,14 @@ class AlertManager:
         return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[Alert]:
-        """Get alert history"""
+        """
+Get alert history"""
         return self.alert_history[-limit:]
 
 
 class BusinessMetricsCollector:
-    """Business-specific metrics collection"""
+    """
+Business-specific metrics collection"""
     
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics = metrics_collector
@@ -484,7 +509,8 @@ class BusinessMetricsCollector:
     
     def record_match_created(self, creator_categories: List[str], match_score: float, 
                            geographic_region: str) -> None:
-        """Record a new match creation"""
+        """
+Record a new match creation"""
         with self._lock:
             self.metrics.increment_counter("matches_created_total")
             self.metrics.record_histogram("match_scores", match_score)
@@ -594,7 +620,8 @@ def timer_decorator(metric_name: str, labels: Optional[Dict[str, str]] = None):
 
 
 def counter_decorator(metric_name: str, labels: Optional[Dict[str, str]] = None):
-    """Decorator to count function calls"""
+    """
+Decorator to count function calls"""
     def decorator(func):
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
@@ -645,7 +672,8 @@ class MonitoringService:
         self._setup_default_alerts()
     
     def _setup_default_alerts(self) -> None:
-        """Setup default alert rules"""
+        """
+Setup default alert rules"""
         # Performance alerts
         self.alert_manager.add_alert_rule(
             "high_error_rate", "error_rate", 0.05, "greater", AlertSeverity.ERROR
@@ -674,12 +702,14 @@ class MonitoringService:
         self.alert_manager.start_alert_checking(alert_interval)
     
     def stop_monitoring(self) -> None:
-        """Stop all monitoring services"""
+        """
+Stop all monitoring services"""
         self.performance_monitor.stop_monitoring()
         self.alert_manager.stop_alert_checking()
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get complete system health status"""
+        """
+Get complete system health status"""
         performance_stats = self.performance_monitor.get_performance_stats()
         business_metrics = self.business_metrics.get_business_metrics()
         active_alerts = self.alert_manager.get_active_alerts()
@@ -775,22 +805,26 @@ def get_monitoring_service() -> MonitoringService:
 
 
 def get_metrics_collector() -> MetricsCollector:
-    """Get global metrics collector"""
+    """
+Get global metrics collector"""
     return get_monitoring_service().metrics_collector
 
 
 def get_performance_monitor() -> PerformanceMonitor:
-    """Get global performance monitor"""
+    """
+Get global performance monitor"""
     return get_monitoring_service().performance_monitor
 
 
 def get_alert_manager() -> AlertManager:
-    """Get global alert manager"""
+    """
+Get global alert manager"""
     return get_monitoring_service().alert_manager
 
 
 def get_business_metrics() -> BusinessMetricsCollector:
-    """Get global business metrics collector"""
+    """
+Get global business metrics collector"""
     return get_monitoring_service().business_metrics
 
 

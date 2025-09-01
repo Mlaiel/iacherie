@@ -4,6 +4,7 @@ Advanced caching strategies, policies, and optimization algorithms
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ import random
 logger = logging.getLogger(__name__)
 
 class CacheStrategy(Enum):
-    """Cache strategies"""
+    """
+Cache strategies"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
@@ -35,6 +38,7 @@ class CacheStrategy(Enum):
 
 class CacheLevel(Enum):
     """Cache hierarchy levels"""
+
     L1_MEMORY = "l1_memory"  # Fastest, smallest
     L2_REDIS = "l2_redis"    # Medium speed, medium size
     L3_DISK = "l3_disk"      # Slowest, largest
@@ -42,6 +46,7 @@ class CacheLevel(Enum):
 
 class AccessPattern(Enum):
     """Data access patterns"""
+
     SEQUENTIAL = "sequential"
     RANDOM = "random"
     TEMPORAL_LOCALITY = "temporal_locality"
@@ -65,28 +70,33 @@ class CacheMetrics:
     
     @property
     def hit_rate(self) -> float:
-        """Calculate hit rate"""
+        """
+Calculate hit rate"""
         total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
     
     @property
     def miss_rate(self) -> float:
-        """Calculate miss rate"""
+        """
+Calculate miss rate"""
         return 1.0 - self.hit_rate
     
     @property
     def average_latency(self) -> float:
-        """Calculate average latency"""
+        """
+Calculate average latency"""
         return self.total_latency / self.total_requests if self.total_requests > 0 else 0.0
     
     @property
     def memory_utilization(self) -> float:
-        """Calculate memory utilization"""
+        """
+Calculate memory utilization"""
         return self.memory_usage / self.cache_size if self.cache_size > 0 else 0.0
 
 @dataclass
 class CacheItem:
-    """Cache item with metadata"""
+    """
+Cache item with metadata"""
     key: str
     value: Any
     size: int
@@ -103,39 +113,47 @@ class CacheItem:
     
     @property
     def is_expired(self) -> bool:
-        """Check if item is expired"""
+        """
+Check if item is expired"""
         if self.ttl is None:
             return False
         return (datetime.utcnow() - self.created_at).total_seconds() > self.ttl
     
     @property
     def age(self) -> float:
-        """Get item age in seconds"""
+        """
+Get item age in seconds"""
         return (datetime.utcnow() - self.created_at).total_seconds()
     
     @property
     def time_since_access(self) -> float:
-        """Get time since last access in seconds"""
+        """
+Get time since last access in seconds"""
         return (datetime.utcnow() - self.last_accessed).total_seconds()
 
 class EvictionStrategy(ABC):
-    """Abstract base class for eviction strategies"""
+    """
+Abstract base class for eviction strategies"""
     
     @abstractmethod
     def should_evict(self, items: List[CacheItem], new_item_size: int, max_size: int) -> List[str]:
-        """Determine which items to evict"""
+        """
+Determine which items to evict"""
         pass
     
     @abstractmethod
     def update_on_access(self, item: CacheItem):
-        """Update item metadata on access"""
+        """
+Update item metadata on access"""
         pass
 
 class LRUEvictionStrategy(EvictionStrategy):
-    """Least Recently Used eviction strategy"""
+    """
+Least Recently Used eviction strategy"""
     
     def should_evict(self, items: List[CacheItem], new_item_size: int, max_size: int) -> List[str]:
-        """Evict least recently used items"""
+        """
+Evict least recently used items"""
         # Sort by last accessed time (oldest first)
         sorted_items = sorted(items, key=lambda x: x.last_accessed)
         
@@ -151,15 +169,18 @@ class LRUEvictionStrategy(EvictionStrategy):
         return evict_keys
     
     def update_on_access(self, item: CacheItem):
-        """Update last accessed time"""
+        """
+Update last accessed time"""
         item.last_accessed = datetime.utcnow()
         item.access_count += 1
 
 class LFUEvictionStrategy(EvictionStrategy):
-    """Least Frequently Used eviction strategy"""
+    """
+Least Frequently Used eviction strategy"""
     
     def should_evict(self, items: List[CacheItem], new_item_size: int, max_size: int) -> List[str]:
-        """Evict least frequently used items"""
+        """
+Evict least frequently used items"""
         # Sort by access count (least used first)
         sorted_items = sorted(items, key=lambda x: (x.access_count, x.last_accessed))
         
@@ -175,15 +196,18 @@ class LFUEvictionStrategy(EvictionStrategy):
         return evict_keys
     
     def update_on_access(self, item: CacheItem):
-        """Update access count"""
+        """
+Update access count"""
         item.last_accessed = datetime.utcnow()
         item.access_count += 1
 
 class TTLEvictionStrategy(EvictionStrategy):
-    """Time-to-Live eviction strategy"""
+    """
+Time-to-Live eviction strategy"""
     
     def should_evict(self, items: List[CacheItem], new_item_size: int, max_size: int) -> List[str]:
-        """Evict expired items first, then oldest items"""
+        """
+Evict expired items first, then oldest items"""
         evict_keys = []
         current_size = sum(item.size for item in items)
         
@@ -207,12 +231,14 @@ class TTLEvictionStrategy(EvictionStrategy):
         return evict_keys
     
     def update_on_access(self, item: CacheItem):
-        """Update last accessed time"""
+        """
+Update last accessed time"""
         item.last_accessed = datetime.utcnow()
         item.access_count += 1
 
 class AdaptiveEvictionStrategy(EvictionStrategy):
-    """Adaptive eviction strategy that learns from access patterns"""
+    """
+Adaptive eviction strategy that learns from access patterns"""
     
     def __init__(self):
         self.access_patterns = defaultdict(list)
@@ -226,7 +252,8 @@ class AdaptiveEvictionStrategy(EvictionStrategy):
         self.ttl_strategy = TTLEvictionStrategy()
     
     def should_evict(self, items: List[CacheItem], new_item_size: int, max_size: int) -> List[str]:
-        """Adaptive eviction based on learned patterns"""
+        """
+Adaptive eviction based on learned patterns"""
         # Get eviction candidates from each strategy
         lru_candidates = set(self.lru_strategy.should_evict(items, new_item_size, max_size))
         lfu_candidates = set(self.lfu_strategy.should_evict(items, new_item_size, max_size))
@@ -265,7 +292,8 @@ class AdaptiveEvictionStrategy(EvictionStrategy):
         return evict_keys
     
     def update_on_access(self, item: CacheItem):
-        """Update access patterns and strategy weights"""
+        """
+Update access patterns and strategy weights"""
         item.last_accessed = datetime.utcnow()
         item.access_count += 1
         
@@ -283,7 +311,8 @@ class AdaptiveEvictionStrategy(EvictionStrategy):
         self._update_strategy_weights()
     
     def _update_strategy_weights(self):
-        """Update strategy weights based on observed patterns"""
+        """
+Update strategy weights based on observed patterns"""
         # Analyze access patterns to adjust weights
         total_items = len(self.access_patterns)
         if total_items == 0:
@@ -323,7 +352,8 @@ class AdaptiveEvictionStrategy(EvictionStrategy):
             self.strategy_weights['lfu'] = 0.2
 
 class PrefetchStrategy:
-    """Data prefetching strategy"""
+    """
+Data prefetching strategy"""
     
     def __init__(self, prediction_window: int = 10):
         self.prediction_window = prediction_window
@@ -332,7 +362,8 @@ class PrefetchStrategy:
         self.sequential_patterns = defaultdict(list)
     
     def record_access(self, key: str, timestamp: Optional[datetime] = None):
-        """Record cache access for pattern learning"""
+        """
+Record cache access for pattern learning"""
         if timestamp is None:
             timestamp = datetime.utcnow()
         
@@ -348,7 +379,8 @@ class PrefetchStrategy:
         self._update_patterns(key, timestamp)
     
     def _update_patterns(self, key: str, timestamp: datetime):
-        """Update access patterns"""
+        """
+Update access patterns"""
         accesses = self.access_history[key]
         if len(accesses) < 2:
             return
@@ -381,7 +413,8 @@ class PrefetchStrategy:
             pass
     
     def predict_next_keys(self, current_key: str, count: int = 5) -> List[str]:
-        """Predict next keys to prefetch"""
+        """
+Predict next keys to prefetch"""
         predictions = []
         
         # Temporal predictions
@@ -439,12 +472,14 @@ class CachePartitioner:
         self.partition_stats = defaultdict(lambda: {'size': 0, 'hits': 0, 'misses': 0})
     
     def get_partition(self, key: str) -> int:
-        """Get partition number for key using consistent hashing"""
+        """
+Get partition number for key using consistent hashing"""
         hash_value = int(hashlib.md5(key.encode()).hexdigest(), 16)
         return hash_value % self.partitions
     
     def get_partition_for_user(self, user_id: str) -> int:
-        """Get partition for user-specific data"""
+        """
+Get partition for user-specific data"""
         return self.get_partition(f"user:{user_id}")
     
     def get_partition_for_content(self, content_id: str) -> int:
@@ -473,7 +508,8 @@ class CachePartitioner:
         return rebalance_plan
     
     def update_partition_stats(self, partition_id: int, size_delta: int, hit: bool):
-        """Update partition statistics"""
+        """
+Update partition statistics"""
         self.partition_stats[partition_id]['size'] += size_delta
         if hit:
             self.partition_stats[partition_id]['hits'] += 1
@@ -481,7 +517,8 @@ class CachePartitioner:
             self.partition_stats[partition_id]['misses'] += 1
 
 class CacheCoherencyManager:
-    """Manage cache coherency across multiple cache levels"""
+    """
+Manage cache coherency across multiple cache levels"""
     
     def __init__(self):
         self.invalidation_queue = asyncio.Queue()
@@ -491,22 +528,26 @@ class CacheCoherencyManager:
         self._lock = threading.RLock()
     
     def register_cache_level(self, level: CacheLevel, cache_instance):
-        """Register a cache level for coherency management"""
+        """
+Register a cache level for coherency management"""
         self.cache_levels[level] = cache_instance
     
     def add_dependency(self, dependent_key: str, dependency_key: str):
-        """Add cache dependency relationship"""
+        """
+Add cache dependency relationship"""
         with self._lock:
             self.dependency_graph[dependency_key].add(dependent_key)
     
     def remove_dependency(self, dependent_key: str, dependency_key: str):
-        """Remove cache dependency relationship"""
+        """
+Remove cache dependency relationship"""
         with self._lock:
             if dependency_key in self.dependency_graph:
                 self.dependency_graph[dependency_key].discard(dependent_key)
     
     async def invalidate_key(self, key: str, cascade: bool = True):
-        """Invalidate key across all cache levels"""
+        """
+Invalidate key across all cache levels"""
         with self._lock:
             self.version_map[key] += 1
         
@@ -523,15 +564,18 @@ class CacheCoherencyManager:
                 await self.invalidate_key(dependent_key, cascade=False)
     
     def get_version(self, key: str) -> int:
-        """Get current version of key"""
+        """
+Get current version of key"""
         return self.version_map[key]
     
     def is_valid(self, key: str, version: int) -> bool:
-        """Check if cached version is still valid"""
+        """
+Check if cached version is still valid"""
         return self.version_map[key] == version
 
 class CacheAnalyzer:
-    """Analyze cache performance and provide optimization recommendations"""
+    """
+Analyze cache performance and provide optimization recommendations"""
     
     def __init__(self):
         self.metrics_history = defaultdict(list)
@@ -539,7 +583,8 @@ class CacheAnalyzer:
         self.performance_baseline = {}
     
     def record_metrics(self, cache_name: str, metrics: CacheMetrics):
-        """Record cache metrics for analysis"""
+        """
+Record cache metrics for analysis"""
         timestamp = datetime.utcnow()
         metric_entry = {
             'timestamp': timestamp,
@@ -561,7 +606,8 @@ class CacheAnalyzer:
         ]
     
     def analyze_performance(self, cache_name: str) -> Dict[str, Any]:
-        """Analyze cache performance and provide insights"""
+        """
+Analyze cache performance and provide insights"""
         if cache_name not in self.metrics_history:
             return {'status': 'no_data'}
         
@@ -637,7 +683,8 @@ class CacheAnalyzer:
         return analysis
     
     def _calculate_health_score(self, analysis: Dict[str, Any]) -> str:
-        """Calculate overall cache health score"""
+        """
+Calculate overall cache health score"""
         score = 100
         
         # Hit rate impact
@@ -672,7 +719,8 @@ class CacheAnalyzer:
             return 'poor'
     
     def get_optimization_suggestions(self, cache_name: str) -> List[Dict[str, Any]]:
-        """Get specific optimization suggestions"""
+        """
+Get specific optimization suggestions"""
         analysis = self.analyze_performance(cache_name)
         
         if 'recommendations' not in analysis:
@@ -706,7 +754,8 @@ class CacheAnalyzer:
         return suggestions
 
 class CacheStrategyManager:
-    """Manage and coordinate different caching strategies"""
+    """
+Manage and coordinate different caching strategies"""
     
     def __init__(self):
         self.strategies = {}
@@ -728,27 +777,33 @@ class CacheStrategyManager:
         return self.eviction_strategies.get(strategy_type, self.eviction_strategies[CacheStrategy.LRU])
     
     def get_prefetch_strategy(self) -> PrefetchStrategy:
-        """Get prefetch strategy instance"""
+        """
+Get prefetch strategy instance"""
         return self.prefetch_strategy
     
     def get_partitioner(self) -> CachePartitioner:
-        """Get cache partitioner instance"""
+        """
+Get cache partitioner instance"""
         return self.partitioner
     
     def get_coherency_manager(self) -> CacheCoherencyManager:
-        """Get cache coherency manager instance"""
+        """
+Get cache coherency manager instance"""
         return self.coherency_manager
     
     def get_analyzer(self) -> CacheAnalyzer:
-        """Get cache analyzer instance"""
+        """
+Get cache analyzer instance"""
         return self.analyzer
     
     def register_strategy(self, name: str, strategy: Any):
-        """Register custom cache strategy"""
+        """
+Register custom cache strategy"""
         self.strategies[name] = strategy
     
     def optimize_cache_configuration(self, cache_metrics: Dict[str, CacheMetrics]) -> Dict[str, Any]:
-        """Optimize cache configuration based on metrics"""
+        """
+Optimize cache configuration based on metrics"""
         optimizations = {}
         
         for cache_name, metrics in cache_metrics.items():
@@ -766,7 +821,8 @@ class CacheStrategyManager:
         return optimizations
     
     def _recommend_strategy(self, analysis: Dict[str, Any]) -> CacheStrategy:
-        """Recommend cache strategy based on analysis"""
+        """
+Recommend cache strategy based on analysis"""
         hit_rate = analysis.get('current_hit_rate', 0.0)
         latency = analysis.get('current_latency', 0.0)
         utilization = analysis.get('memory_utilization', 0.0)
@@ -781,7 +837,8 @@ class CacheStrategyManager:
             return CacheStrategy.ADAPTIVE
     
     def _recommend_size_adjustment(self, analysis: Dict[str, Any]) -> float:
-        """Recommend cache size adjustment multiplier"""
+        """
+Recommend cache size adjustment multiplier"""
         hit_rate = analysis.get('current_hit_rate', 0.0)
         utilization = analysis.get('memory_utilization', 0.0)
         

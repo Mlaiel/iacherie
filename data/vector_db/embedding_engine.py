@@ -5,11 +5,12 @@ Advanced embedding generation for multiple content types including audio, video,
 image, and text content. Optimized for content fingerprinting and similarity search.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -53,7 +54,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EmbeddingResult:
-    """Result of embedding generation."""
+    """
+Result of embedding generation."""
     content_id: str
     content_type: str
     embedding: np.ndarray
@@ -65,7 +67,8 @@ class EmbeddingResult:
 
 @dataclass
 class AudioFeatures:
-    """Comprehensive audio feature extraction results."""
+    """
+Comprehensive audio feature extraction results."""
     mfcc: np.ndarray
     chroma: np.ndarray
     spectral_centroid: np.ndarray
@@ -82,7 +85,8 @@ class AudioFeatures:
 
 @dataclass 
 class VideoFeatures:
-    """Comprehensive video feature extraction results."""
+    """
+Comprehensive video feature extraction results."""
     frame_features: List[np.ndarray]
     optical_flow: np.ndarray
     scene_changes: List[int]
@@ -94,7 +98,8 @@ class VideoFeatures:
 
 @dataclass
 class ImageFeatures:
-    """Comprehensive image feature extraction results."""
+    """
+Comprehensive image feature extraction results."""
     visual_features: np.ndarray
     color_histogram: np.ndarray
     edge_histogram: np.ndarray
@@ -106,7 +111,8 @@ class ImageFeatures:
 
 
 class BaseEmbeddingGenerator(ABC):
-    """Base class for embedding generators."""
+    """
+Base class for embedding generators."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -115,16 +121,19 @@ class BaseEmbeddingGenerator(ABC):
     
     @abstractmethod
     async def generate_embedding(self, content: Any, metadata: Dict[str, Any]) -> EmbeddingResult:
-        """Generate embedding for content."""
+        """
+Generate embedding for content."""
         pass
     
     @abstractmethod
     def extract_features(self, content: Any) -> Dict[str, Any]:
-        """Extract content-specific features."""
+        """
+Extract content-specific features."""
         pass
     
     def normalize_embedding(self, embedding: np.ndarray) -> np.ndarray:
-        """Normalize embedding vector."""
+        """
+Normalize embedding vector."""
         norm = np.linalg.norm(embedding)
         if norm > 0:
             return embedding / norm
@@ -1018,7 +1027,8 @@ class MultiModalEmbeddingEngine:
         return ['text', 'audio', 'image', 'video']
     
     def get_embedding_dimensions(self) -> Dict[str, int]:
-        """Get embedding dimensions for each content type."""
+        """
+Get embedding dimensions for each content type."""
         return {
             'text': self.text_generator.sentence_model.get_sentence_embedding_dimension() + 768,  # Sentence + BERT
             'audio': 200,  # Estimated based on feature extraction

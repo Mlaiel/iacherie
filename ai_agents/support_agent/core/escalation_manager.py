@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -41,7 +42,9 @@ import torch
 logger = logging.getLogger(__name__)
 
 class EscalationTrigger(Enum):
-    """Escalation trigger types"""
+    """
+Escalation trigger types"""
+
     USER_REQUEST = "user_request"
     AI_CONFIDENCE_LOW = "ai_confidence_low"
     COMPLEX_ISSUE = "complex_issue"
@@ -56,6 +59,7 @@ class EscalationTrigger(Enum):
 
 class EscalationPriority(Enum):
     """Escalation priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -64,7 +68,9 @@ class EscalationPriority(Enum):
     EMERGENCY = 6
 
 class AgentStatus(Enum):
-    """Human agent status"""
+    """
+Human agent status"""
+
     AVAILABLE = "available"
     BUSY = "busy"
     AWAY = "away"
@@ -74,6 +80,7 @@ class AgentStatus(Enum):
 
 class AgentSpecialty(Enum):
     """Human agent specialties"""
+
     TECHNICAL_SUPPORT = "technical_support"
     BILLING_SPECIALIST = "billing_specialist"
     CONTENT_PROTECTION = "content_protection"
@@ -170,7 +177,8 @@ class EscalationQueue:
         self._lock = Lock()
     
     async def add_request(self, request: EscalationRequest):
-        """Add escalation request to priority queue"""
+        """
+Add escalation request to priority queue"""
         async with self._lock:
             # Calculate priority score (lower is higher priority)
             priority_score = await self._calculate_priority_score(request)
@@ -181,7 +189,8 @@ class EscalationQueue:
             self._counter += 1
     
     async def get_next_request(self) -> Optional[EscalationRequest]:
-        """Get next highest priority request"""
+        """
+Get next highest priority request"""
         async with self._lock:
             while self._queue:
                 priority_score, counter, request = heapq.heappop(self._queue)
@@ -195,7 +204,8 @@ class EscalationQueue:
         return None
     
     async def remove_request(self, escalation_id: str) -> bool:
-        """Remove request from queue"""
+        """
+Remove request from queue"""
         async with self._lock:
             if escalation_id in self._entry_finder:
                 entry = self._entry_finder.pop(escalation_id)
@@ -204,7 +214,8 @@ class EscalationQueue:
         return False
     
     async def update_priority(self, escalation_id: str, new_priority: EscalationPriority):
-        """Update request priority"""
+        """
+Update request priority"""
         async with self._lock:
             if escalation_id in self._entry_finder:
                 # Remove old entry
@@ -220,7 +231,8 @@ class EscalationQueue:
         return False
     
     async def _calculate_priority_score(self, request: EscalationRequest) -> float:
-        """Calculate priority score for queue ordering"""
+        """
+Calculate priority score for queue ordering"""
         # Base priority from enum (inverted: lower value = higher priority)
         base_score = 7 - request.priority.value
         
@@ -684,7 +696,8 @@ class EscalationManager:
         return EscalationPriority(priority_value)
     
     async def _find_best_agent(self, escalation: EscalationRequest) -> Optional[HumanAgent]:
-        """Find best available agent for escalation"""
+        """
+Find best available agent for escalation"""
         available_agents = []
         
         for agent in self.human_agents.values():
@@ -764,7 +777,8 @@ class EscalationManager:
         return start_hour <= current_hour <= end_hour
     
     async def _get_customer_tier(self, user_id: str) -> str:
-        """Get customer subscription tier"""
+        """
+Get customer subscription tier"""
         # In real implementation, would query user database
         # For now, return default
         return "pro"

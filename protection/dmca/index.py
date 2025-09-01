@@ -5,7 +5,7 @@ Main entry point for the DMCA automation module.
 Provides unified access to all DMCA components and workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -99,7 +99,8 @@ logger = logging.getLogger(__name__)
 
 
 class DMCAFactory:
-    """Factory class for creating DMCA system components"""
+    """
+Factory class for creating DMCA system components"""
     
     @staticmethod
     def create_full_system(db_session: Session, 
@@ -129,33 +130,38 @@ class DMCAFactory:
     
     @staticmethod
     def create_template_engine() -> ProfessionalTemplateEngine:
-        """Create standalone template engine"""
+        """
+Create standalone template engine"""
         return ProfessionalTemplateEngine()
     
     @staticmethod
     def create_platform_manager() -> PlatformIntegrationManager:
-        """Create standalone platform integration manager"""
+        """
+Create standalone platform integration manager"""
         return PlatformIntegrationManager()
     
     @staticmethod
     def create_response_tracker(db_session: Session) -> ResponseIntelligenceEngine:
-        """Create standalone response tracking engine"""
+        """
+Create standalone response tracking engine"""
         return ResponseIntelligenceEngine(db_session)
     
     @staticmethod
     def create_collaboration_engine(db_session: Session, 
                                   user_id: int) -> DMCACollaborationEngine:
-        """Create standalone collaboration engine"""
+        """
+Create standalone collaboration engine"""
         return DMCACollaborationEngine(db_session, user_id)
 
 
 def get_system_info() -> Dict[str, Any]:
-    """Get DMCA system information and capabilities"""
+    """
+Get DMCA system information and capabilities"""
     return {
         "system_name": "Enterprise DMCA Automation Module",
         "version": "2.0.0",
         "author": "Fahed Mlaiel (mlaiel@live.de)",
-        "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+        "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
         "license": "Proprietary - Unauthorized use strictly prohibited",
         "legal_warning": "🚨 SEVERE LEGAL WARNING - Any unauthorized use will result in immediate legal action",
         "team_specialties": {

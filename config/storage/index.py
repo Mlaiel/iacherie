@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, Any, Optional, List
@@ -45,7 +46,8 @@ class StorageOrchestrator:
         self.health_status = {}
         
     def initialize(self) -> bool:
-        """Initialize all storage configurations and validate connectivity."""
+        """
+Initialize all storage configurations and validate connectivity."""
         try:
             print("🚀 Initializing IA-Influencer Agent Storage System...")
             
@@ -98,27 +100,33 @@ class StorageOrchestrator:
         return s3_config.validate_configuration()
     
     def _check_azure_health(self) -> bool:
-        """Check Azure Blob Storage connectivity and configuration."""
+        """
+Check Azure Blob Storage connectivity and configuration."""
         return azure_blob_config.validate_configuration()
     
     def _check_gcs_health(self) -> bool:
-        """Check Google Cloud Storage connectivity and configuration."""
+        """
+Check Google Cloud Storage connectivity and configuration."""
         return gcs_config.validate_configuration()
     
     def _check_local_health(self) -> bool:
-        """Check local storage accessibility and configuration."""
+        """
+Check local storage accessibility and configuration."""
         return local_storage_config.validate_configuration()
     
     def _check_cdn_health(self) -> bool:
-        """Check CDN configuration and endpoints."""
+        """
+Check CDN configuration and endpoints."""
         return cdn_config.validate_configuration()
     
     def _check_security_health(self) -> bool:
-        """Check security configuration and policies."""
+        """
+Check security configuration and policies."""
         return storage_security_config.validate_configuration()
     
     def _log_initialization(self):
-        """Log storage system initialization."""
+        """
+Log storage system initialization."""
         storage_security_config.log_security_event(
             'storage_initialization',
             {
@@ -198,7 +206,8 @@ class StorageOrchestrator:
     
     def _estimate_storage_cost(self, storage_type: str, file_size_mb: float, 
                              access_pattern: str) -> float:
-        """Estimate monthly storage cost in USD."""
+        """
+Estimate monthly storage cost in USD."""
         # Simplified cost calculation (actual costs vary by region and usage)
         cost_per_gb_month = {
             's3': {'frequent': 0.023, 'infrequent': 0.0125, 'archive': 0.004},
@@ -213,7 +222,8 @@ class StorageOrchestrator:
         return round(file_size_gb * rate, 4)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
+        """
+Get comprehensive system status."""
         return {
             'initialized': self.initialized,
             'health_status': self.health_status,
@@ -225,7 +235,8 @@ class StorageOrchestrator:
         }
     
     def refresh_configurations(self) -> bool:
-        """Refresh all storage configurations."""
+        """
+Refresh all storage configurations."""
         try:
             # Re-validate configurations
             validation_result = validate_all_storage_configs()
@@ -313,7 +324,8 @@ def initialize_storage_system() -> bool:
     return storage_orchestrator.initialize()
 
 def get_storage_orchestrator() -> StorageOrchestrator:
-    """Get the global storage orchestrator instance."""
+    """
+Get the global storage orchestrator instance."""
     return storage_orchestrator
 
 # Auto-initialize in production environments

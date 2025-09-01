@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Workflow Management System
+"""
+Comprehensive Tests for Workflow Management System
 
 Industrial-grade testing for workflow orchestration, task coordination,
 pipeline management, and automated process execution.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -53,10 +56,12 @@ logger = logging.getLogger(__name__)
 
 
 class TestWorkflowDefinition:
-    """Test workflow definition and structure"""
+    """
+Test workflow definition and structure"""
     
     def test_workflow_creation(self):
-        """Test creating workflow definitions"""
+        """
+Test creating workflow definitions"""
         workflow = WorkflowDefinition(
             workflow_id="test_workflow_001",
             name="Test Content Creation Workflow",
@@ -268,7 +273,8 @@ class TestWorkflowEngine:
     
     @pytest.fixture
     async def workflow_engine(self) -> WorkflowEngine:
-        """Create workflow engine for testing"""
+        """
+Create workflow engine for testing"""
         config = WorkflowConfig(
             max_concurrent_workflows=10,
             max_concurrent_tasks=20,
@@ -285,7 +291,8 @@ class TestWorkflowEngine:
     
     @pytest.fixture
     def sample_content_workflow(self) -> WorkflowDefinition:
-        """Create sample content creation workflow"""
+        """
+Create sample content creation workflow"""
         workflow = WorkflowDefinition(
             workflow_id="sample_content_workflow",
             name="Sample Content Creation Workflow",
@@ -348,7 +355,8 @@ class TestWorkflowEngine:
         assert not engine.initialized
     
     async def test_workflow_registration(self, workflow_engine, sample_content_workflow):
-        """Test workflow registration"""
+        """
+Test workflow registration"""
         # Register workflow
         registration_result = await workflow_engine.register_workflow(sample_content_workflow)
         
@@ -866,7 +874,8 @@ class TestWorkflowIntegration:
     
     @pytest.fixture
     async def integrated_workflow_system(self):
-        """Create integrated workflow system with all components"""
+        """
+Create integrated workflow system with all components"""
         config = WorkflowConfig(
             max_concurrent_workflows=20,
             max_concurrent_tasks=50,

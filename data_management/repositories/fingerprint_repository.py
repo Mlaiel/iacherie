@@ -8,7 +8,7 @@ Responsibility: AI-powered content identification and tracking
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -21,6 +21,7 @@ FINGERPRINT REPOSITORY ARCHITECTURE:
 Fingerprint Generation → Hash Storage → Similarity Search → 
 Match Detection → Content Tracking → Protection Monitoring
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -40,7 +41,9 @@ except ImportError:
         pass
 
 class FingerprintType(Enum):
-    """Types of content fingerprints"""
+    """
+Types of content fingerprints"""
+
     VISUAL = "visual"
     AUDIO = "audio"
     TEXT = "text"
@@ -50,6 +53,7 @@ class FingerprintType(Enum):
 
 class MatchType(Enum):
     """Types of fingerprint matches"""
+
     EXACT = "exact"
     NEAR_DUPLICATE = "near_duplicate"
     PARTIAL = "partial"
@@ -58,6 +62,7 @@ class MatchType(Enum):
 
 class FingerprintAlgorithm(Enum):
     """Fingerprinting algorithms"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     WAVELET_HASH = "wavelet_hash"
     CHROMAPRINT = "chromaprint"
@@ -83,7 +88,8 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint match result"""
+    """
+Fingerprint match result"""
     match_id: str
     original_fingerprint_id: str
     matched_fingerprint_id: str
@@ -96,7 +102,8 @@ class FingerprintMatch:
 
 @dataclass
 class DuplicateDetection:
-    """Duplicate content detection result"""
+    """
+Duplicate content detection result"""
     detection_id: str
     content_id: str
     duplicate_content_ids: List[str]
@@ -109,7 +116,8 @@ class DuplicateDetection:
 
 @dataclass
 class FingerprintAnalytics:
-    """Fingerprint analytics data"""
+    """
+Fingerprint analytics data"""
     total_fingerprints: int
     fingerprints_by_type: Dict[str, int]
     duplicate_detections: int
@@ -414,7 +422,8 @@ class FingerprintRepository(BaseRepository):
             return FingerprintType.METADATA
     
     def _classify_match_type(self, similarity_score: float) -> MatchType:
-        """Classify match type based on similarity score"""
+        """
+Classify match type based on similarity score"""
         if similarity_score >= self._similarity_thresholds[MatchType.EXACT]:
             return MatchType.EXACT
         elif similarity_score >= self._similarity_thresholds[MatchType.NEAR_DUPLICATE]:
@@ -428,20 +437,24 @@ class FingerprintRepository(BaseRepository):
     
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_fingerprints_by_content(self, content_id: str) -> List[ContentFingerprint]:
-        """Get all fingerprints for a content"""
+        """
+Get all fingerprints for a content"""
         return []
     
     def _get_fingerprint_creator(self, fingerprint_id: str) -> Optional[str]:
-        """Get creator ID for a fingerprint"""
+        """
+Get creator ID for a fingerprint"""
         return None
     
     def _get_content_id_by_fingerprint(self, fingerprint_id: str) -> Optional[str]:
-        """Get content ID for a fingerprint"""
+        """
+Get content ID for a fingerprint"""
         return None
 
 
 class AsyncFingerprintRepository(AsyncBaseRepository):
-    """Asynchronous fingerprint repository for high-performance operations"""
+    """
+Asynchronous fingerprint repository for high-performance operations"""
     
     def __init__(self, db_connection=None, cache_manager=None,
                  fingerprint_engine=None, similarity_matcher=None):
@@ -458,20 +471,23 @@ class AsyncFingerprintRepository(AsyncBaseRepository):
         pass
     
     async def batch_duplicate_detection_async(self, content_ids: List[str]) -> List[DuplicateDetection]:
-        """Perform batch duplicate detection asynchronously"""
+        """
+Perform batch duplicate detection asynchronously"""
         # Async implementation would go here
         pass
         return fingerprints[0] if fingerprints else None
     
     def search_similar(self, embedding: List[float], threshold: float = 0.8, limit: int = 10) -> List[FingerPrintModel]:
-        """Recherche d'empreintes similaires"""
+        """
+Recherche d'empreintes similaires"""
         if not self.vector_db:
             return []
         # Vector similarity search implementation
         return []
     
     def _index_fingerprint(self, fingerprint: FingerPrintModel):
-        """Index fingerprint in vector database"""
+        """
+Index fingerprint in vector database"""
         if self.vector_db and fingerprint.primary_embedding:
             # Add to FAISS index
             pass

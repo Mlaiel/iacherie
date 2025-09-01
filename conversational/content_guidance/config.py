@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
@@ -19,7 +20,9 @@ from backend.core.config import get_settings
 
 
 class ServiceTier(Enum):
-    """Service tier levels for different quality/performance requirements."""
+    """
+Service tier levels for different quality/performance requirements."""
+
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -28,6 +31,7 @@ class ServiceTier(Enum):
 
 class ProcessingMode(Enum):
     """Processing modes for different performance characteristics."""
+
     FAST = "fast"              # Quick processing, lower accuracy
     BALANCED = "balanced"      # Balanced speed and accuracy
     ACCURATE = "accurate"      # High accuracy, slower processing
@@ -55,7 +59,8 @@ class ServiceConfiguration:
 
 @dataclass
 class ContentGuidanceConfig:
-    """Main configuration for the content guidance system."""
+    """
+Main configuration for the content guidance system."""
     
     # Global settings
     environment: str = os.getenv("ENVIRONMENT", "development")
@@ -124,7 +129,8 @@ class ContentGuidanceConfig:
         self._validate_configuration()
     
     def _apply_environment_overrides(self):
-        """Apply environment-specific configuration overrides."""
+        """
+Apply environment-specific configuration overrides."""
         
         if self.environment == "production":
             # Production settings
@@ -313,7 +319,8 @@ class ContentGuidanceConfig:
         ]
     
     def _validate_configuration(self):
-        """Validate configuration settings for consistency and requirements."""
+        """
+Validate configuration settings for consistency and requirements."""
         
         # Validate timeouts
         if self.default_timeout <= 0:
@@ -390,7 +397,8 @@ class ContentGuidanceConfig:
                 service_config.custom_parameters[key] = value
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary format."""
+        """
+Convert configuration to dictionary format."""
         
         result = {}
         
@@ -416,7 +424,8 @@ class ContentGuidanceConfig:
         return result
     
     def export_config(self, file_path: Union[str, Path]):
-        """Export configuration to file."""
+        """
+Export configuration to file."""
         
         import json
         
@@ -427,7 +436,8 @@ class ContentGuidanceConfig:
     
     @classmethod
     def load_from_file(cls, file_path: Union[str, Path]) -> 'ContentGuidanceConfig':
-        """Load configuration from file."""
+        """
+Load configuration from file."""
         
         import json
         
@@ -444,7 +454,8 @@ _config_instance: Optional[ContentGuidanceConfig] = None
 
 
 def get_content_guidance_config() -> ContentGuidanceConfig:
-    """Get the global content guidance configuration instance."""
+    """
+Get the global content guidance configuration instance."""
     
     global _config_instance
     
@@ -455,7 +466,8 @@ def get_content_guidance_config() -> ContentGuidanceConfig:
 
 
 def update_config(**kwargs):
-    """Update the global configuration with new values."""
+    """
+Update the global configuration with new values."""
     
     config = get_content_guidance_config()
     

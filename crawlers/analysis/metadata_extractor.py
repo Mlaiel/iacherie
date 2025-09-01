@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import json
@@ -51,7 +52,9 @@ import chardet
 logger = logging.getLogger(__name__)
 
 class ExtractionStrategy(Enum):
-    """Metadata extraction strategies."""
+    """
+Metadata extraction strategies."""
+
     COMPREHENSIVE = "comprehensive"
     FAST = "fast"
     DEEP_ANALYSIS = "deep_analysis"
@@ -60,6 +63,7 @@ class ExtractionStrategy(Enum):
 
 class MetadataCategory(Enum):
     """Metadata categories."""
+
     TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     RIGHTS = "rights"
@@ -69,6 +73,7 @@ class MetadataCategory(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats."""
+
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -1141,7 +1146,8 @@ class MetadataExtractor:
         content_source: Union[str, bytes, Path],
         strategy: ExtractionStrategy
     ) -> str:
-        """Generate cache key for metadata."""
+        """
+Generate cache key for metadata."""
         if isinstance(content_source, bytes):
             source_hash = hashlib.md5(content_source).hexdigest()
         else:
@@ -1180,7 +1186,8 @@ class MetadataExtractor:
             return None, None
     
     def _parse_date(self, date_string: Optional[str]) -> Optional[datetime]:
-        """Parse date string to datetime object."""
+        """
+Parse date string to datetime object."""
         if not date_string:
             return None
         
@@ -1203,7 +1210,8 @@ class MetadataExtractor:
         return None
     
     def _detect_language(self, text: str) -> Optional[str]:
-        """Detect language of text content."""
+        """
+Detect language of text content."""
         # Simplified language detection
         english_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
         french_words = {'le', 'la', 'les', 'et', 'ou', 'mais', 'dans', 'sur', 'à', 'pour', 'de', 'avec'}
@@ -1238,7 +1246,8 @@ class MetadataExtractor:
         return [word for word, count in word_counts.most_common(max_keywords)]
     
     def _infer_content_category(self, terms: List[str]) -> str:
-        """Infer content category from keywords and tags."""
+        """
+Infer content category from keywords and tags."""
         categories = {
             'music': ['music', 'song', 'album', 'artist', 'band', 'audio', 'sound'],
             'photography': ['photo', 'photography', 'image', 'picture', 'camera', 'lens'],
@@ -1267,7 +1276,8 @@ class MetadataExtractor:
         self,
         content_batch: List[Tuple[str, Union[str, bytes, Path], Optional[ExtractionStrategy], Optional[ContentFormat]]]
     ) -> List[ContentMetadata]:
-        """Extract metadata from multiple content items in batch."""
+        """
+Extract metadata from multiple content items in batch."""
         tasks = []
         
         for content_id, content_source, strategy, content_format in content_batch:

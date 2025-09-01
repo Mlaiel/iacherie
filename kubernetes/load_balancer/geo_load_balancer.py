@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -45,7 +46,8 @@ GEO_COMPLIANCE_STATUS = Gauge('geo_compliance_status', 'GDPR/Regional compliance
 
 @dataclass
 class GeographicRegion:
-    """Geographic region configuration for load balancing"""
+    """
+Geographic region configuration for load balancing"""
     name: str
     countries: List[str]
     primary_servers: List[str]
@@ -671,7 +673,8 @@ class GeographicLoadBalancer:
         return earth_radius * c
     
     async def _calculate_latency_score(self, server: ServerEndpoint) -> float:
-        """Calculate score based on server latency"""
+        """
+Calculate score based on server latency"""
         try:
             # Get average latency from monitoring
             avg_latency = server.avg_latency_ms

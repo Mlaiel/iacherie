@@ -7,6 +7,7 @@ Copyright (c) 2024 Fahed Mlaiel (mlaiel@live.de) - All Rights Reserved
 STRONG COPYRIGHT WARNING: Unauthorized copying, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import pytest
 import pytest_asyncio
 import asyncio
@@ -292,7 +293,8 @@ def content_analyzer():
 
 @pytest.fixture
 def nlp_task_factory():
-    """Factory for creating NLP tasks"""
+    """
+Factory for creating NLP tasks"""
     def create_task(content: str, content_type: str = "text", language: str = "en", metadata: Dict[str, Any] = None):
         from ai.nlp.core import NLPTask
         import uuid
@@ -316,7 +318,8 @@ class NLPResponse:
     
     @classmethod
     def from_nlp_result(cls, result: 'ai.nlp.core.NLPResult') -> 'NLPResponse':
-        """Create from actual NLPResult"""
+        """
+Create from actual NLPResult"""
         return cls(
             request_id=result.task_id,
             results=result.results,

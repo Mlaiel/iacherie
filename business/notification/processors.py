@@ -15,6 +15,7 @@ Processors:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 import logging
 from datetime import datetime, timezone
@@ -28,10 +29,12 @@ logger = logging.getLogger(__name__)
 
 
 class BaseBusinessProcessor(ABC):
-    """Base class for business notification processors."""
+    """
+Base class for business notification processors."""
     
     def __init__(self, config: NotificationConfig):
-        """Initialize processor with configuration."""
+        """
+Initialize processor with configuration."""
         self.config = config
         self.processor_name = self.__class__.__name__
         self.business_rules = BUSINESS_RULES
@@ -51,7 +54,8 @@ class BaseBusinessProcessor(ABC):
     
     @abstractmethod
     def get_supported_types(self) -> List[str]:
-        """Get list of supported notification types."""
+        """
+Get list of supported notification types."""
         pass
     
     def _enhance_content_with_business_context(
@@ -59,7 +63,8 @@ class BaseBusinessProcessor(ABC):
         content: NotificationContent,
         business_context: Dict[str, Any]
     ) -> NotificationContent:
-        """Enhance notification content with business context."""
+        """
+Enhance notification content with business context."""
         try:
             # Add business-specific variables to content
             if business_context:
@@ -140,10 +145,12 @@ class BaseBusinessProcessor(ABC):
 
 
 class ContentProtectionProcessor(BaseBusinessProcessor):
-    """Processor for content protection and copyright notifications."""
+    """
+Processor for content protection and copyright notifications."""
     
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""
+        """
+Get supported notification types."""
         return [
             "content_protection",
             "copyright_infringement", 
@@ -232,7 +239,8 @@ class CollaborationProcessor(BaseBusinessProcessor):
     """Processor for collaboration and partnership notifications."""
     
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""
+        """
+Get supported notification types."""
         return [
             "collaboration_match",
             "partnership_opportunity", 
@@ -328,7 +336,8 @@ class MonetizationProcessor(BaseBusinessProcessor):
     """Processor for monetization and revenue notifications."""
     
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""
+        """
+Get supported notification types."""
         return [
             "monetization_opportunity",
             "revenue_alert",
@@ -502,7 +511,8 @@ class SEOProcessor(BaseBusinessProcessor):
     """Processor for SEO optimization and performance notifications."""
     
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""
+        """
+Get supported notification types."""
         return [
             "seo_optimization",
             "performance_alert",
@@ -632,7 +642,8 @@ class DistributionProcessor(BaseBusinessProcessor):
     """Processor for distribution and platform management notifications."""
     
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""
+        """
+Get supported notification types."""
         return [
             "distribution_status",
             "platform_sync",

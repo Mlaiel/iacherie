@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import time
 import json
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -42,6 +45,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert status states"""
+
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
@@ -51,6 +55,7 @@ class AlertStatus(Enum):
 
 class AlertChannel(Enum):
     """Alert delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
@@ -62,6 +67,7 @@ class AlertChannel(Enum):
 
 class AlertCategory(Enum):
     """Alert categories"""
+
     SYSTEM = "system"
     SECURITY = "security"
     PERFORMANCE = "performance"
@@ -96,7 +102,8 @@ class AlertRule:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'rule_id': self.rule_id,
             'name': self.name,
@@ -122,7 +129,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
+    """
+Alert instance"""
     alert_id: str
     rule_id: str
     title: str
@@ -145,7 +153,8 @@ class Alert:
     notification_count: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'alert_id': self.alert_id,
             'rule_id': self.rule_id,
@@ -183,7 +192,8 @@ class AlertEvaluator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize alert evaluator"""
+        """
+Initialize alert evaluator"""
         self.config = config or {}
         
         # Rule storage
@@ -205,7 +215,8 @@ class AlertEvaluator:
         self.evaluation_task = None
     
     def add_rule(self, rule: AlertRule):
-        """Add alert rule"""
+        """
+Add alert rule"""
         try:
             with self._lock:
                 self.alert_rules[rule.rule_id] = rule
@@ -550,7 +561,8 @@ class AlertManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize alert manager"""
+        """
+Initialize alert manager"""
         self.config = config or {}
         
         # Alert storage
@@ -579,7 +591,8 @@ class AlertManager:
         self._lock = threading.Lock()
     
     async def start(self):
-        """Start alert manager"""
+        """
+Start alert manager"""
         try:
             logger.info("Starting Alert Manager")
             
@@ -987,7 +1000,8 @@ class StandardAlertRules:
     
     @staticmethod
     def high_error_rate_rule() -> AlertRule:
-        """High error rate alert rule"""
+        """
+High error rate alert rule"""
         return AlertRule(
             rule_id="high_error_rate",
             name="High Error Rate",
@@ -1092,7 +1106,8 @@ class IntelligentAlerting:
     """
     
     def __init__(self, alert_manager: AlertManager, analytics_engine: Any):
-        """Initialize intelligent alerting"""
+        """
+Initialize intelligent alerting"""
         self.alert_manager = alert_manager
         self.analytics_engine = analytics_engine
         
@@ -1106,7 +1121,8 @@ class IntelligentAlerting:
         self.alert_patterns: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
     
     async def analyze_and_alert(self, metric_name: str, value: float):
-        """Analyze metric and trigger intelligent alerts"""
+        """
+Analyze metric and trigger intelligent alerts"""
         try:
             # Update baselines
             await self._update_baseline(metric_name, value)

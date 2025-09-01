@@ -12,7 +12,7 @@ This orchestration system and ML methodologies are the exclusive intellectual pr
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 
 🎯 BUSINESS LOGIC INTEGRATION:
 Creator Upload → AI/ML Processing → Feature Extraction → Model Inference
@@ -26,6 +26,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -81,7 +82,9 @@ from .model_registry import ModelRegistry, ModelVersion, ModelMetadata
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """ML service operational status"""
+    """
+ML service operational status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded" 
     UNHEALTHY = "unhealthy"
@@ -90,6 +93,7 @@ class ServiceStatus(Enum):
 
 class MLServiceType(Enum):
     """Available ML service types"""
+
     TRAINING = "training"
     INFERENCE = "inference"
     OPTIMIZATION = "optimization"
@@ -112,7 +116,8 @@ class ServiceHealth:
 
 @dataclass
 class MLOperationRequest:
-    """Standardized ML operation request"""
+    """
+Standardized ML operation request"""
     operation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     service_type: MLServiceType = MLServiceType.INFERENCE
     operation: str = ""
@@ -139,7 +144,8 @@ class MLServiceOrchestrator:
         self._setup_monitoring()
         
     def _initialize_services(self):
-        """Initialize all ML services and components"""
+        """
+Initialize all ML services and components"""
         try:
             # Initialize core ML components
             self.ml_agent = MLAgent()
@@ -185,7 +191,8 @@ class MLServiceOrchestrator:
         }
         
     def _setup_monitoring(self):
-        """Setup comprehensive monitoring and metrics collection"""
+        """
+Setup comprehensive monitoring and metrics collection"""
         # Prometheus metrics
         self.request_counter = Counter(
             'ml_requests_total',
@@ -361,7 +368,8 @@ class MLServiceOrchestrator:
         return health_status
 
     async def get_service_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics for all ML services"""
+        """
+Get comprehensive performance metrics for all ML services"""
         metrics = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'services': {},
@@ -424,7 +432,8 @@ async def process_training_request(request_data: Dict[str, Any]) -> Dict[str, An
     return await ml_orchestrator.process_request(request)
 
 async def process_inference_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process ML model inference request"""
+    """
+Process ML model inference request"""
     request = MLOperationRequest(
         service_type=MLServiceType.INFERENCE,
         operation='predict',
@@ -433,7 +442,8 @@ async def process_inference_request(request_data: Dict[str, Any]) -> Dict[str, A
     return await ml_orchestrator.process_request(request)
 
 async def process_optimization_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process model optimization request"""
+    """
+Process model optimization request"""
     request = MLOperationRequest(
         service_type=MLServiceType.OPTIMIZATION,
         operation='optimize_model',
@@ -442,7 +452,8 @@ async def process_optimization_request(request_data: Dict[str, Any]) -> Dict[str
     return await ml_orchestrator.process_request(request)
 
 async def extract_features(request_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process feature extraction request"""
+    """
+Process feature extraction request"""
     request = MLOperationRequest(
         service_type=MLServiceType.FEATURE_EXTRACTION,
         operation='extract_features',
@@ -451,11 +462,13 @@ async def extract_features(request_data: Dict[str, Any]) -> Dict[str, Any]:
     return await ml_orchestrator.process_request(request)
 
 async def get_ml_health() -> Dict[str, ServiceHealth]:
-    """Get health status of all ML services"""
+    """
+Get health status of all ML services"""
     return await ml_orchestrator.get_service_health()
 
 async def get_ml_metrics() -> Dict[str, Any]:
-    """Get comprehensive ML performance metrics"""
+    """
+Get comprehensive ML performance metrics"""
     return await ml_orchestrator.get_service_metrics()
 
 # Export all components for external access

@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Financial Systems Engineer + Revenue Optimization Expert + Payment Processing Specialist
 """
+
 import asyncio
 import json
 import uuid
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""
+    """
+Revenue source types"""
+
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     SPONSORSHIP = "sponsorship"
@@ -55,6 +58,7 @@ class RevenueSource(str, Enum):
 
 class PaymentStatus(str, Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -66,6 +70,7 @@ class PaymentStatus(str, Enum):
 
 class DistributionMethod(str, Enum):
     """Revenue distribution methods"""
+
     EQUAL_SPLIT = "equal_split"
     PERFORMANCE_BASED = "performance_based"
     CONTRIBUTION_BASED = "contribution_based"
@@ -76,6 +81,7 @@ class DistributionMethod(str, Enum):
 
 class Currency(str, Enum):
     """Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -101,7 +107,8 @@ class RevenueMetrics:
 
 @dataclass
 class TaxInformation:
-    """Tax calculation information"""
+    """
+Tax calculation information"""
     tax_rate_percent: float = 0.0
     tax_jurisdiction: str = ""
     tax_exempt: bool = False
@@ -436,7 +443,8 @@ class RevenueStreamRequest(BaseModel):
     campaign_id: Optional[str] = None
 
 class DistributionRequest(BaseModel):
-    """Request model for revenue distribution"""
+    """
+Request model for revenue distribution"""
     revenue_stream_ids: List[str]
     distribution_name: str
     distribution_method: DistributionMethod
@@ -446,7 +454,8 @@ class DistributionRequest(BaseModel):
     scheduled_date: Optional[datetime] = None
 
 class PaymentRequest(BaseModel):
-    """Request model for payment processing"""
+    """
+Request model for payment processing"""
     distribution_id: str
     recipient_user_id: str
     payment_method: str
@@ -456,7 +465,8 @@ class PaymentRequest(BaseModel):
     currency: Currency = Currency.USD
 
 class MonetizationRuleRequest(BaseModel):
-    """Request model for monetization rules"""
+    """
+Request model for monetization rules"""
     rule_name: str
     rule_type: str
     conditions: Dict[str, Any]
@@ -467,7 +477,8 @@ class MonetizationRuleRequest(BaseModel):
     fixed_fee_cents: Optional[int] = None
 
 class RevenueDistributionManager:
-    """Enterprise revenue distribution management system"""
+    """
+Enterprise revenue distribution management system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
@@ -480,7 +491,8 @@ class RevenueDistributionManager:
         user_id: str,
         revenue_request: RevenueStreamRequest
     ) -> RevenueStream:
-        """Record new revenue stream"""
+        """
+Record new revenue stream"""
         try:
             # Calculate revenue metrics
             revenue_metrics = await self._calculate_revenue_metrics(revenue_request)
@@ -800,7 +812,8 @@ class RevenueDistributionManager:
         return metrics
     
     async def _calculate_fees(self, revenue_stream: RevenueStream) -> Dict[str, int]:
-        """Calculate platform and processing fees"""
+        """
+Calculate platform and processing fees"""
         # This would implement actual fee calculation logic
         # For now, return sample fees
         gross_amount = revenue_stream.gross_revenue_cents
@@ -812,7 +825,8 @@ class RevenueDistributionManager:
         }
     
     async def _validate_revenue_quality(self, revenue_stream: RevenueStream) -> float:
-        """Validate revenue stream quality"""
+        """
+Validate revenue stream quality"""
         score = 100.0
         
         # Check for reasonable ratios
@@ -828,7 +842,8 @@ class RevenueDistributionManager:
         return max(0.0, score)
     
     async def _get_revenue_stream_by_id(self, stream_id: str) -> Optional[RevenueStream]:
-        """Get revenue stream by ID"""
+        """
+Get revenue stream by ID"""
         try:
             stream_uuid = uuid.UUID(stream_id)
             return await self.db_session.query(RevenueStream).filter(

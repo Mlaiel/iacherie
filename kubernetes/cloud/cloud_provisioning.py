@@ -14,6 +14,7 @@ This module provides comprehensive cloud infrastructure provisioning capabilitie
 for the IA Influencer Agent platform, supporting automated resource provisioning,
 infrastructure as code, and dynamic scaling across cloud providers.
 """
+
 import logging
 import asyncio
 import yaml
@@ -29,7 +30,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ProvisioningEngine(Enum):
-    """Infrastructure provisioning engines"""
+    """
+Infrastructure provisioning engines"""
+
     TERRAFORM = "terraform"
     ANSIBLE = "ansible"
     CLOUDFORMATION = "cloudformation"
@@ -40,6 +43,7 @@ class ProvisioningEngine(Enum):
 
 class ResourceState(Enum):
     """Resource provisioning states"""
+
     PLANNING = "planning"
     PROVISIONING = "provisioning"
     ACTIVE = "active"
@@ -50,6 +54,7 @@ class ResourceState(Enum):
 
 class ProvisioningMode(Enum):
     """Provisioning execution modes"""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -74,7 +79,8 @@ class ProvisioningTemplate:
 
 @dataclass
 class ProvisioningJob:
-    """Infrastructure provisioning job"""
+    """
+Infrastructure provisioning job"""
     job_id: str
     template_id: str
     environment: str
@@ -91,7 +97,8 @@ class ProvisioningJob:
 
 @dataclass
 class ResourceDependency:
-    """Resource dependency definition"""
+    """
+Resource dependency definition"""
     resource_id: str
     dependency_id: str
     dependency_type: str
@@ -99,7 +106,8 @@ class ResourceDependency:
     wait_for_completion: bool
 
 class CloudProvisioningEngine:
-    """Enterprise cloud infrastructure provisioning system"""
+    """
+Enterprise cloud infrastructure provisioning system"""
     
     def __init__(self, workspace_path: str = "/tmp/provisioning"):
         """Initialize cloud provisioning engine"""
@@ -119,7 +127,8 @@ class CloudProvisioningEngine:
         self.arm_templates_config = ARMTemplatesEngine(self.workspace_path)
         
     async def initialize(self) -> bool:
-        """Initialize provisioning engine"""
+        """
+Initialize provisioning engine"""
         try:
             self.logger.info("Initializing cloud provisioning engine")
             
@@ -525,7 +534,8 @@ class CloudProvisioningEngine:
     
     async def _estimate_provisioning_cost(self, template: ProvisioningTemplate, 
                                         parameters: Dict[str, Any]) -> float:
-        """Estimate provisioning cost"""
+        """
+Estimate provisioning cost"""
         # This is a simplified cost estimation
         # Real implementation would integrate with cloud provider cost APIs
         
@@ -544,7 +554,8 @@ class CloudProvisioningEngine:
     
     async def _get_cost_breakdown(self, template: ProvisioningTemplate, 
                                 parameters: Dict[str, Any]) -> Dict[str, float]:
-        """Get detailed cost breakdown"""
+        """
+Get detailed cost breakdown"""
         return {
             "compute": 500.0,
             "storage": 100.0,
@@ -576,7 +587,8 @@ class TerraformEngine:
         self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def validate_template(self, template_content: str) -> Dict[str, Any]:
-        """Validate Terraform template"""
+        """
+Validate Terraform template"""
         # Implementation would use terraform validate
         return {"errors": [], "warnings": []}
     
@@ -609,7 +621,8 @@ class AnsibleEngine:
         self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def execute_template(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Execute Ansible playbook"""
+        """
+Execute Ansible playbook"""
         # Implementation would run ansible-playbook
         return {"outputs": {"status": "completed"}}
     
@@ -631,7 +644,8 @@ class CloudFormationEngine:
         self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def validate_template(self, template_content: str) -> Dict[str, Any]:
-        """Validate CloudFormation template"""
+        """
+Validate CloudFormation template"""
         # Implementation would use AWS API to validate
         return {"errors": [], "warnings": []}
     
@@ -664,7 +678,8 @@ class ARMTemplatesEngine:
         self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def execute_template(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Execute ARM template"""
+        """
+Execute ARM template"""
         # Implementation would deploy ARM template
         return {"outputs": {"status": "completed"}}
     

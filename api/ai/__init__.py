@@ -9,13 +9,14 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """# Optional imports to handle missing dependencies gracefully
 try:
     from .nlp import TextAnalyzer
 except ImportError:
     class TextAnalyzer:
-        """Placeholder for missing TextAnalyzer"""
+        """
+Placeholder for missing TextAnalyzer"""
         def __init__(self, *args, **kwargs):
             raise ImportError("NLP dependencies not available. Install with: pip install spacy")
 

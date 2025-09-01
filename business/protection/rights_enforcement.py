@@ -4,6 +4,7 @@ Professional copyright enforcement and violation response system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import aiohttp
 import smtplib
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationType(Enum):
-    """Types of copyright violations"""
+    """
+Types of copyright violations"""
+
     EXACT_COPY = "exact_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -36,6 +39,7 @@ class ViolationType(Enum):
 
 class EnforcementAction(Enum):
     """Types of enforcement actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_and_desist"
     PLATFORM_REPORT = "platform_report"
@@ -47,6 +51,7 @@ class EnforcementAction(Enum):
 
 class EnforcementStatus(Enum):
     """Status of enforcement actions"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -74,7 +79,8 @@ class ViolationReport:
 
 @dataclass
 class EnforcementRecord:
-    """Record of enforcement action taken"""
+    """
+Record of enforcement action taken"""
     record_id: str
     violation_id: str
     action_type: EnforcementAction
@@ -88,7 +94,8 @@ class EnforcementRecord:
 
 
 class DMCATakedownGenerator:
-    """Generate DMCA takedown notices"""
+    """
+Generate DMCA takedown notices"""
     
     def __init__(self, copyright_holder_info: Dict[str, str]):
         self.copyright_holder = copyright_holder_info
@@ -97,7 +104,8 @@ class DMCATakedownGenerator:
     def generate_dmca_notice(self, violation: ViolationReport) -> str:
         """Generate formal DMCA takedown notice"""
         try:
-            notice_template = """DMCA TAKEDOWN NOTICE
+            notice_template = """
+DMCA TAKEDOWN NOTICE
 
 Date: {date}
 
@@ -175,9 +183,11 @@ class CeaseDesistGenerator:
         self.copyright_holder = copyright_holder_info
     
     def generate_cease_desist(self, violation: ViolationReport) -> str:
-        """Generate formal cease and desist letter"""
+        """
+Generate formal cease and desist letter"""
         try:
-            letter_template = """CEASE AND DESIST LETTER
+            letter_template = """
+CEASE AND DESIST LETTER
 
 Date: {date}
 
@@ -290,7 +300,8 @@ class PlatformAPIHandler:
         }
     
     async def submit_platform_report(self, violation: ViolationReport, api_credentials: Dict[str, str]) -> Dict[str, Any]:
-        """Submit copyright report to platform API"""
+        """
+Submit copyright report to platform API"""
         try:
             platform = violation.platform.lower()
             
@@ -358,7 +369,8 @@ class PlatformAPIHandler:
         }
     
     def _format_instagram_report(self, base_data: Dict[str, Any], violation: ViolationReport) -> Dict[str, Any]:
-        """Format report for Instagram API"""
+        """
+Format report for Instagram API"""
         return {
             **base_data,
             'object_type': 'media',
@@ -366,7 +378,8 @@ class PlatformAPIHandler:
         }
     
     def _format_tiktok_report(self, base_data: Dict[str, Any], violation: ViolationReport) -> Dict[str, Any]:
-        """Format report for TikTok API"""
+        """
+Format report for TikTok API"""
         return {
             **base_data,
             'report_reason': 'copyright_infringement',
@@ -374,7 +387,8 @@ class PlatformAPIHandler:
         }
     
     def _format_facebook_report(self, base_data: Dict[str, Any], violation: ViolationReport) -> Dict[str, Any]:
-        """Format report for Facebook API"""
+        """
+Format report for Facebook API"""
         return {
             **base_data,
             'category': 'intellectual_property',
@@ -382,7 +396,8 @@ class PlatformAPIHandler:
         }
     
     def _get_platform_headers(self, platform: str, credentials: Dict[str, str]) -> Dict[str, str]:
-        """Get platform-specific headers"""
+        """
+Get platform-specific headers"""
         base_headers = {
             'User-Agent': 'IA-Influencer-Protection/1.0',
             'Content-Type': 'application/json'
@@ -409,7 +424,8 @@ class PlatformAPIHandler:
 
 
 class EmailNotificationSystem:
-    """Handle email notifications for enforcement actions"""
+    """
+Handle email notifications for enforcement actions"""
     
     def __init__(self, smtp_config: Dict[str, Any]):
         self.smtp_config = smtp_config
@@ -417,7 +433,8 @@ class EmailNotificationSystem:
         self.sender_name = smtp_config.get('sender_name', 'Fahed Mlaiel - IA Influencer Protection')
     
     async def send_dmca_notice(self, violation: ViolationReport, dmca_content: str, recipient_email: str) -> bool:
-        """Send DMCA takedown notice via email"""
+        """
+Send DMCA takedown notice via email"""
         try:
             subject = f"DMCA Takedown Notice - Copyright Infringement (Ref: {violation.violation_id})"
             
@@ -522,7 +539,8 @@ class RightsEnforcementEngine:
         self.active_violations: Dict[str, ViolationReport] = {}
     
     async def enforce_violation(self, violation: ViolationReport, enforcement_actions: List[EnforcementAction]) -> List[EnforcementRecord]:
-        """Execute enforcement actions for a violation"""
+        """
+Execute enforcement actions for a violation"""
         try:
             records = []
             
@@ -647,7 +665,8 @@ class RightsEnforcementEngine:
             raise
     
     async def _execute_platform_report(self, violation: ViolationReport, record: EnforcementRecord):
-        """Execute platform-specific report"""
+        """
+Execute platform-specific report"""
         try:
             # Get API credentials for platform
             api_credentials = self.config.get('platform_credentials', {}).get(violation.platform, {})
@@ -668,7 +687,8 @@ class RightsEnforcementEngine:
             raise
     
     async def _execute_legal_notice(self, violation: ViolationReport, record: EnforcementRecord):
-        """Execute legal notice"""
+        """
+Execute legal notice"""
         try:
             # Generate formal legal notice
             legal_notice = self._generate_legal_notice(violation)
@@ -688,8 +708,10 @@ class RightsEnforcementEngine:
             raise
     
     def _generate_legal_notice(self, violation: ViolationReport) -> str:
-        """Generate formal legal notice"""
-        return f"""FORMAL LEGAL NOTICE - COPYRIGHT INFRINGEMENT
+        """
+Generate formal legal notice"""
+        return f"""
+FORMAL LEGAL NOTICE - COPYRIGHT INFRINGEMENT
 
 Case Reference: {violation.violation_id}
 Date: {datetime.now().strftime('%B %d, %Y')}
@@ -714,7 +736,8 @@ Failure to respond appropriately may result in formal legal proceedings.
 """
     
     def _get_platform_copyright_email(self, platform: str) -> Optional[str]:
-        """Get copyright contact email for platform"""
+        """
+Get copyright contact email for platform"""
         copyright_emails = {
             'youtube': 'copyright@youtube.com',
             'instagram': 'copyright@instagram.com',
@@ -728,7 +751,8 @@ Failure to respond appropriately may result in formal legal proceedings.
         return copyright_emails.get(platform.lower())
     
     def get_enforcement_statistics(self) -> Dict[str, Any]:
-        """Get enforcement statistics"""
+        """
+Get enforcement statistics"""
         try:
             total_records = len(self.enforcement_records)
             

@@ -27,6 +27,7 @@ Creator upload → AI pattern analysis → Intelligent prediction →
 Adaptive scheduling → Performance optimization → Learning feedback → 
 Continuous improvement → Enhanced protection → Revenue optimization
 """
+
 import asyncio
 import logging
 import time
@@ -99,7 +100,8 @@ class AdvancedNeuralScheduler(nn.Module):
         )
         
     def forward(self, x):
-        """Forward pass through the network."""
+        """
+Forward pass through the network."""
         # Feature extraction
         features = self.feature_extractor(x)
         
@@ -128,7 +130,8 @@ class ContentEmbeddingProcessor:
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
     async def initialize(self):
-        """Initialize embedding models."""
+        """
+Initialize embedding models."""
         try:
             # Load pre-trained transformer model
             model_name = "sentence-transformers/all-MiniLM-L6-v2"
@@ -207,7 +210,8 @@ class RealtimePerformanceMonitor:
         
     async def record_prediction(self, task_id: str, predicted: float, 
                               actual: Optional[float] = None) -> None:
-        """Record prediction for performance tracking."""
+        """
+Record prediction for performance tracking."""
         timestamp = datetime.utcnow()
         
         metric = {
@@ -232,7 +236,8 @@ class RealtimePerformanceMonitor:
             await self.redis_client.ltrim('scheduler_predictions', 0, 10000)
             
     async def calculate_performance_metrics(self) -> Dict[str, float]:
-        """Calculate comprehensive performance metrics."""
+        """
+Calculate comprehensive performance metrics."""
         if not self.metrics_buffer:
             return {}
             
@@ -264,7 +269,8 @@ class RealtimePerformanceMonitor:
         return metrics
         
     async def check_performance_alerts(self) -> List[Dict[str, Any]]:
-        """Check for performance degradation and generate alerts."""
+        """
+Check for performance degradation and generate alerts."""
         metrics = await self.calculate_performance_metrics()
         alerts = []
         
@@ -300,6 +306,7 @@ class RealtimePerformanceMonitor:
 
 class LearningMode(Enum):
     """Machine learning operation modes."""
+
     TRAINING = "training"
     INFERENCE = "inference"
     EVALUATION = "evaluation"
@@ -308,6 +315,7 @@ class LearningMode(Enum):
 
 class PerformancePattern(Enum):
     """Task performance patterns."""
+
     CONSISTENT = "consistent"
     IMPROVING = "improving"
     DEGRADING = "degrading"
@@ -318,6 +326,7 @@ class PerformancePattern(Enum):
 
 class BusinessContext(Enum):
     """Business context for scheduling decisions."""
+
     CREATOR_PROTECTION = "creator_protection"
     REVENUE_OPTIMIZATION = "revenue_optimization"
     USER_EXPERIENCE = "user_experience"
@@ -356,7 +365,8 @@ class PredictionResult:
 
 @dataclass
 class LearningSession:
-    """ML learning session configuration."""
+    """
+ML learning session configuration."""
     session_id: str
     learning_mode: LearningMode
     target_metric: str
@@ -396,7 +406,8 @@ class IntelligentScheduler:
         performance_history_size: int = 10000,
         prediction_cache_size: int = 1000
     ):
-        """Initialize intelligent scheduler."""
+        """
+Initialize intelligent scheduler."""
         self.enable_ml_learning = enable_ml_learning
         self.enable_anomaly_detection = enable_anomaly_detection
         self.enable_adaptive_optimization = enable_adaptive_optimization
@@ -914,7 +925,8 @@ class IntelligentScheduler:
         return str(hash(json.dumps(key_features, sort_keys=True)))
     
     async def _continuous_learning_loop(self) -> None:
-        """Continuous learning background process."""
+        """
+Continuous learning background process."""
         while True:
             try:
                 await asyncio.sleep(300)  # Every 5 minutes
@@ -949,7 +961,8 @@ class IntelligentScheduler:
                 self.active_learning_tasks.discard('online_learning')
     
     async def _trigger_model_retraining(self) -> None:
-        """Trigger full model retraining."""
+        """
+Trigger full model retraining."""
         if 'model_retraining' not in self.active_learning_tasks:
             self.active_learning_tasks.add('model_retraining')
             try:
@@ -959,7 +972,8 @@ class IntelligentScheduler:
                 self.active_learning_tasks.discard('model_retraining')
     
     async def _perform_online_learning(self) -> None:
-        """Perform incremental online learning."""
+        """
+Perform incremental online learning."""
         try:
             if len(self.performance_history) < 10:
                 return
@@ -1134,7 +1148,8 @@ class IntelligentScheduler:
         context: BusinessContext,
         current_performance: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize scheduling for specific business context."""
+        """
+Optimize scheduling for specific business context."""
         try:
             context_data = self.business_patterns.get(context, [])
             
@@ -1253,7 +1268,8 @@ class IntelligentScheduler:
         return np.array(platform_mapping.get(platform.lower(), platform_mapping['default']))
     
     async def perform_neural_prediction(self, task_features: Dict[str, Any]) -> PredictionResult:
-        """Perform prediction using neural network."""
+        """
+Perform prediction using neural network."""
         try:
             if not hasattr(self, 'neural_model'):
                 await self.implement_neural_network_predictions()

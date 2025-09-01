@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Audio Intelligence Tests - Enterprise Grade Test Suite
+"""
+Audio Intelligence Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for audio processing, music analysis, speech recognition,
 emotion detection, and audio content understanding systems.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -59,10 +62,12 @@ from ai.ml.audio_intelligence import (
 
 
 class TestAudioIntelligenceEngine:
-    """Tests for core audio intelligence functionality"""
+    """
+Tests for core audio intelligence functionality"""
     
     def test_init_audio_intelligence_engine(self):
-        """Test audio intelligence engine initialization"""
+        """
+Test audio intelligence engine initialization"""
         engine = AudioIntelligenceEngine(
             supported_formats=["wav", "mp3", "flac", "m4a", "ogg"],
             sample_rate=44100,
@@ -233,7 +238,8 @@ class TestSpeechRecognitionEngine:
     """Tests for speech recognition functionality"""
     
     def test_init_speech_recognition(self):
-        """Test speech recognition engine initialization"""
+        """
+Test speech recognition engine initialization"""
         engine = SpeechRecognitionEngine(
             model_name="wav2vec2-base",
             supported_languages=["en", "fr", "de", "es", "it"],
@@ -410,7 +416,8 @@ class TestMusicAnalyzer:
     """Tests for music analysis functionality"""
     
     def test_init_music_analyzer(self):
-        """Test music analyzer initialization"""
+        """
+Test music analyzer initialization"""
         analyzer = MusicAnalyzer(
             analysis_features=["tempo", "key", "genre", "mood", "instruments"],
             genre_model="deep_genre_classifier",
@@ -619,7 +626,8 @@ class TestAudioEmotionDetector:
     """Tests for audio emotion detection"""
     
     def test_init_emotion_detector(self):
-        """Test emotion detector initialization"""
+        """
+Test emotion detector initialization"""
         detector = AudioEmotionDetector(
             emotion_model="deep_emotion_recognition",
             emotions=["happy", "sad", "angry", "neutral", "surprised", "fear", "disgust"],
@@ -756,7 +764,8 @@ class TestVoiceActivityDetector:
     """Tests for voice activity detection"""
     
     def test_init_vad(self):
-        """Test VAD initialization"""
+        """
+Test VAD initialization"""
         vad = VoiceActivityDetector(
             method="deep_learning",
             frame_length=25,  # ms
@@ -818,7 +827,8 @@ class TestAudioIntelligenceIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_audio_pipeline(self, sample_audio_file, temp_dir):
-        """Test complete audio intelligence pipeline"""
+        """
+Test complete audio intelligence pipeline"""
         # Initialize components
         engine = AudioIntelligenceEngine(
             models=["speech_recognition", "music_analysis", "emotion_detection"]

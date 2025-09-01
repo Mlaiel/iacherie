@@ -19,6 +19,7 @@ Expert Team Specializations:
 - Neural Network Architect
 - Data Science Expert
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -52,7 +53,9 @@ from ...database.models import LearningRecord, ModelMetrics
 
 
 class LearningMode(Enum):
-    """Learning modes for the system."""
+    """
+Learning modes for the system."""
+
     SUPERVISED = "supervised"
     UNSUPERVISED = "unsupervised"
     REINFORCEMENT = "reinforcement"
@@ -63,6 +66,7 @@ class LearningMode(Enum):
 
 class ModelType(Enum):
     """Types of machine learning models."""
+
     NEURAL_NETWORK = "neural_network"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -77,6 +81,7 @@ class ModelType(Enum):
 
 class LearningDomain(Enum):
     """Domains where learning is applied."""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     USER_BEHAVIOR = "user_behavior"
     PERFORMANCE_PREDICTION = "performance_prediction"
@@ -115,7 +120,8 @@ class LearningTask:
 
 @dataclass
 class TrainingResult:
-    """Result of a model training session."""
+    """
+Result of a model training session."""
     training_id: str
     task: LearningTask
     training_start: datetime
@@ -138,7 +144,8 @@ class TrainingResult:
 
 @dataclass
 class LearningInsight:
-    """Insight discovered through machine learning."""
+    """
+Insight discovered through machine learning."""
     insight_id: str
     domain: LearningDomain
     insight_type: str
@@ -153,7 +160,8 @@ class LearningInsight:
 
 
 class ContentOptimizationNN(nn.Module):
-    """Neural network for content optimization."""
+    """
+Neural network for content optimization."""
     
     def __init__(self, input_size: int, hidden_sizes: List[int], output_size: int):
         super(ContentOptimizationNN, self).__init__()
@@ -177,7 +185,8 @@ class ContentOptimizationNN(nn.Module):
 
 
 class UserBehaviorLSTM(nn.Module):
-    """LSTM network for user behavior prediction."""
+    """
+LSTM network for user behavior prediction."""
     
     def __init__(self, input_size: int, hidden_size: int, num_layers: int, output_size: int):
         super(UserBehaviorLSTM, self).__init__()
@@ -215,7 +224,8 @@ class LearningEngine:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Learning Engine with advanced ML capabilities."""
+        """
+Initialize the Learning Engine with advanced ML capabilities."""
         self.config = config or {}
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -330,7 +340,8 @@ class LearningEngine:
         )
     
     def _start_learning_services(self):
-        """Start background learning services."""
+        """
+Start background learning services."""
         # Start training task processor
         self.active_training['task_processor'] = asyncio.create_task(
             self._process_learning_tasks()
@@ -516,7 +527,8 @@ class LearningEngine:
         return data
     
     def _generate_content_optimization_data(self, n_samples: int) -> pd.DataFrame:
-        """Generate synthetic content optimization data."""
+        """
+Generate synthetic content optimization data."""
         np.random.seed(42)
         
         data = {
@@ -540,7 +552,8 @@ class LearningEngine:
         return pd.DataFrame(data)
     
     def _generate_user_behavior_data(self, n_samples: int) -> pd.DataFrame:
-        """Generate synthetic user behavior data."""
+        """
+Generate synthetic user behavior data."""
         np.random.seed(42)
         
         # Generate time series data
@@ -573,7 +586,8 @@ class LearningEngine:
         return pd.DataFrame(data)
     
     def _generate_performance_data(self, n_samples: int) -> pd.DataFrame:
-        """Generate synthetic performance data."""
+        """
+Generate synthetic performance data."""
         np.random.seed(42)
         
         data = {
@@ -603,7 +617,8 @@ class LearningEngine:
         task: LearningTask,
         data: pd.DataFrame
     ) -> Tuple[np.ndarray, np.ndarray, Dict[str, Any]]:
-        """Preprocess training data for model training."""
+        """
+Preprocess training data for model training."""
         preprocessors = {}
         
         # Separate features and target
@@ -787,7 +802,8 @@ class LearningEngine:
         X_test: np.ndarray,
         y_test: np.ndarray
     ) -> Dict[str, float]:
-        """Evaluate model performance on test data."""
+        """
+Evaluate model performance on test data."""
         performance = {}
         
         # Get predictions
@@ -833,7 +849,8 @@ class LearningEngine:
         X_train: np.ndarray,
         y_train: np.ndarray
     ) -> Dict[str, float]:
-        """Calculate feature importance for the model."""
+        """
+Calculate feature importance for the model."""
         feature_importance = {}
         
         if hasattr(model, 'feature_importances_'):
@@ -886,7 +903,8 @@ class LearningEngine:
             return 0.0
     
     async def _measure_inference_time(self, model: Any, sample_data: np.ndarray) -> float:
-        """Measure average inference time in milliseconds."""
+        """
+Measure average inference time in milliseconds."""
         try:
             import time
             
@@ -909,7 +927,8 @@ class LearningEngine:
             return 0.0
     
     async def _save_model(self, task_id: str, model: Any, preprocessors: Dict[str, Any]):
-        """Save trained model and preprocessors."""
+        """
+Save trained model and preprocessors."""
         try:
             if isinstance(model, nn.Module):
                 # Save PyTorch model
@@ -944,7 +963,8 @@ class LearningEngine:
             return 0.5
     
     async def _process_learning_tasks(self):
-        """Process learning tasks from the queue."""
+        """
+Process learning tasks from the queue."""
         while True:
             try:
                 # Get task from queue with timeout

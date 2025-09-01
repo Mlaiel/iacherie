@@ -6,7 +6,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -21,6 +21,7 @@ legal action. Contact mlaiel@live.de for licensing.
 Core surveillance engine that orchestrates all surveillance activities
 across the IA Influencer Agent platform.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Callable
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class EngineStatus(Enum):
-    """Surveillance engine status."""
+    """
+Surveillance engine status."""
+
     STOPPED = "stopped"
     STARTING = "starting"
     RUNNING = "running"
@@ -335,7 +338,8 @@ class SurveillanceEngine:
             self.task_callbacks[event].remove(callback)
     
     async def _validate_config(self) -> None:
-        """Validate engine configuration."""
+        """
+Validate engine configuration."""
         if self.max_concurrent_tasks <= 0:
             raise ValueError("max_concurrent_tasks must be positive")
         
@@ -631,7 +635,8 @@ class SurveillanceEngine:
         ]
     
     async def _notify_callbacks(self, event: str, **kwargs) -> None:
-        """Notify event callbacks."""
+        """
+Notify event callbacks."""
         try:
             callbacks = self.task_callbacks.get(event, [])
             

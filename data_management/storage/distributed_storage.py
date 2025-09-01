@@ -8,7 +8,7 @@ Enterprise distributed storage management with sharding, consistency,
 partitioning, and high-availability cluster orchestration.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 ÉQUIPE PROJET - SPÉCIALITÉS:
@@ -18,6 +18,7 @@ Contact: mlaiel@live.de
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import logging
 import asyncio
@@ -34,7 +35,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ConsistencyLevel(Enum):
-    """Data consistency levels for distributed operations"""
+    """
+Data consistency levels for distributed operations"""
+
     EVENTUAL = "eventual"
     STRONG = "strong"
     SESSION = "session"
@@ -42,6 +45,7 @@ class ConsistencyLevel(Enum):
 
 class ShardingStrategy(Enum):
     """Sharding strategies for data distribution"""
+
     HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
@@ -49,6 +53,7 @@ class ShardingStrategy(Enum):
 
 class PartitionType(Enum):
     """Types of data partitioning"""
+
     HORIZONTAL = "horizontal"  # Shard by rows/documents
     VERTICAL = "vertical"      # Shard by columns/fields
     FUNCTIONAL = "functional"  # Shard by feature/service
@@ -78,7 +83,8 @@ class ClusterNode:
     
     @property
     def endpoint(self) -> str:
-        """Get node endpoint URL"""
+        """
+Get node endpoint URL"""
         return f"http://{self.hostname}:{self.port}"
 
 @dataclass
@@ -95,12 +101,14 @@ class ShardInfo:
     
     @property
     def replication_factor(self) -> int:
-        """Get replication factor for this shard"""
+        """
+Get replication factor for this shard"""
         return 1 + len(self.replica_nodes)
 
 @dataclass
 class DistributedConfig:
-    """Configuration for distributed storage system"""
+    """
+Configuration for distributed storage system"""
     cluster_name: str
     consistency_level: ConsistencyLevel
     sharding_strategy: ShardingStrategy
@@ -128,7 +136,8 @@ class DistributedStorageManager:
     """
     
     def __init__(self, config: DistributedConfig):
-        """Initialize distributed storage manager"""
+        """
+Initialize distributed storage manager"""
         self.config = config
         self.cluster_nodes: Dict[str, ClusterNode] = {}
         self.shards: Dict[str, ShardInfo] = {}
@@ -697,7 +706,8 @@ class DistributedStorageManager:
         return []
     
     async def _health_monitor_loop(self) -> None:
-        """Background task for monitoring node health"""
+        """
+Background task for monitoring node health"""
         while True:
             try:
                 await asyncio.sleep(self.config.heartbeat_interval)
@@ -783,7 +793,8 @@ class DistributedStorageManager:
             self.metrics['throughput_ops_sec'] = total_ops / total_time
     
     async def cleanup(self) -> None:
-        """Cleanup distributed storage manager"""
+        """
+Cleanup distributed storage manager"""
         # Cancel background tasks
         if self.health_monitor_task:
             self.health_monitor_task.cancel()
@@ -797,17 +808,20 @@ class DistributedStorageManager:
 
 
 class ShardingManager:
-    """Manages data sharding strategies"""
+    """
+Manages data sharding strategies"""
     
     def __init__(self, strategy: ShardingStrategy):
-        """Initialize sharding manager"""
+        """
+Initialize sharding manager"""
         self.strategy = strategy
         self.shard_ring = {}  # For consistent hashing
         self.shard_ranges = {}  # For range-based sharding
         self.directory_map = {}  # For directory-based sharding
     
     async def initialize(self, node_ids: List[str]) -> None:
-        """Initialize sharding configuration"""
+        """
+Initialize sharding configuration"""
         if self.strategy == ShardingStrategy.HASH_BASED:
             await self._initialize_hash_ring(node_ids)
         elif self.strategy == ShardingStrategy.RANGE_BASED:
@@ -816,7 +830,8 @@ class ShardingManager:
             await self._initialize_directory_sharding(node_ids)
     
     async def get_shard_for_key(self, key: str) -> str:
-        """Determine which shard should handle a given key"""
+        """
+Determine which shard should handle a given key"""
         if self.strategy == ShardingStrategy.HASH_BASED:
             return self._hash_based_shard(key)
         elif self.strategy == ShardingStrategy.RANGE_BASED:
@@ -841,14 +856,17 @@ class ShardingManager:
 
 
 class ConsistencyManager:
-    """Manages data consistency across distributed nodes"""
+    """
+Manages data consistency across distributed nodes"""
     
     def __init__(self, consistency_level: ConsistencyLevel):
-        """Initialize consistency manager"""
+        """
+Initialize consistency manager"""
         self.consistency_level = consistency_level
     
     async def select_read_node(self, shard: ShardInfo, consistency: ConsistencyLevel) -> str:
-        """Select optimal node for read operation based on consistency requirements"""
+        """
+Select optimal node for read operation based on consistency requirements"""
         if consistency == ConsistencyLevel.STRONG:
             # Always read from primary for strong consistency
             return shard.primary_node
@@ -863,10 +881,12 @@ class ConsistencyManager:
 
 
 class PartitionManager:
-    """Manages data partitioning strategies"""
+    """
+Manages data partitioning strategies"""
     
     def __init__(self, partition_type: PartitionType):
-        """Initialize partition manager"""
+        """
+Initialize partition manager"""
         self.partition_type = partition_type
     
     async def partition_data(
@@ -875,7 +895,8 @@ class PartitionManager:
         data: bytes,
         metadata: Optional[Dict[str, Any]]
     ) -> bytes:
-        """Apply partitioning strategy to data"""
+        """
+Apply partitioning strategy to data"""
         if self.partition_type == PartitionType.HORIZONTAL:
             return self._horizontal_partition(data, metadata)
         elif self.partition_type == PartitionType.VERTICAL:
@@ -892,22 +913,26 @@ class PartitionManager:
         partitioned_data: bytes,
         metadata: Optional[Dict[str, Any]]
     ) -> bytes:
-        """Reconstruct original data from partitioned format"""
+        """
+Reconstruct original data from partitioned format"""
         # Reverse the partitioning process
         return partitioned_data
     
     def _horizontal_partition(self, data: bytes, metadata: Optional[Dict[str, Any]]) -> bytes:
-        """Apply horizontal partitioning"""
+        """
+Apply horizontal partitioning"""
         # Implementation would split data by records/rows
         return data
     
     def _vertical_partition(self, data: bytes, metadata: Optional[Dict[str, Any]]) -> bytes:
-        """Apply vertical partitioning"""
+        """
+Apply vertical partitioning"""
         # Implementation would split data by fields/columns
         return data
     
     def _functional_partition(self, data: bytes, metadata: Optional[Dict[str, Any]]) -> bytes:
-        """Apply functional partitioning"""
+        """
+Apply functional partitioning"""
         # Implementation would partition by feature/service
         return data
 

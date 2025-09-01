@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from ...utils.cache import CacheManager
 
 
 class ConversationPhase(Enum):
-    """Conversation phases in creator workflow"""
+    """
+Conversation phases in creator workflow"""
+
     ONBOARDING = "onboarding"
     CONTENT_DISCOVERY = "content_discovery"
     PROTECTION_SETUP = "protection_setup"
@@ -41,6 +44,7 @@ class ConversationPhase(Enum):
 
 class StateTransitionReason(Enum):
     """Reasons for state transitions"""
+
     USER_REQUEST = "user_request"
     WORKFLOW_COMPLETION = "workflow_completion"
     TIMEOUT = "timeout"
@@ -115,19 +119,22 @@ class ConversationWorkflow:
     actual_completion: Optional[datetime] = None
     
     def get_current_step(self) -> Optional[WorkflowStep]:
-        """Get current workflow step"""
+        """
+Get current workflow step"""
         if 0 <= self.current_step_index < len(self.steps):
             return self.steps[self.current_step_index]
         return None
     
     def get_next_step(self) -> Optional[WorkflowStep]:
-        """Get next workflow step"""
+        """
+Get next workflow step"""
         if self.current_step_index + 1 < len(self.steps):
             return self.steps[self.current_step_index + 1]
         return None
     
     def calculate_progress(self) -> float:
-        """Calculate workflow completion progress"""
+        """
+Calculate workflow completion progress"""
         if not self.steps:
             return 0.0
         completed_steps = sum(1 for step in self.steps if step.is_completed)
@@ -179,7 +186,8 @@ class ConversationState:
     completion_likelihood: float = 0.5
     
     def add_transition(self, transition: StateTransition):
-        """Add state transition to history"""
+        """
+Add state transition to history"""
         self.state_history.append(transition)
         self.last_state_change = datetime.utcnow()
         
@@ -718,7 +726,8 @@ class ConversationStateManager:
         from_phase: ConversationPhase,
         to_phase: ConversationPhase
     ):
-        """Handle workflow changes when phase changes"""
+        """
+Handle workflow changes when phase changes"""
         if from_phase != to_phase:
             # Create new workflow for the target phase if needed
             if to_phase in [
@@ -754,7 +763,8 @@ class ConversationStateManager:
         self,
         state: ConversationState
     ) -> Optional[ConversationPhase]:
-        """Suggest next conversation phase based on current state"""
+        """
+Suggest next conversation phase based on current state"""
         current_phase = state.current_phase
         creator_type = state.state_context.get("creator_type", "multi_format")
         
@@ -934,7 +944,8 @@ class ConversationStateManager:
         }
     
     async def _cache_state(self, state: ConversationState):
-        """Cache conversation state"""
+        """
+Cache conversation state"""
         try:
             await self.cache_manager.set(
                 f"conversation_state:{state.conversation_id}",

@@ -4,7 +4,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Type: Production-Ready MFA Database Management
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -12,6 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Business Logic: MFA Setup → Device Registration → Authentication Challenge → 
 Backup Codes → Recovery → Audit Logging
 """
+
 import asyncio
 import secrets
 import string
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MFAMethod(Enum):
-    """Multi-factor authentication methods"""
+    """
+Multi-factor authentication methods"""
+
     TOTP = "totp"  # Time-based One-Time Password
     SMS = "sms"    # SMS verification
     EMAIL = "email"  # Email verification
@@ -50,6 +53,7 @@ class MFAMethod(Enum):
 
 class MFAStatus(Enum):
     """MFA status states"""
+
     ENABLED = "enabled"
     DISABLED = "disabled"
     PENDING_SETUP = "pending_setup"
@@ -58,6 +62,7 @@ class MFAStatus(Enum):
 
 class DeviceStatus(Enum):
     """Trusted device status"""
+
     TRUSTED = "trusted"
     PENDING = "pending"
     REVOKED = "revoked"
@@ -76,7 +81,8 @@ class MFAChallenge:
 
 @dataclass
 class TOTPConfig:
-    """TOTP configuration"""
+    """
+TOTP configuration"""
     secret_key: str
     algorithm: str = "SHA1"
     digits: int = 6
@@ -112,7 +118,8 @@ class MFADevices(Base):
     )
 
 class MFABackupCodes(Base):
-    """Database model for MFA backup codes"""
+    """
+Database model for MFA backup codes"""
     __tablename__ = 'mfa_backup_codes'
     
     code_id = Column(String, primary_key=True)
@@ -130,7 +137,8 @@ class MFABackupCodes(Base):
     )
 
 class MFAChallenges(Base):
-    """Database model for MFA challenges"""
+    """
+Database model for MFA challenges"""
     __tablename__ = 'mfa_challenges'
     
     challenge_id = Column(String, primary_key=True)
@@ -155,7 +163,8 @@ class MFAChallenges(Base):
     )
 
 class TrustedDevices(Base):
-    """Database model for trusted devices"""
+    """
+Database model for trusted devices"""
     __tablename__ = 'trusted_devices'
     
     trust_id = Column(String, primary_key=True)
@@ -667,7 +676,8 @@ class MultiFactorAuthRepository:
         return result.scalar_one_or_none() is not None
     
     async def _assign_new_primary_device(self, user_id: str):
-        """Assign a new primary MFA device"""
+        """
+Assign a new primary MFA device"""
         stmt = select(MFADevices).where(
             MFADevices.user_id == user_id,
             MFADevices.status == MFAStatus.ENABLED.value
@@ -680,7 +690,8 @@ class MultiFactorAuthRepository:
             device.is_primary = True
     
     async def _update_device_last_used(self, device_id: str):
-        """Update device last used timestamp"""
+        """
+Update device last used timestamp"""
         stmt = select(MFADevices).where(MFADevices.device_id == device_id)
         result = await self.session.execute(stmt)
         device = result.scalar_one_or_none()
@@ -689,7 +700,8 @@ class MultiFactorAuthRepository:
             device.last_used_at = datetime.now(timezone.utc)
     
     async def _add_trusted_device(self, user_id: str, device_fingerprint: str) -> str:
-        """Add device to trusted devices list"""
+        """
+Add device to trusted devices list"""
         trust_id = str(uuid4())
         expires_at = datetime.now(timezone.utc) + timedelta(days=30)  # 30 days trust
         

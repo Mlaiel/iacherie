@@ -8,10 +8,11 @@ Responsibility: Central index for all data models with utilities and factory met
 ==================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Type, Any, Optional, Union
 from datetime import datetime, timezone
 import importlib
@@ -25,14 +26,16 @@ from . import (
 )
 
 class ModelRegistry:
-    """Central registry for all data models with factory methods and utilities"""
+    """
+Central registry for all data models with factory methods and utilities"""
     
     def __init__(self):
         self._models: Dict[str, Type] = {}
         self._register_default_models()
     
     def _register_default_models(self):
-        """Register all default models"""
+        """
+Register all default models"""
         self._models.update({
             'content': ContentModel,
             'creator': CreatorModel,
@@ -47,7 +50,8 @@ class ModelRegistry:
         })
     
     def register_model(self, name: str, model_class: Type) -> None:
-        """Register a new model class"""
+        """
+Register a new model class"""
         if not inspect.isclass(model_class):
             raise ValueError(f"Expected class, got {type(model_class)}")
         
@@ -58,11 +62,13 @@ class ModelRegistry:
         return self._models.get(name.lower())
     
     def list_models(self) -> List[str]:
-        """List all registered model names"""
+        """
+List all registered model names"""
         return list(self._models.keys())
     
     def create_instance(self, model_name: str, **kwargs) -> Any:
-        """Create model instance with provided kwargs"""
+        """
+Create model instance with provided kwargs"""
         model_class = self.get_model(model_name)
         if not model_class:
             raise ValueError(f"Model '{model_name}' not found")
@@ -93,7 +99,8 @@ class ModelRegistry:
         }
     
     def validate_model_data(self, model_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data against model schema"""
+        """
+Validate data against model schema"""
         model_class = self.get_model(model_name)
         if not model_class:
             raise ValueError(f"Model '{model_name}' not found")
@@ -123,14 +130,16 @@ class ModelFactory:
         self.registry = registry
     
     def create_content(self, creator_id: str, tenant_id: str, **kwargs) -> ContentModel:
-        """Create a new content model instance"""
+        """
+Create a new content model instance"""
         return self.registry.create_instance('content', 
                                             creator_id=creator_id, 
                                             tenant_id=tenant_id, 
                                             **kwargs)
     
     def create_creator(self, user_id: str, tenant_id: str, email: str, **kwargs) -> CreatorModel:
-        """Create a new creator model instance"""
+        """
+Create a new creator model instance"""
         return self.registry.create_instance('creator',
                                             user_id=user_id,
                                             tenant_id=tenant_id,
@@ -138,14 +147,16 @@ class ModelFactory:
                                             **kwargs)
     
     def create_monetization(self, creator_id: str, tenant_id: str, **kwargs) -> MonetizationModel:
-        """Create a new monetization model instance"""
+        """
+Create a new monetization model instance"""
         return self.registry.create_instance('monetization',
                                             creator_id=creator_id,
                                             tenant_id=tenant_id,
                                             **kwargs)
     
     def batch_create(self, model_configs: List[Dict[str, Any]]) -> List[Any]:
-        """Create multiple model instances from configurations"""
+        """
+Create multiple model instances from configurations"""
         instances = []
         
         for config in model_configs:
@@ -157,11 +168,13 @@ class ModelFactory:
 
 
 class ModelSerializer:
-    """Utility for serializing and deserializing models"""
+    """
+Utility for serializing and deserializing models"""
     
     @staticmethod
     def serialize_model(model_instance) -> Dict[str, Any]:
-        """Serialize model instance to dictionary"""
+        """
+Serialize model instance to dictionary"""
         if hasattr(model_instance, 'to_dict'):
             return model_instance.to_dict()
         
@@ -184,7 +197,8 @@ class ModelSerializer:
     
     @staticmethod
     def deserialize_model(model_class: Type, data: Dict[str, Any]) -> Any:
-        """Deserialize dictionary to model instance"""
+        """
+Deserialize dictionary to model instance"""
         if hasattr(model_class, 'from_dict'):
             return model_class.from_dict(data)
         
@@ -200,7 +214,8 @@ class ModelValidator:
     
     @staticmethod
     def validate_content_data(data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content model data"""
+        """
+Validate content model data"""
         result = {'valid': True, 'errors': []}
         
         # Required fields validation
@@ -254,15 +269,18 @@ def get_all_models() -> Dict[str, Type]:
     return model_registry._models.copy()
 
 def create_model_instance(model_name: str, **kwargs) -> Any:
-    """Quick utility to create model instance"""
+    """
+Quick utility to create model instance"""
     return model_factory.registry.create_instance(model_name, **kwargs)
 
 def serialize_models(models: List[Any]) -> List[Dict[str, Any]]:
-    """Serialize multiple model instances"""
+    """
+Serialize multiple model instances"""
     return [model_serializer.serialize_model(model) for model in models]
 
 def get_model_schema(model_name: str) -> Dict[str, Any]:
-    """Get model schema information"""
+    """
+Get model schema information"""
     return model_registry.get_model_info(model_name)
 
 # Export public interface

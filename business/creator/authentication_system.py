@@ -9,7 +9,7 @@ Security Monitoring → Activity Tracking → Session Management → Logout
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -17,6 +17,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -54,7 +55,9 @@ logger = get_logger(__name__)
 
 
 class AuthenticationMethod(Enum):
-    """Authentication methods supported"""
+    """
+Authentication methods supported"""
+
     PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     BIOMETRIC = "biometric"
@@ -65,6 +68,7 @@ class AuthenticationMethod(Enum):
 
 class SessionStatus(Enum):
     """Session status types"""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -74,6 +78,7 @@ class SessionStatus(Enum):
 
 class SecurityThreatLevel(Enum):
     """Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -82,6 +87,7 @@ class SecurityThreatLevel(Enum):
 
 class DeviceType(Enum):
     """Device types for tracking"""
+
     MOBILE = "mobile"
     DESKTOP = "desktop"
     TABLET = "tablet"
@@ -103,7 +109,8 @@ class AuthenticationRequest:
 
 @dataclass
 class SessionInfo:
-    """User session information"""
+    """
+User session information"""
     session_id: str
     creator_id: str
     user_id: str
@@ -131,7 +138,8 @@ class SessionInfo:
 
 @dataclass
 class MFASetup:
-    """Multi-factor authentication setup"""
+    """
+Multi-factor authentication setup"""
     creator_id: str
     method_type: str  # totp, sms, email
     secret_key: str
@@ -142,7 +150,8 @@ class MFASetup:
 
 @dataclass
 class SecurityEvent:
-    """Security event tracking"""
+    """
+Security event tracking"""
     event_id: str
     creator_id: str
     event_type: str
@@ -728,7 +737,8 @@ class SessionManager:
             return False
     
     async def _store_session(self, session: SessionInfo) -> None:
-        """Store session in cache"""
+        """
+Store session in cache"""
         try:
             session_data = {
                 'session_id': session.session_id,

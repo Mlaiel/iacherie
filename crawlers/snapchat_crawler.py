@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class SnapchatContentType(str, Enum):
-    """Snapchat content types"""
+    """
+Snapchat content types"""
+
     STORY = "story"
     DISCOVER = "discover"
     SPOTLIGHT = "spotlight"
@@ -48,6 +51,7 @@ class SnapchatContentType(str, Enum):
 
 class SnapchatMediaType(str, Enum):
     """Snapchat media types"""
+
     PHOTO = "photo"
     VIDEO = "video"
     GIF = "gif"
@@ -57,6 +61,7 @@ class SnapchatMediaType(str, Enum):
 
 class SnapchatVisibility(str, Enum):
     """Snapchat content visibility"""
+
     PUBLIC = "public"
     FRIENDS = "friends"
     CUSTOM = "custom"
@@ -65,6 +70,7 @@ class SnapchatVisibility(str, Enum):
 
 class SnapchatStoryType(str, Enum):
     """Snapchat story types"""
+
     USER_STORY = "user_story"
     OUR_STORY = "our_story"
     LIVE_STORY = "live_story"
@@ -93,7 +99,8 @@ class SnapchatMedia(BaseModel):
 
 
 class SnapchatUser(BaseModel):
-    """Snapchat user data model"""
+    """
+Snapchat user data model"""
     user_id: str
     username: str
     display_name: str
@@ -114,7 +121,8 @@ class SnapchatUser(BaseModel):
 
 
 class SnapchatStory(BaseModel):
-    """Snapchat story data model"""
+    """
+Snapchat story data model"""
     story_id: str
     user: SnapchatUser
     story_type: SnapchatStoryType
@@ -156,7 +164,8 @@ class SnapchatDiscover(BaseModel):
 
 
 class SnapchatSpotlight(BaseModel):
-    """Snapchat Spotlight content data model"""
+    """
+Snapchat Spotlight content data model"""
     spotlight_id: str
     creator: SnapchatUser
     media: SnapchatMedia
@@ -175,7 +184,8 @@ class SnapchatSpotlight(BaseModel):
 
 
 class SnapchatLens(BaseModel):
-    """Snapchat lens data model"""
+    """
+Snapchat lens data model"""
     lens_id: str
     name: str
     creator: str
@@ -209,7 +219,8 @@ class SnapchatSearchResults(BaseModel):
 
 
 class SnapchatAnalytics(BaseModel):
-    """Snapchat analytics data model"""
+    """
+Snapchat analytics data model"""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_stories_posted: int
@@ -673,7 +684,8 @@ class SnapchatCrawler(BaseCrawler):
         return []
 
     async def _search_discover(self, query: str, limit: int) -> List[SnapchatDiscover]:
-        """Search Discover content"""
+        """
+Search Discover content"""
         try:
             params = {
                 "query": query,
@@ -703,7 +715,8 @@ class SnapchatCrawler(BaseCrawler):
         return []
 
     async def _search_lenses(self, query: str, limit: int) -> List[SnapchatLens]:
-        """Search for lenses"""
+        """
+Search for lenses"""
         try:
             params = {
                 "query": query,
@@ -977,17 +990,20 @@ class SnapchatCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[SnapchatSpotlight]:
-        """Get user's Spotlight posts in specific time period"""
+        """
+Get user's Spotlight posts in specific time period"""
         # Implementation would require accessing Spotlight data
         return []
 
     async def _calculate_similarity(self, story: SnapchatStory) -> float:
-        """Calculate similarity score against protected content"""
+        """
+Calculate similarity score against protected content"""
         # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, story: SnapchatStory) -> str:
-        """Check protection status of story"""
+        """
+Check protection status of story"""
         if story.story_id in self.protected_content:
             return "protected"
         return "unprotected"

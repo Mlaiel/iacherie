@@ -6,6 +6,7 @@ Handles project creation, management, versioning, and collaboration workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ProjectStatus(Enum):
-    """Project status enumeration"""
+    """
+Project status enumeration"""
+
     DRAFT = "draft"
     PLANNING = "planning"
     ACTIVE = "active"
@@ -40,6 +43,7 @@ class ProjectStatus(Enum):
 
 class ProjectType(Enum):
     """Project type enumeration for multi-format content"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_PRODUCTION = "video_production"
     PHOTOGRAPHY_SERIES = "photography_series"
@@ -50,6 +54,7 @@ class ProjectType(Enum):
 
 class ProjectPriority(Enum):
     """Project priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -144,7 +149,8 @@ class CollaborationProject(Base):
 
 @dataclass
 class ProjectCreationRequest:
-    """Data class for project creation requests"""
+    """
+Data class for project creation requests"""
     title: str
     description: str
     project_type: ProjectType
@@ -162,7 +168,8 @@ class ProjectCreationRequest:
 
 @dataclass
 class ProjectUpdateRequest:
-    """Data class for project update requests"""
+    """
+Data class for project update requests"""
     project_id: str
     title: Optional[str] = None
     description: Optional[str] = None
@@ -555,7 +562,8 @@ class ProjectDatabaseManager:
         }
     
     def _initialize_version_control(self) -> Dict[str, Any]:
-        """Initialize version control structure"""
+        """
+Initialize version control structure"""
         return {
             'current_version': '1.0.0',
             'branches': ['main'],
@@ -565,7 +573,8 @@ class ProjectDatabaseManager:
         }
     
     def _default_access_permissions(self) -> Dict[str, Any]:
-        """Default access permissions structure"""
+        """
+Default access permissions structure"""
         return {
             'read': ['team_member', 'viewer'],
             'write': ['team_member', 'editor'],
@@ -575,7 +584,8 @@ class ProjectDatabaseManager:
         }
     
     def _initialize_project_metadata(self, request: ProjectCreationRequest) -> Dict[str, Any]:
-        """Initialize comprehensive project metadata"""
+        """
+Initialize comprehensive project metadata"""
         return {
             'creation_context': {
                 'source': 'api',
@@ -598,7 +608,8 @@ class ProjectDatabaseManager:
         }
     
     async def _cache_project(self, project: CollaborationProject):
-        """Cache project data in Redis"""
+        """
+Cache project data in Redis"""
         try:
             project_data = {
                 'id': str(project.id),
@@ -628,7 +639,8 @@ class ProjectDatabaseManager:
         return (end_date - project.start_date).days
     
     def _calculate_completion_percentage(self, project: CollaborationProject) -> float:
-        """Calculate project completion percentage"""
+        """
+Calculate project completion percentage"""
         if project.status == ProjectStatus.COMPLETED:
             return 100.0
         elif project.status in [ProjectStatus.DRAFT, ProjectStatus.PLANNING]:
@@ -645,7 +657,8 @@ class ProjectDatabaseManager:
         return (completed_items / total_items) * 100 if total_items > 0 else 0.0
     
     def _calculate_budget_utilization(self, project: CollaborationProject) -> float:
-        """Calculate budget utilization percentage"""
+        """
+Calculate budget utilization percentage"""
         if not project.budget_allocated or project.budget_allocated == 0:
             return 0.0
         
@@ -653,7 +666,8 @@ class ProjectDatabaseManager:
         return (spent / project.budget_allocated) * 100
     
     def _deserialize_project(self, data: Dict[str, Any]) -> CollaborationProject:
-        """Deserialize project data from cache"""
+        """
+Deserialize project data from cache"""
         # Simplified deserialization for cache data
         project = CollaborationProject()
         project.id = uuid.UUID(data['id'])

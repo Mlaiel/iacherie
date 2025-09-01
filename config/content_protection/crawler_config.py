@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field
 from enum import Enum
@@ -21,7 +22,9 @@ import os
 
 
 class CrawlerType(str, Enum):
-    """Supported crawler types."""
+    """
+Supported crawler types."""
+
     API_BASED = "api_based"
     SCRAPING = "scraping"
     HYBRID = "hybrid"
@@ -29,6 +32,7 @@ class CrawlerType(str, Enum):
 
 class Platform(str, Enum):
     """Supported platforms for content surveillance."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -45,6 +49,7 @@ class Platform(str, Enum):
 
 class CrawlingStrategy(str, Enum):
     """Crawling strategy types."""
+
     BREADTH_FIRST = "breadth_first"
     DEPTH_FIRST = "depth_first"
     TARGETED = "targeted"
@@ -67,7 +72,8 @@ class PlatformCredentials:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration."""
+    """
+Rate limiting configuration."""
     requests_per_minute: int = 60
     requests_per_hour: int = 1000
     requests_per_day: int = 10000
@@ -79,7 +85,8 @@ class RateLimitConfig:
 
 @dataclass
 class RetryConfig:
-    """Retry configuration for failed requests."""
+    """
+Retry configuration for failed requests."""
     max_retries: int = 3
     initial_delay: float = 1.0
     exponential_backoff: bool = True
@@ -262,7 +269,8 @@ class WebCrawlerConfig:
         self._load_credentials()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
+        """
+Load configuration from environment variables."""
         # General settings
         self.max_concurrent_crawlers = int(os.getenv("CRAWLER_MAX_CONCURRENT", "10"))
         self.crawl_interval_minutes = int(os.getenv("CRAWLER_INTERVAL_MINUTES", "30"))
@@ -328,27 +336,33 @@ class WebCrawlerConfig:
         return self.credentials.get(platform)
     
     def set_credentials(self, platform: Platform, credentials: PlatformCredentials) -> None:
-        """Set credentials for specific platform."""
+        """
+Set credentials for specific platform."""
         self.credentials[platform] = credentials
     
     def is_platform_enabled(self, platform: Platform) -> bool:
-        """Check if platform is enabled for crawling."""
+        """
+Check if platform is enabled for crawling."""
         return self.platforms.get(platform, False)
     
     def enable_platform(self, platform: Platform) -> None:
-        """Enable crawling for specific platform."""
+        """
+Enable crawling for specific platform."""
         self.platforms[platform] = True
     
     def disable_platform(self, platform: Platform) -> None:
-        """Disable crawling for specific platform."""
+        """
+Disable crawling for specific platform."""
         self.platforms[platform] = False
     
     def get_enabled_platforms(self) -> List[Platform]:
-        """Get list of enabled platforms."""
+        """
+Get list of enabled platforms."""
         return [platform for platform, enabled in self.platforms.items() if enabled]
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
+        """
+Validate current configuration and return any issues."""
         issues = []
         
         # Check if at least one platform is enabled

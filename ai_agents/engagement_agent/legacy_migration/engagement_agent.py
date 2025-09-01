@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,7 +46,9 @@ from ...integrations.social_platforms import SocialPlatformIntegrator
 logger = logging.getLogger(__name__)
 
 class EngagementStrategy(Enum):
-    """Engagement optimization strategies"""
+    """
+Engagement optimization strategies"""
+
     ORGANIC_GROWTH = "organic_growth"
     VIRAL_AMPLIFICATION = "viral_amplification"
     COMMUNITY_BUILDING = "community_building"
@@ -56,6 +59,7 @@ class EngagementStrategy(Enum):
 
 class EngagementChannel(Enum):
     """Supported engagement channels"""
+
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -96,7 +100,8 @@ class EngagementMetrics:
 
 @dataclass
 class EngagementResponse:
-    """Automated response configuration"""
+    """
+Automated response configuration"""
     trigger_keywords: List[str]
     response_template: str
     personalization_level: float
@@ -419,7 +424,8 @@ class EngagementAgent(BaseAgent):
     async def _analyze_content_sentiment(self, 
                                        content_id: str, 
                                        platform: str) -> float:
-        """Analyze sentiment of content and associated comments"""
+        """
+Analyze sentiment of content and associated comments"""
         try:
             # Get content text and comments
             content_data = await self.social_integrator.get_content_details(
@@ -470,7 +476,8 @@ class EngagementAgent(BaseAgent):
     async def _assess_audience_quality(self, 
                                      content_id: str, 
                                      platform: str) -> float:
-        """Assess quality of engaged audience"""
+        """
+Assess quality of engaged audience"""
         try:
             # Get audience engagement data
             audience_data = await self.social_integrator.get_audience_insights(
@@ -697,7 +704,8 @@ class EngagementAgentManager:
         self.global_strategies: Dict[str, Any] = {}
         
     async def create_agent(self, agent_id: str) -> EngagementAgent:
-        """Create new engagement agent instance"""
+        """
+Create new engagement agent instance"""
         agent = EngagementAgent()
         await agent.initialize()
         self.agents[agent_id] = agent
@@ -709,7 +717,8 @@ class EngagementAgentManager:
         return self.agents.get(agent_id)
         
     async def remove_agent(self, agent_id: str) -> bool:
-        """Remove engagement agent"""
+        """
+Remove engagement agent"""
         if agent_id in self.agents:
             await self.agents[agent_id].shutdown()
             del self.agents[agent_id]
@@ -751,7 +760,8 @@ class EngagementAgentManager:
     async def _fetch_historical_engagement(self, 
                                          creator_id: str, 
                                          platforms: List[str]) -> Dict[str, Any]:
-        """Fetch historical engagement data for analysis"""
+        """
+Fetch historical engagement data for analysis"""
         try:
             historical_data = {}
             for platform in platforms:
@@ -1340,5 +1350,6 @@ class ProcessingError(Exception):
     pass
 
 class ValidationError(Exception):
-    """Exception raised when validation fails"""
+    """
+Exception raised when validation fails"""
     pass

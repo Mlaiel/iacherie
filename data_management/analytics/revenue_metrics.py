@@ -15,6 +15,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -36,7 +37,9 @@ from ...models.protection import ProtectionEvent
 
 
 class RevenueCategory(Enum):
-    """Revenue analytics categories."""
+    """
+Revenue analytics categories."""
+
     TOTAL_REVENUE = "total_revenue"
     CONTENT_REVENUE = "content_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
@@ -47,6 +50,7 @@ class RevenueCategory(Enum):
 
 class RevenueSource(Enum):
     """Revenue source types."""
+
     CONTENT_LICENSING = "content_licensing"
     SUBSCRIPTION_FEES = "subscription_fees"
     PLATFORM_COMMISSION = "platform_commission"
@@ -337,7 +341,8 @@ class RevenueMetricsCollector:
         return growth_rate
         
     def _calculate_revenue_volatility(self, daily_revenues: List[Dict]) -> float:
-        """Calculate revenue volatility (standard deviation)."""
+        """
+Calculate revenue volatility (standard deviation)."""
         
         if len(daily_revenues) < 2:
             return 0.0
@@ -360,7 +365,8 @@ class RevenueMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueMetric]:
-        """Collect content-specific revenue metrics."""
+        """
+Collect content-specific revenue metrics."""
         
         async with get_database_session() as session:
             # Content revenue query
@@ -471,7 +477,8 @@ class RevenueMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueMetric]:
-        """Collect subscription revenue metrics."""
+        """
+Collect subscription revenue metrics."""
         
         async with get_database_session() as session:
             # Subscription revenue query

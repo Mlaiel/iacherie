@@ -5,12 +5,13 @@ Comprehensive SEO optimization system with AI-powered content analysis,
 keyword optimization, meta tag generation, and search engine performance tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
 from enum import Enum
@@ -29,7 +30,9 @@ from backend.utils.seo_tools import SEOToolsManager
 
 
 class SEOStrategy(str, Enum):
-    """SEO strategy types"""
+    """
+SEO strategy types"""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     KEYWORD_TARGETING = "keyword_targeting"
     TECHNICAL_SEO = "technical_seo"
@@ -42,6 +45,7 @@ class SEOStrategy(str, Enum):
 
 class ContentType(str, Enum):
     """Content types for SEO optimization"""
+
     ARTICLE = "article"
     VIDEO = "video"
     IMAGE = "image"
@@ -53,6 +57,7 @@ class ContentType(str, Enum):
 
 class SearchEngine(str, Enum):
     """Supported search engines"""
+
     GOOGLE = "google"
     BING = "bing"
     YAHOO = "yahoo"
@@ -76,7 +81,8 @@ class KeywordResearch:
 
 @dataclass
 class SEOMetrics:
-    """SEO performance metrics"""
+    """
+SEO performance metrics"""
     search_rankings: Dict[str, int]
     organic_traffic: int
     click_through_rate: float
@@ -91,7 +97,8 @@ class SEOMetrics:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations"""
+    """
+Content optimization recommendations"""
     title_suggestions: List[str]
     meta_description_suggestions: List[str]
     header_optimizations: Dict[str, List[str]]
@@ -104,7 +111,8 @@ class ContentOptimization:
 
 @dataclass
 class SEOAudit:
-    """SEO audit results"""
+    """
+SEO audit results"""
     audit_id: str
     campaign_id: str
     content_id: str

@@ -5,8 +5,9 @@ Advanced AI-powered infringement detection system for multi-format content
 using machine learning and fingerprinting technologies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class InfringementType(Enum):
-    """Types of content infringement"""
+    """
+Types of content infringement"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -34,6 +37,7 @@ class InfringementType(Enum):
 
 class RiskLevel(Enum):
     """Risk levels for infringement"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -76,7 +80,8 @@ class ContentFingerprint:
 
 @dataclass
 class InfringementMatch:
-    """Detected infringement match"""
+    """
+Detected infringement match"""
     match_id: str
     original_content_id: str
     infringing_url: str
@@ -94,7 +99,8 @@ class InfringementMatch:
 
 @dataclass
 class InfringementAnalysis:
-    """Analysis result for infringement detection"""
+    """
+Analysis result for infringement detection"""
     analysis_id: str
     original_content_id: str
     total_matches_analyzed: int
@@ -107,7 +113,8 @@ class InfringementAnalysis:
 
 
 class AudioFingerprintMatcher:
-    """Audio content fingerprint matching"""
+    """
+Audio content fingerprint matching"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -181,7 +188,8 @@ class AudioFingerprintMatcher:
         return similarity
     
     def _compare_spectral_features(self, features1: List[float], features2: List[float]) -> float:
-        """Compare spectral features using cosine similarity"""
+        """
+Compare spectral features using cosine similarity"""
         try:
             # Convert to numpy arrays
             f1 = np.array(features1)
@@ -217,7 +225,8 @@ class AudioFingerprintMatcher:
 
 
 class VideoFingerprintMatcher:
-    """Video content fingerprint matching"""
+    """
+Video content fingerprint matching"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -273,7 +282,8 @@ class VideoFingerprintMatcher:
         return self._hamming_similarity(hash1, hash2)
     
     def _compare_frame_sequences(self, frames1: List[str], frames2: List[str]) -> float:
-        """Compare frame hash sequences"""
+        """
+Compare frame hash sequences"""
         if not frames1 or not frames2:
             return 0.0
         
@@ -296,7 +306,8 @@ class VideoFingerprintMatcher:
         scenes1: List[Dict[str, Any]], 
         scenes2: List[Dict[str, Any]]
     ) -> float:
-        """Compare scene descriptors"""
+        """
+Compare scene descriptors"""
         if not scenes1 or not scenes2:
             return 0.0
         
@@ -313,7 +324,8 @@ class VideoFingerprintMatcher:
         return matching_scenes / max(len(scenes1), len(scenes2))
     
     def _scenes_similar(self, scene1: Dict[str, Any], scene2: Dict[str, Any]) -> bool:
-        """Check if two scenes are similar"""
+        """
+Check if two scenes are similar"""
         # Simplified scene similarity check
         color1 = scene1.get("dominant_colors", [])
         color2 = scene2.get("dominant_colors", [])
@@ -333,7 +345,8 @@ class VideoFingerprintMatcher:
         return 0.8  # Placeholder similarity score
     
     def _hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate Hamming similarity between hashes"""
+        """
+Calculate Hamming similarity between hashes"""
         if len(hash1) != len(hash2):
             return 0.0
         
@@ -342,7 +355,8 @@ class VideoFingerprintMatcher:
 
 
 class ImageFingerprintMatcher:
-    """Image content fingerprint matching"""
+    """
+Image content fingerprint matching"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -398,7 +412,8 @@ class ImageFingerprintMatcher:
         return self._hamming_similarity(hash1, hash2)
     
     def _compare_color_histograms(self, hist1: List[float], hist2: List[float]) -> float:
-        """Compare color histograms using correlation"""
+        """
+Compare color histograms using correlation"""
         try:
             h1 = np.array(hist1)
             h2 = np.array(hist2)
@@ -446,7 +461,8 @@ class ImageFingerprintMatcher:
 
 
 class TextFingerprintMatcher:
-    """Text content fingerprint matching"""
+    """
+Text content fingerprint matching"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -534,7 +550,8 @@ class TextFingerprintMatcher:
         features1: Dict[str, Any], 
         features2: Dict[str, Any]
     ) -> float:
-        """Compare writing style features"""
+        """
+Compare writing style features"""
         similarity_scores = []
         
         # Compare numerical features
@@ -572,7 +589,8 @@ class InfringementDetectionEngine:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize the infringement detection engine"""
+        """
+Initialize the infringement detection engine"""
         try:
             # Initialize AI models and resources
             # In production, this would load ML models for feature extraction
@@ -824,7 +842,8 @@ class InfringementDetectionEngine:
         return intersection / union if union > 0 else 0.0
     
     def _compare_keyword_lists(self, keywords1: List[str], keywords2: List[str]) -> float:
-        """Compare keyword lists"""
+        """
+Compare keyword lists"""
         set1 = set(k.lower() for k in keywords1)
         set2 = set(k.lower() for k in keywords2)
         
@@ -838,7 +857,8 @@ class InfringementDetectionEngine:
         similarity_score: float, 
         analysis_details: Dict[str, Any]
     ) -> InfringementType:
-        """Determine the type of infringement based on similarity analysis"""
+        """
+Determine the type of infringement based on similarity analysis"""
         if similarity_score >= 0.98:
             return InfringementType.EXACT_COPY
         elif similarity_score >= 0.90:
@@ -854,7 +874,8 @@ class InfringementDetectionEngine:
         content_item: Dict[str, Any], 
         platform: str
     ) -> RiskLevel:
-        """Determine risk level of infringement"""
+        """
+Determine risk level of infringement"""
         view_count = content_item.get("view_count", 0)
         engagement = content_item.get("like_count", 0) + content_item.get("share_count", 0)
         

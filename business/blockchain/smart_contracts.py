@@ -3,9 +3,10 @@
 This module manages all smart contracts for content protection, licensing,
 royalty distribution, governance, and staking mechanisms on multiple blockchain networks.
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
+(c) 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContractInfo:
-    """Smart contract information"""
+    """
+Smart contract information"""
     name: str
     address: str
     abi: List[Dict]
@@ -38,7 +40,8 @@ class ContractInfo:
 
 @dataclass
 class TransactionParams:
-    """Transaction parameters for smart contract calls"""
+    """
+Transaction parameters for smart contract calls"""
     from_address: str
     gas_limit: int
     gas_price: int
@@ -543,7 +546,8 @@ class SmartContractManager:
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> None:
-        """Initialize smart contract manager and load contract instances"""
+        """
+Initialize smart contract manager and load contract instances"""
         try:
             self.logger.info("Initializing smart contract manager...")
             
@@ -715,7 +719,8 @@ class SmartContractManager:
         pass
     
     async def _initialize_network_contracts(self, network: str) -> None:
-        """Initialize contract instances for a specific network"""
+        """
+Initialize contract instances for a specific network"""
         # Initialize Web3 connection
         web3 = Web3(Web3.HTTPProvider(getattr(self.config, f"{network}_rpc")))
         self.web3_instances[network] = web3
@@ -759,7 +764,8 @@ class SmartContractManager:
         return []
     
     async def _verify_contract_deployments(self) -> None:
-        """Verify all contract deployments are valid"""
+        """
+Verify all contract deployments are valid"""
         for network, contracts in self.contracts.items():
             for contract_name, contract_instance in contracts.items():
                 try:

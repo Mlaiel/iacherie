@@ -4,7 +4,7 @@ Advanced AI orchestration system for the IA-Influencer-Agent platform.
 Complete enterprise-grade AI ecosystem for content creators, influencers, and digital entrepreneurs.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This is a proprietary AI orchestration system containing revolutionary algorithms
@@ -200,7 +200,7 @@ __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # System configuration and initialization
 def get_system_info() -> dict:
@@ -355,7 +355,7 @@ def get_system_status() -> dict:
 # Startup message
 print(f"""🚀 IA-Influencer-Agent AI Core System Initialized 🚀
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - All Rights Reserved
+(c) 2025 Fahed Mlaiel (mlaiel@live.de) - All Rights Reserved
 
 ✅ Master AI Orchestrator: ACTIVE
 ✅ Collaborative Intelligence: ACTIVE  
@@ -705,7 +705,8 @@ def get_module_info() -> dict:
     return __module_info__
 
 def get_health_status() -> dict:
-    """Get overall module health status"""
+    """
+Get overall module health status"""
     return {
         "ai_engine": ai_engine.health_check(),
         "performance_monitor": performance_monitor.get_system_health(),

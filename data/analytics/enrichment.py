@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class EnrichmentType(Enum):
-    """Analytics enrichment types"""
+    """
+Analytics enrichment types"""
+
     CROSS_PLATFORM_INSIGHTS = "cross_platform_insights"
     AUDIENCE_INTELLIGENCE = "audience_intelligence"
     CONTENT_DNA_ANALYSIS = "content_dna_analysis"
@@ -55,6 +58,7 @@ class EnrichmentType(Enum):
 
 class InsightCategory(Enum):
     """Insight categorization"""
+
     STRATEGIC = "strategic"
     TACTICAL = "tactical"
     OPERATIONAL = "operational"
@@ -64,6 +68,7 @@ class InsightCategory(Enum):
 
 class EnrichmentPriority(Enum):
     """Enrichment processing priority"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -90,7 +95,8 @@ class EnrichedInsight:
 
 @dataclass
 class CrossModuleAnalysis:
-    """Cross-module analytics analysis"""
+    """
+Cross-module analytics analysis"""
     analysis_id: str
     involved_modules: List[str]
     correlation_matrix: Dict[str, Dict[str, float]]
@@ -103,7 +109,8 @@ class CrossModuleAnalysis:
 
 @dataclass
 class ContentDNAProfile:
-    """Content DNA analysis profile"""
+    """
+Content DNA analysis profile"""
     content_id: str
     dna_signature: Dict[str, float]
     performance_genetics: Dict[str, Any]
@@ -117,7 +124,8 @@ class ContentDNAProfile:
 
 @dataclass
 class PredictiveModel:
-    """Advanced predictive model"""
+    """
+Advanced predictive model"""
     model_id: str
     model_type: str
     target_metric: str
@@ -131,7 +139,8 @@ class PredictiveModel:
 
 @dataclass
 class EnrichmentReport:
-    """Comprehensive enrichment analytics report"""
+    """
+Comprehensive enrichment analytics report"""
     user_id: str
     enrichment_date: datetime
     enriched_insights: List[EnrichedInsight]
@@ -510,7 +519,8 @@ class AdvancedAnalyticsEnrichment:
     
     async def _analyze_content_dna(self, content_id: str, 
                                  analytics_data: Dict[str, Any]) -> List[EnrichedInsight]:
-        """Analyze content DNA and generate insights"""
+        """
+Analyze content DNA and generate insights"""
         insights = []
         
         # Implement DNA analysis logic
@@ -519,7 +529,8 @@ class AdvancedAnalyticsEnrichment:
     
     async def _analyze_cross_platform_correlations(self, content_id: str,
                                                  analytics_data: Dict[str, Any]) -> List[EnrichedInsight]:
-        """Analyze cross-platform correlations"""
+        """
+Analyze cross-platform correlations"""
         insights = []
         
         # Implement correlation analysis
@@ -528,7 +539,8 @@ class AdvancedAnalyticsEnrichment:
     
     async def _generate_optimization_insights(self, content_id: str,
                                             analytics_data: Dict[str, Any]) -> List[EnrichedInsight]:
-        """Generate optimization insights"""
+        """
+Generate optimization insights"""
         insights = []
         
         # Implement optimization insight generation
@@ -537,7 +549,8 @@ class AdvancedAnalyticsEnrichment:
     
     async def _generate_predictive_insights(self, content_id: str,
                                           analytics_data: Dict[str, Any]) -> List[EnrichedInsight]:
-        """Generate predictive insights"""
+        """
+Generate predictive insights"""
         insights = []
         
         # Implement predictive insight generation
@@ -545,76 +558,90 @@ class AdvancedAnalyticsEnrichment:
         return insights
     
     async def _calculate_module_correlations(self, analytics_data: Dict[str, Any]) -> Dict[str, Dict[str, float]]:
-        """Calculate correlations between analytics modules"""
+        """
+Calculate correlations between analytics modules"""
         # Implement correlation calculation
         return {}
     
     async def _calculate_synergy_score(self, correlation_matrix: Dict[str, Dict[str, float]]) -> float:
-        """Calculate synergy score from correlation matrix"""
+        """
+Calculate synergy score from correlation matrix"""
         # Implement synergy calculation
         return 0.75
     
     async def _identify_cross_module_opportunities(self, analytics_data: Dict[str, Any],
                                                  correlation_matrix: Dict[str, Dict[str, float]]) -> List[Dict[str, Any]]:
-        """Identify cross-module optimization opportunities"""
+        """
+Identify cross-module optimization opportunities"""
         # Implement opportunity identification
         return []
     
     async def _perform_cross_impact_analysis(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform cross-impact analysis"""
+        """
+Perform cross-impact analysis"""
         # Implement cross-impact analysis
         return {}
     
     async def _generate_unified_recommendations(self, correlation_matrix: Dict[str, Dict[str, float]],
                                               opportunities: List[Dict[str, Any]]) -> List[str]:
-        """Generate unified recommendations"""
+        """
+Generate unified recommendations"""
         # Implement recommendation generation
         return []
     
     async def _extract_content_features(self, content_id: str) -> Dict[str, Any]:
-        """Extract content features for DNA analysis"""
+        """
+Extract content features for DNA analysis"""
         # Implement feature extraction
         return {}
     
     async def _generate_dna_signature(self, features: Dict[str, Any]) -> Dict[str, float]:
-        """Generate DNA signature from features"""
+        """
+Generate DNA signature from features"""
         # Implement DNA signature generation
         return {}
     
     async def _analyze_performance_genetics(self, content_id: str) -> Dict[str, Any]:
-        """Analyze performance genetics"""
+        """
+Analyze performance genetics"""
         # Implement genetics analysis
         return {}
     
     async def _calculate_viral_potential(self, features: Dict[str, Any], 
                                        genetics: Dict[str, Any]) -> float:
-        """Calculate viral potential"""
+        """
+Calculate viral potential"""
         # Implement viral potential calculation
         return 0.5
     
     async def _identify_engagement_predictors(self, features: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify engagement predictors"""
+        """
+Identify engagement predictors"""
         # Implement predictor identification
         return []
     
     async def _calculate_audience_resonance(self, content_id: str) -> Dict[str, float]:
-        """Calculate audience resonance"""
+        """
+Calculate audience resonance"""
         # Implement resonance calculation
         return {}
     
     async def _generate_optimization_blueprint(self, dna_signature: Dict[str, float],
                                              genetics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate optimization blueprint"""
+        """
+Generate optimization blueprint"""
         # Implement blueprint generation
         return {}
     
     async def _find_success_pattern_matches(self, dna_signature: Dict[str, float]) -> float:
-        """Find success pattern matches"""
+        """
+Find success pattern matches"""
         # Implement pattern matching
         return 0.8
     
     async def _build_engagement_model(self, user_id: str, data: Dict[str, Any]) -> PredictiveModel:
-        """Build engagement prediction model"""
+        """
+Build engagement prediction model"""
         # Implement model building
         return PredictiveModel(
             model_id=f"engagement_{user_id}",
@@ -694,32 +721,38 @@ class AdvancedAnalyticsEnrichment:
         return []
     
     async def _detect_engagement_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect engagement anomalies"""
+        """
+Detect engagement anomalies"""
         # Implement engagement anomaly detection
         return []
     
     async def _detect_revenue_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect revenue anomalies"""
+        """
+Detect revenue anomalies"""
         # Implement revenue anomaly detection
         return []
     
     async def _detect_temporal_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect temporal anomalies"""
+        """
+Detect temporal anomalies"""
         # Implement temporal anomaly detection
         return []
     
     async def _detect_platform_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect platform-specific anomalies"""
+        """
+Detect platform-specific anomalies"""
         # Implement platform anomaly detection
         return []
     
     async def _gather_all_analytics_data(self, user_id: str) -> Dict[str, Any]:
-        """Gather all analytics data for user"""
+        """
+Gather all analytics data for user"""
         # Implement comprehensive data gathering
         return {}
     
     async def _get_user_content_ids(self, user_id: str) -> List[str]:
-        """Get user content IDs"""
+        """
+Get user content IDs"""
         try:
             query = select(ContentModel.id).where(ContentModel.user_id == user_id)
             result = await self.db_session.execute(query)
@@ -737,12 +770,14 @@ class AdvancedAnalyticsEnrichment:
     
     async def _calculate_roi_projections(self, user_id: str, models: List[PredictiveModel],
                                        roadmap: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate ROI projections"""
+        """
+Calculate ROI projections"""
         # Implement ROI projection calculation
         return {}
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from Redis cache"""
+        """
+Get data from Redis cache"""
         try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
@@ -750,7 +785,8 @@ class AdvancedAnalyticsEnrichment:
             return None
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
-        """Cache data in Redis"""
+        """
+Cache data in Redis"""
         try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

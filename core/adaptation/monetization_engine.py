@@ -27,6 +27,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -58,7 +59,9 @@ from .exceptions import AdaptationError, ValidationError
 
 
 class RevenueStream(str, Enum):
-    """Comprehensive revenue stream types"""
+    """
+Comprehensive revenue stream types"""
+
     SUBSCRIPTION = "subscription"
     ADVERTISING = "advertising"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -83,6 +86,7 @@ class RevenueStream(str, Enum):
 
 class MonetizationStrategy(str, Enum):
     """Monetization strategy types"""
+
     FREEMIUM = "freemium"
     SUBSCRIPTION_BASED = "subscription_based"
     ADVERTISING_SUPPORTED = "advertising_supported"
@@ -97,6 +101,7 @@ class MonetizationStrategy(str, Enum):
 
 class PricingModel(str, Enum):
     """Pricing model types"""
+
     FIXED = "fixed"
     DYNAMIC = "dynamic"
     TIERED = "tiered"
@@ -111,6 +116,7 @@ class PricingModel(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Supported payment methods"""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
@@ -147,7 +153,8 @@ class RevenueMetrics:
 
 @dataclass
 class MonetizationOpportunity:
-    """AI-identified monetization opportunity"""
+    """
+AI-identified monetization opportunity"""
     opportunity_id: str
     revenue_stream: RevenueStream
     estimated_value: Decimal
@@ -167,7 +174,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class PricingRecommendation:
-    """AI-powered pricing recommendation"""
+    """
+AI-powered pricing recommendation"""
     recommendation_id: str
     product_service: str
     recommended_price: Decimal
@@ -186,7 +194,8 @@ class PricingRecommendation:
 
 @dataclass
 class SubscriptionPlan:
-    """Comprehensive subscription plan configuration"""
+    """
+Comprehensive subscription plan configuration"""
     plan_id: str
     plan_name: str
     description: str
@@ -206,7 +215,8 @@ class SubscriptionPlan:
 
 @dataclass
 class MonetizationRequest:
-    """Enterprise-grade monetization optimization request"""
+    """
+Enterprise-grade monetization optimization request"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -249,7 +259,8 @@ class MonetizationResult:
 
 
 class RevenueAnalytics:
-    """Advanced revenue analytics with AI insights"""
+    """
+Advanced revenue analytics with AI insights"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -345,7 +356,8 @@ class PricingOptimizer:
         market_data: Dict[str, Any],
         optimization_goals: List[str]
     ) -> PricingRecommendation:
-        """Optimize pricing using AI algorithms"""
+        """
+Optimize pricing using AI algorithms"""
         
         # Market analysis
         market_analysis = await self._analyze_market(market_data)

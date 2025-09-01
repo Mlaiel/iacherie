@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Synthèse vocale IA ultra-avancée avec deep learning et vocodeurs neur
 TECHNOLOGIES: WaveNet, Tacotron, Neural Vocoders, Phoneme Processing, Prosody Control
 LOGIQUE MÉTIER: Text/Phonemes → Prosody analysis → Neural synthesis → Voice conversion → Quality enhancement
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -38,7 +39,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class VoiceType(Enum):
-    """Voice type categories"""
+    """
+Voice type categories"""
+
     SOPRANO = "soprano"
     MEZZO_SOPRANO = "mezzo_soprano"
     ALTO = "alto"
@@ -52,6 +55,7 @@ class VoiceType(Enum):
 
 class VocalStyle(Enum):
     """Vocal performance styles"""
+
     CLASSICAL = "classical"
     POP = "pop"
     JAZZ = "jazz"
@@ -65,6 +69,7 @@ class VocalStyle(Enum):
 
 class Emotion(Enum):
     """Vocal emotion expressions"""
+
     NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
@@ -107,7 +112,8 @@ class PhonemeData:
 
 @dataclass
 class SynthesizedVocal:
-    """Synthesized vocal result"""
+    """
+Synthesized vocal result"""
     vocal_id: str
     audio_data: np.ndarray
     sample_rate: int
@@ -120,7 +126,8 @@ class SynthesizedVocal:
     success: bool
 
 class WaveNetVocoder(nn.Module):
-    """WaveNet-based neural vocoder for vocal synthesis"""
+    """
+WaveNet-based neural vocoder for vocal synthesis"""
     
     def __init__(self, num_layers: int = 20, num_blocks: int = 4, 
                  residual_channels: int = 256, gate_channels: int = 256,
@@ -215,7 +222,8 @@ class WaveNetVocoder(nn.Module):
         return output
 
 class TacotronEncoder(nn.Module):
-    """Tacotron-style encoder for text-to-speech"""
+    """
+Tacotron-style encoder for text-to-speech"""
     
     def __init__(self, vocab_size: int, embedding_dim: int = 256, 
                  encoder_dim: int = 256, num_layers: int = 3):
@@ -258,7 +266,8 @@ class TacotronEncoder(nn.Module):
         return outputs
 
 class TacotronDecoder(nn.Module):
-    """Tacotron-style decoder for mel-spectrogram generation"""
+    """
+Tacotron-style decoder for mel-spectrogram generation"""
     
     def __init__(self, encoder_dim: int = 256, decoder_dim: int = 1024,
                  attention_dim: int = 128, mel_dim: int = 80):
@@ -366,7 +375,8 @@ class TacotronDecoder(nn.Module):
         return mel_outputs, stop_outputs, attention_weights
 
 class LocationSensitiveAttention(nn.Module):
-    """Location-sensitive attention mechanism"""
+    """
+Location-sensitive attention mechanism"""
     
     def __init__(self, encoder_dim: int, decoder_dim: int, attention_dim: int):
         super(LocationSensitiveAttention, self).__init__()
@@ -412,7 +422,8 @@ class LocationSensitiveAttention(nn.Module):
         return context, attention_weights
 
 class PhonemeProcessor:
-    """Phoneme processing and analysis"""
+    """
+Phoneme processing and analysis"""
     
     def __init__(self):
         self.phoneme_to_id = self._initialize_phoneme_vocabulary()
@@ -420,7 +431,8 @@ class PhonemeProcessor:
         self.pronunciation_rules = self._initialize_pronunciation_rules()
     
     def _initialize_phoneme_vocabulary(self) -> Dict[str, int]:
-        """Initialize phoneme vocabulary"""
+        """
+Initialize phoneme vocabulary"""
         # IPA phonemes (simplified)
         phonemes = [
             '<PAD>', '<START>', '<END>',
@@ -436,7 +448,8 @@ class PhonemeProcessor:
         return {phoneme: i for i, phoneme in enumerate(phonemes)}
     
     def _initialize_pronunciation_rules(self) -> Dict[str, List[str]]:
-        """Initialize text-to-phoneme rules (simplified)"""
+        """
+Initialize text-to-phoneme rules (simplified)"""
         return {
             'hello': ['h', 'ə', 'l', 'o'],
             'world': ['w', 'ɝ', 'l', 'd'],
@@ -451,7 +464,8 @@ class PhonemeProcessor:
         }
     
     async def text_to_phonemes(self, text: str) -> List[str]:
-        """Convert text to phoneme sequence"""
+        """
+Convert text to phoneme sequence"""
         try:
             words = text.lower().split()
             phonemes = ['<START>']
@@ -498,17 +512,20 @@ class PhonemeProcessor:
         return [self.phoneme_to_id.get(phoneme, 0) for phoneme in phonemes]
     
     def decode_phonemes(self, phoneme_ids: List[int]) -> List[str]:
-        """Decode phoneme IDs to phonemes"""
+        """
+Decode phoneme IDs to phonemes"""
         return [self.id_to_phoneme.get(pid, '<PAD>') for pid in phoneme_ids]
 
 class VocalFormantAnalyzer:
-    """Vocal formant analysis and synthesis"""
+    """
+Vocal formant analysis and synthesis"""
     
     def __init__(self):
         self.formant_templates = self._initialize_formant_templates()
     
     def _initialize_formant_templates(self) -> Dict[str, Dict[str, List[float]]]:
-        """Initialize formant frequency templates for different phonemes and voice types"""
+        """
+Initialize formant frequency templates for different phonemes and voice types"""
         return {
             # Vowel formants (F1, F2, F3) for different voice types
             'a': {
@@ -549,7 +566,8 @@ class VocalFormantAnalyzer:
         }
     
     async def get_formants_for_phoneme(self, phoneme: str, voice_type: VoiceType) -> List[float]:
-        """Get formant frequencies for phoneme and voice type"""
+        """
+Get formant frequencies for phoneme and voice type"""
         try:
             # Map voice type to template key
             voice_map = {

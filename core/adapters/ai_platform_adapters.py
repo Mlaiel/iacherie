@@ -17,6 +17,7 @@ Features:
 - Failover and redundancy management
 - Real-time performance monitoring
 """
+
 import asyncio
 import logging
 from abc import abstractmethod
@@ -40,7 +41,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class AIProvider(Enum):
-    """Supported AI service providers."""
+    """
+Supported AI service providers."""
+
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     HUGGING_FACE = "hugging_face"
@@ -52,6 +55,7 @@ class AIProvider(Enum):
 
 class AIModelType(Enum):
     """AI model categories."""
+
     TEXT_GENERATION = "text_generation"
     CODE_GENERATION = "code_generation"
     CHAT_COMPLETION = "chat_completion"
@@ -81,7 +85,8 @@ class AIModelConfig:
 
 @dataclass
 class AIRequest:
-    """Standardized AI request structure."""
+    """
+Standardized AI request structure."""
     prompt: str
     model_type: AIModelType
     max_tokens: Optional[int] = None
@@ -93,7 +98,8 @@ class AIRequest:
 
 @dataclass
 class AIResponse:
-    """Standardized AI response structure."""
+    """
+Standardized AI response structure."""
     content: str
     provider: AIProvider
     model_name: str
@@ -105,7 +111,8 @@ class AIResponse:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class BaseAIAdapter(BasePlatformAdapter):
-    """Base class for AI platform adapters."""
+    """
+Base class for AI platform adapters."""
     
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
@@ -130,16 +137,19 @@ class BaseAIAdapter(BasePlatformAdapter):
     
     @abstractmethod
     async def chat_completion(self, messages: List[Dict[str, str]], **kwargs) -> AIResponse:
-        """Chat completion using conversational AI."""
+        """
+Chat completion using conversational AI."""
         pass
     
     @abstractmethod
     async def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
-        """Generate embeddings for texts."""
+        """
+Generate embeddings for texts."""
         pass
     
     async def estimate_cost(self, request: AIRequest) -> float:
-        """Estimate cost for AI request."""
+        """
+Estimate cost for AI request."""
         model_config = self.models_config.get(request.model_type.value)
         if not model_config:
             return 0.0
@@ -151,7 +161,8 @@ class BaseAIAdapter(BasePlatformAdapter):
         return estimated_tokens * model_config.cost_per_token
     
     async def track_usage(self, response: AIResponse):
-        """Track usage statistics."""
+        """
+Track usage statistics."""
         today = datetime.utcnow().date().isoformat()
         if today not in self.usage_tracker:
             self.usage_tracker[today] = {
@@ -171,7 +182,8 @@ class BaseAIAdapter(BasePlatformAdapter):
         )
 
 class OpenAIAdapter(BaseAIAdapter):
-    """OpenAI API adapter implementation."""
+    """
+OpenAI API adapter implementation."""
     
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(credentials, config)
@@ -555,7 +567,8 @@ class AIAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseAIAdapter:
-        """Create an AI adapter instance."""
+        """
+Create an AI adapter instance."""
         adapter_class = cls._adapters.get(provider)
         if not adapter_class:
             raise ValueError(f"Unsupported AI provider: {provider}")
@@ -568,7 +581,8 @@ class AIAdapterFactory:
         return list(cls._adapters.keys())
 
 class AIAdapterManager:
-    """Manager for AI adapter instances and intelligent routing."""
+    """
+Manager for AI adapter instances and intelligent routing."""
     
     def __init__(self):
         self.adapters: Dict[AIProvider, BaseAIAdapter] = {}
@@ -576,7 +590,8 @@ class AIAdapterManager:
         self.fallback_providers = [AIProvider.ANTHROPIC, AIProvider.HUGGING_FACE]
     
     def register_adapter(self, provider: AIProvider, adapter: BaseAIAdapter):
-        """Register an AI adapter."""
+        """
+Register an AI adapter."""
         self.adapters[provider] = adapter
         logger.info(f"Registered AI adapter for provider: {provider.value}")
     

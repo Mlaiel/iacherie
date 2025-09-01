@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional container networking management with service discovery,
 load balancing, and advanced networking policies.
 """
+
 import asyncio
 import logging
 import json
@@ -32,7 +33,9 @@ import etcd3
 logger = logging.getLogger(__name__)
 
 class NetworkProtocol(Enum):
-    """Network protocols"""
+    """
+Network protocols"""
+
     TCP = "TCP"
     UDP = "UDP"
     SCTP = "SCTP"
@@ -42,6 +45,7 @@ class NetworkProtocol(Enum):
 
 class LoadBalancerType(Enum):
     """Load balancer types"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
@@ -50,6 +54,7 @@ class LoadBalancerType(Enum):
 
 class ServiceMeshType(Enum):
     """Service mesh types"""
+
     ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
@@ -57,6 +62,7 @@ class ServiceMeshType(Enum):
 
 class NetworkPolicyAction(Enum):
     """Network policy actions"""
+
     ALLOW = "allow"
     DENY = "deny"
     LOG = "log"
@@ -72,7 +78,8 @@ class NetworkPort:
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration"""
+    """
+Service endpoint configuration"""
     name: str
     ip: str
     port: int
@@ -96,7 +103,8 @@ class LoadBalancerConfig:
 
 @dataclass
 class ServiceConfig:
-    """Service configuration"""
+    """
+Service configuration"""
     name: str
     namespace: str
     selector: Dict[str, str]
@@ -117,7 +125,8 @@ class IngressRule:
 
 @dataclass
 class IngressConfig:
-    """Ingress configuration"""
+    """
+Ingress configuration"""
     name: str
     namespace: str
     ingress_class: str = "nginx"

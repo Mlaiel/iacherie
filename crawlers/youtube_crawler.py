@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 import json
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideo:
-    """YouTube video data structure."""
+    """
+YouTube video data structure."""
     video_id: str
     title: str
     description: str
@@ -55,7 +57,8 @@ class YouTubeCrawler(BaseCrawler):
     """
     
     def __init__(self, api_key: Optional[str] = None):
-        """Initialize YouTube crawler."""
+        """
+Initialize YouTube crawler."""
         super().__init__("youtube", rate_limit=100)  # 100 requests per window
         self.api_key = api_key or os.getenv('YOUTUBE_API_KEY')
         self.base_url = "https://www.googleapis.com/youtube/v3"

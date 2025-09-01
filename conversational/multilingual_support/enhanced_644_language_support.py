@@ -14,6 +14,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -60,6 +61,7 @@ logger = logging.getLogger(__name__)
 
 class LanguageFamily(Enum):
     """Major language families"""
+
     INDO_EUROPEAN = "indo_european"
     SINO_TIBETAN = "sino_tibetan"
     NIGER_CONGO = "niger_congo"
@@ -78,6 +80,7 @@ class LanguageFamily(Enum):
 
 class WritingSystem(Enum):
     """Writing systems supported"""
+
     LATIN = "latin"
     CYRILLIC = "cyrillic"
     ARABIC = "arabic"
@@ -101,6 +104,7 @@ class WritingSystem(Enum):
 
 class LanguageTier(Enum):
     """Language support tiers"""
+
     TIER_1_GLOBAL = "tier_1_global"          # 50 languages
     TIER_2_REGIONAL = "tier_2_regional"      # 100 languages
     TIER_3_NATIONAL = "tier_3_national"      # 150 languages
@@ -176,7 +180,8 @@ class Enhanced644LanguageSupport:
     """
     
     def __init__(self, config: Optional[MultilingualAnalysisConfig] = None):
-        """Initialize enhanced language support"""
+        """
+Initialize enhanced language support"""
         self.config = config or MultilingualAnalysisConfig()
         
         # Language profiles storage
@@ -627,30 +632,36 @@ class Enhanced644LanguageSupport:
         return self.language_profiles.get(language_code)
     
     def get_languages_by_family(self, family: LanguageFamily) -> List[LanguageProfile]:
-        """Get all languages in a language family"""
+        """
+Get all languages in a language family"""
         return [profile for profile in self.language_profiles.values() if profile.family == family]
     
     def get_languages_by_tier(self, tier: LanguageTier) -> List[LanguageProfile]:
-        """Get all languages in a tier"""
+        """
+Get all languages in a tier"""
         return [profile for profile in self.language_profiles.values() if profile.tier == tier]
     
     def get_languages_by_country(self, country_code: str) -> List[LanguageProfile]:
-        """Get all languages spoken in a country"""
+        """
+Get all languages spoken in a country"""
         return [profile for profile in self.language_profiles.values() if country_code in profile.countries]
     
     def get_languages_by_script(self, writing_system: WritingSystem) -> List[LanguageProfile]:
-        """Get all languages using a writing system"""
+        """
+Get all languages using a writing system"""
         return [profile for profile in self.language_profiles.values() if profile.writing_system == writing_system]
     
     def get_supported_languages(self) -> Dict[str, int]:
-        """Get count of supported languages by tier"""
+        """
+Get count of supported languages by tier"""
         tier_counts = defaultdict(int)
         for profile in self.language_profiles.values():
             tier_counts[profile.tier.value] += 1
         return dict(tier_counts)
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics"""
+        """
+Get comprehensive statistics"""
         return {
             'total_languages': len(self.language_profiles),
             'languages_by_tier': self.get_supported_languages(),

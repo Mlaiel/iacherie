@@ -29,6 +29,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for content creators"""
+    """
+Supported platform types for content creators"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -87,6 +90,7 @@ class PlatformType(Enum):
 
 class IntegrationLevel(Enum):
     """Levels of platform integration"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -96,6 +100,7 @@ class IntegrationLevel(Enum):
 
 class SyncStatus(Enum):
     """Platform synchronization status"""
+
     SYNCED = "synced"
     SYNCING = "syncing"
     FAILED = "failed"
@@ -123,7 +128,8 @@ class PlatformMetrics:
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration settings"""
+    """
+Platform-specific configuration settings"""
     platform: PlatformType
     integration_level: IntegrationLevel
     api_credentials: Dict
@@ -138,7 +144,8 @@ class PlatformConfiguration:
 
 @dataclass
 class CrossPlatformConversation:
-    """Cross-platform conversation coordination data"""
+    """
+Cross-platform conversation coordination data"""
     conversation_id: str
     primary_platform: PlatformType
     synchronized_platforms: List[PlatformType]

@@ -8,7 +8,7 @@ Responsibility: Enterprise challenge validation, compliance, and fraud detection
 =============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ VALIDATION ARCHITECTURE:
 Input Sanitization → Business Rules → Compliance Engine → 
 Fraud Detection → Quality Gates → Performance Validation → Security Audit
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -32,7 +33,9 @@ import json
 from abc import ABC, abstractmethod
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
+    """
+Validation issue severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -41,6 +44,7 @@ class ValidationSeverity(Enum):
 
 class ValidationCategory(Enum):
     """Validation categories"""
+
     BUSINESS_RULES = "business_rules"
     DATA_INTEGRITY = "data_integrity"
     SECURITY = "security"
@@ -52,6 +56,7 @@ class ValidationCategory(Enum):
 
 class ValidationStatus(Enum):
     """Validation result status"""
+
     PENDING = "pending"
     PASSED = "passed"
     FAILED = "failed"
@@ -62,6 +67,7 @@ class ValidationStatus(Enum):
 
 class FraudRiskLevel(Enum):
     """Fraud risk assessment levels"""
+
     MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
@@ -99,7 +105,8 @@ class ValidationIssue:
 
 @dataclass
 class ValidationResult:
-    """Complete validation result"""
+    """
+Complete validation result"""
     validation_id: str
     status: ValidationStatus
     overall_score: float  # 0.0 to 100.0
@@ -118,7 +125,8 @@ class ComplianceChecker:
     """Enterprise compliance validation system"""
     
     def __init__(self):
-        """Initialize compliance checker"""
+        """
+Initialize compliance checker"""
         self.logger = logging.getLogger(__name__)
         
         # Compliance frameworks
@@ -340,7 +348,8 @@ class RequirementValidator:
     """Challenge requirement validation system"""
     
     def __init__(self):
-        """Initialize requirement validator"""
+        """
+Initialize requirement validator"""
         self.logger = logging.getLogger(__name__)
         
         # Validation thresholds
@@ -665,7 +674,8 @@ class ProgressValidator:
     """Progress validation and tracking system"""
     
     def __init__(self):
-        """Initialize progress validator"""
+        """
+Initialize progress validator"""
         self.logger = logging.getLogger(__name__)
         
         # Progress validation rules
@@ -906,7 +916,8 @@ class ChallengeValidator:
                  user_service=None,
                  content_service=None,
                  fraud_detection_service=None):
-        """Initialize challenge validator"""
+        """
+Initialize challenge validator"""
         self.analytics_service = analytics_service
         self.user_service = user_service
         self.content_service = content_service
@@ -923,7 +934,8 @@ class ChallengeValidator:
         self._validation_rules = self._initialize_validation_rules()
     
     def _initialize_validation_rules(self) -> List[ValidationRule]:
-        """Initialize comprehensive validation rules"""
+        """
+Initialize comprehensive validation rules"""
         return [
             ValidationRule(
                 rule_id="business_001",
@@ -1280,7 +1292,8 @@ class ChallengeValidator:
     def _assess_fraud_risk(self, 
                           issues: List[ValidationIssue],
                           compliance_result: Dict[str, Any]) -> FraudRiskLevel:
-        """Assess fraud risk level"""
+        """
+Assess fraud risk level"""
         fraud_indicators = 0
         
         # Count fraud-related issues

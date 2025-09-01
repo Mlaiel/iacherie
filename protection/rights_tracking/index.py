@@ -2,6 +2,7 @@
 Point d'entrée principal du module de suivi des droits
 Système d'initialisation et coordination des services
 """
+
 import asyncio
 import logging
 import sys
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class RightsTrackingOrchestrator:
-    """Orchestrateur principal des services de suivi des droits"""
+    """
+Orchestrateur principal des services de suivi des droits"""
     
     def __init__(self, config_path: Optional[str] = None):
         self.config = RightsTrackingConfig(config_path)
@@ -45,7 +47,8 @@ class RightsTrackingOrchestrator:
         }
     
     async def initialize(self) -> bool:
-        """Initialise tous les services du module"""
+        """
+Initialise tous les services du module"""
         try:
             logger.info("🚀 Initialisation du module Rights Tracking...")
             self.startup_timestamp = datetime.utcnow()
@@ -590,7 +593,8 @@ async def get_module_health() -> Dict[str, Any]:
 
 
 async def get_module_statistics() -> Dict[str, Any]:
-    """Récupère les statistiques du module"""
+    """
+Récupère les statistiques du module"""
     global _orchestrator
     
     if _orchestrator is None:
@@ -600,7 +604,8 @@ async def get_module_statistics() -> Dict[str, Any]:
 
 
 async def get_service_instance(service_name: str) -> Optional[Any]:
-    """Récupère une instance de service spécifique"""
+    """
+Récupère une instance de service spécifique"""
     global _orchestrator
     
     if _orchestrator is None or service_name not in _orchestrator.services:
@@ -611,7 +616,8 @@ async def get_service_instance(service_name: str) -> Optional[Any]:
 
 # Interface CLI pour tests et débogage
 async def main():
-    """Point d'entrée principal pour l'exécution directe du module"""
+    """
+Point d'entrée principal pour l'exécution directe du module"""
     import argparse
     
     parser = argparse.ArgumentParser(description='Rights Tracking Module')

@@ -17,7 +17,7 @@ Technical Infrastructure:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 ==================================================
@@ -39,6 +39,7 @@ Business Logic Flow:
 Migration Start → Resource Baseline → Performance Monitoring → 
 Anomaly Detection → Predictive Analysis → Alert Generation → Health Reporting
 """
+
 import asyncio
 import logging
 import psutil
@@ -67,7 +68,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of migration metrics"""
+    """
+Types of migration metrics"""
+
     PERFORMANCE = "performance"
     RESOURCE = "resource"
     DURATION = "duration"
@@ -81,6 +84,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -90,6 +94,7 @@ class AlertSeverity(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring session status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -110,7 +115,8 @@ class MetricPoint:
 
 @dataclass
 class ResourceSnapshot:
-    """System resource snapshot"""
+    """
+System resource snapshot"""
     timestamp: datetime
     cpu_percent: float
     memory_percent: float
@@ -127,7 +133,8 @@ class ResourceSnapshot:
 
 @dataclass
 class PerformanceMetrics:
-    """Migration performance metrics"""
+    """
+Migration performance metrics"""
     migration_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -146,7 +153,8 @@ class PerformanceMetrics:
 
 @dataclass
 class MigrationAlert:
-    """Migration monitoring alert"""
+    """
+Migration monitoring alert"""
     alert_id: str
     migration_id: str
     severity: AlertSeverity
@@ -162,7 +170,8 @@ class MigrationAlert:
 
 
 class MigrationPredictor:
-    """ML-based migration outcome and duration predictor"""
+    """
+ML-based migration outcome and duration predictor"""
     
     def __init__(self):
         self.historical_data = []
@@ -170,7 +179,8 @@ class MigrationPredictor:
         self.prediction_accuracy = 0.0
     
     def add_historical_data(self, migration_data: Dict[str, Any]):
-        """Add historical migration data for model training"""
+        """
+Add historical migration data for model training"""
         self.historical_data.append(migration_data)
         
         # Retrain model when we have enough data
@@ -178,7 +188,8 @@ class MigrationPredictor:
             self._train_prediction_model()
     
     def predict_migration_duration(self, migration_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict migration duration based on historical data"""
+        """
+Predict migration duration based on historical data"""
         if not self.model_trained or not self.historical_data:
             return {
                 'predicted_duration_minutes': 60,  # Default estimate
@@ -215,7 +226,8 @@ class MigrationPredictor:
         }
     
     def predict_success_probability(self, migration_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict migration success probability"""
+        """
+Predict migration success probability"""
         if not self.historical_data:
             return {
                 'success_probability': 0.85,
@@ -251,7 +263,8 @@ class MigrationPredictor:
         }
     
     def _extract_features(self, migration_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from migration information"""
+        """
+Extract features from migration information"""
         return {
             'migration_type': migration_info.get('category', 'unknown'),
             'dependency_count': len(migration_info.get('dependencies', [])),
@@ -262,7 +275,8 @@ class MigrationPredictor:
         }
     
     def _calculate_complexity_score(self, migration_info: Dict[str, Any]) -> float:
-        """Calculate migration complexity score"""
+        """
+Calculate migration complexity score"""
         score = 0.0
         
         # Add complexity based on various factors
@@ -278,7 +292,8 @@ class MigrationPredictor:
         return min(1.0, score)
     
     def _find_similar_migrations(self, features: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find similar historical migrations"""
+        """
+Find similar historical migrations"""
         similar = []
         
         for migration in self.historical_data:
@@ -292,7 +307,8 @@ class MigrationPredictor:
         return sorted(similar, key=lambda x: x['similarity_score'], reverse=True)[:5]
     
     def _calculate_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> float:
-        """Calculate similarity between two feature sets"""
+        """
+Calculate similarity between two feature sets"""
         similarities = []
         
         # Type similarity
@@ -317,7 +333,8 @@ class MigrationPredictor:
         return statistics.mean(similarities)
     
     def _train_prediction_model(self):
-        """Train prediction model (simplified version)"""
+        """
+Train prediction model (simplified version)"""
         if len(self.historical_data) < 5:
             return
         
@@ -338,7 +355,8 @@ class ResourceMonitor:
         self.monitor_thread = None
     
     def start_monitoring(self):
-        """Start resource monitoring"""
+        """
+Start resource monitoring"""
         if self.is_monitoring:
             return
         
@@ -463,7 +481,8 @@ class ResourceMonitor:
         return trends
     
     def _monitoring_loop(self):
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         while self.is_monitoring:
             try:
                 snapshot = self.get_current_snapshot()
@@ -488,7 +507,8 @@ class PerformanceAnalyzer:
     
     def analyze_migration_performance(self, metrics: PerformanceMetrics,
                                     resource_monitor: ResourceMonitor) -> Dict[str, Any]:
-        """Analyze migration performance and provide recommendations"""
+        """
+Analyze migration performance and provide recommendations"""
         analysis = {
             'overall_score': 0.0,
             'performance_grade': 'A',
@@ -581,12 +601,14 @@ class PerformanceAnalyzer:
         return 3600  # Default 1 hour
     
     def _get_baseline_throughput(self, migration_id: str) -> float:
-        """Get baseline throughput for migration type"""
+        """
+Get baseline throughput for migration type"""
         baseline = self.performance_baselines.get(migration_id, 100.0)
         return baseline
     
     def _calculate_resource_efficiency(self, resource_trends: Dict[str, Any]) -> float:
-        """Calculate resource efficiency factor"""
+        """
+Calculate resource efficiency factor"""
         if not resource_trends:
             return 0.5
         
@@ -608,7 +630,8 @@ class PerformanceAnalyzer:
     
     def _identify_bottlenecks(self, metrics: PerformanceMetrics,
                             resource_trends: Dict[str, Any]) -> List[str]:
-        """Identify performance bottlenecks"""
+        """
+Identify performance bottlenecks"""
         bottlenecks = []
         
         # High CPU usage
@@ -634,7 +657,8 @@ class PerformanceAnalyzer:
     def _generate_recommendations(self, metrics: PerformanceMetrics,
                                 resource_trends: Dict[str, Any],
                                 bottlenecks: List[str]) -> List[str]:
-        """Generate performance recommendations"""
+        """
+Generate performance recommendations"""
         recommendations = []
         
         if 'high_cpu_usage' in bottlenecks:
@@ -678,7 +702,8 @@ class PerformanceAnalyzer:
     
     def _find_optimization_opportunities(self, metrics: PerformanceMetrics,
                                        resource_trends: Dict[str, Any]) -> List[str]:
-        """Find optimization opportunities"""
+        """
+Find optimization opportunities"""
         opportunities = []
         
         # Underutilized resources
@@ -698,7 +723,8 @@ class PerformanceAnalyzer:
 
 
 class MigrationMonitor:
-    """Comprehensive migration monitoring and alerting system"""
+    """
+Comprehensive migration monitoring and alerting system"""
     
     def __init__(self):
         self.resource_monitor = ResourceMonitor()
@@ -711,7 +737,8 @@ class MigrationMonitor:
     
     def start_monitoring_session(self, migration_id: str, 
                                 migration_info: Dict[str, Any]) -> str:
-        """Start monitoring session for migration"""
+        """
+Start monitoring session for migration"""
         session_id = str(uuid.uuid4())
         
         # Get migration predictions
@@ -773,7 +800,8 @@ class MigrationMonitor:
         self._check_alerts(session_id, session, current_resource)
     
     def end_monitoring_session(self, session_id: str, success: bool = True) -> Dict[str, Any]:
-        """End monitoring session and generate final report"""
+        """
+End monitoring session and generate final report"""
         if session_id not in self.active_sessions:
             return {}
         
@@ -859,7 +887,8 @@ class MigrationMonitor:
     
     def _check_alerts(self, session_id: str, session: Dict[str, Any], 
                      resource_snapshot: ResourceSnapshot):
-        """Check for alert conditions"""
+        """
+Check for alert conditions"""
         metrics = session['metrics']
         
         # High CPU usage alert
@@ -974,7 +1003,8 @@ class MigrationMonitor:
         return sorted(recent_alerts, key=lambda x: x.timestamp, reverse=True)[:10]
     
     def _get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary across all active migrations"""
+        """
+Get performance summary across all active migrations"""
         if not self.active_sessions:
             return {}
         
@@ -992,7 +1022,8 @@ class MigrationMonitor:
         }
     
     def _calculate_session_progress(self, session: Dict[str, Any]) -> float:
-        """Calculate session progress percentage"""
+        """
+Calculate session progress percentage"""
         duration_prediction = session['predictions']['duration']
         predicted_duration = duration_prediction['predicted_duration_minutes']
         
@@ -1006,7 +1037,8 @@ class MigrationMonitor:
         return progress
     
     def _calculate_prediction_accuracy(self, session: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate prediction accuracy for completed session"""
+        """
+Calculate prediction accuracy for completed session"""
         metrics = session['metrics']
         predictions = session['predictions']
         
@@ -1037,10 +1069,12 @@ class MigrationMonitor:
         return accuracy
     
     def add_alert_handler(self, handler: Callable[[MigrationAlert], None]):
-        """Add alert handler function"""
+        """
+Add alert handler function"""
         self.alert_handlers.append(handler)
     
     def remove_alert_handler(self, handler: Callable[[MigrationAlert], None]):
-        """Remove alert handler function"""
+        """
+Remove alert handler function"""
         if handler in self.alert_handlers:
             self.alert_handlers.remove(handler)

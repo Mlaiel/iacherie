@@ -9,6 +9,7 @@ with conflict resolution and consistency guarantees.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -26,7 +27,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class SyncOperation(Enum):
-    """Synchronization operations."""
+    """
+Synchronization operations."""
+
     SET = "set"
     DELETE = "delete"
     INVALIDATE = "invalidate"
@@ -34,6 +37,7 @@ class SyncOperation(Enum):
 
 class ConflictResolution(Enum):
     """Conflict resolution strategies."""
+
     LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MERGE = "merge"
@@ -41,6 +45,7 @@ class ConflictResolution(Enum):
 
 class ConsistencyLevel(Enum):
     """Consistency levels."""
+
     EVENTUAL = "eventual"
     STRONG = "strong"
     WEAK = "weak"
@@ -58,7 +63,8 @@ class SyncEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             'event_id': self.event_id,
             'node_id': self.node_id,
@@ -72,7 +78,8 @@ class SyncEvent:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'SyncEvent':
-        """Create from dictionary."""
+        """
+Create from dictionary."""
         return cls(
             event_id=data['event_id'],
             node_id=data['node_id'],
@@ -86,7 +93,8 @@ class SyncEvent:
 
 @dataclass
 class ConflictInfo:
-    """Conflict information."""
+    """
+Conflict information."""
     key: str
     local_event: SyncEvent
     remote_event: SyncEvent
@@ -152,7 +160,8 @@ class CacheSynchronizer:
         self.sync_callbacks.append(callback)
     
     async def remove_sync_callback(self, callback: Callable) -> None:
-        """Remove synchronization callback."""
+        """
+Remove synchronization callback."""
         if callback in self.sync_callbacks:
             self.sync_callbacks.remove(callback)
     
@@ -508,7 +517,8 @@ class SyncCoordinator:
     """
     
     def __init__(self, cluster_id: str):
-        """Initialize sync coordinator."""
+        """
+Initialize sync coordinator."""
         self.cluster_id = cluster_id
         self.logger = logging.getLogger(f"{__name__}.SyncCoordinator")
         

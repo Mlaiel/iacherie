@@ -4,9 +4,10 @@
 Advanced batch processing system for high-throughput content transformation workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Iterator
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingMode(Enum):
-    """Processing execution modes."""
+    """
+Processing execution modes."""
+
     SEQUENTIAL = "sequential"
     PARALLEL_THREAD = "parallel_thread"
     PARALLEL_PROCESS = "parallel_process"
@@ -34,6 +37,7 @@ class ProcessingMode(Enum):
 
 class BatchPriority(Enum):
     """Batch processing priority levels."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -43,6 +47,7 @@ class BatchPriority(Enum):
 
 class TaskStatus(Enum):
     """Task processing status."""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -87,7 +92,8 @@ class BatchTask:
 
 @dataclass
 class BatchJob:
-    """Batch processing job containing multiple tasks."""
+    """
+Batch processing job containing multiple tasks."""
     id: str
     name: str
     description: str = ""
@@ -132,7 +138,8 @@ class BatchJob:
         return (self.completed_tasks + self.failed_tasks) / self.total_tasks * 100
     
     def get_success_rate(self) -> float:
-        """Get success rate percentage."""
+        """
+Get success rate percentage."""
         processed_tasks = self.completed_tasks + self.failed_tasks
         if processed_tasks == 0:
             return 0.0
@@ -142,7 +149,8 @@ class BatchJob:
 
 @dataclass
 class BatchConfiguration:
-    """Batch processor configuration."""
+    """
+Batch processor configuration."""
     # Worker configuration
     max_thread_workers: int = 4
     max_process_workers: int = 2
@@ -605,7 +613,8 @@ class BatchProcessor:
             return task
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of a job."""
+        """
+Get current status of a job."""
         job = self.active_jobs.get(job_id)
         if not job:
             # Check history
@@ -707,7 +716,8 @@ class BatchProcessor:
             return 1
     
     def _is_cpu_intensive(self, transform_type: str) -> bool:
-        """Determine if transformation is CPU-intensive."""
+        """
+Determine if transformation is CPU-intensive."""
         cpu_intensive_types = {
             "video_encoding", "image_processing", "audio_analysis",
             "ml_inference", "compression", "encryption"
@@ -756,7 +766,8 @@ class BatchProcessor:
             return None
     
     def _get_system_resources(self) -> Dict[str, Any]:
-        """Get current system resource usage."""
+        """
+Get current system resource usage."""
         try:
             import psutil
             return {
@@ -789,7 +800,8 @@ class BatchJobBuilder:
         transform_type: str,
         task_parameters: Optional[Dict[str, Any]] = None
     ) -> 'BatchJobBuilder':
-        """Add a task to the batch."""
+        """
+Add a task to the batch."""
         task = BatchTask(
             id=f"task_{len(self.tasks)}",
             input_file=input_file,
@@ -807,12 +819,14 @@ class BatchJobBuilder:
         return self
     
     def set_priority(self, priority: BatchPriority) -> 'BatchJobBuilder':
-        """Set job priority."""
+        """
+Set job priority."""
         self.priority = priority
         return self
     
     def build(self) -> BatchJob:
-        """Build the batch job."""
+        """
+Build the batch job."""
         job_id = f"batch_{int(time.time())}_{hash(self.name) % 10000}"
         
         return BatchJob(
@@ -838,7 +852,8 @@ class BatchScheduler:
         schedule_time: float,
         repeat_interval: Optional[float] = None
     ):
-        """Schedule a job for future execution."""
+        """
+Schedule a job for future execution."""
         self.scheduled_jobs.append({
             "job": job,
             "schedule_time": schedule_time,

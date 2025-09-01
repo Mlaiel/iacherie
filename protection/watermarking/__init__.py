@@ -30,7 +30,7 @@ Watermarking Technologies:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL STEGANOGRAPHY IP PROTECTION - NATIONAL SECURITY WARNING ⚠️
 ========================================================================
@@ -50,6 +50,7 @@ UNAUTHORIZED ACCESS VIOLATES NATIONAL SECURITY LAWS:
 Contact mlaiel@live.de for MANDATORY steganography licensing authorization.
 Unauthorized access triggers automatic national security alert protocols.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -97,6 +98,7 @@ logger = logging.getLogger(__name__)
 
 class WatermarkType(Enum):
     """Types de filigranes supportés"""
+
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_LSB = "audio_lsb"
     AUDIO_ECHO = "audio_echo"
@@ -111,6 +113,7 @@ class WatermarkType(Enum):
 
 class WatermarkStrength(Enum):
     """Niveaux de force du filigrane"""
+
     LIGHT = "light"        # Imperceptible mais fragile
     MEDIUM = "medium"      # Bon équilibre
     STRONG = "strong"      # Robuste mais peut être perceptible
@@ -119,6 +122,7 @@ class WatermarkStrength(Enum):
 
 class WatermarkPurpose(Enum):
     """Objectifs du filigranage"""
+
     COPYRIGHT = "copyright"
     TRACKING = "tracking"
     AUTHENTICATION = "authentication"
@@ -137,7 +141,8 @@ class WatermarkData:
     metadata: Dict[str, Any]
     
     def to_binary(self) -> bytes:
-        """Convertit en données binaires pour l'insertion"""
+        """
+Convertit en données binaires pour l'insertion"""
         data = {
             'owner_id': self.owner_id,
             'content_id': self.content_id,
@@ -151,7 +156,8 @@ class WatermarkData:
     
     @classmethod
     def from_binary(cls, data: bytes) -> 'WatermarkData':
-        """Crée depuis des données binaires"""
+        """
+Crée depuis des données binaires"""
         json_str = data.decode('utf-8')
         data_dict = json.loads(json_str)
         
@@ -166,7 +172,8 @@ class WatermarkData:
 
 
 class WatermarkResult(BaseModel):
-    """Résultat d'opération de filigranage"""
+    """
+Résultat d'opération de filigranage"""
     success: bool
     watermark_id: str
     watermark_type: WatermarkType
@@ -180,7 +187,8 @@ class WatermarkResult(BaseModel):
 
 
 class WatermarkDetectionResult(BaseModel):
-    """Résultat de détection de filigrane"""
+    """
+Résultat de détection de filigrane"""
     detected: bool
     confidence: float
     watermark_data: Optional[Dict[str, Any]] = None
@@ -191,7 +199,8 @@ class WatermarkDetectionResult(BaseModel):
 
 
 class AudioWatermarker:
-    """Filigranage audio professionnel"""
+    """
+Filigranage audio professionnel"""
     
     def __init__(self):
         self.sample_rate = 44100
@@ -203,7 +212,8 @@ class AudioWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Insère un filigrane dans le domaine spectral"""
+        """
+Insère un filigrane dans le domaine spectral"""
         try:
             if not MULTIMEDIA_AVAILABLE:
                 raise ValueError("Bibliothèques audio non disponibles")
@@ -474,7 +484,8 @@ class AudioWatermarker:
         return bits
     
     def _bits_to_data(self, bits: List[int]) -> bytes:
-        """Convertit une liste de bits en données"""
+        """
+Convertit une liste de bits en données"""
         data = bytearray()
         for i in range(0, len(bits), 8):
             if i + 8 <= len(bits):
@@ -486,10 +497,12 @@ class AudioWatermarker:
 
 
 class ImageWatermarker:
-    """Filigranage d'images professionnel"""
+    """
+Filigranage d'images professionnel"""
     
     def __init__(self):
-        """Initialize professional image watermarking system"""
+        """
+Initialize professional image watermarking system"""
         self.logger = logging.getLogger(f"{__name__}.ImageWatermarker")
         self.watermark_methods = {
             'lsb': self._embed_lsb,
@@ -673,7 +686,8 @@ class ImageWatermarker:
 
 
 class TextWatermarker:
-    """Filigranage de texte professionnel"""
+    """
+Filigranage de texte professionnel"""
     
     def __init__(self):
         self.invisible_chars = {
@@ -690,7 +704,8 @@ class TextWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[str, Dict[str, Any]]:
-        """Insère un filigrane sémantique dans le texte"""
+        """
+Insère un filigrane sémantique dans le texte"""
         try:
             data_bits = self._data_to_bits(watermark_data)
             
@@ -808,12 +823,14 @@ class TextWatermarker:
         return sentence
     
     def _neutralize_sentence(self, sentence: str, strength: WatermarkStrength) -> str:
-        """Neutralise une phrase"""
+        """
+Neutralise une phrase"""
         # Implémentation simplifiée
         return sentence.replace('!', '.')
     
     def _data_to_bits(self, data: bytes) -> List[int]:
-        """Convertit des données en liste de bits"""
+        """
+Convertit des données en liste de bits"""
         bits = []
         for byte in data:
             for i in range(8):
@@ -822,7 +839,8 @@ class TextWatermarker:
 
 
 class WatermarkingService:
-    """Service professionnel de filigranage multimédia"""
+    """
+Service professionnel de filigranage multimédia"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -844,12 +862,14 @@ class WatermarkingService:
         self._setup_output_directory()
     
     def _setup_output_directory(self):
-        """Configure le répertoire de sortie"""
+        """
+Configure le répertoire de sortie"""
         output_dir = self.config.get('output_directory', self.default_config['output_directory'])
         Path(output_dir).mkdir(parents=True, exist_ok=True)
     
     async def initialize(self) -> bool:
-        """Initialise le service de filigranage"""
+        """
+Initialise le service de filigranage"""
         try:
             logger.info("Initialisation du service de filigranage...")
             
@@ -1285,7 +1305,7 @@ class WatermarkingService:
                 
                 # Method 2: Check for specific watermark patterns
                 watermark_patterns = [
-                    r'©\s*\d{4}',  # Copyright notices
+                    r'(c)\s*\d{4}',  # Copyright notices
                     r'watermark',
                     r'protected.*content',
                     r'intellectual.*property'
@@ -1509,7 +1529,8 @@ class WatermarkingService:
         watermark_type: WatermarkType,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> List[WatermarkResult]:
-        """Traitement par lot de fichiers"""
+        """
+Traitement par lot de fichiers"""
         try:
             results = []
             semaphore = asyncio.Semaphore(self.config.get('max_concurrent_jobs', 4))

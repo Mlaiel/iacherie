@@ -20,6 +20,7 @@ This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -59,7 +60,9 @@ from ...models.monetization import (
 
 
 class RevenueSource(Enum):
-    """Revenue source types."""
+    """
+Revenue source types."""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     SPONSORSHIP = "sponsorship"
@@ -76,6 +79,7 @@ class RevenueSource(Enum):
 
 class PlatformRevenue(Enum):
     """Supported revenue platforms."""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
@@ -93,6 +97,7 @@ class PlatformRevenue(Enum):
 
 class PaymentMethod(Enum):
     """Payment processing methods."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -105,6 +110,7 @@ class PaymentMethod(Enum):
 
 class RevenueType(Enum):
     """Types of revenue classification."""
+
     GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     ROYALTIES = "royalties"
@@ -131,7 +137,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueStreamData:
-    """Individual revenue stream information."""
+    """
+Individual revenue stream information."""
     stream_id: str
     user_id: str
     platform: PlatformRevenue
@@ -216,7 +223,8 @@ class MonetizationManager:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize monetization manager."""
+        """
+Initialize monetization manager."""
         self.config = config or MonetizationConfig()
         self.logger = get_logger(__name__)
         self.encryption_manager = EncryptionManager()
@@ -244,7 +252,8 @@ class MonetizationManager:
         self._initialize_platform_clients()
     
     def _initialize_payment_processors(self):
-        """Initialize payment processing systems."""
+        """
+Initialize payment processing systems."""
         try:
             # Initialize Stripe
             if self.config.stripe_secret_key:
@@ -996,17 +1005,20 @@ class MonetizationManager:
             del self.revenue_metrics_cache[key]
     
     async def _check_automatic_payout_triggers(self, user_id: str):
-        """Check if automatic payout should be triggered."""
+        """
+Check if automatic payout should be triggered."""
         # Implementation for automatic payout triggers based on user preferences
         pass
     
     async def _schedule_licensing_payments(self, agreement: LicensingAgreement):
-        """Schedule recurring payments for licensing agreement."""
+        """
+Schedule recurring payments for licensing agreement."""
         # Implementation for scheduling recurring licensing payments
         pass
     
     async def close(self):
-        """Close and cleanup resources."""
+        """
+Close and cleanup resources."""
         try:
             # Clear caches
             self.revenue_streams.clear()
@@ -1031,7 +1043,8 @@ async def bulk_track_revenue_streams(
     manager: MonetizationManager,
     revenue_data: List[Tuple[str, PlatformRevenue, RevenueSource, Decimal, str]]
 ) -> List[str]:
-    """Track multiple revenue streams in bulk."""
+    """
+Track multiple revenue streams in bulk."""
     stream_ids = []
     
     for user_id, platform, source, amount, currency in revenue_data:

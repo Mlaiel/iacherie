@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional fingerprinting engine Docker configuration for multi-format
 content identification and similarity matching systems.
 """
+
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintingEngineDockerConfig:
-    """Enterprise Fingerprinting Engine Docker configuration"""
+    """
+Enterprise Fingerprinting Engine Docker configuration"""
     
     # Container Configuration
     image_name: str = "ia-influencer/fingerprinting-engine"
@@ -277,7 +279,8 @@ CMD ["gunicorn", \\
      "main:app"]
 """
     def _generate_format_env_vars(self) -> str:
-        """Generate format-specific environment variables"""
+        """
+Generate format-specific environment variables"""
         env_vars = []
         for format_type, enabled in self.enabled_formats.items():
             env_vars.append(f"ENV FORMAT_{format_type.upper()}_ENABLED={str(enabled).lower()}")
@@ -519,7 +522,8 @@ numba==0.58.1
 joblib==1.3.2
 """
     def generate_model_download_script(self) -> str:
-        """Generate script to download fingerprinting models"""
+        """
+Generate script to download fingerprinting models"""
         return """#!/usr/bin/env python3
 \"\"\"
 Fingerprinting Models Download Script - IA-Influencer-Agent
@@ -666,7 +670,8 @@ if __name__ == "__main__":
     logger.info("✅ Fingerprinting model download completed")
 """
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
+        """
+Save all configuration files to output directory"""
         import os
         from pathlib import Path
         

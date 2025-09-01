@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class YouTubeMusicContentType(str, Enum):
-    """YouTube Music content types"""
+    """
+YouTube Music content types"""
+
     SONG = "song"
     ALBUM = "album"
     PLAYLIST = "playlist"
@@ -48,6 +51,7 @@ class YouTubeMusicContentType(str, Enum):
 
 class YouTubeMusicQuality(str, Enum):
     """YouTube Music audio quality"""
+
     LOW = "low"  # 128 kbps
     MEDIUM = "medium"  # 256 kbps
     HIGH = "high"  # 320 kbps
@@ -56,6 +60,7 @@ class YouTubeMusicQuality(str, Enum):
 
 class YouTubeMusicPlaylistType(str, Enum):
     """YouTube Music playlist types"""
+
     USER_CREATED = "user_created"
     OFFICIAL = "official"
     GENERATED = "generated"
@@ -89,7 +94,8 @@ class YouTubeMusicArtist(BaseModel):
 
 
 class YouTubeMusicSong(BaseModel):
-    """YouTube Music song data model"""
+    """
+YouTube Music song data model"""
     song_id: str
     title: str
     artists: List[YouTubeMusicArtist] = Field(default_factory=list)
@@ -171,7 +177,8 @@ class YouTubeMusicPlaylist(BaseModel):
 
 
 class YouTubeMusicPodcast(BaseModel):
-    """YouTube Music podcast data model"""
+    """
+YouTube Music podcast data model"""
     podcast_id: str
     title: str
     description: Optional[str] = None
@@ -189,7 +196,8 @@ class YouTubeMusicPodcast(BaseModel):
 
 
 class YouTubeMusicSearchResults(BaseModel):
-    """YouTube Music search results data model"""
+    """
+YouTube Music search results data model"""
     query: str
     total_results: int
     songs: List[YouTubeMusicSong] = Field(default_factory=list)
@@ -205,7 +213,8 @@ class YouTubeMusicSearchResults(BaseModel):
 
 
 class YouTubeMusicAnalytics(BaseModel):
-    """YouTube Music analytics data model"""
+    """
+YouTube Music analytics data model"""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_listening_time_seconds: int
@@ -763,7 +772,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         return []
 
     async def _search_artists(self, query: str, genre: Optional[str], limit: int) -> List[YouTubeMusicArtist]:
-        """Search for artists"""
+        """
+Search for artists"""
         try:
             search_params = {
                 'key': self.api_key,
@@ -832,7 +842,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         return []
 
     async def _parse_song_from_video(self, video_data: Dict[str, Any]) -> Optional[YouTubeMusicSong]:
-        """Parse song data from YouTube video"""
+        """
+Parse song data from YouTube video"""
         try:
             snippet = video_data.get('snippet', {})
             video_id = video_data.get('id', {}).get('videoId', '')
@@ -952,7 +963,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         return []
 
     async def _extract_song_features(self, song: YouTubeMusicSong) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""
+        """
+Extract features for similarity comparison"""
         features = {
             "title": song.title.lower(),
             "artists": set(artist.name.lower() for artist in song.artists),
@@ -1036,7 +1048,8 @@ class YouTubeMusicCrawler(BaseCrawler):
         return []
 
     async def _group_listening_sessions(self, listening_history: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Group listening history into sessions"""
+        """
+Group listening history into sessions"""
         sessions = []
         current_session = []
         session_gap_threshold = 1800  # 30 minutes
@@ -1076,12 +1089,14 @@ class YouTubeMusicCrawler(BaseCrawler):
         return sessions
 
     async def _calculate_similarity(self, song: YouTubeMusicSong) -> float:
-        """Calculate similarity score against protected content"""
+        """
+Calculate similarity score against protected content"""
         # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, song: YouTubeMusicSong) -> str:
-        """Check protection status of song"""
+        """
+Check protection status of song"""
         if song.song_id in self.protected_content:
             return "protected"
         return "unprotected"

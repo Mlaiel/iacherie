@@ -6,7 +6,7 @@ quality assessment, and optimization recommendations for video, audio, and image
 content across multiple platforms and formats.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 LEGAL WARNING: This intellectual property is protected under German and
@@ -22,6 +22,7 @@ Features:
 - Performance prediction based on content characteristics
 - Accessibility compliance validation
 """
+
 import re
 import json
 import hashlib
@@ -86,6 +87,7 @@ logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
     """Types of multimedia content"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -99,6 +101,7 @@ class ContentType(Enum):
 
 class QualityLevel(Enum):
     """Content quality levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -132,6 +135,7 @@ class ContentFormat(Enum):
 
 class PlatformOptimization(Enum):
     """Platform optimization targets"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -144,6 +148,7 @@ class PlatformOptimization(Enum):
 
 class AnalysisFeature(Enum):
     """Content analysis features"""
+
     OBJECT_DETECTION = "object_detection"
     SCENE_ANALYSIS = "scene_analysis"
     EMOTION_DETECTION = "emotion_detection"
@@ -176,7 +181,8 @@ class MediaMetadata:
 
 @dataclass
 class VideoAnalysisResult:
-    """Video content analysis result"""
+    """
+Video content analysis result"""
     metadata: MediaMetadata
     quality_score: float = 0.0
     quality_level: QualityLevel = QualityLevel.AVERAGE
@@ -197,7 +203,8 @@ class VideoAnalysisResult:
 
 @dataclass
 class AudioAnalysisResult:
-    """Audio content analysis result"""
+    """
+Audio content analysis result"""
     metadata: MediaMetadata
     quality_score: float = 0.0
     quality_level: QualityLevel = QualityLevel.AVERAGE
@@ -218,7 +225,8 @@ class AudioAnalysisResult:
 
 @dataclass
 class ImageAnalysisResult:
-    """Image content analysis result"""
+    """
+Image content analysis result"""
     metadata: MediaMetadata
     quality_score: float = 0.0
     quality_level: QualityLevel = QualityLevel.AVERAGE
@@ -240,7 +248,8 @@ class ImageAnalysisResult:
 
 @dataclass
 class MultimediaValidationResult:
-    """Comprehensive multimedia validation result"""
+    """
+Comprehensive multimedia validation result"""
     validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_path: str = ""
     content_type: ContentType = ContentType.IMAGE
@@ -594,7 +603,8 @@ class MultimediaContentAnalysisValidator:
         return ContentType.IMAGE  # Default fallback
     
     def _extract_metadata(self, content_path: str, content_type: ContentType) -> MediaMetadata:
-        """Extract metadata from content file"""
+        """
+Extract metadata from content file"""
         file_size = os.path.getsize(content_path)
         format_name = os.path.splitext(content_path)[1][1:].lower()
         
@@ -1133,12 +1143,14 @@ class MultimediaContentAnalysisValidator:
         return self._calculate_file_checksum(content_path)[:16]
     
     def _detect_duplicates(self, fingerprint: str) -> List[str]:
-        """Detect potential duplicate content using advanced fingerprint database"""
+        """
+Detect potential duplicate content using advanced fingerprint database"""
         # Professional implementation using comprehensive fingerprint database
         return self._query_fingerprint_database_for_duplicates(fingerprint)
     
     def _determine_quality_level(self, score: float, content_type: str) -> QualityLevel:
-        """Determine quality level from score"""
+        """
+Determine quality level from score"""
         thresholds = self.quality_thresholds.get(content_type, {})
         
         if score >= thresholds.get("excellent", 0.9):
@@ -1232,7 +1244,8 @@ def analyze_content_for_platforms(
 
 # Additional helper methods for comprehensive analysis
 def _advanced_video_text_recognition(video_data: bytes) -> List[str]:
-    """Advanced video text recognition using OCR on video frames"""
+    """
+Advanced video text recognition using OCR on video frames"""
     try:
         import cv2
         import pytesseract

@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConversationType(Enum):
-    """Types of conversations"""
+    """
+Types of conversations"""
+
     DIRECT_MESSAGE = "direct_message"
     PUBLIC_COMMENT = "public_comment"
     STORY_REPLY = "story_reply"
@@ -43,6 +46,7 @@ class ConversationType(Enum):
 
 class ResponseTone(Enum):
     """Response tone styles"""
+
     FRIENDLY = "friendly"
     PROFESSIONAL = "professional"
     CASUAL = "casual"
@@ -55,6 +59,7 @@ class ResponseTone(Enum):
 
 class ConversationPriority(Enum):
     """Conversation priority levels"""
+
     URGENT = "urgent"        # Business inquiries, crisis
     HIGH = "high"           # Collaboration, VIP fans
     MEDIUM = "medium"       # Regular fan interactions
@@ -221,7 +226,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return MockSentimentAnalyzer()
     
     def _load_response_templates(self) -> Dict[str, List[str]]:
-        """Load response templates for different conversation types"""
+        """
+Load response templates for different conversation types"""
         return {
             'greeting': [
                 "Hi {name}! Thanks for reaching out! 😊",
@@ -343,7 +349,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return conversation
     
     def _determine_follower_status(self, user_info: Dict[str, Any]) -> str:
-        """Determine user's follower status"""
+        """
+Determine user's follower status"""
         if user_info.get('verified', False):
             return 'vip'
         elif user_info.get('followers_count', 0) > 10000:
@@ -354,7 +361,8 @@ class ConversationalAIAgent(BaseAIAgent):
             return 'non_follower'
     
     async def _analyze_message(self, message: ConversationMessage, conversation: ConversationContext):
-        """Perform comprehensive message analysis"""
+        """
+Perform comprehensive message analysis"""
         try:
             # Sentiment analysis
             message.sentiment_score = await self.sentiment_analyzer.analyze_sentiment(message.content)
@@ -407,7 +415,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return min(urgency, 1.0)
     
     async def _update_conversation_context(self, message: ConversationMessage, conversation: ConversationContext):
-        """Update conversation context with new insights"""
+        """
+Update conversation context with new insights"""
         # Add sentiment to trend
         conversation.sentiment_trend.append(message.sentiment_score)
         if len(conversation.sentiment_trend) > 10:
@@ -423,7 +432,8 @@ class ConversationalAIAgent(BaseAIAgent):
             conversation.intent_classification = message.intent
     
     async def _classify_conversation(self, conversation: ConversationContext, message: ConversationMessage):
-        """Classify conversation type and priority"""
+        """
+Classify conversation type and priority"""
         # Determine conversation type
         if 'collaboration' in message.intent.lower():
             conversation.conversation_type = ConversationType.COLLABORATION_INQUIRY
@@ -447,7 +457,8 @@ class ConversationalAIAgent(BaseAIAgent):
         )
     
     async def _generate_intelligent_response(self, conversation: ConversationContext, message: Dict[str, Any], custom_instructions: Optional[str] = None) -> ResponseGeneration:
-        """Generate intelligent, personalized response"""
+        """
+Generate intelligent, personalized response"""
         try:
             # Determine response strategy
             response_type = self._determine_response_type(conversation, message)
@@ -502,7 +513,8 @@ class ConversationalAIAgent(BaseAIAgent):
             return 'fan_appreciation'
     
     async def _generate_base_response(self, conversation: ConversationContext, message: Dict[str, Any], response_type: str) -> str:
-        """Generate base response from templates"""
+        """
+Generate base response from templates"""
         templates = self.response_templates.get(response_type, self.response_templates['greeting'])
         
         # Select template based on conversation context
@@ -518,7 +530,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return formatted_response
     
     async def _apply_personalization(self, base_response: str, conversation: ConversationContext, message: Dict[str, Any]) -> str:
-        """Apply personalization to response"""
+        """
+Apply personalization to response"""
         personalized = base_response
         
         # Add personal touches based on user profile
@@ -567,7 +580,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return max(0.1, min(confidence, 1.0))
     
     def _calculate_engagement_potential(self, response: str, conversation: ConversationContext) -> float:
-        """Calculate engagement potential of response"""
+        """
+Calculate engagement potential of response"""
         engagement = 0.5  # Base engagement
         
         # Higher engagement for questions
@@ -586,7 +600,8 @@ class ConversationalAIAgent(BaseAIAgent):
         return max(0.1, min(engagement, 1.0))
     
     async def get_conversation_analytics(self, time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
-        """Get conversation analytics and insights"""
+        """
+Get conversation analytics and insights"""
         cutoff_time = datetime.utcnow() - time_range
         recent_conversations = [
             conv for conv in self.active_conversations.values()

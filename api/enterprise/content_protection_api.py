@@ -16,6 +16,7 @@ Features:
 - Revenue protection metrics
 - Multi-platform monitoring
 """
+
 import asyncio
 import json
 import logging
@@ -70,7 +71,8 @@ class ContentProtectionResponse(BaseModel):
 
 
 class PiracyReportRequest(BaseModel):
-    """Request model for piracy reporting"""
+    """
+Request model for piracy reporting"""
     report_id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = Field(..., description="Protected content identifier")
     infringing_url: str = Field(..., description="URL of infringing content")
@@ -550,7 +552,8 @@ async def _get_recent_piracy_reports(content_id: str, limit: int = 10) -> List[D
 
 
 async def _get_takedown_status(content_id: str) -> Dict[str, Any]:
-    """Get takedown status for content"""
+    """
+Get takedown status for content"""
     return {
         "active_count": 0,
         "resolved_count": 5,

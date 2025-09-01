@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable, Set
 from datetime import datetime, timedelta
@@ -58,7 +59,9 @@ from ...utils.retry_handler import ExponentialBackoffRetry
 
 
 class SyncType(Enum):
-    """Types of synchronization operations"""
+    """
+Types of synchronization operations"""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -69,6 +72,7 @@ class SyncType(Enum):
 
 class SyncDirection(Enum):
     """Synchronization directions"""
+
     BIDIRECTIONAL = "bidirectional"
     PLATFORM_TO_LOCAL = "platform_to_local"
     LOCAL_TO_PLATFORM = "local_to_platform"
@@ -77,6 +81,7 @@ class SyncDirection(Enum):
 
 class SyncPriority(Enum):
     """Synchronization priority levels"""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -85,7 +90,9 @@ class SyncPriority(Enum):
 
 
 class ConflictStrategy(Enum):
-    """Conflict resolution strategies"""
+    """
+Conflict resolution strategies"""
+
     LATEST_WINS = "latest_wins"
     PLATFORM_PRIORITY = "platform_priority"
     USER_CHOICE = "user_choice"
@@ -116,7 +123,8 @@ class SyncConfiguration:
 
 @dataclass
 class SyncResult:
-    """Result of synchronization operation"""
+    """
+Result of synchronization operation"""
     sync_id: str
     success: bool
     platform: PlatformType
@@ -135,7 +143,8 @@ class SyncResult:
 
 @dataclass
 class DataConflict:
-    """Data conflict representation"""
+    """
+Data conflict representation"""
     conflict_id: str
     platform_a: PlatformType
     platform_b: PlatformType
@@ -149,26 +158,31 @@ class DataConflict:
 
 
 class ISyncHandler(ABC):
-    """Interface for platform-specific sync handlers"""
+    """
+Interface for platform-specific sync handlers"""
     
     @abstractmethod
     async def fetch_data(self, data_type: str, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Fetch data from platform"""
+        """
+Fetch data from platform"""
         pass
     
     @abstractmethod
     async def push_data(self, data_type: str, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Push data to platform"""
+        """
+Push data to platform"""
         pass
     
     @abstractmethod
     async def get_last_modified(self, data_type: str) -> datetime:
-        """Get last modification timestamp for data type"""
+        """
+Get last modification timestamp for data type"""
         pass
     
     @abstractmethod
     async def validate_data(self, data_type: str, data: Dict[str, Any]) -> bool:
-        """Validate data for platform compatibility"""
+        """
+Validate data for platform compatibility"""
         pass
 
 
@@ -1022,7 +1036,8 @@ class ConsistencyValidator:
         }
 
     def _initialize_consistency_thresholds(self) -> Dict[str, float]:
-        """Initialize consistency thresholds"""
+        """
+Initialize consistency thresholds"""
         return {
             'field_match_threshold': 0.95,
             'value_deviation_threshold': 0.1,

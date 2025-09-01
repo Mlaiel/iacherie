@@ -5,6 +5,7 @@ policy enforcement, lifecycle management, and quality assurance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from .classification import DataClassifier
 
 
 class ContentType(Enum):
-    """Content types supported by the platform"""
+    """
+Content types supported by the platform"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -37,6 +40,7 @@ class ContentType(Enum):
 
 class GovernanceStatus(Enum):
     """Governance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -67,7 +71,8 @@ class DataGovernanceManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the data governance manager"""
+        """
+Initialize the data governance manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         

@@ -18,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 # Copy the core classes we need for testing
 class SpecializedChallengeType(Enum):
-    """Specialized challenge types for the platform requirements"""
+    """
+Specialized challenge types for the platform requirements"""
+
     MONTHLY_CREATIVE = "monthly_creative"
     TECHNICAL_SEO = "technical_seo"
     TECHNICAL_REVENUE = "technical_revenue"
@@ -28,6 +30,7 @@ class SpecializedChallengeType(Enum):
 
 class ChallengeRewardType(Enum):
     """Types of rewards for challenges"""
+
     POINTS = "points"
     BADGE = "badge"
     CASH_PRIZE = "cash_prize"
@@ -395,7 +398,8 @@ class SpecializedChallengeManager:
         return active
     
     async def get_challenge_analytics(self) -> Dict[str, Any]:
-        """Get analytics for specialized challenges"""
+        """
+Get analytics for specialized challenges"""
         return {
             "monthly_challenges": {
                 "total": len(self.monthly_challenges),

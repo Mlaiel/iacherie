@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation severity levels"""
+    """
+Validation severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -64,6 +67,7 @@ class ValidationLevel(Enum):
 
 class ValidationCategory(Enum):
     """Validation categories"""
+
     CONFIGURATION = "configuration"
     CONNECTIVITY = "connectivity"
     SECURITY = "security"
@@ -88,15 +92,18 @@ class ValidationResult:
 
 
 class MicroservicesValidator:
-    """Comprehensive microservices configuration validator"""
+    """
+Comprehensive microservices configuration validator"""
     
     def __init__(self):
-        """Initialize validator"""
+        """
+Initialize validator"""
         self.results: List[ValidationResult] = []
         self.logger = logging.getLogger(__name__)
     
     async def run_full_validation(self) -> Tuple[bool, List[ValidationResult]]:
-        """Run complete validation suite"""
+        """
+Run complete validation suite"""
         self.logger.info("Starting comprehensive microservices validation...")
         self.results.clear()
         
@@ -398,7 +405,8 @@ class MicroservicesValidator:
         self.results.append(result)
     
     def get_validation_summary(self) -> Dict[str, Any]:
-        """Get validation summary statistics"""
+        """
+Get validation summary statistics"""
         level_counts = {}
         category_counts = {}
         
@@ -427,7 +435,8 @@ async def run_full_validation() -> Tuple[bool, List[ValidationResult]]:
 
 
 def get_validation_summary() -> Dict[str, Any]:
-    """Get validation summary"""
+    """
+Get validation summary"""
     return microservices_validator.get_validation_summary()
 
 

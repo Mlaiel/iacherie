@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -24,7 +25,9 @@ from .copyright_registry import CopyrightRegistryManager
 
 
 class CollaborationType(Enum):
-    """Types of creative collaborations"""
+    """
+Types of creative collaborations"""
+
     MUSIC_COLLAB = "music_collaboration"
     CONTENT_REMIX = "content_remix"
     JOINT_CREATION = "joint_creation"
@@ -38,6 +41,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration project status"""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
@@ -50,6 +54,7 @@ class CollaborationStatus(Enum):
 
 class RevenueDistributionModel(Enum):
     """Revenue sharing models"""
+
     EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CONTRIBUTION_WEIGHTED = "contribution_weighted"
@@ -88,7 +93,8 @@ class CollaborationProposal:
 
 @dataclass
 class CollaborationProject:
-    """Active collaboration project"""
+    """
+Active collaboration project"""
     project_id: str
     proposal_id: str
     collaborators: List[str]
@@ -119,7 +125,8 @@ class CollaborationProject:
 
 @dataclass
 class RevenueDistribution:
-    """Revenue distribution event"""
+    """
+Revenue distribution event"""
     distribution_id: str
     project_id: str
     total_amount: Decimal
@@ -135,7 +142,8 @@ class RevenueDistribution:
 
 @dataclass
 class CollaboratorProfile:
-    """Enhanced collaborator profile"""
+    """
+Enhanced collaborator profile"""
     creator_id: str
     display_name: str
     specializations: List[str]
@@ -622,7 +630,8 @@ class CollaborationManager:
         return None
     
     async def get_collaboration_project(self, project_id: str) -> Optional[CollaborationProject]:
-        """Get collaboration project by ID"""
+        """
+Get collaboration project by ID"""
         if project_id in self._projects_cache:
             return self._projects_cache[project_id]
         
@@ -636,7 +645,8 @@ class CollaborationManager:
         return None
     
     async def get_collaborator_profile(self, creator_id: str) -> Optional[CollaboratorProfile]:
-        """Get collaborator profile"""
+        """
+Get collaborator profile"""
         if creator_id in self._profiles_cache:
             return self._profiles_cache[creator_id]
         
@@ -678,7 +688,8 @@ class CollaborationManager:
         return 99.9 <= total <= 100.1  # Allow small floating-point errors
     
     def _parse_timeline(self, timeline_config: Dict[str, Any]) -> Dict[str, datetime]:
-        """Parse timeline configuration"""
+        """
+Parse timeline configuration"""
         parsed = {}
         for key, value in timeline_config.items():
             if isinstance(value, str):
@@ -688,7 +699,8 @@ class CollaborationManager:
         return parsed
     
     def _create_project_milestones(self, proposal: CollaborationProposal) -> List[Dict[str, Any]]:
-        """Create project milestones from proposal"""
+        """
+Create project milestones from proposal"""
         milestones = []
         
         # Default milestones based on collaboration type
@@ -712,11 +724,13 @@ class CollaborationManager:
         return milestones
     
     def _generate_content_hash(self, content_data: bytes) -> str:
-        """Generate content hash"""
+        """
+Generate content hash"""
         return hashlib.sha3_256(content_data).hexdigest()
     
     async def _upload_deliverable_content(self, project_id: str, deliverable_id: str, content: bytes) -> str:
-        """Upload deliverable content to secure storage"""
+        """
+Upload deliverable content to secure storage"""
         # Implementation would integrate with cloud storage
         filename = f"deliverables/{project_id}/{deliverable_id}/{int(datetime.now().timestamp())}"
         # Return mock URL for now
@@ -728,26 +742,31 @@ class CollaborationManager:
         pass
     
     async def _send_response_notification(self, initiator_id: str, proposal: CollaborationProposal, response: str):
-        """Send response notification"""
+        """
+Send response notification"""
         # Implementation would integrate with notification system
         pass
     
     async def _notify_deliverable_submission(self, project: CollaborationProject, deliverable_id: str, submitter_id: str):
-        """Notify collaborators of deliverable submission"""
+        """
+Notify collaborators of deliverable submission"""
         # Implementation would integrate with notification system
         pass
     
     async def _notify_revenue_distribution(self, project: CollaborationProject, distribution: RevenueDistribution):
-        """Notify collaborators of revenue distribution"""
+        """
+Notify collaborators of revenue distribution"""
         # Implementation would integrate with notification system
         pass
     
     def _reconstruct_proposal_from_blockchain(self, blockchain_data: Dict[str, Any]) -> CollaborationProposal:
-        """Reconstruct proposal from blockchain data"""
+        """
+Reconstruct proposal from blockchain data"""
         # Implementation would parse blockchain data back to proposal object
         pass
     
     def _reconstruct_project_from_blockchain(self, blockchain_data: Dict[str, Any]) -> CollaborationProject:
-        """Reconstruct project from blockchain data"""
+        """
+Reconstruct project from blockchain data"""
         # Implementation would parse blockchain data back to project object
         pass

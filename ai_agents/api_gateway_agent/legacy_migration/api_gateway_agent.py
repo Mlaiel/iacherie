@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -77,7 +78,8 @@ class APIGatewayAgent(BaseAgent):
     """
     
     def __init__(self, config: Optional[APIGatewayConfig] = None):
-        """Initialize API Gateway Agent"""
+        """
+Initialize API Gateway Agent"""
         self.config = config or APIGatewayConfig()
         super().__init__(
             agent_id=f"api-gateway-{uuid.uuid4().hex[:8]}",
@@ -255,7 +257,8 @@ class APIGatewayAgent(BaseAgent):
             return await self._proxy_request(request, path)
     
     async def _proxy_request(self, request: Request, path: str) -> Response:
-        """Proxy request to appropriate upstream service"""
+        """
+Proxy request to appropriate upstream service"""
         try:
             # Determine target service
             service_name = self.router.route_request(f"/{path}")
@@ -350,7 +353,8 @@ class APIGatewayAgent(BaseAgent):
         return False
     
     async def _get_services_health(self) -> Dict[str, Dict[str, Any]]:
-        """Get health status of all services"""
+        """
+Get health status of all services"""
         services_health = {}
         
         for service_name, config in self.config.service_routes.items():

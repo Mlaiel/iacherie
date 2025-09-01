@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -462,6 +463,7 @@ class ModelProvider(Enum):
 
 class ModelStatus(Enum):
     """Model status states"""
+
     IDLE = "idle"
     LOADING = "loading"
     READY = "ready"
@@ -472,6 +474,7 @@ class ModelStatus(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -480,7 +483,8 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class ModelConfig:
-    """Configuration for AI models"""
+    """
+Configuration for AI models"""
     name: str
     provider: ModelProvider
     model_type: ModelType
@@ -498,7 +502,8 @@ class ModelConfig:
 
 @dataclass
 class ProcessingResult:
-    """Result from AI model processing"""
+    """
+Result from AI model processing"""
     success: bool
     data: Any
     confidence: float = 0.0
@@ -560,7 +565,8 @@ class BaseAIModel(ABC):
     
     @abstractmethod
     async def validate_connection(self) -> bool:
-        """Validate connection to the AI model"""
+        """
+Validate connection to the AI model"""
         pass
     
     
@@ -617,7 +623,8 @@ class BaseAIModel(ABC):
         return cached_item['result']
     
     def _cache_result(self, cache_key: str, result: ProcessingResult):
-        """Cache processing result"""
+        """
+Cache processing result"""
         if self.config.enable_caching:
             self.cache[cache_key] = {
                 'result': result,
@@ -701,7 +708,8 @@ class BaseAIModel(ABC):
                                         (1 - alpha) * self.average_response_time)
     
     def get_model_info(self) -> Dict[str, Any]:
-        """Get comprehensive model information"""
+        """
+Get comprehensive model information"""
         return {
             "name": self.model_name,
             "provider": self.provider.value,
@@ -764,7 +772,8 @@ class BaseAIModel(ABC):
 
 
 class AudioModel(BaseAIModel):
-    """Base class for audio processing models"""
+    """
+Base class for audio processing models"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -773,18 +782,21 @@ class AudioModel(BaseAIModel):
         self.sample_rate = 44100
     
     async def preprocess_audio(self, audio_data: Any) -> Any:
-        """Preprocess audio data before model processing"""
+        """
+Preprocess audio data before model processing"""
         # Implement audio preprocessing (format conversion, normalization, etc.)
         return audio_data
     
     async def extract_features(self, audio_data: Any) -> Dict[str, Any]:
-        """Extract audio features for analysis"""
+        """
+Extract audio features for analysis"""
         # Implement feature extraction (MFCC, spectral features, etc.)
         return {}
 
 
 class VideoModel(BaseAIModel):
-    """Base class for video processing models"""
+    """
+Base class for video processing models"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -794,18 +806,21 @@ class VideoModel(BaseAIModel):
         self.fps = 30
     
     async def preprocess_video(self, video_data: Any) -> Any:
-        """Preprocess video data before model processing"""
+        """
+Preprocess video data before model processing"""
         # Implement video preprocessing (format conversion, frame extraction, etc.)
         return video_data
     
     async def extract_frames(self, video_data: Any, num_frames: int = 10) -> List[Any]:
-        """Extract key frames from video for analysis"""
+        """
+Extract key frames from video for analysis"""
         # Implement frame extraction
         return []
 
 
 class ImageModel(BaseAIModel):
-    """Base class for image processing models"""
+    """
+Base class for image processing models"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -814,18 +829,21 @@ class ImageModel(BaseAIModel):
         self.min_resolution = (64, 64)
     
     async def preprocess_image(self, image_data: Any) -> Any:
-        """Preprocess image data before model processing"""
+        """
+Preprocess image data before model processing"""
         # Implement image preprocessing (resize, normalize, etc.)
         return image_data
     
     async def extract_features(self, image_data: Any) -> Dict[str, Any]:
-        """Extract visual features from image"""
+        """
+Extract visual features from image"""
         # Implement feature extraction (CNN features, color histograms, etc.)
         return {}
 
 
 class TextModel(BaseAIModel):
-    """Base class for text processing models"""
+    """
+Base class for text processing models"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -834,12 +852,14 @@ class TextModel(BaseAIModel):
         self.min_length = 1
     
     async def preprocess_text(self, text: str) -> str:
-        """Preprocess text before model processing"""
+        """
+Preprocess text before model processing"""
         # Implement text preprocessing (cleaning, tokenization, etc.)
         return text.strip()
     
     async def extract_features(self, text: str) -> Dict[str, Any]:
-        """Extract linguistic features from text"""
+        """
+Extract linguistic features from text"""
         # Implement feature extraction (embeddings, sentiment, etc.)
         return {}
 
@@ -879,12 +899,14 @@ class ModelRegistry:
         return self._models.get(name)
     
     def get_models_by_type(self, model_type: ModelType) -> List[BaseAIModel]:
-        """Get all models of a specific type"""
+        """
+Get all models of a specific type"""
         return [model for model in self._models.values() 
                 if model.model_type == model_type]
     
     def get_models_by_group(self, group: str) -> List[BaseAIModel]:
-        """Get all models in a specific group"""
+        """
+Get all models in a specific group"""
         if group not in self._model_groups:
             return []
         
@@ -892,15 +914,18 @@ class ModelRegistry:
                 if name in self._models]
     
     def list_models(self) -> List[str]:
-        """List all registered model names"""
+        """
+List all registered model names"""
         return list(self._models.keys())
     
     def list_groups(self) -> List[str]:
-        """List all model groups"""
+        """
+List all model groups"""
         return list(self._model_groups.keys())
     
     def remove_model(self, name: str) -> bool:
-        """Remove a model from registry"""
+        """
+Remove a model from registry"""
         if name in self._models:
             model = self._models[name]
             # Cleanup model resources
@@ -1073,7 +1098,8 @@ def create_video_model(name: str, provider: ModelProvider, **kwargs) -> VideoMod
 
 
 def create_image_model(name: str, provider: ModelProvider, **kwargs) -> ImageModel:
-    """Factory function to create image processing models"""
+    """
+Factory function to create image processing models"""
     config = ModelConfig(
         name=name,
         provider=provider,
@@ -1084,7 +1110,8 @@ def create_image_model(name: str, provider: ModelProvider, **kwargs) -> ImageMod
 
 
 def create_text_model(name: str, provider: ModelProvider, **kwargs) -> TextModel:
-    """Factory function to create text processing models"""
+    """
+Factory function to create text processing models"""
     config = ModelConfig(
         name=name,
         provider=provider,
@@ -1096,7 +1123,8 @@ def create_text_model(name: str, provider: ModelProvider, **kwargs) -> TextModel
 
 # Utility functions
 def get_model_by_capability(capability: str) -> Optional[BaseAIModel]:
-    """Get the best model for a specific capability"""
+    """
+Get the best model for a specific capability"""
     # Implement capability-based model selection
     capability_mapping = {
         'audio_fingerprint': ModelType.AUDIO_FINGERPRINT,
@@ -1116,7 +1144,8 @@ def get_model_by_capability(capability: str) -> Optional[BaseAIModel]:
 
 
 def calculate_content_fingerprint(content: Any, content_type: str) -> str:
-    """Calculate a unique fingerprint for content"""
+    """
+Calculate a unique fingerprint for content"""
     # Implement content fingerprinting logic
     content_str = f"{content_type}:{str(content)}"
     return hashlib.sha256(content_str.encode()).hexdigest()

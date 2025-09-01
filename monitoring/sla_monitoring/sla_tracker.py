@@ -1,6 +1,7 @@
 """SLA Monitoring and Tracking System
 Implements performance requirements tracking with automated alerting
 """
+
 import asyncio
 import logging
 import statistics
@@ -12,7 +13,8 @@ import json
 
 @dataclass
 class SLAMetric:
-    """SLA metric definition"""
+    """
+SLA metric definition"""
     name: str
     target_value: float
     current_value: float = 0.0
@@ -51,7 +53,8 @@ class SLATracker:
         self._initialize_sla_metrics()
         
     def _initialize_sla_metrics(self):
-        """Initialize SLA metrics with targets"""
+        """
+Initialize SLA metrics with targets"""
         self.metrics = {
             "response_time_p95": SLAMetric(
                 name="API Response Time P95",
@@ -105,7 +108,8 @@ class SLATracker:
         await self._check_sla_violations()
         
     async def record_throughput(self, request_count: int, time_window_seconds: int = 1):
-        """Record throughput metrics"""
+        """
+Record throughput metrics"""
         timestamp = datetime.now()
         rps = request_count / time_window_seconds
         
@@ -212,7 +216,8 @@ class SLATracker:
             await self._process_sla_violation(violation)
             
     def _is_critical_violation(self, metric: SLAMetric) -> bool:
-        """Check if metric is in critical violation"""
+        """
+Check if metric is in critical violation"""
         if metric.name in ["API Response Time P95"]:
             return metric.current_value > metric.threshold_critical
         elif metric.name in ["Requests Per Second"]:
@@ -275,7 +280,8 @@ class SLATracker:
         return status
         
     async def get_performance_report(self) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
+        """
+Generate comprehensive performance report"""
         now = datetime.now()
         
         # Calculate statistics for last 24 hours

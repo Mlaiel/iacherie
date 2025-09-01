@@ -31,6 +31,7 @@ Team Specialties & Expertise:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -58,7 +59,9 @@ from ...integrations.analytics_integration import AnalyticsIntegration
 
 
 class DispatchStrategy(Enum):
-    """Advanced dispatch strategies for different notification scenarios"""
+    """
+Advanced dispatch strategies for different notification scenarios"""
+
     IMMEDIATE = "immediate"
     BATCH_OPTIMIZED = "batch_optimized"
     INTELLIGENT_ROUTING = "intelligent_routing"
@@ -69,6 +72,7 @@ class DispatchStrategy(Enum):
 
 class FailureHandlingStrategy(Enum):
     """Comprehensive failure handling approaches"""
+
     RETRY_LINEAR = "retry_linear"
     RETRY_EXPONENTIAL = "retry_exponential"
     CHANNEL_FALLBACK = "channel_fallback"
@@ -93,7 +97,8 @@ class DispatchConfiguration:
 
 @dataclass
 class DispatchResult:
-    """Comprehensive dispatch operation result"""
+    """
+Comprehensive dispatch operation result"""
     notification_id: str
     user_id: str
     channels_attempted: List[ChannelType]
@@ -532,7 +537,8 @@ class NotificationDispatcher:
     async def _calculate_channel_scores(
         self, factors: Dict[str, Any]
     ) -> Dict[ChannelType, float]:
-        """AI-powered channel scoring based on multiple factors"""
+        """
+AI-powered channel scoring based on multiple factors"""
         scores = {}
         
         for channel in ChannelType:
@@ -552,7 +558,8 @@ class NotificationDispatcher:
         return scores
     
     async def _update_performance_metrics(self, result: DispatchResult):
-        """Update internal performance metrics"""
+        """
+Update internal performance metrics"""
         self._dispatch_metrics['total_dispatched'] += 1
         
         if result.final_status == DeliveryStatus.DELIVERED:
@@ -567,7 +574,8 @@ class NotificationDispatcher:
         self._dispatch_metrics['average_delivery_time'] = new_avg
     
     async def _track_dispatch_analytics(self, result: DispatchResult):
-        """Track comprehensive analytics for dispatch operations"""
+        """
+Track comprehensive analytics for dispatch operations"""
         analytics_data = {
             'notification_id': result.notification_id,
             'user_id': result.user_id,
@@ -585,7 +593,8 @@ class NotificationDispatcher:
     async def _get_fallback_template(
         self, notification: NotificationModel, channel: ChannelType
     ) -> str:
-        """Get a simple fallback template"""
+        """
+Get a simple fallback template"""
         return f"Notification: {notification.title or 'Update from IA Influencer Platform'}"
     
     async def _fetch_user_preferences_from_db(self, user_id: str) -> Dict[str, Any]:
@@ -600,7 +609,8 @@ class NotificationDispatcher:
         }
     
     async def _get_user_engagement_history(self, user_id: str) -> Dict[str, Any]:
-        """Get user engagement patterns for optimization"""
+        """
+Get user engagement patterns for optimization"""
         # Implementation would analyze user behavior
         return {
             'email_open_rate': 0.7,
@@ -611,7 +621,8 @@ class NotificationDispatcher:
 
 
 class DeliveryTimeOptimizer:
-    """AI-powered delivery time optimization based on user behavior patterns"""
+    """
+AI-powered delivery time optimization based on user behavior patterns"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -643,7 +654,8 @@ class DeliveryTimeOptimizer:
 
 
 class FailurePredictor:
-    """AI-powered failure prediction to proactively avoid delivery issues"""
+    """
+AI-powered failure prediction to proactively avoid delivery issues"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)

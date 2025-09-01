@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -23,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 class SpotifyPlatform(PlatformBase):
-    """Spotify platform integration"""
+    """
+Spotify platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Spotify platform"""
+        """
+Initialize Spotify platform"""
         super().__init__(config)
         self.api_base = "https://api.spotify.com/v1"
         self.auth_base = "https://accounts.spotify.com"
@@ -41,7 +44,8 @@ class SpotifyPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify using Client Credentials flow"""
+        """
+Authenticate with Spotify using Client Credentials flow"""
         try:
             session = await self._get_session()
             
@@ -179,7 +183,8 @@ class SpotifyPlatform(PlatformBase):
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Spotify (Note: Direct upload not supported by public API)"""
+        """
+Upload content to Spotify (Note: Direct upload not supported by public API)"""
         # Spotify doesn't support direct file uploads via public API
         # This would typically be handled through Spotify for Artists or distribution services
         return UploadResult(
@@ -291,7 +296,8 @@ class SpotifyPlatform(PlatformBase):
         return playlists
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from Spotify (limited to playlists you own)"""
+        """
+Delete content from Spotify (limited to playlists you own)"""
         try:
             # Can only unfollow playlists, not delete tracks
             result = await self._make_request('DELETE', f'playlists/{content_id}/followers')
@@ -324,7 +330,8 @@ class SpotifyPlatform(PlatformBase):
         return await self._make_request('GET', f'audio-features/{track_id}')
     
     async def get_track_analysis(self, track_id: str) -> Optional[Dict[str, Any]]:
-        """Get audio analysis for a track"""
+        """
+Get audio analysis for a track"""
         return await self._make_request('GET', f'audio-analysis/{track_id}')
     
     async def get_recommendations(self, 
@@ -332,7 +339,8 @@ class SpotifyPlatform(PlatformBase):
                                 seed_artists: List[str] = None,
                                 seed_genres: List[str] = None,
                                 **audio_features) -> List[Dict[str, Any]]:
-        """Get track recommendations"""
+        """
+Get track recommendations"""
         params = {}
         
         if seed_tracks:
@@ -371,20 +379,23 @@ class SpotifyPlatform(PlatformBase):
         return None
     
     async def add_tracks_to_playlist(self, playlist_id: str, track_uris: List[str]) -> bool:
-        """Add tracks to a playlist"""
+        """
+Add tracks to a playlist"""
         data = {'uris': track_uris}
         
         result = await self._make_request('POST', f'playlists/{playlist_id}/tracks', json=data)
         return result is not None
     
     async def get_available_markets(self) -> List[str]:
-        """Get available markets"""
+        """
+Get available markets"""
         result = await self._make_request('GET', 'markets')
         if result:
             return result.get('markets', [])
         return []
     
     async def close(self):
-        """Close HTTP session"""
+        """
+Close HTTP session"""
         if self.session and not self.session.closed:
             await self.session.close()

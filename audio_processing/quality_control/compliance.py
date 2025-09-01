@@ -5,7 +5,7 @@ platforms and standards, ensuring content meets platform-specific requirements.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceLevel(Enum):
-    """Compliance severity levels"""
+    """
+Compliance severity levels"""
+
     CRITICAL = "critical"       # Must fix before submission
     WARNING = "warning"         # Should fix for best results
     RECOMMENDATION = "recommendation"  # Optional improvements
@@ -41,6 +44,7 @@ class ComplianceLevel(Enum):
 
 class PlatformType(Enum):
     """Supported platform types"""
+
     STREAMING = "streaming"     # Spotify, Apple Music, etc.
     VIDEO = "video"            # YouTube, TikTok, Instagram
     BROADCAST = "broadcast"     # Radio, TV
@@ -84,7 +88,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Complete compliance assessment report"""
+    """
+Complete compliance assessment report"""
     platform: str
     audio_file: str
     total_rules_checked: int
@@ -105,7 +110,8 @@ class ComplianceReport:
 
     @property
     def has_critical_violations(self) -> bool:
-        """Check if has critical violations"""
+        """
+Check if has critical violations"""
         return len(self.critical_violations) > 0
 
 
@@ -124,7 +130,8 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check loudness compliance"""
+        """
+Check loudness compliance"""
         
         target_lufs = rule.parameters.get('target_lufs', -14.0)
         tolerance = rule.tolerance or 1.0
@@ -277,7 +284,8 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check file format compliance"""
+        """
+Check file format compliance"""
         
         allowed_formats = rule.parameters.get('allowed_formats', ['wav', 'flac', 'mp3'])
         max_bitrate = rule.parameters.get('max_bitrate', None)
@@ -401,7 +409,8 @@ class ComplianceRuleEngine:
         return None
 
     def add_custom_rule(self, rule: ComplianceRule):
-        """Add custom compliance rule"""
+        """
+Add custom compliance rule"""
         self.custom_rules[rule.rule_id] = rule
         logger.info(f"Added custom compliance rule: {rule.rule_id}")
 
@@ -819,7 +828,8 @@ class PlatformComplianceManager:
         return requirements
 
     def add_platform_rule(self, platform: str, rule: ComplianceRule):
-        """Add rule to platform"""
+        """
+Add rule to platform"""
         
         if platform.lower() not in self.platform_rules:
             self.platform_rules[platform.lower()] = []

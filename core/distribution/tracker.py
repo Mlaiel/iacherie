@@ -5,8 +5,9 @@ Advanced tracking system for monitoring content distribution across platforms,
 analyzing performance, and providing real-time insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from ..storage.database import DatabaseManager
 
 
 class TrackingStatus(Enum):
-    """Tracking status enumeration."""
+    """
+Tracking status enumeration."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -33,6 +36,7 @@ class TrackingStatus(Enum):
 
 class DistributionPhase(Enum):
     """Distribution phase enumeration."""
+
     QUEUED = "queued"
     PROCESSING = "processing"
     UPLOADING = "uploading"
@@ -61,7 +65,8 @@ class TrackingMetrics:
 
 @dataclass
 class PlatformTracking:
-    """Platform-specific tracking data."""
+    """
+Platform-specific tracking data."""
     platform: str
     platform_id: str
     platform_url: str
@@ -122,7 +127,8 @@ class DistributionTracker:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution tracker."""
+        """
+Initialize distribution tracker."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.event_emitter = EventEmitter()
@@ -653,7 +659,8 @@ class DistributionTracker:
         return metrics
     
     async def _check_performance_alerts(self, tracking: DistributionTracking, analysis: Dict[str, Any]) -> None:
-        """Check for performance alerts and anomalies."""
+        """
+Check for performance alerts and anomalies."""
         alerts = []
         
         # Check engagement rate
@@ -727,7 +734,8 @@ class DistributionTracker:
         asyncio.create_task(self._cleanup_old_data())
     
     async def _collect_analytics_continuously(self) -> None:
-        """Continuously collect analytics data for active trackings."""
+        """
+Continuously collect analytics data for active trackings."""
         while self.is_running:
             try:
                 # Collect analytics for all active trackings
@@ -838,13 +846,15 @@ class DistributionTracker:
         pass
     
     async def _initialize_platform_adapters(self) -> None:
-        """Initialize platform adapters for analytics collection."""
+        """
+Initialize platform adapters for analytics collection."""
         # This would initialize platform adapters
         # For now, use mock adapters
         pass
     
     async def _save_all_trackings(self) -> None:
-        """Save all tracking data to persistent storage."""
+        """
+Save all tracking data to persistent storage."""
         try:
             # Save active trackings
             for tracking in self.active_trackings.values():
@@ -865,12 +875,14 @@ class DistributionTracker:
         pass
     
     async def _archive_tracking(self, tracking: DistributionTracking) -> None:
-        """Archive tracking to long-term storage."""
+        """
+Archive tracking to long-term storage."""
         # This would archive to long-term storage
         pass
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get current system metrics."""
+        """
+Get current system metrics."""
         return {
             **self.system_metrics,
             'timestamp': datetime.utcnow().isoformat(),
@@ -890,11 +902,13 @@ class DistributionTracker:
         }
     
     def get_trending_content(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get trending content list."""
+        """
+Get trending content list."""
         return self.trending_content[:limit]
     
     def get_recent_alerts(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get recent alerts."""
+        """
+Get recent alerts."""
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         return [
             alert for alert in self.anomaly_alerts
@@ -908,7 +922,8 @@ class DistributionTracker:
         platform: Optional[str] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get analytics data with optional filtering."""
+        """
+Get analytics data with optional filtering."""
         analytics = {
             'trackings': [],
             'aggregated_metrics': TrackingMetrics().__dict__,

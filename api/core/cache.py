@@ -2,8 +2,9 @@
 Professional multi-level caching with intelligent invalidation strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Optional, Dict, List, Union, Callable, TypeVar
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ T = TypeVar('T')
 
 
 class CacheStrategy(Enum):
-    """Cache invalidation strategies."""
+    """
+Cache invalidation strategies."""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In, First Out
@@ -33,6 +36,7 @@ class CacheStrategy(Enum):
 
 class CacheLevel(Enum):
     """Cache hierarchy levels."""
+
     L1_MEMORY = 1  # In-memory cache
     L2_REDIS = 2   # Redis distributed cache
     L3_DATABASE = 3  # Database cache
@@ -40,7 +44,8 @@ class CacheLevel(Enum):
 
 @dataclass
 class CacheEntry:
-    """Cache entry with comprehensive metadata."""
+    """
+Cache entry with comprehensive metadata."""
     key: str
     value: Any
     created_at: datetime
@@ -64,7 +69,8 @@ class CacheEntry:
     
     @property
     def is_expired(self) -> bool:
-        """Check if cache entry has expired."""
+        """
+Check if cache entry has expired."""
         if self.ttl_seconds is None:
             return False
         
@@ -73,21 +79,25 @@ class CacheEntry:
     
     @property
     def age_seconds(self) -> float:
-        """Get age of cache entry in seconds."""
+        """
+Get age of cache entry in seconds."""
         return (datetime.now(timezone.utc) - self.created_at).total_seconds()
     
     def touch(self):
-        """Update access timestamp and count."""
+        """
+Update access timestamp and count."""
         self.accessed_at = datetime.now(timezone.utc)
         self.access_count += 1
 
 
 class ICacheProvider(ABC):
-    """Interface for cache provider implementations."""
+    """
+Interface for cache provider implementations."""
     
     @abstractmethod
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from cache."""
+        """
+Get value from cache."""
         pass
     
     @abstractmethod
@@ -98,32 +108,38 @@ class ICacheProvider(ABC):
         ttl_seconds: Optional[int] = None,
         tags: Optional[List[str]] = None
     ) -> bool:
-        """Set value in cache."""
+        """
+Set value in cache."""
         pass
     
     @abstractmethod
     async def delete(self, key: str) -> bool:
-        """Delete value from cache."""
+        """
+Delete value from cache."""
         pass
     
     @abstractmethod
     async def exists(self, key: str) -> bool:
-        """Check if key exists in cache."""
+        """
+Check if key exists in cache."""
         pass
     
     @abstractmethod
     async def clear(self) -> bool:
-        """Clear all cache entries."""
+        """
+Clear all cache entries."""
         pass
     
     @abstractmethod
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics."""
+        """
+Get cache statistics."""
         pass
 
 
 class InMemoryCache(ICacheProvider):
-    """High-performance in-memory cache implementation."""
+    """
+High-performance in-memory cache implementation."""
     
     def __init__(
         self,
@@ -220,13 +236,15 @@ class InMemoryCache(ICacheProvider):
             return True
     
     async def clear(self) -> bool:
-        """Clear all cache entries."""
+        """
+Clear all cache entries."""
         with self._lock:
             self._cache.clear()
             return True
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics."""
+        """
+Get comprehensive cache statistics."""
         with self._lock:
             total_requests = self._stats["hits"] + self._stats["misses"]
             hit_ratio = self._stats["hits"] / total_requests if total_requests > 0 else 0
@@ -259,7 +277,8 @@ class InMemoryCache(ICacheProvider):
         return invalidated
     
     async def _evict_entries(self, count: int):
-        """Evict entries based on strategy."""
+        """
+Evict entries based on strategy."""
         if not self._cache:
             return
         
@@ -304,12 +323,14 @@ class MultiLevelCache:
         self._lock = threading.RLock()
     
     def add_provider(self, level: CacheLevel, provider: ICacheProvider):
-        """Add cache provider at specific level."""
+        """
+Add cache provider at specific level."""
         with self._lock:
             self._providers[level] = provider
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from multi-level cache hierarchy."""
+        """
+Get value from multi-level cache hierarchy."""
         # Try each level in order (L1 -> L2 -> L3)
         for level in sorted(self._providers.keys(), key=lambda x: x.value):
             provider = self._providers[level]
@@ -330,7 +351,8 @@ class MultiLevelCache:
         tags: Optional[List[str]] = None,
         levels: Optional[List[CacheLevel]] = None
     ) -> bool:
-        """Set value in specified cache levels."""
+        """
+Set value in specified cache levels."""
         target_levels = levels or list(self._providers.keys())
         success = True
         
@@ -342,7 +364,8 @@ class MultiLevelCache:
         return success
     
     async def delete(self, key: str, levels: Optional[List[CacheLevel]] = None) -> bool:
-        """Delete from specified levels."""
+        """
+Delete from specified levels."""
         target_levels = levels or list(self._providers.keys())
         success = True
         
@@ -358,7 +381,8 @@ class MultiLevelCache:
         tags: List[str],
         levels: Optional[List[CacheLevel]] = None
     ) -> Dict[CacheLevel, int]:
-        """Invalidate by tags across levels."""
+        """
+Invalidate by tags across levels."""
         target_levels = levels or list(self._providers.keys())
         results = {}
         
@@ -372,7 +396,8 @@ class MultiLevelCache:
         return results
     
     async def get_stats(self) -> Dict[CacheLevel, Dict[str, Any]]:
-        """Get statistics from all levels."""
+        """
+Get statistics from all levels."""
         stats = {}
         for level, provider in self._providers.items():
             stats[level] = await provider.get_stats()
@@ -384,25 +409,29 @@ class MultiLevelCache:
         value: Any,
         current_level: CacheLevel
     ):
-        """Promote cache entry to higher (faster) levels."""
+        """
+Promote cache entry to higher (faster) levels."""
         for level in self._providers.keys():
             if level.value < current_level.value:
                 await self._providers[level].set(key, value)
 
 
 class CacheManager:
-    """Professional cache management with intelligent strategies."""
+    """
+Professional cache management with intelligent strategies."""
     
     def __init__(self, cache: Union[ICacheProvider, MultiLevelCache]):
         self.cache = cache
         self._key_generators: Dict[str, Callable] = {}
     
     def register_key_generator(self, prefix: str, generator: Callable[..., str]):
-        """Register key generation strategy for prefix."""
+        """
+Register key generation strategy for prefix."""
         self._key_generators[prefix] = generator
     
     def generate_key(self, prefix: str, *args, **kwargs) -> str:
-        """Generate cache key using registered strategies."""
+        """
+Generate cache key using registered strategies."""
         if prefix in self._key_generators:
             return self._key_generators[prefix](*args, **kwargs)
         
@@ -437,7 +466,8 @@ class CacheManager:
     
     @asynccontextmanager
     async def cache_context(self, prefix: str, ttl_seconds: Optional[int] = None):
-        """Context manager for scoped caching."""
+        """
+Context manager for scoped caching."""
         context_keys = []
         
         original_set = self.cache.set
@@ -496,10 +526,12 @@ def get_cache_manager() -> CacheManager:
 
 
 def get_memory_cache() -> InMemoryCache:
-    """Get global memory cache instance."""
+    """
+Get global memory cache instance."""
     return _memory_cache
 
 
 def get_multi_level_cache() -> MultiLevelCache:
-    """Get global multi-level cache instance."""
+    """
+Get global multi-level cache instance."""
     return _multi_level_cache

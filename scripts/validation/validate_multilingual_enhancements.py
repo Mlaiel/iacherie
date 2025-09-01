@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Simple validation script for enhanced multilingual support."""
+
 import json
 import os
 
 def test_ui_translations_enhanced():
-    """Test that UI translation files have enhanced keys."""
+    """
+Test that UI translation files have enhanced keys."""
     print("=" * 60)
     print("ENHANCED MULTILINGUAL SUPPORT VALIDATION")
     print("=" * 60)

@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class OpportunityMetrics:
-    """Metrics for collaboration opportunity assessment"""
+    """
+Metrics for collaboration opportunity assessment"""
     reach_potential: float
     revenue_projection: Decimal
     engagement_compatibility: float
@@ -64,7 +66,8 @@ class OpportunityMetrics:
 
 @dataclass
 class CollaborationOpportunity:
-    """Comprehensive collaboration opportunity model"""
+    """
+Comprehensive collaboration opportunity model"""
     opportunity_id: str
     primary_creator_id: str
     target_creator_id: str
@@ -83,7 +86,8 @@ class CollaborationOpportunity:
 
 
 class OpportunityFinder:
-    """Advanced opportunity discovery and analysis engine"""
+    """
+Advanced opportunity discovery and analysis engine"""
     
     def __init__(self, db_session, redis_client, ml_models):
         self.db = db_session

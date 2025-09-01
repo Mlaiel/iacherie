@@ -7,6 +7,7 @@ copyright infringement on YouTube Music platform.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class CopyrightStatus(Enum):
-    """Copyright detection status"""
+    """
+Copyright detection status"""
+
     CLEAR = "clear"
     DETECTED = "detected"
     CLAIMED = "claimed"
@@ -55,7 +58,8 @@ class CopyrightMonitor:
         self.detection_threshold = self.config.get('detection_threshold', 0.8)
         
     async def initialize(self):
-        """Initialize copyright monitoring system"""
+        """
+Initialize copyright monitoring system"""
         self.monitoring_active = True
         logger.info("Copyright monitoring system initialized")
     

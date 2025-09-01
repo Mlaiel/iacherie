@@ -8,7 +8,7 @@ Technologies: Python, Kubernetes PVs, Docker Volumes, NFS, CSI Drivers
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Content upload → Volume allocation → Performance optimization → 
 Backup scheduling → Scaling management → Monitoring alerts → Recovery procedures
 """
+
 import logging
 import asyncio
 import json
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class VolumeType(Enum):
-    """Volume types for different use cases"""
+    """
+Volume types for different use cases"""
+
     LOCAL_DISK = "local-disk"
     NETWORK_STORAGE = "network-storage"
     KUBERNETES_PV = "kubernetes-pv"
@@ -58,6 +61,7 @@ class VolumeType(Enum):
 
 class StorageClass(Enum):
     """Storage classes for performance optimization"""
+
     HIGH_PERFORMANCE = "high-performance"  # SSD, high IOPS
     STANDARD = "standard"  # Balanced performance/cost
     COLD_STORAGE = "cold-storage"  # HDD, archival
@@ -67,6 +71,7 @@ class StorageClass(Enum):
 
 class VolumeAccessMode(Enum):
     """Volume access modes"""
+
     READ_WRITE_ONCE = "ReadWriteOnce"  # Single node
     READ_ONLY_MANY = "ReadOnlyMany"  # Multiple nodes read-only
     READ_WRITE_MANY = "ReadWriteMany"  # Multiple nodes read-write
@@ -75,6 +80,7 @@ class VolumeAccessMode(Enum):
 
 class VolumeStatus(Enum):
     """Volume status tracking"""
+
     CREATING = "creating"
     AVAILABLE = "available"
     BOUND = "bound"
@@ -921,7 +927,8 @@ class VolumeConfigurationManager:
     
     @staticmethod
     def load_config_from_file(config_path: Path) -> VolumeConfig:
-        """Load volume configuration from YAML file"""
+        """
+Load volume configuration from YAML file"""
         try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -997,7 +1004,8 @@ def create_volume_manager(
 
 # Usage Example
 async def main():
-    """Example usage of VolumeManager"""
+    """
+Example usage of VolumeManager"""
     try:
         # Create volume manager for content storage
         volume_manager = create_volume_manager(

@@ -4,7 +4,7 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 Advanced AI-powered text processing engine for bloggers, writers, and content creators.
 
 PROPRIETARY CODE - CONFIDENTIAL
-© 2025 IA-Influencer-Agent Team. All Rights Reserved.
+(c) 2025 IA-Influencer-Agent Team. All Rights Reserved.
 
 Team Development:
 - Lead AI Engineer: Dr. Alexandra Chen
@@ -19,6 +19,7 @@ Any violation will be prosecuted to the full extent of the law.
 
 Business Logic: User Upload → AI Analysis → Style Detection → Quality Assessment → SEO Enhancement
 """
+
 import asyncio
 import logging
 import json
@@ -35,7 +36,9 @@ from collections import Counter
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class TextFormat(Enum):
-    """Supported text formats"""
+    """
+Supported text formats"""
+
     PLAIN = "plain"
     MARKDOWN = "markdown"
     HTML = "html"
@@ -45,6 +48,7 @@ class TextFormat(Enum):
 
 class ContentType(Enum):
     """Content types for text"""
+
     ARTICLE = "article"
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
@@ -56,6 +60,7 @@ class ContentType(Enum):
 
 class WritingStyle(Enum):
     """Writing styles"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     ACADEMIC = "academic"
@@ -238,7 +243,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive text content protection"""
+        """
+Apply comprehensive text content protection"""
         # Generate text fingerprint
         fingerprint = await self._generate_text_fingerprint(content)
         
@@ -259,7 +265,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _load_language_models(self):
-        """Load language models for text processing"""
+        """
+Load language models for text processing"""
         self.logger.info("Loading language models...")
         await asyncio.sleep(0.3)
         
@@ -361,7 +368,8 @@ class TextGenerationEngine(BaseContentEngine):
         )
     
     async def _enhance_text_content(self, content: str, options: Dict, analysis: Dict) -> str:
-        """Enhance text content based on requirements"""
+        """
+Enhance text content based on requirements"""
         self.logger.info("Enhancing text content...")
         await asyncio.sleep(0.4)
         
@@ -433,7 +441,8 @@ class TextGenerationEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _analyze_seo_factors(self, content: str, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze SEO factors in content"""
+        """
+Analyze SEO factors in content"""
         word_count = len(content.split())
         
         return {
@@ -447,7 +456,8 @@ class TextGenerationEngine(BaseContentEngine):
         }
     
     async def _optimize_title(self, content: str, keywords: List[str]) -> str:
-        """Generate optimized title"""
+        """
+Generate optimized title"""
         # Extract first sentence or use keywords
         first_sentence = content.split('.')[0].strip()
         keyword = keywords[0] if keywords else 'Content'
@@ -475,7 +485,8 @@ class TextGenerationEngine(BaseContentEngine):
         return densities
     
     async def _suggest_internal_links(self, content: str) -> List[Dict[str, str]]:
-        """Suggest internal linking opportunities"""
+        """
+Suggest internal linking opportunities"""
         return [
             {'anchor_text': 'AI content creation', 'suggested_url': '/ai-content-guide'},
             {'anchor_text': 'SEO optimization', 'suggested_url': '/seo-strategies'},
@@ -483,7 +494,8 @@ class TextGenerationEngine(BaseContentEngine):
         ]
     
     async def _generate_seo_recommendations(self, content: str, keywords: List[str]) -> List[str]:
-        """Generate SEO improvement recommendations"""
+        """
+Generate SEO improvement recommendations"""
         return [
             "Add more keyword variations throughout the content",
             "Include relevant internal links to boost page authority",
@@ -534,7 +546,7 @@ class TextGenerationEngine(BaseContentEngine):
     async def _apply_text_watermark(self, content: str) -> str:
         """Apply invisible text watermarking"""
         # Add invisible watermark (simplified)
-        return f"{content} [©2025 Fahed Mlaiel - Original Content]"
+        return f"{content} [(c)2025 Fahed Mlaiel - Original Content]"
 
 class SEOOptimizationEngine(BaseContentEngine):
     """
@@ -647,11 +659,13 @@ class SEOOptimizationEngine(BaseContentEngine):
         return await self._comprehensive_seo_optimization(content, target_keywords)
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """SEO content protection"""
+        """
+SEO content protection"""
         return {'seo_protected': True, 'indexing_optimized': True}
     
     async def _load_seo_models(self):
-        """Load SEO analysis models"""
+        """
+Load SEO analysis models"""
         self.logger.info("Loading SEO models...")
         await asyncio.sleep(0.2)
         
@@ -768,7 +782,8 @@ class SEOOptimizationEngine(BaseContentEngine):
         }
     
     async def _comprehensive_seo_optimization(self, content: str, keywords: List[str]) -> Dict[str, Any]:
-        """Comprehensive SEO optimization"""
+        """
+Comprehensive SEO optimization"""
         return {
             'fully_optimized': True,
             'search_ready': True,
@@ -887,11 +902,13 @@ class ContentWriterEngine(BaseContentEngine):
         return {'content_seo_ready': True, 'engaging_content': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Content writing protection"""
+        """
+Content writing protection"""
         return {'original_content': True, 'plagiarism_free': True}
     
     async def _load_writing_models(self):
-        """Load content writing models"""
+        """
+Load content writing models"""
         self.logger.info("Loading writing models...")
         await asyncio.sleep(0.3)
         

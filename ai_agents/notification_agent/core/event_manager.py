@@ -29,6 +29,7 @@ Team Specialties & Expertise:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -49,7 +50,8 @@ from ...business.monetization_business import MonetizationBusinessLogic
 
 
 class NotificationEventType(Enum):
-    """Comprehensive notification event types for IA Influencer business logic"""
+    """
+Comprehensive notification event types for IA Influencer business logic"""
     
     # Content Creator Events
     CONTENT_UPLOADED = "content_uploaded"
@@ -94,6 +96,7 @@ class NotificationEventType(Enum):
 
 class EventPriority(Enum):
     """Event priority levels for notification triggering"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -103,6 +106,7 @@ class EventPriority(Enum):
 
 class EventProcessingStatus(Enum):
     """Event processing status tracking"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -128,7 +132,8 @@ class NotificationEvent(BaseEvent):
 
 @dataclass
 class EventRule:
-    """Business rule for event-driven notification triggering"""
+    """
+Business rule for event-driven notification triggering"""
     rule_id: str
     event_types: List[NotificationEventType]
     conditions: List[Callable[[NotificationEvent], bool]]
@@ -142,7 +147,8 @@ class EventRule:
 
 @dataclass
 class EventProcessingResult:
-    """Result of event processing with comprehensive details"""
+    """
+Result of event processing with comprehensive details"""
     event_id: str
     processing_status: EventProcessingStatus
     notifications_triggered: List[str]
@@ -625,7 +631,8 @@ class NotificationEventManager:
         return True
     
     async def _start_event_processor(self):
-        """Start the background event processor"""
+        """
+Start the background event processor"""
         while True:
             try:
                 # Process events from queue
@@ -646,7 +653,8 @@ class NotificationEventManager:
             await self.process_event(event)
     
     async def _update_event_analytics(self, result: EventProcessingResult):
-        """Update event processing analytics"""
+        """
+Update event processing analytics"""
         self._event_metrics['events_processed'] += 1
         self._event_metrics['notifications_triggered'] += len(result.notifications_triggered)
         
@@ -666,9 +674,11 @@ class NotificationEventManager:
             self._event_metrics['rule_hit_rates'][rule_id] += 1
     
     async def get_event_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive event processing metrics"""
+        """
+Get comprehensive event processing metrics"""
         return self._event_metrics.copy()
     
     async def queue_event(self, event: NotificationEvent):
-        """Queue an event for processing"""
+        """
+Queue an event for processing"""
         await self._event_queue.put(event)

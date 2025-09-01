@@ -7,6 +7,7 @@ revenue patterns, payment trends, and business intelligence.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class AnalyticsType(Enum):
-    """Types of analytics"""
+    """
+Types of analytics"""
+
     REVENUE = "revenue"
     PAYMENT_TRENDS = "payment_trends"
     CUSTOMER_BEHAVIOR = "customer_behavior"
@@ -32,6 +35,7 @@ class AnalyticsType(Enum):
 
 class TimeFrame(Enum):
     """Analytics time frames"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -50,7 +54,8 @@ class RevenueMetrics:
 
 @dataclass
 class PaymentTrendMetrics:
-    """Payment trend metrics"""
+    """
+Payment trend metrics"""
     success_rate: Decimal
     failure_rate: Decimal
     chargeback_rate: Decimal
@@ -69,7 +74,8 @@ class BillingAnalyticsEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize billing analytics engine"""
+        """
+Initialize billing analytics engine"""
         try:
             await self._setup_database_tables()
             await self._setup_analytics_cache()
@@ -124,7 +130,8 @@ class BillingAnalyticsEngine:
             """)
 
     async def _setup_analytics_cache(self) -> None:
-        """Setup analytics cache settings"""
+        """
+Setup analytics cache settings"""
         try:
             # Cache expiry settings (in seconds)
             cache_settings = {
@@ -270,7 +277,8 @@ class BillingAnalyticsEngine:
 
     async def _get_revenue_breakdown(self, conn, start_date: datetime, end_date: datetime,
                                    time_frame: TimeFrame) -> List[Dict[str, Any]]:
-        """Get revenue breakdown by time frame"""
+        """
+Get revenue breakdown by time frame"""
         if time_frame == TimeFrame.DAILY:
             interval = 'day'
         elif time_frame == TimeFrame.WEEKLY:
@@ -296,7 +304,8 @@ class BillingAnalyticsEngine:
         return [dict(row) for row in breakdown]
 
     async def _calculate_growth_metrics(self, conn, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate growth metrics"""
+        """
+Calculate growth metrics"""
         # Current period revenue
         current_revenue = await conn.fetchval("""
             SELECT COALESCE(SUM(amount), 0)
@@ -329,7 +338,8 @@ class BillingAnalyticsEngine:
         }
 
     async def generate_payment_trends_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Generate payment trends analytics"""
+        """
+Generate payment trends analytics"""
         try:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=days)
@@ -449,7 +459,8 @@ class BillingAnalyticsEngine:
         return grouped
 
     async def generate_subscription_metrics(self) -> Dict[str, Any]:
-        """Generate subscription-specific metrics"""
+        """
+Generate subscription-specific metrics"""
         try:
             async with self.db_pool.acquire() as conn:
                 # Active subscriptions

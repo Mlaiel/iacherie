@@ -1,7 +1,7 @@
 """Revenue Calculator Engine - Advanced mathematical revenue computation system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -25,6 +25,7 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class CalculationMethod(Enum):
-    """Revenue calculation methods"""
+    """
+Revenue calculation methods"""
+
     SIMPLE_MULTIPLICATIVE = "simple_multiplicative"
     WEIGHTED_AVERAGE = "weighted_average"
     EXPONENTIAL_GROWTH = "exponential_growth"
@@ -61,6 +64,7 @@ class CalculationMethod(Enum):
 
 class RevenueModel(Enum):
     """Revenue models"""
+
     SUBSCRIPTION = "subscription"
     ADVERTISING = "advertising"
     COMMISSION = "commission"
@@ -75,6 +79,7 @@ class RevenueModel(Enum):
 
 class TimePeriod(Enum):
     """Time periods for calculations"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -97,7 +102,8 @@ class RevenueInputs:
 
 @dataclass
 class RevenueCalculation:
-    """Revenue calculation result"""
+    """
+Revenue calculation result"""
     calculation_id: str
     method: CalculationMethod
     model: RevenueModel
@@ -111,19 +117,22 @@ class RevenueCalculation:
     
     @property
     def profit(self) -> Decimal:
-        """Calculate profit (revenue - costs)"""
+        """
+Calculate profit (revenue - costs)"""
         return self.result - self.inputs.costs
     
     @property
     def profit_margin(self) -> Decimal:
-        """Calculate profit margin percentage"""
+        """
+Calculate profit margin percentage"""
         if self.result == 0:
             return Decimal('0')
         return (self.profit / self.result) * 100
     
     @property
     def roi(self) -> Decimal:
-        """Calculate return on investment"""
+        """
+Calculate return on investment"""
         if self.inputs.costs == 0:
             return Decimal('0')
         return (self.profit / self.inputs.costs) * 100
@@ -131,7 +140,8 @@ class RevenueCalculation:
 
 @dataclass
 class CalculationScenario:
-    """Calculation scenario for what-if analysis"""
+    """
+Calculation scenario for what-if analysis"""
     scenario_id: str
     name: str
     description: str
@@ -140,7 +150,8 @@ class CalculationScenario:
 
 
 class RevenueCalculatorEngine:
-    """Advanced revenue calculation and modeling engine"""
+    """
+Advanced revenue calculation and modeling engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -154,7 +165,8 @@ class RevenueCalculatorEngine:
         self.CONVERGENCE_THRESHOLD = 1e-6
         
     async def initialize(self) -> None:
-        """Initialize calculator engine"""
+        """
+Initialize calculator engine"""
         try:
             # Load custom formulas
             await self._load_custom_formulas()
@@ -183,7 +195,8 @@ class RevenueCalculatorEngine:
         }
     
     async def _initialize_optimization(self) -> None:
-        """Initialize optimization parameters"""
+        """
+Initialize optimization parameters"""
         self.optimization_config = {
             'max_iterations': self.config.get('max_iterations', 1000),
             'tolerance': self.config.get('tolerance', 1e-6),
@@ -198,7 +211,8 @@ class RevenueCalculatorEngine:
         time_period: TimePeriod = TimePeriod.MONTHLY,
         include_sensitivity: bool = False
     ) -> RevenueCalculation:
-        """Calculate revenue using specified method and model"""
+        """
+Calculate revenue using specified method and model"""
         try:
             calculation_id = str(uuid.uuid4())
             
@@ -276,7 +290,8 @@ class RevenueCalculatorEngine:
         return inputs.base_amount * inputs.multiplier
     
     async def _weighted_average(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Weighted average calculation"""
+        """
+Weighted average calculation"""
         if not inputs.variables:
             return inputs.base_amount
         
@@ -291,12 +306,14 @@ class RevenueCalculatorEngine:
         return weighted_sum / total_weight
     
     async def _exponential_growth(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Exponential growth calculation: base * (1 + growth_rate) ^ time_periods"""
+        """
+Exponential growth calculation: base * (1 + growth_rate) ^ time_periods"""
         growth_factor = (1 + inputs.growth_rate) ** inputs.time_periods
         return inputs.base_amount * Decimal(str(growth_factor))
     
     async def _compound_interest(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Compound interest calculation"""
+        """
+Compound interest calculation"""
         # Convert time period to annual equivalent
         periods_per_year = self._get_periods_per_year(time_period)
         annual_rate = inputs.growth_rate * periods_per_year
@@ -309,7 +326,8 @@ class RevenueCalculatorEngine:
         return inputs.base_amount * Decimal(str(compound_factor))
     
     async def _linear_regression(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Linear regression based calculation"""
+        """
+Linear regression based calculation"""
         # Simple linear trend: y = mx + b
         slope = inputs.growth_rate
         intercept = inputs.base_amount
@@ -319,7 +337,8 @@ class RevenueCalculatorEngine:
         return max(Decimal('0'), result)
     
     async def _monte_carlo(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Monte Carlo simulation"""
+        """
+Monte Carlo simulation"""
         num_simulations = self.config.get('monte_carlo_simulations', 10000)
         
         # Generate random scenarios
@@ -343,7 +362,8 @@ class RevenueCalculatorEngine:
         return Decimal(str(np.mean(results)))
     
     async def _discounted_cash_flow(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Discounted cash flow calculation"""
+        """
+Discounted cash flow calculation"""
         total_dcf = Decimal('0')
         
         for period in range(1, inputs.time_periods + 1):
@@ -359,7 +379,8 @@ class RevenueCalculatorEngine:
         return total_dcf
     
     async def _net_present_value(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Net present value calculation"""
+        """
+Net present value calculation"""
         # Calculate DCF
         dcf = await self._discounted_cash_flow(inputs, time_period)
         
@@ -369,9 +390,11 @@ class RevenueCalculatorEngine:
         return npv
     
     async def _internal_rate_return(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Internal rate of return calculation"""
+        """
+Internal rate of return calculation"""
         def npv_function(rate):
-            """NPV function for IRR calculation"""
+            """
+NPV function for IRR calculation"""
             npv = -float(inputs.costs)  # Initial investment (negative)
             
             for period in range(1, inputs.time_periods + 1):
@@ -389,7 +412,8 @@ class RevenueCalculatorEngine:
             return Decimal('0')
     
     async def _payback_period(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Payback period calculation"""
+        """
+Payback period calculation"""
         if inputs.base_amount <= 0:
             return Decimal('0')
         
@@ -415,7 +439,8 @@ class RevenueCalculatorEngine:
         return Decimal(str(inputs.time_periods))
     
     async def _break_even_analysis(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Break-even analysis calculation"""
+        """
+Break-even analysis calculation"""
         fixed_costs = inputs.costs
         variable_cost_rate = inputs.variables.get('variable_cost_rate', Decimal('0'))
         unit_price = inputs.variables.get('unit_price', inputs.base_amount)
@@ -432,7 +457,8 @@ class RevenueCalculatorEngine:
         return break_even_revenue
     
     async def _sensitivity_analysis_method(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
-        """Sensitivity analysis calculation"""
+        """
+Sensitivity analysis calculation"""
         # Base calculation
         base_result = await self._exponential_growth(inputs, time_period)
         
@@ -440,7 +466,8 @@ class RevenueCalculatorEngine:
         return base_result
     
     def _get_periods_per_year(self, time_period: TimePeriod) -> int:
-        """Get number of periods per year"""
+        """
+Get number of periods per year"""
         period_map = {
             TimePeriod.DAILY: 365,
             TimePeriod.WEEKLY: 52,
@@ -456,7 +483,8 @@ class RevenueCalculatorEngine:
         inputs: RevenueInputs,
         result: Decimal
     ) -> Dict[str, Decimal]:
-        """Generate detailed calculation breakdown"""
+        """
+Generate detailed calculation breakdown"""
         breakdown = {
             'base_amount': inputs.base_amount,
             'multiplier': inputs.multiplier,
@@ -490,7 +518,8 @@ class RevenueCalculatorEngine:
         inputs: RevenueInputs,
         result: Decimal
     ) -> float:
-        """Calculate confidence level for calculation"""
+        """
+Calculate confidence level for calculation"""
         base_confidence = 0.8
         
         # Adjust based on method reliability
@@ -526,7 +555,8 @@ class RevenueCalculatorEngine:
         inputs: RevenueInputs,
         time_period: TimePeriod
     ) -> Dict[str, Any]:
-        """Perform sensitivity analysis"""
+        """
+Perform sensitivity analysis"""
         try:
             base_result = await self._execute_calculation_method(method, inputs, time_period)
             
@@ -606,36 +636,43 @@ class RevenueCalculatorEngine:
         return Decimal(str(streams)) * rate_per_stream
     
     async def _youtube_revenue_formula(self, views: int, cpm: Decimal, engagement_rate: Decimal) -> Decimal:
-        """YouTube revenue calculation"""
+        """
+YouTube revenue calculation"""
         monetizable_views = Decimal(str(views)) * engagement_rate
         return (monetizable_views / 1000) * cpm
     
     async def _instagram_revenue_formula(self, followers: int, engagement_rate: Decimal, rate_per_engagement: Decimal) -> Decimal:
-        """Instagram revenue calculation"""
+        """
+Instagram revenue calculation"""
         engagements = Decimal(str(followers)) * engagement_rate
         return engagements * rate_per_engagement
     
     async def _tiktok_revenue_formula(self, views: int, creator_fund_rate: Decimal, brand_partnerships: Decimal) -> Decimal:
-        """TikTok revenue calculation"""
+        """
+TikTok revenue calculation"""
         creator_fund_revenue = Decimal(str(views)) * creator_fund_rate
         return creator_fund_revenue + brand_partnerships
     
     async def _subscription_revenue_formula(self, subscribers: int, monthly_fee: Decimal, retention_rate: Decimal) -> Decimal:
-        """Subscription revenue calculation"""
+        """
+Subscription revenue calculation"""
         active_subscribers = Decimal(str(subscribers)) * retention_rate
         return active_subscribers * monthly_fee
     
     async def _advertising_revenue_formula(self, impressions: int, ctr: Decimal, cpc: Decimal) -> Decimal:
-        """Advertising revenue calculation"""
+        """
+Advertising revenue calculation"""
         clicks = Decimal(str(impressions)) * ctr
         return clicks * cpc
     
     async def _commission_revenue_formula(self, sales_volume: Decimal, commission_rate: Decimal) -> Decimal:
-        """Commission revenue calculation"""
+        """
+Commission revenue calculation"""
         return sales_volume * commission_rate
     
     async def _licensing_revenue_formula(self, licenses: int, license_fee: Decimal, royalty_rate: Decimal, usage_volume: Decimal) -> Decimal:
-        """Licensing revenue calculation"""
+        """
+Licensing revenue calculation"""
         license_revenue = Decimal(str(licenses)) * license_fee
         royalty_revenue = usage_volume * royalty_rate
         return license_revenue + royalty_revenue
@@ -645,7 +682,8 @@ class RevenueCalculatorEngine:
         formula_name: str,
         parameters: Dict[str, Any]
     ) -> Decimal:
-        """Calculate using custom formula"""
+        """
+Calculate using custom formula"""
         try:
             if formula_name not in self.custom_formulas:
                 raise ValueError(f"Unknown formula: {formula_name}")
@@ -680,7 +718,8 @@ class RevenueCalculatorEngine:
         """Optimize revenue parameters to reach target"""
         try:
             def objective_function(x):
-                """Objective function for optimization"""
+                """
+Objective function for optimization"""
                 # Create modified inputs with optimized variables
                 modified_inputs = RevenueInputs(
                     base_amount=base_inputs.base_amount,

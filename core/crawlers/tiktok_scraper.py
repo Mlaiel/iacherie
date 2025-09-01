@@ -6,13 +6,14 @@ Combines official TikTok Business API with advanced scraping techniques
 for comprehensive content surveillance and rights protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 import re
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TikTokVideoData:
-    """Comprehensive TikTok video metadata structure."""
+    """
+Comprehensive TikTok video metadata structure."""
     
     video_id: str
     video_url: str
@@ -75,7 +77,8 @@ class TikTokVideoData:
 
 @dataclass
 class TikTokUserData:
-    """TikTok user profile comprehensive information."""
+    """
+TikTok user profile comprehensive information."""
     
     user_id: str
     username: str
@@ -93,10 +96,12 @@ class TikTokUserData:
     last_active: Optional[datetime]
 
 class TikTokAPIManager:
-    """Professional TikTok API management with business API integration."""
+    """
+Professional TikTok API management with business API integration."""
     
     def __init__(self, api_key: Optional[str] = None, client_secret: Optional[str] = None):
-        """Initialize TikTok API service with business API credentials."""
+        """
+Initialize TikTok API service with business API credentials."""
         self.api_key = api_key
         self.client_secret = client_secret
         self.access_token = None
@@ -109,7 +114,8 @@ class TikTokAPIManager:
             asyncio.create_task(self._initialize_business_api())
     
     async def _initialize_business_api(self):
-        """Initialize TikTok Business API with OAuth 2.0."""
+        """
+Initialize TikTok Business API with OAuth 2.0."""
         try:
             # TikTok Business API OAuth endpoint
             token_url = "https://business-api.tiktok.com/open_api/oauth2/access_token/"
@@ -174,14 +180,16 @@ class TikTokWebScraper:
     """Advanced TikTok web scraping with anti-detection measures."""
     
     def __init__(self, proxy_manager: Optional[ProxyManager] = None):
-        """Initialize TikTok web scraper with proxy support."""
+        """
+Initialize TikTok web scraper with proxy support."""
         self.proxy_manager = proxy_manager
         self.session = None
         self.driver = None
         self._setup_selenium_driver()
     
     def _setup_selenium_driver(self):
-        """Configure Selenium WebDriver with anti-detection measures."""
+        """
+Configure Selenium WebDriver with anti-detection measures."""
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
@@ -387,7 +395,8 @@ class TikTokWebScraper:
             return 0
     
     async def search_hashtag(self, hashtag: str, limit: int = 100) -> List[str]:
-        """Search videos by hashtag and return video URLs."""
+        """
+Search videos by hashtag and return video URLs."""
         try:
             search_url = f"https://www.tiktok.com/tag/{hashtag.replace('#', '')}"
             self.driver.get(search_url)
@@ -432,10 +441,12 @@ class TikTokWebScraper:
             self.driver.quit()
 
 class TikTokCrawler(BaseCrawler):
-    """Professional TikTok crawler with comprehensive monitoring capabilities."""
+    """
+Professional TikTok crawler with comprehensive monitoring capabilities."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize TikTok crawler with configuration."""
+        """
+Initialize TikTok crawler with configuration."""
         super().__init__(config)
         self.api_manager = TikTokAPIManager(
             api_key=config.get('tiktok_api_key'),
@@ -447,7 +458,8 @@ class TikTokCrawler(BaseCrawler):
         self.platform = 'tiktok'
     
     async def crawl_video(self, video_url: str) -> Optional[CrawlResult]:
-        """Crawl comprehensive data for a specific TikTok video."""
+        """
+Crawl comprehensive data for a specific TikTok video."""
         try:
             # Scrape video data
             video_data = await self.web_scraper.scrape_video_data(video_url)

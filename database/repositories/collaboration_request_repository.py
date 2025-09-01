@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import List, Optional, Dict, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc, text
@@ -50,7 +51,8 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize collaboration request repository"""
+        """
+Initialize collaboration request repository"""
         super().__init__(db_session, CollaborationRequest)
         
     def create_request(self,

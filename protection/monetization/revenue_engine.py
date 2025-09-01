@@ -4,6 +4,7 @@ Handles all revenue generation, tracking, and optimization for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStreamType(Enum):
-    """Revenue stream types for content monetization."""
+    """
+Revenue stream types for content monetization."""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     SPONSORSHIP = "sponsorship"
@@ -32,6 +35,7 @@ class RevenueStreamType(Enum):
 
 class RevenueStatus(Enum):
     """Revenue tracking status."""
+
     PENDING = "pending"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -86,7 +90,8 @@ class RevenueMetrics:
     period_end: datetime
     
     def get_performance_score(self) -> float:
-        """Calculate overall performance score."""
+        """
+Calculate overall performance score."""
         base_score = min(float(self.total_revenue) / 1000, 100)
         growth_bonus = min(self.growth_rate * 10, 20)
         conversion_bonus = min(self.conversion_rate * 100, 30)
@@ -94,26 +99,31 @@ class RevenueMetrics:
 
 
 class RevenueProcessor(ABC):
-    """Abstract base class for revenue processors."""
+    """
+Abstract base class for revenue processors."""
     
     @abstractmethod
     async def process_transaction(self, transaction: RevenueTransaction) -> bool:
-        """Process a revenue transaction."""
+        """
+Process a revenue transaction."""
         pass
     
     @abstractmethod
     async def verify_payment(self, transaction_id: str) -> bool:
-        """Verify payment status."""
+        """
+Verify payment status."""
         pass
     
     @abstractmethod
     async def handle_refund(self, transaction_id: str, reason: str) -> bool:
-        """Handle transaction refund."""
+        """
+Handle transaction refund."""
         pass
 
 
 class SubscriptionProcessor(RevenueProcessor):
-    """Handles subscription-based revenue processing."""
+    """
+Handles subscription-based revenue processing."""
     
     def __init__(self):
         self.active_subscriptions: Dict[str, Dict] = {}
@@ -155,13 +165,15 @@ class SubscriptionProcessor(RevenueProcessor):
         return True
     
     async def handle_refund(self, transaction_id: str, reason: str) -> bool:
-        """Handle subscription refund."""
+        """
+Handle subscription refund."""
         # Implement refund logic
         return True
 
 
 class PayPerViewProcessor(RevenueProcessor):
-    """Handles pay-per-view revenue processing."""
+    """
+Handles pay-per-view revenue processing."""
     
     def __init__(self):
         self.view_prices = {
@@ -197,7 +209,8 @@ class PayPerViewProcessor(RevenueProcessor):
         return True
     
     async def handle_refund(self, transaction_id: str, reason: str) -> bool:
-        """Handle pay-per-view refund."""
+        """
+Handle pay-per-view refund."""
         return True
 
 
@@ -217,7 +230,8 @@ class RevenueEngine:
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the revenue engine."""
+        """
+Initialize the revenue engine."""
         try:
             # Initialize processors
             for processor in self.processors.values():

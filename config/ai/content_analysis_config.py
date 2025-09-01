@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class ContentType(str, Enum):
-    """Supported content types for analysis."""
+    """
+Supported content types for analysis."""
+
     
     AUDIO_MUSIC = "audio_music"
     AUDIO_PODCAST = "audio_podcast"
@@ -42,6 +45,7 @@ class ContentType(str, Enum):
 
 class AnalysisLevel(str, Enum):
     """Analysis depth levels for content processing."""
+
     
     BASIC = "basic"
     STANDARD = "standard"
@@ -51,6 +55,7 @@ class AnalysisLevel(str, Enum):
 
 class ContentQuality(str, Enum):
     """Content quality assessment levels."""
+
     
     LOW = "low"
     MEDIUM = "medium"
@@ -269,7 +274,8 @@ class ContentAnalysisConfig(BaseSettings):
         ))
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get all supported file formats by category."""
+        """
+Get all supported file formats by category."""
         return {
             "audio": self.SUPPORTED_AUDIO_FORMATS,
             "video": self.SUPPORTED_VIDEO_FORMATS,

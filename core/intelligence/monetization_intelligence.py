@@ -7,10 +7,11 @@ across multiple platforms and content types through AI-driven insights.
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel - All rights reserved
+Copyright (c) 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -40,7 +41,9 @@ from ..cache.redis_cache import RedisCache
 
 
 class MonetizationStrategy(Enum):
-    """Monetization strategy types"""
+    """
+Monetization strategy types"""
+
     DIRECT_SALES = "direct_sales"
     SUBSCRIPTION = "subscription"
     SPONSORSHIP = "sponsorship"
@@ -55,6 +58,7 @@ class MonetizationStrategy(Enum):
 
 class RevenueStream(Enum):
     """Revenue stream categories"""
+
     PLATFORM_MONETIZATION = "platform_monetization"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     DIRECT_SALES = "direct_sales"
@@ -89,7 +93,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation"""
+    """
+Revenue optimization recommendation"""
     optimization_id: str
     current_revenue: Decimal
     optimized_revenue: Decimal
@@ -106,7 +111,8 @@ class RevenueOptimization:
 
 @dataclass
 class MarketAnalysis:
-    """Market analysis for monetization"""
+    """
+Market analysis for monetization"""
     market_size: Decimal
     growth_rate: float
     competition_level: str
@@ -131,7 +137,8 @@ class MonetizationIntelligence:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize monetization intelligence engine"""
+        """
+Initialize monetization intelligence engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -154,7 +161,8 @@ class MonetizationIntelligence:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for monetization intelligence"""
+        """
+Initialize ML models for monetization intelligence"""
         try:
             # Revenue prediction model
             self.revenue_predictor = GradientBoostingRegressor(
@@ -748,27 +756,31 @@ class MonetizationIntelligence:
     
     # Revenue calculation methods
     def _calculate_subscription_revenue(self, audience_size: int, engagement_rate: float) -> Decimal:
-        """Calculate potential subscription revenue"""
+        """
+Calculate potential subscription revenue"""
         conversion_rate = min(engagement_rate * 0.1, 0.05)  # Conservative estimate
         subscribers = int(audience_size * conversion_rate)
         monthly_price = Decimal('9.99')  # Average subscription price
         return Decimal(subscribers) * monthly_price * 12  # Annual revenue
     
     def _calculate_digital_product_revenue(self, audience_size: int, content_portfolio: Dict[str, Any]) -> Decimal:
-        """Calculate potential digital product revenue"""
+        """
+Calculate potential digital product revenue"""
         conversion_rate = 0.02  # 2% conversion rate
         customers = int(audience_size * conversion_rate)
         average_price = Decimal('99.00')  # Average course price
         return Decimal(customers) * average_price
     
     def _calculate_youtube_revenue(self, monthly_views: int, engagement_rate: float) -> Decimal:
-        """Calculate potential YouTube ad revenue"""
+        """
+Calculate potential YouTube ad revenue"""
         rpm = Decimal('2.50')  # Revenue per mille (per 1000 views)
         annual_views = monthly_views * 12
         return (Decimal(annual_views) / 1000) * rpm
     
     def _calculate_tiktok_revenue(self, monthly_views: int, engagement_rate: float) -> Decimal:
-        """Calculate potential TikTok revenue"""
+        """
+Calculate potential TikTok revenue"""
         # Creator Fund: $0.02-$0.04 per 1000 views
         fund_rpm = Decimal('0.03')
         annual_views = monthly_views * 12
@@ -780,7 +792,8 @@ class MonetizationIntelligence:
         return fund_revenue + live_revenue
     
     def _calculate_partnership_revenue(self, audience_size: int, engagement_rate: float, tier: str) -> Decimal:
-        """Calculate potential brand partnership revenue"""
+        """
+Calculate potential brand partnership revenue"""
         if tier == 'micro':
             rate_per_follower = Decimal('0.01')  # $0.01 per follower per post
             posts_per_year = 24  # 2 sponsored posts per month
@@ -791,7 +804,8 @@ class MonetizationIntelligence:
         return Decimal(audience_size) * rate_per_follower * posts_per_year
     
     def _calculate_affiliate_revenue(self, audience_size: int, engagement_rate: float, categories: List[str]) -> Decimal:
-        """Calculate potential affiliate revenue"""
+        """
+Calculate potential affiliate revenue"""
         click_rate = engagement_rate * 0.1  # 10% of engaged users click
         conversion_rate = 0.03  # 3% conversion rate
         average_commission = Decimal('25.00')
@@ -799,7 +813,8 @@ class MonetizationIntelligence:
         return Decimal(monthly_sales) * average_commission * 12
     
     def _calculate_consulting_revenue(self, audience_size: int, expertise_areas: List[str]) -> Decimal:
-        """Calculate potential consulting revenue"""
+        """
+Calculate potential consulting revenue"""
         conversion_rate = 0.001  # 0.1% become clients
         clients = max(int(audience_size * conversion_rate), 1)
         hourly_rate = Decimal('150.00')  # Average consulting rate
@@ -807,7 +822,8 @@ class MonetizationIntelligence:
         return Decimal(clients) * hourly_rate * hours_per_client * 6  # Twice per year
     
     def _calculate_merchandise_revenue(self, audience_size: int, engagement_rate: float) -> Decimal:
-        """Calculate potential merchandise revenue"""
+        """
+Calculate potential merchandise revenue"""
         conversion_rate = engagement_rate * 0.05  # 5% of engaged users buy
         customers = int(audience_size * conversion_rate)
         average_order_value = Decimal('35.00')
@@ -815,14 +831,16 @@ class MonetizationIntelligence:
         return Decimal(customers) * average_order_value * Decimal(str(orders_per_year))
     
     def _calculate_course_revenue(self, audience_size: int, expertise_areas: List[str]) -> Decimal:
-        """Calculate potential course revenue"""
+        """
+Calculate potential course revenue"""
         conversion_rate = 0.015  # 1.5% conversion rate
         students = int(audience_size * conversion_rate)
         course_price = Decimal('299.00')  # Average course price
         return Decimal(students) * course_price
     
     def _calculate_workshop_revenue(self, audience_size: int, engagement_rate: float) -> Decimal:
-        """Calculate potential workshop revenue"""
+        """
+Calculate potential workshop revenue"""
         conversion_rate = engagement_rate * 0.02  # 2% of engaged users attend
         attendees_per_workshop = max(int(audience_size * conversion_rate), 5)
         workshop_price = Decimal('47.00')
@@ -834,7 +852,8 @@ class MonetizationIntelligence:
         content_portfolio: Dict[str, Any],
         audience_data: Dict[str, Any]
     ) -> MarketAnalysis:
-        """Get comprehensive market analysis"""
+        """
+Get comprehensive market analysis"""
         try:
             # This would integrate with market data APIs
             # For now, return mock analysis
@@ -887,7 +906,8 @@ class RevenueOptimizer:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize revenue optimizer"""
+        """
+Initialize revenue optimizer"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -898,7 +918,8 @@ class RevenueOptimizer:
         self._initialize_optimization_models()
     
     def _initialize_optimization_models(self):
-        """Initialize optimization ML models"""
+        """
+Initialize optimization ML models"""
         try:
             # Revenue optimization neural network
             class RevenueOptimizer(nn.Module):

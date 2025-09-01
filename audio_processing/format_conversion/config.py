@@ -6,6 +6,7 @@ Provides format-specific settings, quality presets, and system configuration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingMode(Enum):
-    """Processing mode for audio conversion"""
+    """
+Processing mode for audio conversion"""
+
     SINGLE_THREADED = "single"
     MULTI_THREADED = "multi"
     PARALLEL_BATCH = "batch"
@@ -28,6 +31,7 @@ class ProcessingMode(Enum):
 
 class CompressionMode(Enum):
     """Compression mode for lossy formats"""
+
     CBR = "constant_bitrate"      # Constant Bitrate
     VBR = "variable_bitrate"      # Variable Bitrate
     ABR = "average_bitrate"       # Average Bitrate
@@ -57,12 +61,14 @@ class FormatProfile:
     format_specific_options: Dict[str, Any] = field(default_factory=dict)
     
     def get_quality_preset(self, quality: QualityLevel) -> Dict[str, Any]:
-        """Get quality preset for specified level"""
+        """
+Get quality preset for specified level"""
         return self.quality_presets.get(quality, {})
     
     def validate_parameters(self, sample_rate: int, channels: int, 
                           bit_depth: Optional[int] = None) -> List[str]:
-        """Validate format parameters and return issues"""
+        """
+Validate format parameters and return issues"""
         issues = []
         
         if sample_rate not in self.supported_sample_rates:
@@ -318,7 +324,8 @@ class ConversionConfig:
         )
     
     def _initialize_quality_presets(self):
-        """Initialize quality presets"""
+        """
+Initialize quality presets"""
         
         self.quality_presets["audiophile"] = QualityPreset(
             name="Audiophile",
@@ -408,11 +415,13 @@ class ConversionConfig:
         return self.format_profiles.get(format)
     
     def get_quality_preset(self, preset_name: str) -> Optional[QualityPreset]:
-        """Get quality preset by name"""
+        """
+Get quality preset by name"""
         return self.quality_presets.get(preset_name)
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return issues"""
+        """
+Validate configuration and return issues"""
         issues = []
         
         # Validate temp directory
@@ -462,7 +471,8 @@ class ConversionConfig:
     
     @classmethod
     def from_environment(cls) -> 'ConversionConfig':
-        """Create configuration from environment variables"""
+        """
+Create configuration from environment variables"""
         config = cls()
         
         # Override with environment variables

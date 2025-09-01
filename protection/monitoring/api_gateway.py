@@ -13,7 +13,7 @@ Industrial Features:
 - Comprehensive request/response logging
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -21,6 +21,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 security = HTTPBearer()
 
 class APIVersion(str, Enum):
-    """API version enumeration."""
+    """
+API version enumeration."""
+
     V1 = "v1"
     V2 = "v2"
 
@@ -63,7 +66,8 @@ class MonitoringAPIRequest(BaseModel):
     config: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class ComprehensiveMonitoringRequest(MonitoringAPIRequest):
-    """Request for comprehensive monitoring."""
+    """
+Request for comprehensive monitoring."""
     monitoring_types: List[str] = Field(default_factory=lambda: ["realtime", "surveillance", "geospatial"])
     priority: str = "medium"
     auto_response: bool = False
@@ -92,7 +96,8 @@ class MonitoringAPIGateway:
     """Ultra-advanced monitoring API gateway."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the API gateway."""
+        """
+Initialize the API gateway."""
         self.config = config
         self.app = FastAPI(
             title="Content Protection Monitoring API",

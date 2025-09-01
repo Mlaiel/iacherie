@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import asyncio
 import threading
 import time
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class IsolationLevel(Enum):
-    """SQL standard isolation levels with extended creator economy controls"""
+    """
+SQL standard isolation levels with extended creator economy controls"""
+
     READ_UNCOMMITTED = "READ_UNCOMMITTED"  # Lowest isolation, phantom reads allowed
     READ_COMMITTED = "READ_COMMITTED"      # Prevents dirty reads
     REPEATABLE_READ = "REPEATABLE_READ"    # Prevents non-repeatable reads
@@ -54,6 +57,7 @@ class IsolationLevel(Enum):
 
 class LockType(Enum):
     """Lock types for resource protection"""
+
     SHARED = "SHARED"           # Read lock, multiple readers allowed
     EXCLUSIVE = "EXCLUSIVE"     # Write lock, exclusive access
     INTENT_SHARED = "INTENT_SHARED"     # Intent to acquire shared locks
@@ -83,19 +87,22 @@ class LockRequest:
     
     @property
     def is_expired(self) -> bool:
-        """Check if lock request has expired"""
+        """
+Check if lock request has expired"""
         elapsed = (datetime.now(timezone.utc) - self.requested_at).total_seconds()
         return elapsed > self.timeout
     
     @property
     def wait_time(self) -> float:
-        """Calculate wait time in seconds"""
+        """
+Calculate wait time in seconds"""
         return (datetime.now(timezone.utc) - self.requested_at).total_seconds()
 
 
 @dataclass
 class GrantedLock:
-    """Information about granted lock"""
+    """
+Information about granted lock"""
     transaction_id: str
     resource_id: str
     lock_type: LockType
@@ -104,7 +111,8 @@ class GrantedLock:
     access_count: int = 0
     
     def is_compatible(self, lock_type: LockType) -> bool:
-        """Check if this lock is compatible with requested lock type"""
+        """
+Check if this lock is compatible with requested lock type"""
         compatibility_matrix = {
             (LockType.SHARED, LockType.SHARED): True,
             (LockType.SHARED, LockType.EXCLUSIVE): False,
@@ -135,7 +143,8 @@ class GrantedLock:
 
 
 class DeadlockDetector:
-    """Deadlock detection and resolution system"""
+    """
+Deadlock detection and resolution system"""
     
     def __init__(self):
         self.wait_for_graph: Dict[str, Set[str]] = defaultdict(set)
@@ -144,21 +153,25 @@ class DeadlockDetector:
         self.running = False
         
     def start_detection(self):
-        """Start deadlock detection background task"""
+        """
+Start deadlock detection background task"""
         self.running = True
         asyncio.create_task(self._detection_loop())
     
     def stop_detection(self):
-        """Stop deadlock detection"""
+        """
+Stop deadlock detection"""
         self.running = False
     
     def add_wait_edge(self, waiting_tx: str, blocking_tx: str):
-        """Add edge to wait-for graph"""
+        """
+Add edge to wait-for graph"""
         with self.lock:
             self.wait_for_graph[waiting_tx].add(blocking_tx)
     
     def remove_wait_edge(self, waiting_tx: str, blocking_tx: str):
-        """Remove edge from wait-for graph"""
+        """
+Remove edge from wait-for graph"""
         with self.lock:
             if waiting_tx in self.wait_for_graph:
                 self.wait_for_graph[waiting_tx].discard(blocking_tx)
@@ -166,7 +179,8 @@ class DeadlockDetector:
                     del self.wait_for_graph[waiting_tx]
     
     def remove_transaction(self, transaction_id: str):
-        """Remove transaction from wait-for graph"""
+        """
+Remove transaction from wait-for graph"""
         with self.lock:
             # Remove as waiting transaction
             self.wait_for_graph.pop(transaction_id, None)
@@ -178,7 +192,8 @@ class DeadlockDetector:
                     del self.wait_for_graph[tx_id]
     
     def detect_deadlock(self) -> Optional[List[str]]:
-        """Detect deadlock using cycle detection in wait-for graph"""
+        """
+Detect deadlock using cycle detection in wait-for graph"""
         with self.lock:
             visited = set()
             rec_stack = set()
@@ -213,7 +228,8 @@ class DeadlockDetector:
             return None
     
     async def _detection_loop(self):
-        """Background deadlock detection loop"""
+        """
+Background deadlock detection loop"""
         while self.running:
             try:
                 deadlock = self.detect_deadlock()
@@ -482,7 +498,8 @@ class IsolationController:
         return False
     
     async def get_lock_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive lock statistics"""
+        """
+Get comprehensive lock statistics"""
         
         async with self.lock:
             total_locks = sum(len(locks) for locks in self.granted_locks.values())
@@ -529,7 +546,8 @@ class IsolationController:
         return True
     
     async def _grant_lock(self, request: LockRequest) -> None:
-        """Grant lock request"""
+        """
+Grant lock request"""
         
         granted_lock = GrantedLock(
             transaction_id=request.transaction_id,
@@ -557,11 +575,13 @@ class IsolationController:
             pass  # Request not in queue
     
     def _cleanup_deadlock_edges(self, transaction_id: str) -> None:
-        """Clean up deadlock detection edges for transaction"""
+        """
+Clean up deadlock detection edges for transaction"""
         self.deadlock_detector.remove_transaction(transaction_id)
     
     async def _process_lock_queue(self, resource_id: str) -> None:
-        """Process waiting lock requests for resource"""
+        """
+Process waiting lock requests for resource"""
         
         queue = self.lock_queue[resource_id]
         processed = []
@@ -604,7 +624,8 @@ class IsolationController:
         creator_id: str,
         resource_id: str
     ) -> bool:
-        """Validate creator-specific access rules"""
+        """
+Validate creator-specific access rules"""
         
         # Check if resource belongs to creator
         if resource_id.startswith(f"creator_{creator_id}_"):
@@ -634,7 +655,8 @@ class IsolationController:
         operation_type: str,
         resource_id: str
     ) -> bool:
-        """Check for repeatable read violations"""
+        """
+Check for repeatable read violations"""
         # Implementation for repeatable read checks
         return False
     
@@ -644,7 +666,8 @@ class IsolationController:
         operation_type: str,
         resource_id: str
     ) -> bool:
-        """Check for creator isolation violations"""
+        """
+Check for creator isolation violations"""
         # Implementation for creator-specific isolation checks
         return False
     
@@ -654,7 +677,8 @@ class IsolationController:
         operation_type: str,
         resource_id: str
     ) -> bool:
-        """Check for content consistency violations"""
+        """
+Check for content consistency violations"""
         # Implementation for content consistency checks
         return False
     
@@ -664,12 +688,14 @@ class IsolationController:
         operation_type: str,
         resource_id: str
     ) -> bool:
-        """Check for revenue atomicity violations"""
+        """
+Check for revenue atomicity violations"""
         # Implementation for revenue operation atomicity checks
         return False
     
     def _update_wait_time_metric(self, wait_time: float) -> None:
-        """Update average wait time metric"""
+        """
+Update average wait time metric"""
         current_avg = self.metrics["average_wait_time"]
         total_grants = self.metrics["locks_granted"]
         
@@ -734,7 +760,8 @@ async def with_content_consistency(
     transaction_id: str,
     content_resources: List[str]
 ):
-    """Ensure content consistency across multiple resources"""
+    """
+Ensure content consistency across multiple resources"""
     await controller.set_transaction_isolation(
         transaction_id, 
         IsolationLevel.CONTENT_CONSISTENT
@@ -754,7 +781,8 @@ async def with_revenue_atomicity(
     transaction_id: str,
     revenue_resources: List[str]
 ):
-    """Ensure atomic revenue operations"""
+    """
+Ensure atomic revenue operations"""
     await controller.set_transaction_isolation(
         transaction_id, 
         IsolationLevel.REVENUE_ATOMIC

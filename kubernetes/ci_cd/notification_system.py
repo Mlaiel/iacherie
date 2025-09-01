@@ -8,6 +8,7 @@ Enterprise notification system for CI/CD pipeline events and alerts.
 Multi-channel communication with intelligent routing and escalation.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
@@ -26,7 +27,9 @@ import boto3
 logger = logging.getLogger(__name__)
 
 class NotificationChannel(Enum):
-    """Notification channel enumeration"""
+    """
+Notification channel enumeration"""
+
     EMAIL = "email"
     SLACK = "slack"
     TEAMS = "teams"
@@ -38,6 +41,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority enumeration"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -46,6 +50,7 @@ class NotificationPriority(Enum):
 
 class EventType(Enum):
     """Pipeline event type enumeration"""
+
     BUILD_STARTED = "build_started"
     BUILD_SUCCESS = "build_success"
     BUILD_FAILED = "build_failed"
@@ -80,7 +85,8 @@ class NotificationConfiguration:
 
 @dataclass
 class NotificationMessage:
-    """Notification message"""
+    """
+Notification message"""
     event_type: EventType
     priority: NotificationPriority
     title: str
@@ -98,7 +104,8 @@ class NotificationMessage:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient"""
+    """
+Notification recipient"""
     name: str
     email: Optional[str] = None
     slack_user: Optional[str] = None
@@ -112,10 +119,12 @@ class NotificationRecipient:
             self.roles = []
 
 class NotificationSystem:
-    """Enterprise notification system for CI/CD pipelines"""
+    """
+Enterprise notification system for CI/CD pipelines"""
     
     def __init__(self):
-        """Initialize notification system"""
+        """
+Initialize notification system"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.configurations: Dict[NotificationChannel, NotificationConfiguration] = {}
         self.recipients: Dict[str, NotificationRecipient] = {}
@@ -671,7 +680,8 @@ class NotificationSystem:
         return recipients
     
     def _create_email_html(self, message: NotificationMessage) -> str:
-        """Create HTML email body"""
+        """
+Create HTML email body"""
         color = self._get_priority_color(message.priority)
         
         html = f"""
@@ -718,7 +728,8 @@ class NotificationSystem:
         return html
     
     def _get_priority_color(self, priority: NotificationPriority) -> str:
-        """Get color code for priority level"""
+        """
+Get color code for priority level"""
         colors = {
             NotificationPriority.CRITICAL: "#DC3545",
             NotificationPriority.HIGH: "#FD7E14",
@@ -786,7 +797,8 @@ class NotificationSystem:
         return filtered_messages
     
     async def test_notifications(self) -> Dict[NotificationChannel, bool]:
-        """Test all configured notification channels"""
+        """
+Test all configured notification channels"""
         test_results = {}
         
         test_message = NotificationMessage(

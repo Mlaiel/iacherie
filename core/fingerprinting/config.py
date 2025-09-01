@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from pathlib import Path
@@ -13,7 +14,8 @@ from dataclasses import dataclass
 
 @dataclass
 class FingerprintingConfig:
-    """Configuration class for fingerprinting operations"""
+    """
+Configuration class for fingerprinting operations"""
     
     # File processing settings
     max_file_size: int = 500 * 1024 * 1024  # 500MB
@@ -67,7 +69,8 @@ class FingerprintingConfig:
     enable_debug: bool = False
     
     def __post_init__(self):
-        """Initialize default values and validate configuration"""
+        """
+Initialize default values and validate configuration"""
         if self.supported_audio_formats is None:
             self.supported_audio_formats = [
                 '.mp3', '.wav', '.flac', '.m4a', '.ogg', '.aac', '.wma'
@@ -101,7 +104,8 @@ class FingerprintingConfig:
         self._validate_config()
     
     def _validate_config(self):
-        """Validate configuration values"""
+        """
+Validate configuration values"""
         if self.max_file_size <= 0:
             raise ValueError("max_file_size must be positive")
         
@@ -175,7 +179,8 @@ class FingerprintingConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'FingerprintingConfig':
-        """Create configuration from dictionary"""
+        """
+Create configuration from dictionary"""
         return cls(
             max_file_size=config_dict.get('max_file_size', 500 * 1024 * 1024),
             supported_audio_formats=config_dict.get('supported_formats', {}).get('audio'),
@@ -214,7 +219,8 @@ class FingerprintingConfig:
     
     @classmethod
     def from_file(cls, config_path: str) -> 'FingerprintingConfig':
-        """Load configuration from JSON file"""
+        """
+Load configuration from JSON file"""
         import json
         
         with open(config_path, 'r', encoding='utf-8') as f:
@@ -223,7 +229,8 @@ class FingerprintingConfig:
         return cls.from_dict(config_dict)
     
     def save_to_file(self, config_path: str):
-        """Save configuration to JSON file"""
+        """
+Save configuration to JSON file"""
         import json
         
         with open(config_path, 'w', encoding='utf-8') as f:
@@ -235,7 +242,8 @@ DEFAULT_CONFIG = FingerprintingConfig()
 
 # Environment-based configuration
 def get_config_from_environment() -> FingerprintingConfig:
-    """Create configuration from environment variables"""
+    """
+Create configuration from environment variables"""
     config = FingerprintingConfig()
     
     # Override with environment variables if they exist
@@ -308,7 +316,8 @@ TESTING_CONFIG = FingerprintingConfig(
 
 # Configuration constants
 class FingerprintingConstants:
-    """Constants for fingerprinting operations"""
+    """
+Constants for fingerprinting operations"""
     
     # File format MIME types
     AUDIO_MIME_TYPES = {
@@ -370,7 +379,8 @@ class FingerprintingConstants:
 
 
 def get_current_config() -> FingerprintingConfig:
-    """Get configuration based on current environment"""
+    """
+Get configuration based on current environment"""
     env = os.environ.get('FINGERPRINTING_ENV', 'development').lower()
     
     if env == 'production':

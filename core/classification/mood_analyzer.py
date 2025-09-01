@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,6 +16,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
@@ -45,7 +46,8 @@ class MoodAnalyzer:
     """
     
     def __init__(self):
-        """Initialize mood analyzer."""
+        """
+Initialize mood analyzer."""
         self.settings = get_settings()
         
         # Initialize emotion models and mappings
@@ -63,7 +65,8 @@ class MoodAnalyzer:
         }
 
     def _init_emotion_models(self):
-        """Initialize emotion models and mapping systems."""
+        """
+Initialize emotion models and mapping systems."""
         
         # Primary emotion categories (Plutchik's wheel extended)
         self.primary_emotions = {
@@ -913,7 +916,8 @@ class MoodAnalyzer:
             return 'low_negative'   # Sadness, depression
 
     def _analyze_temporal_emotions(self, indicators: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze temporal emotion patterns."""
+        """
+Analyze temporal emotion patterns."""
         try:
             temporal_analysis = {
                 'emotion_stability': 0.5,
@@ -1129,7 +1133,8 @@ class MoodAnalyzer:
             return 'unknown'
 
     def _map_scene_to_emotions(self, scene_type: str) -> List[str]:
-        """Map scene types to emotions."""
+        """
+Map scene types to emotions."""
         scene_emotion_mapping = {
             'beach': ['joy', 'calm', 'relaxation'],
             'forest': ['peace', 'tranquility', 'mystery'],
@@ -1144,12 +1149,14 @@ class MoodAnalyzer:
         return scene_emotion_mapping.get(scene_type.lower(), [])
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
+        """
+Get current timestamp."""
         from datetime import datetime
         return datetime.now().isoformat()
 
     def get_emotion_info(self, emotion: str) -> Dict[str, Any]:
-        """Get detailed information about a specific emotion."""
+        """
+Get detailed information about a specific emotion."""
         try:
             emotion = emotion.lower()
             

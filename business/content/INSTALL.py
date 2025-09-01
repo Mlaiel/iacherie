@@ -17,6 +17,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import os
 import sys
 import subprocess
@@ -27,7 +28,8 @@ from typing import List, Dict, Any
 
 
 def print_banner():
-    """Print system banner."""
+    """
+Print system banner."""
     print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    IA Influencer Agent - Content Module                     ║
 ║                         Quick Start & Installation                          ║
@@ -44,7 +46,8 @@ def print_banner():
 
 
 def check_python_version():
-    """Check Python version compatibility."""
+    """
+Check Python version compatibility."""
     if sys.version_info < (3, 9):
         print("❌ Python 3.9+ required. Current version:", sys.version)
         return False
@@ -212,7 +215,8 @@ def print_next_steps():
 
 
 def main():
-    """Main installation and setup process."""
+    """
+Main installation and setup process."""
     print_banner()
     
     # Step 1: Check Python version

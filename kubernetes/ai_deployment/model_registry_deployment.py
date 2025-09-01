@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelStage(Enum):
-    """Model lifecycle stages"""
+    """
+Model lifecycle stages"""
+
     DEVELOPMENT = "development"
     STAGING = "staging" 
     PRODUCTION = "production"
@@ -43,6 +46,7 @@ class ModelStage(Enum):
 
 class ModelFormat(Enum):
     """Supported model formats"""
+
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     ONNX = "onnx"
@@ -54,6 +58,7 @@ class ModelFormat(Enum):
 
 class DeploymentStrategy(Enum):
     """Model deployment strategies"""
+
     BLUE_GREEN = "blue_green"
     ROLLING = "rolling"
     CANARY = "canary"
@@ -1115,7 +1120,8 @@ class ModelRegistryDeployment:
         return hashlib.sha256(model_content.encode()).hexdigest()
     
     async def _upload_model_artifacts(self, metadata: Dict[str, Any]) -> str:
-        """Upload model artifacts to storage"""
+        """
+Upload model artifacts to storage"""
         try:
             model_name = metadata["name"]
             model_version = metadata.get("version", "1.0.0")

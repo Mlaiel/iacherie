@@ -4,9 +4,10 @@ This module provides comprehensive NFT functionality for content creators includ
 NFT minting, marketplace operations, licensing management, royalty distribution,
 and metadata handling for audio, video, image, and text content.
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
+(c) 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for NFT minting"""
+    """
+Supported content types for NFT minting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -45,6 +48,7 @@ class ContentType(Enum):
 
 class LicenseType(Enum):
     """Types of licenses available for NFT content"""
+
     COMMERCIAL = "commercial"
     PERSONAL = "personal"
     EXCLUSIVE = "exclusive"
@@ -74,7 +78,8 @@ class NFTMetadata:
 
 @dataclass
 class LicenseTerms:
-    """License terms for NFT content"""
+    """
+License terms for NFT content"""
     license_type: LicenseType
     duration: Optional[timedelta]
     territory: str
@@ -89,7 +94,8 @@ class LicenseTerms:
 
 @dataclass
 class NFTListing:
-    """NFT marketplace listing"""
+    """
+NFT marketplace listing"""
     token_id: int
     contract_address: str
     network: str
@@ -351,7 +357,8 @@ class NFTMinter:
             return await self._generate_generic_preview(content_type)
     
     async def _generate_audio_preview(self, audio_path: str) -> str:
-        """Generate waveform visualization for audio content"""
+        """
+Generate waveform visualization for audio content"""
         # This would use libraries like librosa and matplotlib to generate waveforms
         # For now, returning a placeholder
         return "QmAudioWaveformPreview"

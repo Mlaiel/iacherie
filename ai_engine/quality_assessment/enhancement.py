@@ -4,7 +4,7 @@ Advanced AI-powered content enhancement and optimization system for creators and
 Provides intelligent suggestions, automated improvements, and performance optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 import re
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementType(Enum):
-    """Types of content enhancements"""
+    """
+Types of content enhancements"""
+
     TEXT_OPTIMIZATION = "text_optimization"
     IMAGE_ENHANCEMENT = "image_enhancement"
     VIDEO_ENHANCEMENT = "video_enhancement"
@@ -49,6 +52,7 @@ class EnhancementType(Enum):
 
 class EnhancementPriority(Enum):
     """Enhancement priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -58,6 +62,7 @@ class EnhancementPriority(Enum):
 
 class EnhancementCategory(Enum):
     """Enhancement categories"""
+
     QUALITY_IMPROVEMENT = "quality_improvement"
     PERFORMANCE_BOOST = "performance_boost"
     ENGAGEMENT_INCREASE = "engagement_increase"
@@ -70,6 +75,7 @@ class EnhancementCategory(Enum):
 
 class ProcessingMethod(Enum):
     """Enhancement processing methods"""
+
     AUTOMATED = "automated"
     AI_ASSISTED = "ai_assisted"
     MANUAL_REVIEW = "manual_review"
@@ -109,7 +115,8 @@ class EnhancementSuggestion:
 
 @dataclass
 class TextEnhancement:
-    """Text content enhancement results"""
+    """
+Text content enhancement results"""
     original_text: str = field(default="")
     enhanced_text: str = field(default="")
     
@@ -311,7 +318,8 @@ class EnhancementProfile:
 
 @dataclass
 class EnhancementAnalysisMetrics:
-    """Enhancement analysis metrics container"""
+    """
+Enhancement analysis metrics container"""
     profile: EnhancementProfile = field(default_factory=EnhancementProfile)
     
     # Analysis metadata
@@ -348,7 +356,8 @@ class ContentEnhancer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize content enhancer"""
+        """
+Initialize content enhancer"""
         super().__init__(config or ModelConfig(
             model_name="content_enhancer",
             provider="internal",
@@ -419,7 +428,8 @@ class ContentEnhancer(BaseAIModel):
         }
     
     def _initialize_video_enhancer(self):
-        """Initialize video enhancement engine"""
+        """
+Initialize video enhancement engine"""
         self.video_enhancement_settings = {
             'quality_presets': {
                 'social_media': {
@@ -444,7 +454,8 @@ class ContentEnhancer(BaseAIModel):
         }
     
     def _initialize_seo_optimizer(self):
-        """Initialize SEO optimization engine"""
+        """
+Initialize SEO optimization engine"""
         self.seo_optimization_rules = {
             'keyword_density': {
                 'primary': (1.0, 3.0),      # 1-3%
@@ -466,7 +477,8 @@ class ContentEnhancer(BaseAIModel):
         }
     
     def _initialize_engagement_optimizer(self):
-        """Initialize engagement optimization engine"""
+        """
+Initialize engagement optimization engine"""
         self.engagement_optimization_data = {
             'optimal_posting_times': {
                 'instagram': ['6:00', '12:00', '19:00'],

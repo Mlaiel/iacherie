@@ -7,6 +7,7 @@ and intelligent alert correlation and deduplication.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import time
 import logging
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -35,6 +38,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert status"""
+
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
@@ -61,7 +65,8 @@ class Alert:
 
 @dataclass
 class NotificationChannel:
-    """Notification channel configuration"""
+    """
+Notification channel configuration"""
     name: str
     type: str  # email, slack, webhook, telegram, pagerduty
     config: Dict[str, Any]
@@ -71,7 +76,8 @@ class NotificationChannel:
 
 @dataclass
 class EscalationRule:
-    """Alert escalation rule"""
+    """
+Alert escalation rule"""
     name: str
     conditions: Dict[str, Any]
     delay: int  # seconds
@@ -81,7 +87,8 @@ class EscalationRule:
 
 @dataclass
 class SilenceRule:
-    """Alert silence rule"""
+    """
+Alert silence rule"""
     id: str
     matchers: Dict[str, str]
     start_time: datetime
@@ -133,7 +140,8 @@ class AlertManager:
         self._register_default_channels()
         
     def _register_default_channels(self):
-        """Register default notification channels"""
+        """
+Register default notification channels"""
         
         # Email channel
         self.register_channel(NotificationChannel(
@@ -596,14 +604,16 @@ class AlertManager:
         return None
         
     def _is_silenced(self, alert: Alert) -> bool:
-        """Check if alert matches any silence rule"""
+        """
+Check if alert matches any silence rule"""
         for silence in self._silence_rules:
             if self._matches_silence(alert, silence):
                 return True
         return False
         
     def _matches_silence(self, alert: Alert, silence: SilenceRule) -> bool:
-        """Check if alert matches silence rule"""
+        """
+Check if alert matches silence rule"""
         now = datetime.utcnow()
         if now < silence.start_time or now > silence.end_time:
             return False
@@ -662,7 +672,8 @@ class AlertManager:
                         await self._escalate_alert(alert, rule)
                         
     def _matches_escalation_conditions(self, alert: Alert, rule: EscalationRule) -> bool:
-        """Check if alert matches escalation conditions"""
+        """
+Check if alert matches escalation conditions"""
         conditions = rule.conditions
         
         if "severity" in conditions:
@@ -699,7 +710,8 @@ class AlertManager:
         pass
         
     async def _cleanup_old_alerts(self):
-        """Clean up old resolved alerts"""
+        """
+Clean up old resolved alerts"""
         cutoff = datetime.utcnow() - timedelta(seconds=self.max_alert_age)
         
         # Remove old alerts from history

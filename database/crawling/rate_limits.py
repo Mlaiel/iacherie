@@ -11,6 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -33,7 +34,9 @@ from ..core.exceptions import (
 
 
 class RateLimitPeriod(Enum):
-    """Rate limit time periods."""
+    """
+Rate limit time periods."""
+
     MINUTE = 'minute'
     HOUR = 'hour'
     DAY = 'day'
@@ -42,7 +45,9 @@ class RateLimitPeriod(Enum):
 
 
 class PlatformLimits:
-    """Default rate limits for different platforms."""
+    """
+Default rate limits for different platforms."""
+
     
     YOUTUBE = {
         'requests_per_hour': 10000,

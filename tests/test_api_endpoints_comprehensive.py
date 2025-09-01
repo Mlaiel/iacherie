@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,9 +13,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""API Endpoint Tests for Complete Coverage
+"""
+API Endpoint Tests for Complete Coverage
 Ensures all API endpoints are properly tested
 """
+
 import pytest
 import sys
 import os
@@ -26,10 +29,12 @@ from fastapi import status
 
 
 class TestAuthenticationAPI:
-    """Test authentication API endpoints"""
+    """
+Test authentication API endpoints"""
     
     def test_login_endpoint(self):
-        """Test user login endpoint"""
+        """
+Test user login endpoint"""
         login_data = {
             "email": "test@example.com",
             "password": "secure_password_123"
@@ -96,7 +101,8 @@ class TestContentManagementAPI:
     
     @pytest.mark.asyncio
     async def test_content_upload_endpoint(self):
-        """Test content upload endpoint"""
+        """
+Test content upload endpoint"""
         upload_data = {
             "title": "Test Video Content",
             "description": "Test video description",
@@ -164,7 +170,8 @@ class TestCollaborationAPI:
     """Test collaboration API endpoints"""
     
     def test_get_collaboration_matches_endpoint(self):
-        """Test get collaboration matches endpoint"""
+        """
+Test get collaboration matches endpoint"""
         query_params = {
             "content_type": "video",
             "audience_size": "macro",
@@ -244,7 +251,8 @@ class TestFingerprintingAPI:
     
     @pytest.mark.asyncio
     async def test_generate_fingerprint_endpoint(self):
-        """Test generate content fingerprint endpoint"""
+        """
+Test generate content fingerprint endpoint"""
         fingerprint_data = {
             "content_id": "content_789",
             "fingerprint_type": "video",
@@ -297,7 +305,8 @@ class TestContentProtectionAPI:
     """Test content protection API endpoints"""
     
     def test_enable_monitoring_endpoint(self):
-        """Test enable content monitoring endpoint"""
+        """
+Test enable content monitoring endpoint"""
         monitoring_data = {
             "content_id": "content_789",
             "platforms": ["youtube", "instagram", "tiktok"],
@@ -362,7 +371,8 @@ class TestMonetizationAPI:
     """Test monetization API endpoints"""
     
     def test_get_revenue_analytics_endpoint(self):
-        """Test get revenue analytics endpoint"""
+        """
+Test get revenue analytics endpoint"""
         query_params = {
             "period": "monthly",
             "start_date": "2024-01-01",
@@ -438,7 +448,8 @@ class TestAnalyticsAPI:
     """Test analytics API endpoints"""
     
     def test_get_performance_analytics_endpoint(self):
-        """Test get performance analytics endpoint"""
+        """
+Test get performance analytics endpoint"""
         query_params = {
             "content_id": "content_789",
             "platform": "youtube",
@@ -521,7 +532,8 @@ class TestCampaignManagementAPI:
     """Test campaign management API endpoints"""
     
     def test_create_campaign_endpoint(self):
-        """Test create marketing campaign endpoint"""
+        """
+Test create marketing campaign endpoint"""
         campaign_data = {
             "name": "Summer Music Campaign",
             "objective": "engagement",
@@ -579,7 +591,8 @@ class TestErrorHandling:
     """Test API error handling"""
     
     def test_authentication_error_response(self):
-        """Test authentication error responses"""
+        """
+Test authentication error responses"""
         error_response = {
             "status": "error",
             "error": {

@@ -30,6 +30,7 @@ Architecture:
 - Configuration management with encryption
 - Auto-discovery and initialization system
 """
+
 from .base_adapter import (
     BasePlatformAdapter, 
     AdapterStatus, 
@@ -395,7 +396,8 @@ def get_supported_platforms(category: Optional[str] = None) -> Union[Dict[str, L
     return SUPPORTED_PLATFORMS
 
 def get_adapter_factory(category: AdapterCategory) -> Optional[Type]:
-    """Get adapter factory class for a specific category."""
+    """
+Get adapter factory class for a specific category."""
     factories = {
         AdapterCategory.SOCIAL_MEDIA: SocialMediaAdapterFactory,
         AdapterCategory.MUSIC_STREAMING: MusicAdapterFactory,
@@ -406,12 +408,14 @@ def get_adapter_factory(category: AdapterCategory) -> Optional[Type]:
     return factories.get(category)
 
 def validate_platform_support(category: str, platform: str) -> bool:
-    """Validate if a platform is supported in a category."""
+    """
+Validate if a platform is supported in a category."""
     supported = SUPPORTED_PLATFORMS.get(category, [])
     return platform.lower() in supported
 
 def get_adapter_classes_by_category(category: AdapterCategory) -> List[Type[BasePlatformAdapter]]:
-    """Get all adapter classes for a specific category."""
+    """
+Get all adapter classes for a specific category."""
     adapter_classes = {
         AdapterCategory.SOCIAL_MEDIA: [
             InstagramAdapter, YouTubeAdapter, TikTokAdapter,
@@ -473,7 +477,8 @@ def create_adapter_config(
     )
 
 async def initialize_adapter_system(redis_client=None) -> AdapterRegistry:
-    """Initialize the adapter system with default configuration."""
+    """
+Initialize the adapter system with default configuration."""
     registry = get_adapter_registry(redis_client)
     
     logger.info(f"Adapter system initialized")
@@ -505,7 +510,8 @@ class QuickAdapters:
     
     @staticmethod
     async def get_instagram_adapter(credentials: Dict[str, Any]) -> Optional[InstagramAdapter]:
-        """Get Instagram adapter with credentials."""
+        """
+Get Instagram adapter with credentials."""
         adapter_creds = AdapterCredentials(**credentials)
         return await get_social_media_adapter("instagram", adapter_creds)
     

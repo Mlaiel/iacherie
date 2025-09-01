@@ -16,6 +16,7 @@ Enterprise-grade content protection configuration for multi-format creators
 → AI fingerprinting → real-time monitoring → automated takedown → legal compliance.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple
@@ -26,7 +27,9 @@ import json
 import hashlib
 
 class ContentType(Enum):
-    """Supported content types for protection"""
+    """
+Supported content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -69,6 +72,7 @@ class FingerprintAlgorithm(Enum):
 
 class DetectionSensitivity(Enum):
     """Detection sensitivity levels"""
+
     LOW = "low"          # 95%+ similarity required
     MEDIUM = "medium"    # 85%+ similarity required
     HIGH = "high"        # 75%+ similarity required
@@ -76,6 +80,7 @@ class DetectionSensitivity(Enum):
 
 class MonitoringScope(Enum):
     """Content monitoring scope"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -86,6 +91,7 @@ class MonitoringScope(Enum):
 
 class TakedownAction(Enum):
     """Automated takedown actions"""
+
     NOTIFY_ONLY = "notify_only"
     DMCA_REQUEST = "dmca_request"
     PLATFORM_REPORT = "platform_report"
@@ -134,7 +140,8 @@ class FingerprintConfiguration:
 
 @dataclass
 class MonitoringConfiguration:
-    """Real-time content monitoring configuration"""
+    """
+Real-time content monitoring configuration"""
     enabled: bool = True
     monitoring_scope: MonitoringScope = MonitoringScope.GLOBAL
     
@@ -241,7 +248,8 @@ class TakedownConfiguration:
 
 @dataclass
 class ComplianceConfiguration:
-    """Legal compliance configuration"""
+    """
+Legal compliance configuration"""
     # Regional compliance
     gdpr_compliance: bool = True
     ccpa_compliance: bool = True
@@ -268,7 +276,8 @@ class ComplianceConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """Performance and scaling configuration"""
+    """
+Performance and scaling configuration"""
     # Processing performance
     max_concurrent_fingerprints: int = 100
     max_concurrent_scans: int = 50

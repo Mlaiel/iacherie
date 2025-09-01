@@ -5,6 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union
 from datetime import datetime, timedelta
 import asyncio
@@ -558,6 +559,7 @@ logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -565,6 +567,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     PLAGIARISM = "plagiarism"
@@ -586,7 +589,8 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
+    """
+Content violation alert"""
     violation_id: str
     content_id: str
     violation_type: ViolationType
@@ -968,7 +972,8 @@ class ProtectionAgent(BaseAgent):
         return fingerprint
     
     def _detect_content_type(self, content_path: Path) -> str:
-        """Detect content type from file"""
+        """
+Detect content type from file"""
         import mimetypes
         
         mime_type, _ = mimetypes.guess_type(content_path)
@@ -996,7 +1001,8 @@ class ProtectionAgent(BaseAgent):
         return 'unknown'
     
     def _generate_content_id(self, content_path: Path, user_id: str) -> str:
-        """Generate unique content ID"""
+        """
+Generate unique content ID"""
         content_string = f"{user_id}:{content_path.name}:{content_path.stat().st_mtime}"
         return hashlib.sha256(content_string.encode()).hexdigest()[:16]
     
@@ -1031,7 +1037,8 @@ class ProtectionAgent(BaseAgent):
         fingerprint: ContentFingerprint,
         enforcement_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Configure enforcement settings"""
+        """
+Configure enforcement settings"""
         
         config = {
             'enabled': enforcement_options.get('enabled', True),
@@ -1052,7 +1059,8 @@ class ProtectionAgent(BaseAgent):
         platforms: List[str],
         deep_scan: bool = False
     ) -> List[ViolationAlert]:
-        """Scan platforms for content violations"""
+        """
+Scan platforms for content violations"""
         
         violations = []
         
@@ -1204,23 +1212,28 @@ class WebContentCrawler:
     """Web crawler for content monitoring"""
     
     async def initialize(self):
-        """Initialize web crawler"""
+        """
+Initialize web crawler"""
         pass
     
     async def start_monitoring(self):
-        """Start web monitoring process"""
+        """
+Start web monitoring process"""
         pass
 
 
 class PlatformMonitor:
-    """Platform-specific content monitoring"""
+    """
+Platform-specific content monitoring"""
     
     async def initialize(self):
-        """Initialize platform monitors"""
+        """
+Initialize platform monitors"""
         pass
     
     async def start_monitoring(self):
-        """Start platform monitoring"""
+        """
+Start platform monitoring"""
         pass
     
     async def search_similar_content(
@@ -1228,42 +1241,52 @@ class PlatformMonitor:
         fingerprint: ContentFingerprint,
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Search for similar content on platform"""
+        """
+Search for similar content on platform"""
         # Platform-specific search implementation
         return []
 
 
 class ViolationDetector:
-    """AI-powered violation detection"""
+    """
+AI-powered violation detection"""
     
     async def initialize(self):
-        """Initialize violation detection models"""
+        """
+Initialize violation detection models"""
         pass
 
 
 class TakedownManager:
-    """Manages takedown requests and legal enforcement"""
+    """
+Manages takedown requests and legal enforcement"""
     
     async def initialize(self):
-        """Initialize takedown management"""
+        """
+Initialize takedown management"""
         pass
     
     async def generate_takedown_request(self, violation: ViolationAlert) -> Dict[str, Any]:
-        """Generate takedown request"""
+        """
+Generate takedown request"""
         return {'status': 'generated', 'request_id': 'takedown_123'}
     
     async def generate_dmca_notice(self, violation: ViolationAlert) -> Dict[str, Any]:
-        """Generate DMCA notice"""
+        """
+Generate DMCA notice"""
         return {'status': 'generated', 'notice_id': 'dmca_123'}
     
     async def generate_cease_desist(self, violation: ViolationAlert) -> Dict[str, Any]:
-        """Generate cease and desist letter"""
+        """
+Generate cease and desist letter"""
         return {'status': 'generated', 'letter_id': 'cd_123'}
 
 
 class LicenseManager:
-    """Manages content licensing and permissions"""
+    """
+Manages content licensing and permissions"""
     
     async def initialize(self):
-        """Initialize license management"""
+        """
+Initialize license management"""
         pass

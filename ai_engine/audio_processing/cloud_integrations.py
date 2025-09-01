@@ -2,7 +2,7 @@
 Advanced cloud services integration for professional audio processing and distribution.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
 This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
@@ -11,6 +11,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 STRICTLY PROHIBITED and will result in immediate legal action.
 All rights reserved. Patent pending.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
+    """
+Supported cloud providers"""
+
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
@@ -64,6 +67,7 @@ class CloudProvider(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status states"""
+
     PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"
@@ -90,7 +94,8 @@ class CloudCredentials:
 
 @dataclass
 class AudioMetadata:
-    """Audio metadata for distribution"""
+    """
+Audio metadata for distribution"""
     title: str
     artist: str
     album: Optional[str] = None
@@ -120,7 +125,8 @@ class DistributionResult:
 
 
 class CloudStorageManager:
-    """Advanced cloud storage management"""
+    """
+Advanced cloud storage management"""
     
     def __init__(self, credentials: Dict[CloudProvider, CloudCredentials]):
         self.credentials = credentials
@@ -128,7 +134,8 @@ class CloudStorageManager:
         self._initialize_clients()
         
     def _initialize_clients(self):
-        """Initialize cloud service clients"""
+        """
+Initialize cloud service clients"""
         for provider, creds in self.credentials.items():
             try:
                 if provider == CloudProvider.AWS_S3:
@@ -385,7 +392,8 @@ class MusicPlatformDistributor:
         self._initialize_api_clients()
     
     def _initialize_api_clients(self):
-        """Initialize music platform API clients"""
+        """
+Initialize music platform API clients"""
         for provider, creds in self.credentials.items():
             try:
                 if provider == CloudProvider.SPOTIFY:
@@ -411,7 +419,8 @@ class MusicPlatformDistributor:
         }
     
     def _create_soundcloud_client(self, creds: CloudCredentials):
-        """Create SoundCloud API client"""
+        """
+Create SoundCloud API client"""
         return {
             'client_id': creds.api_key,
             'client_secret': creds.secret_key,
@@ -423,7 +432,8 @@ class MusicPlatformDistributor:
                                    platform: CloudProvider,
                                    metadata: AudioMetadata,
                                    additional_options: Optional[Dict[str, Any]] = None) -> DistributionResult:
-        """Distribute audio to specific music platform"""
+        """
+Distribute audio to specific music platform"""
         try:
             start_time = datetime.now()
             
@@ -552,7 +562,8 @@ class MusicPlatformDistributor:
         return requirements.get(platform, {})
     
     def _generate_distribution_guide(self, platform: CloudProvider, metadata: AudioMetadata) -> str:
-        """Generate platform-specific distribution guide"""
+        """
+Generate platform-specific distribution guide"""
         requirements = self._get_platform_requirements(platform)
         
         guide = f"""# {platform.value.replace('_', ' ').title()} Distribution Guide
@@ -586,7 +597,8 @@ Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
 
 class MultiPlatformDistributionManager:
-    """Comprehensive multi-platform distribution management"""
+    """
+Comprehensive multi-platform distribution management"""
     
     def __init__(self, 
                  cloud_credentials: Dict[CloudProvider, CloudCredentials],
@@ -600,7 +612,8 @@ class MultiPlatformDistributionManager:
                                         metadata: AudioMetadata,
                                         target_platforms: List[CloudProvider],
                                         storage_providers: Optional[List[CloudProvider]] = None) -> Dict[CloudProvider, DistributionResult]:
-        """Distribute to multiple platforms simultaneously"""
+        """
+Distribute to multiple platforms simultaneously"""
         results = {}
         
         # First, upload to storage providers
@@ -643,7 +656,8 @@ class MultiPlatformDistributionManager:
     async def retry_failed_distributions(self, 
                                        file_path: Path,
                                        metadata: AudioMetadata) -> Dict[CloudProvider, DistributionResult]:
-        """Retry failed distributions"""
+        """
+Retry failed distributions"""
         failed_providers = [
             result.provider for result in self.distribution_history
             if result.status == DistributionStatus.FAILED
@@ -702,7 +716,8 @@ class MultiPlatformDistributionManager:
 
 # Factory functions for common distribution scenarios
 async def create_music_distributor(config_path: Optional[Path] = None) -> MultiPlatformDistributionManager:
-    """Create a configured music distributor"""
+    """
+Create a configured music distributor"""
     if config_path and config_path.exists():
         with open(config_path, 'r') as f:
             config = json.load(f)
@@ -731,7 +746,8 @@ async def create_music_distributor(config_path: Optional[Path] = None) -> MultiP
 async def quick_upload_to_storage(file_path: Path,
                                  metadata: AudioMetadata,
                                  provider: CloudProvider = CloudProvider.AWS_S3) -> DistributionResult:
-    """Quick upload to a single storage provider"""
+    """
+Quick upload to a single storage provider"""
     # This would need actual credentials configuration
     credentials = {
         provider: CloudCredentials(

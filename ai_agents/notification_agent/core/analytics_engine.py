@@ -29,6 +29,7 @@ Team Specialties & Expertise:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -59,7 +60,9 @@ from ...integrations.business_intelligence import BusinessIntelligenceIntegratio
 
 
 class MetricType(Enum):
-    """Comprehensive metric types for notification analytics"""
+    """
+Comprehensive metric types for notification analytics"""
+
     DELIVERY_RATE = "delivery_rate"
     OPEN_RATE = "open_rate"
     CLICK_RATE = "click_rate"
@@ -74,6 +77,7 @@ class MetricType(Enum):
 
 class AnalyticsTimeframe(Enum):
     """Time frame options for analytics queries"""
+
     REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -85,6 +89,7 @@ class AnalyticsTimeframe(Enum):
 
 class SegmentationType(Enum):
     """User segmentation types for advanced analytics"""
+
     CREATOR_TYPE = "creator_type"  # musician, blogger, photographer, etc.
     ENGAGEMENT_LEVEL = "engagement_level"
     SUBSCRIPTION_TIER = "subscription_tier"
@@ -122,7 +127,8 @@ class MetricResult:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report with business insights"""
+    """
+Comprehensive analytics report with business insights"""
     query_id: str
     generated_at: datetime
     timeframe: AnalyticsTimeframe
@@ -484,22 +490,26 @@ class NotificationAnalyticsEngine:
             return 0.0
     
     async def _calculate_delivery_rate(self, query: AnalyticsQuery) -> float:
-        """Calculate notification delivery rate"""
+        """
+Calculate notification delivery rate"""
         # Implementation would query database for delivery statistics
         # For now, return mock data
         return 0.95
     
     async def _calculate_open_rate(self, query: AnalyticsQuery) -> float:
-        """Calculate notification open rate"""
+        """
+Calculate notification open rate"""
         # Implementation would query database for open statistics
         return 0.68
     
     async def _calculate_click_rate(self, query: AnalyticsQuery) -> float:
-        """Calculate notification click-through rate"""
+        """
+Calculate notification click-through rate"""
         return 0.24
     
     async def _calculate_engagement_score(self, query: AnalyticsQuery) -> float:
-        """Calculate overall engagement score"""
+        """
+Calculate overall engagement score"""
         # Composite score based on multiple factors
         delivery_rate = await self._calculate_delivery_rate(query)
         open_rate = await self._calculate_open_rate(query)
@@ -511,7 +521,8 @@ class NotificationAnalyticsEngine:
     async def _analyze_segments(
         self, query: AnalyticsQuery, base_metrics: List[MetricResult]
     ) -> Dict[str, List[MetricResult]]:
-        """Perform segmentation analysis"""
+        """
+Perform segmentation analysis"""
         segments = {}
         
         if query.user_segments:
@@ -546,7 +557,8 @@ class NotificationAnalyticsEngine:
     async def _generate_recommendations(
         self, insights: Dict[str, Any], query: AnalyticsQuery
     ) -> List[str]:
-        """Generate actionable recommendations"""
+        """
+Generate actionable recommendations"""
         recommendations = []
         
         # Performance-based recommendations
@@ -646,14 +658,16 @@ class NotificationAnalyticsEngine:
         }
     
     def _calculate_rate(self, events: List[Dict], numerator_event: str, denominator_event: str) -> float:
-        """Calculate rate between two event types"""
+        """
+Calculate rate between two event types"""
         numerator = len([e for e in events if e['event_type'] == numerator_event])
         denominator = len([e for e in events if e['event_type'] == denominator_event])
         
         return numerator / denominator if denominator > 0 else 0.0
     
     async def _add_realtime_event(self, event_data: Dict[str, Any]):
-        """Add event to real-time processing queue"""
+        """
+Add event to real-time processing queue"""
         timestamp = event_data['timestamp']
         
         # Add to relevant metric queues
@@ -673,7 +687,8 @@ class NotificationAnalyticsEngine:
                 ]
     
     def _event_affects_metric(self, event_data: Dict, metric_type: MetricType) -> bool:
-        """Check if event affects specific metric type"""
+        """
+Check if event affects specific metric type"""
         event_type = event_data['event_type']
         
         if metric_type == MetricType.DELIVERY_RATE:
@@ -688,7 +703,8 @@ class NotificationAnalyticsEngine:
     def _extract_metric_value_from_event(
         self, event_data: Dict, metric_type: MetricType
     ) -> float:
-        """Extract metric contribution from event"""
+        """
+Extract metric contribution from event"""
         event_type = event_data['event_type']
         
         # Simplified metric value extraction

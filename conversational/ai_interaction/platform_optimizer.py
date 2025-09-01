@@ -5,8 +5,9 @@ Advanced platform optimization system for content creators.
 Provides platform-specific strategies, optimization recommendations, and cross-platform insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms"""
+    """
+Supported platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -43,6 +46,7 @@ class Platform(Enum):
 
 class OptimizationType(Enum):
     """Types of platform optimizations"""
+
     CONTENT_FORMAT = "content_format"
     POSTING_SCHEDULE = "posting_schedule"
     HASHTAG_STRATEGY = "hashtag_strategy"
@@ -57,6 +61,7 @@ class OptimizationType(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     SHORT_VIDEO = "short_video"
     LONG_VIDEO = "long_video"
     LIVE_STREAM = "live_stream"
@@ -87,7 +92,8 @@ class PlatformMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Platform optimization recommendation"""
+    """
+Platform optimization recommendation"""
     recommendation_id: str
     platform: Platform
     optimization_type: OptimizationType
@@ -105,7 +111,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform optimization strategy"""
+    """
+Cross-platform optimization strategy"""
     strategy_id: str
     primary_platforms: List[Platform]
     content_adaptation_plan: Dict[Platform, Dict[str, Any]]
@@ -133,7 +140,8 @@ class PlatformOptimizer:
         self._algorithm_insights = {}
         
     async def initialize(self) -> None:
-        """Initialize the platform optimizer"""
+        """
+Initialize the platform optimizer"""
         try:
             await self.ai_models.load_optimization_models()
             await self.platform_analytics.initialize()

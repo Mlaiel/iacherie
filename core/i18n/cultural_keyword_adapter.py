@@ -8,7 +8,7 @@ Technologies: Python, Cultural AI, SEO Analysis, Regional Marketing
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Keyword analysis → Cultural context detection → Regional preferences → 
 Local terminology mapping → Cultural sensitivity check → Adapted keywords
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class KeywordAdaptationType(Enum):
-    """Types of keyword adaptations"""
+    """
+Types of keyword adaptations"""
+
     CULTURAL_TRANSLATION = "cultural_translation"
     LOCAL_TERMINOLOGY = "local_terminology"
     CULTURAL_SENSITIVITY = "cultural_sensitivity"
@@ -59,7 +62,8 @@ class CulturalKeywordResult:
 
 @dataclass
 class RegionalKeywordPreferences:
-    """Regional keyword preferences and patterns"""
+    """
+Regional keyword preferences and patterns"""
     region: str
     preferred_terms: Dict[str, List[str]]
     avoided_terms: List[str]
@@ -71,7 +75,8 @@ class RegionalKeywordPreferences:
 
 
 class CulturalKeywordAdapter:
-    """Advanced cultural keyword adaptation engine"""
+    """
+Advanced cultural keyword adaptation engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -226,7 +231,8 @@ class CulturalKeywordAdapter:
     async def _analyze_keyword_cultural_context(
         self, keyword: str, target_culture: str
     ) -> Dict[str, Any]:
-        """Analyze keyword for cultural context"""
+        """
+Analyze keyword for cultural context"""
         
         analysis = {
             'adaptation_type': KeywordAdaptationType.CULTURAL_TRANSLATION,
@@ -315,7 +321,8 @@ class CulturalKeywordAdapter:
         return variants
 
     async def _generate_amazigh_variants(self, keyword: str) -> List[str]:
-        """Generate Amazigh/Berber variants"""
+        """
+Generate Amazigh/Berber variants"""
         
         if "AMAZIGH" in self.cultural_mappings:
             mapping = self.cultural_mappings["AMAZIGH"]
@@ -383,7 +390,8 @@ class CulturalKeywordAdapter:
     async def _estimate_regional_popularity(
         self, keywords: List[str], region: str
     ) -> Dict[str, float]:
-        """Estimate regional popularity scores"""
+        """
+Estimate regional popularity scores"""
         
         popularity = {}
         

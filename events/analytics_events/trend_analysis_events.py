@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import numpy as np
@@ -46,7 +47,9 @@ logger = get_logger(__name__)
 
 
 class TrendType(Enum):
-    """Types of trends to analyze"""
+    """
+Types of trends to analyze"""
+
     HASHTAG = "hashtag"
     CONTENT_FORMAT = "content_format"
     MUSIC_GENRE = "music_genre"
@@ -63,6 +66,7 @@ class TrendType(Enum):
 
 class TrendStage(Enum):
     """Stages of trend lifecycle"""
+
     EMERGING = "emerging"
     GROWING = "growing"
     PEAK = "peak"
@@ -75,6 +79,7 @@ class TrendStage(Enum):
 
 class TrendScope(Enum):
     """Scope of trend influence"""
+
     NICHE = "niche"
     COMMUNITY = "community"
     PLATFORM = "platform"
@@ -87,6 +92,7 @@ class TrendScope(Enum):
 
 class TrendSource(Enum):
     """Sources of trend data"""
+
     PLATFORM_ANALYTICS = "platform_analytics"
     SOCIAL_LISTENING = "social_listening"
     SEARCH_TRENDS = "search_trends"
@@ -116,7 +122,8 @@ class TrendAnalysisEvent(BaseEvent):
     prediction_data: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert trend analysis event to dictionary"""
+        """
+Convert trend analysis event to dictionary"""
         return {
             **asdict(self),
             'trend_type': self.trend_type.value,
@@ -126,7 +133,8 @@ class TrendAnalysisEvent(BaseEvent):
 
 @dataclass
 class TrendInsight:
-    """Represents a trend insight"""
+    """
+Represents a trend insight"""
     insight_id: str
     creator_id: str
     trend_identifier: str
@@ -145,7 +153,8 @@ class TrendInsight:
 
 @dataclass
 class ViralContentPrediction:
-    """Prediction for viral content potential"""
+    """
+Prediction for viral content potential"""
     content_id: str
     creator_id: str
     viral_probability: float
@@ -160,7 +169,8 @@ class ViralContentPrediction:
 
 
 class TrendAnalysisEventHandler(BaseEventHandler):
-    """Handles trend analysis events with comprehensive processing"""
+    """
+Handles trend analysis events with comprehensive processing"""
     
     def __init__(self):
         super().__init__()
@@ -172,7 +182,8 @@ class TrendAnalysisEventHandler(BaseEventHandler):
         self.recommendation_engine = TrendRecommendationEngine()
         
     async def handle(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Process trend analysis event with comprehensive insights"""
+        """
+Process trend analysis event with comprehensive insights"""
         try:
             # Validate event data
             await self._validate_event(event)
@@ -255,7 +266,8 @@ class TrendAnalysisEventHandler(BaseEventHandler):
             )
     
     async def _calculate_trend_opportunities(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Calculate opportunities based on trend analysis"""
+        """
+Calculate opportunities based on trend analysis"""
         trend_metrics = event.trend_metrics
         
         # Calculate momentum score
@@ -289,7 +301,8 @@ class TrendAnalysisEventHandler(BaseEventHandler):
         }
     
     def _calculate_momentum_score(self, trend_metrics: Dict[str, float]) -> float:
-        """Calculate trend momentum score"""
+        """
+Calculate trend momentum score"""
         growth_rate = trend_metrics.get('growth_rate', 0)
         engagement_velocity = trend_metrics.get('engagement_velocity', 0)
         mention_frequency = trend_metrics.get('mention_frequency', 0)
@@ -312,7 +325,8 @@ class TrendAnalysisEventHandler(BaseEventHandler):
 
 
 class TrendDetectionEngine:
-    """Detects and analyzes emerging trends"""
+    """
+Detects and analyzes emerging trends"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -321,7 +335,8 @@ class TrendDetectionEngine:
         self.scaler = StandardScaler()
         
     async def analyze_trends(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Comprehensive trend analysis"""
+        """
+Comprehensive trend analysis"""
         # Detect trend lifecycle stage
         lifecycle_stage = await self._detect_lifecycle_stage(event)
         
@@ -351,7 +366,8 @@ class TrendDetectionEngine:
         }
     
     async def _detect_lifecycle_stage(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Detect what stage the trend is in its lifecycle"""
+        """
+Detect what stage the trend is in its lifecycle"""
         trend_metrics = event.trend_metrics
         
         # Get historical data for the trend
@@ -396,7 +412,8 @@ class TrendDetectionEngine:
         }
     
     async def _analyze_trend_velocity(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Analyze trend velocity and acceleration"""
+        """
+Analyze trend velocity and acceleration"""
         historical_data = await self._get_historical_trend_data(event.trend_identifier)
         
         if len(historical_data) < 3:
@@ -434,14 +451,16 @@ class TrendDetectionEngine:
 
 
 class TrendPredictionEngine:
-    """Predicts future trend patterns and opportunities"""
+    """
+Predicts future trend patterns and opportunities"""
     
     def __init__(self):
         self.trend_predictor = TrendPredictor()
         self.db_manager = DatabaseManager()
         
     async def predict_trends(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Generate comprehensive trend predictions"""
+        """
+Generate comprehensive trend predictions"""
         # Short-term predictions (next 7 days)
         short_term = await self._predict_short_term_trends(event)
         
@@ -471,7 +490,8 @@ class TrendPredictionEngine:
         }
     
     async def _predict_viral_potential(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Predict viral content potential"""
+        """
+Predict viral content potential"""
         trend_metrics = event.trend_metrics
         content_examples = event.content_examples
         
@@ -501,13 +521,15 @@ class TrendPredictionEngine:
 
 
 class TrendVisualizationEngine:
-    """Creates visualizations for trend data"""
+    """
+Creates visualizations for trend data"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
         
     async def create_visualizations(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
-        """Create comprehensive trend visualizations"""
+        """
+Create comprehensive trend visualizations"""
         # Timeline visualization
         timeline_viz = await self._create_timeline_visualization(event)
         
@@ -538,13 +560,15 @@ class TrendVisualizationEngine:
 
 
 class TrendRecommendationEngine:
-    """Generates actionable trend recommendations"""
+    """
+Generates actionable trend recommendations"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
         
     async def generate_recommendations(self, event: TrendAnalysisEvent) -> List[Dict[str, Any]]:
-        """Generate comprehensive trend-based recommendations"""
+        """
+Generate comprehensive trend-based recommendations"""
         recommendations = []
         
         # Content strategy recommendations
@@ -577,7 +601,8 @@ class TrendRecommendationEngine:
         return recommendations[:10]  # Return top 10 recommendations
     
     async def _generate_content_recommendations(self, event: TrendAnalysisEvent) -> List[Dict[str, Any]]:
-        """Generate content strategy recommendations based on trends"""
+        """
+Generate content strategy recommendations based on trends"""
         recommendations = []
         
         trend_data = event.trend_data

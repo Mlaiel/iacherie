@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -34,7 +35,9 @@ settings = get_settings()
 
 
 class ContentType(Enum):
-    """Types of content for valuation."""
+    """
+Types of content for valuation."""
+
     AUDIO_TRACK = "audio_track"
     VIDEO_CONTENT = "video_content"
     PHOTO_IMAGE = "photo_image"
@@ -49,6 +52,7 @@ class ContentType(Enum):
 
 class UsageScope(Enum):
     """Scope of content usage for pricing."""
+
     PERSONAL = "personal"
     COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
@@ -59,6 +63,7 @@ class UsageScope(Enum):
 
 class ValuationMethod(Enum):
     """Methods for content valuation."""
+
     MARKET_COMPARABLE = "market_comparable"
     COST_PLUS = "cost_plus"
     VALUE_BASED = "value_based"
@@ -86,7 +91,8 @@ class ContentMetadata:
 
 @dataclass
 class MarketComparable:
-    """Market comparable for valuation."""
+    """
+Market comparable for valuation."""
     comparable_id: str
     content_type: ContentType
     sale_price: Decimal
@@ -99,7 +105,8 @@ class MarketComparable:
 
 @dataclass
 class ValuationResult:
-    """Content valuation result."""
+    """
+Content valuation result."""
     valuation_id: str
     content_id: str
     base_value: Decimal
@@ -123,7 +130,8 @@ class ContentValuator:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the content valuator."""
+        """
+Initialize the content valuator."""
         self.config = config or MonetizationConfig()
         self._valuation_engine = ContentValuationEngine()
         self._market_data_service = MarketDataService()
@@ -131,7 +139,8 @@ class ContentValuator:
         self._valuation_models = {}
         
     async def initialize(self) -> None:
-        """Initialize the content valuator."""
+        """
+Initialize the content valuator."""
         try:
             await self._valuation_engine.initialize()
             await self._market_data_service.initialize()
@@ -465,31 +474,36 @@ class ContentValuator:
     async def _prepare_valuation_data(
         self, metadata: ContentMetadata, usage_scope: UsageScope
     ) -> Dict[str, Any]:
-        """Prepare data for valuation."""
+        """
+Prepare data for valuation."""
         # Implementation for data preparation
         pass
     
     async def _market_comparable_valuation(
         self, metadata: ContentMetadata, usage_scope: UsageScope, data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform market comparable valuation."""
+        """
+Perform market comparable valuation."""
         # Implementation for market comparable method
         pass
     
     async def _ai_predicted_valuation(
         self, metadata: ContentMetadata, usage_scope: UsageScope, data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform AI-predicted valuation."""
+        """
+Perform AI-predicted valuation."""
         # Implementation for AI prediction method
         pass
     
     async def _hybrid_valuation(
         self, metadata: ContentMetadata, usage_scope: UsageScope, data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform hybrid valuation using multiple methods."""
+        """
+Perform hybrid valuation using multiple methods."""
         # Implementation for hybrid method
         pass
     
     def _generate_valuation_id(self) -> str:
-        """Generate unique valuation ID."""
+        """
+Generate unique valuation ID."""
         return f"VAL_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(datetime.now().isoformat())}"

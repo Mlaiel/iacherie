@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import shutil
@@ -25,7 +26,9 @@ from ...core.exceptions import RecoveryError
 
 
 class RecoveryType(Enum):
-    """Recovery type enumeration."""
+    """
+Recovery type enumeration."""
+
     FULL_RESTORE = "full_restore"
     PARTIAL_RESTORE = "partial_restore"
     POINT_IN_TIME = "point_in_time"
@@ -35,6 +38,7 @@ class RecoveryType(Enum):
 
 class RecoveryStatus(Enum):
     """Recovery status enumeration."""
+
     PENDING = "pending"
     PREPARING = "preparing"
     RESTORING = "restoring"
@@ -64,7 +68,8 @@ class RecoveryPlan:
 
 @dataclass
 class RecoveryOperation:
-    """Recovery operation tracking."""
+    """
+Recovery operation tracking."""
     recovery_id: str
     plan: RecoveryPlan
     status: RecoveryStatus
@@ -792,7 +797,8 @@ class RecoveryManager:
         return 3600  # 1 hour default
 
     async def _analyze_dependencies(self, components: List[str]) -> List[str]:
-        """Analyze component dependencies."""
+        """
+Analyze component dependencies."""
         dependencies = []
         
         if "content" in components:
@@ -837,7 +843,8 @@ class RecoveryManager:
         return total
 
     async def _estimate_completion_time(self, operation: RecoveryOperation) -> Optional[str]:
-        """Estimate completion time for active recovery."""
+        """
+Estimate completion time for active recovery."""
         if operation.progress_percent <= 0:
             return None
         
@@ -849,7 +856,8 @@ class RecoveryManager:
         return completion_time.isoformat()
 
     async def _calculate_required_space(self, plan: RecoveryPlan) -> int:
-        """Calculate required storage space for recovery."""
+        """
+Calculate required storage space for recovery."""
         total_size = 0
         
         for backup_id in plan.target_backups:
@@ -881,12 +889,14 @@ class RecoveryManager:
         return True
 
     async def _check_dependencies(self, plan: RecoveryPlan) -> bool:
-        """Check if all dependencies are met."""
+        """
+Check if all dependencies are met."""
         # Implementation would check specific dependencies
         return True
 
     async def _check_conflicts(self, plan: RecoveryPlan) -> List[str]:
-        """Check for conflicts with current system state."""
+        """
+Check for conflicts with current system state."""
         conflicts = []
         
         # Check for active processes that might conflict
@@ -896,12 +906,14 @@ class RecoveryManager:
         return conflicts
 
     async def _execute_step(self, step: str, operation: RecoveryOperation) -> bool:
-        """Execute a specific recovery step."""
+        """
+Execute a specific recovery step."""
         # Implementation would execute specific recovery steps
         return True
 
     async def _capture_current_state(self, components: List[str]) -> Dict[str, Any]:
-        """Capture current system state for rollback."""
+        """
+Capture current system state for rollback."""
         state = {}
         
         for component in components:
@@ -911,7 +923,8 @@ class RecoveryManager:
         return state
 
     async def _get_component_state(self, component: str) -> Dict[str, Any]:
-        """Get current state of a component."""
+        """
+Get current state of a component."""
         # Implementation would capture component state
         return {}
 
@@ -921,21 +934,25 @@ class RecoveryManager:
         component_data: Dict[str, Any], 
         restore_path: Optional[str]
     ) -> bool:
-        """Restore a specific component."""
+        """
+Restore a specific component."""
         # Implementation would restore component data
         return True
 
     async def _count_files_in_component(self, component_data: Dict[str, Any]) -> int:
-        """Count files in component data."""
+        """
+Count files in component data."""
         # Implementation would count files
         return 1
 
     async def _verify_component(self, component: str, restore_path: Optional[str]) -> bool:
-        """Verify component integrity after restoration."""
+        """
+Verify component integrity after restoration."""
         # Implementation would verify component
         return True
 
     async def _restore_component_state(self, component: str, state_data: Dict[str, Any]) -> None:
-        """Restore component to previous state."""
+        """
+Restore component to previous state."""
         # Implementation would restore component state
         pass

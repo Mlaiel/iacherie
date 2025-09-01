@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionPlatform(Enum):
-    """Plateformes de distribution supportées"""
+    """
+Plateformes de distribution supportées"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -66,6 +69,7 @@ class DistributionPlatform(Enum):
 
 class ContentType(Enum):
     """Types de contenu distribués"""
+
     SINGLE = "single"
     ALBUM = "album"
     EP = "ep"
@@ -80,6 +84,7 @@ class ContentType(Enum):
 
 class DistributionStatus(Enum):
     """États de distribution"""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -95,6 +100,7 @@ class DistributionStatus(Enum):
 
 class OptimizationStrategy(Enum):
     """Stratégies d'optimisation de distribution"""
+
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
@@ -121,7 +127,8 @@ class DistributionConfig:
 
 @dataclass
 class DistributionJob:
-    """Job de distribution multi-plateformes"""
+    """
+Job de distribution multi-plateformes"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     content_id: str = None
@@ -197,7 +204,8 @@ class MultiPlatformDistributionManager:
         self.optimization_models = self._init_optimization_models()
         
     def _init_platform_apis(self) -> Dict[str, Any]:
-        """Initialise les APIs des plateformes de distribution"""
+        """
+Initialise les APIs des plateformes de distribution"""
         return {
             "spotify": {
                 "api_url": "https://api.spotify.com/v1/",
@@ -354,7 +362,8 @@ class MultiPlatformDistributionManager:
         return templates
 
     def _init_optimization_models(self) -> Dict[str, Any]:
-        """Initialise les modèles d'optimisation IA"""
+        """
+Initialise les modèles d'optimisation IA"""
         return {
             "timing_optimizer": None,  # Modèle ML pour timing optimal
             "audience_matcher": None,  # Modèle pour matching audience
@@ -711,7 +720,8 @@ class MultiPlatformDistributionManager:
         job: DistributionJob,
         platform_config: DistributionConfig
     ) -> PlatformPublication:
-        """Crée et lance une publication sur une plateforme spécifique"""
+        """
+Crée et lance une publication sur une plateforme spécifique"""
         publication = PlatformPublication(
             distribution_job_id=job.id,
             platform=platform_config.platform,

@@ -7,6 +7,7 @@ Handles posts, stories, insights, and business account management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramMedia:
-    """Instagram media information"""
+    """
+Instagram media information"""
     media_id: str
     media_type: str  # "IMAGE", "VIDEO", "CAROUSEL_ALBUM"
     caption: str
@@ -89,7 +91,8 @@ class InstagramBusinessAPI:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
@@ -103,7 +106,8 @@ class InstagramBusinessAPI:
         data: Optional[Dict[str, Any]] = None,
         base_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
+        """
+Make authenticated API request with rate limiting"""
         
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("instagram", endpoint)

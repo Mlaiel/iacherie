@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -58,7 +59,9 @@ from ..quality_agent import QualityScore, QualityLevel, ContentType
 logger = logging.getLogger(__name__)
 
 class EnhancementType(Enum):
-    """Types of content enhancement"""
+    """
+Types of content enhancement"""
+
     AUDIO_QUALITY = "audio_quality"
     VIDEO_QUALITY = "video_quality"
     IMAGE_QUALITY = "image_quality"
@@ -72,6 +75,7 @@ class EnhancementType(Enum):
 
 class EnhancementPriority(Enum):
     """Enhancement priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -92,7 +96,8 @@ class EnhancementOptions:
 
 @dataclass
 class EnhancementOperation:
-    """Individual enhancement operation"""
+    """
+Individual enhancement operation"""
     operation_id: str
     operation_type: str
     description: str
@@ -104,7 +109,8 @@ class EnhancementOperation:
 
 @dataclass
 class EnhancementPlan:
-    """Comprehensive enhancement execution plan"""
+    """
+Comprehensive enhancement execution plan"""
     plan_id: str
     content_id: str
     content_type: ContentType
@@ -118,7 +124,8 @@ class EnhancementPlan:
 
 @dataclass
 class EnhancementExecutionResult:
-    """Results of enhancement execution"""
+    """
+Results of enhancement execution"""
     plan_id: str
     content_id: str
     success: bool
@@ -693,7 +700,8 @@ class QualityEnhancer:
         operation: EnhancementOperation,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Execute individual enhancement operation"""
+        """
+Execute individual enhancement operation"""
         
         try:
             if operation.operation_type == "audio_enhancement":
@@ -992,7 +1000,8 @@ class ImprovementEngine:
         quality_score: QualityScore,
         target_quality: QualityLevel = QualityLevel.EXCELLENT
     ) -> List[Dict[str, Any]]:
-        """Generate intelligent improvement suggestions"""
+        """
+Generate intelligent improvement suggestions"""
         
         try:
             suggestions = []

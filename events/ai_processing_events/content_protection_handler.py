@@ -8,8 +8,9 @@ Content Enhancement → Protection & Fingerprinting → Rights Validation →
 SEO Optimization → Collaboration → Distribution
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import hashlib
@@ -45,7 +46,9 @@ from ...protection.rights_validator import RightsValidator
 logger = logging.getLogger(__name__)
 
 class ProtectionType(Enum):
-    """Content protection types"""
+    """
+Content protection types"""
+
     FINGERPRINTING = "fingerprinting"
     COPYRIGHT_REGISTRATION = "copyright_registration"
     WATERMARKING = "watermarking"
@@ -56,6 +59,7 @@ class ProtectionType(Enum):
 
 class FingerprintAlgorithm(Enum):
     """Fingerprinting algorithm types"""
+
     CHROMAPRINT = "chromaprint"  # Audio
     PERCEPTUAL_HASH = "perceptual_hash"  # Image
     VIDEO_HASH = "video_hash"  # Video
@@ -64,6 +68,7 @@ class FingerprintAlgorithm(Enum):
 
 class ProtectionLevel(Enum):
     """Protection security levels"""
+
     BASIC = "basic"
     STANDARD = "standard" 
     PROFESSIONAL = "professional"
@@ -83,7 +88,8 @@ class ProtectionConfiguration:
     notification_preferences: Dict[str, bool]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         return {
             'protection_type': self.protection_type.value,
             'protection_level': self.protection_level.value,
@@ -97,7 +103,8 @@ class ProtectionConfiguration:
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
+    """
+Content fingerprint data structure"""
     fingerprint_id: str
     content_id: str
     algorithm: FingerprintAlgorithm
@@ -108,7 +115,8 @@ class ContentFingerprint:
     confidence_score: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert fingerprint to dictionary"""
+        """
+Convert fingerprint to dictionary"""
         return {
             'fingerprint_id': self.fingerprint_id,
             'content_id': self.content_id,
@@ -122,7 +130,8 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionMetrics:
-    """Metrics for protection processing"""
+    """
+Metrics for protection processing"""
     processing_time: float
     fingerprint_generation_time: float
     protection_strength: float
@@ -132,7 +141,8 @@ class ProtectionMetrics:
     timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
+        """
+Convert metrics to dictionary"""
         return {
             'processing_time': self.processing_time,
             'fingerprint_generation_time': self.fingerprint_generation_time,
@@ -145,7 +155,8 @@ class ProtectionMetrics:
 
 @dataclass
 class ProtectionResult:
-    """Comprehensive protection processing results"""
+    """
+Comprehensive protection processing results"""
     content_id: str
     protection_id: str
     protection_type: ProtectionType
@@ -159,7 +170,8 @@ class ProtectionResult:
     compliance_status: Dict[str, Any]
     
     def get_protection_summary(self) -> Dict[str, Any]:
-        """Get summary of protection measures applied"""
+        """
+Get summary of protection measures applied"""
         return {
             'protection_id': self.protection_id,
             'protection_strength': self.protection_metrics.protection_strength,
@@ -171,7 +183,8 @@ class ProtectionResult:
         }
     
     def calculate_protection_score(self) -> float:
-        """Calculate overall protection effectiveness score"""
+        """
+Calculate overall protection effectiveness score"""
         fingerprint_score = self.fingerprint.confidence_score * 0.3
         security_score = self.protection_metrics.security_score * 0.25
         compliance_score = self.protection_metrics.compliance_score * 0.25
@@ -224,7 +237,8 @@ class ContentProtectionHandler(BaseEventHandler):
         }
     
     def _initialize_protection_algorithms(self):
-        """Initialize protection and fingerprinting algorithms"""
+        """
+Initialize protection and fingerprinting algorithms"""
         try:
             # Initialize text vectorizer for text fingerprinting
             self.text_vectorizer = TfidfVectorizer(
@@ -532,7 +546,8 @@ class ContentProtectionHandler(BaseEventHandler):
         content_type: str, 
         algorithm: FingerprintAlgorithm
     ) -> ContentFingerprint:
-        """Generate content fingerprint using specified algorithm"""
+        """
+Generate content fingerprint using specified algorithm"""
         
         start_time = datetime.now()
         
@@ -831,7 +846,8 @@ class ContentProtectionHandler(BaseEventHandler):
         config: ProtectionConfiguration,
         fingerprint: ContentFingerprint
     ) -> Dict[str, Any]:
-        """Apply comprehensive protection measures"""
+        """
+Apply comprehensive protection measures"""
         
         protection_measures = {}
         
@@ -871,7 +887,8 @@ class ContentProtectionHandler(BaseEventHandler):
         content_type: str, 
         fingerprint: ContentFingerprint
     ) -> Dict[str, Any]:
-        """Apply digital watermarking to content"""
+        """
+Apply digital watermarking to content"""
         try:
             # Create watermark payload
             watermark_data = {
@@ -921,7 +938,8 @@ class ContentProtectionHandler(BaseEventHandler):
             return {'applied': False, 'error': str(e)}
     
     async def _apply_audio_watermark(self, content_path: str, watermark_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply inaudible watermark to audio"""
+        """
+Apply inaudible watermark to audio"""
         try:
             # Simplified audio watermarking - in production, use spread spectrum or echo hiding
             audio_data, sample_rate = librosa.load(content_path, sr=None)
@@ -936,7 +954,8 @@ class ContentProtectionHandler(BaseEventHandler):
             return {'applied': False, 'error': str(e)}
     
     async def _apply_video_watermark(self, content_path: str, watermark_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply invisible watermark to video"""
+        """
+Apply invisible watermark to video"""
         try:
             # Simplified video watermarking - in production, use frame-based steganography
             return {
@@ -949,7 +968,8 @@ class ContentProtectionHandler(BaseEventHandler):
             return {'applied': False, 'error': str(e)}
     
     def _generate_creator_signature(self, fingerprint: ContentFingerprint) -> str:
-        """Generate cryptographic signature for creator verification"""
+        """
+Generate cryptographic signature for creator verification"""
         try:
             # Create signature data
             signature_data = f"{fingerprint.content_id}:{fingerprint.fingerprint_hash}:{fingerprint.creation_timestamp.isoformat()}"
@@ -1029,7 +1049,7 @@ class ContentProtectionHandler(BaseEventHandler):
         """Create legal documentation for content protection"""
         try:
             legal_docs = {
-                'copyright_notice': f"© {datetime.now().year} Content protected by IA Influencer Agent",
+                'copyright_notice': f"(c) {datetime.now().year} Content protected by IA Influencer Agent",
                 'fingerprint_certificate': {
                     'fingerprint_id': fingerprint.fingerprint_id,
                     'algorithm': fingerprint.algorithm.value,
@@ -1138,7 +1158,8 @@ class ContentProtectionHandler(BaseEventHandler):
         return min(1.0, total_strength)
     
     def _calculate_security_score(self, protection_measures: Dict[str, Any]) -> float:
-        """Calculate security score based on protection measures"""
+        """
+Calculate security score based on protection measures"""
         base_security = 0.7  # Base security from fingerprinting
         
         # Add security from watermarking
@@ -1159,12 +1180,14 @@ class ContentProtectionHandler(BaseEventHandler):
         return min(1.0, base_security)
     
     def _calculate_compliance_score(self, protection_measures: Dict[str, Any]) -> float:
-        """Calculate compliance score"""
+        """
+Calculate compliance score"""
         compliance_status = protection_measures.get('compliance_status', {})
         return compliance_status.get('compliance_score', 0.8)
     
     def _calculate_monitoring_coverage(self, protection_measures: Dict[str, Any]) -> float:
-        """Calculate monitoring coverage score"""
+        """
+Calculate monitoring coverage score"""
         monitoring_info = protection_measures.get('monitoring_setup', {})
         
         if not monitoring_info.get('monitoring_enabled'):
@@ -1188,7 +1211,8 @@ class ContentProtectionHandler(BaseEventHandler):
         protection_measures: Dict[str, Any], 
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze business impact of protection measures"""
+        """
+Analyze business impact of protection measures"""
         try:
             protection_strength = self._calculate_protection_strength(protection_measures)
             

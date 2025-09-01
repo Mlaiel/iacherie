@@ -20,7 +20,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
 async def demo_ultra_advanced_seo():
-    """Demonstration des fonctionnalités SEO ultra-avancées"""
+    """
+Demonstration des fonctionnalités SEO ultra-avancées"""
     
     print("🔍 DEMO: Ultra-Advanced SEO Techniques")
     print("=" * 50)

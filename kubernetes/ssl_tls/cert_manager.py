@@ -13,6 +13,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import os
 import ssl
 import hashlib
@@ -35,7 +36,9 @@ import requests
 
 
 class CertificateType(Enum):
-    """Certificate type enumeration"""
+    """
+Certificate type enumeration"""
+
     DOMAIN_VALIDATION = "DV"
     ORGANIZATION_VALIDATION = "OV"
     EXTENDED_VALIDATION = "EV"
@@ -45,6 +48,7 @@ class CertificateType(Enum):
 
 class CertificateStatus(Enum):
     """Certificate status enumeration"""
+
     VALID = "valid"
     EXPIRED = "expired"
     EXPIRING_SOON = "expiring_soon"
@@ -72,7 +76,8 @@ class CertificateInfo:
 
 
 class CertificateValidationError(Exception):
-    """Certificate validation exception"""
+    """
+Certificate validation exception"""
     pass
 
 
@@ -449,7 +454,8 @@ class CertificateManager:
             return CertificateType.DOMAIN_VALIDATION
     
     def _extract_validation_urls(self, certificate: x509.Certificate) -> Tuple[Optional[str], Optional[str]]:
-        """Extract OCSP and CRL URLs from certificate"""
+        """
+Extract OCSP and CRL URLs from certificate"""
         ocsp_url = None
         crl_url = None
         

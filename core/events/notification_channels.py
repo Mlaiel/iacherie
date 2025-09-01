@@ -4,12 +4,13 @@ Architecture: Multi-Channel Notification Delivery
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
     Système de canaux de notification multi-plateformes pour la distribution
     temps réel des notifications dans la plateforme IA-Influencer-Agent.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChannelType(Enum):
-    """Types de canaux de notification"""
+    """
+Types de canaux de notification"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -48,6 +51,7 @@ class ChannelType(Enum):
 
 class NotificationPriority(Enum):
     """Priorité des notifications"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -56,6 +60,7 @@ class NotificationPriority(Enum):
 
 class DeliveryStatus(Enum):
     """Statut de livraison"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -148,11 +153,13 @@ class NotificationChannel(ABC):
     
     @abstractmethod
     async def validate_config(self) -> bool:
-        """Valide la configuration du canal"""
+        """
+Valide la configuration du canal"""
         pass
     
     def can_send(self) -> bool:
-        """Vérifie si le canal peut envoyer (rate limiting)"""
+        """
+Vérifie si le canal peut envoyer (rate limiting)"""
         if not self.enabled:
             return False
         
@@ -166,11 +173,13 @@ class NotificationChannel(ABC):
         return self.rate_counter < self.rate_limit
     
     def _increment_counter(self):
-        """Incrémente le compteur de rate limiting"""
+        """
+Incrémente le compteur de rate limiting"""
         self.rate_counter += 1
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du canal"""
+        """
+Retourne les statistiques du canal"""
         return {
             "channel_id": self.channel_id,
             "channel_type": self.channel_type.value,
@@ -382,12 +391,14 @@ class WebSocketChannel(NotificationChannel):
             connections.discard(connection_id)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration WebSocket"""
+        """
+Valide la configuration WebSocket"""
         # Vérification basique de la configuration
         return isinstance(self.port, int) and 1 <= self.port <= 65535
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie une notification WebSocket"""
+        """
+Envoie une notification WebSocket"""
         if not self.can_send():
             return False
         

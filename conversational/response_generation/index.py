@@ -241,7 +241,8 @@ class ResponseGenerationAPI:
     """
     
     def __init__(self, config: ResponseGenerationConfig = None):
-        """Initialize the response generation API"""
+        """
+Initialize the response generation API"""
         if config is None:
             config = ResponseGenerationConfig()
         
@@ -636,7 +637,8 @@ class ResponseGenerationSystem:
     """
     
     def __init__(self, db_session, cache_manager):
-        """Initialize the unified response generation system"""
+        """
+Initialize the unified response generation system"""
         self.db_session = db_session
         self.cache_manager = cache_manager
         
@@ -708,7 +710,8 @@ class ResponseGenerationSystem:
         request: ResponseRequest, 
         context: dict
     ) -> GeneratedResponse:
-        """Generate revenue optimization focused response"""
+        """
+Generate revenue optimization focused response"""
         # Implementation details...
         pass
     
@@ -717,7 +720,8 @@ class ResponseGenerationSystem:
         request: ResponseRequest, 
         context: dict
     ) -> GeneratedResponse:
-        """Generate content protection focused response"""
+        """
+Generate content protection focused response"""
         # Implementation details...
         pass
     
@@ -726,7 +730,8 @@ class ResponseGenerationSystem:
         request: ResponseRequest, 
         context: dict
     ) -> GeneratedResponse:
-        """Generate collaboration focused response"""
+        """
+Generate collaboration focused response"""
         # Implementation details...
         pass
 

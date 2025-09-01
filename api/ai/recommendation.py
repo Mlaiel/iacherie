@@ -1,4 +1,5 @@
 """Recommendation engine for content optimization and collaboration matching."""
+
 import logging
 from typing import Dict, List, Tuple
 from collections import defaultdict
@@ -192,7 +193,8 @@ class RecommendationEngine:
             return dot_product / (norm1 * norm2)
 
     def _get_match_reasons(self, features1: Dict, features2: Dict) -> List[str]:
-        """Get reasons why two pieces of content are similar."""
+        """
+Get reasons why two pieces of content are similar."""
         reasons = []
         
         if features1.get("media_type") == features2.get("media_type"):

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Mock-based Unit Tests for AI Engine Core
+"""
+Mock-based Unit Tests for AI Engine Core
 ========================================
 
 Mock-based tests for AI engine core that work without psutil dependencies.
@@ -20,6 +22,7 @@ Mock-based tests for AI engine core that work without psutil dependencies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete AI engine test coverage without external dependencies
 """
+
 import pytest
 import sys
 import os
@@ -30,7 +33,8 @@ import json
 from datetime import datetime, timedelta
 
 class MockAIModel:
-    """Mock AI model for testing"""
+    """
+Mock AI model for testing"""
     
     def __init__(self, model_name: str, model_type: str = "classification"):
         self.model_name = model_name
@@ -45,11 +49,13 @@ class MockAIModel:
         return True
     
     async def unload(self):
-        """Unload model"""
+        """
+Unload model"""
         self.is_loaded = False
     
     async def predict(self, input_data: Any) -> Dict:
-        """Make prediction"""
+        """
+Make prediction"""
         if not self.is_loaded:
             raise Exception("Model not loaded")
         
@@ -110,13 +116,15 @@ class MockAIOrchestrator:
         await model.load()
     
     async def unregister_model(self, model_id: str):
-        """Unregister AI model"""
+        """
+Unregister AI model"""
         if model_id in self.models:
             await self.models[model_id].unload()
             del self.models[model_id]
     
     async def inference(self, model_id: str, input_data: Any) -> Dict:
-        """Perform inference using specified model"""
+        """
+Perform inference using specified model"""
         if model_id not in self.models:
             raise ValueError(f"Model {model_id} not found")
         
@@ -146,7 +154,8 @@ class MockAIOrchestrator:
         return results
     
     def get_model_status(self, model_id: str) -> Dict:
-        """Get model status"""
+        """
+Get model status"""
         if model_id not in self.models:
             return {"status": "not_found"}
         
@@ -166,14 +175,16 @@ class MockAIOrchestrator:
 
 
 class MockPersonalizationEngine:
-    """Mock personalization engine"""
+    """
+Mock personalization engine"""
     
     def __init__(self):
         self.user_profiles = {}
         self.recommendation_cache = {}
     
     async def create_user_profile(self, user_id: str, preferences: Dict) -> Dict:
-        """Create user profile"""
+        """
+Create user profile"""
         profile = {
             "user_id": user_id,
             "preferences": preferences,
@@ -251,7 +262,8 @@ class TestAIModels:
         assert not classification_model.is_loaded
     
     async def test_classification_prediction(self, classification_model):
-        """Test classification model prediction"""
+        """
+Test classification model prediction"""
         await classification_model.load()
         
         result = await classification_model.predict("test input")
@@ -340,7 +352,8 @@ class TestAIOrchestrator:
             assert orchestrator.models[model_id].is_loaded
     
     async def test_model_unregistration(self, orchestrator, sample_models):
-        """Test model unregistration"""
+        """
+Test model unregistration"""
         # Register and then unregister
         await orchestrator.register_model("test_model", sample_models["classifier"])
         assert "test_model" in orchestrator.models
@@ -404,7 +417,8 @@ class TestPersonalizationEngine:
         return MockPersonalizationEngine()
     
     async def test_user_profile_creation(self, personalization_engine):
-        """Test user profile creation"""
+        """
+Test user profile creation"""
         user_id = "user_123"
         preferences = {
             "genre": "rock",
@@ -481,7 +495,8 @@ class TestAIEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_ai_workflow(self):
-        """Test complete AI workflow from orchestration to personalization"""
+        """
+Test complete AI workflow from orchestration to personalization"""
         # Setup components
         orchestrator = MockAIOrchestrator()
         personalization = MockPersonalizationEngine()

@@ -18,6 +18,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -43,7 +44,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class LanguageProcessingConfig:
-    """Configuration for language processing operations"""
+    """
+Configuration for language processing operations"""
     max_text_length: int = 50000
     enable_caching: bool = True
     cache_ttl: int = 3600
@@ -72,7 +74,8 @@ class LanguageProcessingFacade:
         self._initialize_components()
         
     def _initialize_components(self):
-        """Initialize all processing components"""
+        """
+Initialize all processing components"""
         try:
             # Core analyzers
             self.text_analyzer = TextAnalyzer()
@@ -306,7 +309,8 @@ async def analyze_content(
 
 
 async def quick_sentiment(text: str) -> SentimentResult:
-    """Quick sentiment analysis"""
+    """
+Quick sentiment analysis"""
     processor = get_language_processor()
     return await processor.sentiment_analyzer.analyze_sentiment(text)
 

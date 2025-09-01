@@ -4,11 +4,12 @@ Advanced performance tuning, caching strategies, and optimization settings
 for the IA Influencer Agent enterprise platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class CacheStrategy(Enum):
-    """Caching strategies"""
+    """
+Caching strategies"""
+
     NO_CACHE = "no_cache"
     MEMORY_CACHE = "memory_cache"
     REDIS_CACHE = "redis_cache"
@@ -34,6 +37,7 @@ class CacheStrategy(Enum):
 
 class OptimizationLevel(Enum):
     """Optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -43,6 +47,7 @@ class OptimizationLevel(Enum):
 
 class CompressionType(Enum):
     """Compression types"""
+
     NONE = "none"
     GZIP = "gzip"
     BROTLI = "brotli"
@@ -52,6 +57,7 @@ class CompressionType(Enum):
 
 class LoadBalancingStrategy(Enum):
     """Load balancing strategies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -398,7 +404,8 @@ class OptimizationConfig:
     cost_optimization_mode: bool = False
     
     def get_optimization_summary(self) -> Dict[str, Any]:
-        """Get comprehensive optimization summary"""
+        """
+Get comprehensive optimization summary"""
         return {
             "optimization_level": self.optimization_level.value,
             "performance_mode": self.performance_mode,

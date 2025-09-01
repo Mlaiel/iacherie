@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -46,7 +47,9 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions."""
+    """
+Quality assessment dimensions."""
+
     TECHNICAL_QUALITY = "technical_quality"
     CONTENT_QUALITY = "content_quality"
     METADATA_QUALITY = "metadata_quality"
@@ -59,6 +62,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Quality levels for content assessment."""
+
     EXCEPTIONAL = "exceptional"  # 90-100%
     HIGH = "high"               # 80-89%
     GOOD = "good"               # 70-79%
@@ -89,14 +93,17 @@ class QualityMetrics:
 
 
 class TechnicalQualityAnalyzer:
-    """Analyzes technical quality aspects of content."""
+    """
+Analyzes technical quality aspects of content."""
     
     def __init__(self):
-        """Initialize technical quality analyzer."""
+        """
+Initialize technical quality analyzer."""
         self.logger = logging.getLogger(__name__)
     
     async def analyze_technical_quality(self, content_item: ContentItem) -> Dict[str, float]:
-        """Analyze technical quality aspects."""
+        """
+Analyze technical quality aspects."""
         try:
             technical_scores = {}
             
@@ -289,11 +296,13 @@ class ContentQualityAnalyzer:
     """Analyzes content quality aspects."""
     
     def __init__(self):
-        """Initialize content quality analyzer."""
+        """
+Initialize content quality analyzer."""
         self.logger = logging.getLogger(__name__)
     
     async def analyze_content_quality(self, content_item: ContentItem) -> Dict[str, float]:
-        """Analyze content quality aspects."""
+        """
+Analyze content quality aspects."""
         try:
             content_scores = {}
             
@@ -500,14 +509,16 @@ class QualityAssuranceEngine:
     """Main quality assurance engine."""
     
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize quality assurance engine."""
+        """
+Initialize quality assurance engine."""
         self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.technical_analyzer = TechnicalQualityAnalyzer()
         self.content_analyzer = ContentQualityAnalyzer()
     
     async def perform_quality_assessment(self, content_item: ContentItem) -> QualityMetrics:
-        """Perform comprehensive quality assessment."""
+        """
+Perform comprehensive quality assessment."""
         try:
             start_time = time.time()
             
@@ -581,7 +592,8 @@ class QualityAssuranceEngine:
             return QualityLevel.UNACCEPTABLE
     
     async def _assess_metadata_quality(self, content_item: ContentItem) -> float:
-        """Assess metadata quality specifically."""
+        """
+Assess metadata quality specifically."""
         if not content_item.metadata:
             return 0.1
         
@@ -648,7 +660,8 @@ class QualityAssuranceEngine:
         return min(1.0, score)
     
     async def _assess_consistency(self, content_item: ContentItem) -> float:
-        """Assess internal consistency."""
+        """
+Assess internal consistency."""
         score = 0.8
         
         # Filename-metadata consistency

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for Dashboards Module
+"""
+Ultra-Industrial Test Suite for Dashboards Module
 
 This module provides comprehensive testing for dashboard management,
 visualization, and business intelligence capabilities.
@@ -48,6 +50,7 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import numpy as np
@@ -82,11 +85,13 @@ from ai.observability.dashboards import (
 
 
 class TestDashboardManager:
-    """Ultra-industrial tests for DashboardManager class"""
+    """
+Ultra-industrial tests for DashboardManager class"""
     
     @pytest.fixture
     def dashboard_manager(self):
-        """Create DashboardManager instance for testing"""
+        """
+Create DashboardManager instance for testing"""
         config = {
             "supported_dashboards": ["executive", "technical", "creator", "security", "business_intelligence"],
             "default_theme": "professional",
@@ -364,7 +369,8 @@ class TestExecutiveDashboard:
     
     @pytest.fixture
     def executive_dashboard(self):
-        """Create ExecutiveDashboard instance for testing"""
+        """
+Create ExecutiveDashboard instance for testing"""
         config = {
             "kpi_focus": ["revenue", "growth", "user_acquisition", "profitability"],
             "time_periods": ["daily", "weekly", "monthly", "quarterly"],
@@ -409,7 +415,8 @@ class TestExecutiveDashboard:
         assert hasattr(executive_dashboard, 'strategic_widgets')
     
     def test_kpi_visualization(self, executive_dashboard, executive_data):
-        """Test executive KPI visualization"""
+        """
+Test executive KPI visualization"""
         # Configure KPI widgets
         kpi_config = executive_dashboard.configure_kpi_widgets(executive_data)
         
@@ -494,7 +501,8 @@ class TestTechnicalDashboard:
     
     @pytest.fixture
     def technical_dashboard(self):
-        """Create TechnicalDashboard instance for testing"""
+        """
+Create TechnicalDashboard instance for testing"""
         config = {
             "monitoring_categories": ["infrastructure", "applications", "security", "performance"],
             "alert_integration": True,
@@ -540,7 +548,8 @@ class TestTechnicalDashboard:
         assert hasattr(technical_dashboard, 'alert_widgets')
     
     def test_infrastructure_monitoring(self, technical_dashboard, technical_data):
-        """Test infrastructure monitoring dashboard"""
+        """
+Test infrastructure monitoring dashboard"""
         infra_dashboard = technical_dashboard.create_infrastructure_monitoring(technical_data)
         
         assert "system_overview" in infra_dashboard
@@ -647,7 +656,8 @@ class TestCreatorDashboard:
     
     @pytest.fixture
     def creator_dashboard(self):
-        """Create CreatorDashboard instance for testing"""
+        """
+Create CreatorDashboard instance for testing"""
         config = {
             "creator_metrics": ["content_performance", "engagement", "revenue", "growth"],
             "content_types": ["image", "video", "audio", "text"],
@@ -699,7 +709,8 @@ class TestCreatorDashboard:
         assert hasattr(creator_dashboard, 'engagement_widgets')
     
     def test_content_analytics(self, creator_dashboard, creator_data):
-        """Test content analytics dashboard"""
+        """
+Test content analytics dashboard"""
         content_analytics = creator_dashboard.create_content_analytics(creator_data)
         
         assert "content_performance" in content_analytics
@@ -795,11 +806,13 @@ class TestWidgetFactory:
     
     @pytest.fixture
     def widget_factory(self):
-        """Create WidgetFactory instance for testing"""
+        """
+Create WidgetFactory instance for testing"""
         return WidgetFactory()
     
     def test_kpi_widget_creation(self, widget_factory):
-        """Test KPI widget creation"""
+        """
+Test KPI widget creation"""
         kpi_widget = widget_factory.create_kpi_widget(
             title="Total Revenue",
             value=248750.50,
@@ -902,11 +915,13 @@ class TestDashboardBuilder:
     
     @pytest.fixture
     def dashboard_builder(self):
-        """Create DashboardBuilder instance for testing"""
+        """
+Create DashboardBuilder instance for testing"""
         return DashboardBuilder()
     
     def test_template_based_building(self, dashboard_builder):
-        """Test template-based dashboard building"""
+        """
+Test template-based dashboard building"""
         # Executive template
         executive_template = dashboard_builder.build_from_template(
             template_name="executive_overview",

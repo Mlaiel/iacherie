@@ -6,6 +6,7 @@ predictive optimization, and automated efficiency improvements.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import statistics
@@ -21,7 +22,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization operations"""
+    """
+Types of optimization operations"""
+
     MEMORY_OPTIMIZATION = "memory_optimization"
     ACCESS_PATTERN_OPTIMIZATION = "access_pattern_optimization"
     TTL_OPTIMIZATION = "ttl_optimization"
@@ -32,6 +35,7 @@ class OptimizationType(Enum):
 
 class OptimizationPriority(Enum):
     """Priority levels for optimization actions"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -40,7 +44,8 @@ class OptimizationPriority(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Single optimization recommendation"""
+    """
+Single optimization recommendation"""
     optimization_id: str
     optimization_type: OptimizationType
     priority: OptimizationPriority
@@ -69,7 +74,8 @@ class OptimizationResult:
 
 @dataclass
 class CachePrediction:
-    """Cache performance prediction model"""
+    """
+Cache performance prediction model"""
     metric_name: str
     current_value: float
     predicted_values: List[Tuple[datetime, float]]  # (time, predicted_value)
@@ -215,7 +221,8 @@ class CacheOptimizer:
         metrics: Dict[str, Any], 
         config: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Analyze memory usage and generate optimization recommendations"""
+        """
+Analyze memory usage and generate optimization recommendations"""
         recommendations = []
         
         memory_usage_percent = metrics.get('memory_usage_percent', 0)
@@ -539,7 +546,8 @@ class CacheOptimizer:
         recommendation: OptimizationRecommendation,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Execute memory optimization"""
+        """
+Execute memory optimization"""
         try:
             target_reduction = recommendation.parameters.get('target_reduction_percent', 20)
             
@@ -626,7 +634,8 @@ class CacheOptimizer:
                 self.historical_metrics[metric_name].append((timestamp, value))
     
     async def _update_learning_models(self, metrics: Dict[str, Any]):
-        """Update ML models with new performance data"""
+        """
+Update ML models with new performance data"""
         # Simplified learning model update
         # Real implementation would use proper ML algorithms
         
@@ -649,7 +658,8 @@ class CacheOptimizer:
                         }
     
     async def _generate_predictions(self) -> List[CachePrediction]:
-        """Generate performance predictions"""
+        """
+Generate performance predictions"""
         predictions = []
         
         for metric_name, model_data in self.predictive_models.items():
@@ -721,7 +731,8 @@ class CacheOptimizer:
         before_metrics: Dict[str, Any],
         after_metrics: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate actual impact of optimization"""
+        """
+Calculate actual impact of optimization"""
         impact = {}
         
         for metric_name in before_metrics:
@@ -736,7 +747,8 @@ class CacheOptimizer:
         return impact
     
     async def _calculate_improvement(self, current_metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate performance improvement over baseline"""
+        """
+Calculate performance improvement over baseline"""
         if not self.performance_baseline:
             # Set current as baseline
             self.performance_baseline = current_metrics.copy()
@@ -756,7 +768,8 @@ class CacheOptimizer:
         return improvements
     
     def _recommendation_to_dict(self, rec: OptimizationRecommendation) -> Dict[str, Any]:
-        """Convert recommendation to dictionary"""
+        """
+Convert recommendation to dictionary"""
         return {
             'optimization_id': rec.optimization_id,
             'type': rec.optimization_type.value,
@@ -771,7 +784,8 @@ class CacheOptimizer:
         }
     
     def _prediction_to_dict(self, pred: CachePrediction) -> Dict[str, Any]:
-        """Convert prediction to dictionary"""
+        """
+Convert prediction to dictionary"""
         return {
             'metric_name': pred.metric_name,
             'current_value': pred.current_value,

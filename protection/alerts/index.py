@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Main API endpoint aggregator for the alert system.
 Provides centralized access to all alert-related services and operations.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -52,7 +53,8 @@ security = HTTPBearer()
 
 # API Models for requests/responses
 class CreateAlertRequest(BaseModel):
-    """Request model for creating new alerts."""
+    """
+Request model for creating new alerts."""
     title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., min_length=1, max_length=2000)
     severity: AlertSeverity
@@ -72,7 +74,8 @@ class CreateAlertRequest(BaseModel):
 
 
 class UpdateAlertRequest(BaseModel):
-    """Request model for updating alerts."""
+    """
+Request model for updating alerts."""
     status: Optional[AlertStatus] = None
     assigned_to: Optional[str] = None
     resolution: Optional[str] = None
@@ -81,7 +84,8 @@ class UpdateAlertRequest(BaseModel):
 
 
 class AlertSearchRequest(BaseModel):
-    """Request model for searching alerts."""
+    """
+Request model for searching alerts."""
     severity: Optional[List[AlertSeverity]] = None
     status: Optional[List[AlertStatus]] = None
     category: Optional[List[AlertCategory]] = None
@@ -119,7 +123,8 @@ class AlertResponse(BaseModel):
 
 
 class AlertListResponse(BaseModel):
-    """Response model for alert list operations."""
+    """
+Response model for alert list operations."""
     alerts: List[ContentProtectionAlert]
     total_count: int
     page_count: int
@@ -129,7 +134,8 @@ class AlertListResponse(BaseModel):
 
 
 class AlertStatisticsResponse(BaseModel):
-    """Response model for alert statistics."""
+    """
+Response model for alert statistics."""
     statistics: AlertDashboardMetrics
     trends: Dict[str, Any]
     performance_metrics: Dict[str, Any]
@@ -603,12 +609,14 @@ class AlertSystemAPI:
         pass
 
     async def _suggest_reclassification(self, alert: ContentProtectionAlert, classification: MLClassificationResult):
-        """Suggest alert reclassification based on ML analysis."""
+        """
+Suggest alert reclassification based on ML analysis."""
         # Implementation for ML-based reclassification suggestions
         pass
 
     async def _bulk_escalate_alerts(self, alert_ids: List[str], level: EscalationLevel, reason: str, actor: str) -> BulkOperationResult:
-        """Perform bulk escalation of alerts."""
+        """
+Perform bulk escalation of alerts."""
         successful = []
         failed = []
         
@@ -667,7 +675,8 @@ class AlertSystemAPI:
 
 # FastAPI app instance and route registration
 def create_alert_api_app(alert_system: AlertSystemAPI) -> FastAPI:
-    """Create and configure the FastAPI application for the alert system."""
+    """
+Create and configure the FastAPI application for the alert system."""
     
     app = FastAPI(
         title="Content Protection Alert System API",

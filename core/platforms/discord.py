@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class DiscordPlatform(PlatformBase):
-    """Discord platform integration"""
+    """
+Discord platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Discord platform"""
+        """
+Initialize Discord platform"""
         super().__init__(config)
         self.api_base = "https://discord.com/api/v10"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -40,7 +43,8 @@ class DiscordPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Discord Bot Token"""
+        """
+Authenticate with Discord Bot Token"""
         try:
             if not self.bot_token:
                 logger.error("Discord requires bot_token")
@@ -77,7 +81,8 @@ class DiscordPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Discord API"""
+        """
+Make authenticated request to Discord API"""
         try:
             session = await self._get_session()
             

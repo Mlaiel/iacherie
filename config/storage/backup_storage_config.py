@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -21,7 +22,9 @@ from enum import Enum
 from datetime import datetime, timedelta
 
 class BackupType(Enum):
-    """Types of backup operations."""
+    """
+Types of backup operations."""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -29,6 +32,7 @@ class BackupType(Enum):
 
 class BackupStorage(Enum):
     """Backup storage locations."""
+
     LOCAL = "local"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
@@ -37,6 +41,7 @@ class BackupStorage(Enum):
 
 class RetentionPolicy(Enum):
     """Backup retention policies."""
+
     DAILY_7 = "daily_7_days"
     WEEKLY_4 = "weekly_4_weeks"
     MONTHLY_12 = "monthly_12_months"
@@ -75,7 +80,8 @@ class BackupSchedule:
 
 @dataclass
 class BackupDestination:
-    """Backup destination configuration."""
+    """
+Backup destination configuration."""
     
     storage_type: BackupStorage
     location: str
@@ -154,7 +160,8 @@ class BackupStorageConfig:
             self.destinations = self._get_default_destinations()
     
     def _get_default_schedules(self) -> Dict[str, BackupSchedule]:
-        """Default backup schedule configurations."""
+        """
+Default backup schedule configurations."""
         return {
             'database_daily': BackupSchedule(
                 name="Database Daily Backup",
@@ -297,19 +304,22 @@ class BackupStorageConfig:
                 if schedule.enabled}
     
     def get_schedule_by_priority(self) -> List[BackupSchedule]:
-        """Get backup schedules sorted by priority (highest first)."""
+        """
+Get backup schedules sorted by priority (highest first)."""
         active_schedules = list(self.get_active_schedules().values())
         return sorted(active_schedules, key=lambda x: x.priority, reverse=True)
     
     def get_destination_by_storage_type(self, storage_type: BackupStorage) -> Optional[BackupDestination]:
-        """Get first destination of specified storage type."""
+        """
+Get first destination of specified storage type."""
         for destination in self.destinations.values():
             if destination.storage_type == storage_type:
                 return destination
         return None
     
     def validate_configuration(self) -> bool:
-        """Validate backup configuration."""
+        """
+Validate backup configuration."""
         try:
             # Check if at least one schedule is enabled
             active_schedules = self.get_active_schedules()
@@ -350,7 +360,8 @@ class BackupStorageConfig:
         return retention_mapping.get(policy, self.default_retention_days)
     
     def calculate_backup_size_estimate(self, schedule_name: str) -> float:
-        """Estimate backup size in GB for a schedule."""
+        """
+Estimate backup size in GB for a schedule."""
         schedule = self.schedules.get(schedule_name)
         if not schedule:
             return 0.0
@@ -376,7 +387,8 @@ class BackupStorageConfig:
         return round(size_gb, 2)
     
     def get_next_backup_times(self) -> Dict[str, datetime]:
-        """Get next scheduled backup times for all active schedules."""
+        """
+Get next scheduled backup times for all active schedules."""
         from croniter import croniter
         
         next_times = {}
@@ -413,7 +425,8 @@ class BackupStorageConfig:
         return summary
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export backup configuration to JSON-serializable format."""
+        """
+Export backup configuration to JSON-serializable format."""
         return {
             'enable_backups': self.enable_backups,
             'backup_base_path': self.backup_base_path,

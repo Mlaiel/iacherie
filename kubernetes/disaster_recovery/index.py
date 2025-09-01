@@ -21,6 +21,7 @@ permission from the author is strictly prohibited and will result in immediate l
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -51,6 +52,7 @@ __email__ = "mlaiel@live.de"
 
 class DisasterRecoveryStatus(Enum):
     """System disaster recovery status enumeration"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     AT_RISK = "at_risk"
@@ -61,6 +63,7 @@ class DisasterRecoveryStatus(Enum):
 
 class RecoveryMode(Enum):
     """Recovery operation mode enumeration"""
+
     PREVENTIVE = "preventive"
     REACTIVE = "reactive"
     EMERGENCY = "emergency"
@@ -84,7 +87,8 @@ class DisasterRecoveryMetrics:
 
 @dataclass
 class SystemHealthReport:
-    """System health and disaster recovery readiness report"""
+    """
+System health and disaster recovery readiness report"""
     overall_status: DisasterRecoveryStatus
     component_health: Dict[str, str]
     risk_factors: List[str]
@@ -106,7 +110,8 @@ class DisasterRecoveryCoordinator:
     """
     
     def __init__(self, config: Config):
-        """Initialize disaster recovery coordinator"""
+        """
+Initialize disaster recovery coordinator"""
         self.config = config
         self.logger = get_logger(__name__)
         

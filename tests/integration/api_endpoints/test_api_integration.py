@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Simplified API Integration Tests
+"""
+Simplified API Integration Tests
 
 Comprehensive integration tests for all API endpoints with mock responses
 to validate endpoint structure, authentication, validation, and error handling.
@@ -20,6 +22,7 @@ to validate endpoint structure, authentication, validation, and error handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -44,20 +47,24 @@ class MockAPIClient:
         self.user_id: str = MOCK_USER_ID
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         pass
     
     async def authenticate(self):
-        """Mock authentication and store auth token."""
+        """
+Mock authentication and store auth token."""
         self.auth_token = MOCK_AUTH_TOKEN
         return True
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get authorization headers."""
+        """
+Get authorization headers."""
         headers = {"Content-Type": "application/json"}
         if self.auth_token:
             headers["Authorization"] = f"Bearer {self.auth_token}"
@@ -71,7 +78,8 @@ class MockAPIClient:
         return response
     
     async def post(self, endpoint: str, data: Any = None):
-        """Mock POST request."""
+        """
+Mock POST request."""
         return self._handle_mock_request("POST", endpoint, data=data)
     
     async def get(self, endpoint: str):
@@ -147,7 +155,8 @@ class TestAuthenticationIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_registration_flow(self):
-        """Test complete user registration flow."""
+        """
+Test complete user registration flow."""
         async with MockAPIClient() as client:
             user_data = {
                 "email": f"test_{uuid.uuid4().hex[:8]}@example.com",
@@ -197,7 +206,8 @@ class TestContentManagementIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_upload_flow(self):
-        """Test content upload workflow."""
+        """
+Test content upload workflow."""
         async with MockAPIClient() as client:
             await client.authenticate()
             
@@ -251,7 +261,8 @@ class TestFingerprintingIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_fingerprint_creation(self):
-        """Test fingerprint creation process."""
+        """
+Test fingerprint creation process."""
         async with MockAPIClient() as client:
             await client.authenticate()
             
@@ -293,7 +304,8 @@ class TestProtectionIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_monitoring_activation(self):
-        """Test content monitoring activation."""
+        """
+Test content monitoring activation."""
         async with MockAPIClient() as client:
             await client.authenticate()
             
@@ -342,7 +354,8 @@ class TestAnalyticsIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_analytics_retrieval(self):
-        """Test analytics data retrieval."""
+        """
+Test analytics data retrieval."""
         async with MockAPIClient() as client:
             await client.authenticate()
             
@@ -374,7 +387,8 @@ class TestCollaborationIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_collaborator_matching(self):
-        """Test collaborator matching system."""
+        """
+Test collaborator matching system."""
         async with MockAPIClient() as client:
             await client.authenticate()
             
@@ -421,7 +435,8 @@ class TestErrorHandlingIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_unauthenticated_request(self):
-        """Test unauthenticated request handling."""
+        """
+Test unauthenticated request handling."""
         async with MockAPIClient() as client:
             # Don't authenticate
             headers = client.get_auth_headers()
@@ -451,7 +466,8 @@ class TestPerformanceIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_concurrent_api_requests(self):
-        """Test concurrent API request handling."""
+        """
+Test concurrent API request handling."""
         import time
         
         async def make_request():

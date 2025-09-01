@@ -38,6 +38,7 @@ This workflow system contains proprietary algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
 """
+
 import logging
 import asyncio
 import json
@@ -65,7 +66,8 @@ from .processor import MatchProcessor, ProcessingResult, MatchStatus, Processing
 
 
 class WorkflowStage(Enum):
-    """Advanced workflow stage management with AI optimization"""
+    """
+Advanced workflow stage management with AI optimization"""
     # Planning & Discovery
     WORKFLOW_PLANNING = "workflow_planning"
     RESOURCE_ALLOCATION = "resource_allocation"
@@ -114,6 +116,7 @@ class WorkflowConfig(Enum):
 
 class ExecutionResult(Enum):
     """Workflow execution results with business intelligence"""
+
     SUCCESS = "success"                   # Successful completion
     PARTIAL_SUCCESS = "partial_success"   # Partially successful
     FAILURE = "failure"                   # Failed execution
@@ -202,7 +205,8 @@ class ExecutionStatus:
 
 @dataclass
 class WorkflowConfig:
-    """Configuration for workflow execution"""
+    """
+Configuration for workflow execution"""
     workflow_type: WorkflowType
     execution_mode: ExecutionMode
     priority: WorkflowPriority
@@ -217,7 +221,8 @@ class WorkflowConfig:
 
 @dataclass
 class WorkflowTask:
-    """Individual workflow task"""
+    """
+Individual workflow task"""
     task_id: str
     match_id: str
     creator_a_id: int
@@ -235,7 +240,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution tracking"""
+    """
+Workflow execution tracking"""
     execution_id: str
     workflow_type: WorkflowType
     tasks: List[WorkflowTask]
@@ -294,7 +300,8 @@ class WorkflowManager:
         self.resource_monitor = ResourceMonitor()
     
     def _initialize_default_config(self) -> None:
-        """Initialize default workflow configuration"""
+        """
+Initialize default workflow configuration"""
         self.default_workflow_config = WorkflowConfig(
             workflow_type=WorkflowType.PARALLEL,
             execution_mode=ExecutionMode.ASYNCHRONOUS,
@@ -740,7 +747,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute a batch of tasks sequentially"""
+        """
+Execute a batch of tasks sequentially"""
         for task in batch:
             await self._execute_single_task(task, workflow_execution, config)
             await asyncio.sleep(0.1)  # Small delay between tasks
@@ -753,7 +761,8 @@ class WorkflowManager:
         batch_time: float,
         workflow_execution: WorkflowExecution
     ) -> Dict[str, float]:
-        """Analyze performance of a batch execution"""
+        """
+Analyze performance of a batch execution"""
         completed_tasks = [t for t in batch if t.status == "completed"]
         failed_tasks = [t for t in batch if t.status == "failed"]
         
@@ -808,7 +817,8 @@ class WorkflowManager:
         creator_b: CreatorProfile,
         config: WorkflowConfig
     ) -> WorkflowPriority:
-        """Calculate task priority based on creator profiles"""
+        """
+Calculate task priority based on creator profiles"""
         # This would implement sophisticated priority calculation
         # For now, return normal priority
         return WorkflowPriority.NORMAL
@@ -816,27 +826,32 @@ class WorkflowManager:
     # Resource management methods
     
     async def _check_resource_availability(self, config: WorkflowConfig) -> bool:
-        """Check if resources are available for processing"""
+        """
+Check if resources are available for processing"""
         # Implementation would check CPU, memory, database connections, etc.
         return True
     
     async def _get_creator_profile(self, creator_id: int) -> Optional[CreatorProfile]:
-        """Get creator profile by ID"""
+        """
+Get creator profile by ID"""
         # Implementation would fetch from database/cache
         return None
     
     # Monitoring and reporting methods
     
     async def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get current status of a workflow execution"""
+        """
+Get current status of a workflow execution"""
         return self.active_workflows.get(execution_id)
     
     async def get_active_workflows(self) -> List[WorkflowExecution]:
-        """Get all currently active workflows"""
+        """
+Get all currently active workflows"""
         return list(self.active_workflows.values())
     
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel a running workflow"""
+        """
+Cancel a running workflow"""
         if execution_id in self.active_workflows:
             workflow = self.active_workflows[execution_id]
             workflow.status = "cancelled"
@@ -908,23 +923,28 @@ class ResourceMonitor:
         self.cache_operations = 0
     
     def record_memory_usage(self, memory_mb: float) -> None:
-        """Record memory usage"""
+        """
+Record memory usage"""
         self.peak_memory = max(self.peak_memory, memory_mb)
     
     def record_cpu_usage(self, cpu_percent: float) -> None:
-        """Record CPU usage"""
+        """
+Record CPU usage"""
         self.peak_cpu = max(self.peak_cpu, cpu_percent)
     
     def record_database_query(self) -> None:
-        """Record database query"""
+        """
+Record database query"""
         self.database_queries += 1
     
     def record_cache_operation(self) -> None:
-        """Record cache operation"""
+        """
+Record cache operation"""
         self.cache_operations += 1
     
     def get_resource_summary(self) -> Dict[str, Any]:
-        """Get resource usage summary"""
+        """
+Get resource usage summary"""
         uptime = (datetime.utcnow() - self.start_time).total_seconds()
         
         return {

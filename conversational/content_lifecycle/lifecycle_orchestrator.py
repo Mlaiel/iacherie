@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentLifecycleState(Enum):
-    """Content lifecycle states"""
+    """
+Content lifecycle states"""
+
     DRAFT = "draft"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
@@ -46,6 +49,7 @@ class ContentLifecycleState(Enum):
 
 class WorkflowType(Enum):
     """Workflow types for content lifecycle"""
+
     CREATION = "creation"
     REVIEW = "review"
     APPROVAL = "approval"
@@ -58,6 +62,7 @@ class WorkflowType(Enum):
 
 class AutomationTrigger(Enum):
     """Automation trigger types"""
+
     TIME_BASED = "time_based"
     PERFORMANCE_BASED = "performance_based"
     EVENT_BASED = "event_based"
@@ -84,7 +89,8 @@ class LifecycleEvent:
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition structure"""
+    """
+Workflow definition structure"""
     workflow_id: str
     name: str
     description: str
@@ -102,7 +108,8 @@ class WorkflowDefinition:
 
 @dataclass
 class LifecycleMetrics:
-    """Lifecycle performance metrics"""
+    """
+Lifecycle performance metrics"""
     content_id: str
     current_state: ContentLifecycleState
     time_in_current_state: timedelta
@@ -142,7 +149,8 @@ class LifecycleOrchestrator:
         self._initialize_state_handlers()
         
     async def initialize(self):
-        """Initialize the lifecycle orchestrator"""
+        """
+Initialize the lifecycle orchestrator"""
         try:
             # Load active workflows
             await self._load_active_workflows()
@@ -450,17 +458,20 @@ class LifecycleOrchestrator:
         }
     
     async def _load_active_workflows(self):
-        """Load active workflow definitions"""
+        """
+Load active workflow definitions"""
         # Implementation for loading workflows
         pass
     
     async def _load_automation_rules(self):
-        """Load automation rules"""
+        """
+Load automation rules"""
         # Implementation for loading rules
         pass
     
     async def _setup_event_listeners(self):
-        """Setup event listeners"""
+        """
+Setup event listeners"""
         # Implementation for event listeners
         pass
     
@@ -469,7 +480,8 @@ class LifecycleOrchestrator:
         session: AsyncSession,
         content_id: str
     ) -> ContentLifecycleState:
-        """Get current content lifecycle state"""
+        """
+Get current content lifecycle state"""
         # Implementation for getting current state
         pass
     
@@ -479,59 +491,70 @@ class LifecycleOrchestrator:
         target_state: ContentLifecycleState,
         content_id: str
     ):
-        """Validate if state transition is allowed"""
+        """
+Validate if state transition is allowed"""
         # Implementation for transition validation
         pass
     
     # State handler methods
     async def _handle_draft_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle draft state operations"""
+        """
+Handle draft state operations"""
         # Implementation for draft state handling
         pass
     
     async def _handle_review_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle review state operations"""
+        """
+Handle review state operations"""
         # Implementation for review state handling
         pass
     
     async def _handle_approved_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle approved state operations"""
+        """
+Handle approved state operations"""
         # Implementation for approved state handling
         pass
     
     async def _handle_scheduled_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle scheduled state operations"""
+        """
+Handle scheduled state operations"""
         # Implementation for scheduled state handling
         pass
     
     async def _handle_published_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle published state operations"""
+        """
+Handle published state operations"""
         # Implementation for published state handling
         pass
     
     async def _handle_promoted_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle promoted state operations"""
+        """
+Handle promoted state operations"""
         # Implementation for promoted state handling
         pass
     
     async def _handle_optimized_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle optimized state operations"""
+        """
+Handle optimized state operations"""
         # Implementation for optimized state handling
         pass
     
     async def _handle_archived_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle archived state operations"""
+        """
+Handle archived state operations"""
         # Implementation for archived state handling
         pass
 
 
 # Lifecycle Orchestrator Factory
 class LifecycleOrchestratorFactory:
-    """Factory for creating lifecycle orchestrator instances"""
+    """
+Factory for creating lifecycle orchestrator instances"""
     
     @staticmethod
     async def create_orchestrator() -> LifecycleOrchestrator:
-        """Create and initialize a new lifecycle orchestrator"""
+        """
+Create and initialize a new lifecycle orchestrator"""
         orchestrator = LifecycleOrchestrator()
         await orchestrator.initialize()
         return orchestrator

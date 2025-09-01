@@ -7,6 +7,7 @@ for PostgreSQL, Redis, MongoDB, Elasticsearch, and Vector stores.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
@@ -25,7 +26,9 @@ from .utils import ReplicationUtils
 
 
 class ReplicationHandlerType(Enum):
-    """Supported replication handler types"""
+    """
+Supported replication handler types"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -56,7 +59,8 @@ class ReplicationManager:
     """
     
     def __init__(self, config: ReplicationConfig):
-        """Initialize replication manager with configuration"""
+        """
+Initialize replication manager with configuration"""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationManager")
         self.utils = ReplicationUtils(config)

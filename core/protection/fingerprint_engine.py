@@ -8,8 +8,9 @@ This module provides advanced fingerprinting capabilities for content protection
 - Vector similarity matching using FAISS
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import hashlib
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -50,7 +51,9 @@ settings = get_settings()
 
 
 class FingerprintType(Enum):
-    """Supported fingerprint types for content protection"""
+    """
+Supported fingerprint types for content protection"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_PERCEPTUAL = "video_perceptual"
@@ -73,14 +76,16 @@ class FingerprintResult:
 
 
 class AudioFingerprinter:
-    """Advanced audio fingerprinting with multiple algorithms"""
+    """
+Advanced audio fingerprinting with multiple algorithms"""
     
     def __init__(self):
         self.sample_rate = 22050
         self.duration_limit = 300  # 5 minutes max
         
     async def generate_chromaprint(self, audio_path: Path) -> FingerprintResult:
-        """Generate Chromaprint fingerprint for audio content"""
+        """
+Generate Chromaprint fingerprint for audio content"""
         try:
             # Load audio with librosa
             y, sr = librosa.load(str(audio_path), sr=self.sample_rate, duration=self.duration_limit)
@@ -189,7 +194,8 @@ class VideoFingerprinter:
         self.max_frames = 300  # Limit to 5 minutes worth of frames
         
     async def generate_perceptual_fingerprint(self, video_path: Path) -> FingerprintResult:
-        """Generate perceptual hash fingerprint for video content"""
+        """
+Generate perceptual hash fingerprint for video content"""
         try:
             cap = cv2.VideoCapture(str(video_path))
             fps = cap.get(cv2.CAP_PROP_FPS)
@@ -332,7 +338,8 @@ class ImageFingerprinter:
         self._load_clip_model()
     
     def _load_clip_model(self):
-        """Load CLIP model for semantic image analysis"""
+        """
+Load CLIP model for semantic image analysis"""
         try:
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -431,7 +438,8 @@ class TextFingerprinter:
         self._load_bert_model()
     
     def _load_bert_model(self):
-        """Load BERT model for semantic text analysis"""
+        """
+Load BERT model for semantic text analysis"""
         try:
             model_name = "sentence-transformers/all-MiniLM-L6-v2"
             self.sentence_model = sentence_transformers.SentenceTransformer(model_name)
@@ -555,7 +563,8 @@ class FingerprintEngine:
         self._initialize_vector_indexes()
     
     def _initialize_vector_indexes(self):
-        """Initialize FAISS indexes for different content types"""
+        """
+Initialize FAISS indexes for different content types"""
         try:
             # Initialize indexes for different embedding dimensions
             dimensions = {

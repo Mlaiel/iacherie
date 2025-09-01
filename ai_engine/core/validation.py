@@ -4,10 +4,11 @@ Enterprise-grade content validation and quality assurance for industrial AI plat
 Supports multi-format content validation for creators (musicians, bloggers, photographers, influencers, comedians).
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import re
 import string
 import hashlib
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Advanced validation severity levels for comprehensive monitoring"""
+    """
+Advanced validation severity levels for comprehensive monitoring"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -68,6 +71,7 @@ class ValidationLevel(Enum):
 
 class ContentType(Enum):
     """Supported content types for validation"""
+
     TEXT = "text"
     AUDIO = "audio"
     VIDEO = "video"
@@ -86,6 +90,7 @@ class ContentType(Enum):
 
 class ValidationCategory(Enum):
     """Categories of validation checks"""
+
     CONTENT_SAFETY = "content_safety"
     COPYRIGHT_COMPLIANCE = "copyright_compliance"
     TECHNICAL_QUALITY = "technical_quality"
@@ -114,7 +119,8 @@ class ValidationIssue:
     source_location: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert issue to dictionary"""
+        """
+Convert issue to dictionary"""
         return {
             "level": self.level.value,
             "category": self.category.value,
@@ -162,7 +168,8 @@ class ValidationResult:
         fix_suggestion: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
     ):
-        """Add a validation issue with comprehensive details"""
+        """
+Add a validation issue with comprehensive details"""
         issue = ValidationIssue(
             level=level,
             category=category,
@@ -183,19 +190,23 @@ class ValidationResult:
             self.is_valid = False
             
     def get_issues_by_category(self, category: ValidationCategory) -> List[ValidationIssue]:
-        """Get issues filtered by category"""
+        """
+Get issues filtered by category"""
         return [issue for issue in self.issues if issue.category == category]
         
     def get_issues_by_level(self, level: ValidationLevel) -> List[ValidationIssue]:
-        """Get issues filtered by level"""
+        """
+Get issues filtered by level"""
         return [issue for issue in self.issues if issue.level == level]
         
     def get_fixable_issues(self) -> List[ValidationIssue]:
-        """Get issues that can be automatically fixed"""
+        """
+Get issues that can be automatically fixed"""
         return [issue for issue in self.issues if issue.auto_fixable]
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert validation result to dictionary"""
+        """
+Convert validation result to dictionary"""
         return {
             "is_valid": self.is_valid,
             "scores": {
@@ -227,7 +238,8 @@ class ContentSecurityValidator:
         self.load_security_rules()
         
     def load_security_rules(self):
-        """Load security validation rules"""
+        """
+Load security validation rules"""
         # Malicious content patterns
         self.blocked_patterns = [
             r'<script[^>]*>.*?</script>',  # Script injection
@@ -246,7 +258,8 @@ class ContentSecurityValidator:
         ]
         
     def validate_security(self, content: str, result: ValidationResult):
-        """Validate content security"""
+        """
+Validate content security"""
         security_score = 100.0
         
         # Check for blocked patterns
@@ -286,7 +299,8 @@ class ContentQualityAnalyzer:
             self.init_ai_models()
             
     def init_ai_models(self):
-        """Initialize AI models for quality analysis"""
+        """
+Initialize AI models for quality analysis"""
         try:
             # Content quality model
             self.quality_tokenizer = AutoTokenizer.from_pretrained(
@@ -370,7 +384,8 @@ class ContentQualityAnalyzer:
 
 
 class AudioContentValidator:
-    """Advanced audio content validation"""
+    """
+Advanced audio content validation"""
     
     def __init__(self):
         self.audio_formats = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a']
@@ -383,7 +398,8 @@ class AudioContentValidator:
         }
         
     def validate_audio(self, audio_path: str, result: ValidationResult):
-        """Validate audio content quality and compliance"""
+        """
+Validate audio content quality and compliance"""
         if not AUDIO_AVAILABLE:
             result.add_issue(
                 ValidationLevel.WARNING,
@@ -463,7 +479,8 @@ class AudioContentValidator:
         duration: float, 
         silence_ratio: float
     ) -> float:
-        """Calculate overall audio quality score"""
+        """
+Calculate overall audio quality score"""
         score = 100.0
         
         # Sample rate scoring
@@ -488,7 +505,8 @@ class AudioContentValidator:
 
 
 class ImageContentValidator:
-    """Advanced image content validation"""
+    """
+Advanced image content validation"""
     
     def __init__(self):
         self.image_formats = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.webp']
@@ -501,7 +519,8 @@ class ImageContentValidator:
         }
         
     def validate_image(self, image_path: str, result: ValidationResult):
-        """Validate image content quality and compliance"""
+        """
+Validate image content quality and compliance"""
         if not CV2_AVAILABLE:
             result.add_issue(
                 ValidationLevel.WARNING,
@@ -617,7 +636,8 @@ class ImageContentValidator:
 
 
 class SEOValidator:
-    """SEO optimization validation for content"""
+    """
+SEO optimization validation for content"""
     
     def __init__(self):
         self.seo_rules = {
@@ -630,7 +650,8 @@ class SEOValidator:
         }
         
     def validate_seo(self, content: str, metadata: Dict[str, Any], result: ValidationResult):
-        """Validate SEO optimization"""
+        """
+Validate SEO optimization"""
         seo_score = 100.0
         
         # Title validation
@@ -882,7 +903,8 @@ class ContentValidator:
         content_type: ContentType,
         result: ValidationResult
     ):
-        """Validate basic content requirements"""
+        """
+Validate basic content requirements"""
         if isinstance(content, str):
             if not content or not content.strip():
                 result.add_issue(
@@ -1035,7 +1057,8 @@ class ContentValidator:
         content_type: ContentType,
         result: ValidationResult
     ):
-        """Assess content readiness for monetization"""
+        """
+Assess content readiness for monetization"""
         monetization_score = 100.0
         
         # Check for copyright compliance
@@ -1053,7 +1076,8 @@ class ContentValidator:
         result.monetization_readiness = max(0, monetization_score)
         
     def _calculate_final_scores(self, result: ValidationResult):
-        """Calculate final validation scores"""
+        """
+Calculate final validation scores"""
         # Overall score is weighted average of component scores
         weights = {
             'quality': 0.25,
@@ -1080,7 +1104,8 @@ class ContentValidator:
         contents: List[Tuple[Union[str, bytes, Path], ContentType]],
         **kwargs
     ) -> List[ValidationResult]:
-        """Validate multiple contents in batch"""
+        """
+Validate multiple contents in batch"""
         results = []
         
         for content, content_type in contents:
@@ -1095,7 +1120,8 @@ class ContentValidator:
         content_type: ContentType,
         **kwargs
     ) -> ValidationResult:
-        """Asynchronous content validation"""
+        """
+Asynchronous content validation"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,
@@ -1409,7 +1435,8 @@ class ContentQualityAnalyzer:
         return [s.strip() for s in sentences if s.strip()]
     
     def _check_basic_grammar(self, content: str) -> List[str]:
-        """Basic grammar checking (simplified implementation)"""
+        """
+Basic grammar checking (simplified implementation)"""
         issues = []
         
         # Check for common grammar mistakes
@@ -1454,7 +1481,8 @@ class ContentQualityAnalyzer:
         self.quality_thresholds.update(thresholds)
     
     def add_custom_validation_rule(self, rule_func):
-        """Add a custom validation rule"""
+        """
+Add a custom validation rule"""
         self.validation_rules.append(rule_func)
     
     def validate_batch(self, contents: List[str], content_type: str = "text") -> List[ValidationResult]:

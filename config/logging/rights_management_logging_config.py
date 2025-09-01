@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -30,7 +31,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class RightsType(str, Enum):
-    """Types of intellectual property rights"""
+    """
+Types of intellectual property rights"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -45,6 +48,7 @@ class RightsType(str, Enum):
 
 class LicenseType(str, Enum):
     """Types of content licenses"""
+
     EXCLUSIVE_LICENSE = "exclusive_license"
     NON_EXCLUSIVE_LICENSE = "non_exclusive_license"
     PERPETUAL_LICENSE = "perpetual_license"
@@ -61,6 +65,7 @@ class LicenseType(str, Enum):
 
 class EnforcementAction(str, Enum):
     """Copyright enforcement actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_NOTICE = "legal_notice"
@@ -75,6 +80,7 @@ class EnforcementAction(str, Enum):
 
 class LegalJurisdiction(str, Enum):
     """Legal jurisdictions for rights management"""
+
     UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
     UNITED_KINGDOM = "united_kingdom"
@@ -125,14 +131,16 @@ class RightsManagementLogConfig:
 
 
 class RightsManagementLogger:
-    """Specialized logger for rights management operations"""
+    """
+Specialized logger for rights management operations"""
     
     def __init__(self, config: RightsManagementLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for rights management"""
+        """
+Setup structured logger for rights management"""
         processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
@@ -169,7 +177,8 @@ class RightsManagementLogger:
         return event_dict
     
     def _mark_confidential_data(self, logger, method_name, event_dict):
-        """Mark confidential legal data"""
+        """
+Mark confidential legal data"""
         event_dict['confidentiality_level'] = 'LEGAL_CONFIDENTIAL'
         event_dict['access_restricted'] = True
         return event_dict
@@ -534,12 +543,14 @@ class RightsManagementLoggingConfig:
     
     @staticmethod
     def create_default_config() -> RightsManagementLogConfig:
-        """Create default rights management logging configuration"""
+        """
+Create default rights management logging configuration"""
         return RightsManagementLogConfig()
     
     @staticmethod
     def create_legal_compliant_config() -> RightsManagementLogConfig:
-        """Create legally compliant rights management logging configuration"""
+        """
+Create legally compliant rights management logging configuration"""
         return RightsManagementLogConfig(
             enable_copyright_logging=True,
             enable_licensing_logging=True,

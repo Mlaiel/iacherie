@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Type, Callable
@@ -37,7 +38,9 @@ from .metadata_serializer import MetadataSerializer, MetadataData
 logger = logging.getLogger(__name__)
 
 class SerializerType(Enum):
-    """Available serializer types."""
+    """
+Available serializer types."""
+
     CONTENT = "content"
     SURVEILLANCE = "surveillance"
     PLATFORM = "platform"
@@ -51,6 +54,7 @@ class SerializerType(Enum):
 
 class OperationType(Enum):
     """Serialization operation types."""
+
     SERIALIZE = "serialize"
     DESERIALIZE = "deserialize"
     BATCH_SERIALIZE = "batch_serialize"
@@ -60,6 +64,7 @@ class OperationType(Enum):
 
 class Priority(Enum):
     """Operation priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -68,7 +73,8 @@ class Priority(Enum):
 
 @dataclass
 class SerializationTask:
-    """Represents a serialization task in the queue."""
+    """
+Represents a serialization task in the queue."""
     task_id: str
     operation_type: OperationType
     serializer_type: SerializerType
@@ -84,7 +90,8 @@ class SerializationTask:
     error: Optional[str] = None
 
 class SerializationMetrics(BaseModel):
-    """System-wide serialization metrics."""
+    """
+System-wide serialization metrics."""
     total_operations: int = 0
     successful_operations: int = 0
     failed_operations: int = 0
@@ -117,7 +124,8 @@ class SerializerOrchestrator:
     """
     
     def __init__(self, max_workers: int = 10, enable_caching: bool = True):
-        """Initialize the serializer orchestrator."""
+        """
+Initialize the serializer orchestrator."""
         self.max_workers = max_workers
         self.enable_caching = enable_caching
         
@@ -475,7 +483,8 @@ class SerializerOrchestrator:
         return (datetime.now() - timestamp) < self.cache_ttl
     
     def get_metrics(self) -> SerializationMetrics:
-        """Get current system metrics."""
+        """
+Get current system metrics."""
         with self._lock:
             # Update active workers count
             self.metrics.active_workers = len(self.active_tasks)
@@ -487,7 +496,8 @@ class SerializerOrchestrator:
             return self.metrics.copy()
     
     def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific task."""
+        """
+Get status of a specific task."""
         with self._lock:
             if task_id in self.active_tasks:
                 task = self.active_tasks[task_id]
@@ -523,7 +533,8 @@ class SerializerOrchestrator:
                 return None
     
     def clear_cache(self):
-        """Clear the result cache."""
+        """
+Clear the result cache."""
         with self._lock:
             self.result_cache.clear()
             logger.info("Result cache cleared")
@@ -551,7 +562,8 @@ class SerializerIndex:
     """
     
     def __init__(self, enable_orchestrator: bool = True, max_workers: int = 10):
-        """Initialize the serializer index."""
+        """
+Initialize the serializer index."""
         self.enable_orchestrator = enable_orchestrator
         
         if enable_orchestrator:
@@ -601,7 +613,8 @@ class SerializerIndex:
         serializer_type: SerializerType,
         priority: Priority = Priority.NORMAL
     ) -> Any:
-        """Deserialize data using the specified serializer."""
+        """
+Deserialize data using the specified serializer."""
         if self.enable_orchestrator:
             task_id = await self.orchestrator.submit_task(
                 OperationType.DESERIALIZE,
@@ -623,7 +636,8 @@ class SerializerIndex:
         serializer_type: SerializerType,
         priority: Priority = Priority.NORMAL
     ) -> Any:
-        """Batch serialize multiple data objects."""
+        """
+Batch serialize multiple data objects."""
         if self.enable_orchestrator:
             task_id = await self.orchestrator.submit_task(
                 OperationType.BATCH_SERIALIZE,
@@ -640,25 +654,29 @@ class SerializerIndex:
                 return [serializer.serialize(item) for item in data_list]
     
     def get_serializer(self, serializer_type: SerializerType) -> Any:
-        """Get direct access to a specific serializer."""
+        """
+Get direct access to a specific serializer."""
         if self.enable_orchestrator:
             return self.orchestrator.serializers[serializer_type]
         else:
             return self.serializers[serializer_type]
     
     def get_metrics(self) -> Optional[SerializationMetrics]:
-        """Get system metrics (only available with orchestrator)."""
+        """
+Get system metrics (only available with orchestrator)."""
         if self.enable_orchestrator:
             return self.orchestrator.get_metrics()
         else:
             return None
     
     def get_available_serializers(self) -> List[SerializerType]:
-        """Get list of available serializer types."""
+        """
+Get list of available serializer types."""
         return list(SerializerType)
     
     def get_supported_operations(self) -> List[OperationType]:
-        """Get list of supported operation types."""
+        """
+Get list of supported operation types."""
         return list(OperationType)
 
 
@@ -669,7 +687,8 @@ def get_serializer_index(
     enable_orchestrator: bool = True,
     max_workers: int = 10
 ) -> SerializerIndex:
-    """Get or create the global serializer index instance."""
+    """
+Get or create the global serializer index instance."""
     global _serializer_index
     
     if _serializer_index is None:
@@ -681,7 +700,8 @@ def get_serializer_index(
     return _serializer_index
 
 def reset_serializer_index():
-    """Reset the global serializer index instance."""
+    """
+Reset the global serializer index instance."""
     global _serializer_index
     
     if _serializer_index and _serializer_index.enable_orchestrator:

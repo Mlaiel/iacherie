@@ -12,6 +12,7 @@ Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -36,7 +37,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for audio processing operations."""
+    """
+Configuration for audio processing operations."""
     sample_rate: int = 44100
     bit_depth: int = 24
     channels: int = 2
@@ -50,7 +52,8 @@ class ProcessingConfig:
 
 @dataclass 
 class ProcessingResult:
-    """Result container for processing operations."""
+    """
+Result container for processing operations."""
     processed_audio: np.ndarray
     quality_metrics: Dict[str, float]
     processing_time: float
@@ -58,7 +61,8 @@ class ProcessingResult:
 
 
 class BaseProcessor(ABC):
-    """Abstract base class for audio processors."""
+    """
+Abstract base class for audio processors."""
     
     def __init__(self, config: Optional[ProcessingConfig] = None):
         self.config = config or ProcessingConfig()
@@ -66,11 +70,13 @@ class BaseProcessor(ABC):
         
     @abstractmethod
     async def process(self, audio: np.ndarray, **kwargs) -> ProcessingResult:
-        """Process audio data."""
+        """
+Process audio data."""
         pass
     
     def validate_audio_input(self, audio: np.ndarray) -> None:
-        """Validate input audio format."""
+        """
+Validate input audio format."""
         if not isinstance(audio, np.ndarray):
             raise AudioProcessingError("Audio must be numpy array")
         
@@ -87,7 +93,8 @@ class BaseProcessor(ABC):
 
 
 class AudioProcessor(BaseProcessor):
-    """Main audio processor for separation pipeline."""
+    """
+Main audio processor for separation pipeline."""
     
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
@@ -95,7 +102,8 @@ class AudioProcessor(BaseProcessor):
         self.filters = self._initialize_filters()
         
     def _initialize_filters(self) -> Dict[str, Any]:
-        """Initialize audio filters."""
+        """
+Initialize audio filters."""
         return {
             "highpass": signal.butter(4, 20, btype='high', fs=self.config.sample_rate),
             "lowpass": signal.butter(4, 20000, btype='low', fs=self.config.sample_rate),
@@ -457,7 +465,8 @@ class AudioProcessor(BaseProcessor):
             return 5.0  # Default value
     
     def _calculate_dynamic_range(self, audio: np.ndarray) -> float:
-        """Calculate dynamic range."""
+        """
+Calculate dynamic range."""
         try:
             # Calculate RMS over sliding windows
             window_size = int(0.1 * self.config.sample_rate)  # 100ms windows
@@ -479,7 +488,8 @@ class AudioProcessor(BaseProcessor):
             return 20.0  # Default value
     
     def _calculate_frequency_flatness(self, audio: np.ndarray) -> float:
-        """Calculate frequency response flatness."""
+        """
+Calculate frequency response flatness."""
         try:
             # Compute power spectral density
             freqs, psd = signal.welch(audio, fs=self.config.sample_rate, nperseg=2048)
@@ -500,7 +510,8 @@ class AudioProcessor(BaseProcessor):
             return 0.5
     
     def _calculate_overall_quality(self, metrics: Dict[str, float]) -> float:
-        """Calculate overall quality score from individual metrics."""
+        """
+Calculate overall quality score from individual metrics."""
         try:
             # Normalize and weight different metrics
             snr_score = min(1.0, max(0.0, (metrics.get("snr_db", 0) + 10) / 50))
@@ -530,7 +541,8 @@ class StemProcessor(BaseProcessor):
         self.stem_profiles = self._load_stem_profiles()
     
     def _load_stem_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Load processing profiles for different stem types."""
+        """
+Load processing profiles for different stem types."""
         return {
             "vocals": {
                 "eq_curve": [(100, -2), (500, 1), (2000, 3), (8000, 2)],
@@ -838,7 +850,8 @@ class StemProcessor(BaseProcessor):
             return 20.0  # Default
     
     def _calculate_vocal_clarity(self, audio: np.ndarray) -> float:
-        """Calculate vocal clarity metric."""
+        """
+Calculate vocal clarity metric."""
         try:
             # Focus on presence frequencies (2-5 kHz)
             sos = signal.butter(4, [2000, 5000], btype='band', fs=self.config.sample_rate)
@@ -857,7 +870,8 @@ class StemProcessor(BaseProcessor):
             return 0.5
     
     def _calculate_drum_punch(self, audio: np.ndarray) -> float:
-        """Calculate drum punch metric."""
+        """
+Calculate drum punch metric."""
         try:
             # Analyze transient content
             diff = np.diff(audio)
@@ -874,7 +888,8 @@ class StemProcessor(BaseProcessor):
             return 0.5
     
     def _calculate_bass_tightness(self, audio: np.ndarray) -> float:
-        """Calculate bass tightness metric."""
+        """
+Calculate bass tightness metric."""
         try:
             # Focus on low frequencies
             sos = signal.butter(4, 150, btype='low', fs=self.config.sample_rate)
@@ -897,14 +912,16 @@ class StemProcessor(BaseProcessor):
 
 
 class QualityAnalyzer(BaseProcessor):
-    """Advanced quality analyzer for separated audio."""
+    """
+Advanced quality analyzer for separated audio."""
     
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.analysis_bands = self._setup_analysis_bands()
         
     def _setup_analysis_bands(self) -> List[Tuple[float, float]]:
-        """Setup frequency bands for analysis."""
+        """
+Setup frequency bands for analysis."""
         return [
             (20, 60),      # Sub-bass
             (60, 250),     # Bass
@@ -918,7 +935,8 @@ class QualityAnalyzer(BaseProcessor):
     
     async def process(self, stems: Dict[str, np.ndarray], 
                      reference: Optional[np.ndarray] = None) -> Dict[str, Any]:
-        """Perform comprehensive quality analysis."""
+        """
+Perform comprehensive quality analysis."""
         analysis_results = {}
         
         for stem_name, stem_audio in stems.items():
@@ -1157,7 +1175,8 @@ class QualityAnalyzer(BaseProcessor):
             return 0.0
     
     def _calculate_momentary_loudness(self, audio: np.ndarray) -> float:
-        """Calculate momentary loudness."""
+        """
+Calculate momentary loudness."""
         try:
             # Use 400ms window for momentary loudness
             window_samples = int(0.4 * self.config.sample_rate)
@@ -1176,7 +1195,8 @@ class QualityAnalyzer(BaseProcessor):
             return -23.0  # Default LUFS value
     
     def _calculate_stem_score(self, analysis_results: Dict[str, Any]) -> float:
-        """Calculate overall stem quality score."""
+        """
+Calculate overall stem quality score."""
         try:
             scores = []
             

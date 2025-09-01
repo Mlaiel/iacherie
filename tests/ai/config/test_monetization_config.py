@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for MonetizationConfig module ensuring 100% revenue
 optimization, collaboration matching, and financial analytics for content creators.
 """
+
 import pytest
 import sys
 import os
@@ -68,7 +69,8 @@ class TestMonetizationConfig:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.config = MonetizationConfig()
         self.test_env = test_environment
         self.sample_revenue_data = self._generate_sample_revenue_data()
@@ -703,7 +705,8 @@ class TestRevenueCalculator:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.revenue_calculator = RevenueCalculator()
     
     @pytest_marks["unit"]
@@ -734,7 +737,8 @@ class TestCollaborationMatcher:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.collaboration_matcher = CollaborationMatcher()
     
     @pytest_marks["unit"]

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
 from datetime import datetime, timezone, timedelta

@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -48,7 +49,9 @@ from ....core.cache import RedisCache
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for distribution"""
+    """
+Supported content types for distribution"""
+
     MUSIC = "music"
     PODCAST = "podcast"
     VIDEO = "video"
@@ -64,6 +67,7 @@ class ContentType(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status types"""
+
     PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
@@ -122,6 +126,7 @@ class PlatformType(Enum):
 
 class PlatformCapability(Enum):
     """Platform capabilities for intelligent routing"""
+
     AUDIO_STREAMING = "audio_streaming"
     VIDEO_HOSTING = "video_hosting"
     LIVE_STREAMING = "live_streaming"
@@ -186,7 +191,8 @@ class PlatformSpecification:
 
 @dataclass
 class DistributionJob:
-    """Comprehensive distribution job configuration"""
+    """
+Comprehensive distribution job configuration"""
     job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     content_metadata: ContentMetadata = field(default_factory=ContentMetadata)
@@ -559,7 +565,8 @@ class DistributionEngine(BaseAgent):
         pass
 
     async def _protect_content(self, job: DistributionJob) -> None:
-        """Apply content protection and rights management"""
+        """
+Apply content protection and rights management"""
         try:
             # Generate content fingerprint for protection
             content_fingerprint = await self.content_protector.generate_fingerprint(
@@ -762,7 +769,8 @@ class DistributionEngine(BaseAgent):
         return content_package
 
     async def _get_user_credentials(self, user_id: str, platform: PlatformType) -> Dict[str, Any]:
-        """Retrieve user credentials for platform authentication"""
+        """
+Retrieve user credentials for platform authentication"""
         # Implementation would fetch user's platform credentials securely
         # This is a placeholder for the actual implementation
         cached_credentials = await self.cache.get(f"credentials:{user_id}:{platform.value}")
@@ -890,11 +898,13 @@ class DistributionEngine(BaseAgent):
         )
 
     async def get_job_status(self, job_id: str) -> Optional[DistributionJob]:
-        """Get current status of a distribution job"""
+        """
+Get current status of a distribution job"""
         return self.active_jobs.get(job_id)
 
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a pending or processing distribution job"""
+        """
+Cancel a pending or processing distribution job"""
         job = self.active_jobs.get(job_id)
         if job and job.status in [DistributionStatus.PENDING, DistributionStatus.QUEUED, DistributionStatus.PROCESSING]:
             job.status = DistributionStatus.CANCELLED
@@ -907,7 +917,8 @@ class DistributionEngine(BaseAgent):
         return self.performance_metrics.copy()
 
     async def get_platform_analytics(self, platform: PlatformType, content_id: str) -> Dict[str, Any]:
-        """Get detailed analytics for specific platform content"""
+        """
+Get detailed analytics for specific platform content"""
         try:
             return await self._collect_platform_analytics(platform, content_id)
         except Exception as e:

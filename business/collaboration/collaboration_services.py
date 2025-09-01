@@ -4,6 +4,7 @@ Professional business logic services for collaboration management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 import asyncio
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceResponse:
-    """Standardized service response"""
+    """
+Standardized service response"""
     def __init__(
         self, 
         success: bool, 
@@ -61,7 +63,8 @@ class CollaborationDiscoveryService:
         creator_profile: Dict[str, Any],
         preferences: Dict[str, Any] = None
     ) -> ServiceResponse:
-        """Discover collaboration opportunities for a creator"""
+        """
+Discover collaboration opportunities for a creator"""
         try:
             preferences = preferences or {}
             
@@ -271,7 +274,8 @@ class CollaborationDiscoveryService:
 
 
 class CollaborationMatchingService:
-    """Service for advanced collaboration matching and pairing"""
+    """
+Service for advanced collaboration matching and pairing"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -285,7 +289,8 @@ class CollaborationMatchingService:
         candidate_pool: List[Dict[str, Any]],
         matching_options: Dict[str, Any] = None
     ) -> ServiceResponse:
-        """Find and rank collaboration matches"""
+        """
+Find and rank collaboration matches"""
         try:
             matching_options = matching_options or {}
             
@@ -440,7 +445,8 @@ class CollaborationManagementService:
         selected_matches: List[str],
         contract_terms: Dict[str, Any]
     ) -> ServiceResponse:
-        """Create a new collaboration from matches"""
+        """
+Create a new collaboration from matches"""
         try:
             # Create collaboration request
             request = CollaborationRequest(**request_data)

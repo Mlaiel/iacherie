@@ -8,10 +8,11 @@ Responsibility: Exceptions hiérarchiques pour système de sauvegarde
 ===================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
@@ -141,7 +142,8 @@ class JobCreationException(JobException):
 
 
 class JobExecutionException(JobException):
-    """Exception lors de l'exécution d'une tâche de sauvegarde"""
+    """
+Exception lors de l'exécution d'une tâche de sauvegarde"""
     
     def __init__(
         self,
@@ -201,12 +203,14 @@ class StorageConnectionException(StorageException):
 
 
 class StorageAuthenticationException(StorageException):
-    """Exception d'authentification avec le stockage"""
+    """
+Exception d'authentification avec le stockage"""
     pass
 
 
 class StorageCapacityException(StorageException):
-    """Exception de capacité de stockage insuffisante"""
+    """
+Exception de capacité de stockage insuffisante"""
     
     def __init__(
         self,
@@ -230,7 +234,8 @@ class StoragePermissionException(StorageException):
 
 
 class FileNotFoundException(StorageException):
-    """Exception de fichier non trouvé"""
+    """
+Exception de fichier non trouvé"""
     
     def __init__(self, message: str, file_path: Optional[str] = None, **kwargs):
         context = kwargs.get("context", {})
@@ -286,7 +291,8 @@ class CompressionAlgorithmException(CompressionException):
 
 
 class CompressionRatioException(CompressionException):
-    """Exception de ratio de compression anormal"""
+    """
+Exception de ratio de compression anormal"""
     
     def __init__(
         self,
@@ -312,7 +318,8 @@ class DecompressionException(CompressionException):
 # Exceptions de chiffrement et sécurité
 
 class EncryptionException(BackupException):
-    """Exception de base pour les opérations de chiffrement"""
+    """
+Exception de base pour les opérations de chiffrement"""
     
     def __init__(
         self,
@@ -336,14 +343,16 @@ class KeyManagementException(EncryptionException):
 
 
 class KeyNotFoundException(KeyManagementException):
-    """Exception de clé de chiffrement non trouvée"""
+    """
+Exception de clé de chiffrement non trouvée"""
     
     def __init__(self, message: str, key_id: Optional[str] = None, **kwargs):
         super().__init__(message, key_id=key_id, **kwargs)
 
 
 class KeyExpiredException(KeyManagementException):
-    """Exception de clé de chiffrement expirée"""
+    """
+Exception de clé de chiffrement expirée"""
     
     def __init__(
         self,
@@ -367,7 +376,8 @@ class DecryptionException(EncryptionException):
 # Exceptions de vérification et intégrité
 
 class VerificationException(BackupException):
-    """Exception de base pour les opérations de vérification"""
+    """
+Exception de base pour les opérations de vérification"""
     
     def __init__(
         self,
@@ -410,14 +420,16 @@ class CorruptionException(IntegrityException):
 
 
 class ChecksumMismatchException(IntegrityException):
-    """Exception de différence de checksum"""
+    """
+Exception de différence de checksum"""
     pass
 
 
 # Exceptions de récupération
 
 class RecoveryException(BackupException):
-    """Exception de base pour les opérations de récupération"""
+    """
+Exception de base pour les opérations de récupération"""
     
     def __init__(
         self,
@@ -441,7 +453,8 @@ class RecoveryPlanException(RecoveryException):
 
 
 class RecoveryExecutionException(RecoveryException):
-    """Exception d'exécution de récupération"""
+    """
+Exception d'exécution de récupération"""
     
     def __init__(
         self,
@@ -465,7 +478,8 @@ class RecoveryTimeoutException(RecoveryException):
 # Exceptions de monitoring et alertes
 
 class MonitoringException(BackupException):
-    """Exception de base pour le système de monitoring"""
+    """
+Exception de base pour le système de monitoring"""
     
     def __init__(
         self,
@@ -489,7 +503,8 @@ class MetricCollectionException(MonitoringException):
 
 
 class AlertException(MonitoringException):
-    """Exception du système d'alertes"""
+    """
+Exception du système d'alertes"""
     
     def __init__(
         self,
@@ -534,14 +549,16 @@ class RetentionPolicyException(RetentionException):
 
 
 class RetentionExecutionException(RetentionException):
-    """Exception d'exécution de rétention"""
+    """
+Exception d'exécution de rétention"""
     pass
 
 
 # Exceptions de planification
 
 class SchedulingException(BackupException):
-    """Exception de base pour la planification"""
+    """
+Exception de base pour la planification"""
     
     def __init__(
         self,
@@ -565,14 +582,16 @@ class CronExpressionException(SchedulingException):
 
 
 class ScheduleConflictException(SchedulingException):
-    """Exception de conflit de planification"""
+    """
+Exception de conflit de planification"""
     pass
 
 
 # Exceptions de quotas et limites
 
 class QuotaException(BackupException):
-    """Exception de dépassement de quota"""
+    """
+Exception de dépassement de quota"""
     
     def __init__(
         self,
@@ -602,19 +621,22 @@ class StorageQuotaException(QuotaException):
 
 
 class BackupCountQuotaException(QuotaException):
-    """Exception de dépassement de quota de nombre de sauvegardes"""
+    """
+Exception de dépassement de quota de nombre de sauvegardes"""
     pass
 
 
 class BandwidthQuotaException(QuotaException):
-    """Exception de dépassement de quota de bande passante"""
+    """
+Exception de dépassement de quota de bande passante"""
     pass
 
 
 # Exceptions de réseau et connectivité
 
 class NetworkException(BackupException):
-    """Exception de base pour les problèmes réseau"""
+    """
+Exception de base pour les problèmes réseau"""
     
     def __init__(
         self,
@@ -638,7 +660,8 @@ class ConnectionException(NetworkException):
 
 
 class TimeoutException(NetworkException):
-    """Exception de timeout réseau"""
+    """
+Exception de timeout réseau"""
     
     def __init__(
         self,

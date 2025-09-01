@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List, Union, Callable
 from pydantic import BaseSettings, Field, validator, HttpUrl
@@ -25,7 +26,9 @@ import json
 
 
 class WebhookProvider(str, Enum):
-    """Supported webhook providers."""
+    """
+Supported webhook providers."""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -109,7 +112,8 @@ class WebhookRetry:
 
 
 class WebhookConfig(BaseSettings):
-    """Webhook configuration for external service integrations."""
+    """
+Webhook configuration for external service integrations."""
     
     # Base webhook settings
     webhook_base_url: HttpUrl = Field(..., env="WEBHOOK_BASE_URL")
@@ -234,6 +238,7 @@ class WebhookConfig(BaseSettings):
 
 class WebhookEndpoints:
     """Webhook endpoints configuration."""
+
     
     ENDPOINTS = {
         WebhookProvider.SPOTIFY: {
@@ -278,14 +283,16 @@ class WebhookEndpoints:
 
 
 class WebhookManager:
-    """Webhook manager for handling external service notifications."""
+    """
+Webhook manager for handling external service notifications."""
     
     def __init__(self, config: WebhookConfig):
         self.config = config
         self.handlers: Dict[str, Callable] = {}
         
     def get_security_config(self, provider: WebhookProvider) -> WebhookSecurity:
-        """Get security configuration for a specific provider."""
+        """
+Get security configuration for a specific provider."""
         secret_attr = f"{provider}_webhook_secret"
         secret_key = getattr(self.config, secret_attr, "")
         
@@ -331,11 +338,13 @@ class WebhookManager:
         self.handlers[event_type] = handler
     
     def get_handler(self, event_type: str) -> Optional[Callable]:
-        """Get webhook event handler."""
+        """
+Get webhook event handler."""
         return self.handlers.get(event_type)
     
     def get_provider_config(self, provider: WebhookProvider) -> Dict[str, Any]:
-        """Get complete webhook configuration for a specific provider."""
+        """
+Get complete webhook configuration for a specific provider."""
         enabled_attr = f"{provider}_webhook_enabled"
         endpoint_attr = f"{provider}_webhook_endpoint"
         events_attr = f"{provider}_webhook_events"

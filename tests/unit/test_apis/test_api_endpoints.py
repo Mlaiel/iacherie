@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,9 +13,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive API endpoint tests
+"""
+Comprehensive API endpoint tests
 Tests all critical API routes for functionality, security, and performance
 """
+
 import pytest
 import sys
 import os
@@ -153,7 +156,8 @@ class TestContentAPI:
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
+        """
+Get authorization headers for testing"""
         user_data = {
             "email": "creator@example.com",
             "password": "password123",
@@ -280,7 +284,8 @@ class TestFingerprintingAPI:
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
+        """
+Get authorization headers for testing"""
         user_data = {
             "email": "creator@example.com",
             "password": "password123",
@@ -405,7 +410,8 @@ class TestProtectionAPI:
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
+        """
+Get authorization headers for testing"""
         user_data = {
             "email": "creator@example.com",
             "password": "password123",
@@ -496,7 +502,8 @@ class TestMonetizationAPI:
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
+        """
+Get authorization headers for testing"""
         user_data = {
             "email": "creator@example.com",
             "password": "password123",
@@ -573,7 +580,8 @@ class TestAPIPerformance:
         return TestClient(app)
     
     def test_api_response_times(self, client):
-        """Test API response times"""
+        """
+Test API response times"""
         import time
         
         endpoints = [
@@ -643,7 +651,8 @@ class TestAPIErrorHandling:
         return TestClient(app)
     
     def test_404_handling(self, client):
-        """Test 404 error handling"""
+        """
+Test 404 error handling"""
         response = client.get("/api/nonexistent-endpoint")
         
         assert response.status_code == 404

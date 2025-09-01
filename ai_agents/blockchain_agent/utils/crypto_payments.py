@@ -16,6 +16,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -40,7 +41,9 @@ from .blockchain_agent import BlockchainNetwork
 
 
 class PaymentStatus(Enum):
-    """Payment transaction statuses."""
+    """
+Payment transaction statuses."""
+
     PENDING = "pending"
     CONFIRMING = "confirming"
     CONFIRMED = "confirmed"
@@ -52,6 +55,7 @@ class PaymentStatus(Enum):
 
 class PaymentType(Enum):
     """Types of cryptocurrency payments."""
+
     ONE_TIME = "one_time"
     SUBSCRIPTION = "subscription"
     STREAMING = "streaming"
@@ -62,6 +66,7 @@ class PaymentType(Enum):
 
 class CurrencyType(Enum):
     """Supported cryptocurrency types."""
+
     BITCOIN = "BTC"
     ETHEREUM = "ETH"
     POLYGON = "MATIC"
@@ -94,7 +99,8 @@ class PaymentRequest:
 
 @dataclass
 class PaymentTransaction:
-    """Completed payment transaction record."""
+    """
+Completed payment transaction record."""
     id: str
     payment_request_id: str
     transaction_hash: str
@@ -115,7 +121,8 @@ class PaymentTransaction:
 
 @dataclass
 class SubscriptionPlan:
-    """Cryptocurrency subscription plan."""
+    """
+Cryptocurrency subscription plan."""
     id: str
     name: str
     description: str
@@ -130,7 +137,8 @@ class SubscriptionPlan:
 
 @dataclass
 class PaymentStream:
-    """Real-time payment streaming configuration."""
+    """
+Real-time payment streaming configuration."""
     id: str
     from_address: str
     to_address: str
@@ -158,7 +166,8 @@ class CryptoPaymentProcessor:
     """
     
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the Cryptocurrency Payment Processor."""
+        """
+Initialize the Cryptocurrency Payment Processor."""
         self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
@@ -758,7 +767,8 @@ class CryptoPaymentProcessor:
         currency: CurrencyType,
         network: BlockchainNetwork
     ) -> Dict[str, Any]:
-        """Calculate payment processing fees."""
+        """
+Calculate payment processing fees."""
         # Gas fee estimate
         gas_fee = await self._estimate_gas_fee(network, amount)
         
@@ -782,12 +792,14 @@ class CryptoPaymentProcessor:
         }
     
     async def _estimate_gas_fee(self, network: BlockchainNetwork, amount: Decimal) -> Decimal:
-        """Estimate gas fee for transaction."""
+        """
+Estimate gas fee for transaction."""
         gas_estimates = await self.blockchain_agent._estimate_gas_cost(network, amount)
         return Decimal(str(gas_estimates.get('estimated_cost_eth', 0.001)))
     
     async def _generate_payment_data(self, request: PaymentRequest) -> str:
-        """Generate payment data for QR codes."""
+        """
+Generate payment data for QR codes."""
         payment_data = {
             'type': 'crypto_payment',
             'amount': str(request.amount),
@@ -806,7 +818,8 @@ class CryptoPaymentProcessor:
         interval: str,
         interval_count: int
     ) -> datetime:
-        """Calculate next payment date for subscription."""
+        """
+Calculate next payment date for subscription."""
         if interval == "daily":
             return start_date + timedelta(days=interval_count)
         elif interval == "weekly":

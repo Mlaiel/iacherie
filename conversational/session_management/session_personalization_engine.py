@@ -13,6 +13,7 @@ Any unauthorized use, copy, modification, or distribution without
 explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -55,7 +56,9 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class PersonalizationLevel(Enum):
-    """Session personalization levels"""
+    """
+Session personalization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -64,6 +67,7 @@ class PersonalizationLevel(Enum):
 
 class UserBehaviorType(Enum):
     """User behavior classification types"""
+
     CREATIVE_FOCUSED = "creative_focused"
     BUSINESS_ORIENTED = "business_oriented"
     COLLABORATION_SEEKING = "collaboration_seeking"
@@ -74,6 +78,7 @@ class UserBehaviorType(Enum):
 
 class ContentPreferenceType(Enum):
     """Content preference types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -105,7 +110,8 @@ class UserSessionPreferences:
 
 @dataclass
 class SessionPersonalizationContext:
-    """Session personalization context"""
+    """
+Session personalization context"""
     session_id: str
     user_id: str
     current_platform: str
@@ -120,7 +126,8 @@ class SessionPersonalizationContext:
     learning_insights: Dict[str, Any]
 
 class UserSessionPreferencesManager:
-    """Manages user session preferences with ML-powered learning"""
+    """
+Manages user session preferences with ML-powered learning"""
     def __init__(self):
         self.cache_manager = CacheManager()
         self.encryption_manager = EncryptionManager()
@@ -1208,25 +1215,29 @@ class PreferenceEmbeddingNetwork(nn.Module):
 # Factory functions for easy module access
 
 async def create_session_personalization_engine() -> SessionPersonalizationEngine:
-    """Factory function to create and initialize session personalization engine"""
+    """
+Factory function to create and initialize session personalization engine"""
     engine = SessionPersonalizationEngine()
     await engine.initialize()
     return engine
 
 async def create_user_preferences_manager() -> UserSessionPreferencesManager:
-    """Factory function to create and initialize user preferences manager"""
+    """
+Factory function to create and initialize user preferences manager"""
     manager = UserSessionPreferencesManager()
     await manager.initialize()
     return manager
 
 async def create_adaptive_behavior_manager() -> AdaptiveSessionBehavior:
-    """Factory function to create and initialize adaptive behavior manager"""
+    """
+Factory function to create and initialize adaptive behavior manager"""
     manager = AdaptiveSessionBehavior()
     await manager.initialize()
     return manager
 
 async def create_personalized_conversation_manager() -> PersonalizedConversationManager:
-    """Factory function to create and initialize personalized conversation manager"""
+    """
+Factory function to create and initialize personalized conversation manager"""
     manager = PersonalizedConversationManager()
     await manager.initialize()
     return manager
@@ -1235,14 +1246,16 @@ async def create_personalized_conversation_manager() -> PersonalizedConversation
 _personalization_engine: Optional[SessionPersonalizationEngine] = None
 
 async def get_personalization_engine() -> SessionPersonalizationEngine:
-    """Get or create the global personalization engine instance"""
+    """
+Get or create the global personalization engine instance"""
     global _personalization_engine
     if _personalization_engine is None:
         _personalization_engine = await create_session_personalization_engine()
     return _personalization_engine
 
 async def initialize_session_personalization():
-    """Initialize the session personalization system"""
+    """
+Initialize the session personalization system"""
     try:
         global _personalization_engine
         _personalization_engine = await create_session_personalization_engine()

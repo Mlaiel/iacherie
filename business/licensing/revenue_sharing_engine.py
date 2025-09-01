@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -31,7 +32,9 @@ from ..integrations.payment_processors import PaymentProcessorManager
 
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     DOWNLOAD_SALES = "download_sales"
     SYNCHRONIZATION_FEES = "synchronization_fees"
@@ -48,6 +51,7 @@ class RevenueType(Enum):
 
 class ShareType(Enum):
     """Types of revenue sharing arrangements"""
+
     PERCENTAGE = "percentage"           # Fixed percentage
     TIERED = "tiered"                  # Tiered based on performance
     WATERFALL = "waterfall"            # Sequential distribution
@@ -58,6 +62,7 @@ class ShareType(Enum):
 
 class PaymentFrequency(Enum):
     """Payment schedule frequencies"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -71,6 +76,7 @@ class PaymentFrequency(Enum):
 
 class DistributionStatus(Enum):
     """Revenue distribution status"""
+
     PENDING = "pending"
     CALCULATING = "calculating"
     READY_FOR_PAYMENT = "ready_for_payment"
@@ -95,7 +101,8 @@ class RevenueMetrics:
 
 
 class RevenueShareConfiguration(BaseModel):
-    """Revenue sharing configuration"""
+    """
+Revenue sharing configuration"""
     content_id: str = Field(..., description="Content associated with revenue sharing")
     share_type: ShareType = Field(..., description="Type of sharing arrangement")
     revenue_types: List[RevenueType] = Field(..., description="Types of revenue to share")
@@ -566,7 +573,8 @@ class RevenueSharingEngine:
         revenue_data: List[Dict[str, Any]], 
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate detailed revenue distribution"""
+        """
+Calculate detailed revenue distribution"""
         # Implementation for revenue distribution calculation
         pass
     
@@ -575,6 +583,7 @@ class RevenueSharingEngine:
         payment_updates: List[Dict[str, Any]], 
         distribution_record: Any
     ) -> Dict[str, Any]:
-        """Calculate comprehensive payment metrics"""
+        """
+Calculate comprehensive payment metrics"""
         # Implementation for payment metrics calculation
         pass

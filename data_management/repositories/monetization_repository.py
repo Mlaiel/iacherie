@@ -8,7 +8,7 @@ Responsibility: Revenue tracking, optimization, and subscription management
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -21,6 +21,7 @@ MONETIZATION REPOSITORY ARCHITECTURE:
 Revenue Tracking → Payment Integration → Subscription Lifecycle → 
 Commission Management → Payout Processing → Analytics → Optimization
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -33,7 +34,9 @@ from decimal import Decimal
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     SUBSCRIPTION = "subscription"
     COLLABORATION = "collaboration"
     CONTENT_SALES = "content_sales"
@@ -45,6 +48,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -55,6 +59,7 @@ class PaymentStatus(Enum):
 
 class SubscriptionTier(Enum):
     """Subscription tier levels"""
+
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -63,6 +68,7 @@ class SubscriptionTier(Enum):
 
 class PayoutStatus(Enum):
     """Payout status"""
+
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
     SENT = "sent"
@@ -87,7 +93,8 @@ class RevenueRecord:
 
 @dataclass
 class SubscriptionInfo:
-    """Subscription information"""
+    """
+Subscription information"""
     subscription_id: str
     creator_id: str
     subscriber_id: str
@@ -103,7 +110,8 @@ class SubscriptionInfo:
 
 @dataclass
 class PayoutRecord:
-    """Payout record data structure"""
+    """
+Payout record data structure"""
     payout_id: str
     creator_id: str
     amount: Decimal
@@ -118,7 +126,8 @@ class PayoutRecord:
 
 @dataclass
 class CommissionInfo:
-    """Commission calculation info"""
+    """
+Commission calculation info"""
     transaction_id: str
     gross_amount: Decimal
     platform_fee: Decimal
@@ -129,7 +138,8 @@ class CommissionInfo:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data"""
+    """
+Revenue analytics data"""
     total_revenue: Decimal
     revenue_by_type: Dict[str, Decimal]
     revenue_growth: float
@@ -358,12 +368,14 @@ class MonetizationRepository(BaseRepository):
         return []
     
     def _get_previous_period_revenue(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[RevenueRecord]:
-        """Get revenue data for previous period"""
+        """
+Get revenue data for previous period"""
         return []
 
 
 class AsyncMonetizationRepository(AsyncBaseRepository):
-    """Asynchronous monetization repository for high-performance operations"""
+    """
+Asynchronous monetization repository for high-performance operations"""
     
     def __init__(self, db_connection=None, cache_manager=None,
                  payment_processor=None, analytics_service=None):
@@ -380,6 +392,7 @@ class AsyncMonetizationRepository(AsyncBaseRepository):
         pass
     
     async def process_bulk_payouts_async(self, payout_batch: List[PayoutRecord]) -> List[PayoutRecord]:
-        """Process multiple payouts asynchronously"""
+        """
+Process multiple payouts asynchronously"""
         # Async implementation would go here
         pass

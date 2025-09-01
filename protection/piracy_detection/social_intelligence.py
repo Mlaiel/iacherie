@@ -4,7 +4,7 @@
 Advanced social media intelligence and network analysis for content tracking.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -31,6 +31,7 @@ This module provides:
 - Social sentiment analysis and reputation monitoring
 - Community detection and behavior analysis
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -60,7 +61,9 @@ import asyncpg
 logger = logging.getLogger(__name__)
 
 class SocialPlatform(Enum):
-    """Supported social media platforms."""
+    """
+Supported social media platforms."""
+
     TWITTER = "twitter"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -76,6 +79,7 @@ class SocialPlatform(Enum):
 
 class ContentStatus(Enum):
     """Content status on social platforms."""
+
     ORIGINAL = "original"
     REPOST = "repost"
     MODIFIED = "modified"
@@ -86,6 +90,7 @@ class ContentStatus(Enum):
 
 class InfluencerTier(Enum):
     """Influencer tier classification."""
+
     NANO = "nano"           # 1K-10K followers
     MICRO = "micro"         # 10K-100K followers
     MACRO = "macro"         # 100K-1M followers
@@ -94,6 +99,7 @@ class InfluencerTier(Enum):
 
 class NetworkRole(Enum):
     """Role in social network."""
+
     CREATOR = "creator"
     AMPLIFIER = "amplifier"
     CURATOR = "curator"
@@ -125,7 +131,8 @@ class SocialProfile:
 
 @dataclass
 class ContentPost:
-    """Social media content post."""
+    """
+Social media content post."""
     post_id: str
     platform: SocialPlatform
     author_profile: SocialProfile
@@ -144,7 +151,8 @@ class ContentPost:
 
 @dataclass
 class NetworkConnection:
-    """Connection between social media profiles."""
+    """
+Connection between social media profiles."""
     connection_id: str
     source_profile: str
     target_profile: str
@@ -158,7 +166,8 @@ class NetworkConnection:
 
 @dataclass
 class PropagationPath:
-    """Content propagation path through social networks."""
+    """
+Content propagation path through social networks."""
     path_id: str
     original_content_id: str
     propagation_steps: List[Dict[str, Any]]
@@ -173,7 +182,8 @@ class PropagationPath:
 
 @dataclass
 class SocialIntelligenceReport:
-    """Comprehensive social intelligence analysis report."""
+    """
+Comprehensive social intelligence analysis report."""
     report_id: str
     content_id: str
     analysis_period: Tuple[datetime, datetime]
@@ -204,7 +214,8 @@ class SocialNetworkIntelligence:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the social network intelligence engine."""
+        """
+Initialize the social network intelligence engine."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -244,7 +255,8 @@ class SocialNetworkIntelligence:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the social network intelligence engine."""
+        """
+Initialize the social network intelligence engine."""
         try:
             self.logger.info("Initializing Social Network Intelligence Engine...")
             
@@ -799,13 +811,15 @@ class SocialNetworkIntelligence:
         }
     
     async def _create_authenticity_detector(self):
-        """Create custom authenticity detection model."""
+        """
+Create custom authenticity detection model."""
         # Placeholder for custom authenticity detection implementation
         # This would include bot detection, fake account identification, etc.
         return None
     
     async def close(self) -> None:
-        """Clean up resources."""
+        """
+Clean up resources."""
         try:
             # Cancel monitoring tasks
             if hasattr(self, 'monitoring_tasks'):
@@ -835,16 +849,19 @@ class SocialNetworkIntelligence:
         return []
     
     async def _search_instagram_mentions(self, content_id: str, start_date: datetime, end_date: datetime) -> List[ContentPost]:
-        """Search Instagram for content mentions."""
+        """
+Search Instagram for content mentions."""
         # Implementation for Instagram API search
         return []
     
     async def _search_youtube_mentions(self, content_id: str, start_date: datetime, end_date: datetime) -> List[ContentPost]:
-        """Search YouTube for content mentions.""" 
+        """
+Search YouTube for content mentions.""" 
         # Implementation for YouTube API search
         return []
     
     async def _search_reddit_mentions(self, content_id: str, start_date: datetime, end_date: datetime) -> List[ContentPost]:
-        """Search Reddit for content mentions."""
+        """
+Search Reddit for content mentions."""
         # Implementation for Reddit API search  
         return []

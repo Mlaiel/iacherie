@@ -5,7 +5,7 @@ across multiple channels with preference management and delivery optimization.
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class NotificationType(Enum):
-    """Notification types"""
+    """
+Notification types"""
+
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     COLLABORATION = "collaboration"
@@ -40,6 +43,7 @@ class NotificationType(Enum):
 
 class NotificationChannel(Enum):
     """Notification delivery channels"""
+
     IN_APP = "in_app"
     EMAIL = "email"
     SMS = "sms"
@@ -49,6 +53,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -74,14 +79,16 @@ class Notification:
 
 
 class NotificationPreferences:
-    """Notification preferences management"""
+    """
+Notification preferences management"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def get_user_preferences(self, creator_id: str) -> Dict[str, Any]:
-        """Get notification preferences for creator"""
+        """
+Get notification preferences for creator"""
         cache_key = f"notification_preferences:{creator_id}"
         preferences = await self.cache.get(cache_key)
         
@@ -178,7 +185,8 @@ class NotificationRenderer:
         self.logger = get_logger(self.__class__.__name__)
     
     async def render_notification(self, notification: Notification, channel: NotificationChannel, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Render notification for specific channel"""
+        """
+Render notification for specific channel"""
         if channel == NotificationChannel.EMAIL:
             return await self._render_email(notification, creator_data)
         elif channel == NotificationChannel.SMS:
@@ -193,7 +201,8 @@ class NotificationRenderer:
         return {'error': 'Unsupported channel'}
     
     async def _render_email(self, notification: Notification, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Render email notification"""
+        """
+Render email notification"""
         return {
             'channel': 'email',
             'to': creator_data.get('email'),
@@ -230,7 +239,8 @@ class NotificationRenderer:
         }
     
     async def _render_in_app(self, notification: Notification, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Render in-app notification"""
+        """
+Render in-app notification"""
         return {
             'channel': 'in_app',
             'notification_id': notification.notification_id,
@@ -243,7 +253,8 @@ class NotificationRenderer:
         }
     
     async def _render_webhook(self, notification: Notification, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Render webhook notification"""
+        """
+Render webhook notification"""
         return {
             'channel': 'webhook',
             'url': creator_data.get('webhook_url'),
@@ -261,14 +272,16 @@ class NotificationRenderer:
 
 
 class NotificationDelivery:
-    """Notification delivery engine"""
+    """
+Notification delivery engine"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def deliver_notification(self, notification: Notification, channel: NotificationChannel, rendered_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Deliver notification via specific channel"""
+        """
+Deliver notification via specific channel"""
         try:
             if channel == NotificationChannel.EMAIL:
                 result = await self._deliver_email(rendered_content)
@@ -456,7 +469,8 @@ class NotificationManager:
             return start_hour <= current_hour < end_hour
     
     async def _calculate_next_delivery_time(self, preferences: Dict[str, Any]) -> datetime:
-        """Calculate next appropriate delivery time"""
+        """
+Calculate next appropriate delivery time"""
         quiet_hours = preferences.get('quiet_hours', {})
         end_time = quiet_hours.get('end_time', '08:00')
         end_hour = int(end_time.split(':')[0])
@@ -470,7 +484,8 @@ class NotificationManager:
         return next_delivery
     
     async def get_notification_history(self, creator_id: str, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get notification history for creator"""
+        """
+Get notification history for creator"""
         # Mock notification history
         return [
             {

@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import hashlib
@@ -74,7 +75,9 @@ logger = logging.getLogger(__name__)
 
 
 class DocumentFormat(str, Enum):
-    """Supported document formats"""
+    """
+Supported document formats"""
+
     PDF = "pdf"
     DOCX = "docx"
     DOC = "doc"
@@ -96,6 +99,7 @@ class DocumentFormat(str, Enum):
 
 class DocumentType(str, Enum):
     """Types of documents"""
+
     TEXT_DOCUMENT = "text_document"
     SPREADSHEET = "spreadsheet"
     PRESENTATION = "presentation"
@@ -107,6 +111,7 @@ class DocumentType(str, Enum):
 
 class ExtractionMode(str, Enum):
     """Document extraction modes"""
+
     TEXT_ONLY = "text_only"
     STRUCTURED = "structured"
     WITH_FORMATTING = "with_formatting"
@@ -117,6 +122,7 @@ class ExtractionMode(str, Enum):
 
 class DocumentQuality(str, Enum):
     """Document quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -176,7 +182,8 @@ class DocumentMetadata:
 
 @dataclass
 class DocumentStructure:
-    """Document structure information"""
+    """
+Document structure information"""
     sections: List[Dict[str, Any]] = field(default_factory=list)
     headings: List[Dict[str, Any]] = field(default_factory=list)
     paragraphs: List[Dict[str, Any]] = field(default_factory=list)
@@ -192,7 +199,8 @@ class DocumentStructure:
 
 @dataclass
 class ContentAnalysis:
-    """Content analysis results"""
+    """
+Content analysis results"""
     main_topics: List[str] = field(default_factory=list)
     key_entities: List[Dict[str, Any]] = field(default_factory=list)
     sentiment_score: Optional[float] = None
@@ -207,7 +215,8 @@ class ContentAnalysis:
 
 @dataclass
 class DocumentFeatures:
-    """Advanced document features"""
+    """
+Advanced document features"""
     text_content: Optional[str] = None
     structured_content: Dict[str, Any] = field(default_factory=dict)
     extracted_text: Optional[str] = None
@@ -221,7 +230,8 @@ class DocumentFeatures:
 
 @dataclass
 class DocumentAnalysisResult:
-    """Result of document analysis"""
+    """
+Result of document analysis"""
     success: bool
     metadata: Optional[DocumentMetadata] = None
     features: Optional[DocumentFeatures] = None
@@ -574,7 +584,8 @@ class DocumentProcessor:
         return type_map.get(doc_format, DocumentType.UNKNOWN)
     
     async def _validate_document(self, metadata: DocumentMetadata) -> Dict[str, Any]:
-        """Validate document against configuration constraints"""
+        """
+Validate document against configuration constraints"""
         if not metadata.format or metadata.format not in self._supported_formats:
             return {
                 "valid": False,

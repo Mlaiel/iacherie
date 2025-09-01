@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WebhookAnalyticsModel(Base):
-    """Database model for webhook analytics events"""
+    """
+Database model for webhook analytics events"""
     __tablename__ = "webhook_analytics_events"
     
     event_id = Column(String, primary_key=True)
@@ -91,6 +93,7 @@ class WebhookMetricsModel(Base):
 
 class MetricType(Enum):
     """Types of webhook metrics"""
+
     REQUESTS = "requests"
     RESPONSE_TIME = "response_time"
     ERROR_RATE = "error_rate"
@@ -102,6 +105,7 @@ class MetricType(Enum):
 
 class TimeWindow(Enum):
     """Time windows for metrics aggregation"""
+
     MINUTE = "1m"
     HOUR = "1h"
     DAY = "1d"
@@ -128,7 +132,8 @@ class WebhookEvent:
 
 @dataclass
 class MetricSnapshot:
-    """Snapshot of webhook metrics"""
+    """
+Snapshot of webhook metrics"""
     metric_type: MetricType
     time_window: TimeWindow
     timestamp: datetime
@@ -147,7 +152,8 @@ class MetricSnapshot:
 
 @dataclass
 class AnalyticsQuery:
-    """Query configuration for analytics data"""
+    """
+Query configuration for analytics data"""
     start_time: datetime
     end_time: datetime
     endpoint_ids: List[str] = field(default_factory=list)
@@ -678,7 +684,8 @@ class WebhookAnalytics:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook analytics"""
+        """
+Graceful shutdown of webhook analytics"""
         try:
             logger.info("Shutting down WebhookAnalytics")
             
@@ -1003,7 +1010,8 @@ class WebhookAnalytics:
         }
 
     def _analyze_errors(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze errors in the data"""
+        """
+Analyze errors in the data"""
         errors = [d for d in data if not d['success']]
         
         if not errors:
@@ -1037,7 +1045,8 @@ class WebhookAnalytics:
         }
 
     def _get_empty_metrics(self) -> Dict[str, Any]:
-        """Get empty metrics structure"""
+        """
+Get empty metrics structure"""
         return {
             'summary': {
                 'total_requests': 0,
@@ -1077,7 +1086,8 @@ class WebhookAnalytics:
         metrics: Dict[str, Any],
         query: AnalyticsQuery
     ) -> Dict[str, Any]:
-        """Calculate insights from metrics data"""
+        """
+Calculate insights from metrics data"""
         insights = {
             'key_findings': [],
             'recommendations': [],
@@ -1144,7 +1154,8 @@ class WebhookAnalytics:
         return 'metrics:' + ':'.join(key_components)
 
     async def _start_aggregation_tasks(self) -> None:
-        """Start background aggregation tasks"""
+        """
+Start background aggregation tasks"""
         # Metrics aggregation task
         task = asyncio.create_task(self._aggregate_metrics_task())
         self._aggregation_tasks.add(task)
@@ -1154,7 +1165,8 @@ class WebhookAnalytics:
         self._aggregation_tasks.add(task)
 
     async def _aggregate_metrics_task(self) -> None:
-        """Background task for metrics aggregation"""
+        """
+Background task for metrics aggregation"""
         while True:
             try:
                 await asyncio.sleep(self.aggregation_interval_seconds)
@@ -1266,55 +1278,68 @@ class WebhookAnalytics:
         return {'placeholder': 'endpoint_insights'}
     
     async def _analyze_endpoint_errors(self, endpoint_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Analyze errors for specific endpoint"""
+        """
+Analyze errors for specific endpoint"""
         return {'placeholder': 'error_analysis'}
     
     async def _calculate_performance_trends(self, endpoint_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate performance trends for endpoint"""
+        """
+Calculate performance trends for endpoint"""
         return {'placeholder': 'performance_trends'}
     
     async def _calculate_user_insights(self, user_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate insights for specific user"""
+        """
+Calculate insights for specific user"""
         return {'placeholder': 'user_insights'}
     
     async def _calculate_platform_usage(self, user_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate platform usage for user"""
+        """
+Calculate platform usage for user"""
         return {'placeholder': 'platform_usage'}
     
     async def _calculate_platform_insights(self, platform: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate insights for specific platform"""
+        """
+Calculate insights for specific platform"""
         return {'placeholder': 'platform_insights'}
     
     # Report generation methods (placeholders for full implementation)
     
     async def _generate_executive_summary(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate executive summary section"""
+        """
+Generate executive summary section"""
         return {'placeholder': 'executive_summary'}
     
     async def _generate_performance_analysis(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate performance analysis section"""
+        """
+Generate performance analysis section"""
         return {'placeholder': 'performance_analysis'}
     
     async def _generate_error_analysis(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate error analysis section"""
+        """
+Generate error analysis section"""
         return {'placeholder': 'error_analysis'}
     
     async def _generate_trend_analysis(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate trend analysis section"""
+        """
+Generate trend analysis section"""
         return {'placeholder': 'trend_analysis'}
     
     async def _generate_platform_insights(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate platform insights section"""
+        """
+Generate platform insights section"""
         return {'placeholder': 'platform_insights'}
     
     async def _generate_detailed_breakdowns(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate detailed breakdowns section"""
+        """
+Generate detailed breakdowns section"""
         return {'placeholder': 'detailed_breakdowns'}
     
     async def _generate_recommendations(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate recommendations section"""
+        """
+Generate recommendations section"""
         return {'placeholder': 'recommendations'}
     
     async def _generate_summary_statistics(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate summary statistics section"""
+        """
+Generate summary statistics section"""
         return {'placeholder': 'summary_statistics'}

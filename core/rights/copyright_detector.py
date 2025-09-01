@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Copyright Detection Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ settings = get_settings()
 
 
 class DetectionStatus(str, Enum):
-    """Copyright detection status."""
+    """
+Copyright detection status."""
+
     PENDING = "pending"
     SCANNING = "scanning"
     VIOLATION_DETECTED = "violation_detected"
@@ -53,6 +56,7 @@ class DetectionStatus(str, Enum):
 
 class ViolationSeverity(str, Enum):
     """Violation severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -61,6 +65,7 @@ class ViolationSeverity(str, Enum):
 
 class Platform(str, Enum):
     """Supported monitoring platforms."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -88,7 +93,8 @@ class ViolationEvidence:
 
 
 class CopyrightDetectionRequest(BaseModel):
-    """Copyright detection request model."""
+    """
+Copyright detection request model."""
     content_fingerprint: str = Field(..., description="Content fingerprint hash")
     monitoring_platforms: List[Platform] = Field(default_factory=lambda: [Platform.YOUTUBE, Platform.INSTAGRAM])
     detection_sensitivity: float = Field(default=0.85, ge=0.0, le=1.0)
@@ -120,7 +126,8 @@ class CopyrightDetectionService:
     """
     
     def __init__(self, db_session: AsyncSession, fingerprint_engine: DigitalFingerprintEngine):
-        """Initialize copyright detection service."""
+        """
+Initialize copyright detection service."""
         self.db = db_session
         self.fingerprint_engine = fingerprint_engine
         self.encryption = AdvancedEncryption()
@@ -442,7 +449,8 @@ class CopyrightDetectionService:
         pass
     
     async def _get_content_fingerprint(self, fingerprint_hash: str) -> Optional[FingerprintResult]:
-        """Get fingerprint by hash."""
+        """
+Get fingerprint by hash."""
         # Fingerprint retrieval implementation
         pass
     
@@ -450,14 +458,16 @@ class CopyrightDetectionService:
         self, monitoring_id: str, content_id: str, user_id: str, 
         request: CopyrightDetectionRequest
     ) -> Any:
-        """Create monitoring target record."""
+        """
+Create monitoring target record."""
         # Database creation implementation
         pass
     
     async def _deduplicate_violations(
         self, violations: List[ViolationReport]
     ) -> List[ViolationReport]:
-        """Remove duplicate violations."""
+        """
+Remove duplicate violations."""
         seen_urls = set()
         unique_violations = []
         
@@ -471,7 +481,8 @@ class CopyrightDetectionService:
     async def _validate_violations(
         self, violations: List[ViolationReport]
     ) -> List[ViolationReport]:
-        """Validate detected violations to reduce false positives."""
+        """
+Validate detected violations to reduce false positives."""
         validated = []
         
         for violation in violations:
@@ -482,7 +493,8 @@ class CopyrightDetectionService:
         return validated
     
     async def _is_valid_violation(self, violation: ViolationReport) -> bool:
-        """Validate individual violation."""
+        """
+Validate individual violation."""
         # Implement validation logic
         # Check for false positives, accessibility, etc.
         return violation.similarity_score >= 0.85
@@ -490,7 +502,8 @@ class CopyrightDetectionService:
     async def _generate_dmca_content(
         self, violation: ViolationReport, owner_info: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate DMCA takedown notice content."""
+        """
+Generate DMCA takedown notice content."""
         return {
             "subject": f"DMCA Takedown Notice - Copyright Infringement",
             "body": f"Formal DMCA takedown notice for copyright violation detected at {violation.detected_url}",
@@ -537,12 +550,14 @@ class CopyrightDetectionService:
     async def _get_user_violations(
         self, user_id: str, start_date: datetime
     ) -> List[Any]:
-        """Get user violations from database."""
+        """
+Get user violations from database."""
         # Database query implementation
         return []
     
     async def _calculate_trend(self, violations: List[Any], days: int) -> str:
-        """Calculate trend direction for violations."""
+        """
+Calculate trend direction for violations."""
         if len(violations) < 2:
             return "insufficient_data"
         
@@ -583,7 +598,8 @@ class CopyrightDetectionService:
     async def _generate_protection_recommendations(
         self, violations: List[Any]
     ) -> List[str]:
-        """Generate protection strategy recommendations."""
+        """
+Generate protection strategy recommendations."""
         recommendations = [
             "Increase monitoring frequency on high-violation platforms",
             "Consider watermarking for visual content",
@@ -921,7 +937,8 @@ class YouTubeDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search YouTube for copyright violations."""
+        """
+Search YouTube for copyright violations."""
         # Implementation would use YouTube API
         return []
     
@@ -929,7 +946,8 @@ class YouTubeDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start YouTube monitoring."""
+        """
+Start YouTube monitoring."""
         return f"youtube_monitor_{monitoring_id}"
 
 
@@ -939,14 +957,16 @@ class InstagramDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search Instagram for violations."""
+        """
+Search Instagram for violations."""
         return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start Instagram monitoring."""
+        """
+Start Instagram monitoring."""
         return f"instagram_monitor_{monitoring_id}"
 
 
@@ -956,14 +976,16 @@ class TikTokDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search TikTok for violations."""
+        """
+Search TikTok for violations."""
         return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start TikTok monitoring."""
+        """
+Start TikTok monitoring."""
         return f"tiktok_monitor_{monitoring_id}"
 
 
@@ -973,14 +995,16 @@ class TwitterDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search Twitter for violations."""
+        """
+Search Twitter for violations."""
         return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start Twitter monitoring."""
+        """
+Start Twitter monitoring."""
         return f"twitter_monitor_{monitoring_id}"
 
 
@@ -990,14 +1014,16 @@ class FacebookDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search Facebook for violations."""
+        """
+Search Facebook for violations."""
         return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start Facebook monitoring."""
+        """
+Start Facebook monitoring."""
         return f"facebook_monitor_{monitoring_id}"
 
 
@@ -1007,14 +1033,16 @@ class SpotifyDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search Spotify for violations."""
+        """
+Search Spotify for violations."""
         return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start Spotify monitoring."""
+        """
+Start Spotify monitoring."""
         return f"spotify_monitor_{monitoring_id}"
 
 
@@ -1024,14 +1052,16 @@ class SoundCloudDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search SoundCloud for violations."""
+        """
+Search SoundCloud for violations."""
         return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start SoundCloud monitoring."""
+        """
+Start SoundCloud monitoring."""
         return f"soundcloud_monitor_{monitoring_id}"
 
 
@@ -1041,12 +1071,14 @@ class GenericWebDetectionClient(BasePlatformClient):
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search generic web for violations."""
+        """
+Search generic web for violations."""
         return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start generic web monitoring."""
+        """
+Start generic web monitoring."""
         return f"web_monitor_{monitoring_id}"

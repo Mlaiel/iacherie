@@ -8,7 +8,7 @@ Responsibility: Advanced data models for multi-format creator profiles with AI-p
 ==========================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC CREATOR PIPELINE:
 Registration → Profile Setup → Verification → Content Creation → AI Analytics → 
 Protection Management → Collaboration → Monetization → Growth Analytics
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
@@ -25,7 +26,9 @@ import uuid
 import hashlib
 
 class CreatorType(Enum):
-    """Advanced creator types supported by the platform"""
+    """
+Advanced creator types supported by the platform"""
+
     MUSICIAN = "musician"
     MUSIC_PRODUCER = "music_producer"
     SINGER_SONGWRITER = "singer_songwriter"
@@ -51,6 +54,7 @@ class CreatorType(Enum):
 
 class CreatorStatus(Enum):
     """Creator account status lifecycle"""
+
     PENDING = "pending"
     ACTIVE = "active"
     VERIFIED = "verified"
@@ -64,6 +68,7 @@ class CreatorStatus(Enum):
 
 class SubscriptionTier(Enum):
     """Subscription tiers with advanced features"""
+
     FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
@@ -72,6 +77,7 @@ class SubscriptionTier(Enum):
 
 class VerificationLevel(IntEnum):
     """Verification levels for credibility"""
+
     UNVERIFIED = 0
     EMAIL_VERIFIED = 1
     PHONE_VERIFIED = 2
@@ -80,7 +86,9 @@ class VerificationLevel(IntEnum):
     PLATFORM_VERIFIED = 5
 
 class CreatorTier(Enum):
-    """Creator tier based on performance and engagement"""
+    """
+Creator tier based on performance and engagement"""
+
     STARTER = "starter"
     RISING = "rising"
     ESTABLISHED = "established"
@@ -182,7 +190,8 @@ class CreatorProfile:
         return self.engagement_rate
     
     def calculate_credibility_score(self) -> float:
-        """Calculate credibility score based on various factors"""
+        """
+Calculate credibility score based on various factors"""
         score = 0.0
         
         # Verification level weight
@@ -212,7 +221,8 @@ class CreatorProfile:
         return self.credibility_score
     
     def get_profile_completeness(self) -> float:
-        """Calculate profile completeness percentage"""
+        """
+Calculate profile completeness percentage"""
         required_fields = [
             self.display_name, self.bio, self.country, 
             len(self.genres) > 0, len(self.skills) > 0
@@ -234,7 +244,8 @@ class CreatorProfile:
         return completeness
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for API responses"""
+        """
+Convert to dictionary for API responses"""
         return {
             "display_name": self.display_name,
             "bio": self.bio,
@@ -379,17 +390,20 @@ class CreatorSettings:
         self.notification_types[notification_type] = enabled
     
     def add_payment_method(self, method: str) -> None:
-        """Add payment method if not already present"""
+        """
+Add payment method if not already present"""
         if method not in self.payment_methods:
             self.payment_methods.append(method)
     
     def remove_payment_method(self, method: str) -> None:
-        """Remove payment method"""
+        """
+Remove payment method"""
         if method in self.payment_methods:
             self.payment_methods.remove(method)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             "default_content_visibility": self.default_content_visibility,
             "auto_fingerprinting": self.auto_fingerprinting,
@@ -670,7 +684,8 @@ class CreatorModel:
         return self.creator_tier
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert to dictionary with optional sensitive data inclusion"""
+        """
+Convert to dictionary with optional sensitive data inclusion"""
         base_data = {
             "creator_id": self.creator_id,
             "user_id": self.user_id,
@@ -743,7 +758,8 @@ def validate_creator_email(email: str) -> bool:
 
 
 def calculate_creator_score(creator: CreatorModel) -> float:
-    """Calculate overall creator score for ranking"""
+    """
+Calculate overall creator score for ranking"""
     score = 0.0
     
     # Content contribution (30%)

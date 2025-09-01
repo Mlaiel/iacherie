@@ -36,6 +36,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import pickle
@@ -104,7 +105,8 @@ class IVectorStore:
     
     async def add_vectors(self, vectors: np.ndarray, metadata: List[Dict[str, Any]], 
                          ids: Optional[List[str]] = None) -> bool:
-        """Add vectors to the store"""
+        """
+Add vectors to the store"""
         try:
             if self.index is None:
                 # Initialize index with first vectors
@@ -199,7 +201,8 @@ class IVectorStore:
         return True
     
     async def delete_vectors(self, ids: List[str]) -> bool:
-        """Delete vectors by IDs"""
+        """
+Delete vectors by IDs"""
         try:
             # FAISS doesn't support deletion, so we mark as deleted in metadata
             deleted_count = 0
@@ -676,7 +679,8 @@ class VectorStoreConnectionPool(IConnectionPool):
     async def add_content_fingerprint(self, content_type: str, vector: np.ndarray, 
                                     metadata: Dict[str, Any], 
                                     fingerprint_id: Optional[str] = None) -> bool:
-        """Add content fingerprint to appropriate vector store"""
+        """
+Add content fingerprint to appropriate vector store"""
         try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")

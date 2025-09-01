@@ -22,6 +22,7 @@ Features:
 - Business intelligence configuration
 - Content protection and compliance settings
 """
+
 import os
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -36,7 +37,9 @@ from cryptography.fernet import Fernet
 
 
 class Environment(Enum):
-    """Environment types for deployment"""
+    """
+Environment types for deployment"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -46,6 +49,7 @@ class Environment(Enum):
 
 class ResponseQualityLevel(Enum):
     """Response quality configuration levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -56,6 +60,7 @@ class ResponseQualityLevel(Enum):
 
 class ModelProvider(Enum):
     """AI model provider types"""
+
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     GOOGLE = "google"
@@ -67,6 +72,7 @@ class ModelProvider(Enum):
 
 class PlatformType(Enum):
     """Platform integration types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -106,7 +112,8 @@ class ModelConfiguration:
 
 @dataclass 
 class PlatformConfiguration:
-    """Platform-specific API configuration"""
+    """
+Platform-specific API configuration"""
     platform: PlatformType
     client_id: Optional[SecretStr] = None
     client_secret: Optional[SecretStr] = None
@@ -196,7 +203,8 @@ class QualityConfiguration:
 
 @dataclass
 class PersonalizationConfiguration:
-    """User personalization settings"""
+    """
+User personalization settings"""
     enable_personalization: bool = True
     learning_rate: float = 0.01
     min_interactions_for_personalization: int = 10
@@ -212,7 +220,8 @@ class PersonalizationConfiguration:
 
 @dataclass
 class BusinessIntelligenceConfiguration:
-    """Business intelligence and analytics settings"""
+    """
+Business intelligence and analytics settings"""
     enable_revenue_tracking: bool = True
     enable_market_analysis: bool = True
     enable_competitor_monitoring: bool = True
@@ -228,7 +237,8 @@ class BusinessIntelligenceConfiguration:
 
 @dataclass
 class ContentProtectionConfiguration:
-    """Content protection and IP management settings"""
+    """
+Content protection and IP management settings"""
     enable_fingerprinting: bool = True
     enable_monitoring: bool = True
     enable_automated_takedowns: bool = True
@@ -291,7 +301,8 @@ class PerformanceConfiguration:
 
 @dataclass
 class LoggingConfiguration:
-    """Logging and monitoring settings"""
+    """
+Logging and monitoring settings"""
     log_level: str = "INFO"
     log_format: str = "json"
     enable_structured_logging: bool = True
@@ -413,11 +424,13 @@ class ResponseGenerationConfig(BaseSettings):
         return None
     
     def is_production(self) -> bool:
-        """Check if running in production environment"""
+        """
+Check if running in production environment"""
         return self.environment == Environment.PRODUCTION
     
     def get_model_config(self, model_name: Optional[str] = None) -> ModelConfiguration:
-        """Get model configuration by name or return primary model"""
+        """
+Get model configuration by name or return primary model"""
         if model_name:
             for model in self.fallback_models:
                 if model.model_name == model_name:
@@ -456,7 +469,8 @@ def create_config_for_environment(env: Environment) -> ResponseGenerationConfig:
 
 
 def encrypt_sensitive_config(config: ResponseGenerationConfig, encryption_key: bytes) -> Dict[str, Any]:
-    """Encrypt sensitive configuration values"""
+    """
+Encrypt sensitive configuration values"""
     fernet = Fernet(encryption_key)
     config_dict = config.dict()
     
@@ -499,7 +513,8 @@ def encrypt_sensitive_config(config: ResponseGenerationConfig, encryption_key: b
 
 @dataclass
 class ResponseConfiguration:
-    """Response generation configuration"""
+    """
+Response generation configuration"""
     max_length: int = 2000
     min_length: int = 50
     quality_threshold: float = 0.8
@@ -584,7 +599,8 @@ class ResponseGenerationConfig:
         self._load_configuration()
     
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path"""
+        """
+Get default configuration file path"""
         return os.path.join(
             os.path.dirname(__file__), 
             "config", 
@@ -599,12 +615,14 @@ class ResponseGenerationConfig:
                 self._merge_configuration(config_data)
     
     def _merge_configuration(self, config_data: Dict[str, Any]):
-        """Merge configuration data with settings"""
+        """
+Merge configuration data with settings"""
         # Implementation for merging configuration
         pass
     
     def get_model_config(self, model_name: str) -> ModelConfiguration:
-        """Get configuration for specific AI model"""
+        """
+Get configuration for specific AI model"""
         model_configs = {
             "gpt-4": ModelConfiguration(
                 model_name="gpt-4",
@@ -760,7 +778,8 @@ def get_config_for_environment(env: Environment) -> Dict[str, Any]:
 
 
 def apply_environment_config(env: Environment):
-    """Apply environment-specific configuration"""
+    """
+Apply environment-specific configuration"""
     env_config = get_config_for_environment(env)
     
     for key, value in env_config.items():

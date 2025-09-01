@@ -12,6 +12,7 @@ This real-time monitoring system and its algorithms are the exclusive intellectu
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -40,7 +41,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"      # Immediate action required
     HIGH = "high"             # Action required within 1 hour
     MEDIUM = "medium"         # Action required within 24 hours
@@ -49,6 +52,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Types of metrics being monitored"""
+
     ENGAGEMENT = "engagement"
     GROWTH = "growth"
     PERFORMANCE = "performance"
@@ -62,6 +66,7 @@ class MetricType(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring system status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     MAINTENANCE = "maintenance"
@@ -70,6 +75,7 @@ class MonitoringStatus(Enum):
 
 class AlertType(Enum):
     """Types of alerts"""
+
     THRESHOLD_BREACH = "threshold_breach"
     ANOMALY_DETECTION = "anomaly_detection"
     TREND_ALERT = "trend_alert"
@@ -193,7 +199,8 @@ class RealTimeMonitoringSystem:
     """
     
     def __init__(self, cache_manager: CacheManager = None, redis_client: redis.Redis = None):
-        """Initialize the real-time monitoring system"""
+        """
+Initialize the real-time monitoring system"""
         self.cache_manager = cache_manager or CacheManager("realtime_monitoring")
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
         
@@ -729,7 +736,8 @@ class RealTimeMonitoringSystem:
         return min(max(performance_score, 0.0), 1.0)
 
     async def _calculate_viral_potential(self, content_data: Dict[str, Any], metrics: RealTimeMetrics) -> float:
-        """Calculate viral potential score"""
+        """
+Calculate viral potential score"""
         if not content_data:
             return 0.0
         
@@ -749,13 +757,15 @@ class RealTimeMonitoringSystem:
         return min(max(viral_potential, 0.0), 1.0)
 
     async def _handle_alert(self, alert: MonitoringAlert):
-        """Handle alert based on severity"""
+        """
+Handle alert based on severity"""
         handler = self.alert_handlers.get(alert.severity)
         if handler:
             await handler(alert)
 
     async def _handle_critical_alert(self, alert: MonitoringAlert):
-        """Handle critical severity alerts"""
+        """
+Handle critical severity alerts"""
         logger.critical(f"CRITICAL ALERT: {alert.title} - {alert.description}")
         
         # Immediate notifications
@@ -803,7 +813,8 @@ class AlertManager:
         self.monitoring_system = monitoring_system
     
     async def create_custom_alert_rule(self, rule_config: Dict[str, Any]) -> str:
-        """Create custom alert rule"""
+        """
+Create custom alert rule"""
         return "alert_rule_12345"
 
 class MetricCollector:
@@ -813,7 +824,8 @@ class MetricCollector:
         self.monitoring_system = monitoring_system
     
     async def collect_platform_metrics(self, platform: str, creator_id: str) -> Dict[str, Any]:
-        """Collect metrics from specific platform"""
+        """
+Collect metrics from specific platform"""
         return {
             'engagement_data': {},
             'audience_data': {},
@@ -821,13 +833,15 @@ class MetricCollector:
         }
 
 class AnomalyDetector:
-    """Specialized anomaly detection system"""
+    """
+Specialized anomaly detection system"""
     
     def __init__(self, monitoring_system: RealTimeMonitoringSystem):
         self.monitoring_system = monitoring_system
     
     async def detect_performance_anomalies(self, metrics_history: List[RealTimeMetrics]) -> List[Dict[str, Any]]:
-        """Detect anomalies in performance metrics"""
+        """
+Detect anomalies in performance metrics"""
         return [
             {
                 'anomaly_type': 'engagement_spike',

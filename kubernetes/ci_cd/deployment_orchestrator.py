@@ -23,6 +23,7 @@ Business Logic Features:
 - Real-time analytics service orchestration
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Callable
 import asyncio
 import logging
@@ -39,7 +40,9 @@ from kubernetes.client.rest import ApiException
 logger = logging.getLogger(__name__)
 
 class DeploymentStatus(Enum):
-    """Deployment status enumeration"""
+    """
+Deployment status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESS = "success"
@@ -49,6 +52,7 @@ class DeploymentStatus(Enum):
 
 class DeploymentStrategy(Enum):
     """Deployment strategy enumeration"""
+
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING = "rolling"
@@ -84,7 +88,8 @@ class DeploymentConfiguration:
 
 @dataclass
 class DeploymentResult:
-    """Deployment result structure"""
+    """
+Deployment result structure"""
     deployment_id: str
     status: DeploymentStatus
     strategy: DeploymentStrategy
@@ -101,7 +106,8 @@ class DeploymentOrchestrator:
     """Enterprise deployment orchestration engine"""
     
     def __init__(self):
-        """Initialize deployment orchestrator"""
+        """
+Initialize deployment orchestrator"""
         self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.k8s_client = None
@@ -254,7 +260,8 @@ class DeploymentOrchestrator:
         result: DeploymentResult,
         progress_callback: Optional[Callable] = None
     ) -> None:
-        """Execute canary deployment strategy"""
+        """
+Execute canary deployment strategy"""
         try:
             traffic_split = config.traffic_split or {"canary": 10, "stable": 90}
             
@@ -703,7 +710,8 @@ class DeploymentOrchestrator:
         return self.deployment_history[-limit:]
     
     def get_deployment_statistics(self) -> Dict[str, Any]:
-        """Get deployment statistics"""
+        """
+Get deployment statistics"""
         if not self.deployment_history:
             return {}
         

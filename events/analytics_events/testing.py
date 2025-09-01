@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import time
 import random
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TestResult:
-    """Test result data structure"""
+    """
+Test result data structure"""
     test_name: str
     passed: bool
     duration: float
@@ -46,7 +48,8 @@ class TestResult:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data structure"""
+    """
+Performance benchmark data structure"""
     operation_name: str
     avg_response_time: float
     min_response_time: float
@@ -59,10 +62,12 @@ class PerformanceBenchmark:
 
 
 class DataGenerator:
-    """Advanced test data generator for analytics events"""
+    """
+Advanced test data generator for analytics events"""
     
     def __init__(self, seed: int = 42):
-        """Initialize data generator with random seed"""
+        """
+Initialize data generator with random seed"""
         random.seed(seed)
         np.random.seed(seed)
         self.user_ids = [str(uuid.uuid4()) for _ in range(1000)]
@@ -72,7 +77,8 @@ class DataGenerator:
         self.event_types = ['view', 'like', 'share', 'comment', 'download', 'subscribe']
     
     def generate_engagement_event(self, timestamp: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate realistic engagement event data"""
+        """
+Generate realistic engagement event data"""
         if timestamp is None:
             timestamp = datetime.now(timezone.utc) - timedelta(
                 seconds=random.randint(0, 86400)  # Last 24 hours
@@ -211,7 +217,8 @@ class DataGenerator:
     
     def generate_batch_events(self, event_type: str, count: int, 
                             time_range_hours: int = 24) -> List[Dict[str, Any]]:
-        """Generate a batch of events of specified type"""
+        """
+Generate a batch of events of specified type"""
         events = []
         start_time = datetime.now(timezone.utc) - timedelta(hours=time_range_hours)
         
@@ -241,7 +248,8 @@ class LoadTester:
     """Advanced load testing for analytics systems"""
     
     def __init__(self, target_function: Callable, max_concurrent: int = 100):
-        """Initialize load tester"""
+        """
+Initialize load tester"""
         self.target_function = target_function
         self.max_concurrent = max_concurrent
         self.results = []
@@ -249,7 +257,8 @@ class LoadTester:
     async def run_load_test(self, requests_per_second: int, 
                           duration_seconds: int, 
                           test_data_generator: Callable) -> PerformanceBenchmark:
-        """Run comprehensive load test"""
+        """
+Run comprehensive load test"""
         total_requests = requests_per_second * duration_seconds
         interval = 1.0 / requests_per_second
         
@@ -364,7 +373,8 @@ class DataQualityValidator:
         }
     
     def validate_data_quality(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Comprehensive data quality validation"""
+        """
+Comprehensive data quality validation"""
         if not events:
             return {'error': 'No events to validate'}
         
@@ -464,7 +474,8 @@ class DataQualityValidator:
 
 
 class MLModelTester:
-    """Advanced testing utilities for ML models in analytics"""
+    """
+Advanced testing utilities for ML models in analytics"""
     
     def __init__(self):
         self.test_results = {}
@@ -472,7 +483,8 @@ class MLModelTester:
     async def test_model_performance(self, model, test_data: List[Dict[str, Any]], 
                                    target_column: str, 
                                    feature_columns: List[str]) -> Dict[str, Any]:
-        """Comprehensive ML model performance testing"""
+        """
+Comprehensive ML model performance testing"""
         try:
             df = pd.DataFrame(test_data)
             X = df[feature_columns]
@@ -614,7 +626,8 @@ class IntegrationTester:
         self.test_results = []
     
     async def test_database_integration(self, db_connection) -> TestResult:
-        """Test database integration"""
+        """
+Test database integration"""
         start_time = time.time()
         errors = []
         warnings = []
@@ -766,7 +779,8 @@ def create_mock_analytics_handler():
 
 
 def create_test_dataset(size: int = 1000) -> List[Dict[str, Any]]:
-    """Create comprehensive test dataset"""
+    """
+Create comprehensive test dataset"""
     generator = DataGenerator()
     dataset = []
     
@@ -789,7 +803,8 @@ def create_test_dataset(size: int = 1000) -> List[Dict[str, Any]]:
 
 
 async def run_comprehensive_test_suite() -> Dict[str, Any]:
-    """Run comprehensive test suite for analytics system"""
+    """
+Run comprehensive test suite for analytics system"""
     test_results = {
         'data_quality': {},
         'load_testing': {},

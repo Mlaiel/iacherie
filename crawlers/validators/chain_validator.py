@@ -5,7 +5,7 @@ Advanced validation pipeline and chain management system for the IA Influencer A
 providing orchestrated validation workflows and comprehensive validation management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 Features:
@@ -15,6 +15,7 @@ Features:
 - Error handling and recovery
 - Performance optimization
 """
+
 import asyncio
 import time
 from enum import Enum
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationMode(Enum):
-    """Validation execution modes"""
+    """
+Validation execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -45,6 +48,7 @@ class ValidationMode(Enum):
 
 class ValidationPriority(Enum):
     """Validation priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -74,13 +78,15 @@ class ValidationStep:
     
     @property
     def success_rate(self) -> float:
-        """Calculate step success rate"""
+        """
+Calculate step success rate"""
         if self.execution_count == 0:
             return 0.0
         return self.success_count / self.execution_count
     
     def should_execute(self, data: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Check if step should be executed based on conditions"""
+        """
+Check if step should be executed based on conditions"""
         if not self.enabled:
             return False
         
@@ -114,19 +120,22 @@ class ValidationChainResult:
     
     @property
     def success_rate(self) -> float:
-        """Calculate chain success rate"""
+        """
+Calculate chain success rate"""
         if self.total_steps == 0:
             return 0.0
         return self.successful_steps / self.total_steps
     
     @property
     def has_critical_failures(self) -> bool:
-        """Check if chain has critical failures"""
+        """
+Check if chain has critical failures"""
         return len(self.critical_failures) > 0
     
     @property
     def completion_rate(self) -> float:
-        """Calculate completion rate (executed vs total)"""
+        """
+Calculate completion rate (executed vs total)"""
         if self.total_steps == 0:
             return 0.0
         return len(self.executed_steps) / self.total_steps
@@ -190,7 +199,8 @@ class ValidationChain:
                 break
     
     def disable_step(self, step_name: str) -> None:
-        """Disable a specific validation step"""
+        """
+Disable a specific validation step"""
         for step in self.steps:
             if step.name == step_name:
                 step.enabled = False
@@ -338,7 +348,8 @@ class ValidationChain:
         result: ValidationChainResult,
         stop_on_critical: bool
     ) -> ValidationChainResult:
-        """Execute steps sequentially"""
+        """
+Execute steps sequentially"""
         
         for step in self._get_enabled_steps_by_priority():
             if not step.should_execute(data, context):
@@ -369,7 +380,8 @@ class ValidationChain:
         result: ValidationChainResult,
         stop_on_critical: bool
     ) -> ValidationChainResult:
-        """Execute steps in parallel"""
+        """
+Execute steps in parallel"""
         
         enabled_steps = [s for s in self.steps if s.enabled and s.should_execute(data, context)]
         
@@ -455,7 +467,8 @@ class ValidationChain:
         context: Dict[str, Any],
         result: ValidationChainResult
     ) -> ValidationChainResult:
-        """Execute steps and stop on first failure"""
+        """
+Execute steps and stop on first failure"""
         
         for step in self._get_enabled_steps_by_priority():
             if not step.should_execute(data, context):
@@ -481,7 +494,8 @@ class ValidationChain:
         context: Dict[str, Any],
         result: ValidationChainResult
     ) -> ValidationChainResult:
-        """Execute all steps regardless of failures"""
+        """
+Execute all steps regardless of failures"""
         
         for step in self._get_enabled_steps_by_priority():
             if not step.should_execute(data, context):
@@ -572,7 +586,8 @@ class ValidationChain:
         return sorted(enabled_steps, key=lambda s: priority_order.get(s.priority, 999))
     
     def _execute_step(self, step: ValidationStep, data: Dict[str, Any], context: Dict[str, Any]) -> Any:
-        """Execute a single validation step with retry logic"""
+        """
+Execute a single validation step with retry logic"""
         step_start_time = time.time()
         step.execution_count += 1
         step.last_executed = datetime.utcnow()
@@ -625,7 +640,8 @@ class ValidationChain:
         return await loop.run_in_executor(None, self._execute_step, step, data, context)
     
     def _execute_content_validation(self, validator: ContentValidator, data: Dict[str, Any], step: ValidationStep) -> Any:
-        """Execute content validation"""
+        """
+Execute content validation"""
         content = data.get('content', '')
         content_type = data.get('content_type', 'text')
         metadata = data.get('metadata')
@@ -642,7 +658,8 @@ class ValidationChain:
         )
     
     def _execute_schema_validation(self, validator: SchemaValidator, data: Dict[str, Any], step: ValidationStep) -> Any:
-        """Execute schema validation"""
+        """
+Execute schema validation"""
         validation_type = step.validator_config.get('validation_type', 'custom')
         
         if validation_type == 'json_schema':
@@ -657,12 +674,14 @@ class ValidationChain:
             return validator.validate_custom_rules(data, rules)
     
     def _execute_quality_validation(self, validator: DataQualityValidator, data: Dict[str, Any], step: ValidationStep) -> Any:
-        """Execute quality validation"""
+        """
+Execute quality validation"""
         content_type = step.validator_config.get('content_type', 'unknown')
         return validator.assess_quality(data, content_type)
     
     def _execute_business_validation(self, validator: BusinessRuleValidator, data: Dict[str, Any], step: ValidationStep) -> Any:
-        """Execute business rule validation"""
+        """
+Execute business rule validation"""
         rule_categories = step.validator_config.get('rule_categories')
         rule_names = step.validator_config.get('rule_names')
         stop_on_critical = step.validator_config.get('stop_on_critical', True)
@@ -675,7 +694,8 @@ class ValidationChain:
         )
     
     def _execute_performance_validation(self, validator: PerformanceValidator, data: Dict[str, Any], step: ValidationStep) -> Any:
-        """Execute performance validation"""
+        """
+Execute performance validation"""
         operation_name = step.validator_config.get('operation_name', step.name)
         
         # Create a simple operation function for performance testing
@@ -685,7 +705,8 @@ class ValidationChain:
         return validator.validate_performance(test_operation, operation_name)
     
     def _is_step_successful(self, step_result: Any) -> bool:
-        """Check if step execution was successful"""
+        """
+Check if step execution was successful"""
         if hasattr(step_result, 'is_valid'):
             return step_result.is_valid
         elif hasattr(step_result, 'overall_score'):
@@ -696,7 +717,8 @@ class ValidationChain:
             return step_result is not None
     
     def _is_critical_failure(self, step_result: Any) -> bool:
-        """Check if step result indicates critical failure"""
+        """
+Check if step result indicates critical failure"""
         if hasattr(step_result, 'has_critical_violations'):
             return step_result.has_critical_violations
         elif hasattr(step_result, 'critical_issues'):
@@ -707,7 +729,8 @@ class ValidationChain:
             return False
     
     def _aggregate_results(self, result: ValidationChainResult) -> None:
-        """Aggregate validation results and calculate overall scores"""
+        """
+Aggregate validation results and calculate overall scores"""
         
         # Calculate overall score
         scores = []
@@ -757,7 +780,8 @@ class ValidationChain:
                 result.recommendations.extend(step_result.improvement_suggestions)
     
     def _update_chain_stats(self, result: ValidationChainResult, execution_time: float) -> None:
-        """Update chain execution statistics"""
+        """
+Update chain execution statistics"""
         self.chain_stats['total_executions'] += 1
         
         if result.is_valid:
@@ -773,7 +797,8 @@ class ValidationChain:
         self.chain_stats['last_executed'] = datetime.utcnow().isoformat()
     
     def _store_execution_history(self, result: ValidationChainResult) -> None:
-        """Store execution result in history"""
+        """
+Store execution result in history"""
         self.execution_history.append(result)
         
         # Limit history size
@@ -784,7 +809,8 @@ class ValidationChain:
 # Predefined validation chains
 
 def create_content_validation_chain() -> ValidationChain:
-    """Create a comprehensive content validation chain"""
+    """
+Create a comprehensive content validation chain"""
     chain = ValidationChain(
         name="content_validation_chain",
         mode=ValidationMode.SEQUENTIAL

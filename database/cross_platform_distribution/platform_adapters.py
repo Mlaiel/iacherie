@@ -44,6 +44,7 @@ All violations will be prosecuted to the FULL EXTENT of international copyright 
 Legal action will be taken immediately against any infringement.
 Contact: mlaiel@live.de for authorized licensing only.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -62,7 +63,9 @@ import os
 logger = logging.getLogger(__name__)
 
 class PlatformType(str, Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
@@ -71,6 +74,7 @@ class PlatformType(str, Enum):
 
 class AuthenticationType(str, Enum):
     """Authentication methods"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -80,6 +84,7 @@ class AuthenticationType(str, Enum):
 
 class UploadStatus(str, Enum):
     """Upload operation status"""
+
     PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"
@@ -104,7 +109,8 @@ class PlatformCredentials:
 
 @dataclass
 class UploadResult:
-    """Result of platform upload operation"""
+    """
+Result of platform upload operation"""
     success: bool
     platform_id: Optional[str] = None
     platform_url: Optional[str] = None
@@ -115,7 +121,8 @@ class UploadResult:
 
 @dataclass
 class ContentMetadata:
-    """Metadata for content upload"""
+    """
+Metadata for content upload"""
     title: str
     description: Optional[str] = None
     tags: Optional[List[str]] = None
@@ -146,13 +153,15 @@ class BasePlatformAdapter(ABC):
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""
+        """
+Authenticate with the platform"""
         pass
     
     @abstractmethod
@@ -161,21 +170,25 @@ class BasePlatformAdapter(ABC):
         file_path: str, 
         metadata: ContentMetadata
     ) -> UploadResult:
-        """Upload content to the platform"""
+        """
+Upload content to the platform"""
         pass
     
     @abstractmethod
     async def get_upload_status(self, platform_id: str) -> UploadStatus:
-        """Get the status of an uploaded content"""
+        """
+Get the status of an uploaded content"""
         pass
     
     @abstractmethod
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from the platform"""
+        """
+Delete content from the platform"""
         pass
     
     async def check_rate_limit(self, endpoint: str) -> bool:
-        """Check if rate limit allows request"""
+        """
+Check if rate limit allows request"""
         # Simple rate limiting implementation
         now = datetime.utcnow()
         if endpoint not in self.rate_limiter:
@@ -195,7 +208,8 @@ class BasePlatformAdapter(ABC):
         return False
     
     async def refresh_authentication(self) -> bool:
-        """Refresh authentication tokens if needed"""
+        """
+Refresh authentication tokens if needed"""
         if self.credentials.auth_type != AuthenticationType.OAUTH2:
             return True
         
@@ -209,13 +223,15 @@ class BasePlatformAdapter(ABC):
         return await self._refresh_oauth_token()
     
     async def _refresh_oauth_token(self) -> bool:
-        """Refresh OAuth2 token"""
+        """
+Refresh OAuth2 token"""
         # This would be implemented by each platform adapter
         self.logger.warning("OAuth2 token refresh not implemented for this platform")
         return False
 
 class YouTubeAdapter(BasePlatformAdapter):
     """YouTube API adapter for video content distribution"""
+
     
     API_BASE_URL = "https://www.googleapis.com/youtube/v3"
     UPLOAD_URL = "https://www.googleapis.com/upload/youtube/v3/videos"
@@ -360,6 +376,7 @@ class YouTubeAdapter(BasePlatformAdapter):
 
 class SpotifyAdapter(BasePlatformAdapter):
     """Spotify API adapter for music content distribution"""
+
     
     API_BASE_URL = "https://api.spotify.com/v1"
     
@@ -438,13 +455,15 @@ class SpotifyAdapter(BasePlatformAdapter):
         return UploadStatus.PUBLISHED
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from Spotify"""
+        """
+Delete content from Spotify"""
         # Spotify doesn't allow deletion via API
         self.logger.warning("Spotify content deletion not supported via API")
         return False
 
 class InstagramAdapter(BasePlatformAdapter):
     """Instagram API adapter for social media content distribution"""
+
     
     API_BASE_URL = "https://graph.facebook.com/v18.0"
     
@@ -512,7 +531,8 @@ class InstagramAdapter(BasePlatformAdapter):
         return UploadStatus.PUBLISHED
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from Instagram"""
+        """
+Delete content from Instagram"""
         try:
             url = f"{self.API_BASE_URL}/{platform_id}"
             params = {"access_token": self.credentials.access_token}

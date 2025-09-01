@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 from datetime import datetime
@@ -28,7 +29,8 @@ from backend.core.orchestration import (
 
 
 async def demo_content_processing():
-    """Demonstrate content processing workflow."""
+    """
+Demonstrate content processing workflow."""
     print("\n🎵 CONTENT PROCESSING WORKFLOW DEMO")
     print("=" * 50)
     

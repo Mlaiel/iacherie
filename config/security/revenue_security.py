@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -29,7 +30,9 @@ from enum import Enum
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers."""
+    """
+Supported payment providers."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -41,6 +44,7 @@ class PaymentProvider(Enum):
 
 class RevenueSource(Enum):
     """Revenue sources for content creators."""
+
     SPOTIFY_ROYALTIES = "spotify_royalties"
     YOUTUBE_ADSENSE = "youtube_adsense"
     INSTAGRAM_CREATOR = "instagram_creator"
@@ -55,6 +59,7 @@ class RevenueSource(Enum):
 
 class FraudRiskLevel(Enum):
     """Fraud risk assessment levels."""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -65,6 +70,7 @@ class FraudRiskLevel(Enum):
 
 class ComplianceRegion(Enum):
     """Financial compliance regions."""
+
     EU = "eu"
     US = "us"
     UK = "uk"
@@ -430,12 +436,14 @@ revenue_security_config = RevenueSecurityConfig()
 
 
 def get_revenue_security_config() -> RevenueSecurityConfig:
-    """Get the revenue security configuration instance."""
+    """
+Get the revenue security configuration instance."""
     return revenue_security_config
 
 
 def validate_revenue_security_config(config: RevenueSecurityConfig) -> bool:
-    """Validate revenue security configuration settings."""
+    """
+Validate revenue security configuration settings."""
     # Validate payment limits
     if config.payment_security.transaction_limit_eur <= 0:
         raise ValueError("Transaction limit must be positive")

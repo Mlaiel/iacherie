@@ -18,7 +18,7 @@ Technical Excellence:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING:
 This software and all associated concepts are protected by international copyright law,
@@ -27,6 +27,7 @@ reverse engineering, or appropriation is STRICTLY PROHIBITED and will result in 
 legal action including civil lawsuits, criminal prosecution, and maximum financial penalties.
 Contact mlaiel@live.de for any usage authorization. All activities are monitored and logged.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any
@@ -50,7 +51,9 @@ from .config import FingerprintConfig
 
 
 class ContentFormat(Enum):
-    """Supported content formats for fingerprinting."""
+    """
+Supported content formats for fingerprinting."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -283,7 +286,8 @@ class FingerprintingSystemIndex:
         return await self.deployment_manager.deploy(environment)
     
     async def shutdown(self):
-        """Gracefully shutdown the system."""
+        """
+Gracefully shutdown the system."""
         self.logger.info("Shutting down Content Fingerprinting System...")
         
         # Stop monitoring
@@ -369,7 +373,8 @@ async def process_content_simple(
 
 
 async def shutdown_system():
-    """Shutdown the global fingerprinting system."""
+    """
+Shutdown the global fingerprinting system."""
     global _system_instance
     
     if _system_instance:

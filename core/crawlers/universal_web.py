@@ -6,13 +6,14 @@ Provides comprehensive scraping capabilities with anti-detection measures,
 proxy rotation, and intelligent content extraction for copyright protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 import re
@@ -46,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebsiteData:
-    """Comprehensive website content metadata structure."""
+    """
+Comprehensive website content metadata structure."""
     
     url: str
     title: str
@@ -80,7 +82,8 @@ class WebsiteData:
 
 @dataclass
 class CrawlingTarget:
-    """Configuration for website crawling targets."""
+    """
+Configuration for website crawling targets."""
     
     domain: str
     start_urls: List[str]
@@ -102,14 +105,17 @@ class CrawlingTarget:
     similarity_threshold: float = 0.8
 
 class ContentExtractor:
-    """Advanced content extraction from web pages."""
+    """
+Advanced content extraction from web pages."""
     
     def __init__(self):
-        """Initialize content extractor with multiple extraction methods."""
+        """
+Initialize content extractor with multiple extraction methods."""
         self.session = aiohttp.ClientSession()
     
     async def extract_article_content(self, url: str) -> Optional[WebsiteData]:
-        """Extract article content using newspaper3k and custom methods."""
+        """
+Extract article content using newspaper3k and custom methods."""
         try:
             # Use newspaper3k for article extraction
             article = Article(url)
@@ -281,15 +287,18 @@ class ContentExtractor:
             await self.session.close()
 
 class ScrapyWebCrawler:
-    """Scrapy-based web crawler for large-scale crawling."""
+    """
+Scrapy-based web crawler for large-scale crawling."""
     
     def __init__(self, target: CrawlingTarget):
-        """Initialize Scrapy crawler."""
+        """
+Initialize Scrapy crawler."""
         self.target = target
         self.results = []
         
     def create_spider(self):
-        """Create Scrapy spider for the target."""
+        """
+Create Scrapy spider for the target."""
         
         class WebSpider(scrapy.Spider):
             name = 'web_crawler'
@@ -321,7 +330,8 @@ class ScrapyWebCrawler:
                         yield response.follow(link, self.parse)
             
             def _should_follow_link(self, link):
-                """Check if link should be followed based on patterns."""
+                """
+Check if link should be followed based on patterns."""
                 if not link:
                     return False
                 
@@ -340,7 +350,8 @@ class ScrapyWebCrawler:
         return WebSpider
     
     async def crawl(self) -> List[Dict[str, Any]]:
-        """Run Scrapy crawler and return results."""
+        """
+Run Scrapy crawler and return results."""
         try:
             process = CrawlerProcess(get_project_settings())
             spider_class = self.create_spider()
@@ -362,7 +373,8 @@ class UniversalWebCrawler(BaseCrawler):
     """Universal web crawler with comprehensive monitoring capabilities."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize universal web crawler."""
+        """
+Initialize universal web crawler."""
         super().__init__(config)
         self.content_extractor = ContentExtractor()
         self.proxy_manager = config.get('proxy_manager')
@@ -379,11 +391,13 @@ class UniversalWebCrawler(BaseCrawler):
         self.crawling_targets: List[CrawlingTarget] = []
     
     def add_crawling_target(self, target: CrawlingTarget):
-        """Add a new crawling target."""
+        """
+Add a new crawling target."""
         self.crawling_targets.append(target)
     
     async def crawl_url(self, url: str) -> Optional[CrawlResult]:
-        """Crawl a specific URL and extract content."""
+        """
+Crawl a specific URL and extract content."""
         await self.rate_limiter.acquire()
         
         try:

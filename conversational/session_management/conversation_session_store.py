@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import pickle
@@ -42,7 +43,9 @@ logger = get_logger(__name__)
 
 
 class StorageBackend(Enum):
-    """Storage backend types"""
+    """
+Storage backend types"""
+
     REDIS = "redis"
     POSTGRESQL = "postgresql"
     MEMORY = "memory"
@@ -51,6 +54,7 @@ class StorageBackend(Enum):
 
 class CompressionType(Enum):
     """Compression algorithms"""
+
     NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
@@ -73,7 +77,8 @@ class SessionStoreConfig:
 
 
 class SessionData(BaseModel):
-    """Session data structure"""
+    """
+Session data structure"""
     session_id: str
     user_id: str
     conversation_history: List[Dict[str, Any]] = Field(default_factory=list)
@@ -99,7 +104,8 @@ class SessionData(BaseModel):
 
 
 class SessionCacheManager:
-    """Advanced session caching with intelligent eviction"""
+    """
+Advanced session caching with intelligent eviction"""
     
     def __init__(self, config: SessionStoreConfig):
         self.config = config
@@ -220,7 +226,8 @@ class SessionCacheManager:
         return json_data
     
     async def _deserialize_session_data(self, serialized_data: bytes) -> SessionData:
-        """Deserialize session data with decompression and decryption"""
+        """
+Deserialize session data with decompression and decryption"""
         
         # Decrypt if enabled
         if self.config.encryption_enabled:
@@ -244,7 +251,8 @@ class SessionCacheManager:
         return SessionData(**data_dict)
     
     async def _calculate_data_size(self, session_data: SessionData) -> int:
-        """Calculate session data size in bytes"""
+        """
+Calculate session data size in bytes"""
         
         try:
             serialized_data = await self._serialize_session_data(session_data)
@@ -253,7 +261,8 @@ class SessionCacheManager:
             return 0
     
     async def _calculate_checksum(self, session_data: SessionData) -> str:
-        """Calculate session data checksum for integrity verification"""
+        """
+Calculate session data checksum for integrity verification"""
         
         import hashlib
         
@@ -376,7 +385,8 @@ class SessionDataPersistence:
         self.logger = get_logger(self.__class__.__name__)
     
     async def save_session(self, session_data: SessionData) -> bool:
-        """Save session to persistent storage"""
+        """
+Save session to persistent storage"""
         
         try:
             async with get_async_session() as session:
@@ -566,7 +576,8 @@ class DistributedSessionStorage:
         self.cleanup_task: Optional[asyncio.Task] = None
     
     async def start_background_tasks(self):
-        """Start background maintenance tasks"""
+        """
+Start background maintenance tasks"""
         
         if self.config.auto_backup:
             self.backup_task = asyncio.create_task(self._backup_loop())
@@ -613,7 +624,8 @@ class DistributedSessionStorage:
         return session_data
     
     async def store_session(self, session_data: SessionData) -> bool:
-        """Store session in both cache and persistence"""
+        """
+Store session in both cache and persistence"""
         
         try:
             # Store in cache first (fast)
@@ -663,7 +675,8 @@ class DistributedSessionStorage:
         return await self.persistence.get_user_sessions(user_id)
     
     async def _backup_loop(self):
-        """Background backup task"""
+        """
+Background backup task"""
         
         try:
             while True:
@@ -812,7 +825,8 @@ class ConversationSessionStore:
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize the session store"""
+        """
+Initialize the session store"""
         
         await self.distributed_storage.start_background_tasks()
         self.logger.info("Conversation session store initialized")
@@ -835,22 +849,26 @@ class ConversationSessionStore:
         return session_data
     
     async def get_session(self, session_id: str) -> Optional[SessionData]:
-        """Get session by ID"""
+        """
+Get session by ID"""
         
         return await self.distributed_storage.get_session(session_id)
     
     async def update_session(self, session_data: SessionData) -> bool:
-        """Update session data"""
+        """
+Update session data"""
         
         return await self.distributed_storage.store_session(session_data)
     
     async def delete_session(self, session_id: str) -> bool:
-        """Delete session"""
+        """
+Delete session"""
         
         return await self.distributed_storage.delete_session(session_id)
     
     async def get_user_sessions(self, user_id: str) -> List[SessionData]:
-        """Get all sessions for user"""
+        """
+Get all sessions for user"""
         
         return await self.distributed_storage.get_user_sessions(user_id)
     
@@ -859,7 +877,8 @@ class ConversationSessionStore:
         session_id: str,
         message: Dict[str, Any]
     ) -> bool:
-        """Add message to conversation history"""
+        """
+Add message to conversation history"""
         
         try:
             session_data = await self.get_session(session_id)

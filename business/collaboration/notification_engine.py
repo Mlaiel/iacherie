@@ -4,6 +4,7 @@ Professional notification management and communication orchestration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types of collaboration notifications"""
+    """
+Types of collaboration notifications"""
+
     COLLABORATION_REQUEST = "collaboration_request"
     COLLABORATION_ACCEPTED = "collaboration_accepted"
     COLLABORATION_REJECTED = "collaboration_rejected"
@@ -39,6 +42,7 @@ class NotificationType(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -48,6 +52,7 @@ class NotificationPriority(Enum):
 
 class NotificationChannel(Enum):
     """Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
@@ -60,6 +65,7 @@ class NotificationChannel(Enum):
 
 class NotificationStatus(Enum):
     """Notification delivery status"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -97,7 +103,8 @@ class NotificationTemplate:
 
 
 class CollaborationNotification(BaseModel):
-    """Collaboration notification model"""
+    """
+Collaboration notification model"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     type: NotificationType
     priority: NotificationPriority = NotificationPriority.MEDIUM
@@ -155,7 +162,8 @@ class NotificationDeliveryResult:
 
 @dataclass
 class NotificationAnalytics:
-    """Notification analytics data"""
+    """
+Notification analytics data"""
     total_sent: int = 0
     total_delivered: int = 0
     total_read: int = 0
@@ -187,7 +195,8 @@ class NotificationEngine:
         asyncio.create_task(self._initialize_engine())
     
     async def _initialize_engine(self):
-        """Initialize notification engine"""
+        """
+Initialize notification engine"""
         try:
             await self._setup_channel_providers()
             await self._load_notification_templates()
@@ -554,7 +563,8 @@ class NotificationEngine:
         }
     
     async def _load_notification_templates(self):
-        """Load notification templates"""
+        """
+Load notification templates"""
         # Mock templates - in reality would load from database
         self.templates = {
             'collaboration_request_email': NotificationTemplate(
@@ -580,12 +590,14 @@ class NotificationEngine:
         self.analytics_data = NotificationAnalytics()
     
     async def _setup_delivery_scheduler(self):
-        """Setup notification delivery scheduler"""
+        """
+Setup notification delivery scheduler"""
         # This would setup a background task to process scheduled notifications
         asyncio.create_task(self._process_scheduled_notifications())
     
     async def _validate_notification(self, notification: CollaborationNotification) -> Dict[str, Any]:
-        """Validate notification before sending"""
+        """
+Validate notification before sending"""
         try:
             # Check recipients
             if not notification.recipients:
@@ -612,7 +624,8 @@ class NotificationEngine:
         self, 
         notification: CollaborationNotification
     ) -> CollaborationNotification:
-        """Apply user preferences to notification"""
+        """
+Apply user preferences to notification"""
         # Filter recipients based on their preferences
         filtered_recipients = []
         
@@ -638,7 +651,8 @@ class NotificationEngine:
         recipient: NotificationRecipient, 
         notification_type: NotificationType
     ) -> bool:
-        """Check if user allows this type of notification"""
+        """
+Check if user allows this type of notification"""
         # Check notification preferences
         preferences = recipient.notification_preferences
         type_key = f"allow_{notification_type.value}"
@@ -672,7 +686,8 @@ class NotificationEngine:
         recipient: NotificationRecipient, 
         notification: CollaborationNotification
     ) -> bool:
-        """Check if it's do-not-disturb time for recipient"""
+        """
+Check if it's do-not-disturb time for recipient"""
         if not notification.respect_do_not_disturb or not recipient.do_not_disturb_hours:
             return False
         
@@ -691,7 +706,8 @@ class NotificationEngine:
         recipient: NotificationRecipient,
         channel: NotificationChannel
     ) -> NotificationDeliveryResult:
-        """Deliver notification via specific channel"""
+        """
+Deliver notification via specific channel"""
         try:
             # Get channel provider
             provider = self.channel_providers.get(channel)
@@ -755,7 +771,8 @@ class NotificationEngine:
         recipient: NotificationRecipient,
         channel: NotificationChannel
     ):
-        """Schedule notification for specific recipient and channel"""
+        """
+Schedule notification for specific recipient and channel"""
         # Implementation would add to scheduled queue with specific timing
         pass
     
@@ -764,7 +781,8 @@ class NotificationEngine:
         notification: CollaborationNotification,
         delivery_results: List[NotificationDeliveryResult]
     ):
-        """Update analytics with notification results"""
+        """
+Update analytics with notification results"""
         self.analytics_data.total_sent += 1
         
         delivered_count = sum(1 for r in delivery_results if r.status == NotificationStatus.DELIVERED)
@@ -775,7 +793,8 @@ class NotificationEngine:
             self.analytics_data.delivery_rate = self.analytics_data.total_delivered / self.analytics_data.total_sent
     
     async def _process_scheduled_notifications(self):
-        """Background task to process scheduled notifications"""
+        """
+Background task to process scheduled notifications"""
         while True:
             try:
                 current_time = datetime.utcnow()

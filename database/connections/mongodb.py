@@ -11,6 +11,7 @@ Manages MongoDB connections for content metadata and analytics:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
@@ -25,7 +26,8 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 
 @dataclass
 class MongoDBConfig:
-    """MongoDB connection configuration"""
+    """
+MongoDB connection configuration"""
     host: str = "localhost"
     port: int = 27017
     database: str = "ia_influencer_content"
@@ -76,7 +78,8 @@ class MongoDBConnectionHandler:
         self.last_health_check = None
     
     async def initialize(self) -> None:
-        """Initialize MongoDB connection"""
+        """
+Initialize MongoDB connection"""
         try:
             self.logger.info("Initializing MongoDB connection...")
             
@@ -213,7 +216,8 @@ class MongoDBConnectionHandler:
         return self.tenant_databases[tenant_id]
     
     async def _create_tenant_database(self, tenant_id: str) -> None:
-        """Create database for specific tenant"""
+        """
+Create database for specific tenant"""
         if not self.client:
             raise RuntimeError("MongoDB client not initialized")
         
@@ -231,7 +235,8 @@ class MongoDBConnectionHandler:
         await self._create_indexes_for_database(database)
     
     async def _create_indexes_for_database(self, database: AsyncIOMotorDatabase) -> None:
-        """Create indexes for a specific database"""
+        """
+Create indexes for a specific database"""
         try:
             # Content fingerprints
             fingerprints = database.content_fingerprints
@@ -266,7 +271,8 @@ class MongoDBConnectionHandler:
                         collection_name: str, 
                         document: Dict[str, Any],
                         tenant_id: Optional[str] = None) -> str:
-        """Insert single document"""
+        """
+Insert single document"""
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             

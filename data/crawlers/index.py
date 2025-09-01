@@ -5,12 +5,13 @@ Simplified access point for the professional web crawling system.
 Provides quick initialization and common usage patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, 
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -261,7 +262,8 @@ class CrawlerFactory:
         }
     
     async def get_manager_status(self) -> Dict[str, Any]:
-        """Get current status of crawler manager"""
+        """
+Get current status of crawler manager"""
         if not self.manager:
             return {'status': 'not_initialized'}
         
@@ -272,7 +274,8 @@ class CrawlerFactory:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if self.manager:
             await self.manager.shutdown()
             self.manager = None

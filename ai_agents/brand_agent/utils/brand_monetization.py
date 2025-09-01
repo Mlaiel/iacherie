@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ from ...integrations.social_media import InfluencerMarketplaces, BrandPartnershi
 logger = logging.getLogger(__name__)
 
 class MonetizationStrategy(Enum):
-    """Brand monetization strategies"""
+    """
+Brand monetization strategies"""
+
     LICENSING = "licensing"
     FRANCHISING = "franchising"
     MERCHANDISING = "merchandising"
@@ -64,6 +67,7 @@ class MonetizationStrategy(Enum):
 
 class RevenueStream(Enum):
     """Types of revenue streams"""
+
     ONE_TIME = "one_time"
     RECURRING = "recurring"
     PERFORMANCE_BASED = "performance_based"
@@ -73,6 +77,7 @@ class RevenueStream(Enum):
 
 class MarketTier(Enum):
     """Market tiers for pricing strategy"""
+
     PREMIUM = "premium"
     MASS_MARKET = "mass_market"
     VALUE = "value"

@@ -5,6 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass
 from datetime import datetime
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WatermarkConfig:
-    """Watermark configuration structure"""
+    """
+Watermark configuration structure"""
     watermark_type: str  # visible, invisible, digital_signature
     strength: float = 0.3  # Watermark strength (0.0 - 1.0)
     position: str = "center"  # center, corner, distributed
@@ -49,7 +51,8 @@ class DigitalSignature:
     metadata: Dict = None
     
     def verify_signature(self, public_key: bytes, content_hash: bytes) -> bool:
-        """Verify digital signature"""
+        """
+Verify digital signature"""
         try:
             public_key_obj = serialization.load_pem_public_key(public_key, backend=default_backend())
             public_key_obj.verify(
@@ -68,7 +71,8 @@ class DigitalSignature:
 
 @dataclass
 class WatermarkResult:
-    """Result of watermarking operation"""
+    """
+Result of watermarking operation"""
     success: bool
     watermarked_content: Optional[bytes] = None
     watermark_id: str = ""
@@ -281,7 +285,7 @@ class AdvancedWatermarkingEngine:
         draw = ImageDraw.Draw(overlay)
         
         # Watermark text
-        watermark_text = config.text or f"© {owner_info.get('name', 'Protected')} - {datetime.utcnow().year}"
+        watermark_text = config.text or f"(c) {owner_info.get('name', 'Protected')} - {datetime.utcnow().year}"
         
         # Try to load font, fallback to default if not available
         try:
@@ -334,7 +338,8 @@ class AdvancedWatermarkingEngine:
         
     def _embed_dct_watermark(self, channel: np.ndarray, watermark_pattern: np.ndarray,
                            strength: float) -> np.ndarray:
-        """Embed watermark in DCT domain"""
+        """
+Embed watermark in DCT domain"""
         # Divide image into 8x8 blocks
         height, width = channel.shape
         watermarked = channel.copy().astype(np.float32)
@@ -362,7 +367,8 @@ class AdvancedWatermarkingEngine:
         return np.clip(watermarked, 0, 255).astype(np.uint8)
         
     def _generate_watermark_pattern(self, owner_info: Dict) -> np.ndarray:
-        """Generate unique watermark pattern for owner"""
+        """
+Generate unique watermark pattern for owner"""
         owner_id = owner_info.get('id', 'unknown')
         
         # Create deterministic pattern based on owner ID
@@ -376,7 +382,8 @@ class AdvancedWatermarkingEngine:
         
     def _apply_audio_watermark(self, audio_data: bytes, config: WatermarkConfig,
                              owner_info: Dict) -> WatermarkResult:
-        """Apply watermark to audio content"""
+        """
+Apply watermark to audio content"""
         try:
             # Load audio data
             y, sr = librosa.load(io.BytesIO(audio_data), sr=self.audio_params['sample_rate'])
@@ -431,7 +438,8 @@ class AdvancedWatermarkingEngine:
         return watermarked_audio
         
     def _generate_audio_watermark_sequence(self, owner_info: Dict) -> np.ndarray:
-        """Generate audio watermark sequence"""
+        """
+Generate audio watermark sequence"""
         owner_id = owner_info.get('id', 'unknown')
         
         # Create deterministic sequence
@@ -442,7 +450,8 @@ class AdvancedWatermarkingEngine:
         
     def _apply_video_watermark(self, video_data: bytes, config: WatermarkConfig,
                              owner_info: Dict) -> WatermarkResult:
-        """Apply watermark to video content"""
+        """
+Apply watermark to video content"""
         # Video watermarking would involve frame-by-frame processing
         # This is a simplified implementation
         return WatermarkResult(
@@ -453,13 +462,14 @@ class AdvancedWatermarkingEngine:
         
     def _apply_text_watermark(self, text_data: bytes, config: WatermarkConfig,
                             owner_info: Dict) -> WatermarkResult:
-        """Apply watermark to text content"""
+        """
+Apply watermark to text content"""
         try:
             text = text_data.decode('utf-8')
             
             if config.watermark_type == "visible":
                 # Add visible copyright notice
-                watermark_text = f"\n\n© {owner_info.get('name', 'Protected')} - {datetime.utcnow().year}\n"
+                watermark_text = f"\n\n(c) {owner_info.get('name', 'Protected')} - {datetime.utcnow().year}\n"
                 watermarked_text = text + watermark_text
             else:
                 # Invisible text watermarking using zero-width characters
@@ -525,7 +535,8 @@ class AdvancedWatermarkingEngine:
             return {'error': str(e)}
             
     def _extract_dct_watermark(self, channel: np.ndarray) -> np.ndarray:
-        """Extract watermark from DCT domain"""
+        """
+Extract watermark from DCT domain"""
         height, width = channel.shape
         extracted_pattern = np.zeros((height // 8, width // 8))
         
@@ -544,7 +555,8 @@ class AdvancedWatermarkingEngine:
         return extracted_pattern
         
     def _calculate_watermark_confidence(self, extracted_pattern: np.ndarray) -> float:
-        """Calculate confidence score for extracted watermark"""
+        """
+Calculate confidence score for extracted watermark"""
         # Analyze pattern characteristics
         pattern_std = np.std(extracted_pattern)
         pattern_range = np.max(extracted_pattern) - np.min(extracted_pattern)
@@ -555,7 +567,8 @@ class AdvancedWatermarkingEngine:
         return confidence
         
     def _extract_audio_watermark(self, audio_data: bytes, extraction_key: str = None) -> Dict:
-        """Extract watermark from audio"""
+        """
+Extract watermark from audio"""
         # Placeholder implementation
         return {
             'watermark_detected': False,
@@ -564,7 +577,8 @@ class AdvancedWatermarkingEngine:
         }
         
     def _extract_video_watermark(self, video_data: bytes, extraction_key: str = None) -> Dict:
-        """Extract watermark from video"""
+        """
+Extract watermark from video"""
         # Placeholder implementation
         return {
             'watermark_detected': False,
@@ -573,7 +587,8 @@ class AdvancedWatermarkingEngine:
         }
         
     def _extract_text_watermark(self, text_data: bytes, extraction_key: str = None) -> Dict:
-        """Extract watermark from text"""
+        """
+Extract watermark from text"""
         try:
             text = text_data.decode('utf-8')
             
@@ -617,7 +632,8 @@ class AdvancedWatermarkingEngine:
             
     def _generate_digital_signature(self, content_data: bytes, owner_info: Dict,
                                   watermark_id: str) -> DigitalSignature:
-        """Generate digital signature for content"""
+        """
+Generate digital signature for content"""
         # Create content hash
         content_hash = hashlib.sha256(content_data).digest()
         

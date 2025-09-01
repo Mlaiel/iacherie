@@ -5,7 +5,7 @@ Comprehensive multi-level access control system for digital content protection
 with advanced security features, role-based permissions, and real-time enforcement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import hashlib
@@ -41,7 +42,9 @@ import bcrypt
 logger = logging.getLogger(__name__)
 
 class AccessLevel(str, Enum):
-    """Hierarchical access levels."""
+    """
+Hierarchical access levels."""
+
     NONE = "none"
     READ_ONLY = "read_only"
     LIMITED = "limited"
@@ -53,6 +56,7 @@ class AccessLevel(str, Enum):
 
 class ResourceType(str, Enum):
     """Types of protected resources."""
+
     CONTENT = "content"
     METADATA = "metadata"
     ANALYTICS = "analytics"
@@ -63,6 +67,7 @@ class ResourceType(str, Enum):
 
 class PermissionType(str, Enum):
     """Granular permission types."""
+
     VIEW = "view"
     DOWNLOAD = "download"
     STREAM = "stream"
@@ -77,6 +82,7 @@ class PermissionType(str, Enum):
 
 class SecurityLevel(str, Enum):
     """Security enforcement levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -99,7 +105,8 @@ class AccessRule:
 
 @dataclass
 class SecurityContext:
-    """Security context for access requests."""
+    """
+Security context for access requests."""
     user_id: int
     session_id: str
     ip_address: str
@@ -144,7 +151,8 @@ class AccessController:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Access Controller."""
+        """
+Initialize the Access Controller."""
         self.config = config
         self._initialized = False
         
@@ -325,27 +333,32 @@ class AccessController:
         return min(risk_score, 1.0)  # Cap at 1.0
 
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is flagged as suspicious."""
+        """
+Check if IP address is flagged as suspicious."""
         # Placeholder for IP reputation checking
         return False
 
     async def _is_tor_ip(self, ip_address: str) -> bool:
-        """Check if IP address is from Tor network."""
+        """
+Check if IP address is from Tor network."""
         # Placeholder for Tor detection
         return False
 
     async def _is_high_risk_location(self, location: str) -> bool:
-        """Check if location is considered high risk."""
+        """
+Check if location is considered high risk."""
         high_risk_countries = ['XX', 'YY']  # Placeholder
         return location in high_risk_countries
 
     async def _is_trusted_device(self, user_id: int, device_id: str) -> bool:
-        """Check if device is trusted for user."""
+        """
+Check if device is trusted for user."""
         # Placeholder for device trust checking
         return True
 
     async def _has_recent_suspicious_activity(self, user_id: int) -> bool:
-        """Check for recent suspicious activity by user."""
+        """
+Check for recent suspicious activity by user."""
         # Check recent audit entries for suspicious patterns
         cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
@@ -610,7 +623,8 @@ class AccessController:
         return True
 
     def _get_permissions_for_access_level(self, access_level: AccessLevel) -> Set[PermissionType]:
-        """Get permissions granted by access level."""
+        """
+Get permissions granted by access level."""
         level_permissions = {
             AccessLevel.NONE: set(),
             AccessLevel.READ_ONLY: {PermissionType.VIEW},
@@ -633,7 +647,8 @@ class AccessController:
         permission: PermissionType,
         additional_context: Optional[Dict[str, Any]]
     ) -> Tuple[bool, str]:
-        """Check attribute-based access control."""
+        """
+Check attribute-based access control."""
         # Placeholder for advanced ABAC logic
         # In production, this would evaluate complex attribute policies
         return True, "ABAC policies satisfied"
@@ -738,7 +753,8 @@ class AccessController:
             ]
 
     async def assign_role(self, user_id: int, role: str) -> bool:
-        """Assign role to user."""
+        """
+Assign role to user."""
         if role not in self.role_permissions:
             logger.error(f"Unknown role: {role}")
             return False
@@ -816,7 +832,8 @@ class AccessController:
         resource_type: Optional[ResourceType] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get access control analytics."""
+        """
+Get access control analytics."""
         filtered_entries = self.access_audit
         
         # Apply filters

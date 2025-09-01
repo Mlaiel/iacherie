@@ -15,6 +15,7 @@ Kubernetes environment configuration for container orchestration.
 Handles scaling, service discovery, secrets management, and deployment strategies.
 ====================================================
 """
+
 import os
 import yaml
 import logging
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class KubernetesClusterConfig:
-    """Kubernetes cluster configuration"""
+    """
+Kubernetes cluster configuration"""
     cluster_name: str = os.getenv('K8S_CLUSTER_NAME', 'ia-influencer-cluster')
     namespace: str = os.getenv('K8S_NAMESPACE', 'ia-influencer')
     api_version: str = "v1"
@@ -509,7 +511,8 @@ class KubernetesEnvironmentManager:
     
     # Private helper methods for manifest generation
     def _generate_namespace_manifest(self) -> str:
-        """Generate namespace manifest"""
+        """
+Generate namespace manifest"""
         manifest = {
             'apiVersion': 'v1',
             'kind': 'Namespace',
@@ -525,7 +528,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_configmap_manifest(self, environment: str) -> str:
-        """Generate ConfigMap manifest"""
+        """
+Generate ConfigMap manifest"""
         manifest = {
             'apiVersion': 'v1',
             'kind': 'ConfigMap',
@@ -543,7 +547,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_secrets_manifest(self, environment: str) -> str:
-        """Generate Secrets manifest"""
+        """
+Generate Secrets manifest"""
         manifest = {
             'apiVersion': 'v1',
             'kind': 'Secret',
@@ -560,7 +565,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_deployment_manifest(self) -> str:
-        """Generate Deployment manifest"""
+        """
+Generate Deployment manifest"""
         manifest = {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -704,7 +710,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_service_manifest(self) -> str:
-        """Generate Service manifest"""
+        """
+Generate Service manifest"""
         manifest = {
             'apiVersion': 'v1',
             'kind': 'Service',
@@ -740,7 +747,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_ingress_manifest(self) -> str:
-        """Generate Ingress manifest"""
+        """
+Generate Ingress manifest"""
         manifest = {
             'apiVersion': 'networking.k8s.io/v1',
             'kind': 'Ingress',
@@ -786,7 +794,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_hpa_manifest(self) -> str:
-        """Generate HorizontalPodAutoscaler manifest"""
+        """
+Generate HorizontalPodAutoscaler manifest"""
         manifest = {
             'apiVersion': 'autoscaling/v2',
             'kind': 'HorizontalPodAutoscaler',
@@ -837,7 +846,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_vpa_manifest(self) -> str:
-        """Generate VerticalPodAutoscaler manifest"""
+        """
+Generate VerticalPodAutoscaler manifest"""
         manifest = {
             'apiVersion': 'autoscaling.k8s.io/v1',
             'kind': 'VerticalPodAutoscaler',
@@ -859,7 +869,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_network_policy_manifest(self) -> str:
-        """Generate NetworkPolicy manifest"""
+        """
+Generate NetworkPolicy manifest"""
         manifest = {
             'apiVersion': 'networking.k8s.io/v1',
             'kind': 'NetworkPolicy',
@@ -909,7 +920,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_service_monitor_manifest(self) -> str:
-        """Generate ServiceMonitor manifest for Prometheus"""
+        """
+Generate ServiceMonitor manifest for Prometheus"""
         manifest = {
             'apiVersion': 'monitoring.coreos.com/v1',
             'kind': 'ServiceMonitor',
@@ -938,7 +950,8 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _write_manifests_to_files(self, manifests: Dict[str, str], environment: str):
-        """Write manifests to files"""
+        """
+Write manifests to files"""
         manifests_dir = Path(f"./k8s/{environment}")
         manifests_dir.mkdir(parents=True, exist_ok=True)
         
@@ -954,71 +967,88 @@ class KubernetesEnvironmentManager:
     
     # Setup methods for additional components
     def _install_prometheus_operator(self):
-        """Install Prometheus Operator"""
+        """
+Install Prometheus Operator"""
         pass
     
     def _install_grafana(self):
-        """Install Grafana"""
+        """
+Install Grafana"""
         pass
     
     def _install_jaeger(self):
-        """Install Jaeger"""
+        """
+Install Jaeger"""
         pass
     
     def _install_elk_stack(self):
-        """Install ELK Stack"""
+        """
+Install ELK Stack"""
         pass
     
     def _setup_alertmanager(self):
-        """Setup AlertManager"""
+        """
+Setup AlertManager"""
         pass
     
     def _install_istio(self):
-        """Install Istio service mesh"""
+        """
+Install Istio service mesh"""
         pass
     
     def _configure_traffic_management(self):
-        """Configure traffic management"""
+        """
+Configure traffic management"""
         pass
     
     def _setup_service_mesh_security(self):
-        """Setup service mesh security"""
+        """
+Setup service mesh security"""
         pass
     
     def _configure_service_mesh_observability(self):
-        """Configure service mesh observability"""
+        """
+Configure service mesh observability"""
         pass
     
     def _install_argocd(self):
-        """Install ArgoCD"""
+        """
+Install ArgoCD"""
         pass
     
     def _configure_git_repository(self):
-        """Configure Git repository"""
+        """
+Configure Git repository"""
         pass
     
     def _setup_deployment_pipelines(self):
-        """Setup deployment pipelines"""
+        """
+Setup deployment pipelines"""
         pass
     
     def _configure_sync_policies(self):
-        """Configure sync policies"""
+        """
+Configure sync policies"""
         pass
     
     def _install_velero(self):
-        """Install Velero"""
+        """
+Install Velero"""
         pass
     
     def _configure_backup_schedules(self):
-        """Configure backup schedules"""
+        """
+Configure backup schedules"""
         pass
     
     def _setup_cross_region_replication(self):
-        """Setup cross-region replication"""
+        """
+Setup cross-region replication"""
         pass
     
     def _configure_restore_procedures(self):
-        """Configure restore procedures"""
+        """
+Configure restore procedures"""
         pass
     
     # Validation methods

@@ -5,7 +5,7 @@ and coordinate cross-platform campaigns with intelligent matching and workflow a
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class CollaborationType(Enum):
-    """Collaboration types"""
+    """
+Collaboration types"""
+
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PROJECT = "joint_project"
@@ -38,6 +41,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status"""
+
     PROPOSED = "proposed"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -62,7 +66,8 @@ class Collaboration:
 
 
 class PartnerMatcher:
-    """AI-powered partner matching system"""
+    """
+AI-powered partner matching system"""
     
     def __init__(self, profile_manager: CreatorProfileManager, cache_manager: CacheManager):
         self.profile_manager = profile_manager
@@ -70,7 +75,8 @@ class PartnerMatcher:
         self.logger = get_logger(self.__class__.__name__)
     
     async def find_compatible_partners(self, creator_id: str, collaboration_type: CollaborationType) -> List[Dict[str, Any]]:
-        """Find compatible collaboration partners"""
+        """
+Find compatible collaboration partners"""
         try:
             # Get creator profile
             creator_profile = await self.profile_manager.get_creator_profile(creator_id)
@@ -122,14 +128,16 @@ class PartnerMatcher:
 
 
 class ProjectManager:
-    """Project management for collaborations"""
+    """
+Project management for collaborations"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def create_project(self, collaboration_data: Dict[str, Any]) -> Collaboration:
-        """Create new collaboration project"""
+        """
+Create new collaboration project"""
         collaboration_id = f"collab_{datetime.utcnow().timestamp()}"
         
         collaboration = Collaboration(
@@ -172,7 +180,8 @@ class WorkflowManager:
         self.logger = get_logger(self.__class__.__name__)
     
     async def create_workflow_template(self, collaboration_type: CollaborationType) -> Dict[str, Any]:
-        """Create workflow template for collaboration type"""
+        """
+Create workflow template for collaboration type"""
         templates = {
             CollaborationType.CONTENT_CREATION: {
                 'steps': [
@@ -196,14 +205,16 @@ class WorkflowManager:
 
 
 class CommunicationHub:
-    """Collaboration communication management"""
+    """
+Collaboration communication management"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def create_chat_room(self, collaboration_id: str, participants: List[str]) -> Dict[str, Any]:
-        """Create chat room for collaboration"""
+        """
+Create chat room for collaboration"""
         chat_room_id = f"chat_{collaboration_id}"
         
         chat_room = {
@@ -306,7 +317,8 @@ class CollaborationHub:
         ]
     
     async def _get_recent_activity(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get recent collaboration activity"""
+        """
+Get recent collaboration activity"""
         return [
             {
                 'type': 'new_message',
@@ -321,7 +333,8 @@ class CollaborationHub:
         ]
     
     async def initiate_collaboration(self, initiator_id: str, collaboration_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Initiate new collaboration"""
+        """
+Initiate new collaboration"""
         try:
             # Create collaboration project
             collaboration = await self.project_manager.create_project({

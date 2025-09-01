@@ -4,6 +4,7 @@ Automated policy enforcement and governance system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class PolicyType(str, Enum):
-    """Policy enforcement types"""
+    """
+Policy enforcement types"""
+
     ACCESS_CONTROL = "access_control"
     DATA_RETENTION = "data_retention"
     CONTENT_PROTECTION = "content_protection"
@@ -42,6 +45,7 @@ class PolicyType(str, Enum):
 
 class PolicyAction(str, Enum):
     """Policy enforcement actions"""
+
     ALLOW = "allow"
     DENY = "deny"
     WARN = "warn"
@@ -56,6 +60,7 @@ class PolicyAction(str, Enum):
 
 class PolicySeverity(str, Enum):
     """Policy violation severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,6 +69,7 @@ class PolicySeverity(str, Enum):
 
 class PolicyScope(str, Enum):
     """Policy enforcement scope"""
+
     USER = "user"
     ORGANIZATION = "organization"
     SYSTEM = "system"
@@ -81,7 +87,8 @@ class PolicyCondition:
 
 @dataclass
 class PolicyRule:
-    """Complete policy rule definition"""
+    """
+Complete policy rule definition"""
     rule_id: str
     name: str
     description: str
@@ -100,7 +107,8 @@ class PolicyRule:
 
 @dataclass
 class PolicyEvaluationContext:
-    """Context for policy evaluation"""
+    """
+Context for policy evaluation"""
     user_id: Optional[int] = None
     organization_id: Optional[int] = None
     resource_type: Optional[str] = None
@@ -115,7 +123,8 @@ class PolicyEvaluationContext:
 
 @dataclass
 class PolicyViolationDetails:
-    """Policy violation details"""
+    """
+Policy violation details"""
     rule_id: str
     rule_name: str
     violation_type: str
@@ -126,7 +135,8 @@ class PolicyViolationDetails:
 
 
 class PolicyEnforcer:
-    """Enterprise policy enforcement engine"""
+    """
+Enterprise policy enforcement engine"""
     
     def __init__(self):
         self.logger = logger

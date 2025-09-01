@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -54,11 +55,13 @@ class VideoQualityAnalyzer:
     """Video quality analysis and metrics calculation."""
     
     def __init__(self):
-        """Initialize video quality analyzer."""
+        """
+Initialize video quality analyzer."""
         self.logger = logging.getLogger(__name__)
     
     def analyze_frame_quality(self, frame: np.ndarray) -> Dict[str, float]:
-        """Analyze quality metrics for a single frame."""
+        """
+Analyze quality metrics for a single frame."""
         try:
             quality_metrics = {}
             
@@ -143,11 +146,13 @@ class VideoSceneDetector:
     """Video scene detection and segmentation."""
     
     def __init__(self):
-        """Initialize scene detector."""
+        """
+Initialize scene detector."""
         self.logger = logging.getLogger(__name__)
     
     def detect_scenes(self, frames: List[np.ndarray], threshold: float = 0.3) -> List[Dict[str, Any]]:
-        """Detect scene changes in video frames."""
+        """
+Detect scene changes in video frames."""
         try:
             if len(frames) < 2:
                 return [{'start_frame': 0, 'end_frame': len(frames)-1, 'scene_type': 'single'}]
@@ -221,12 +226,14 @@ class VideoObjectDetector:
     """Video object detection using computer vision."""
     
     def __init__(self):
-        """Initialize object detector."""
+        """
+Initialize object detector."""
         self.logger = logging.getLogger(__name__)
         self.cascade_classifiers = self._load_cascade_classifiers()
     
     def _load_cascade_classifiers(self) -> Dict[str, Any]:
-        """Load OpenCV cascade classifiers."""
+        """
+Load OpenCV cascade classifiers."""
         classifiers = {}
         
         try:
@@ -350,7 +357,8 @@ class VideoContentFilter:
     """Enterprise-grade video content filter."""
     
     def __init__(self, config: VideoFilterConfig):
-        """Initialize video content filter."""
+        """
+Initialize video content filter."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -378,7 +386,8 @@ class VideoContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter video content with comprehensive analysis."""
+        """
+Filter video content with comprehensive analysis."""
         start_time = time.time()
         
         try:
@@ -737,7 +746,8 @@ class VideoContentFilter:
         analysis_results: Dict[str, Any],
         strict_mode: bool
     ) -> FilterResult:
-        """Determine filter result based on analysis."""
+        """
+Determine filter result based on analysis."""
         # Check quality thresholds
         quality_data = analysis_results.get('quality', {})
         if quality_data.get('overall_score', 1.0) < 0.3:  # Very low quality
@@ -760,7 +770,8 @@ class VideoContentFilter:
                 return FilterResult.FAILED
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on video filter."""
+        """
+Perform health check on video filter."""
         health_status = {
             'status': 'healthy',
             'libraries': {

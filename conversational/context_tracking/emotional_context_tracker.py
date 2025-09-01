@@ -29,6 +29,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: AI conversation optimization
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -54,7 +55,9 @@ from ...ai.recommendation.emotional_intelligence import EmotionalIntelligenceEng
 
 
 class EmotionalState(Enum):
-    """Primary emotional states tracked"""
+    """
+Primary emotional states tracked"""
+
     JOY = "joy"
     EXCITEMENT = "excitement"
     CONTENTMENT = "contentment"
@@ -81,6 +84,7 @@ class EmotionalState(Enum):
 
 class SentimentPolarity(Enum):
     """Sentiment polarity classifications"""
+
     VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     SLIGHTLY_POSITIVE = "slightly_positive"
@@ -92,6 +96,7 @@ class SentimentPolarity(Enum):
 
 class EmotionalTrigger(Enum):
     """Common emotional triggers for content creators"""
+
     AUDIENCE_FEEDBACK = "audience_feedback"
     PERFORMANCE_METRICS = "performance_metrics"
     COLLABORATION_OUTCOME = "collaboration_outcome"
@@ -108,6 +113,7 @@ class EmotionalTrigger(Enum):
 
 class MoodCategory(Enum):
     """Mood categories for content optimization"""
+
     ENERGETIC = "energetic"
     CALM = "calm"
     CREATIVE = "creative"
@@ -137,7 +143,8 @@ class EmotionalDataPoint:
 
 @dataclass
 class EmotionalPattern:
-    """Identified emotional pattern"""
+    """
+Identified emotional pattern"""
     pattern_id: str
     pattern_type: str
     emotional_states: List[EmotionalState]
@@ -155,7 +162,8 @@ class EmotionalPattern:
 
 @dataclass
 class EmotionalProfile:
-    """Comprehensive emotional profile for user"""
+    """
+Comprehensive emotional profile for user"""
     user_id: str
     dominant_emotions: List[EmotionalState]
     emotional_baseline: Dict[str, float]
@@ -175,7 +183,8 @@ class EmotionalProfile:
 
 @dataclass
 class EmotionalRecommendation:
-    """Emotional optimization recommendation"""
+    """
+Emotional optimization recommendation"""
     recommendation_id: str
     user_id: str
     recommendation_type: str
@@ -1226,7 +1235,8 @@ class EmotionalContextTracker:
         return max(0, balance_score - volatility_penalty)
 
     async def _identify_stress_indicators(self, profile: EmotionalProfile) -> List[str]:
-        """Identify potential stress indicators"""
+        """
+Identify potential stress indicators"""
         stress_indicators = []
         
         # High emotional volatility

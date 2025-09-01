@@ -2,6 +2,7 @@
 """Security Hardening Manager
 Automated security hardening and compliance for the IA Influencer Agent platform
 """
+
 import os
 import sys
 import time
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security level enumeration"""
+    """
+Security level enumeration"""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -41,6 +44,7 @@ class SecurityLevel(Enum):
 
 class ComplianceStandard(Enum):
     """Compliance standard enumeration"""
+
     GDPR = "gdpr"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
@@ -50,6 +54,7 @@ class ComplianceStandard(Enum):
 
 class VulnerabilityLevel(Enum):
     """Vulnerability level enumeration"""
+
     INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
@@ -71,7 +76,8 @@ class SecurityPolicy:
 
 @dataclass
 class Vulnerability:
-    """Vulnerability data class"""
+    """
+Vulnerability data class"""
     id: str
     title: str
     description: str
@@ -86,7 +92,8 @@ class Vulnerability:
 
 @dataclass
 class SecurityAudit:
-    """Security audit data class"""
+    """
+Security audit data class"""
     id: str
     audit_type: str
     started_at: datetime
@@ -106,7 +113,8 @@ class SecurityHardening:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize security hardening manager"""
+        """
+Initialize security hardening manager"""
         self.config_path = config_path or "/etc/security/config.yaml"
         self.security_policies = {}
         self.vulnerabilities = {}
@@ -885,61 +893,75 @@ class SecurityHardening:
         return True  # Simplified implementation
     
     def _check_unnecessary_services(self) -> bool:
-        """Check for unnecessary services"""
+        """
+Check for unnecessary services"""
         return True  # Simplified implementation
     
     def _check_file_permissions(self) -> bool:
-        """Check file permissions"""
+        """
+Check file permissions"""
         return True  # Simplified implementation
     
     def _check_ssl_certificates(self) -> bool:
-        """Check SSL certificate validity"""
+        """
+Check SSL certificate validity"""
         return True  # Simplified implementation
     
     def _check_system_updates(self) -> bool:
-        """Check system updates"""
+        """
+Check system updates"""
         return True  # Simplified implementation
     
     def _check_authentication_config(self) -> bool:
-        """Check authentication configuration"""
+        """
+Check authentication configuration"""
         return True  # Simplified implementation
     
     def _check_authorization_config(self) -> bool:
-        """Check authorization configuration"""
+        """
+Check authorization configuration"""
         return True  # Simplified implementation
     
     def _check_input_validation(self) -> bool:
-        """Check input validation"""
+        """
+Check input validation"""
         return True  # Simplified implementation
     
     def _check_session_management(self) -> bool:
-        """Check session management"""
+        """
+Check session management"""
         return True  # Simplified implementation
     
     def _check_error_handling(self) -> bool:
-        """Check error handling"""
+        """
+Check error handling"""
         return True  # Simplified implementation
     
     def _check_database_encryption(self) -> bool:
-        """Check database encryption"""
+        """
+Check database encryption"""
         return True  # Simplified implementation
     
     def _check_database_access_controls(self) -> bool:
-        """Check database access controls"""
+        """
+Check database access controls"""
         return True  # Simplified implementation
     
     def _check_database_audit_logging(self) -> bool:
-        """Check database audit logging"""
+        """
+Check database audit logging"""
         return True  # Simplified implementation
     
     def _check_database_backup_security(self) -> bool:
-        """Check database backup security"""
+        """
+Check database backup security"""
         return True  # Simplified implementation
     
     # Remediation methods (simplified implementations)
     
     def _remediate_weak_ssl(self) -> None:
-        """Remediate weak SSL configuration"""
+        """
+Remediate weak SSL configuration"""
         logger.info("Remediated weak SSL configuration")
     
     def _remediate_outdated_packages(self) -> None:
@@ -1270,23 +1292,28 @@ class SecurityHardening:
         return os.path.exists('/etc/ssl/certs') or os.path.exists('/etc/nginx/ssl')
     
     def _check_access_logging(self) -> bool:
-        """Check if access logging is enabled"""
+        """
+Check if access logging is enabled"""
         return os.path.exists('/var/log')
     
     def _check_data_retention_policies(self) -> bool:
-        """Check if data retention policies are implemented"""
+        """
+Check if data retention policies are implemented"""
         return os.path.exists('/etc/logrotate.conf') or os.path.exists('/etc/logrotate.d')
     
     def _check_security_controls(self) -> bool:
-        """Check security controls"""
+        """
+Check security controls"""
         return self._check_firewall_status()
     
     def _check_availability_controls(self) -> bool:
-        """Check availability controls"""
+        """
+Check availability controls"""
         return os.path.exists('/var/log')  # Simplified check
     
     def _check_security_policy(self) -> bool:
-        """Check if security policy exists"""
+        """
+Check if security policy exists"""
         try:
             result = subprocess.run(
                 ["find", ".", "-name", "*security*policy*", "-o", "-name", "*SECURITY*"],
@@ -1344,7 +1371,8 @@ class VulnerabilityScanner:
     """Vulnerability scanner"""
     
     def scan_all(self) -> List[Vulnerability]:
-        """Scan for all vulnerabilities"""
+        """
+Scan for all vulnerabilities"""
         try:
             vulnerabilities = []
             
@@ -1369,24 +1397,28 @@ class VulnerabilityScanner:
         return []
     
     def _scan_application_vulnerabilities(self) -> List[Vulnerability]:
-        """Scan for application vulnerabilities"""
+        """
+Scan for application vulnerabilities"""
         # This would implement actual vulnerability scanning
         return []
     
     def _scan_network_vulnerabilities(self) -> List[Vulnerability]:
-        """Scan for network vulnerabilities"""
+        """
+Scan for network vulnerabilities"""
         # This would implement actual vulnerability scanning
         return []
 
 
 class ComplianceChecker:
-    """Compliance checker"""
+    """
+Compliance checker"""
     
     def __init__(self, standards: List[str]):
         self.standards = standards
     
     def check_compliance(self, standard: str) -> float:
-        """Check compliance for specific standard"""
+        """
+Check compliance for specific standard"""
         try:
             # This would implement actual compliance checking
             return 85.0  # Example score
@@ -1399,7 +1431,8 @@ class SecurityMonitor:
     """Security event monitor"""
     
     def get_recent_events(self) -> List[Dict[str, Any]]:
-        """Get recent security events"""
+        """
+Get recent security events"""
         try:
             # This would implement actual security event monitoring
             return []

@@ -8,7 +8,7 @@ Technologies: Multi-channel delivery, ML prioritization, Real-time routing
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Event trigger → Notification prioritization → Channel selection → 
 Template processing → Delivery optimization → Status tracking → Retry handling
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
@@ -47,7 +48,9 @@ settings = get_settings()
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
+    """
+Notification delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -62,6 +65,7 @@ class NotificationChannel(Enum):
 
 class NotificationPriority(Enum):
     """Notification priorities"""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -70,7 +74,9 @@ class NotificationPriority(Enum):
 
 
 class NotificationStatus(Enum):
-    """Notification delivery status"""
+    """
+Notification delivery status"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -82,6 +88,7 @@ class NotificationStatus(Enum):
 
 class TemplateType(Enum):
     """Notification template types"""
+
     WORKER_ALERT = "worker_alert"
     TASK_COMPLETION = "task_completion"
     SECURITY_ALERT = "security_alert"
@@ -144,7 +151,8 @@ class NotificationRule:
 
 @dataclass
 class Notification:
-    """Notification instance"""
+    """
+Notification instance"""
     notification_id: str
     rule_id: str
     event: WorkerEvent
@@ -166,7 +174,8 @@ class Notification:
 
 @dataclass
 class DeliveryResult:
-    """Notification delivery result"""
+    """
+Notification delivery result"""
     notification_id: str
     status: NotificationStatus
     delivered_at: Optional[datetime] = None
@@ -176,29 +185,34 @@ class DeliveryResult:
 
 
 class NotificationChannel_ABC(ABC):
-    """Abstract base class for notification channels"""
+    """
+Abstract base class for notification channels"""
     def __init__(self, channel_config: Dict[str, Any]):
         self.config = channel_config
         self.rate_limiter = RateLimiter()
 
     @abstractmethod
     async def send(self, notification: Notification) -> DeliveryResult:
-        """Send notification through this channel"""
+        """
+Send notification through this channel"""
         pass
 
     @abstractmethod
     async def validate_recipient(self, recipient: NotificationRecipient) -> bool:
-        """Validate recipient for this channel"""
+        """
+Validate recipient for this channel"""
         pass
 
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check channel health"""
+        """
+Check channel health"""
         pass
 
 
 class EmailChannel(NotificationChannel_ABC):
-    """Email notification channel"""
+    """
+Email notification channel"""
     def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.smtp_server = channel_config.get("smtp_server", "localhost")
@@ -265,7 +279,8 @@ class EmailChannel(NotificationChannel_ABC):
         await loop.run_in_executor(None, send_message)
 
     async def _add_attachment(self, msg: MIMEMultipart, attachment: Dict[str, Any]) -> None:
-        """Add attachment to email"""
+        """
+Add attachment to email"""
         try:
             filename = attachment.get("filename")
             content = attachment.get("content")
@@ -298,7 +313,8 @@ class EmailChannel(NotificationChannel_ABC):
 
 
 class WebhookChannel(NotificationChannel_ABC):
-    """Webhook notification channel"""
+    """
+Webhook notification channel"""
     def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.timeout = channel_config.get("timeout", 30)
@@ -364,18 +380,21 @@ class WebhookChannel(NotificationChannel_ABC):
         return bool(recipient.webhook_url and recipient.webhook_url.startswith(('http://', 'https://')))
 
     async def health_check(self) -> bool:
-        """Check webhook channel health"""
+        """
+Check webhook channel health"""
         return True  # Webhook health depends on individual URLs
 
 
 class WebSocketChannel(NotificationChannel_ABC):
-    """WebSocket notification channel"""
+    """
+WebSocket notification channel"""
     def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.active_connections: Dict[str, websockets.WebSocketServerProtocol] = {}
 
     async def send(self, notification: Notification) -> DeliveryResult:
-        """Send WebSocket notification"""
+        """
+Send WebSocket notification"""
         try:
             websocket_id = notification.recipient.websocket_id
             if not websocket_id or websocket_id not in self.active_connections:
@@ -433,7 +452,8 @@ class WebSocketChannel(NotificationChannel_ABC):
         return bool(recipient.websocket_id)
 
     async def health_check(self) -> bool:
-        """Check WebSocket channel health"""
+        """
+Check WebSocket channel health"""
         return True
 
 
@@ -1255,7 +1275,8 @@ def get_notification_engine() -> NotificationEngine:
 
 
 async def initialize_notification_engine() -> bool:
-    """Initialize global notification engine"""
+    """
+Initialize global notification engine"""
     try:
         engine = get_notification_engine()
         return await engine.start()

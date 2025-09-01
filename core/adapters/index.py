@@ -17,6 +17,7 @@ Features:
 - Dependency injection and service location
 - Performance metrics and analytics
 """
+
 import asyncio
 import logging
 import importlib
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AdapterModuleInfo:
-    """Information about an adapter module."""
+    """
+Information about an adapter module."""
     module_name: str
     module_path: str
     adapter_classes: List[Type[BasePlatformAdapter]]
@@ -46,7 +48,8 @@ class AdapterModuleInfo:
 
 @dataclass
 class AdapterDiscoveryResult:
-    """Result of adapter discovery operation."""
+    """
+Result of adapter discovery operation."""
     total_modules: int
     loaded_modules: int
     failed_modules: int
@@ -55,7 +58,8 @@ class AdapterDiscoveryResult:
     discovery_time: float
 
 class AdapterModuleLoader:
-    """Handles loading and unloading of adapter modules."""
+    """
+Handles loading and unloading of adapter modules."""
     
     def __init__(self):
         self.loaded_modules: Dict[str, AdapterModuleInfo] = {}
@@ -63,7 +67,8 @@ class AdapterModuleLoader:
         self.module_dependencies: Dict[str, List[str]] = {}
     
     async def discover_adapters(self) -> AdapterDiscoveryResult:
-        """Discover all available adapter modules."""
+        """
+Discover all available adapter modules."""
         start_time = datetime.utcnow()
         discovered_adapters = []
         errors = []
@@ -160,7 +165,8 @@ class AdapterModuleLoader:
         return self.adapter_classes.get(class_name)
     
     def get_adapters_by_platform_type(self, platform_type: PlatformType) -> List[Type[BasePlatformAdapter]]:
-        """Get all adapter classes for a specific platform type."""
+        """
+Get all adapter classes for a specific platform type."""
         adapters = []
         for module_info in self.loaded_modules.values():
             if platform_type in module_info.platform_types:
@@ -168,18 +174,21 @@ class AdapterModuleLoader:
         return adapters
     
     def get_module_info(self, module_name: str) -> Optional[AdapterModuleInfo]:
-        """Get information about a loaded module."""
+        """
+Get information about a loaded module."""
         return self.loaded_modules.get(module_name)
     
     def list_all_adapters(self) -> Dict[str, List[str]]:
-        """List all available adapters organized by module."""
+        """
+List all available adapters organized by module."""
         adapters_by_module = {}
         for module_name, module_info in self.loaded_modules.items():
             adapters_by_module[module_name] = [cls.__name__ for cls in module_info.adapter_classes]
         return adapters_by_module
 
 class AdapterHealthMonitor:
-    """Monitors health and performance of loaded adapters."""
+    """
+Monitors health and performance of loaded adapters."""
     
     def __init__(self):
         self.health_checks: Dict[str, Dict[str, Any]] = {}
@@ -187,7 +196,8 @@ class AdapterHealthMonitor:
         self.last_health_check: Optional[datetime] = None
     
     async def check_adapter_health(self, adapter_name: str, adapter_instance: BasePlatformAdapter) -> Dict[str, Any]:
-        """Check the health of a specific adapter."""
+        """
+Check the health of a specific adapter."""
         start_time = datetime.utcnow()
         
         health_status = {
@@ -262,7 +272,8 @@ class AdapterHealthMonitor:
         return summary
     
     def get_performance_metrics(self, adapter_name: str) -> Dict[str, Any]:
-        """Get performance metrics for a specific adapter."""
+        """
+Get performance metrics for a specific adapter."""
         metrics = self.performance_metrics.get(adapter_name, [])
         
         if not metrics:
@@ -279,7 +290,8 @@ class AdapterHealthMonitor:
         }
 
 class AdapterIndexManager:
-    """Main manager for adapter discovery, loading, and monitoring."""
+    """
+Main manager for adapter discovery, loading, and monitoring."""
     
     def __init__(self):
         self.module_loader = AdapterModuleLoader()
@@ -289,7 +301,8 @@ class AdapterIndexManager:
         self.initialization_time: Optional[datetime] = None
     
     async def initialize(self, auto_register: bool = True) -> AdapterDiscoveryResult:
-        """Initialize the adapter system with discovery and optional auto-registration."""
+        """
+Initialize the adapter system with discovery and optional auto-registration."""
         if self.is_initialized:
             logger.warning("Adapter system already initialized")
             return AdapterDiscoveryResult(0, 0, 0, [], [], 0.0)
@@ -324,7 +337,8 @@ class AdapterIndexManager:
         pass
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
+        """
+Get comprehensive system status."""
         if not self.is_initialized:
             return {'error': 'System not initialized'}
         
@@ -352,16 +366,19 @@ class AdapterIndexManager:
         }
     
     def get_adapter_class(self, class_name: str) -> Optional[Type[BasePlatformAdapter]]:
-        """Get an adapter class by name."""
+        """
+Get an adapter class by name."""
         return self.module_loader.get_adapter_class(class_name)
     
     def list_adapters_by_platform(self, platform_type: PlatformType) -> List[str]:
-        """List all available adapters for a platform type."""
+        """
+List all available adapters for a platform type."""
         adapters = self.module_loader.get_adapters_by_platform_type(platform_type)
         return [adapter.__name__ for adapter in adapters]
     
     async def reload_module(self, module_name: str) -> bool:
-        """Reload a specific adapter module."""
+        """
+Reload a specific adapter module."""
         try:
             # Unload existing module
             if module_name in self.module_loader.loaded_modules:
@@ -392,12 +409,14 @@ def get_adapter_index_manager() -> AdapterIndexManager:
     return _adapter_index_manager
 
 async def initialize_adapter_index(auto_register: bool = True) -> AdapterDiscoveryResult:
-    """Initialize the adapter index system."""
+    """
+Initialize the adapter index system."""
     manager = get_adapter_index_manager()
     return await manager.initialize(auto_register)
 
 async def get_adapter_system_status() -> Dict[str, Any]:
-    """Get the current status of the adapter system."""
+    """
+Get the current status of the adapter system."""
     manager = get_adapter_index_manager()
     return await manager.get_system_status()
 

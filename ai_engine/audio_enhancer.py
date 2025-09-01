@@ -4,6 +4,7 @@ AI-powered audio processing and enhancement system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioEnhancementParams:
-    """Audio enhancement parameters"""
+    """
+Audio enhancement parameters"""
     noise_reduction: bool = True
     audio_upscaling: bool = False
     auto_mastering: bool = True
@@ -39,7 +41,8 @@ class EnhancementResult:
 
 
 class AudioEnhancer:
-    """AI-powered audio processing and enhancement engine"""
+    """
+AI-powered audio processing and enhancement engine"""
     
     def __init__(self):
         self.enhancement_history = {}
@@ -52,7 +55,8 @@ class AudioEnhancer:
         params: AudioEnhancementParams,
         user_id: str
     ) -> EnhancementResult:
-        """Enhance audio file with AI processing"""
+        """
+Enhance audio file with AI processing"""
         try:
             start_time = datetime.now()
             

@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -30,7 +31,9 @@ from backend.services.notification.real_time_service import RealTimeNotification
 logger = logging.getLogger(__name__)
 
 class TurnType(Enum):
-    """Types of conversation turns"""
+    """
+Types of conversation turns"""
+
     USER_MESSAGE = "user_message"
     AGENT_RESPONSE = "agent_response"
     SYSTEM_NOTIFICATION = "system_notification"
@@ -43,6 +46,7 @@ class TurnType(Enum):
 
 class TurnPriority(Enum):
     """Priority levels for turns"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -50,7 +54,9 @@ class TurnPriority(Enum):
     CRITICAL = 5
 
 class TurnStatus(Enum):
-    """Status of conversation turns"""
+    """
+Status of conversation turns"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -60,6 +66,7 @@ class TurnStatus(Enum):
 
 class SpeakerRole(Enum):
     """Roles for conversation speakers"""
+
     PRIMARY_CREATOR = "primary_creator"
     COLLABORATING_CREATOR = "collaborating_creator"
     AI_ASSISTANT = "ai_assistant"
@@ -138,7 +145,8 @@ class TurnSequence:
 
 @dataclass
 class TurnQueue:
-    """Queue for managing conversation turns"""
+    """
+Queue for managing conversation turns"""
     queue_id: str
     conversation_id: str
     pending_turns: deque = field(default_factory=deque)
@@ -337,7 +345,8 @@ class TurnManager:
         return sum(1 for keyword in business_keywords if keyword in content_lower)
 
     def _detect_urgency_indicators(self, content: str) -> int:
-        """Detect urgency indicators in content"""
+        """
+Detect urgency indicators in content"""
         urgency_indicators = [
             'urgent', 'asap', 'immediately', 'critical', 'emergency',
             'deadline', 'time-sensitive', 'priority', 'rush'
@@ -347,7 +356,8 @@ class TurnManager:
         return sum(1 for indicator in urgency_indicators if indicator in content_lower)
 
     def _calculate_engagement_score(self, features: Dict[str, Any]) -> float:
-        """Calculate engagement score based on content features"""
+        """
+Calculate engagement score based on content features"""
         score = 0.0
         
         # Base score from content length
@@ -368,7 +378,8 @@ class TurnManager:
         return min(score, 1.0)
 
     def _calculate_business_value_score(self, turn: ConversationTurn) -> float:
-        """Calculate business value score for turn"""
+        """
+Calculate business value score for turn"""
         score = 0.0
         
         # Revenue impact
@@ -407,7 +418,8 @@ class TurnManager:
         return min(score, 1.0)
 
     async def _get_or_create_queue(self, conversation_id: str) -> TurnQueue:
-        """Get existing queue or create new one for conversation"""
+        """
+Get existing queue or create new one for conversation"""
         
         if conversation_id not in self.active_queues:
             queue_id = str(uuid.uuid4())
@@ -466,7 +478,8 @@ class TurnManager:
             await self._start_turn_processing(queue, turn)
 
     async def _start_turn_processing(self, queue: TurnQueue, turn: ConversationTurn):
-        """Start processing a specific turn"""
+        """
+Start processing a specific turn"""
         
         turn.status = TurnStatus.PROCESSING
         turn.processed_at = datetime.now(timezone.utc)
@@ -476,7 +489,8 @@ class TurnManager:
         asyncio.create_task(self._process_turn(queue, turn))
 
     async def _process_turn(self, queue: TurnQueue, turn: ConversationTurn):
-        """Process individual turn"""
+        """
+Process individual turn"""
         
         async with self.processing_semaphore:
             start_time = datetime.now(timezone.utc)
@@ -779,7 +793,8 @@ class TurnManager:
         self.speaker_contexts[speaker_id]['last_updated'] = datetime.now(timezone.utc).isoformat()
 
     async def _update_processing_metrics(self, processing_time: float, success: bool):
-        """Update processing performance metrics"""
+        """
+Update processing performance metrics"""
         
         self.metrics['turns_processed'] += 1
         
@@ -797,7 +812,8 @@ class TurnManager:
         self.metrics['success_rate'] = (success_count / self.metrics['turns_processed']) * 100.0
 
     async def _cleanup_expired_turns(self):
-        """Background task to cleanup expired turns"""
+        """
+Background task to cleanup expired turns"""
         
         while True:
             try:
@@ -915,7 +931,8 @@ class TurnManager:
 
     # Public API methods
     async def get_turn_status(self, turn_id: str) -> Dict[str, Any]:
-        """Get status of specific turn"""
+        """
+Get status of specific turn"""
         
         try:
             turn_data = await self.redis_client.get(f"turn:{turn_id}")
@@ -970,7 +987,8 @@ class TurnManager:
         return False
 
     def get_queue_metrics(self, conversation_id: str) -> Dict[str, Any]:
-        """Get metrics for conversation queue"""
+        """
+Get metrics for conversation queue"""
         
         queue = self.active_queues.get(conversation_id)
         if not queue:

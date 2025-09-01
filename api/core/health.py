@@ -2,8 +2,9 @@
 Professional health monitoring with comprehensive dependency checks.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Dict, List, Optional, Callable, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -16,7 +17,9 @@ from contextlib import asynccontextmanager
 
 
 class HealthStatus(Enum):
-    """Health check status levels."""
+    """
+Health check status levels."""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -25,6 +28,7 @@ class HealthStatus(Enum):
 
 class ComponentType(Enum):
     """Types of system components."""
+
     DATABASE = "database"
     CACHE = "cache"
     EXTERNAL_API = "external_api"
@@ -48,7 +52,8 @@ class HealthCheckResult:
     tags: Dict[str, str] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
+        """
+Convert to dictionary for serialization."""
         return {
             "component_name": self.component_name,
             "component_type": self.component_type.value,
@@ -90,7 +95,8 @@ class SystemHealthStatus:
     
     @property
     def unhealthy_components(self) -> List[HealthCheckResult]:
-        """Get list of unhealthy components."""
+        """
+Get list of unhealthy components."""
         return [
             result for result in self.component_results
             if result.status == HealthStatus.UNHEALTHY
@@ -98,7 +104,8 @@ class SystemHealthStatus:
     
     @property
     def degraded_components(self) -> List[HealthCheckResult]:
-        """Get list of degraded components."""
+        """
+Get list of degraded components."""
         return [
             result for result in self.component_results
             if result.status == HealthStatus.DEGRADED
@@ -106,38 +113,45 @@ class SystemHealthStatus:
 
 
 class IHealthCheck(ABC):
-    """Interface for health check implementations."""
+    """
+Interface for health check implementations."""
     
     @property
     @abstractmethod
     def name(self) -> str:
-        """Health check name."""
+        """
+Health check name."""
         pass
     
     @property
     @abstractmethod
     def component_type(self) -> ComponentType:
-        """Component type being checked."""
+        """
+Component type being checked."""
         pass
     
     @abstractmethod
     async def check_health(self) -> HealthCheckResult:
-        """Execute health check and return result."""
+        """
+Execute health check and return result."""
         pass
     
     @property
     def timeout_seconds(self) -> float:
-        """Health check timeout in seconds."""
+        """
+Health check timeout in seconds."""
         return 5.0
     
     @property
     def tags(self) -> Dict[str, str]:
-        """Additional tags for the health check."""
+        """
+Additional tags for the health check."""
         return {}
 
 
 class DatabaseHealthCheck(IHealthCheck):
-    """Health check for database connectivity."""
+    """
+Health check for database connectivity."""
     
     def __init__(self, name: str, connection_factory: Callable):
         self._name = name
@@ -152,7 +166,8 @@ class DatabaseHealthCheck(IHealthCheck):
         return ComponentType.DATABASE
     
     async def check_health(self) -> HealthCheckResult:
-        """Check database connectivity and responsiveness."""
+        """
+Check database connectivity and responsiveness."""
         start_time = time.perf_counter()
         
         try:
@@ -199,7 +214,8 @@ class RedisHealthCheck(IHealthCheck):
         return ComponentType.CACHE
     
     async def check_health(self) -> HealthCheckResult:
-        """Check Redis connectivity and responsiveness."""
+        """
+Check Redis connectivity and responsiveness."""
         start_time = time.perf_counter()
         
         try:
@@ -260,7 +276,8 @@ class ExternalAPIHealthCheck(IHealthCheck):
         return 10.0
     
     async def check_health(self) -> HealthCheckResult:
-        """Check external API availability."""
+        """
+Check external API availability."""
         start_time = time.perf_counter()
         
         try:
@@ -318,7 +335,8 @@ class StorageHealthCheck(IHealthCheck):
         return ComponentType.STORAGE
     
     async def check_health(self) -> HealthCheckResult:
-        """Check storage system availability."""
+        """
+Check storage system availability."""
         start_time = time.perf_counter()
         
         try:
@@ -377,7 +395,8 @@ class HealthCheckManager:
             self._health_checks[health_check.name] = health_check
     
     def unregister_health_check(self, name: str) -> bool:
-        """Unregister a health check."""
+        """
+Unregister a health check."""
         with self._lock:
             if name in self._health_checks:
                 del self._health_checks[name]
@@ -385,7 +404,8 @@ class HealthCheckManager:
             return False
     
     async def check_health(self, component_name: Optional[str] = None) -> SystemHealthStatus:
-        """Execute health checks and return system status."""
+        """
+Execute health checks and return system status."""
         if component_name:
             # Check specific component
             if component_name not in self._health_checks:
@@ -483,17 +503,20 @@ class HealthCheckManager:
         return HealthStatus.HEALTHY
     
     def _get_uptime_seconds(self) -> float:
-        """Get application uptime in seconds."""
+        """
+Get application uptime in seconds."""
         return (datetime.now(timezone.utc) - self.start_time).total_seconds()
     
     def get_registered_checks(self) -> List[str]:
-        """Get list of registered health check names."""
+        """
+Get list of registered health check names."""
         with self._lock:
             return list(self._health_checks.keys())
 
 
 class SimpleHealthCheck(IHealthCheck):
-    """Simple health check that always returns healthy."""
+    """
+Simple health check that always returns healthy."""
     
     def __init__(self, name: str, component_type: ComponentType = ComponentType.SERVICE):
         self._name = name
@@ -508,7 +531,8 @@ class SimpleHealthCheck(IHealthCheck):
         return self._component_type
     
     async def check_health(self) -> HealthCheckResult:
-        """Always return healthy status."""
+        """
+Always return healthy status."""
         return HealthCheckResult(
             component_name=self.name,
             component_type=self.component_type,
@@ -532,15 +556,18 @@ def get_health_manager() -> HealthCheckManager:
 
 
 def register_health_check(health_check: IHealthCheck) -> None:
-    """Register a health check with global manager."""
+    """
+Register a health check with global manager."""
     _health_manager.register_health_check(health_check)
 
 
 async def check_system_health() -> SystemHealthStatus:
-    """Check overall system health."""
+    """
+Check overall system health."""
     return await _health_manager.check_health()
 
 
 async def check_component_health(component_name: str) -> SystemHealthStatus:
-    """Check specific component health."""
+    """
+Check specific component health."""
     return await _health_manager.check_health(component_name)

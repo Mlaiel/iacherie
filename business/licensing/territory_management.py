@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -29,7 +30,9 @@ from ..ai.territory_intelligence import TerritoryIntelligenceEngine
 
 
 class TerritoryScope(Enum):
-    """Territory scope definitions"""
+    """
+Territory scope definitions"""
+
     GLOBAL = "global"
     CONTINENTAL = "continental"
     REGIONAL = "regional"
@@ -41,6 +44,7 @@ class TerritoryScope(Enum):
 
 class RightsType(Enum):
     """Types of territorial rights"""
+
     DISTRIBUTION = "distribution"
     PERFORMANCE = "performance"
     BROADCASTING = "broadcasting"
@@ -55,6 +59,7 @@ class RightsType(Enum):
 
 class TerritoryStatus(Enum):
     """Territory licensing status"""
+
     AVAILABLE = "available"
     LICENSED_EXCLUSIVE = "licensed_exclusive"
     LICENSED_NON_EXCLUSIVE = "licensed_non_exclusive"
@@ -83,7 +88,8 @@ class TerritoryProfile:
 
 
 class TerritoryRequest(BaseModel):
-    """Territory rights management request"""
+    """
+Territory rights management request"""
     content_id: str = Field(..., description="Content for territory management")
     territories: List[str] = Field(..., description="Territory codes")
     rights_types: List[RightsType] = Field(..., description="Types of rights")
@@ -590,7 +596,8 @@ class TerritoryManagementService:
         territories: List[str], 
         content_id: str
     ) -> Dict[str, Any]:
-        """Analyze market potential for territories"""
+        """
+Analyze market potential for territories"""
         # Implementation for market analysis
         pass
     
@@ -600,6 +607,7 @@ class TerritoryManagementService:
         market_analysis: Dict[str, Any],
         recommendations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate revenue projections for territory strategy"""
+        """
+Calculate revenue projections for territory strategy"""
         # Implementation for revenue projection calculation
         pass

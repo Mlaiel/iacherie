@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, text
@@ -50,7 +51,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize content fingerprint repository"""
+        """
+Initialize content fingerprint repository"""
         super().__init__(db_session, ContentFingerprint)
         
     def create_fingerprint(self,

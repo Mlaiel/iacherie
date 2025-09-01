@@ -4,7 +4,7 @@ Comprehensive test suite for Natural Language Processing components
 covering all modules with industrial-grade testing standards.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
@@ -19,10 +19,11 @@ Team Expertise:
 ✅ Développeur Audio - Fahed Mlaiel
 ✅ DevOps Engineer - Fahed Mlaiel
 ✅ IA Prompt Engineer - Fahed Mlaiel
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Test configuration
 TEST_CONFIG = {
@@ -50,15 +51,18 @@ class SentimentAnalysisTests(TextAnalysisTests):
     pass
 
 class ContentGenerationTests(TextAnalysisTests):
-    """Specialized tests for content generation"""
+    """
+Specialized tests for content generation"""
     pass
 
 class LanguageDetectionTests(TextAnalysisTests):
-    """Specialized tests for language detection"""
+    """
+Specialized tests for language detection"""
     pass
 
 class TranslationTests(TextAnalysisTests):
-    """Specialized tests for translation"""
+    """
+Specialized tests for translation"""
     pass
 
 # Export test classes

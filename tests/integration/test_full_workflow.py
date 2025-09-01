@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Tests for Full Workflows
+"""
+Integration Tests for Full Workflows
 ====================================
 
 Comprehensive integration tests for end-to-end workflows:
@@ -23,6 +25,7 @@ Comprehensive integration tests for end-to-end workflows:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -40,11 +43,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestFullWorkflowIntegration:
-    """Integration tests for complete end-to-end workflows"""
+    """
+Integration tests for complete end-to-end workflows"""
     
     @pytest.fixture
     def mock_workflow_orchestrator(self):
-        """Mock workflow orchestration system"""
+        """
+Mock workflow orchestration system"""
         orchestrator = Mock()
         orchestrator.start_workflow = AsyncMock()
         orchestrator.monitor_progress = AsyncMock()
@@ -55,7 +60,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.fixture
     def sample_content_workflow_input(self):
-        """Sample input for content workflow"""
+        """
+Sample input for content workflow"""
         return {
             'workflow_id': 'workflow_123456789',
             'workflow_type': 'content_protection_and_distribution',
@@ -89,7 +95,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_content_protection_workflow(self, mock_workflow_orchestrator, sample_content_workflow_input):
-        """Test complete content protection workflow from start to finish"""
+        """
+Test complete content protection workflow from start to finish"""
         # Mock workflow execution stages
         workflow_stages = {
             'content_validation': {
@@ -175,7 +182,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_multi_platform_distribution_workflow(self, mock_workflow_orchestrator):
-        """Test multi-platform content distribution workflow"""
+        """
+Test multi-platform content distribution workflow"""
         # Mock distribution workflow input
         distribution_input = {
             'workflow_id': 'dist_workflow_456',
@@ -271,7 +279,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_monetization_workflow_integration(self, mock_workflow_orchestrator):
-        """Test complete monetization workflow integration"""
+        """
+Test complete monetization workflow integration"""
         # Mock monetization workflow input
         monetization_input = {
             'workflow_id': 'mon_workflow_789',
@@ -377,11 +386,13 @@ class TestFullWorkflowIntegration:
 
 
 class TestErrorHandlingAndRecovery:
-    """Integration tests for error handling and workflow recovery"""
+    """
+Integration tests for error handling and workflow recovery"""
     
     @pytest.fixture
     def mock_error_handler(self):
-        """Mock error handling system"""
+        """
+Mock error handling system"""
         handler = Mock()
         handler.handle_workflow_error = AsyncMock()
         handler.attempt_recovery = AsyncMock()
@@ -391,7 +402,8 @@ class TestErrorHandlingAndRecovery:
     
     @pytest.mark.asyncio
     async def test_workflow_error_recovery(self, mock_error_handler):
-        """Test workflow error handling and recovery mechanisms"""
+        """
+Test workflow error handling and recovery mechanisms"""
         # Mock workflow error scenario
         error_scenario = {
             'workflow_id': 'workflow_error_123',
@@ -474,7 +486,8 @@ class TestErrorHandlingAndRecovery:
     
     @pytest.mark.asyncio
     async def test_data_consistency_during_failures(self, mock_error_handler):
-        """Test data consistency maintenance during workflow failures"""
+        """
+Test data consistency maintenance during workflow failures"""
         # Mock data consistency scenario
         consistency_scenario = {
             'workflow_id': 'consistency_test_456',

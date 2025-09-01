@@ -5,6 +5,7 @@ Advanced AI-powered digital watermarking for content protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 import numpy as np
@@ -17,14 +18,17 @@ from dataclasses import dataclass, field
 import logging
 
 def utc_now():
-    """Get current UTC datetime in a timezone-aware manner"""
+    """
+Get current UTC datetime in a timezone-aware manner"""
     return datetime.now(timezone.utc)
 
 logger = logging.getLogger(__name__)
 
 
 class WatermarkType(Enum):
-    """Types of watermarks"""
+    """
+Types of watermarks"""
+
     VISIBLE = "visible"
     INVISIBLE = "invisible"
     ROBUST = "robust"
@@ -34,6 +38,7 @@ class WatermarkType(Enum):
 
 class WatermarkStrength(Enum):
     """Watermark strength levels"""
+
     LOW = "low"          # Less noticeable, easier to remove
     MEDIUM = "medium"    # Balanced visibility and robustness
     HIGH = "high"        # Very robust, may be more noticeable
@@ -42,6 +47,7 @@ class WatermarkStrength(Enum):
 
 class EmbeddingMethod(Enum):
     """Watermark embedding methods"""
+
     LSB = "lsb"              # Least Significant Bit
     DCT = "dct"              # Discrete Cosine Transform
     DWT = "dwt"              # Discrete Wavelet Transform
@@ -65,7 +71,8 @@ class WatermarkConfig:
 
 @dataclass
 class WatermarkResult:
-    """Result of watermark application"""
+    """
+Result of watermark application"""
     success: bool
     watermark_id: str
     watermark_type: WatermarkType
@@ -79,7 +86,8 @@ class WatermarkResult:
 
 @dataclass
 class DigitalWatermark:
-    """Digital watermark data structure for serialization and storage"""
+    """
+Digital watermark data structure for serialization and storage"""
     watermark_id: str
     content_id: str
     watermark_type: WatermarkType
@@ -90,7 +98,8 @@ class DigitalWatermark:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert watermark to dictionary for serialization"""
+        """
+Convert watermark to dictionary for serialization"""
         return {
             'watermark_id': self.watermark_id,
             'content_id': self.content_id,
@@ -104,7 +113,8 @@ class DigitalWatermark:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'DigitalWatermark':
-        """Create watermark from dictionary"""
+        """
+Create watermark from dictionary"""
         return cls(
             watermark_id=data['watermark_id'],
             content_id=data['content_id'],
@@ -131,7 +141,8 @@ class WatermarkEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize watermark engine"""
+        """
+Initialize watermark engine"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -165,7 +176,8 @@ class WatermarkEngine:
         }
     
     async def initialize(self) -> bool:
-        """Initialize watermarking engine"""
+        """
+Initialize watermarking engine"""
         try:
             self.logger.info("Initializing watermark engine...")
             
@@ -480,7 +492,8 @@ class WatermarkEngine:
         return watermarker_map.get(content_type.value)
     
     def _get_detector(self, content_type, watermark_type=None):
-        """Get appropriate detector for content type"""
+        """
+Get appropriate detector for content type"""
         key = f"{content_type.value}_{watermark_type.value if watermark_type else 'general'}"
         return self._detector_models.get(key)
     
@@ -527,7 +540,8 @@ class WatermarkEngine:
         result: WatermarkResult,
         config: WatermarkConfig
     ) -> Dict[str, Any]:
-        """Verify that watermark was embedded correctly"""
+        """
+Verify that watermark was embedded correctly"""
         try:
             # Attempt to detect the just-embedded watermark
             detection_result = await self.detect_watermark(
@@ -549,13 +563,15 @@ class WatermarkEngine:
         return watermark_info.get('authorized_removal', False)
     
     async def _simulate_attack(self, content: Any, attack_type: str) -> Any:
-        """Simulate various attacks on watermarked content"""
+        """
+Simulate various attacks on watermarked content"""
         # Placeholder for attack simulation
         # Each attack type would modify the content in specific ways
         return content
     
     def _update_metrics(self, result: WatermarkResult):
-        """Update engine metrics"""
+        """
+Update engine metrics"""
         self.metrics['watermarks_applied'] += 1
         
         # Update quality preservation average
@@ -574,7 +590,8 @@ class WatermarkEngine:
     # Initialization methods
     
     async def _init_ai_models(self):
-        """Initialize AI models for different content types"""
+        """
+Initialize AI models for different content types"""
         try:
             # Audio watermarking model
             if self.config.get('enable_audio', True):
@@ -611,7 +628,8 @@ class WatermarkEngine:
         }
     
     async def _init_detection_models(self):
-        """Initialize watermark detection models"""
+        """
+Initialize watermark detection models"""
         # Placeholder for detection model initialization
         self._detector_models = {
             'audio_invisible': None,
@@ -623,7 +641,8 @@ class WatermarkEngine:
     # Embedding algorithm implementations (placeholders)
     
     async def _dct_embedding(self, content: Any, watermark_data: bytes, config: WatermarkConfig):
-        """DCT-based watermark embedding"""
+        """
+DCT-based watermark embedding"""
         try:
             logger.info("Applying DCT-based watermark embedding")
             
@@ -940,7 +959,8 @@ class AudioWatermarker:
         return await self.embed_watermark(audio_data, WatermarkConfig())
     
     async def embed_echo_hiding(self, audio_data, watermark_data, echo_delay=0.001, echo_strength=0.1):
-        """Embed watermark using echo hiding technique"""
+        """
+Embed watermark using echo hiding technique"""
         return await self.embed_watermark(audio_data, WatermarkConfig())
     
     async def remove_watermark(self, content, watermark_info):
@@ -952,7 +972,8 @@ class ImageWatermarker:
         self.config = config
     
     async def initialize(self):
-        """Initialize image watermarker with required components"""
+        """
+Initialize image watermarker with required components"""
         self.logger = logging.getLogger(f"{__name__}.ImageWatermarker")
         self.is_initialized = True
         self.logger.info("Image watermarker initialized successfully")
@@ -1037,7 +1058,8 @@ class InvisibleWatermark:
         self.watermark_id = str(uuid.uuid4())
     
     async def embed(self, content_data: bytes, content_type: str = 'image') -> Dict[str, Any]:
-        """Embed invisible watermark into content"""
+        """
+Embed invisible watermark into content"""
         await asyncio.sleep(0.1)  # Simulate processing
         return {
             'success': True,
@@ -1048,7 +1070,8 @@ class InvisibleWatermark:
         }
     
     async def detect(self, watermarked_content: bytes, content_type: str = 'image') -> Dict[str, Any]:
-        """Detect invisible watermark in content"""
+        """
+Detect invisible watermark in content"""
         await asyncio.sleep(0.1)  # Simulate processing
         return {
             'detected': True,
@@ -1059,7 +1082,8 @@ class InvisibleWatermark:
 
 
 class VisibleWatermark:
-    """Visible watermark implementation for professional content protection"""
+    """
+Visible watermark implementation for professional content protection"""
     
     def __init__(self, text: str = "", logo_data: Optional[bytes] = None):
         self.text = text
@@ -1078,7 +1102,8 @@ class VisibleWatermark:
         }
     
     async def embed_logo_overlay(self, base_content: bytes, logo_content: bytes, content_type: str = 'image', **kwargs) -> Dict[str, Any]:
-        """Embed logo overlay watermark"""
+        """
+Embed logo overlay watermark"""
         await asyncio.sleep(0.1)  # Simulate processing
         return {
             'success': True,
@@ -1090,14 +1115,16 @@ class VisibleWatermark:
 
 
 class AudioWatermark:
-    """Professional audio watermarking for ultra-industrial content protection"""
+    """
+Professional audio watermarking for ultra-industrial content protection"""
     
     def __init__(self, watermark_data: bytes):
         self.watermark_data = watermark_data
         self.watermark_id = str(uuid.uuid4())
     
     async def embed_spread_spectrum(self, audio_data: bytes, watermark_data: bytes, spread_factor: float = 1.0) -> Dict[str, Any]:
-        """Embed watermark using spread spectrum technique"""
+        """
+Embed watermark using spread spectrum technique"""
         await asyncio.sleep(0.1)  # Simulate processing
         return {
             'success': True,
@@ -1108,7 +1135,8 @@ class AudioWatermark:
         }
     
     async def embed_echo_hiding(self, audio_data: bytes, watermark_data: bytes, echo_delay: float = 0.001, echo_strength: float = 0.1) -> Dict[str, Any]:
-        """Embed watermark using echo hiding technique"""
+        """
+Embed watermark using echo hiding technique"""
         await asyncio.sleep(0.1)  # Simulate processing
         return {
             'success': True,
@@ -1121,14 +1149,16 @@ class AudioWatermark:
 
 
 class WatermarkValidator:
-    """Ultra-Industrial Watermark Validation Engine"""
+    """
+Ultra-Industrial Watermark Validation Engine"""
     
     def __init__(self):
         self.validator_id = str(uuid.uuid4())
         self.validation_history = []
     
     async def validate_watermark(self, content_data: bytes, watermark_id: str) -> Dict[str, Any]:
-        """Validate watermark presence and integrity"""
+        """
+Validate watermark presence and integrity"""
         await asyncio.sleep(0.05)  # Simulate processing
         
         # Simulate validation logic
@@ -1148,7 +1178,8 @@ class WatermarkValidator:
         return result
     
     async def extract_watermark(self, content_data: bytes) -> Optional[Dict[str, Any]]:
-        """Extract watermark information from content"""
+        """
+Extract watermark information from content"""
         await asyncio.sleep(0.1)  # Simulate processing
         
         if len(content_data) == 0:
@@ -1164,5 +1195,6 @@ class WatermarkValidator:
         }
     
     def get_validation_history(self) -> List[Dict[str, Any]]:
-        """Get validation history"""
+        """
+Get validation history"""
         return self.validation_history.copy()

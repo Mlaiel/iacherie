@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 import json
@@ -33,7 +34,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class APIEndpointMetrics:
-    """External API endpoint performance metrics"""
+    """
+External API endpoint performance metrics"""
     service_name: str
     endpoint_name: str
     response_time_ms: float

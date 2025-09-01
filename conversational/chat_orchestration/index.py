@@ -14,12 +14,13 @@ Features:
 - Gestion des erreurs et fallback automatique
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, Optional, Any, Type
@@ -51,7 +52,9 @@ from backend.security.encryption import EncryptionService
 
 
 class OrchestrationComponentType(Enum):
-    """Types of orchestration components"""
+    """
+Types of orchestration components"""
+
     CHAT_MANAGER = "chat_manager"
     MESSAGE_PROCESSOR = "message_processor"
     RESPONSE_GENERATOR = "response_generator"
@@ -91,7 +94,8 @@ class OrchestrationConfiguration:
     analytics_config: Dict[str, Any] = None
     
     def __post_init__(self):
-        """Initialize default configurations"""
+        """
+Initialize default configurations"""
         if self.chat_manager_config is None:
             self.chat_manager_config = {}
         if self.message_processor_config is None:
@@ -140,7 +144,8 @@ class ChatOrchestrationFactory:
         self.logger.setLevel(logging.DEBUG if self.config.debug_mode else logging.INFO)
     
     async def initialize(self) -> None:
-        """Initialize the orchestration factory and core dependencies"""
+        """
+Initialize the orchestration factory and core dependencies"""
         
         if self._initialized:
             return
@@ -204,7 +209,8 @@ class ChatOrchestrationFactory:
         component_type: OrchestrationComponentType,
         **kwargs
     ) -> Any:
-        """Create a specific orchestration component"""
+        """
+Create a specific orchestration component"""
         
         try:
             if component_type == OrchestrationComponentType.CHAT_MANAGER:
@@ -274,7 +280,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_message_processor(self, **kwargs) -> EnterpriseMessageProcessor:
-        """Create message processor component"""
+        """
+Create message processor component"""
         
         return EnterpriseMessageProcessor(
             redis_client=self.redis_client,
@@ -283,7 +290,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_response_generator(self, **kwargs) -> EnterpriseResponseGenerator:
-        """Create response generator component"""
+        """
+Create response generator component"""
         
         return EnterpriseResponseGenerator(
             **self.config.response_generator_config,
@@ -291,7 +299,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_intent_classifier(self, **kwargs) -> EnterpriseIntentClassifier:
-        """Create intent classifier component"""
+        """
+Create intent classifier component"""
         
         return EnterpriseIntentClassifier(
             **self.config.intent_classifier_config,
@@ -299,7 +308,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_context_analyzer(self, **kwargs) -> EnterpriseContextAnalyzer:
-        """Create context analyzer component"""
+        """
+Create context analyzer component"""
         
         return EnterpriseContextAnalyzer(
             **self.config.context_analyzer_config,
@@ -307,7 +317,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_conversation_router(self, **kwargs) -> EnterpriseConversationRouter:
-        """Create conversation router component"""
+        """
+Create conversation router component"""
         
         return EnterpriseConversationRouter(
             **self.config.router_config,
@@ -315,7 +326,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_session_controller(self, **kwargs) -> EnterpriseSessionController:
-        """Create session controller component"""
+        """
+Create session controller component"""
         
         return EnterpriseSessionController(
             session_store=self.database_manager.get_session_store(),
@@ -326,7 +338,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_chat_analytics(self, **kwargs) -> EnterpriseChatAnalytics:
-        """Create chat analytics component"""
+        """
+Create chat analytics component"""
         
         return EnterpriseChatAnalytics(
             analytics_store=self.database_manager.get_analytics_store(),
@@ -335,7 +348,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_content_fingerprinting(self, **kwargs) -> ContentFingerprintingEngine:
-        """Create content fingerprinting component"""
+        """
+Create content fingerprinting component"""
         
         return ContentFingerprintingEngine(
             database_manager=self.database_manager,
@@ -344,7 +358,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_content_protection(self, **kwargs) -> ContentProtectionMonitor:
-        """Create content protection component"""
+        """
+Create content protection component"""
         
         fingerprinting_engine = await self.get_component(OrchestrationComponentType.CONTENT_FINGERPRINTING)
         
@@ -355,7 +370,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_monetization_orchestrator(self, **kwargs) -> MonetizationOrchestrator:
-        """Create monetization orchestrator component"""
+        """
+Create monetization orchestrator component"""
         
         return MonetizationOrchestrator(
             database_manager=self.database_manager,
@@ -364,7 +380,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_surveillance_monitor(self, **kwargs) -> SurveillanceMonitor:
-        """Create surveillance monitor component"""
+        """
+Create surveillance monitor component"""
         
         return SurveillanceMonitor(
             database_manager=self.database_manager,
@@ -373,7 +390,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_realtime_analytics(self, **kwargs) -> RealtimeCreatorAnalytics:
-        """Create realtime analytics component"""
+        """
+Create realtime analytics component"""
         
         return RealtimeCreatorAnalytics(
             database_manager=self.database_manager,
@@ -418,7 +436,8 @@ class ChatOrchestrationFactory:
         return suite
     
     async def shutdown(self) -> None:
-        """Shutdown all components and cleanup resources"""
+        """
+Shutdown all components and cleanup resources"""
         
         try:
             # Shutdown all components
@@ -581,5 +600,5 @@ __all__ = [
 # Module metadata
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"

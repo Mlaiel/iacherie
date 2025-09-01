@@ -7,9 +7,10 @@ revenue sharing, and content collaboration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 
-Copyright © 2024 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2024 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
+
 from .collaboration_projects import (
     CollaborationProject,
     ProjectStatus,
@@ -427,7 +428,7 @@ def get_module_info() -> dict:
         'supported_formats': SUPPORTED_CONTENT_FORMATS,
         'enterprise_features': ENTERPRISE_FEATURES,
         'total_models': len(__all__),
-        'copyright_notice': 'Copyright © 2024 Fahed Mlaiel. All rights reserved.'
+        'copyright_notice': 'Copyright (c) 2024 Fahed Mlaiel. All rights reserved.'
     }
 
 def get_collaboration_statistics() -> dict:

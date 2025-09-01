@@ -19,6 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
+
 import asyncio
 import json
 import time
@@ -50,7 +51,9 @@ from backend.core.logging import SecurityLogger
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels with numeric priority"""
+    """
+Threat severity levels with numeric priority"""
+
     INFO = 0
     LOW = 1
     MEDIUM = 2
@@ -60,7 +63,8 @@ class ThreatLevel(Enum):
 
 
 class EventType(Enum):
-    """Security event types for comprehensive monitoring"""
+    """
+Security event types for comprehensive monitoring"""
     # Authentication Events
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
@@ -135,7 +139,8 @@ class SecurityEvent:
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator for detection rules"""
+    """
+Threat indicator for detection rules"""
     indicator_type: str
     value: str
     threat_level: ThreatLevel
@@ -146,7 +151,8 @@ class ThreatIndicator:
 
 
 class AuditLogger:
-    """Comprehensive audit logging system"""
+    """
+Comprehensive audit logging system"""
     
     def __init__(self):
         self.logger = SecurityLogger("AuditLogger")
@@ -253,7 +259,8 @@ class AuditLogger:
         pass
     
     async def _update_security_metrics(self, event: SecurityEvent):
-        """Update real-time security metrics"""
+        """
+Update real-time security metrics"""
         try:
             # Update event counters
             date_key = event.timestamp.strftime("%Y-%m-%d")
@@ -306,7 +313,8 @@ class AuditLogger:
 
 
 class ThreatDetector:
-    """Advanced threat detection engine"""
+    """
+Advanced threat detection engine"""
     
     def __init__(self, audit_logger: AuditLogger):
         self.audit_logger = audit_logger
@@ -765,7 +773,8 @@ class SecurityMetrics:
         return []
     
     async def _get_threat_level_distribution(self, date: str) -> Dict[str, int]:
-        """Get threat level distribution"""
+        """
+Get threat level distribution"""
         daily_key = f"security_metrics:daily:{date}"
         
         distribution = {}
@@ -987,7 +996,8 @@ class SecurityMonitor:
         pass
     
     async def get_security_status(self) -> Dict[str, Any]:
-        """Get current security status"""
+        """
+Get current security status"""
         try:
             dashboard_data = await self.security_metrics.get_security_dashboard_data()
             

@@ -7,6 +7,7 @@ Implements various algorithms including token bucket, sliding window, and adapti
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import time
 import logging
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RateLimitRule:
-    """Rate limit rule configuration"""
+    """
+Rate limit rule configuration"""
     platform: str
     endpoint: str = "*"
     max_requests: int = 100
@@ -44,7 +46,8 @@ class RateLimitStatus:
 
 
 class APIRateLimiter:
-    """Intelligent rate limiting for platform APIs"""
+    """
+Intelligent rate limiting for platform APIs"""
     
     def __init__(self, redis_url: Optional[str] = None):
         self.redis_url = redis_url

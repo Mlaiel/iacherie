@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 
 Contact: Fahed Mlaiel <mlaiel@live.de>
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 from datetime import datetime, timezone, timedelta
@@ -34,7 +35,9 @@ from pathlib import Path
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""
+    """
+Supported content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -49,6 +52,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels with increasing security"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -59,6 +63,7 @@ class ProtectionLevel(Enum):
 
 class ThreatSeverity(IntEnum):
     """Threat severity levels (higher number = more severe)"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -67,7 +72,9 @@ class ThreatSeverity(IntEnum):
 
 
 class VerificationStatus(Enum):
-    """Blockchain verification status"""
+    """
+Blockchain verification status"""
+
     PENDING = "pending"
     CONFIRMING = "confirming"
     CONFIRMED = "confirmed"
@@ -78,6 +85,7 @@ class VerificationStatus(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -90,6 +98,7 @@ class ViolationType(Enum):
 
 class EnforcementAction(Enum):
     """Enforcement actions that can be taken"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     PLATFORM_REPORT = "platform_report"
@@ -101,6 +110,7 @@ class EnforcementAction(Enum):
 
 class MonitoringStatus(Enum):
     """Content monitoring job status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -110,6 +120,7 @@ class MonitoringStatus(Enum):
 
 class LicenseType(Enum):
     """Content licensing types"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -121,6 +132,7 @@ class LicenseType(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Supported encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     RSA_4096 = "rsa_4096"
@@ -1051,7 +1063,8 @@ class AnalyticsReport:
 
 @dataclass
 class ContentProtectionConfig:
-    """Configuration ultra-avancée de protection"""
+    """
+Configuration ultra-avancée de protection"""
     config_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_type: ContentType = ContentType.AUDIO
     protection_level: ProtectionLevel = ProtectionLevel.STANDARD
@@ -1068,7 +1081,8 @@ class ContentProtectionConfig:
 
 @dataclass
 class ContentMetadata:
-    """Métadonnées ultra-avancées de contenu"""
+    """
+Métadonnées ultra-avancées de contenu"""
     content_id: str = ""
     content_type: ContentType = ContentType.AUDIO
     title: str = ""

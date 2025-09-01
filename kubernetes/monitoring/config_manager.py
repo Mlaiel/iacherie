@@ -17,6 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import os
 import yaml
 import json
@@ -27,7 +28,9 @@ from pathlib import Path
 
 
 class EnvironmentType(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -36,6 +39,7 @@ class EnvironmentType(Enum):
 
 class MonitoringProfile(Enum):
     """Monitoring profiles for different use cases"""
+
     MINIMAL = "minimal"           # Resource-constrained environments
     STANDARD = "standard"         # Balanced monitoring for general use
     ADVANCED = "advanced"         # Enhanced monitoring with AI analytics
@@ -135,7 +139,8 @@ class AIFingerprintingConfiguration:
 
 @dataclass
 class RevenueMonitoringConfiguration:
-    """Revenue monitoring configuration"""
+    """
+Revenue monitoring configuration"""
     # Revenue thresholds
     high_value_transaction_threshold: float = 10000.0
     anomaly_spike_multiplier: float = 5.0
@@ -190,7 +195,8 @@ class SecurityMonitoringConfiguration:
 
 @dataclass
 class BusinessIntelligenceConfiguration:
-    """Business intelligence configuration"""
+    """
+Business intelligence configuration"""
     # Analytics processing
     real_time_analytics_enabled: bool = True
     predictive_analytics_enabled: bool = True
@@ -215,7 +221,8 @@ class BusinessIntelligenceConfiguration:
 
 @dataclass
 class DashboardConfiguration:
-    """Dashboard and UI configuration"""
+    """
+Dashboard and UI configuration"""
     # Server settings
     port: int = 8080
     host: str = "0.0.0.0"
@@ -303,7 +310,8 @@ class MonitoringConfigurationManager:
         return self._config
     
     def _load_from_file(self, config_file: Path) -> Dict[str, Any]:
-        """Load configuration from YAML file"""
+        """
+Load configuration from YAML file"""
         try:
             with open(config_file, 'r') as f:
                 if config_file.suffix.lower() == '.yaml' or config_file.suffix.lower() == '.yml':
@@ -691,7 +699,8 @@ class MonitoringConfigurationManager:
         return self._config.copy()
     
     def update_config(self, updates: Dict[str, Any]):
-        """Update configuration with new values"""
+        """
+Update configuration with new values"""
         def deep_update(base_dict: Dict, update_dict: Dict):
             for key, value in update_dict.items():
                 if isinstance(value, dict) and key in base_dict and isinstance(base_dict[key], dict):
@@ -705,7 +714,8 @@ class MonitoringConfigurationManager:
 
 # Convenience function for quick configuration loading
 def load_monitoring_config(config_path: Optional[str] = None) -> MonitoringConfigurationManager:
-    """Load monitoring configuration for current environment"""
+    """
+Load monitoring configuration for current environment"""
     config_manager = MonitoringConfigurationManager(config_path)
     config_manager.load_configuration()
     return config_manager

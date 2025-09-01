@@ -15,6 +15,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import asyncio
 import hashlib
 import json
@@ -51,7 +52,8 @@ settings = get_settings()
 
 
 class ContentProtectionEngine:
-    """Industrial content protection system with AI fingerprinting and anti-piracy."""
+    """
+Industrial content protection system with AI fingerprinting and anti-piracy."""
     
     def __init__(self):
         self.db = get_database()
@@ -939,7 +941,8 @@ class ContentProtectionEngine:
         return base_threshold + policy_adjustment
     
     def _calculate_protection_strength(self, fingerprints: List[Dict[str, Any]]) -> float:
-        """Calculate protection strength score based on fingerprints."""
+        """
+Calculate protection strength score based on fingerprints."""
         if not fingerprints:
             return 0.0
         
@@ -955,7 +958,8 @@ class ContentProtectionEngine:
         return min(fingerprint_score + multimodal_bonus, 1.0)
     
     def _estimate_detection_accuracy(self, content_type: str, fingerprint_count: int) -> float:
-        """Estimate detection accuracy based on content type and fingerprint quality."""
+        """
+Estimate detection accuracy based on content type and fingerprint quality."""
         base_accuracies = {
             'audio': 0.92,
             'image': 0.88,
@@ -969,7 +973,8 @@ class ContentProtectionEngine:
         return min(base_accuracy + fingerprint_bonus, 0.98)
     
     def _extract_ngrams(self, text: str, n: int) -> Dict[str, int]:
-        """Extract n-grams from text."""
+        """
+Extract n-grams from text."""
         words = text.lower().split()
         ngrams = {}
         
@@ -980,7 +985,8 @@ class ContentProtectionEngine:
         return ngrams
     
     def _calculate_temporal_consistency(self, embeddings: List[List[float]]) -> float:
-        """Calculate temporal consistency of video frames."""
+        """
+Calculate temporal consistency of video frames."""
         if len(embeddings) < 2:
             return 1.0
         
@@ -992,7 +998,8 @@ class ContentProtectionEngine:
         return float(np.mean(similarities))
     
     def _calculate_period_start(self, period: str, end_date: datetime) -> datetime:
-        """Calculate start date for analysis period."""
+        """
+Calculate start date for analysis period."""
         if period == 'day':
             return end_date - timedelta(days=1)
         elif period == 'week':

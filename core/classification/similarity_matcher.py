@@ -7,10 +7,11 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 """
+
 import numpy as np
 import torch
 import faiss
@@ -51,7 +52,8 @@ class SimilarityMatcher:
     """
     
     def __init__(self):
-        """Initialize similarity matcher with vector engines."""
+        """
+Initialize similarity matcher with vector engines."""
         self.settings = get_settings()
         self.vector_engine = VectorEngine()
         
@@ -86,7 +88,8 @@ class SimilarityMatcher:
         self._load_indexes()
         
     def _initialize_models(self) -> None:
-        """Initialize deep learning models for feature extraction."""
+        """
+Initialize deep learning models for feature extraction."""
         try:
             # Load CLIP model for image/video similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -435,17 +438,20 @@ class SimilarityMatcher:
         return 0.0
     
     def _calculate_hash_distance(self, hash1: str, index: int) -> int:
-        """Calculate Hamming distance between perceptual hashes."""
+        """
+Calculate Hamming distance between perceptual hashes."""
         # Implementation for hash comparison
         return 0
     
     def _compare_temporal_patterns(self, fingerprint: Dict, index: int) -> float:
-        """Compare temporal patterns in video fingerprints."""
+        """
+Compare temporal patterns in video fingerprints."""
         # Implementation for temporal pattern matching
         return 0.0
     
     def _calculate_text_similarity(self, text: str, index: int) -> float:
-        """Calculate exact text similarity ratio."""
+        """
+Calculate exact text similarity ratio."""
         # Implementation for text similarity calculation
         return 0.0
     
@@ -456,7 +462,8 @@ class SimilarityMatcher:
         content_id: str,
         metadata: Optional[Dict] = None
     ) -> bool:
-        """Add new content to similarity index."""
+        """
+Add new content to similarity index."""
         try:
             if content_type == 'audio':
                 features = self._extract_audio_features(content_path)

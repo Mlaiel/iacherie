@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import os
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConversionQuality(Enum):
-    """Conversion quality levels"""
+    """
+Conversion quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -53,6 +56,7 @@ class ConversionQuality(Enum):
 
 class ConversionMode(Enum):
     """Conversion processing modes"""
+
     FAST = "fast"
     BALANCED = "balanced"
     QUALITY = "quality"
@@ -80,7 +84,8 @@ class ConversionProfile:
 
 @dataclass
 class ConversionRequest:
-    """Conversion request specification"""
+    """
+Conversion request specification"""
     request_id: str
     source_file: str
     target_format: str
@@ -97,7 +102,8 @@ class ConversionRequest:
 
 @dataclass
 class ConversionResult:
-    """Conversion operation result"""
+    """
+Conversion operation result"""
     request_id: str
     success: bool
     output_file: Optional[str] = None
@@ -115,7 +121,8 @@ class ConversionResult:
 
 
 class MultimediaConverter:
-    """Enterprise multimedia format converter"""
+    """
+Enterprise multimedia format converter"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -271,7 +278,8 @@ class MultimediaConverter:
         return self.conversion_matrix
         
     async def estimate_conversion_time(self, source_file: str, target_format: str) -> Dict[str, Any]:
-        """Estimate conversion time and resources"""
+        """
+Estimate conversion time and resources"""
         try:
             # Get file information
             file_size = os.path.getsize(source_file)
@@ -329,7 +337,8 @@ class MultimediaConverter:
         return profiles
         
     async def optimize_for_platform(self, source_file: str, platform: str) -> ConversionResult:
-        """Optimize file for specific platform"""
+        """
+Optimize file for specific platform"""
         platform_configs = {
             "youtube": {
                 "target_format": "mp4",
@@ -701,7 +710,8 @@ class MultimediaConverter:
         process.wait()
         
     def _create_default_profiles(self) -> Dict[str, ConversionProfile]:
-        """Create default conversion profiles"""
+        """
+Create default conversion profiles"""
         profiles = {}
         
         # Video profiles
@@ -791,7 +801,8 @@ class MultimediaConverter:
         return target_format.lower() in self.conversion_matrix.get(source_format.lower(), [])
         
     async def _select_optimal_profile(self, source_format: str, target_format: str, quality: ConversionQuality) -> ConversionProfile:
-        """Select optimal conversion profile"""
+        """
+Select optimal conversion profile"""
         # Find matching profiles
         matching_profiles = [
             profile for profile in self.profiles.values()

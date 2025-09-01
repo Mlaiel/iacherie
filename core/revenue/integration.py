@@ -1,7 +1,7 @@
 """Revenue Integration Engine - Central integration point for all revenue management components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -10,6 +10,7 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IntegrationConfig:
-    """Configuration for revenue integration"""
+    """
+Configuration for revenue integration"""
     optimization_enabled: bool = True
     forecasting_enabled: bool = True
     tracking_enabled: bool = True
@@ -53,7 +55,8 @@ class IntegrationConfig:
 
 @dataclass
 class IntegrationState:
-    """Current state of revenue integration system"""
+    """
+Current state of revenue integration system"""
     status: str
     last_sync: datetime
     active_components: List[str]
@@ -807,7 +810,8 @@ async def get_integration_engine(config: Optional[IntegrationConfig] = None) -> 
 
 
 async def initialize_revenue_system(config: Optional[IntegrationConfig] = None) -> RevenueIntegrationEngine:
-    """Initialize the complete revenue management system"""
+    """
+Initialize the complete revenue management system"""
     try:
         logger.info("Initializing complete revenue management system...")
         

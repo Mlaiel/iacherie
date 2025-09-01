@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Resource Management → Execution Scheduling → Performance Monitoring → Dynamic Optimization → Result Coordination
 """
+
 import asyncio
 import logging
 import time
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class ExecutionStatus(Enum):
-    """Execution status types"""
+    """
+Execution status types"""
+
     QUEUED = "queued"
     PREPARING = "preparing"
     RUNNING = "running"
@@ -38,6 +41,7 @@ class ExecutionStatus(Enum):
 
 class ResourceType(Enum):
     """Resource types"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -48,6 +52,7 @@ class ResourceType(Enum):
 
 class Priority(Enum):
     """Execution priorities"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -56,7 +61,9 @@ class Priority(Enum):
 
 
 class SchedulingStrategy(Enum):
-    """Scheduling strategies"""
+    """
+Scheduling strategies"""
+
     FIFO = "fifo"
     PRIORITY = "priority"
     ROUND_ROBIN = "round_robin"
@@ -198,7 +205,8 @@ class ResourceManager:
         self.resource_monitor_task = asyncio.create_task(self._monitor_resources())
     
     async def _monitor_resources(self):
-        """Monitor resource usage"""
+        """
+Monitor resource usage"""
         while self.monitoring_active:
             try:
                 # Update available resources based on system usage
@@ -325,7 +333,8 @@ class ResourceManager:
 
 
 class ExecutionScheduler:
-    """Intelligent execution scheduler"""
+    """
+Intelligent execution scheduler"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -354,7 +363,8 @@ class ExecutionScheduler:
         self.scheduler_task = asyncio.create_task(self._scheduler_loop())
     
     async def _scheduler_loop(self):
-        """Main scheduler loop"""
+        """
+Main scheduler loop"""
         while self.scheduling_active:
             try:
                 await self._schedule_executions()
@@ -392,7 +402,8 @@ class ExecutionScheduler:
                     scheduled_count += 1
     
     def _sort_queue_by_strategy(self) -> List[ExecutionContext]:
-        """Sort execution queue by scheduling strategy"""
+        """
+Sort execution queue by scheduling strategy"""
         if self.strategy == SchedulingStrategy.FIFO:
             return sorted(self.execution_queue, key=lambda x: x.request.submitted_at)
         
@@ -416,7 +427,8 @@ class ExecutionScheduler:
             return self.execution_queue[:]
     
     def _estimate_execution_time(self, context: ExecutionContext) -> float:
-        """Estimate execution time"""
+        """
+Estimate execution time"""
         # Simple estimation based on pipeline type and data size
         base_time = 60.0  # 1 minute base
         
@@ -446,7 +458,8 @@ class ExecutionScheduler:
         return sorted(self.execution_queue, key=adaptive_score, reverse=True)
     
     def _check_dependencies(self, context: ExecutionContext) -> bool:
-        """Check if execution dependencies are satisfied"""
+        """
+Check if execution dependencies are satisfied"""
         for dep_id in context.request.dependencies:
             if dep_id not in self.completed_executions:
                 # Check if dependency is running
@@ -461,13 +474,15 @@ class ExecutionScheduler:
         return True
     
     async def _check_resource_availability(self, context: ExecutionContext) -> bool:
-        """Check if required resources are available"""
+        """
+Check if required resources are available"""
         # This would integrate with ResourceManager
         # For now, return True as simplified implementation
         return True
     
     async def _schedule_execution(self, context: ExecutionContext):
-        """Schedule execution for immediate start"""
+        """
+Schedule execution for immediate start"""
         # Remove from queue
         if context in self.execution_queue:
             self.execution_queue.remove(context)
@@ -514,7 +529,8 @@ class ExecutionScheduler:
         return None
     
     def complete_execution(self, context_id: str, result_data: Dict[str, Any]):
-        """Mark execution as completed"""
+        """
+Mark execution as completed"""
         if context_id in self.running_executions:
             context = self.running_executions[context_id]
             context.status = ExecutionStatus.COMPLETED
@@ -589,7 +605,8 @@ class ExecutionScheduler:
 
 
 class PerformanceOptimizer:
-    """Execution performance optimizer"""
+    """
+Execution performance optimizer"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -838,7 +855,8 @@ class ExecutionManager:
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         while self.monitoring_active:
             try:
                 await self._monitor_executions()
@@ -942,7 +960,8 @@ class ExecutionManager:
         context.assigned_resources.clear()
     
     def register_execution_handler(self, execution_type: str, handler: Callable):
-        """Register custom execution handler"""
+        """
+Register custom execution handler"""
         self.execution_handlers[execution_type] = handler
         self.logger.info(f"Registered execution handler for type: {execution_type}")
     
@@ -1184,11 +1203,13 @@ class ExecutionManager:
         return self.scheduler.get_execution_status(execution_id)
     
     def get_execution_metrics(self) -> Dict[str, Any]:
-        """Get execution metrics"""
+        """
+Get execution metrics"""
         return self.execution_metrics
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel execution"""
+        """
+Cancel execution"""
         # Try to cancel from scheduler first
         if self.scheduler.cancel_execution(execution_id):
             return True
@@ -1234,11 +1255,13 @@ class ExecutionManager:
         return self.resource_manager.get_resource_status()
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get queue status"""
+        """
+Get queue status"""
         return self.scheduler.get_queue_status()
     
     async def shutdown(self):
-        """Shutdown execution manager"""
+        """
+Shutdown execution manager"""
         self.logger.info("Shutting down execution manager")
         
         # Stop monitoring

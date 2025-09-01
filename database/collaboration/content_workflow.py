@@ -6,9 +6,10 @@ automated workflow orchestration, and cross-platform content distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WorkflowStatus(Enum):
-    """Content workflow status enumeration"""
+    """
+Content workflow status enumeration"""
+
     DRAFT = "draft"
     IN_PROGRESS = "in_progress"
     REVIEW_PENDING = "review_pending"
@@ -45,6 +48,7 @@ class WorkflowStatus(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats for multi-format workflows"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -58,6 +62,7 @@ class ContentFormat(Enum):
 
 class WorkflowStepType(Enum):
     """Types of workflow steps"""
+
     CONTENT_CREATION = "content_creation"
     REVIEW_APPROVAL = "review_approval"
     EDITING = "editing"
@@ -73,6 +78,7 @@ class WorkflowStepType(Enum):
 
 class AutomationTrigger(Enum):
     """Workflow automation trigger types"""
+
     TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
     CONDITION_BASED = "condition_based"
@@ -295,7 +301,8 @@ class ContentVersion(Base):
 
 @dataclass
 class WorkflowTemplate:
-    """Workflow template configuration for reusable workflows"""
+    """
+Workflow template configuration for reusable workflows"""
     name: str
     description: str
     content_formats: List[ContentFormat]

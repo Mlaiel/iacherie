@@ -19,6 +19,7 @@ Professional Development Team Specialties:
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -37,7 +38,9 @@ from aiohttp.client_exceptions import ClientError
 
 
 class ConnectionStatus(Enum):
-    """Connection status states"""
+    """
+Connection status states"""
+
     IDLE = "idle"
     ACTIVE = "active"
     BUSY = "busy"
@@ -48,6 +51,7 @@ class ConnectionStatus(Enum):
 
 class PoolStrategy(Enum):
     """Connection pool strategies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     FASTEST_RESPONSE = "fastest_response"
@@ -76,7 +80,8 @@ class ConnectionInfo:
 
 @dataclass
 class PoolConfiguration:
-    """Connection pool configuration"""
+    """
+Connection pool configuration"""
     max_connections_total: int = 100
     max_connections_per_host: int = 20
     connection_timeout: int = 10
@@ -94,7 +99,8 @@ class PoolConfiguration:
 
 @dataclass
 class PoolMetrics:
-    """Connection pool metrics"""
+    """
+Connection pool metrics"""
     total_connections: int = 0
     active_connections: int = 0
     idle_connections: int = 0
@@ -254,7 +260,8 @@ class ConnectionPool:
         self.metrics.total_requests += 1
     
     async def close_connection(self, connection_id: str):
-        """Close and remove connection from pool"""
+        """
+Close and remove connection from pool"""
         if connection_id not in self.connections:
             return
         
@@ -352,11 +359,13 @@ class ConnectionPool:
         return self.metrics
     
     def get_connection_info(self, connection_id: str) -> Optional[ConnectionInfo]:
-        """Get information about a specific connection"""
+        """
+Get information about a specific connection"""
         return self.connections.get(connection_id)
     
     def get_host_connections(self, host: str) -> List[ConnectionInfo]:
-        """Get all connections for a specific host"""
+        """
+Get all connections for a specific host"""
         host_keys = [key for key in self.host_connections.keys() if host in key]
         connections = []
         
@@ -368,7 +377,8 @@ class ConnectionPool:
         return connections
     
     async def health_check(self) -> bool:
-        """Perform health check on connection pool"""
+        """
+Perform health check on connection pool"""
         try:
             # Check if we can create a test session
             test_session = await self._create_session("httpbin.org", 443, "https")
@@ -464,7 +474,8 @@ class ConnectionPool:
             return random.choice(available_connections)
     
     def _create_ssl_context(self) -> ssl.SSLContext:
-        """Create SSL context for HTTPS connections"""
+        """
+Create SSL context for HTTPS connections"""
         context = ssl.create_default_context()
         
         if not self.config.enable_ssl_verification:
@@ -474,7 +485,8 @@ class ConnectionPool:
         return context
     
     async def _cleanup_loop(self):
-        """Main cleanup loop"""
+        """
+Main cleanup loop"""
         while not self.shutdown_event.is_set():
             try:
                 await self.cleanup_stale_connections()
@@ -517,7 +529,8 @@ class ConnectionPoolManager:
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize connection pool manager"""
+        """
+Initialize connection pool manager"""
         try:
             self.logger.info("Initializing connection pool manager...")
             
@@ -625,7 +638,8 @@ class ConnectionPoolManager:
         }
     
     async def health_check(self) -> Dict[str, bool]:
-        """Perform health check on all pools"""
+        """
+Perform health check on all pools"""
         results = {}
         
         for pool_id, pool in self.pools.items():
@@ -656,7 +670,8 @@ async def create_connection_pool(
     config: Optional[PoolConfiguration] = None,
     pool_id: Optional[str] = None
 ) -> ConnectionPool:
-    """Create and initialize a connection pool"""
+    """
+Create and initialize a connection pool"""
     pool_config = config or PoolConfiguration()
     pool = ConnectionPool(pool_config, pool_id)
     await pool.initialize()
@@ -666,7 +681,8 @@ async def create_connection_pool(
 async def create_pool_manager(
     default_config: Optional[PoolConfiguration] = None
 ) -> ConnectionPoolManager:
-    """Create and initialize a connection pool manager"""
+    """
+Create and initialize a connection pool manager"""
     manager = ConnectionPoolManager(default_config)
     await manager.initialize()
     return manager

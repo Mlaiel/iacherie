@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides unified external API integration with automatic client creation,
 request handling, error management, and response processing for all configured platforms.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -23,7 +24,9 @@ from .monitoring import APIMonitoringManager
 logger = logging.getLogger(__name__)
 
 class RequestMethod(Enum):
-    """HTTP request methods"""
+    """
+HTTP request methods"""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -34,6 +37,7 @@ class RequestMethod(Enum):
 
 class ResponseFormat(Enum):
     """API response formats"""
+
     JSON = "json"
     XML = "xml"
     TEXT = "text"
@@ -55,7 +59,8 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """API response wrapper"""
+    """
+API response wrapper"""
     success: bool
     status_code: int
     data: Any
@@ -65,7 +70,8 @@ class APIResponse:
     raw_response: Optional[str] = None
 
 class APIClient:
-    """Generic API client for external integrations"""
+    """
+Generic API client for external integrations"""
     
     def __init__(self, api_name: str, config: Dict[str, Any], 
                  auth_manager: APIAuthenticationManager,
@@ -85,16 +91,19 @@ class APIClient:
         self.session: Optional[aiohttp.ClientSession] = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         await self._ensure_session()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         await self.close()
     
     async def _ensure_session(self):
-        """Ensure HTTP session is created"""
+        """
+Ensure HTTP session is created"""
         if self.session is None or self.session.closed:
             # Get authentication headers
             auth_headers = self.auth_manager.get_auth_headers(self.api_name)
@@ -121,7 +130,8 @@ class APIClient:
             )
     
     async def close(self):
-        """Close HTTP session"""
+        """
+Close HTTP session"""
         if self.session and not self.session.closed:
             await self.session.close()
     
@@ -248,7 +258,8 @@ class APIClient:
     
     async def _process_response(self, response: aiohttp.ClientResponse, 
                                request: APIRequest, response_time: float) -> APIResponse:
-        """Process HTTP response"""
+        """
+Process HTTP response"""
         headers = dict(response.headers)
         
         try:
@@ -308,7 +319,8 @@ class APIClient:
     async def post(self, endpoint: str, data: Optional[Union[Dict[str, Any], str]] = None,
                    params: Optional[Dict[str, Any]] = None,
                    headers: Optional[Dict[str, str]] = None, **kwargs) -> APIResponse:
-        """POST request"""
+        """
+POST request"""
         request = APIRequest(
             method=RequestMethod.POST,
             endpoint=endpoint,
@@ -322,7 +334,8 @@ class APIClient:
     async def put(self, endpoint: str, data: Optional[Union[Dict[str, Any], str]] = None,
                   params: Optional[Dict[str, Any]] = None,
                   headers: Optional[Dict[str, str]] = None, **kwargs) -> APIResponse:
-        """PUT request"""
+        """
+PUT request"""
         request = APIRequest(
             method=RequestMethod.PUT,
             endpoint=endpoint,
@@ -335,7 +348,8 @@ class APIClient:
     
     async def delete(self, endpoint: str, params: Optional[Dict[str, Any]] = None,
                      headers: Optional[Dict[str, str]] = None, **kwargs) -> APIResponse:
-        """DELETE request"""
+        """
+DELETE request"""
         request = APIRequest(
             method=RequestMethod.DELETE,
             endpoint=endpoint,
@@ -348,7 +362,8 @@ class APIClient:
     async def patch(self, endpoint: str, data: Optional[Union[Dict[str, Any], str]] = None,
                     params: Optional[Dict[str, Any]] = None,
                     headers: Optional[Dict[str, str]] = None, **kwargs) -> APIResponse:
-        """PATCH request"""
+        """
+PATCH request"""
         request = APIRequest(
             method=RequestMethod.PATCH,
             endpoint=endpoint,
@@ -360,7 +375,8 @@ class APIClient:
         return await self.make_request(request)
 
 class ExternalAPIIntegration:
-    """Main external API integration manager"""
+    """
+Main external API integration manager"""
     
     def __init__(self):
         self.api_manager = APIManager()
@@ -371,7 +387,8 @@ class ExternalAPIIntegration:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize all components"""
+        """
+Initialize all components"""
         if self._initialized:
             return
         
@@ -420,7 +437,8 @@ class ExternalAPIIntegration:
     
     async def make_request(self, api_name: str, request: APIRequest, 
                           user_id: Optional[str] = None) -> APIResponse:
-        """Make request to specific API"""
+        """
+Make request to specific API"""
         client = self.get_client(api_name)
         if not client:
             return APIResponse(
@@ -505,7 +523,8 @@ class ExternalAPIIntegration:
         return await self.monitoring_manager.get_monitoring_summary()
     
     async def health_check(self, api_name: Optional[str] = None) -> Dict[str, Any]:
-        """Perform health check on specific API or all APIs"""
+        """
+Perform health check on specific API or all APIs"""
         if api_name:
             if api_name in self.clients:
                 result = await self.monitoring_manager.health_checker.perform_health_check(api_name)
@@ -516,7 +535,8 @@ class ExternalAPIIntegration:
             return await self.monitoring_manager.health_checker.check_all_apis()
     
     def get_api_status(self) -> Dict[str, Any]:
-        """Get status of all APIs"""
+        """
+Get status of all APIs"""
         summary = {
             'total_apis': len(self.clients),
             'initialized': self._initialized,
@@ -532,7 +552,8 @@ class ExternalAPIIntegration:
         return summary
     
     async def shutdown(self):
-        """Shutdown all connections and monitoring"""
+        """
+Shutdown all connections and monitoring"""
         try:
             # Stop monitoring
             self.monitoring_manager.stop_continuous_monitoring()
@@ -556,10 +577,12 @@ async def initialize_external_apis():
     await external_api.initialize()
 
 async def get_api_client(api_name: str) -> Optional[APIClient]:
-    """Get API client by name"""
+    """
+Get API client by name"""
     return external_api.get_client(api_name)
 
 async def make_api_request(api_name: str, request: APIRequest, 
                           user_id: Optional[str] = None) -> APIResponse:
-    """Make API request"""
+    """
+Make API request"""
     return await external_api.make_request(api_name, request, user_id)

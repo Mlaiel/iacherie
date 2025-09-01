@@ -2,8 +2,9 @@
 Professional observability with comprehensive business and system metrics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -18,7 +19,9 @@ import statistics
 
 
 class MetricType(Enum):
-    """Types of metrics for categorization."""
+    """
+Types of metrics for categorization."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -28,6 +31,7 @@ class MetricType(Enum):
 
 class MetricUnit(Enum):
     """Standard metric units."""
+
     NONE = ""
     SECONDS = "seconds"
     MILLISECONDS = "milliseconds"
@@ -54,7 +58,8 @@ class MetricDefinition:
 
 @dataclass
 class MetricValue:
-    """Individual metric measurement."""
+    """
+Individual metric measurement."""
     value: Union[int, float]
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     tags: Dict[str, str] = field(default_factory=dict)
@@ -62,7 +67,8 @@ class MetricValue:
 
 @dataclass
 class TimingResult:
-    """Result from timing measurement."""
+    """
+Result from timing measurement."""
     duration_ms: float
     start_time: datetime
     end_time: datetime
@@ -70,7 +76,8 @@ class TimingResult:
 
 
 class IMetricsCollector(ABC):
-    """Interface for metrics collection."""
+    """
+Interface for metrics collection."""
     
     @abstractmethod
     def increment_counter(
@@ -79,7 +86,8 @@ class IMetricsCollector(ABC):
         value: Union[int, float] = 1,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Increment counter metric."""
+        """
+Increment counter metric."""
         pass
     
     @abstractmethod
@@ -89,7 +97,8 @@ class IMetricsCollector(ABC):
         value: Union[int, float],
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Set gauge metric value."""
+        """
+Set gauge metric value."""
         pass
     
     @abstractmethod
@@ -99,7 +108,8 @@ class IMetricsCollector(ABC):
         duration_ms: float,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Record timing metric."""
+        """
+Record timing metric."""
         pass
     
     @abstractmethod
@@ -109,12 +119,14 @@ class IMetricsCollector(ABC):
         value: Union[int, float],
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Record histogram value."""
+        """
+Record histogram value."""
         pass
 
 
 class InMemoryMetricsCollector(IMetricsCollector):
-    """In-memory metrics collector for development and testing."""
+    """
+In-memory metrics collector for development and testing."""
     
     def __init__(self, retention_hours: int = 24):
         self.retention_hours = retention_hours
@@ -134,7 +146,8 @@ class InMemoryMetricsCollector(IMetricsCollector):
         value: Union[int, float] = 1,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Increment counter with value."""
+        """
+Increment counter with value."""
         with self._lock:
             metric_value = MetricValue(value=value, tags=tags or {})
             self._counters[name].append(metric_value)
@@ -145,7 +158,8 @@ class InMemoryMetricsCollector(IMetricsCollector):
         value: Union[int, float],
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Set gauge to specific value."""
+        """
+Set gauge to specific value."""
         with self._lock:
             self._gauges[name] = MetricValue(value=value, tags=tags or {})
     
@@ -155,7 +169,8 @@ class InMemoryMetricsCollector(IMetricsCollector):
         duration_ms: float,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Record timing measurement."""
+        """
+Record timing measurement."""
         with self._lock:
             metric_value = MetricValue(value=duration_ms, tags=tags or {})
             self._timings[name].append(metric_value)
@@ -166,24 +181,28 @@ class InMemoryMetricsCollector(IMetricsCollector):
         value: Union[int, float],
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Record histogram value."""
+        """
+Record histogram value."""
         with self._lock:
             metric_value = MetricValue(value=value, tags=tags or {})
             self._histograms[name].append(metric_value)
     
     def get_counter_sum(self, name: str) -> float:
-        """Get total counter value."""
+        """
+Get total counter value."""
         with self._lock:
             return sum(m.value for m in self._counters.get(name, []))
     
     def get_gauge_value(self, name: str) -> Optional[float]:
-        """Get current gauge value."""
+        """
+Get current gauge value."""
         with self._lock:
             gauge = self._gauges.get(name)
             return gauge.value if gauge else None
     
     def get_timing_stats(self, name: str) -> Dict[str, float]:
-        """Get timing statistics."""
+        """
+Get timing statistics."""
         with self._lock:
             values = [m.value for m in self._timings.get(name, [])]
             if not values:
@@ -221,7 +240,8 @@ class InMemoryMetricsCollector(IMetricsCollector):
                 pass
     
     def _cleanup_old_metrics(self):
-        """Remove old metrics beyond retention period."""
+        """
+Remove old metrics beyond retention period."""
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=self.retention_hours)
         
         with self._lock:
@@ -254,7 +274,8 @@ class InMemoryMetricsCollector(IMetricsCollector):
 
 
 class MetricsRegistry:
-    """Registry for metric definitions and collection."""
+    """
+Registry for metric definitions and collection."""
     
     def __init__(self, collector: IMetricsCollector):
         self.collector = collector
@@ -262,7 +283,8 @@ class MetricsRegistry:
         self._lock = threading.RLock()
     
     def register_metric(self, definition: MetricDefinition) -> None:
-        """Register metric definition."""
+        """
+Register metric definition."""
         with self._lock:
             self._definitions[definition.name] = definition
     
@@ -273,7 +295,8 @@ class MetricsRegistry:
         unit: MetricUnit = MetricUnit.COUNT,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Register counter metric."""
+        """
+Register counter metric."""
         definition = MetricDefinition(
             name=name,
             metric_type=MetricType.COUNTER,
@@ -290,7 +313,8 @@ class MetricsRegistry:
         unit: MetricUnit = MetricUnit.NONE,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Register gauge metric."""
+        """
+Register gauge metric."""
         definition = MetricDefinition(
             name=name,
             metric_type=MetricType.GAUGE,
@@ -307,7 +331,8 @@ class MetricsRegistry:
         unit: MetricUnit = MetricUnit.MILLISECONDS,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Register timer metric."""
+        """
+Register timer metric."""
         definition = MetricDefinition(
             name=name,
             metric_type=MetricType.TIMER,
@@ -323,7 +348,8 @@ class MetricsRegistry:
         value: Union[int, float] = 1,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Increment counter metric."""
+        """
+Increment counter metric."""
         self.collector.increment_counter(name, value, tags)
     
     def set_gauge(
@@ -332,7 +358,8 @@ class MetricsRegistry:
         value: Union[int, float],
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Set gauge metric."""
+        """
+Set gauge metric."""
         self.collector.set_gauge(name, value, tags)
     
     def record_timing(
@@ -341,12 +368,14 @@ class MetricsRegistry:
         duration_ms: float,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Record timing metric."""
+        """
+Record timing metric."""
         self.collector.record_timing(name, duration_ms, tags)
     
     @contextmanager
     def timer(self, name: str, tags: Optional[Dict[str, str]] = None):
-        """Context manager for timing operations."""
+        """
+Context manager for timing operations."""
         start_time = time.perf_counter()
         try:
             yield
@@ -356,7 +385,8 @@ class MetricsRegistry:
     
     @asynccontextmanager
     async def async_timer(self, name: str, tags: Optional[Dict[str, str]] = None):
-        """Async context manager for timing operations."""
+        """
+Async context manager for timing operations."""
         start_time = time.perf_counter()
         try:
             yield
@@ -365,20 +395,23 @@ class MetricsRegistry:
             self.record_timing(name, duration_ms, tags)
     
     def get_definitions(self) -> Dict[str, MetricDefinition]:
-        """Get all registered metric definitions."""
+        """
+Get all registered metric definitions."""
         with self._lock:
             return self._definitions.copy()
 
 
 class BusinessMetrics:
-    """Business-specific metrics for IA Influencer Agent."""
+    """
+Business-specific metrics for IA Influencer Agent."""
     
     def __init__(self, registry: MetricsRegistry):
         self.registry = registry
         self._register_business_metrics()
     
     def _register_business_metrics(self):
-        """Register all business metrics."""
+        """
+Register all business metrics."""
         # Content metrics
         self.registry.register_counter(
             "content.uploaded.total",
@@ -577,7 +610,8 @@ def timing_decorator(metric_name: str, tags: Optional[Dict[str, str]] = None):
 
 
 def counter_decorator(metric_name: str, tags: Optional[Dict[str, str]] = None):
-    """Decorator for automatic counter increment."""
+    """
+Decorator for automatic counter increment."""
     def decorator(func):
         async def async_wrapper(*args, **kwargs):
             try:
@@ -619,10 +653,12 @@ def get_metrics_collector() -> IMetricsCollector:
 
 
 def get_metrics_registry() -> MetricsRegistry:
-    """Get global metrics registry."""
+    """
+Get global metrics registry."""
     return _registry
 
 
 def get_business_metrics() -> BusinessMetrics:
-    """Get business metrics instance."""
+    """
+Get business metrics instance."""
     return _business_metrics

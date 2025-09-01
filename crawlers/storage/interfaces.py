@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple, Callable
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ import asyncio
 from contextlib import asynccontextmanager
 
 class StorageBackendType(Enum):
-    """Supported storage backend types."""
+    """
+Supported storage backend types."""
+
     DATABASE = "database"
     FILE_SYSTEM = "file_system"
     OBJECT_STORAGE = "object_storage"
@@ -45,6 +48,7 @@ class StorageBackendType(Enum):
 
 class ContentType(Enum):
     """Content types for multi-format support."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -57,13 +61,16 @@ class ContentType(Enum):
 
 class ViolationSeverity(IntEnum):
     """Violation severity levels."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
 
 class FingerPrintType(Enum):
-    """Fingerprint algorithm types."""
+    """
+Fingerprint algorithm types."""
+
     CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     CONTENT_HASH = "content_hash"
@@ -73,6 +80,7 @@ class FingerPrintType(Enum):
 
 class CompressionType(Enum):
     """Supported compression types."""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -83,6 +91,7 @@ class CompressionType(Enum):
 
 class DataFormat(Enum):
     """Supported data formats."""
+
     JSON = "json"
     JSONL = "jsonl"
     PARQUET = "parquet"
@@ -96,6 +105,7 @@ class DataFormat(Enum):
 
 class Platform(Enum):
     """Supported social media platforms."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -111,6 +121,7 @@ class Platform(Enum):
 
 class RevenueType(Enum):
     """Revenue stream types."""
+
     STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -122,6 +133,7 @@ class RevenueType(Enum):
 
 class StorageOperation(Enum):
     """Storage operation types."""
+
     CREATE = "create"
     READ = "read"
     UPDATE = "update"
@@ -136,6 +148,7 @@ class StorageOperation(Enum):
 
 class HealthStatus(Enum):
     """Health status levels."""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -174,7 +187,8 @@ class CrawlerData:
 
 @dataclass
 class ContentRecord:
-    """Content record for protection system."""
+    """
+Content record for protection system."""
     id: str
     user_id: str
     original_filename: str
@@ -202,7 +216,8 @@ class ContentRecord:
 
 @dataclass
 class ViolationRecord:
-    """Copyright violation record."""
+    """
+Copyright violation record."""
     id: str
     original_content_id: str
     detected_content_id: str
@@ -233,7 +248,8 @@ class CacheKey:
     tags: List[str] = field(default_factory=list)
     
     def to_string(self) -> str:
-        """Convert to cache key string."""
+        """
+Convert to cache key string."""
         key = f"{self.namespace}:{self.identifier}"
         if self.version:
             key += f":{self.version}"
@@ -255,7 +271,8 @@ class VectorRecord:
 
 @dataclass
 class TimeSeriesPoint:
-    """Time series data point."""
+    """
+Time series data point."""
     metric_name: str
     timestamp: datetime
     value: Union[int, float]
@@ -264,7 +281,8 @@ class TimeSeriesPoint:
 
 @dataclass
 class RevenueRecord:
-    """Revenue tracking record."""
+    """
+Revenue tracking record."""
     id: str
     user_id: str
     content_id: str
@@ -322,7 +340,8 @@ class StorageMetadata:
 
 # Storage Exceptions
 class StorageException(Exception):
-    """Base exception for storage operations."""
+    """
+Base exception for storage operations."""
     
     def __init__(self, message: str, error_code: Optional[str] = None, details: Optional[Dict[str, Any]] = None):
         self.message = message
@@ -331,7 +350,8 @@ class StorageException(Exception):
         super().__init__(self.message)
 
 class ConnectionException(StorageException):
-    """Exception for connection-related errors."""
+    """
+Exception for connection-related errors."""
     def __init__(self, message: str, host: str = None, port: int = None, details: dict = None):
         self.host = host
         self.port = port
@@ -423,7 +443,8 @@ class QueryFilter:
 
 @dataclass
 class QueryOptions:
-    """Query options for storage operations."""
+    """
+Query options for storage operations."""
     filters: List[QueryFilter]
     sort_by: Optional[str] = None
     sort_order: str = "asc"  # asc, desc
@@ -455,7 +476,8 @@ class BaseStorageProvider(ABC):
         backend_type: StorageBackendType,
         config: Dict[str, Any]
     ):
-        """Initialize storage provider."""
+        """
+Initialize storage provider."""
         self.provider_id = provider_id
         self.backend_type = backend_type
         self.config = config
@@ -464,17 +486,20 @@ class BaseStorageProvider(ABC):
     
     @abstractmethod
     async def connect(self) -> None:
-        """Establish connection to storage backend."""
+        """
+Establish connection to storage backend."""
         pass
     
     @abstractmethod
     async def disconnect(self) -> None:
-        """Close connection to storage backend."""
+        """
+Close connection to storage backend."""
         pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check if storage backend is healthy."""
+        """
+Check if storage backend is healthy."""
         pass
     
     @abstractmethod
@@ -484,7 +509,8 @@ class BaseStorageProvider(ABC):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a single record."""
+        """
+Store a single record."""
         pass
     
     @abstractmethod
@@ -492,7 +518,8 @@ class BaseStorageProvider(ABC):
         self,
         records: List[Tuple[str, Any, Optional[StorageMetadata]]]
     ) -> Dict[str, bool]:
-        """Store multiple records in batch."""
+        """
+Store multiple records in batch."""
         pass
     
     @abstractmethod
@@ -501,7 +528,8 @@ class BaseStorageProvider(ABC):
         record_id: str,
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
-        """Retrieve a single record."""
+        """
+Retrieve a single record."""
         pass
     
     @abstractmethod
@@ -510,7 +538,8 @@ class BaseStorageProvider(ABC):
         record_ids: List[str],
         include_metadata: bool = True
     ) -> Dict[str, Optional[Tuple[Any, Optional[StorageMetadata]]]]:
-        """Retrieve multiple records in batch."""
+        """
+Retrieve multiple records in batch."""
         pass
     
     @abstractmethod
@@ -518,7 +547,8 @@ class BaseStorageProvider(ABC):
         self,
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
-        """Query records with filtering and pagination."""
+        """
+Query records with filtering and pagination."""
         pass
     
     @abstractmethod
@@ -526,7 +556,8 @@ class BaseStorageProvider(ABC):
         self,
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
-        """Count records matching filters."""
+        """
+Count records matching filters."""
         pass
     
     @abstractmethod
@@ -536,27 +567,32 @@ class BaseStorageProvider(ABC):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Update an existing record."""
+        """
+Update an existing record."""
         pass
     
     @abstractmethod
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record."""
+        """
+Delete a record."""
         pass
     
     @abstractmethod
     async def delete_batch(self, record_ids: List[str]) -> Dict[str, bool]:
-        """Delete multiple records in batch."""
+        """
+Delete multiple records in batch."""
         pass
     
     @abstractmethod
     async def exists(self, record_id: str) -> bool:
-        """Check if record exists."""
+        """
+Check if record exists."""
         pass
     
     @abstractmethod
     async def get_statistics(self) -> StorageStats:
-        """Get storage statistics."""
+        """
+Get storage statistics."""
         pass
     
     @abstractmethod
@@ -565,7 +601,8 @@ class BaseStorageProvider(ABC):
         older_than: datetime,
         batch_size: int = 1000
     ) -> int:
-        """Remove records older than specified date."""
+        """
+Remove records older than specified date."""
         pass
 
 class ContentStorageProvider(BaseStorageProvider):
@@ -584,7 +621,8 @@ class ContentStorageProvider(BaseStorageProvider):
         content_data: Dict[str, Any],
         media_files: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
-        """Store content with associated media files."""
+        """
+Store content with associated media files."""
         pass
     
     @abstractmethod
@@ -593,7 +631,8 @@ class ContentStorageProvider(BaseStorageProvider):
         content_id: str,
         include_media: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """Retrieve content with optional media files."""
+        """
+Retrieve content with optional media files."""
         pass
     
     @abstractmethod
@@ -604,7 +643,8 @@ class ContentStorageProvider(BaseStorageProvider):
         end_date: Optional[datetime] = None,
         limit: Optional[int] = None
     ) -> AsyncIterator[Dict[str, Any]]:
-        """Query content by platform and date range."""
+        """
+Query content by platform and date range."""
         pass
     
     @abstractmethod
@@ -614,7 +654,8 @@ class ContentStorageProvider(BaseStorageProvider):
         content_type: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get content metrics and analytics."""
+        """
+Get content metrics and analytics."""
         pass
 
 class ViolationStorageProvider(BaseStorageProvider):
@@ -635,7 +676,8 @@ class ViolationStorageProvider(BaseStorageProvider):
         violation_type: str,
         evidence: Dict[str, Any]
     ) -> bool:
-        """Store a violation record."""
+        """
+Store a violation record."""
         pass
     
     @abstractmethod
@@ -645,7 +687,8 @@ class ViolationStorageProvider(BaseStorageProvider):
         status: str,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """Update violation status and resolution."""
+        """
+Update violation status and resolution."""
         pass
     
     @abstractmethod
@@ -654,7 +697,8 @@ class ViolationStorageProvider(BaseStorageProvider):
         platform: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get violation statistics."""
+        """
+Get violation statistics."""
         pass
     
     @abstractmethod
@@ -662,7 +706,8 @@ class ViolationStorageProvider(BaseStorageProvider):
         self,
         content_id: str
     ) -> AsyncIterator[Dict[str, Any]]:
-        """Query violations for specific content."""
+        """
+Query violations for specific content."""
         pass
 
 class CacheStorageProvider(BaseStorageProvider):
@@ -679,12 +724,14 @@ class CacheStorageProvider(BaseStorageProvider):
         value: Any,
         ttl_seconds: int
     ) -> bool:
-        """Set value with time-to-live."""
+        """
+Set value with time-to-live."""
         pass
     
     @abstractmethod
     async def get_ttl(self, key: str) -> Optional[int]:
-        """Get remaining TTL for key."""
+        """
+Get remaining TTL for key."""
         pass
     
     @abstractmethod
@@ -693,7 +740,8 @@ class CacheStorageProvider(BaseStorageProvider):
         key: str,
         additional_seconds: int
     ) -> bool:
-        """Extend TTL for existing key."""
+        """
+Extend TTL for existing key."""
         pass
     
     @abstractmethod
@@ -702,7 +750,8 @@ class CacheStorageProvider(BaseStorageProvider):
         data: Dict[str, Any],
         ttl_seconds: int
     ) -> Dict[str, bool]:
-        """Set multiple values with TTL."""
+        """
+Set multiple values with TTL."""
         pass
 
 class VectorStorageProvider(BaseStorageProvider):
@@ -719,7 +768,8 @@ class VectorStorageProvider(BaseStorageProvider):
         embedding: List[float],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Store an embedding vector."""
+        """
+Store an embedding vector."""
         pass
     
     @abstractmethod
@@ -730,7 +780,8 @@ class VectorStorageProvider(BaseStorageProvider):
         similarity_threshold: float = 0.8,
         metadata_filters: Optional[Dict[str, Any]] = None
     ) -> List[Tuple[str, float, Optional[Dict[str, Any]]]]:
-        """Perform similarity search."""
+        """
+Perform similarity search."""
         pass
     
     @abstractmethod
@@ -738,7 +789,8 @@ class VectorStorageProvider(BaseStorageProvider):
         self,
         record_id: str
     ) -> Optional[Tuple[List[float], Optional[Dict[str, Any]]]]:
-        """Retrieve embedding by ID."""
+        """
+Retrieve embedding by ID."""
         pass
     
     @abstractmethod
@@ -748,7 +800,8 @@ class VectorStorageProvider(BaseStorageProvider):
         embedding: List[float],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Update existing embedding."""
+        """
+Update existing embedding."""
         pass
     
     @abstractmethod
@@ -758,7 +811,8 @@ class VectorStorageProvider(BaseStorageProvider):
         top_k: int = 10,
         similarity_threshold: float = 0.8
     ) -> List[List[Tuple[str, float, Optional[Dict[str, Any]]]]]:
-        """Perform batch similarity search."""
+        """
+Perform batch similarity search."""
         pass
 
 class TimeSeriesStorageProvider(BaseStorageProvider):
@@ -776,7 +830,8 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         value: Union[int, float],
         tags: Optional[Dict[str, str]] = None
     ) -> bool:
-        """Store a single metric point."""
+        """
+Store a single metric point."""
         pass
     
     @abstractmethod
@@ -784,7 +839,8 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         self,
         metrics: List[Tuple[str, datetime, Union[int, float], Optional[Dict[str, str]]]]
     ) -> Dict[str, bool]:
-        """Store multiple metric points."""
+        """
+Store multiple metric points."""
         pass
     
     @abstractmethod
@@ -797,7 +853,8 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         interval: Optional[timedelta] = None,
         tags: Optional[Dict[str, str]] = None
     ) -> List[Tuple[datetime, Union[int, float]]]:
-        """Query metric data with optional aggregation."""
+        """
+Query metric data with optional aggregation."""
         pass
     
     @abstractmethod
@@ -806,7 +863,8 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         metric_name: str,
         tags: Optional[Dict[str, str]] = None
     ) -> Optional[Tuple[datetime, Union[int, float]]]:
-        """Get latest metric value."""
+        """
+Get latest metric value."""
         pass
 
 class RevenueStorageProvider(BaseStorageProvider):
@@ -821,7 +879,8 @@ class RevenueStorageProvider(BaseStorageProvider):
         self,
         revenue_record: RevenueRecord
     ) -> bool:
-        """Store a revenue record."""
+        """
+Store a revenue record."""
         pass
     
     @abstractmethod
@@ -832,7 +891,8 @@ class RevenueStorageProvider(BaseStorageProvider):
         end_date: datetime,
         platform: Optional[Platform] = None
     ) -> Dict[str, float]:
-        """Calculate revenue for user in date range."""
+        """
+Calculate revenue for user in date range."""
         pass
     
     @abstractmethod
@@ -841,7 +901,8 @@ class RevenueStorageProvider(BaseStorageProvider):
         user_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get revenue analytics and trends."""
+        """
+Get revenue analytics and trends."""
         pass
     
     @abstractmethod
@@ -851,7 +912,8 @@ class RevenueStorageProvider(BaseStorageProvider):
         content_id: str,
         projection_days: int = 30
     ) -> float:
-        """Estimate projected revenue using ML."""
+        """
+Estimate projected revenue using ML."""
         pass
     
     @abstractmethod
@@ -859,7 +921,8 @@ class RevenueStorageProvider(BaseStorageProvider):
         self,
         platform: Platform
     ) -> Dict[str, float]:
-        """Get commission rates for platform."""
+        """
+Get commission rates for platform."""
         pass
 
 class CollaborationStorageProvider(BaseStorageProvider):
@@ -874,7 +937,8 @@ class CollaborationStorageProvider(BaseStorageProvider):
         self,
         collaboration_record: CollaborationRecord
     ) -> bool:
-        """Store a collaboration record."""
+        """
+Store a collaboration record."""
         pass
     
     @abstractmethod
@@ -884,7 +948,8 @@ class CollaborationStorageProvider(BaseStorageProvider):
         content_type: ContentType,
         max_results: int = 10
     ) -> List[Dict[str, Any]]:
-        """Find potential collaborators using AI matching."""
+        """
+Find potential collaborators using AI matching."""
         pass
     
     @abstractmethod
@@ -894,7 +959,8 @@ class CollaborationStorageProvider(BaseStorageProvider):
         genre: Optional[str] = None,
         audience_overlap_threshold: float = 0.3
     ) -> List[Dict[str, Any]]:
-        """Get AI-powered collaboration recommendations."""
+        """
+Get AI-powered collaboration recommendations."""
         pass
     
     @abstractmethod
@@ -903,7 +969,8 @@ class CollaborationStorageProvider(BaseStorageProvider):
         user_a_id: str,
         user_b_id: str
     ) -> float:
-        """Calculate collaboration compatibility score."""
+        """
+Calculate collaboration compatibility score."""
         pass
 
 class FingerPrintStorageProvider(BaseStorageProvider):
@@ -921,7 +988,8 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         fingerprint_data: Union[str, List[float]],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Store content fingerprint."""
+        """
+Store content fingerprint."""
         pass
     
     @abstractmethod
@@ -932,7 +1000,8 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         similarity_threshold: float = 0.8,
         max_results: int = 10
     ) -> List[Tuple[str, float]]:
-        """Find similar content by fingerprint."""
+        """
+Find similar content by fingerprint."""
         pass
     
     @abstractmethod
@@ -941,7 +1010,8 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         content_id: str,
         platform_data: CrawlerData
     ) -> List[ViolationRecord]:
-        """Detect copyright violations."""
+        """
+Detect copyright violations."""
         pass
     
     @abstractmethod
@@ -950,7 +1020,8 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         content_id: str,
         fingerprint_type: FingerPrintType
     ) -> bool:
-        """Update fingerprint search index."""
+        """
+Update fingerprint search index."""
         pass
 
 class AnalyticsStorageProvider(BaseStorageProvider):
@@ -967,7 +1038,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         platform: Platform,
         metrics: Dict[str, Union[int, float]]
     ) -> bool:
-        """Store engagement metrics."""
+        """
+Store engagement metrics."""
         pass
     
     @abstractmethod
@@ -977,7 +1049,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         metric_name: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Calculate trend analysis."""
+        """
+Calculate trend analysis."""
         pass
     
     @abstractmethod
@@ -986,7 +1059,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         content_id: str,
         metrics: List[str]
     ) -> Dict[str, Any]:
-        """Get content performance analytics."""
+        """
+Get content performance analytics."""
         pass
     
     @abstractmethod
@@ -995,7 +1069,8 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         content_id: str,
         platform: Platform
     ) -> float:
-        """Predict viral potential using ML."""
+        """
+Predict viral potential using ML."""
         pass
 
 class DistributionStorageProvider(BaseStorageProvider):
@@ -1012,7 +1087,8 @@ class DistributionStorageProvider(BaseStorageProvider):
         target_platforms: List[Platform],
         distribution_config: Dict[str, Any]
     ) -> str:
-        """Store distribution record and return distribution ID."""
+        """
+Store distribution record and return distribution ID."""
         pass
     
     @abstractmethod
@@ -1020,7 +1096,8 @@ class DistributionStorageProvider(BaseStorageProvider):
         self,
         distribution_id: str
     ) -> Dict[Platform, str]:
-        """Get distribution status across platforms."""
+        """
+Get distribution status across platforms."""
         pass
     
     @abstractmethod
@@ -1031,7 +1108,8 @@ class DistributionStorageProvider(BaseStorageProvider):
         scheduled_time: datetime,
         distribution_config: Dict[str, Any]
     ) -> bool:
-        """Schedule content distribution."""
+        """
+Schedule content distribution."""
         pass
     
     @abstractmethod
@@ -1041,7 +1119,8 @@ class DistributionStorageProvider(BaseStorageProvider):
         content_type: ContentType,
         target_platforms: List[Platform]
     ) -> Dict[Platform, datetime]:
-        """Optimize distribution timing using AI."""
+        """
+Optimize distribution timing using AI."""
         pass
 
 class LicensingStorageProvider(BaseStorageProvider):
@@ -1060,7 +1139,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         commercial_use: bool = False,
         attribution_required: bool = True
     ) -> str:
-        """Store content license."""
+        """
+Store content license."""
         pass
     
     @abstractmethod
@@ -1070,7 +1150,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         usage_type: str,
         requester_id: str
     ) -> bool:
-        """Check if usage is permitted under license."""
+        """
+Check if usage is permitted under license."""
         pass
     
     @abstractmethod
@@ -1080,7 +1161,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         license_template: str,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Generate license agreement document."""
+        """
+Generate license agreement document."""
         pass
     
     @abstractmethod
@@ -1089,7 +1171,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         license_id: str,
         usage_details: Dict[str, Any]
     ) -> bool:
-        """Track license usage for reporting."""
+        """
+Track license usage for reporting."""
         pass
 
 class StorageRouter(ABC):
@@ -1104,7 +1187,8 @@ class StorageRouter(ABC):
         data_size: Optional[int] = None,
         priority: int = 1
     ) -> BaseStorageProvider:
-        """Route operation to appropriate storage provider."""
+        """
+Route operation to appropriate storage provider."""
         pass
     
     @abstractmethod
@@ -1112,7 +1196,8 @@ class StorageRouter(ABC):
         self,
         provider_id: str
     ) -> HealthStatus:
-        """Get health status of storage provider."""
+        """
+Get health status of storage provider."""
         pass
     
     @abstractmethod
@@ -1120,7 +1205,8 @@ class StorageRouter(ABC):
         self,
         available_providers: List[BaseStorageProvider]
     ) -> BaseStorageProvider:
-        """Balance load across providers."""
+        """
+Balance load across providers."""
         pass
     
     @abstractmethod
@@ -1129,7 +1215,8 @@ class StorageRouter(ABC):
         failed_provider: BaseStorageProvider,
         operation_context: Dict[str, Any]
     ) -> BaseStorageProvider:
-        """Handle provider failover."""
+        """
+Handle provider failover."""
         pass
 
 class StorageTransaction(ABC):
@@ -1140,24 +1227,28 @@ class StorageTransaction(ABC):
     """
     
     def __init__(self, transaction_id: str):
-        """Initialize transaction."""
+        """
+Initialize transaction."""
         self.transaction_id = transaction_id
         self.is_active = True
         self.operations = []
     
     @abstractmethod
     async def begin(self) -> None:
-        """Begin transaction."""
+        """
+Begin transaction."""
         pass
     
     @abstractmethod
     async def commit(self) -> bool:
-        """Commit transaction."""
+        """
+Commit transaction."""
         pass
     
     @abstractmethod
     async def rollback(self) -> bool:
-        """Rollback transaction."""
+        """
+Rollback transaction."""
         pass
     
     @abstractmethod
@@ -1166,16 +1257,19 @@ class StorageTransaction(ABC):
         operation_type: str,
         operation_data: Dict[str, Any]
     ) -> None:
-        """Add operation to transaction."""
+        """
+Add operation to transaction."""
         pass
     
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self.begin()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if exc_type is not None:
             await self.rollback()
         else:
@@ -1191,7 +1285,8 @@ class StorageFactory(ABC):
         self,
         config: Dict[str, Any]
     ) -> ContentStorageProvider:
-        """Create content storage provider."""
+        """
+Create content storage provider."""
         pass
     
     @abstractmethod
@@ -1199,7 +1294,8 @@ class StorageFactory(ABC):
         self,
         config: Dict[str, Any]
     ) -> ViolationStorageProvider:
-        """Create violation storage provider."""
+        """
+Create violation storage provider."""
         pass
     
     @abstractmethod
@@ -1207,7 +1303,8 @@ class StorageFactory(ABC):
         self,
         config: Dict[str, Any]
     ) -> CacheStorageProvider:
-        """Create cache storage provider."""
+        """
+Create cache storage provider."""
         pass
     
     @abstractmethod
@@ -1215,7 +1312,8 @@ class StorageFactory(ABC):
         self,
         config: Dict[str, Any]
     ) -> VectorStorageProvider:
-        """Create vector storage provider."""
+        """
+Create vector storage provider."""
         pass
     
     @abstractmethod
@@ -1223,7 +1321,8 @@ class StorageFactory(ABC):
         self,
         config: Dict[str, Any]
     ) -> TimeSeriesStorageProvider:
-        """Create time series storage provider."""
+        """
+Create time series storage provider."""
         pass
     
     @abstractmethod
@@ -1231,7 +1330,8 @@ class StorageFactory(ABC):
         self,
         provider: BaseStorageProvider
     ) -> StorageTransaction:
-        """Create storage transaction."""
+        """
+Create storage transaction."""
         pass
 
 # Export all interfaces

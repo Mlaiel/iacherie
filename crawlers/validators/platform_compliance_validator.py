@@ -6,7 +6,7 @@ compliance checking, monetization eligibility assessment, and content optimizati
 for major creator platforms including Spotify, YouTube, Instagram, TikTok, and more.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 Features:
@@ -17,6 +17,7 @@ Features:
 - Platform-specific content guidelines enforcement
 - Revenue optimization recommendations
 """
+
 import re
 import json
 import mimetypes
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms"""
+    """
+Supported platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -50,6 +53,7 @@ class Platform(Enum):
 
 class ContentCategory(Enum):
     """Content categories"""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -62,6 +66,7 @@ class ContentCategory(Enum):
 
 class MonetizationTier(Enum):
     """Monetization tiers"""
+
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -71,6 +76,7 @@ class MonetizationTier(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -110,7 +116,8 @@ class ContentSpecification:
 
 @dataclass
 class MonetizationRequirement:
-    """Monetization requirements for platform"""
+    """
+Monetization requirements for platform"""
     min_followers: Optional[int] = None
     min_watch_time: Optional[int] = None
     min_content_count: Optional[int] = None
@@ -124,7 +131,8 @@ class MonetizationRequirement:
 
 @dataclass
 class ComplianceViolation:
-    """Individual compliance violation"""
+    """
+Individual compliance violation"""
     violation_id: str
     requirement: PlatformRequirement
     severity: str
@@ -138,7 +146,8 @@ class ComplianceViolation:
 
 @dataclass
 class PlatformComplianceResult:
-    """Platform compliance validation result"""
+    """
+Platform compliance validation result"""
     platform: Platform
     is_compliant: bool
     compliance_status: ComplianceStatus
@@ -155,7 +164,8 @@ class PlatformComplianceResult:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for compliance checking"""
+    """
+Creator profile for compliance checking"""
     creator_id: str
     creator_type: str  # musician, blogger, photographer, influencer, comedian
     follower_counts: Dict[Platform, int] = field(default_factory=dict)
@@ -171,7 +181,8 @@ class CreatorProfile:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for compliance validation"""
+    """
+Content metadata for compliance validation"""
     title: Optional[str] = None
     description: Optional[str] = None
     tags: List[str] = field(default_factory=list)
@@ -705,7 +716,8 @@ class PlatformComplianceValidator:
             result.compliance_score = 1.0
     
     def _determine_compliance_status(self, result: PlatformComplianceResult):
-        """Determine final compliance status"""
+        """
+Determine final compliance status"""
         high_severity_violations = [v for v in result.violations if v.severity == "high"]
         medium_severity_violations = [v for v in result.violations if v.severity == "medium"]
         
@@ -791,7 +803,8 @@ class PlatformComplianceValidator:
         return self._comprehensive_copyright_analysis(content_data, content_metadata)
     
     def _calculate_impact_score(self, requirement: PlatformRequirement) -> float:
-        """Calculate impact score for requirement violation"""
+        """
+Calculate impact score for requirement violation"""
         severity_scores = {
             "low": 0.2,
             "medium": 0.5,
@@ -819,7 +832,8 @@ class PlatformComplianceValidator:
         return min_ages.get(platform, 0)
     
     def _determine_program_tier(self, platform: Platform, creator_profile: CreatorProfile) -> str:
-        """Determine creator program tier"""
+        """
+Determine creator program tier"""
         follower_count = creator_profile.follower_counts.get(platform, 0)
         
         if follower_count >= 1000000:
@@ -1524,7 +1538,8 @@ def validate_spotify_compliance(
     content_metadata: ContentMetadata,
     creator_profile: CreatorProfile
 ) -> PlatformComplianceResult:
-    """Validate Spotify compliance for musician content"""
+    """
+Validate Spotify compliance for musician content"""
     validator = create_platform_compliance_validator()
     return validator.validate_platform_compliance(
         Platform.SPOTIFY, content_data, content_metadata, creator_profile
@@ -1536,7 +1551,8 @@ def validate_youtube_compliance(
     content_metadata: ContentMetadata,
     creator_profile: CreatorProfile
 ) -> PlatformComplianceResult:
-    """Validate YouTube compliance for video content"""
+    """
+Validate YouTube compliance for video content"""
     validator = create_platform_compliance_validator()
     return validator.validate_platform_compliance(
         Platform.YOUTUBE, content_data, content_metadata, creator_profile

@@ -1,6 +1,7 @@
 """Case Escalation Management System
 Professional escalation workflow for unresolved copyright enforcement cases
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Callable
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class EscalationLevel(Enum):
-    """Escalation levels for enforcement cases"""
+    """
+Escalation levels for enforcement cases"""
+
     INITIAL = "initial"              # First enforcement action
     AUTOMATED_RETRY = "automated_retry"  # Automated follow-up
     MANUAL_REVIEW = "manual_review"      # Human review required
@@ -31,6 +34,7 @@ class EscalationLevel(Enum):
 
 class EscalationTrigger(Enum):
     """Triggers that cause case escalation"""
+
     TIME_EXPIRED = "time_expired"
     PLATFORM_REJECTION = "platform_rejection"
     COUNTER_NOTICE = "counter_notice"
@@ -44,6 +48,7 @@ class EscalationTrigger(Enum):
 
 class EscalationStatus(Enum):
     """Status of escalation processes"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -54,6 +59,7 @@ class EscalationStatus(Enum):
 
 class EscalationOutcome(Enum):
     """Possible outcomes of escalation"""
+
     CONTENT_REMOVED = "content_removed"
     REVENUE_CLAIMED = "revenue_claimed"
     SETTLEMENT_REACHED = "settlement_reached"
@@ -125,7 +131,8 @@ class EscalationAction:
 
 @dataclass
 class EscalationHistory:
-    """Complete escalation history for a case"""
+    """
+Complete escalation history for a case"""
     case_id: str
     escalations: List['CaseEscalation'] = field(default_factory=list)
     total_escalations: int = 0
@@ -135,7 +142,8 @@ class EscalationHistory:
     total_cost: float = 0.0
     
     def add_escalation(self, escalation: 'CaseEscalation'):
-        """Add escalation to history"""
+        """
+Add escalation to history"""
         self.escalations.append(escalation)
         self.total_escalations = len(self.escalations)
         
@@ -145,7 +153,8 @@ class EscalationHistory:
         self.current_level = escalation.to_level
     
     def calculate_totals(self):
-        """Calculate total time and cost"""
+        """
+Calculate total time and cost"""
         total_time = timedelta()
         total_cost = 0.0
         
@@ -162,7 +171,8 @@ class EscalationHistory:
 
 @dataclass
 class CaseEscalation:
-    """Individual case escalation instance"""
+    """
+Individual case escalation instance"""
     id: str
     case_id: str
     triggered_by: EscalationTrigger
@@ -194,11 +204,13 @@ class CaseEscalation:
     evidence_updates: List[str] = field(default_factory=list)
     
     def add_action(self, action: EscalationAction):
-        """Add action to escalation"""
+        """
+Add action to escalation"""
         self.actions.append(action)
     
     def add_note(self, note: str):
-        """Add note to escalation"""
+        """
+Add note to escalation"""
         timestamp = datetime.utcnow().isoformat()
         self.notes.append(f"{timestamp}: {note}")
     
@@ -210,7 +222,8 @@ class CaseEscalation:
 
 
 class AutomatedEscalationEngine:
-    """Engine for automated case escalation"""
+    """
+Engine for automated case escalation"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -493,7 +506,8 @@ class AutomatedEscalationEngine:
         escalation: CaseEscalation,
         actions: List[str]
     ):
-        """Execute automated actions for escalation"""
+        """
+Execute automated actions for escalation"""
         try:
             for action_type in actions:
                 action_id = f"ACT-{escalation.id}-{len(escalation.actions)}"
@@ -738,7 +752,8 @@ class AutomatedEscalationEngine:
         return self.escalation_history.get(case_id)
     
     async def monitor_escalations(self):
-        """Monitor active escalations for deadlines and status updates"""
+        """
+Monitor active escalations for deadlines and status updates"""
         try:
             current_time = datetime.utcnow()
             overdue_escalations = []
@@ -813,7 +828,8 @@ class AutomatedEscalationEngine:
         return None
     
     async def get_escalation_statistics(self) -> Dict[str, Any]:
-        """Get escalation engine statistics"""
+        """
+Get escalation engine statistics"""
         try:
             active_count = len(self.active_escalations)
             total_cases = len(self.escalation_history)

@@ -8,10 +8,11 @@ Responsibility: Chiffrement bout-en-bout pour sauvegardes avec gestion clés ava
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import os
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EncryptionKey:
-    """Clé de chiffrement avec métadonnées"""
+    """
+Clé de chiffrement avec métadonnées"""
     key_id: str
     algorithm: str
     key_data: bytes
@@ -51,13 +53,15 @@ class EncryptionKey:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Vérifie si la clé a expiré"""
+        """
+Vérifie si la clé a expiré"""
         if not self.expires_at:
             return False
         return datetime.now() > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire pour stockage"""
+        """
+Convertit en dictionnaire pour stockage"""
         return {
             "key_id": self.key_id,
             "algorithm": self.algorithm,
@@ -959,7 +963,8 @@ class AESEncryption:
         output_path: Path,
         key: bytes
     ) -> bool:
-        """Chiffrement CBC streaming pour gros fichiers"""
+        """
+Chiffrement CBC streaming pour gros fichiers"""
         from cryptography.hazmat.primitives import padding as sym_padding
         
         iv = os.urandom(16)

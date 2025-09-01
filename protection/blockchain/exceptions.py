@@ -19,12 +19,14 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 from typing import Optional, Dict, Any
 from enum import Enum
 
 
 class ErrorCode(Enum):
-    """Blockchain error codes for standardized error handling"""
+    """
+Blockchain error codes for standardized error handling"""
     
     # General blockchain errors
     NETWORK_CONNECTION_FAILED = "BLOCKCHAIN_001"
@@ -91,7 +93,8 @@ class BlockchainError(Exception):
         super().__init__(self.message)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/API responses"""
+        """
+Convert exception to dictionary for logging/API responses"""
         return {
             "error_type": self.__class__.__name__,
             "message": self.message,
@@ -116,7 +119,8 @@ class NetworkError(BlockchainError):
 
 
 class TransactionError(BlockchainError):
-    """Transaction execution errors"""
+    """
+Transaction execution errors"""
     
     def __init__(
         self,
@@ -130,7 +134,8 @@ class TransactionError(BlockchainError):
 
 
 class InsufficientFundsError(TransactionError):
-    """Insufficient funds for transaction"""
+    """
+Insufficient funds for transaction"""
     
     def __init__(
         self,
@@ -288,7 +293,8 @@ class SecurityError(BlockchainError):
 
 
 class SignatureValidationError(SecurityError):
-    """Digital signature validation errors"""
+    """
+Digital signature validation errors"""
     
     def __init__(
         self,
@@ -388,7 +394,8 @@ logger = logging.getLogger(__name__)
 
 
 class BlockchainError(Exception):
-    """Base exception for all blockchain-related errors"""
+    """
+Base exception for all blockchain-related errors"""
     
     def __init__(
         self, 
@@ -418,7 +425,8 @@ class BlockchainError(Exception):
         return datetime.utcnow().isoformat()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for API responses"""
+        """
+Convert exception to dictionary for API responses"""
         return {
             'error': self.__class__.__name__,
             'message': self.message,
@@ -430,7 +438,8 @@ class BlockchainError(Exception):
 
 
 class BlockchainConnectionError(BlockchainError):
-    """Raised when blockchain network connection fails"""
+    """
+Raised when blockchain network connection fails"""
     
     def __init__(self, network: str, endpoint: str, **kwargs):
         message = f"Failed to connect to {network} blockchain at {endpoint}"

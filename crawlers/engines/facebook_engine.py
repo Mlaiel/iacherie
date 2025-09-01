@@ -21,6 +21,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -65,7 +66,8 @@ settings = get_settings()
 
 @dataclass
 class FacebookPostData:
-    """Facebook post data structure"""
+    """
+Facebook post data structure"""
     post_id: str
     message: str
     story: str
@@ -94,7 +96,8 @@ class FacebookPostData:
 
 @dataclass
 class FacebookPageData:
-    """Facebook page data structure"""
+    """
+Facebook page data structure"""
     page_id: str
     name: str
     username: str
@@ -129,7 +132,8 @@ class FacebookPageData:
 
 @dataclass
 class FacebookGroupData:
-    """Facebook group data structure"""
+    """
+Facebook group data structure"""
     group_id: str
     name: str
     description: str
@@ -153,7 +157,8 @@ class FacebookGroupData:
 
 @dataclass
 class FacebookBusinessData:
-    """Facebook business data structure"""
+    """
+Facebook business data structure"""
     business_id: str
     name: str
     primary_page: Dict[str, Any]
@@ -656,7 +661,8 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
                                    limit: int,
                                    post_type: Optional[str] = None,
                                    date_range: Optional[tuple] = None) -> List[FacebookPostData]:
-        """Fallback Selenium scraping for public content"""
+        """
+Fallback Selenium scraping for public content"""
         # This would implement Selenium-based scraping for public Facebook content
         # Note: Facebook heavily restricts scraping, so this should only be used for public content
         logger.warning("Selenium scraping for Facebook is limited due to platform restrictions")

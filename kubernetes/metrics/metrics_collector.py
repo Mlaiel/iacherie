@@ -33,6 +33,7 @@ Features:
 - Automated metric export and storage
 - Performance optimization tracking
 """
+
 import logging
 import asyncio
 import time
@@ -63,7 +64,9 @@ metrics_config = get_metrics_config()
 
 
 class MetricType(Enum):
-    """Metric type enumeration"""
+    """
+Metric type enumeration"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -74,6 +77,7 @@ class MetricType(Enum):
 
 class MetricPriority(Enum):
     """Metric collection priority"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -82,6 +86,7 @@ class MetricPriority(Enum):
 
 class AggregationType(Enum):
     """Metric aggregation types"""
+
     SUM = "sum"
     AVG = "avg"
     MIN = "min"
@@ -95,6 +100,7 @@ class AggregationType(Enum):
 
 class CollectionInterval(Enum):
     """Collection interval enumeration"""
+
     REALTIME = 1      # 1 second
     FAST = 5          # 5 seconds
     NORMAL = 30       # 30 seconds
@@ -104,7 +110,8 @@ class CollectionInterval(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition with collection configuration"""
+    """
+Metric definition with collection configuration"""
     name: str
     metric_type: MetricType
     description: str
@@ -163,7 +170,8 @@ class MetricsCollector:
         self._initialize_infrastructure_collectors()
         
     async def start(self) -> None:
-        """Start metrics collection"""
+        """
+Start metrics collection"""
         try:
             if self._running:
                 self.logger.warning("Metrics collector already running")

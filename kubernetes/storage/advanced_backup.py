@@ -8,7 +8,7 @@ Technologies: Python, Multi-Cloud Backup, Versioning, Point-in-Time Recovery
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Content creation → Backup scheduling → Multi-cloud replication → 
 Version management → Point-in-time recovery → Integrity verification → Cost optimization
 """
+
 import logging
 import asyncio
 import hashlib
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Types of backup operations"""
+    """
+Types of backup operations"""
+
     FULL = "full"  # Complete backup
     INCREMENTAL = "incremental"  # Only changed data
     DIFFERENTIAL = "differential"  # Changes since last full backup
@@ -60,6 +63,7 @@ class BackupType(Enum):
 
 class BackupTier(Enum):
     """Backup storage tiers for cost optimization"""
+
     HOT = "hot"  # Immediate access
     WARM = "warm"  # Access within hours
     COLD = "cold"  # Access within days
@@ -69,6 +73,7 @@ class BackupTier(Enum):
 
 class RecoveryObjective(Enum):
     """Recovery time and point objectives"""
+
     RTO_1_HOUR = "rto_1h"  # Recovery Time Objective: 1 hour
     RTO_4_HOURS = "rto_4h"  # Recovery Time Objective: 4 hours
     RTO_24_HOURS = "rto_24h"  # Recovery Time Objective: 24 hours
@@ -79,6 +84,7 @@ class RecoveryObjective(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -90,6 +96,7 @@ class BackupStatus(Enum):
 
 class CloudProvider(Enum):
     """Supported cloud providers for backup"""
+
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
@@ -168,7 +175,8 @@ class BackupMetadata:
 
 @dataclass
 class RecoveryRequest:
-    """Data recovery request"""
+    """
+Data recovery request"""
     request_id: str
     backup_id: str
     requested_by: str
@@ -193,7 +201,8 @@ class RecoveryRequest:
 
 @dataclass
 class BackupMetrics:
-    """Comprehensive backup metrics"""
+    """
+Comprehensive backup metrics"""
     total_backups: int = 0
     successful_backups: int = 0
     failed_backups: int = 0
@@ -1140,7 +1149,8 @@ def create_custom_backup_policy(
     schedule: str,
     retention_days: int = 90
 ) -> BackupPolicy:
-    """Factory function to create custom backup policy"""
+    """
+Factory function to create custom backup policy"""
     return BackupPolicy(
         policy_name=name,
         backup_type=backup_type,
@@ -1154,7 +1164,8 @@ def create_custom_backup_policy(
 
 # Usage Example
 async def main():
-    """Example usage of AdvancedBackupManager"""
+    """
+Example usage of AdvancedBackupManager"""
     try:
         backup_mgr = create_backup_manager()
         

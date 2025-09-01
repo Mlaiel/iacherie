@@ -5,7 +5,7 @@ with automated DMCA takedowns, cease & desist letters, and litigation support.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class DocumentType(Enum):
-    """Legal document types"""
+    """
+Legal document types"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_NOTICE = "copyright_notice"
@@ -59,6 +62,7 @@ class DocumentType(Enum):
 
 class JurisdictionType(Enum):
     """Legal jurisdictions"""
+
     US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_GENERAL = "eu_general"
@@ -73,6 +77,7 @@ class JurisdictionType(Enum):
 
 class UrgencyLevel(Enum):
     """Document urgency levels"""
+
     ROUTINE = "routine"
     STANDARD = "standard"
     URGENT = "urgent"

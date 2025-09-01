@@ -7,6 +7,7 @@ high accuracy using transformer models and fallback methods.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -55,7 +56,8 @@ class LanguageScore:
 
 @dataclass
 class LanguageResult:
-    """Complete language detection result"""
+    """
+Complete language detection result"""
     text: str
     primary_language: str
     primary_language_name: str
@@ -77,7 +79,8 @@ class LanguageDetector:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Language Detector"""
+        """
+Initialize Language Detector"""
         self.config = config or default_config
         self.models = {}
         self.pipelines = {}
@@ -89,7 +92,8 @@ class LanguageDetector:
         self._initialize_models()
     
     def _load_language_mappings(self) -> Dict[str, str]:
-        """Load ISO language code to name mappings"""
+        """
+Load ISO language code to name mappings"""
         return {
             'af': 'Afrikaans', 'ar': 'Arabic', 'bg': 'Bulgarian', 'bn': 'Bengali',
             'ca': 'Catalan', 'cs': 'Czech', 'cy': 'Welsh', 'da': 'Danish',
@@ -109,7 +113,8 @@ class LanguageDetector:
         }
     
     def _load_script_patterns(self) -> Dict[str, re.Pattern]:
-        """Load regex patterns for script detection"""
+        """
+Load regex patterns for script detection"""
         return {
             'latin': re.compile(r'[a-zA-Z]'),
             'cyrillic': re.compile(r'[а-яё]', re.IGNORECASE),
@@ -125,7 +130,8 @@ class LanguageDetector:
         }
     
     def _initialize_models(self):
-        """Initialize language detection models"""
+        """
+Initialize language detection models"""
         try:
             # Primary transformer model
             if TRANSFORMERS_AVAILABLE:
@@ -294,7 +300,8 @@ class LanguageDetector:
         text: str,
         max_languages: int
     ) -> Optional[List[Dict[str, Any]]]:
-        """Detect language using transformer model"""
+        """
+Detect language using transformer model"""
         try:
             pipeline_obj = self.pipelines["primary"]
             
@@ -494,7 +501,8 @@ class LanguageDetector:
         return max_script[0] if max_script and max_script[1] / total_chars > 0.3 else None
     
     def _analyze_encoding(self, text: str) -> str:
-        """Analyze character encoding of text"""
+        """
+Analyze character encoding of text"""
         try:
             # Check for common encodings
             if all(ord(char) < 128 for char in text):
@@ -522,7 +530,8 @@ class LanguageDetector:
         return 0.0
     
     async def is_multilingual(self, text: str, threshold: float = 0.15) -> bool:
-        """Check if text contains multiple languages"""
+        """
+Check if text contains multiple languages"""
         result = await self.detect_language(text)
         
         significant_languages = [
@@ -533,7 +542,8 @@ class LanguageDetector:
         return len(significant_languages) > 1
     
     def get_supported_languages(self) -> List[Dict[str, str]]:
-        """Get list of supported languages"""
+        """
+Get list of supported languages"""
         return [
             {"code": code, "name": name}
             for code, name in self.iso_to_name.items()
@@ -566,7 +576,8 @@ class LanguageDetector:
         return script_mapping.get(language_code, 'latin')
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
+        """
+Perform health check"""
         status = {
             "status": "healthy",
             "models_loaded": len(self.pipelines),
@@ -628,7 +639,8 @@ def normalize_language_code(lang_code: str) -> str:
     return code_mappings.get(normalized, normalized[:2])
 
 def get_language_family(language_code: str) -> str:
-    """Get language family for a given language code"""
+    """
+Get language family for a given language code"""
     families = {
         'romance': ['es', 'fr', 'it', 'pt', 'ro', 'ca'],
         'germanic': ['en', 'de', 'nl', 'sv', 'da', 'no'],

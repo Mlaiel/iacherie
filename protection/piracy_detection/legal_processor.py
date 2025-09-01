@@ -4,7 +4,7 @@
 Advanced legal compliance and regulatory framework processor for content protection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -30,6 +30,7 @@ This module provides:
 - Legal documentation generation
 - Court-admissible evidence formatting
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -48,7 +49,9 @@ from email.mime.application import MIMEApplication
 logger = logging.getLogger(__name__)
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions supported."""
+    """
+Legal jurisdictions supported."""
+
     UNITED_STATES = "us"
     EUROPEAN_UNION = "eu"
     UNITED_KINGDOM = "uk"
@@ -62,6 +65,7 @@ class LegalJurisdiction(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks."""
+
     DMCA = "dmca"
     GDPR = "gdpr"
     CCPA = "ccpa"
@@ -72,6 +76,7 @@ class ComplianceFramework(Enum):
 
 class LegalActionType(Enum):
     """Types of legal actions."""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -81,6 +86,7 @@ class LegalActionType(Enum):
 
 class DocumentType(Enum):
     """Types of legal documents."""
+
     TAKEDOWN_NOTICE = "takedown_notice"
     COUNTER_NOTICE = "counter_notice"
     CEASE_DESIST_LETTER = "cease_desist_letter"
@@ -103,7 +109,8 @@ class LegalRequirement:
 
 @dataclass
 class ComplianceCheck:
-    """Result of compliance verification."""
+    """
+Result of compliance verification."""
     check_id: str
     jurisdiction: LegalJurisdiction
     framework: ComplianceFramework
@@ -116,7 +123,8 @@ class ComplianceCheck:
 
 @dataclass
 class LegalDocument:
-    """Generated legal document."""
+    """
+Generated legal document."""
     document_id: str
     document_type: DocumentType
     jurisdiction: LegalJurisdiction
@@ -132,7 +140,8 @@ class LegalDocument:
 
 @dataclass
 class TakedownRequest:
-    """DMCA takedown request."""
+    """
+DMCA takedown request."""
     request_id: str
     copyright_holder: Dict[str, Any]
     infringing_content: Dict[str, Any]
@@ -145,7 +154,8 @@ class TakedownRequest:
     response_deadline: datetime
 
 class LegalTemplateEngine:
-    """Generates legal documents from templates."""
+    """
+Generates legal documents from templates."""
     
     def __init__(self, templates_path: str):
         self.templates_path = Path(templates_path)
@@ -153,10 +163,12 @@ class LegalTemplateEngine:
         self._load_templates()
     
     def _load_templates(self):
-        """Load legal document templates."""
+        """
+Load legal document templates."""
         # DMCA Takedown Notice Template
         self.templates['dmca_takedown'] = {
-            'us': """DMCA TAKEDOWN NOTICE
+            'us': """
+DMCA TAKEDOWN NOTICE
 
 To: {platform_name}
     {platform_address}
@@ -193,7 +205,8 @@ SIGNATURE:
 {copyright_holder_title}
 {date_signed}
 """,
-            'eu': """COPYRIGHT INFRINGEMENT NOTICE
+            'eu': """
+COPYRIGHT INFRINGEMENT NOTICE
 (European Union Directive 2001/29/EC)
 
 To: {platform_name}
@@ -231,7 +244,8 @@ I declare in good faith that the use of the work described above is not authoriz
         
         # Cease and Desist Template
         self.templates['cease_desist'] = {
-            'us': """CEASE AND DESIST LETTER
+            'us': """
+CEASE AND DESIST LETTER
 
 {current_date}
 
@@ -272,7 +286,8 @@ Failure to comply within {deadline_days} days may result in legal action seeking
                          template_type: str,
                          jurisdiction: LegalJurisdiction,
                          variables: Dict[str, Any]) -> str:
-        """Generate legal document from template."""
+        """
+Generate legal document from template."""
         try:
             template_key = f"{template_type}_{jurisdiction.value}"
             if template_key not in self.templates.get(template_type, {}):
@@ -300,7 +315,8 @@ class ComplianceValidator:
         self.requirements = self._load_compliance_requirements()
     
     def _load_compliance_requirements(self) -> Dict[str, List[LegalRequirement]]:
-        """Load compliance requirements by framework."""
+        """
+Load compliance requirements by framework."""
         requirements = {
             'gdpr': [
                 LegalRequirement(
@@ -407,7 +423,8 @@ class LegalDocumentManager:
                             document_type: DocumentType,
                             jurisdiction: LegalJurisdiction,
                             template_vars: Dict[str, Any]) -> LegalDocument:
-        """Create a new legal document."""
+        """
+Create a new legal document."""
         try:
             document_id = f"doc_{document_type.value}_{int(datetime.now().timestamp())}"
             
@@ -830,7 +847,8 @@ class LegalComplianceProcessor:
         return hashlib.sha256(evidence_string.encode()).hexdigest()
     
     def _calculate_package_hash(self, package_data: Dict[str, Any]) -> str:
-        """Calculate hash for entire evidence package."""
+        """
+Calculate hash for entire evidence package."""
         # Remove hash field temporarily for calculation
         temp_package = package_data.copy()
         temp_package['metadata'] = temp_package['metadata'].copy()
@@ -840,7 +858,8 @@ class LegalComplianceProcessor:
         return hashlib.sha256(package_string.encode()).hexdigest()
     
     def _assess_admissibility(self, evidence_data: Dict[str, Any]) -> List[str]:
-        """Assess legal admissibility of evidence."""
+        """
+Assess legal admissibility of evidence."""
         notes = []
         
         # Check for chain of custody

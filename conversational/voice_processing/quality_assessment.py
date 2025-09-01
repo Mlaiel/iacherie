@@ -6,6 +6,7 @@ and broadcasting standards compliance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -19,7 +20,8 @@ from .models import VoiceQualityMetrics
 logger = logging.getLogger(__name__)
 
 class VoiceQualityAssessor:
-    """Professional voice quality assessment system"""
+    """
+Professional voice quality assessment system"""
     
     def __init__(self, config: QualityConfig):
         self.config = config
@@ -105,7 +107,8 @@ class VoiceQualityAssessor:
         return 60.0  # High SNR if no noise detected
     
     def _calculate_thd(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate Total Harmonic Distortion"""
+        """
+Calculate Total Harmonic Distortion"""
         # Simplified THD calculation
         fft = np.fft.fft(audio)
         magnitude = np.abs(fft)
@@ -131,7 +134,8 @@ class VoiceQualityAssessor:
         return 1.0  # Low distortion default
     
     def _calculate_dynamic_range(self, audio: np.ndarray) -> float:
-        """Calculate dynamic range in dB"""
+        """
+Calculate dynamic range in dB"""
         peak = np.max(np.abs(audio))
         rms = np.sqrt(np.mean(audio ** 2))
         
@@ -141,7 +145,8 @@ class VoiceQualityAssessor:
         return 0.0
     
     def _assess_clarity(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Assess voice clarity"""
+        """
+Assess voice clarity"""
         # Mock clarity assessment based on spectral characteristics
         fft = np.fft.fft(audio)
         magnitude = np.abs(fft)
@@ -156,37 +161,43 @@ class VoiceQualityAssessor:
         return 0.5
     
     def _assess_naturalness(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Assess voice naturalness"""
+        """
+Assess voice naturalness"""
         # Mock naturalness assessment
         # In real implementation would use perceptual models
         return 0.85
     
     def _assess_intelligibility(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Assess speech intelligibility"""
+        """
+Assess speech intelligibility"""
         # Mock intelligibility assessment
         snr = self._calculate_snr(audio)
         intelligibility = min(1.0, (snr - 10) / 30)  # Maps 10-40 dB SNR to 0-1
         return max(0.0, intelligibility)
     
     def _assess_prosody(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Assess prosodic quality"""
+        """
+Assess prosodic quality"""
         # Mock prosody assessment based on pitch variation
         # In real implementation would analyze intonation patterns
         return 0.80
     
     def _calculate_lufs(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate LUFS (Loudness Units relative to Full Scale)"""
+        """
+Calculate LUFS (Loudness Units relative to Full Scale)"""
         # Simplified LUFS calculation
         rms = np.sqrt(np.mean(audio ** 2))
         lufs = -23.0 + 20 * np.log10(rms + 1e-10)  # Approximate LUFS
         return float(lufs)
     
     def _check_broadcast_compliance(self, snr: float, dynamic_range: float, lufs: float) -> bool:
-        """Check broadcast standard compliance"""
+        """
+Check broadcast standard compliance"""
         return snr > 20 and dynamic_range > 12 and -30 < lufs < -16
     
     def _check_streaming_compliance(self, peak_level: float, rms_level: float) -> bool:
-        """Check streaming platform compliance"""
+        """
+Check streaming platform compliance"""
         return peak_level < 0.95 and rms_level > 0.1
     
     async def shutdown(self) -> None:

@@ -12,6 +12,7 @@ without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -43,6 +44,7 @@ logger = get_logger(__name__)
 
 class PWAFeature(Enum):
     """PWA feature capabilities."""
+
     OFFLINE_SUPPORT = "offline_support"
     PUSH_NOTIFICATIONS = "push_notifications"
     BACKGROUND_SYNC = "background_sync"
@@ -57,6 +59,7 @@ class PWAFeature(Enum):
 
 class PWAInstallPrompt(Enum):
     """PWA installation prompt types."""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     AFTER_ENGAGEMENT = "after_engagement"
@@ -83,7 +86,8 @@ class PWAConfiguration:
 
 @dataclass
 class PWAInstallData:
-    """PWA installation tracking data."""
+    """
+PWA installation tracking data."""
     user_id: str
     session_id: str
     device_info: Dict[str, Any]
@@ -123,7 +127,8 @@ class MobilePWAService:
             self.push_service = None
     
     def _create_default_pwa_config(self) -> PWAConfiguration:
-        """Create default PWA configuration."""
+        """
+Create default PWA configuration."""
         return PWAConfiguration(
             app_name="Ainflue - AI Content Protection",
             short_name="Ainflue",
@@ -969,7 +974,8 @@ console.log('PWA Service Worker loaded successfully');
         return offline_html
     
     def get_pwa_configuration(self) -> PWAConfiguration:
-        """Get current PWA configuration."""
+        """
+Get current PWA configuration."""
         return self.pwa_config
     
     async def update_pwa_configuration(

@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple, AsyncIterator
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data structure."""
+    """
+Revenue analytics data structure."""
     user_id: str
     period_start: datetime
     period_end: datetime
@@ -55,7 +57,8 @@ class RevenueAnalytics:
 
 @dataclass
 class PaymentRecord:
-    """Payment processing record."""
+    """
+Payment processing record."""
     id: str
     user_id: str
     revenue_records: List[str]  # Revenue record IDs
@@ -79,18 +82,21 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
     """
     
     def __init__(self, provider_id: str, config: Dict[str, Any]):
-        """Initialize database revenue storage provider."""
+        """
+Initialize database revenue storage provider."""
         super().__init__(provider_id, config)
         self.ml_models = {}  # Cache for ML models
         
     async def connect(self) -> None:
-        """Connect to database and initialize revenue tables."""
+        """
+Connect to database and initialize revenue tables."""
         await super().connect()
         await self._create_revenue_tables()
         await self._initialize_ml_models()
         
     async def _create_revenue_tables(self) -> None:
-        """Create revenue-specific database tables."""
+        """
+Create revenue-specific database tables."""
         revenue_table_sql = """
         CREATE TABLE IF NOT EXISTS revenue_records (
             id VARCHAR(36) PRIMARY KEY,
@@ -487,7 +493,8 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         start_date: datetime,
         end_date: datetime
     ) -> Optional[Dict[str, Any]]:
-        """Get cached analytics if available."""
+        """
+Get cached analytics if available."""
         try:
             sql = """
             SELECT * FROM revenue_analytics 
@@ -583,7 +590,8 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         return sum(amounts) / len(amounts)
     
     def _calculate_growth_rate(self, current: float, previous: float) -> Optional[float]:
-        """Calculate growth rate between periods."""
+        """
+Calculate growth rate between periods."""
         if previous == 0:
             return None if current == 0 else 100.0
         
@@ -595,7 +603,8 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         start_date: datetime,
         end_date: datetime
     ) -> Optional[float]:
-        """Calculate correlation between engagement and revenue."""
+        """
+Calculate correlation between engagement and revenue."""
         try:
             sql = """
             SELECT engagement_rate, amount 

@@ -4,7 +4,7 @@ Demonstrates comprehensive usage of the Quality Assessment Module
 with practical examples for content creators and developers.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -15,6 +15,7 @@ to the full extent of the law.
 
 NOTE: This is an example/testing file - actual tests should be in the tests_backend directory
 """
+
 import asyncio
 import logging
 from pathlib import Path
@@ -50,7 +51,8 @@ class QualityAssessmentDemo:
     """
     
     def __init__(self):
-        """Initialize the demo with professional configuration"""
+        """
+Initialize the demo with professional configuration"""
         # Use professional configuration
         self.config = QualityAssessmentConfig(ConfigurationLevel.PROFESSIONAL)
         logger.info("Quality Assessment Demo initialized with professional configuration")
@@ -358,7 +360,8 @@ class QualityAssessmentDemo:
         return 75.0  # Default score
     
     def _generate_mock_recommendations(self, content_type: str, quality_score: float) -> List[str]:
-        """Generate mock recommendations based on content type and quality score"""
+        """
+Generate mock recommendations based on content type and quality score"""
         recommendations = []
         
         if quality_score < 70:
@@ -451,7 +454,8 @@ class QualityAssessmentDemo:
         return min(100.0, base_score)
     
     def _calculate_business_performance(self, scenario: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate business performance metrics"""
+        """
+Calculate business performance metrics"""
         followers = scenario['followers']
         engagement_rate = scenario['engagement_rate']
         content_frequency = scenario['content_frequency']

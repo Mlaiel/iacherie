@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import logging
 import time
@@ -32,7 +33,9 @@ settings = get_settings()
 
 
 class QueuePriority(str, Enum):
-    """Queue priority levels"""
+    """
+Queue priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -41,6 +44,7 @@ class QueuePriority(str, Enum):
 
 class QueueType(str, Enum):
     """Queue types for different processing needs"""
+
     CONTENT_PROCESSING = "content_processing"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     AI_ANALYSIS = "ai_analysis"
@@ -59,6 +63,7 @@ class QueueType(str, Enum):
 
 class QueueStatus(str, Enum):
     """Queue operational status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     DRAINING = "draining"
@@ -85,7 +90,8 @@ class QueueTask:
 
 
 class QueueConfiguration(BaseModel):
-    """Configuration for a queue"""
+    """
+Configuration for a queue"""
     name: str = Field(..., description="Queue name")
     queue_type: QueueType = Field(..., description="Queue type")
     priority: QueuePriority = Field(default=QueuePriority.MEDIUM, description="Default priority")
@@ -132,7 +138,8 @@ class QueueManager:
         self.is_running = False
 
     async def initialize(self) -> None:
-        """Initialize queue manager"""
+        """
+Initialize queue manager"""
         try:
             # Setup Redis connection
             self.redis_client = aioredis.from_url(

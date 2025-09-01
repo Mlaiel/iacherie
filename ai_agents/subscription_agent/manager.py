@@ -6,6 +6,7 @@ control and monitoring capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,7 +19,9 @@ from .core.subscription_engine import SubscriptionEngine, SubscriptionStatus, Su
 logger = logging.getLogger(__name__)
 
 class SubscriptionSystemStatus(Enum):
-    """System status for subscription management"""
+    """
+System status for subscription management"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -60,7 +63,8 @@ class SubscriptionManager:
         )
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the subscription management system"""
+        """
+Initialize the subscription management system"""
         try:
             logger.info("Initializing Subscription Manager...")
             

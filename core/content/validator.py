@@ -5,8 +5,9 @@ The ContentValidator ensures content integrity, security, and compliance
 before processing in the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -31,12 +32,14 @@ from ..config.settings import get_settings
 
 
 class ValidationError(Exception):
-    """Content validation error"""
+    """
+Content validation error"""
     pass
 
 
 class ValidationRule:
-    """Content validation rule definition"""
+    """
+Content validation rule definition"""
     
     def __init__(
         self,

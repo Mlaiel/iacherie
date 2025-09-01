@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, func, and_, or_
@@ -45,7 +46,9 @@ Base = declarative_base()
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics calculation timeframes"""
+    """
+Analytics calculation timeframes"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -58,6 +61,7 @@ class AnalyticsTimeframe(Enum):
 
 class MetricType(Enum):
     """Revenue metric types for analytics"""
+
     GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     PLATFORM_FEES = "platform_fees"
@@ -82,6 +86,7 @@ class MetricType(Enum):
 
 class AnalyticsStatus(Enum):
     """Analytics calculation status"""
+
     PENDING = "pending"
     CALCULATING = "calculating"
     COMPLETED = "completed"
@@ -107,7 +112,8 @@ class RevenueMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance metrics"""
+    """
+Platform-specific performance metrics"""
     platform: str
     total_revenue: Decimal
     transaction_count: int
@@ -120,7 +126,8 @@ class PlatformPerformance:
 
 @dataclass
 class ContentPerformance:
-    """Content-specific performance metrics"""
+    """
+Content-specific performance metrics"""
     content_id: str
     content_title: str
     total_revenue: Decimal

@@ -10,12 +10,15 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 from typing import Dict, Any, Optional, List
 from datetime import datetime, timezone
 from enum import Enum
 
 class SupportErrorCategory(Enum):
-    """Categories of support errors"""
+    """
+Categories of support errors"""
+
     CONFIGURATION = "configuration"
     AI_MODEL = "ai_model"
     DATABASE = "database"
@@ -30,6 +33,7 @@ class SupportErrorCategory(Enum):
 
 class SupportErrorSeverity(Enum):
     """Error severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -57,7 +61,8 @@ class SupportAgentException(Exception):
         self.timestamp = datetime.now(timezone.utc)
         
     def _generate_error_code(self) -> str:
-        """Generate error code based on category and timestamp"""
+        """
+Generate error code based on category and timestamp"""
         timestamp_str = self.timestamp.strftime("%Y%m%d%H%M")
         return f"SUP_{self.category.value.upper()}_{timestamp_str}"
     
@@ -522,7 +527,8 @@ class ErrorRecoveryManager:
         exception_types: List[type] = None,
         context: Dict[str, Any] = None
     ):
-        """Execute operation with retry logic"""
+        """
+Execute operation with retry logic"""
         import asyncio
         
         exception_types = exception_types or [Exception]

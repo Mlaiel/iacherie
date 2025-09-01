@@ -4,8 +4,9 @@ Provides intelligent matching capabilities for creators, content, and opportunit
 using machine learning algorithms and semantic analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,7 +21,9 @@ from .marketplace_agent import MarketplaceConfig, ContentType
 
 
 class MatchingType(Enum):
-    """Types of matching operations."""
+    """
+Types of matching operations."""
+
     CREATOR_COLLABORATION = "creator_collaboration"
     CONTENT_RECOMMENDATION = "content_recommendation"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -30,6 +33,7 @@ class MatchingType(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity calculation methods."""
+
     COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     JACCARD_SIMILARITY = "jaccard_similarity"
@@ -64,7 +68,8 @@ class MatchingResult:
 
 @dataclass
 class RecommendationSet:
-    """Set of recommendations with metadata."""
+    """
+Set of recommendations with metadata."""
     user_id: int = 0
     recommendation_type: str = ""
     items: List[MatchingResult] = field(default_factory=list)

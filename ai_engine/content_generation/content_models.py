@@ -18,7 +18,9 @@ from enum import Enum
 
 # Enums for type safety
 class ContentType(str, Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     BLOG_POST = "blog_post"
     SOCIAL_POST = "social_post"
     INSTAGRAM_POST = "instagram_post"
@@ -39,6 +41,7 @@ class ContentType(str, Enum):
 
 class Platform(str, Enum):
     """Social media platform enumeration"""
+
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
@@ -52,6 +55,7 @@ class Platform(str, Enum):
 
 class ContentFormat(str, Enum):
     """Content format enumeration"""
+
     TEXT = "text"
     HTML = "html"
     MARKDOWN = "markdown"
@@ -61,6 +65,7 @@ class ContentFormat(str, Enum):
 
 class QualityLevel(str, Enum):
     """Quality level enumeration"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -69,6 +74,7 @@ class QualityLevel(str, Enum):
 
 class BrandVoice(str, Enum):
     """Brand voice enumeration"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     FRIENDLY = "friendly"

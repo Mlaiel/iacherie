@@ -11,6 +11,7 @@ This module provides comprehensive recovery planning capabilities:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from backend.deployment.monitoring import MonitoringManager
 
 
 class DisasterType(Enum):
-    """Types of disaster scenarios"""
+    """
+Types of disaster scenarios"""
+
     SYSTEM_FAILURE = "system_failure"
     DATACENTER_OUTAGE = "datacenter_outage"
     NETWORK_PARTITION = "network_partition"
@@ -42,6 +45,7 @@ class DisasterType(Enum):
 
 class RecoveryPhase(Enum):
     """Recovery operation phases"""
+
     ASSESSMENT = "assessment"
     PREPARATION = "preparation"
     EXECUTION = "execution"
@@ -52,6 +56,7 @@ class RecoveryPhase(Enum):
 
 class RecoveryPriority(Enum):
     """Service recovery priorities"""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -61,7 +66,8 @@ class RecoveryPriority(Enum):
 
 @dataclass
 class RecoveryObjective:
-    """Recovery time and point objectives"""
+    """
+Recovery time and point objectives"""
     rto_seconds: int  # Recovery Time Objective
     rpo_seconds: int  # Recovery Point Objective
     availability_target: float  # Target availability percentage
@@ -71,7 +77,8 @@ class RecoveryObjective:
 
 @dataclass
 class ServiceRecoveryPlan:
-    """Recovery plan for individual service"""
+    """
+Recovery plan for individual service"""
     service_name: str
     objectives: RecoveryObjective
     dependencies: List[str]
@@ -86,7 +93,8 @@ class ServiceRecoveryPlan:
 
 @dataclass
 class DisasterScenario:
-    """Disaster scenario configuration"""
+    """
+Disaster scenario configuration"""
     scenario_id: str
     disaster_type: DisasterType
     affected_components: List[str]
@@ -99,7 +107,8 @@ class DisasterScenario:
 
 @dataclass
 class RecoveryExecution:
-    """Recovery execution tracking"""
+    """
+Recovery execution tracking"""
     execution_id: str
     scenario_id: str
     start_time: datetime
@@ -154,7 +163,8 @@ class RecoveryPlanner:
         }
 
     def _initialize_recovery_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize recovery procedure templates"""
+        """
+Initialize recovery procedure templates"""
         return {
             'database_recovery': {
                 'steps': [
@@ -205,7 +215,8 @@ class RecoveryPlanner:
         }
 
     def _initialize_validation_frameworks(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Initialize recovery validation frameworks"""
+        """
+Initialize recovery validation frameworks"""
         return {
             'functional_validation': [
                 {'test': 'user_authentication', 'timeout': 60, 'critical': True},
@@ -600,7 +611,8 @@ class RecoveryPlanner:
         }
 
     async def get_recovery_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive recovery planning and execution metrics"""
+        """
+Get comprehensive recovery planning and execution metrics"""
         return {
             'metrics': self.recovery_metrics.copy(),
             'total_service_plans': len(self.service_plans),
@@ -614,7 +626,8 @@ class RecoveryPlanner:
         }
 
     def _update_dependency_graph(self, recovery_plan: ServiceRecoveryPlan):
-        """Update service dependency graph"""
+        """
+Update service dependency graph"""
         service_name = recovery_plan.service_name
         
         # Add service node
@@ -626,7 +639,8 @@ class RecoveryPlanner:
             self.dependency_graph.add_edge(dependency, service_name)
 
     def _update_recovery_metrics(self, execution: RecoveryExecution, success: bool):
-        """Update recovery performance metrics"""
+        """
+Update recovery performance metrics"""
         self.recovery_metrics['total_recoveries'] += 1
         
         if success:

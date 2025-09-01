@@ -4,6 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive predictive analytics capabilities for the IA Influencer Agent platform.
 """
+
 import logging
 import numpy as np
 import pandas as pd
@@ -27,7 +28,9 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions supported"""
+    """
+Types of predictions supported"""
+
     ENGAGEMENT_FORECAST = "engagement_forecast"
     TREND_PREDICTION = "trend_prediction"
     VIRAL_PROBABILITY = "viral_probability"
@@ -43,6 +46,7 @@ class PredictionType(Enum):
 
 class ModelType(Enum):
     """Types of ML models"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -52,6 +56,7 @@ class ModelType(Enum):
 
 class TimeHorizon(Enum):
     """Prediction time horizons"""
+
     SHORT_TERM = "short_term"  # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"  # 1-6 months
@@ -71,7 +76,8 @@ class PredictionRequest:
     
 @dataclass
 class PredictionResult:
-    """Prediction result"""
+    """
+Prediction result"""
     request_id: str
     prediction_type: PredictionType
     predicted_value: Union[float, int, str, List[Any]]
@@ -88,7 +94,8 @@ class PredictionResult:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics"""
+    """
+Model performance metrics"""
     model_id: str
     model_type: ModelType
     accuracy: float
@@ -104,7 +111,8 @@ class ModelMetrics:
 
 @dataclass
 class TrendData:
-    """Trend analysis data"""
+    """
+Trend analysis data"""
     metric_name: str
     values: List[float]
     timestamps: List[datetime]
@@ -1104,7 +1112,8 @@ class PredictiveAnalyticsEngine:
         return suggestions_map.get(niche, {}).get(month, default_suggestions)
     
     def _generic_prediction(self, request: PredictionRequest) -> PredictionResult:
-        """Generic prediction for unsupported prediction types"""
+        """
+Generic prediction for unsupported prediction types"""
         try:
             features = request.features
             
@@ -1148,7 +1157,8 @@ class PredictiveAnalyticsEngine:
         return self.model_metrics.copy()
     
     def clear_cache(self) -> bool:
-        """Clear prediction cache"""
+        """
+Clear prediction cache"""
         try:
             self.prediction_cache.clear()
             self.logger.info("Prediction cache cleared")

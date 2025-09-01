@@ -1,4 +1,5 @@
 """Natural Language Processing: sentiment analysis, keyword extraction, content classification."""
+
 import re
 from typing import Dict, List, Tuple
 from collections import Counter
@@ -97,7 +98,8 @@ class TextAnalyzer:
         return [word for word, count in keyword_counts.most_common(top_k)]
 
     def classify_content(self, text: str) -> Dict:
-        """Classify content type and topics."""
+        """
+Classify content type and topics."""
         text_lower = text.lower()
         
         # Topic classification

@@ -4,7 +4,7 @@
 Advanced neural network-based piracy detection with deep learning models.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -30,6 +30,7 @@ This module provides:
 - Advanced deep learning violation classification
 - Contextual understanding of content modifications
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -50,7 +51,9 @@ from transformers import (
 logger = logging.getLogger(__name__)
 
 class NeuralModelType(Enum):
-    """Types of neural models for detection."""
+    """
+Types of neural models for detection."""
+
     TRANSFORMER_TEXT = "transformer_text"
     VISION_TRANSFORMER = "vision_transformer"
     AUDIO_TRANSFORMER = "audio_transformer"
@@ -356,7 +359,8 @@ class NeuralPiracyDetector:
     async def _compute_similarity_scores(self, 
                                        content_features: Dict[str, Any],
                                        reference_features: Dict[str, Any]) -> Dict[str, np.ndarray]:
-        """Compute comprehensive similarity scores."""
+        """
+Compute comprehensive similarity scores."""
         
         # Semantic similarity (cosine similarity of embeddings)
         content_emb = content_features['embeddings']
@@ -391,7 +395,8 @@ class NeuralPiracyDetector:
                                 content_features: Dict[str, Any],
                                 reference_features: Dict[str, Any],
                                 similarity_scores: Dict[str, Any]) -> float:
-        """Classify potential violation using neural analysis."""
+        """
+Classify potential violation using neural analysis."""
         
         # Use pre-trained violation probability
         content_violation_prob = content_features['violation_probability'][0]
@@ -408,7 +413,8 @@ class NeuralPiracyDetector:
         return float(np.clip(final_probability, 0.0, 1.0))
     
     async def _load_pretrained_weights(self):
-        """Load pre-trained weights if available."""
+        """
+Load pre-trained weights if available."""
         try:
             # Implementation for loading custom trained weights
             weights_path = self.config.get('pretrained_weights_path')

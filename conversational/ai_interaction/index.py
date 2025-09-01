@@ -6,13 +6,14 @@ Provides unified access point, module coordination, and system management
 for the enterprise-grade conversational AI platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use of this code is strictly prohibited and will result in
 immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -51,7 +52,9 @@ MODULE_ERRORS = Counter('ai_interaction_module_errors_total', 'Total module erro
 
 
 class SystemStatus(Enum):
-    """System status enumeration"""
+    """
+System status enumeration"""
+
     INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
@@ -62,6 +65,7 @@ class SystemStatus(Enum):
 
 class ComponentStatus(Enum):
     """Component status enumeration"""
+
     STARTING = "starting"
     READY = "ready"
     BUSY = "busy"
@@ -100,7 +104,8 @@ class ComponentInfo:
 
 @dataclass
 class SystemHealth:
-    """Overall system health information"""
+    """
+Overall system health information"""
     status: SystemStatus
     overall_health_score: float
     component_statuses: Dict[str, ComponentInfo]
@@ -157,7 +162,8 @@ class AIInteractionSystem:
         }
         
     async def initialize(self) -> None:
-        """Initialize the complete AI Interaction system"""
+        """
+Initialize the complete AI Interaction system"""
         start_time = datetime.now()
         
         try:
@@ -292,41 +298,49 @@ class AIInteractionSystem:
         self.interaction_engine = await create_interaction_engine()
     
     async def _initialize_ai_assistant(self) -> None:
-        """Initialize the AI assistant"""
+        """
+Initialize the AI assistant"""
         self.ai_assistant = await create_ai_assistant()
     
     async def _initialize_content_analyzer(self) -> None:
-        """Initialize the content analyzer"""
+        """
+Initialize the content analyzer"""
         self.content_analyzer = ContentAnalyzer()
         await self.content_analyzer.initialize()
     
     async def _initialize_response_generator(self) -> None:
-        """Initialize the response generator"""
+        """
+Initialize the response generator"""
         self.response_generator = ResponseGenerator()
         await self.response_generator.initialize()
     
     async def _initialize_conversation_handler(self) -> None:
-        """Initialize the conversation handler"""
+        """
+Initialize the conversation handler"""
         self.conversation_handler = ConversationHandler()
         await self.conversation_handler.initialize()
     
     async def _initialize_smart_recommendations(self) -> None:
-        """Initialize the smart recommendations system"""
+        """
+Initialize the smart recommendations system"""
         self.smart_recommendations = SmartRecommendations()
         await self.smart_recommendations.initialize()
     
     async def _initialize_creator_advisor(self) -> None:
-        """Initialize the creator advisor"""
+        """
+Initialize the creator advisor"""
         self.creator_advisor = CreatorAdvisor()
         await self.creator_advisor.initialize()
     
     async def _initialize_platform_optimizer(self) -> None:
-        """Initialize the platform optimizer"""
+        """
+Initialize the platform optimizer"""
         self.platform_optimizer = PlatformOptimizer()
         await self.platform_optimizer.initialize()
     
     async def _perform_initial_health_check(self) -> None:
-        """Perform initial system health check"""
+        """
+Perform initial system health check"""
         try:
             health_results = []
             
@@ -444,7 +458,8 @@ class AIInteractionSystem:
         )
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the system"""
+        """
+Gracefully shutdown the system"""
         try:
             logger.info("Starting system shutdown...")
             
@@ -487,12 +502,14 @@ async def initialize_system(config: Optional[SystemConfiguration] = None) -> AII
 
 
 def get_system() -> Optional[AIInteractionSystem]:
-    """Get the global system instance"""
+    """
+Get the global system instance"""
     return _system_instance
 
 
 async def shutdown_system() -> None:
-    """Shutdown the global system"""
+    """
+Shutdown the global system"""
     global _system_instance
     
     if _system_instance:
@@ -502,7 +519,8 @@ async def shutdown_system() -> None:
 
 # Health check endpoint for external monitoring
 async def health_check() -> Dict[str, Any]:
-    """External health check endpoint"""
+    """
+External health check endpoint"""
     if _system_instance:
         health = await _system_instance.get_system_status()
         return {

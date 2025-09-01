@@ -160,7 +160,8 @@ class MockAPIServer:
         self.is_running = False
         
     async def start(self):
-        """Start the mock API server."""
+        """
+Start the mock API server."""
         try:
             # Check if real server is already running
             import aiohttp

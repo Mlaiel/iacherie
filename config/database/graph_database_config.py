@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class GraphDBType(Enum):
-    """Supported graph database types"""
+    """
+Supported graph database types"""
+
     NEO4J = "neo4j"
     AMAZON_NEPTUNE = "neptune"
     AZURE_COSMOS_GREMLIN = "cosmos_gremlin"
@@ -39,6 +42,7 @@ class GraphDBType(Enum):
 
 class NodeType(Enum):
     """Node types in the IA-Influencer graph model"""
+
     USER = "User"
     CONTENT = "Content"
     PLATFORM = "Platform"
@@ -51,6 +55,7 @@ class NodeType(Enum):
 
 class RelationshipType(Enum):
     """Relationship types for business logic"""
+
     CREATED = "CREATED"
     COLLABORATED_WITH = "COLLABORATED_WITH"
     INFLUENCED_BY = "INFLUENCED_BY"
@@ -88,7 +93,8 @@ class NodeSchema:
 
 @dataclass
 class RelationshipSchema:
-    """Schema definition for graph relationships"""
+    """
+Schema definition for graph relationships"""
     relationship_type: RelationshipType
     from_node: NodeType
     to_node: NodeType
@@ -98,7 +104,8 @@ class RelationshipSchema:
 
 @dataclass
 class GraphDatabaseConfig:
-    """Professional graph database configuration"""
+    """
+Professional graph database configuration"""
     # Database configuration
     db_type: GraphDBType = GraphDBType.NEO4J
     credentials: GraphDatabaseCredentials = field(default_factory=GraphDatabaseCredentials)
@@ -251,7 +258,8 @@ class GraphDatabaseManager:
         self.session = None
         
     async def initialize(self) -> bool:
-        """Initialize graph database connection"""
+        """
+Initialize graph database connection"""
         try:
             if self.config.db_type == GraphDBType.NEO4J:
                 await self._initialize_neo4j()
@@ -289,7 +297,8 @@ class GraphDatabaseManager:
         )
         
     async def _setup_schema(self):
-        """Set up database schema with indexes and constraints"""
+        """
+Set up database schema with indexes and constraints"""
         try:
             with self.driver.session(database=self.config.credentials.database) as session:
                 # Create constraints

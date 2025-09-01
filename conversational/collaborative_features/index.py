@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
@@ -37,7 +38,8 @@ class CollaborativeFeaturesRegistry:
         self._initialized = False
     
     async def initialize_services(self, config: Dict[str, Any]) -> None:
-        """Initialize all collaborative services"""
+        """
+Initialize all collaborative services"""
         try:
             if self._initialized:
                 return
@@ -93,7 +95,8 @@ class CollaborationWorkflowManager:
         participants: List[str],
         project_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Start a comprehensive collaboration workflow"""
+        """
+Start a comprehensive collaboration workflow"""
         try:
             workflow_id = f"workflow_{workflow_type}_{len(self.active_workflows)}"
             
@@ -170,12 +173,14 @@ async def get_collaboration_service(service_name: str) -> Any:
 
 
 async def initialize_collaboration_features(config: Dict[str, Any] = None) -> None:
-    """Initialize all collaboration features"""
+    """
+Initialize all collaboration features"""
     await collaboration_registry.initialize_services(config or {})
 
 
 def get_feature_summary() -> Dict[str, Any]:
-    """Get summary of all collaborative features"""
+    """
+Get summary of all collaborative features"""
     return {
         "module_name": "collaborative_features",
         "version": "1.0.0",

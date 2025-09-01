@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Infrastructure as Code templates for multi-cloud deployment.
 ==================================================================
 """
+
 import logging
 import asyncio
 import yaml
@@ -28,7 +29,9 @@ import jinja2
 from jinja2 import Environment, FileSystemLoader, Template
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
+    """
+Supported cloud providers"""
+
     AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
@@ -39,6 +42,7 @@ class CloudProvider(Enum):
 
 class DeploymentType(Enum):
     """Deployment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -47,6 +51,7 @@ class DeploymentType(Enum):
 
 class TemplateFormat(Enum):
     """Template formats"""
+
     YAML = "yaml"
     JSON = "json"
     TERRAFORM = "tf"
@@ -71,7 +76,8 @@ class TemplateContext:
 
 @dataclass
 class DeploymentTemplate:
-    """Deployment template definition"""
+    """
+Deployment template definition"""
     name: str
     provider: CloudProvider
     template_type: DeploymentType
@@ -103,7 +109,8 @@ class DeploymentTemplateManager:
     """
     
     def __init__(self):
-        """Initialize deployment template manager"""
+        """
+Initialize deployment template manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Templates storage
@@ -166,15 +173,18 @@ class DeploymentTemplateManager:
         
         # Custom filters
         def to_yaml(value, indent=2):
-            """Convert value to YAML"""
+            """
+Convert value to YAML"""
             return yaml.dump(value, default_flow_style=False, indent=indent)
         
         def to_json(value, indent=2):
-            """Convert value to JSON"""
+            """
+Convert value to JSON"""
             return json.dumps(value, indent=indent)
         
         def resource_name(name, environment):
-            """Generate resource name"""
+            """
+Generate resource name"""
             return f"{name}-{environment}"
         
         def namespace_name(app_name, environment):
@@ -521,8 +531,10 @@ spec:
         periodSeconds: 60
 """
     def _get_docker_compose_template(self) -> str:
-        """Get Docker Compose template"""
-        return """version: '3.8'
+        """
+Get Docker Compose template"""
+        return """
+version: '3.8'
 
 services:
   {{ application_name }}:
@@ -641,8 +653,10 @@ networks:
     driver: bridge
 """
     def _get_terraform_aws_template(self) -> str:
-        """Get Terraform AWS template"""
-        return """terraform {
+        """
+Get Terraform AWS template"""
+        return """
+terraform {
   required_version = ">= 1.0"
   required_providers {
     aws = {
@@ -944,8 +958,10 @@ output "vpc_id" {
 }
 """
     def _get_helm_chart_template(self) -> str:
-        """Get Helm chart template"""
-        return """apiVersion: v2
+        """
+Get Helm chart template"""
+        return """
+apiVersion: v2
 name: {{ application_name }}
 description: A Helm chart for {{ application_name }}
 type: application
@@ -963,7 +979,8 @@ dependencies:
     condition: redis.enabled
 """
     def _get_ansible_playbook_template(self) -> str:
-        """Get Ansible playbook template"""
+        """
+Get Ansible playbook template"""
         return """---
 - name: Deploy {{ application_name }}
   hosts: all
@@ -1101,7 +1118,8 @@ dependencies:
         state: restarted
 """
     async def _generate_default_templates(self) -> None:
-        """Generate additional default templates"""
+        """
+Generate additional default templates"""
         
         # CI/CD pipeline templates
         await self._generate_cicd_templates()

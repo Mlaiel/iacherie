@@ -23,6 +23,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -95,7 +96,9 @@ from ..utils.user_agent_rotator import UserAgentRotator
 
 
 class ScrapingStrategy(Enum):
-    """Web scraping strategies."""
+    """
+Web scraping strategies."""
+
     REQUESTS_ONLY = "requests_only"
     SELENIUM_HEADLESS = "selenium_headless"
     SELENIUM_VISIBLE = "selenium_visible"
@@ -106,6 +109,7 @@ class ScrapingStrategy(Enum):
 
 class AntiDetectionLevel(Enum):
     """Anti-detection protection levels."""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
@@ -114,6 +118,7 @@ class AntiDetectionLevel(Enum):
 
 class ContentExtractorType(Enum):
     """Content extraction types."""
+
     TEXT_ONLY = "text_only"
     IMAGES_ONLY = "images_only"
     VIDEOS_ONLY = "videos_only"
@@ -1048,13 +1053,15 @@ class WebScrapingEngine:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit - cleanup all sessions."""
+        """
+Async context manager exit - cleanup all sessions."""
         for session_id in list(self.active_sessions.keys()):
             await self.close_session(session_id)
 
 
 class ScrapingSessionManager:
-    """Manager for multiple scraping sessions."""
+    """
+Manager for multiple scraping sessions."""
     
     def __init__(self, max_sessions: int = 10):
         self.max_sessions = max_sessions
@@ -1063,7 +1070,8 @@ class ScrapingSessionManager:
         self.active_sessions = {}
     
     async def create_managed_session(self, config: ScrapingSession) -> str:
-        """Create a managed scraping session."""
+        """
+Create a managed scraping session."""
         if len(self.active_sessions) >= self.max_sessions:
             # Wait for available session slot
             await self.session_queue.get()
@@ -1074,7 +1082,8 @@ class ScrapingSessionManager:
         return session_id
     
     async def close_managed_session(self, session_id: str):
-        """Close a managed session and free up slot."""
+        """
+Close a managed session and free up slot."""
         await self.scraping_engine.close_session(session_id)
         
         if session_id in self.active_sessions:

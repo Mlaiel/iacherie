@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from ...security.encryption import DataEncryption
 
 
 class InteractionType(Enum):
-    """Types of user interactions"""
+    """
+Types of user interactions"""
+
     MESSAGE = "message"
     FILE_UPLOAD = "file_upload"
     BUTTON_CLICK = "button_click"
@@ -49,6 +52,7 @@ class InteractionType(Enum):
 
 class InteractionChannel(Enum):
     """Interaction channels"""
+
     CHAT = "chat"
     WEB_UI = "web_ui"
     MOBILE_APP = "mobile_app"
@@ -61,6 +65,7 @@ class InteractionChannel(Enum):
 
 class SessionPhase(Enum):
     """Session phases for tracking interaction patterns"""
+
     INITIATION = "initiation"
     EXPLORATION = "exploration"
     ENGAGEMENT = "engagement"
@@ -172,7 +177,8 @@ class InteractionSession:
     help_requests: int = 0
     
     def add_event(self, event: InteractionEvent):
-        """Add interaction event to session"""
+        """
+Add interaction event to session"""
         self.events.append(event)
         self.total_interactions += 1
         
@@ -192,7 +198,8 @@ class InteractionSession:
             self.current_phase = new_phase
     
     def _determine_phase(self, event: InteractionEvent) -> SessionPhase:
-        """Determine session phase based on event"""
+        """
+Determine session phase based on event"""
         if event.interaction_type in [InteractionType.FEATURE_ACCESS, InteractionType.TASK_EXECUTION]:
             return SessionPhase.TASK_EXECUTION
         elif event.interaction_type in [InteractionType.MENU_NAVIGATION, InteractionType.CONTENT_VIEW]:
@@ -203,7 +210,8 @@ class InteractionSession:
             return self.current_phase
     
     def calculate_engagement_score(self) -> float:
-        """Calculate session engagement score"""
+        """
+Calculate session engagement score"""
         if not self.events:
             return 0.0
         
@@ -1371,7 +1379,8 @@ class InteractionHistoryTracker:
         return []
     
     async def _background_analytics(self):
-        """Background task for analytics processing"""
+        """
+Background task for analytics processing"""
         while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
@@ -1424,12 +1433,14 @@ class InteractionHistoryTracker:
         pass
     
     async def _update_all_user_profiles(self):
-        """Update all user profiles"""
+        """
+Update all user profiles"""
         # Regenerate profiles for active users
         pass
     
     async def _cleanup_old_stats(self):
-        """Clean up old statistical data"""
+        """
+Clean up old statistical data"""
         cutoff_date = datetime.utcnow() - timedelta(days=30)
         cutoff_str = cutoff_date.strftime("%Y-%m-%d")
         

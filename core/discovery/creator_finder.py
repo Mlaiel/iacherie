@@ -32,6 +32,7 @@ Features:
 - Real-time availability and status tracking
 - Privacy-respecting discovery mechanisms
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -53,7 +54,9 @@ import networkx as nx
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Creator type enumeration"""
+    """
+Creator type enumeration"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -73,6 +76,7 @@ class CreatorType(Enum):
 
 class SkillLevel(Enum):
     """Skill proficiency levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -81,6 +85,7 @@ class SkillLevel(Enum):
 
 class CollaborationType(Enum):
     """Types of collaboration"""
+
     MUSIC_COLLABORATION = "music_collaboration"
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
@@ -96,6 +101,7 @@ class CollaborationType(Enum):
 
 class AvailabilityStatus(Enum):
     """Creator availability status"""
+
     AVAILABLE = "available"
     BUSY = "busy"
     LIMITED = "limited"
@@ -117,7 +123,8 @@ class CreatorSkill:
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""
+    """
+Comprehensive creator profile"""
     creator_id: str
     username: str
     display_name: str
@@ -193,7 +200,8 @@ class CreatorFilter:
 
 @dataclass
 class MatchCriteria:
-    """Criteria for creator matching"""
+    """
+Criteria for creator matching"""
     skill_complementarity_weight: float = 0.3
     audience_overlap_weight: float = 0.2
     geographic_proximity_weight: float = 0.15
@@ -210,7 +218,8 @@ class MatchCriteria:
 
 @dataclass
 class CreatorMatch:
-    """Creator matching result"""
+    """
+Creator matching result"""
     creator_id: str
     profile: CreatorProfile
     match_score: float
@@ -226,7 +235,8 @@ class CreatorMatch:
 
 @dataclass
 class CollaborationPotential:
-    """Collaboration potential analysis"""
+    """
+Collaboration potential analysis"""
     creator1_id: str
     creator2_id: str
     overall_score: float
@@ -257,7 +267,8 @@ class CreatorFinder:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize creator finder with configuration"""
+        """
+Initialize creator finder with configuration"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -292,7 +303,8 @@ class CreatorFinder:
         self._collaboration_analysis_task = None
 
     async def initialize(self) -> bool:
-        """Initialize all creator finder components"""
+        """
+Initialize all creator finder components"""
         try:
             self.logger.info("Initializing CreatorFinder...")
             
@@ -971,7 +983,8 @@ class CreatorFilter:
 
 @dataclass
 class MatchCriteria:
-    """Matching criteria and weights"""
+    """
+Matching criteria and weights"""
     skill_compatibility_weight: float = 0.25
     audience_overlap_weight: float = 0.20
     geographic_proximity_weight: float = 0.15
@@ -988,7 +1001,8 @@ class MatchCriteria:
 
 @dataclass
 class CollaborationPotential:
-    """Collaboration potential assessment"""
+    """
+Collaboration potential assessment"""
     collaboration_type: CollaborationType
     potential_score: float
     success_probability: float
@@ -1002,7 +1016,8 @@ class CollaborationPotential:
 
 @dataclass
 class CreatorMatch:
-    """Creator matching result"""
+    """
+Creator matching result"""
     matched_creator: CreatorProfile
     match_score: float
     compatibility_breakdown: Dict[str, float]
@@ -1023,7 +1038,8 @@ class CreatorFinder:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize creator finder"""
+        """
+Initialize creator finder"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -1483,7 +1499,8 @@ class CreatorFinder:
         candidates: List[str],
         criteria: MatchCriteria
     ) -> List[Tuple[str, float]]:
-        """Calculate compatibility scores for candidates"""
+        """
+Calculate compatibility scores for candidates"""
         scored_candidates = []
         
         for candidate_id in candidates:
@@ -1528,7 +1545,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate skill compatibility score"""
+        """
+Calculate skill compatibility score"""
         skills1 = {skill.skill_name: skill.level for skill in creator1.skills}
         skills2 = {skill.skill_name: skill.level for skill in creator2.skills}
         
@@ -1557,7 +1575,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate audience overlap score"""
+        """
+Calculate audience overlap score"""
         # Simplified audience overlap calculation
         genres1 = set(creator1.genres)
         genres2 = set(creator2.genres)
@@ -1575,7 +1594,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate location compatibility score"""
+        """
+Calculate location compatibility score"""
         if not creator1.location or not creator2.location:
             return 0.7  # Neutral score for unknown locations
         
@@ -1594,7 +1614,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate collaboration history compatibility"""
+        """
+Calculate collaboration history compatibility"""
         # Check if they've collaborated before
         if self._collaboration_graph.has_edge(creator1.creator_id, creator2.creator_id):
             edge_data = self._collaboration_graph.get_edge_data(
@@ -1615,7 +1636,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate availability match score"""
+        """
+Calculate availability match score"""
         availability_scores = {
             AvailabilityStatus.AVAILABLE: 1.0,
             AvailabilityStatus.OPEN_TO_OFFERS: 0.9,
@@ -1635,7 +1657,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate quality compatibility score"""
+        """
+Calculate quality compatibility score"""
         quality_diff = abs(creator1.quality_score - creator2.quality_score)
         reputation_diff = abs(creator1.reputation_score - creator2.reputation_score)
         
@@ -1650,7 +1673,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> float:
-        """Calculate personal compatibility score"""
+        """
+Calculate personal compatibility score"""
         # Language compatibility
         common_languages = set(creator1.languages) & set(creator2.languages)
         language_score = 1.0 if common_languages else 0.5
@@ -1669,7 +1693,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> bool:
-        """Check if creators have complementary skills"""
+        """
+Check if creators have complementary skills"""
         skills1 = {skill.skill_name for skill in creator1.skills}
         skills2 = {skill.skill_name for skill in creator2.skills}
         
@@ -1681,7 +1706,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> bool:
-        """Check if creators share platforms"""
+        """
+Check if creators share platforms"""
         platforms1 = set(creator1.platforms.keys())
         platforms2 = set(creator2.platforms.keys())
         
@@ -1692,7 +1718,8 @@ class CreatorFinder:
         scored_candidates: List[Tuple[str, float]],
         criteria: MatchCriteria
     ) -> List[Tuple[str, float]]:
-        """Apply matching criteria thresholds"""
+        """
+Apply matching criteria thresholds"""
         return [
             (candidate_id, score)
             for candidate_id, score in scored_candidates
@@ -1704,7 +1731,8 @@ class CreatorFinder:
         seeker: CreatorProfile,
         qualified_matches: List[Tuple[str, float]]
     ) -> List[CreatorMatch]:
-        """Analyze detailed match information"""
+        """
+Analyze detailed match information"""
         detailed_matches = []
         
         for candidate_id, match_score in qualified_matches:
@@ -1767,7 +1795,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> List[CollaborationPotential]:
-        """Analyze collaboration potential between creators"""
+        """
+Analyze collaboration potential between creators"""
         potential_collaborations = []
         
         # Check common collaboration types
@@ -1796,7 +1825,8 @@ class CreatorFinder:
         candidate: CreatorProfile,
         compatibility: Dict[str, float]
     ) -> List[str]:
-        """Generate reasoning for the match"""
+        """
+Generate reasoning for the match"""
         reasoning = []
         
         if compatibility['skill_compatibility'] > 0.8:
@@ -1866,7 +1896,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> List[str]:
-        """Find complementary skills between creators"""
+        """
+Find complementary skills between creators"""
         skills1 = {skill.skill_name for skill in creator1.skills}
         skills2 = {skill.skill_name for skill in creator2.skills}
         
@@ -1877,7 +1908,8 @@ class CreatorFinder:
         creator1: CreatorProfile,
         creator2: CreatorProfile
     ) -> Dict[str, Any]:
-        """Analyze geographic collaboration feasibility"""
+        """
+Analyze geographic collaboration feasibility"""
         if not creator1.location or not creator2.location:
             return {'feasible': True, 'mode': 'remote_only'}
         
@@ -1895,7 +1927,8 @@ class CreatorFinder:
         seeker: CreatorProfile,
         candidate: CreatorProfile
     ) -> str:
-        """Recommend collaboration approach"""
+        """
+Recommend collaboration approach"""
         if candidate.availability_status == AvailabilityStatus.SELECTIVE:
             return "Craft a highly personalized proposal highlighting mutual benefits"
         elif candidate.quality_score > seeker.quality_score:
@@ -1932,7 +1965,8 @@ class CreatorFinder:
         self,
         matches: List[CreatorMatch]
     ) -> List[CreatorMatch]:
-        """Sort and rank matches by relevance"""
+        """
+Sort and rank matches by relevance"""
         return sorted(
             matches,
             key=lambda x: (x.match_score, x.estimated_response_probability),
@@ -1944,7 +1978,8 @@ class CreatorFinder:
         creator: CreatorProfile,
         target_collaborations: List[CollaborationType]
     ) -> List[str]:
-        """Analyze skill gaps for target collaborations"""
+        """
+Analyze skill gaps for target collaborations"""
         # Mock skill gap analysis
         return ['audio_production', 'video_editing', 'marketing']
 
@@ -1952,7 +1987,8 @@ class CreatorFinder:
         self,
         target_collaborations: List[CollaborationType]
     ) -> Dict[str, Any]:
-        """Find skill benchmarks from successful creators"""
+        """
+Find skill benchmarks from successful creators"""
         return {
             'top_skills': ['audio_production', 'collaboration', 'marketing'],
             'average_experience': 5.2,
@@ -1964,7 +2000,8 @@ class CreatorFinder:
         skill_gaps: List[str],
         benchmarks: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate skill development recommendations"""
+        """
+Generate skill development recommendations"""
         return [
             {
                 'skill': gap,
@@ -1980,7 +2017,8 @@ class CreatorFinder:
         creator: CreatorProfile,
         recommendations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Estimate impact of skill development"""
+        """
+Estimate impact of skill development"""
         return {
             'improved_match_rate': 0.25,
             'collaboration_success_increase': 0.30,
@@ -1991,7 +2029,8 @@ class CreatorFinder:
         self,
         recommendations: List[Dict[str, Any]]
     ) -> Dict[str, List[str]]:
-        """Find learning resources for skill development"""
+        """
+Find learning resources for skill development"""
         return {
             rec['skill']: ['Online Course Platform', 'YouTube Tutorials', 'Mentorship Program']
             for rec in recommendations
@@ -2001,7 +2040,8 @@ class CreatorFinder:
         self,
         recommendations: List[Dict[str, Any]]
     ) -> str:
-        """Estimate overall learning timeline"""
+        """
+Estimate overall learning timeline"""
         return "6-12 months for comprehensive skill development"
 
     async def _get_direct_connections(self, creator_id: str) -> List[str]:
@@ -2015,7 +2055,8 @@ class CreatorFinder:
         creator_id: str,
         depth: int
     ) -> Dict[str, Any]:
-        """Analyze network structure and connectivity"""
+        """
+Analyze network structure and connectivity"""
         if creator_id not in self._collaboration_graph:
             return {'network_size': 0, 'connectivity': 0.0}
         
@@ -2032,7 +2073,8 @@ class CreatorFinder:
         }
 
     async def _calculate_network_influence(self, creator_id: str) -> Dict[str, Any]:
-        """Calculate network influence metrics"""
+        """
+Calculate network influence metrics"""
         if creator_id not in self._collaboration_graph:
             return {'influence_score': 0.0}
         
@@ -2055,7 +2097,8 @@ class CreatorFinder:
         creator_id: str,
         connections: List[str]
     ) -> List[Dict[str, Any]]:
-        """Find network-based opportunities"""
+        """
+Find network-based opportunities"""
         opportunities = []
         
         # Find friends of friends
@@ -2080,7 +2123,8 @@ class CreatorFinder:
         network_analysis: Dict[str, Any],
         influence_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate network insights"""
+        """
+Generate network insights"""
         insights = []
         
         if network_analysis['network_size'] > 20:
@@ -2139,7 +2183,8 @@ class CreatorFinder:
         creator2: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Analyze factors affecting collaboration success"""
+        """
+Analyze factors affecting collaboration success"""
         return {
             'success_factors': ['shared_vision', 'complementary_skills', 'good_communication'],
             'timeline': 30,  # days
@@ -2153,7 +2198,8 @@ class CreatorFinder:
         creator2: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Analyze historical collaboration patterns"""
+        """
+Analyze historical collaboration patterns"""
         return {
             'similar_collaboration_success_rate': 0.75,
             'average_project_duration': 25,
@@ -2166,7 +2212,8 @@ class CreatorFinder:
         creator2: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Assess collaboration risks"""
+        """
+Assess collaboration risks"""
         return {
             'risk_level': 'medium',
             'challenges': ['schedule_coordination', 'creative_alignment'],
@@ -2180,7 +2227,8 @@ class CreatorFinder:
         patterns: Dict[str, Any],
         risks: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict collaboration success probability"""
+        """
+Predict collaboration success probability"""
         base_probability = compatibility['overall_score'] * 0.7
         pattern_adjustment = patterns['similar_collaboration_success_rate'] * 0.3
         
@@ -2202,7 +2250,8 @@ class CreatorFinder:
         match_count: int,
         failed: bool = False
     ):
-        """Update search performance metrics"""
+        """
+Update search performance metrics"""
         self.metrics['total_searches'] += 1
         
         if not failed:
@@ -2217,7 +2266,8 @@ class CreatorFinder:
         )
 
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get finder performance metrics"""
+        """
+Get finder performance metrics"""
         return {
             'finder_metrics': self.metrics,
             'database_statistics': {
@@ -2240,7 +2290,8 @@ class CreatorFinder:
         }
 
     async def shutdown(self):
-        """Cleanup and shutdown finder"""
+        """
+Cleanup and shutdown finder"""
         try:
             # Clear caches
             self._match_cache.clear()

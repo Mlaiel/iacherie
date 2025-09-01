@@ -4,8 +4,9 @@ Professional audio embeddings generation and similarity matching for the IA Infl
 Implements state-of-the-art deep learning models for audio representation learning.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioEmbedding:
-    """Audio embedding representation with metadata"""
+    """
+Audio embedding representation with metadata"""
     embedding: np.ndarray
     audio_id: str
     features: Optional[AudioFeatures] = None
@@ -117,7 +119,8 @@ class AudioEmbeddingModel(nn.Module):
         self._initialize_weights()
     
     def _initialize_weights(self):
-        """Initialize model weights using Xavier initialization"""
+        """
+Initialize model weights using Xavier initialization"""
         for module in self.modules():
             if isinstance(module, (nn.Conv1d, nn.Linear)):
                 nn.init.xavier_uniform_(module.weight)

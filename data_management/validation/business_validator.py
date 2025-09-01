@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE VALIDATION MÉTIER MULTI-CRÉATEURS
@@ -15,6 +15,7 @@ Validation des règles business pour musiciens, influenceurs, photographes, blog
 - Contrôle qualité selon standards métier
 - Validation workflows et processus
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -39,7 +40,9 @@ import langdetect
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types de créateurs supportés"""
+    """
+Types de créateurs supportés"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer" 
     PHOTOGRAPHER = "photographer"
@@ -48,6 +51,7 @@ class CreatorType(Enum):
 
 class ContentCategory(Enum):
     """Catégories de contenu"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -55,6 +59,7 @@ class ContentCategory(Enum):
 
 class QualityLevel(Enum):
     """Niveaux de qualité"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -74,7 +79,8 @@ class BusinessValidationResult:
     quotas_usage: Dict[str, Any]
 
 class CreatorQuotaManager:
-    """Gestionnaire des quotas par type de créateur"""
+    """
+Gestionnaire des quotas par type de créateur"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.CreatorQuotaManager")
@@ -701,7 +707,8 @@ class ContentQualityAnalyzer:
             return 75
     
     def _analyze_image_composition(self, img_array: np.ndarray) -> float:
-        """Analyse la composition d'une image"""
+        """
+Analyse la composition d'une image"""
         try:
             # Conversion en niveaux de gris pour l'analyse
             if len(img_array.shape) == 3:
@@ -1010,7 +1017,8 @@ class BusinessValidator:
         return sum(scores)
     
     def _determine_business_category(self, creator_type: CreatorType, content_type: str, quality_analysis: Dict) -> str:
-        """Détermine la catégorie métier du contenu"""
+        """
+Détermine la catégorie métier du contenu"""
         quality_level = quality_analysis.get('quality_level', QualityLevel.BASIC)
         
         categories = {

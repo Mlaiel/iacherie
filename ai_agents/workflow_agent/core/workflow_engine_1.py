@@ -21,6 +21,7 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,9 @@ from ..base import BaseAgent
 
 
 class ExecutionMode(Enum):
-    """Workflow execution mode enumeration."""
+    """
+Workflow execution mode enumeration."""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     BATCH = "batch"
@@ -54,6 +57,7 @@ class ExecutionMode(Enum):
 
 class OptimizationStrategy(Enum):
     """Execution optimization strategy enumeration."""
+
     PERFORMANCE = "performance"
     RESOURCE_EFFICIENCY = "resource_efficiency"
     COST_OPTIMIZATION = "cost_optimization"
@@ -79,7 +83,8 @@ class ExecutionPlan:
 
 @dataclass
 class ExecutionMetrics:
-    """Execution performance metrics."""
+    """
+Execution performance metrics."""
     execution_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -94,7 +99,8 @@ class ExecutionMetrics:
 
 @dataclass
 class ExecutionTask:
-    """Individual execution task."""
+    """
+Individual execution task."""
     id: str
     name: str
     executor: Callable
@@ -115,7 +121,8 @@ class WorkflowEngine(BaseAgent):
     intelligent optimization, fault tolerance, and scalable processing.
     """
     def __init__(self, max_workers: int = 100, max_processes: int = None):
-        """Initialize the workflow engine."""
+        """
+Initialize the workflow engine."""
         super().__init__()
         self.logger = logging.getLogger(__name__)
         
@@ -735,17 +742,20 @@ class WorkflowEngine(BaseAgent):
         return False
 
     def _record_circuit_breaker_failure(self, task_name: str):
-        """Record failure for circuit breaker."""
+        """
+Record failure for circuit breaker."""
         state = self.circuit_breaker_state[task_name]
         state['failures'] += 1
         state['last_failure'] = time.time()
 
     def _reset_circuit_breaker(self, task_name: str):
-        """Reset circuit breaker on successful execution."""
+        """
+Reset circuit breaker on successful execution."""
         self.circuit_breaker_state[task_name] = {'failures': 0, 'last_failure': None}
 
     def _update_performance_metrics(self, metrics: ExecutionMetrics):
-        """Update global performance metrics."""
+        """
+Update global performance metrics."""
         self.performance_metrics['total_executions'] += 1
         
         if metrics.success_rate > 0.5:  # Consider successful if >50% success rate
@@ -768,7 +778,8 @@ class WorkflowEngine(BaseAgent):
         )
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics."""
+        """
+Get current performance metrics."""
         return {
             'metrics': self.performance_metrics.copy(),
             'active_executions': len(self.active_executions),
@@ -778,7 +789,8 @@ class WorkflowEngine(BaseAgent):
         }
 
     async def shutdown(self):
-        """Shutdown the workflow engine gracefully."""
+        """
+Shutdown the workflow engine gracefully."""
         try:
             self.logger.info("Shutting down workflow engine...")
             
@@ -804,46 +816,55 @@ class WorkflowEngine(BaseAgent):
         return [{'tasks': nodes}]
 
     async def _optimize_resource_allocation(self, stages, optimization):
-        """Optimize resource allocation for stages."""
+        """
+Optimize resource allocation for stages."""
         # Placeholder implementation
         return {'cpu': 2.0, 'memory': 1024.0}
 
     async def _estimate_execution_duration(self, stages, resource_allocation):
-        """Estimate execution duration."""
+        """
+Estimate execution duration."""
         # Placeholder implementation
         return len(stages) * 10.0  # 10 seconds per stage
 
     async def _create_execution_batches(self, plan):
-        """Create execution batches from plan."""
+        """
+Create execution batches from plan."""
         # Placeholder implementation
         return [stage for stage in plan.execution_stages]
 
     async def _execute_task_batch(self, batch):
-        """Execute a batch of tasks."""
+        """
+Execute a batch of tasks."""
         # Placeholder implementation
         return {'success': True, 'results': {}}
 
     async def _determine_stage_strategies(self, plan):
-        """Determine optimal strategy for each stage."""
+        """
+Determine optimal strategy for each stage."""
         # Placeholder implementation
         return {i: 'asynchronous' for i in range(len(plan.execution_stages))}
 
     async def _execute_stage_batch(self, stage, context_results):
-        """Execute stage in batch mode."""
+        """
+Execute stage in batch mode."""
         # Placeholder implementation
         return {}
 
     async def _execute_stage_streaming(self, stage, context_results):
-        """Execute stage in streaming mode."""
+        """
+Execute stage in streaming mode."""
         # Placeholder implementation
         return {}
 
     async def _execute_synchronous(self, plan):
-        """Execute workflow synchronously."""
+        """
+Execute workflow synchronously."""
         # Placeholder implementation - would implement sequential execution
         return await self._execute_asynchronous(plan)
 
     async def _execute_real_time(self, plan):
-        """Execute workflow in real-time mode."""
+        """
+Execute workflow in real-time mode."""
         # Placeholder implementation - would implement real-time execution
         return await self._execute_streaming(plan)

@@ -10,6 +10,7 @@ prohibited and will result in severe legal consequences.
 This module provides comprehensive social media analytics, audience insights,
 and social intelligence for content creators on the IA Influencer Agent platform.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
@@ -26,7 +27,9 @@ import asyncio
 logger = logging.getLogger(__name__)
 
 class SocialPlatform(Enum):
-    """Supported social media platforms"""
+    """
+Supported social media platforms"""
+
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
@@ -44,6 +47,7 @@ class SocialPlatform(Enum):
 
 class EngagementType(Enum):
     """Types of social engagement"""
+
     LIKE = "like"
     LOVE = "love"
     COMMENT = "comment"
@@ -67,6 +71,7 @@ class EngagementType(Enum):
 
 class AudienceSegment(Enum):
     """Audience segmentation types"""
+
     AGE_GROUP = "age_group"
     GENDER = "gender"
     LOCATION = "location"
@@ -80,6 +85,7 @@ class AudienceSegment(Enum):
 
 class SentimentType(Enum):
     """Sentiment analysis types"""
+
     POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
@@ -87,6 +93,7 @@ class SentimentType(Enum):
 
 class TrendStatus(Enum):
     """Trend status types"""
+
     EMERGING = "emerging"
     TRENDING = "trending"
     PEAK = "peak"
@@ -113,7 +120,8 @@ class SocialEngagement:
 
 @dataclass
 class AudienceProfile:
-    """Comprehensive audience profile"""
+    """
+Comprehensive audience profile"""
     profile_id: str
     creator_id: str
     analysis_timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -145,7 +153,8 @@ class AudienceProfile:
 
 @dataclass
 class SocialTrend:
-    """Social media trend analysis"""
+    """
+Social media trend analysis"""
     trend_id: str
     keyword: str
     platform: SocialPlatform
@@ -163,7 +172,8 @@ class SocialTrend:
 
 @dataclass
 class CompetitorIntelligence:
-    """Competitor social media intelligence"""
+    """
+Competitor social media intelligence"""
     competitor_id: str
     competitor_name: str
     platforms: List[SocialPlatform] = field(default_factory=list)
@@ -196,7 +206,8 @@ class CompetitorIntelligence:
 
 @dataclass
 class SocialCampaign:
-    """Social media campaign analytics"""
+    """
+Social media campaign analytics"""
     campaign_id: str
     campaign_name: str
     creator_id: str
@@ -229,10 +240,12 @@ class SocialCampaign:
     optimization_recommendations: List[str] = field(default_factory=list)
 
 class SocialAnalyticsEngine:
-    """Advanced social media analytics engine for comprehensive social intelligence"""
+    """
+Advanced social media analytics engine for comprehensive social intelligence"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize social analytics engine"""
+        """
+Initialize social analytics engine"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -427,7 +440,8 @@ class SocialAnalyticsEngine:
         profile: AudienceProfile,
         engagements: List[SocialEngagement]
     ):
-        """Analyze audience demographic breakdown"""
+        """
+Analyze audience demographic breakdown"""
         try:
             # Simulate demographic analysis (in production, integrate with platform APIs)
             profile.total_followers = len(set(eng.user_id for eng in engagements))
@@ -1006,7 +1020,8 @@ class SocialAnalyticsEngine:
             return SentimentType.NEUTRAL
     
     async def _calculate_influence_score(self, engagement: SocialEngagement) -> float:
-        """Calculate influence score for an engagement"""
+        """
+Calculate influence score for an engagement"""
         # Simplified influence calculation
         base_score = 5.0
         
@@ -1027,7 +1042,8 @@ class SocialAnalyticsEngine:
         return min(10.0, base_score * multiplier + user_factor)
     
     async def _estimate_reach_potential(self, engagement: SocialEngagement) -> int:
-        """Estimate reach potential of an engagement"""
+        """
+Estimate reach potential of an engagement"""
         # Simplified reach estimation
         base_reach = hash(engagement.user_id) % 1000 + 100  # 100-1100 base reach
         
@@ -1046,7 +1062,8 @@ class SocialAnalyticsEngine:
         self,
         engagements: List[SocialEngagement]
     ) -> Dict[str, float]:
-        """Analyze geographic distribution of engagements"""
+        """
+Analyze geographic distribution of engagements"""
         # Simulate geographic distribution
         countries = ['US', 'UK', 'Canada', 'Australia', 'Germany', 'France', 'Japan', 'Brazil']
         distribution = {}
@@ -1068,7 +1085,8 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement],
         topic_categories: Dict[str, List[str]]
     ) -> Dict[str, float]:
-        """Calculate audience affinities for different topics"""
+        """
+Calculate audience affinities for different topics"""
         topic_scores = {}
         
         for topic, keywords in topic_categories.items():
@@ -1096,7 +1114,8 @@ class SocialAnalyticsEngine:
         timeframe: timedelta,
         offset: Optional[timedelta] = None
     ) -> int:
-        """Count keyword mentions in a specific timeframe"""
+        """
+Count keyword mentions in a specific timeframe"""
         end_time = datetime.utcnow() - (offset or timedelta(0))
         start_time = end_time - timeframe
         
@@ -1112,7 +1131,8 @@ class SocialAnalyticsEngine:
         return count
     
     def _update_processing_time(self, processing_time: float):
-        """Update average processing time statistics"""
+        """
+Update average processing time statistics"""
         current_avg = self.analytics_stats['average_processing_time']
         total_analyses = self.analytics_stats['total_audience_analyses']
         
@@ -1124,7 +1144,8 @@ class SocialAnalyticsEngine:
             self.analytics_stats['average_processing_time'] = processing_time
     
     def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get social analytics engine performance statistics"""
+        """
+Get social analytics engine performance statistics"""
         stats = self.analytics_stats.copy()
         stats['cached_profiles'] = len(self.audience_profiles_cache)
         stats['cached_competitors'] = len(self.competitor_cache)
@@ -1133,7 +1154,8 @@ class SocialAnalyticsEngine:
         return stats
     
     async def cleanup_old_data(self, max_age_days: int = 30):
-        """Clean up old cached data"""
+        """
+Clean up old cached data"""
         cutoff_date = datetime.utcnow() - timedelta(days=max_age_days)
         
         # Clean old engagements

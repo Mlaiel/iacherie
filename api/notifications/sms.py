@@ -1,4 +1,5 @@
 """Enterprise SMS notification service with multi-provider support and delivery tracking."""
+
 import os
 import aiohttp
 import asyncio
@@ -18,7 +19,9 @@ from app.utils.metrics import MetricsCollector
 
 
 class SMSProvider(str, Enum):
-    """Supported SMS providers with enterprise-grade reliability."""
+    """
+Supported SMS providers with enterprise-grade reliability."""
+
     TWILIO = "twilio"
     AWS_SNS = "aws_sns"
     NEXMO = "nexmo"
@@ -173,13 +176,15 @@ class SMSNotifier:
         return results
 
     async def get_delivery_status(self, message_id: str) -> Optional[SMSDeliveryResult]:
-        """Get delivery status for a specific message."""
+        """
+Get delivery status for a specific message."""
         # This would typically query a database or provider API
         # Simplified implementation
         return None
 
     async def schedule_sms(self, message: SMSMessage, scheduled_at: datetime) -> str:
-        """Schedule SMS for future delivery."""
+        """
+Schedule SMS for future delivery."""
         message.scheduled_at = scheduled_at
         
         # Store in scheduling queue (would use Celery or similar in production)
@@ -424,7 +429,8 @@ class SMSNotifier:
         return groups
 
     async def _send_batch_with_rate_limit(self, provider: SMSProvider, messages: List[SMSMessage]) -> List[SMSDeliveryResult]:
-        """Send batch of messages with rate limiting."""
+        """
+Send batch of messages with rate limiting."""
         results = []
         rate_limit = self.rate_limits.get(provider, 10)  # Default 10 requests per second
         
@@ -478,26 +484,31 @@ class SMSNotifier:
         return 0
 
     async def _get_delivery_rate(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> float:
-        """Get SMS delivery rate percentage."""
+        """
+Get SMS delivery rate percentage."""
         # Implementation would query database
         return 0.95
 
     async def _get_cost_breakdown(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, float]:
-        """Get cost breakdown by provider."""
+        """
+Get cost breakdown by provider."""
         # Implementation would query database
         return {}
 
     async def _get_provider_performance(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, Dict]:
-        """Get provider performance metrics."""
+        """
+Get provider performance metrics."""
         # Implementation would query database
         return {}
 
     async def _get_geographic_stats(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, int]:
-        """Get geographic distribution of SMS."""
+        """
+Get geographic distribution of SMS."""
         # Implementation would query database
         return {}
 
     async def _get_failure_analysis(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, Any]:
-        """Get failure analysis and common issues."""
+        """
+Get failure analysis and common issues."""
         # Implementation would query database
         return {}

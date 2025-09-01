@@ -17,6 +17,7 @@ Team Specialization:
 - DevOps Engineer: Production deployment & monitoring systems
 - AI Prompt Engineer: Intelligent content analysis & classification
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,7 +41,9 @@ logger = get_logger(__name__)
 
 
 class ContentFormat(str, Enum):
-    """Supported content formats for fingerprinting."""
+    """
+Supported content formats for fingerprinting."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -51,6 +54,7 @@ class ContentFormat(str, Enum):
 
 class FingerprintQuality(str, Enum):
     """Fingerprint quality levels."""
+
     BASIC = "basic"
     STANDARD = "standard" 
     PROFESSIONAL = "professional"
@@ -60,6 +64,7 @@ class FingerprintQuality(str, Enum):
 
 class ProtectionScope(str, Enum):
     """Protection scope levels."""
+
     SINGLE_PLATFORM = "single_platform"
     MULTI_PLATFORM = "multi_platform"
     GLOBAL_SURVEILLANCE = "global_surveillance"
@@ -81,7 +86,8 @@ class FingerprintRequest:
 
 @dataclass
 class FingerprintResult:
-    """Comprehensive fingerprinting result."""
+    """
+Comprehensive fingerprinting result."""
     request_id: str
     content_id: str
     fingerprints: Dict[str, Any]
@@ -95,7 +101,8 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Content similarity match result."""
+    """
+Content similarity match result."""
     match_id: str
     original_content_id: str
     matched_content_id: str
@@ -663,11 +670,13 @@ class FingerprintingIntegration:
         })()
     
     def _generate_mock_vector(self, dimension: int) -> List[float]:
-        """Generate mock vector embedding for testing."""
+        """
+Generate mock vector embedding for testing."""
         return np.random.random(dimension).tolist()
     
     async def _generate_video_fingerprint(self, video_data: Any) -> Dict[str, Any]:
-        """Generate video fingerprint (simplified)."""
+        """
+Generate video fingerprint (simplified)."""
         return {
             "video_hash": hashlib.sha256(str(video_data).encode()).hexdigest(),
             "frame_count": 30 * 60,  # Mock 60 seconds at 30fps
@@ -822,7 +831,8 @@ class FingerprintingIntegration:
         return []
     
     async def _deduplicate_similarity_matches(self, matches: List[SimilarityMatch]) -> List[SimilarityMatch]:
-        """Remove duplicate similarity matches."""
+        """
+Remove duplicate similarity matches."""
         seen_content_ids = set()
         unique_matches = []
         
@@ -838,11 +848,13 @@ class FingerprintingIntegration:
         content_id: str,
         monitoring_scope: ProtectionScope
     ) -> List[SimilarityMatch]:
-        """Monitor single content for violations."""
+        """
+Monitor single content for violations."""
         return await self.detect_content_similarity(content_id, 0.8, 50)
     
     async def _generate_monitoring_report(self, monitoring_results: Dict[str, List[SimilarityMatch]]):
-        """Generate monitoring report."""
+        """
+Generate monitoring report."""
         logger.info(f"Generated monitoring report for {len(monitoring_results)} content items")
     
     async def _analyze_fingerprint_completeness(self, fp_type: str, fp_data: Any) -> float:

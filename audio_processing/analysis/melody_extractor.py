@@ -4,8 +4,9 @@ Advanced melody extraction engine using machine learning and signal processing
 to identify, track, and analyze melodic content in audio signals.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -19,7 +20,9 @@ from scipy import ndimage
 
 
 class MelodyExtractionMethod(Enum):
-    """Methods for melody extraction"""
+    """
+Methods for melody extraction"""
+
     PYIN = "pyin"
     CREPE = "crepe"
     YIN = "yin"
@@ -28,6 +31,7 @@ class MelodyExtractionMethod(Enum):
 
 class MelodyConfidence(Enum):
     """Melody confidence levels"""
+
     HIGH = 0.8
     MEDIUM = 0.6
     LOW = 0.4
@@ -35,7 +39,8 @@ class MelodyConfidence(Enum):
 
 @dataclass
 class MelodySegment:
-    """Individual melody segment"""
+    """
+Individual melody segment"""
     start_time: float
     end_time: float
     frequencies: np.ndarray
@@ -49,7 +54,8 @@ class MelodySegment:
 
 @dataclass
 class MelodyAnalysisResult:
-    """Complete melody analysis results"""
+    """
+Complete melody analysis results"""
     fundamental_frequencies: np.ndarray
     confidence_scores: np.ndarray
     time_stamps: np.ndarray
@@ -205,7 +211,8 @@ class MelodyExtractor:
         return await asyncio.get_event_loop().run_in_executor(self.executor, extract_f0)
     
     def _pyin_extraction(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """PYIN-based fundamental frequency extraction"""
+        """
+PYIN-based fundamental frequency extraction"""
         try:
             f0, voiced_flag, voiced_probs = librosa.pyin(
                 audio_data,
@@ -333,7 +340,8 @@ class MelodyExtractor:
         return await asyncio.get_event_loop().run_in_executor(self.executor, segment)
     
     def _frequency_to_note(self, frequency: float) -> str:
-        """Convert frequency to musical note name"""
+        """
+Convert frequency to musical note name"""
         if frequency <= 0:
             return "Rest"
         
@@ -380,7 +388,8 @@ class MelodyExtractor:
     async def _analyze_key_signature(self, 
                                    f0: np.ndarray, 
                                    voiced: np.ndarray) -> Tuple[Optional[str], Dict[str, Any]]:
-        """Analyze key signature and scale characteristics"""
+        """
+Analyze key signature and scale characteristics"""
         def analyze_key():
             if not np.any(voiced):
                 return None, {}
@@ -451,7 +460,8 @@ class MelodyExtractor:
     async def _analyze_melodic_contour(self, 
                                      f0: np.ndarray, 
                                      voiced: np.ndarray) -> np.ndarray:
-        """Analyze melodic contour (shape)"""
+        """
+Analyze melodic contour (shape)"""
         def analyze_contour():
             if not np.any(voiced):
                 return np.array([])
@@ -476,7 +486,8 @@ class MelodyExtractor:
                              f0: np.ndarray, 
                              voiced: np.ndarray, 
                              time_stamps: np.ndarray) -> Dict[str, float]:
-        """Analyze global vibrato characteristics"""
+        """
+Analyze global vibrato characteristics"""
         def analyze():
             if not np.any(voiced):
                 return {'rate': 0.0, 'depth': 0.0, 'presence': 0.0}
@@ -517,7 +528,8 @@ class MelodyExtractor:
     async def _compute_pitch_stability(self, 
                                      f0: np.ndarray, 
                                      voiced: np.ndarray) -> float:
-        """Compute overall pitch stability"""
+        """
+Compute overall pitch stability"""
         def compute():
             if not np.any(voiced):
                 return 0.0
@@ -537,7 +549,8 @@ class MelodyExtractor:
     async def _analyze_note_transitions(self, 
                                       f0: np.ndarray, 
                                       voiced: np.ndarray) -> Dict[str, int]:
-        """Analyze note transition patterns"""
+        """
+Analyze note transition patterns"""
         def analyze():
             if not np.any(voiced):
                 return {}

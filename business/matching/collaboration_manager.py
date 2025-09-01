@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationStatus(Enum):
-    """Collaboration status enumeration"""
+    """
+Collaboration status enumeration"""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     APPROVED = "approved"
@@ -62,6 +65,7 @@ class CollaborationStatus(Enum):
 
 class ProjectPhase(Enum):
     """Project phase enumeration"""
+
     PLANNING = "planning"
     PRE_PRODUCTION = "pre_production"
     PRODUCTION = "production"
@@ -92,7 +96,8 @@ class CollaborationAgreement:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone tracking"""
+    """
+Project milestone tracking"""
     milestone_id: str
     title: str
     description: str
@@ -119,7 +124,8 @@ class ResourceAllocation:
 
 
 class CollaborationManager:
-    """Advanced collaboration management and coordination system"""
+    """
+Advanced collaboration management and coordination system"""
     
     def __init__(self, db_session, notification_service, contract_service):
         self.db = db_session

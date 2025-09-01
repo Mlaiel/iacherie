@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import time
 import threading
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics following Prometheus conventions"""
+    """
+Types of metrics following Prometheus conventions"""
+
     COUNTER = "counter"         # Monotonically increasing value
     GAUGE = "gauge"            # Current value that can go up/down
     HISTOGRAM = "histogram"    # Distribution of values with buckets
@@ -82,7 +85,8 @@ class MetricSample:
             self.timestamp = self.timestamp.replace(tzinfo=timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
@@ -92,7 +96,8 @@ class MetricSample:
 
 @dataclass
 class MetricDefinition:
-    """Metric definition with metadata"""
+    """
+Metric definition with metadata"""
     name: str
     metric_type: MetricType
     unit: MetricUnit
@@ -119,7 +124,8 @@ class MetricDefinition:
 
 
 class Counter:
-    """Counter metric implementation"""
+    """
+Counter metric implementation"""
     
     def __init__(self, definition: MetricDefinition):
         self.definition = definition
@@ -128,7 +134,8 @@ class Counter:
         self.samples: deque = deque(maxlen=10000)
     
     def inc(self, amount: Union[int, float] = 1, labels: Optional[Dict[str, str]] = None):
-        """Increment counter"""
+        """
+Increment counter"""
         if amount < 0:
             raise ValueError("Counter can only be incremented by non-negative values")
         
@@ -146,7 +153,8 @@ class Counter:
         return self._value
     
     def get_samples(self, since: Optional[datetime] = None) -> List[MetricSample]:
-        """Get samples since specified time"""
+        """
+Get samples since specified time"""
         if since is None:
             return list(self.samples)
         
@@ -154,7 +162,8 @@ class Counter:
 
 
 class Gauge:
-    """Gauge metric implementation"""
+    """
+Gauge metric implementation"""
     
     def __init__(self, definition: MetricDefinition):
         self.definition = definition
@@ -163,7 +172,8 @@ class Gauge:
         self.samples: deque = deque(maxlen=10000)
     
     def set(self, value: Union[int, float], labels: Optional[Dict[str, str]] = None):
-        """Set gauge value"""
+        """
+Set gauge value"""
         with self._lock:
             self._value = float(value)
             sample = MetricSample(
@@ -174,7 +184,8 @@ class Gauge:
             self.samples.append(sample)
     
     def inc(self, amount: Union[int, float] = 1, labels: Optional[Dict[str, str]] = None):
-        """Increment gauge"""
+        """
+Increment gauge"""
         with self._lock:
             self._value += amount
             sample = MetricSample(
@@ -185,7 +196,8 @@ class Gauge:
             self.samples.append(sample)
     
     def dec(self, amount: Union[int, float] = 1, labels: Optional[Dict[str, str]] = None):
-        """Decrement gauge"""
+        """
+Decrement gauge"""
         with self._lock:
             self._value -= amount
             sample = MetricSample(
@@ -196,11 +208,13 @@ class Gauge:
             self.samples.append(sample)
     
     def get_value(self) -> float:
-        """Get current gauge value"""
+        """
+Get current gauge value"""
         return self._value
     
     def get_samples(self, since: Optional[datetime] = None) -> List[MetricSample]:
-        """Get samples since specified time"""
+        """
+Get samples since specified time"""
         if since is None:
             return list(self.samples)
         
@@ -208,7 +222,8 @@ class Gauge:
 
 
 class Histogram:
-    """Histogram metric implementation"""
+    """
+Histogram metric implementation"""
     
     def __init__(self, definition: MetricDefinition):
         self.definition = definition
@@ -221,7 +236,8 @@ class Histogram:
         self.samples: deque = deque(maxlen=10000)
     
     def observe(self, value: Union[int, float], labels: Optional[Dict[str, str]] = None):
-        """Observe a value"""
+        """
+Observe a value"""
         value = float(value)
         
         with self._lock:
@@ -246,19 +262,23 @@ class Histogram:
             self.samples.append(sample)
     
     def get_bucket_counts(self) -> Dict[Union[float, str], int]:
-        """Get bucket counts"""
+        """
+Get bucket counts"""
         return self._bucket_counts.copy()
     
     def get_sum(self) -> float:
-        """Get sum of all observed values"""
+        """
+Get sum of all observed values"""
         return self._sum
     
     def get_count(self) -> int:
-        """Get count of all observations"""
+        """
+Get count of all observations"""
         return self._count
     
     def get_quantile(self, quantile: float) -> Optional[float]:
-        """Calculate quantile from histogram data"""
+        """
+Calculate quantile from histogram data"""
         if not self.samples:
             return None
         
@@ -267,7 +287,8 @@ class Histogram:
         return values[min(index, len(values) - 1)]
     
     def get_samples(self, since: Optional[datetime] = None) -> List[MetricSample]:
-        """Get samples since specified time"""
+        """
+Get samples since specified time"""
         if since is None:
             return list(self.samples)
         
@@ -275,7 +296,8 @@ class Histogram:
 
 
 class Summary:
-    """Summary metric implementation"""
+    """
+Summary metric implementation"""
     
     def __init__(self, definition: MetricDefinition):
         self.definition = definition
@@ -286,7 +308,8 @@ class Summary:
         self.samples: deque = deque(maxlen=10000)
     
     def observe(self, value: Union[int, float], labels: Optional[Dict[str, str]] = None):
-        """Observe a value"""
+        """
+Observe a value"""
         value = float(value)
         
         with self._lock:
@@ -301,15 +324,18 @@ class Summary:
             self.samples.append(sample)
     
     def get_sum(self) -> float:
-        """Get sum of all observed values"""
+        """
+Get sum of all observed values"""
         return self._sum
     
     def get_count(self) -> int:
-        """Get count of all observations"""
+        """
+Get count of all observations"""
         return self._count
     
     def get_quantiles(self) -> Dict[float, float]:
-        """Calculate quantiles"""
+        """
+Calculate quantiles"""
         if not self.samples:
             return {}
         
@@ -323,7 +349,8 @@ class Summary:
         return quantiles
     
     def get_samples(self, since: Optional[datetime] = None) -> List[MetricSample]:
-        """Get samples since specified time"""
+        """
+Get samples since specified time"""
         if since is None:
             return list(self.samples)
         
@@ -344,7 +371,8 @@ class MetricsCollector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize metrics collector"""
+        """
+Initialize metrics collector"""
         self.config = config or {}
         
         # Collector configuration
@@ -372,7 +400,8 @@ class MetricsCollector:
         self.exporters: List[Any] = []
     
     def register_metric(self, definition: MetricDefinition) -> Union[Counter, Gauge, Histogram, Summary]:
-        """Register a new metric"""
+        """
+Register a new metric"""
         
         with self._lock:
             metric_name = f"{self.namespace}_{definition.name}"
@@ -411,7 +440,8 @@ class MetricsCollector:
     
     def gauge(self, name: str, description: str, unit: MetricUnit = MetricUnit.COUNT,
              labels: Optional[List[str]] = None) -> Gauge:
-        """Create or get a gauge metric"""
+        """
+Create or get a gauge metric"""
         definition = MetricDefinition(
             name=name,
             metric_type=MetricType.GAUGE,
@@ -423,7 +453,8 @@ class MetricsCollector:
     
     def histogram(self, name: str, description: str, unit: MetricUnit = MetricUnit.SECONDS,
                  buckets: Optional[List[float]] = None, labels: Optional[List[str]] = None) -> Histogram:
-        """Create or get a histogram metric"""
+        """
+Create or get a histogram metric"""
         definition = MetricDefinition(
             name=name,
             metric_type=MetricType.HISTOGRAM,
@@ -436,7 +467,8 @@ class MetricsCollector:
     
     def summary(self, name: str, description: str, unit: MetricUnit = MetricUnit.SECONDS,
                quantiles: Optional[List[float]] = None, labels: Optional[List[str]] = None) -> Summary:
-        """Create or get a summary metric"""
+        """
+Create or get a summary metric"""
         definition = MetricDefinition(
             name=name,
             metric_type=MetricType.SUMMARY,
@@ -448,7 +480,8 @@ class MetricsCollector:
         return self.register_metric(definition)
     
     def get_metric(self, name: str) -> Optional[Union[Counter, Gauge, Histogram, Summary]]:
-        """Get metric by name"""
+        """
+Get metric by name"""
         metric_name = f"{self.namespace}_{name}"
         return self.metrics.get(metric_name)
     
@@ -457,7 +490,8 @@ class MetricsCollector:
         return self.metrics.copy()
     
     async def start_collection(self):
-        """Start metrics collection background tasks"""
+        """
+Start metrics collection background tasks"""
         try:
             logger.info("Starting metrics collection")
             self.is_collecting = True
@@ -594,7 +628,8 @@ class MetricsCollector:
         return {}
     
     def _calculate_percentile(self, sorted_values: List[float], percentile: float) -> float:
-        """Calculate percentile from sorted values"""
+        """
+Calculate percentile from sorted values"""
         if not sorted_values:
             return 0.0
         
@@ -602,7 +637,8 @@ class MetricsCollector:
         return sorted_values[min(index, len(sorted_values) - 1)]
     
     async def _cleanup_old_data(self):
-        """Clean up old metrics data"""
+        """
+Clean up old metrics data"""
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(seconds=self.retention_period)
             
@@ -685,17 +721,20 @@ class MetricsCollector:
         return export_data
     
     async def _export_to_backend(self, exporter: Any, data: Dict[str, Any]):
-        """Export data to specific backend"""
+        """
+Export data to specific backend"""
         # This would be implemented based on specific exporter type
         # (Prometheus, InfluxDB, CloudWatch, etc.)
         pass
     
     def add_exporter(self, exporter: Any):
-        """Add metrics exporter"""
+        """
+Add metrics exporter"""
         self.exporters.append(exporter)
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get summary of all metrics"""
+        """
+Get summary of all metrics"""
         summary = {
             'total_metrics': len(self.metrics),
             'metrics_by_type': {},
@@ -730,7 +769,8 @@ class MetricsAggregator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize metrics aggregator"""
+        """
+Initialize metrics aggregator"""
         self.config = config or {}
         
         # Aggregation configuration
@@ -747,7 +787,8 @@ class MetricsAggregator:
         self.processing_lock = threading.Lock()
     
     async def aggregate_metrics(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Aggregate metrics across different time windows"""
+        """
+Aggregate metrics across different time windows"""
         
         try:
             timestamp = datetime.now(timezone.utc)
@@ -831,7 +872,8 @@ class MetricsAggregator:
     
     async def _aggregate_counter(self, metric_name: str, metric_info: Dict[str, Any],
                                window_seconds: int, window_start: datetime) -> Dict[str, Any]:
-        """Aggregate counter metric"""
+        """
+Aggregate counter metric"""
         
         current_value = metric_info.get('value', 0)
         series_key = f"{metric_name}_{window_seconds}"
@@ -952,7 +994,8 @@ class MetricsAggregator:
     def get_aggregated_data(self, metric_name: str, window_seconds: int,
                            start_time: Optional[datetime] = None,
                            end_time: Optional[datetime] = None) -> List[Dict[str, Any]]:
-        """Get aggregated data for a specific metric and window"""
+        """
+Get aggregated data for a specific metric and window"""
         
         series_key = f"{metric_name}_{window_seconds}"
         series_data = self.aggregated_data.get(series_key, {})
@@ -1003,7 +1046,8 @@ class MetricsAnalyzer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize metrics analyzer"""
+        """
+Initialize metrics analyzer"""
         self.config = config or {}
         
         # Analysis configuration
@@ -1016,7 +1060,8 @@ class MetricsAnalyzer:
         self.baselines: Dict[str, Dict[str, float]] = {}
     
     async def analyze_metrics(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive metrics analysis"""
+        """
+Perform comprehensive metrics analysis"""
         
         try:
             analysis_results = {
@@ -1087,7 +1132,8 @@ class MetricsAnalyzer:
         return None
     
     def _get_or_calculate_baseline(self, metric_name: str, current_value: float) -> Optional[Dict[str, float]]:
-        """Get or calculate baseline statistics for a metric"""
+        """
+Get or calculate baseline statistics for a metric"""
         
         if metric_name not in self.baselines:
             # Initialize baseline with current value
@@ -1122,7 +1168,8 @@ class MetricsAnalyzer:
     
     def _check_anomaly(self, metric_name: str, current_value: float, 
                       baseline: Dict[str, float]) -> Optional[Dict[str, Any]]:
-        """Check if current value is anomalous"""
+        """
+Check if current value is anomalous"""
         
         if baseline['count'] < self.min_samples:
             return None
@@ -1150,7 +1197,8 @@ class MetricsAnalyzer:
         return None
     
     async def _analyze_trends(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze trends in metrics data"""
+        """
+Analyze trends in metrics data"""
         
         trends = []
         
@@ -1204,7 +1252,8 @@ class MetricsAnalyzer:
             return 'stable'
     
     def _calculate_trend_strength(self, values: List[float]) -> float:
-        """Calculate trend strength (-1 to 1)"""
+        """
+Calculate trend strength (-1 to 1)"""
         if len(values) < 3:
             return 0.0
         
@@ -1232,7 +1281,8 @@ class MetricsAnalyzer:
         return 0.0
     
     async def _generate_performance_insights(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate performance insights from metrics"""
+        """
+Generate performance insights from metrics"""
         
         insights = []
         

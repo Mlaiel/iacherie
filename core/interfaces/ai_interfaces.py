@@ -4,8 +4,9 @@ Defines interfaces for AI agent interactions, content processing,
 recommendations, analytics and content generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
@@ -14,7 +15,9 @@ import numpy as np
 
 
 class AIModelType(Enum):
-    """Types of AI models used in the system."""
+    """
+Types of AI models used in the system."""
+
     LANGUAGE_MODEL = "language_model"
     COMPUTER_VISION = "computer_vision"
     AUDIO_PROCESSING = "audio_processing"
@@ -25,6 +28,7 @@ class AIModelType(Enum):
 
 class RecommendationType(Enum):
     """Types of recommendations provided by AI."""
+
     COLLABORATION = "collaboration"
     CONTENT_OPTIMIZATION = "content_optimization"
     MARKETING = "marketing"
@@ -60,12 +64,14 @@ class AIAgentInterface(ABC):
         request: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process natural language user request."""
+        """
+Process natural language user request."""
         pass
     
     @abstractmethod
     async def get_agent_capabilities(self) -> List[str]:
-        """Get list of agent capabilities and features."""
+        """
+Get list of agent capabilities and features."""
         pass
     
     @abstractmethod
@@ -74,7 +80,8 @@ class AIAgentInterface(ABC):
         user_id: str,
         new_data: Dict[str, Any]
     ) -> bool:
-        """Update agent knowledge with new user data."""
+        """
+Update agent knowledge with new user data."""
         pass
     
     @abstractmethod
@@ -83,12 +90,14 @@ class AIAgentInterface(ABC):
         user_id: str,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Retrieve conversation history with user."""
+        """
+Retrieve conversation history with user."""
         pass
 
 
 class AIProcessorInterface(ABC):
-    """Interface for AI content processing operations."""
+    """
+Interface for AI content processing operations."""
     
     @abstractmethod
     async def process_audio_content(
@@ -114,7 +123,8 @@ class AIProcessorInterface(ABC):
         image_data: bytes,
         analysis_type: str
     ) -> Dict[str, Any]:
-        """Process visual content with computer vision."""
+        """
+Process visual content with computer vision."""
         pass
     
     @abstractmethod
@@ -123,7 +133,8 @@ class AIProcessorInterface(ABC):
         text: str,
         analysis_type: str
     ) -> Dict[str, Any]:
-        """Process text content with NLP analysis."""
+        """
+Process text content with NLP analysis."""
         pass
     
     @abstractmethod
@@ -132,7 +143,8 @@ class AIProcessorInterface(ABC):
         content_data: bytes,
         content_type: str
     ) -> np.ndarray:
-        """Extract AI feature vectors from content."""
+        """
+Extract AI feature vectors from content."""
         pass
     
     @abstractmethod
@@ -141,12 +153,14 @@ class AIProcessorInterface(ABC):
         content_data: bytes,
         content_type: str
     ) -> Dict[str, float]:
-        """Classify emotional mood and sentiment of content."""
+        """
+Classify emotional mood and sentiment of content."""
         pass
 
 
 class AIRecommendationInterface(ABC):
-    """Interface for AI-powered recommendation system."""
+    """
+Interface for AI-powered recommendation system."""
     
     @abstractmethod
     async def generate_collaboration_recommendations(
@@ -172,7 +186,8 @@ class AIRecommendationInterface(ABC):
         content_id: str,
         performance_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Recommend content optimization strategies."""
+        """
+Recommend content optimization strategies."""
         pass
     
     @abstractmethod
@@ -181,7 +196,8 @@ class AIRecommendationInterface(ABC):
         user_id: str,
         content_analytics: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Suggest monetization opportunities and strategies."""
+        """
+Suggest monetization opportunities and strategies."""
         pass
     
     @abstractmethod
@@ -190,7 +206,8 @@ class AIRecommendationInterface(ABC):
         content_features: np.ndarray,
         demographic_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Recommend optimal audience targeting strategies."""
+        """
+Recommend optimal audience targeting strategies."""
         pass
     
     @abstractmethod
@@ -199,12 +216,14 @@ class AIRecommendationInterface(ABC):
         content_features: np.ndarray,
         historical_data: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Predict expected content performance metrics."""
+        """
+Predict expected content performance metrics."""
         pass
 
 
 class AIAnalyticsInterface(ABC):
-    """Interface for AI-powered analytics and insights."""
+    """
+Interface for AI-powered analytics and insights."""
     
     @abstractmethod
     async def analyze_content_performance(
@@ -231,7 +250,8 @@ class AIAnalyticsInterface(ABC):
         platform: str,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Analyze audience engagement patterns."""
+        """
+Analyze audience engagement patterns."""
         pass
     
     @abstractmethod
@@ -240,7 +260,8 @@ class AIAnalyticsInterface(ABC):
         content_category: str,
         geographic_region: str
     ) -> Dict[str, Any]:
-        """Generate market insights for content category."""
+        """
+Generate market insights for content category."""
         pass
     
     @abstractmethod
@@ -249,7 +270,8 @@ class AIAnalyticsInterface(ABC):
         user_id: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze competitive landscape and positioning."""
+        """
+Analyze competitive landscape and positioning."""
         pass
     
     @abstractmethod
@@ -258,12 +280,14 @@ class AIAnalyticsInterface(ABC):
         content_features: np.ndarray,
         market_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Predict upcoming trend opportunities."""
+        """
+Predict upcoming trend opportunities."""
         pass
 
 
 class AIGenerationInterface(ABC):
-    """Interface for AI content generation capabilities."""
+    """
+Interface for AI content generation capabilities."""
     
     @abstractmethod
     async def generate_content_descriptions(
@@ -292,7 +316,8 @@ class AIGenerationInterface(ABC):
         platform: str,
         target_audience: Dict[str, Any]
     ) -> List[str]:
-        """Generate optimized hashtags for content."""
+        """
+Generate optimized hashtags for content."""
         pass
     
     @abstractmethod
@@ -312,7 +337,8 @@ class AIGenerationInterface(ABC):
         content_type: str,
         target_keywords: List[str]
     ) -> Dict[str, str]:
-        """Generate SEO-optimized metadata for content."""
+        """
+Generate SEO-optimized metadata for content."""
         pass
     
     @abstractmethod
@@ -321,7 +347,8 @@ class AIGenerationInterface(ABC):
         video_data: bytes,
         target_emotion: str
     ) -> List[Dict[str, Any]]:
-        """Generate thumbnail suggestions for video content."""
+        """
+Generate thumbnail suggestions for video content."""
         pass
     
     @abstractmethod
@@ -331,5 +358,6 @@ class AIGenerationInterface(ABC):
         content_type: str,
         variation_count: int = 3
     ) -> List[bytes]:
-        """Generate content variations for A/B testing."""
+        """
+Generate content variations for A/B testing."""
         pass

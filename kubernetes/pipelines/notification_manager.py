@@ -2,7 +2,7 @@
 Enterprise-Grade Notification and Alerting for Pipeline Events
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive notification and alerting capabilities for pipeline events,
 supporting multiple channels and integration with monitoring systems.
@@ -17,6 +17,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import aiohttp
 import smtplib
@@ -36,7 +37,9 @@ from pathlib import Path
 from .pipeline_manager import PipelineExecution
 
 class NotificationChannel(Enum):
-    """Notification channel types"""
+    """
+Notification channel types"""
+
     EMAIL = "email"
     SLACK = "slack"
     TEAMS = "teams"
@@ -46,6 +49,7 @@ class NotificationChannel(Enum):
 
 class NotificationLevel(Enum):
     """Notification severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -53,6 +57,7 @@ class NotificationLevel(Enum):
 
 class NotificationEvent(Enum):
     """Pipeline events that trigger notifications"""
+
     PIPELINE_STARTED = "pipeline_started"
     PIPELINE_COMPLETED = "pipeline_completed"
     PIPELINE_FAILED = "pipeline_failed"
@@ -77,7 +82,8 @@ class NotificationConfig:
 
 @dataclass
 class NotificationMessage:
-    """Notification message structure"""
+    """
+Notification message structure"""
     title: str
     content: str
     level: NotificationLevel
@@ -92,7 +98,8 @@ class NotificationMessage:
             self.metadata = {}
 
 class NotificationTemplate:
-    """Notification template management"""
+    """
+Notification template management"""
     
     def __init__(self, templates_dir: Optional[Path] = None):
         self.templates_dir = templates_dir or Path(__file__).parent / "notification_templates"
@@ -219,7 +226,8 @@ class EmailNotificationHandler:
         
     async def send_notification(self, config: NotificationConfig, 
                               message: NotificationMessage) -> bool:
-        """Send email notification"""
+        """
+Send email notification"""
         try:
             # Create message
             msg = MIMEMultipart('alternative')
@@ -254,7 +262,8 @@ class SlackNotificationHandler:
         
     async def send_notification(self, config: NotificationConfig, 
                               message: NotificationMessage) -> bool:
-        """Send Slack notification"""
+        """
+Send Slack notification"""
         webhook_url = config.webhook_url or self.default_webhook_url
         if not webhook_url:
             self.logger.error("No Slack webhook URL configured")
@@ -366,7 +375,8 @@ class NotificationManager:
         self._load_default_configurations()
         
     def _load_default_configurations(self):
-        """Load default notification configurations"""
+        """
+Load default notification configurations"""
         # Default configurations for different environments
         default_configs = [
             NotificationConfig(
@@ -427,7 +437,8 @@ class NotificationManager:
         
     def _get_level_for_event(self, event: NotificationEvent, 
                            execution: PipelineExecution) -> NotificationLevel:
-        """Determine notification level based on event and execution"""
+        """
+Determine notification level based on event and execution"""
         if event in [NotificationEvent.PIPELINE_FAILED, NotificationEvent.DEPLOYMENT_FAILED]:
             return NotificationLevel.ERROR
         elif event == NotificationEvent.SECURITY_ALERT:
@@ -440,7 +451,8 @@ class NotificationManager:
     def _create_pipeline_message(self, execution: PipelineExecution, 
                                event: NotificationEvent, 
                                level: NotificationLevel) -> NotificationMessage:
-        """Create notification message for pipeline event"""
+        """
+Create notification message for pipeline event"""
         # Prepare template data
         template_data = {
             'pipeline_name': execution.config.name,

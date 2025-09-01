@@ -22,10 +22,12 @@ from business_intelligence_agent.models.bi_models import BusinessIntelligenceReq
 
 
 class TestAnalyticsAgentsSimple:
-    """Simple test class for analytics agents."""
+    """
+Simple test class for analytics agents."""
     
     def test_user_behavior_agent_init(self):
-        """Test user behavior agent initialization."""
+        """
+Test user behavior agent initialization."""
         agent = UserBehaviorAgent()
         assert agent.agent_name == "User Behavior Agent"
         assert agent.agent_version == "1.0.0"
@@ -81,7 +83,8 @@ class TestAnalyticsAgentsSimple:
     
     @pytest.mark.asyncio
     async def test_sentiment_analysis(self):
-        """Test sentiment analysis."""
+        """
+Test sentiment analysis."""
         agent = SentimentAnalysisAgent()
         request = SentimentAnalysisRequest(
             content_text="This is amazing! I love this platform.",
@@ -113,7 +116,8 @@ class TestAnalyticsAgentsSimple:
         assert len(result.recommendations) > 0
     
     def test_all_agents_have_correct_names(self):
-        """Test that all agents have the expected names."""
+        """
+Test that all agents have the expected names."""
         expected_agents = {
             UserBehaviorAgent(): "User Behavior Agent",
             PerformanceMetricsAgent(): "Performance Metrics Agent", 

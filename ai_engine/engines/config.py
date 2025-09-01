@@ -15,7 +15,7 @@ Provides centralized configuration, environment management, and performance tuni
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -31,6 +31,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 import os
 import json
 import yaml
@@ -43,7 +44,9 @@ from datetime import datetime
 
 
 class EnvironmentType(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -52,6 +55,7 @@ class EnvironmentType(Enum):
 
 class PerformanceProfile(Enum):
     """Performance optimization profiles"""
+
     ECONOMY = "economy"
     BALANCED = "balanced"
     PERFORMANCE = "performance"
@@ -137,7 +141,8 @@ class PerformanceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and logging configuration"""
+    """
+Monitoring and logging configuration"""
     log_level: str = "INFO"
     log_format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     log_file_path: str = "/var/log/ia-influencer/engines.log"
@@ -387,7 +392,8 @@ class ConfigManager:
         return self._last_modified is None or file_modified > self._last_modified
         
     def _load_config_file(self) -> Dict[str, Any]:
-        """Load configuration from file"""
+        """
+Load configuration from file"""
         with open(self.config_file, 'r', encoding='utf-8') as f:
             if self.config_file.endswith('.yaml') or self.config_file.endswith('.yml'):
                 return yaml.safe_load(f)
@@ -616,12 +622,14 @@ def get_config() -> EnginesConfig:
 
 
 def get_engine_config(engine_name: str) -> Dict[str, Any]:
-    """Get configuration for specific engine"""
+    """
+Get configuration for specific engine"""
     return config_manager.get_engine_config(engine_name)
 
 
 def reload_config() -> EnginesConfig:
-    """Force reload configuration"""
+    """
+Force reload configuration"""
     return config_manager.load_config(force_reload=True)
 
 

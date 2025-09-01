@@ -8,7 +8,7 @@ Advanced content analysis with AI-powered insights
 for influencer content optimization and protection.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -27,6 +27,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import logging
 import asyncio
@@ -53,7 +54,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types of content"""
+    """
+Types of content"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -63,6 +66,7 @@ class ContentType(Enum):
 
 class AnalysisLevel(Enum):
     """Analysis depth levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     DETAILED = "detailed"
@@ -70,6 +74,7 @@ class AnalysisLevel(Enum):
 
 class QualityLevel(Enum):
     """Content quality levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -78,6 +83,7 @@ class QualityLevel(Enum):
 
 class ContentRisk(Enum):
     """Content risk categories"""
+
     SAFE = "safe"
     MODERATE = "moderate"
     SENSITIVE = "sensitive"
@@ -98,7 +104,8 @@ class ContentFeatures:
 
 @dataclass
 class AudioFeatures:
-    """Audio feature extraction results"""
+    """
+Audio feature extraction results"""
     duration: float = 0.0
     sample_rate: int = 0
     channels: int = 0
@@ -183,7 +190,8 @@ class ImageAnalyzer:
         self.supported_formats = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.gif', '.webp'}
     
     async def analyze_image(self, file_path: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> ContentFeatures:
-        """Analyze image content and extract features"""
+        """
+Analyze image content and extract features"""
         try:
             # Load image
             image = cv2.imread(file_path)
@@ -219,18 +227,21 @@ class ImageAnalyzer:
         return float(np.mean(gray) / 255.0)
     
     def _calculate_contrast(self, image: np.ndarray) -> float:
-        """Calculate image contrast using standard deviation"""
+        """
+Calculate image contrast using standard deviation"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         return float(np.std(gray) / 255.0)
     
     def _calculate_sharpness(self, image: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
+        """
+Calculate image sharpness using Laplacian variance"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         laplacian = cv2.Laplacian(gray, cv2.CV_64F)
         return float(np.var(laplacian) / 10000.0)  # Normalized
     
     def _calculate_noise_level(self, image: np.ndarray) -> float:
-        """Estimate noise level in image"""
+        """
+Estimate noise level in image"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Use Gaussian blur difference to estimate noise
@@ -240,7 +251,8 @@ class ImageAnalyzer:
         return float(np.mean(noise) / 255.0)
     
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using K-means clustering"""
+        """
+Extract dominant colors using K-means clustering"""
         try:
             # Reshape image data
             data = image.reshape((-1, 3))
@@ -270,7 +282,8 @@ class ImageAnalyzer:
         return float(edge_pixels / total_pixels)
     
     def _calculate_texture_complexity(self, image: np.ndarray) -> float:
-        """Calculate texture complexity using Local Binary Pattern"""
+        """
+Calculate texture complexity using Local Binary Pattern"""
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             
@@ -339,7 +352,8 @@ class AudioAnalyzer:
         self.supported_formats = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'}
     
     async def analyze_audio(self, file_path: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> AudioFeatures:
-        """Analyze audio content and extract features"""
+        """
+Analyze audio content and extract features"""
         try:
             features = AudioFeatures()
             
@@ -392,16 +406,19 @@ class AudioAnalyzer:
         return float(np.mean(rms))
     
     def _calculate_dynamic_range(self, y: np.ndarray) -> float:
-        """Calculate dynamic range"""
+        """
+Calculate dynamic range"""
         return float(np.max(y) - np.min(y))
     
     def _calculate_silence_ratio(self, y: np.ndarray, threshold: float = 0.01) -> float:
-        """Calculate ratio of silence in audio"""
+        """
+Calculate ratio of silence in audio"""
         silent_samples = np.sum(np.abs(y) < threshold)
         return float(silent_samples / len(y))
     
     def _get_key_profiles(self) -> List[np.ndarray]:
-        """Get major key profiles for key detection"""
+        """
+Get major key profiles for key detection"""
         # Simplified key profiles (Krumhansl-Schmuckler)
         major_profile = np.array([6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
         
@@ -413,7 +430,8 @@ class AudioAnalyzer:
         return profiles
     
     def _index_to_key(self, index: int) -> str:
-        """Convert key index to key name"""
+        """
+Convert key index to key name"""
         keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         return keys[index] + " Major"
 
@@ -428,7 +446,8 @@ class TextAnalyzer:
         ])
     
     async def analyze_text(self, text: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> TextFeatures:
-        """Analyze text content and extract features"""
+        """
+Analyze text content and extract features"""
         try:
             features = TextFeatures()
             
@@ -488,7 +507,8 @@ class TextAnalyzer:
         return densities
     
     def _analyze_sentiment(self, text: str) -> float:
-        """Simple sentiment analysis using word lists"""
+        """
+Simple sentiment analysis using word lists"""
         positive_words = {
             'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic',
             'love', 'like', 'enjoy', 'happy', 'pleased', 'satisfied'
@@ -512,7 +532,8 @@ class TextAnalyzer:
         return (positive_count - negative_count) / total_sentiment_words
     
     def _extract_topics(self, text: str, max_topics: int = 5) -> List[str]:
-        """Extract topics using keyword frequency"""
+        """
+Extract topics using keyword frequency"""
         # Simplified topic extraction
         words = re.findall(r'\b\w+\b', text.lower())
         words = [word for word in words if word not in self.stop_words and len(word) > 3]
@@ -523,7 +544,8 @@ class TextAnalyzer:
         return topics
     
     def _extract_named_entities(self, text: str) -> List[Dict[str, str]]:
-        """Simple named entity recognition"""
+        """
+Simple named entity recognition"""
         entities = []
         
         # Simple patterns for basic entity types
@@ -547,7 +569,8 @@ class TextAnalyzer:
         return entities
     
     def _analyze_emotions(self, text: str) -> Dict[str, float]:
-        """Simple emotion analysis using word lists"""
+        """
+Simple emotion analysis using word lists"""
         emotion_words = {
             'joy': {'happy', 'joy', 'excited', 'thrilled', 'delighted', 'cheerful'},
             'anger': {'angry', 'furious', 'mad', 'irritated', 'annoyed', 'rage'},
@@ -582,7 +605,8 @@ class ContentAnalyzer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content analyzer"""
+        """
+Initialize content analyzer"""
         self.config = config or {}
         
         # Specialized analyzers
@@ -735,7 +759,8 @@ class ContentAnalyzer:
             return ContentType.UNKNOWN
     
     async def _analyze_file_basics(self, analysis: ContentAnalysis):
-        """Analyze basic file properties"""
+        """
+Analyze basic file properties"""
         try:
             file_path = Path(analysis.file_path)
             stat = file_path.stat()
@@ -961,7 +986,8 @@ class ContentAnalyzer:
             return QualityLevel.UNACCEPTABLE
     
     def _identify_quality_issues(self, analysis: ContentAnalysis, quality_scores: Dict[str, float]) -> List[str]:
-        """Identify specific quality issues"""
+        """
+Identify specific quality issues"""
         issues = []
         
         # Check each quality metric
@@ -1074,7 +1100,7 @@ class ContentAnalyzer:
             # Check text for copyright terms
             if analysis.content_type == ContentType.TEXT and analysis.text_features:
                 copyright_terms = {
-                    'copyright', '©', 'all rights reserved', 'trademark',
+                    'copyright', '(c)', 'all rights reserved', 'trademark',
                     'proprietary', 'licensed', 'copyrighted'
                 }
                 
@@ -1170,7 +1196,8 @@ class ContentAnalyzer:
             return ContentRisk.SAFE
     
     def _identify_risk_factors(self, risk_scores: Dict[str, float]) -> List[str]:
-        """Identify specific risk factors"""
+        """
+Identify specific risk factors"""
         factors = []
         
         threshold = 0.3  # Risk threshold
@@ -1395,7 +1422,8 @@ class ContentAnalyzer:
         return tags
     
     def _generate_mock_ai_description(self, analysis: ContentAnalysis) -> str:
-        """Generate mock AI description"""
+        """
+Generate mock AI description"""
         descriptions = {
             ContentType.IMAGE: f"Image content with {analysis.quality_level.value} quality",
             ContentType.AUDIO: f"Audio content with {analysis.quality_level.value} quality",

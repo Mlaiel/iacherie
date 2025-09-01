@@ -12,6 +12,7 @@ without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import uuid
@@ -50,6 +51,7 @@ logger = get_logger(__name__)
 
 class ContentFormat(Enum):
     """Supported content formats for mobile processing."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -59,6 +61,7 @@ class ContentFormat(Enum):
 
 class ProcessingStage(Enum):
     """Content processing pipeline stages."""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     AI_PROCESSING = "ai_processing"
@@ -89,7 +92,8 @@ class MobileContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Mobile content processing result."""
+    """
+Mobile content processing result."""
     content_id: str
     stage: ProcessingStage
     success: bool
@@ -125,7 +129,8 @@ class MobileContentPipeline:
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize all processing engines."""
+        """
+Initialize all processing engines."""
         try:
             self.content_processor = ContentProcessor()
             self.fingerprint_engine = FingerprintEngine()
@@ -444,7 +449,8 @@ class MobileContentPipeline:
         return self.active_processes.get(content_id)
     
     async def cancel_processing(self, content_id: str) -> bool:
-        """Cancel active content processing."""
+        """
+Cancel active content processing."""
         if content_id in self.active_processes:
             result = self.active_processes[content_id]
             result.stage = ProcessingStage.FAILED

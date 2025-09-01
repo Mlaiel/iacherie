@@ -9,7 +9,7 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """# Quick import access for all AI modules
 try:
     from content_analysis import (
@@ -119,7 +119,7 @@ def demo_ai_processing():
     print("⚠️ Legal Notice:")
     print("  This system is protected by copyright.")
     print("  Unauthorized use is strictly prohibited.")
-    print("  © 2025 Fahed Mlaiel. All rights reserved.")
+    print("  (c) 2025 Fahed Mlaiel. All rights reserved.")
 
 if __name__ == "__main__":
     demo_ai_processing()

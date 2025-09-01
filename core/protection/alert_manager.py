@@ -8,8 +8,9 @@ This module provides comprehensive alerting capabilities for the protection syst
 - Priority-based alert routing and escalation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 import smtplib
@@ -41,7 +42,9 @@ settings = get_settings()
 
 
 class AlertChannel(Enum):
-    """Available alert channels"""
+    """
+Available alert channels"""
+
     EMAIL = "email"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -54,6 +57,7 @@ class AlertChannel(Enum):
 
 class AlertPriority(Enum):
     """Alert priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -63,6 +67,7 @@ class AlertPriority(Enum):
 
 class AlertStatus(Enum):
     """Alert status"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -99,7 +104,8 @@ class AlertConfiguration:
 
 @dataclass
 class Alert:
-    """Represents an alert to be sent"""
+    """
+Represents an alert to be sent"""
     alert_id: str
     violation_evidence: ViolationEvidence
     alert_type: str
@@ -127,7 +133,8 @@ class Alert:
 
 @dataclass
 class NotificationTemplate:
-    """Template for notifications"""
+    """
+Template for notifications"""
     name: str
     channel: AlertChannel
     subject_template: str
@@ -137,7 +144,8 @@ class NotificationTemplate:
 
 
 class EmailNotifier:
-    """Email notification handler"""
+    """
+Email notification handler"""
     
     def __init__(self):
         self.smtp_server = settings.SMTP_SERVER
@@ -215,7 +223,8 @@ class WebhookNotifier:
     """Webhook notification handler"""
     
     async def send_webhook_alert(self, alert: Alert, webhook_urls: List[str]) -> bool:
-        """Send webhook alert"""
+        """
+Send webhook alert"""
         try:
             # Prepare payload
             payload = {
@@ -276,7 +285,8 @@ class SlackNotifier:
         self.webhook_url = getattr(settings, 'SLACK_WEBHOOK_URL', None)
     
     async def send_slack_alert(self, alert: Alert) -> bool:
-        """Send Slack alert"""
+        """
+Send Slack alert"""
         try:
             if not self.webhook_url:
                 logger.warning("Slack webhook URL not configured")
@@ -389,7 +399,8 @@ class SMSNotifier:
         self.api_url = getattr(settings, 'SMS_API_URL', None)
     
     async def send_sms_alert(self, alert: Alert, phone_numbers: List[str]) -> bool:
-        """Send SMS alert"""
+        """
+Send SMS alert"""
         try:
             if not self.api_key or not self.api_url:
                 logger.warning("SMS API not configured")
@@ -450,7 +461,8 @@ class AlertManager:
         self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default alert configurations"""
+        """
+Initialize default alert configurations"""
         # Critical violations config
         self.alert_configurations['critical_violations'] = AlertConfiguration(
             name="Critical Violations",
@@ -575,7 +587,8 @@ class AlertManager:
             return self.alert_configurations.get('standard')
     
     def _check_rate_limits(self, config: AlertConfiguration) -> bool:
-        """Check if rate limits allow sending alert"""
+        """
+Check if rate limits allow sending alert"""
         now = datetime.utcnow()
         config_key = config.name
         
@@ -607,7 +620,8 @@ class AlertManager:
                               violation: ViolationEvidence, 
                               config: AlertConfiguration,
                               evidence_data: Dict[str, Any] = None) -> Alert:
-        """Create alert object from violation evidence"""
+        """
+Create alert object from violation evidence"""
         alert_id = f"alert_{violation.violation_id}_{int(datetime.utcnow().timestamp())}"
         
         # Determine priority

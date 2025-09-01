@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class TeamType(Enum):
-    """Team type enumeration"""
+    """
+Team type enumeration"""
+
     ORGANIZATION = "organization"
     DEPARTMENT = "department"
     PROJECT_TEAM = "project_team"
@@ -53,6 +56,7 @@ class TeamType(Enum):
 
 class TeamStatus(Enum):
     """Team status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -66,6 +70,7 @@ class TeamStatus(Enum):
 
 class MemberRole(Enum):
     """Member role enumeration"""
+
     OWNER = "owner"
     ADMIN = "admin"
     MANAGER = "manager"
@@ -82,6 +87,7 @@ class MemberRole(Enum):
 
 class MemberStatus(Enum):
     """Member status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING_INVITATION = "pending_invitation"
@@ -95,6 +101,7 @@ class MemberStatus(Enum):
 
 class InvitationStatus(Enum):
     """Invitation status enumeration"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -105,6 +112,7 @@ class InvitationStatus(Enum):
 
 class PermissionLevel(Enum):
     """Permission level enumeration"""
+
     READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     FULL_ACCESS = "full_access"
@@ -114,6 +122,7 @@ class PermissionLevel(Enum):
 
 class TeamVisibility(Enum):
     """Team visibility enumeration"""
+
     PUBLIC = "public"
     PRIVATE = "private"
     ORGANIZATION_VISIBLE = "organization_visible"
@@ -311,7 +320,8 @@ class TeamManagement(Base):
         )
     
     def add_member(self, user_id: str, role: MemberRole, added_by: str) -> 'TeamMember':
-        """Add a member to the team"""
+        """
+Add a member to the team"""
         member = TeamMember(
             team_id=self.id,
             user_id=user_id,
@@ -328,7 +338,8 @@ class TeamManagement(Base):
         return member
     
     def invite_member(self, email: str, role: MemberRole, invited_by: str, message: str = None) -> 'TeamInvitation':
-        """Invite a new member to the team"""
+        """
+Invite a new member to the team"""
         invitation = TeamInvitation(
             team_id=self.id,
             email=email,
@@ -345,13 +356,15 @@ class TeamManagement(Base):
         return invitation
     
     def update_member_role(self, user_id: str, new_role: MemberRole, updated_by: str) -> bool:
-        """Update a member's role"""
+        """
+Update a member's role"""
         # This would update the associated TeamMember record
         self.last_activity_at = datetime.now(timezone.utc)
         return True
     
     def remove_member(self, user_id: str, removed_by: str, reason: str = None) -> bool:
-        """Remove a member from the team"""
+        """
+Remove a member from the team"""
         # This would update the associated TeamMember record
         self.member_count -= 1
         self.active_member_count -= 1
@@ -359,7 +372,8 @@ class TeamManagement(Base):
         return True
     
     def get_hierarchy_path(self) -> str:
-        """Get the full hierarchy path"""
+        """
+Get the full hierarchy path"""
         if self.hierarchy_path:
             return self.hierarchy_path
         
@@ -384,7 +398,8 @@ class TeamManagement(Base):
         return False
     
     def get_team_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive team statistics"""
+        """
+Get comprehensive team statistics"""
         return {
             'basic_info': {
                 'team_id': self.team_id,
@@ -419,12 +434,14 @@ class TeamManagement(Base):
         }
     
     def update_activity(self) -> None:
-        """Update last activity timestamp"""
+        """
+Update last activity timestamp"""
         self.last_activity_at = datetime.now(timezone.utc)
         self.updated_at = datetime.now(timezone.utc)
     
     def archive_team(self, archived_by: str, reason: str = None) -> None:
-        """Archive the team"""
+        """
+Archive the team"""
         self.status = TeamStatus.ARCHIVED
         self.archive_at = datetime.now(timezone.utc)
         self.updated_at = datetime.now(timezone.utc)
@@ -439,7 +456,8 @@ class TeamManagement(Base):
         }
     
     def restore_team(self, restored_by: str) -> None:
-        """Restore archived team"""
+        """
+Restore archived team"""
         self.status = TeamStatus.ACTIVE
         self.archive_at = None
         self.updated_at = datetime.now(timezone.utc)
@@ -567,17 +585,20 @@ class TeamInvitation(Base):
         return datetime.now(timezone.utc) >= self.expires_at
     
     def accept_invitation(self, user_id: str) -> None:
-        """Accept the invitation"""
+        """
+Accept the invitation"""
         self.status = InvitationStatus.ACCEPTED
         self.accepted_by = user_id
         self.accepted_at = datetime.now(timezone.utc)
     
     def decline_invitation(self) -> None:
-        """Decline the invitation"""
+        """
+Decline the invitation"""
         self.status = InvitationStatus.DECLINED
     
     def resend_invitation(self, expires_in_days: int = 7) -> None:
-        """Resend the invitation"""
+        """
+Resend the invitation"""
         self.status = InvitationStatus.RESENT
         self.send_count += 1
         self.last_sent_at = datetime.now(timezone.utc)

@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -24,7 +25,9 @@ from .core.keyword_engine import KeywordEngine, KeywordJob, KeywordResult, Keywo
 logger = logging.getLogger(__name__)
 
 class KeywordResearchSystemStatus(Enum):
-    """System status levels"""
+    """
+System status levels"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
@@ -285,7 +288,8 @@ class KeywordResearchManager:
         keyword_data: Dict[str, Any],
         research_result: KeywordResult
     ) -> List[str]:
-        """Identify opportunities for a specific keyword"""
+        """
+Identify opportunities for a specific keyword"""
         opportunities = []
         keyword = keyword_data['keyword']
         
@@ -318,11 +322,13 @@ class KeywordResearchManager:
         return campaign.status if campaign else None
 
     async def get_campaign_results(self, campaign_id: str) -> Optional[Dict[str, Any]]:
-        """Get the results of a completed campaign"""
+        """
+Get the results of a completed campaign"""
         return self.campaign_results.get(campaign_id)
 
     async def get_system_metrics(self) -> KeywordResearchMetrics:
-        """Get current system metrics"""
+        """
+Get current system metrics"""
         return self.system_metrics
 
     async def _process_campaign_results(
@@ -330,7 +336,8 @@ class KeywordResearchManager:
         campaign: KeywordResearchCampaign,
         research_result: KeywordResult
     ) -> Dict[str, Any]:
-        """Process campaign results for optimization"""
+        """
+Process campaign results for optimization"""
         processed_data = {
             'total_keywords': len(research_result.keywords),
             'keyword_categories': {},
@@ -399,7 +406,8 @@ class KeywordResearchManager:
             self.system_metrics.last_updated = datetime.now()
 
     async def _validate_configuration(self) -> None:
-        """Validate system configuration"""
+        """
+Validate system configuration"""
         required_configs = ['max_concurrent_campaigns']
         for config_key in required_configs:
             if config_key not in self.config:
@@ -418,7 +426,8 @@ class KeywordResearchManager:
         return self.active_campaigns.copy()
 
     async def cancel_campaign(self, campaign_id: str) -> bool:
-        """Cancel a running campaign"""
+        """
+Cancel a running campaign"""
         campaign = self.active_campaigns.get(campaign_id)
         if campaign and campaign.status == "running":
             campaign.status = "cancelled"

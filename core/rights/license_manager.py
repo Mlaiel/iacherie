@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - License Management Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ settings = get_settings()
 
 
 class LicenseType(str, Enum):
-    """License type categories."""
+    """
+License type categories."""
+
     PERSONAL = "personal"
     COMMERCIAL = "commercial"
     EDUCATIONAL = "educational"
@@ -51,6 +54,7 @@ class LicenseType(str, Enum):
 
 class LicenseStatus(str, Enum):
     """License status states."""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -61,6 +65,7 @@ class LicenseStatus(str, Enum):
 
 class UsageRights(str, Enum):
     """Content usage rights."""
+
     VIEW_ONLY = "view_only"
     DOWNLOAD = "download"
     MODIFY = "modify"
@@ -92,7 +97,8 @@ class LicenseTerms:
 
 
 class LicenseRequest(BaseModel):
-    """License creation/purchase request model."""
+    """
+License creation/purchase request model."""
     content_id: str = Field(..., description="Content identifier")
     license_type: LicenseType = Field(..., description="Type of license")
     usage_rights: List[UsageRights] = Field(..., min_items=1)
@@ -141,7 +147,8 @@ class LicenseManagementSystem:
     """
     
     def __init__(self, db_session: AsyncSession):
-        """Initialize license management system."""
+        """
+Initialize license management system."""
         self.db = db_session
         self.encryption = AdvancedEncryption()
         
@@ -670,7 +677,8 @@ class LicenseManagementSystem:
     async def _generate_license_terms(
         self, license_id: str, request: LicenseRequest, content: Any
     ) -> LicenseTerms:
-        """Generate license terms from template and request."""
+        """
+Generate license terms from template and request."""
         template = self.license_templates[request.license_type]
         
         return LicenseTerms(
@@ -699,7 +707,8 @@ class LicenseManagementSystem:
     async def _generate_license_token(
         self, license_record: Any, terms: LicenseTerms
     ) -> str:
-        """Generate secure license token."""
+        """
+Generate secure license token."""
         payload = {
             "license_id": license_record.id,
             "content_id": license_record.content_id,
@@ -730,7 +739,8 @@ class LicenseManagementSystem:
         pass
     
     async def _summarize_terms(self, terms: LicenseTerms) -> Dict[str, Any]:
-        """Summarize license terms for display."""
+        """
+Summarize license terms for display."""
         return {
             "license_type": terms.license_type.value,
             "usage_rights": [right.value for right in terms.usage_rights],

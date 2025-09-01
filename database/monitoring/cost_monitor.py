@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,9 @@ from ...cloud.gcp import GCPBilling
 
 
 class CostCategory(Enum):
-    """Database cost categories"""
+    """
+Database cost categories"""
+
     COMPUTE = "compute"
     STORAGE = "storage"
     NETWORK = "network"
@@ -51,6 +54,7 @@ class CostCategory(Enum):
 
 class ResourceType(Enum):
     """Database resource types"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -61,6 +65,7 @@ class ResourceType(Enum):
 
 class OptimizationStrategy(Enum):
     """Cost optimization strategies"""
+
     RIGHTSIZING = "rightsizing"
     RESERVED_INSTANCES = "reserved_instances"
     SPOT_INSTANCES = "spot_instances"
@@ -101,7 +106,8 @@ class CostMetric:
 
 @dataclass
 class OptimizationRecommendation:
-    """Cost optimization recommendation"""
+    """
+Cost optimization recommendation"""
     recommendation_id: str
     timestamp: datetime
     strategy: OptimizationStrategy
@@ -137,7 +143,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ResourceUsage:
-    """Resource usage tracking"""
+    """
+Resource usage tracking"""
     resource_id: str
     timestamp: datetime
     resource_type: ResourceType
@@ -151,7 +158,8 @@ class ResourceUsage:
     efficiency_score: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'resource_id': self.resource_id,
             'timestamp': self.timestamp.isoformat(),
@@ -168,7 +176,8 @@ class ResourceUsage:
 
 
 class DatabaseCostMonitor:
-    """Advanced database cost monitoring and optimization system"""
+    """
+Advanced database cost monitoring and optimization system"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
@@ -197,7 +206,8 @@ class DatabaseCostMonitor:
         asyncio.create_task(self._load_cost_budgets())
         
     async def _load_cost_budgets(self):
-        """Load cost budgets and thresholds"""
+        """
+Load cost budgets and thresholds"""
         try:
             # Default budgets for different cost categories
             self.cost_budgets = {
@@ -696,7 +706,8 @@ class DatabaseCostMonitor:
         }
         
     async def _get_recent_cost_metrics(self, hours: int = 24) -> List[Dict]:
-        """Get recent cost metrics"""
+        """
+Get recent cost metrics"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -985,29 +996,34 @@ class ResourceOptimizer:
         self.logger = logging.getLogger(__name__)
         
     async def optimize_resources(self, usage_data: List[ResourceUsage]) -> List[OptimizationRecommendation]:
-        """Generate resource optimization recommendations"""
+        """
+Generate resource optimization recommendations"""
         # Implementation for resource optimization
         pass
         
     async def right_size_instances(self, current_usage: Dict[str, ResourceUsage]) -> List[Dict]:
-        """Recommend instance right-sizing"""
+        """
+Recommend instance right-sizing"""
         # Implementation for instance right-sizing
         pass
 
 
 class CostAnalyzer:
-    """Advanced cost analysis and forecasting"""
+    """
+Advanced cost analysis and forecasting"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def forecast_costs(self, historical_data: List[CostMetric], periods: int = 12) -> List[Dict]:
-        """Forecast future costs"""
+        """
+Forecast future costs"""
         # Implementation for cost forecasting
         pass
         
     async def analyze_cost_drivers(self, cost_data: List[CostMetric]) -> Dict[str, Any]:
-        """Analyze main cost drivers"""
+        """
+Analyze main cost drivers"""
         # Implementation for cost driver analysis
         pass

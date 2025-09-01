@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -48,7 +49,8 @@ settings = get_settings()
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track data structure"""
+    """
+SoundCloud track data structure"""
     id: str
     title: str
     description: Optional[str]
@@ -81,7 +83,8 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user data structure"""
+    """
+SoundCloud user data structure"""
     id: str
     username: str
     permalink: str
@@ -109,7 +112,8 @@ class SoundCloudUser:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist data structure"""
+    """
+SoundCloud playlist data structure"""
     id: str
     title: str
     description: Optional[str]
@@ -145,7 +149,8 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize SoundCloud crawler engine"""
+        """
+Initialize SoundCloud crawler engine"""
         super().__init__(platform="soundcloud", config=config)
         
         # Rate limiting
@@ -205,7 +210,8 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver"""
+        """
+Setup Selenium WebDriver"""
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -658,7 +664,8 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         return len(intersection) / len(union)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
+        """
+Clean up resources"""
         try:
             if self.session:
                 await self.session.close()

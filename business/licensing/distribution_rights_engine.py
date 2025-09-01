@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -31,7 +32,9 @@ from ..ai.revenue_optimization import RevenueOptimizationEngine
 
 
 class DistributionType(Enum):
-    """Types of content distribution"""
+    """
+Types of content distribution"""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     PHYSICAL = "physical"
@@ -46,6 +49,7 @@ class DistributionType(Enum):
 
 class PlatformCategory(Enum):
     """Platform categories for distribution"""
+
     MUSIC_STREAMING = "music_streaming"        # Spotify, Apple Music, etc.
     VIDEO_PLATFORMS = "video_platforms"        # YouTube, Vimeo, etc.
     SOCIAL_MEDIA = "social_media"              # Instagram, TikTok, etc.
@@ -60,6 +64,7 @@ class PlatformCategory(Enum):
 
 class RightsScope(Enum):
     """Scope of distribution rights"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     LIMITED_EXCLUSIVE = "limited_exclusive"
@@ -69,6 +74,7 @@ class RightsScope(Enum):
 
 class TerritoryType(Enum):
     """Territory classification types"""
+
     GLOBAL = "global"
     REGIONAL = "regional"       # EU, NAFTA, etc.
     NATIONAL = "national"       # Country-specific
@@ -91,7 +97,8 @@ class DistributionStrategy:
 
 @dataclass
 class RightsConflict:
-    """Rights conflict detection result"""
+    """
+Rights conflict detection result"""
     conflict_type: str
     conflicting_rights: List[str]
     affected_territories: List[str]
@@ -101,7 +108,8 @@ class RightsConflict:
 
 
 class DistributionRequest(BaseModel):
-    """Distribution rights request structure"""
+    """
+Distribution rights request structure"""
     content_id: str = Field(..., description="Content to distribute")
     requester_id: str = Field(..., description="Entity requesting distribution rights")
     distribution_types: List[DistributionType] = Field(..., description="Types of distribution")
@@ -602,11 +610,13 @@ class DistributionRightsEngine:
         pass
     
     async def _analyze_rights_conflicts(self, request: DistributionRequest) -> Dict[str, Any]:
-        """Analyze potential rights conflicts for distribution request"""
+        """
+Analyze potential rights conflicts for distribution request"""
         # Implementation for rights conflict analysis
         pass
     
     async def _generate_distribution_strategy(self, request: DistributionRequest) -> DistributionStrategy:
-        """Generate optimal distribution strategy using AI"""
+        """
+Generate optimal distribution strategy using AI"""
         # Implementation for strategy generation
         pass

@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -38,6 +41,7 @@ class AlertSeverity(Enum):
 
 class AlertChannel(Enum):
     """Alert notification channels"""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -61,7 +65,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
+    """
+Alert instance"""
     id: str
     rule_name: str
     severity: AlertSeverity

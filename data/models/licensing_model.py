@@ -5,7 +5,7 @@ Professional licensing data model for content rights and legal agreements.
 Comprehensive licensing management with contracts, royalties, and compliance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
@@ -28,7 +29,9 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """License type enumeration"""
+    """
+License type enumeration"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -48,6 +51,7 @@ class LicenseType(Enum):
 
 class LicenseCategory(Enum):
     """License category enumeration"""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -62,6 +66,7 @@ class LicenseCategory(Enum):
 
 class UsageType(Enum):
     """Usage type enumeration"""
+
     COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     PERSONAL = "personal"
@@ -78,6 +83,7 @@ class UsageType(Enum):
 
 class LicenseStatus(Enum):
     """License status enumeration"""
+
     DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
@@ -92,6 +98,7 @@ class LicenseStatus(Enum):
 
 class PaymentStructure(Enum):
     """Payment structure enumeration"""
+
     ONE_TIME = "one_time"
     ROYALTY = "royalty"
     SUBSCRIPTION = "subscription"
@@ -356,14 +363,16 @@ class LicensingModel(Base):
     
     @property
     def is_active(self) -> bool:
-        """Check if license is currently active"""
+        """
+Check if license is currently active"""
         return (self.status == LicenseStatus.ACTIVE.value and
                 not self.is_deleted and
                 self.is_within_validity_period)
     
     @property
     def is_within_validity_period(self) -> bool:
-        """Check if current date is within license validity period"""
+        """
+Check if current date is within license validity period"""
         today = date.today()
         
         # Check start date
@@ -378,14 +387,16 @@ class LicensingModel(Base):
     
     @property
     def is_expired(self) -> bool:
-        """Check if license has expired"""
+        """
+Check if license has expired"""
         if not self.license_end_date:
             return False  # Perpetual license
         return date.today() > self.license_end_date
     
     @property
     def days_until_expiry(self) -> Optional[int]:
-        """Calculate days until license expires"""
+        """
+Calculate days until license expires"""
         if not self.license_end_date:
             return None  # Perpetual license
         
@@ -394,12 +405,14 @@ class LicensingModel(Base):
     
     @property
     def is_renewable(self) -> bool:
-        """Check if license can be renewed"""
+        """
+Check if license can be renewed"""
         return self.renewal_option and not self.is_deleted
     
     @property
     def usage_percentage(self) -> float:
-        """Calculate usage as percentage of limit"""
+        """
+Calculate usage as percentage of limit"""
         if not self.usage_limit_quantity or self.usage_limit_quantity <= 0:
             return 0.0
         
@@ -407,14 +420,16 @@ class LicensingModel(Base):
     
     @property
     def is_usage_exceeded(self) -> bool:
-        """Check if usage limit has been exceeded"""
+        """
+Check if usage limit has been exceeded"""
         if not self.usage_limit_quantity:
             return False
         return self.current_usage_count > self.usage_limit_quantity
     
     @property
     def royalty_rate_formatted(self) -> str:
-        """Get formatted royalty rate"""
+        """
+Get formatted royalty rate"""
         if self.royalty_rate:
             return f"{self.royalty_rate:.2f}%"
         return "0%"
@@ -443,7 +458,8 @@ class LicensingModel(Base):
     
     @property
     def contract_status(self) -> str:
-        """Get contract status description"""
+        """
+Get contract status description"""
         if not self.signed_at:
             return "Unsigned"
         elif not self.activated_at:
@@ -485,7 +501,8 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def activate_license(self):
-        """Activate signed license"""
+        """
+Activate signed license"""
         if not self.signed_at:
             raise ValueError("License must be signed before activation")
         
@@ -542,7 +559,8 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_royalties(self, revenue: Decimal, period_start: date, period_end: date):
-        """Calculate royalties for a period"""
+        """
+Calculate royalties for a period"""
         if not self.royalty_rate or self.royalty_rate <= 0:
             return Decimal('0')
         
@@ -670,7 +688,8 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def amend_license(self, amendments: Dict[str, Any], amendment_reason: str = None):
-        """Add amendment to license"""
+        """
+Add amendment to license"""
         # Apply amendments
         for key, value in amendments.items():
             if hasattr(self, key):
@@ -750,7 +769,8 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted license"""
+        """
+Restore soft-deleted license"""
         self.is_deleted = False
         self.deleted_at = None
         

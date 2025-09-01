@@ -4,8 +4,9 @@ Advanced audio effects and restoration capabilities for the IA Influencer Agent 
 Implements industry-standard audio processing algorithms with AI enhancement.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class EffectType(Enum):
-    """Audio effect types enumeration"""
+    """
+Audio effect types enumeration"""
+
     REVERB = "reverb"
     DELAY = "delay"
     CHORUS = "chorus"
@@ -55,7 +58,8 @@ class EffectParameters:
 
 @dataclass
 class RestorationResult:
-    """Audio restoration analysis result"""
+    """
+Audio restoration analysis result"""
     original_quality_score: float
     restored_quality_score: float
     noise_reduction_db: float
@@ -101,7 +105,8 @@ class EffectsProcessor:
         self.filter_states = {}
     
     def add_effect(self, effect_params: EffectParameters):
-        """Add effect to the processing chain"""
+        """
+Add effect to the processing chain"""
         self.effect_chain.append(effect_params)
         logger.debug(f"Added {effect_params.effect_type.value} effect to chain")
     
@@ -768,12 +773,14 @@ class AudioRestoration:
             return 50.0
     
     def _detect_noise(self, audio_data: np.ndarray) -> bool:
-        """Detect if audio has significant noise"""
+        """
+Detect if audio has significant noise"""
         noise_floor = np.percentile(np.abs(audio_data), 10)
         return noise_floor > 0.01  # Threshold for noise detection
     
     def _detect_clicks(self, audio_data: np.ndarray) -> bool:
-        """Detect clicks and pops in audio"""
+        """
+Detect clicks and pops in audio"""
         # Calculate difference signal for transient detection
         diff_signal = np.diff(audio_data)
         click_threshold = np.std(diff_signal) * 5
@@ -782,7 +789,8 @@ class AudioRestoration:
         return clicks > len(audio_data) * 0.001  # More than 0.1% of samples
     
     def _detect_hum(self, audio_data: np.ndarray) -> bool:
-        """Detect power line hum (50/60 Hz and harmonics)"""
+        """
+Detect power line hum (50/60 Hz and harmonics)"""
         # FFT analysis for hum detection
         fft_data = np.abs(fft(audio_data))
         freqs = fftfreq(len(audio_data), 1/self.sample_rate)
@@ -803,7 +811,8 @@ class AudioRestoration:
         return hum_ratio > 0.05  # 5% threshold
     
     def _detect_spectral_damage(self, audio_data: np.ndarray) -> bool:
-        """Detect spectral damage or gaps"""
+        """
+Detect spectral damage or gaps"""
         # Spectral analysis for damage detection
         stft = librosa.stft(audio_data, hop_length=512)
         magnitude = np.abs(stft)
@@ -816,7 +825,8 @@ class AudioRestoration:
         return damaged_bands > magnitude.shape[0] * 0.1  # 10% of frequency bands
     
     def _detect_artifacts(self, audio_data: np.ndarray) -> List[str]:
-        """Detect various audio artifacts"""
+        """
+Detect various audio artifacts"""
         artifacts = []
         
         if self._detect_noise(audio_data):
@@ -1001,7 +1011,8 @@ class AudioRestoration:
     def _calculate_improvement_metrics(self, 
                                      original: np.ndarray, 
                                      restored: np.ndarray) -> Dict[str, float]:
-        """Calculate various improvement metrics"""
+        """
+Calculate various improvement metrics"""
         try:
             metrics = {}
             
@@ -1033,13 +1044,15 @@ class AudioRestoration:
         return 10 * np.log10(signal_power / (noise_power + 1e-10))
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range"""
+        """
+Calculate dynamic range"""
         peak = np.percentile(np.abs(audio_data), 99)
         noise_floor = np.percentile(np.abs(audio_data), 1)
         return 20 * np.log10(peak / (noise_floor + 1e-10))
     
     def _calculate_spectral_flatness(self, audio_data: np.ndarray) -> float:
-        """Calculate spectral flatness (Wiener entropy)"""
+        """
+Calculate spectral flatness (Wiener entropy)"""
         try:
             # Calculate power spectral density
             freqs, psd = signal.welch(audio_data, self.sample_rate)

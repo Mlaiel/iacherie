@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set, Union
@@ -24,7 +25,8 @@ from datetime import datetime, timedelta
 
 
 class RoyaltyType(str, Enum):
-    """Types of royalties in the music and content industry."""
+    """
+Types of royalties in the music and content industry."""
     # Music Royalties
     MECHANICAL = "mechanical"  # Physical/digital reproduction
     PERFORMANCE = "performance"  # Radio, streaming, live performance
@@ -62,6 +64,7 @@ class RoyaltyType(str, Enum):
 
 class RoyaltyCalculationMethod(str, Enum):
     """Methods for calculating royalty distributions."""
+
     PERCENTAGE = "percentage"  # Fixed percentage split
     FIXED_AMOUNT = "fixed_amount"  # Fixed amount per unit
     TIERED = "tiered"  # Different rates based on volume
@@ -73,6 +76,7 @@ class RoyaltyCalculationMethod(str, Enum):
 
 class RoyaltyRecipientType(str, Enum):
     """Types of royalty recipients."""
+
     ARTIST = "artist"  # Primary artist/creator
     SONGWRITER = "songwriter"  # Song composer
     PRODUCER = "producer"  # Music producer
@@ -91,6 +95,7 @@ class RoyaltyRecipientType(str, Enum):
 
 class RoyaltyStatus(str, Enum):
     """Status of royalty payments."""
+
     PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
@@ -105,6 +110,7 @@ class RoyaltyStatus(str, Enum):
 
 class RoyaltyPeriod(str, Enum):
     """Reporting and distribution periods."""
+
     REAL_TIME = "real_time"  # Instant distribution
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -539,7 +545,8 @@ class RoyaltyConfig:
         return self.SPLIT_TEMPLATES.get(template_name, [])
     
     def validate_splits(self, splits: List[RoyaltySplit]) -> Dict[str, Any]:
-        """Validate royalty splits for consistency."""
+        """
+Validate royalty splits for consistency."""
         total_percentage = sum(split.split_percentage for split in splits)
         tolerance = self.BUSINESS_RULES["split_percentage_tolerance"]
         
@@ -620,6 +627,7 @@ from enum import Enum
 
 class RoyaltyType(str, Enum):
     """Types of royalties."""
+
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -639,6 +647,7 @@ class RoyaltyType(str, Enum):
 
 class RoyaltyCalculationMethod(str, Enum):
     """Methods for calculating royalties."""
+
     PERCENTAGE = "percentage"
     PER_STREAM = "per_stream"
     PER_DOWNLOAD = "per_download"
@@ -649,6 +658,7 @@ class RoyaltyCalculationMethod(str, Enum):
 
 class DistributionFrequency(str, Enum):
     """Frequency of royalty distributions."""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -660,6 +670,7 @@ class DistributionFrequency(str, Enum):
 
 class RoyaltyStatus(str, Enum):
     """Status of royalty payments."""
+
     PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
@@ -671,6 +682,7 @@ class RoyaltyStatus(str, Enum):
 
 class RightType(str, Enum):
     """Types of rights for royalty collection."""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SHARED = "shared"
@@ -710,7 +722,8 @@ class PlatformRoyaltyConfig:
 
 @dataclass
 class CollaboratorSplit:
-    """Collaborator royalty split configuration."""
+    """
+Collaborator royalty split configuration."""
     collaborator_id: str
     name: str
     role: str  # composer, lyricist, producer, performer, etc.
@@ -736,7 +749,8 @@ class TerritoryRoyaltyConfig:
 
 @dataclass
 class RoyaltyConfig:
-    """Main royalty configuration class."""
+    """
+Main royalty configuration class."""
     
     # Database Configuration
     DATABASE_URL: str = os.getenv(
@@ -1016,7 +1030,8 @@ class RoyaltyConfig:
         return self.PLATFORM_CONFIGS.get(platform_id.lower())
     
     def get_territory_config(self, territory_code: str) -> Optional[TerritoryRoyaltyConfig]:
-        """Get territory-specific royalty configuration."""
+        """
+Get territory-specific royalty configuration."""
         return self.TERRITORY_CONFIGS.get(territory_code.upper())
     
     def get_royalty_rate(
@@ -1024,7 +1039,8 @@ class RoyaltyConfig:
         royalty_type: RoyaltyType, 
         platform: Optional[str] = None
     ) -> Optional[RoyaltyRate]:
-        """Get royalty rate for a specific type and platform."""
+        """
+Get royalty rate for a specific type and platform."""
         if platform:
             platform_config = self.get_platform_config(platform)
             if platform_config and royalty_type in platform_config.royalty_rates:
@@ -1039,7 +1055,8 @@ class RoyaltyConfig:
         gross_revenue: Decimal,
         platform: Optional[str] = None
     ) -> Decimal:
-        """Calculate royalty amount based on usage and revenue."""
+        """
+Calculate royalty amount based on usage and revenue."""
         rate_config = self.get_royalty_rate(royalty_type, platform)
         if not rate_config:
             return Decimal("0.00")

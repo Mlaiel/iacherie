@@ -9,8 +9,9 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
 from datetime import datetime
@@ -24,7 +25,9 @@ import math
 logger = logging.getLogger(__name__)
 
 class SEOPlatform(Enum):
-    """Supported platforms for SEO optimization"""
+    """
+Supported platforms for SEO optimization"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -38,6 +41,7 @@ class SEOPlatform(Enum):
 
 class ContentFormat(Enum):
     """Content formats for SEO"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -57,7 +61,8 @@ class SEOKeyword:
 
 @dataclass
 class SEOMetadata:
-    """Optimized SEO metadata"""
+    """
+Optimized SEO metadata"""
     title: str
     description: str
     tags: List[str]
@@ -69,7 +74,8 @@ class SEOMetadata:
 
 @dataclass
 class SEOAnalytics:
-    """SEO performance analytics"""
+    """
+SEO performance analytics"""
     seo_score: float
     keyword_density: Dict[str, float]
     readability_score: float
@@ -78,7 +84,8 @@ class SEOAnalytics:
     optimization_suggestions: List[str]
 
 class KeywordAnalyzer:
-    """Advanced keyword research and analysis system"""
+    """
+Advanced keyword research and analysis system"""
     
     def __init__(self):
         self.trending_keywords = {
@@ -104,7 +111,8 @@ class KeywordAnalyzer:
         metadata: Dict[str, Any],
         target_platforms: List[SEOPlatform]
     ) -> List[SEOKeyword]:
-        """Analyze and extract optimal keywords from content"""
+        """
+Analyze and extract optimal keywords from content"""
         try:
             # Extract base keywords from content
             base_keywords = await self._extract_base_keywords(content_text)
@@ -189,7 +197,8 @@ class KeywordAnalyzer:
         )
     
     def _estimate_search_volume(self, keyword: str) -> int:
-        """Estimate monthly search volume for keyword"""
+        """
+Estimate monthly search volume for keyword"""
         # Simulate search volume estimation
         base_volume = len(keyword) * 100
         
@@ -201,7 +210,8 @@ class KeywordAnalyzer:
         return min(base_volume, 100000)  # Cap at 100k
     
     def _estimate_competition(self, keyword: str) -> float:
-        """Estimate keyword competition level"""
+        """
+Estimate keyword competition level"""
         # Simulate competition analysis
         if len(keyword.split()) == 1:  # Single words are more competitive
             return 0.8
@@ -211,7 +221,8 @@ class KeywordAnalyzer:
             return 0.3
     
     def _calculate_relevance_score(self, keyword: str, platforms: List[SEOPlatform]) -> float:
-        """Calculate keyword relevance score"""
+        """
+Calculate keyword relevance score"""
         base_score = 0.5
         
         # Boost for platform-specific keywords
@@ -228,7 +239,8 @@ class KeywordAnalyzer:
         return min(base_score, 1.0)
     
     def _analyze_trend_direction(self, keyword: str) -> str:
-        """Analyze keyword trend direction"""
+        """
+Analyze keyword trend direction"""
         # Simulate trend analysis
         trending_terms = ['ai', 'viral', 'trending', 'new', '2025']
         if any(term in keyword.lower() for term in trending_terms):
@@ -237,7 +249,8 @@ class KeywordAnalyzer:
             return 'stable'
     
     def _suggest_keyword_placement(self, keyword: str, platforms: List[SEOPlatform]) -> List[str]:
-        """Suggest optimal keyword placement"""
+        """
+Suggest optimal keyword placement"""
         placements = ['title']  # Always suggest title
         
         if len(keyword.split()) <= 2:
@@ -249,7 +262,8 @@ class KeywordAnalyzer:
         return placements
 
 class ContentOptimizer:
-    """Advanced content optimization for SEO"""
+    """
+Advanced content optimization for SEO"""
     
     def __init__(self):
         self.keyword_analyzer = KeywordAnalyzer()
@@ -360,7 +374,8 @@ class ContentOptimizer:
         keywords: List[SEOKeyword],
         platforms: List[SEOPlatform]
     ) -> str:
-        """Generate SEO-optimized title"""
+        """
+Generate SEO-optimized title"""
         original_title = metadata.get('title', '')
         
         if not keywords:
@@ -475,7 +490,8 @@ class ContentOptimizer:
         keywords: List[SEOKeyword], 
         platforms: List[SEOPlatform]
     ) -> List[str]:
-        """Generate optimized hashtags"""
+        """
+Generate optimized hashtags"""
         hashtags = []
         
         # Convert top keywords to hashtags
@@ -501,7 +517,8 @@ class ContentOptimizer:
         return unique_hashtags[:30]  # Instagram limit
     
     async def _suggest_category(self, metadata: Dict[str, Any], keywords: List[SEOKeyword]) -> str:
-        """Suggest optimal content category"""
+        """
+Suggest optimal content category"""
         content_type = metadata.get('content_type', '').lower()
         
         # Map content types to categories
@@ -533,7 +550,8 @@ class ContentOptimizer:
         metadata: Dict[str, Any], 
         keywords: List[SEOKeyword]
     ) -> List[str]:
-        """Generate thumbnail optimization suggestions"""
+        """
+Generate thumbnail optimization suggestions"""
         suggestions = []
         
         # Basic suggestions
@@ -584,7 +602,8 @@ class ContentOptimizer:
         return list(set(optimal_times))  # Remove duplicates
     
     def _determine_content_format(self, metadata: Dict[str, Any]) -> ContentFormat:
-        """Determine content format from metadata"""
+        """
+Determine content format from metadata"""
         content_type = metadata.get('content_type', '').lower()
         filename = metadata.get('filename', '').lower()
         
@@ -598,7 +617,8 @@ class ContentOptimizer:
             return ContentFormat.TEXT
     
     def _get_max_title_length(self, platforms: List[SEOPlatform]) -> int:
-        """Get maximum title length for platforms"""
+        """
+Get maximum title length for platforms"""
         # Return minimum of all platform limits
         platform_limits = {
             SEOPlatform.YOUTUBE: 100,
@@ -614,7 +634,8 @@ class ContentOptimizer:
         return min(limits)
 
 class PerformanceAnalyzer:
-    """SEO performance analysis and optimization suggestions"""
+    """
+SEO performance analysis and optimization suggestions"""
     
     def __init__(self):
         self.scoring_weights = {
@@ -630,7 +651,8 @@ class PerformanceAnalyzer:
         metadata: SEOMetadata, 
         content_metrics: Dict[str, Any]
     ) -> SEOAnalytics:
-        """Analyze comprehensive SEO performance"""
+        """
+Analyze comprehensive SEO performance"""
         try:
             # Calculate individual scores
             keyword_score = await self._analyze_keyword_optimization(metadata)
@@ -691,7 +713,8 @@ class PerformanceAnalyzer:
         return title_score + desc_score
     
     async def _analyze_content_quality(self, metadata: SEOMetadata, content_metrics: Dict[str, Any]) -> float:
-        """Analyze content quality score"""
+        """
+Analyze content quality score"""
         quality_indicators = []
         
         # Title quality
@@ -715,7 +738,8 @@ class PerformanceAnalyzer:
         return sum(quality_indicators) / len(quality_indicators)
     
     async def _predict_engagement(self, metadata: SEOMetadata, content_metrics: Dict[str, Any]) -> float:
-        """Predict engagement potential"""
+        """
+Predict engagement potential"""
         engagement_factors = []
         
         # Hashtag optimization
@@ -732,7 +756,8 @@ class PerformanceAnalyzer:
         return sum(engagement_factors) / len(engagement_factors)
     
     async def _analyze_technical_seo(self, metadata: SEOMetadata) -> float:
-        """Analyze technical SEO factors"""
+        """
+Analyze technical SEO factors"""
         technical_scores = []
         
         # Metadata completeness
@@ -753,7 +778,8 @@ class PerformanceAnalyzer:
         return sum(technical_scores) / len(technical_scores)
     
     async def _analyze_social_signals(self, metadata: SEOMetadata) -> float:
-        """Analyze social media optimization"""
+        """
+Analyze social media optimization"""
         if not metadata.hashtags:
             return 0.3
         
@@ -765,7 +791,8 @@ class PerformanceAnalyzer:
         return min(social_hashtags / 10, 1.0)  # Normalize to 1.0
     
     async def _calculate_keyword_density(self, metadata: SEOMetadata) -> Dict[str, float]:
-        """Calculate keyword density in content"""
+        """
+Calculate keyword density in content"""
         if not metadata.keywords:
             return {}
         
@@ -808,7 +835,8 @@ class PerformanceAnalyzer:
             return 0.5
     
     async def _predict_platform_rankings(self, metadata: SEOMetadata) -> Dict[SEOPlatform, float]:
-        """Predict ranking potential on different platforms"""
+        """
+Predict ranking potential on different platforms"""
         rankings = {}
         
         # Analyze content for each platform
@@ -837,7 +865,8 @@ class PerformanceAnalyzer:
         technical_score: float, 
         social_score: float
     ) -> List[str]:
-        """Generate actionable optimization suggestions"""
+        """
+Generate actionable optimization suggestions"""
         suggestions = []
         
         if keyword_score < 0.7:

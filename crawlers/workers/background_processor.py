@@ -8,7 +8,7 @@ Technologies: AsyncIO, Celery, Redis, ML Batch Processing, Advanced Scheduling
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Background job → Intelligent routing → ML-optimized batch processing → 
 Resource-aware execution → Result aggregation → Real-time monitoring → Auto-notification
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
@@ -55,7 +56,9 @@ T = TypeVar('T')
 
 
 class ProcessorType(Enum):
-    """Advanced background processor types"""
+    """
+Advanced background processor types"""
+
     BATCH_CRAWLER = "batch_crawler"
     CONTENT_ANALYZER = "content_analyzer"
     FINGERPRINT_GENERATOR = "fingerprint_generator"
@@ -72,6 +75,7 @@ class ProcessorType(Enum):
 
 class JobStatus(Enum):
     """Comprehensive job status states"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     QUEUED = "queued"
@@ -87,6 +91,7 @@ class JobStatus(Enum):
 
 class ProcessingMode(Enum):
     """Advanced processing modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     BATCH = "batch"
@@ -99,6 +104,7 @@ class ProcessingMode(Enum):
 
 class ProcessorStatus(Enum):
     """Background processor status"""
+
     IDLE = "idle"
     ACTIVE = "active"
     BUSY = "busy"
@@ -176,7 +182,8 @@ class JobExecution:
 
 @dataclass
 class ProcessorMetrics:
-    """Background processor performance metrics"""
+    """
+Background processor performance metrics"""
     processor_id: str
     total_jobs_processed: int = 0
     successful_jobs: int = 0
@@ -199,7 +206,8 @@ class ProcessorMetrics:
 
 @dataclass
 class ProcessorConfig:
-    """Processor configuration"""
+    """
+Processor configuration"""
     processor_type: ProcessorType
     max_concurrent_jobs: int = 5
     max_batch_size: int = 100
@@ -1047,7 +1055,8 @@ class BackgroundProcessor:
         await self.job_queue.put((priority_value, time.time(), job))
 
     async def _send_completion_notification(self, execution: JobExecution) -> None:
-        """Send job completion notification"""
+        """
+Send job completion notification"""
         try:
             notification_data = {
                 'job_id': execution.job.job_id,
@@ -1100,7 +1109,8 @@ class BackgroundProcessor:
         await self.job_queue.put((priority_value, time.time(), job))
 
     def _get_priority_value(self, priority: TaskPriority) -> int:
-        """Convert priority enum to integer value"""
+        """
+Convert priority enum to integer value"""
         priority_values = {
             TaskPriority.CRITICAL: 1,
             TaskPriority.HIGH: 2,
@@ -1111,7 +1121,8 @@ class BackgroundProcessor:
         return priority_values.get(priority, 3)
 
     async def _estimate_completion_time(self, execution: JobExecution) -> Optional[str]:
-        """Estimate job completion time"""
+        """
+Estimate job completion time"""
         try:
             if execution.progress <= 0:
                 return None

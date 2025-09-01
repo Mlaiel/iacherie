@@ -13,6 +13,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -31,7 +32,9 @@ Base = declarative_base()
 
 
 class PlatformType(PyEnum):
-    """Types de plateformes supportées."""
+    """
+Types de plateformes supportées."""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     SOUNDCLOUD = "soundcloud"
@@ -49,6 +52,7 @@ class PlatformType(PyEnum):
 
 class IntegrationStatus(PyEnum):
     """Statuts d'intégration des plateformes."""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -60,6 +64,7 @@ class IntegrationStatus(PyEnum):
 
 class SyncFrequency(PyEnum):
     """Fréquences de synchronisation."""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -69,6 +74,7 @@ class SyncFrequency(PyEnum):
 
 class DistributionChannel(PyEnum):
     """Canaux de distribution."""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORMS = "video_platforms"
     SOCIAL_MEDIA = "social_media"
@@ -338,7 +344,8 @@ class PlatformIntegrationRepository:
         self.cipher = Fernet(encryption_key) if encryption_key else None
 
     def create_integration(self, integration_data: Dict[str, Any]) -> PlatformIntegration:
-        """Créer une nouvelle intégration de plateforme."""
+        """
+Créer une nouvelle intégration de plateforme."""
         try:
             # Chiffrer les tokens si disponible
             if self.cipher and 'access_token' in integration_data:

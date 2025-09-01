@@ -14,12 +14,13 @@ Features:
 - Cross-platform session continuity and migration support
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -42,7 +43,9 @@ from backend.utils.event_emitter import EventEmitter
 
 
 class SessionStatus(Enum):
-    """Session status types"""
+    """
+Session status types"""
+
     ACTIVE = "active"
     IDLE = "idle"
     SUSPENDED = "suspended"
@@ -54,6 +57,7 @@ class SessionStatus(Enum):
 
 class SessionType(Enum):
     """Session types for different use cases"""
+
     CONVERSATION = "conversation"
     WORKSPACE = "workspace"
     COLLABORATION = "collaboration"
@@ -66,6 +70,7 @@ class SessionType(Enum):
 
 class SessionPriority(Enum):
     """Session priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
@@ -75,6 +80,7 @@ class SessionPriority(Enum):
 
 class SessionIsolationLevel(Enum):
     """Session isolation levels for multi-tenancy"""
+
     STRICT = "strict"
     MODERATE = "moderate"
     COLLABORATIVE = "collaborative"
@@ -98,7 +104,8 @@ class SessionWorkspace:
 
 @dataclass
 class SessionSecurityContext:
-    """Security context for session"""
+    """
+Security context for session"""
     encryption_key: str
     access_tokens: Dict[str, str] = field(default_factory=dict)
     permissions: Set[str] = field(default_factory=set)
@@ -127,7 +134,8 @@ class SessionMetrics:
 
 @dataclass
 class SessionConfiguration:
-    """Comprehensive session configuration"""
+    """
+Comprehensive session configuration"""
     session_id: str
     creator_profile_id: str
     session_type: SessionType
@@ -148,7 +156,8 @@ class SessionConfiguration:
 
 @dataclass
 class SessionState:
-    """Current session state"""
+    """
+Current session state"""
     session_id: str
     status: SessionStatus
     configuration: SessionConfiguration
@@ -1044,24 +1053,28 @@ class EnterpriseSessionController:
         return gzip.compress(pickle.dumps(session_state))
     
     def _deserialize_session_state(self, session_data: bytes) -> SessionState:
-        """Deserialize session state from bytes"""
+        """
+Deserialize session state from bytes"""
         return pickle.loads(gzip.decompress(session_data))
     
     async def _encrypt_session_data(self, session_state: SessionState) -> bytes:
-        """Encrypt session data"""
+        """
+Encrypt session data"""
         serialized_data = self._serialize_session_state(session_state)
         encryption_key = session_state.configuration.security_context.encryption_key
         return await self.encryption.encrypt_data(serialized_data, encryption_key)
     
     async def _decrypt_session_data(self, encrypted_data: bytes) -> SessionState:
-        """Decrypt session data"""
+        """
+Decrypt session data"""
         # Note: In real implementation, we'd need to get the encryption key
         # This is a simplified version
         decrypted_data = await self.encryption.decrypt_data(encrypted_data)
         return self._deserialize_session_state(decrypted_data)
     
     async def _is_session_expired(self, session_state: SessionState) -> bool:
-        """Check if session has expired"""
+        """
+Check if session has expired"""
         
         current_time = datetime.utcnow()
         
@@ -1078,7 +1091,8 @@ class EnterpriseSessionController:
         return False
     
     async def _expire_session(self, session_id: str) -> None:
-        """Expire a session"""
+        """
+Expire a session"""
         
         try:
             session_state = await self.get_session(session_id, require_active=False)
@@ -1260,7 +1274,8 @@ class EnterpriseSessionController:
             await self._expire_session(session_id)
     
     async def _monitor_session_health(self) -> None:
-        """Monitor health of active sessions"""
+        """
+Monitor health of active sessions"""
         
         total_sessions = len(self.active_sessions)
         if total_sessions > self.max_concurrent_sessions * 0.9:
@@ -1293,15 +1308,18 @@ class EnterpriseSessionController:
         return len(self.active_sessions)
     
     def get_session_metrics(self, session_id: str) -> Optional[SessionMetrics]:
-        """Get metrics for specific session"""
+        """
+Get metrics for specific session"""
         return self.session_metrics.get(session_id)
     
     def get_all_session_metrics(self) -> Dict[str, SessionMetrics]:
-        """Get metrics for all sessions"""
+        """
+Get metrics for all sessions"""
         return self.session_metrics.copy()
     
     def get_session_events(self, limit: int = 100) -> List[SessionEvent]:
-        """Get recent session events"""
+        """
+Get recent session events"""
         events_list = list(self.session_events)
         return events_list[-limit:] if limit else events_list
 

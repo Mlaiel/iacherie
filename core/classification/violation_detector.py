@@ -7,10 +7,11 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 """
+
 import numpy as np
 import cv2
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationSeverity(Enum):
-    """Violation severity levels."""
+    """
+Violation severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -48,6 +51,7 @@ class ViolationSeverity(Enum):
 
 class ViolationType(Enum):
     """Types of content violations."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     MODIFIED_CONTENT = "modified_content"
@@ -83,7 +87,8 @@ class ViolationDetector:
     """
     
     def __init__(self):
-        """Initialize violation detector with monitoring systems."""
+        """
+Initialize violation detector with monitoring systems."""
         self.settings = get_settings()
         self.similarity_matcher = SimilarityMatcher()
         self.web_crawler = WebCrawler()
@@ -570,7 +575,8 @@ class ViolationDetector:
         platform: str,
         search_result: Dict[str, Any]
     ) -> ViolationSeverity:
-        """Calculate violation severity based on multiple factors."""
+        """
+Calculate violation severity based on multiple factors."""
         base_severity = {
             ViolationType.EXACT_COPY: ViolationSeverity.CRITICAL,
             ViolationType.COPYRIGHT_INFRINGEMENT: ViolationSeverity.HIGH,
@@ -602,7 +608,8 @@ class ViolationDetector:
         violation_type: ViolationType,
         platform: str
     ) -> ViolationEvidence:
-        """Collect comprehensive evidence for the violation."""
+        """
+Collect comprehensive evidence for the violation."""
         try:
             # Take screenshot of the infringing page
             screenshot_path = self.web_crawler.take_screenshot(search_result['url'])
@@ -695,13 +702,15 @@ class ViolationDetector:
         return ['content', 'media', content_type]
     
     def _detect_language(self, text: str) -> str:
-        """Detect language of text content."""
+        """
+Detect language of text content."""
         # This would use language detection library
         # Simplified implementation
         return 'en'
     
     def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file."""
+        """
+Calculate SHA-256 hash of file."""
         try:
             with open(file_path, 'rb') as f:
                 file_hash = hashlib.sha256(f.read()).hexdigest()

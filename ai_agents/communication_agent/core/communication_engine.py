@@ -6,6 +6,7 @@ messaging, notifications, and real-time collaboration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class MessageType(Enum):
-    """Message type enumeration"""
+    """
+Message type enumeration"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -26,6 +29,7 @@ class MessageType(Enum):
 
 class SessionStatus(Enum):
     """Communication session status"""
+
     ACTIVE = "active"
     IDLE = "idle"
     DISCONNECTED = "disconnected"
@@ -42,7 +46,8 @@ class CommunicationJob:
 
 @dataclass
 class CommunicationResult:
-    """Communication operation result"""
+    """
+Communication operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -51,7 +56,8 @@ class CommunicationResult:
     completed_at: datetime = None
 
 class CommunicationEngine:
-    """Core communication processing engine"""
+    """
+Core communication processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

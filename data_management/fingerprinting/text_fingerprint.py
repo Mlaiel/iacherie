@@ -8,7 +8,7 @@ Responsibility: Advanced text fingerprinting with BERT, RoBERTa, and semantic an
 ===================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -28,6 +28,7 @@ TEXT FINGERPRINTING TECHNOLOGIES:
 ├── 🔍 Semantic Similarity (Cosine + Euclidean)
 └── 🛡️ Plagiarism Protection (Real-time Monitoring)
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
@@ -148,7 +149,8 @@ class BaseTextProcessor(ABC):
         
     @abstractmethod
     async def process(self, text: str) -> Dict[str, Any]:
-        """Process text and extract features"""
+        """
+Process text and extract features"""
         logger.warning(f"process method not implemented in {self.__class__.__name__}")
         
         # Return basic fingerprint data structure
@@ -177,7 +179,8 @@ class BaseTextProcessor(ABC):
         return text
     
     def _detect_language(self, text: str) -> str:
-        """Détecte la langue du texte"""
+        """
+Détecte la langue du texte"""
         if not SPACY_AVAILABLE:
             return "en"  # Fallback vers l'anglais
         
@@ -200,7 +203,8 @@ class BERTProcessor(BaseTextProcessor):
         self._load_model()
     
     def _load_model(self):
-        """Charge le modèle BERT"""
+        """
+Charge le modèle BERT"""
         if not TRANSFORMERS_AVAILABLE:
             logger.error("BERT processor requires transformers library")
             return
@@ -279,7 +283,8 @@ class RoBERTaProcessor(BaseTextProcessor):
         self._load_model()
     
     def _load_model(self):
-        """Charge le modèle RoBERTa"""
+        """
+Charge le modèle RoBERTa"""
         if not TRANSFORMERS_AVAILABLE:
             logger.error("RoBERTa processor requires transformers library")
             return
@@ -353,7 +358,8 @@ class TFIDFProcessor(BaseTextProcessor):
         self._initialize_vectorizer()
     
     def _initialize_vectorizer(self):
-        """Initialise le vectoriseur TF-IDF"""
+        """
+Initialise le vectoriseur TF-IDF"""
         if not SKLEARN_AVAILABLE:
             logger.error("TF-IDF processor requires scikit-learn")
             return
@@ -412,7 +418,8 @@ class Word2VecProcessor(BaseTextProcessor):
         self.model = None
         
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec Word2Vec"""
+        """
+Traite le texte avec Word2Vec"""
         if not GENSIM_AVAILABLE:
             return {"error": "Word2Vec requires gensim library"}
         
@@ -458,7 +465,8 @@ class Word2VecProcessor(BaseTextProcessor):
             return [sentence.strip().lower().split() for sentence in sentences if sentence.strip()]
     
     def _generate_doc_vector(self, model, text: str) -> np.ndarray:
-        """Génère un vecteur pour l'ensemble du document"""
+        """
+Génère un vecteur pour l'ensemble du document"""
         words = text.lower().split()
         word_vectors = []
         
@@ -472,14 +480,16 @@ class Word2VecProcessor(BaseTextProcessor):
             return np.zeros(model.vector_size)
     
     def get_name(self) -> str:
-        """Get processor name"""
+        """
+Get processor name"""
         return "word2vec"
 
 class NGramProcessor(BaseTextProcessor):
     """Processeur N-gram pour l'analyse structurelle"""
     
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec analyse N-gram"""
+        """
+Traite le texte avec analyse N-gram"""
         try:
             # N-grams de mots
             word_ngrams = self._extract_word_ngrams(text)
@@ -529,7 +539,8 @@ class NGramProcessor(BaseTextProcessor):
         return list(set(ngrams))  # Suppression des doublons
     
     def _hash_ngrams(self, ngrams: List[str]) -> str:
-        """Génère un hash des n-grams"""
+        """
+Génère un hash des n-grams"""
         combined = "".join(sorted(ngrams))
         return hashlib.sha256(combined.encode()).hexdigest()
     
@@ -823,7 +834,8 @@ class TextFingerprintEngine:
         return dot_product / (norm1 * norm2)
     
     def _jaccard_similarity(self, set1: Set, set2: Set) -> float:
-        """Calcule la similarité de Jaccard entre deux ensembles"""
+        """
+Calcule la similarité de Jaccard entre deux ensembles"""
         intersection = len(set1.intersection(set2))
         union = len(set1.union(set2))
         
@@ -833,7 +845,8 @@ class TextFingerprintEngine:
         return intersection / union
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""
+        """
+Retourne les métriques de performance"""
         avg_processing_time = (
             self.metrics["processing_time_total"] / self.metrics["texts_processed"]
             if self.metrics["texts_processed"] > 0 else 0

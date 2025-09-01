@@ -34,6 +34,7 @@ Features:
 - Rate Limiting & Throttling Utilities
 - Notification Formatting Helpers
 """
+
 import asyncio
 import logging
 import functools
@@ -89,11 +90,13 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class ValidationError(Exception):
-    """Custom validation error"""
+    """
+Custom validation error"""
     pass
 
 class ProcessingError(Exception):
-    """Custom processing error"""
+    """
+Custom processing error"""
     pass
 
 # ==============================================================================
@@ -101,7 +104,8 @@ class ProcessingError(Exception):
 # ==============================================================================
 
 def async_timer(func: Callable) -> Callable:
-    """Decorator to measure async function execution time"""
+    """
+Decorator to measure async function execution time"""
     @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         start_time = time.time()
@@ -149,7 +153,8 @@ class DataValidator:
     
     @staticmethod
     def validate_email(email: str) -> bool:
-        """Validate email address"""
+        """
+Validate email address"""
         try:
             validation = validate_email(email)
             return True
@@ -167,7 +172,8 @@ class DataValidator:
     
     @staticmethod
     def validate_url(url: str) -> bool:
-        """Validate URL format"""
+        """
+Validate URL format"""
         try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
@@ -176,7 +182,8 @@ class DataValidator:
     
     @staticmethod
     def validate_uuid(uuid_string: str) -> bool:
-        """Validate UUID format"""
+        """
+Validate UUID format"""
         try:
             uuid.UUID(uuid_string)
             return True
@@ -185,7 +192,8 @@ class DataValidator:
     
     @staticmethod
     def validate_json(json_string: str) -> bool:
-        """Validate JSON format"""
+        """
+Validate JSON format"""
         try:
             json.loads(json_string)
             return True
@@ -194,14 +202,16 @@ class DataValidator:
     
     @staticmethod
     def sanitize_html(html_content: str) -> str:
-        """Sanitize HTML content"""
+        """
+Sanitize HTML content"""
         allowed_tags = ['p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
         allowed_attributes = {'a': ['href', 'title'], '*': ['class']}
         return bleach.clean(html_content, tags=allowed_tags, attributes=allowed_attributes)
     
     @staticmethod
     def validate_password_strength(password: str) -> Dict[str, Any]:
-        """Validate password strength"""
+        """
+Validate password strength"""
         result = {
             'is_valid': True,
             'score': 0,
@@ -256,12 +266,14 @@ class DateTimeUtils:
     
     @staticmethod
     def now_utc() -> datetime:
-        """Get current UTC datetime"""
+        """
+Get current UTC datetime"""
         return datetime.now(timezone.utc)
     
     @staticmethod
     def to_timezone(dt: datetime, timezone_name: str) -> datetime:
-        """Convert datetime to specific timezone"""
+        """
+Convert datetime to specific timezone"""
         tz = pytz.timezone(timezone_name)
         if dt.tzinfo is None:
             dt = pytz.utc.localize(dt)
@@ -269,7 +281,8 @@ class DateTimeUtils:
     
     @staticmethod
     def format_duration(seconds: float) -> str:
-        """Format duration in human-readable format"""
+        """
+Format duration in human-readable format"""
         if seconds < 60:
             return f"{seconds:.1f} seconds"
         elif seconds < 3600:
@@ -302,7 +315,8 @@ class DateTimeUtils:
     
     @staticmethod
     def _next_business_day(dt: datetime) -> datetime:
-        """Calculate next business day"""
+        """
+Calculate next business day"""
         next_day = dt + timedelta(days=1)
         while next_day.weekday() >= 5:  # Skip weekends
             next_day += timedelta(days=1)
@@ -313,7 +327,8 @@ class DateTimeUtils:
 # ==============================================================================
 
 class SecurityUtils:
-    """Advanced security and encryption utilities"""
+    """
+Advanced security and encryption utilities"""
     
     def __init__(self, key: Optional[bytes] = None):
         if key:
@@ -322,43 +337,50 @@ class SecurityUtils:
             self.fernet = Fernet(Fernet.generate_key())
     
     def encrypt_string(self, plaintext: str) -> str:
-        """Encrypt string and return base64 encoded result"""
+        """
+Encrypt string and return base64 encoded result"""
         encrypted = self.fernet.encrypt(plaintext.encode())
         return base64.b64encode(encrypted).decode()
     
     def decrypt_string(self, encrypted_text: str) -> str:
-        """Decrypt base64 encoded encrypted string"""
+        """
+Decrypt base64 encoded encrypted string"""
         encrypted_bytes = base64.b64decode(encrypted_text.encode())
         decrypted = self.fernet.decrypt(encrypted_bytes)
         return decrypted.decode()
     
     @staticmethod
     def hash_password(password: str) -> str:
-        """Hash password using bcrypt"""
+        """
+Hash password using bcrypt"""
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed.decode('utf-8')
     
     @staticmethod
     def verify_password(password: str, hashed: str) -> bool:
-        """Verify password against hash"""
+        """
+Verify password against hash"""
         return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
     
     @staticmethod
     def generate_token(length: int = 32) -> str:
-        """Generate secure random token"""
+        """
+Generate secure random token"""
         return base64.urlsafe_b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)[:length].decode()
     
     @staticmethod
     def generate_jwt(payload: Dict[str, Any], secret: str, expiry_hours: int = 24) -> str:
-        """Generate JWT token"""
+        """
+Generate JWT token"""
         payload['exp'] = datetime.utcnow() + timedelta(hours=expiry_hours)
         payload['iat'] = datetime.utcnow()
         return jwt.encode(payload, secret, algorithm='HS256')
     
     @staticmethod
     def verify_jwt(token: str, secret: str) -> Optional[Dict[str, Any]]:
-        """Verify and decode JWT token"""
+        """
+Verify and decode JWT token"""
         try:
             return jwt.decode(token, secret, algorithms=['HS256'])
         except jwt.InvalidTokenError:
@@ -369,7 +391,8 @@ class SecurityUtils:
 # ==============================================================================
 
 class TextUtils:
-    """Advanced text processing and NLP utilities"""
+    """
+Advanced text processing and NLP utilities"""
     
     def __init__(self):
         self.sentiment_analyzer = pipeline("sentiment-analysis")
@@ -388,17 +411,20 @@ class TextUtils:
     
     @staticmethod
     def extract_hashtags(text: str) -> List[str]:
-        """Extract hashtags from text"""
+        """
+Extract hashtags from text"""
         return re.findall(r'#(\w+)', text)
     
     @staticmethod
     def extract_mentions(text: str) -> List[str]:
-        """Extract mentions from text"""
+        """
+Extract mentions from text"""
         return re.findall(r'@(\w+)', text)
     
     @staticmethod
     def extract_urls(text: str) -> List[str]:
-        """Extract URLs from text"""
+        """
+Extract URLs from text"""
         url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         return re.findall(url_pattern, text)
     
@@ -411,7 +437,8 @@ class TextUtils:
     
     @staticmethod
     def slugify(text: str) -> str:
-        """Convert text to URL-friendly slug"""
+        """
+Convert text to URL-friendly slug"""
         # Convert to lowercase
         text = text.lower()
         
@@ -423,7 +450,8 @@ class TextUtils:
         return text.strip('-')
     
     async def analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze text sentiment"""
+        """
+Analyze text sentiment"""
         try:
             result = self.sentiment_analyzer(text)[0]
             return {
@@ -450,7 +478,8 @@ class MediaUtils:
         max_height: int = 1080,
         quality: int = 85
     ) -> Dict[str, Any]:
-        """Process and optimize image"""
+        """
+Process and optimize image"""
         try:
             with Image.open(image_path) as img:
                 # Get original dimensions
@@ -548,7 +577,8 @@ class MediaUtils:
 # ==============================================================================
 
 class GeoUtils:
-    """Geographic and location utilities"""
+    """
+Geographic and location utilities"""
     
     def __init__(self):
         self.geolocator = Nominatim(user_agent="collaboration_system")
@@ -559,7 +589,8 @@ class GeoUtils:
         return geodesic(point1, point2).kilometers
     
     async def geocode_address(self, address: str) -> Optional[Dict[str, Any]]:
-        """Geocode address to coordinates"""
+        """
+Geocode address to coordinates"""
         try:
             location = self.geolocator.geocode(address, timeout=10)
             if location:
@@ -657,18 +688,21 @@ class FormatUtils:
     
     @staticmethod
     def deserialize_datetime(iso_string: str) -> datetime:
-        """Deserialize ISO format datetime"""
+        """
+Deserialize ISO format datetime"""
         return datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
     
     @staticmethod
     def to_camel_case(snake_str: str) -> str:
-        """Convert snake_case to camelCase"""
+        """
+Convert snake_case to camelCase"""
         components = snake_str.split('_')
         return components[0] + ''.join(x.capitalize() for x in components[1:])
     
     @staticmethod
     def to_snake_case(camel_str: str) -> str:
-        """Convert camelCase to snake_case"""
+        """
+Convert camelCase to snake_case"""
         return re.sub('([a-z0-9])([A-Z])', r'\1_\2', camel_str).lower()
 
 # ==============================================================================
@@ -677,7 +711,8 @@ class FormatUtils:
 
 @dataclass
 class PaginationInfo:
-    """Pagination information"""
+    """
+Pagination information"""
     page: int
     per_page: int
     total_items: int
@@ -688,7 +723,8 @@ class PaginationInfo:
     next_page: Optional[int]
 
 class PaginationUtils:
-    """Pagination utilities"""
+    """
+Pagination utilities"""
     
     @staticmethod
     def paginate(
@@ -697,7 +733,8 @@ class PaginationUtils:
         per_page: int = 20,
         max_per_page: int = 100
     ) -> Tuple[List[T], PaginationInfo]:
-        """Paginate list of items"""
+        """
+Paginate list of items"""
         # Validate inputs
         page = max(1, page)
         per_page = min(max(1, per_page), max_per_page)
@@ -731,7 +768,8 @@ class PaginationUtils:
         pagination: PaginationInfo,
         meta: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create standardized pagination response"""
+        """
+Create standardized pagination response"""
         return {
             'data': data,
             'pagination': asdict(pagination),
@@ -743,7 +781,8 @@ class PaginationUtils:
 # ==============================================================================
 
 class CacheUtils:
-    """Advanced caching utilities"""
+    """
+Advanced caching utilities"""
     
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
@@ -754,7 +793,8 @@ class CacheUtils:
         factory_func: Callable[[], Any],
         ttl: int = 3600
     ) -> Any:
-        """Get from cache or set using factory function"""
+        """
+Get from cache or set using factory function"""
         try:
             # Try to get from cache
             cached_value = await self.redis.get(key)

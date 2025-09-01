@@ -30,6 +30,7 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
+
 import asyncio
 import logging
 import json
@@ -71,7 +72,9 @@ logger = get_logger(__name__)
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels."""
+    """
+Error severity levels."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -80,7 +83,9 @@ class ErrorSeverity(Enum):
 
 
 class ErrorCategory(Enum):
-    """Error categories for classification."""
+    """
+Error categories for classification."""
+
     PLATFORM_API = "platform.api"
     NETWORK = "network"
     CONTENT_PROCESSING = "content.processing"
@@ -99,6 +104,7 @@ class ErrorCategory(Enum):
 
 class ErrorAction(Enum):
     """Possible error handling actions."""
+
     RETRY = "retry"
     FALLBACK = "fallback"
     SKIP = "skip"
@@ -125,13 +131,15 @@ class ErrorContext:
     correlation_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return asdict(self)
 
 
 @dataclass
 class ErrorDetails:
-    """Comprehensive error details."""
+    """
+Comprehensive error details."""
     
     error_id: str
     category: ErrorCategory
@@ -148,7 +156,8 @@ class ErrorDetails:
     resolution_notes: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             'error_id': self.error_id,
             'category': self.category.value,
@@ -167,13 +176,15 @@ class ErrorDetails:
 
 
 class ErrorClassifier:
-    """Professional error classification system."""
+    """
+Professional error classification system."""
     
     def __init__(self):
         self.classification_rules = self._load_classification_rules()
     
     def _load_classification_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load error classification rules."""
+        """
+Load error classification rules."""
         return {
             # Platform API Errors
             'platform_api': {
@@ -360,7 +371,8 @@ class ErrorClassifier:
         return ErrorCategory.UNKNOWN, ErrorSeverity.MEDIUM
     
     def _classify_by_patterns(self, error_message: str) -> Tuple[ErrorCategory, ErrorSeverity]:
-        """Classify error by message patterns."""
+        """
+Classify error by message patterns."""
         for rule_name, rule_config in self.classification_rules.items():
             patterns = rule_config['patterns']
             
@@ -386,7 +398,8 @@ class ErrorClassifier:
         severity: ErrorSeverity, 
         exception: Exception
     ) -> ErrorAction:
-        """Determine suggested action based on error characteristics."""
+        """
+Determine suggested action based on error characteristics."""
         # Critical and emergency errors
         if severity in [ErrorSeverity.CRITICAL, ErrorSeverity.EMERGENCY]:
             return ErrorAction.ESCALATE
@@ -411,14 +424,16 @@ class ErrorClassifier:
 
 
 class ErrorRecoveryManager:
-    """Professional error recovery and retry management."""
+    """
+Professional error recovery and retry management."""
     
     def __init__(self):
         self.recovery_strategies = self._load_recovery_strategies()
         self.retry_delays = [1, 2, 4, 8, 16]  # Exponential backoff
     
     def _load_recovery_strategies(self) -> Dict[ErrorCategory, Dict[str, Any]]:
-        """Load recovery strategies for different error categories."""
+        """
+Load recovery strategies for different error categories."""
         return {
             ErrorCategory.RATE_LIMIT: {
                 'max_retries': 5,
@@ -582,7 +597,8 @@ class ErrorAggregator:
         }
     
     async def add_error(self, error_details: ErrorDetails):
-        """Add error to aggregation system."""
+        """
+Add error to aggregation system."""
         try:
             # Create aggregation key
             key = f"{error_details.category.value}:{error_details.exception_type}"
@@ -860,7 +876,8 @@ class ErrorHandler:
     
     async def get_error_statistics(self, 
                                  time_range: timedelta = timedelta(hours=24)) -> Dict[str, Any]:
-        """Get error statistics for monitoring."""
+        """
+Get error statistics for monitoring."""
         try:
             cutoff_time = datetime.utcnow() - time_range
             
@@ -986,7 +1003,8 @@ def create_error_handler(
     metrics_collector: Optional[MetricsCollector] = None,
     alert_manager: Optional[AlertManager] = None
 ) -> ErrorHandler:
-    """Create and return an ErrorHandler instance."""
+    """
+Create and return an ErrorHandler instance."""
     return ErrorHandler(
         notification_manager=notification_manager,
         metrics_collector=metrics_collector,

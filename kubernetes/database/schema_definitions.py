@@ -71,6 +71,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Schema evolution management
 - Dependency tracking
 """
+
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
@@ -97,7 +98,9 @@ from backend.core.logging import get_logger
 
 
 class DataType(Enum):
-    """Types de données supportés"""
+    """
+Types de données supportés"""
+
     INTEGER = "integer"
     BIGINT = "bigint"
     SMALLINT = "smallint"
@@ -140,6 +143,7 @@ class DataType(Enum):
 
 class IndexType(Enum):
     """Types d'index disponibles"""
+
     BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
@@ -150,6 +154,7 @@ class IndexType(Enum):
 
 class ConstraintType(Enum):
     """Types de contraintes"""
+
     PRIMARY_KEY = "primary_key"
     FOREIGN_KEY = "foreign_key"
     UNIQUE = "unique"
@@ -160,6 +165,7 @@ class ConstraintType(Enum):
 
 class PartitionType(Enum):
     """Types de partitioning"""
+
     RANGE = "range"
     LIST = "list"
     HASH = "hash"
@@ -224,7 +230,8 @@ class IndexDefinition:
 
 @dataclass
 class ConstraintDefinition:
-    """Définition d'une contrainte"""
+    """
+Définition d'une contrainte"""
     name: str
     table_name: str
     constraint_type: ConstraintType
@@ -361,7 +368,8 @@ class SchemaDefinitionManager:
         }
     
     def _load_optimization_rules(self) -> Dict[str, Any]:
-        """Charge les règles d'optimisation"""
+        """
+Charge les règles d'optimisation"""
         return {
             'indexing': {
                 'foreign_key_auto_index': True,
@@ -383,7 +391,8 @@ class SchemaDefinitionManager:
         }
     
     def _load_existing_definitions(self):
-        """Charge les définitions existantes depuis la base"""
+        """
+Charge les définitions existantes depuis la base"""
         try:
             # Si moteur disponible, inspection de la base existante
             if self.engine:
@@ -1332,11 +1341,13 @@ class SchemaDefinitionManager:
         return self.table_definitions.get(table_name)
     
     def list_tables(self) -> List[str]:
-        """Liste toutes les tables définies"""
+        """
+Liste toutes les tables définies"""
         return list(self.table_definitions.keys())
     
     def get_schema_summary(self) -> Dict[str, Any]:
-        """Récupère un résumé du schéma"""
+        """
+Récupère un résumé du schéma"""
         try:
             summary = {
                 'total_tables': len(self.table_definitions),

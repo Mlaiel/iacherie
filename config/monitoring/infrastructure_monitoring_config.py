@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union, Tuple
@@ -30,7 +31,9 @@ from collections import defaultdict
 
 
 class InfrastructureLayer(Enum):
-    """Infrastructure monitoring layers"""
+    """
+Infrastructure monitoring layers"""
+
     HARDWARE = "hardware"
     OPERATING_SYSTEM = "operating_system"
     CONTAINER = "container"
@@ -43,6 +46,7 @@ class InfrastructureLayer(Enum):
 
 class ResourceType(Enum):
     """Infrastructure resource types"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -56,6 +60,7 @@ class ResourceType(Enum):
 
 class MonitoringCollectorType(Enum):
     """Monitoring collector types"""
+
     NODE_EXPORTER = "node_exporter"
     CADVISOR = "cadvisor"
     KUBERNETES_STATE = "kubernetes_state"
@@ -113,7 +118,8 @@ class InfrastructureMonitoringConfig:
     """
     
     def __init__(self):
-        """Initialize infrastructure monitoring configuration"""
+        """
+Initialize infrastructure monitoring configuration"""
         self._targets = {}
         self._thresholds = {}
         self._alert_rules = {}
@@ -564,7 +570,8 @@ class InfrastructureMonitoringConfig:
         return self._targets.get(name)
     
     def get_threshold(self, resource_type: ResourceType) -> Optional[ResourceThreshold]:
-        """Get threshold by resource type"""
+        """
+Get threshold by resource type"""
         key = f"{resource_type.value}_threshold"
         return self._thresholds.get(key)
     
@@ -573,12 +580,14 @@ class InfrastructureMonitoringConfig:
         return self._alert_rules.get(name)
     
     def get_targets_by_layer(self, layer: InfrastructureLayer) -> List[InfrastructureTarget]:
-        """Get targets by infrastructure layer"""
+        """
+Get targets by infrastructure layer"""
         return [target for target in self._targets.values() 
                 if target.layer == layer]
     
     def get_critical_alerts(self) -> List[InfrastructureAlert]:
-        """Get critical alert rules"""
+        """
+Get critical alert rules"""
         return [alert for alert in self._alert_rules.values() 
                 if alert.severity == "critical"]
     

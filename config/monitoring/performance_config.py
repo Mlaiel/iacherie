@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -22,7 +23,9 @@ from enum import Enum
 
 
 class PerformanceMetricType(Enum):
-    """Performance metric types"""
+    """
+Performance metric types"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     RESOURCE_USAGE = "resource_usage"
@@ -33,6 +36,7 @@ class PerformanceMetricType(Enum):
 
 class ProfilingMode(Enum):
     """Profiling modes"""
+
     DISABLED = "disabled"
     SAMPLING = "sampling"
     CONTINUOUS = "continuous"
@@ -41,6 +45,7 @@ class ProfilingMode(Enum):
 
 class AlertSeverity(Enum):
     """Performance alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"

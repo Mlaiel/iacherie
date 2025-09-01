@@ -5,6 +5,7 @@ multi-platform income optimization, and automated payment processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,9 @@ from ...utils.pricing_optimizer import PricingOptimizer
 logger = logging.getLogger(__name__)
 
 class RevenueStream(Enum):
-    """Available revenue stream types"""
+    """
+Available revenue stream types"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     MERCHANDISE = "merchandise"
     DIGITAL_DOWNLOADS = "digital_downloads"
@@ -62,6 +65,7 @@ class RevenueStream(Enum):
 
 class PaymentProcessor(Enum):
     """Supported payment processors"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -583,7 +587,8 @@ class MonetizationSetup:
     
     async def _generate_growth_projections(self, current_revenue: Decimal, creator_type: str,
                                          platform_metrics: Dict[str, float]) -> Dict[str, Decimal]:
-        """Generate revenue growth projections."""
+        """
+Generate revenue growth projections."""
         projections = {}
         
         # Base growth rates by creator type
@@ -612,7 +617,8 @@ class MonetizationSetup:
     
     def _calculate_stream_confidence(self, stream: RevenueStream, creator_type: str,
                                    platform_metrics: Dict[str, float]) -> float:
-        """Calculate confidence score for revenue stream."""
+        """
+Calculate confidence score for revenue stream."""
         base_confidence = 0.5
         
         # Stream-specific confidence factors
@@ -631,7 +637,8 @@ class MonetizationSetup:
         return min(1.0, stream_confidence + platform_boost)
     
     def _estimate_time_to_revenue(self, stream: RevenueStream, creator_type: str) -> str:
-        """Estimate time to first revenue for stream."""
+        """
+Estimate time to first revenue for stream."""
         time_estimates = {
             RevenueStream.STREAMING_ROYALTIES: '1-2 months',
             RevenueStream.MERCHANDISE: '2-4 weeks',
@@ -645,7 +652,8 @@ class MonetizationSetup:
     
     async def _develop_pricing_strategy(self, user_id: str, streams: List[RevenueStream],
                                       analysis: Dict[str, Any], preferences: Dict[str, Any]) -> Dict[str, Any]:
-        """Develop optimized pricing strategy."""
+        """
+Develop optimized pricing strategy."""
         pricing_strategy = {
             'strategy_type': 'value_based',
             'pricing_model': 'tiered',
@@ -670,7 +678,8 @@ class MonetizationSetup:
     # Payment processor setup methods
     async def _setup_payment_processor(self, user_id: str, processor: PaymentProcessor,
                                      strategies: MonetizationStrategy) -> Dict[str, Any]:
-        """Setup specific payment processor."""
+        """
+Setup specific payment processor."""
         try:
             if processor == PaymentProcessor.STRIPE:
                 return await self._setup_stripe_account(user_id, strategies)
@@ -764,7 +773,8 @@ class MonetizationSetup:
     async def _identify_optimization_opportunities(self, creator_type: str, content_score: float,
                                                  platform_metrics: Dict[str, float],
                                                  revenue_potential: Dict[str, Any]) -> List[str]:
-        """Identify opportunities for revenue optimization."""
+        """
+Identify opportunities for revenue optimization."""
         opportunities = []
         
         # Content-based opportunities
@@ -892,7 +902,8 @@ class MonetizationSetup:
         }
     
     async def _verify_payment_compliance(self, user_id: str, payment_setup: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify payment compliance and regulations."""
+        """
+Verify payment compliance and regulations."""
         # Placeholder implementation
         return {
             'status': 'compliant',

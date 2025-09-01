@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -53,7 +54,9 @@ from ...database.connection import get_async_session
 logger = get_structured_logger(__name__)
 
 class OptimizationStrategy(str, Enum):
-    """Pricing optimization strategy enumeration"""
+    """
+Pricing optimization strategy enumeration"""
+
     REVENUE_MAXIMIZATION = "revenue_maximization"
     PROFIT_MAXIMIZATION = "profit_maximization"
     MARKET_PENETRATION = "market_penetration"
@@ -65,6 +68,7 @@ class OptimizationStrategy(str, Enum):
 
 class PriceTestType(str, Enum):
     """Price testing type enumeration"""
+
     AB_TEST = "ab_test"
     MULTIVARIATE_TEST = "multivariate_test"
     BANDIT_ALGORITHM = "bandit_algorithm"
@@ -74,6 +78,7 @@ class PriceTestType(str, Enum):
 
 class MarketCondition(str, Enum):
     """Market condition enumeration"""
+
     BULL_MARKET = "bull_market"
     BEAR_MARKET = "bear_market"
     STABLE_MARKET = "stable_market"
@@ -84,6 +89,7 @@ class MarketCondition(str, Enum):
 
 class PricingObjective(str, Enum):
     """Pricing objective enumeration"""
+
     MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_PROFIT = "maximize_profit"
     MAXIMIZE_CONVERSION = "maximize_conversion"
@@ -218,7 +224,8 @@ class PricingOptimizerEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Pricing Optimizer Engine"""
+        """
+Initialize Pricing Optimizer Engine"""
         self.config = config or {}
         
         # Optimization components
@@ -415,7 +422,8 @@ class PricingOptimizerEngine:
         return X, y_revenue, y_conversion, y_demand
     
     async def _prepare_market_data(self, request: PricingRequest) -> Dict[str, Any]:
-        """Prepare market data for optimization"""
+        """
+Prepare market data for optimization"""
         try:
             market_data = {
                 "current_rate": float(request.current_rate),
@@ -1097,7 +1105,8 @@ class DemandModeler:
         self.demand_models = {}
     
     async def initialize(self): 
-        """Initialize demand modeling components"""
+        """
+Initialize demand modeling components"""
         try:
             # Initialize historical data collection
             self.historical_data = {
@@ -1331,7 +1340,8 @@ class CompetitorAnalyzer:
         self.analysis_cache = {}
     
     async def initialize(self): 
-        """Initialize competitor analysis components"""
+        """
+Initialize competitor analysis components"""
         logger.info("CompetitorAnalyzer initialized")
         return True
     
@@ -1348,7 +1358,8 @@ class TestManager:
         self.test_results = {}
     
     async def initialize(self): 
-        """Initialize test management components"""
+        """
+Initialize test management components"""
         logger.info("TestManager initialized")
         return True
     
@@ -1377,7 +1388,8 @@ class BayesianOptimizer:
         self.parameter_space = {}
     
     async def initialize(self): 
-        """Initialize Bayesian optimization components"""
+        """
+Initialize Bayesian optimization components"""
         logger.info("BayesianOptimizer initialized")
         return True
     
@@ -1387,7 +1399,7 @@ class BayesianOptimizer:
         return True
 
 """Professional Pricing Optimizer Engine
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides advanced pricing optimization capabilities using machine learning,
 econometric models, and comprehensive market analysis.

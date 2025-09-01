@@ -13,6 +13,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import cv2
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VisionProcessingRequest:
-    """Comprehensive vision processing request structure"""
+    """
+Comprehensive vision processing request structure"""
     content_id: str
     content_type: str  # image, video, frame
     file_path: Optional[str] = None
@@ -64,7 +66,8 @@ class VisionProcessingRequest:
 
 @dataclass
 class VisionProcessingResult:
-    """Comprehensive vision processing result structure"""
+    """
+Comprehensive vision processing result structure"""
     content_id: str
     processing_status: str
     processing_time: float
@@ -203,7 +206,8 @@ class VisionOrchestrator(BaseAgent):
         )
 
     async def _initialize_models(self):
-        """Initialize ML models and transformations"""
+        """
+Initialize ML models and transformations"""
         # Standard preprocessing transforms
         self.preprocess_transform = transforms.Compose([
             transforms.ToTensor(),
@@ -444,7 +448,8 @@ class VisionOrchestrator(BaseAgent):
             }
 
     async def _generate_visual_fingerprint(self, content_data: np.ndarray) -> Dict[str, Any]:
-        """Generate visual fingerprint for similarity matching"""
+        """
+Generate visual fingerprint for similarity matching"""
         try:
             fingerprint_data = await self.visual_similarity.generate_fingerprint(content_data)
             return {
@@ -460,7 +465,8 @@ class VisionOrchestrator(BaseAgent):
             }
 
     async def _extract_text_content(self, content_data: np.ndarray) -> Dict[str, Any]:
-        """Extract text content using OCR"""
+        """
+Extract text content using OCR"""
         try:
             ocr_results = await self.ocr_reader.extract_text(content_data)
             return {
@@ -476,7 +482,8 @@ class VisionOrchestrator(BaseAgent):
             }
 
     async def _recognize_faces(self, content_data: np.ndarray) -> Dict[str, Any]:
-        """Recognize faces in content"""
+        """
+Recognize faces in content"""
         try:
             face_results = await self.face_recognition.recognize_faces(content_data)
             return {
@@ -492,7 +499,8 @@ class VisionOrchestrator(BaseAgent):
             }
 
     async def _analyze_scene_content(self, content_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze scene and context"""
+        """
+Analyze scene and context"""
         try:
             scene_results = await self.scene_analyzer.analyze_scene(content_data)
             return {
@@ -508,7 +516,8 @@ class VisionOrchestrator(BaseAgent):
             }
 
     async def _assess_content_quality(self, content_data: np.ndarray) -> Dict[str, Any]:
-        """Assess content quality metrics"""
+        """
+Assess content quality metrics"""
         try:
             quality_results = await self.image_processor.assess_quality(content_data)
             return {
@@ -524,7 +533,8 @@ class VisionOrchestrator(BaseAgent):
             }
 
     async def _extract_comprehensive_metadata(self, content_data: np.ndarray) -> Dict[str, Any]:
-        """Extract comprehensive metadata"""
+        """
+Extract comprehensive metadata"""
         try:
             metadata_results = await self.metadata_extractor.extract_metadata(content_data)
             return {
@@ -545,7 +555,8 @@ class VisionOrchestrator(BaseAgent):
         task_results: List[Any],
         processing_tasks: List[str]
     ) -> None:
-        """Aggregate all processing task results"""
+        """
+Aggregate all processing task results"""
         result.detection_results = {}
         result.similarity_data = {}
         result.ocr_results = {}
@@ -617,7 +628,8 @@ class VisionOrchestrator(BaseAgent):
         result: VisionProcessingResult,
         request: VisionProcessingRequest
     ) -> None:
-        """Finalize and validate processing results"""
+        """
+Finalize and validate processing results"""
         # Set final processing status
         if result.errors:
             result.processing_status = "completed_with_errors"
@@ -676,7 +688,8 @@ class VisionOrchestrator(BaseAgent):
         content_id: str,
         result: VisionProcessingResult
     ) -> None:
-        """Cache processing results for future use"""
+        """
+Cache processing results for future use"""
         try:
             cache_key = f"vision_result_{content_id}"
             cache_data = {
@@ -719,7 +732,8 @@ class VisionOrchestrator(BaseAgent):
         return compressed
 
     async def _optimize_fingerprint(self, fingerprint_data: Any) -> Any:
-        """Optimize fingerprint data for storage and transmission"""
+        """
+Optimize fingerprint data for storage and transmission"""
         if isinstance(fingerprint_data, np.ndarray):
             # Convert to more compact representation
             return {
@@ -735,7 +749,8 @@ class VisionOrchestrator(BaseAgent):
         similarity_threshold: float = 0.8,
         limit: int = 10
     ) -> List[Dict]:
-        """Search for visually similar content"""
+        """
+Search for visually similar content"""
         try:
             return await self.visual_similarity.search_similar(
                 query_fingerprint, 
@@ -765,7 +780,8 @@ class VisionOrchestrator(BaseAgent):
         self,
         request: VisionProcessingRequest
     ) -> VisionProcessingResult:
-        """Specialized video content processing"""
+        """
+Specialized video content processing"""
         if request.content_type != 'video':
             raise ValueError("Request must be for video content")
         
@@ -829,7 +845,8 @@ class VisionOrchestrator(BaseAgent):
         }
 
     def get_processing_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive processing capabilities"""
+        """
+Get comprehensive processing capabilities"""
         return {
             'max_image_size': self.config.max_image_size,
             'max_video_duration': self.config.max_video_duration,
@@ -863,7 +880,8 @@ class VisionOrchestrator(BaseAgent):
         }
 
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
+        """
+Perform comprehensive health check"""
         health_status = {
             'overall_status': 'healthy',
             'components': {},
@@ -916,7 +934,8 @@ class VisionOrchestrator(BaseAgent):
         return health_status
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get detailed performance metrics"""
+        """
+Get detailed performance metrics"""
         return {
             'processing_times': self.performance_monitor.get_all_metrics(),
             'cache_statistics': await self.cache_manager.get_statistics(),
@@ -928,7 +947,8 @@ class VisionOrchestrator(BaseAgent):
         }
 
     async def cleanup(self) -> None:
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         try:
             logger.info("Starting Vision Orchestrator cleanup...")
             

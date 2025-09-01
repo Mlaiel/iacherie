@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, Optional, Any, List
@@ -70,7 +71,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for crawler utilities."""
+    """
+Configuration for crawler utilities."""
     # Rate limiting
     enable_rate_limiting: bool = True
     rate_limit_strategy: str = "platform_specific"  # platform_specific, adaptive, conservative
@@ -122,7 +124,8 @@ class CrawlerUtilsManager:
     """
     
     def __init__(self, config: Optional[CrawlerConfig] = None):
-        """Initialize crawler utilities manager."""
+        """
+Initialize crawler utilities manager."""
         self.config = config or CrawlerConfig()
         
         # Initialize components
@@ -246,7 +249,8 @@ class CrawlerUtilsManager:
         mobile: Optional[bool] = None,
         country: Optional[str] = None
     ) -> str:
-        """Create a new crawler session with all utilities configured."""
+        """
+Create a new crawler session with all utilities configured."""
         session_id = await self.session_manager.create_session(
             platform=platform,
             domain=domain,
@@ -476,7 +480,8 @@ class CrawlerUtilsManager:
         return stats
     
     async def cleanup(self) -> None:
-        """Cleanup all resources."""
+        """
+Cleanup all resources."""
         if self.session_manager:
             await self.session_manager.close_all_sessions()
         
@@ -495,7 +500,8 @@ def create_basic_crawler_config(
     enable_captcha: bool = False,
     redis_url: Optional[str] = None
 ) -> CrawlerConfig:
-    """Create basic crawler configuration."""
+    """
+Create basic crawler configuration."""
     return CrawlerConfig(
         enable_proxy_rotation=enable_proxy,
         enable_captcha_solving=enable_captcha,
@@ -507,7 +513,8 @@ def create_advanced_crawler_config(
     proxy_enabled: bool = True,
     captcha_api_keys: Optional[Dict[str, str]] = None
 ) -> CrawlerConfig:
-    """Create advanced crawler configuration."""
+    """
+Create advanced crawler configuration."""
     return CrawlerConfig(
         enable_rate_limiting=True,
         rate_limit_strategy="adaptive",
@@ -537,7 +544,8 @@ async def quick_crawl(url: str, **kwargs) -> Dict[str, Any]:
         await manager.cleanup()
 
 async def quick_extract_content(url: str) -> Optional[Dict[str, Any]]:
-    """Quick content extraction from URL."""
+    """
+Quick content extraction from URL."""
     result = await quick_crawl(url, extract_content=True)
     return result.get('content') if result.get('success') else None
 

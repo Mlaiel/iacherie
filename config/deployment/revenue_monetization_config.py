@@ -21,6 +21,7 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
+
 import os
 import json
 import yaml
@@ -34,7 +35,9 @@ import logging
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers"""
+    """
+Supported payment providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -46,6 +49,7 @@ class PaymentProvider(Enum):
 
 class RevenueSource(Enum):
     """Revenue sources"""
+
     CONTENT_PROTECTION = "content_protection"
     LICENSING_FEES = "licensing_fees"
     ROYALTY_COLLECTION = "royalty_collection"
@@ -58,6 +62,7 @@ class RevenueSource(Enum):
 
 class CurrencyCode(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -72,6 +77,7 @@ class CurrencyCode(Enum):
 
 class PayoutSchedule(Enum):
     """Payout schedules"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     BIWEEKLY = "biweekly"
@@ -99,7 +105,8 @@ class PaymentProviderConfig:
 
 @dataclass
 class RevenueStreamConfig:
-    """Revenue stream configuration"""
+    """
+Revenue stream configuration"""
     source: RevenueSource
     enabled: bool = True
     commission_rate: float = 0.15  # 15% platform commission
@@ -113,7 +120,8 @@ class RevenueStreamConfig:
 
 @dataclass
 class TaxConfiguration:
-    """Tax configuration"""
+    """
+Tax configuration"""
     tax_jurisdiction: str = "Germany"
     vat_rate: float = 0.19
     income_tax_rate: float = 0.42
@@ -229,7 +237,8 @@ class RevenueMonetizationConfig:
         return providers
     
     def _initialize_revenue_streams(self) -> Dict[RevenueSource, RevenueStreamConfig]:
-        """Initialize revenue stream configurations"""
+        """
+Initialize revenue stream configurations"""
         streams = {}
         
         # Content protection revenue
@@ -304,7 +313,8 @@ class RevenueMonetizationConfig:
         return streams
     
     def _initialize_tax_config(self) -> TaxConfiguration:
-        """Initialize tax configuration"""
+        """
+Initialize tax configuration"""
         return TaxConfiguration(
             tax_jurisdiction="Germany",
             vat_rate=0.19,
@@ -386,11 +396,13 @@ class RevenueMonetizationConfig:
         return self.payment_providers.get(provider)
     
     def get_revenue_stream_config(self, source: RevenueSource) -> Optional[RevenueStreamConfig]:
-        """Get configuration for specific revenue stream"""
+        """
+Get configuration for specific revenue stream"""
         return self.revenue_streams.get(source)
     
     def calculate_net_revenue(self, gross_amount: float, source: RevenueSource, provider: PaymentProvider) -> Dict[str, float]:
-        """Calculate net revenue after fees and taxes"""
+        """
+Calculate net revenue after fees and taxes"""
         stream_config = self.get_revenue_stream_config(source)
         provider_config = self.get_payment_provider_config(provider)
         

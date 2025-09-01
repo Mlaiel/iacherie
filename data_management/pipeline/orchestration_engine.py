@@ -8,7 +8,7 @@ Responsibility: Orchestration complète des workflows de traitement de données 
 =======================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -28,6 +28,7 @@ ARCHITECTURE PIPELINE:
 ├── 🎮 Resource Management (Auto-scaling)
 └── 🚀 Optimization Engine (Dynamic tuning)
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from enum import Enum
@@ -57,6 +58,7 @@ logger = logging.getLogger(__name__)
 
 class PipelineStage(Enum):
     """Étapes de la pipeline de traitement"""
+
     INITIALIZATION = "initialization"
     VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
@@ -74,6 +76,7 @@ class PipelineStage(Enum):
 
 class TaskStatus(Enum):
     """Statuts des tâches"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -84,6 +87,7 @@ class TaskStatus(Enum):
 
 class PipelineMode(Enum):
     """Modes de traitement de pipeline"""
+
     REAL_TIME = "real_time"          # Traitement immédiat
     BATCH = "batch"                  # Traitement par lots
     STREAMING = "streaming"          # Traitement en flux
@@ -104,7 +108,8 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecution:
-    """Exécution d'une tâche"""
+    """
+Exécution d'une tâche"""
     task_id: str
     execution_id: str
     status: TaskStatus
@@ -118,7 +123,8 @@ class TaskExecution:
 
 @dataclass
 class PipelineExecution:
-    """Exécution complète d'une pipeline"""
+    """
+Exécution complète d'une pipeline"""
     pipeline_id: str
     execution_id: str
     content_id: str
@@ -588,7 +594,8 @@ class DataPipelineOrchestrator:
         return sorted_tasks
     
     def _group_tasks_by_dependency_level(self, tasks: List[TaskDefinition]) -> Dict[int, List[TaskDefinition]]:
-        """Groupe les tâches par niveau de dépendance pour parallélisation"""
+        """
+Groupe les tâches par niveau de dépendance pour parallélisation"""
         levels = {}
         task_levels = {}
         
@@ -620,7 +627,8 @@ class DataPipelineOrchestrator:
     
     async def _execute_task(self, task: TaskDefinition, execution: PipelineExecution,
                           content_path: str) -> TaskExecution:
-        """Exécute une tâche individuelle avec monitoring et retry"""
+        """
+Exécute une tâche individuelle avec monitoring et retry"""
         task_execution = TaskExecution(
             task_id=task.task_id,
             execution_id=str(uuid.uuid4()),
@@ -824,7 +832,8 @@ class DataPipelineOrchestrator:
         return real_time_tasks, batch_tasks, streaming_tasks
     
     def _calculate_pipeline_metrics(self, execution: PipelineExecution) -> Dict[str, float]:
-        """Calcule les métriques de performance de la pipeline"""
+        """
+Calcule les métriques de performance de la pipeline"""
         if not execution.tasks:
             return {}
         
@@ -855,7 +864,8 @@ class DataPipelineOrchestrator:
         return self.active_pipelines.get(execution_id)
     
     async def cancel_pipeline(self, execution_id: str) -> bool:
-        """Annule une pipeline en cours d'exécution"""
+        """
+Annule une pipeline en cours d'exécution"""
         if execution_id in self.active_pipelines:
             execution = self.active_pipelines[execution_id]
             execution.status = TaskStatus.CANCELLED

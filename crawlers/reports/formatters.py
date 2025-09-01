@@ -40,6 +40,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import json
@@ -116,7 +117,9 @@ logger = logging.getLogger(__name__)
 
 
 class OutputFormat(Enum):
-    """Output format enumeration."""
+    """
+Output format enumeration."""
+
     PDF = "pdf"
     EXCEL = "excel"
     JSON = "json"
@@ -127,6 +130,7 @@ class OutputFormat(Enum):
 
 class StylingOptions(Enum):
     """Styling options for reports."""
+
     CORPORATE = "corporate"
     MODERN = "modern"
     MINIMAL = "minimal"
@@ -173,7 +177,8 @@ class ReportFormatter(ABC):
         pass
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Validate report data before formatting."""
+        """
+Validate report data before formatting."""
         try:
             required_fields = ["config", "metrics", "data"]
             
@@ -232,7 +237,8 @@ class ReportFormatter(ABC):
             return data
     
     def _get_color_scheme(self) -> Dict[str, str]:
-        """Get color scheme based on styling option."""
+        """
+Get color scheme based on styling option."""
         schemes = {
             StylingOptions.CORPORATE: {
                 "primary": "#1f4e79",
@@ -762,7 +768,8 @@ class JSONFormatter(ReportFormatter):
     """
     
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Format report data as JSON."""
+        """
+Format report data as JSON."""
         try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
@@ -811,7 +818,8 @@ class CSVFormatter(ReportFormatter):
     """
     
     async def format_report(self, report_data: Dict[str, Any]) -> Union[str, Dict[str, str]]:
-        """Format report data as CSV."""
+        """
+Format report data as CSV."""
         try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
@@ -905,7 +913,8 @@ class TechnicalReportFormatter(ReportFormatter):
     """
     
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Generate comprehensive technical analysis report."""
+        """
+Generate comprehensive technical analysis report."""
         try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
@@ -1117,7 +1126,8 @@ class MonetizationReportFormatter(ReportFormatter):
     """
     
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Generate comprehensive monetization analysis report."""
+        """
+Generate comprehensive monetization analysis report."""
         try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
@@ -1676,7 +1686,8 @@ class HTMLFormatter(ReportFormatter):
         return Template(template_str)
     
     async def _generate_charts_html(self, data: Dict[str, Any]) -> str:
-        """Generate charts HTML using Plotly."""
+        """
+Generate charts HTML using Plotly."""
         charts_html = ""
         
         # This is a placeholder for chart generation
@@ -1698,7 +1709,8 @@ class XMLFormatter(ReportFormatter):
     """
     
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Format report data as XML."""
+        """
+Format report data as XML."""
         try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)

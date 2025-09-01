@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration tests for Ainflue upload API endpoints.
+"""
+Integration tests for Ainflue upload API endpoints.
 Tests the complete upload workflow and fingerprinting process.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -38,7 +41,8 @@ class TestUploadAPI:
     
     @pytest.fixture(autouse=True)
     async def setup(self):
-        """Setup test environment."""
+        """
+Setup test environment."""
         # Create test files directory
         os.makedirs(TEST_FILES_DIR, exist_ok=True)
         
@@ -54,7 +58,8 @@ class TestUploadAPI:
         await self.client.aclose()
     
     def create_test_files(self):
-        """Create sample test files for upload testing."""
+        """
+Create sample test files for upload testing."""
         # Audio file (MP3)
         self.audio_file = Path(TEST_FILES_DIR) / "test_audio.mp3"
         with open(self.audio_file, "wb") as f:
@@ -406,7 +411,8 @@ class TestFingerprintingPerformance:
     
     @pytest.mark.asyncio
     async def test_fingerprinting_speed(self):
-        """Test fingerprinting processing time."""
+        """
+Test fingerprinting processing time."""
         client = httpx.AsyncClient(base_url=API_BASE_URL)
         
         # Create a test file

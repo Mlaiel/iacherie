@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from ...models.gdpr_models import DataProcessingRecord, ProcessingActivity, Data
 logger = get_logger(__name__)
 
 class ProcessingStatus(Enum):
-    """Data processing status types"""
+    """
+Data processing status types"""
+
     PENDING = "pending"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -43,6 +46,7 @@ class ProcessingStatus(Enum):
 
 class LawfulBasis(Enum):
     """GDPR lawful basis for processing"""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -52,6 +56,7 @@ class LawfulBasis(Enum):
 
 class DataCategory(Enum):
     """Categories of personal data"""
+
     BASIC_IDENTITY = "basic_identity"
     CONTACT_DATA = "contact_data"
     DEMOGRAPHIC_DATA = "demographic_data"
@@ -670,7 +675,8 @@ class DataProcessor:
         activity: ProcessingActivity,
         termination_reason: str
     ) -> Dict[str, str]:
-        """Determine appropriate data handling action upon termination"""
+        """
+Determine appropriate data handling action upon termination"""
         if termination_reason == "consent_withdrawn":
             return {
                 "action": "delete",

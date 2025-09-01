@@ -10,7 +10,7 @@ User (musician/blogger/photographer/influencer/comedian)
 → Upload multi-format → IA protection rights → SEO pro → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -18,6 +18,7 @@ Any reproduction, modification, distribution or use without explicit
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of collaboration services for IA Influencer Agent."""
+    """
+Types of collaboration services for IA Influencer Agent."""
+
     COLLABORATION_API = "collaboration_api"
     MATCHING_ENGINE = "matching_engine"
     CONTENT_PROCESSING = "content_processing"
@@ -53,6 +56,7 @@ class ServiceType(Enum):
 
 class ServiceStatus(Enum):
     """Service deployment status with comprehensive states."""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     DEPLOYING = "deploying"
@@ -70,6 +74,7 @@ class ServiceStatus(Enum):
 
 class ContainerRuntime(Enum):
     """Supported container runtimes."""
+
     DOCKER = "docker"
     KUBERNETES = "kubernetes"
     PODMAN = "podman"
@@ -78,6 +83,7 @@ class ContainerRuntime(Enum):
 
 class OrchestrationPlatform(Enum):
     """Supported orchestration platforms."""
+
     KUBERNETES = "kubernetes"
     DOCKER_SWARM = "docker_swarm"
     AWS_ECS = "aws_ecs"
@@ -132,7 +138,8 @@ class ServiceInstance:
 
 @dataclass
 class DeploymentStrategy:
-    """Deployment strategy configuration."""
+    """
+Deployment strategy configuration."""
     strategy_type: str = "rolling_update"
     max_unavailable: int = 1
     max_surge: int = 1
@@ -165,7 +172,8 @@ class CollaborationOrchestrator:
         platform: OrchestrationPlatform = OrchestrationPlatform.KUBERNETES,
         runtime: ContainerRuntime = ContainerRuntime.DOCKER
     ):
-        """Initialize the collaboration orchestrator."""
+        """
+Initialize the collaboration orchestrator."""
         self.config = config
         self.platform = platform
         self.runtime = runtime
@@ -477,7 +485,8 @@ class CollaborationOrchestrator:
         return self.services.get(service_id)
 
     async def list_services(self, service_type: Optional[ServiceType] = None) -> List[ServiceInstance]:
-        """List all services, optionally filtered by type."""
+        """
+List all services, optionally filtered by type."""
         services = list(self.services.values())
         
         if service_type:
@@ -486,7 +495,8 @@ class CollaborationOrchestrator:
         return services
 
     async def get_service_health(self, service_id: str) -> Dict[str, Any]:
-        """Get comprehensive health status of a service."""
+        """
+Get comprehensive health status of a service."""
         if service_id not in self.services:
             raise ValueError(f"Service {service_id} not found")
         
@@ -825,7 +835,8 @@ class CollaborationOrchestrator:
     """
     
     def __init__(self, deployment_config):
-        """Initialize collaboration orchestrator."""
+        """
+Initialize collaboration orchestrator."""
         self.deployment_config = deployment_config
         self.deployed_services: Dict[str, DeployedService] = {}
         self.service_configs = self._load_service_configurations()
@@ -1360,7 +1371,8 @@ class CollaborationOrchestrator:
         return await self.perform_health_checks()
     
     async def rollback_services(self) -> Dict[str, Any]:
-        """Rollback all services to previous version."""
+        """
+Rollback all services to previous version."""
         logger.info("Rolling back collaboration services")
         
         rollback_results = {}

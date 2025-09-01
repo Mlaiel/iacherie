@@ -17,6 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -32,7 +33,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MonitoringTier(Enum):
-    """Monitoring tier levels"""
+    """
+Monitoring tier levels"""
+
     INFRASTRUCTURE = "infrastructure"
     APPLICATION = "application"
     BUSINESS = "business"
@@ -41,6 +44,7 @@ class MonitoringTier(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -48,6 +52,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Metric types for IA Influencer platform"""
+
     CONTENT_UPLOADS = "content_uploads"
     COPYRIGHT_VIOLATIONS = "copyright_violations"
     REVENUE_TRANSACTIONS = "revenue_transactions"
@@ -73,7 +78,8 @@ class AlertRule:
 
 @dataclass
 class Dashboard:
-    """Dashboard configuration"""
+    """
+Dashboard configuration"""
     dashboard_id: str
     title: str
     description: str
@@ -115,6 +121,7 @@ logger = logging.getLogger(__name__)
 
 class MonitoringComponent(Enum):
     """Monitoring stack components"""
+
     PROMETHEUS = "prometheus"
     GRAFANA = "grafana"
     JAEGER = "jaeger"
@@ -126,6 +133,7 @@ class MonitoringComponent(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
@@ -142,7 +150,8 @@ class MetricConfig:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
+    """
+Alert rule configuration"""
     name: str
     expression: str
     severity: AlertSeverity
@@ -188,7 +197,8 @@ class MonitoringStackManager:
         self.metric_collectors = {}
         
     async def deploy_monitoring_stack(self, spec: MonitoringStackSpec) -> Dict[str, Any]:
-        """Deploy comprehensive monitoring and observability infrastructure"""
+        """
+Deploy comprehensive monitoring and observability infrastructure"""
         try:
             results = {}
             logger.info("Deploying monitoring stack for IA Influencer platform")
@@ -1198,7 +1208,8 @@ class MonitoringStackManager:
         }
     
     async def _create_prometheus_rbac(self, namespace: str) -> Dict[str, Any]:
-        """Create RBAC for Prometheus"""
+        """
+Create RBAC for Prometheus"""
         try:
             # Service Account
             service_account = client.V1ServiceAccount(

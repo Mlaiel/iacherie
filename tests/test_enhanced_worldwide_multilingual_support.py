@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Enhanced Worldwide Multilingual Support Tests
+"""
+Enhanced Worldwide Multilingual Support Tests
 ============================================
 
 Tests for comprehensive language and dialect support covering
@@ -21,6 +23,7 @@ Tests for comprehensive language and dialect support covering
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -45,10 +48,12 @@ except ImportError as e:
 
 
 class TestWorldwideLanguageCoverage:
-    """Test comprehensive worldwide language coverage"""
+    """
+Test comprehensive worldwide language coverage"""
     
     def test_import_availability(self):
-        """Test that all multilingual modules can be imported"""
+        """
+Test that all multilingual modules can be imported"""
         if not IMPORTS_AVAILABLE:
             pytest.skip(f"Required modules not available: {IMPORT_ERROR}")
         

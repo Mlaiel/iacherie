@@ -8,7 +8,7 @@ Intelligent storage lifecycle management with automated tiering,
 archival policies, and cost optimization for content creators.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -16,6 +16,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -30,7 +31,9 @@ import time
 logger = logging.getLogger(__name__)
 
 class LifecycleAction(Enum):
-    """Lifecycle management actions"""
+    """
+Lifecycle management actions"""
+
     MIGRATE_TIER = "migrate_tier"
     ARCHIVE = "archive"
     DELETE = "delete"
@@ -41,6 +44,7 @@ class LifecycleAction(Enum):
 
 class TriggerType(Enum):
     """Lifecycle rule trigger types"""
+
     AGE_BASED = "age_based"
     ACCESS_BASED = "access_based"
     SIZE_BASED = "size_based"
@@ -100,7 +104,8 @@ class LifecycleEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize lifecycle engine"""
+        """
+Initialize lifecycle engine"""
         self.config = config
         self.rules: Dict[str, LifecycleRule] = {}
         self.executions: Dict[str, LifecycleExecution] = {}
@@ -241,7 +246,8 @@ class LifecycleEngine:
         return self.rules.get(rule_id)
     
     def list_rules(self, enabled_only: bool = False) -> List[LifecycleRule]:
-        """List all lifecycle rules"""
+        """
+List all lifecycle rules"""
         rules = list(self.rules.values())
         if enabled_only:
             rules = [rule for rule in rules if rule.enabled]
@@ -253,7 +259,8 @@ class LifecycleEngine:
         dry_run: bool = False,
         max_files: Optional[int] = None
     ) -> LifecycleExecution:
-        """Execute a specific lifecycle rule"""
+        """
+Execute a specific lifecycle rule"""
         
         if rule_id not in self.rules:
             raise ValueError(f"Rule {rule_id} not found")
@@ -375,7 +382,8 @@ class LifecycleEngine:
         rule_id: Optional[str] = None,
         limit: int = 100
     ) -> List[LifecycleExecution]:
-        """List recent executions"""
+        """
+List recent executions"""
         executions = list(self.executions.values())
         
         if rule_id:
@@ -387,7 +395,8 @@ class LifecycleEngine:
         return executions[:limit]
     
     async def get_lifecycle_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive lifecycle statistics"""
+        """
+Get comprehensive lifecycle statistics"""
         
         stats = {
             'rules': {
@@ -418,7 +427,8 @@ class LifecycleEngine:
     # Private implementation methods
     
     async def _find_matching_files(self, rule: LifecycleRule) -> List[Dict[str, Any]]:
-        """Find files that match the rule conditions"""
+        """
+Find files that match the rule conditions"""
         
         if not self.storage_manager:
             logger.warning("Storage manager not available for file matching")
@@ -979,7 +989,8 @@ class LifecycleEngine:
         return max(0, monthly_savings)
     
     def _calculate_archival_savings(self, file_size: int) -> float:
-        """Calculate cost savings from archival"""
+        """
+Calculate cost savings from archival"""
         
         size_gb = file_size / (1024**3)
         # Assume 80% cost reduction for archival
@@ -988,30 +999,35 @@ class LifecycleEngine:
         return monthly_savings
     
     def _estimate_migration_savings(self, size_bytes: int) -> float:
-        """Estimate savings from tier migration"""
+        """
+Estimate savings from tier migration"""
         size_gb = size_bytes / (1024**3)
         return size_gb * 0.03 * 12  # $0.03/GB/month * 12 months
     
     def _estimate_cleanup_savings(self, file_count: int) -> float:
-        """Estimate savings from cleanup"""
+        """
+Estimate savings from cleanup"""
         # Assume average file size of 10MB
         size_gb = (file_count * 10) / 1024
         return size_gb * 0.05 * 12  # Storage cost savings
     
     def _estimate_archival_savings(self, file_count: int) -> float:
-        """Estimate savings from archival"""
+        """
+Estimate savings from archival"""
         # Assume average file size of 50MB
         size_gb = (file_count * 50) / 1024
         return size_gb * 0.04 * 12  # 80% cost reduction for archival
     
     def _estimate_temp_cleanup_savings(self, file_count: int) -> float:
-        """Estimate savings from temporary file cleanup"""
+        """
+Estimate savings from temporary file cleanup"""
         # Assume average temp file size of 5MB
         size_gb = (file_count * 5) / 1024
         return size_gb * 0.05 * 12  # Full storage cost recovery
     
     async def _get_content_analysis_summary(self) -> Dict[str, Any]:
-        """Get summary of content analysis cache"""
+        """
+Get summary of content analysis cache"""
         
         return {
             'cached_analyses': len(self.content_analysis_cache),
@@ -1020,7 +1036,8 @@ class LifecycleEngine:
         }
     
     def _update_execution_metrics(self, execution: LifecycleExecution) -> None:
-        """Update performance metrics from execution"""
+        """
+Update performance metrics from execution"""
         
         self.metrics['rules_executed'] += 1
         

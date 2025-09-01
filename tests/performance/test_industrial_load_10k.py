@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LoadTestResult:
-    """Results from a load test execution."""
+    """
+Results from a load test execution."""
     concurrent_users: int
     total_requests: int
     successful_requests: int
@@ -36,7 +37,8 @@ class LoadTestResult:
 
 @dataclass
 class IndustrialLoadTestConfig:
-    """Configuration for industrial load testing."""
+    """
+Configuration for industrial load testing."""
     max_concurrent_users: int = 10000
     ramp_up_duration_seconds: int = 300  # 5 minutes
     test_duration_seconds: int = 1800  # 30 minutes
@@ -65,7 +67,8 @@ class IndustrialLoadTester:
         self.total_bytes_transferred = 0
 
     async def __aenter__(self):
-        """Setup session for testing."""
+        """
+Setup session for testing."""
         timeout = aiohttp.ClientTimeout(total=30, connect=10)
         connector = aiohttp.TCPConnector(
             limit=self.config.max_concurrent_users + 100,
@@ -80,7 +83,8 @@ class IndustrialLoadTester:
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Cleanup session."""
+        """
+Cleanup session."""
         if self.session:
             await self.session.close()
 
@@ -276,7 +280,8 @@ class TestIndustrialLoadTesting:
 
     @pytest.fixture
     def load_test_config(self):
-        """Configuration for load tests."""
+        """
+Configuration for load tests."""
         return IndustrialLoadTestConfig(
             max_concurrent_users=10000,
             max_acceptable_response_time_ms=100,

@@ -5,8 +5,9 @@ Advanced similarity search engine for content fingerprint matching.
 Implements multiple similarity algorithms with configurable thresholds.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import asyncio
 import logging
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class SimilarityMetric(Enum):
-    """Similarity metrics supported"""
+    """
+Similarity metrics supported"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -40,6 +43,7 @@ class SimilarityMetric(Enum):
 
 class MatchType(Enum):
     """Types of content matches"""
+
     EXACT = "exact"              # 98-100% similarity
     NEAR_DUPLICATE = "near_duplicate"  # 90-98% similarity
     SIMILAR = "similar"          # 75-90% similarity
@@ -62,7 +66,8 @@ class SimilarityResult:
 
 @dataclass
 class SearchConfiguration:
-    """Configuration for similarity search"""
+    """
+Configuration for similarity search"""
     similarity_metric: SimilarityMetric = SimilarityMetric.COSINE
     min_similarity: float = 0.6
     max_results: int = 100
@@ -75,7 +80,8 @@ class SearchConfiguration:
 
 
 class SimilarityCalculator:
-    """Calculate similarity between vectors using various metrics"""
+    """
+Calculate similarity between vectors using various metrics"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -215,7 +221,8 @@ class SimilarityCalculator:
 
 
 class SearchEngine:
-    """Advanced similarity search engine"""
+    """
+Advanced similarity search engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -349,7 +356,8 @@ class SearchEngine:
         return similarities
     
     def _determine_match_type(self, similarity_score: float, config: SearchConfiguration) -> MatchType:
-        """Determine match type based on similarity score"""
+        """
+Determine match type based on similarity score"""
         if similarity_score >= config.exact_threshold:
             return MatchType.EXACT
         elif similarity_score >= config.near_duplicate_threshold:
@@ -367,7 +375,8 @@ class SearchEngine:
         query_metadata: Optional[Dict[str, Any]],
         candidate_metadata: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate confidence score for the match"""
+        """
+Calculate confidence score for the match"""
         base_confidence = similarity_score
         
         # Adjust based on metadata quality
@@ -397,7 +406,8 @@ class SearchEngine:
         candidate_ids: List[str],
         config: SearchConfiguration
     ) -> str:
-        """Generate cache key for search results"""
+        """
+Generate cache key for search results"""
         query_hash = hashlib.md5(query_vector.tobytes()).hexdigest()[:8]
         candidates_hash = hashlib.md5(''.join(sorted(candidate_ids)).encode()).hexdigest()[:8]
         config_hash = hashlib.md5(str(config.__dict__).encode()).hexdigest()[:8]
@@ -496,7 +506,8 @@ class SearchEngine:
         }
     
     def clear_cache(self):
-        """Clear search result cache"""
+        """
+Clear search result cache"""
         self.result_cache.clear()
         self.search_stats['cache_hits'] = 0
         self.search_stats['cache_misses'] = 0
@@ -506,7 +517,8 @@ class SearchEngine:
         ground_truth: List[Tuple[str, str, bool]],  # (query_id, candidate_id, is_match)
         vectors: Dict[str, np.ndarray]
     ) -> SearchConfiguration:
-        """Optimize similarity thresholds based on ground truth data"""
+        """
+Optimize similarity thresholds based on ground truth data"""
         try:
             # Calculate similarities for ground truth pairs
             similarities_true = []

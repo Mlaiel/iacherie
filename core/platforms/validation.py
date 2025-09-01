@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -28,16 +29,19 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformValidator:
-    """Comprehensive platform ecosystem validator"""
+    """
+Comprehensive platform ecosystem validator"""
     
     def __init__(self):
-        """Initialize validator"""
+        """
+Initialize validator"""
         self.validation_results: Dict[str, Any] = {}
         self.errors: List[str] = []
         self.warnings: List[str] = []
     
     async def validate_ecosystem(self) -> Dict[str, Any]:
-        """Validate entire platform ecosystem"""
+        """
+Validate entire platform ecosystem"""
         logger.info("Starting comprehensive ecosystem validation...")
         
         validation_start = datetime.utcnow()
@@ -402,7 +406,7 @@ class PlatformValidator:
         
         # Footer
         report.append("=" * 80)
-        report.append("© 2025 Fahed Mlaiel - Platform Ecosystem Validation")
+        report.append("(c) 2025 Fahed Mlaiel - Platform Ecosystem Validation")
         report.append("=" * 80)
         
         return "\n".join(report)
@@ -415,7 +419,8 @@ async def validate_platform_ecosystem() -> Dict[str, Any]:
 
 
 def quick_validation() -> bool:
-    """Quick validation check - returns True if basic functionality works"""
+    """
+Quick validation check - returns True if basic functionality works"""
     try:
         # Check basic imports
         from . import base, distributor, aggregator, monitor, connector
@@ -443,7 +448,8 @@ async def async_quick_validation() -> bool:
 
 
 def get_ecosystem_health() -> Dict[str, Any]:
-    """Get current ecosystem health status"""
+    """
+Get current ecosystem health status"""
     try:
         return {
             'status': 'HEALTHY',

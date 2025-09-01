@@ -22,6 +22,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import logging
 import time
 import threading
@@ -45,7 +46,9 @@ from sqlalchemy.engine import Engine
 logger = logging.getLogger(__name__)
 
 class MaintenanceType(Enum):
-    """Types of maintenance operations"""
+    """
+Types of maintenance operations"""
+
     VACUUM = "vacuum"
     ANALYZE = "analyze"
     REINDEX = "reindex"
@@ -60,6 +63,7 @@ class MaintenanceType(Enum):
 
 class MaintenancePriority(Enum):
     """Maintenance task priorities"""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -67,7 +71,9 @@ class MaintenancePriority(Enum):
     BACKGROUND = 5
 
 class MaintenanceStatus(Enum):
-    """Maintenance task status"""
+    """
+Maintenance task status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -77,6 +83,7 @@ class MaintenanceStatus(Enum):
 
 class HealthStatus(Enum):
     """Partition health status"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -104,7 +111,8 @@ class MaintenanceTask:
 
 @dataclass
 class PartitionHealth:
-    """Partition health information"""
+    """
+Partition health information"""
     partition_name: str
     table_name: str
     health_status: HealthStatus
@@ -124,7 +132,8 @@ class PartitionHealth:
 
 @dataclass
 class MaintenanceReport:
-    """Comprehensive maintenance report"""
+    """
+Comprehensive maintenance report"""
     report_id: str
     period_start: datetime
     period_end: datetime
@@ -140,7 +149,8 @@ class MaintenanceReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class HealthMonitor:
-    """Partition health monitoring and diagnostics system"""
+    """
+Partition health monitoring and diagnostics system"""
     
     def __init__(self, session_factory, config: Dict[str, Any] = None):
         self.session_factory = session_factory
@@ -150,7 +160,8 @@ class HealthMonitor:
         self.check_interval = self.config.get('health_check_interval', 3600)  # 1 hour
         
     def check_partition_health(self, partition_name: str, table_name: str) -> PartitionHealth:
-        """Comprehensive partition health check"""
+        """
+Comprehensive partition health check"""
         health = PartitionHealth(
             partition_name=partition_name,
             table_name=table_name,
@@ -222,7 +233,8 @@ class HealthMonitor:
             return False
     
     def _get_partition_statistics(self, session: Session, partition_name: str) -> Dict[str, Any]:
-        """Get basic partition statistics"""
+        """
+Get basic partition statistics"""
         try:
             result = session.execute(text(f"""
                 SELECT 
@@ -371,7 +383,8 @@ class HealthMonitor:
         return max(efficiency, 0.1)
     
     def _determine_health_status(self, health: PartitionHealth) -> HealthStatus:
-        """Determine overall health status"""
+        """
+Determine overall health status"""
         critical_issues = 0
         warning_issues = 0
         
@@ -472,7 +485,8 @@ class MaintenanceScheduler:
         self.emergency_threshold = self.config.get('emergency_threshold', 0.9)  # CPU/Memory
         
     def schedule_maintenance(self, task: MaintenanceTask) -> bool:
-        """Schedule maintenance task"""
+        """
+Schedule maintenance task"""
         try:
             with self.schedule_lock:
                 # Validate task
@@ -516,7 +530,8 @@ class MaintenanceScheduler:
         return not existing_task
     
     def _check_dependencies(self, task: MaintenanceTask) -> bool:
-        """Check if task dependencies are satisfied"""
+        """
+Check if task dependencies are satisfied"""
         if not task.dependencies:
             return True
         
@@ -533,7 +548,8 @@ class MaintenanceScheduler:
         return True
     
     def _calculate_optimal_schedule_time(self, task: MaintenanceTask) -> datetime:
-        """Calculate optimal scheduling time"""
+        """
+Calculate optimal scheduling time"""
         now = datetime.utcnow()
         
         # For critical tasks, schedule immediately
@@ -548,7 +564,8 @@ class MaintenanceScheduler:
         return self._find_low_load_time(now, task.estimated_duration)
     
     def _find_next_maintenance_window(self, from_time: datetime) -> datetime:
-        """Find next maintenance window"""
+        """
+Find next maintenance window"""
         # Find next maintenance window (2-5 AM)
         target_time = from_time.replace(
             hour=self.maintenance_window_start, 
@@ -564,7 +581,8 @@ class MaintenanceScheduler:
         return target_time
     
     def _find_low_load_time(self, from_time: datetime, duration: timedelta) -> datetime:
-        """Find time with expected low system load"""
+        """
+Find time with expected low system load"""
         # Simple heuristic: schedule during night hours
         target_hour = 3  # 3 AM
         
@@ -577,7 +595,8 @@ class MaintenanceScheduler:
         return target_time
     
     def get_next_tasks(self, max_tasks: int = None) -> List[MaintenanceTask]:
-        """Get next tasks ready for execution"""
+        """
+Get next tasks ready for execution"""
         if max_tasks is None:
             max_tasks = self.max_concurrent_tasks - len(self.running_tasks)
         
@@ -604,7 +623,8 @@ class MaintenanceScheduler:
             return ready_tasks
     
     def _is_system_load_acceptable(self) -> bool:
-        """Check if system load is acceptable for maintenance"""
+        """
+Check if system load is acceptable for maintenance"""
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory_percent = psutil.virtual_memory().percent
@@ -616,7 +636,8 @@ class MaintenanceScheduler:
             return True  # Assume acceptable if can't check
     
     def mark_task_started(self, task_id: str):
-        """Mark task as started"""
+        """
+Mark task as started"""
         with self.schedule_lock:
             for i, task in enumerate(self.task_queue):
                 if task.task_id == task_id:
@@ -629,7 +650,8 @@ class MaintenanceScheduler:
                     break
     
     def mark_task_completed(self, task_id: str, success: bool = True, error_message: str = None):
-        """Mark task as completed"""
+        """
+Mark task as completed"""
         with self.schedule_lock:
             if task_id in self.running_tasks:
                 task = self.running_tasks[task_id]
@@ -651,7 +673,8 @@ class MaintenanceScheduler:
                     self.completed_tasks = self.completed_tasks[-500:]
 
 class MaintenanceExecutor:
-    """Maintenance task execution engine"""
+    """
+Maintenance task execution engine"""
     
     def __init__(self, session_factory, config: Dict[str, Any] = None):
         self.session_factory = session_factory
@@ -659,7 +682,8 @@ class MaintenanceExecutor:
         self.executor = ThreadPoolExecutor(max_workers=self.config.get('max_workers', 4))
         
     def execute_task(self, task: MaintenanceTask) -> bool:
-        """Execute maintenance task"""
+        """
+Execute maintenance task"""
         try:
             logger.info(f"Executing maintenance task: {task.task_id} ({task.task_type.value})")
             
@@ -863,7 +887,8 @@ class MaintenanceManager:
                               table_name: str,
                               priority: MaintenancePriority = MaintenancePriority.MEDIUM,
                               parameters: Dict[str, Any] = None) -> MaintenanceTask:
-        """Create maintenance task"""
+        """
+Create maintenance task"""
         task_id = f"{task_type.value}_{partition_name}_{int(time.time())}"
         
         # Estimate duration based on task type
@@ -924,7 +949,8 @@ class MaintenanceManager:
         return self.health_monitor.check_partition_health(partition_name, table_name)
     
     def get_health_summary(self) -> Dict[str, Any]:
-        """Get health summary for all registered partitions"""
+        """
+Get health summary for all registered partitions"""
         try:
             health_summary = {
                 'total_partitions': len(self.partition_registry),

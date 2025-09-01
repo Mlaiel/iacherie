@@ -63,6 +63,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Rapports de conformité automatiques
 - Analytics d'utilisation des ressources
 """
+
 import asyncio
 import os
 import hashlib
@@ -91,7 +92,9 @@ from backend.deployment.database.audit_manager import get_audit_manager
 
 
 class MigrationStatus(Enum):
-    """Statuts des migrations"""
+    """
+Statuts des migrations"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -102,6 +105,7 @@ class MigrationStatus(Enum):
 
 class MigrationType(Enum):
     """Types de migration"""
+
     SCHEMA = "schema"
     DATA = "data"
     INDEX = "index"
@@ -113,6 +117,7 @@ class MigrationType(Enum):
 
 class MigrationPriority(Enum):
     """Priorités de migration"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -121,7 +126,8 @@ class MigrationPriority(Enum):
 
 @dataclass
 class MigrationScript:
-    """Définition d'un script de migration"""
+    """
+Définition d'un script de migration"""
     id: str
     version: str
     name: str
@@ -195,7 +201,8 @@ class MigrationResult:
 
 @dataclass
 class MigrationPlan:
-    """Plan d'exécution des migrations"""
+    """
+Plan d'exécution des migrations"""
     id: str
     name: str
     description: str
@@ -400,7 +407,8 @@ class DatabaseMigrationEngine:
         return metadata
     
     def _split_sql_scripts(self, content: str) -> Tuple[str, str]:
-        """Sépare les scripts UP et DOWN d'un fichier SQL"""
+        """
+Sépare les scripts UP et DOWN d'un fichier SQL"""
         # Recherche des marqueurs UP et DOWN
         up_match = re.search(r'--\s*UP\s*\n(.*?)(?=--\s*DOWN|\Z)', content, re.DOTALL | re.IGNORECASE)
         down_match = re.search(r'--\s*DOWN\s*\n(.*)', content, re.DOTALL | re.IGNORECASE)
@@ -1026,7 +1034,8 @@ class DatabaseMigrationEngine:
         return await self._rollback_migration(migration_id)
     
     async def _rollback_migration(self, migration_id: str) -> MigrationResult:
-        """Effectue le rollback interne d'une migration"""
+        """
+Effectue le rollback interne d'une migration"""
         try:
             if migration_id not in self.migrations:
                 raise ValueError(f"Migration {migration_id} not found")

@@ -12,6 +12,7 @@ This module provides comprehensive compliance dashboard functionality including:
 - Policy management interface
 - Violation tracking and remediation
 """
+
 import asyncio
 import json
 import logging
@@ -39,7 +40,9 @@ logger = get_logger(__name__)
 
 
 class DashboardView(str, Enum):
-    """Dashboard view types"""
+    """
+Dashboard view types"""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     COMPLIANCE_STATUS = "compliance_status"
     VIOLATION_TRACKING = "violation_tracking"
@@ -54,6 +57,7 @@ class DashboardView(str, Enum):
 
 class ReportFrequency(str, Enum):
     """Report generation frequency"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -65,6 +69,7 @@ class ReportFrequency(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -91,7 +96,8 @@ class DashboardMetrics:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert information"""
+    """
+Compliance alert information"""
     alert_id: str
     severity: AlertSeverity
     title: str
@@ -107,7 +113,8 @@ class ComplianceAlert:
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""
+    """
+Dashboard widget configuration"""
     widget_id: str
     widget_type: str
     title: str
@@ -576,7 +583,8 @@ class ComplianceDashboard:
         report_type: str,
         parameters: Dict[str, Any]
     ) -> None:
-        """Generate report in background"""
+        """
+Generate report in background"""
         try:
             # Implementation for background report generation
             pass
@@ -590,17 +598,20 @@ class ComplianceDashboard:
         pass
 
     async def _process_auto_remediation(self, alert: ComplianceAlert) -> None:
-        """Process automatic remediation for alert"""
+        """
+Process automatic remediation for alert"""
         # Implementation for auto-remediation
         pass
 
     async def _send_alert_notifications(self, alert: ComplianceAlert) -> None:
-        """Send alert notifications"""
+        """
+Send alert notifications"""
         # Implementation to send notifications
         pass
 
     async def _get_violation_counts(self, time_range: tuple) -> Dict[str, int]:
-        """Get violation counts for time range"""
+        """
+Get violation counts for time range"""
         # Implementation to get violation statistics
         return {"open": 0, "resolved": 0, "pending_audits": 0, "dmca_takedowns": 0, "data_breaches": 0, "regulatory_changes": 0}
 
@@ -610,17 +621,20 @@ class ComplianceDashboard:
         return 0.0
 
     async def _get_executive_widgets(self) -> List[DashboardWidget]:
-        """Get executive dashboard widgets"""
+        """
+Get executive dashboard widgets"""
         # Implementation to return widget configurations
         return []
 
     async def _get_compliance_widgets(self) -> List[DashboardWidget]:
-        """Get compliance dashboard widgets"""
+        """
+Get compliance dashboard widgets"""
         # Implementation to return widget configurations
         return []
 
     async def _get_violation_widgets(self) -> List[DashboardWidget]:
-        """Get violation tracking widgets"""
+        """
+Get violation tracking widgets"""
         # Implementation to return widget configurations
         return []
 

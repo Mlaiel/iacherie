@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -41,6 +42,7 @@ logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
     """Supported content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -52,6 +54,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -60,6 +63,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -69,6 +73,7 @@ class ViolationType(Enum):
 
 class Platform(Enum):
     """Platforms to monitor for violations"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -99,7 +104,8 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
+    """
+Content violation alert"""
     alert_id: str
     fingerprint_id: str
     detected_url: str
@@ -143,7 +149,8 @@ class AudioFingerprintEngine:
         self.frame_size = 1024
         
     async def generate_audio_fingerprint(self, audio_file_path: str) -> Tuple[str, np.ndarray]:
-        """Generate audio fingerprint using multiple algorithms"""
+        """
+Generate audio fingerprint using multiple algorithms"""
         try:
             # Chromaprint fingerprinting
             duration, raw_fingerprints = chromaprint.decode_fingerprint(
@@ -188,7 +195,8 @@ class VideoFingerprintEngine:
         self.hash_size = 64
         
     async def generate_video_fingerprint(self, video_file_path: str) -> Tuple[str, np.ndarray]:
-        """Generate video fingerprint using frame analysis and perceptual hashing"""
+        """
+Generate video fingerprint using frame analysis and perceptual hashing"""
         try:
             cap = cv2.VideoCapture(video_file_path)
             fps = cap.get(cv2.CAP_PROP_FPS)
@@ -384,7 +392,8 @@ class ContentProtectionInfrastructureManager:
         self.monitoring_active = False
         
     async def initialize_protection_infrastructure(self) -> Dict[str, Any]:
-        """Initialize complete content protection infrastructure"""
+        """
+Initialize complete content protection infrastructure"""
         try:
             logger.info("Initializing content protection infrastructure...")
             
@@ -676,17 +685,20 @@ class ContentProtectionInfrastructureManager:
         self.fingerprint_storage[fingerprint.content_id] = fingerprint
 
     async def _scan_platform_for_violations(self, platform: Platform) -> List[ViolationAlert]:
-        """Scan specific platform for violations"""
+        """
+Scan specific platform for violations"""
         # Placeholder implementation - in production, implement actual crawling
         return []
 
     async def _process_violation_alerts(self, violations: List[ViolationAlert]) -> List[ViolationAlert]:
-        """Process and rank violation alerts"""
+        """
+Process and rank violation alerts"""
         # Sort by similarity score and confidence level
         return sorted(violations, key=lambda x: (x.similarity_score, x.confidence_level), reverse=True)
 
     async def _monitor_platform_continuously(self, platform: Platform):
-        """Continuously monitor a platform for violations"""
+        """
+Continuously monitor a platform for violations"""
         while self.monitoring_active:
             try:
                 violations = await self._scan_platform_for_violations(platform)

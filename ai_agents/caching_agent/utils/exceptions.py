@@ -10,11 +10,13 @@ ATTENTION: Ce code fait partie de la propriété intellectuelle de Fahed Mlaiel.
 Toute reproduction, distribution, ou utilisation non autorisée est strictement interdite.
 Contact: mlaiel@live.de
 """
+
 from typing import Any, Dict, List, Optional
 
 
 class CachingAgentError(Exception):
-    """Base exception class for all caching agent errors."""
+    """
+Base exception class for all caching agent errors."""
     
     def __init__(self, message: str, error_code: Optional[str] = None, 
                  details: Optional[Dict[str, Any]] = None):

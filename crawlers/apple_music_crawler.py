@@ -21,6 +21,7 @@ Features:
 - Multi-region content discovery and availability tracking
 - Comprehensive music metadata extraction and analysis
 """
+
 import asyncio
 import json
 import re
@@ -57,7 +58,8 @@ settings = get_settings()
 
 @dataclass
 class AppleMusicTrack:
-    """Enhanced Apple Music track data structure with fingerprinting."""
+    """
+Enhanced Apple Music track data structure with fingerprinting."""
     track_id: str
     name: str
     artist_name: str
@@ -101,7 +103,8 @@ class AppleMusicTrack:
 
 @dataclass
 class AppleMusicArtist:
-    """Apple Music artist data structure."""
+    """
+Apple Music artist data structure."""
     artist_id: str
     name: str
     biography: Optional[str]
@@ -127,7 +130,8 @@ class AppleMusicArtist:
 
 @dataclass
 class AppleMusicAlbum:
-    """Apple Music album data structure."""
+    """
+Apple Music album data structure."""
     album_id: str
     name: str
     artist_name: str
@@ -156,7 +160,8 @@ class AppleMusicAlbum:
 
 
 class AppleMusicArtist(BaseModel):
-    """Apple Music Artist data model"""
+    """
+Apple Music Artist data model"""
     artist_id: str
     name: str
     url: str
@@ -174,7 +179,8 @@ class AppleMusicArtist(BaseModel):
 
 
 class AppleMusicAlbum(BaseModel):
-    """Apple Music Album data model"""
+    """
+Apple Music Album data model"""
     album_id: str
     name: str
     artist_name: str
@@ -195,7 +201,8 @@ class AppleMusicAlbum(BaseModel):
 
 
 class AppleMusicPlaylist(BaseModel):
-    """Apple Music Playlist data model"""
+    """
+Apple Music Playlist data model"""
     playlist_id: str
     name: str
     description: Optional[str] = None
@@ -962,7 +969,8 @@ class AppleMusicCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     async def _analyze_release_pattern(self, albums: List[Dict]) -> Dict[str, Any]:
-        """Analyze artist's release pattern"""
+        """
+Analyze artist's release pattern"""
         if not albums:
             return {}
         
@@ -991,7 +999,8 @@ class AppleMusicCrawler(BaseCrawler):
         }
     
     async def _analyze_content_ratings(self, songs: List[Dict]) -> Dict[str, Any]:
-        """Analyze content ratings distribution"""
+        """
+Analyze content ratings distribution"""
         ratings = {}
         for song in songs:
             rating = song.get('attributes', {}).get('contentRating', 'clean')
@@ -1005,7 +1014,8 @@ class AppleMusicCrawler(BaseCrawler):
         }
     
     async def _analyze_recent_activity(self, albums: List[Dict], songs: List[Dict]) -> Dict[str, Any]:
-        """Analyze recent activity"""
+        """
+Analyze recent activity"""
         recent_threshold = datetime.now() - timedelta(days=365)
         
         recent_albums = 0
@@ -1025,7 +1035,8 @@ class AppleMusicCrawler(BaseCrawler):
         }
     
     async def _analyze_chart_trends(self, chart_data: List[Dict], chart_type: str) -> List[Dict]:
-        """Analyze trends from chart data"""
+        """
+Analyze trends from chart data"""
         trends = []
         
         for item in chart_data[:20]:  # Top 20 items
@@ -1049,7 +1060,8 @@ class AppleMusicCrawler(BaseCrawler):
         return trends
     
     async def _get_trending_genres(self, trends_data: Dict) -> List[str]:
-        """Extract trending genres from trend data"""
+        """
+Extract trending genres from trend data"""
         genre_counts = {}
         
         for trend_type, trends in trends_data.items():
@@ -1061,7 +1073,8 @@ class AppleMusicCrawler(BaseCrawler):
         return sorted(genre_counts.keys(), key=genre_counts.get, reverse=True)[:10]
     
     async def _analyze_duration_trends(self, songs_trends: List[Dict]) -> Dict[str, Any]:
-        """Analyze duration trends from songs"""
+        """
+Analyze duration trends from songs"""
         if not songs_trends:
             return {}
         
@@ -1084,7 +1097,8 @@ class AppleMusicCrawler(BaseCrawler):
         }
     
     async def _analyze_release_patterns(self, trends_data: Dict) -> Dict[str, Any]:
-        """Analyze release patterns from trends"""
+        """
+Analyze release patterns from trends"""
         current_year = datetime.now().year
         year_counts = {}
         
@@ -1106,7 +1120,8 @@ class AppleMusicCrawler(BaseCrawler):
         }
     
     async def _analyze_content_rating_trends(self, trends_data: Dict) -> Dict[str, Any]:
-        """Analyze content rating trends"""
+        """
+Analyze content rating trends"""
         rating_counts = {}
         
         for trend_type, trends in trends_data.items():
@@ -1123,7 +1138,8 @@ class AppleMusicCrawler(BaseCrawler):
         }
     
     async def _calculate_artist_diversity(self, trends_data: Dict) -> int:
-        """Calculate artist diversity in trends"""
+        """
+Calculate artist diversity in trends"""
         unique_artists = set()
         
         for trend_type, trends in trends_data.items():
@@ -1136,7 +1152,8 @@ class AppleMusicCrawler(BaseCrawler):
         return len(unique_artists)
     
     async def _identify_dominant_labels(self, trends_data: Dict) -> List[str]:
-        """Identify dominant record labels (would need additional API calls)"""
+        """
+Identify dominant record labels (would need additional API calls)"""
         # This would require fetching album details for label information
         return ["Universal Music Group", "Sony Music", "Warner Music Group"]  # Placeholder
     
@@ -1158,7 +1175,8 @@ class AppleMusicCrawler(BaseCrawler):
         return [artist for artist, pos in emerging[20:30]]  # Artists in positions 20-30
     
     async def _analyze_genre_crossover(self, trends_data: Dict) -> Dict[str, int]:
-        """Analyze genre crossover patterns"""
+        """
+Analyze genre crossover patterns"""
         genre_combinations = {}
         
         for trend_type, trends in trends_data.items():
@@ -1172,7 +1190,8 @@ class AppleMusicCrawler(BaseCrawler):
         return dict(sorted(genre_combinations.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _analyze_track_performance(self, track: AppleMusicTrack) -> Dict[str, Any]:
-        """Analyze individual track performance metrics"""
+        """
+Analyze individual track performance metrics"""
         return {
             'track_id': track.track_id,
             'name': track.name,
@@ -1188,7 +1207,8 @@ class AppleMusicCrawler(BaseCrawler):
         }
     
     def _categorize_duration(self, duration_ms: int) -> str:
-        """Categorize track duration"""
+        """
+Categorize track duration"""
         duration_seconds = duration_ms / 1000
         
         if duration_seconds < 120:

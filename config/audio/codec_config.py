@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class CodecType(Enum):
-    """Audio codec types"""
+    """
+Audio codec types"""
+
     LOSSLESS = "lossless"
     LOSSY = "lossy"
     HYBRID = "hybrid"
@@ -36,6 +39,7 @@ class CodecType(Enum):
 
 class CodecFamily(Enum):
     """Audio codec families"""
+
     PCM = "pcm"          # WAV, AIFF
     MPEG = "mpeg"        # MP3, AAC
     XIPH = "xiph"        # Vorbis, Opus, FLAC
@@ -45,6 +49,7 @@ class CodecFamily(Enum):
 
 class BitrateMode(Enum):
     """Bitrate encoding modes"""
+
     CBR = "cbr"          # Constant bitrate
     VBR = "vbr"          # Variable bitrate
     ABR = "abr"          # Average bitrate
@@ -53,6 +58,7 @@ class BitrateMode(Enum):
 
 class QualityProfile(Enum):
     """Audio quality profiles"""
+
     ARCHIVAL = "archival"        # Highest quality, no compression
     MASTERING = "mastering"      # Studio mastering quality
     DISTRIBUTION = "distribution" # High quality distribution
@@ -77,7 +83,8 @@ class CodecCapabilities:
 
 @dataclass
 class EncodingPreset:
-    """Audio encoding preset configuration"""
+    """
+Audio encoding preset configuration"""
     name: str
     bitrate_kbps: Optional[int] = None
     quality_level: Optional[float] = None  # 0.0-1.0 or codec-specific
@@ -97,7 +104,8 @@ class CodecConfig:
     """
     
     def __init__(self):
-        """Initialize codec configuration manager"""
+        """
+Initialize codec configuration manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Initialize codec registry
@@ -544,11 +552,13 @@ class CodecConfig:
         return self._codecs.get(codec.lower())
     
     def get_supported_codecs(self) -> List[str]:
-        """Get list of all supported codecs"""
+        """
+Get list of all supported codecs"""
         return list(self._codecs.keys())
     
     def get_lossless_codecs(self) -> List[str]:
-        """Get list of lossless codecs"""
+        """
+Get list of lossless codecs"""
         return [
             codec for codec, info in self._codecs.items()
             if info["type"] == CodecType.LOSSLESS

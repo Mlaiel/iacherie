@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,6 +16,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
@@ -46,7 +47,8 @@ class QualityAssessor:
     """
     
     def __init__(self):
-        """Initialize quality assessor."""
+        """
+Initialize quality assessor."""
         self.settings = get_settings()
         
         # Initialize quality frameworks and standards
@@ -65,7 +67,8 @@ class QualityAssessor:
         }
 
     def _init_quality_frameworks(self):
-        """Initialize quality assessment frameworks."""
+        """
+Initialize quality assessment frameworks."""
         
         # Technical quality metrics by content type
         self.technical_metrics = {
@@ -813,7 +816,8 @@ class QualityAssessor:
             return 0.5
 
     def _assess_engagement_potential(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Assess engagement potential of content."""
+        """
+Assess engagement potential of content."""
         try:
             assessment = {
                 'score': 0.0,
@@ -1093,7 +1097,8 @@ class QualityAssessor:
             return 'needs_improvement'
 
     def _identify_strengths_weaknesses(self, assessment: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Identify strengths and weaknesses from assessment."""
+        """
+Identify strengths and weaknesses from assessment."""
         strengths = []
         weaknesses = []
         
@@ -1276,7 +1281,8 @@ class QualityAssessor:
         return datetime.now().isoformat()
 
     def get_quality_info(self, quality_level: str) -> Dict[str, Any]:
-        """Get information about a quality level."""
+        """
+Get information about a quality level."""
         try:
             quality_info = {
                 'needs_improvement': {

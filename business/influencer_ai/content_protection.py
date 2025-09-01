@@ -24,6 +24,7 @@ Advanced Content Protection System for multi-format creators implementing:
 - Legal compliance and evidence collection
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class ProtectionType(Enum):
-    """Types de protection de contenu"""
+    """
+Types de protection de contenu"""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -62,6 +65,7 @@ class ProtectionType(Enum):
 
 class ThreatLevel(Enum):
     """Niveaux de menace détectés"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -69,6 +73,7 @@ class ThreatLevel(Enum):
 
 class ContentStatus(Enum):
     """Statuts de protection du contenu"""
+
     PROTECTED = "protected"
     VULNERABLE = "vulnerable"
     COMPROMISED = "compromised"
@@ -77,6 +82,7 @@ class ContentStatus(Enum):
 
 class PlatformType(Enum):
     """Plateformes surveillées"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -132,7 +138,8 @@ class ContentProtectionConfig:
 # =============== SERVICE INTERFACES ===============
 
 class IContentProtectionService(ABC):
-    """Interface pour le service de protection de contenu"""
+    """
+Interface pour le service de protection de contenu"""
     
     @abstractmethod
     async def create_fingerprint(
@@ -142,7 +149,8 @@ class IContentProtectionService(ABC):
         creator_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Créer une empreinte digitale pour du contenu"""
+        """
+Créer une empreinte digitale pour du contenu"""
         pass
     
     @abstractmethod
@@ -151,7 +159,8 @@ class IContentProtectionService(ABC):
         fingerprint: ContentFingerprint,
         platforms: Optional[List[PlatformType]] = None
     ) -> List[ThreatAlert]:
-        """Détecter des menaces sur les plateformes"""
+        """
+Détecter des menaces sur les plateformes"""
         pass
     
     @abstractmethod
@@ -160,7 +169,8 @@ class IContentProtectionService(ABC):
         fingerprint_ids: List[str],
         continuous: bool = True
     ) -> AsyncIterator[ThreatAlert]:
-        """Surveillance continue du contenu"""
+        """
+Surveillance continue du contenu"""
         pass
     
     @abstractmethod
@@ -178,13 +188,15 @@ class IContentProtectionService(ABC):
         content_data: bytes,
         creator_id: str
     ) -> Dict[str, Any]:
-        """Vérifier la propriété via blockchain"""
+        """
+Vérifier la propriété via blockchain"""
         pass
 
 # =============== CORE MANAGER ===============
 
 class ContentProtectionManager:
-    """Gestionnaire avancé de protection de contenu"""
+    """
+Gestionnaire avancé de protection de contenu"""
     
     def __init__(self, config: Optional[ContentProtectionConfig] = None):
         self.config = config or ContentProtectionConfig()
@@ -522,7 +534,8 @@ class ContentProtectionService(IContentProtectionService):
         creator_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Créer une empreinte digitale pour du contenu"""
+        """
+Créer une empreinte digitale pour du contenu"""
         return await self.manager.register_content(
             content_data, content_type, creator_id, metadata
         )
@@ -532,7 +545,8 @@ class ContentProtectionService(IContentProtectionService):
         fingerprint: ContentFingerprint,
         platforms: Optional[List[PlatformType]] = None
     ) -> List[ThreatAlert]:
-        """Détecter des menaces sur les plateformes"""
+        """
+Détecter des menaces sur les plateformes"""
         target_platforms = platforms or self.config.platforms_to_monitor
         return await self.manager._scan_platforms_for_threats(fingerprint)
     
@@ -541,7 +555,8 @@ class ContentProtectionService(IContentProtectionService):
         fingerprint_ids: List[str],
         continuous: bool = True
     ) -> AsyncIterator[ThreatAlert]:
-        """Surveillance continue du contenu"""
+        """
+Surveillance continue du contenu"""
         for fingerprint_id in fingerprint_ids:
             if continuous:
                 await self.manager._start_content_monitoring(fingerprint_id)
@@ -574,7 +589,8 @@ class ContentProtectionService(IContentProtectionService):
         content_data: bytes,
         creator_id: str
     ) -> Dict[str, Any]:
-        """Vérifier la propriété via blockchain"""
+        """
+Vérifier la propriété via blockchain"""
         try:
             # Simulation de vérification blockchain
             ownership_hash = hashlib.sha256(
@@ -605,7 +621,8 @@ def create_content_protection_service(config: Optional[ContentProtectionConfig] 
     return ContentProtectionService(config)
 
 def create_content_protection_manager(config: Optional[ContentProtectionConfig] = None) -> ContentProtectionManager:
-    """Factory pour créer un gestionnaire de protection de contenu"""
+    """
+Factory pour créer un gestionnaire de protection de contenu"""
     return ContentProtectionManager(config)
 
 # =============== MODULE EXPORTS ===============

@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -35,7 +36,9 @@ from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger(__name__)
 
 class MonetizationChannel(Enum):
-    """Monetization channels and revenue streams."""
+    """
+Monetization channels and revenue streams."""
+
     BRAND_PARTNERSHIPS = "brand_partnerships"
     SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -51,6 +54,7 @@ class MonetizationChannel(Enum):
 
 class RevenueCategory(Enum):
     """Revenue categorization."""
+
     ACTIVE_REVENUE = "active_revenue"      # Direct content monetization
     PASSIVE_REVENUE = "passive_revenue"    # Ongoing revenue streams
     ONE_TIME_REVENUE = "one_time_revenue"  # Single transactions
@@ -59,6 +63,7 @@ class RevenueCategory(Enum):
 
 class MonetizationPotential(Enum):
     """Monetization potential levels."""
+
     VERY_HIGH = "very_high"    # >$10K monthly potential
     HIGH = "high"              # $5K-$10K monthly potential
     MEDIUM = "medium"          # $1K-$5K monthly potential
@@ -93,7 +98,8 @@ class RevenueMetrics:
 
 @dataclass
 class MonetizationOpportunity:
-    """Identified monetization opportunity."""
+    """
+Identified monetization opportunity."""
     opportunity_id: str
     channel: MonetizationChannel
     potential_revenue: Decimal
@@ -119,7 +125,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class BrandCollaborationAnalysis:
-    """Brand collaboration and partnership analysis."""
+    """
+Brand collaboration and partnership analysis."""
     brand_compatibility_score: float
     audience_alignment_score: float
     engagement_quality_score: float
@@ -141,7 +148,8 @@ class BrandCollaborationAnalysis:
 
 @dataclass
 class MonetizationAnalysisResult:
-    """Complete monetization analysis result."""
+    """
+Complete monetization analysis result."""
     content_id: str
     analysis_timestamp: datetime
     
@@ -972,7 +980,8 @@ class MonetizationAnalyzer:
         engagement_rate: float,
         niche: str
     ) -> List[str]:
-        """Get optimal partnership types."""
+        """
+Get optimal partnership types."""
         partnership_types = []
         
         # Basic partnerships
@@ -1425,7 +1434,8 @@ class MonetizationAnalyzer:
         return np.mean(confidence_factors)
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get monetization analysis analytics and performance metrics."""
+        """
+Get monetization analysis analytics and performance metrics."""
         avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {

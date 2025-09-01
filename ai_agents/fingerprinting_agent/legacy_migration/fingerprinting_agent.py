@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -67,7 +68,9 @@ from .similarity_matcher import SimilarityMatcher
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprints supported"""
+    """
+Types of fingerprints supported"""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -76,6 +79,7 @@ class FingerprintType(Enum):
 
 class FingerprintQuality(Enum):
     """Fingerprint quality levels"""
+
     LOW = "low"          # Basic hash-based
     MEDIUM = "medium"    # Feature extraction
     HIGH = "high"        # Deep learning embeddings
@@ -83,6 +87,7 @@ class FingerprintQuality(Enum):
 
 class SimilarityThreshold(Enum):
     """Similarity matching thresholds"""
+
     EXACT_MATCH = 0.98
     NEAR_DUPLICATE = 0.90
     SIMILAR_CONTENT = 0.75
@@ -91,7 +96,8 @@ class SimilarityThreshold(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Advanced content fingerprint structure"""
+    """
+Advanced content fingerprint structure"""
     fingerprint_id: str
     content_id: str
     content_type: str
@@ -119,7 +125,8 @@ class ContentFingerprint:
 
 @dataclass 
 class SimilarityMatch:
-    """Similarity match result"""
+    """
+Similarity match result"""
     query_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float

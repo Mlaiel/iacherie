@@ -14,12 +14,13 @@ Features:
 - Intelligent recommendations and optimization insights
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -42,7 +43,9 @@ from backend.utils.ml_insights import MLInsightsEngine
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""
+    """
+Types of analytics metrics"""
+
     CONVERSATION_QUALITY = "conversation_quality"
     CREATOR_PERFORMANCE = "creator_performance"
     ENGAGEMENT_METRICS = "engagement_metrics"
@@ -57,6 +60,7 @@ class AnalyticsMetricType(Enum):
 
 class AnalyticsTimeframe(Enum):
     """Analytics timeframe options"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -69,6 +73,7 @@ class AnalyticsTimeframe(Enum):
 
 class InsightSeverity(Enum):
     """Insight severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -78,6 +83,7 @@ class InsightSeverity(Enum):
 
 class RecommendationType(Enum):
     """Types of recommendations"""
+
     PERFORMANCE_OPTIMIZATION = "performance_optimization"
     MONETIZATION_OPPORTUNITY = "monetization_opportunity"
     COLLABORATION_SUGGESTION = "collaboration_suggestion"
@@ -108,7 +114,8 @@ class ConversationMetrics:
 
 @dataclass
 class CreatorPerformanceMetrics:
-    """Creator-specific performance metrics"""
+    """
+Creator-specific performance metrics"""
     creator_profile_id: str
     creator_type: str
     content_creation_rate: float = 0.0
@@ -126,7 +133,8 @@ class CreatorPerformanceMetrics:
 
 @dataclass
 class MonetizationAnalytics:
-    """Monetization performance analytics"""
+    """
+Monetization performance analytics"""
     total_revenue_opportunities: int = 0
     converted_opportunities: int = 0
     conversion_rate: float = 0.0
@@ -141,7 +149,8 @@ class MonetizationAnalytics:
 
 @dataclass
 class CollaborationAnalytics:
-    """Collaboration performance analytics"""
+    """
+Collaboration performance analytics"""
     total_collaborations: int = 0
     successful_collaborations: int = 0
     collaboration_success_rate: float = 0.0
@@ -156,7 +165,8 @@ class CollaborationAnalytics:
 
 @dataclass
 class ProtectionAnalytics:
-    """Content protection analytics"""
+    """
+Content protection analytics"""
     total_content_scanned: int = 0
     threats_detected: int = 0
     threats_mitigated: int = 0
@@ -171,7 +181,8 @@ class ProtectionAnalytics:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight with recommendations"""
+    """
+Analytics insight with recommendations"""
     insight_id: str
     insight_type: str
     severity: InsightSeverity
@@ -190,7 +201,8 @@ class AnalyticsInsight:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation with implementation details"""
+    """
+Optimization recommendation with implementation details"""
     recommendation_id: str
     recommendation_type: RecommendationType
     priority: str
@@ -210,7 +222,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     report_type: str
     timeframe: AnalyticsTimeframe
@@ -1305,7 +1318,8 @@ class EnterpriseChatAnalytics:
     
     # Background task methods
     async def _real_time_analytics_loop(self) -> None:
-        """Background task for real-time analytics updates"""
+        """
+Background task for real-time analytics updates"""
         
         while True:
             try:

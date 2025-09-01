@@ -16,6 +16,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 import logging
 import json
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TemplateMetrics:
-    """Template performance metrics."""
+    """
+Template performance metrics."""
     template_id: str
     usage_count: int = 0
     success_rate: float = 0.0
@@ -225,7 +227,8 @@ class TemplateProcessor:
         notification_type: str,
         request: NotificationRequest
     ) -> Optional[NotificationTemplate]:
-        """Create template from definition."""
+        """
+Create template from definition."""
         try:
             template_id = f"{notification_type}_{template_name}_{request.recipient.language}"
             
@@ -374,7 +377,8 @@ class TemplateProcessor:
         template: NotificationTemplate,
         request: NotificationRequest
     ) -> float:
-        """Calculate template suitability score."""
+        """
+Calculate template suitability score."""
         try:
             score = 50.0  # Base score
             
@@ -933,7 +937,8 @@ class TemplateProcessor:
         return await self._get_default_template(request.notification_type)
     
     def _initialize_default_templates(self):
-        """Initialize default templates and metrics."""
+        """
+Initialize default templates and metrics."""
         # Initialize template metrics for tracking
         default_template_ids = [
             "content_protection_copyright_alert",
@@ -1034,9 +1039,11 @@ class TemplateProcessor:
         return self.processing_stats.copy()
     
     def get_template_metrics(self) -> Dict[str, TemplateMetrics]:
-        """Get template performance metrics."""
+        """
+Get template performance metrics."""
         return self.template_metrics.copy()
     
     def get_ab_test_results(self) -> Dict[str, Dict[str, Any]]:
-        """Get A/B test results."""
+        """
+Get A/B test results."""
         return self.a_b_tests.copy()

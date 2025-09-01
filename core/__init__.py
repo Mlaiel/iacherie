@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -529,14 +529,16 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Pour toute demande de licence ou autorisation: mlaiel@live.de
 
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
 def get_legal_notice() -> str:
-    """Retourne l'avertissement légal"""
+    """
+Retourne l'avertissement légal"""
     return LEGAL_NOTICE
 
 def get_module_metadata() -> Dict[str, Any]:
-    """Retourne les métadonnées complètes du module"""
+    """
+Retourne les métadonnées complètes du module"""
     return MODULE_METADATA.copy()
 
 # Core validation system

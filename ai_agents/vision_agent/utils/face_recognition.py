@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import cv2
@@ -291,7 +292,8 @@ class FaceRecognition(BaseAgent):
             return 'poor'
 
     async def _detect_emotions(self, face_roi: np.ndarray) -> Dict[str, Any]:
-        """Basic emotion detection (privacy-aware)"""
+        """
+Basic emotion detection (privacy-aware)"""
         try:
             # This is a simplified emotion detection
             # In production, use proper emotion recognition models
@@ -577,7 +579,8 @@ class FaceRecognition(BaseAgent):
         return result_image
 
     async def _mask_faces(self, image: np.ndarray) -> np.ndarray:
-        """Apply mask overlay to faces"""
+        """
+Apply mask overlay to faces"""
         result_image = image.copy()
         
         # Detect faces
@@ -599,7 +602,8 @@ class FaceRecognition(BaseAgent):
         return result_image
 
     def set_privacy_mode(self, enabled: bool) -> None:
-        """Enable or disable privacy protection mode"""
+        """
+Enable or disable privacy protection mode"""
         self.privacy_mode = enabled
         logger.info(f"Privacy mode {'enabled' if enabled else 'disabled'}")
 
@@ -614,7 +618,8 @@ class FaceRecognition(BaseAgent):
         }
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             await self.performance_monitor.close()
             await self.privacy_manager.cleanup()

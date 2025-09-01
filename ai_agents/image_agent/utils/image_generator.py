@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class GenerationModel(Enum):
-    """Available AI generation models"""
+    """
+Available AI generation models"""
+
     STABLE_DIFFUSION_V1_5 = "stable_diffusion_v1_5"
     STABLE_DIFFUSION_V2_1 = "stable_diffusion_v2_1" 
     STABLE_DIFFUSION_XL = "stable_diffusion_xl"
@@ -64,6 +67,7 @@ class GenerationModel(Enum):
 
 class StyleTransferModel(Enum):
     """Style transfer model types"""
+
     NEURAL_STYLE_TRANSFER = "neural_style_transfer"
     FAST_NEURAL_STYLE = "fast_neural_style"
     CYCLEGAN = "cyclegan"
@@ -73,6 +77,7 @@ class StyleTransferModel(Enum):
 
 class GenerationType(Enum):
     """Types of image generation"""
+
     TEXT_TO_IMAGE = "text_to_image"
     IMAGE_TO_IMAGE = "image_to_image"
     STYLE_TRANSFER = "style_transfer"
@@ -85,6 +90,7 @@ class GenerationType(Enum):
 
 class QualityPreset(Enum):
     """Generation quality presets"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
@@ -126,7 +132,8 @@ class StyleTransferParams:
 
 @dataclass
 class GenerationResult:
-    """AI generation result"""
+    """
+AI generation result"""
     success: bool
     generation_time: float
     generated_images: List[Image.Image] = field(default_factory=list)
@@ -844,7 +851,8 @@ class ImageSynthesizer:
     """
     
     def __init__(self, enable_gpu: bool = True):
-        """Initialize Image Synthesizer"""
+        """
+Initialize Image Synthesizer"""
         self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.enable_gpu else "cpu")
         
@@ -942,7 +950,8 @@ class ImageSynthesizer:
         style_image: Image.Image, 
         params: StyleTransferParams
     ) -> Image.Image:
-        """Perform high-quality neural style transfer (slower but better quality)"""
+        """
+Perform high-quality neural style transfer (slower but better quality)"""
         try:
             # This is a simplified implementation
             # In practice, this would use VGG19 or similar pre-trained networks
@@ -1008,7 +1017,8 @@ class ImageSynthesizer:
         return await self._neural_style_transfer_slow(content_image, style_image, params)
 
     async def _save_stylized_image(self, image: Image.Image, save_path: Union[str, Path]) -> None:
-        """Save stylized image"""
+        """
+Save stylized image"""
         save_path = Path(save_path)
         save_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -1077,7 +1087,8 @@ class ImageSynthesizer:
         return result
 
     async def _apply_watercolor_effect(self, image: Image.Image, intensity: float) -> Image.Image:
-        """Apply watercolor artistic effect"""
+        """
+Apply watercolor artistic effect"""
         img_array = np.array(image)
         
         # Edge-preserving smoothing
@@ -1097,7 +1108,8 @@ class ImageSynthesizer:
         return Image.fromarray(result)
 
     async def _apply_abstract_effect(self, image: Image.Image, intensity: float) -> Image.Image:
-        """Apply abstract artistic effect"""
+        """
+Apply abstract artistic effect"""
         img_array = np.array(image)
         
         # Quantize colors for abstract look

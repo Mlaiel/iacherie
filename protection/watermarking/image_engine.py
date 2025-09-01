@@ -1,6 +1,7 @@
 """Image Watermarking Core Engine
 Advanced digital watermarking for image content with multiple embedding techniques
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class ImageWatermarkEngine:
-    """Professional image watermarking engine with multiple embedding techniques"""
+    """
+Professional image watermarking engine with multiple embedding techniques"""
     
     def __init__(self):
         self.block_size = 8  # For DCT
@@ -419,7 +421,8 @@ class ImageWatermarkEngine:
         return bits
     
     def _bits_to_data(self, bits: List[int]) -> bytes:
-        """Converts bit array back to byte data"""
+        """
+Converts bit array back to byte data"""
         data = bytearray()
         for i in range(0, len(bits), 8):
             byte = 0
@@ -434,7 +437,8 @@ class ImageWatermarkEngine:
         watermarked_image: np.ndarray,
         params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Detects LSB watermark"""
+        """
+Detects LSB watermark"""
         try:
             height, width, channels = watermarked_image.shape
             bit_depth = params.get("bit_depth", 2)

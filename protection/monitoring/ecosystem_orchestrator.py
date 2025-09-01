@@ -12,7 +12,7 @@ Industrial Features:
 - Advanced compliance and audit capabilities
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,9 @@ from .geospatial_intelligence import GeospatialIntelligenceEngine, JurisdictionT
 logger = logging.getLogger(__name__)
 
 class EcosystemStatus(str, Enum):
-    """Status of the monitoring ecosystem."""
+    """
+Status of the monitoring ecosystem."""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     DEGRADED = "degraded"
@@ -56,6 +59,7 @@ class EcosystemStatus(str, Enum):
 
 class ComponentType(str, Enum):
     """Types of monitoring components."""
+
     REALTIME_MONITOR = "realtime_monitor"
     ANALYTICS_ENGINE = "analytics_engine"
     PERFORMANCE_OPTIMIZER = "performance_optimizer"
@@ -66,6 +70,7 @@ class ComponentType(str, Enum):
 
 class WorkflowType(str, Enum):
     """Types of automated workflows."""
+
     THREAT_DETECTION = "threat_detection"
     INCIDENT_RESPONSE = "incident_response"
     COMPLIANCE_AUDIT = "compliance_audit"
@@ -75,6 +80,7 @@ class WorkflowType(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -95,7 +101,8 @@ class ComponentHealth:
 
 @dataclass
 class EcosystemAlert:
-    """Ecosystem-wide alert."""
+    """
+Ecosystem-wide alert."""
     alert_id: str
     alert_type: str
     severity: AlertSeverity
@@ -108,7 +115,8 @@ class EcosystemAlert:
 
 @dataclass
 class WorkflowExecution:
-    """Automated workflow execution."""
+    """
+Automated workflow execution."""
     workflow_id: str
     workflow_type: WorkflowType
     trigger_event: str
@@ -121,10 +129,12 @@ class WorkflowExecution:
     errors: List[str] = field(default_factory=list)
 
 class MonitoringEcosystemOrchestrator:
-    """Ultra-advanced monitoring ecosystem orchestrator."""
+    """
+Ultra-advanced monitoring ecosystem orchestrator."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the ecosystem orchestrator."""
+        """
+Initialize the ecosystem orchestrator."""
         self.config = config
         self.redis_client = None
         self.db_session = None

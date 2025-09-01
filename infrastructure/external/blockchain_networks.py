@@ -6,6 +6,7 @@ Date: 2025-07-31 06:28:26
 Module infrastructure professionnel avec patterns enterprise.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any
 import asyncio
 import logging
@@ -14,7 +15,8 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class BlockchainNetworksManager:
-    """Gestionnaire Blockchain Networks"""
+    """
+Gestionnaire Blockchain Networks"""
     
     def __init__(self):
         self.initialized = False

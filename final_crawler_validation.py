@@ -15,7 +15,8 @@ from datetime import datetime
 sys.path.insert(0, '/home/runner/work/Ainflue/Ainflue')
 
 async def comprehensive_crawler_validation():
-    """Run comprehensive validation of all crawler functionality."""
+    """
+Run comprehensive validation of all crawler functionality."""
     
     print("🕷️ COMPREHENSIVE CRAWLER VALIDATION")
     print("=" * 60)

@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -49,7 +50,8 @@ settings = get_settings()
 
 @dataclass
 class KickStream:
-    """Kick stream data structure"""
+    """
+Kick stream data structure"""
     id: str
     slug: str
     channel_id: str
@@ -72,7 +74,8 @@ class KickStream:
 
 @dataclass
 class KickChannel:
-    """Kick channel data structure"""
+    """
+Kick channel data structure"""
     id: str
     username: str
     display_name: str
@@ -94,7 +97,8 @@ class KickChannel:
 
 @dataclass
 class KickChatMessage:
-    """Kick chat message data structure"""
+    """
+Kick chat message data structure"""
     id: str
     channel_id: str
     user_id: str
@@ -110,7 +114,8 @@ class KickChatMessage:
 
 @dataclass
 class KickClip:
-    """Kick clip data structure"""
+    """
+Kick clip data structure"""
     id: str
     title: str
     channel_id: str
@@ -140,7 +145,8 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Kick crawler engine"""
+        """
+Initialize Kick crawler engine"""
         super().__init__(platform="kick", config=config)
         
         # Rate limiting
@@ -199,7 +205,8 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver"""
+        """
+Setup Selenium WebDriver"""
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')

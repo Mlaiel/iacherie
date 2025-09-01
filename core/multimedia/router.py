@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Callable, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class RoutingStrategy(Enum):
-    """Content routing strategies"""
+    """
+Content routing strategies"""
+
     ROUND_ROBIN = "round_robin"
     LOAD_BALANCED = "load_balanced"
     PRIORITY_BASED = "priority_based"
@@ -50,6 +53,7 @@ class RoutingStrategy(Enum):
 
 class DestinationType(Enum):
     """Types of routing destinations"""
+
     PROCESSING_PIPELINE = "processing_pipeline"
     STORAGE_SYSTEM = "storage_system"
     CDN_ENDPOINT = "cdn_endpoint"
@@ -61,6 +65,7 @@ class DestinationType(Enum):
 
 class RoutingPriority(Enum):
     """Routing priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
@@ -87,7 +92,8 @@ class RoutingDestination:
 
 @dataclass
 class RoutingRule:
-    """Content routing rule"""
+    """
+Content routing rule"""
     rule_id: str
     name: str
     conditions: Dict[str, Any]
@@ -102,7 +108,8 @@ class RoutingRule:
 
 @dataclass
 class RoutingRequest:
-    """Content routing request"""
+    """
+Content routing request"""
     request_id: str
     content_path: str
     content_metadata: Dict[str, Any]
@@ -116,7 +123,8 @@ class RoutingRequest:
 
 @dataclass
 class RoutingResult:
-    """Routing operation result"""
+    """
+Routing operation result"""
     request_id: str
     success: bool
     destination_id: str
@@ -142,7 +150,8 @@ class MultimediaRouter:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia router"""
+        """
+Initialize multimedia router"""
         self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
@@ -421,7 +430,8 @@ class MultimediaRouter:
         request: RoutingRequest,
         rule: RoutingRule
     ) -> bool:
-        """Evaluate if request matches rule conditions"""
+        """
+Evaluate if request matches rule conditions"""
         if not rule.conditions:
             return True  # Empty conditions match all
         
@@ -455,7 +465,8 @@ class MultimediaRouter:
         return True
     
     async def _select_round_robin(self, destination_ids: List[str]) -> str:
-        """Select destination using round-robin strategy"""
+        """
+Select destination using round-robin strategy"""
         active_destinations = [d for d in destination_ids if self.destinations[d].is_active]
         
         if not active_destinations:
@@ -518,7 +529,8 @@ class MultimediaRouter:
         return selected if selected else destination_ids
     
     async def _check_destination_availability(self, destination: RoutingDestination) -> bool:
-        """Check if destination is available for routing"""
+        """
+Check if destination is available for routing"""
         if not destination.is_active:
             return False
         
@@ -539,7 +551,8 @@ class MultimediaRouter:
         request: RoutingRequest,
         destination: RoutingDestination
     ) -> RoutingResult:
-        """Route content to specific destination"""
+        """
+Route content to specific destination"""
         start_time = time.time()
         
         try:
@@ -643,7 +656,8 @@ class MultimediaRouter:
         routing_data: Dict[str, Any],
         destination: RoutingDestination
     ) -> Dict[str, Any]:
-        """Route content to generic API endpoint"""
+        """
+Route content to generic API endpoint"""
         # This would implement actual HTTP API call
         
         # Simulate API call
@@ -656,11 +670,13 @@ class MultimediaRouter:
         }
     
     def _start_health_monitoring(self):
-        """Start health monitoring for destinations"""
+        """
+Start health monitoring for destinations"""
         asyncio.create_task(self._health_monitor_loop())
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""
+        """
+Health monitoring loop"""
         while True:
             try:
                 for destination in self.destinations.values():
@@ -719,7 +735,8 @@ class MultimediaRouter:
         return None
     
     def get_destination_status(self) -> Dict[str, Any]:
-        """Get status of all destinations"""
+        """
+Get status of all destinations"""
         status = {}
         
         for dest_id, destination in self.destinations.items():
@@ -736,7 +753,8 @@ class MultimediaRouter:
         return status
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get routing statistics"""
+        """
+Get routing statistics"""
         stats = self.stats.copy()
         stats.update({
             'active_requests': len(self.active_requests),
@@ -747,7 +765,8 @@ class MultimediaRouter:
         return stats
     
     def update_destination(self, destination_id: str, updates: Dict[str, Any]):
-        """Update destination configuration"""
+        """
+Update destination configuration"""
         if destination_id not in self.destinations:
             raise ValueError(f"Unknown destination: {destination_id}")
         

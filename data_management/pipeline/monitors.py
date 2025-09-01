@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Advanced monitoring and observability systems for data pipeline health,
 performance metrics, error tracking, and resource optimization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -37,7 +38,9 @@ from ..utils.notification import NotificationManager
 
 
 class HealthStatus(Enum):
-    """System health status levels."""
+    """
+System health status levels."""
+
     HEALTHY = "healthy"
     WARNING = "warning" 
     CRITICAL = "critical"
@@ -46,6 +49,7 @@ class HealthStatus(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -65,7 +69,8 @@ class HealthCheck:
 
 @dataclass
 class Alert:
-    """System alert information."""
+    """
+System alert information."""
     alert_id: str
     component: str
     severity: AlertSeverity
@@ -288,7 +293,8 @@ class PipelineHealthMonitor:
             component_history.pop(0)
     
     async def _evaluate_health_alerts(self, health_check: HealthCheck, is_critical: bool):
-        """Evaluate health check for alert conditions."""
+        """
+Evaluate health check for alert conditions."""
         
         component = health_check.component
         
@@ -382,7 +388,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_redis_health(self) -> Dict[str, Any]:
-        """Check Redis connectivity and performance."""
+        """
+Check Redis connectivity and performance."""
         
         try:
             # Simulate Redis health check
@@ -406,7 +413,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_storage_health(self) -> Dict[str, Any]:
-        """Check storage system accessibility and performance."""
+        """
+Check storage system accessibility and performance."""
         
         try:
             # Simulate storage health check
@@ -429,7 +437,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_processing_engine_health(self) -> Dict[str, Any]:
-        """Check processing engine health and capacity."""
+        """
+Check processing engine health and capacity."""
         
         try:
             # Simulate processing engine health check
@@ -453,7 +462,8 @@ class PipelineHealthMonitor:
             }
     
     async def _check_api_health(self) -> Dict[str, Any]:
-        """Check API endpoint health and responsiveness."""
+        """
+Check API endpoint health and responsiveness."""
         
         try:
             # Simulate API health check
@@ -477,7 +487,8 @@ class PipelineHealthMonitor:
             }
     
     async def get_overall_health(self) -> Dict[str, Any]:
-        """Get overall system health status."""
+        """
+Get overall system health status."""
         
         if not self.health_history:
             return {
@@ -602,7 +613,8 @@ class PerformanceMetricsCollector:
         }
     
     def _collect_application_metrics(self) -> Dict[str, Any]:
-        """Collect application-level performance metrics."""
+        """
+Collect application-level performance metrics."""
         
         # In production, collect actual application metrics
         return {
@@ -616,7 +628,8 @@ class PerformanceMetricsCollector:
         }
     
     def _collect_pipeline_metrics(self) -> Dict[str, Any]:
-        """Collect pipeline-specific performance metrics."""
+        """
+Collect pipeline-specific performance metrics."""
         
         # In production, collect actual pipeline metrics
         return {
@@ -630,7 +643,8 @@ class PerformanceMetricsCollector:
         }
     
     def _store_metrics(self, category: str, metrics: Dict[str, Any]):
-        """Store metrics data for analysis."""
+        """
+Store metrics data for analysis."""
         
         if category not in self.performance_data:
             self.performance_data[category] = []
@@ -642,7 +656,8 @@ class PerformanceMetricsCollector:
             self.performance_data[category].pop(0)
     
     def _update_trending_data(self):
-        """Update trending analysis data."""
+        """
+Update trending analysis data."""
         
         for category, data in self.performance_data.items():
             if len(data) < 2:
@@ -674,7 +689,8 @@ class PerformanceMetricsCollector:
                     continue
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction from values."""
+        """
+Calculate trend direction from values."""
         
         if len(values) < 2:
             return 'stable'
@@ -700,7 +716,8 @@ class PerformanceMetricsCollector:
     
     @monitor_performance
     async def get_performance_summary(self, timeframe_minutes: int = 60) -> Dict[str, Any]:
-        """Get performance summary for specified timeframe."""
+        """
+Get performance summary for specified timeframe."""
         
         cutoff_time = datetime.utcnow() - timedelta(minutes=timeframe_minutes)
         
@@ -848,7 +865,8 @@ class ErrorTrackingSystem:
         }
     
     def _calculate_message_similarity(self, msg1: str, msg2: str) -> float:
-        """Calculate similarity between error messages."""
+        """
+Calculate similarity between error messages."""
         
         # Simple similarity calculation based on common words
         words1 = set(msg1.lower().split())
@@ -863,7 +881,8 @@ class ErrorTrackingSystem:
         return len(intersection) / len(union) if union else 0.0
     
     async def _generate_resolution_suggestions(self, error_data: Dict[str, Any]) -> List[str]:
-        """Generate automated resolution suggestions."""
+        """
+Generate automated resolution suggestions."""
         
         suggestions = []
         error_type = error_data['error_type']
@@ -937,7 +956,8 @@ class ResourceUsageMonitor:
         self.monitoring_thread.start()
     
     async def _monitor_resources(self):
-        """Monitor system resources continuously."""
+        """
+Monitor system resources continuously."""
         
         while True:
             try:
@@ -999,7 +1019,8 @@ class ResourceUsageMonitor:
                 self.resource_data[category].pop(0)
     
     async def _check_resource_thresholds(self, data: Dict[str, Any]):
-        """Check resource usage against thresholds."""
+        """
+Check resource usage against thresholds."""
         
         # CPU threshold check
         if data['cpu']['usage_percent'] > self.usage_thresholds.get('cpu_warning', 80):
@@ -1017,7 +1038,8 @@ class ResourceUsageMonitor:
             # Trigger disk usage alert
     
     async def get_resource_summary(self, timeframe_minutes: int = 60) -> Dict[str, Any]:
-        """Get resource usage summary for specified timeframe."""
+        """
+Get resource usage summary for specified timeframe."""
         
         cutoff_time = datetime.utcnow() - timedelta(minutes=timeframe_minutes)
         
@@ -1052,7 +1074,8 @@ class ResourceUsageMonitor:
         return summary
     
     def _generate_optimization_recommendations(self, summary: Dict[str, Any]) -> List[str]:
-        """Generate resource optimization recommendations."""
+        """
+Generate resource optimization recommendations."""
         
         recommendations = []
         

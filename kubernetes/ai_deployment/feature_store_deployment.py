@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class FeatureType(Enum):
-    """Feature data types"""
+    """
+Feature data types"""
+
     NUMERIC = "numeric"
     CATEGORICAL = "categorical"
     TEXT = "text"
@@ -45,6 +48,7 @@ class FeatureType(Enum):
 
 class StorageBackend(Enum):
     """Feature storage backends"""
+
     REDIS = "redis"
     POSTGRES = "postgres"
     CLICKHOUSE = "clickhouse"
@@ -55,6 +59,7 @@ class StorageBackend(Enum):
 
 class ServingMode(Enum):
     """Feature serving modes"""
+
     ONLINE = "online"
     OFFLINE = "offline"
     BATCH = "batch"
@@ -1113,7 +1118,8 @@ class FeatureStoreDeployment:
         return [data]  # Return transformed data
     
     async def _ingest_to_offline_store(self, group_name: str, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Ingest features to offline store"""
+        """
+Ingest features to offline store"""
         # Placeholder for offline ingestion logic
         return {
             "status": "success",
@@ -1157,12 +1163,14 @@ class FeatureStoreDeployment:
         return entity_df  # Return enhanced dataframe
     
     async def _get_latest_features(self, feature_groups: List[str], entity_df: pd.DataFrame) -> pd.DataFrame:
-        """Get latest features for entities"""
+        """
+Get latest features for entities"""
         # Placeholder for latest features logic
         return entity_df  # Return enhanced dataframe
     
     async def _cleanup_failed_feature_group(self, group_name: str) -> None:
-        """Clean up failed feature group creation"""
+        """
+Clean up failed feature group creation"""
         try:
             # Remove metadata
             self._redis_client.delete(f"feature_group:{group_name}")

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Monetization AI Agents
+"""
+Test suite for Monetization AI Agents
 
 Tests all functionalities of revenue optimization, sponsorship matching,
 pricing strategies, and monetization opportunity agents.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -26,6 +28,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -49,16 +52,19 @@ from ai.ai_agents.monetization_agents import (
 
 
 class TestMonetizationAgent:
-    """Test MonetizationAgent functionality"""
+    """
+Test MonetizationAgent functionality"""
     
     @pytest.fixture
     def agent(self):
-        """Create MonetizationAgent instance"""
+        """
+Create MonetizationAgent instance"""
         return MonetizationAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
-        """Sample creator profile for monetization analysis"""
+        """
+Sample creator profile for monetization analysis"""
         return {
             "creator_id": "creator_001",
             "name": "TechEducator",
@@ -233,12 +239,14 @@ class TestSponsorshipAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create SponsorshipAgent instance"""
+        """
+Create SponsorshipAgent instance"""
         return SponsorshipAgent()
     
     @pytest.fixture
     def sample_sponsorship_profile(self):
-        """Sample profile for sponsorship matching"""
+        """
+Sample profile for sponsorship matching"""
         return {
             "creator_id": "creator_002",
             "niche": "fitness_lifestyle",
@@ -286,7 +294,8 @@ class TestSponsorshipAgent:
     
     @pytest.mark.asyncio
     async def test_evaluate_brand_alignment(self, agent, sample_sponsorship_profile):
-        """Test brand alignment evaluation"""
+        """
+Test brand alignment evaluation"""
         brand_proposal = {
             "brand_name": "FitLife Supplements",
             "industry": "health_supplements",
@@ -419,12 +428,14 @@ class TestPricingOptimizationAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create PricingOptimizationAgent instance"""
+        """
+Create PricingOptimizationAgent instance"""
         return PricingOptimizationAgent()
     
     @pytest.fixture
     def sample_pricing_context(self):
-        """Sample pricing context for optimization"""
+        """
+Sample pricing context for optimization"""
         return {
             "creator_profile": {
                 "creator_id": "creator_003",
@@ -473,7 +484,8 @@ class TestPricingOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_price_sensitivity(self, agent, sample_pricing_context):
-        """Test price sensitivity analysis"""
+        """
+Test price sensitivity analysis"""
         price_sensitivity = await agent.analyze_price_sensitivity(sample_pricing_context)
         
         assert "sensitivity_score" in price_sensitivity
@@ -581,12 +593,14 @@ class TestRevenueAnalysisAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create RevenueAnalysisAgent instance"""
+        """
+Create RevenueAnalysisAgent instance"""
         return RevenueAnalysisAgent()
     
     @pytest.fixture
     def sample_revenue_data(self):
-        """Sample revenue data for analysis"""
+        """
+Sample revenue data for analysis"""
         return {
             "creator_id": "creator_004",
             "time_period": "12_months",
@@ -748,7 +762,8 @@ class TestIntegrationScenarios:
     
     @pytest.fixture
     def agents(self):
-        """Create all monetization agents for integration testing"""
+        """
+Create all monetization agents for integration testing"""
         return {
             "monetization": MonetizationAgent(),
             "sponsorship": SponsorshipAgent(),
@@ -825,12 +840,14 @@ class TestErrorHandling:
     
     @pytest.fixture
     def agent(self):
-        """Create MonetizationAgent for error testing"""
+        """
+Create MonetizationAgent for error testing"""
         return MonetizationAgent()
     
     @pytest.mark.asyncio
     async def test_insufficient_creator_data(self, agent):
-        """Test handling of insufficient creator data"""
+        """
+Test handling of insufficient creator data"""
         minimal_data = {"creator_id": "test"}
         
         with pytest.raises((ValueError, KeyError)):
@@ -875,12 +892,14 @@ class TestPerformanceAndScaling:
     
     @pytest.fixture
     def agent(self):
-        """Create MonetizationAgent for performance testing"""
+        """
+Create MonetizationAgent for performance testing"""
         return MonetizationAgent()
     
     @pytest.mark.asyncio
     async def test_large_scale_opportunity_analysis(self, agent):
-        """Test large-scale monetization opportunity analysis"""
+        """
+Test large-scale monetization opportunity analysis"""
         large_creator_portfolio = {
             "creators": [
                 {

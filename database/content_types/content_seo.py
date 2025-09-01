@@ -16,6 +16,7 @@ Contact: mlaiel@live.de
 🎯 LOGIQUE MÉTIER SEO :
 User Upload → IA Analysis → SEO Auto-Optimization → Multi-Platform Distribution → Performance Tracking
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -41,7 +42,9 @@ from .content_models import Base, ContentType
 logger = logging.getLogger(__name__)
 
 class SEOPriority(Enum):
-    """SEO optimization priority levels"""
+    """
+SEO optimization priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -50,6 +53,7 @@ class SEOPriority(Enum):
 
 class ContentOptimizationStatus(Enum):
     """Content optimization status"""
+
     PENDING = "pending"
     ANALYZING = "analyzing"
     OPTIMIZING = "optimizing"
@@ -59,6 +63,7 @@ class ContentOptimizationStatus(Enum):
 
 class SEOMetricType(Enum):
     """Types of SEO metrics"""
+
     KEYWORD_DENSITY = "keyword_density"
     READABILITY_SCORE = "readability_score"
     META_COMPLETENESS = "meta_completeness"
@@ -70,6 +75,7 @@ class SEOMetricType(Enum):
 
 class PlatformType(Enum):
     """Target platforms for SEO optimization"""
+
     GOOGLE = "google"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -95,7 +101,8 @@ class KeywordAnalysis:
     semantic_keywords: List[str]
     
     def get_top_keywords(self, limit: int = 10) -> List[str]:
-        """Get top keywords by relevance and search volume"""
+        """
+Get top keywords by relevance and search volume"""
         # Sort by combination of search volume and low competition
         all_keywords = self.primary_keywords + self.secondary_keywords
         sorted_keywords = sorted(
@@ -107,7 +114,8 @@ class KeywordAnalysis:
 
 @dataclass
 class SEORecommendation:
-    """Container for SEO recommendations"""
+    """
+Container for SEO recommendations"""
     category: str
     priority: SEOPriority
     title: str
@@ -118,7 +126,8 @@ class SEORecommendation:
     platform_specific: List[PlatformType] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             'category': self.category,
             'priority': self.priority.value,
@@ -131,7 +140,8 @@ class SEORecommendation:
         }
 
 class ContentSEO(Base):
-    """Database model for content SEO data"""
+    """
+Database model for content SEO data"""
     __tablename__ = "content_seo"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -322,7 +332,8 @@ class KeywordResearcher:
         return content.lower()
     
     async def _extract_primary_keywords(self, content: str, language: str) -> List[str]:
-        """Extract primary keywords from content"""
+        """
+Extract primary keywords from content"""
         try:
             # Simple keyword extraction (in production, would use NLP libraries)
             words = content.split()
@@ -417,7 +428,8 @@ class KeywordResearcher:
         return density
     
     async def _get_search_volumes(self, keywords: List[str]) -> Dict[str, int]:
-        """Get search volume estimates for keywords"""
+        """
+Get search volume estimates for keywords"""
         # Placeholder for search volume API integration
         # In production, would integrate with Google Keyword Planner API, SEMrush, etc.
         volumes = {}
@@ -429,7 +441,8 @@ class KeywordResearcher:
         return volumes
     
     async def _get_competition_scores(self, keywords: List[str]) -> Dict[str, float]:
-        """Get competition scores for keywords"""
+        """
+Get competition scores for keywords"""
         # Placeholder for competition analysis
         # In production, would analyze SERP results and competitor density
         scores = {}
@@ -441,7 +454,8 @@ class KeywordResearcher:
         return scores
     
     async def _find_trending_keywords(self, keywords: List[str], content_type: ContentType) -> List[str]:
-        """Find trending keywords related to content"""
+        """
+Find trending keywords related to content"""
         # Placeholder for trending keyword discovery
         # In production, would integrate with Google Trends API, social media APIs
         trending = []
@@ -457,7 +471,8 @@ class KeywordResearcher:
         return trending[:5]
     
     async def _generate_semantic_keywords(self, primary_keywords: List[str], language: str) -> List[str]:
-        """Generate semantically related keywords"""
+        """
+Generate semantically related keywords"""
         # Placeholder for semantic keyword generation
         # In production, would use word embeddings, semantic networks
         semantic = []
@@ -474,7 +489,8 @@ class KeywordResearcher:
         return list(set(semantic))  # Remove duplicates
 
 class SEOOptimizer:
-    """Advanced SEO optimization engine"""
+    """
+Advanced SEO optimization engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -675,7 +691,8 @@ class SEOOptimizer:
         return min(100.0, score)
     
     def _calculate_readability_score(self, content: str) -> float:
-        """Calculate content readability score"""
+        """
+Calculate content readability score"""
         if not content or len(content) < 100:
             return 50.0  # Neutral score for short content
         
@@ -688,7 +705,8 @@ class SEOOptimizer:
     
     async def _predict_engagement_score(self, content_data: Dict[str, Any],
                                       keyword_analysis: KeywordAnalysis) -> float:
-        """Predict content engagement potential"""
+        """
+Predict content engagement potential"""
         score = 50.0  # Base score
         
         # Trending keywords boost
@@ -712,7 +730,8 @@ class SEOOptimizer:
     
     async def _predict_virality_potential(self, content_data: Dict[str, Any],
                                         keyword_analysis: KeywordAnalysis) -> float:
-        """Predict content virality potential"""
+        """
+Predict content virality potential"""
         score = 20.0  # Low base score (virality is rare)
         
         # Trending keywords significantly boost virality
@@ -734,7 +753,8 @@ class SEOOptimizer:
         return min(100.0, score)
     
     async def _predict_search_visibility(self, keyword_analysis: KeywordAnalysis) -> float:
-        """Predict search engine visibility"""
+        """
+Predict search engine visibility"""
         if not keyword_analysis.primary_keywords:
             return 10.0
         
@@ -753,7 +773,8 @@ class SEOOptimizer:
     async def _optimize_for_platforms(self, content_data: Dict[str, Any],
                                     keyword_analysis: KeywordAnalysis,
                                     platforms: List[PlatformType]) -> Dict[str, Any]:
-        """Generate platform-specific optimizations"""
+        """
+Generate platform-specific optimizations"""
         optimizations = {}
         
         for platform in platforms:
@@ -777,7 +798,8 @@ class SEOOptimizer:
         return optimizations
     
     def _determine_youtube_category(self, content_data: Dict[str, Any]) -> str:
-        """Determine appropriate YouTube category"""
+        """
+Determine appropriate YouTube category"""
         content_type = content_data.get('type', 'text')
         title = content_data.get('title', '').lower()
         
@@ -794,7 +816,8 @@ class SEOOptimizer:
     
     def _determine_spotify_genres(self, content_data: Dict[str, Any],
                                 keyword_analysis: KeywordAnalysis) -> List[str]:
-        """Determine Spotify genres from content"""
+        """
+Determine Spotify genres from content"""
         genres = []
         keywords = ' '.join(keyword_analysis.primary_keywords).lower()
         
@@ -820,7 +843,8 @@ class SEOOptimizer:
         return genres[:5]  # Limit to 5 genres
     
     async def _analyze_sentiment(self, content: str) -> str:
-        """Analyze content sentiment"""
+        """
+Analyze content sentiment"""
         # Placeholder for sentiment analysis
         # In production, would use sentiment analysis libraries or APIs
         positive_words = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'love', 'best']
@@ -838,7 +862,8 @@ class SEOOptimizer:
             return 'neutral'
     
     async def _extract_themes(self, content: str) -> List[str]:
-        """Extract main themes from content"""
+        """
+Extract main themes from content"""
         # Placeholder for theme extraction
         # In production, would use topic modeling, NLP libraries
         themes = []
@@ -862,7 +887,8 @@ class SEOOptimizer:
     
     async def _analyze_target_audience(self, content_data: Dict[str, Any],
                                      keyword_analysis: KeywordAnalysis) -> Dict[str, Any]:
-        """Analyze target audience characteristics"""
+        """
+Analyze target audience characteristics"""
         audience = {
             'age_groups': [],
             'interests': [],
@@ -894,7 +920,8 @@ class SEOOptimizer:
     async def _generate_recommendations(self, content_data: Dict[str, Any],
                                       keyword_analysis: KeywordAnalysis,
                                       optimization_score: float) -> List[SEORecommendation]:
-        """Generate SEO improvement recommendations"""
+        """
+Generate SEO improvement recommendations"""
         recommendations = []
         
         # Title optimization recommendations

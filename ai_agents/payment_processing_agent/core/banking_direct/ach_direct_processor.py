@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import logging
@@ -420,7 +421,8 @@ class ACHDirectProcessor(BaseBankingProcessor):
             return False
     
     async def _lookup_bank_name(self, routing_number: str) -> str:
-        """Lookup bank name from routing number."""
+        """
+Lookup bank name from routing number."""
         try:
             # In real implementation, query routing number database
             return f"Bank (RTN: {routing_number})"

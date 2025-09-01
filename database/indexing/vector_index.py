@@ -15,7 +15,7 @@ across multi-modal content embeddings with enterprise-grade optimization.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -51,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 class VectorIndexType:
     """Vector index types for different similarity algorithms"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -59,6 +61,7 @@ class VectorIndexType:
 
 class VectorStorageBackend:
     """Vector storage backend options"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MEMORY = "memory"
@@ -83,7 +86,8 @@ class VectorIndexManager:
     """
     
     def __init__(self):
-        """Initialize vector index manager"""
+        """
+Initialize vector index manager"""
         self.db_manager = PostgreSQLManager()
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
@@ -845,7 +849,8 @@ class VectorIndexManager:
         pass
     
     async def get_index_stats(self, index_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive statistics for vector indexes"""
+        """
+Get comprehensive statistics for vector indexes"""
         if index_name:
             if index_name not in self.index_metadata:
                 return {'error': f'Index {index_name} not found'}
@@ -883,7 +888,8 @@ class VectorIndexManager:
             return stats
     
     async def cleanup(self):
-        """Cleanup resources and save indexes"""
+        """
+Cleanup resources and save indexes"""
         try:
             # Save all index metadata
             save_tasks = [self._save_index_metadata(name) for name in self.index_metadata]

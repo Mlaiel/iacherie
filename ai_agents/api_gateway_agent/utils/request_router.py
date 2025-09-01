@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class RoutingStrategy(str, Enum):
-    """Request routing strategies"""
+    """
+Request routing strategies"""
+
     PREFIX_MATCH = "prefix_match"
     EXACT_MATCH = "exact_match"
     REGEX_MATCH = "regex_match"
@@ -55,7 +58,8 @@ class RequestRouter:
     """
     
     def __init__(self, config: APIGatewayConfig):
-        """Initialize request router"""
+        """
+Initialize request router"""
         self.config = config
         self.routing_rules: List[RoutingRule] = []
         
@@ -244,7 +248,8 @@ class RequestRouter:
         return service_name in self.config.service_routes
     
     def add_routing_rule(self, rule: RoutingRule) -> bool:
-        """Add new routing rule dynamically"""
+        """
+Add new routing rule dynamically"""
         try:
             # Compile regex if needed
             if rule.strategy == RoutingStrategy.REGEX_MATCH:

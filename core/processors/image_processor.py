@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(str, Enum):
-    """Supported image formats"""
+    """
+Supported image formats"""
+
     JPEG = "jpeg"
     JPG = "jpg"
     PNG = "png"
@@ -68,6 +71,7 @@ class ImageFormat(str, Enum):
 
 class ImageQuality(str, Enum):
     """Image quality levels"""
+
     LOW = "low"          # Compressed, small size
     MEDIUM = "medium"    # Balanced quality/size
     HIGH = "high"        # High quality, larger size
@@ -76,6 +80,7 @@ class ImageQuality(str, Enum):
 
 class ImageProcessingType(str, Enum):
     """Types of image processing"""
+
     ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
     CONVERSION = "conversion"
@@ -116,7 +121,8 @@ class ImageProcessingConfig:
 
 @dataclass
 class ImageMetadata:
-    """Comprehensive image metadata"""
+    """
+Comprehensive image metadata"""
     width: int
     height: int
     format: str
@@ -143,7 +149,8 @@ class ImageMetadata:
 
 @dataclass
 class ColorAnalysis:
-    """Color analysis results"""
+    """
+Color analysis results"""
     dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
     color_palette: List[Tuple[int, int, int]] = field(default_factory=list)
     average_color: Optional[Tuple[int, int, int]] = None
@@ -157,7 +164,8 @@ class ColorAnalysis:
 
 @dataclass
 class ImageFeatures:
-    """Advanced image features extracted via AI"""
+    """
+Advanced image features extracted via AI"""
     faces_detected: List[Dict[str, Any]] = field(default_factory=list)
     objects_detected: List[Dict[str, Any]] = field(default_factory=list)
     text_regions: List[Dict[str, Any]] = field(default_factory=list)
@@ -177,7 +185,8 @@ class ImageFeatures:
 
 @dataclass
 class ImageAnalysisResult:
-    """Result of image analysis"""
+    """
+Result of image analysis"""
     success: bool
     metadata: Optional[ImageMetadata] = None
     features: Optional[ImageFeatures] = None

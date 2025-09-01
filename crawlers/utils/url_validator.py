@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Tuple, Set
@@ -36,7 +37,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class URLType(Enum):
-    """URL type classification."""
+    """
+URL type classification."""
+
     YOUTUBE_VIDEO = "youtube_video"
     YOUTUBE_CHANNEL = "youtube_channel"
     YOUTUBE_PLAYLIST = "youtube_playlist"
@@ -72,7 +75,8 @@ class URLValidationResult:
 
 @dataclass
 class URLMetadata:
-    """URL metadata extraction result."""
+    """
+URL metadata extraction result."""
     title: Optional[str]
     description: Optional[str]
     canonical_url: Optional[str]
@@ -98,7 +102,8 @@ class URLValidator:
     """
     
     def __init__(self):
-        """Initialize URL validator."""
+        """
+Initialize URL validator."""
         self.blocked_domains = set()
         self.allowed_domains = set()
         self.suspicious_patterns = []
@@ -148,7 +153,8 @@ class URLValidator:
         }
     
     def _load_security_rules(self) -> None:
-        """Load security rules for URL validation."""
+        """
+Load security rules for URL validation."""
         # Blocked domains (malware, phishing, etc.)
         self.blocked_domains.update([
             'malware-example.com',
@@ -254,7 +260,8 @@ class URLValidator:
             return False
     
     def _normalize_url(self, url: str) -> str:
-        """Normalize URL for consistent processing."""
+        """
+Normalize URL for consistent processing."""
         try:
             # Parse URL
             parsed = urlparse(url)
@@ -399,7 +406,8 @@ class URLValidator:
         return type_mapping.get((platform, content_type), URLType.GENERIC_WEB)
     
     async def _check_accessibility(self, url: str, timeout: int = 10) -> bool:
-        """Check if URL is accessible."""
+        """
+Check if URL is accessible."""
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
                 async with session.head(url) as response:
@@ -575,14 +583,16 @@ class URLValidator:
         return platform in self.platform_patterns
     
     def add_custom_pattern(self, platform: str, content_type: str, pattern: str) -> None:
-        """Add custom URL pattern for platform."""
+        """
+Add custom URL pattern for platform."""
         if platform not in self.platform_patterns:
             self.platform_patterns[platform] = {}
         
         self.platform_patterns[platform][content_type] = pattern
     
     def update_security_rules(self, blocked_domains: Set[str], suspicious_patterns: List[str]) -> None:
-        """Update security rules."""
+        """
+Update security rules."""
         self.blocked_domains.update(blocked_domains)
         self.suspicious_patterns.extend(suspicious_patterns)
 
@@ -599,7 +609,8 @@ class URLNormalizer:
     
     @staticmethod
     def normalize_youtube_url(url: str) -> str:
-        """Normalize YouTube URL."""
+        """
+Normalize YouTube URL."""
         try:
             # Extract video ID
             video_match = re.search(r'(?:v=|youtu\.be/)([a-zA-Z0-9_-]{11})', url)
@@ -656,7 +667,8 @@ class URLNormalizer:
 
 # URL validation utilities
 def quick_validate_url(url: str) -> bool:
-    """Quick URL validation."""
+    """
+Quick URL validation."""
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
@@ -664,7 +676,8 @@ def quick_validate_url(url: str) -> bool:
         return False
 
 def extract_domain(url: str) -> str:
-    """Extract domain from URL."""
+    """
+Extract domain from URL."""
     try:
         return urlparse(url).netloc.lower()
     except Exception:
@@ -680,7 +693,8 @@ def is_same_domain(url1: str, url2: str) -> bool:
         return False
 
 def clean_url_parameters(url: str, keep_params: Optional[List[str]] = None) -> str:
-    """Clean URL parameters keeping only specified ones."""
+    """
+Clean URL parameters keeping only specified ones."""
     try:
         parsed = urlparse(url)
         if not keep_params:

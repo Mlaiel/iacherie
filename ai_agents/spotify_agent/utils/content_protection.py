@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import hashlib
 import logging
@@ -54,7 +55,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types of content for protection"""
+    """
+Types of content for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -64,6 +67,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"          # Hash-based protection
     STANDARD = "standard"    # Fingerprinting + watermarking
     PREMIUM = "premium"      # Advanced ML detection
@@ -71,6 +75,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of copyright violations"""
+
     UNAUTHORIZED_UPLOAD = "unauthorized_upload"
     PIRACY = "piracy"
     REMIX_WITHOUT_PERMISSION = "remix_without_permission"
@@ -80,6 +85,7 @@ class ViolationType(Enum):
 
 class EnforcementAction(Enum):
     """Enforcement actions for violations"""
+
     WARNING = "warning"
     TAKEDOWN_REQUEST = "takedown_request"
     LEGAL_NOTICE = "legal_notice"
@@ -104,7 +110,8 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationDetection:
-    """Copyright violation detection result"""
+    """
+Copyright violation detection result"""
     violation_id: str
     original_content_id: str
     infringing_content_id: str
@@ -418,7 +425,8 @@ class ContentProtectionSystem:
         self.fingerprint_db[fingerprint.fingerprint_id] = fingerprint.__dict__
 
     async def _generate_candidate_fingerprint(self, content_data: bytes, content_type: ContentType) -> Dict[str, Any]:
-        """Generate fingerprint for candidate content"""
+        """
+Generate fingerprint for candidate content"""
         # Reuse existing fingerprint methods
         return {
             "hash_values": await self._generate_hash_signatures(content_data),
@@ -488,7 +496,8 @@ class ContentProtectionSystem:
         self.rights_db[rights.content_id] = rights.__dict__
 
     async def _create_blockchain_record(self, rights: RightsOwnership):
-        """Create blockchain record for rights"""
+        """
+Create blockchain record for rights"""
         # This would integrate with blockchain for immutable records
         logger.info(f"Blockchain record created for content {rights.content_id}")
 
@@ -506,7 +515,8 @@ class ContentProtectionSystem:
         return actions
 
     async def _send_warning_notice(self, violation: ViolationDetection) -> Dict[str, Any]:
-        """Send warning notice for violation"""
+        """
+Send warning notice for violation"""
         return {
             "action": "warning_sent",
             "status": "success",

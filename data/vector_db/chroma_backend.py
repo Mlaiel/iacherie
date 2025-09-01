@@ -5,11 +5,12 @@ Persistent vector database backend using ChromaDB for long-term storage,
 metadata management, and hybrid search capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
 """
+
 import asyncio
 import logging
 import numpy as np

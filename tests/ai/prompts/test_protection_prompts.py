@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Protection Prompts Tests
+"""
+Advanced Protection Prompts Tests
 Ultra-professional test suite for AI Protection Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -44,11 +47,13 @@ from ai.prompts.protection_prompts import (
 
 
 class TestProtectionPrompts:
-    """Ultra-comprehensive test suite for Protection Prompts"""
+    """
+Ultra-comprehensive test suite for Protection Prompts"""
     
     @pytest.fixture
     async def protection_prompts(self):
-        """Create a fresh AIProtectionPrompts instance for each test"""
+        """
+Create a fresh AIProtectionPrompts instance for each test"""
         prompts = AIProtectionPrompts()
         await prompts.initialize()
         yield prompts
@@ -56,7 +61,8 @@ class TestProtectionPrompts:
     
     @pytest.fixture
     def sample_audio_protection_context(self):
-        """Create sample audio protection context for testing"""
+        """
+Create sample audio protection context for testing"""
         return ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.ENTERPRISE,
@@ -165,7 +171,8 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_protection_registry_loading(self, protection_prompts):
-        """Test that protection registry is properly loaded"""
+        """
+Test that protection registry is properly loaded"""
         registry = PROTECTION_PROMPTS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)
@@ -184,7 +191,8 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_audio_basic_protection_prompts(self, protection_prompts):
-        """Test basic audio protection prompts generation"""
+        """
+Test basic audio protection prompts generation"""
         basic_context = ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.BASIC,

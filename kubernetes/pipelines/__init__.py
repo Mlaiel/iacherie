@@ -2,7 +2,7 @@
 Enterprise-Grade CI/CD Pipeline Management System with Advanced Content Protection & Monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides advanced deployment pipeline management for the IA Influencer Agent platform,
 supporting multi-environment deployments, automated testing, continuous integration/delivery,
@@ -21,6 +21,7 @@ Architecture:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 from enum import Enum
@@ -29,7 +30,9 @@ from pathlib import Path
 
 # Pipeline Status Enumeration
 class PipelineStatus(Enum):
-    """Pipeline execution status definitions"""
+    """
+Pipeline execution status definitions"""
+
     PENDING = "pending"
     RUNNING = "running" 
     SUCCESS = "success"
@@ -39,6 +42,7 @@ class PipelineStatus(Enum):
 
 class Environment(Enum):
     """Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -46,6 +50,7 @@ class Environment(Enum):
 
 class PipelineType(Enum):
     """Pipeline type definitions"""
+
     BUILD = "build"
     TEST = "test"
     DEPLOY = "deploy"
@@ -95,7 +100,8 @@ class PipelineManager:
         return PipelineStatus.PENDING
         
     def trigger_pipeline(self, pipeline_id: str, **kwargs) -> bool:
-        """Trigger pipeline execution with optional parameters"""
+        """
+Trigger pipeline execution with optional parameters"""
         if pipeline_id not in self.active_pipelines:
             self.logger.error(f"Pipeline not found: {pipeline_id}")
             return False

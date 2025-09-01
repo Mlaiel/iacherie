@@ -6,6 +6,7 @@ and advanced sharding capabilities for high-scale applications.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 import json
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class PartitioningTrigger(Enum):
-    """Triggers for partition operations"""
+    """
+Triggers for partition operations"""
+
     SIZE_THRESHOLD = "size_threshold"
     TIME_THRESHOLD = "time_threshold"
     PERFORMANCE_DEGRADATION = "performance_degradation"
@@ -48,7 +51,8 @@ class PartitionPlan:
 
 @dataclass
 class ShardingConfig:
-    """Database sharding configuration"""
+    """
+Database sharding configuration"""
     shard_count: int
     shard_key: str
     routing_algorithm: str
@@ -59,7 +63,8 @@ class ShardingConfig:
 
 
 class IntelligentPartitionManager:
-    """Intelligent partition manager with automated optimization"""
+    """
+Intelligent partition manager with automated optimization"""
     
     def __init__(self, engine: AsyncEngine):
         self.engine = engine
@@ -70,7 +75,8 @@ class IntelligentPartitionManager:
         self.monitoring_task: Optional[asyncio.Task] = None
         
     async def initialize_partitioning(self, table_configs: Dict[str, PartitionConfig]) -> bool:
-        """Initialize partitioning for multiple tables"""
+        """
+Initialize partitioning for multiple tables"""
         try:
             logger.info("Initializing intelligent partitioning system")
             
@@ -557,7 +563,8 @@ class IntelligentPartitionManager:
         return unbalanced
     
     def _detect_unused_partitions(self, partition_stats: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Detect unused or rarely accessed partitions"""
+        """
+Detect unused or rarely accessed partitions"""
         unused = []
         
         for partition, stats in partition_stats.items():
@@ -570,7 +577,8 @@ class IntelligentPartitionManager:
         return unused
     
     def _detect_slow_partitions(self, partition_stats: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Detect partitions with performance issues"""
+        """
+Detect partitions with performance issues"""
         slow = []
         
         for partition, stats in partition_stats.items():
@@ -581,7 +589,8 @@ class IntelligentPartitionManager:
         return slow
     
     async def _execute_optimization(self, table_name: str, optimization: Dict[str, Any]) -> bool:
-        """Execute a specific optimization"""
+        """
+Execute a specific optimization"""
         try:
             optimization_type = optimization['type']
             partitions = optimization['partitions']

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentCategory(Enum):
-    """Content category types"""
+    """
+Content category types"""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
@@ -60,6 +63,7 @@ class ContentCategory(Enum):
 
 class TrendStatus(Enum):
     """Trend status types"""
+
     EMERGING = "emerging"
     TRENDING = "trending"
     STABLE = "stable"
@@ -69,6 +73,7 @@ class TrendStatus(Enum):
 
 class ContentElement(Enum):
     """Content element types for analysis"""
+
     HASHTAGS = "hashtags"
     MENTIONS = "mentions"
     LOCATION = "location"
@@ -179,7 +184,8 @@ class ContentTrend:
     risk_level: str  # low, medium, high
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
+        """
+Convert to dictionary for JSON serialization"""
         return {
             "trend_id": self.trend_id,
             "trend_name": self.trend_name,
@@ -214,7 +220,8 @@ class ContentOptimizationRecommendation:
     examples: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
+        """
+Convert to dictionary for JSON serialization"""
         return {
             "recommendation_id": self.recommendation_id,
             "title": self.title,
@@ -385,13 +392,15 @@ class ContentInsights:
         return [tag[1:] for tag in hashtags]  # Remove # symbol
     
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract user mentions from text content"""
+        """
+Extract user mentions from text content"""
         mention_pattern = r'@\w+'
         mentions = re.findall(mention_pattern, text.lower())
         return [mention[1:] for mention in mentions]  # Remove @ symbol
     
     def _analyze_call_to_action(self, text: str) -> Dict[str, Any]:
-        """Analyze call-to-action elements in text"""
+        """
+Analyze call-to-action elements in text"""
         cta_keywords = [
             "click", "link", "bio", "comment", "share", "tag", "follow",
             "subscribe", "like", "save", "swipe", "watch", "listen",
@@ -728,7 +737,8 @@ class TrendAnalyzer:
     """
     
     def __init__(self, db_session: Session):
-        """Initialize trend analyzer with database session"""
+        """
+Initialize trend analyzer with database session"""
         self.db = db_session
         self.logger = logging.getLogger(__name__)
     
@@ -1044,7 +1054,8 @@ class TrendAnalyzer:
         self,
         user_content: List[ContentInsightModel]
     ) -> List[ContentOptimizationRecommendation]:
-        """Generate user-specific optimization recommendations"""
+        """
+Generate user-specific optimization recommendations"""
         
         recommendations = []
         

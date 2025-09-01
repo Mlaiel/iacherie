@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Professional content types for analysis"""
+    """
+Professional content types for analysis"""
+
     MUSIC = "music"
     VIDEO = "video"
     BLOG_POST = "blog_post"
@@ -55,6 +58,7 @@ class ContentType(Enum):
 
 class ContentFormat(Enum):
     """Content format classifications"""
+
     SHORT_FORM = "short_form"  # < 60 seconds
     MEDIUM_FORM = "medium_form"  # 1-15 minutes
     LONG_FORM = "long_form"  # > 15 minutes
@@ -65,6 +69,7 @@ class ContentFormat(Enum):
 
 class ContentQuality(Enum):
     """Content quality assessment levels"""
+
     EXCEPTIONAL = "exceptional"
     HIGH = "high"
     GOOD = "good"
@@ -104,7 +109,8 @@ class ContentMetrics:
 
 @dataclass
 class ContentInsight:
-    """Content analysis insights"""
+    """
+Content analysis insights"""
     insight_id: str
     content_id: str
     insight_type: str
@@ -122,7 +128,8 @@ class ContentInsight:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations"""
+    """
+Content optimization recommendations"""
     optimization_id: str
     content_id: str
     optimization_type: str
@@ -528,7 +535,8 @@ class ContentAnalytics:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content quality metrics"""
+        """
+Analyze content quality metrics"""
         # Implementation for quality analysis
         pass
     
@@ -536,7 +544,8 @@ class ContentAnalytics:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze engagement potential"""
+        """
+Analyze engagement potential"""
         # Implementation for engagement analysis
         pass
     
@@ -544,7 +553,8 @@ class ContentAnalytics:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze SEO performance"""
+        """
+Analyze SEO performance"""
         # Implementation for SEO analysis
         pass
     
@@ -552,23 +562,27 @@ class ContentAnalytics:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Analyze platform optimization scores"""
+        """
+Analyze platform optimization scores"""
         # Implementation for platform optimization analysis
         pass
 
 
 # Content Analytics Factory
 class ContentAnalyticsFactory:
-    """Factory for creating content analytics instances"""
+    """
+Factory for creating content analytics instances"""
     
     @staticmethod
     def create_analytics_engine() -> ContentAnalytics:
-        """Create a new content analytics engine"""
+        """
+Create a new content analytics engine"""
         return ContentAnalytics()
     
     @staticmethod
     def create_ai_enhanced_engine() -> 'AIEnhancedContentAnalytics':
-        """Create AI-enhanced content analytics engine"""
+        """
+Create AI-enhanced content analytics engine"""
         from .ai_enhanced_content_analytics import AIEnhancedContentAnalytics
         return AIEnhancedContentAnalytics()
 

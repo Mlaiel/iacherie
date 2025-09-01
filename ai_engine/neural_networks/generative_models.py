@@ -21,7 +21,9 @@ from .transformer_models import TransformerConfig, ContentTransformer
 
 
 class GenerationTask(Enum):
-    """Types of content generation tasks"""
+    """
+Types of content generation tasks"""
+
     TEXT_COMPLETION = "text_completion"
     AUDIO_SYNTHESIS = "audio_synthesis"
     IMAGE_GENERATION = "image_generation"
@@ -35,6 +37,7 @@ class GenerationTask(Enum):
 
 class GenerationQuality(Enum):
     """Quality levels for generation"""
+
     DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"

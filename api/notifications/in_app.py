@@ -1,4 +1,5 @@
 """Enterprise in-app notification service with real-time delivery and user experience optimization."""
+
 import os
 import json
 import asyncio
@@ -16,7 +17,8 @@ from app.utils.metrics import MetricsCollector
 
 
 class InAppNotificationType(str, Enum):
-    """In-app notification types for IA Influencer business logic."""
+    """
+In-app notification types for IA Influencer business logic."""
     # Content Management
     CONTENT_UPLOAD_SUCCESS = "content_upload_success"
     CONTENT_UPLOAD_FAILED = "content_upload_failed"
@@ -71,6 +73,7 @@ class InAppNotificationType(str, Enum):
 
 class NotificationPriority(str, Enum):
     """In-app notification priority levels."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -80,6 +83,7 @@ class NotificationPriority(str, Enum):
 
 class NotificationCategory(str, Enum):
     """Notification categories for filtering and organization."""
+
     CONTENT = "content"
     PROTECTION = "protection"
     COLLABORATION = "collaboration"
@@ -153,7 +157,8 @@ class InAppNotification:
 
 @dataclass
 class NotificationPreferences:
-    """User preferences for in-app notifications."""
+    """
+User preferences for in-app notifications."""
     user_id: str
     enabled_types: Set[InAppNotificationType]
     priority_threshold: NotificationPriority = NotificationPriority.NORMAL
@@ -357,7 +362,8 @@ class InAppNotifier:
         category: Optional[NotificationCategory] = None,
         priority: Optional[NotificationPriority] = None
     ) -> List[InAppNotification]:
-        """Get notifications for a specific user with filtering."""
+        """
+Get notifications for a specific user with filtering."""
         user_notifications = self.notifications.get(user_id, [])
         
         # Apply filters
@@ -381,7 +387,8 @@ class InAppNotifier:
         return filtered_notifications[offset:offset + limit]
 
     async def mark_notification_read(self, user_id: str, notification_id: str) -> bool:
-        """Mark a notification as read."""
+        """
+Mark a notification as read."""
         user_notifications = self.notifications.get(user_id, [])
         
         for notification in user_notifications:
@@ -509,7 +516,8 @@ class InAppNotifier:
         ))
 
     async def cleanup_expired_notifications(self) -> int:
-        """Clean up expired notifications."""
+        """
+Clean up expired notifications."""
         cleaned_count = 0
         current_time = datetime.utcnow()
         
@@ -579,7 +587,8 @@ class InAppNotifier:
         return True
 
     async def _apply_template(self, notification: InAppNotification):
-        """Apply notification template if available."""
+        """
+Apply notification template if available."""
         template = self.notification_templates.get(notification.type)
         if not template:
             return
@@ -622,7 +631,8 @@ class InAppNotifier:
         self.notifications[notification.user_id].append(notification)
 
     async def _deliver_real_time(self, notification: InAppNotification):
-        """Deliver notification in real-time via WebSocket."""
+        """
+Deliver notification in real-time via WebSocket."""
         # This would integrate with WebSocket connections in production
         self.logger.debug(f"Real-time delivery simulated for notification: {notification.id}")
 

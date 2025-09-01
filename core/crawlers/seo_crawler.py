@@ -6,8 +6,9 @@ et la détection d'usage non autorisé via les moteurs de recherche.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import json
@@ -31,7 +32,8 @@ from ...utils.proxy_manager import ProxyManager
 
 @dataclass
 class SEOMetrics:
-    """Métriques SEO d'un contenu"""
+    """
+Métriques SEO d'un contenu"""
     url: str
     title: str
     meta_description: str
@@ -53,7 +55,8 @@ class SEOMetrics:
 
 @dataclass
 class SearchRanking:
-    """Position dans les résultats de recherche"""
+    """
+Position dans les résultats de recherche"""
     query: str
     url: str
     position: int
@@ -69,7 +72,8 @@ class SearchRanking:
 
 @dataclass
 class CompetitorAnalysis:
-    """Analyse de la concurrence"""
+    """
+Analyse de la concurrence"""
     competitor_url: str
     shared_keywords: List[str]
     ranking_comparison: Dict[str, Tuple[int, int]]  # keyword: (our_rank, their_rank)
@@ -130,7 +134,8 @@ class SEOAnalyticsCrawler:
         ]
 
     def _setup_selenium_driver(self) -> None:
-        """Configure le driver Selenium pour JavaScript"""
+        """
+Configure le driver Selenium pour JavaScript"""
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
@@ -212,12 +217,14 @@ class SEOAnalyticsCrawler:
         return title_tag.get_text().strip() if title_tag else ''
 
     def _extract_meta_description(self, soup: BeautifulSoup) -> str:
-        """Extrait la meta description"""
+        """
+Extrait la meta description"""
         meta_desc = soup.find('meta', attrs={'name': 'description'})
         return meta_desc.get('content', '') if meta_desc else ''
 
     def _extract_keywords(self, soup: BeautifulSoup) -> List[str]:
-        """Extrait les mots-clés"""
+        """
+Extrait les mots-clés"""
         keywords = []
         
         # Meta keywords (obsolète mais parfois présent)
@@ -240,12 +247,14 @@ class SEOAnalyticsCrawler:
         return list(set(keywords))  # Déduplication
 
     def _extract_h_tags(self, soup: BeautifulSoup, tag_name: str) -> List[str]:
-        """Extrait les balises H1/H2/etc."""
+        """
+Extrait les balises H1/H2/etc."""
         tags = soup.find_all(tag_name)
         return [tag.get_text().strip() for tag in tags]
 
     def _count_internal_links(self, soup: BeautifulSoup, base_url: str) -> int:
-        """Compte les liens internes"""
+        """
+Compte les liens internes"""
         base_domain = urlparse(base_url).netloc
         internal_count = 0
         
@@ -257,7 +266,8 @@ class SEOAnalyticsCrawler:
         return internal_count
 
     def _count_external_links(self, soup: BeautifulSoup, base_url: str) -> int:
-        """Compte les liens externes"""
+        """
+Compte les liens externes"""
         base_domain = urlparse(base_url).netloc
         external_count = 0
         
@@ -269,12 +279,14 @@ class SEOAnalyticsCrawler:
         return external_count
 
     def _check_mobile_friendly(self, soup: BeautifulSoup) -> bool:
-        """Vérifie la compatibilité mobile"""
+        """
+Vérifie la compatibilité mobile"""
         viewport_meta = soup.find('meta', attrs={'name': 'viewport'})
         return viewport_meta is not None
 
     def _extract_schema_markup(self, soup: BeautifulSoup) -> List[str]:
-        """Extrait les balises de données structurées"""
+        """
+Extrait les balises de données structurées"""
         schema_types = []
         
         # JSON-LD
@@ -297,7 +309,8 @@ class SEOAnalyticsCrawler:
         return list(set(schema_types))
 
     def _extract_social_tags(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extrait les métadonnées sociales"""
+        """
+Extrait les métadonnées sociales"""
         social_tags = {}
         
         # Open Graph
@@ -319,7 +332,8 @@ class SEOAnalyticsCrawler:
         return social_tags
 
     def _count_words(self, soup: BeautifulSoup) -> int:
-        """Compte les mots dans le contenu"""
+        """
+Compte les mots dans le contenu"""
         # Suppression des scripts et styles
         for script in soup(["script", "style"]):
             script.decompose()
@@ -335,7 +349,8 @@ class SEOAnalyticsCrawler:
         return max(1, word_count // 200)
 
     def _extract_last_modified(self, headers: Dict[str, str]) -> Optional[datetime]:
-        """Extrait la date de dernière modification"""
+        """
+Extrait la date de dernière modification"""
         last_modified = headers.get('Last-Modified')
         if last_modified:
             try:
@@ -707,7 +722,8 @@ class SEOAnalyticsCrawler:
         return min(1.0, overlap_score)
 
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calcule la similarité entre deux textes"""
+        """
+Calcule la similarité entre deux textes"""
         if not text1 or not text2:
             return 0.0
         
@@ -951,7 +967,8 @@ class SEOAnalyticsCrawler:
         return sorted(recent_rankings, key=lambda x: x['timestamp'], reverse=True)[:20]
 
     def _get_top_keywords(self) -> List[Dict[str, Any]]:
-        """Récupère les mots-clés les plus performants"""
+        """
+Récupère les mots-clés les plus performants"""
         keyword_performance = {}
         
         for keyword, rankings in self.ranking_history.items():
@@ -975,7 +992,8 @@ class SEOAnalyticsCrawler:
         return top_keywords
 
     def _get_competitor_insights(self) -> List[Dict[str, Any]]:
-        """Récupère les insights sur les concurrents"""
+        """
+Récupère les insights sur les concurrents"""
         insights = []
         
         for competitor_url, analysis in self.competitor_data.items():
@@ -1012,7 +1030,8 @@ class SEOAnalyticsCrawler:
         }
 
     def _get_seo_alerts(self) -> List[Dict[str, Any]]:
-        """Génère des alertes SEO"""
+        """
+Génère des alertes SEO"""
         alerts = []
         
         # Alertes de chute de ranking

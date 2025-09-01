@@ -4,6 +4,7 @@ Know Your Customer verification and identity management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -29,7 +30,9 @@ logger = get_logger(__name__)
 
 
 class KYCLevel(str, Enum):
-    """KYC verification levels"""
+    """
+KYC verification levels"""
+
     BASIC = "basic"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
@@ -38,6 +41,7 @@ class KYCLevel(str, Enum):
 
 class VerificationStatus(str, Enum):
     """Verification status states"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     APPROVED = "approved"
@@ -49,6 +53,7 @@ class VerificationStatus(str, Enum):
 
 class DocumentType(str, Enum):
     """Identity document types"""
+
     PASSPORT = "passport"
     NATIONAL_ID = "national_id"
     DRIVERS_LICENSE = "drivers_license"
@@ -61,6 +66,7 @@ class DocumentType(str, Enum):
 
 class RiskLevel(str, Enum):
     """Risk assessment levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -83,7 +89,8 @@ class IdentityVerificationResult:
 
 @dataclass
 class ComplianceRequirement:
-    """KYC compliance requirement definition"""
+    """
+KYC compliance requirement definition"""
     requirement_id: str
     name: str
     description: str
@@ -96,7 +103,8 @@ class ComplianceRequirement:
 
 
 class KYCVerificationSystem:
-    """Enterprise KYC verification and compliance system"""
+    """
+Enterprise KYC verification and compliance system"""
     
     def __init__(self):
         self.logger = logger

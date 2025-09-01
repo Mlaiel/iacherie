@@ -20,6 +20,7 @@ Team Specialization:
 - DevOps Engineer: Production deployment and monitoring
 - AI Prompt Engineer: Intelligent content analysis
 """
+
 from .core import AudioFingerprintCore, FingerprintResult, MatchResult
 from .hash_generator import (
     PerceptualHashGenerator, 

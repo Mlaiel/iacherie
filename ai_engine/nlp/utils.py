@@ -4,11 +4,12 @@ Comprehensive utility functions, helpers, and common functionality
 for the NLP processing pipeline.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import re
@@ -34,7 +35,9 @@ import zoneinfo
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Social media platforms"""
+    """
+Social media platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok" 
     YOUTUBE = "youtube"
@@ -48,6 +51,7 @@ class Platform(Enum):
 
 class ContentType(Enum):
     """Content types"""
+
     POST = "post"
     STORY = "story"
     REEL = "reel"
@@ -61,6 +65,7 @@ class ContentType(Enum):
 
 class Language(Enum):
     """Supported languages"""
+
     ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
@@ -91,7 +96,8 @@ class TextStats:
 
 @dataclass
 class PlatformLimits:
-    """Platform-specific content limits"""
+    """
+Platform-specific content limits"""
     platform: Platform
     max_caption_length: int
     max_hashtags: int
@@ -103,7 +109,8 @@ class PlatformLimits:
 
 @dataclass
 class ValidationResult:
-    """Content validation result"""
+    """
+Content validation result"""
     is_valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
@@ -111,7 +118,8 @@ class ValidationResult:
     compliance_score: float = 1.0
 
 class TextCleaner:
-    """Advanced text cleaning utilities"""
+    """
+Advanced text cleaning utilities"""
     
     def __init__(self):
         # Compiled regex patterns for efficiency
@@ -230,11 +238,13 @@ class TextCleaner:
         }
     
     def _normalize_unicode(self, text: str) -> str:
-        """Normalize unicode characters"""
+        """
+Normalize unicode characters"""
         return unicodedata.normalize('NFKC', text)
     
     def _decode_html_entities(self, text: str) -> str:
-        """Decode HTML entities"""
+        """
+Decode HTML entities"""
         decoded = html.unescape(text)
         
         # Handle additional entities
@@ -244,11 +254,13 @@ class TextCleaner:
         return decoded
     
     def _normalize_whitespace(self, text: str) -> str:
-        """Normalize whitespace"""
+        """
+Normalize whitespace"""
         return self.whitespace_pattern.sub(' ', text)
     
     def _normalize_social_elements(self, text: str) -> str:
-        """Normalize hashtags and mentions"""
+        """
+Normalize hashtags and mentions"""
         # Convert hashtags to lowercase
         def lowercase_hashtag(match):
             return match.group(0).lower()
@@ -262,7 +274,8 @@ class TextCleaner:
         return text
     
     def _platform_specific_clean(self, text: str) -> str:
-        """Platform-specific text cleaning"""
+        """
+Platform-specific text cleaning"""
         # Remove platform-specific markup
         # Instagram: Remove line breaks in captions
         text = text.replace('\n\n', '\n')
@@ -276,7 +289,8 @@ class TextCleaner:
         return text
 
 class TextAnalyzer:
-    """Advanced text analysis utilities"""
+    """
+Advanced text analysis utilities"""
     
     def __init__(self):
         self.cleaner = TextCleaner()
@@ -289,7 +303,8 @@ class TextAnalyzer:
         }
     
     def get_text_stats(self, text: str, language: str = 'en') -> TextStats:
-        """Get comprehensive text statistics"""
+        """
+Get comprehensive text statistics"""
         if not text:
             return TextStats(0, 0, 0, 0, 0.0, 0.0, 0.0, 0, 0, 0, 0)
         
@@ -334,7 +349,8 @@ class TextAnalyzer:
     
     def extract_keywords(self, text: str, language: str = 'en', 
                         max_keywords: int = 10) -> List[Tuple[str, float]]:
-        """Extract keywords with TF-IDF-like scoring"""
+        """
+Extract keywords with TF-IDF-like scoring"""
         if not text:
             return []
         
@@ -417,14 +433,16 @@ class TextAnalyzer:
         return word_pattern.findall(text)
     
     def _get_sentences(self, text: str) -> List[str]:
-        """Extract sentences from text"""
+        """
+Extract sentences from text"""
         # Simple sentence splitting
         sentence_pattern = re.compile(r'[.!?]+')
         sentences = sentence_pattern.split(text)
         return [s.strip() for s in sentences if s.strip()]
     
     def _calculate_readability(self, text: str, sentences: List[str], words: List[str]) -> float:
-        """Calculate readability score (simplified Flesch Reading Ease)"""
+        """
+Calculate readability score (simplified Flesch Reading Ease)"""
         if not sentences or not words:
             return 0.0
         
@@ -445,7 +463,8 @@ class TextAnalyzer:
         return max(0.0, min(1.0, readability / 100.0))
     
     def _calculate_complexity(self, words: List[str], sentences: List[str], language: str) -> float:
-        """Calculate text complexity score"""
+        """
+Calculate text complexity score"""
         if not words:
             return 0.0
         
@@ -472,7 +491,8 @@ class TextAnalyzer:
         return statistics.mean(complexity_factors)
 
 class PlatformValidator:
-    """Platform-specific content validation"""
+    """
+Platform-specific content validation"""
     
     def __init__(self):
         self.platform_limits = {
@@ -532,7 +552,8 @@ class PlatformValidator:
     
     def validate_content(self, content: str, platform: Platform, 
                         content_type: ContentType = ContentType.POST) -> ValidationResult:
-        """Validate content for specific platform"""
+        """
+Validate content for specific platform"""
         if platform not in self.platform_limits:
             return ValidationResult(
                 is_valid=False,
@@ -661,7 +682,8 @@ class HashGenerator:
     
     @staticmethod
     def generate_content_hash(content: str, algorithm: str = 'md5') -> str:
-        """Generate hash for content"""
+        """
+Generate hash for content"""
         if not content:
             return ""
         
@@ -693,7 +715,8 @@ class HashGenerator:
     
     @staticmethod
     def generate_fingerprint(content: str, metadata: Dict[str, Any] = None) -> str:
-        """Generate unique fingerprint combining content and metadata"""
+        """
+Generate unique fingerprint combining content and metadata"""
         fingerprint_data = {
             'content': content,
             'metadata': metadata or {},
@@ -704,11 +727,13 @@ class HashGenerator:
         return hashlib.sha256(fingerprint_string.encode('utf-8')).hexdigest()
 
 class DateTimeUtils:
-    """Date and time utilities"""
+    """
+Date and time utilities"""
     
     @staticmethod
     def get_optimal_posting_times(platform: Platform, timezone_str: str = 'UTC') -> List[int]:
-        """Get optimal posting hours for platform (24-hour format)"""
+        """
+Get optimal posting hours for platform (24-hour format)"""
         # Based on general social media research
         optimal_times = {
             Platform.INSTAGRAM: [8, 11, 13, 17, 19],
@@ -725,7 +750,8 @@ class DateTimeUtils:
     @staticmethod
     def is_optimal_posting_time(platform: Platform, dt: datetime, 
                                timezone_str: str = 'UTC') -> bool:
-        """Check if given time is optimal for posting"""
+        """
+Check if given time is optimal for posting"""
         try:
             # Convert to specified timezone
             if timezone_str != 'UTC':
@@ -739,7 +765,8 @@ class DateTimeUtils:
     
     @staticmethod
     def format_relative_time(dt: datetime, language: str = 'en') -> str:
-        """Format relative time (e.g., '2 hours ago')"""
+        """
+Format relative time (e.g., '2 hours ago')"""
         now = datetime.utcnow()
         if dt.tzinfo:
             now = now.replace(tzinfo=timezone.utc)
@@ -793,7 +820,8 @@ class PerformanceUtils:
     @staticmethod
     async def batch_process(items: List[Any], processor: Callable, 
                           batch_size: int = 10, max_concurrent: int = 5) -> List[Any]:
-        """Process items in batches with concurrency control"""
+        """
+Process items in batches with concurrency control"""
         results = []
         
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -845,7 +873,8 @@ class PerformanceUtils:
     
     @staticmethod
     def time_function(func: Callable) -> Callable:
-        """Decorator to measure function execution time"""
+        """
+Decorator to measure function execution time"""
         def wrapper(*args, **kwargs):
             start_time = time.time()
             result = func(*args, **kwargs)
@@ -893,7 +922,8 @@ def extract_dominant_colors(image_path: str, num_colors: int = 5) -> List[Tuple[
 
 def calculate_engagement_score(likes: int, comments: int, shares: int, 
                              views: int, followers: int) -> float:
-    """Calculate engagement score based on interaction metrics"""
+    """
+Calculate engagement score based on interaction metrics"""
     if followers == 0 or views == 0:
         return 0.0
     
@@ -904,7 +934,8 @@ def calculate_engagement_score(likes: int, comments: int, shares: int,
     return min(1.0, engagement * 100)
 
 def generate_variations(text: str, num_variations: int = 3) -> List[str]:
-    """Generate text variations using simple transformations"""
+    """
+Generate text variations using simple transformations"""
     variations = []
     
     # Original text

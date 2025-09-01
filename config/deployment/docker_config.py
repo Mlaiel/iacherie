@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -25,7 +26,8 @@ import json
 
 @dataclass
 class DockerImageConfig:
-    """Docker image configuration for specific services"""
+    """
+Docker image configuration for specific services"""
     name: str
     tag: str
     registry: str

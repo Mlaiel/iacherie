@@ -40,6 +40,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 """
+
 import os
 import sys
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -60,7 +61,8 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class VoiceEngine(Enum):
-    """Advanced voice processing engines with industrial capabilities."""
+    """
+Advanced voice processing engines with industrial capabilities."""
     # Speech Recognition Engines
     WHISPER_OPENAI = "whisper_openai"
     WHISPER_LARGE_V3 = "whisper_large_v3"
@@ -93,6 +95,7 @@ class VoiceEngine(Enum):
 
 class AudioFormat(Enum):
     """Professional audio formats with high-quality specifications."""
+
     WAV_PCM = "wav_pcm"
     FLAC_LOSSLESS = "flac_lossless"
     MP3_320KBPS = "mp3_320kbps"
@@ -104,6 +107,7 @@ class AudioFormat(Enum):
 
 class ProcessingMode(Enum):
     """Voice processing operation modes."""
+
     REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     STREAMING = "streaming"
@@ -111,6 +115,7 @@ class ProcessingMode(Enum):
 
 class QualityLevel(IntEnum):
     """Audio quality levels for processing."""
+
     DRAFT = 1
     STANDARD = 2
     HIGH = 3
@@ -118,7 +123,9 @@ class QualityLevel(IntEnum):
     STUDIO = 5
 
 class SecurityLevel(IntEnum):
-    """Security levels for voice processing."""
+    """
+Security levels for voice processing."""
+
     BASIC = 1
     STANDARD = 2
     HIGH = 3
@@ -127,7 +134,8 @@ class SecurityLevel(IntEnum):
 
 @dataclass
 class AdvancedSpeechRecognitionConfig:
-    """Ultra-advanced speech recognition configuration."""
+    """
+Ultra-advanced speech recognition configuration."""
     # Primary and fallback engines
     primary_engine: VoiceEngine = VoiceEngine.WHISPER_LARGE_V3
     fallback_engines: List[VoiceEngine] = field(default_factory=lambda: [
@@ -326,7 +334,8 @@ class BiometricSpeakerConfig:
 
 @dataclass
 class ForensicVoiceSecurityConfig:
-    """Forensic-grade voice security and protection configuration."""
+    """
+Forensic-grade voice security and protection configuration."""
     enabled: bool = True
     security_level: SecurityLevel = SecurityLevel.HIGH
     
@@ -572,7 +581,8 @@ class VoiceProcessingConfig:
     
     @classmethod
     def from_file(cls, config_path: str) -> 'VoiceProcessingConfig':
-        """Load configuration from YAML or JSON file."""
+        """
+Load configuration from YAML or JSON file."""
         try:
             config_path = Path(config_path)
             
@@ -643,18 +653,21 @@ class VoiceProcessingConfig:
     
     @staticmethod
     def _convert_enums_from_strings(config_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert enum strings back to enum objects."""
+        """
+Convert enum strings back to enum objects."""
         # This is a simplified implementation
         # In a full implementation, you'd map specific fields to their enum types
         return config_data
     
     def get_processing_config_hash(self) -> str:
-        """Generate a hash of the current processing configuration."""
+        """
+Generate a hash of the current processing configuration."""
         config_str = json.dumps(self._to_dict_with_enums(), sort_keys=True)
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     def validate_audio_file(self, file_path: str) -> Tuple[bool, str]:
-        """Validate if an audio file meets configuration requirements."""
+        """
+Validate if an audio file meets configuration requirements."""
         try:
             file_size_mb = os.path.getsize(file_path) / (1024 * 1024)
             

@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import pickle
@@ -37,7 +38,8 @@ settings = get_settings()
 
 @dataclass
 class VectorSearchResult:
-    """Vector search result with metadata"""
+    """
+Vector search result with metadata"""
     fingerprint_id: int
     content_id: str
     similarity_score: float
@@ -48,7 +50,8 @@ class VectorSearchResult:
 
 @dataclass
 class IndexStats:
-    """FAISS index statistics"""
+    """
+FAISS index statistics"""
     total_vectors: int
     dimension: int
     index_type: str

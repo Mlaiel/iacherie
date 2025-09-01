@@ -6,8 +6,9 @@ automatisée et actions légales automatisées.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import json
@@ -29,7 +30,9 @@ from ...utils.evidence_collector import EvidenceCollector
 
 
 class CopyrightStatus(Enum):
-    """Statuts de protection des droits d'auteur"""
+    """
+Statuts de protection des droits d'auteur"""
+
     PROTECTED = "protected"
     PENDING_REGISTRATION = "pending_registration"
     REGISTERED = "registered"
@@ -40,6 +43,7 @@ class CopyrightStatus(Enum):
 
 class ViolationSeverity(Enum):
     """Niveaux de sévérité des violations"""
+
     MINOR = "minor"
     MODERATE = "moderate"
     SEVERE = "severe"
@@ -142,8 +146,10 @@ class CopyrightGuardian:
         }
 
     def _load_dmca_template(self) -> str:
-        """Charge le template DMCA"""
-        return """DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
+        """
+Charge le template DMCA"""
+        return """
+DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
 
 To: {platform_name}
 From: {copyright_owner}
@@ -175,8 +181,10 @@ SIGNATURE:
 {contact_information}
 """
     def _load_cease_desist_template(self) -> str:
-        """Charge le template de cessation"""
-        return """CEASE AND DESIST NOTICE
+        """
+Charge le template de cessation"""
+        return """
+CEASE AND DESIST NOTICE
 
 To: {infringer_name}
 From: {copyright_owner}
@@ -209,8 +217,10 @@ Sincerely,
 {contact_information}
 """
     def _load_settlement_template(self) -> str:
-        """Charge le template de règlement"""
-        return """SETTLEMENT OFFER
+        """
+Charge le template de règlement"""
+        return """
+SETTLEMENT OFFER
 
 To: {infringer_name}
 From: {copyright_owner}
@@ -240,8 +250,10 @@ Regards,
 {legal_counsel}
 """
     def _load_court_filing_template(self) -> str:
-        """Charge le template de dépôt judiciaire"""
-        return """COMPLAINT FOR COPYRIGHT INFRINGEMENT
+        """
+Charge le template de dépôt judiciaire"""
+        return """
+COMPLAINT FOR COPYRIGHT INFRINGEMENT
 
 {court_header}
 
@@ -353,12 +365,14 @@ PRAYER FOR RELIEF:
         pass
 
     async def _submit_eu_copyright_office(self, registration: CopyrightRegistration) -> None:
-        """Soumet aux organismes EU"""
+        """
+Soumet aux organismes EU"""
         # Implémentation pour l'UE
         pass
 
     async def _submit_uk_copyright_office(self, registration: CopyrightRegistration) -> None:
-        """Soumet au UK IPO"""
+        """
+Soumet au UK IPO"""
         # Implémentation pour le Royaume-Uni
         pass
 
@@ -517,7 +531,8 @@ PRAYER FOR RELIEF:
         }
 
     def _parse_search_results(self, html: str) -> List[Dict[str, Any]]:
-        """Parse les résultats de recherche"""
+        """
+Parse les résultats de recherche"""
         results = []
         soup = BeautifulSoup(html, 'html.parser')
         
@@ -539,7 +554,8 @@ PRAYER FOR RELIEF:
         self,
         registration: CopyrightRegistration
     ) -> List[Dict[str, Any]]:
-        """Recherche sur plateformes spécialisées"""
+        """
+Recherche sur plateformes spécialisées"""
         # Implémentation des recherches spécialisées
         return []
 
@@ -547,7 +563,8 @@ PRAYER FOR RELIEF:
         self,
         registration: CopyrightRegistration
     ) -> List[Dict[str, Any]]:
-        """Recherche sur réseaux de partage"""
+        """
+Recherche sur réseaux de partage"""
         # Implémentation des recherches P2P
         return []
 
@@ -556,7 +573,8 @@ PRAYER FOR RELIEF:
         registration: CopyrightRegistration,
         suspect_content: Dict[str, Any]
     ) -> Optional[CopyrightViolation]:
-        """Analyse une violation potentielle"""
+        """
+Analyse une violation potentielle"""
         try:
             # Analyse du contenu suspect
             suspect_analysis = await self._analyze_suspect_content(suspect_content['url'])
@@ -670,7 +688,8 @@ PRAYER FOR RELIEF:
         return score / comparisons if comparisons > 0 else 0.0
 
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calcule la similarité textuelle"""
+        """
+Calcule la similarité textuelle"""
         if not text1 or not text2:
             return 0.0
         
@@ -690,7 +709,8 @@ PRAYER FOR RELIEF:
         suspect_analysis: Dict[str, Any],
         similarity_score: float
     ) -> str:
-        """Classifie le type de violation"""
+        """
+Classifie le type de violation"""
         if similarity_score >= 0.95:
             return "exact_copy"
         elif similarity_score >= 0.85:
@@ -759,7 +779,8 @@ PRAYER FOR RELIEF:
         return min(estimated_damage, 1000000)  # Cap à 1M
 
     def _generate_violation_id(self) -> str:
-        """Génère un ID unique pour la violation"""
+        """
+Génère un ID unique pour la violation"""
         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
         random_suffix = hashlib.md5(str(datetime.now()).encode()).hexdigest()[:6]
         return f"CV-{timestamp}-{random_suffix.upper()}"
@@ -860,7 +881,8 @@ PRAYER FOR RELIEF:
         )
 
     async def _notify_copyright_violation(self, violation: CopyrightViolation) -> None:
-        """Notifie une violation de copyright"""
+        """
+Notifie une violation de copyright"""
         notification_data = {
             'type': 'copyright_violation',
             'violation_id': violation.violation_id,
@@ -951,7 +973,8 @@ PRAYER FOR RELIEF:
         legal_case: Dict[str, Any],
         action_type: str
     ) -> Dict[str, str]:
-        """Génère les documents de procédure"""
+        """
+Génère les documents de procédure"""
         documents = {}
         
         if action_type == 'federal_lawsuit':
@@ -967,7 +990,8 @@ PRAYER FOR RELIEF:
         return documents
 
     def _generate_complaint(self, legal_case: Dict[str, Any]) -> str:
-        """Génère la plainte"""
+        """
+Génère la plainte"""
         template = self.legal_templates['court_filing']
         
         return template.format(
@@ -983,7 +1007,8 @@ PRAYER FOR RELIEF:
 
     def _generate_injunction_motion(self, legal_case: Dict[str, Any]) -> str:
         """Génère la motion d'injonction"""
-        return f"""MOTION FOR PRELIMINARY INJUNCTION
+        return f"""
+MOTION FOR PRELIMINARY INJUNCTION
 
 TO THE HONORABLE COURT:
 
@@ -1001,10 +1026,12 @@ Respectfully submitted,
 Copyright Guardian Legal System
 """
     def _generate_damages_request(self, legal_case: Dict[str, Any]) -> str:
-        """Génère la demande de dommages"""
+        """
+Génère la demande de dommages"""
         damages = legal_case['damages_claimed']
         
-        return f"""REQUEST FOR DAMAGES
+        return f"""
+REQUEST FOR DAMAGES
 
 Plaintiff seeks the following relief:
 
@@ -1021,7 +1048,8 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         documents: Dict[str, str],
         action_type: str
     ) -> Dict[str, Any]:
-        """Dépose les documents au tribunal"""
+        """
+Dépose les documents au tribunal"""
         # Simulation du dépôt électronique
         case_number = f"CV-{datetime.now().strftime('%Y')}-{hash(str(documents)) % 10000:04d}"
         
@@ -1106,7 +1134,8 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         }
 
     def _calculate_dmca_success_rate(self) -> float:
-        """Calcule le taux de succès des DMCA"""
+        """
+Calcule le taux de succès des DMCA"""
         dmca_sent = len([v for v in self.copyright_violations.values() if v.dmca_sent])
         dmca_successful = len([
             v for v in self.copyright_violations.values()
@@ -1116,7 +1145,8 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         return (dmca_successful / dmca_sent * 100) if dmca_sent > 0 else 0
 
     def _calculate_average_response_time(self) -> float:
-        """Calcule le temps de réponse moyen"""
+        """
+Calcule le temps de réponse moyen"""
         resolved_violations = [
             v for v in self.copyright_violations.values()
             if v.resolution_date
@@ -1133,7 +1163,8 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         return total_time / len(resolved_violations) / 3600  # En heures
 
     def _calculate_legal_success_rate(self) -> float:
-        """Calcule le taux de succès des actions légales"""
+        """
+Calcule le taux de succès des actions légales"""
         legal_actions = [v for v in self.copyright_violations.values() if v.legal_action_initiated]
         successful_actions = [
             v for v in legal_actions

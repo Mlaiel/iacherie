@@ -12,6 +12,7 @@ Ce code et cette conception architecturale sont la propriété intellectuelle ex
 L'utilisation, la copie, la distribution ou la commercialisation non autorisées sont strictement interdites.
 Contact: mlaiel@live.de pour les demandes de licence.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 # Classes de requête et réponse simplifiées
 class VisionRequest:
-    """Requête simplifiée pour le traitement vision"""
+    """
+Requête simplifiée pour le traitement vision"""
     
     def __init__(
         self,
@@ -76,7 +78,8 @@ class VisionResponse:
         self.timestamp = datetime.now()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertir la réponse en dictionnaire"""
+        """
+Convertir la réponse en dictionnaire"""
         return {
             'content_id': self.content_id,
             'success': self.success,
@@ -370,11 +373,13 @@ class VisionAgentIndex:
         }
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Obtenir les statistiques d'utilisation"""
+        """
+Obtenir les statistiques d'utilisation"""
         return self.stats.copy()
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Obtenir l'état de santé du système"""
+        """
+Obtenir l'état de santé du système"""
         if not self.is_initialized:
             return {
                 'status': 'not_initialized',
@@ -394,7 +399,8 @@ class VisionAgentIndex:
         }
     
     async def cleanup(self) -> None:
-        """Nettoyer les ressources"""
+        """
+Nettoyer les ressources"""
         try:
             if self.orchestrator:
                 await self.orchestrator.cleanup()
@@ -447,7 +453,8 @@ async def quick_process(
 
 
 async def quick_analyze_image(file_path: str) -> Dict[str, Any]:
-    """Analyser rapidement une image"""
+    """
+Analyser rapidement une image"""
     content_id = f"quick_image_{datetime.now().timestamp()}"
     return await quick_process(
         content_id=content_id,

@@ -6,7 +6,7 @@ All modules compliant with cahier des charges requirements.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This conversational AI platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
@@ -320,7 +320,8 @@ if COLLABORATION_ENGINE_AVAILABLE:
 # =============================================================================
 
 async def initialize_ultra_advanced_modules():
-    """Initialize all ultra-advanced AI modules"""
+    """
+Initialize all ultra-advanced AI modules"""
     initialized_modules = {}
     
     try:
@@ -381,6 +382,6 @@ __all__ = ULTRA_ADVANCED_EXPORTS + [
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use prohibited"
 __description__ = "Ultra-Advanced Conversational AI Module Index - IA Influencer Agent Platform"

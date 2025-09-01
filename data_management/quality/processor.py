@@ -15,6 +15,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Quality assessment → Issue identification → Processing strategy → 
 Automated corrections → Enhancement application → Optimization → Quality verification
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -67,7 +68,9 @@ from ..models.quality_models import QualityAssessment, ProcessingJob, Processing
 
 
 class ProcessingType(Enum):
-    """Types of quality processing operations"""
+    """
+Types of quality processing operations"""
+
     CORRECTION = "correction"
     ENHANCEMENT = "enhancement"
     OPTIMIZATION = "optimization"
@@ -79,6 +82,7 @@ class ProcessingType(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -88,6 +92,7 @@ class ProcessingPriority(Enum):
 
 class ProcessingStatus(Enum):
     """Processing job status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -117,7 +122,8 @@ class ProcessingTask:
 
 @dataclass
 class ProcessingResult:
-    """Quality processing result structure"""
+    """
+Quality processing result structure"""
     task_id: str
     status: ProcessingStatus
     output_path: Optional[str]
@@ -131,7 +137,8 @@ class ProcessingResult:
 
 
 class AudioProcessor:
-    """Audio quality processing engine"""
+    """
+Audio quality processing engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -275,7 +282,8 @@ class AudioProcessor:
         return audio
     
     async def _reduce_noise(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Reduce noise in audio."""
+        """
+Reduce noise in audio."""
         # Simple spectral gating noise reduction
         stft = librosa.stft(audio)
         magnitude = np.abs(stft)
@@ -293,7 +301,8 @@ class AudioProcessor:
         return librosa.istft(cleaned_stft)
     
     async def _enhance_dynamics(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Enhance audio dynamics."""
+        """
+Enhance audio dynamics."""
         # Simple compressor
         threshold = params.get('comp_threshold', -12.0)  # dB
         ratio = params.get('comp_ratio', 4.0)
@@ -313,7 +322,8 @@ class AudioProcessor:
         return audio * gain
     
     async def _fix_clipping(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Fix audio clipping."""
+        """
+Fix audio clipping."""
         # Simple clipping detection and repair
         threshold = params.get('clipping_threshold', 0.95)
         
@@ -335,7 +345,8 @@ class AudioProcessor:
         return audio
     
     async def _adjust_eq(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Adjust audio EQ."""
+        """
+Adjust audio EQ."""
         # Simple frequency domain EQ
         fft = np.fft.fft(audio)
         freqs = np.fft.fftfreq(len(fft), 1/sr)
@@ -356,7 +367,8 @@ class AudioProcessor:
         return np.real(np.fft.ifft(equalized_fft))
     
     async def _enhance_stereo(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Enhance stereo width."""
+        """
+Enhance stereo width."""
         if len(audio.shape) < 2:
             return audio  # Mono audio
         
@@ -376,7 +388,8 @@ class AudioProcessor:
         return np.array([left, right])
     
     async def _save_audio(self, audio: np.ndarray, sr: int, output_path: str):
-        """Save processed audio."""
+        """
+Save processed audio."""
         sf.write(output_path, audio.T if len(audio.shape) > 1 else audio, sr)
     
     async def _calculate_audio_improvement(
@@ -384,7 +397,8 @@ class AudioProcessor:
         original_metrics: Dict[str, Any],
         final_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate audio quality improvement score."""
+        """
+Calculate audio quality improvement score."""
         improvements = []
         
         # Dynamic range improvement
@@ -404,7 +418,8 @@ class AudioProcessor:
 
 
 class ImageProcessor:
-    """Image quality processing engine"""
+    """
+Image quality processing engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -536,19 +551,22 @@ class ImageProcessor:
         return enhancer.enhance(factor)
     
     async def _enhance_brightness(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Enhance image brightness."""
+        """
+Enhance image brightness."""
         factor = params.get('brightness_factor', 1.1)
         enhancer = ImageEnhance.Brightness(image)
         return enhancer.enhance(factor)
     
     async def _enhance_sharpness(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Enhance image sharpness."""
+        """
+Enhance image sharpness."""
         factor = params.get('sharpness_factor', 1.3)
         enhancer = ImageEnhance.Sharpness(image)
         return enhancer.enhance(factor)
     
     async def _reduce_noise_image(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Reduce image noise."""
+        """
+Reduce image noise."""
         # Convert to numpy for OpenCV processing
         img_array = np.array(image)
         
@@ -561,13 +579,15 @@ class ImageProcessor:
         return Image.fromarray(denoised)
     
     async def _correct_colors(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Correct image colors."""
+        """
+Correct image colors."""
         color_factor = params.get('color_factor', 1.1)
         enhancer = ImageEnhance.Color(image)
         return enhancer.enhance(color_factor)
     
     async def _resize_optimize(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Optimize image size."""
+        """
+Optimize image size."""
         max_size = params.get('max_dimension', self.max_dimension)
         
         # Calculate new size maintaining aspect ratio
@@ -585,7 +605,8 @@ class ImageProcessor:
         return image
     
     async def _save_image(self, image: Image.Image, output_path: str):
-        """Save processed image."""
+        """
+Save processed image."""
         image.save(output_path, format=self.target_format, quality=self.quality, optimize=True)
     
     async def _calculate_image_improvement(
@@ -593,7 +614,8 @@ class ImageProcessor:
         original_metrics: Dict[str, Any],
         final_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate image quality improvement score."""
+        """
+Calculate image quality improvement score."""
         improvements = []
         
         # Contrast improvement
@@ -618,7 +640,8 @@ class ImageProcessor:
 
 
 class VideoProcessor:
-    """Video quality processing engine"""
+    """
+Video quality processing engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -758,7 +781,8 @@ class VideoProcessor:
 
 
 class TextProcessor:
-    """Text quality processing engine"""
+    """
+Text quality processing engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -835,19 +859,22 @@ class TextProcessor:
         return metrics
     
     async def _fix_spelling(self, content: str, params: Dict[str, Any]) -> str:
-        """Fix spelling errors in text."""
+        """
+Fix spelling errors in text."""
         # Placeholder for spell checking implementation
         # Would use libraries like pyspellchecker or language_tool_python
         return content
     
     async def _fix_grammar(self, content: str, params: Dict[str, Any]) -> str:
-        """Fix grammar errors in text."""
+        """
+Fix grammar errors in text."""
         # Placeholder for grammar checking implementation
         # Would use libraries like language_tool_python or Grammarly API
         return content
     
     async def _improve_readability(self, content: str, params: Dict[str, Any]) -> str:
-        """Improve text readability."""
+        """
+Improve text readability."""
         # Simple sentence splitting for long sentences
         sentences = content.split('. ')
         improved_sentences = []
@@ -866,13 +893,15 @@ class TextProcessor:
         return '. '.join(improved_sentences)
     
     async def _enhance_seo(self, content: str, params: Dict[str, Any]) -> str:
-        """Enhance content for SEO."""
+        """
+Enhance content for SEO."""
         # Placeholder for SEO enhancement
         # Would add meta descriptions, optimize keywords, etc.
         return content
     
     async def _format_content(self, content: str, params: Dict[str, Any]) -> str:
-        """Format content for better presentation."""
+        """
+Format content for better presentation."""
         # Basic formatting improvements
         lines = content.split('\n')
         formatted_lines = []
@@ -892,7 +921,8 @@ class TextProcessor:
         original_metrics: Dict[str, Any],
         final_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate text quality improvement score."""
+        """
+Calculate text quality improvement score."""
         improvements = []
         
         # Readability improvement
@@ -1012,7 +1042,8 @@ class QualityProcessor:
         return self.active_tasks.get(task_id)
     
     async def cancel_processing_task(self, task_id: str) -> bool:
-        """Cancel a processing task."""
+        """
+Cancel a processing task."""
         if task_id in self.active_tasks:
             task = self.active_tasks[task_id]
             task.status = ProcessingStatus.CANCELLED
@@ -1254,7 +1285,8 @@ class QualityProcessor:
         return stats
     
     async def cleanup_completed_tasks(self, max_age_hours: int = 24):
-        """Clean up completed tasks older than specified age."""
+        """
+Clean up completed tasks older than specified age."""
         cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         
         tasks_to_remove = []

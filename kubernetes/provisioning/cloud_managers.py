@@ -11,6 +11,7 @@ Any unauthorized use, reproduction, distribution, or appropriation of this code,
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
 is strictly prohibited and will result in immediate legal action. All rights reserved.
 """
+
 import boto3
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers for infrastructure deployment"""
+    """
+Supported cloud providers for infrastructure deployment"""
+
     AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
@@ -55,7 +58,8 @@ class InfrastructureConfig:
 
 @dataclass
 class ClusterConfig:
-    """Kubernetes cluster configuration"""
+    """
+Kubernetes cluster configuration"""
     cluster_name: str
     node_count: int
     node_type: str
@@ -70,7 +74,8 @@ class ClusterConfig:
 
 
 class BaseCloudManager:
-    """Base class for cloud infrastructure management"""
+    """
+Base class for cloud infrastructure management"""
     
     def __init__(self, config: InfrastructureConfig):
         self.config = config
@@ -105,7 +110,8 @@ class BaseCloudManager:
 
 
 class AWSInfrastructureManager(BaseCloudManager):
-    """AWS-specific infrastructure management"""
+    """
+AWS-specific infrastructure management"""
     
     def __init__(self, config: InfrastructureConfig, credentials: Dict[str, str]):
         super().__init__(config)
@@ -121,7 +127,8 @@ class AWSInfrastructureManager(BaseCloudManager):
         self.cloudformation = self.session.client('cloudformation')
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
-        """Provision complete AWS infrastructure for IA Influencer platform"""
+        """
+Provision complete AWS infrastructure for IA Influencer platform"""
         try:
             self.logger.info(f"Starting AWS infrastructure provisioning for {self.config.environment}")
             
@@ -855,7 +862,8 @@ class AWSInfrastructureManager(BaseCloudManager):
         }
     
     async def _rollback_failed_resources(self):
-        """Rollback any resources created during failed provisioning"""
+        """
+Rollback any resources created during failed provisioning"""
         self.logger.warning("Rolling back failed AWS infrastructure provisioning")
         # Implementation would clean up any partially created resources
         pass
@@ -940,7 +948,8 @@ class GCPInfrastructureManager(BaseCloudManager):
         self.container_client = container_v1.ClusterManagerClient()
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
-        """Provision complete GCP infrastructure for IA Influencer platform"""
+        """
+Provision complete GCP infrastructure for IA Influencer platform"""
         try:
             self.logger.info(f"Starting GCP infrastructure provisioning for {self.config.environment}")
             
@@ -992,7 +1001,8 @@ class AzureInfrastructureManager(BaseCloudManager):
         self.container_client = ContainerServiceClient(credentials, subscription_id)
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
-        """Provision complete Azure infrastructure for IA Influencer platform"""
+        """
+Provision complete Azure infrastructure for IA Influencer platform"""
         try:
             self.logger.info(f"Starting Azure infrastructure provisioning for {self.config.environment}")
             
@@ -1047,7 +1057,8 @@ class MultiCloudInfrastructureManager:
         
     async def provision_hybrid_infrastructure(self, primary_cloud: CloudProvider, 
                                             secondary_clouds: List[CloudProvider]) -> Dict[str, Any]:
-        """Provision infrastructure across multiple cloud providers"""
+        """
+Provision infrastructure across multiple cloud providers"""
         try:
             self.logger.info(f"Starting multi-cloud infrastructure provisioning")
             
@@ -1102,19 +1113,22 @@ class MultiCloudInfrastructureManager:
         return {}
     
     async def _provision_secondary_gcp(self) -> Dict[str, Any]:
-        """Provision secondary GCP infrastructure for disaster recovery"""
+        """
+Provision secondary GCP infrastructure for disaster recovery"""
         if self.gcp_manager:
             return await self.gcp_manager.provision_infrastructure()
         return {}
     
     async def _provision_secondary_azure(self) -> Dict[str, Any]:
-        """Provision secondary Azure infrastructure for disaster recovery"""
+        """
+Provision secondary Azure infrastructure for disaster recovery"""
         if self.azure_manager:
             return await self.azure_manager.provision_infrastructure()
         return {}
     
     async def _setup_cross_cloud_connectivity(self) -> Dict[str, Any]:
-        """Setup VPN connections and data replication between clouds"""
+        """
+Setup VPN connections and data replication between clouds"""
         return {
             'vpn_connections': [],
             'data_replication': 'configured',
@@ -1126,7 +1140,8 @@ class MultiCloudInfrastructureManager:
 # Factory function for creating cloud managers
 def create_cloud_manager(provider: CloudProvider, config: InfrastructureConfig, 
                         **kwargs) -> BaseCloudManager:
-    """Factory function to create appropriate cloud manager"""
+    """
+Factory function to create appropriate cloud manager"""
     if provider == CloudProvider.AWS:
         return AWSInfrastructureManager(config, kwargs.get('credentials', {}))
     elif provider == CloudProvider.GCP:

@@ -15,6 +15,7 @@ Docker environment configuration for containerized deployment.
 Handles multi-stage builds, security hardening, and orchestration.
 ================================================
 """
+
 import os
 import logging
 import yaml
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DockerImageConfig:
-    """Docker image configuration"""
+    """
+Docker image configuration"""
     base_image: str = "python:3.11-slim"
     registry: str = os.getenv('DOCKER_REGISTRY', 'ghcr.io')
     namespace: str = os.getenv('DOCKER_NAMESPACE', 'ia-influencer')
@@ -97,7 +99,8 @@ class DockerResourceConfig:
 
 @dataclass
 class DockerVolumeConfig:
-    """Docker volume configuration"""
+    """
+Docker volume configuration"""
     data_volumes: List[str] = field(default_factory=lambda: [
         '/app/data',
         '/app/logs',
@@ -444,7 +447,8 @@ class DockerEnvironmentManager:
     
     # Private helper methods
     def _generate_dockerfile_content(self, stage: str) -> str:
-        """Generate Dockerfile content for specified stage"""
+        """
+Generate Dockerfile content for specified stage"""
         if stage == "production":
             return self._generate_production_dockerfile()
         elif stage == "development":
@@ -525,7 +529,8 @@ CMD ["python", "-m", "gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker
 """
     
     def _generate_development_dockerfile(self) -> str:
-        """Generate development Dockerfile with debugging tools"""
+        """
+Generate development Dockerfile with debugging tools"""
         return f"""# Development Dockerfile for IA Influencer Agent
 FROM {self.image.base_image} as development
 
@@ -556,7 +561,8 @@ CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "
 """
     
     def _generate_testing_dockerfile(self) -> str:
-        """Generate testing Dockerfile for CI/CD"""
+        """
+Generate testing Dockerfile for CI/CD"""
         return f"""# Testing Dockerfile for IA Influencer Agent
 FROM {self.image.base_image} as testing
 
@@ -582,7 +588,8 @@ CMD ["python", "-m", "pytest", "-v", "--cov=app", "--cov-report=html"]
 """
     
     def _generate_base_dockerfile(self) -> str:
-        """Generate base Dockerfile"""
+        """
+Generate base Dockerfile"""
         return f"""# Base Dockerfile for IA Influencer Agent
 FROM {self.image.base_image}
 
@@ -593,7 +600,8 @@ CMD ["python", "app/main.py"]
 """
     
     def _generate_compose_config(self, environment: str) -> Dict[str, Any]:
-        """Generate Docker Compose configuration"""
+        """
+Generate Docker Compose configuration"""
         services = {
             'ia-influencer-app': {
                 'build': {
@@ -686,7 +694,8 @@ CMD ["python", "app/main.py"]
         return base_env
     
     def _get_volume_mappings(self) -> List[str]:
-        """Get volume mappings for Docker Compose"""
+        """
+Get volume mappings for Docker Compose"""
         mappings = []
         
         # Data volumes
@@ -743,54 +752,66 @@ CMD ["python", "app/main.py"]
         }
     
     def _analyze_image_layers(self, dockerfile_path: str) -> Dict[str, Any]:
-        """Analyze Docker image layers"""
+        """
+Analyze Docker image layers"""
         # Implementation would analyze layers
         return {'layers': [], 'optimization_suggestions': []}
     
     def _optimize_dockerfile_layers(self, dockerfile_path: str, analysis: Dict[str, Any]) -> str:
-        """Optimize Dockerfile layers"""
+        """
+Optimize Dockerfile layers"""
         # Implementation would optimize layers
         with open(dockerfile_path, 'r') as f:
             return f.read()
     
     def _create_user_setup_script(self):
-        """Create user setup script"""
+        """
+Create user setup script"""
         pass
     
     def _generate_security_policies(self):
-        """Generate security policies"""
+        """
+Generate security policies"""
         pass
     
     def _setup_capability_restrictions(self):
-        """Setup capability restrictions"""
+        """
+Setup capability restrictions"""
         pass
     
     def _configure_seccomp_profile(self):
-        """Configure seccomp profile"""
+        """
+Configure seccomp profile"""
         pass
     
     def _setup_apparmor_profile(self):
-        """Setup AppArmor profile"""
+        """
+Setup AppArmor profile"""
         pass
     
     def _configure_metrics_collection(self):
-        """Configure metrics collection"""
+        """
+Configure metrics collection"""
         pass
     
     def _setup_log_aggregation(self):
-        """Setup log aggregation"""
+        """
+Setup log aggregation"""
         pass
     
     def _configure_tracing(self):
-        """Configure tracing"""
+        """
+Configure tracing"""
         pass
     
     def _setup_health_checks(self):
-        """Setup health checks"""
+        """
+Setup health checks"""
         pass
     
     def _configure_alerting(self):
-        """Configure alerting"""
+        """
+Configure alerting"""
         pass
     
     # Validation methods

@@ -4,6 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive audio signal processing capabilities.
 """
+
 import logging
 import numpy as np
 import time
@@ -16,7 +17,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
+
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -25,6 +28,7 @@ class AudioFormat(Enum):
 
 class ProcessingType(Enum):
     """Audio processing types"""
+
     NORMALIZE = "normalize"
     DENOISE = "denoise"
     ENHANCE = "enhance"
@@ -45,7 +49,8 @@ class AudioData:
 
 @dataclass
 class ProcessingResult:
-    """Audio processing result"""
+    """
+Audio processing result"""
     processed_audio: AudioData
     processing_time: float
     processing_type: ProcessingType
@@ -54,7 +59,8 @@ class ProcessingResult:
     error_message: Optional[str] = None
 
 class AudioSignalProcessor:
-    """Advanced audio signal processor"""
+    """
+Advanced audio signal processor"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -126,7 +132,8 @@ class AudioSignalProcessor:
         )
     
     def _denoise_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Simple denoising (placeholder implementation)"""
+        """
+Simple denoising (placeholder implementation)"""
         # Placeholder: In real implementation, would use spectral subtraction or similar
         denoised_samples = audio_data.samples * 0.98  # Slight reduction
         
@@ -140,7 +147,8 @@ class AudioSignalProcessor:
         )
     
     def _enhance_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Audio enhancement (placeholder implementation)"""
+        """
+Audio enhancement (placeholder implementation)"""
         enhancement_factor = params.get('enhancement_factor', 1.1)
         enhanced_samples = audio_data.samples * enhancement_factor
         
@@ -157,7 +165,8 @@ class AudioSignalProcessor:
         )
     
     def _compress_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Dynamic range compression"""
+        """
+Dynamic range compression"""
         threshold = params.get('threshold', 0.5)
         ratio = params.get('ratio', 4.0)
         
@@ -178,7 +187,8 @@ class AudioSignalProcessor:
         )
     
     def _equalize_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Basic equalization (placeholder)"""
+        """
+Basic equalization (placeholder)"""
         # Placeholder implementation
         eq_samples = audio_data.samples * 1.05  # Slight boost
         
@@ -192,7 +202,8 @@ class AudioSignalProcessor:
         )
     
     def _calculate_quality_metrics(self, audio_data: AudioData) -> Dict[str, float]:
-        """Calculate audio quality metrics"""
+        """
+Calculate audio quality metrics"""
         try:
             samples = audio_data.samples
             
@@ -252,7 +263,8 @@ class AudioSignalProcessor:
         )
     
     def generate_silence(self, duration_seconds: float, sample_rate: int = None) -> AudioData:
-        """Generate silence"""
+        """
+Generate silence"""
         sample_rate = sample_rate or self.default_sample_rate
         num_samples = int(duration_seconds * sample_rate)
         samples = np.zeros(num_samples, dtype=np.float32)
@@ -261,7 +273,8 @@ class AudioSignalProcessor:
     
     def generate_tone(self, frequency: float, duration_seconds: float,
                      amplitude: float = 0.5, sample_rate: int = None) -> AudioData:
-        """Generate a sine wave tone"""
+        """
+Generate a sine wave tone"""
         sample_rate = sample_rate or self.default_sample_rate
         num_samples = int(duration_seconds * sample_rate)
         

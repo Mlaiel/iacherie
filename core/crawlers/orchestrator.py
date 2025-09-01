@@ -6,13 +6,14 @@ monitoring tasks. Provides intelligent scheduling, resource management,
 and coordinated content surveillance across all platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -37,7 +38,9 @@ from ..security.encryption import SecurityManager
 logger = logging.getLogger(__name__)
 
 class CrawlerType(Enum):
-    """Supported crawler types."""
+    """
+Supported crawler types."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -46,6 +49,7 @@ class CrawlerType(Enum):
 
 class MonitoringMode(Enum):
     """Monitoring operation modes."""
+
     CONTINUOUS = "continuous"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -81,7 +85,8 @@ class CrawlingTask:
 
 @dataclass
 class CrawlingJobResult:
-    """Result of a crawling job execution."""
+    """
+Result of a crawling job execution."""
     
     job_id: str
     task_id: str
@@ -100,10 +105,12 @@ class CrawlingJobResult:
     alerts_sent: int = 0
 
 class CrawlerOrchestrator:
-    """Advanced orchestrator for managing multiple crawlers and monitoring tasks."""
+    """
+Advanced orchestrator for managing multiple crawlers and monitoring tasks."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize crawler orchestrator."""
+        """
+Initialize crawler orchestrator."""
         self.config = config
         self.crawlers: Dict[CrawlerType, BaseCrawler] = {}
         self.tasks: Dict[str, CrawlingTask] = {}
@@ -125,7 +132,8 @@ class CrawlerOrchestrator:
         self._initialize_crawlers()
     
     def _initialize_crawlers(self):
-        """Initialize all available crawlers."""
+        """
+Initialize all available crawlers."""
         try:
             # YouTube crawler
             if self.config.get('youtube_api_key'):

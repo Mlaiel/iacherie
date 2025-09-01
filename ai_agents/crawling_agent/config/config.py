@@ -18,13 +18,16 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Set
 from enum import Enum
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
+    """
+Environment types for configuration"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -32,6 +35,7 @@ class EnvironmentType(Enum):
 
 class LogLevel(Enum):
     """Logging levels"""
+
     DEBUG = "DEBUG"
     INFO = "INFO" 
     WARNING = "WARNING"
@@ -92,7 +96,8 @@ class CrawlingPerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration settings"""
+    """
+Security configuration settings"""
     # API security
     api_key_encryption_key: str = os.getenv("API_ENCRYPTION_KEY", "")
     jwt_secret_key: str = os.getenv("JWT_SECRET_KEY", "")

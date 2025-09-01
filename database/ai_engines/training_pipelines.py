@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Callable, Generator
 import json
 import logging
@@ -43,7 +44,9 @@ from ray import tune
 logger = logging.getLogger(__name__)
 
 class TrainingStatus(str, Enum):
-    """Training job status enumeration."""
+    """
+Training job status enumeration."""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     RUNNING = "running"
@@ -55,6 +58,7 @@ class TrainingStatus(str, Enum):
 
 class TrainingMode(str, Enum):
     """Training mode enumeration."""
+
     SINGLE_NODE = "single_node"
     DISTRIBUTED = "distributed"
     FEDERATED = "federated"
@@ -63,6 +67,7 @@ class TrainingMode(str, Enum):
 
 class OptimizationStrategy(str, Enum):
     """Hyperparameter optimization strategy."""
+
     GRID_SEARCH = "grid_search"
     RANDOM_SEARCH = "random_search"
     BAYESIAN = "bayesian"
@@ -87,7 +92,8 @@ class TrainingConfiguration:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics structure."""
+    """
+Training metrics structure."""
     job_id: str
     epoch: int
     step: int
@@ -101,7 +107,8 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingCheckpoint:
-    """Training checkpoint structure."""
+    """
+Training checkpoint structure."""
     job_id: str
     checkpoint_id: str
     epoch: int
@@ -114,7 +121,8 @@ class TrainingCheckpoint:
     checksum: str
 
 class TrainingJobRequest(BaseModel):
-    """Training job request schema."""
+    """
+Training job request schema."""
     model_id: str = Field(..., min_length=1)
     dataset_id: str = Field(..., min_length=1)
     training_mode: TrainingMode = TrainingMode.SINGLE_NODE
@@ -139,7 +147,8 @@ class TrainingPipelineOrchestrator:
     """
     
     def __init__(self):
-        """Initialize the training pipeline orchestrator."""
+        """
+Initialize the training pipeline orchestrator."""
         self.active_jobs = {}
         self.job_queue = asyncio.Queue()
         self.resource_manager = ResourceManager()
@@ -688,7 +697,8 @@ class MLOpsWorkflowManager:
     """
     
     def __init__(self):
-        """Initialize the MLOps workflow manager."""
+        """
+Initialize the MLOps workflow manager."""
         self.workflows = {}
         self.workflow_templates = {}
         
@@ -740,7 +750,8 @@ class TrainingJobManager:
     """
     
     def __init__(self):
-        """Initialize the training job manager."""
+        """
+Initialize the training job manager."""
         self.jobs = {}
         self.job_templates = {}
         
@@ -790,7 +801,8 @@ class HyperparameterOptimizer:
     """
     
     def __init__(self):
-        """Initialize the hyperparameter optimizer."""
+        """
+Initialize the hyperparameter optimizer."""
         self.optimization_studies = {}
         self.optimization_history = {}
         
@@ -903,7 +915,8 @@ class DistributedTrainingCoordinator:
     """
     
     def __init__(self):
-        """Initialize the distributed training coordinator."""
+        """
+Initialize the distributed training coordinator."""
         self.training_clusters = {}
         self.node_registry = {}
         
@@ -1020,12 +1033,14 @@ class ResourceManager:
         return allocation_id
     
     async def release_resources(self, allocation_id: str):
-        """Release allocated resources."""
+        """
+Release allocated resources."""
         if allocation_id in self.allocated_resources:
             del self.allocated_resources[allocation_id]
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check resource manager health."""
+        """
+Check resource manager health."""
         return {
             "status": "healthy",
             "available_resources": self.available_resources,
@@ -1039,7 +1054,8 @@ class CheckpointManager:
         self.checkpoints = {}
     
     async def initialize(self):
-        """Initialize checkpoint manager."""
+        """
+Initialize checkpoint manager."""
         logger.info("Checkpoint manager initialized")
     
     async def save_checkpoint(self, checkpoint: TrainingCheckpoint):
@@ -1054,7 +1070,8 @@ class MetricsCollector:
         self.metrics_store = {}
     
     async def initialize(self):
-        """Initialize metrics collector."""
+        """
+Initialize metrics collector."""
         logger.info("Metrics collector initialized")
     
     async def collect_metrics(self, job_id: str, metrics: TrainingMetrics):

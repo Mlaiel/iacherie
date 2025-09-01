@@ -23,6 +23,7 @@ Project Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 from __future__ import annotations
 
 import logging
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 
 # High-level bootstrap/shutdown
 async def bootstrap(config: Optional[Dict[str, Any]] = None) -> bool:
-    """Start the global agent manager and register all agent pools."""
+    """
+Start the global agent manager and register all agent pools."""
     # config reserved for future extensions; initialize_agent_system handles pools/classes
     ok = await initialize_agent_system()
     if ok:
@@ -64,29 +66,35 @@ async def shutdown() -> None:
 
 # Request routing convenience
 async def route_request(request: AgentRequest) -> AgentResponse:
-    """Route an AgentRequest through the global manager with load balancing."""
+    """
+Route an AgentRequest through the global manager with load balancing."""
     return await agent_manager.process_request(request)
 
 async def get_system_status() -> Dict[str, Any]:
-    """Return a comprehensive snapshot of the agent system status."""
+    """
+Return a comprehensive snapshot of the agent system status."""
     return await agent_manager.get_system_status()
 
 # Agent utilities
 def list_agent_types() -> List[str]:
-    """List all available agent types registered in the system."""
+    """
+List all available agent types registered in the system."""
     return get_available_agent_types()
 
 def describe_agent(agent_type: str) -> Optional[Dict[str, Any]]:
-    """Describe a specific agent type (class name, module, description)."""
+    """
+Describe a specific agent type (class name, module, description)."""
     return get_agent_info(agent_type)
 
 async def create_agent_instance(agent_type: str, agent_id: str, config: Optional[Dict[str, Any]] = None):
-    """Create and initialize a single agent instance via the factory."""
+    """
+Create and initialize a single agent instance via the factory."""
     return await AgentFactory.create_agent(agent_type=agent_type, agent_id=agent_id, config=config)
 
 # Business workflow shortcuts
 async def get_workflow_orchestrator() -> BusinessWorkflowOrchestrator:
-    """Return the singleton business workflow orchestrator (initialized on demand)."""
+    """
+Return the singleton business workflow orchestrator (initialized on demand)."""
     # The module exports a singleton; ensure dependencies are initialized by caller if needed
     return workflow_orchestrator
 
@@ -100,7 +108,8 @@ async def process_upload(
     metadata: Optional[Dict[str, Any]] = None,
     config: Optional[WorkflowConfig] = None,
 ) -> str:
-    """End-to-end content processing entry point using the business orchestrator."""
+    """
+End-to-end content processing entry point using the business orchestrator."""
     orchestrator = await get_workflow_orchestrator()
     if getattr(orchestrator, "protection_agent", None) is None:
         await orchestrator.initialize()

@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class CircuitState(str, Enum):
-    """Circuit breaker states"""
+    """
+Circuit breaker states"""
+
     CLOSED = "closed"      # Normal operation
     OPEN = "open"         # Blocking requests
     HALF_OPEN = "half_open"  # Testing recovery
@@ -48,7 +51,8 @@ class CircuitBreakerConfig:
 
 @dataclass
 class CallResult:
-    """Individual call result"""
+    """
+Individual call result"""
     success: bool
     duration: float
     error: Optional[str] = None
@@ -74,7 +78,8 @@ class CircuitBreaker:
     """
     
     def __init__(self, config: Optional[CircuitBreakerConfig] = None):
-        """Initialize circuit breaker"""
+        """
+Initialize circuit breaker"""
         self.config = config or CircuitBreakerConfig()
         
         # State management
@@ -179,7 +184,8 @@ class CircuitBreaker:
         return False
     
     async def _record_success(self, duration: float):
-        """Record successful call"""
+        """
+Record successful call"""
         self.total_calls += 1
         
         # Add to call history
@@ -206,7 +212,8 @@ class CircuitBreaker:
             self.on_call_success(duration)
     
     async def _record_failure(self, error: str, duration: float):
-        """Record failed call"""
+        """
+Record failed call"""
         self.total_calls += 1
         self.total_failures += 1
         self.last_failure_time = time.time()
@@ -231,7 +238,8 @@ class CircuitBreaker:
             self.on_call_failure(error)
     
     def _add_call_to_history(self, call_result: CallResult):
-        """Add call result to sliding window history"""
+        """
+Add call result to sliding window history"""
         self.call_history.append(call_result)
         
         # Maintain sliding window size
@@ -239,7 +247,8 @@ class CircuitBreaker:
             self.call_history = self.call_history[-self.max_history_size:]
     
     def _should_open_circuit(self) -> bool:
-        """Determine if circuit should be opened based on failure criteria"""
+        """
+Determine if circuit should be opened based on failure criteria"""
         # Simple failure count threshold
         if self.failure_count >= self.config.failure_threshold:
             return True
@@ -265,7 +274,8 @@ class CircuitBreaker:
         return False
     
     def _transition_to_open(self):
-        """Transition circuit to OPEN state"""
+        """
+Transition circuit to OPEN state"""
         old_state = self.state
         self.state = CircuitState.OPEN
         self.next_attempt_time = time.time() + self.config.recovery_timeout
@@ -305,7 +315,8 @@ class CircuitBreaker:
         return self.state
     
     def get_failure_rate(self) -> float:
-        """Get current failure rate from sliding window"""
+        """
+Get current failure rate from sliding window"""
         if not self.call_history:
             return 0.0
         
@@ -313,7 +324,8 @@ class CircuitBreaker:
         return failures / len(self.call_history)
     
     def get_slow_call_rate(self) -> float:
-        """Get current slow call rate from sliding window"""
+        """
+Get current slow call rate from sliding window"""
         if not self.call_history:
             return 0.0
         
@@ -324,7 +336,8 @@ class CircuitBreaker:
         return slow_calls / len(self.call_history)
     
     def get_average_response_time(self) -> float:
-        """Get average response time from sliding window"""
+        """
+Get average response time from sliding window"""
         if not self.call_history:
             return 0.0
         
@@ -332,7 +345,8 @@ class CircuitBreaker:
         return statistics.mean(durations)
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive circuit breaker metrics"""
+        """
+Get comprehensive circuit breaker metrics"""
         current_time = time.time()
         
         metrics = {
@@ -382,7 +396,8 @@ class CircuitBreaker:
         self._transition_to_open()
     
     def force_close(self):
-        """Force circuit breaker to CLOSED state"""
+        """
+Force circuit breaker to CLOSED state"""
         self._transition_to_closed()
     
     def set_event_callback(
@@ -390,7 +405,8 @@ class CircuitBreaker:
         event_type: str, 
         callback: Callable
     ):
-        """Set event callback"""
+        """
+Set event callback"""
         if event_type == "state_change":
             self.on_state_change = callback
         elif event_type == "call_success":
@@ -415,7 +431,8 @@ class CircuitBreakerRegistry:
     """
     
     def __init__(self):
-        """Initialize circuit breaker registry"""
+        """
+Initialize circuit breaker registry"""
         self.circuit_breakers: Dict[str, CircuitBreaker] = {}
         self.default_config = CircuitBreakerConfig()
         
@@ -450,7 +467,8 @@ class CircuitBreakerRegistry:
         }
     
     def reset_all(self):
-        """Reset all circuit breakers"""
+        """
+Reset all circuit breakers"""
         for name, breaker in self.circuit_breakers.items():
             breaker.reset()
             logger.info(f"Reset circuit breaker: {name}")

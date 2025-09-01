@@ -4,7 +4,7 @@ Central registry and access point for all professional NLP modules.
 Provides comprehensive capability discovery and module management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
@@ -20,6 +20,7 @@ Team Specialties:
 - DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer: Fahed Mlaiel
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
 from dataclasses import dataclass
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModuleCategory(Enum):
-    """Professional module categories."""
+    """
+Professional module categories."""
+
     ENTERPRISE_CORE = "enterprise_core"
     INTELLIGENCE_ENGINE = "intelligence_engine"
     PROTECTION_SYSTEM = "protection_system"
@@ -45,6 +48,7 @@ class ModuleCategory(Enum):
 
 class PerformanceTier(Enum):
     """Module performance tiers."""
+
     ENTERPRISE = "enterprise"
     PROFESSIONAL = "professional"
     BUSINESS = "business"
@@ -78,7 +82,8 @@ class ProfessionalNLPRegistry:
     """
     
     def __init__(self):
-        """Initialize the professional NLP registry."""
+        """
+Initialize the professional NLP registry."""
         self.modules = self._initialize_enterprise_registry()
         self.loaded_modules: Dict[str, Any] = {}
         self.module_instances: Dict[str, Any] = {}
@@ -422,21 +427,24 @@ class ProfessionalNLPRegistry:
         return self.modules.get(module_name)
     
     def list_enterprise_modules(self) -> List[str]:
-        """List all enterprise-tier modules."""
+        """
+List all enterprise-tier modules."""
         return [
             name for name, spec in self.modules.items()
             if spec.performance_tier == PerformanceTier.ENTERPRISE
         ]
     
     def list_modules_by_category(self, category: ModuleCategory) -> List[str]:
-        """List modules by category."""
+        """
+List modules by category."""
         return [
             name for name, spec in self.modules.items()
             if spec.category == category
         ]
     
     def get_modules_for_creator_type(self, creator_type: str) -> List[str]:
-        """Get recommended modules for specific creator type."""
+        """
+Get recommended modules for specific creator type."""
         recommended = []
         for name, spec in self.modules.items():
             if (creator_type in spec.target_creators or 
@@ -455,14 +463,16 @@ class ProfessionalNLPRegistry:
         return capability_map
     
     def get_dependency_graph(self) -> Dict[str, List[str]]:
-        """Get module dependency relationships."""
+        """
+Get module dependency relationships."""
         return {
             name: spec.dependencies
             for name, spec in self.modules.items()
         }
     
     def validate_dependencies(self, module_name: str) -> bool:
-        """Validate all dependencies are available for a module."""
+        """
+Validate all dependencies are available for a module."""
         spec = self.modules.get(module_name)
         if not spec:
             return False
@@ -470,14 +480,16 @@ class ProfessionalNLPRegistry:
         return all(dep in self.modules for dep in spec.dependencies)
     
     def get_business_value_summary(self) -> Dict[str, str]:
-        """Get business value summary for all modules."""
+        """
+Get business value summary for all modules."""
         return {
             name: spec.business_value
             for name, spec in self.modules.items()
         }
     
     def get_comprehensive_report(self) -> Dict[str, Any]:
-        """Generate comprehensive registry report."""
+        """
+Generate comprehensive registry report."""
         return {
             "total_modules": len(self.modules),
             "enterprise_modules": len(self.list_enterprise_modules()),
@@ -604,27 +616,33 @@ def get_enterprise_modules() -> List[str]:
     return professional_registry.list_enterprise_modules()
 
 def get_module_specification(module_name: str) -> Optional[ProfessionalModuleSpec]:
-    """Get comprehensive module specification."""
+    """
+Get comprehensive module specification."""
     return professional_registry.get_module_spec(module_name)
 
 def get_creator_optimization_plan(creator_type: str) -> Dict[str, Any]:
-    """Get personalized optimization plan for creator type."""
+    """
+Get personalized optimization plan for creator type."""
     return professional_registry.get_creator_optimization_plan(creator_type)
 
 def get_capability_overview() -> Dict[str, List[str]]:
-    """Get overview of all capabilities mapped to modules."""
+    """
+Get overview of all capabilities mapped to modules."""
     return professional_registry.get_capability_map()
 
 def get_business_value_report() -> Dict[str, str]:
-    """Get business value summary for all modules."""
+    """
+Get business value summary for all modules."""
     return professional_registry.get_business_value_summary()
 
 def get_comprehensive_platform_report() -> Dict[str, Any]:
-    """Generate comprehensive platform capability report."""
+    """
+Generate comprehensive platform capability report."""
     return professional_registry.get_comprehensive_report()
 
 def validate_module_readiness(module_name: str) -> Dict[str, Any]:
-    """Validate if module is ready for production use."""
+    """
+Validate if module is ready for production use."""
     spec = professional_registry.get_module_spec(module_name)
     if not spec:
         return {"ready": False, "error": "Module not found"}
@@ -659,7 +677,8 @@ def get_recommended_implementation_order() -> List[str]:
 # ========== MODULE FACTORY FUNCTIONS ==========
 
 def create_content_intelligence_engine():
-    """Factory function for Content Intelligence Engine."""
+    """
+Factory function for Content Intelligence Engine."""
     try:
         from .content_intelligence import ContentIntelligenceEngine
         return ContentIntelligenceEngine()

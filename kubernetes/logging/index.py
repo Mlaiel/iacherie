@@ -20,6 +20,7 @@ Team Expertise:
 - Microservices Architect: Distributed Systems
 - IA Prompt Engineer: Advanced AI Integration
 """
+
 import asyncio
 import logging
 import sys
@@ -51,7 +52,8 @@ class IAInfluencerLoggingSystem:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the complete logging system"""
+        """
+Initialize the complete logging system"""
         self.config = config or DEFAULT_LOGGING_CONFIG
         self.aggregator = None
         self.es_manager = None
@@ -65,7 +67,8 @@ class IAInfluencerLoggingSystem:
         self._setup_basic_logging()
     
     def _setup_basic_logging(self):
-        """Setup basic Python logging configuration"""
+        """
+Setup basic Python logging configuration"""
         logging.basicConfig(
             level=getattr(logging, self.config['environment']['log_level']),
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -179,7 +182,8 @@ class IAInfluencerLoggingSystem:
             )
     
     async def create_service_logger(self, service_name: str, module_name: str = None):
-        """Create a service-specific logger"""
+        """
+Create a service-specific logger"""
         if not self.aggregator:
             raise RuntimeError("Logging system not initialized")
         
@@ -442,7 +446,8 @@ _logging_system = None
 
 
 async def get_logging_system(config: Optional[Dict[str, Any]] = None) -> IAInfluencerLoggingSystem:
-    """Get or create global logging system instance"""
+    """
+Get or create global logging system instance"""
     global _logging_system
     
     if _logging_system is None:
@@ -453,7 +458,8 @@ async def get_logging_system(config: Optional[Dict[str, Any]] = None) -> IAInflu
 
 
 async def shutdown_logging_system():
-    """Shutdown global logging system"""
+    """
+Shutdown global logging system"""
     global _logging_system
     
     if _logging_system:
@@ -463,19 +469,22 @@ async def shutdown_logging_system():
 
 # Convenience functions for common operations
 async def log_ai_event(message: str, user_id: str = None, **kwargs):
-    """Quick AI event logging"""
+    """
+Quick AI event logging"""
     system = await get_logging_system()
     await system.log_ai_processing(message, user_id, **kwargs)
 
 
 async def log_fingerprint_event(message: str, user_id: str = None, **kwargs):
-    """Quick fingerprinting event logging"""
+    """
+Quick fingerprinting event logging"""
     system = await get_logging_system()
     await system.log_fingerprinting(message, user_id, **kwargs)
 
 
 async def log_revenue_event(message: str, user_id: str = None, **kwargs):
-    """Quick revenue event logging"""
+    """
+Quick revenue event logging"""
     system = await get_logging_system()
     await system.log_revenue_processing(message, user_id, **kwargs)
 
@@ -487,7 +496,8 @@ async def log_security_alert(message: str, severity: str = "medium", **kwargs):
 
 
 def main():
-    """CLI entry point for logging system management"""
+    """
+CLI entry point for logging system management"""
     import argparse
     
     parser = argparse.ArgumentParser(description="IA Influencer Agent Logging System")

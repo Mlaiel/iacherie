@@ -8,6 +8,7 @@ Enterprise compliance verification system for CI/CD pipelines.
 Ensures adherence to GDPR, SOC2, ISO27001, and industry standards for content platforms.
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Set
 import asyncio
 import logging
@@ -24,7 +25,9 @@ import xml.etree.ElementTree as ET
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Compliance framework enumeration"""
+    """
+Compliance framework enumeration"""
+
     GDPR = "gdpr"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
@@ -38,6 +41,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceLevel(Enum):
     """Compliance level enumeration"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -46,6 +50,7 @@ class ComplianceLevel(Enum):
 
 class ViolationType(Enum):
     """Compliance violation type enumeration"""
+
     DATA_PRIVACY = "data_privacy"
     SECURITY_CONTROL = "security_control"
     ACCESS_CONTROL = "access_control"
@@ -79,7 +84,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation result"""
+    """
+Compliance violation result"""
     rule_id: str
     framework: ComplianceFramework
     violation_type: ViolationType
@@ -97,7 +103,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
+    """
+Compliance assessment report"""
     framework: ComplianceFramework
     assessment_date: datetime
     total_rules: int
@@ -110,10 +117,12 @@ class ComplianceReport:
     next_assessment_date: datetime
 
 class ComplianceChecker:
-    """Enterprise compliance verification system"""
+    """
+Enterprise compliance verification system"""
     
     def __init__(self):
-        """Initialize compliance checker"""
+        """
+Initialize compliance checker"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.compliance_rules: Dict[ComplianceFramework, List[ComplianceRule]] = {}
         self.violation_history: List[ComplianceViolation] = []

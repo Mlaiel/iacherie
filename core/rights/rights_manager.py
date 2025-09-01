@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Rights Management Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -36,7 +37,9 @@ settings = get_settings()
 
 
 class ContentType(str, Enum):
-    """Supported content types for rights management."""
+    """
+Supported content types for rights management."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -46,6 +49,7 @@ class ContentType(str, Enum):
 
 class RightsLevel(str, Enum):
     """Rights protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -54,6 +58,7 @@ class RightsLevel(str, Enum):
 
 class ProtectionStatus(str, Enum):
     """Content protection status."""
+
     PENDING = "pending"
     PROTECTED = "protected"
     MONITORING = "monitoring"
@@ -82,7 +87,8 @@ class RightsMetadata:
 
 
 class RightsRegistrationRequest(BaseModel):
-    """Rights registration request model."""
+    """
+Rights registration request model."""
     content_file: bytes = Field(..., description="Content binary data")
     content_type: ContentType = Field(..., description="Type of content")
     title: str = Field(..., min_length=1, max_length=255)
@@ -120,7 +126,8 @@ class RightsManager:
     """
     
     def __init__(self, db_session: AsyncSession):
-        """Initialize RightsManager with database session."""
+        """
+Initialize RightsManager with database session."""
         self.db = db_session
         self.encryption = AdvancedEncryption()
         self._rights_cache = {}
@@ -435,77 +442,89 @@ class RightsManager:
     async def _check_content_conflicts(
         self, fingerprint_hash: str, content_type: ContentType
     ) -> List[Dict[str, Any]]:
-        """Check for existing content conflicts."""
+        """
+Check for existing content conflicts."""
         # Implementation for conflict detection
         pass
     
     async def _create_rights_record(
         self, rights_metadata: RightsMetadata
     ) -> Any:
-        """Create database rights record."""
+        """
+Create database rights record."""
         # Database creation logic
         pass
     
     async def _initialize_protection_monitoring(
         self, content_id: str, rights_metadata: RightsMetadata
     ) -> None:
-        """Initialize content protection monitoring."""
+        """
+Initialize content protection monitoring."""
         # Protection monitoring setup
         pass
     
     async def _generate_rights_certificate(
         self, rights_metadata: RightsMetadata
     ) -> Dict[str, Any]:
-        """Generate digital rights certificate."""
+        """
+Generate digital rights certificate."""
         # Certificate generation logic
         pass
     
     async def _get_user(self, user_id: str) -> Optional[Any]:
-        """Get user from database."""
+        """
+Get user from database."""
         # User retrieval logic
         pass
     
     async def _get_rights_record(self, content_id: str) -> Optional[Any]:
-        """Get rights record from database."""
+        """
+Get rights record from database."""
         # Rights record retrieval
         pass
     
     async def _search_existing_rights(
         self, fingerprint_hash: str, content_type: ContentType
     ) -> List[Any]:
-        """Search for existing rights records."""
+        """
+Search for existing rights records."""
         # Rights search logic
         pass
     
     async def _calculate_confidence_score(
         self, fingerprint_result: Any, existing_rights: List[Any]
     ) -> float:
-        """Calculate validation confidence score."""
+        """
+Calculate validation confidence score."""
         # Confidence calculation algorithm
         pass
     
     async def _identify_potential_conflicts(
         self, fingerprint_result: Any, existing_rights: List[Any], user_id: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Identify potential rights conflicts."""
+        """
+Identify potential rights conflicts."""
         # Conflict identification logic
         pass
     
     async def _generate_validation_recommendation(
         self, existing_rights: List[Any], conflicts: List[Dict[str, Any]], confidence: float
     ) -> str:
-        """Generate validation recommendation."""
+        """
+Generate validation recommendation."""
         # Recommendation generation logic
         pass
     
     async def _update_protection_monitoring(
         self, content_id: str, new_owner_id: str
     ) -> None:
-        """Update protection monitoring for new owner."""
+        """
+Update protection monitoring for new owner."""
         # Monitoring update logic
         pass
     
     async def _disable_protection_monitoring(self, content_id: str) -> None:
-        """Disable protection monitoring for content."""
+        """
+Disable protection monitoring for content."""
         # Monitoring disable logic
         pass

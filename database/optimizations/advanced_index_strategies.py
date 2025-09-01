@@ -6,6 +6,7 @@ recommendations, predictive indexing, and performance-driven adaptive strategies
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import numpy as np
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ logger = get_logger(__name__)
 
 
 class AdvancedIndexStrategy(Enum):
-    """Advanced indexing strategies"""
+    """
+Advanced indexing strategies"""
+
     PREDICTIVE = "predictive"
     ADAPTIVE = "adaptive" 
     ML_DRIVEN = "ml_driven"
@@ -52,7 +55,8 @@ class IndexUsagePattern:
 
 @dataclass
 class WorkloadProfile:
-    """Database workload profile"""
+    """
+Database workload profile"""
     read_write_ratio: float
     peak_hours: List[int]
     query_complexity_distribution: Dict[str, float]
@@ -63,7 +67,8 @@ class WorkloadProfile:
 
 
 class PredictiveIndexManager:
-    """Predictive index management using historical patterns"""
+    """
+Predictive index management using historical patterns"""
     
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
@@ -72,7 +77,8 @@ class PredictiveIndexManager:
         self.prediction_models: Dict[str, Any] = {}
         
     async def analyze_usage_patterns(self, engine: AsyncEngine, days_back: int = 30) -> Dict[str, IndexUsagePattern]:
-        """Analyze index usage patterns over time"""
+        """
+Analyze index usage patterns over time"""
         try:
             patterns = {}
             
@@ -129,23 +135,27 @@ class PredictiveIndexManager:
         return size_factor / scan_count
     
     def _estimate_maintenance_cost(self, size_bytes: int) -> float:
-        """Estimate index maintenance cost"""
+        """
+Estimate index maintenance cost"""
         # Larger indexes have higher maintenance costs
         size_mb = size_bytes / (1024 * 1024)
         return size_mb * 0.1  # 10% of size as maintenance factor
     
     async def _get_temporal_usage(self, engine: AsyncEngine, index_name: str) -> Dict[str, int]:
-        """Get temporal usage patterns (simplified)"""
+        """
+Get temporal usage patterns (simplified)"""
         # In a real implementation, you'd query pg_stat_activity or custom logging
         # For now, return a placeholder pattern
         return {str(hour): 0 for hour in range(24)}
     
     def _calculate_performance_impact(self, usage_count: int, selectivity: float) -> float:
-        """Calculate performance impact score"""
+        """
+Calculate performance impact score"""
         return usage_count * selectivity * 10
     
     async def predict_index_needs(self, workload_profile: WorkloadProfile) -> List[IndexRecommendation]:
-        """Predict future index needs based on workload patterns"""
+        """
+Predict future index needs based on workload patterns"""
         recommendations = []
         
         try:
@@ -238,7 +248,8 @@ class AdaptiveIndexManager:
     async def adapt_to_workload_changes(self, engine: AsyncEngine, 
                                       new_workload: WorkloadProfile,
                                       current_workload: WorkloadProfile) -> List[str]:
-        """Adapt indexes based on workload changes"""
+        """
+Adapt indexes based on workload changes"""
         adaptations = []
         
         try:
@@ -367,7 +378,8 @@ class TenantAwareIndexManager:
         self.tenant_patterns: Dict[str, Dict[str, Any]] = {}
         
     async def analyze_tenant_patterns(self, engine: AsyncEngine) -> Dict[str, Any]:
-        """Analyze per-tenant access patterns"""
+        """
+Analyze per-tenant access patterns"""
         try:
             patterns = {}
             
@@ -445,7 +457,8 @@ class CostOptimizedIndexManager:
         
     async def optimize_index_costs(self, engine: AsyncEngine, 
                                  budget_constraint: float = 100.0) -> List[Dict[str, Any]]:
-        """Optimize indexes within budget constraints (in MB)"""
+        """
+Optimize indexes within budget constraints (in MB)"""
         try:
             # Get current index costs
             current_indexes = await self._get_index_costs(engine)
@@ -547,7 +560,8 @@ class AdvancedIndexStrategiesManager:
     async def execute_strategy(self, engine: AsyncEngine, 
                              strategy: AdvancedIndexStrategy,
                              parameters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Execute specific indexing strategy"""
+        """
+Execute specific indexing strategy"""
         parameters = parameters or {}
         results = {'strategy': strategy.value, 'timestamp': datetime.now()}
         

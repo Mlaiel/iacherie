@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueModel(str, Enum):
-    """Revenue models available on the platform."""
+    """
+Revenue models available on the platform."""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     ADVERTISING_REVENUE = "advertising_revenue"
     SUBSCRIPTION_FEES = "subscription_fees"
@@ -34,6 +37,7 @@ class RevenueModel(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Supported payment methods for payouts."""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -46,6 +50,7 @@ class PaymentMethod(str, Enum):
 
 class Currency(str, Enum):
     """Supported currencies for international operations."""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -65,6 +70,7 @@ class Currency(str, Enum):
 
 class TaxRegion(str, Enum):
     """Tax regions for compliance and reporting."""
+
     EUROPEAN_UNION = "european_union"
     UNITED_STATES = "united_states"
     UNITED_KINGDOM = "united_kingdom"
@@ -79,6 +85,7 @@ class TaxRegion(str, Enum):
 
 class PayoutFrequency(str, Enum):
     """Payout frequency options."""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -89,6 +96,7 @@ class PayoutFrequency(str, Enum):
 
 class RevenueStatus(str, Enum):
     """Revenue tracking status."""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSING = "processing"
@@ -114,7 +122,8 @@ class RevenueConfiguration:
 
 @dataclass
 class PaymentConfiguration:
-    """Payment processor configuration."""
+    """
+Payment processor configuration."""
     processor_id: str
     processor_name: str
     payment_method: PaymentMethod
@@ -145,7 +154,8 @@ class MonetizationSeedsManager:
     """
     
     def __init__(self):
-        """Initialize monetization seeds manager with enterprise configurations."""
+        """
+Initialize monetization seeds manager with enterprise configurations."""
         self.revenue_models = {}
         self.payment_configurations = {}
         self.tax_settings = {}
@@ -158,7 +168,8 @@ class MonetizationSeedsManager:
         self.forecasting_models = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all monetization-related seed data with full enterprise support."""
+        """
+Initialize all monetization-related seed data with full enterprise support."""
         logger.info("Initializing comprehensive monetization seeds data...")
         start_time = datetime.now(timezone.utc)
         
@@ -534,7 +545,8 @@ class MonetizationSeedsManager:
         }
     
     async def _initialize_payment_systems(self) -> Dict[str, Any]:
-        """Initialize payment processing systems and configurations."""
+        """
+Initialize payment processing systems and configurations."""
         payment_systems = {
             PaymentMethod.STRIPE: {
                 'name': 'Stripe',
@@ -711,7 +723,8 @@ class MonetizationSeedsManager:
         }
     
     async def _initialize_pricing_strategies(self) -> Dict[str, Any]:
-        """Initialize dynamic pricing strategies and optimization models."""
+        """
+Initialize dynamic pricing strategies and optimization models."""
         pricing_strategies = {
             'subscription_pricing': {
                 'strategy_type': 'tiered_pricing',
@@ -857,7 +870,8 @@ class MonetizationSeedsManager:
         }
     
     async def _initialize_tax_configurations(self) -> Dict[str, Any]:
-        """Initialize tax compliance configurations for different regions."""
+        """
+Initialize tax compliance configurations for different regions."""
         tax_configurations = {
             TaxRegion.EUROPEAN_UNION: {
                 'region_name': 'European Union',
@@ -1014,7 +1028,8 @@ class MonetizationSeedsManager:
         }
     
     async def _initialize_revenue_sharing(self) -> Dict[str, Any]:
-        """Initialize revenue sharing models and platform fee structures."""
+        """
+Initialize revenue sharing models and platform fee structures."""
         revenue_sharing = {
             'platform_fee_structure': {
                 'tiered_pricing': {
@@ -1127,7 +1142,8 @@ class MonetizationSeedsManager:
         }
     
     async def _initialize_financial_analytics(self) -> Dict[str, Any]:
-        """Initialize financial analytics and reporting capabilities."""
+        """
+Initialize financial analytics and reporting capabilities."""
         financial_analytics = {
             'revenue_analytics': {
                 'real_time_tracking': {
@@ -1241,7 +1257,8 @@ class MonetizationSeedsManager:
         }
     
     async def _initialize_fraud_prevention(self) -> Dict[str, Any]:
-        """Initialize fraud prevention and security measures for financial transactions."""
+        """
+Initialize fraud prevention and security measures for financial transactions."""
         fraud_prevention = {
             'transaction_monitoring': {
                 'real_time_screening': {
@@ -1369,7 +1386,8 @@ class MonetizationSeedsManager:
         }
     
     async def _initialize_payout_schedules(self) -> Dict[str, Any]:
-        """Initialize payout schedules and processing configurations."""
+        """
+Initialize payout schedules and processing configurations."""
         payout_schedules = {
             'standard_schedules': {
                 'weekly': {
@@ -1484,7 +1502,8 @@ class MonetizationSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all monetization seed data (use with caution)."""
+        """
+Reset all monetization seed data (use with caution)."""
         logger.warning("Resetting monetization seeds data...")
         
         self.revenue_models.clear()

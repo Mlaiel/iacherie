@@ -6,9 +6,10 @@ access control, audit logging, threat detection, and compliance management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SecurityRole(Enum):
-    """Security roles for collaboration access control"""
+    """
+Security roles for collaboration access control"""
+
     OWNER = "owner"
     ADMIN = "admin"
     COLLABORATOR = "collaborator"
@@ -51,6 +54,7 @@ class SecurityRole(Enum):
 
 class PermissionType(Enum):
     """Granular permission types"""
+
     CREATE = "create"
     READ = "read"
     UPDATE = "update"
@@ -66,6 +70,7 @@ class PermissionType(Enum):
 
 class AccessControlScope(Enum):
     """Scope of access control"""
+
     PROJECT = "project"
     CONTENT = "content"
     WORKFLOW = "workflow"
@@ -77,6 +82,7 @@ class AccessControlScope(Enum):
 
 class SecurityEventType(Enum):
     """Types of security events for audit logging"""
+
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
     LOGOUT = "logout"
@@ -92,6 +98,7 @@ class SecurityEventType(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"

@@ -14,6 +14,7 @@ This module provides comprehensive cloud services integration supporting AWS, Az
 GCP, and other cloud providers with advanced resource management, cost optimization,
 and security features.
 """
+
 import logging
 import asyncio
 import time
@@ -34,7 +35,9 @@ from google.oauth2 import service_account
 logger = logging.getLogger(__name__)
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
+    """
+Supported cloud providers"""
+
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -44,6 +47,7 @@ class CloudProvider(Enum):
 
 class ResourceType(Enum):
     """Cloud resource types"""
+
     STORAGE = "storage"
     COMPUTE = "compute"
     DATABASE = "database"
@@ -57,6 +61,7 @@ class ResourceType(Enum):
 
 class ResourceStatus(Enum):
     """Resource status"""
+
     CREATING = auto()
     RUNNING = auto()
     STOPPED = auto()
@@ -66,7 +71,8 @@ class ResourceStatus(Enum):
 
 @dataclass
 class CloudCredentials:
-    """Cloud provider credentials"""
+    """
+Cloud provider credentials"""
     provider: CloudProvider
     access_key_id: Optional[str] = None
     secret_access_key: Optional[str] = None
@@ -98,7 +104,8 @@ class CloudResource:
 
 @dataclass
 class StorageObject:
-    """Storage object representation"""
+    """
+Storage object representation"""
     key: str
     size: int
     last_modified: datetime
@@ -124,30 +131,35 @@ class BaseCloudConnector(ABC):
     
     @abstractmethod
     async def list_resources(self, resource_type: ResourceType) -> List[CloudResource]:
-        """List resources of specific type"""
+        """
+List resources of specific type"""
         pass
     
     @abstractmethod
     async def create_resource(self, resource_type: ResourceType, 
                             config: Dict[str, Any]) -> CloudResource:
-        """Create new resource"""
+        """
+Create new resource"""
         pass
     
     @abstractmethod
     async def delete_resource(self, resource_id: str, 
                             resource_type: ResourceType) -> bool:
-        """Delete resource"""
+        """
+Delete resource"""
         pass
     
     @abstractmethod
     async def get_resource_metrics(self, resource_id: str, 
                                  start_time: datetime, 
                                  end_time: datetime) -> Dict[str, Any]:
-        """Get resource performance metrics"""
+        """
+Get resource performance metrics"""
         pass
     
     async def cleanup(self):
-        """Cleanup connector resources"""
+        """
+Cleanup connector resources"""
         if self.client:
             if hasattr(self.client, 'close'):
                 await self.client.close()
@@ -164,7 +176,8 @@ class AWSConnector(BaseCloudConnector):
         self.lambda_client = None
         
     async def authenticate(self) -> bool:
-        """Authenticate with AWS"""
+        """
+Authenticate with AWS"""
         try:
             # Initialize AWS session
             session_kwargs = {
@@ -648,7 +661,8 @@ class AzureConnector(BaseCloudConnector):
         self.storage_client = None
         
     async def authenticate(self) -> bool:
-        """Authenticate with Azure"""
+        """
+Authenticate with Azure"""
         try:
             if self.credentials.client_id and self.credentials.client_secret:
                 self.credential = azure.identity.ClientSecretCredential(
@@ -673,7 +687,8 @@ class AzureConnector(BaseCloudConnector):
     
     async def create_resource(self, resource_type: ResourceType, 
                             config: Dict[str, Any]) -> CloudResource:
-        """Create Azure resource"""
+        """
+Create Azure resource"""
         try:
             if resource_type == ResourceType.STORAGE:
                 return await self._create_azure_storage(config)
@@ -797,14 +812,16 @@ class AzureConnector(BaseCloudConnector):
         return {}
 
 class GCPConnector(BaseCloudConnector):
-    """Google Cloud Platform connector"""
+    """
+Google Cloud Platform connector"""
     
     def __init__(self, credentials: CloudCredentials):
         super().__init__(credentials)
         self.storage_client = None
         
     async def authenticate(self) -> bool:
-        """Authenticate with GCP"""
+        """
+Authenticate with GCP"""
         try:
             if self.credentials.service_account_key:
                 credentials_obj = service_account.Credentials.from_service_account_info(
@@ -984,7 +1001,8 @@ class GCPConnector(BaseCloudConnector):
         return {}
 
 class CloudOrchestrator:
-    """Multi-cloud orchestration and management"""
+    """
+Multi-cloud orchestration and management"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -994,7 +1012,8 @@ class CloudOrchestrator:
         
     async def add_provider(self, provider: CloudProvider, 
                           credentials: CloudCredentials) -> bool:
-        """Add cloud provider"""
+        """
+Add cloud provider"""
         try:
             connector_classes = {
                 CloudProvider.AWS: AWSConnector,
@@ -1079,7 +1098,8 @@ class CloudOrchestrator:
         }
     
     async def deploy_multi_cloud_application(self, deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy application across multiple cloud providers"""
+        """
+Deploy application across multiple cloud providers"""
         deployment_results = {}
         
         for provider_config in deployment_config.get('providers', []):
@@ -1184,7 +1204,8 @@ class CloudOrchestrator:
         return health_report
     
     async def cleanup_all(self):
-        """Cleanup all cloud connectors"""
+        """
+Cleanup all cloud connectors"""
         for connector in self.connectors.values():
             await connector.cleanup()
         
@@ -1201,7 +1222,8 @@ class CloudCostTracker:
         
     def track_cost(self, provider: CloudProvider, resource_id: str, 
                   cost: float, timestamp: datetime):
-        """Track cost for resource"""
+        """
+Track cost for resource"""
         cost_entry = {
             'provider': provider.value,
             'resource_id': resource_id,
@@ -1212,7 +1234,8 @@ class CloudCostTracker:
     
     def get_cost_report(self, start_date: datetime, 
                        end_date: datetime) -> Dict[str, Any]:
-        """Generate cost report for date range"""
+        """
+Generate cost report for date range"""
         total_cost = 0.0
         provider_costs = defaultdict(float)
         resource_costs = {}

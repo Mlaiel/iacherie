@@ -5,7 +5,7 @@ and optimize their content across all platforms with intelligent categorization 
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class ContentType(Enum):
-    """Content types"""
+    """
+Content types"""
+
     VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
@@ -41,6 +44,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content status"""
+
     DRAFT = "draft"
     PUBLISHED = "published"
     SCHEDULED = "scheduled"
@@ -67,14 +71,16 @@ class ContentItem:
 
 
 class ContentOrganizer:
-    """Content organization and categorization"""
+    """
+Content organization and categorization"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def organize_content(self, creator_id: str, organization_rules: Dict[str, Any]) -> Dict[str, Any]:
-        """Organize content based on rules"""
+        """
+Organize content based on rules"""
         # Get all content for creator
         content_items = await self._get_creator_content(creator_id)
         
@@ -103,7 +109,8 @@ class ContentOrganizer:
         return organized_content
     
     async def _get_creator_content(self, creator_id: str) -> List[ContentItem]:
-        """Get all content for creator"""
+        """
+Get all content for creator"""
         # Mock content items
         return [
             ContentItem(
@@ -139,7 +146,8 @@ class ContentAnalyzer:
         self.logger = get_logger(self.__class__.__name__)
     
     async def analyze_content_performance(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze content performance metrics"""
+        """
+Analyze content performance metrics"""
         content_items = await self._get_creator_content_analytics(creator_id)
         
         # Calculate performance metrics
@@ -176,7 +184,8 @@ class ContentAnalyzer:
         }
     
     async def _get_creator_content_analytics(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get content analytics data"""
+        """
+Get content analytics data"""
         return [
             {
                 'content_id': 'content_001',
@@ -198,14 +207,16 @@ class ContentAnalyzer:
 
 
 class ContentScheduler:
-    """Content scheduling and publishing automation"""
+    """
+Content scheduling and publishing automation"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def schedule_content(self, content_id: str, schedule_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Schedule content for publishing"""
+        """
+Schedule content for publishing"""
         schedule_id = f"schedule_{content_id}_{datetime.utcnow().timestamp()}"
         
         schedule = {
@@ -239,14 +250,16 @@ class ContentScheduler:
 
 
 class ContentOptimizer:
-    """AI-powered content optimization"""
+    """
+AI-powered content optimization"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def optimize_content(self, content_id: str) -> Dict[str, Any]:
-        """Optimize content for better performance"""
+        """
+Optimize content for better performance"""
         # Mock optimization suggestions
         return {
             'content_id': content_id,
@@ -359,7 +372,8 @@ class ContentPortfolio:
         ]
     
     async def create_content_item(self, creator_id: str, content_data: Dict[str, Any]) -> ContentItem:
-        """Create new content item in portfolio"""
+        """
+Create new content item in portfolio"""
         try:
             content_id = f"content_{creator_id}_{datetime.utcnow().timestamp()}"
             

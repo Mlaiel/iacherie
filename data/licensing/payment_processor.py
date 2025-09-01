@@ -5,13 +5,14 @@ Enterprise-grade multi-currency payment processing with automated distribution,
 fraud prevention, and global compliance for licensing royalties and fees.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
 """
+
 from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime, date, timedelta
 from uuid import UUID, uuid4
@@ -42,7 +43,9 @@ settings = get_settings()
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
+    """
+Supported payment methods"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -58,6 +61,7 @@ class PaymentMethod(Enum):
 
 class PaymentType(Enum):
     """Payment types"""
+
     ROYALTY_PAYMENT = "royalty_payment"
     LICENSE_FEE = "license_fee"
     ADVANCE_PAYMENT = "advance_payment"
@@ -72,6 +76,7 @@ class PaymentType(Enum):
 
 class PaymentFrequency(Enum):
     """Payment frequency options"""
+
     IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -83,6 +88,7 @@ class PaymentFrequency(Enum):
 
 class PaymentPriority(Enum):
     """Payment processing priority"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -110,7 +116,8 @@ class PaymentInstruction:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result"""
+    """
+Payment processing result"""
     payment_id: str
     status: PaymentStatus
     transaction_id: Optional[str] = None
@@ -147,7 +154,8 @@ class PaymentProcessor:
         notification_service: NotificationService = None,
         audit_logger: AuditLogger = None
     ):
-        """Initialize payment processor with comprehensive dependencies"""
+        """
+Initialize payment processor with comprehensive dependencies"""
         self.repository = repository or LicensingRepository()
         self.gateway_manager = gateway_manager or PaymentGatewayManager()
         self.fraud_service = fraud_service or FraudDetectionService()
@@ -714,6 +722,7 @@ settings = get_settings()
 
 class PaymentMethod(Enum):
     """Supported payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     STRIPE = "stripe"
     PAYPAL = "paypal"
@@ -727,6 +736,7 @@ class PaymentMethod(Enum):
 
 class PaymentType(Enum):
     """Payment types"""
+
     ROYALTY = "royalty"
     LICENSE_FEE = "license_fee"
     ADVANCE = "advance"
@@ -737,6 +747,7 @@ class PaymentType(Enum):
 
 class PaymentPriority(Enum):
     """Payment processing priorities"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -756,7 +767,8 @@ class PaymentProcessor:
         payment_security: PaymentSecurity = None,
         cache_manager: CacheManager = None
     ):
-        """Initialize payment processor with dependencies"""
+        """
+Initialize payment processor with dependencies"""
         self.repository = repository or LicensingRepository()
         self.currency_converter = currency_converter or CurrencyConverter()
         self.payment_security = payment_security or PaymentSecurity()
@@ -1181,7 +1193,8 @@ class PaymentProcessor:
         recipient_info: Dict[str, Any],
         payment_record: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment with specific provider"""
+        """
+Process payment with specific provider"""
         processor = self.processors.get(payment_method)
         if not processor:
             raise PaymentError(f"No processor available for {payment_method}")

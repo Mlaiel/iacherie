@@ -8,7 +8,7 @@ Responsibility: Advanced AI processing workflows and ML model management
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ AI PROCESSING REPOSITORY ARCHITECTURE:
 Content Ingestion → AI Model Selection → Processing Pipeline → Quality Assessment → 
 Result Enhancement → Vector Storage → Performance Monitoring → Model Optimization
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
 import logging
 import asyncio
@@ -39,7 +40,9 @@ from ..models.ai_processing_model import (
 )
 
 class ProcessingType(Enum):
-    """AI processing types"""
+    """
+AI processing types"""
+
     CONTENT_ANALYSIS = "content_analysis"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     QUALITY_ENHANCEMENT = "quality_enhancement"
@@ -53,6 +56,7 @@ class ProcessingType(Enum):
 
 class ModelPriority(Enum):
     """Model execution priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -71,7 +75,8 @@ class ProcessingMetrics:
     created_at: datetime
 
 class AIProcessingRepository(BaseRepository[AIProcessingJob]):
-    """Professional AI processing repository with advanced ML pipeline management"""
+    """
+Professional AI processing repository with advanced ML pipeline management"""
     
     def __init__(self, db_session, cache_manager=None, vector_store=None, model_registry=None):
         super().__init__(db_session, cache_manager, vector_store)
@@ -548,17 +553,20 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         }
 
     async def _get_queue_position(self, priority: ModelPriority) -> int:
-        """Get current position in processing queue"""
+        """
+Get current position in processing queue"""
         queue = self.processing_queues[priority]
         return queue.qsize() + 1
 
     async def _enqueue_processing_job(self, job: AIProcessingJob):
-        """Add job to appropriate processing queue"""
+        """
+Add job to appropriate processing queue"""
         queue = self.processing_queues[job.priority]
         await queue.put(job)
 
     async def _cache_job_data(self, job: AIProcessingJob):
-        """Cache job data for quick access"""
+        """
+Cache job data for quick access"""
         if self.cache_manager:
             cache_key = f"job:{job.job_id}"
             await self.cache_manager.set(
@@ -640,7 +648,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         result: Dict[str, Any],
         validation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Enhance processing results with AI insights"""
+        """
+Enhance processing results with AI insights"""
         enhanced = {
             'output_data': result,
             'quality_metrics': {
@@ -666,7 +675,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         return enhanced
 
     async def _store_processing_result(self, result: ProcessingResult):
-        """Store processing result"""
+        """
+Store processing result"""
         # This would store in results table
         self.logger.info(f"Result stored: {result.result_id}")
 
@@ -724,7 +734,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         return optimized
 
     async def _store_processing_pipeline(self, pipeline: ProcessingPipeline):
-        """Store processing pipeline"""
+        """
+Store processing pipeline"""
         # This would store in pipeline table
         self.logger.info(f"Pipeline stored: {pipeline.pipeline_id}")
 
@@ -742,7 +753,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         pipeline: ProcessingPipeline,
         result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive pipeline report"""
+        """
+Generate comprehensive pipeline report"""
         return {
             'pipeline_id': pipeline.pipeline_id,
             'execution_summary': result,
@@ -763,7 +775,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         model_type: ModelType,
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze model performance data"""
+        """
+Analyze model performance data"""
         return {
             'accuracy_trend': 'stable',
             'latency_trend': 'improving',
@@ -777,7 +790,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         model_type: ModelType,
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify model optimization opportunities"""
+        """
+Identify model optimization opportunities"""
         opportunities = []
         
         if analysis['error_rate'] > 5:
@@ -801,7 +815,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         model_type: ModelType,
         opportunities: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = []
         
         for opportunity in opportunities:
@@ -825,7 +840,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         model_type: ModelType,
         recommendations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Apply model optimization recommendations"""
+        """
+Apply model optimization recommendations"""
         # This would apply actual optimizations
         return {
             'optimizations_applied': len(recommendations),
@@ -838,7 +854,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         model_type: ModelType,
         optimization_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate optimization effectiveness"""
+        """
+Validate optimization effectiveness"""
         return {
             'improvement_percentage': 20.5,
             'performance_increase': True,
@@ -846,7 +863,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         }
 
     async def _update_model_registry(self, model_type: ModelType, results: Dict[str, Any]):
-        """Update model registry with optimization results"""
+        """
+Update model registry with optimization results"""
         # This would update the model registry
         self.logger.info(f"Model registry updated for {model_type.value}")
 
@@ -868,7 +886,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         }
 
     async def _analyze_processing_trends(self, jobs: List[AIProcessingJob]) -> Dict[str, Any]:
-        """Analyze processing trends"""
+        """
+Analyze processing trends"""
         return {
             'job_volume_trend': 'increasing',
             'processing_time_trend': 'stable',
@@ -877,7 +896,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         }
 
     async def _generate_resource_utilization_report(self, jobs: List[AIProcessingJob]) -> Dict[str, Any]:
-        """Generate resource utilization report"""
+        """
+Generate resource utilization report"""
         return {
             'cpu_utilization': 75.5,
             'memory_utilization': 68.2,
@@ -887,7 +907,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         }
 
     async def _identify_processing_bottlenecks(self, jobs: List[AIProcessingJob]) -> List[Dict[str, Any]]:
-        """Identify processing bottlenecks"""
+        """
+Identify processing bottlenecks"""
         return [
             {
                 'type': 'queue_congestion',
@@ -908,7 +929,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         metrics: Dict[str, Any],
         bottlenecks: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate processing optimization recommendations"""
+        """
+Generate processing optimization recommendations"""
         recommendations = []
         
         if metrics.get('success_rate', 100) < 95:
@@ -927,7 +949,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         return self.model_registry.get(model_type.value, [])
 
     async def _deploy_new_model(self, model_type: ModelType, model_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy new model version"""
+        """
+Deploy new model version"""
         return {
             'action': 'deploy',
             'model_id': model_data.get('model_id', f"new_{model_type.value}"),
@@ -946,7 +969,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         }
 
     async def _retire_model(self, model_type: ModelType, model_id: str) -> Dict[str, Any]:
-        """Retire model"""
+        """
+Retire model"""
         return {
             'action': 'retire',
             'model_id': model_id,
@@ -955,7 +979,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         }
 
     async def _rollback_model(self, model_type: ModelType, version: str) -> Dict[str, Any]:
-        """Rollback to previous model version"""
+        """
+Rollback to previous model version"""
         return {
             'action': 'rollback',
             'rolled_back_to': version,
@@ -969,7 +994,8 @@ class AIProcessingRepository(BaseRepository[AIProcessingJob]):
         action: str,
         result: Dict[str, Any]
     ):
-        """Update model registry with lifecycle changes"""
+        """
+Update model registry with lifecycle changes"""
         # This would update the model registry
         self.logger.info(f"Model registry updated: {action} for {model_type.value}")
 
@@ -985,7 +1011,8 @@ class AsyncAIProcessingRepository(AsyncBaseRepository[AIProcessingJob]):
         self,
         job_requests: List[Dict[str, Any]]
     ) -> List[AIProcessingJob]:
-        """Submit multiple processing jobs in batch"""
+        """
+Submit multiple processing jobs in batch"""
         try:
             tasks = []
             for request in job_requests:

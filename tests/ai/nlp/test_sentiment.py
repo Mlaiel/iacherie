@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for NLP Sentiment Analysis Module
+"""
+Comprehensive Tests for NLP Sentiment Analysis Module
 
 Industrial-grade tests for AdvancedSentimentAnalyzer covering emotion detection,
 mood analysis, and sentiment optimization with real implementations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -46,11 +49,13 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedSentimentAnalyzer:
-    """Comprehensive tests for AdvancedSentimentAnalyzer"""
+    """
+Comprehensive tests for AdvancedSentimentAnalyzer"""
     
     @pytest.mark.asyncio
     async def test_analyzer_initialization(self, sentiment_analyzer):
-        """Test sentiment analyzer initialization"""
+        """
+Test sentiment analyzer initialization"""
         assert sentiment_analyzer is not None
         assert hasattr(sentiment_analyzer, 'config')
         assert hasattr(sentiment_analyzer, 'emotion_detector')
@@ -65,7 +70,8 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_basic_sentiment_analysis(self, sentiment_analyzer):
-        """Test basic sentiment analysis"""
+        """
+Test basic sentiment analysis"""
         test_cases = [
             {
                 'text': "I absolutely love this amazing product! It's fantastic!",
@@ -301,7 +307,8 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_sentiment_trends_analysis(self, sentiment_analyzer):
-        """Test sentiment trends over time"""
+        """
+Test sentiment trends over time"""
         # Simulate content evolution over time
         content_timeline = [
             {
@@ -603,7 +610,8 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_cross_platform_sentiment_analysis(self, sentiment_analyzer):
-        """Test cross-platform sentiment analysis"""
+        """
+Test cross-platform sentiment analysis"""
         base_content = "Just tried this new AI tool and it's incredible!"
         platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN, Platform.TIKTOK]
         
@@ -693,36 +701,43 @@ class TestEmotionDetector:
     
     @pytest.mark.asyncio
     async def test_emotion_detector_initialization(self):
-        """Test emotion detector initialization"""
+        """
+Test emotion detector initialization"""
         detector = EmotionDetector()
         assert detector is not None
         assert hasattr(detector, 'detect_emotions')
 
 class TestMoodAnalyzer:
-    """Test mood analyzer component"""
+    """
+Test mood analyzer component"""
     
     @pytest.mark.asyncio
     async def test_mood_analyzer_initialization(self):
-        """Test mood analyzer initialization"""
+        """
+Test mood analyzer initialization"""
         analyzer = MoodAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'analyze_mood')
 
 class TestSentimentOptimizer:
-    """Test sentiment optimizer component"""
+    """
+Test sentiment optimizer component"""
     
     @pytest.mark.asyncio
     async def test_sentiment_optimizer_initialization(self):
-        """Test sentiment optimizer initialization"""
+        """
+Test sentiment optimizer initialization"""
         optimizer = SentimentOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'optimize_sentiment')
 
 class TestSentimentConfig:
-    """Test sentiment configuration"""
+    """
+Test sentiment configuration"""
     
     def test_config_creation(self):
-        """Test sentiment configuration creation"""
+        """
+Test sentiment configuration creation"""
         config = SentimentConfig(
             emotion_models=['basic', 'advanced'],
             sentiment_scale=[-1.0, 1.0],

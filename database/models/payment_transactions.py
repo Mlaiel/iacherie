@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class TransactionType(Enum):
-    """Transaction type enumeration"""
+    """
+Transaction type enumeration"""
+
     PAYMENT = "payment"
     REFUND = "refund"
     PAYOUT = "payout"
@@ -62,6 +65,7 @@ class TransactionType(Enum):
 
 class TransactionStatus(Enum):
     """Transaction status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -81,6 +85,7 @@ class TransactionStatus(Enum):
 
 class PaymentProvider(Enum):
     """Payment provider enumeration"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     SQUARE = "square"
@@ -107,6 +112,7 @@ class PaymentProvider(Enum):
 
 class Currency(Enum):
     """Currency enumeration"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -133,6 +139,7 @@ class Currency(Enum):
 
 class RiskLevel(Enum):
     """Transaction risk level"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -142,6 +149,7 @@ class RiskLevel(Enum):
 
 class PaymentMethod(Enum):
     """Payment method types"""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
@@ -437,7 +445,8 @@ class PaymentTransaction(Base):
         self.net_amount = self.amount - self.total_fees
     
     def mark_as_completed(self, external_transaction_id: str = None, receipt_url: str = None) -> None:
-        """Mark transaction as completed"""
+        """
+Mark transaction as completed"""
         self.status = TransactionStatus.COMPLETED
         self.settled_at = datetime.now(timezone.utc)
         if external_transaction_id:
@@ -447,7 +456,8 @@ class PaymentTransaction(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def mark_as_failed(self, error_message: str, error_code: str = None) -> None:
-        """Mark transaction as failed"""
+        """
+Mark transaction as failed"""
         self.status = TransactionStatus.FAILED
         self.failed_at = datetime.now(timezone.utc)
         self.provider_response = {
@@ -458,7 +468,8 @@ class PaymentTransaction(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def process_refund(self, refund_amount: Decimal = None, reason: str = None, refunded_by: str = None) -> 'PaymentTransaction':
-        """Process a refund for this transaction"""
+        """
+Process a refund for this transaction"""
         if self.status != TransactionStatus.COMPLETED:
             raise ValueError("Can only refund completed transactions")
         
@@ -539,7 +550,8 @@ class PaymentTransaction(Base):
         return self.risk_score
     
     def distribute_revenue_shares(self) -> List['PaymentTransaction']:
-        """Distribute revenue shares to collaborators"""
+        """
+Distribute revenue shares to collaborators"""
         if not self.revenue_shares or self.status != TransactionStatus.COMPLETED:
             return []
         
@@ -601,7 +613,8 @@ class PaymentTransaction(Base):
         }
     
     def is_eligible_for_refund(self) -> bool:
-        """Check if transaction is eligible for refund"""
+        """
+Check if transaction is eligible for refund"""
         return (
             self.status == TransactionStatus.COMPLETED and
             self.transaction_type in [TransactionType.PAYMENT, TransactionType.SUBSCRIPTION] and
@@ -611,7 +624,8 @@ class PaymentTransaction(Base):
         )
     
     def get_tax_summary(self) -> Dict[str, Any]:
-        """Get tax information summary"""
+        """
+Get tax information summary"""
         return {
             'tax_amount': float(self.tax_amount) if self.tax_amount else 0.0,
             'tax_rate': float(self.tax_rate) if self.tax_rate else 0.0,

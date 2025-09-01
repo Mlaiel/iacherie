@@ -14,6 +14,7 @@ Advanced AI-powered content fingerprinting system supporting multiple
 formats: audio, video, image, and text. Provides high-precision 
 similarity matching using state-of-the-art ML algorithms.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Protocol
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & CONFIGURATION ===============
 
 class FingerprintingEngineStatus(Enum):
-    """Fingerprinting engine operational status"""
+    """
+Fingerprinting engine operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -54,6 +57,7 @@ class FingerprintingEngineStatus(Enum):
 
 class ContentType(Enum):
     """Supported content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -85,6 +89,7 @@ class FingerprintMethod(Enum):
 
 class SimilarityAlgorithm(Enum):
     """Similarity calculation algorithms"""
+
     COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
@@ -146,28 +151,33 @@ class IFingerprintingEngineService(ABC):
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize fingerprinting engine"""
+        """
+Initialize fingerprinting engine"""
         pass
     
     @abstractmethod
     async def generate_fingerprint(self, content_data: bytes, content_type: ContentType) -> ContentFingerprint:
-        """Generate fingerprint for content"""
+        """
+Generate fingerprint for content"""
         pass
     
     @abstractmethod
     async def find_similar(self, fingerprint: ContentFingerprint, top_k: int = 10) -> List[SimilarityMatch]:
-        """Find similar content using fingerprint"""
+        """
+Find similar content using fingerprint"""
         pass
     
     @abstractmethod
     async def index_fingerprint(self, fingerprint: ContentFingerprint) -> bool:
-        """Add fingerprint to search index"""
+        """
+Add fingerprint to search index"""
         pass
 
 # =============== AUDIO FINGERPRINTING ENGINE ===============
 
 class AudioFingerprintEngine:
-    """Advanced audio fingerprinting using multiple methods"""
+    """
+Advanced audio fingerprinting using multiple methods"""
     
     def __init__(self, config: FingerprintingEngineConfig):
         self.config = config
@@ -765,7 +775,8 @@ class FingerprintingEngineFactory:
     
     @staticmethod
     def create_service(config: Optional[FingerprintingEngineConfig] = None) -> FingerprintingEngineService:
-        """Create configured fingerprinting engine service"""
+        """
+Create configured fingerprinting engine service"""
         if config is None:
             config = FingerprintingEngineConfig()
         
@@ -777,7 +788,8 @@ class FingerprintingEngineFactory:
         similarity_threshold: float = 0.85,
         **kwargs
     ) -> FingerprintingEngineConfig:
-        """Create fingerprinting engine configuration"""
+        """
+Create fingerprinting engine configuration"""
         return FingerprintingEngineConfig(
             vector_dimension=vector_dimension,
             similarity_threshold=similarity_threshold,
@@ -786,7 +798,8 @@ class FingerprintingEngineFactory:
 
 
 def calculate_hamming_distance(hash1: str, hash2: str) -> int:
-    """Calculate Hamming distance between two hash strings"""
+    """
+Calculate Hamming distance between two hash strings"""
     if len(hash1) != len(hash2):
         return len(hash1)
     
@@ -794,7 +807,8 @@ def calculate_hamming_distance(hash1: str, hash2: str) -> int:
 
 
 def normalize_vector(vector: np.ndarray) -> np.ndarray:
-    """Normalize vector for similarity calculations"""
+    """
+Normalize vector for similarity calculations"""
     norm = np.linalg.norm(vector)
     if norm == 0:
         return vector

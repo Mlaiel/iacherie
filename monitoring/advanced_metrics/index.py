@@ -9,6 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricsCategory(Enum):
-    """Categories of metrics for organization and filtering"""
+    """
+Categories of metrics for organization and filtering"""
+
     BUSINESS_KPI = "business_kpi"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_PERFORMANCE = "content_performance"
@@ -37,6 +40,7 @@ class MetricsCategory(Enum):
 
 class AggregationPeriod(Enum):
     """Time periods for metrics aggregation"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -101,7 +105,8 @@ class AdvancedMetricsManager:
         self.collection_tasks = []
     
     async def initialize(self) -> None:
-        """Initialize the advanced metrics system"""
+        """
+Initialize the advanced metrics system"""
         try:
             if self.is_initialized:
                 self.logger.warning("AdvancedMetricsManager already initialized")
@@ -340,7 +345,8 @@ class AdvancedMetricsManager:
                 await self.collectors[category].initialize()
     
     async def _initialize_analyzers(self) -> None:
-        """Initialize metrics analyzers for enabled categories"""
+        """
+Initialize metrics analyzers for enabled categories"""
         from .business_kpis import BusinessKPIAnalyzer
         from .user_engagement_metrics import UserEngagementAnalyzer
         from .content_performance import ContentPerformanceAnalyzer
@@ -362,17 +368,20 @@ class AdvancedMetricsManager:
                 await self.analyzers[category].initialize()
     
     async def _initialize_processors(self) -> None:
-        """Initialize data processors for metrics processing"""
+        """
+Initialize data processors for metrics processing"""
         # Initialize background data processors
         pass
     
     async def _setup_background_tasks(self) -> None:
-        """Setup background tasks for metrics processing"""
+        """
+Setup background tasks for metrics processing"""
         # Setup automated cleanup, aggregation, and alerting tasks
         pass
     
     def _setup_prometheus_metrics(self) -> None:
-        """Setup Prometheus metrics collectors"""
+        """
+Setup Prometheus metrics collectors"""
         self.prometheus_metrics = {
             "metrics_collected_total": Counter(
                 "advanced_metrics_collected_total",
@@ -426,7 +435,8 @@ class AdvancedMetricsManager:
         pass
     
     def _format_as_csv(self, data: Dict[str, Any]) -> str:
-        """Format report data as CSV"""
+        """
+Format report data as CSV"""
         # Implementation for CSV formatting
         return "CSV format not implemented yet"
 
@@ -442,33 +452,38 @@ class MetricsAggregator:
         data: List[Dict[str, Any]],
         period: AggregationPeriod
     ) -> Dict[str, Any]:
-        """Aggregate metrics data by time period"""
+        """
+Aggregate metrics data by time period"""
         # Implementation for period-based aggregation
         pass
 
 
 class MetricsDashboard:
-    """Dashboard generator for advanced metrics visualization"""
+    """
+Dashboard generator for advanced metrics visualization"""
     
     def __init__(self, manager: AdvancedMetricsManager):
         self.manager = manager
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def generate_dashboard_data(self) -> Dict[str, Any]:
-        """Generate data for metrics dashboard"""
+        """
+Generate data for metrics dashboard"""
         # Implementation for dashboard data generation
         pass
 
 
 class MetricsReporter:
-    """Report generator for advanced metrics"""
+    """
+Report generator for advanced metrics"""
     
     def __init__(self, manager: AdvancedMetricsManager):
         self.manager = manager
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def generate_executive_summary(self) -> Dict[str, Any]:
-        """Generate executive summary report"""
+        """
+Generate executive summary report"""
         # Implementation for executive summary generation
         pass
 
@@ -478,7 +493,8 @@ _metrics_manager_instance: Optional[AdvancedMetricsManager] = None
 
 
 async def initialize_advanced_metrics(config: Optional[MetricsConfiguration] = None) -> AdvancedMetricsManager:
-    """Initialize the global advanced metrics manager"""
+    """
+Initialize the global advanced metrics manager"""
     global _metrics_manager_instance
     
     if _metrics_manager_instance is None:
@@ -489,5 +505,6 @@ async def initialize_advanced_metrics(config: Optional[MetricsConfiguration] = N
 
 
 def get_metrics_manager() -> Optional[AdvancedMetricsManager]:
-    """Get the global advanced metrics manager instance"""
+    """
+Get the global advanced metrics manager instance"""
     return _metrics_manager_instance

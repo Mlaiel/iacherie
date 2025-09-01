@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel. Any unauthoriz
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
 """
+
 from typing import Dict, Any, Optional
 import asyncio
 import logging
@@ -44,7 +45,8 @@ class ManagerRegistry:
     """
     
     def __init__(self):
-        """Initialize manager registry."""
+        """
+Initialize manager registry."""
         self.logger = get_logger(__name__)
         self.managers: Dict[str, Any] = {}
         self.configurations: Dict[str, Any] = {}
@@ -127,7 +129,8 @@ class ManagerRegistry:
         return self.managers.get(manager_name)
     
     def get_content_discovery_manager(self) -> Optional[ContentDiscoveryManager]:
-        """Get content discovery manager."""
+        """
+Get content discovery manager."""
         return self.get_manager("content_discovery")
     
     def get_resource_allocation_manager(self) -> Optional[ResourceAllocationManager]:
@@ -300,7 +303,8 @@ class ManagerRegistry:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.close_all()
 
 
@@ -328,7 +332,8 @@ async def get_manager_registry(configurations: Optional[Dict[str, Any]] = None) 
 
 
 async def shutdown_manager_registry():
-    """Shutdown the global manager registry."""
+    """
+Shutdown the global manager registry."""
     global _manager_registry
     
     if _manager_registry:
@@ -353,7 +358,8 @@ async def create_complete_manager_suite(configurations: Optional[Dict[str, Any]]
 
 
 async def get_content_discovery_manager(config: Optional[Any] = None) -> ContentDiscoveryManager:
-    """Quick access to content discovery manager."""
+    """
+Quick access to content discovery manager."""
     if config:
         return await create_content_discovery_manager(config)
     else:
@@ -362,7 +368,8 @@ async def get_content_discovery_manager(config: Optional[Any] = None) -> Content
 
 
 async def get_platform_integration_manager(config: Optional[Any] = None) -> PlatformIntegrationManager:
-    """Quick access to platform integration manager."""
+    """
+Quick access to platform integration manager."""
     if config:
         return await create_platform_integration_manager(config)
     else:
@@ -371,7 +378,8 @@ async def get_platform_integration_manager(config: Optional[Any] = None) -> Plat
 
 
 async def get_content_protection_manager(config: Optional[Any] = None) -> ContentProtectionManager:
-    """Quick access to content protection manager."""
+    """
+Quick access to content protection manager."""
     if config:
         return await create_content_protection_manager(config)
     else:
@@ -380,7 +388,8 @@ async def get_content_protection_manager(config: Optional[Any] = None) -> Conten
 
 
 async def get_monetization_manager(config: Optional[Any] = None) -> MonetizationManager:
-    """Quick access to monetization manager."""
+    """
+Quick access to monetization manager."""
     if config:
         return await create_monetization_manager(config)
     else:
@@ -389,7 +398,8 @@ async def get_monetization_manager(config: Optional[Any] = None) -> Monetization
 
 
 async def get_collaboration_manager(config: Optional[Any] = None) -> CollaborationManager:
-    """Quick access to collaboration manager."""
+    """
+Quick access to collaboration manager."""
     if config:
         return await create_collaboration_manager(config)
     else:

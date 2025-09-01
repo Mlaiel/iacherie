@@ -6,6 +6,7 @@ optimization workflows, multi-platform enhancement, and performance tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -18,7 +19,9 @@ from .core.optimization_engine import OptimizationEngine, OptimizationJob, Optim
 logger = logging.getLogger(__name__)
 
 class ContentOptimizationSystemStatus(Enum):
-    """System status levels"""
+    """
+System status levels"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
@@ -219,9 +222,11 @@ class ContentOptimizationManager:
         return campaign.status if campaign else None
 
     async def get_system_metrics(self) -> OptimizationMetrics:
-        """Get current system metrics"""
+        """
+Get current system metrics"""
         return self.system_metrics
 
     def get_active_campaigns(self) -> Dict[str, OptimizationCampaign]:
-        """Get all active campaigns"""
+        """
+Get all active campaigns"""
         return self.active_campaigns.copy()

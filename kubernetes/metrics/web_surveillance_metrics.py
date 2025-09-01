@@ -29,6 +29,7 @@ Features:
 - Anti-piracy effectiveness metrics
 - Real-time threat detection
 """
+
 import time
 import asyncio
 import logging
@@ -45,7 +46,9 @@ logger = get_logger(__name__)
 
 
 class CrawlerPlatform(Enum):
-    """Supported crawler platforms"""
+    """
+Supported crawler platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -58,6 +61,7 @@ class CrawlerPlatform(Enum):
 
 class SurveillanceStatus(Enum):
     """Surveillance operation status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     FAILED = "failed"
@@ -67,6 +71,7 @@ class SurveillanceStatus(Enum):
 
 class ThreatLevel(Enum):
     """Content threat level classification"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -87,7 +92,8 @@ class CrawlerSession:
 
 @dataclass
 class ContentMatch:
-    """Detected content match information"""
+    """
+Detected content match information"""
     match_id: str
     original_content_id: str
     detected_url: str
@@ -118,7 +124,8 @@ class WebSurveillanceMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize Prometheus metrics for web surveillance"""
+        """
+Initialize Prometheus metrics for web surveillance"""
         
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
@@ -539,7 +546,8 @@ class WebSurveillanceMetricsCollector:
         instance_id: str,
         health_score: float
     ) -> None:
-        """Update crawler instance health score"""
+        """
+Update crawler instance health score"""
         
         self.crawler_health_score.labels(
             platform=platform.value,

@@ -4,6 +4,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 
 Validates production configuration and secrets for security compliance.
 """
+
 import os
 import re
 import sys
@@ -17,7 +18,8 @@ from pathlib import Path
 
 @dataclass
 class ValidationResult:
-    """Validation result for a security check."""
+    """
+Validation result for a security check."""
     check_name: str
     passed: bool
     message: str
@@ -324,11 +326,13 @@ class ProductionSecurityValidator:
         return entropy
     
     def generate_secure_key(self, length: int = 32) -> str:
-        """Generate a cryptographically secure random key."""
+        """
+Generate a cryptographically secure random key."""
         return secrets.token_urlsafe(length)
     
     def print_report(self) -> None:
-        """Print validation report."""
+        """
+Print validation report."""
         print("=" * 80)
         print("AINFLUE PRODUCTION SECURITY VALIDATION REPORT")
         print("=" * 80)

@@ -5,7 +5,7 @@ Gestion des templates, campagnes, deliverabilité et analytics email.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, ML Engineer, DBA Expert
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 AVERTISSEMENT LÉGAL:
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class EmailPriority(Enum):
-    """Priorités des emails"""
+    """
+Priorités des emails"""
+
     LOW = "low"
     NORMAL = "normal" 
     HIGH = "high"
@@ -47,6 +50,7 @@ class EmailPriority(Enum):
 
 class EmailStatus(Enum):
     """Statuts des emails"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -59,6 +63,7 @@ class EmailStatus(Enum):
 
 class EmailProvider(Enum):
     """Fournisseurs d'email"""
+
     SMTP = "smtp"
     SENDGRID = "sendgrid"
     AWS_SES = "aws_ses"
@@ -83,7 +88,8 @@ class EmailTemplate:
 
 @dataclass
 class EmailMessage:
-    """Message email"""
+    """
+Message email"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     to_email: str = ""
     to_name: str = ""
@@ -291,7 +297,8 @@ class EmailProviderSendGrid:
         self.client = SendGridAPIClient(api_key)
     
     async def send_email(self, message: EmailMessage) -> Dict[str, Any]:
-        """Envoyer un email via SendGrid"""
+        """
+Envoyer un email via SendGrid"""
         try:
             mail = Mail(
                 from_email=(message.from_email, message.from_name),
@@ -343,7 +350,8 @@ class EmailTemplateEngine:
         self.templates[template.id] = template
     
     def render_template(self, template_id: str, data: Dict[str, Any]) -> Dict[str, str]:
-        """Rendre un template avec les données"""
+        """
+Rendre un template avec les données"""
         try:
             template = self.templates.get(template_id)
             if not template:
@@ -385,7 +393,8 @@ class EmailManager:
         self.default_provider = EmailProvider.SMTP
         
     def _init_providers(self) -> Dict[EmailProvider, Any]:
-        """Initialiser les fournisseurs d'email"""
+        """
+Initialiser les fournisseurs d'email"""
         providers = {}
         
         # SMTP
@@ -537,7 +546,8 @@ class EmailManager:
             return result
     
     async def _save_delivery(self, delivery: EmailDelivery):
-        """Sauvegarder une livraison en base"""
+        """
+Sauvegarder une livraison en base"""
         async with self.db_pool.acquire() as conn:
             query = """
                 INSERT INTO email_deliveries (
@@ -560,7 +570,8 @@ class EmailManager:
             )
     
     async def _load_message(self, message_id: str) -> Optional[EmailMessage]:
-        """Charger un message depuis la base"""
+        """
+Charger un message depuis la base"""
         async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM email_messages WHERE id = $1"
             row = await conn.fetchrow(query, message_id)

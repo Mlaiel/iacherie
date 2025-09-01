@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Any, Set, Tuple
 from dataclasses import dataclass, field
@@ -26,7 +27,9 @@ import hashlib
 import secrets
 
 class SecurityLevel(Enum):
-    """Security levels for different operations."""
+    """
+Security levels for different operations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -35,6 +38,7 @@ class SecurityLevel(Enum):
 
 class ThreatLevel(Enum):
     """Threat level classifications."""
+
     MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
@@ -44,6 +48,7 @@ class ThreatLevel(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication methods for secure access."""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
@@ -54,6 +59,7 @@ class AuthenticationMethod(Enum):
 
 class EncryptionStandard(Enum):
     """Encryption standards."""
+
     AES_128 = "aes_128"
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
@@ -63,6 +69,7 @@ class EncryptionStandard(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks."""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
@@ -198,7 +205,8 @@ class ComplianceConfig:
 
 @dataclass
 class SecurityMonitoringConfig:
-    """Configuration for security monitoring and alerting."""
+    """
+Configuration for security monitoring and alerting."""
     enabled: bool = True
     
     # Monitoring scope
@@ -234,7 +242,8 @@ class SecurityMonitoringConfig:
 
 @dataclass
 class VulnerabilityManagementConfig:
-    """Configuration for vulnerability management."""
+    """
+Configuration for vulnerability management."""
     enabled: bool = True
     
     # Scanning configuration
@@ -262,10 +271,12 @@ class VulnerabilityManagementConfig:
     executive_summaries: bool = True
 
 class SecurityConfigManager:
-    """Manager for security configurations."""
+    """
+Manager for security configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize security configuration manager."""
+        """
+Initialize security configuration manager."""
         self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.encryption = EncryptionConfig()
         self.access_control = AccessControlConfig()
@@ -276,7 +287,8 @@ class SecurityConfigManager:
         self._load_configurations()
     
     def _load_configurations(self) -> None:
-        """Load security configurations from files."""
+        """
+Load security configurations from files."""
         try:
             config_file = self.config_dir / "security_config.json"
             if config_file.exists():
@@ -295,7 +307,8 @@ class SecurityConfigManager:
         return secrets.token_urlsafe(length)
     
     def hash_password(self, password: str, salt: Optional[str] = None) -> Tuple[str, str]:
-        """Hash a password with salt."""
+        """
+Hash a password with salt."""
         if salt is None:
             salt = secrets.token_hex(16)
         
@@ -308,12 +321,14 @@ class SecurityConfigManager:
         return password_hash.hex(), salt
     
     def verify_password(self, password: str, hashed: str, salt: str) -> bool:
-        """Verify a password against its hash."""
+        """
+Verify a password against its hash."""
         password_hash, _ = self.hash_password(password, salt)
         return password_hash == hashed
     
     def check_security_compliance(self) -> Dict[str, Any]:
-        """Check current security compliance status."""
+        """
+Check current security compliance status."""
         compliance_status = {
             "overall_score": 0.0,
             "checks": {},

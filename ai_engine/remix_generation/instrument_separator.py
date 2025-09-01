@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Séparation avancée de sources audio et isolation d'instruments avec I
 TECHNOLOGIES: Deep Learning, Spectral Analysis, Neural Networks, Audio Processing
 LOGIQUE MÉTIER: Mixed audio → Source analysis → Neural separation → Quality enhancement → Isolated tracks
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -53,7 +54,9 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class InstrumentType(Enum):
-    """Types of instruments for separation"""
+    """
+Types of instruments for separation"""
+
     VOCALS = "vocals"
     DRUMS = "drums"
     BASS = "bass"
@@ -70,6 +73,7 @@ class InstrumentType(Enum):
 
 class SeparationMethod(Enum):
     """Source separation methods"""
+
     NEURAL_NETWORK = "neural_network"
     SPECTRAL_MASKING = "spectral_masking"
     HARMONIC_PERCUSSIVE = "harmonic_percussive"
@@ -81,6 +85,7 @@ class SeparationMethod(Enum):
 
 class SeparationQuality(Enum):
     """Quality levels for separation"""
+
     FAST = "fast"
     STANDARD = "standard"
     HIGH = "high"
@@ -104,7 +109,8 @@ class SeparationParameters:
 
 
 class RealTimeStreamingSeparator:
-    """Real-time streaming source separation for live audio processing"""
+    """
+Real-time streaming source separation for live audio processing"""
     
     def __init__(self, chunk_size: int = 4096, sample_rate: int = 44100,
                  overlap_ratio: float = 0.5, max_latency_ms: float = 50.0):
@@ -323,7 +329,8 @@ class RealTimeStreamingSeparator:
         return freq_filter
     
     def _create_bass_filter(self, num_freq_bins: int) -> np.ndarray:
-        """Create frequency filter for bass isolation"""
+        """
+Create frequency filter for bass isolation"""
         # Bass range typically 20Hz - 250Hz
         freq_filter = np.zeros(num_freq_bins)
         bass_end = int(0.12 * num_freq_bins)  # ~250Hz at 44.1kHz
@@ -339,7 +346,8 @@ class RealTimeStreamingSeparator:
         return freq_filter
     
     async def _load_separation_model(self):
-        """Load the neural network separation model"""
+        """
+Load the neural network separation model"""
         try:
             # In production, would load actual trained model
             # For now, create a simple ConvTasNet model
@@ -365,7 +373,8 @@ class SeparatedTrack:
 
 @dataclass
 class SeparationResult:
-    """Complete separation result"""
+    """
+Complete separation result"""
     separation_id: str
     original_audio: np.ndarray
     separated_tracks: Dict[InstrumentType, SeparatedTrack]
@@ -377,7 +386,8 @@ class SeparationResult:
     success: bool
 
 class UNetSeparator(nn.Module):
-    """U-Net architecture for source separation"""
+    """
+U-Net architecture for source separation"""
     
     def __init__(self, input_channels: int = 2, output_channels: int = 4, 
                  feature_maps: int = 64):
@@ -412,7 +422,8 @@ class UNetSeparator(nn.Module):
         self.final_conv = nn.Conv2d(feature_maps, output_channels, 1)
         
     def _conv_block(self, in_channels: int, out_channels: int):
-        """Convolutional block with batch normalization and activation"""
+        """
+Convolutional block with batch normalization and activation"""
         return nn.Sequential(
             nn.Conv2d(in_channels, out_channels, 3, padding=1),
             nn.BatchNorm2d(out_channels),
@@ -455,7 +466,8 @@ class UNetSeparator(nn.Module):
         return output
 
 class ConvTasNet(nn.Module):
-    """Conv-TasNet for real-time source separation"""
+    """
+Conv-TasNet for real-time source separation"""
     
     def __init__(self, num_sources: int = 4, encoder_dim: int = 512, 
                  num_blocks: int = 8, num_repeats: int = 3):
@@ -501,7 +513,8 @@ class ConvTasNet(nn.Module):
         return separated
 
 class TCNSeparator(nn.Module):
-    """Temporal Convolutional Network for separation"""
+    """
+Temporal Convolutional Network for separation"""
     
     def __init__(self, input_dim: int, num_sources: int, 
                  num_blocks: int = 8, num_repeats: int = 3):
@@ -554,7 +567,8 @@ class TCNSeparator(nn.Module):
         return masks
 
 class TCNBlock(nn.Module):
-    """Temporal Convolutional Block"""
+    """
+Temporal Convolutional Block"""
     
     def __init__(self, input_dim: int, hidden_dim: int, 
                  kernel_size: int, dilation: int):
@@ -591,13 +605,15 @@ class TCNBlock(nn.Module):
         return out
 
 class SpectralAnalyzer:
-    """Advanced spectral analysis for source separation"""
+    """
+Advanced spectral analysis for source separation"""
     
     def __init__(self):
         self.instrument_profiles = self._initialize_instrument_profiles()
     
     def _initialize_instrument_profiles(self) -> Dict[InstrumentType, Dict[str, Any]]:
-        """Initialize spectral profiles for different instruments"""
+        """
+Initialize spectral profiles for different instruments"""
         return {
             InstrumentType.VOCALS: {
                 "frequency_range": (80, 1200),

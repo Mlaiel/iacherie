@@ -8,7 +8,7 @@ Responsibility: Content licensing and rights management
 ===========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Content Creation → Rights Definition → License Generation → 
 Contract Management → Revenue Distribution → Compliance Monitoring
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from enum import Enum
 import uuid
 
 class LicenseType(Enum):
-    """Types de licences disponibles"""
+    """
+Types de licences disponibles"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -35,6 +38,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """Statuts des licences"""
+
     DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
@@ -46,6 +50,7 @@ class LicenseStatus(Enum):
 
 class PaymentStructure(Enum):
     """Structures de paiement"""
+
     ONE_TIME = "one_time"
     ROYALTY = "royalty"
     SUBSCRIPTION = "subscription"
@@ -67,7 +72,8 @@ class LicenseTerms:
 
 @dataclass
 class RoyaltyStructure:
-    """Structure des royalties"""
+    """
+Structure des royalties"""
     percentage: float = 0.0
     minimum_amount: float = 0.0
     payment_frequency: str = "monthly"
@@ -138,7 +144,8 @@ class LicensingModel:
             self.end_date = self.start_date + timedelta(days=self.terms.duration_months * 30)
     
     def is_active(self) -> bool:
-        """Vérifie si la licence est active"""
+        """
+Vérifie si la licence est active"""
         now = datetime.now()
         return (
             self.status == LicenseStatus.ACTIVE and
@@ -147,13 +154,15 @@ class LicensingModel:
         )
     
     def is_expired(self) -> bool:
-        """Vérifie si la licence a expiré"""
+        """
+Vérifie si la licence a expiré"""
         if not self.end_date:
             return False
         return datetime.now() > self.end_date
     
     def calculate_royalty(self, revenue: float) -> float:
-        """Calcule les royalties basées sur le revenu"""
+        """
+Calcule les royalties basées sur le revenu"""
         if not self.royalty_structure:
             return 0.0
         
@@ -161,7 +170,8 @@ class LicensingModel:
         return max(royalty, self.royalty_structure.minimum_amount)
     
     def can_be_used(self, use_case: str) -> bool:
-        """Vérifie si la licence permet un usage spécifique"""
+        """
+Vérifie si la licence permet un usage spécifique"""
         if not self.is_active():
             return False
         
@@ -171,7 +181,8 @@ class LicensingModel:
         return use_case in self.terms.usage_rights
     
     def record_usage(self, revenue: float = 0.0):
-        """Enregistre un usage de la licence"""
+        """
+Enregistre un usage de la licence"""
         self.usage_count += 1
         if revenue > 0:
             self.revenue_generated += revenue
@@ -181,7 +192,8 @@ class LicensingModel:
                 self.compliance_score *= 0.9  # Pénalité pour dépassement
     
     def renew_license(self, duration_months: int = None):
-        """Renouvelle la licence"""
+        """
+Renouvelle la licence"""
         if duration_months:
             self.terms.duration_months = duration_months
         
@@ -193,7 +205,8 @@ class LicensingModel:
         self.renewal_date = datetime.now()
     
     def get_compliance_report(self) -> Dict[str, Any]:
-        """Génère un rapport de conformité"""
+        """
+Génère un rapport de conformité"""
         return {
             "license_id": self.license_id,
             "status": self.status.value,

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive AI Core Integration Tests
+"""
+Comprehensive AI Core Integration Tests
 
 Ultra-advanced enterprise-grade integration test suite for complete AI core system
 workflow validation and end-to-end business logic testing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
@@ -34,6 +36,7 @@ Team Expertise:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import pytest
 import sys
 import os
@@ -66,7 +69,8 @@ class TestCompleteWorkflowIntegration:
     """Integration tests for complete AI core workflow"""
     
     def setup_method(self):
-        """Setup integration test environment"""
+        """
+Setup integration test environment"""
         self.config = CoreConfig(
             environment="integration_test",
             debug_mode=True,
@@ -363,7 +367,8 @@ class TestConcurrentWorkflowIntegration:
     """Integration tests for concurrent workflow processing"""
     
     def setup_method(self):
-        """Setup concurrent testing environment"""
+        """
+Setup concurrent testing environment"""
         self.config = CoreConfig(
             pipeline=PipelineConfig(
                 max_concurrent_pipelines=20,
@@ -372,7 +377,8 @@ class TestConcurrentWorkflowIntegration:
         )
     
     def test_concurrent_pipeline_processing(self):
-        """Test concurrent pipeline processing"""
+        """
+Test concurrent pipeline processing"""
         import threading
         import queue
         
@@ -462,7 +468,8 @@ class TestConcurrentWorkflowIntegration:
         """Test asynchronous workflow integration"""
         
         async def process_content_async(content_id: int, content_data: Dict[str, Any]) -> Dict[str, Any]:
-            """Async content processing simulation"""
+            """
+Async content processing simulation"""
             start_time = time.time()
             
             # Simulate async AI processing
@@ -520,12 +527,14 @@ class TestSystemLoadIntegration:
     """Integration tests for system load and stress testing"""
     
     def test_high_load_workflow_integration(self):
-        """Test workflow integration under high load"""
+        """
+Test workflow integration under high load"""
         from concurrent.futures import ThreadPoolExecutor, as_completed
         import statistics
         
         def process_high_load_content(content_id: int) -> Dict[str, Any]:
-            """Process content under high load conditions"""
+            """
+Process content under high load conditions"""
             start_time = time.time()
             
             try:
@@ -699,10 +708,12 @@ class TestErrorHandlingIntegration:
     """Integration tests for error handling across the system"""
     
     def test_graceful_error_handling_integration(self):
-        """Test graceful error handling throughout the workflow"""
+        """
+Test graceful error handling throughout the workflow"""
         
         def simulate_workflow_with_errors(error_stage: str = None):
-            """Simulate workflow with potential errors at different stages"""
+            """
+Simulate workflow with potential errors at different stages"""
             try:
                 stages = ["upload", "validation", "ai_analysis", "protection", "seo", "distribution"]
                 completed_stages = []
@@ -786,7 +797,8 @@ class TestErrorHandlingIntegration:
         success_queue = queue.Queue()
         
         def worker_with_potential_errors(worker_id: int):
-            """Worker that may encounter errors"""
+            """
+Worker that may encounter errors"""
             try:
                 # Simulate random errors (50% chance)
                 if worker_id % 2 == 0:

@@ -7,6 +7,7 @@ genre detection, mood analysis, BPM detection, and AI-powered music intelligence
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -17,7 +18,9 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class AnalysisType(Enum):
-    """Types of audio analysis"""
+    """
+Types of audio analysis"""
+
     GENRE_DETECTION = "genre_detection"
     MOOD_ANALYSIS = "mood_analysis"
     BPM_DETECTION = "bpm_detection"
@@ -32,6 +35,7 @@ class AnalysisType(Enum):
 
 class MusicalKey(Enum):
     """Musical keys"""
+
     C_MAJOR = "C major"
     C_SHARP_MAJOR = "C# major"
     D_MAJOR = "D major"
@@ -60,6 +64,7 @@ class MusicalKey(Enum):
 
 class TimeSignature(Enum):
     """Common time signatures"""
+
     FOUR_FOUR = "4/4"
     THREE_FOUR = "3/4"
     TWO_FOUR = "2/4"

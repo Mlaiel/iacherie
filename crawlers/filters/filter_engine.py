@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -55,7 +56,9 @@ from .duplicate_filters import DuplicateContentFilter
 
 
 class FilterResult(str, Enum):
-    """Filter result enumeration."""
+    """
+Filter result enumeration."""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -79,7 +82,8 @@ class FilterResponse:
 
 @dataclass
 class ContentItem:
-    """Content item data structure."""
+    """
+Content item data structure."""
     content_id: str
     content_type: str
     content_data: Union[bytes, str, Dict[str, Any]]
@@ -91,10 +95,12 @@ class ContentItem:
 
 
 class ContentFilterEngine:
-    """Enterprise-grade content filtering engine."""
+    """
+Enterprise-grade content filtering engine."""
     
     def __init__(self, config_manager: Optional[FilterConfigManager] = None):
-        """Initialize the content filter engine."""
+        """
+Initialize the content filter engine."""
         self.config = config_manager or filter_config
         self.logger = logging.getLogger(__name__)
         
@@ -341,7 +347,8 @@ class ContentFilterEngine:
         return 'application/octet-stream'
     
     def _update_stats(self, results: Dict[str, FilterResponse], processing_time: float) -> None:
-        """Update engine statistics."""
+        """
+Update engine statistics."""
         self.stats['total_processed'] += 1
         
         # Count passed/failed
@@ -361,7 +368,8 @@ class ContentFilterEngine:
         filter_types: List[FilterType] = None,
         max_concurrent: int = None
     ) -> List[Dict[str, FilterResponse]]:
-        """Filter multiple content items concurrently."""
+        """
+Filter multiple content items concurrently."""
         if max_concurrent is None:
             max_concurrent = self.config.performance_config.max_concurrent_filters
         
@@ -413,7 +421,8 @@ class ContentFilterEngine:
         }
     
     async def validate_engine_health(self) -> Dict[str, Any]:
-        """Validate engine health and configuration."""
+        """
+Validate engine health and configuration."""
         health_status = {
             'status': 'healthy',
             'checks': {},

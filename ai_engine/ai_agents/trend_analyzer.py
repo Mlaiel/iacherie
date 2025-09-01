@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -25,7 +26,8 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 # Mock engines for testing - would be replaced with actual implementations
 class TrendPredictionEngine:
     async def initialize(self):
-        """Initialize trend prediction models and algorithms"""
+        """
+Initialize trend prediction models and algorithms"""
         self.models = {}
         self.algorithms = ['temporal_analysis', 'pattern_matching', 'velocity_tracking']
         self.initialized = True
@@ -59,6 +61,7 @@ logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
     """Trend categories"""
+
     MUSIC = "music"
     VIDEO = "video"
     FASHION = "fashion"
@@ -83,6 +86,7 @@ class TrendCategory(Enum):
 
 class TrendScope(Enum):
     """Geographic scope of trends"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -92,6 +96,7 @@ class TrendScope(Enum):
 
 class TrendVelocity(Enum):
     """Speed of trend growth"""
+
     EXPLOSIVE = "explosive"    # >100% growth in 24h
     RAPID = "rapid"           # 50-100% growth in 24h
     STEADY = "steady"         # 10-50% growth in 24h
@@ -131,7 +136,8 @@ class TrendData:
 
 @dataclass
 class TrendPrediction:
-    """Future trend prediction"""
+    """
+Future trend prediction"""
     prediction_id: str
     predicted_trend: str
     category: TrendCategory
@@ -147,7 +153,8 @@ class TrendPrediction:
 
 @dataclass
 class TrendAnalysisReport:
-    """Comprehensive trend analysis report"""
+    """
+Comprehensive trend analysis report"""
     report_id: str
     analysis_period: Tuple[datetime, datetime]
     platform_coverage: List[str]
@@ -659,7 +666,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         return trends
 
     async def _extract_platform_trends(self, platform: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract trend signals from platform data"""
+        """
+Extract trend signals from platform data"""
         trends = {}
         
         # Extract trending topics, hashtags, and content
@@ -712,7 +720,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         return trends
 
     async def _score_trend_candidate(self, candidate: Dict[str, Any]) -> float:
-        """Score a trend candidate based on multiple factors"""
+        """
+Score a trend candidate based on multiple factors"""
         scores = {}
         
         # Volume score (mentions across platforms)
@@ -778,7 +787,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         candidate: Dict[str, Any], 
         trend_score: float
     ) -> TrendData:
-        """Create TrendData object from candidate"""
+        """
+Create TrendData object from candidate"""
         
         # Determine category
         category = await self._classify_trend_category(candidate)

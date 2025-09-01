@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationType(Enum):
-    """Aggregation type enumeration"""
+    """
+Aggregation type enumeration"""
+
     SUM = "sum"
     AVERAGE = "average"
     MAXIMUM = "maximum"
@@ -33,6 +36,7 @@ class AggregationType(Enum):
 
 class TimeFrame(Enum):
     """Time frame enumeration"""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -66,7 +70,8 @@ class CrossPlatformContent:
 
 @dataclass
 class AggregatedMetrics:
-    """Aggregated metrics result"""
+    """
+Aggregated metrics result"""
     content_id: str
     time_frame: TimeFrame
     start_date: datetime
@@ -83,7 +88,8 @@ class AggregatedMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform performance metrics"""
+    """
+Platform performance metrics"""
     platform_id: str
     total_content: int
     total_views: int
@@ -97,7 +103,8 @@ class PlatformPerformance:
 
 @dataclass
 class AudienceInsights:
-    """Aggregated audience insights"""
+    """
+Aggregated audience insights"""
     total_reach: int
     unique_viewers: int
     demographics: Dict[str, Any]
@@ -108,10 +115,12 @@ class AudienceInsights:
 
 
 class PlatformAggregator:
-    """Multi-platform data aggregation and analytics engine"""
+    """
+Multi-platform data aggregation and analytics engine"""
     
     def __init__(self, platform_manager: PlatformManager):
-        """Initialize aggregator with platform manager"""
+        """
+Initialize aggregator with platform manager"""
         self.platform_manager = platform_manager
         self.content_mappings: Dict[str, CrossPlatformContent] = {}
         self.metric_definitions: List[MetricDefinition] = []
@@ -122,7 +131,8 @@ class PlatformAggregator:
         self._initialize_default_metrics()
     
     def _initialize_default_metrics(self):
-        """Initialize default metric definitions"""
+        """
+Initialize default metric definitions"""
         default_metrics = [
             MetricDefinition("total_views", "views", AggregationType.SUM, 1.0, description="Total views across platforms"),
             MetricDefinition("total_likes", "likes", AggregationType.SUM, 1.0, description="Total likes across platforms"),
@@ -419,7 +429,8 @@ class PlatformAggregator:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Dict[str, Any]]:
-        """Compare performance across multiple content pieces"""
+        """
+Compare performance across multiple content pieces"""
         
         comparison_data = {}
         
@@ -448,7 +459,8 @@ class PlatformAggregator:
         limit: int = 10,
         time_frame: TimeFrame = TimeFrame.DAY
     ) -> List[Dict[str, Any]]:
-        """Get trending content across platforms"""
+        """
+Get trending content across platforms"""
         
         if not platform_ids:
             platform_ids = [p.platform_id for p in self.platform_manager.get_active_platforms()]
@@ -571,7 +583,8 @@ class PlatformAggregator:
         return export_data
     
     def clear_cache(self):
-        """Clear aggregation cache"""
+        """
+Clear aggregation cache"""
         self.cached_results.clear()
         logger.info("Aggregation cache cleared")
     

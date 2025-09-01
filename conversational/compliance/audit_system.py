@@ -5,12 +5,13 @@ compliance assessments, regulatory reporting, and compliance certification manag
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,7 +33,9 @@ from ..models.audit_models import AuditLog, ComplianceAssessment, AuditReport
 
 
 class AuditType(Enum):
-    """Types of compliance audits"""
+    """
+Types of compliance audits"""
+
     INTERNAL = "internal"
     EXTERNAL = "external"
     REGULATORY = "regulatory"
@@ -42,6 +45,7 @@ class AuditType(Enum):
 
 class AuditScope(Enum):
     """Audit scope levels"""
+
     SYSTEM_WIDE = "system_wide"
     PLATFORM_SPECIFIC = "platform_specific"
     USER_SPECIFIC = "user_specific"
@@ -51,6 +55,7 @@ class AuditScope(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -63,6 +68,7 @@ class ComplianceFramework(Enum):
 
 class AuditStatus(Enum):
     """Audit status levels"""
+
     SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -83,7 +89,8 @@ class AuditCriteria:
 
 @dataclass
 class AuditFinding:
-    """Audit finding structure"""
+    """
+Audit finding structure"""
     finding_id: str
     category: str
     severity: str
@@ -97,7 +104,8 @@ class AuditFinding:
 
 @dataclass
 class ComplianceScore:
-    """Compliance scoring structure"""
+    """
+Compliance scoring structure"""
     framework: ComplianceFramework
     overall_score: float
     category_scores: Dict[str, float]
@@ -108,7 +116,8 @@ class ComplianceScore:
 
 @dataclass
 class AuditExecutionPlan:
-    """Audit execution plan"""
+    """
+Audit execution plan"""
     audit_id: str
     audit_type: AuditType
     scope: AuditScope

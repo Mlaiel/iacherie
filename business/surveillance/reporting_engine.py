@@ -5,8 +5,9 @@ Advanced reporting and analytics engine for surveillance activities,
 infringement detection, and creator protection metrics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports"""
+    """
+Types of reports"""
+
     INFRINGEMENT_SUMMARY = "infringement_summary"
     CREATOR_PROTECTION = "creator_protection"
     PLATFORM_ANALYSIS = "platform_analysis"
@@ -40,6 +43,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Available report formats"""
+
     JSON = "json"
     PDF = "pdf"
     CSV = "csv"
@@ -50,6 +54,7 @@ class ReportFormat(Enum):
 
 class ReportPeriod(Enum):
     """Report time periods"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -93,7 +98,8 @@ class ReportConfig:
 
 @dataclass
 class ReportData:
-    """Report data container"""
+    """
+Report data container"""
     report_id: str
     config: ReportConfig
     data: Dict[str, Any] = field(default_factory=dict)
@@ -106,14 +112,16 @@ class ReportData:
 
 
 class BaseReportGenerator:
-    """Base class for report generators"""
+    """
+Base class for report generators"""
     
     def __init__(self, report_type: ReportType, surveillance_system):
         self.report_type = report_type
         self.surveillance_system = surveillance_system
     
     async def generate(self, config: ReportConfig) -> ReportData:
-        """Generate report based on configuration"""
+        """
+Generate report based on configuration"""
         # Default implementation for report generators without specific implementation
         logging.warning(f"Report generation not implemented for {self.__class__.__name__}")
         from datetime import datetime
@@ -154,7 +162,8 @@ class InfringementSummaryGenerator(BaseReportGenerator):
         super().__init__(ReportType.INFRINGEMENT_SUMMARY, surveillance_system)
     
     async def generate(self, config: ReportConfig) -> ReportData:
-        """Generate infringement summary report"""
+        """
+Generate infringement summary report"""
         start_time = datetime.now()
         
         base_metrics = await self.get_base_metrics(config)
@@ -442,7 +451,8 @@ class CreatorProtectionGenerator(BaseReportGenerator):
         super().__init__(ReportType.CREATOR_PROTECTION, surveillance_system)
     
     async def generate(self, config: ReportConfig) -> ReportData:
-        """Generate creator protection report"""
+        """
+Generate creator protection report"""
         start_time = datetime.now()
         
         base_metrics = await self.get_base_metrics(config)
@@ -620,7 +630,8 @@ class ReportingEngine:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize reporting engine"""
+        """
+Initialize reporting engine"""
         try:
             # Initialize report generators
             self.generators[ReportType.INFRINGEMENT_SUMMARY] = InfringementSummaryGenerator(self.surveillance_system)
@@ -707,7 +718,8 @@ class ReportingEngine:
             await self._format_as_xml(report_data)
     
     async def _format_as_csv(self, report_data: ReportData) -> None:
-        """Format report as CSV"""
+        """
+Format report as CSV"""
         output = io.StringIO()
         
         # Write basic info
@@ -828,7 +840,8 @@ class ReportingEngine:
         return self.report_cache.get(report_id)
     
     async def list_reports(self, creator_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List available reports"""
+        """
+List available reports"""
         reports = []
         
         for report_id, report_data in self.report_cache.items():

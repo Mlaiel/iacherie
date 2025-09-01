@@ -18,6 +18,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -39,7 +40,8 @@ from .deployment_recorder import DeploymentRecorder
 
 @dataclass
 class DeploymentRequest:
-    """Unified deployment request for IA Influencer Agent platform"""
+    """
+Unified deployment request for IA Influencer Agent platform"""
     deployment_type: str  # creator_onboarding, content_protection, monetization, etc.
     creator_type: Optional[str] = None  # musician, video_creator, photographer, etc.
     creator_tier: str = "standard"  # basic, standard, premium, enterprise

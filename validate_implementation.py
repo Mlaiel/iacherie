@@ -4,12 +4,14 @@ Validates that all required files are created and properly structured.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import os
 import json
 from pathlib import Path
 
 def validate_file_structure():
-    """Validate that all required files are present and have content."""
+    """
+Validate that all required files are present and have content."""
     print("🔍 Validating Priority Features Implementation")
     print("=" * 60)
     

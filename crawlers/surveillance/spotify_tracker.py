@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Advanced Spotify tracking system for music content monitoring and copyright protection.
 Provides comprehensive tracking of artists, tracks, playlists, and user activities.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpotifyTrack:
-    """Spotify track data."""
+    """
+Spotify track data."""
     track_id: str
     name: str
     artist_ids: List[str]
@@ -58,7 +60,8 @@ class SpotifyTrack:
 
 @dataclass
 class SpotifyArtist:
-    """Spotify artist data."""
+    """
+Spotify artist data."""
     artist_id: str
     name: str
     popularity: int
@@ -74,7 +77,8 @@ class SpotifyArtist:
 
 @dataclass
 class SpotifyAlbum:
-    """Spotify album data."""
+    """
+Spotify album data."""
     album_id: str
     name: str
     artist_ids: List[str]
@@ -96,7 +100,8 @@ class SpotifyAlbum:
 
 @dataclass
 class SpotifyPlaylist:
-    """Spotify playlist data."""
+    """
+Spotify playlist data."""
     playlist_id: str
     name: str
     description: str
@@ -116,7 +121,8 @@ class SpotifyPlaylist:
 
 @dataclass
 class SpotifyUser:
-    """Spotify user data."""
+    """
+Spotify user data."""
     user_id: str
     display_name: str
     followers: int
@@ -178,7 +184,8 @@ class SpotifyTracker:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Spotify tracker."""
+        """
+Initialize Spotify tracker."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -1029,7 +1036,8 @@ class SpotifyTracker:
             await self._authenticate()
     
     async def _enforce_rate_limit(self) -> None:
-        """Enforce rate limiting for Spotify API requests."""
+        """
+Enforce rate limiting for Spotify API requests."""
         current_time = asyncio.get_event_loop().time()
         time_since_last_request = current_time - self._last_request_time
         
@@ -1040,7 +1048,8 @@ class SpotifyTracker:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_tracking_status(self) -> Dict[str, Any]:
-        """Get current tracking status."""
+        """
+Get current tracking status."""
         return {
             'tracking_active': self._tracking_active,
             'monitored_targets': {
@@ -1074,7 +1083,8 @@ class SpotifyTracker:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
+        """
+Get recent violations."""
         recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
@@ -1098,7 +1108,8 @@ class SpotifyTracker:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Spotify tracker."""
+        """
+Shutdown the Spotify tracker."""
         try:
             self._logger.info("Shutting down Spotify tracker...")
             

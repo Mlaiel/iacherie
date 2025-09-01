@@ -13,6 +13,7 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Any
 from dataclasses import dataclass
@@ -20,7 +21,8 @@ from datetime import datetime, timedelta
 
 
 class NotificationType(str, Enum):
-    """Types of notifications in the system."""
+    """
+Types of notifications in the system."""
     # Content-related notifications
     CONTENT_UPLOADED = "content_uploaded"
     CONTENT_PROCESSED = "content_processed"
@@ -71,6 +73,7 @@ class NotificationType(str, Enum):
 
 class NotificationChannel(str, Enum):
     """Available notification delivery channels."""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
@@ -84,6 +87,7 @@ class NotificationChannel(str, Enum):
 
 class NotificationPriority(str, Enum):
     """Priority levels for notifications."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -93,6 +97,7 @@ class NotificationPriority(str, Enum):
 
 class NotificationFrequency(str, Enum):
     """Frequency settings for recurring notifications."""
+
     IMMEDIATE = "immediate"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -113,7 +118,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRule:
-    """Business rule for notification triggering."""
+    """
+Business rule for notification triggering."""
     notification_type: NotificationType
     trigger_conditions: Dict[str, Any]
     channels: List[NotificationChannel]
@@ -127,7 +133,8 @@ class NotificationRule:
 
 
 class NotificationConfig:
-    """Enterprise notification system configuration."""
+    """
+Enterprise notification system configuration."""
     # Notification type configurations
     NOTIFICATION_CONFIGS = {
         NotificationType.CONTENT_UPLOADED: {
@@ -472,12 +479,14 @@ class NotificationConfig:
 
     @classmethod
     def get_channel_config(cls, channel: NotificationChannel) -> Dict[str, Any]:
-        """Get configuration for specific notification channel."""
+        """
+Get configuration for specific notification channel."""
         return cls.CHANNEL_CONFIGS.get(channel, {})
 
     @classmethod
     def get_user_preferences(cls, user_role: str) -> Dict[str, Any]:
-        """Get default notification preferences for user role."""
+        """
+Get default notification preferences for user role."""
         return cls.USER_PREFERENCE_TEMPLATES.get(user_role, cls.USER_PREFERENCE_TEMPLATES["creator_standard"])
 
     @classmethod
@@ -513,7 +522,8 @@ class NotificationConfig:
     @classmethod
     def validate_notification_channels(cls, channels: List[NotificationChannel], 
                                      user_preferences: Dict[str, Any]) -> List[NotificationChannel]:
-        """Validate and filter notification channels based on user preferences."""
+        """
+Validate and filter notification channels based on user preferences."""
         valid_channels = []
         
         for channel in channels:

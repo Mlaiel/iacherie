@@ -1,6 +1,7 @@
 """Blockchain Integration for Watermarking
 Immutable ownership records and watermark verification on blockchain
 """
+
 import asyncio
 import logging
 import json
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WatermarkRecord:
-    """Blockchain watermark record structure"""
+    """
+Blockchain watermark record structure"""
     watermark_id: str
     content_hash: str
     owner_address: str
@@ -38,7 +40,8 @@ class WatermarkRecord:
 
 @dataclass
 class OwnershipProof:
-    """Ownership proof structure"""
+    """
+Ownership proof structure"""
     owner_id: str
     content_id: str
     ownership_hash: str
@@ -48,7 +51,8 @@ class OwnershipProof:
 
 
 class BlockchainWatermarkRegistry:
-    """Professional blockchain integration for watermark registry and verification"""
+    """
+Professional blockchain integration for watermark registry and verification"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -60,7 +64,8 @@ class BlockchainWatermarkRegistry:
             self._initialize_blockchain()
     
     def _initialize_blockchain(self):
-        """Initialize blockchain connection"""
+        """
+Initialize blockchain connection"""
         try:
             # Connect to blockchain network
             provider_url = self.config.get('provider_url', 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID')
@@ -551,11 +556,13 @@ class BlockchainWatermarkRegistry:
         pass
     
     async def _get_local_ownership_history(self, content_hash: str) -> List[Dict[str, Any]]:
-        """Local fallback for ownership history"""
+        """
+Local fallback for ownership history"""
         return []
     
     def _get_default_abi(self) -> List[Dict[str, Any]]:
-        """Returns default smart contract ABI"""
+        """
+Returns default smart contract ABI"""
         return [
             {
                 "inputs": [

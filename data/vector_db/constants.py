@@ -5,7 +5,7 @@ Centralized constants, enums, and configuration values for the vector database s
 This module defines all fixed values, thresholds, and system-wide configurations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ COPYRIGHT WARNING ⚠️
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
@@ -23,6 +23,7 @@ TEAM SPECIALTIES:
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
 """
+
 from enum import Enum, IntEnum
 from typing import Dict, List, Tuple, Any, Final
 
@@ -34,7 +35,7 @@ SYSTEM_NAME: Final[str] = "IA Influencer Agent Vector Database System"
 SYSTEM_VERSION: Final[str] = "1.0.0"
 SYSTEM_AUTHOR: Final[str] = "Fahed Mlaiel"
 SYSTEM_EMAIL: Final[str] = "mlaiel@live.de"
-SYSTEM_COPYRIGHT: Final[str] = "© 2025 Fahed Mlaiel - All Rights Reserved"
+SYSTEM_COPYRIGHT: Final[str] = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 SYSTEM_LICENSE: Final[str] = "Proprietary - Unauthorized use prohibited"
 
 # ================================
@@ -43,6 +44,7 @@ SYSTEM_LICENSE: Final[str] = "Proprietary - Unauthorized use prohibited"
 
 class ContentType(Enum):
     """Supported content types for vector database."""
+
     TEXT = "text"
     AUDIO = "audio"
     IMAGE = "image"
@@ -52,6 +54,7 @@ class ContentType(Enum):
 
 class AudioFormat(Enum):
     """Supported audio formats."""
+
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -61,6 +64,7 @@ class AudioFormat(Enum):
 
 class ImageFormat(Enum):
     """Supported image formats."""
+
     JPEG = "jpeg"
     PNG = "png"
     GIF = "gif"
@@ -71,6 +75,7 @@ class ImageFormat(Enum):
 
 class VideoFormat(Enum):
     """Supported video formats."""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -85,6 +90,7 @@ class VideoFormat(Enum):
 
 class BackendType(Enum):
     """Vector database backend types."""
+
     FAISS = "faiss"
     CHROMA = "chroma"
     PINECONE = "pinecone"
@@ -94,6 +100,7 @@ class BackendType(Enum):
 
 class FAISSIndexType(Enum):
     """FAISS index types."""
+
     FLAT = "flat"
     IVF_FLAT = "ivf_flat"
     IVF_PQ = "ivf_pq"
@@ -103,6 +110,7 @@ class FAISSIndexType(Enum):
 
 class DistanceMetric(Enum):
     """Distance metrics for similarity computation."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -332,6 +340,7 @@ SECURITY_CONFIG: Final[Dict[str, Any]] = {
 
 class ErrorCode(IntEnum):
     """System error codes."""
+
     SUCCESS = 0
     GENERAL_ERROR = 1000
     VALIDATION_ERROR = 1001
@@ -404,6 +413,7 @@ HTTP_STATUS_CODES: Final[Dict[str, int]] = {
 
 class FeatureFlag(Enum):
     """Feature flags for enabling/disabling functionality."""
+
     ENABLE_AUDIO_PROCESSING = "enable_audio_processing"
     ENABLE_VIDEO_PROCESSING = "enable_video_processing"
     ENABLE_GPU_ACCELERATION = "enable_gpu_acceleration"
@@ -508,7 +518,7 @@ COPYRIGHT_NOTICE: Final[str] = """⚠️ COPYRIGHT WARNING ⚠️
 
 This Vector Database System is the intellectual property of Fahed Mlaiel.
 
-© 2025 Fahed Mlaiel - All Rights Reserved
+(c) 2025 Fahed Mlaiel - All Rights Reserved
 
 This software represents over 3500+ hours of development work and contains 
 proprietary algorithms, architectures, and implementations. 
@@ -526,7 +536,8 @@ Violations will result in immediate legal action including but not limited to:
 - Injunctive relief
 
 For licensing inquiries, contact: mlaiel@live.de
-"""LEGAL_DISCLAIMERS: Final[Dict[str, str]] = {
+"""
+LEGAL_DISCLAIMERS: Final[Dict[str, str]] = {
     "warranty": "This software is provided 'as is' without warranty of any kind.",
     "liability": "The author shall not be liable for any damages arising from use.",
     "trademark": "All trademarks are property of their respective owners.",
@@ -614,12 +625,14 @@ def validate_feature_flag(flag_name: str) -> bool:
 
 
 def get_performance_threshold(metric_name: str) -> float:
-    """Get performance threshold for a specific metric."""
+    """
+Get performance threshold for a specific metric."""
     return PERFORMANCE_THRESHOLDS.get(metric_name, 0.0)
 
 
 def get_error_message(error_code: int) -> str:
-    """Get error message for an error code."""
+    """
+Get error message for an error code."""
     return ERROR_MESSAGES.get(error_code, "Unknown error")
 
 

@@ -16,6 +16,7 @@ Professional SEO enhancement engine for content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import re
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SEOAnalysis:
-    """SEO analysis result"""
+    """
+SEO analysis result"""
     seo_score: float
     keyword_density: Dict[str, float]
     meta_analysis: Dict[str, Any]
@@ -46,7 +48,8 @@ class SEOAnalysis:
 
 @dataclass
 class KeywordAnalysis:
-    """Keyword analysis result"""
+    """
+Keyword analysis result"""
     keyword: str
     density: float
     frequency: int
@@ -56,7 +59,8 @@ class KeywordAnalysis:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations"""
+    """
+Content optimization recommendations"""
     optimized_title: str
     optimized_description: str
     optimized_content: str

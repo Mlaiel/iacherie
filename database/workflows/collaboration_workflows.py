@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaboration workflows"""
+    """
+Types of collaboration workflows"""
+
     CONTENT_CREATION = "content_creation"
     BRAND_PARTNERSHIP = "brand_partnership"
     CROSS_PROMOTION = "cross_promotion"
@@ -59,6 +62,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration workflow status"""
+
     DRAFT = "draft"
     PROPOSAL_SENT = "proposal_sent"
     UNDER_REVIEW = "under_review"
@@ -75,6 +79,7 @@ class CollaborationStatus(Enum):
 
 class ParticipantRole(Enum):
     """Collaboration participant roles"""
+
     INITIATOR = "initiator"
     COLLABORATOR = "collaborator"
     BRAND_SPONSOR = "brand_sponsor"
@@ -87,6 +92,7 @@ class ParticipantRole(Enum):
 
 class ContributionType(Enum):
     """Types of contributions in collaboration"""
+
     CONTENT_CREATION = "content_creation"
     AUDIO_PRODUCTION = "audio_production"
     VIDEO_EDITING = "video_editing"
@@ -103,6 +109,7 @@ class ContributionType(Enum):
 
 class RevenueShareType(Enum):
     """Revenue sharing models"""
+
     EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CONTRIBUTION_WEIGHTED = "contribution_weighted"
@@ -518,7 +525,8 @@ class AICreatorMatcher:
         self,
         collaboration: CollaborationWorkflow
     ) -> List[Dict[str, Any]]:
-        """Get list of potential collaborators based on basic criteria"""
+        """
+Get list of potential collaborators based on basic criteria"""
         # This would query user profiles, skills, and availability
         # For now, return mock data structure
         return []
@@ -528,7 +536,8 @@ class AICreatorMatcher:
         collaboration: CollaborationWorkflow,
         collaborator: Dict[str, Any]
     ) -> float:
-        """Calculate overall compatibility score using multiple algorithms"""
+        """
+Calculate overall compatibility score using multiple algorithms"""
         scores = {}
         
         # Apply each matching algorithm
@@ -570,7 +579,8 @@ class AICreatorMatcher:
         collaboration: CollaborationWorkflow,
         collaborator: Dict[str, Any]
     ) -> float:
-        """Calculate audience demographic and interest overlap"""
+        """
+Calculate audience demographic and interest overlap"""
         # Implementation would analyze audience data
         return 0.6  # Mock score
     
@@ -579,7 +589,8 @@ class AICreatorMatcher:
         collaboration: CollaborationWorkflow,
         collaborator: Dict[str, Any]
     ) -> float:
-        """Analyze past collaboration success and reliability"""
+        """
+Analyze past collaboration success and reliability"""
         # Implementation would analyze historical collaboration data
         return 0.8  # Mock score
     
@@ -588,7 +599,8 @@ class AICreatorMatcher:
         collaboration: CollaborationWorkflow,
         collaborator: Dict[str, Any]
     ) -> float:
-        """Assess how well skills complement project needs"""
+        """
+Assess how well skills complement project needs"""
         # Implementation would match required vs offered skills
         return 0.75  # Mock score
     
@@ -597,7 +609,8 @@ class AICreatorMatcher:
         collaboration: CollaborationWorkflow,
         collaborator: Dict[str, Any]
     ) -> float:
-        """Evaluate performance metrics compatibility"""
+        """
+Evaluate performance metrics compatibility"""
         # Implementation would analyze engagement rates, growth trends
         return 0.65  # Mock score
     
@@ -606,7 +619,8 @@ class AICreatorMatcher:
         collaboration: CollaborationWorkflow,
         collaborator: Dict[str, Any]
     ) -> str:
-        """Recommend optimal role for collaborator in project"""
+        """
+Recommend optimal role for collaborator in project"""
         # Implementation would analyze skills and project needs
         return "collaborator"  # Mock role
 
@@ -776,7 +790,8 @@ class CollaborationWorkflowManager:
                 )
     
     async def _process_revenue_payments(self, revenue_share_id: str):
-        """Process actual payments for revenue sharing"""
+        """
+Process actual payments for revenue sharing"""
         # Implementation would integrate with payment processors
         logger.info(f"Processing payments for revenue share {revenue_share_id}")
 
@@ -793,7 +808,8 @@ class RevenueShareCalculator:
         content_id: str,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate individual revenue shares for participants"""
+        """
+Calculate individual revenue shares for participants"""
         # Get collaboration participants
         participants = self.db_session.query(CollaborationParticipant).filter(
             CollaborationParticipant.collaboration_id == collaboration_id,
@@ -848,7 +864,8 @@ class RevenueShareCalculator:
         participants: List[CollaborationParticipant],
         total_revenue: float
     ) -> Dict[str, Any]:
-        """Calculate revenue based on pre-defined percentages"""
+        """
+Calculate revenue based on pre-defined percentages"""
         shares = {}
         
         for participant in participants:
@@ -869,7 +886,8 @@ class RevenueShareCalculator:
         total_revenue: float,
         content_id: str
     ) -> Dict[str, Any]:
-        """Calculate revenue based on actual contributions"""
+        """
+Calculate revenue based on actual contributions"""
         # Implementation would analyze actual contributions to content
         # For now, fallback to equal split
         return self._calculate_equal_split(participants, total_revenue)
@@ -880,14 +898,16 @@ class RevenueShareCalculator:
         total_revenue: float,
         content_id: str
     ) -> Dict[str, Any]:
-        """Calculate revenue based on performance metrics"""
+        """
+Calculate revenue based on performance metrics"""
         # Implementation would analyze performance contributions
         # For now, fallback to equal split
         return self._calculate_equal_split(participants, total_revenue)
 
 
 class CollaborationNotificationService:
-    """Notification service for collaboration workflows"""
+    """
+Notification service for collaboration workflows"""
     
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -898,7 +918,8 @@ class CollaborationNotificationService:
         user_id: str,
         participant_id: str
     ):
-        """Send collaboration invitation notification"""
+        """
+Send collaboration invitation notification"""
         # Implementation would send email/push notification
         logger.info(f"Sent collaboration invitation to user {user_id}")
     

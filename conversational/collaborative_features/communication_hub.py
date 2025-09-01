@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class MessageType(Enum):
-    """Types of communication messages"""
+    """
+Types of communication messages"""
+
     TEXT = "text"
     FILE = "file"
     IMAGE = "image"
@@ -55,6 +58,7 @@ class MessageType(Enum):
 
 class MessagePriority(Enum):
     """Message priority levels for delivery optimization"""
+
     URGENT = "urgent"
     HIGH = "high"
     NORMAL = "normal"
@@ -64,6 +68,7 @@ class MessagePriority(Enum):
 
 class ChannelType(Enum):
     """Communication channel types"""
+
     DIRECT_MESSAGE = "direct_message"
     TEAM_CHANNEL = "team_channel"
     PROJECT_CHANNEL = "project_channel"
@@ -74,6 +79,7 @@ class ChannelType(Enum):
 
 class NotificationType(Enum):
     """Notification types for different events"""
+
     MESSAGE_RECEIVED = "message_received"
     TASK_ASSIGNED = "task_assigned"
     PROJECT_UPDATE = "project_update"
@@ -112,7 +118,8 @@ class Message:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert message to dictionary representation"""
+        """
+Convert message to dictionary representation"""
         return {
             "message_id": self.message_id,
             "channel_id": self.channel_id,
@@ -159,7 +166,8 @@ class CommunicationChannel:
     last_activity: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert channel to dictionary representation"""
+        """
+Convert channel to dictionary representation"""
         return {
             "channel_id": self.channel_id,
             "channel_name": self.channel_name,
@@ -199,7 +207,8 @@ class CollaborativeCommunicationManager:
         is_private: bool = False,
         settings: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create new communication channel for team collaboration"""
+        """
+Create new communication channel for team collaboration"""
         try:
             channel_id = str(uuid.uuid4())
             
@@ -726,7 +735,8 @@ class RealTimeMessageHandler:
         websocket: websockets.WebSocketServerProtocol,
         user_id: str
     ):
-        """Handle WebSocket connection for real-time messaging"""
+        """
+Handle WebSocket connection for real-time messaging"""
         try:
             # Register connection
             self.comm_manager.active_connections[user_id] = websocket
@@ -950,13 +960,15 @@ class VideoConferenceIntegrator:
         return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
     
     async def _send_meeting_invitations(self, meeting_data: Dict[str, Any]):
-        """Send meeting invitations to participants"""
+        """
+Send meeting invitations to participants"""
         # Implementation would send email/push notifications
         pass
 
 
 class FileShareCoordinator:
-    """Advanced file sharing coordination for collaborative teams"""
+    """
+Advanced file sharing coordination for collaborative teams"""
     
     def __init__(self, cache_manager: CacheManager, file_manager: FileManager):
         self.cache = cache_manager
@@ -972,7 +984,8 @@ class FileShareCoordinator:
         description: Optional[str] = None,
         access_permissions: Dict[str, List[str]] = None
     ) -> Dict[str, Any]:
-        """Share file in communication channel"""
+        """
+Share file in communication channel"""
         try:
             # Validate file
             validation_result = await self.file_manager.validate_file(
@@ -1084,7 +1097,8 @@ class FileShareCoordinator:
 
 
 class NotificationDispatcher:
-    """Advanced notification dispatching for collaborative events"""
+    """
+Advanced notification dispatching for collaborative events"""
     
     def __init__(self, cache_manager: CacheManager, notification_service: NotificationService):
         self.cache = cache_manager
@@ -1100,7 +1114,8 @@ class NotificationDispatcher:
         metadata: Dict[str, Any],
         priority: MessagePriority = MessagePriority.NORMAL
     ) -> Dict[str, Any]:
-        """Dispatch notification to multiple users with preferences"""
+        """
+Dispatch notification to multiple users with preferences"""
         try:
             dispatched_count = 0
             failed_count = 0

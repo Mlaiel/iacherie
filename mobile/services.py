@@ -4,6 +4,7 @@ Content processing, upload, and collaboration services optimized for mobile
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
 """
+
 import asyncio
 import hashlib
 import json
@@ -67,7 +68,8 @@ class MobileUpload:
 
 @dataclass
 class MobileProcessingJob:
-    """Mobile content processing job."""
+    """
+Mobile content processing job."""
     job_id: str
     upload_id: str
     processing_type: str  # fingerprint, ai_analysis, compression, optimization
@@ -82,7 +84,8 @@ class MobileProcessingJob:
 
 @dataclass
 class MobileCollaborationRequest:
-    """Mobile collaboration request."""
+    """
+Mobile collaboration request."""
     request_id: str
     requester_id: str
     target_user_id: str
@@ -460,17 +463,20 @@ class MobileContentService:
         return data
     
     async def _optimize_video_for_mobile(self, data: bytes) -> bytes:
-        """Optimize video for mobile platforms."""
+        """
+Optimize video for mobile platforms."""
         # Simulate video optimization
         return data
     
     async def _optimize_audio_for_mobile(self, data: bytes) -> bytes:
-        """Optimize audio for mobile platforms."""
+        """
+Optimize audio for mobile platforms."""
         # Simulate audio optimization
         return data
     
     def _get_optimizations_applied(self, upload: MobileUpload) -> List[str]:
-        """Get list of optimizations applied to upload."""
+        """
+Get list of optimizations applied to upload."""
         optimizations = []
         
         if upload.compression_applied:
@@ -558,7 +564,8 @@ def create_mobile_content_service() -> MobileContentService:
 
 
 def create_mobile_collaboration_service() -> MobileCollaborationService:
-    """Create mobile collaboration service instance."""
+    """
+Create mobile collaboration service instance."""
     return MobileCollaborationService()
 
 

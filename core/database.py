@@ -4,6 +4,7 @@ Advanced multi-database management for PostgreSQL, Redis, and MongoDB.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Optional, Dict, Any, List
 from contextlib import asynccontextmanager
@@ -48,7 +49,8 @@ class DatabaseManager:
         await self._run_health_checks()
     
     async def _initialize_postgres(self) -> None:
-        """Initialize PostgreSQL connection with connection pooling"""
+        """
+Initialize PostgreSQL connection with connection pooling"""
         try:
             # Create async engine with connection pooling
             self.postgres_engine = create_async_engine(
@@ -132,7 +134,8 @@ class DatabaseManager:
                 await session.close()
     
     async def get_redis_client(self):
-        """Get Redis client"""
+        """
+Get Redis client"""
         if not self.redis_client:
             raise Exception("Redis client not initialized")
         return self.redis_client
@@ -149,7 +152,8 @@ class DatabaseManager:
         return database[collection_name]
     
     async def _run_health_checks(self) -> None:
-        """Run health checks on all databases"""
+        """
+Run health checks on all databases"""
         # PostgreSQL health check
         try:
             async with self.postgres_engine.begin() as conn:
@@ -178,19 +182,22 @@ class DatabaseManager:
         return self._health_status.copy()
     
     async def execute_postgres_query(self, query: str, params: Optional[Dict] = None) -> List[Dict]:
-        """Execute raw PostgreSQL query"""
+        """
+Execute raw PostgreSQL query"""
         async with self.get_postgres_session() as session:
             result = await session.execute(query, params or {})
             return [dict(row) for row in result.fetchall()]
     
     async def execute_redis_command(self, command: str, *args, **kwargs) -> Any:
-        """Execute Redis command"""
+        """
+Execute Redis command"""
         redis_client = await self.get_redis_client()
         return await getattr(redis_client, command)(*args, **kwargs)
     
     async def find_mongodb_documents(self, collection: str, filter_dict: Dict = None, 
                                    limit: Optional[int] = None) -> List[Dict]:
-        """Find documents in MongoDB collection"""
+        """
+Find documents in MongoDB collection"""
         collection_obj = await self.get_mongodb_collection(collection)
         cursor = collection_obj.find(filter_dict or {})
         
@@ -200,14 +207,16 @@ class DatabaseManager:
         return await cursor.to_list(length=None)
     
     async def insert_mongodb_document(self, collection: str, document: Dict) -> str:
-        """Insert document into MongoDB collection"""
+        """
+Insert document into MongoDB collection"""
         collection_obj = await self.get_mongodb_collection(collection)
         result = await collection_obj.insert_one(document)
         return str(result.inserted_id)
     
     async def update_mongodb_document(self, collection: str, filter_dict: Dict, 
                                     update_dict: Dict) -> int:
-        """Update documents in MongoDB collection"""
+        """
+Update documents in MongoDB collection"""
         collection_obj = await self.get_mongodb_collection(collection)
         result = await collection_obj.update_many(filter_dict, {"$set": update_dict})
         return result.modified_count
@@ -219,7 +228,8 @@ class DatabaseManager:
         return result.deleted_count
     
     async def create_indexes(self) -> None:
-        """Create database indexes for performance optimization"""
+        """
+Create database indexes for performance optimization"""
         # PostgreSQL indexes will be created via SQLAlchemy migrations
         
         # MongoDB indexes

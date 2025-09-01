@@ -20,6 +20,7 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
 """
+
 import logging
 import os
 import platform
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class DriverProfile(Enum):
-    """Predefined driver configuration profiles"""
+    """
+Predefined driver configuration profiles"""
+
     STEALTH = "stealth"
     PERFORMANCE = "performance"
     DEBUGGING = "debugging"
@@ -67,6 +70,7 @@ class DriverProfile(Enum):
 
 class EnvironmentType(Enum):
     """Target environment types"""
+
     LOCAL = "local"
     DOCKER = "docker"
     CLOUD = "cloud"
@@ -151,7 +155,8 @@ class WebDriverFactory:
         return self.create_driver(config, DriverProfile.STEALTH)
     
     def create_performance_driver(self, browser_type: BrowserType = BrowserType.CHROME) -> webdriver.Remote:
-        """Create performance-optimized driver for speed"""
+        """
+Create performance-optimized driver for speed"""
         config = BrowserConfiguration(
             browser_type=browser_type,
             mode=BrowserMode.HEADLESS,
@@ -172,7 +177,8 @@ class WebDriverFactory:
         return self._create_mobile_chrome_driver(config, device_name)
     
     def create_testing_driver(self, browser_type: BrowserType = BrowserType.CHROME) -> webdriver.Remote:
-        """Create driver optimized for testing"""
+        """
+Create driver optimized for testing"""
         config = BrowserConfiguration(
             browser_type=browser_type,
             mode=BrowserMode.HEADLESS,
@@ -182,7 +188,8 @@ class WebDriverFactory:
         return self.create_driver(config, DriverProfile.TESTING)
     
     def _create_chrome_driver(self, config: BrowserConfiguration) -> webdriver.Chrome:
-        """Create Chrome WebDriver with advanced configuration"""
+        """
+Create Chrome WebDriver with advanced configuration"""
         options = ChromeOptions()
         
         # Basic configuration
@@ -615,7 +622,8 @@ class WebDriverFactory:
         return presets_by_browser
     
     def cleanup_temp_directories(self) -> None:
-        """Cleanup temporary directories created during driver operations"""
+        """
+Cleanup temporary directories created during driver operations"""
         for temp_dir in self.temp_directories:
             try:
                 shutil.rmtree(temp_dir, ignore_errors=True)
@@ -633,7 +641,8 @@ def create_stealth_driver(environment: EnvironmentType = EnvironmentType.LOCAL) 
 
 
 def create_performance_driver(environment: EnvironmentType = EnvironmentType.LOCAL) -> webdriver.Remote:
-    """Create performance-optimized Chrome driver"""
+    """
+Create performance-optimized Chrome driver"""
     factory = WebDriverFactory(environment)
     return factory.create_performance_driver()
 
@@ -647,6 +656,7 @@ def create_mobile_driver(device_name: str = "iPhone 12",
 
 def create_testing_driver(browser_type: BrowserType = BrowserType.CHROME,
                          environment: EnvironmentType = EnvironmentType.LOCAL) -> webdriver.Remote:
-    """Create testing-optimized driver"""
+    """
+Create testing-optimized driver"""
     factory = WebDriverFactory(environment)
     return factory.create_testing_driver(browser_type)

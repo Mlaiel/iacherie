@@ -15,8 +15,9 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de)
 is strictly prohibited and may result in legal action.
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -49,7 +50,9 @@ from ...ai.collaboration.match_scorer import MatchScorer
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities"""
+    """
+Types of collaboration opportunities"""
+
     MUSICAL_COLLABORATION = "musical_collaboration"
     CONTENT_COLLABORATION = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
@@ -63,6 +66,7 @@ class CollaborationType(Enum):
 
 class CreatorType(Enum):
     """Types of content creators"""
+
     MUSICIAN = "musician"
     SINGER = "singer"
     PRODUCER = "producer"
@@ -76,6 +80,7 @@ class CreatorType(Enum):
 
 class MatchCriteria(Enum):
     """Matching criteria for collaboration"""
+
     GENRE_SIMILARITY = "genre_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
@@ -104,7 +109,8 @@ class CreatorProfile:
     created_at: datetime = field(default_factory=datetime.now)
     
     def calculate_influence_score(self) -> float:
-        """Calculate overall influence score across platforms"""
+        """
+Calculate overall influence score across platforms"""
         total_followers = 0
         total_engagement = 0
         platform_count = 0
@@ -127,7 +133,8 @@ class CreatorProfile:
         return follower_score + engagement_score
     
     def get_collaboration_compatibility(self, other: 'CreatorProfile') -> float:
-        """Calculate compatibility score with another creator"""
+        """
+Calculate compatibility score with another creator"""
         scores = []
         
         # Genre compatibility
@@ -168,7 +175,8 @@ class CreatorProfile:
         return sum(scores)
     
     def _calculate_style_similarity(self, other: 'CreatorProfile') -> float:
-        """Calculate creative style similarity"""
+        """
+Calculate creative style similarity"""
         # Compare content style attributes
         self_style = self.content_style
         other_style = other.content_style
@@ -197,7 +205,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationMatch:
-    """Represents a potential collaboration match"""
+    """
+Represents a potential collaboration match"""
     match_id: str
     primary_creator: CreatorProfile
     secondary_creator: CreatorProfile
@@ -212,7 +221,8 @@ class CollaborationMatch:
     match_timestamp: datetime = field(default_factory=datetime.now)
     
     def get_collaboration_summary(self) -> Dict[str, Any]:
-        """Get summary of collaboration potential"""
+        """
+Get summary of collaboration potential"""
         return {
             'match_id': self.match_id,
             'creators': {
@@ -237,7 +247,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationMatchingResult:
-    """Comprehensive collaboration matching results"""
+    """
+Comprehensive collaboration matching results"""
     content_id: str
     creator_profile: CreatorProfile
     matches: List[CollaborationMatch]
@@ -248,11 +259,13 @@ class CollaborationMatchingResult:
     processing_metrics: Dict[str, Any]
     
     def get_top_matches(self, limit: int = 5) -> List[CollaborationMatch]:
-        """Get top collaboration matches"""
+        """
+Get top collaboration matches"""
         return sorted(self.matches, key=lambda x: x.match_score, reverse=True)[:limit]
     
     def get_matches_by_type(self, collaboration_type: CollaborationType) -> List[CollaborationMatch]:
-        """Get matches filtered by collaboration type"""
+        """
+Get matches filtered by collaboration type"""
         return [match for match in self.matches if match.collaboration_type == collaboration_type]
 
 class CollaborationMatchingHandler(BaseEventHandler):
@@ -264,7 +277,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
     """
     
     def __init__(self, ai_engine: Any):
-        """Initialize collaboration matching handler"""
+        """
+Initialize collaboration matching handler"""
         super().__init__()
         self.ai_engine = ai_engine
         self.creator_profiler = CreatorProfiler()
@@ -283,7 +297,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         self.performance_metrics = defaultdict(list)
     
     def _initialize_matching_algorithms(self):
-        """Initialize machine learning models for matching"""
+        """
+Initialize machine learning models for matching"""
         try:
             # Initialize vectorizer for content similarity
             self.content_vectorizer = TfidfVectorizer(
@@ -460,7 +475,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return processed_platforms
     
     async def _analyze_content_style(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze creator's content style"""
+        """
+Analyze creator's content style"""
         try:
             # Extract content samples
             content_samples = creator_data.get('content_samples', [])
@@ -509,7 +525,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return max(mood_scores.items(), key=lambda x: x[1])[0] if mood_scores else 'neutral'
     
     def _analyze_energy_level(self, content_samples: List[Dict[str, Any]]) -> int:
-        """Analyze energy level (1-10 scale)"""
+        """
+Analyze energy level (1-10 scale)"""
         if not content_samples:
             return 5  # Default medium energy
         
@@ -536,7 +553,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return max(1, min(10, int(energy_score)))
     
     def _analyze_production_quality(self, creator_data: Dict[str, Any]) -> int:
-        """Analyze production quality (1-10 scale)"""
+        """
+Analyze production quality (1-10 scale)"""
         quality_indicators = {
             'professional_equipment': 2,
             'studio_recording': 3,
@@ -566,7 +584,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return max(1, min(10, quality_score))
     
     def _analyze_audio_characteristics(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audio characteristics"""
+        """
+Analyze audio characteristics"""
         return {
             'tempo_preference': creator_data.get('tempo_preference', 'medium'),
             'instrument_focus': creator_data.get('primary_instruments', []),
@@ -575,7 +594,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         }
     
     def _calculate_reputation_score(self, creator_data: Dict[str, Any]) -> float:
-        """Calculate creator reputation score"""
+        """
+Calculate creator reputation score"""
         reputation_factors = {
             'verified_accounts': 10,
             'collaboration_count': len(creator_data.get('collaboration_history', [])) * 2,
@@ -597,7 +617,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return max(0.0, min(100.0, base_score))
     
     def _calculate_engagement_metrics(self, platforms: Dict[str, Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate aggregated engagement metrics"""
+        """
+Calculate aggregated engagement metrics"""
         metrics = {
             'average_engagement_rate': 0.0,
             'total_reach': 0,
@@ -626,7 +647,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
     async def _find_potential_matches(self, creator_profile: CreatorProfile, 
                                      matching_criteria: List[MatchCriteria],
                                      collaboration_types: List[CollaborationType]) -> List[CreatorProfile]:
-        """Find potential collaboration matches"""
+        """
+Find potential collaboration matches"""
         try:
             potential_matches = []
             
@@ -683,7 +705,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return True
     
     def _generate_synthetic_matches(self, creator_profile: CreatorProfile, count: int) -> List[CreatorProfile]:
-        """Generate synthetic creator profiles for matching demonstration"""
+        """
+Generate synthetic creator profiles for matching demonstration"""
         synthetic_matches = []
         
         base_genres = ['pop', 'rock', 'hip-hop', 'electronic', 'indie', 'folk', 'jazz', 'classical']
@@ -849,7 +872,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return breakdown
     
     def _determine_collaboration_type(self, creator: CreatorProfile, candidate: CreatorProfile) -> CollaborationType:
-        """Determine the most suitable collaboration type"""
+        """
+Determine the most suitable collaboration type"""
         
         # Simple logic based on creator types and compatibility
         creator_type = creator.creator_type
@@ -878,7 +902,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
     
     def _generate_collaboration_ideas(self, creator: CreatorProfile, candidate: CreatorProfile,
                                      collaboration_type: CollaborationType) -> List[str]:
-        """Generate specific collaboration ideas"""
+        """
+Generate specific collaboration ideas"""
         ideas = []
         
         creator_genres = creator.genres
@@ -923,7 +948,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         return estimated_reach
     
     def _calculate_confidence_level(self, compatibility_breakdown: Dict[str, float]) -> float:
-        """Calculate confidence level in the match"""
+        """
+Calculate confidence level in the match"""
         scores = list(compatibility_breakdown.values())
         
         # Higher confidence for more consistent scores
@@ -940,7 +966,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
     
     def _generate_recommended_approach(self, creator: CreatorProfile, candidate: CreatorProfile,
                                       collaboration_type: CollaborationType) -> str:
-        """Generate recommended approach for initiating collaboration"""
+        """
+Generate recommended approach for initiating collaboration"""
         
         creator_influence = creator.calculate_influence_score()
         candidate_influence = candidate.calculate_influence_score()
@@ -1056,7 +1083,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         }
     
     def get_matching_statistics(self) -> Dict[str, Any]:
-        """Get handler performance statistics"""
+        """
+Get handler performance statistics"""
         return {
             'matching_counts': dict(self.matching_stats),
             'average_processing_time': np.mean(self.performance_metrics['processing_time']) if self.performance_metrics['processing_time'] else 0,
@@ -1067,7 +1095,8 @@ class CollaborationMatchingHandler(BaseEventHandler):
         }
     
     async def cleanup(self):
-        """Cleanup handler resources"""
+        """
+Cleanup handler resources"""
         logger.info("Cleaning up collaboration matching handler resources")
         self.creator_database.clear()
         self.match_cache.clear()

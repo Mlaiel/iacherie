@@ -10,6 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -19,7 +20,9 @@ from datetime import datetime, timedelta
 
 
 class RevenueStream(Enum):
-    """Revenue stream types enumeration."""
+    """
+Revenue stream types enumeration."""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     SYNC_LICENSING = "sync_licensing"
     MERCHANDISE = "merchandise"
@@ -36,6 +39,7 @@ class RevenueStream(Enum):
 
 class PaymentMethod(Enum):
     """Payment methods enumeration."""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -48,6 +52,7 @@ class PaymentMethod(Enum):
 
 class PricingTier(Enum):
     """Platform pricing tiers."""
+
     FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
@@ -77,7 +82,8 @@ class RevenueStreamConfig:
 
 @dataclass
 class PlatformCommissionConfig:
-    """Platform commission configuration by content type and tier."""
+    """
+Platform commission configuration by content type and tier."""
     content_type: str
     pricing_tier: PricingTier
     commission_rate: Decimal
@@ -91,7 +97,8 @@ class PlatformCommissionConfig:
 
 @dataclass
 class PayoutConfig:
-    """Payout configuration and scheduling."""
+    """
+Payout configuration and scheduling."""
     payment_method: PaymentMethod
     minimum_amount: Decimal
     maximum_amount: Decimal
@@ -104,10 +111,12 @@ class PayoutConfig:
 
 
 class AdvancedMonetizationConfig:
-    """Advanced monetization configuration for content creators."""
+    """
+Advanced monetization configuration for content creators."""
     
     def __init__(self):
-        """Initialize monetization configuration."""
+        """
+Initialize monetization configuration."""
         self.revenue_streams = self._get_revenue_stream_configs()
         self.commission_structures = self._get_commission_structures()
         self.payout_configs = self._get_payout_configs()
@@ -118,7 +127,8 @@ class AdvancedMonetizationConfig:
         self.optimization_settings = self._get_optimization_settings()
     
     def _get_revenue_stream_configs(self) -> Dict[RevenueStream, RevenueStreamConfig]:
-        """Get revenue stream configurations."""
+        """
+Get revenue stream configurations."""
         return {
             RevenueStream.STREAMING_ROYALTIES: RevenueStreamConfig(
                 stream_type=RevenueStream.STREAMING_ROYALTIES,
@@ -617,7 +627,8 @@ class AdvancedMonetizationConfig:
         return self.revenue_streams.get(stream_type)
     
     def get_commission_structure(self, content_type: str, tier: PricingTier) -> Optional[PlatformCommissionConfig]:
-        """Get commission structure for content type and tier."""
+        """
+Get commission structure for content type and tier."""
         structures = self.commission_structures.get(content_type, [])
         for structure in structures:
             if structure.pricing_tier == tier:
@@ -631,7 +642,8 @@ class AdvancedMonetizationConfig:
         content_type: str,
         pricing_tier: PricingTier
     ) -> Dict[str, Decimal]:
-        """Calculate payout amount after fees and commissions."""
+        """
+Calculate payout amount after fees and commissions."""
         stream_config = self.get_revenue_stream_config(revenue_stream)
         commission_config = self.get_commission_structure(content_type, pricing_tier)
         
@@ -666,7 +678,8 @@ def get_revenue_stream_config(stream_type: RevenueStream) -> Optional[RevenueStr
 
 
 def get_pricing_tier_config(tier: PricingTier) -> Optional[Dict[str, Any]]:
-    """Get pricing tier configuration."""
+    """
+Get pricing tier configuration."""
     return advanced_monetization_config.pricing_tiers.get(tier)
 
 

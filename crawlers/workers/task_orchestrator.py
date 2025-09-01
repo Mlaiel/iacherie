@@ -8,7 +8,7 @@ Technologies: ML-driven orchestration, Graph workflows, Adaptive scheduling
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Workflow definition → Dependency analysis → Intelligent scheduling → 
 Resource allocation → Parallel execution → Progress monitoring → Auto-recovery
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
 import logging
 import asyncio
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
+    """
+Workflow execution status"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
@@ -60,6 +63,7 @@ class WorkflowStatus(Enum):
 
 class TaskType(Enum):
     """Task types in orchestration"""
+
     CRAWLER_TASK = "crawler_task"
     ANALYSIS_TASK = "analysis_task"
     FINGERPRINT_TASK = "fingerprint_task"
@@ -72,6 +76,7 @@ class TaskType(Enum):
 
 class DependencyType(Enum):
     """Task dependency types"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -83,6 +88,7 @@ class DependencyType(Enum):
 
 class ExecutionStrategy(Enum):
     """Workflow execution strategies"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     PIPELINE = "pipeline"
@@ -110,7 +116,8 @@ class TaskDefinition:
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition"""
+    """
+Workflow definition"""
     workflow_id: str
     name: str
     description: str
@@ -148,7 +155,8 @@ class TaskExecution:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution state"""
+    """
+Workflow execution state"""
     execution_id: str
     workflow_def: WorkflowDefinition
     status: WorkflowStatus = WorkflowStatus.PENDING

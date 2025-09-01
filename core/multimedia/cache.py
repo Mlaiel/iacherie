@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class CacheLevel(Enum):
-    """Cache level types"""
+    """
+Cache level types"""
+
     MEMORY = "memory"
     DISK = "disk"
     DISTRIBUTED = "distributed"
@@ -49,6 +52,7 @@ class CacheLevel(Enum):
 
 class CacheStrategy(Enum):
     """Cache eviction strategies"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     TTL = "ttl"  # Time To Live
@@ -58,6 +62,7 @@ class CacheStrategy(Enum):
 
 class CacheType(Enum):
     """Types of cached content"""
+
     ORIGINAL_CONTENT = "original_content"
     PROCESSED_CONTENT = "processed_content"
     THUMBNAILS = "thumbnails"
@@ -85,7 +90,8 @@ class CacheEntry:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration"""
+    """
+Cache configuration"""
     max_memory_size: int = 1024 * 1024 * 1024  # 1GB
     max_disk_size: int = 10 * 1024 * 1024 * 1024  # 10GB
     default_ttl: int = 3600  # 1 hour
@@ -98,7 +104,8 @@ class CacheConfig:
 
 @dataclass
 class CacheStats:
-    """Cache statistics"""
+    """
+Cache statistics"""
     total_entries: int = 0
     memory_usage_bytes: int = 0
     disk_usage_bytes: int = 0
@@ -123,7 +130,8 @@ class MultimediaCache:
     """
     
     def __init__(self, config: Optional[CacheConfig] = None):
-        """Initialize multimedia cache"""
+        """
+Initialize multimedia cache"""
         self.config = config or CacheConfig()
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
@@ -332,7 +340,8 @@ class MultimediaCache:
         return data
     
     async def _store_in_memory(self, entry: CacheEntry):
-        """Store entry in memory cache"""
+        """
+Store entry in memory cache"""
         # Check if eviction is needed
         if (self.stats.memory_usage_bytes + entry.size_bytes > self.config.max_memory_size):
             await self._evict_memory_entries(entry.size_bytes)
@@ -341,7 +350,8 @@ class MultimediaCache:
         self.stats.memory_usage_bytes += entry.size_bytes
     
     async def _store_on_disk(self, entry: CacheEntry):
-        """Store entry on disk cache"""
+        """
+Store entry on disk cache"""
         # Check if eviction is needed
         if (self.stats.disk_usage_bytes + entry.size_bytes > self.config.max_disk_size):
             await self._evict_disk_entries(entry.size_bytes)
@@ -404,7 +414,8 @@ class MultimediaCache:
             await self._remove_from_memory(cache_key)
     
     async def _evict_disk_entries(self, needed_space: int):
-        """Evict entries from disk cache to free space"""
+        """
+Evict entries from disk cache to free space"""
         freed_space = 0
         entries_to_remove = []
         
@@ -429,7 +440,8 @@ class MultimediaCache:
             await self._remove_from_disk(cache_key)
     
     async def _remove_entry(self, cache_key: str):
-        """Remove entry from cache"""
+        """
+Remove entry from cache"""
         if cache_key in self.memory_cache:
             await self._remove_from_memory(cache_key)
         else:
@@ -449,14 +461,16 @@ class MultimediaCache:
         self.stats.eviction_count += 1
     
     async def _remove_from_memory(self, cache_key: str):
-        """Remove entry from memory cache"""
+        """
+Remove entry from memory cache"""
         if cache_key in self.memory_cache:
             entry = self.memory_cache[cache_key]
             self.stats.memory_usage_bytes -= entry.size_bytes
             del self.memory_cache[cache_key]
     
     async def _remove_from_disk(self, cache_key: str):
-        """Remove entry from disk cache"""
+        """
+Remove entry from disk cache"""
         cache_file = self.disk_cache_dir / f"{cache_key}.cache"
         
         if cache_file.exists():
@@ -483,7 +497,8 @@ class MultimediaCache:
         return datetime.now(timezone.utc) > expiry_time
     
     def _update_access_tracking(self, cache_key: str):
-        """Update access tracking for cache strategies"""
+        """
+Update access tracking for cache strategies"""
         # Update LRU order
         if cache_key in self.access_order:
             self.access_order.remove(cache_key)
@@ -596,7 +611,8 @@ class MultimediaCache:
         identifier: Optional[str] = None,
         cache_type: Optional[CacheType] = None
     ) -> List[Dict[str, Any]]:
-        """List cached content"""
+        """
+List cached content"""
         results = []
         
         for cache_key, index_entry in self.cache_index.items():
@@ -619,11 +635,13 @@ class MultimediaCache:
         return results
     
     def _start_cleanup_task(self):
-        """Start background cleanup task"""
+        """
+Start background cleanup task"""
         asyncio.create_task(self._cleanup_loop())
     
     async def _cleanup_loop(self):
-        """Background cleanup loop"""
+        """
+Background cleanup loop"""
         while True:
             try:
                 await self._cleanup_expired_entries()

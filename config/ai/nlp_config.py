@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class NLPTask(str, Enum):
-    """Supported NLP tasks for content processing."""
+    """
+Supported NLP tasks for content processing."""
+
     
     TEXT_CLASSIFICATION = "text_classification"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
@@ -44,6 +47,7 @@ class NLPTask(str, Enum):
 
 class NLPLanguage(str, Enum):
     """Supported languages for NLP processing."""
+
     
     ENGLISH = "en"
     FRENCH = "fr"
@@ -168,7 +172,8 @@ class NLPConfig(BaseSettings):
         return v
     
     def get_nlp_model_spec(self, task: NLPTask) -> NLPModelSpec:
-        """Get NLP model specification by task."""
+        """
+Get NLP model specification by task."""
         specs = {
             NLPTask.TEXT_CLASSIFICATION: NLPModelSpec(
                 task=NLPTask.TEXT_CLASSIFICATION,
@@ -356,7 +361,8 @@ class NLPConfig(BaseSettings):
         return models
     
     def get_content_analysis_pipeline(self) -> List[NLPTask]:
-        """Get recommended NLP pipeline for content analysis."""
+        """
+Get recommended NLP pipeline for content analysis."""
         return [
             NLPTask.LANGUAGE_DETECTION,
             NLPTask.CONTENT_MODERATION,
@@ -368,7 +374,8 @@ class NLPConfig(BaseSettings):
         ]
     
     def get_content_optimization_pipeline(self) -> List[NLPTask]:
-        """Get recommended NLP pipeline for content optimization."""
+        """
+Get recommended NLP pipeline for content optimization."""
         return [
             NLPTask.SEO_OPTIMIZATION,
             NLPTask.HASHTAG_GENERATION,
@@ -377,7 +384,8 @@ class NLPConfig(BaseSettings):
         ]
     
     def get_multilingual_config(self) -> Dict[str, Any]:
-        """Get multilingual processing configuration."""
+        """
+Get multilingual processing configuration."""
         return {
             "default_language": self.DEFAULT_LANGUAGE,
             "auto_detection": self.AUTO_LANGUAGE_DETECTION,

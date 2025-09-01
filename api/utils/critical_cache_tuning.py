@@ -7,6 +7,7 @@ analytics, protection monitoring, and collaboration.
 
 Author: Performance Optimization Team
 """
+
 import asyncio
 import time
 import json
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class CacheBackend(Enum):
-    """Supported cache backends"""
+    """
+Supported cache backends"""
+
     REDIS = "redis"
     MEMCACHED = "memcached"
     MEMORY = "memory"
@@ -31,6 +34,7 @@ class CacheBackend(Enum):
 
 class BusinessOperation(Enum):
     """Critical business operations"""
+
     USER_AUTHENTICATION = "user_auth"
     CONTENT_UPLOAD = "content_upload"
     FINGERPRINT_PROCESSING = "fingerprint_proc"
@@ -73,7 +77,8 @@ class CachePerformanceMetrics:
 
 
 class CriticalCacheTuner:
-    """Enhanced cache tuning for critical business operations"""
+    """
+Enhanced cache tuning for critical business operations"""
     
     def __init__(self):
         self.configurations = self._define_optimal_configurations()
@@ -82,7 +87,8 @@ class CriticalCacheTuner:
         self.memcached_optimizations = self._define_memcached_optimizations()
         
     def _define_optimal_configurations(self) -> Dict[BusinessOperation, CacheConfiguration]:
-        """Define optimal cache configurations for each business operation"""
+        """
+Define optimal cache configurations for each business operation"""
         return {
             BusinessOperation.USER_AUTHENTICATION: CacheConfiguration(
                 operation=BusinessOperation.USER_AUTHENTICATION,

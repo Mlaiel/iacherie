@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -56,7 +57,9 @@ from .scheduling_agent import ScheduledJob, AudienceActivity, OptimalTimingAnaly
 logger = logging.getLogger(__name__)
 
 class OptimizationStrategy(Enum):
-    """Schedule optimization strategies"""
+    """
+Schedule optimization strategies"""
+
     ENGAGEMENT_MAX = "engagement_maximization"
     REACH_MAX = "reach_maximization"
     BALANCED = "balanced_optimization"
@@ -66,6 +69,7 @@ class OptimizationStrategy(Enum):
 
 class TimingFactor(Enum):
     """Factors considered in timing optimization"""
+
     AUDIENCE_ACTIVITY = "audience_activity"
     PLATFORM_ALGORITHM = "platform_algorithm"
     COMPETITION_LEVEL = "competition_level"
@@ -88,7 +92,8 @@ class OptimizationConfig:
 
 @dataclass
 class TimingPrediction:
-    """Timing prediction result"""
+    """
+Timing prediction result"""
     recommended_time: datetime
     expected_performance: Dict[str, float]
     confidence_score: float
@@ -98,7 +103,8 @@ class TimingPrediction:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for evaluation"""
+    """
+Performance metrics for evaluation"""
     engagement_rate: float
     reach: int
     impressions: int
@@ -527,7 +533,8 @@ class ScheduleOptimizer:
         return pd.DataFrame([features])
     
     async def _update_models(self, historical_data: List[Dict[str, Any]], features: pd.DataFrame):
-        """Update ML models with recent data"""
+        """
+Update ML models with recent data"""
         if len(historical_data) < 10:
             return
         
@@ -567,7 +574,8 @@ class ScheduleOptimizer:
         platforms: List[str],
         config: OptimizationConfig
     ) -> float:
-        """Evaluate a candidate timing using multiple factors"""
+        """
+Evaluate a candidate timing using multiple factors"""
         try:
             total_score = 0.0
             total_weight = 0.0
@@ -729,7 +737,8 @@ class ScheduleOptimizer:
         candidate_time: datetime,
         platforms: List[str]
     ) -> float:
-        """Evaluate competition level (lower competition = higher score)"""
+        """
+Evaluate competition level (lower competition = higher score)"""
         hour = candidate_time.hour
         day_of_week = candidate_time.weekday()
         
@@ -765,7 +774,8 @@ class ScheduleOptimizer:
         candidate_time: datetime,
         content_metadata: Dict[str, Any]
     ) -> float:
-        """Evaluate timing based on content type"""
+        """
+Evaluate timing based on content type"""
         content_type = content_metadata.get('content_type', 'general').lower()
         hour = candidate_time.hour
         day_of_week = candidate_time.weekday()
@@ -803,7 +813,8 @@ class ScheduleOptimizer:
         creator_id: str,
         platforms: List[str]
     ) -> float:
-        """Evaluate based on historical performance at similar times"""
+        """
+Evaluate based on historical performance at similar times"""
         try:
             # Mock implementation - would analyze actual historical data
             hour = candidate_time.hour
@@ -853,7 +864,8 @@ class ScheduleOptimizer:
         return min(1.0, seasonal_score)
     
     async def _evaluate_global_events(self, candidate_time: datetime) -> float:
-        """Evaluate impact of global events (simplified)"""
+        """
+Evaluate impact of global events (simplified)"""
         # Mock implementation - would integrate with news/events APIs
         # For now, return neutral score
         return 0.5
@@ -863,7 +875,8 @@ class ScheduleOptimizer:
         candidate_time: datetime,
         platforms: List[str]
     ) -> float:
-        """Evaluate timezone alignment with target audience"""
+        """
+Evaluate timezone alignment with target audience"""
         # Mock implementation - would consider creator's audience timezone distribution
         # For now, assume good alignment during reasonable hours
         hour = candidate_time.hour
@@ -874,7 +887,8 @@ class ScheduleOptimizer:
             return 0.3  # Poor timing for most timezones
     
     def _get_default_activity_score(self, hour: int, day_of_week: int) -> float:
-        """Get default activity score when no data available"""
+        """
+Get default activity score when no data available"""
         # Mock default patterns
         peak_hours = [7, 8, 9, 12, 17, 18, 19, 20]
         weekend_penalty = 0.1 if day_of_week >= 5 else 0
@@ -889,7 +903,8 @@ class ScheduleOptimizer:
         content_metadata: Dict[str, Any],
         platforms: List[str]
     ) -> Dict[str, float]:
-        """Predict performance metrics for optimal time"""
+        """
+Predict performance metrics for optimal time"""
         try:
             # Extract features for the optimal time
             features_df = await self._extract_features(
@@ -960,7 +975,8 @@ class ScheduleOptimizer:
         platforms: List[str],
         config: OptimizationConfig
     ) -> Dict[TimingFactor, float]:
-        """Analyze contribution of each factor to the optimal timing"""
+        """
+Analyze contribution of each factor to the optimal timing"""
         factors_analysis = {}
         
         for factor in config.factors:
@@ -978,7 +994,8 @@ class ScheduleOptimizer:
         optimal_time: datetime,
         expected_performance: Dict[str, float]
     ) -> List[str]:
-        """Generate human-readable optimization reasoning"""
+        """
+Generate human-readable optimization reasoning"""
         reasoning = []
         
         # Strategy-based reasoning
@@ -1032,7 +1049,8 @@ class ScheduleOptimizer:
         return hashlib.md5('|'.join(key_parts).encode()).hexdigest()
     
     async def _collect_training_data(self, creator_id: Optional[str]) -> List[Dict[str, Any]]:
-        """Collect data for model training"""
+        """
+Collect data for model training"""
         training_data = []
         
         try:
@@ -1118,7 +1136,8 @@ class ScheduleOptimizer:
         )
     
     def _save_models(self):
-        """Save trained models to disk"""
+        """
+Save trained models to disk"""
         try:
             joblib.dump(self.engagement_model, f"{self.model_storage_path}/engagement_model.joblib")
             joblib.dump(self.reach_model, f"{self.model_storage_path}/reach_model.joblib")
@@ -1219,7 +1238,8 @@ class TimingAnalyzer:
         }
     
     def _analyze_optimal_hours(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze optimal posting hours based on performance"""
+        """
+Analyze optimal posting hours based on performance"""
         hourly_performance = {}
         
         for schedule in schedules:
@@ -1252,7 +1272,8 @@ class TimingAnalyzer:
         }
     
     def _analyze_platform_performance(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze performance across different platforms"""
+        """
+Analyze performance across different platforms"""
         platform_performance = {}
         
         for schedule in schedules:
@@ -1282,7 +1303,8 @@ class TimingAnalyzer:
         return platform_averages
     
     def _analyze_content_type_performance(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze performance by content type"""
+        """
+Analyze performance by content type"""
         content_performance = {}
         
         for schedule in schedules:
@@ -1314,7 +1336,8 @@ class TimingAnalyzer:
         return content_averages
     
     def _analyze_seasonal_trends(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze seasonal performance trends"""
+        """
+Analyze seasonal performance trends"""
         monthly_performance = {}
         
         for schedule in schedules:
@@ -1350,7 +1373,8 @@ class TimingAnalyzer:
         }
     
     def _analyze_performance_trends(self, schedules: List[ScheduledJob]) -> Dict[str, Any]:
-        """Analyze overall performance trends over time"""
+        """
+Analyze overall performance trends over time"""
         # Sort schedules by time
         sorted_schedules = sorted(schedules, key=lambda x: x.schedule_time)
         

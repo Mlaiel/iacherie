@@ -18,7 +18,7 @@ Features:
 - Multi-factor authentication and authorization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -26,6 +26,7 @@ Any reproduction, modification, distribution or use without explicit
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security levels for different operations."""
+    """
+Security levels for different operations."""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -53,6 +56,7 @@ class SecurityLevel(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -62,6 +66,7 @@ class ThreatLevel(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication methods supported."""
+
     PASSWORD = "password"
     MFA = "mfa"
     BIOMETRIC = "biometric"
@@ -73,6 +78,7 @@ class AuthenticationMethod(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Encryption algorithms supported."""
+
     AES_256 = "aes_256"
     RSA_4096 = "rsa_4096"
     CHACHA20 = "chacha20"
@@ -96,7 +102,8 @@ class SecurityPolicy:
 
 @dataclass
 class ThreatEvent:
-    """Security threat event."""
+    """
+Security threat event."""
     event_id: str
     threat_level: ThreatLevel
     source_ip: str
@@ -125,7 +132,8 @@ class CollaborationSecurityManager:
     - Incident response and recovery
     """
     def __init__(self, config: Any):
-        """Initialize the collaboration security manager."""
+        """
+Initialize the collaboration security manager."""
         self.config = config
         
         # Security policies and configurations
@@ -585,7 +593,8 @@ class CollaborationSecurityManager:
         return True
 
     async def _check_creator_permissions(self, creator_id: str, resource: str, action: str) -> bool:
-        """Check creator permissions for resource access."""
+        """
+Check creator permissions for resource access."""
         # Implementation would check actual permissions
         return True
 
@@ -603,7 +612,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security levels for resources."""
+    """
+Security levels for resources."""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -613,6 +624,7 @@ class SecurityLevel(Enum):
 
 class AccessRole(Enum):
     """Access roles for RBAC."""
+
     ADMIN = "admin"
     DEVELOPER = "developer"
     OPERATOR = "operator"
@@ -622,6 +634,7 @@ class AccessRole(Enum):
 
 class EncryptionType(Enum):
     """Types of encryption."""
+
     AES_256_GCM = "aes_256_gcm"
     RSA_4096 = "rsa_4096"
     ECDSA_P384 = "ecdsa_p384"
@@ -630,6 +643,7 @@ class EncryptionType(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -701,7 +715,8 @@ class CollaborationSecurityManager:
     """
     
     def __init__(self, deployment_config):
-        """Initialize security manager."""
+        """
+Initialize security manager."""
         self.deployment_config = deployment_config
         self.security_policies: Dict[str, SecurityPolicy] = {}
         self.access_control_rules: Dict[str, AccessControlRule] = {}
@@ -1477,7 +1492,8 @@ class CollaborationSecurityManager:
         return True
     
     async def _generate_incident_report(self, alert: SecurityAlert, actions: List[str]) -> Dict[str, Any]:
-        """Generate incident response report."""
+        """
+Generate incident response report."""
         await asyncio.sleep(1)  # Simulate report generation
         
         return {

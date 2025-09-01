@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for NLP Classification Module
+"""
+Comprehensive Tests for NLP Classification Module
 
 Industrial-grade tests for AdvancedClassificationEngine covering content classification,
 topic modeling, and categorization with real implementations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -47,11 +50,13 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentClassifier:
-    """Comprehensive tests for AdvancedContentClassifier"""
+    """
+Comprehensive tests for AdvancedContentClassifier"""
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, classification_engine):
-        """Test classification engine initialization"""
+        """
+Test classification engine initialization"""
         assert classification_engine is not None
         assert hasattr(classification_engine, 'config')
         assert hasattr(classification_engine, 'topic_modeler')
@@ -66,7 +71,8 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_content_classification(self, classification_engine):
-        """Test basic content classification"""
+        """
+Test basic content classification"""
         test_cases = [
             {
                 'content': "Check out our new AI-powered content creation tool! It's perfect for social media marketing and brand engagement. #AI #Marketing #SocialMedia",
@@ -314,7 +320,8 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_multilingual_classification(self, classification_engine):
-        """Test multilingual content classification"""
+        """
+Test multilingual content classification"""
         multilingual_content = [
             {
                 'text': "Artificial intelligence is transforming digital marketing strategies.",
@@ -477,7 +484,8 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_classification_explanation(self, classification_engine):
-        """Test classification explanation and interpretability"""
+        """
+Test classification explanation and interpretability"""
         content = "Innovative startup using AI to revolutionize healthcare diagnostics and patient care."
         
         explanation_result = await classification_engine.explain_classification(
@@ -660,36 +668,43 @@ class TestTopicModeler:
     
     @pytest.mark.asyncio
     async def test_topic_modeler_initialization(self):
-        """Test topic modeler initialization"""
+        """
+Test topic modeler initialization"""
         modeler = TopicModeler()
         assert modeler is not None
         assert hasattr(modeler, 'extract_topics')
 
 class TestContentCategorizer:
-    """Test content categorizer component"""
+    """
+Test content categorizer component"""
     
     @pytest.mark.asyncio
     async def test_content_categorizer_initialization(self):
-        """Test content categorizer initialization"""
+        """
+Test content categorizer initialization"""
         categorizer = ContentCategorizer()
         assert categorizer is not None
         assert hasattr(categorizer, 'categorize_content')
 
 class TestIntentClassifier:
-    """Test intent classifier component"""
+    """
+Test intent classifier component"""
     
     @pytest.mark.asyncio
     async def test_intent_classifier_initialization(self):
-        """Test intent classifier initialization"""
+        """
+Test intent classifier initialization"""
         classifier = IntentClassifier()
         assert classifier is not None
         assert hasattr(classifier, 'classify_intent')
 
 class TestClassificationConfig:
-    """Test classification configuration"""
+    """
+Test classification configuration"""
     
     def test_config_creation(self):
-        """Test classification configuration creation"""
+        """
+Test classification configuration creation"""
         config = ClassificationConfig(
             classification_models=['basic', 'advanced'],
             topic_categories=['technology', 'health', 'business'],

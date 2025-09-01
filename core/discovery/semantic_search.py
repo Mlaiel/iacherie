@@ -34,6 +34,7 @@ Features:
 - Advanced query analytics and performance optimization
 - Rights-aware search with content protection integration
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -65,7 +66,9 @@ from sentence_transformers import SentenceTransformer
 logger = logging.getLogger(__name__)
 
 class SearchModalityType(Enum):
-    """Search modality types"""
+    """
+Search modality types"""
+
     TEXT = "text"
     AUDIO = "audio"
     IMAGE = "image"
@@ -74,6 +77,7 @@ class SearchModalityType(Enum):
 
 class EmbeddingModel(Enum):
     """Available embedding models"""
+
     SENTENCE_BERT = "sentence-transformers/all-MiniLM-L6-v2"
     MULTILINGUAL_BERT = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     CLIP = "openai/clip-vit-base-patch32"
@@ -82,6 +86,7 @@ class EmbeddingModel(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity calculation methods"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -89,6 +94,7 @@ class SimilarityMetric(Enum):
 
 class QueryType(Enum):
     """Query types for semantic search"""
+
     NATURAL_LANGUAGE = "natural_language"
     KEYWORD = "keyword"
     SEMANTIC = "semantic"
@@ -111,7 +117,8 @@ class VectorEmbedding:
 
 @dataclass
 class SemanticQuery:
-    """Semantic search query configuration"""
+    """
+Semantic search query configuration"""
     query_text: str
     query_type: QueryType = QueryType.NATURAL_LANGUAGE
     target_modalities: List[SearchModalityType] = field(default_factory=lambda: [SearchModalityType.TEXT])
@@ -127,7 +134,8 @@ class SemanticQuery:
 
 @dataclass
 class SimilarityScore:
-    """Similarity score with detailed information"""
+    """
+Similarity score with detailed information"""
     content_id: str
     score: float
     metric_used: SimilarityMetric
@@ -138,7 +146,8 @@ class SimilarityScore:
 
 @dataclass
 class SearchContext:
-    """Search context for personalization and filtering"""
+    """
+Search context for personalization and filtering"""
     user_id: Optional[str] = None
     session_id: Optional[str] = None
     search_history: List[str] = field(default_factory=list)
@@ -155,7 +164,8 @@ class IndexManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize index manager"""
+        """
+Initialize index manager"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -173,7 +183,8 @@ class IndexManager:
         }
 
     async def initialize_indices(self, embedding_dimensions: Dict[SearchModalityType, int]):
-        """Initialize FAISS indices for each modality"""
+        """
+Initialize FAISS indices for each modality"""
         try:
             for modality, dimension in embedding_dimensions.items():
                 # Create FAISS index with inner product similarity
@@ -291,7 +302,8 @@ class SemanticSearchEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize semantic search engine"""
+        """
+Initialize semantic search engine"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -322,7 +334,8 @@ class SemanticSearchEngine:
         }
 
     async def initialize(self) -> bool:
-        """Initialize all search engine components"""
+        """
+Initialize all search engine components"""
         try:
             # Load embedding models
             await self._load_embedding_models()
@@ -900,7 +913,8 @@ class SemanticSearchEngine:
         result: Dict[str, Any],
         query: SemanticQuery
     ) -> Dict[str, Any]:
-        """Enhance search result with additional metadata"""
+        """
+Enhance search result with additional metadata"""
         try:
             enhanced = result.copy()
             

@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 import json
 import yaml
@@ -24,7 +25,8 @@ from .environments import get_config
 
 
 class SingletonMeta(type):
-    """Metaclass for singleton pattern"""
+    """
+Metaclass for singleton pattern"""
     _instances = {}
     _lock = threading.Lock()
     
@@ -38,7 +40,8 @@ class SingletonMeta(type):
 
 @dataclass
 class ConfigurationSource:
-    """Configuration source definition"""
+    """
+Configuration source definition"""
     name: str
     source_type: str  # file, env, s3, redis, database
     location: str
@@ -50,7 +53,8 @@ class ConfigurationSource:
 
 
 class ConfigManager(metaclass=SingletonMeta):
-    """Centralized configuration manager"""
+    """
+Centralized configuration manager"""
     
     def __init__(self):
         self._config_cache: Dict[str, Any] = {}
@@ -65,7 +69,8 @@ class ConfigManager(metaclass=SingletonMeta):
         self._start_auto_refresh()
     
     def _initialize_default_sources(self):
-        """Initialize default configuration sources"""
+        """
+Initialize default configuration sources"""
         # Environment variables (highest priority)
         self.add_source(ConfigurationSource(
             name="environment",
@@ -121,12 +126,14 @@ class ConfigManager(metaclass=SingletonMeta):
             self._sources.sort(key=lambda x: x.priority, reverse=True)
     
     def remove_source(self, name: str):
-        """Remove a configuration source"""
+        """
+Remove a configuration source"""
         with self._lock:
             self._sources = [s for s in self._sources if s.name != name]
     
     def get(self, key: str, default: Any = None, refresh: bool = False) -> Any:
-        """Get configuration value with cascading priority"""
+        """
+Get configuration value with cascading priority"""
         if refresh or key not in self._config_cache:
             self._refresh_key(key)
         
@@ -139,7 +146,8 @@ class ConfigManager(metaclass=SingletonMeta):
             self._notify_watchers(key, value)
     
     def _refresh_key(self, key: str):
-        """Refresh a specific configuration key from sources"""
+        """
+Refresh a specific configuration key from sources"""
         with self._lock:
             for source in self._sources:
                 if not source.enabled:
@@ -197,7 +205,8 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _load_from_aws_ssm(self, parameter_name: str) -> Any:
-        """Load configuration from AWS Systems Manager Parameter Store"""
+        """
+Load configuration from AWS Systems Manager Parameter Store"""
         try:
             import boto3
             ssm = boto3.client('ssm')
@@ -213,7 +222,8 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _load_from_redis(self, redis_url: str, key: str) -> Any:
-        """Load configuration from Redis"""
+        """
+Load configuration from Redis"""
         try:
             r = redis.from_url(redis_url)
             value = r.get(key)
@@ -227,7 +237,8 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _load_from_s3(self, s3_path: str, key: str) -> Any:
-        """Load configuration from S3"""
+        """
+Load configuration from S3"""
         try:
             import boto3
             # Parse S3 path: s3://bucket/path/file.json
@@ -259,7 +270,8 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _start_auto_refresh(self):
-        """Start automatic configuration refresh thread"""
+        """
+Start automatic configuration refresh thread"""
         if self._refresh_thread and self._refresh_thread.is_alive():
             return
         
@@ -267,7 +279,8 @@ class ConfigManager(metaclass=SingletonMeta):
         self._refresh_thread.start()
     
     def _auto_refresh_worker(self):
-        """Auto-refresh worker thread"""
+        """
+Auto-refresh worker thread"""
         while not self._stop_refresh:
             try:
                 current_time = datetime.now()
@@ -291,14 +304,16 @@ class ConfigManager(metaclass=SingletonMeta):
         pass
     
     def watch(self, key: str, callback: callable):
-        """Watch for configuration changes"""
+        """
+Watch for configuration changes"""
         with self._lock:
             if key not in self._watchers:
                 self._watchers[key] = []
             self._watchers[key].append(callback)
     
     def _notify_watchers(self, key: str, value: Any):
-        """Notify watchers of configuration changes"""
+        """
+Notify watchers of configuration changes"""
         if key in self._watchers:
             for callback in self._watchers[key]:
                 try:
@@ -316,28 +331,32 @@ class ConfigManager(metaclass=SingletonMeta):
         return dict(self._config_cache)
     
     def reload(self):
-        """Reload all configuration from sources"""
+        """
+Reload all configuration from sources"""
         with self._lock:
             self._config_cache.clear()
             for source in self._sources:
                 source.last_refresh = None
     
     def stop(self):
-        """Stop the configuration manager"""
+        """
+Stop the configuration manager"""
         self._stop_refresh = True
         if self._refresh_thread:
             self._refresh_thread.join(timeout=5)
 
 
 class EnvironmentManager:
-    """Environment-specific configuration management"""
+    """
+Environment-specific configuration management"""
     
     def __init__(self):
         self._current_env = None
         self._config_cache: Dict[str, AppConfig] = {}
     
     def get_current_environment(self) -> str:
-        """Get current environment name"""
+        """
+Get current environment name"""
         if self._current_env is None:
             self._current_env = os.getenv("ENVIRONMENT", "development").lower()
         return self._current_env
@@ -349,7 +368,8 @@ class EnvironmentManager:
         self._config_cache.clear()
     
     def get_config(self, environment: str = None) -> AppConfig:
-        """Get configuration for specific environment"""
+        """
+Get configuration for specific environment"""
         env = environment or self.get_current_environment()
         
         if env not in self._config_cache:
@@ -358,14 +378,16 @@ class EnvironmentManager:
         return self._config_cache[env]
     
     def validate_environment(self, environment: str = None) -> Dict[str, Any]:
-        """Validate environment configuration"""
+        """
+Validate environment configuration"""
         from .environments import validate_environment_config
         env = environment or self.get_current_environment()
         config = self.get_config(env)
         return validate_environment_config(config)
     
     def list_environments(self) -> List[str]:
-        """List available environments"""
+        """
+List available environments"""
         return ["development", "testing", "staging", "production"]
     
     def is_production(self) -> bool:
@@ -482,7 +504,8 @@ class SecretManager:
         return value
     
     def _store_in_aws_secrets_manager(self, name: str, value: str) -> bool:
-        """Store secret in AWS Secrets Manager"""
+        """
+Store secret in AWS Secrets Manager"""
         try:
             import boto3
             secrets_client = boto3.client('secretsmanager')
@@ -555,11 +578,13 @@ class SecretManager:
         return self._cipher_suite.encrypt(plaintext.encode()).decode()
     
     def decrypt(self, ciphertext: str) -> str:
-        """Decrypt a string"""
+        """
+Decrypt a string"""
         return self._cipher_suite.decrypt(ciphertext.encode()).decode()
     
     def rotate_encryption_key(self) -> bool:
-        """Rotate the encryption key (re-encrypt all secrets)"""
+        """
+Rotate the encryption key (re-encrypt all secrets)"""
         try:
             # Generate new key
             new_key = Fernet.generate_key()
@@ -742,6 +767,7 @@ class FeatureToggleManager:
         return status
     
     def clear_cache(self):
-        """Clear feature toggle cache"""
+        """
+Clear feature toggle cache"""
         self._feature_cache.clear()
         self._rollout_cache.clear()

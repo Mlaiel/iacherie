@@ -65,6 +65,7 @@ For licensing inquiries or authorized usage: mlaiel@live.de
 Creator verification and partnership compliance required before access.
 All collaboration activities and partnerships are monitored for compliance and security.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -87,7 +88,9 @@ from .content_creator_flows import CreatorProfile, Platform, ContentFormat
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of creator collaborations"""
+    """
+Types of creator collaborations"""
+
     MUSIC_FEATURE = "music_feature"
     VIDEO_COLLABORATION = "video_collaboration"
     PODCAST_GUEST = "podcast_guest"
@@ -101,6 +104,7 @@ class CollaborationType(Enum):
 
 class CollaborationStyle(Enum):
     """Collaboration styles and preferences"""
+
     CREATIVE_PARTNER = "creative_partner"
     TECHNICAL_CONTRIBUTOR = "technical_contributor"
     PROMOTIONAL_PARTNER = "promotional_partner"
@@ -111,6 +115,7 @@ class CollaborationStyle(Enum):
 
 class CollaborationStage(Enum):
     """Stages of collaboration process"""
+
     DISCOVERY = "discovery"
     MATCHING = "matching"
     INITIAL_CONTACT = "initial_contact"
@@ -123,6 +128,7 @@ class CollaborationStage(Enum):
 
 class CollaborationPriority(Enum):
     """Priority levels for collaborations"""
+
     EXPLORATORY = "exploratory"
     INTERESTED = "interested"
     COMMITTED = "committed"
@@ -199,7 +205,8 @@ class CollaborationDialogueHandler:
         self.collaboration_flows = self._initialize_collaboration_flows()
         
     def _initialize_collaboration_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize collaboration conversation flows"""
+        """
+Initialize collaboration conversation flows"""
         return {
             "collaboration_discovery_flow": {
                 "name": "Collaboration Discovery & Matching",
@@ -650,7 +657,8 @@ class CollaborationDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Enhance collaboration opportunities with AI optimization"""
+        """
+Enhance collaboration opportunities with AI optimization"""
         opportunities = []
         
         # Generate optimized opportunity postings
@@ -672,7 +680,8 @@ class CollaborationDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Perform AI analysis for collaboration insights"""
+        """
+Perform AI analysis for collaboration insights"""
         analysis_results = {}
         
         for analysis_type in analysis_types:

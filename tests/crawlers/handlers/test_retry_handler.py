@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,14 +13,16 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test Retry Handler Module
+"""
+Test Retry Handler Module
 
 Tests for intelligent retry mechanisms, adaptive learning, and circuit breakers.
 
 Author: Fahed Mlaiel (Legal Copyright)
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
 """
+
 import pytest
 import sys
 import os
@@ -43,9 +46,11 @@ from crawlers.handlers.retry_handler import (
 
 
 class TestRetryConfig:
-    """Test suite for RetryConfig class."""
+    """
+Test suite for RetryConfig class."""
     def test_config_creation(self):
-        """Test retry configuration creation."""
+        """
+Test retry configuration creation."""
         config = RetryConfig(
             max_attempts=5,
             base_delay=1.0,
@@ -61,7 +66,8 @@ class TestRetryConfig:
         assert config.jitter is True
 
     def test_default_config(self):
-        """Test default configuration values."""
+        """
+Test default configuration values."""
         config = RetryConfig()
         
         assert config.max_attempts == 3
@@ -71,7 +77,8 @@ class TestRetryConfig:
         assert config.jitter is False
 
     def test_config_validation(self):
-        """Test configuration validation."""
+        """
+Test configuration validation."""
         # Valid config
         config = RetryConfig(max_attempts=3, base_delay=1.0)
         assert config.max_attempts > 0
@@ -85,7 +92,8 @@ class TestRetryConfig:
             RetryConfig(base_delay=-1.0)
 
     def test_config_serialization(self):
-        """Test configuration serialization."""
+        """
+Test configuration serialization."""
         config = RetryConfig(
             max_attempts=5,
             base_delay=2.0,
@@ -99,16 +107,19 @@ class TestRetryConfig:
 
 
 class TestBackoffCalculator:
-    """Test suite for BackoffCalculator class."""
+    """
+Test suite for BackoffCalculator class."""
     def test_calculator_initialization(self):
-        """Test calculator setup."""
+        """
+Test calculator setup."""
         calc = BackoffCalculator()
         assert calc.base_delay == 1.0
         assert calc.max_delay == 300.0
         assert calc.strategy == BackoffStrategy.EXPONENTIAL
 
     def test_exponential_backoff(self):
-        """Test exponential backoff calculation."""
+        """
+Test exponential backoff calculation."""
         calc = BackoffCalculator(
             base_delay=1.0,
             strategy=BackoffStrategy.EXPONENTIAL
@@ -123,7 +134,8 @@ class TestBackoffCalculator:
         assert delay3 == 4.0  # 1.0 * 2^2
 
     def test_linear_backoff(self):
-        """Test linear backoff calculation."""
+        """
+Test linear backoff calculation."""
         calc = BackoffCalculator(
             base_delay=2.0,
             strategy=BackoffStrategy.LINEAR
@@ -138,7 +150,8 @@ class TestBackoffCalculator:
         assert delay3 == 6.0  # 2.0 * 3
 
     def test_fixed_backoff(self):
-        """Test fixed backoff calculation."""
+        """
+Test fixed backoff calculation."""
         calc = BackoffCalculator(
             base_delay=5.0,
             strategy=BackoffStrategy.FIXED
@@ -153,7 +166,8 @@ class TestBackoffCalculator:
         assert delay3 == 5.0
 
     def test_max_delay_capping(self):
-        """Test delay capping at maximum value."""
+        """
+Test delay capping at maximum value."""
         calc = BackoffCalculator(
             base_delay=10.0,
             max_delay=30.0,
@@ -165,7 +179,8 @@ class TestBackoffCalculator:
         assert delay4 == 30.0
 
     def test_jitter_application(self):
-        """Test jitter application to delays."""
+        """
+Test jitter application to delays."""
         calc = BackoffCalculator(
             base_delay=1.0,
             jitter=True,
@@ -183,7 +198,8 @@ class TestBackoffCalculator:
             assert 0.5 <= delay <= 1.5
 
     def test_adaptive_adjustment(self):
-        """Test adaptive delay adjustment based on success rate."""
+        """
+Test adaptive delay adjustment based on success rate."""
         calc = BackoffCalculator(base_delay=1.0)
         
         # Simulate high success rate - should reduce delays
@@ -198,9 +214,11 @@ class TestBackoffCalculator:
 
 
 class TestCircuitBreaker:
-    """Test suite for CircuitBreaker class."""
+    """
+Test suite for CircuitBreaker class."""
     def test_circuit_breaker_initialization(self):
-        """Test circuit breaker setup."""
+        """
+Test circuit breaker setup."""
         cb = CircuitBreaker(
             failure_threshold=5,
             recovery_timeout=30.0,
@@ -214,7 +232,8 @@ class TestCircuitBreaker:
         assert cb.failure_count == 0
 
     def test_circuit_breaker_closed_state(self):
-        """Test circuit breaker in closed state."""
+        """
+Test circuit breaker in closed state."""
         cb = CircuitBreaker(failure_threshold=3)
         
         # Should allow calls in closed state
@@ -222,7 +241,8 @@ class TestCircuitBreaker:
         assert cb.state == CircuitBreakerState.CLOSED
 
     def test_circuit_breaker_opening(self):
-        """Test circuit breaker opening after failures."""
+        """
+Test circuit breaker opening after failures."""
         cb = CircuitBreaker(failure_threshold=3)
         
         # Record failures
@@ -234,7 +254,8 @@ class TestCircuitBreaker:
         assert not cb.can_execute()
 
     def test_circuit_breaker_half_open_transition(self):
-        """Test transition to half-open state."""
+        """
+Test transition to half-open state."""
         cb = CircuitBreaker(
             failure_threshold=2,
             recovery_timeout=0.1  # Short timeout for testing
@@ -253,7 +274,8 @@ class TestCircuitBreaker:
         assert cb.state == CircuitBreakerState.HALF_OPEN
 
     def test_circuit_breaker_recovery(self):
-        """Test circuit breaker recovery to closed state."""
+        """
+Test circuit breaker recovery to closed state."""
         cb = CircuitBreaker(
             failure_threshold=2,
             recovery_timeout=0.1,
@@ -277,7 +299,8 @@ class TestCircuitBreaker:
         assert cb.state == CircuitBreakerState.CLOSED
 
     def test_circuit_breaker_failure_in_half_open(self):
-        """Test failure handling in half-open state."""
+        """
+Test failure handling in half-open state."""
         cb = CircuitBreaker(
             failure_threshold=2,
             recovery_timeout=0.1
@@ -296,7 +319,8 @@ class TestCircuitBreaker:
         assert cb.state == CircuitBreakerState.OPEN
 
     def test_circuit_breaker_stats(self):
-        """Test circuit breaker statistics."""
+        """
+Test circuit breaker statistics."""
         cb = CircuitBreaker()
         
         # Record some operations
@@ -312,9 +336,11 @@ class TestCircuitBreaker:
 
 
 class TestAdaptiveRetryManager:
-    """Test suite for AdaptiveRetryManager class."""
+    """
+Test suite for AdaptiveRetryManager class."""
     def test_manager_initialization(self):
-        """Test retry manager setup."""
+        """
+Test retry manager setup."""
         manager = AdaptiveRetryManager()
         assert manager.calculator is not None
         assert manager.circuit_breaker is not None
@@ -322,7 +348,8 @@ class TestAdaptiveRetryManager:
 
     @pytest.mark.asyncio
     async def test_successful_operation_no_retry(self):
-        """Test successful operation requiring no retries."""
+        """
+Test successful operation requiring no retries."""
         manager = AdaptiveRetryManager()
         
         async def successful_operation():
@@ -457,7 +484,8 @@ class TestAdaptiveRetryManager:
         assert stats.average_attempts == (1 + 3 + 5) / 3
 
     def test_adaptive_learning(self):
-        """Test adaptive learning from retry patterns."""
+        """
+Test adaptive learning from retry patterns."""
         manager = AdaptiveRetryManager()
         
         # Simulate high failure rate
@@ -478,7 +506,8 @@ class TestAdaptiveRetryManager:
 
     @pytest.mark.asyncio
     async def test_retry_with_different_backoff_strategies(self):
-        """Test retry with different backoff strategies."""
+        """
+Test retry with different backoff strategies."""
         manager = AdaptiveRetryManager()
         
         attempts = []
@@ -513,7 +542,8 @@ class TestIntegration:
     """Integration tests for retry handling system."""
     @pytest.mark.asyncio
     async def test_complete_retry_flow(self):
-        """Test complete retry flow with all components."""
+        """
+Test complete retry flow with all components."""
         manager = AdaptiveRetryManager()
         
         # Configure for testing

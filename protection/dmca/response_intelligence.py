@@ -5,7 +5,7 @@ Advanced response tracking and analytics engine for DMCA compliance monitoring.
 Real-time status updates, automated follow-ups, and comprehensive reporting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
@@ -31,6 +31,7 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set, Union, Callable
@@ -60,7 +61,9 @@ logger = logging.getLogger(__name__)
 
 
 class ResponseType(Enum):
-    """Types of responses received to DMCA notices"""
+    """
+Types of responses received to DMCA notices"""
+
     ACKNOWLEDGMENT = "acknowledgment"           # Platform confirmed receipt
     COMPLIANCE = "compliance"                   # Content was removed/blocked
     PARTIAL_COMPLIANCE = "partial_compliance"   # Some content removed
@@ -75,6 +78,7 @@ class ResponseType(Enum):
 
 class ComplianceLevel(IntEnum):
     """Levels of compliance achieved"""
+
     NONE = 0              # No action taken
     PARTIAL = 1           # Some content removed/modified
     SUBSTANTIAL = 2       # Most content addressed
@@ -83,7 +87,9 @@ class ComplianceLevel(IntEnum):
 
 
 class FollowUpAction(Enum):
-    """Automated follow-up actions"""
+    """
+Automated follow-up actions"""
+
     SEND_REMINDER = "send_reminder"
     ESCALATE_INTERNAL = "escalate_internal"
     ESCALATE_LEGAL = "escalate_legal"
@@ -187,7 +193,8 @@ class ResponseIntelligenceEngine:
         self.response_parsers = self._initialize_response_parsers()
     
     def _initialize_platform_patterns(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform-specific response patterns and timeframes"""
+        """
+Initialize platform-specific response patterns and timeframes"""
         return {
             PlatformType.YOUTUBE: {
                 'typical_response_time': timedelta(hours=24),
@@ -240,7 +247,8 @@ class ResponseIntelligenceEngine:
         }
     
     def _initialize_response_parsers(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize automated response parsing rules"""
+        """
+Initialize automated response parsing rules"""
         return {
             'compliance_keywords': [
                 'removed', 'taken down', 'deleted', 'blocked', 'disabled',
@@ -403,7 +411,8 @@ class ResponseIntelligenceEngine:
     
     async def _assess_compliance(self, response_content: str, 
                                 response_type: ResponseType) -> ComplianceLevel:
-        """Assess the level of compliance from the response"""
+        """
+Assess the level of compliance from the response"""
         if response_type == ResponseType.COMPLIANCE:
             if 'completely' in response_content.lower() or 'fully' in response_content.lower():
                 return ComplianceLevel.COMPLETE
@@ -417,7 +426,8 @@ class ResponseIntelligenceEngine:
             return ComplianceLevel.NONE
     
     async def _update_notice_status(self, notice_id: str, response_event: ResponseEvent):
-        """Update DMCA notice status based on response"""
+        """
+Update DMCA notice status based on response"""
         status_mapping = {
             ResponseType.ACKNOWLEDGMENT: DMCAStatus.ACKNOWLEDGED,
             ResponseType.COMPLIANCE: DMCAStatus.COMPLIED,
@@ -447,7 +457,8 @@ class ResponseIntelligenceEngine:
                 self.db_session.commit()
     
     async def _determine_follow_up_actions(self, response_event: ResponseEvent) -> List[FollowUpAction]:
-        """Determine appropriate follow-up actions based on response"""
+        """
+Determine appropriate follow-up actions based on response"""
         actions = []
         
         if response_event.response_type == ResponseType.NO_RESPONSE:
@@ -475,7 +486,8 @@ class ResponseIntelligenceEngine:
     async def _execute_follow_up_action(self, notice_id: str, 
                                        action: FollowUpAction,
                                        response_event: ResponseEvent):
-        """Execute automated follow-up action"""
+        """
+Execute automated follow-up action"""
         logger.info(f"Executing follow-up action {action.value} for notice {notice_id}")
         
         try:
@@ -786,12 +798,14 @@ class ResponseIntelligenceEngine:
         pass
     
     async def _store_compliance_verification(self, verification: ComplianceVerification):
-        """Store compliance verification in database"""
+        """
+Store compliance verification in database"""
         # Implementation for storing compliance verifications
         pass
     
     async def _send_automated_reminder(self, notice_id: str):
-        """Send automated reminder for unresponded notice"""
+        """
+Send automated reminder for unresponded notice"""
         logger.info(f"Sending automated reminder for notice {notice_id}")
         # Implementation for sending reminders
     

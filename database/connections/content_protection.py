@@ -18,6 +18,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Tuple, Union
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""
+    """
+Supported content types for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -51,6 +54,7 @@ class ContentType(Enum):
 
 class ProtectionStatus(Enum):
     """Content protection status"""
+
     ACTIVE = "active"
     SUSPENDED = "suspended"
     VIOLATION_DETECTED = "violation_detected"
@@ -60,6 +64,7 @@ class ProtectionStatus(Enum):
 
 class AlertPriority(Enum):
     """Protection alert priority levels"""
+
     LOW = "low"
     MEDIUM = "medium" 
     HIGH = "high"
@@ -81,7 +86,8 @@ class ContentFingerprint:
     protection_status: ProtectionStatus = ProtectionStatus.ACTIVE
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             "fingerprint_id": self.fingerprint_id,
             "tenant_id": self.tenant_id,
@@ -594,7 +600,8 @@ class ContentProtectionConnections:
             return AlertPriority.LOW
     
     async def _store_fingerprint_metadata(self, pg_handler, fingerprint: ContentFingerprint):
-        """Store fingerprint metadata in PostgreSQL."""
+        """
+Store fingerprint metadata in PostgreSQL."""
         query = """
         INSERT INTO content_fingerprints (
             fingerprint_id, tenant_id, content_type, original_filename,
@@ -615,7 +622,8 @@ class ContentProtectionConnections:
         )
     
     async def _store_vector_embedding(self, vector_handler, fingerprint: ContentFingerprint):
-        """Store vector embedding in vector database."""
+        """
+Store vector embedding in vector database."""
         await vector_handler.store_vector(
             vector_id=fingerprint.fingerprint_id,
             vector=fingerprint.vector_embedding,
@@ -676,7 +684,8 @@ class ContentProtectionConnections:
     # - _update_alert_index
     
     async def get_protection_metrics(self) -> Dict[str, Any]:
-        """Get protection operation metrics."""
+        """
+Get protection operation metrics."""
         return {
             "operations_count": self.operations_count,
             "fingerprints_stored": self.fingerprints_stored,

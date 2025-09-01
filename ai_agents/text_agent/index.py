@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -376,18 +377,21 @@ async def analyze_text(text: str, **kwargs) -> Dict[str, Any]:
     return await system.analyze_text(text, kwargs)
 
 async def generate_content(prompt: str, **kwargs) -> Dict[str, Any]:
-    """Convenience function for content generation"""
+    """
+Convenience function for content generation"""
     system = TextAgentSystem()
     config = GenerationConfig(**kwargs) if kwargs else None
     return await system.generate_content(prompt, config)
 
 async def translate_text(text: str, target_language: str, **kwargs) -> Dict[str, Any]:
-    """Convenience function for text translation"""
+    """
+Convenience function for text translation"""
     system = TextAgentSystem()
     return await system.translate_text(text, target_language, **kwargs)
 
 async def detect_plagiarism(text: str, **kwargs) -> Dict[str, Any]:
-    """Convenience function for plagiarism detection"""
+    """
+Convenience function for plagiarism detection"""
     system = TextAgentSystem()
     return await system.detect_plagiarism(text, **kwargs)
 
@@ -395,7 +399,8 @@ async def detect_plagiarism(text: str, **kwargs) -> Dict[str, Any]:
 _global_system = None
 
 def get_text_system() -> TextAgentSystem:
-    """Get or create global text system instance"""
+    """
+Get or create global text system instance"""
     global _global_system
     if _global_system is None:
         _global_system = TextAgentSystem()

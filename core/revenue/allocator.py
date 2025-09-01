@@ -1,7 +1,7 @@
 """Revenue Allocation Engine - Intelligent revenue distribution and allocation optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -10,6 +10,7 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class AllocationStrategy(Enum):
-    """Revenue allocation strategies"""
+    """
+Revenue allocation strategies"""
+
     EQUAL_DISTRIBUTION = "equal_distribution"
     PERFORMANCE_BASED = "performance_based"
     PRIORITY_WEIGHTED = "priority_weighted"
@@ -48,6 +51,7 @@ class AllocationStrategy(Enum):
 
 class AllocationPriority(Enum):
     """Allocation priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -57,6 +61,7 @@ class AllocationPriority(Enum):
 
 class AllocationConstraint(Enum):
     """Allocation constraint types"""
+
     MINIMUM_AMOUNT = "minimum_amount"
     MAXIMUM_AMOUNT = "maximum_amount"
     PERCENTAGE_LIMIT = "percentage_limit"
@@ -82,19 +87,22 @@ class AllocationTarget:
     
     @property
     def allocation_percentage(self) -> float:
-        """Calculate current allocation percentage"""
+        """
+Calculate current allocation percentage"""
         # This would be calculated based on total available amount
         return 0.0  # Placeholder
     
     @property
     def is_satisfied(self) -> bool:
-        """Check if allocation constraints are satisfied"""
+        """
+Check if allocation constraints are satisfied"""
         return (self.minimum_allocation <= self.current_allocation <= self.maximum_allocation)
 
 
 @dataclass
 class AllocationMetrics:
-    """Revenue allocation performance metrics"""
+    """
+Revenue allocation performance metrics"""
     total_amount: Decimal
     allocated_amount: Decimal
     unallocated_amount: Decimal
@@ -108,7 +116,8 @@ class AllocationMetrics:
     
     @property
     def allocation_rate(self) -> float:
-        """Calculate allocation rate"""
+        """
+Calculate allocation rate"""
         if self.total_amount == 0:
             return 0.0
         return float((self.allocated_amount / self.total_amount) * 100)
@@ -116,7 +125,8 @@ class AllocationMetrics:
 
 @dataclass
 class AllocationResult:
-    """Revenue allocation result"""
+    """
+Revenue allocation result"""
     allocation_id: str
     strategy_used: AllocationStrategy
     targets: List[AllocationTarget]
@@ -128,7 +138,8 @@ class AllocationResult:
 
 
 class BaseAllocationOptimizer(ABC):
-    """Abstract base class for allocation optimizers"""
+    """
+Abstract base class for allocation optimizers"""
     
     @abstractmethod
     async def optimize(
@@ -137,12 +148,14 @@ class BaseAllocationOptimizer(ABC):
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize allocation across targets"""
+        """
+Optimize allocation across targets"""
         pass
 
 
 class PerformanceBasedOptimizer(BaseAllocationOptimizer):
-    """Performance-based allocation optimizer"""
+    """
+Performance-based allocation optimizer"""
     
     async def optimize(
         self,
@@ -150,7 +163,8 @@ class PerformanceBasedOptimizer(BaseAllocationOptimizer):
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize based on performance scores"""
+        """
+Optimize based on performance scores"""
         try:
             # Calculate total performance score
             total_performance = sum(target.performance_score for target in targets)
@@ -189,7 +203,8 @@ class RiskAdjustedOptimizer(BaseAllocationOptimizer):
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize based on risk-adjusted returns"""
+        """
+Optimize based on risk-adjusted returns"""
         try:
             # Calculate risk-adjusted scores
             risk_adjusted_scores = []
@@ -234,7 +249,8 @@ class DynamicOptimizer(BaseAllocationOptimizer):
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize using mathematical optimization"""
+        """
+Optimize using mathematical optimization"""
         try:
             n_targets = len(targets)
             
@@ -323,7 +339,8 @@ class RevenueAllocator:
         self.encryption_manager = EncryptionManager()
         
     async def initialize(self) -> None:
-        """Initialize revenue allocator"""
+        """
+Initialize revenue allocator"""
         try:
             # Initialize optimizers
             self.optimizers = {

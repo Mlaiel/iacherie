@@ -2,8 +2,9 @@
 Multi-platform revenue tracking and synchronization for content creators
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from ...core.security.encryption import SecurityManager
 
 
 class PlatformType(Enum):
-    """Supported content platforms"""
+    """
+Supported content platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -41,6 +44,7 @@ class PlatformType(Enum):
 
 class RevenueType(Enum):
     """Types of revenue streams"""
+
     STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -65,7 +69,8 @@ class PlatformCredentials:
     expires_at: Optional[datetime] = None
     
     def is_valid(self) -> bool:
-        """Check if credentials are valid"""
+        """
+Check if credentials are valid"""
         if self.expires_at and self.expires_at < datetime.now():
             return False
         
@@ -82,7 +87,8 @@ class PlatformCredentials:
 
 @dataclass
 class RevenueData:
-    """Platform revenue data"""
+    """
+Platform revenue data"""
     platform: PlatformType
     revenue_type: RevenueType
     amount: Decimal
@@ -96,7 +102,8 @@ class RevenueData:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "platform": self.platform.value,
             "revenue_type": self.revenue_type.value,
@@ -114,6 +121,7 @@ class RevenueData:
 
 class SpotifyRevenueIntegration:
     """Spotify Artists API integration"""
+
     
     BASE_URL = "https://api.spotify.com/v1"
     
@@ -186,6 +194,7 @@ class SpotifyRevenueIntegration:
 
 class YouTubeRevenueIntegration:
     """YouTube Analytics API integration"""
+
     
     BASE_URL = "https://youtubeanalytics.googleapis.com/v2"
     
@@ -271,6 +280,7 @@ class YouTubeRevenueIntegration:
 
 class InstagramRevenueIntegration:
     """Instagram Creator API integration"""
+
     
     BASE_URL = "https://graph.facebook.com/v18.0"
     
@@ -357,6 +367,7 @@ class InstagramRevenueIntegration:
 
 class TikTokRevenueIntegration:
     """TikTok Creator API integration"""
+
     
     BASE_URL = "https://open-api.tiktok.com/v1.3"
     
@@ -451,7 +462,8 @@ class PlatformRevenueAggregator:
         self._initialize_integrations()
     
     def _initialize_integrations(self):
-        """Initialize platform integration classes"""
+        """
+Initialize platform integration classes"""
         self.integration_classes = {
             PlatformType.SPOTIFY: SpotifyRevenueIntegration,
             PlatformType.YOUTUBE: YouTubeRevenueIntegration,
@@ -465,7 +477,8 @@ class PlatformRevenueAggregator:
         credentials: PlatformCredentials,
         session: AsyncSession
     ) -> bool:
-        """Add platform credentials for user"""
+        """
+Add platform credentials for user"""
         try:
             if not credentials.is_valid():
                 raise ValueError(f"Invalid credentials for {credentials.platform.value}")
@@ -676,7 +689,8 @@ class RevenueSync:
         self.sync_running = False
     
     async def start_automated_sync(self, interval_hours: int = 24):
-        """Start automated revenue synchronization"""
+        """
+Start automated revenue synchronization"""
         self.sync_running = True
         
         while self.sync_running:
@@ -693,7 +707,8 @@ class RevenueSync:
         self.sync_running = False
     
     async def _sync_all_users(self):
-        """Sync revenue for all users with connected platforms"""
+        """
+Sync revenue for all users with connected platforms"""
         # This would get all users from database and sync their platforms
         # Implementation depends on your user management system
         pass

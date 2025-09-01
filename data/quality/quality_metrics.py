@@ -5,8 +5,9 @@ Enterprise-grade quality metrics calculation and analytics for data quality mana
 Provides comprehensive scoring algorithms, trend analysis, and quality reporting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
@@ -19,7 +20,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality dimensions for comprehensive assessment"""
+    """
+Quality dimensions for comprehensive assessment"""
+
     ACCURACY = "accuracy"
     COMPLETENESS = "completeness"
     CONSISTENCY = "consistency"
@@ -41,7 +44,8 @@ class QualityScore:
     metadata: Dict[str, Any]
 
 class QualityTrend:
-    """Quality trend analysis container"""
+    """
+Quality trend analysis container"""
     
     def __init__(self):
         self.trend_direction: str = "stable"  # improving, declining, stable
@@ -62,8 +66,9 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
                 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple, Callable
 import asyncio
 import logging
@@ -81,7 +86,9 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality dimensions for comprehensive assessment"""
+    """
+Quality dimensions for comprehensive assessment"""
+
     ACCURACY = "accuracy"                    # Correctness of data
     COMPLETENESS = "completeness"            # Data presence and fullness
     CONSISTENCY = "consistency"              # Internal coherence
@@ -95,6 +102,7 @@ class QualityDimension(Enum):
 
 class MetricType(Enum):
     """Types of quality metrics"""
+
     PERCENTAGE = "percentage"               # 0-100 scale
     RATIO = "ratio"                        # 0-1 scale  
     COUNT = "count"                        # Absolute numbers
@@ -103,6 +111,7 @@ class MetricType(Enum):
 
 class TrendDirection(Enum):
     """Quality trend directions"""
+
     IMPROVING = "improving"
     DECLINING = "declining"
     STABLE = "stable"
@@ -123,7 +132,8 @@ class QualityMeasurement:
 
 @dataclass
 class QualityScore:
-    """Comprehensive quality score with detailed breakdown"""
+    """
+Comprehensive quality score with detailed breakdown"""
     overall_score: float
     dimension_scores: Dict[str, float]
     confidence_level: float
@@ -135,7 +145,8 @@ class QualityScore:
     weights: Dict[str, float] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Validate score after initialization"""
+        """
+Validate score after initialization"""
         if not 0 <= self.overall_score <= 100:
             raise ValueError(f"Overall score must be between 0-100, got {self.overall_score}")
         
@@ -157,7 +168,8 @@ class QualityTrend:
     confidence_interval: Optional[Tuple[float, float]] = None
     
 class QualityBaseline:
-    """Quality baseline for comparison"""
+    """
+Quality baseline for comparison"""
     
     def __init__(self, name: str, target_scores: Dict[str, float]):
         self.name = name
@@ -166,12 +178,14 @@ class QualityBaseline:
         self.last_updated = datetime.utcnow()
     
     def update_targets(self, new_targets: Dict[str, float]):
-        """Update baseline targets"""
+        """
+Update baseline targets"""
         self.target_scores.update(new_targets)
         self.last_updated = datetime.utcnow()
     
     def compare_score(self, actual_score: float, dimension: str) -> Dict[str, Any]:
-        """Compare actual score against baseline"""
+        """
+Compare actual score against baseline"""
         target = self.target_scores.get(dimension, 80.0)  # Default target
         variance = actual_score - target
         variance_percentage = (variance / target) * 100 if target > 0 else 0
@@ -270,7 +284,8 @@ class QualityMetrics:
         self.baselines['standard'] = QualityBaseline('standard', standard_targets)
     
     def record_measurement(self, measurement: QualityMeasurement):
-        """Record a quality measurement"""
+        """
+Record a quality measurement"""
         self.measurements.append(measurement)
         self.dimension_history[measurement.dimension.value].append({
             'value': measurement.value,
@@ -687,7 +702,8 @@ class QualityMetrics:
         }
     
     def create_baseline(self, name: str, target_scores: Dict[str, float]):
-        """Create a new quality baseline"""
+        """
+Create a new quality baseline"""
         self.baselines[name] = QualityBaseline(name, target_scores)
         self.logger.info(f"Created quality baseline: {name}")
     
@@ -851,7 +867,8 @@ class QualityMetrics:
         return self.default_weights.copy()
     
     def update_dimension_weights(self, new_weights: Dict[str, float]):
-        """Update dimension weights"""
+        """
+Update dimension weights"""
         # Validate weights sum to 1.0
         total_weight = sum(new_weights.values())
         if abs(total_weight - 1.0) > 0.01:  # Allow small floating point errors
@@ -1077,7 +1094,8 @@ class QualityMetrics:
         return min(100, accuracy)
     
     def _calculate_completeness_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate completeness dimension score"""
+        """
+Calculate completeness dimension score"""
         
         required_fields = metrics.get('required_fields', 0)
         present_fields = metrics.get('present_fields', 0)
@@ -1089,7 +1107,8 @@ class QualityMetrics:
         return min(100, completeness)
     
     def _calculate_consistency_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate consistency dimension score"""
+        """
+Calculate consistency dimension score"""
         
         format_consistency = metrics.get('format_consistency', 100)
         structure_consistency = metrics.get('structure_consistency', 100)
@@ -1100,7 +1119,8 @@ class QualityMetrics:
         return min(100, consistency)
     
     def _calculate_timeliness_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate timeliness dimension score"""
+        """
+Calculate timeliness dimension score"""
         
         processing_time = metrics.get('processing_time', 0)
         expected_time = metrics.get('expected_processing_time', 1)
@@ -1121,7 +1141,8 @@ class QualityMetrics:
             return 40.0
     
     def _calculate_validity_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate validity dimension score"""
+        """
+Calculate validity dimension score"""
         
         valid_records = metrics.get('valid_records', 0)
         total_records = metrics.get('total_records', 1)
@@ -1133,7 +1154,8 @@ class QualityMetrics:
         return min(100, validity)
     
     def _calculate_uniqueness_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate uniqueness dimension score"""
+        """
+Calculate uniqueness dimension score"""
         
         unique_records = metrics.get('unique_records', 0)
         total_records = metrics.get('total_records', 1)
@@ -1145,7 +1167,8 @@ class QualityMetrics:
         return min(100, uniqueness)
     
     def _calculate_integrity_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate integrity dimension score"""
+        """
+Calculate integrity dimension score"""
         
         checksum_valid = metrics.get('checksum_valid', True)
         structure_valid = metrics.get('structure_valid', True)
@@ -1163,7 +1186,8 @@ class QualityMetrics:
         return min(100, score)
     
     def _calculate_compliance_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate compliance dimension score"""
+        """
+Calculate compliance dimension score"""
         
         compliance_checks = metrics.get('compliance_checks', {})
         
@@ -1224,7 +1248,8 @@ class QualityMetrics:
         dimension_scores: Dict[str, float],
         sample_size: int
     ) -> float:
-        """Calculate confidence level for the quality score"""
+        """
+Calculate confidence level for the quality score"""
         
         # Base confidence on sample size
         if sample_size >= 1000:

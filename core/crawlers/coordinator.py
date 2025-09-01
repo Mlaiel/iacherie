@@ -2,7 +2,7 @@
 ==========================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 Unauthorized use, copying or distribution prohibited.
@@ -11,6 +11,7 @@ Master coordinator for managing multiple web crawlers simultaneously.
 Handles task distribution, resource allocation, monitoring, and error recovery
 across all supported platforms for optimal content surveillance.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerTask:
-    """Represents a crawling task with metadata."""
+    """
+Represents a crawling task with metadata."""
     
     task_id: str
     platform: CrawlerType
@@ -152,7 +154,8 @@ class CrawlerCoordinator:
             )
     
     async def start(self):
-        """Start the crawler coordinator and all managed crawlers."""
+        """
+Start the crawler coordinator and all managed crawlers."""
         if self.is_running:
             logger.warning("Coordinator is already running")
             return
@@ -298,7 +301,8 @@ class CrawlerCoordinator:
             self.task_queue.remove(task)
     
     async def _execute_task(self, task: CrawlerTask):
-        """Execute a crawling task asynchronously."""
+        """
+Execute a crawling task asynchronously."""
         
         task.status = "running"
         task.started_at = datetime.utcnow()
@@ -524,11 +528,13 @@ class CrawlerCoordinator:
         return None
     
     def get_platform_statistics(self) -> Dict[str, CrawlerStats]:
-        """Get performance statistics for all platforms."""
+        """
+Get performance statistics for all platforms."""
         return self.crawler_stats.copy()
     
     def get_coordinator_status(self) -> Dict[str, Any]:
-        """Get overall coordinator status and statistics."""
+        """
+Get overall coordinator status and statistics."""
         
         return {
             'is_running': self.is_running,
@@ -545,7 +551,8 @@ class CrawlerCoordinator:
     # Private helper methods
     
     def _task_to_dict(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Convert task object to dictionary."""
+        """
+Convert task object to dictionary."""
         return {
             'task_id': task.task_id,
             'platform': task.platform.value,
@@ -563,7 +570,8 @@ class CrawlerCoordinator:
         }
     
     def _stats_to_dict(self, stats: CrawlerStats) -> Dict[str, Any]:
-        """Convert stats object to dictionary."""
+        """
+Convert stats object to dictionary."""
         return {
             'platform': stats.platform,
             'total_tasks': stats.total_tasks,
@@ -577,7 +585,8 @@ class CrawlerCoordinator:
         }
     
     async def _store_task_state(self, task: CrawlerTask):
-        """Store task state in Redis for persistence."""
+        """
+Store task state in Redis for persistence."""
         try:
             task_data = self._task_to_dict(task)
             self.redis_client.setex(
@@ -610,12 +619,14 @@ class CrawlerCoordinator:
         pass
     
     async def _send_violation_notification(self, violation: Dict[str, Any]):
-        """Send violation notification via configured channels."""
+        """
+Send violation notification via configured channels."""
         # Implementation for webhook/email notifications
         pass
     
     async def _cleanup_old_tasks(self):
-        """Clean up old completed tasks to prevent memory leaks."""
+        """
+Clean up old completed tasks to prevent memory leaks."""
         cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         old_task_ids = [

@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 import json
 import hashlib
@@ -35,7 +36,9 @@ T = TypeVar('T')
 
 
 class CacheLevel(str, Enum):
-    """Cache level priorities"""
+    """
+Cache level priorities"""
+
     L1_MEMORY = "l1_memory"      # In-process memory cache
     L2_REDIS = "l2_redis"        # Redis distributed cache
     L3_DATABASE = "l3_database"   # Database query cache
@@ -43,6 +46,7 @@ class CacheLevel(str, Enum):
 
 class CacheStrategy(str, Enum):
     """Caching strategies"""
+
     WRITE_THROUGH = "write_through"      # Write to cache and storage
     WRITE_BACK = "write_back"            # Write to cache, delayed storage
     WRITE_AROUND = "write_around"        # Write to storage, bypass cache
@@ -52,6 +56,7 @@ class CacheStrategy(str, Enum):
 
 class CacheEvictionPolicy(str, Enum):
     """Cache eviction policies"""
+
     LRU = "lru"          # Least Recently Used
     LFU = "lfu"          # Least Frequently Used
     FIFO = "fifo"        # First In, First Out
@@ -72,20 +77,23 @@ class CacheMetrics:
     
     @property
     def hit_rate(self) -> float:
-        """Calculate cache hit rate"""
+        """
+Calculate cache hit rate"""
         total_reads = self.hit_count + self.miss_count
         return self.hit_count / total_reads if total_reads > 0 else 0.0
     
     @property
     def avg_latency(self) -> float:
-        """Calculate average operation latency"""
+        """
+Calculate average operation latency"""
         total_ops = self.hit_count + self.miss_count + self.write_count
         return self.total_latency / total_ops if total_ops > 0 else 0.0
 
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""
+    """
+Cache entry with metadata"""
     key: str
     value: Any
     created_at: datetime = field(default_factory=datetime.utcnow)
@@ -96,19 +104,22 @@ class CacheEntry:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""
+        """
+Check if cache entry is expired"""
         if self.ttl is None:
             return False
         return datetime.utcnow() > self.created_at + timedelta(seconds=self.ttl)
     
     def touch(self):
-        """Update access metadata"""
+        """
+Update access metadata"""
         self.last_accessed = datetime.utcnow()
         self.access_count += 1
 
 
 class MemoryCache(Generic[T]):
-    """In-memory L1 cache with LRU eviction"""
+    """
+In-memory L1 cache with LRU eviction"""
     
     def __init__(
         self,
@@ -124,7 +135,8 @@ class MemoryCache(Generic[T]):
         self.metrics = CacheMetrics()
     
     async def get(self, key: str) -> Optional[T]:
-        """Get value from memory cache"""
+        """
+Get value from memory cache"""
         start_time = time.time()
         
         try:
@@ -201,13 +213,15 @@ class MemoryCache(Generic[T]):
         self._access_order.clear()
     
     def _update_access_order(self, key: str):
-        """Update LRU access order"""
+        """
+Update LRU access order"""
         if key in self._access_order:
             self._access_order.remove(key)
         self._access_order.append(key)
     
     async def _evict(self):
-        """Evict entries based on policy"""
+        """
+Evict entries based on policy"""
         if not self._cache:
             return
         
@@ -235,7 +249,8 @@ class MemoryCache(Generic[T]):
 
 
 class RedisCache:
-    """Redis-based L2 distributed cache"""
+    """
+Redis-based L2 distributed cache"""
     
     def __init__(
         self,
@@ -279,7 +294,8 @@ class RedisCache:
             self.redis_client = None
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from Redis cache"""
+        """
+Get value from Redis cache"""
         if not self.redis_client:
             await self.connect()
         
@@ -654,7 +670,8 @@ class PerformanceCache:
         return total_deleted
     
     async def warm_cache(self, key: str, fetch_func: Callable, ttl: Optional[int] = None):
-        """Add cache warming request to queue"""
+        """
+Add cache warming request to queue"""
         try:
             await self.warming_queue.put({
                 "key": key,

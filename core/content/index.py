@@ -5,8 +5,9 @@ This module provides the main entry point and unified interface for the
 IA Influencer Agent content management system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -31,7 +32,8 @@ from .synchronizer import ContentSynchronizer
 
 @dataclass
 class ContentSystemStatus:
-    """Content management system status container"""
+    """
+Content management system status container"""
     system_health: str
     active_processes: int
     content_count: int

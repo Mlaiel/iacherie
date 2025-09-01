@@ -7,6 +7,7 @@ regulations, automated calculations, and compliance reporting.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,7 +23,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class TaxType(Enum):
-    """Types of taxes"""
+    """
+Types of taxes"""
+
     VAT = "vat"
     GST = "gst"
     SALES_TAX = "sales_tax"
@@ -31,6 +34,7 @@ class TaxType(Enum):
 
 class ComplianceStatus(Enum):
     """Tax compliance status"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -50,7 +54,8 @@ class TaxRule:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
+    """
+Tax calculation result"""
     transaction_id: str
     total_amount: Decimal
     tax_amount: Decimal
@@ -70,7 +75,8 @@ class TaxComplianceEngine:
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize tax compliance engine"""
+        """
+Initialize tax compliance engine"""
         try:
             await self._setup_database_tables()
             await self._load_tax_rules()
@@ -136,7 +142,8 @@ class TaxComplianceEngine:
             """)
 
     async def _load_tax_rules(self) -> None:
-        """Load tax rules for different countries"""
+        """
+Load tax rules for different countries"""
         try:
             # Default tax rules for major markets
             default_rules = [

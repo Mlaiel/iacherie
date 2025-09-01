@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List
@@ -48,11 +49,13 @@ logger = logging.getLogger(__name__)
 
 
 class CacheUsageExamples:
-    """Collection of practical cache configuration usage examples"""
+    """
+Collection of practical cache configuration usage examples"""
     
     @staticmethod
     def example_1_quick_setup():
-        """Example 1: Quick setup for development environment"""
+        """
+Example 1: Quick setup for development environment"""
         print("=== Example 1: Quick Development Setup ===")
         
         # Method 1: Auto-detection and setup
@@ -280,7 +283,8 @@ class AsyncCacheExamples:
     
     @staticmethod
     async def example_async_operations():
-        """Example of asynchronous cache operations"""
+        """
+Example of asynchronous cache operations"""
         print("\n=== Async Cache Operations Example ===")
         
         # Get configuration

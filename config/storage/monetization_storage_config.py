@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -21,7 +22,9 @@ from enum import Enum
 from decimal import Decimal
 
 class MonetizationPlatform(Enum):
-    """Supported monetization platforms."""
+    """
+Supported monetization platforms."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -35,6 +38,7 @@ class MonetizationPlatform(Enum):
 
 class RevenueType(Enum):
     """Types of revenue streams."""
+
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATION = "donation"
@@ -47,6 +51,7 @@ class RevenueType(Enum):
 
 class PaymentProvider(Enum):
     """Supported payment providers."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -174,20 +179,24 @@ class MonetizationStorageConfig:
         return self.platform_revenue_config[platform]['api_data_storage']
     
     def get_supported_revenue_types(self, platform: MonetizationPlatform) -> List[RevenueType]:
-        """Get supported revenue types for specific platform."""
+        """
+Get supported revenue types for specific platform."""
         return self.platform_revenue_config[platform]['revenue_types']
     
     def get_supported_currencies(self, platform: MonetizationPlatform) -> List[str]:
-        """Get supported currencies for specific platform."""
+        """
+Get supported currencies for specific platform."""
         return self.platform_revenue_config[platform]['currency_support']
     
     def is_pci_compliant(self) -> bool:
-        """Check if payment storage is PCI compliant."""
+        """
+Check if payment storage is PCI compliant."""
         return self.payment_storage_config.get('pci_compliance', False)
 
 @dataclass
 class PaymentProcessingConfig:
-    """Configuration for payment processing and financial transactions."""
+    """
+Configuration for payment processing and financial transactions."""
     
     # Payment provider configurations
     payment_providers_config: Dict[PaymentProvider, Dict[str, Any]] = field(default_factory=dict)
@@ -217,7 +226,8 @@ class PaymentProcessingConfig:
     })
     
     def __post_init__(self):
-        """Initialize payment provider configurations."""
+        """
+Initialize payment provider configurations."""
         if not self.payment_providers_config:
             self.payment_providers_config = {
                 PaymentProvider.STRIPE: {
@@ -251,7 +261,8 @@ class PaymentProcessingConfig:
 
 @dataclass
 class LicensingStorageConfig:
-    """Configuration for content licensing and intellectual property management."""
+    """
+Configuration for content licensing and intellectual property management."""
     
     # Licensing storage paths
     license_agreements_path: str = "monetization/licensing/agreements"
@@ -333,7 +344,8 @@ def validate_monetization_storage_config() -> bool:
         return False
 
 def validate_payment_processing_config() -> bool:
-    """Validate payment processing configuration."""
+    """
+Validate payment processing configuration."""
     try:
         # Validate payment providers
         required_providers = [PaymentProvider.STRIPE, PaymentProvider.PAYPAL]

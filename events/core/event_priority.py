@@ -4,8 +4,9 @@ Defines priority levels for event processing to ensure proper handling order
 and resource allocation in the enterprise event system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from enum import Enum, IntEnum
 
 class EventPriority(IntEnum):
@@ -14,27 +15,38 @@ class EventPriority(IntEnum):
     
     Higher numeric values indicate higher priority.
     """
+
     
     LOW = 1
-    """Low priority events - batch processing, analytics, reporting"""
+    """
+Low priority events - batch processing, analytics, reporting"""
+
     
     MEDIUM = 2
-    """Medium priority events - standard content processing, routine operations"""
+    """
+Medium priority events - standard content processing, routine operations"""
+
     
     HIGH = 3
-    """High priority events - real-time processing, user-facing operations"""
+    """
+High priority events - real-time processing, user-facing operations"""
+
     
     CRITICAL = 4
-    """Critical priority events - security alerts, system failures, urgent operations"""
+    """
+Critical priority events - security alerts, system failures, urgent operations"""
+
     
     EMERGENCY = 5
-    """Emergency priority events - immediate attention required, system-critical"""
+    """
+Emergency priority events - immediate attention required, system-critical"""
     
     def __str__(self) -> str:
         return self.name.lower()
     
     def get_description(self) -> str:
-        """Get human-readable description of priority level"""
+        """
+Get human-readable description of priority level"""
         descriptions = {
             EventPriority.LOW: "Low priority - background processing",
             EventPriority.MEDIUM: "Medium priority - standard operations", 
@@ -56,7 +68,8 @@ class EventPriority(IntEnum):
         return timeouts.get(self, 300)
     
     def get_retry_attempts(self) -> int:
-        """Get recommended retry attempts for this priority level"""
+        """
+Get recommended retry attempts for this priority level"""
         retries = {
             EventPriority.LOW: 1,
             EventPriority.MEDIUM: 2,

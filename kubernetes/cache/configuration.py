@@ -28,6 +28,7 @@ Business Logic Integration:
 - Monetization data caching for real-time revenue analytics
 - Collaboration platform cache for creator discovery
 """
+
 import asyncio
 import logging
 import os
@@ -46,7 +47,9 @@ import psutil
 
 
 class ConfigurationScope(Enum):
-    """Configuration scope levels for multi-tenant cache management"""
+    """
+Configuration scope levels for multi-tenant cache management"""
+
     GLOBAL = "global"
     DATACENTER = "datacenter"
     NODE = "node"
@@ -58,6 +61,7 @@ class ConfigurationScope(Enum):
 
 class ConfigurationSource(Enum):
     """Configuration sources with priority ordering"""
+
     FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
@@ -70,6 +74,7 @@ class ConfigurationSource(Enum):
 
 class ContentTypeCache(Enum):
     """Cache strategies per content type"""
+
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
@@ -83,6 +88,7 @@ class ContentTypeCache(Enum):
 
 class CacheOptimizationLevel(Enum):
     """AI-powered cache optimization levels"""
+
     CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
@@ -619,7 +625,8 @@ class CacheConfiguration:
     # Private helper methods
     
     def _initialize_validation_schema(self) -> None:
-        """Initialize configuration validation schema"""
+        """
+Initialize configuration validation schema"""
         self._validation_schema = {
             "security": {
                 "encryption_enabled": {"type": "boolean"},
@@ -686,7 +693,8 @@ class CacheConfiguration:
         return {}
 
     async def _save_to_file(self, file_path: str, config_data: Dict[str, Any]) -> bool:
-        """Save configuration to file"""
+        """
+Save configuration to file"""
         try:
             # Ensure directory exists
             Path(file_path).parent.mkdir(parents=True, exist_ok=True)
@@ -710,7 +718,8 @@ class CacheConfiguration:
         return True
 
     async def _validate_configuration(self, config_data: Dict[str, Any]) -> bool:
-        """Validate configuration data against schema"""
+        """
+Validate configuration data against schema"""
         try:
             # Basic validation using schema
             for section, section_data in config_data.items():

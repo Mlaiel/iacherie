@@ -7,6 +7,7 @@ scheduling, and platform-specific optimization for maximum reach and engagement.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ settings = get_settings()
 
 
 class ContentDistributionManager:
-    """Advanced multi-platform content distribution system."""
+    """
+Advanced multi-platform content distribution system."""
     
     def __init__(self):
         self.db = get_database()
@@ -218,7 +220,8 @@ class ContentDistributionManager:
         content_info: Any,
         distribution_plan: Dict[str, Any]
     ) -> Dict[str, Dict[str, Any]]:
-        """Prepare content variants for each platform."""
+        """
+Prepare content variants for each platform."""
         platform_preparations = {}
         platforms_config = distribution_plan['platforms']
         
@@ -375,7 +378,8 @@ class ContentDistributionManager:
         platform_settings: Dict[str, Any],
         platform_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Prepare metadata for specific platform."""
+        """
+Prepare metadata for specific platform."""
         metadata = {}
         
         # Common metadata
@@ -401,7 +405,8 @@ class ContentDistributionManager:
         platform: str,
         platform_settings: Dict[str, Any]
     ) -> datetime:
-        """Calculate optimal posting time for platform."""
+        """
+Calculate optimal posting time for platform."""
         # If specific time is provided, use it
         if 'scheduled_time' in platform_settings:
             return datetime.fromisoformat(platform_settings['scheduled_time'])
@@ -438,7 +443,8 @@ class ContentDistributionManager:
         platform_preparations: Dict[str, Dict[str, Any]],
         distribution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute distribution based on chosen strategy."""
+        """
+Execute distribution based on chosen strategy."""
         strategy = distribution_plan.get('strategy', 'simultaneous')
         
         if strategy == 'simultaneous':
@@ -583,7 +589,8 @@ class ContentDistributionManager:
         distribution_job_id: UUID,
         platform_preparations: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute distribution at optimal engagement times."""
+        """
+Execute distribution at optimal engagement times."""
         results = {}
         
         # Schedule uploads at optimal times
@@ -690,48 +697,57 @@ class ContentDistributionManager:
         await asyncio.sleep(1)
     
     async def _update_rate_limit_tracking(self, platform: str) -> None:
-        """Update rate limit tracking after API call."""
+        """
+Update rate limit tracking after API call."""
         # This would update rate limit counters in database
         pass
     
     # Platform-specific upload methods
     async def _upload_to_youtube(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to YouTube."""
+        """
+Upload content to YouTube."""
         # This would use YouTube Data API
         return await self.platform_manager.upload_to_youtube(preparation)
     
     async def _upload_to_instagram(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Instagram."""
+        """
+Upload content to Instagram."""
         # This would use Instagram Basic Display API
         return await self.platform_manager.upload_to_instagram(preparation)
     
     async def _upload_to_tiktok(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to TikTok."""
+        """
+Upload content to TikTok."""
         # This would use TikTok API
         return await self.platform_manager.upload_to_tiktok(preparation)
     
     async def _upload_to_twitter(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Twitter."""
+        """
+Upload content to Twitter."""
         # This would use Twitter API v2
         return await self.platform_manager.upload_to_twitter(preparation)
     
     async def _upload_to_facebook(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Facebook."""
+        """
+Upload content to Facebook."""
         # This would use Facebook Graph API
         return await self.platform_manager.upload_to_facebook(preparation)
     
     async def _upload_to_linkedin(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to LinkedIn."""
+        """
+Upload content to LinkedIn."""
         # This would use LinkedIn API
         return await self.platform_manager.upload_to_linkedin(preparation)
     
     async def _upload_to_spotify(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Spotify."""
+        """
+Upload content to Spotify."""
         # This would use Spotify Web API
         return await self.platform_manager.upload_to_spotify(preparation)
     
     async def _upload_to_soundcloud(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to SoundCloud."""
+        """
+Upload content to SoundCloud."""
         # This would use SoundCloud API
         return await self.platform_manager.upload_to_soundcloud(preparation)
     
@@ -740,7 +756,8 @@ class ContentDistributionManager:
         distribution_job_id: UUID,
         distribution_results: Dict[str, Any]
     ) -> None:
-        """Update distribution job with results."""
+        """
+Update distribution job with results."""
         # Calculate overall status
         successful_uploads = sum(1 for result in distribution_results.values() 
                                if result.get('status') == 'success')
@@ -767,7 +784,8 @@ class ContentDistributionManager:
         distribution_job_id: UUID,
         distribution_plan: Dict[str, Any]
     ) -> None:
-        """Schedule follow-up actions after distribution."""
+        """
+Schedule follow-up actions after distribution."""
         post_actions = distribution_plan.get('post_distribution_actions', {})
         
         # Schedule analytics collection
@@ -822,7 +840,8 @@ class ContentDistributionManager:
         self, 
         distribution_results: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate tracking URLs for uploaded content."""
+        """
+Generate tracking URLs for uploaded content."""
         tracking_urls = {}
         
         for platform, result in distribution_results.items():
@@ -839,7 +858,8 @@ class ContentDistributionManager:
         distribution_job_id: UUID, 
         user_id: UUID
     ) -> Dict[str, Any]:
-        """Get distribution job status."""
+        """
+Get distribution job status."""
         job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
         if not job or job.user_id != user_id:
             raise DistributionError("Distribution job not found or access denied")
@@ -872,7 +892,8 @@ class ContentDistributionManager:
         distribution_job_id: UUID, 
         user_id: UUID
     ) -> Dict[str, Any]:
-        """Cancel pending distribution job."""
+        """
+Cancel pending distribution job."""
         job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
         if not job or job.user_id != user_id:
             raise DistributionError("Distribution job not found or access denied")
@@ -951,7 +972,8 @@ class ContentDistributionManager:
         }
     
     async def get_supported_platforms(self) -> Dict[str, Any]:
-        """Get list of supported platforms and their configurations."""
+        """
+Get list of supported platforms and their configurations."""
         return {
             platform: {
                 'name': platform.title(),
@@ -964,7 +986,8 @@ class ContentDistributionManager:
         }
     
     def _get_platform_features(self, platform: str) -> List[str]:
-        """Get list of features supported by platform."""
+        """
+Get list of features supported by platform."""
         features_map = {
             'youtube': ['video', 'audio', 'live_streaming', 'shorts', 'monetization'],
             'instagram': ['image', 'video', 'stories', 'reels', 'shopping'],

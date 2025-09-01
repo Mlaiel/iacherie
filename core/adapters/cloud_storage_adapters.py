@@ -18,6 +18,7 @@ Supported Providers:
 - Cloudflare R2: Edge storage with zero egress fees
 - DigitalOcean Spaces: Object storage with CDN
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, BinaryIO
@@ -41,7 +42,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class CloudProvider(Enum):
-    """Supported cloud storage providers."""
+    """
+Supported cloud storage providers."""
+
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
@@ -53,6 +56,7 @@ class CloudProvider(Enum):
 
 class StorageClass(Enum):
     """Storage class types for cost optimization."""
+
     STANDARD = "standard"
     REDUCED_REDUNDANCY = "reduced_redundancy"
     INTELLIGENT_TIERING = "intelligent_tiering"
@@ -65,6 +69,7 @@ class StorageClass(Enum):
 
 class AccessLevel(Enum):
     """File access levels."""
+
     PUBLIC_READ = "public_read"
     PUBLIC_READ_WRITE = "public_read_write"
     PRIVATE = "private"
@@ -92,7 +97,8 @@ class StorageFile:
 
 @dataclass
 class UploadRequest:
-    """File upload request structure."""
+    """
+File upload request structure."""
     file_path: str
     bucket: str
     key: Optional[str] = None
@@ -107,7 +113,8 @@ class UploadRequest:
 
 @dataclass
 class StorageAnalytics:
-    """Storage usage analytics and metrics."""
+    """
+Storage usage analytics and metrics."""
     total_files: int = 0
     total_size_bytes: int = 0
     storage_costs: Dict[str, float] = field(default_factory=dict)
@@ -368,7 +375,8 @@ class AWSS3Adapter(BasePlatformAdapter):
         return mapping.get(storage_class, 'STANDARD')
     
     def _map_access_level(self, access_level: AccessLevel) -> str:
-        """Map AccessLevel enum to S3 ACL."""
+        """
+Map AccessLevel enum to S3 ACL."""
         mapping = {
             AccessLevel.PUBLIC_READ: 'public-read',
             AccessLevel.PUBLIC_READ_WRITE: 'public-read-write',
@@ -380,7 +388,8 @@ class AWSS3Adapter(BasePlatformAdapter):
         return mapping.get(access_level, 'private')
     
     async def health_check(self) -> bool:
-        """Perform S3 health check."""
+        """
+Perform S3 health check."""
         try:
             response = self.s3_client.list_buckets()
             return 'Buckets' in response
@@ -517,7 +526,8 @@ class MinIOAdapter(BasePlatformAdapter):
             return False
 
 class CloudStorageAdapterFactory:
-    """Factory for creating cloud storage adapters."""
+    """
+Factory for creating cloud storage adapters."""
     
     _adapters = {
         CloudProvider.AWS_S3: AWSS3Adapter,
@@ -528,7 +538,8 @@ class CloudStorageAdapterFactory:
     
     @classmethod
     def create_adapter(cls, provider: CloudProvider, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified cloud storage provider."""
+        """
+Create adapter for specified cloud storage provider."""
         if provider not in cls._adapters:
             raise AdapterError(f"Unsupported cloud storage provider: {provider}")
         

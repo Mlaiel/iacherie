@@ -15,7 +15,7 @@ performance for similarity matching and duplicate detection.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -40,7 +41,9 @@ from ..security.fingerprint_security import FingerprintSecurityManager
 logger = logging.getLogger(__name__)
 
 class FingerprintType:
-    """Types of content fingerprints"""
+    """
+Types of content fingerprints"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
@@ -56,6 +59,7 @@ class FingerprintType:
 
 class FingerprintStatus:
     """Status of fingerprint processing"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -77,7 +81,8 @@ class FingerprintIndexManager:
     """
     
     def __init__(self):
-        """Initialize fingerprint index manager with enterprise components"""
+        """
+Initialize fingerprint index manager with enterprise components"""
         self.db_manager = PostgreSQLManager()
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
@@ -984,6 +989,7 @@ class FingerprintIndexManager:
 
 class FingerprintStatus:
     """Status of fingerprint processing"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -1003,7 +1009,8 @@ class FingerprintIndexManager:
     """
     
     def __init__(self):
-        """Initialize fingerprint index manager"""
+        """
+Initialize fingerprint index manager"""
         self.db_manager = PostgreSQLManager()
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
@@ -1678,7 +1685,8 @@ class FingerprintIndexManager:
         pass
     
     async def get_fingerprint_statistics(self, fingerprint_type: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive fingerprint statistics"""
+        """
+Get comprehensive fingerprint statistics"""
         try:
             if fingerprint_type:
                 if fingerprint_type not in self.index_stats:

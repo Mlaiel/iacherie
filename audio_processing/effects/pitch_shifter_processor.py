@@ -5,8 +5,9 @@ PSOLA, granular synthesis, formant preservation, and real-time modulation.
 Supports both musical and voice processing applications.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Optional, Tuple, Dict, Any, List
@@ -19,7 +20,9 @@ import threading
 
 
 class PitchShiftAlgorithm(Enum):
-    """Pitch shifting algorithm types"""
+    """
+Pitch shifting algorithm types"""
+
     PHASE_VOCODER = "phase_vocoder"
     PSOLA = "psola"
     GRANULAR = "granular"
@@ -29,6 +32,7 @@ class PitchShiftAlgorithm(Enum):
 
 class WindowType(Enum):
     """Window function types"""
+
     HANNING = "hanning"
     HAMMING = "hamming"
     BLACKMAN = "blackman"
@@ -85,7 +89,8 @@ class PhaseVocoder:
         self.freq_bins = np.fft.fftfreq(frame_size, 1/sample_rate)[:frame_size//2 + 1]
         
     def process_frame(self, input_frame: np.ndarray, pitch_factor: float) -> np.ndarray:
-        """Process single frame with phase vocoder"""
+        """
+Process single frame with phase vocoder"""
         # Apply analysis window
         windowed = input_frame * self.analysis_window
         
@@ -128,7 +133,8 @@ class PhaseVocoder:
 
 
 class PSOLAProcessor:
-    """Pitch Synchronous Overlap and Add processor"""
+    """
+Pitch Synchronous Overlap and Add processor"""
     
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
@@ -139,7 +145,8 @@ class PSOLAProcessor:
     def detect_pitch_marks(self, signal: np.ndarray, 
                           min_pitch: float = 80.0, 
                           max_pitch: float = 400.0) -> List[int]:
-        """Detect pitch marks using autocorrelation"""
+        """
+Detect pitch marks using autocorrelation"""
         pitch_marks = []
         
         # Calculate correlation window size
@@ -166,7 +173,8 @@ class PSOLAProcessor:
         return pitch_marks
     
     def shift_pitch(self, signal: np.ndarray, pitch_factor: float) -> np.ndarray:
-        """Apply PSOLA pitch shifting"""
+        """
+Apply PSOLA pitch shifting"""
         if pitch_factor == 1.0:
             return signal
         
@@ -209,7 +217,8 @@ class PSOLAProcessor:
 
 
 class GranularProcessor:
-    """Granular synthesis-based pitch shifter"""
+    """
+Granular synthesis-based pitch shifter"""
     
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
@@ -219,7 +228,8 @@ class GranularProcessor:
         
     def create_grain(self, signal: np.ndarray, position: int, 
                     size: int, pitch_factor: float) -> np.ndarray:
-        """Create a single grain"""
+        """
+Create a single grain"""
         # Extract grain
         start = max(0, position - size // 2)
         end = min(len(signal), start + size)
@@ -243,7 +253,8 @@ class GranularProcessor:
         return windowed_grain
     
     def process(self, signal: np.ndarray, pitch_factor: float) -> np.ndarray:
-        """Process signal with granular synthesis"""
+        """
+Process signal with granular synthesis"""
         output_length = int(len(signal) / pitch_factor)
         output = np.zeros(output_length)
         
@@ -266,7 +277,8 @@ class GranularProcessor:
 
 
 class FormantPreserver:
-    """Formant preservation for natural voice processing"""
+    """
+Formant preservation for natural voice processing"""
     
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
@@ -274,7 +286,8 @@ class FormantPreserver:
         
     def extract_spectral_envelope(self, spectrum: np.ndarray, 
                                  decimation_factor: int = 8) -> np.ndarray:
-        """Extract spectral envelope using cepstral analysis"""
+        """
+Extract spectral envelope using cepstral analysis"""
         # Convert to log magnitude
         log_magnitude = np.log(np.abs(spectrum) + 1e-10)
         
@@ -292,7 +305,8 @@ class FormantPreserver:
     
     def preserve_formants(self, original_spectrum: np.ndarray, 
                          shifted_spectrum: np.ndarray) -> np.ndarray:
-        """Apply formant preservation"""
+        """
+Apply formant preservation"""
         # Extract envelopes
         original_envelope = self.extract_spectral_envelope(original_spectrum)
         shifted_envelope = self.extract_spectral_envelope(shifted_spectrum)
@@ -307,7 +321,8 @@ class FormantPreserver:
 
 
 class PitchShifterProcessor:
-    """Professional pitch shifter with multiple algorithms"""
+    """
+Professional pitch shifter with multiple algorithms"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -327,7 +342,8 @@ class PitchShifterProcessor:
         self.lfo_phase = 0.0
         
     def _init_processors(self):
-        """Initialize processing components"""
+        """
+Initialize processing components"""
         try:
             self.phase_vocoder = PhaseVocoder(
                 self.params.window_size,
@@ -364,7 +380,8 @@ class PitchShifterProcessor:
         return 2.0 ** (cents / 1200.0)
     
     def generate_pitch_modulation(self) -> float:
-        """Generate LFO modulation for pitch"""
+        """
+Generate LFO modulation for pitch"""
         if self.params.pitch_modulation_rate <= 0:
             return 0.0
         
@@ -379,7 +396,8 @@ class PitchShifterProcessor:
         return lfo_value * self.params.pitch_modulation_depth
     
     def process_buffer(self, audio_buffer: np.ndarray) -> np.ndarray:
-        """Process audio buffer with pitch shifting"""
+        """
+Process audio buffer with pitch shifting"""
         with self.processing_lock:
             try:
                 # Calculate pitch shift ratio including modulation
@@ -448,7 +466,8 @@ class PitchShifterProcessor:
         return output
     
     def _process_spectral(self, signal: np.ndarray, pitch_ratio: float) -> np.ndarray:
-        """Process with spectral interpolation"""
+        """
+Process with spectral interpolation"""
         # FFT-based pitch shifting
         spectrum = np.fft.fft(signal)
         magnitude = np.abs(spectrum)
@@ -483,7 +502,8 @@ class PitchShifterProcessor:
         return output
     
     def _process_harmonic(self, signal: np.ndarray, pitch_ratio: float) -> np.ndarray:
-        """Process with harmonic analysis/synthesis"""
+        """
+Process with harmonic analysis/synthesis"""
         # Analyze harmonics
         spectrum = np.fft.fft(signal)
         magnitude = np.abs(spectrum)
@@ -507,7 +527,8 @@ class PitchShifterProcessor:
         return output
     
     def create_preset(self, name: str) -> Dict[str, Any]:
-        """Create pitch shifter presets"""
+        """
+Create pitch shifter presets"""
         presets = {
             'octave_up': {
                 'algorithm': PitchShiftAlgorithm.PHASE_VOCODER,
@@ -583,7 +604,8 @@ class PitchShifterProcessor:
         return presets.get(name, presets['subtle_correction'])
     
     def apply_preset(self, name: str):
-        """Apply a preset to the processor"""
+        """
+Apply a preset to the processor"""
         preset = self.create_preset(name)
         
         # Update parameters from preset
@@ -697,7 +719,8 @@ class PitchShifterProcessor:
         }
     
     def reset(self):
-        """Reset processor state"""
+        """
+Reset processor state"""
         # Reset phase vocoder
         self.phase_vocoder.phase_accumulator.fill(0)
         self.phase_vocoder.previous_phase.fill(0)
@@ -762,7 +785,8 @@ class PitchShifterProcessor:
         self.grain_window = np.hanning(self.grain_size)
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply pitch shifting processing"""
+        """
+Apply pitch shifting processing"""
         try:
             if self.pitch_shift_cents == 0:
                 return audio_data  # No processing needed
@@ -869,7 +893,8 @@ class PitchShifterProcessor:
     def _preserve_formants(self, shifted_spectrum: np.ndarray, 
                           original_magnitude: np.ndarray,
                           pitch_factor: float) -> np.ndarray:
-        """Preserve formant structure during pitch shifting"""
+        """
+Preserve formant structure during pitch shifting"""
         # Simple formant preservation by spectral envelope warping
         freqs = np.fft.rfftfreq(self.frame_size, 1/self.sample_rate)
         
@@ -892,7 +917,8 @@ class PitchShifterProcessor:
     
     def _calculate_spectral_envelope(self, magnitude: np.ndarray, 
                                    freqs: np.ndarray) -> np.ndarray:
-        """Calculate spectral envelope (formant structure)"""
+        """
+Calculate spectral envelope (formant structure)"""
         # Use cepstral analysis for envelope extraction
         log_magnitude = np.log(magnitude + 1e-10)
         
@@ -910,7 +936,8 @@ class PitchShifterProcessor:
     
     def _warp_spectral_envelope(self, envelope: np.ndarray, 
                                freqs: np.ndarray, pitch_factor: float) -> np.ndarray:
-        """Warp spectral envelope for formant preservation"""
+        """
+Warp spectral envelope for formant preservation"""
         # Scale frequency axis by inverse of pitch factor to preserve formants
         formant_factor = 1.0 / pitch_factor
         warped_freqs = freqs * formant_factor
@@ -921,7 +948,8 @@ class PitchShifterProcessor:
         return warped_envelope
     
     def _psola_shift(self, audio_data: np.ndarray) -> np.ndarray:
-        """PSOLA (Pitch Synchronous Overlap-Add) pitch shifting"""
+        """
+PSOLA (Pitch Synchronous Overlap-Add) pitch shifting"""
         # Simplified PSOLA implementation
         # This would typically require pitch tracking first
         
@@ -973,7 +1001,8 @@ class PitchShifterProcessor:
         return np.array(processed_audio)
     
     def _granular_shift(self, audio_data: np.ndarray) -> np.ndarray:
-        """Granular synthesis based pitch shifting"""
+        """
+Granular synthesis based pitch shifting"""
         pitch_factor = 2**(self.pitch_shift_cents / 1200.0)
         
         grain_hop = int(self.grain_size * (1 - self.grain_overlap))
@@ -1020,7 +1049,8 @@ class PitchShifterProcessor:
         return np.array(processed_audio)
     
     def _spectral_shift(self, audio_data: np.ndarray) -> np.ndarray:
-        """Spectral domain pitch shifting"""
+        """
+Spectral domain pitch shifting"""
         pitch_factor = 2**(self.pitch_shift_cents / 1200.0)
         
         # Process entire signal in frequency domain
@@ -1043,7 +1073,8 @@ class PitchShifterProcessor:
         return processed_audio
     
     def set_pitch_shift(self, cents: float):
-        """Set pitch shift in cents (-1200 to +1200)"""
+        """
+Set pitch shift in cents (-1200 to +1200)"""
         self.pitch_shift_cents = np.clip(cents, -1200, 1200)
         self.logger.debug(f"Pitch shift set to {cents} cents")
     

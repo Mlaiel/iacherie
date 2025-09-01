@@ -17,6 +17,7 @@ Features:
 - High accuracy recognition
 - Extensible architecture
 """
+
 import logging
 import numpy as np
 import torch
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class VisionTaskType(Enum):
-    """Vision task types"""
+    """
+Vision task types"""
+
     CLASSIFICATION = "classification"
     DETECTION = "detection" 
     RECOGNITION = "recognition"
@@ -44,6 +47,7 @@ class VisionTaskType(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for predictions"""
+
     LOW = "low"
     MEDIUM = "medium" 
     HIGH = "high"
@@ -60,7 +64,8 @@ class VisionResult:
     metadata: Dict[str, Any] = None
     
     def get_best_prediction(self) -> Dict[str, Any]:
-        """Get the prediction with highest confidence"""
+        """
+Get the prediction with highest confidence"""
         if not self.predictions:
             return {}
         return max(self.predictions, key=lambda x: x.get('confidence', 0))
@@ -68,7 +73,8 @@ class VisionResult:
 
 @dataclass  
 class BoundingBox:
-    """Bounding box for object detection"""
+    """
+Bounding box for object detection"""
     x: int
     y: int
     width: int
@@ -88,7 +94,8 @@ class BoundingBox:
 
 
 class BaseVisionModel(ABC):
-    """Base class for vision models"""
+    """
+Base class for vision models"""
     
     def __init__(self, model_name: str = "base_vision"):
         self.model_name = model_name
@@ -104,16 +111,19 @@ class BaseVisionModel(ABC):
         
     @abstractmethod
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for model input"""
+        """
+Preprocess image for model input"""
         pass
         
     @abstractmethod
     def predict(self, image: Union[np.ndarray, Image.Image]) -> VisionResult:
-        """Make prediction on image"""
+        """
+Make prediction on image"""
         pass
         
     def _convert_to_pil(self, image: Union[np.ndarray, Image.Image]) -> Image.Image:
-        """Convert input to PIL Image"""
+        """
+Convert input to PIL Image"""
         if isinstance(image, np.ndarray):
             if len(image.shape) == 3 and image.shape[2] == 3:
                 # BGR to RGB for OpenCV images
@@ -123,7 +133,8 @@ class BaseVisionModel(ABC):
 
 
 class ImageClassifier(BaseVisionModel):
-    """Advanced image classifier using deep learning"""
+    """
+Advanced image classifier using deep learning"""
     
     def __init__(self, model_name: str = "resnet50", num_classes: int = 1000):
         super().__init__(f"classifier_{model_name}")
@@ -255,7 +266,8 @@ class ObjectDetector(BaseVisionModel):
         return MockDetector()
     
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for object detection"""
+        """
+Preprocess image for object detection"""
         if not self.is_loaded:
             if not self.load_model():
                 raise RuntimeError("Failed to load detection model")
@@ -366,7 +378,8 @@ class FaceRecognizer(BaseVisionModel):
         return FaceModel()
     
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for face recognition"""
+        """
+Preprocess image for face recognition"""
         if not self.is_loaded:
             if not self.load_model():
                 raise RuntimeError("Failed to load face recognition model")
@@ -472,7 +485,8 @@ class SceneAnalyzer(BaseVisionModel):
         return model
     
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for scene analysis"""
+        """
+Preprocess image for scene analysis"""
         if not self.is_loaded:
             if not self.load_model():
                 raise RuntimeError("Failed to load scene analysis model")

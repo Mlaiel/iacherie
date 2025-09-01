@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkDeploymentStatus(Enum):
-    """Network deployment status"""
+    """
+Network deployment status"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     DEPLOYING = "deploying"

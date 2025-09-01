@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import yaml
 import json
 from pathlib import Path
@@ -15,7 +16,8 @@ import sys
 
 
 def validate_production_scaling_yaml():
-    """Validate the production scaling YAML configuration"""
+    """
+Validate the production scaling YAML configuration"""
     print("🔍 Validating Production Scaling Configuration...")
     
     yaml_path = Path(__file__).parent.parent / "kubernetes" / "production" / "production-scaling.yaml"

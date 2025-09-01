@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Data collection integration module to connect crawlers with data harvester
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any

@@ -4,6 +4,7 @@ Advanced violation detection and analysis.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 
@@ -13,7 +14,8 @@ from ..ai_engine.vector_database import vector_database
 
 
 class ViolationDetector:
-    """Advanced violation detection using AI fingerprinting"""
+    """
+Advanced violation detection using AI fingerprinting"""
     
     def __init__(self):
         self.detection_algorithms = ["fingerprint", "visual", "audio", "text"]

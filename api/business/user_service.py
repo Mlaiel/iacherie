@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
@@ -130,7 +131,8 @@ class UserService:
         return self.pwd_context.verify(plain_password, hashed_password)
     
     async def get_user_by_email(self, email: str, db: Session = None) -> Optional[User]:
-        """Get user by email address"""
+        """
+Get user by email address"""
         try:
             if not db:
                 db = next(get_db())

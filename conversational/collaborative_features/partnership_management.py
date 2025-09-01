@@ -22,6 +22,7 @@ Project Team Specialties:
 - Security Engineer: Enterprise Security/Compliance
 - Microservices Architect: Distributed Systems
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class PartnershipType(Enum):
-    """Types of partnership arrangements"""
+    """
+Types of partnership arrangements"""
+
     BRAND_SPONSORSHIP = "brand_sponsorship"
     PRODUCT_PLACEMENT = "product_placement"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -61,6 +64,7 @@ class PartnershipType(Enum):
 
 class CampaignStatus(Enum):
     """Campaign status types"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -71,6 +75,7 @@ class CampaignStatus(Enum):
 
 class ContractStatus(Enum):
     """Contract status types"""
+
     DRAFT = "draft"
     UNDER_NEGOTIATION = "under_negotiation"
     PENDING_SIGNATURE = "pending_signature"
@@ -102,7 +107,8 @@ class Partnership:
 
 @dataclass
 class BrandProfile:
-    """Brand profile for partnership matching"""
+    """
+Brand profile for partnership matching"""
     brand_id: str
     name: str
     industry: str
@@ -422,7 +428,8 @@ class BrandCollaborationManager:
         brand_id: str,
         collaboration_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create a new brand collaboration"""
+        """
+Create a new brand collaboration"""
         try:
             collaboration_id = f"collab_{creator_id}_{brand_id}_{uuid.uuid4().hex[:8]}"
             
@@ -528,7 +535,8 @@ class SponsorshipCoordinator:
         campaign_details: Dict[str, Any],
         budget_allocation: Dict[str, Decimal]
     ) -> Dict[str, Any]:
-        """Coordinate multi-creator sponsorship campaign"""
+        """
+Coordinate multi-creator sponsorship campaign"""
         try:
             campaign_id = f"sponsor_{sponsor_id}_{uuid.uuid4().hex[:8]}"
             
@@ -615,7 +623,8 @@ class CampaignManagementService:
         participants: List[str],
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Launch integrated multi-platform campaign"""
+        """
+Launch integrated multi-platform campaign"""
         try:
             campaign_id = f"campaign_{uuid.uuid4().hex[:8]}"
             
@@ -697,7 +706,8 @@ class ContractNegotiationEngine:
         legal_requirements: Dict[str, Any],
         customizations: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate optimized partnership contract"""
+        """
+Generate optimized partnership contract"""
         try:
             contract_id = f"contract_{uuid.uuid4().hex[:8]}"
             

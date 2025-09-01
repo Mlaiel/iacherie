@@ -15,6 +15,7 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -47,7 +48,9 @@ settings = get_settings()
 
 
 class InsightType(Enum):
-    """Types of artist insights"""
+    """
+Types of artist insights"""
+
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
     MARKET = "market"
@@ -60,6 +63,7 @@ class InsightType(Enum):
 
 class MetricTrend(Enum):
     """Metric trend directions"""
+
     GROWING = "growing"
     DECLINING = "declining"
     STABLE = "stable"
@@ -69,6 +73,7 @@ class MetricTrend(Enum):
 
 class RecommendationPriority(Enum):
     """Priority levels for recommendations"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -107,7 +112,8 @@ class PerformanceMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Audience analysis insights"""
+    """
+Audience analysis insights"""
     # Demographics
     age_distribution: Dict[str, float] = field(default_factory=dict)
     gender_distribution: Dict[str, float] = field(default_factory=dict)
@@ -131,7 +137,8 @@ class AudienceInsights:
 
 @dataclass
 class MarketPosition:
-    """Market positioning analysis"""
+    """
+Market positioning analysis"""
     # Competitive position
     market_rank: Optional[int] = None
     genre_rank: Optional[int] = None
@@ -151,7 +158,8 @@ class MarketPosition:
 
 @dataclass
 class CreativeAnalysis:
-    """Creative output analysis"""
+    """
+Creative output analysis"""
     # Musical characteristics
     signature_sound: Dict[str, float] = field(default_factory=dict)
     style_evolution: List[Dict[str, Any]] = field(default_factory=list)
@@ -170,7 +178,8 @@ class CreativeAnalysis:
 
 @dataclass
 class FinancialInsights:
-    """Financial performance insights"""
+    """
+Financial performance insights"""
     # Revenue streams
     streaming_revenue: float = 0.0
     performance_revenue: float = 0.0
@@ -191,7 +200,8 @@ class FinancialInsights:
 
 @dataclass
 class ArtistRecommendation:
-    """Artist recommendation with priority and impact"""
+    """
+Artist recommendation with priority and impact"""
     recommendation_id: str
     title: str
     description: str
@@ -215,7 +225,8 @@ class ArtistRecommendation:
 
 @dataclass
 class ComprehensiveInsights:
-    """Complete artist insights report"""
+    """
+Complete artist insights report"""
     artist_id: str
     analysis_period: Tuple[datetime, datetime]
     
@@ -249,7 +260,8 @@ class ArtistInsights:
     and strategic recommendations for growth and optimization.
     """
     def __init__(self):
-        """Initialize artist insights engine"""
+        """
+Initialize artist insights engine"""
         self.spotify_agent = SpotifyAgent()
         self.analytics_agent = AnalyticsAgent()
         self.performance_analyzer = PerformanceAnalyzer()
@@ -929,7 +941,8 @@ class ArtistInsights:
         return np.mean(confidence_factors) if confidence_factors else 0.5
 
     def _calculate_data_completeness(self, insights: ComprehensiveInsights) -> float:
-        """Calculate data completeness score"""
+        """
+Calculate data completeness score"""
         total_fields = 0
         populated_fields = 0
         
@@ -956,7 +969,8 @@ class ArtistInsights:
     # Additional helper methods for specific analysis components
 
     def _calculate_trend_direction(self, data: List[float]) -> str:
-        """Calculate trend direction from time series data"""
+        """
+Calculate trend direction from time series data"""
         if len(data) < 2:
             return "stable"
         
@@ -986,14 +1000,16 @@ class ArtistInsights:
         return (end_value - start_value) / start_value
 
     def _calculate_volatility(self, data: List[float]) -> float:
-        """Calculate volatility (standard deviation) of data"""
+        """
+Calculate volatility (standard deviation) of data"""
         if len(data) < 2:
             return 0.0
         
         return float(np.std(data))
 
     def _detect_seasonal_pattern(self, data: List[float]) -> Dict[str, float]:
-        """Detect seasonal patterns in data"""
+        """
+Detect seasonal patterns in data"""
         # Simplified seasonal analysis
         if len(data) < 12:  # Need at least a year of data
             return {}
@@ -1051,7 +1067,8 @@ class ArtistInsights:
         }
 
     async def _identify_competitors(self, artist_id: str) -> List[str]:
-        """Identify competitor artists"""
+        """
+Identify competitor artists"""
         # Placeholder - would use ML to find similar artists
         return [f"competitor_{i}" for i in range(3)]
 
@@ -1069,7 +1086,8 @@ class ArtistInsights:
         artist_profile: Dict[str, Any], 
         max_results: int
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration partners"""
+        """
+Find potential collaboration partners"""
         # Placeholder
         return [
             {
@@ -1087,7 +1105,8 @@ class ArtistInsights:
         artist_profile: Dict[str, Any], 
         collaborator: Dict[str, Any]
     ) -> float:
-        """Calculate collaboration compatibility score"""
+        """
+Calculate collaboration compatibility score"""
         # Simplified scoring
         score = 0.0
         score += collaborator.get('audience_overlap', 0.0) * 0.3
@@ -1103,7 +1122,8 @@ class ArtistInsights:
         collaborator: Dict[str, Any], 
         score: float
     ) -> str:
-        """Generate rationale for collaboration recommendation"""
+        """
+Generate rationale for collaboration recommendation"""
         if score > 0.7:
             return "High compatibility across multiple dimensions"
         elif score > 0.5:

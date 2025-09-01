@@ -4,6 +4,7 @@ Advanced privacy protection and user control systems
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -29,7 +30,9 @@ logger = get_logger(__name__)
 
 
 class PrivacyLevel(str, Enum):
-    """Privacy protection levels"""
+    """
+Privacy protection levels"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -38,6 +41,7 @@ class PrivacyLevel(str, Enum):
 
 class DataMinimization(str, Enum):
     """Data minimization strategies"""
+
     COLLECT_MINIMAL = "collect_minimal"
     PROCESS_MINIMAL = "process_minimal"
     STORE_MINIMAL = "store_minimal"
@@ -46,6 +50,7 @@ class DataMinimization(str, Enum):
 
 class AnonymizationLevel(str, Enum):
     """Data anonymization levels"""
+
     NONE = "none"
     PSEUDONYMIZATION = "pseudonymization"
     ANONYMIZATION = "anonymization"
@@ -54,6 +59,7 @@ class AnonymizationLevel(str, Enum):
 
 class AccessRight(str, Enum):
     """Data subject access rights"""
+
     VIEW = "view"
     DOWNLOAD = "download"
     CORRECT = "correct"
@@ -82,7 +88,8 @@ class PrivacyConfiguration:
 
 @dataclass
 class PrivacyImpactAssessment:
-    """Privacy Impact Assessment (PIA) result"""
+    """
+Privacy Impact Assessment (PIA) result"""
     assessment_id: str
     data_processing_activity: str
     privacy_risks: List[str]
@@ -97,7 +104,8 @@ class PrivacyImpactAssessment:
 
 @dataclass
 class DataSubjectRequest:
-    """Data subject rights request"""
+    """
+Data subject rights request"""
     request_id: str
     user_id: int
     request_type: AccessRight
@@ -110,7 +118,8 @@ class DataSubjectRequest:
 
 
 class PrivacyControlsManager:
-    """Advanced privacy protection and user control system"""
+    """
+Advanced privacy protection and user control system"""
     
     def __init__(self):
         self.logger = logger

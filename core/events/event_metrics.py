@@ -5,7 +5,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
 Contact autorisations : mlaiel@live.de
@@ -14,6 +14,7 @@ Description:
     Système avancé de métriques et analytics pour les événements de la plateforme
     IA-Influencer-Agent. Monitoring temps réel, KPIs business et alertes intelligentes.
 """
+
 from typing import Any, Dict, List, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types de métriques"""
+    """
+Types de métriques"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -47,6 +50,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Niveaux de sévérité des alertes"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -55,6 +59,7 @@ class AlertSeverity(Enum):
 
 class AggregationPeriod(Enum):
     """Périodes d'agrégation"""
+
     MINUTE = "1m"
     FIVE_MINUTES = "5m"
     HOUR = "1h"
@@ -74,7 +79,8 @@ class MetricValue:
 
 @dataclass
 class MetricDefinition:
-    """Définition d'une métrique"""
+    """
+Définition d'une métrique"""
     name: str
     metric_type: MetricType
     description: str
@@ -117,21 +123,25 @@ class Alert:
 
 
 class MetricCollector(ABC):
-    """Interface pour collecteurs de métriques"""
+    """
+Interface pour collecteurs de métriques"""
     
     @abstractmethod
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques"""
+        """
+Collecte les métriques"""
         pass
     
     @abstractmethod
     def get_definitions(self) -> List[MetricDefinition]:
-        """Retourne les définitions de métriques"""
+        """
+Retourne les définitions de métriques"""
         pass
 
 
 class EventMetricsCollector(MetricCollector):
-    """Collecteur de métriques pour les événements"""
+    """
+Collecteur de métriques pour les événements"""
     
     def __init__(self):
         self.event_counts = defaultdict(int)
@@ -141,7 +151,8 @@ class EventMetricsCollector(MetricCollector):
         self.processing_times = deque(maxlen=1000)
         
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques d'événements"""
+        """
+Collecte les métriques d'événements"""
         now = datetime.now(timezone.utc)
         metrics = {}
         
@@ -238,10 +249,12 @@ class EventMetricsCollector(MetricCollector):
 
 
 class SystemMetricsCollector(MetricCollector):
-    """Collecteur de métriques système"""
+    """
+Collecteur de métriques système"""
     
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques système"""
+        """
+Collecte les métriques système"""
         metrics = {}
         
         # CPU
@@ -310,7 +323,8 @@ class BusinessMetricsCollector(MetricCollector):
         self.user_activities = defaultdict(int)
         
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques business"""
+        """
+Collecte les métriques business"""
         metrics = {}
         
         # Métriques de contenu
@@ -398,24 +412,29 @@ class BusinessMetricsCollector(MetricCollector):
         self.content_uploads[content_type] += 1
     
     def record_protection_violation(self, platform: str):
-        """Enregistre une violation de protection"""
+        """
+Enregistre une violation de protection"""
         self.protection_violations[platform] += 1
     
     def record_revenue(self, amount: float, currency: str):
-        """Enregistre des revenus"""
+        """
+Enregistre des revenus"""
         self.revenue_amounts[currency] += amount
     
     def record_collaboration_match(self, match_type: str):
-        """Enregistre un match de collaboration"""
+        """
+Enregistre un match de collaboration"""
         self.collaboration_matches[match_type] += 1
     
     def record_user_activity(self, user_id: str):
-        """Enregistre une activité utilisateur"""
+        """
+Enregistre une activité utilisateur"""
         self.user_activities[user_id] = int(time.time())
 
 
 class AlertManager:
-    """Gestionnaire d'alertes"""
+    """
+Gestionnaire d'alertes"""
     
     def __init__(self):
         self.rules: Dict[str, AlertRule] = {}
@@ -424,7 +443,8 @@ class AlertManager:
         self.callbacks: List[Callable[[Alert], None]] = []
         
     def add_rule(self, rule: AlertRule):
-        """Ajoute une règle d'alerte"""
+        """
+Ajoute une règle d'alerte"""
         self.rules[rule.rule_id] = rule
         logger.info("Alert rule added: %s", rule.rule_id)
     
@@ -818,7 +838,8 @@ class EventMetricsManager:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[MetricValue]:
-        """Retourne les métriques historiques"""
+        """
+Retourne les métriques historiques"""
         metrics = self.historical_metrics.get(metric_name, [])
         
         if start_time:
@@ -829,7 +850,8 @@ class EventMetricsManager:
         return metrics
     
     def get_active_alerts(self) -> List[Alert]:
-        """Retourne les alertes actives"""
+        """
+Retourne les alertes actives"""
         return list(self.alert_manager.active_alerts.values())
     
     def get_alert_history(
@@ -837,7 +859,8 @@ class EventMetricsManager:
         limit: int = 100,
         severity: Optional[AlertSeverity] = None
     ) -> List[Alert]:
-        """Retourne l'historique des alertes"""
+        """
+Retourne l'historique des alertes"""
         alerts = self.alert_manager.alert_history
         
         if severity:
@@ -846,11 +869,13 @@ class EventMetricsManager:
         return sorted(alerts, key=lambda a: a.triggered_at, reverse=True)[:limit]
     
     def add_alert_rule(self, rule: AlertRule):
-        """Ajoute une règle d'alerte"""
+        """
+Ajoute une règle d'alerte"""
         self.alert_manager.add_rule(rule)
     
     def add_alert_callback(self, callback: Callable[[Alert], None]):
-        """Ajoute un callback d'alerte"""
+        """
+Ajoute un callback d'alerte"""
         self.alert_manager.add_callback(callback)
 
 

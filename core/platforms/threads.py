@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -23,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 class ThreadsPlatform(PlatformBase):
-    """Meta Threads platform integration"""
+    """
+Meta Threads platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Threads platform"""
+        """
+Initialize Threads platform"""
         super().__init__(config)
         self.api_base = "https://graph.threads.net/v1.0"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -40,7 +43,8 @@ class ThreadsPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Threads API"""
+        """
+Authenticate with Threads API"""
         try:
             access_token = self.config.credentials.get('access_token')
             

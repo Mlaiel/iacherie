@@ -10,6 +10,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -52,7 +53,8 @@ class PostgreSQLManager:
         self._initialize_connections()
     
     def _initialize_connections(self) -> None:
-        """Initialize database connections and pools"""
+        """
+Initialize database connections and pools"""
         try:
             # Synchronous connection pool
             self.connection_pool = ThreadedConnectionPool(
@@ -662,7 +664,8 @@ class PostgreSQLManager:
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
+        """
+Context manager exit"""
         self.close_connections()
 
 
@@ -670,7 +673,8 @@ class PostgreSQLManager:
 _postgresql_manager = None
 
 def get_postgresql_manager() -> PostgreSQLManager:
-    """Get PostgreSQL manager singleton instance"""
+    """
+Get PostgreSQL manager singleton instance"""
     global _postgresql_manager
     if _postgresql_manager is None:
         _postgresql_manager = PostgreSQLManager()

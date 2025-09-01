@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import hashlib
@@ -53,7 +54,9 @@ import wave
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Fingerprint algorithm types."""
+    """
+Fingerprint algorithm types."""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
@@ -70,6 +73,7 @@ class FingerprintType(Enum):
 
 class ContentType(Enum):
     """Content type enumeration."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -90,7 +94,8 @@ class FingerprintResult:
     extraction_timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
+        """
+Convert to dictionary representation."""
         return {
             'content_id': self.content_id,
             'fingerprint_type': self.fingerprint_type.value,
@@ -105,7 +110,8 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity matching result."""
+    """
+Similarity matching result."""
     original_content_id: str
     matched_content_id: str
     similarity_score: float
@@ -128,7 +134,8 @@ class AIFingerprintEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the fingerprint engine."""
+        """
+Initialize the fingerprint engine."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -666,7 +673,8 @@ class AIFingerprintEngine:
         }
     
     async def clear_indices(self) -> None:
-        """Clear all vector indices."""
+        """
+Clear all vector indices."""
         self._init_vector_indices()
         self.logger.info("All vector indices cleared")
     

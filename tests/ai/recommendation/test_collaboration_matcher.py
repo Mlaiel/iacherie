@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Collaboration Matching System
+"""
+Comprehensive Tests for Collaboration Matching System
 
 Tests cover collaboration matching, compatibility scoring, and partnership algorithms
 
@@ -24,6 +26,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -47,11 +50,13 @@ from ai.core.base_models import ModelStatus
 
 
 class TestCollaborationMatcher:
-    """Comprehensive tests for the main collaboration matcher"""
+    """
+Comprehensive tests for the main collaboration matcher"""
     
     @pytest.mark.asyncio
     async def test_matcher_initialization(self, collaboration_matcher):
-        """Test collaboration matcher initialization"""
+        """
+Test collaboration matcher initialization"""
         matcher = collaboration_matcher
         
         assert matcher is not None
@@ -67,7 +72,8 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_matcher_initialization_failure(self):
-        """Test matcher initialization failure handling"""
+        """
+Test matcher initialization failure handling"""
         matcher = CollaborationMatcher()
         
         # Mock a failure condition
@@ -301,7 +307,8 @@ class TestCompatibilityScorer:
     
     @pytest.mark.asyncio
     async def test_calculate_compatibility_score(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test compatibility score calculation"""
+        """
+Test compatibility score calculation"""
         musician = sample_creator_musician
         blogger = sample_creator_blogger
         
@@ -327,7 +334,8 @@ class TestCompatibilityScorer:
     
     @pytest.mark.asyncio
     async def test_content_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test content compatibility scoring"""
+        """
+Test content compatibility scoring"""
         musician = sample_creator_musician
         blogger = sample_creator_blogger
         
@@ -342,7 +350,8 @@ class TestCompatibilityScorer:
         
     @pytest.mark.asyncio
     async def test_audience_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test audience compatibility scoring"""
+        """
+Test audience compatibility scoring"""
         musician = sample_creator_musician
         blogger = sample_creator_blogger
 
@@ -357,7 +366,8 @@ class TestCompatibilityScorer:
 
     @pytest.mark.asyncio
     async def test_style_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test style compatibility scoring"""
+        """
+Test style compatibility scoring"""
         musician = sample_creator_musician
         blogger = sample_creator_blogger
 
@@ -372,7 +382,8 @@ class TestCompatibilityScorer:
 
     @pytest.mark.asyncio
     async def test_schedule_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test schedule compatibility scoring"""
+        """
+Test schedule compatibility scoring"""
         musician = sample_creator_musician
         blogger = sample_creator_blogger
 
@@ -385,11 +396,13 @@ class TestCompatibilityScorer:
         assert isinstance(score['individual_scores']['schedule_compatibility'], (int, float))
         assert 0 <= score['individual_scores']['schedule_compatibility'] <= 1
 class TestPartnershipAnalyzer:
-    """Tests for partnership analysis and optimization"""
+    """
+Tests for partnership analysis and optimization"""
     
     @pytest.mark.asyncio
     async def test_analyze_partnership_potential(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test partnership potential analysis"""
+        """
+Test partnership potential analysis"""
         musician = sample_creator_musician
         blogger = sample_creator_blogger
         
@@ -557,7 +570,8 @@ class TestCollaborationRecommender:
     
     @pytest.mark.asyncio
     async def test_recommend_collaborations(self, collaboration_recommender, sample_creator_musician):
-        """Test collaboration recommendation generation"""
+        """
+Test collaboration recommendation generation"""
         creator = sample_creator_musician
         
         recommendations = await collaboration_recommender.get_collaboration_recommendations(
@@ -575,7 +589,8 @@ class TestCollaborationRecommender:
     
     @pytest.mark.asyncio
     async def test_recommend_by_goal(self, collaboration_recommender, sample_creator_musician):
-        """Test collaboration recommendations by goal"""
+        """
+Test collaboration recommendations by goal"""
         creator = sample_creator_musician
         
         # Test growth goal
@@ -666,7 +681,8 @@ class TestCollaborationRecommender:
     
     @pytest.mark.asyncio
     async def test_recommend_niche_collaborations(self, collaboration_recommender, sample_creator_musician):
-        """Test niche collaboration recommendations"""
+        """
+Test niche collaboration recommendations"""
         creator = sample_creator_musician
         
         niche_recommendations = await collaboration_recommender.recommend_niche(
@@ -691,7 +707,8 @@ class TestCollaborationMatchingPerformance:
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_matching_performance(self, benchmark, collaboration_matcher, sample_creator_musician):
-        """Benchmark collaboration matching performance"""
+        """
+Benchmark collaboration matching performance"""
         creator = sample_creator_musician
         
         async def find_matches():
@@ -762,7 +779,8 @@ class TestCollaborationMatchingEdgeCases:
     
     @pytest.mark.asyncio
     async def test_matching_for_new_creator(self, collaboration_matcher):
-        """Test matching for creators with minimal data"""
+        """
+Test matching for creators with minimal data"""
         new_creator = CreatorProfile(
             creator_id="new_creator_001",
             username="newcreator",

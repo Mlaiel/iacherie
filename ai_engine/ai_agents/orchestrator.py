@@ -6,6 +6,7 @@ Handles agent lifecycle, communication, task distribution, and performance monit
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 import uuid
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class OrchestrationMode(Enum):
-    """Modes of agent orchestration"""
+    """
+Modes of agent orchestration"""
+
     SEQUENTIAL = "sequential"      # Agents work one after another
     PARALLEL = "parallel"          # Agents work simultaneously
     PIPELINE = "pipeline"          # Output of one feeds into next
@@ -29,6 +32,7 @@ class OrchestrationMode(Enum):
 
 class AgentPriority(Enum):
     """Agent priority levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -38,7 +42,8 @@ class AgentPriority(Enum):
 
 @dataclass
 class OrchestrationTask:
-    """Task for agent orchestration"""
+    """
+Task for agent orchestration"""
     task_id: str
     name: str
     description: str
@@ -68,7 +73,8 @@ class OrchestrationTask:
 
 @dataclass
 class OrchestrationResult:
-    """Result of agent orchestration"""
+    """
+Result of agent orchestration"""
     task_id: str
     success: bool
     completion_time: datetime
@@ -104,7 +110,8 @@ class AIAgentsOrchestrator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the orchestrator"""
+        """
+Initialize the orchestrator"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -143,7 +150,8 @@ class AIAgentsOrchestrator:
         self.orchestration_loop_task = None
     
     async def initialize(self) -> bool:
-        """Initialize the orchestrator"""
+        """
+Initialize the orchestrator"""
         try:
             self.logger.info("Initializing AI Agents Orchestrator...")
             
@@ -443,7 +451,8 @@ class AIAgentsOrchestrator:
         self.orchestration_loop_task = asyncio.create_task(self._orchestration_loop())
     
     async def _orchestration_loop(self):
-        """Main orchestration loop"""
+        """
+Main orchestration loop"""
         while self.is_running:
             try:
                 # Process task queue
@@ -481,7 +490,8 @@ class AIAgentsOrchestrator:
                 self.active_tasks.pop(task.task_id, None)
     
     async def _execute_task(self, task: OrchestrationTask):
-        """Execute a single task"""
+        """
+Execute a single task"""
         start_time = datetime.utcnow()
         
         try:
@@ -574,7 +584,8 @@ class AIAgentsOrchestrator:
         }
     
     async def _execute_parallel(self, task: OrchestrationTask) -> Dict[str, Any]:
-        """Execute task with parallel agent processing"""
+        """
+Execute task with parallel agent processing"""
         agents = task.required_agents + task.optional_agents
         tasks = []
         
@@ -593,28 +604,33 @@ class AIAgentsOrchestrator:
         }
     
     async def _execute_pipeline(self, task: OrchestrationTask) -> Dict[str, Any]:
-        """Execute task with pipeline agent processing"""
+        """
+Execute task with pipeline agent processing"""
         # Placeholder for pipeline implementation
         return {'success': True, 'agents': [], 'results': {}, 'score': 0.8}
     
     async def _execute_collaborative(self, task: OrchestrationTask) -> Dict[str, Any]:
-        """Execute task with collaborative agent processing"""
+        """
+Execute task with collaborative agent processing"""
         # Placeholder for collaborative implementation
         return {'success': True, 'agents': [], 'results': {}, 'score': 0.8}
     
     async def _execute_adaptive(self, task: OrchestrationTask) -> Dict[str, Any]:
-        """Execute task with AI-optimized adaptive processing"""
+        """
+Execute task with AI-optimized adaptive processing"""
         # Placeholder for adaptive implementation
         return {'success': True, 'agents': [], 'results': {}, 'score': 0.8}
     
     # Additional helper methods (placeholders)
     
     def _validate_task(self, task: OrchestrationTask) -> bool:
-        """Validate task configuration"""
+        """
+Validate task configuration"""
         return bool(task.name and task.required_agents)
     
     async def _check_agent_availability(self, task: OrchestrationTask) -> List[str]:
-        """Check if required agents are available"""
+        """
+Check if required agents are available"""
         missing = []
         for agent_id in task.required_agents:
             if agent_id not in self.active_agents:
@@ -622,46 +638,55 @@ class AIAgentsOrchestrator:
         return missing
     
     async def _get_task_progress(self, task_id: str) -> float:
-        """Get task progress (0.0 to 1.0)"""
+        """
+Get task progress (0.0 to 1.0)"""
         return 0.5  # Placeholder
     
     async def _estimate_completion_time(self, task_id: str) -> Optional[datetime]:
-        """Estimate task completion time"""
+        """
+Estimate task completion time"""
         return datetime.utcnow() + timedelta(minutes=30)  # Placeholder
     
     async def _get_participating_agents(self, task_id: str) -> List[str]:
-        """Get agents participating in a task"""
+        """
+Get agents participating in a task"""
         if task_id in self.active_tasks:
             task = self.active_tasks[task_id]
             return task.required_agents + task.optional_agents
         return []
     
     async def _estimate_start_time(self, task: OrchestrationTask) -> datetime:
-        """Estimate when a queued task will start"""
+        """
+Estimate when a queued task will start"""
         return datetime.utcnow() + timedelta(minutes=10)  # Placeholder
     
     async def _cancel_active_task(self, task: OrchestrationTask):
-        """Cancel an active task"""
+        """
+Cancel an active task"""
         pass  # Placeholder
     
     async def _is_task_valid(self, task: OrchestrationTask) -> bool:
-        """Check if task is still valid"""
+        """
+Check if task is still valid"""
         if task.deadline and datetime.utcnow() > task.deadline:
             return False
         return True
     
     async def _monitor_active_tasks(self):
-        """Monitor active tasks for timeouts and failures"""
+        """
+Monitor active tasks for timeouts and failures"""
         pass  # Placeholder
     
     async def _update_metrics(self):
-        """Update orchestrator metrics"""
+        """
+Update orchestrator metrics"""
         total_tasks = self.metrics['tasks_completed'] + self.metrics['tasks_failed']
         if total_tasks > 0:
             self.metrics['success_rate'] = self.metrics['tasks_completed'] / total_tasks
     
     async def _cleanup_completed_tasks(self):
-        """Cleanup old completed tasks"""
+        """
+Cleanup old completed tasks"""
         cutoff = datetime.utcnow() - timedelta(hours=24)
         to_remove = [
             task_id for task_id, result in self.completed_tasks.items()
@@ -671,7 +696,8 @@ class AIAgentsOrchestrator:
             del self.completed_tasks[task_id]
     
     async def _complete_active_tasks(self):
-        """Complete all active tasks before shutdown"""
+        """
+Complete all active tasks before shutdown"""
         if self.active_tasks:
             self.logger.info(f"Waiting for {len(self.active_tasks)} active tasks to complete...")
             # Implementation for graceful task completion
@@ -690,33 +716,41 @@ class AIAgentsOrchestrator:
         pass  # Placeholder
     
     async def _cleanup_agent_communication(self, agent_id: str):
-        """Cleanup agent communication channel"""
+        """
+Cleanup agent communication channel"""
         pass  # Placeholder
     
     async def _handle_agent_removal(self, agent_id: str, active_tasks: List[OrchestrationTask]):
-        """Handle removal of agent with active tasks"""
+        """
+Handle removal of agent with active tasks"""
         pass  # Placeholder
     
     async def _analyze_agent_performance(self) -> Dict[str, Any]:
-        """Analyze agent performance for optimization"""
+        """
+Analyze agent performance for optimization"""
         return {}  # Placeholder
     
     async def _optimize_task_scheduling(self) -> Dict[str, Any]:
-        """Optimize task scheduling algorithms"""
+        """
+Optimize task scheduling algorithms"""
         return {}  # Placeholder
     
     async def _optimize_resource_allocation(self) -> Dict[str, Any]:
-        """Optimize resource allocation"""
+        """
+Optimize resource allocation"""
         return {}  # Placeholder
     
     async def _apply_optimizations(self, optimizations: Dict[str, Any]):
-        """Apply optimization recommendations"""
+        """
+Apply optimization recommendations"""
         pass  # Placeholder
     
     async def _get_uptime(self) -> float:
-        """Get orchestrator uptime in seconds"""
+        """
+Get orchestrator uptime in seconds"""
         return 0.0  # Placeholder
     
     async def _get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage"""
+        """
+Get current resource usage"""
         return {}  # Placeholder

@@ -14,7 +14,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from tests.utils.mock_api_server import ensure_api_server
 
 async def test_mock_server():
-    """Test the mock server functionality."""
+    """
+Test the mock server functionality."""
     print("🧪 Testing Mock API Server...")
     
     # Start the mock server

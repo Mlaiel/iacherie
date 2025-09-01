@@ -6,7 +6,7 @@ and standardization capabilities for creator content workflows. Supports multi-f
 metadata standards and automated optimization for platform distribution.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 
 Features:
@@ -19,6 +19,7 @@ Features:
 - Multilingual metadata support
 - Real-time metadata validation and enrichment
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Set, Tuple
@@ -65,6 +66,7 @@ logger = logging.getLogger(__name__)
 
 class MetadataType(Enum):
     """Types of metadata for comprehensive management."""
+
     TECHNICAL = "technical"          # Technical specifications
     DESCRIPTIVE = "descriptive"      # Title, description, keywords
     ADMINISTRATIVE = "administrative" # Creation date, file info
@@ -81,6 +83,7 @@ class MetadataType(Enum):
 
 class MetadataStandard(Enum):
     """Metadata standards and formats."""
+
     DUBLIN_CORE = "dublin_core"
     EXIF = "exif"
     IPTC = "iptc"
@@ -97,6 +100,7 @@ class MetadataStandard(Enum):
 
 class ValidationSeverity(Enum):
     """Metadata validation issue severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -171,6 +175,7 @@ class MetadataField(Enum):
 
 class PlatformRequirement(Enum):
     """Platform-specific metadata requirements."""
+
     REQUIRED = "required"
     RECOMMENDED = "recommended"
     OPTIONAL = "optional"
@@ -191,7 +196,8 @@ class MetadataValidationIssue:
     standard: Optional[MetadataStandard] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "field": self.field,
             "issue_type": self.issue_type,
@@ -316,11 +322,13 @@ class MetadataValidationResult:
         return [issue for issue in self.issues if issue.severity == ValidationSeverity.CRITICAL]
     
     def get_auto_fixable_issues(self) -> List[MetadataValidationIssue]:
-        """Get issues that can be automatically fixed."""
+        """
+Get issues that can be automatically fixed."""
         return [issue for issue in self.issues if issue.auto_fixable]
     
     def calculate_completeness_score(self) -> float:
-        """Calculate metadata completeness score."""
+        """
+Calculate metadata completeness score."""
         essential_fields = [
             MetadataField.TITLE, MetadataField.ARTIST, MetadataField.DESCRIPTION,
             MetadataField.CREATION_DATE, MetadataField.COPYRIGHT
@@ -335,7 +343,8 @@ class MetadataValidationResult:
         return self.completeness_score
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "is_valid": self.is_valid,
             "validation_timestamp": self.validation_timestamp.isoformat(),
@@ -370,6 +379,7 @@ class MetadataValidator:
     - Creator workflow integration
     - Real-time metadata processing
     """
+
     
     VERSION = "2.0.0"
     
@@ -1356,11 +1366,13 @@ class MetadataValidator:
         return metadata.exif_metadata
     
     def _export_id3(self, metadata: ExtractedMetadata) -> Dict[str, Any]:
-        """Export metadata in ID3 format."""
+        """
+Export metadata in ID3 format."""
         return metadata.id3_metadata
     
     def _export_custom(self, metadata: ExtractedMetadata) -> Dict[str, Any]:
-        """Export metadata in custom format."""
+        """
+Export metadata in custom format."""
         return {
             "descriptive": metadata.descriptive,
             "technical": metadata.technical,
@@ -1983,14 +1995,14 @@ def create_metadata_report(
         copyright_str = str(value)
         
         # Check for proper copyright format
-        if not re.search(r'(©|copyright|\(c\))', copyright_str, re.IGNORECASE):
+        if not re.search(r'((c)|copyright|\(c\))', copyright_str, re.IGNORECASE):
             return MetadataValidationIssue(
                 field=field.value,
                 issue_type="missing_copyright_symbol",
                 severity=ValidationSeverity.INFO,
-                message="Copyright should include © symbol or 'Copyright' text",
+                message="Copyright should include (c) symbol or 'Copyright' text",
                 current_value=copyright_str,
-                suggested_value=f"© {copyright_str}",
+                suggested_value=f"(c) {copyright_str}",
                 auto_fixable=True
             )
         
@@ -2055,7 +2067,8 @@ class MetadataValidationIssue:
 
 @dataclass
 class MetadataValidationResult:
-    """Metadata validation result."""
+    """
+Metadata validation result."""
     is_valid: bool
     completeness_score: float
     quality_score: float
@@ -2363,7 +2376,8 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate metadata quality score."""
+        """
+Calculate metadata quality score."""
         try:
             score = 100.0
             
@@ -2386,7 +2400,8 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate standards compliance score."""
+        """
+Calculate standards compliance score."""
         try:
             compliance_score = 100.0
             
@@ -2814,7 +2829,8 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate EXIF compliance score."""
+        """
+Calculate EXIF compliance score."""
         try:
             compliance_score = 100.0
             
@@ -3074,7 +3090,8 @@ class XMPValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate XMP compliance score."""
+        """
+Calculate XMP compliance score."""
         try:
             compliance_score = 100.0
             
@@ -3197,7 +3214,8 @@ class MetadataField:
 
 @dataclass
 class MetadataIssue:
-    """Metadata validation issue."""
+    """
+Metadata validation issue."""
     field_name: str
     issue_type: str
     severity: ValidationSeverity
@@ -3218,7 +3236,8 @@ class MetadataIssue:
 
 @dataclass
 class MetadataValidationResult:
-    """Comprehensive metadata validation result."""
+    """
+Comprehensive metadata validation result."""
     is_valid: bool
     completeness_score: float
     quality_score: float
@@ -3886,7 +3905,8 @@ class MetadataValidator:
             return 0.0
     
     async def _calculate_quality_score(self, result: MetadataValidationResult) -> float:
-        """Calculate overall metadata quality score."""
+        """
+Calculate overall metadata quality score."""
         try:
             # Base score
             base_score = result.completeness_score
@@ -3910,7 +3930,8 @@ class MetadataValidator:
             return 50.0
     
     async def _calculate_standardization_score(self, result: MetadataValidationResult) -> float:
-        """Calculate standardization score."""
+        """
+Calculate standardization score."""
         try:
             # Higher score for using recognized standards
             score = len(result.detected_standards) * 20
@@ -3920,7 +3941,8 @@ class MetadataValidator:
             return 0.0
     
     async def _calculate_consistency_score(self, result: MetadataValidationResult) -> float:
-        """Calculate consistency score."""
+        """
+Calculate consistency score."""
         try:
             consistency_issues = [issue for issue in result.issues 
                                 if "consistency" in issue.issue_type]
@@ -3953,7 +3975,8 @@ class MetadataValidator:
         content_type: Optional[str],
         standard: MetadataStandard
     ) -> List[MetadataField]:
-        """Get applicable field definitions."""
+        """
+Get applicable field definitions."""
         try:
             applicable = []
             

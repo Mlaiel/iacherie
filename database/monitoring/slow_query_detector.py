@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import asyncio
 import hashlib
 import re
@@ -35,7 +36,9 @@ from ...ai.analysis.query_optimization_ai import QueryOptimizationAI
 
 
 class QueryImpact(Enum):
-    """Query performance impact levels"""
+    """
+Query performance impact levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -44,6 +47,7 @@ class QueryImpact(Enum):
 
 class QueryCategory(Enum):
     """Query categorization for analysis"""
+
     OLTP = "oltp"          # Online Transaction Processing
     OLAP = "olap"          # Online Analytical Processing
     BATCH = "batch"        # Batch processing
@@ -74,7 +78,8 @@ class SlowQueryInstance:
     memory_usage_mb: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['query_start'] = self.query_start.isoformat()
         data['query_end'] = self.query_end.isoformat()
@@ -83,7 +88,8 @@ class SlowQueryInstance:
 
 @dataclass
 class SlowQueryPattern:
-    """Aggregated slow query pattern analysis"""
+    """
+Aggregated slow query pattern analysis"""
     pattern_id: str
     normalized_query: str
     query_category: QueryCategory
@@ -103,7 +109,8 @@ class SlowQueryPattern:
     optimization_priority: int  # 1-10 scale
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['query_category'] = self.query_category.value
         data['impact_level'] = self.impact_level.value
@@ -114,7 +121,8 @@ class SlowQueryPattern:
 
 @dataclass
 class OptimizationSuggestion:
-    """Query optimization suggestion"""
+    """
+Query optimization suggestion"""
     suggestion_id: str
     query_pattern_id: str
     suggestion_type: str
@@ -129,7 +137,8 @@ class OptimizationSuggestion:
     created_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['created_at'] = self.created_at.isoformat()
         return data
@@ -431,7 +440,8 @@ class SlowQueryDetector:
         return hashlib.md5(normalized_query.encode()).hexdigest()[:16]
     
     async def _analyze_query_patterns(self) -> None:
-        """Analyze slow query patterns and trends"""
+        """
+Analyze slow query patterns and trends"""
         try:
             # Group slow queries by pattern
             pattern_groups = defaultdict(list)
@@ -572,7 +582,8 @@ class SlowQueryDetector:
             return QueryCategory.UNKNOWN
     
     def _calculate_impact_level(self, queries: List[SlowQueryInstance]) -> QueryImpact:
-        """Calculate performance impact level"""
+        """
+Calculate performance impact level"""
         # Consider frequency and duration
         frequency = len(queries)
         avg_duration = statistics.mean(q.execution_time_ms for q in queries)
@@ -614,7 +625,8 @@ class SlowQueryDetector:
             return QueryImpact.LOW
     
     def _extract_table_names(self, normalized_query: str) -> List[str]:
-        """Extract table names from normalized query"""
+        """
+Extract table names from normalized query"""
         table_names = []
         
         # Simple regex patterns for table extraction
@@ -633,7 +645,8 @@ class SlowQueryDetector:
         return list(set(table_names))  # Remove duplicates
     
     def _analyze_performance_trend(self, execution_times: List[float]) -> str:
-        """Analyze performance trend over time"""
+        """
+Analyze performance trend over time"""
         if len(execution_times) < 3:
             return "stable"
         
@@ -693,7 +706,8 @@ class SlowQueryDetector:
         return min(priority, 10)  # Cap at 10
     
     async def _generate_optimization_suggestions(self) -> None:
-        """Generate optimization suggestions for slow query patterns"""
+        """
+Generate optimization suggestions for slow query patterns"""
         try:
             for pattern_id, pattern in self.query_patterns.items():
                 if pattern.optimization_priority >= 5:  # Only high-priority patterns

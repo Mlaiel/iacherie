@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import json
 import time
@@ -29,7 +30,9 @@ from ..security.encryption import EncryptionService
 
 
 class SyncOperation(Enum):
-    """Synchronization operation types"""
+    """
+Synchronization operation types"""
+
     CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
@@ -39,6 +42,7 @@ class SyncOperation(Enum):
 
 class ConflictResolutionStrategy(Enum):
     """Conflict resolution strategies"""
+
     LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MERGE_FIELDS = "merge_fields"
@@ -49,6 +53,7 @@ class ConflictResolutionStrategy(Enum):
 
 class SyncStatus(Enum):
     """Synchronization status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -59,6 +64,7 @@ class SyncStatus(Enum):
 
 class SyncDirection(Enum):
     """Synchronization direction"""
+
     BIDIRECTIONAL = "bidirectional"
     PUSH_ONLY = "push_only"
     PULL_ONLY = "pull_only"
@@ -84,13 +90,15 @@ class SyncChange:
     
     @property
     def is_expired(self) -> bool:
-        """Check if change is expired"""
+        """
+Check if change is expired"""
         return datetime.utcnow() > self.timestamp + timedelta(hours=24)
 
 
 @dataclass
 class SyncConflict:
-    """Represents a synchronization conflict"""
+    """
+Represents a synchronization conflict"""
     id: str
     entity_type: str
     entity_id: str
@@ -103,7 +111,8 @@ class SyncConflict:
     resolution_data: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert conflict to dictionary"""
+        """
+Convert conflict to dictionary"""
         return {
             "id": self.id,
             "entity_type": self.entity_type,
@@ -785,7 +794,8 @@ class RealtimeSyncManager:
         entity_type: str,
         resolver: Callable[[SyncConflict], Optional[Dict[str, Any]]]
     ):
-        """Register a custom conflict resolver"""
+        """
+Register a custom conflict resolver"""
         self.conflict_resolvers[entity_type] = resolver
     
     async def resolve_conflict_manually(
@@ -793,7 +803,8 @@ class RealtimeSyncManager:
         conflict_id: str,
         resolution_data: Dict[str, Any]
     ) -> bool:
-        """Manually resolve a conflict"""
+        """
+Manually resolve a conflict"""
         try:
             if conflict_id not in self.conflicts:
                 return False
@@ -861,17 +872,20 @@ class RealtimeSyncManager:
         return hashlib.sha256(data_str.encode()).hexdigest()
     
     def _verify_checksum(self, data: Dict[str, Any], expected_checksum: str) -> bool:
-        """Verify data checksum"""
+        """
+Verify data checksum"""
         return self._calculate_checksum(data) == expected_checksum
     
     async def _get_entity_version(self, entity_type: str, entity_id: str) -> int:
-        """Get current version of an entity"""
+        """
+Get current version of an entity"""
         # This would typically query the database
         # For now, return a simple timestamp-based version
         return int(time.time() * 1000)
     
     async def _periodic_sync(self):
-        """Periodic synchronization of pending changes"""
+        """
+Periodic synchronization of pending changes"""
         while True:
             try:
                 await asyncio.sleep(self.config["sync_interval"])
@@ -1019,7 +1033,8 @@ async def sync_context(
     encryption_service: Optional[EncryptionService] = None,
     metrics_collector: Optional[MetricsCollector] = None
 ):
-    """Context manager for sync operations"""
+    """
+Context manager for sync operations"""
     sync_manager = await get_sync_manager(node_id, config, encryption_service, metrics_collector)
     try:
         yield sync_manager

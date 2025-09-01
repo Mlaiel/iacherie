@@ -13,6 +13,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Index
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -30,7 +31,9 @@ Base = declarative_base()
 
 
 class RevenueSource(PyEnum):
-    """Sources de revenus supportées."""
+    """
+Sources de revenus supportées."""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     DOWNLOAD_SALES = "download_sales"
     LICENSING_FEES = "licensing_fees"
@@ -47,6 +50,7 @@ class RevenueSource(PyEnum):
 
 class PaymentStatus(PyEnum):
     """Statuts de paiement."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -58,6 +62,7 @@ class PaymentStatus(PyEnum):
 
 class RevenueType(PyEnum):
     """Types de revenus."""
+
     GROSS = "gross"
     NET = "net"
     COMMISSION = "commission"
@@ -68,6 +73,7 @@ class RevenueType(PyEnum):
 
 class Currency(PyEnum):
     """Devises supportées."""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -343,7 +349,8 @@ class MonetizationRepository:
         self.db = db_session
 
     def record_transaction(self, transaction_data: Dict[str, Any]) -> RevenueTransaction:
-        """Enregistrer une nouvelle transaction de revenu."""
+        """
+Enregistrer une nouvelle transaction de revenu."""
         try:
             transaction = RevenueTransaction(**transaction_data)
             

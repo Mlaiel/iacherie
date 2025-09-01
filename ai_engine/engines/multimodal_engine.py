@@ -4,7 +4,7 @@ Enterprise-grade multimodal AI engines for cross-media content processing,
 fusion, and unified content creation for professional content creators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -14,6 +14,7 @@ Violators will face legal action under international copyright law.
 
 Business Logic: Multi-format Input → Cross-modal Analysis → Unified Processing → Enhanced Output
 """
+
 import asyncio
 import numpy as np
 import logging
@@ -31,7 +32,9 @@ from pathlib import Path
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class MediaType(Enum):
-    """Supported media types for multimodal processing"""
+    """
+Supported media types for multimodal processing"""
+
     TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
@@ -40,6 +43,7 @@ class MediaType(Enum):
 
 class FusionStrategy(Enum):
     """Fusion strategies for multimodal content"""
+
     EARLY_FUSION = "early_fusion"
     LATE_FUSION = "late_fusion"
     ATTENTION_FUSION = "attention_fusion"
@@ -213,7 +217,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive multimodal content protection"""
+        """
+Apply comprehensive multimodal content protection"""
         # Generate multimodal fingerprint
         fingerprint = await self._generate_multimodal_fingerprint(content)
         
@@ -230,7 +235,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _load_multimodal_models(self):
-        """Load multimodal processing models"""
+        """
+Load multimodal processing models"""
         self.logger.info("Loading multimodal models...")
         await asyncio.sleep(0.4)
         
@@ -450,7 +456,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         )
     
     async def _calculate_multimodal_quality_score(self, content: Any, metadata: MultimodalMetadata, features: Dict) -> float:
-        """Calculate comprehensive multimodal quality score"""
+        """
+Calculate comprehensive multimodal quality score"""
         base_score = 0.8
         
         # Fusion quality factor
@@ -467,7 +474,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _extract_multimodal_seo_features(self, content: Any) -> Dict[str, Any]:
-        """Extract SEO features from multimodal content"""
+        """
+Extract SEO features from multimodal content"""
         return {
             'has_images': True,
             'has_audio': True,
@@ -482,7 +490,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _generate_cross_modal_keywords(self, content: Any, keywords: List[str]) -> Dict[str, List[str]]:
-        """Generate keywords optimized for each modality"""
+        """
+Generate keywords optimized for each modality"""
         return {
             'text_keywords': keywords + ['multimodal', 'interactive', 'professional'],
             'image_keywords': ['visual', 'professional', 'high-quality'] + keywords[:3],
@@ -491,7 +500,8 @@ class MultimodalFusionEngine(BaseContentEngine):
         }
     
     async def _generate_multimodal_fingerprint(self, content: Any) -> str:
-        """Generate multimodal fingerprint"""
+        """
+Generate multimodal fingerprint"""
         content_str = str(content)
         timestamp = str(time.time())
         combined = f"{content_str}_{timestamp}_multimodal"
@@ -628,11 +638,13 @@ class CrossMediaEngine(BaseContentEngine):
         return {'cross_media_seo_ready': True, 'format_optimized': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Cross-media content protection"""
+        """
+Cross-media content protection"""
         return {'cross_media_protected': True, 'transformation_tracked': True}
     
     async def _load_transformation_models(self):
-        """Load media transformation models"""
+        """
+Load media transformation models"""
         self.logger.info("Loading transformation models...")
         await asyncio.sleep(0.3)
         
@@ -861,11 +873,13 @@ class UnifiedContentEngine(BaseContentEngine):
         return {'unified_seo_optimized': True, 'comprehensive_optimization': True}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Unified content protection"""
+        """
+Unified content protection"""
         return {'unified_protection': True, 'comprehensive_security': True}
     
     async def _load_orchestration_models(self):
-        """Load content orchestration models"""
+        """
+Load content orchestration models"""
         self.logger.info("Loading orchestration models...")
         await asyncio.sleep(0.2)
         

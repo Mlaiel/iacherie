@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import cv2
@@ -43,7 +44,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class DetectionModel:
-    """Object detection model configurations"""
+    """
+Object detection model configurations"""
+
     YOLO_V8 = "yolo_v8"
     YOLO_V5 = "yolo_v5"
     SSD_MOBILENET = "ssd_mobilenet"
@@ -177,7 +180,8 @@ class ObjectDetector(BaseAgent):
         }
 
     def _create_ssd_placeholder(self) -> Dict[str, Any]:
-        """Create SSD model placeholder"""
+        """
+Create SSD model placeholder"""
         return {
             'type': 'ssd_mobilenet',
             'input_size': (300, 300),
@@ -386,7 +390,8 @@ class ObjectDetector(BaseAgent):
         image: np.ndarray, 
         existing_detections: List[Dict]
     ) -> List[Dict[str, Any]]:
-        """Enhance detections with cascade classifiers"""
+        """
+Enhance detections with cascade classifiers"""
         enhanced = existing_detections.copy()
         
         try:
@@ -452,7 +457,8 @@ class ObjectDetector(BaseAgent):
         self, 
         detections: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Post-process detection results"""
+        """
+Post-process detection results"""
         try:
             # Remove duplicates and apply NMS
             filtered_detections = self._apply_non_maximum_suppression(detections)
@@ -536,7 +542,8 @@ class ObjectDetector(BaseAgent):
         images: List[np.ndarray],
         max_concurrent: int = 5
     ) -> List[Dict[str, Any]]:
-        """Detect objects in multiple images concurrently"""
+        """
+Detect objects in multiple images concurrently"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def detect_single(image):
@@ -555,7 +562,8 @@ class ObjectDetector(BaseAgent):
         image: np.ndarray,
         target_classes: List[str]
     ) -> Dict[str, Any]:
-        """Detect specific object classes in image"""
+        """
+Detect specific object classes in image"""
         # Perform full detection
         full_results = await self.detect_objects(image)
         
@@ -576,7 +584,8 @@ class ObjectDetector(BaseAgent):
         return full_results
 
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection performance statistics"""
+        """
+Get detection performance statistics"""
         stats = self.detection_stats.copy()
         
         if stats['processing_times']:
@@ -592,11 +601,13 @@ class ObjectDetector(BaseAgent):
         return stats
 
     def get_supported_classes(self, category: str = 'general') -> List[str]:
-        """Get list of supported object classes"""
+        """
+Get list of supported object classes"""
         return self.object_classes.get(category, self.object_classes['general']).copy()
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             await self.performance_monitor.close()
             

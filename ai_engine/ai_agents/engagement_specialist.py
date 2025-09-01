@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementStrategy(Enum):
-    """Engagement optimization strategies"""
+    """
+Engagement optimization strategies"""
+
     COMMUNITY_BUILDING = "community_building"
     VIRAL_AMPLIFICATION = "viral_amplification"
     AUTHENTIC_CONNECTION = "authentic_connection"
@@ -42,6 +45,7 @@ class EngagementStrategy(Enum):
 
 class InteractionType(Enum):
     """Types of user interactions"""
+
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"

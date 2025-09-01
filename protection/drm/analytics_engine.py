@@ -5,7 +5,7 @@ Advanced analytics and business intelligence system for digital rights
 management with predictive modeling and revenue optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import json
@@ -38,7 +39,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Types of analytics metrics."""
+    """
+Types of analytics metrics."""
+
     USAGE = "usage"
     REVENUE = "revenue"
     PERFORMANCE = "performance"
@@ -50,6 +53,7 @@ class MetricType(str, Enum):
 
 class AggregationPeriod(str, Enum):
     """Aggregation periods for analytics."""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -60,6 +64,7 @@ class AggregationPeriod(str, Enum):
 
 class TrendDirection(str, Enum):
     """Trend direction indicators."""
+
     UP = "up"
     DOWN = "down"
     STABLE = "stable"
@@ -79,7 +84,8 @@ class MetricValue:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""
+    """
+Comprehensive analytics report."""
     report_id: str
     report_type: str
     period_start: datetime
@@ -94,7 +100,8 @@ class AnalyticsReport:
 
 @dataclass
 class UsagePattern:
-    """Content usage pattern analysis."""
+    """
+Content usage pattern analysis."""
     pattern_id: str
     content_id: str
     user_segments: Dict[str, int]
@@ -108,7 +115,8 @@ class UsagePattern:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis and forecasting."""
+    """
+Revenue analysis and forecasting."""
     analysis_id: str
     period: str
     total_revenue: float
@@ -120,10 +128,12 @@ class RevenueAnalysis:
     optimization_opportunities: List[str]
 
 class AnalyticsEngine:
-    """Advanced DRM analytics and business intelligence system."""
+    """
+Advanced DRM analytics and business intelligence system."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize analytics engine."""
+        """
+Initialize analytics engine."""
         self.config = config
         self.metrics: List[MetricValue] = []
         self.usage_data: List[Dict[str, Any]] = []
@@ -1140,12 +1150,14 @@ class AnalyticsEngine:
         pass
     
     async def _update_prediction_models(self) -> None:
-        """Update machine learning prediction models."""
+        """
+Update machine learning prediction models."""
         # This would implement model retraining logic
         pass
     
     async def get_analytics_statistics(self) -> Dict[str, Any]:
-        """Get analytics engine statistics."""
+        """
+Get analytics engine statistics."""
         return {
             "total_metrics": len(self.metrics),
             "usage_events": len(self.usage_data),

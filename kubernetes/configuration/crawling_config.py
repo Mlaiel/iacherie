@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade web crawling and monitoring configuration management system.
 ========================================================================
 """
+
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from enum import Enum
 from dataclasses import dataclass, field
@@ -30,7 +31,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class CrawlerType(Enum):
-    """Types of crawlers"""
+    """
+Types of crawlers"""
+
     WEB_SCRAPER = "web_scraper"
     API_CRAWLER = "api_crawler"
     SOCIAL_MEDIA_CRAWLER = "social_media_crawler"
@@ -42,6 +45,7 @@ class CrawlerType(Enum):
 
 class CrawlFrequency(Enum):
     """Crawling frequency options"""
+
     REAL_TIME = "real_time"
     EVERY_MINUTE = "every_minute"
     EVERY_5_MINUTES = "every_5_minutes"
@@ -56,6 +60,7 @@ class CrawlFrequency(Enum):
 
 class DetectionMode(Enum):
     """Content detection modes"""
+
     EXACT_MATCH = "exact_match"
     FUZZY_MATCH = "fuzzy_match"
     SEMANTIC_MATCH = "semantic_match"
@@ -65,6 +70,7 @@ class DetectionMode(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -74,6 +80,7 @@ class AlertLevel(Enum):
 
 class ActionType(Enum):
     """Automated action types"""
+
     NOTIFY_ONLY = "notify_only"
     LOG_VIOLATION = "log_violation"
     SEND_DMCA = "send_dmca"
@@ -85,6 +92,7 @@ class ActionType(Enum):
 
 class CrawlerEngine(Enum):
     """Crawler engines"""
+
     SCRAPY = "scrapy"
     SELENIUM = "selenium"
     PLAYWRIGHT = "playwright"
@@ -225,7 +233,8 @@ class ContentDetectionConfig:
 
 @dataclass
 class AlertingConfig:
-    """Alerting configuration"""
+    """
+Alerting configuration"""
     enabled: bool = True
     
     # Alert channels
@@ -325,7 +334,8 @@ class AutomatedActionConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance and optimization configuration"""
+    """
+Performance and optimization configuration"""
     # Resource limits
     max_memory_gb: int = 8
     max_cpu_cores: int = 4
@@ -436,7 +446,8 @@ class CrawlingMonitoringConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize crawling monitoring configuration manager"""
+        """
+Initialize crawling monitoring configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -535,7 +546,8 @@ class CrawlingMonitoringConfigManager:
         self.last_updated = datetime.now()
     
     def add_platform(self, platform_id: str, config: PlatformCrawlerConfig) -> bool:
-        """Add platform crawler configuration"""
+        """
+Add platform crawler configuration"""
         try:
             self._config.platform_configs[platform_id] = config
             self._config.updated_at = datetime.now()
@@ -551,14 +563,16 @@ class CrawlingMonitoringConfigManager:
         return self._config.platform_configs.get(platform_id)
     
     def get_enabled_platforms(self) -> List[str]:
-        """Get list of enabled platforms"""
+        """
+Get list of enabled platforms"""
         return [
             platform_id for platform_id, config in self._config.platform_configs.items()
             if config.enabled
         ]
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         try:

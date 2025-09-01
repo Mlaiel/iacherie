@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import json
@@ -63,7 +64,8 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize Redis cache storage provider."""
+        """
+Initialize Redis cache storage provider."""
         super().__init__(provider_id, StorageBackendType.CACHE, config)
         
         self.redis_url = config.get('redis_url', 'redis://localhost:6379')
@@ -167,7 +169,8 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         return serialized, compressed
     
     def _deserialize_data(self, data: bytes, compressed: bool = False) -> Any:
-        """Deserialize and optionally decompress data."""
+        """
+Deserialize and optionally decompress data."""
         # Decompress if needed
         if compressed:
             data = gzip.decompress(data)
@@ -184,7 +187,8 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a record in Redis cache."""
+        """
+Store a record in Redis cache."""
         start_time = time.time()
         
         try:
@@ -632,7 +636,8 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         return await self.store_record(record_id, data, metadata)
     
     async def get_statistics(self) -> StorageStats:
-        """Get cache statistics."""
+        """
+Get cache statistics."""
         try:
             # Get basic Redis info
             info = await self.redis_client.info('memory')
@@ -730,7 +735,8 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize in-memory cache storage provider."""
+        """
+Initialize in-memory cache storage provider."""
         super().__init__(provider_id, StorageBackendType.CACHE, config)
         
         self.max_size = config.get('max_size', 10000)  # Maximum number of entries
@@ -795,7 +801,8 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         return self.is_connected
     
     async def _cleanup_expired_entries(self) -> None:
-        """Background task to clean up expired entries."""
+        """
+Background task to clean up expired entries."""
         while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
@@ -835,7 +842,8 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a record in memory cache."""
+        """
+Store a record in memory cache."""
         try:
             self._evict_if_needed()
             
@@ -966,7 +974,8 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         return results
     
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record from memory cache."""
+        """
+Delete a record from memory cache."""
         try:
             removed = self._cache.pop(record_id, None) is not None
             self._access_times.pop(record_id, None)
@@ -991,7 +1000,8 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         self,
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
-        """Count records in memory cache."""
+        """
+Count records in memory cache."""
         current_time = time.time()
         count = 0
         
@@ -1002,7 +1012,8 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         return count
     
     async def get_statistics(self) -> StorageStats:
-        """Get memory cache statistics."""
+        """
+Get memory cache statistics."""
         try:
             # Count non-expired entries
             current_time = time.time()

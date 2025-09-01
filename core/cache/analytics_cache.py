@@ -4,6 +4,7 @@ High-performance caching for analytics data, metrics, and real-time statistics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of metrics tracked"""
+    """
+Types of metrics tracked"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -30,6 +33,7 @@ class MetricType(Enum):
 
 class TimeWindow(Enum):
     """Time windows for aggregation"""
+
     MINUTE = "1m"
     HOUR = "1h"
     DAY = "1d"
@@ -49,7 +53,8 @@ class MetricPoint:
 
 @dataclass
 class AnalyticsEvent:
-    """Analytics event structure"""
+    """
+Analytics event structure"""
     event_type: str
     user_id: Optional[str]
     session_id: Optional[str]
@@ -60,7 +65,8 @@ class AnalyticsEvent:
     user_agent: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 class AnalyticsCache:
@@ -121,7 +127,8 @@ class AnalyticsCache:
                          properties: Optional[Dict[str, Any]] = None,
                          ip_address: Optional[str] = None,
                          user_agent: Optional[str] = None) -> bool:
-        """Track analytics event"""
+        """
+Track analytics event"""
         
         event = AnalyticsEvent(
             event_type=event_type,
@@ -706,7 +713,8 @@ class AnalyticsCache:
         }
     
     async def close(self):
-        """Close cache connections"""
+        """
+Close cache connections"""
         await self.redis_cache.close()
         self.memory_cache.close()
 
@@ -739,7 +747,8 @@ class MetricsCache(AnalyticsCache):
         )
     
     async def increment_counter(self, metric_name: str, tags: Optional[Dict[str, str]] = None):
-        """Increment a counter metric"""
+        """
+Increment a counter metric"""
         await self.record_metric(
             metric_name,
             1,
@@ -748,7 +757,8 @@ class MetricsCache(AnalyticsCache):
         )
     
     async def set_gauge(self, metric_name: str, value: float, tags: Optional[Dict[str, str]] = None):
-        """Set a gauge metric value"""
+        """
+Set a gauge metric value"""
         await self.record_metric(
             metric_name,
             value,
@@ -757,7 +767,8 @@ class MetricsCache(AnalyticsCache):
         )
     
     async def get_dashboard_metrics(self) -> Dict[str, Any]:
-        """Get key metrics for dashboard display"""
+        """
+Get key metrics for dashboard display"""
         try:
             current_time = time.time()
             last_hour = current_time - 3600

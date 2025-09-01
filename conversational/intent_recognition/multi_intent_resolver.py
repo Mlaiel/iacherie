@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
@@ -26,7 +27,9 @@ from .exceptions import ClassificationError
 
 
 class IntentPriority(Enum):
-    """Intent priority levels for conflict resolution"""
+    """
+Intent priority levels for conflict resolution"""
+
     CRITICAL = 1    # Security, urgent issues
     HIGH = 2        # Core business functions
     MEDIUM = 3      # Standard operations
@@ -35,7 +38,9 @@ class IntentPriority(Enum):
 
 
 class ResolutionStrategy(Enum):
-    """Strategies for resolving intent conflicts"""
+    """
+Strategies for resolving intent conflicts"""
+
     HIGHEST_CONFIDENCE = "highest_confidence"
     PRIORITY_BASED = "priority_based"
     CONTEXT_AWARE = "context_aware"
@@ -59,7 +64,8 @@ class IntentCandidate:
 
 @dataclass
 class MultiIntentResult:
-    """Result of multi-intent resolution"""
+    """
+Result of multi-intent resolution"""
     primary_intent: IntentCategory
     secondary_intents: List[IntentCategory] = field(default_factory=list)
     resolution_strategy: ResolutionStrategy = ResolutionStrategy.HIGHEST_CONFIDENCE
@@ -93,7 +99,8 @@ class IntentPriorityManager:
         self.context_modifiers = self._initialize_context_modifiers()
     
     def _initialize_intent_priorities(self) -> Dict[IntentCategory, IntentPriority]:
-        """Initialize default intent priorities"""
+        """
+Initialize default intent priorities"""
         return {
             # Critical priorities (security, urgent issues)
             IntentCategory.PROTECTION_REPORT: IntentPriority.CRITICAL,
@@ -124,7 +131,8 @@ class IntentPriorityManager:
         }
     
     def _initialize_intent_dependencies(self) -> Dict[IntentCategory, List[IntentCategory]]:
-        """Initialize intent dependency relationships"""
+        """
+Initialize intent dependency relationships"""
         return {
             # Content workflow dependencies
             IntentCategory.CONTENT_ENHANCE: [IntentCategory.CONTENT_UPLOAD],
@@ -152,7 +160,8 @@ class IntentPriorityManager:
         }
     
     def _initialize_context_modifiers(self) -> Dict[str, Dict[IntentCategory, float]]:
-        """Initialize context-based priority modifiers"""
+        """
+Initialize context-based priority modifiers"""
         return {
             'urgent_context': {
                 IntentCategory.PROTECTION_REPORT: 1.5,
@@ -183,7 +192,8 @@ class IntentPriorityManager:
         intent: IntentCategory,
         context: Optional[Dict[str, Any]] = None
     ) -> IntentPriority:
-        """Get priority for intent with context adjustments"""
+        """
+Get priority for intent with context adjustments"""
         base_priority = self.intent_priorities.get(intent, IntentPriority.MEDIUM)
         
         if not context:
@@ -210,7 +220,8 @@ class IntentPriorityManager:
         target_intent: IntentCategory,
         completed_intents: List[IntentCategory]
     ) -> Tuple[bool, List[IntentCategory]]:
-        """Check if intent dependencies are satisfied"""
+        """
+Check if intent dependencies are satisfied"""
         dependencies = self.intent_dependencies.get(target_intent, [])
         missing_dependencies = [dep for dep in dependencies if dep not in completed_intents]
         
@@ -222,7 +233,8 @@ class IntentPriorityManager:
         completed_intents: List[IntentCategory],
         pending_intents: List[IntentCategory]
     ) -> float:
-        """Calculate dependency satisfaction score"""
+        """
+Calculate dependency satisfaction score"""
         dependencies = self.intent_dependencies.get(intent, [])
         
         if not dependencies:
@@ -267,7 +279,8 @@ class IntentConflictResolver:
         }
     
     def _initialize_conflict_rules(self) -> Dict[str, List[Tuple[IntentCategory, IntentCategory]]]:
-        """Initialize intent conflict rules"""
+        """
+Initialize intent conflict rules"""
         return {
             'mutually_exclusive': [
                 (IntentCategory.CONTENT_DELETE, IntentCategory.CONTENT_ENHANCE),
@@ -288,7 +301,8 @@ class IntentConflictResolver:
         self,
         intent_candidates: List[IntentCandidate]
     ) -> List[str]:
-        """Detect conflicts between intent candidates"""
+        """
+Detect conflicts between intent candidates"""
         conflicts = []
         
         for i, candidate1 in enumerate(intent_candidates):
@@ -324,7 +338,8 @@ class IntentConflictResolver:
         strategy: ResolutionStrategy,
         context: Optional[Dict[str, Any]] = None
     ) -> MultiIntentResult:
-        """Resolve conflicts using specified strategy"""
+        """
+Resolve conflicts using specified strategy"""
         
         try:
             if strategy == ResolutionStrategy.HIGHEST_CONFIDENCE:
@@ -388,7 +403,8 @@ class IntentConflictResolver:
         candidates: List[IntentCandidate],
         context: Optional[Dict[str, Any]] = None
     ) -> MultiIntentResult:
-        """Resolve by intent priorities"""
+        """
+Resolve by intent priorities"""
         
         # Update priorities with context
         for candidate in candidates:
@@ -417,7 +433,8 @@ class IntentConflictResolver:
         candidates: List[IntentCandidate],
         context: Optional[Dict[str, Any]] = None
     ) -> MultiIntentResult:
-        """Resolve using context-aware scoring"""
+        """
+Resolve using context-aware scoring"""
         
         # Calculate composite scores
         for candidate in candidates:
@@ -458,7 +475,8 @@ class IntentConflictResolver:
         candidates: List[IntentCandidate],
         context: Optional[Dict[str, Any]] = None
     ) -> MultiIntentResult:
-        """Resolve based on user preferences"""
+        """
+Resolve based on user preferences"""
         
         # Sort by user preference scores
         sorted_candidates = sorted(
@@ -482,7 +500,8 @@ class IntentConflictResolver:
         candidates: List[IntentCandidate],
         context: Optional[Dict[str, Any]] = None
     ) -> MultiIntentResult:
-        """Resolve for sequential execution"""
+        """
+Resolve for sequential execution"""
         
         # Sort by dependencies and priorities
         completed_intents = context.get('completed_intents', []) if context else []
@@ -520,7 +539,8 @@ class IntentConflictResolver:
         candidates: List[IntentCandidate],
         context: Optional[Dict[str, Any]] = None
     ) -> MultiIntentResult:
-        """Resolve for parallel execution"""
+        """
+Resolve for parallel execution"""
         
         # Filter out conflicting intents
         non_conflicting = []
@@ -688,7 +708,8 @@ class MultiIntentResolver(BaseService):
         context: Optional[Dict[str, Any]] = None,
         secondary: bool = False
     ) -> float:
-        """Calculate context relevance score for intent"""
+        """
+Calculate context relevance score for intent"""
         if not context:
             return 0.5
         
@@ -730,7 +751,8 @@ class MultiIntentResolver(BaseService):
         user_preferences: Optional[Dict[str, Any]] = None,
         secondary: bool = False
     ) -> float:
-        """Calculate user preference score for intent"""
+        """
+Calculate user preference score for intent"""
         if not user_preferences:
             return 0.5
         
@@ -754,7 +776,8 @@ class MultiIntentResolver(BaseService):
         result: ClassificationResult,
         context: Optional[Dict[str, Any]] = None
     ) -> float:
-        """Calculate temporal relevance score"""
+        """
+Calculate temporal relevance score"""
         if not context:
             return 0.5
         
@@ -768,7 +791,8 @@ class MultiIntentResolver(BaseService):
         resolution_time: float,
         success: bool
     ) -> None:
-        """Update performance metrics"""
+        """
+Update performance metrics"""
         try:
             self.performance_metrics['total_resolutions'] += 1
             
@@ -855,7 +879,8 @@ class MultiIntentResolver(BaseService):
         }
     
     def _get_top_performing_strategy(self) -> str:
-        """Get the best performing resolution strategy"""
+        """
+Get the best performing resolution strategy"""
         strategy_rates = self.performance_metrics['strategy_success_rates']
         
         if not strategy_rates:

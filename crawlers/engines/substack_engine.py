@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -48,7 +49,8 @@ settings = get_settings()
 
 @dataclass
 class SubstackPost:
-    """Substack post data structure"""
+    """
+Substack post data structure"""
     id: str
     title: str
     subtitle: Optional[str]
@@ -81,7 +83,8 @@ class SubstackPost:
 
 @dataclass
 class SubstackPublication:
-    """Substack publication data structure"""
+    """
+Substack publication data structure"""
     id: str
     name: str
     subdomain: str
@@ -106,7 +109,8 @@ class SubstackPublication:
 
 @dataclass
 class SubstackWriter:
-    """Substack writer data structure"""
+    """
+Substack writer data structure"""
     id: str
     name: str
     bio: Optional[str]
@@ -133,7 +137,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Substack crawler engine"""
+        """
+Initialize Substack crawler engine"""
         super().__init__(platform="substack", config=config)
         
         # Rate limiting
@@ -190,7 +195,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver"""
+        """
+Setup Selenium WebDriver"""
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -464,7 +470,8 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         pass
     
     def _parse_post_data(self, post_data: Dict[str, Any], subdomain: str) -> SubstackPost:
-        """Parse post data from API response"""
+        """
+Parse post data from API response"""
         try:
             return SubstackPost(
                 id=str(post_data.get('id', '')),

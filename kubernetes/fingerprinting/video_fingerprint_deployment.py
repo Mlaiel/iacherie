@@ -6,8 +6,9 @@ services using OpenCV, YOLO, and perceptual hashing for high-accuracy video
 content identification and protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class VideoProcessingQuality(Enum):
-    """Video processing quality levels"""
+    """
+Video processing quality levels"""
+
     FAST = "fast"
     BALANCED = "balanced"
     ACCURATE = "accurate"
@@ -31,6 +34,7 @@ class VideoProcessingQuality(Enum):
 
 class VideoResolution(Enum):
     """Supported video resolutions for processing"""
+
     SD_480P = "480p"
     HD_720P = "720p"
     FHD_1080P = "1080p"

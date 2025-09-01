@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -38,7 +39,8 @@ settings = get_settings()
 
 @dataclass
 class TwitterTweet:
-    """Twitter tweet data structure."""
+    """
+Twitter tweet data structure."""
     tweet_id: str
     text: str
     author_id: str
@@ -57,7 +59,8 @@ class TwitterTweet:
 
 @dataclass
 class TwitterUser:
-    """Twitter user data structure."""
+    """
+Twitter user data structure."""
     user_id: str
     username: str
     name: str
@@ -73,7 +76,8 @@ class TwitterUser:
 
 @dataclass 
 class TwitterSpace:
-    """Twitter Space data structure."""
+    """
+Twitter Space data structure."""
     space_id: str
     title: str
     state: str
@@ -106,7 +110,8 @@ class TwitterCrawler:
     """
     
     def __init__(self):
-        """Initialize Twitter crawler."""
+        """
+Initialize Twitter crawler."""
         # API credentials
         self.bearer_token = settings.TWITTER_BEARER_TOKEN
         self.api_key = settings.TWITTER_API_KEY
@@ -156,7 +161,8 @@ class TwitterCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -741,7 +747,8 @@ class TwitterCrawler:
         return keyword_sets
     
     def _calculate_tweet_similarity(self, tweet1: TwitterTweet, tweet2: TwitterTweet) -> float:
-        """Calculate similarity score between two tweets."""
+        """
+Calculate similarity score between two tweets."""
         # Text similarity
         text1_words = set(tweet1.text.lower().split())
         text2_words = set(tweet2.text.lower().split())
@@ -777,7 +784,8 @@ class TwitterCrawler:
         return similarity
     
     def _get_tweet_match_factors(self, tweet1: TwitterTweet, tweet2: TwitterTweet) -> List[str]:
-        """Get factors that contribute to tweet similarity."""
+        """
+Get factors that contribute to tweet similarity."""
         factors = []
         
         if tweet1.author_id == tweet2.author_id:

@@ -20,6 +20,7 @@ Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution,
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
 """
+
 from typing import Dict, List, Optional, Any, Union, Set
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of content collaboration."""
+    """
+Types of content collaboration."""
+
     FEATURED_ARTIST = "featured_artist"
     REMIX_COLLABORATION = "remix_collaboration"
     CROSS_PROMOTION = "cross_promotion"
@@ -48,6 +51,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status tracking."""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
@@ -60,6 +64,7 @@ class CollaborationStatus(Enum):
 
 class RevenueShareModel(Enum):
     """Revenue sharing models for collaborations."""
+
     EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     PERFORMANCE_BASED = "performance_based"
@@ -84,7 +89,8 @@ class CollaborationTerms:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal data structure."""
+    """
+Collaboration proposal data structure."""
     proposal_id: str
     initiator_id: str
     target_collaborators: List[str]
@@ -97,7 +103,8 @@ class CollaborationProposal:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert proposal to dictionary."""
+        """
+Convert proposal to dictionary."""
         return {
             "proposal_id": self.proposal_id,
             "initiator_id": self.initiator_id,
@@ -139,12 +146,14 @@ class ActiveCollaboration:
     
     @property
     def is_active(self) -> bool:
-        """Check if collaboration is currently active."""
+        """
+Check if collaboration is currently active."""
         now = datetime.utcnow()
         return self.start_date <= now <= self.end_date and self.status == CollaborationStatus.ACTIVE
     
     def calculate_revenue_distribution(self, total_revenue: Decimal) -> Dict[str, Decimal]:
-        """Calculate revenue distribution among participants."""
+        """
+Calculate revenue distribution among participants."""
         distribution = {}
         
         for participant_id in self.participants:
@@ -160,7 +169,8 @@ class ActiveCollaboration:
 
 
 class CollaborationMatchingEngine:
-    """AI-powered collaboration matching system."""
+    """
+AI-powered collaboration matching system."""
     
     def __init__(self):
         self.matching_criteria = {
@@ -177,7 +187,8 @@ class CollaborationMatchingEngine:
         collaboration_type: CollaborationType,
         preferences: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration matches using AI."""
+        """
+Find potential collaboration matches using AI."""
         try:
             # Simulate AI matching logic
             candidates = await self._get_potential_candidates(user_id, collaboration_type)
@@ -222,7 +233,8 @@ class CollaborationMatchingEngine:
         return min(base_score, 1.0)
     
     async def _get_compatibility_factors(self, user_id: str, candidate_id: str) -> Dict[str, float]:
-        """Get detailed compatibility factors."""
+        """
+Get detailed compatibility factors."""
         return {
             'genre_match': 0.85,
             'audience_overlap': 0.65,
@@ -232,7 +244,8 @@ class CollaborationMatchingEngine:
 
 
 class CollaborationEngine:
-    """Main collaboration management engine."""
+    """
+Main collaboration management engine."""
     
     def __init__(self):
         self.matching_engine = CollaborationMatchingEngine()
@@ -248,7 +261,8 @@ class CollaborationEngine:
         terms: CollaborationTerms,
         expires_in_days: int = 7
     ) -> CollaborationProposal:
-        """Create a new collaboration proposal."""
+        """
+Create a new collaboration proposal."""
         try:
             proposal_id = str(uuid.uuid4())
             expires_at = datetime.utcnow() + timedelta(days=expires_in_days)
@@ -445,7 +459,8 @@ class CollaborationEngine:
         return True  # Simplified for demo
     
     async def _activate_collaboration(self, proposal: CollaborationProposal) -> None:
-        """Activate the collaboration."""
+        """
+Activate the collaboration."""
         await self.activate_collaboration(proposal)
     
     async def _create_counter_proposal(
@@ -454,7 +469,8 @@ class CollaborationEngine:
         counter_user_id: str,
         counter_terms: CollaborationTerms
     ) -> CollaborationProposal:
-        """Create a counter-proposal."""
+        """
+Create a counter-proposal."""
         return await self.create_collaboration_proposal(
             initiator_id=counter_user_id,
             target_collaborators=[original_proposal.initiator_id],

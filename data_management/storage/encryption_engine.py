@@ -8,7 +8,7 @@ Enterprise encryption engine for secure content protection
 with advanced key management and compliance features.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -27,6 +27,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, BinaryIO
 import logging
 import asyncio
@@ -54,7 +55,9 @@ import cryptography.exceptions
 logger = logging.getLogger(__name__)
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
+    """
+Supported encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -64,6 +67,7 @@ class EncryptionAlgorithm(Enum):
 
 class KeyDerivationFunction(Enum):
     """Key derivation functions"""
+
     PBKDF2 = "pbkdf2"
     SCRYPT = "scrypt"
     ARGON2 = "argon2"
@@ -84,7 +88,8 @@ class EncryptionConfig:
 
 @dataclass
 class EncryptionResult:
-    """Result of encryption operation"""
+    """
+Result of encryption operation"""
     success: bool
     encrypted_data: Optional[bytes] = None
     key_id: Optional[str] = None
@@ -95,7 +100,8 @@ class EncryptionResult:
 
 @dataclass
 class DecryptionResult:
-    """Result of decryption operation"""
+    """
+Result of decryption operation"""
     success: bool
     decrypted_data: Optional[bytes] = None
     key_id: Optional[str] = None
@@ -105,7 +111,8 @@ class DecryptionResult:
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata"""
+    """
+Encryption key metadata"""
     key_id: str
     algorithm: EncryptionAlgorithm
     key_data: bytes
@@ -117,7 +124,8 @@ class EncryptionKey:
     backup_keys: List[bytes] = None
 
 class KeyManager:
-    """Secure key management system"""
+    """
+Secure key management system"""
     
     def __init__(self, config: EncryptionConfig):
         self.config = config
@@ -210,7 +218,8 @@ class KeyManager:
         return None
     
     def rotate_keys(self) -> Dict[str, Any]:
-        """Rotate expired keys"""
+        """
+Rotate expired keys"""
         rotated_keys = []
         current_time = datetime.now()
         
@@ -236,7 +245,8 @@ class KeyManager:
         }
     
     def _generate_key_id(self) -> str:
-        """Generate unique key identifier"""
+        """
+Generate unique key identifier"""
         timestamp = int(time.time())
         random_part = secrets.token_hex(8)
         return f"key_{timestamp}_{random_part}"
@@ -254,7 +264,8 @@ class EncryptionEngine:
     """
     
     def __init__(self, config: Optional[EncryptionConfig] = None):
-        """Initialize encryption engine"""
+        """
+Initialize encryption engine"""
         self.config = config or EncryptionConfig()
         self.key_manager = KeyManager(self.config)
         
@@ -465,7 +476,8 @@ class EncryptionEngine:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """AES-256-GCM encryption"""
+        """
+AES-256-GCM encryption"""
         nonce = secrets.token_bytes(self.config.nonce_length)
         
         cipher = Cipher(
@@ -493,7 +505,8 @@ class EncryptionEngine:
         key: EncryptionKey,
         metadata: Optional[Dict[str, Any]]
     ) -> bytes:
-        """AES-256-GCM decryption"""
+        """
+AES-256-GCM decryption"""
         nonce_len = self.config.nonce_length
         tag_len = 16  # GCM tag is always 16 bytes
         
@@ -515,7 +528,8 @@ class EncryptionEngine:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """AES-256-CBC encryption with PKCS7 padding"""
+        """
+AES-256-CBC encryption with PKCS7 padding"""
         iv = secrets.token_bytes(16)  # AES block size
         
         # Apply PKCS7 padding
@@ -547,7 +561,8 @@ class EncryptionEngine:
         key: EncryptionKey,
         metadata: Optional[Dict[str, Any]]
     ) -> bytes:
-        """AES-256-CBC decryption with PKCS7 padding removal"""
+        """
+AES-256-CBC decryption with PKCS7 padding removal"""
         iv = encrypted_data[:16]
         ciphertext = encrypted_data[16:]
         
@@ -569,7 +584,8 @@ class EncryptionEngine:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """ChaCha20-Poly1305 encryption"""
+        """
+ChaCha20-Poly1305 encryption"""
         nonce = secrets.token_bytes(12)  # ChaCha20 nonce is 12 bytes
         
         cipher = Cipher(
@@ -597,7 +613,8 @@ class EncryptionEngine:
         key: EncryptionKey,
         metadata: Optional[Dict[str, Any]]
     ) -> bytes:
-        """ChaCha20-Poly1305 decryption"""
+        """
+ChaCha20-Poly1305 decryption"""
         nonce = encrypted_data[:12]
         ciphertext = encrypted_data[12:]
         
@@ -615,7 +632,8 @@ class EncryptionEngine:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Fernet encryption (simplified wrapper)"""
+        """
+Fernet encryption (simplified wrapper)"""
         fernet = Fernet(key.key_data)
         encrypted_data = fernet.encrypt(data)
         
@@ -630,7 +648,8 @@ class EncryptionEngine:
         encrypted_data: bytes,
         key: EncryptionKey
     ) -> bytes:
-        """Fernet decryption"""
+        """
+Fernet decryption"""
         fernet = Fernet(key.key_data)
         return fernet.decrypt(encrypted_data)
     
@@ -639,7 +658,8 @@ class EncryptionEngine:
         data: bytes,
         key: EncryptionKey
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """RSA encryption (for small data or key encryption)"""
+        """
+RSA encryption (for small data or key encryption)"""
         private_key = serialization.load_pem_private_key(
             key.key_data,
             password=None,
@@ -704,7 +724,8 @@ class EncryptionEngine:
         encrypted_data: bytes,
         key: EncryptionKey
     ) -> bytes:
-        """RSA decryption"""
+        """
+RSA decryption"""
         private_key = serialization.load_pem_private_key(
             key.key_data,
             password=None,
@@ -751,7 +772,8 @@ class EncryptionEngine:
         data_size: int,
         processing_time: float
     ) -> None:
-        """Update encryption performance metrics"""
+        """
+Update encryption performance metrics"""
         self.metrics['total_encryptions'] += 1
         self.metrics['total_data_encrypted_mb'] += data_size / (1024 * 1024)
         
@@ -774,7 +796,8 @@ class EncryptionEngine:
         data_size: int,
         processing_time: float
     ) -> None:
-        """Update decryption performance metrics"""
+        """
+Update decryption performance metrics"""
         self.metrics['total_decryptions'] += 1
         
         # Update average decryption time
@@ -792,7 +815,8 @@ class EncryptionEngine:
         success: bool,
         error: Optional[str] = None
     ) -> None:
-        """Log encryption operation for audit trail"""
+        """
+Log encryption operation for audit trail"""
         log_entry = {
             'timestamp': datetime.now().isoformat(),
             'operation': 'encrypt',
@@ -817,7 +841,8 @@ class EncryptionEngine:
         success: bool,
         error: Optional[str] = None
     ) -> None:
-        """Log decryption operation for audit trail"""
+        """
+Log decryption operation for audit trail"""
         log_entry = {
             'timestamp': datetime.now().isoformat(),
             'operation': 'decrypt',
@@ -835,7 +860,8 @@ class EncryptionEngine:
             self.audit_log = self.audit_log[-10000:]
     
     def get_encryption_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive encryption statistics"""
+        """
+Get comprehensive encryption statistics"""
         return {
             'total_encryptions': self.metrics['total_encryptions'],
             'total_decryptions': self.metrics['total_decryptions'],
@@ -853,7 +879,8 @@ class EncryptionEngine:
         limit: int = 100,
         operation: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Get audit log entries"""
+        """
+Get audit log entries"""
         logs = self.audit_log
         
         if operation:
@@ -862,7 +889,8 @@ class EncryptionEngine:
         return logs[-limit:] if limit else logs
     
     async def rotate_keys(self) -> Dict[str, Any]:
-        """Trigger key rotation"""
+        """
+Trigger key rotation"""
         return self.key_manager.rotate_keys()
 
 # Export main classes

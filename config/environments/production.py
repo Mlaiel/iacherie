@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Configuration environnement production avec sécurité maximale.
 ==================================================================
 """
+
 import os
 import secrets
 from typing import Dict, Any, List, Optional
@@ -155,7 +156,8 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         return secrets.token_urlsafe(32)
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration production avec vérifications strictes"""
+        """
+Valide la configuration production avec vérifications strictes"""
         try:
             # Vérifications critiques pour production
             assert self.database_config is not None, "Configuration base de données requise"

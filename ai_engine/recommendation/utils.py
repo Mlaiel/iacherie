@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import hashlib
@@ -54,7 +55,8 @@ logger = structlog.get_logger(__name__)
 
 # Performance monitoring decorators
 def measure_performance(operation_name: str):
-    """Decorator to measure operation performance"""
+    """
+Decorator to measure operation performance"""
     def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
@@ -142,7 +144,8 @@ class ModelManager:
         self.logger = structlog.get_logger(__name__)
         
     async def load_model(self, model_name: str, model_path: str, force_reload: bool = False) -> Any:
-        """Load and cache AI models with intelligent management"""
+        """
+Load and cache AI models with intelligent management"""
         if model_name in self.model_cache and not force_reload:
             self.usage_stats[model_name] = self.usage_stats.get(model_name, 0) + 1
             return self.model_cache[model_name]
@@ -221,7 +224,8 @@ class ModelManager:
             return 0.0
     
     def get_model_stats(self) -> Dict[str, Any]:
-        """Get comprehensive model statistics"""
+        """
+Get comprehensive model statistics"""
         return {
             'cached_models': list(self.model_cache.keys()),
             'cache_size': len(self.model_cache),
@@ -236,7 +240,8 @@ class ModelManager:
 
 
 class PerformanceMonitor:
-    """Advanced performance monitoring and alerting system"""
+    """
+Advanced performance monitoring and alerting system"""
     
     def __init__(self):
         self.metrics = {}
@@ -251,7 +256,8 @@ class PerformanceMonitor:
         self.logger = structlog.get_logger(__name__)
     
     def record_metric(self, metric_name: str, value: float, tags: Dict[str, str] = None):
-        """Record a performance metric"""
+        """
+Record a performance metric"""
         timestamp = datetime.now()
         
         if metric_name not in self.metrics:
@@ -274,7 +280,8 @@ class PerformanceMonitor:
         self._check_alerts(metric_name, value)
     
     def _check_alerts(self, metric_name: str, value: float):
-        """Check if metric value triggers alerts"""
+        """
+Check if metric value triggers alerts"""
         if metric_name in self.thresholds:
             threshold = self.thresholds[metric_name]
             
@@ -345,11 +352,13 @@ class PerformanceMonitor:
 
 
 class DataValidator:
-    """Enterprise-grade data validation and sanitization"""
+    """
+Enterprise-grade data validation and sanitization"""
     
     @staticmethod
     def validate_user_profile(profile: UserProfile) -> List[str]:
-        """Validate user profile data"""
+        """
+Validate user profile data"""
         errors = []
         
         if not profile.user_id:
@@ -510,7 +519,8 @@ class CacheManager:
         }
     
     async def health_check(self) -> HealthCheck:
-        """Check cache health"""
+        """
+Check cache health"""
         try:
             if not self.redis_client:
                 return HealthCheck(
@@ -562,7 +572,8 @@ def generate_cache_key(*args, **kwargs) -> str:
 
 
 def calculate_similarity(vector1: np.ndarray, vector2: np.ndarray) -> float:
-    """Calculate cosine similarity between two vectors"""
+    """
+Calculate cosine similarity between two vectors"""
     try:
         # Handle zero vectors
         if np.linalg.norm(vector1) == 0 or np.linalg.norm(vector2) == 0:
@@ -593,7 +604,8 @@ def normalize_scores(scores: List[float]) -> List[float]:
 
 
 def weighted_score(scores: Dict[str, float], weights: Dict[str, float]) -> float:
-    """Calculate weighted average score"""
+    """
+Calculate weighted average score"""
     if not scores or not weights:
         return 0.0
     
@@ -609,7 +621,8 @@ def weighted_score(scores: Dict[str, float], weights: Dict[str, float]) -> float
 
 
 async def initialize_models() -> bool:
-    """Initialize all recommendation models"""
+    """
+Initialize all recommendation models"""
     try:
         logger.info("Starting model initialization process")
         
@@ -717,7 +730,8 @@ def performance_metrics() -> Dict[str, Any]:
 
 
 async def recommendation_validator(recommendations: List[ContentRecommendation]) -> List[str]:
-    """Validate recommendation quality and consistency"""
+    """
+Validate recommendation quality and consistency"""
     errors = []
     
     if not recommendations:
@@ -755,19 +769,22 @@ async def _validate_data(data: Any, schema: Dict[str, Any]) -> List[str]:
 
 
 async def _get_from_cache(cache_key: str) -> Optional[Any]:
-    """Internal cache retrieval helper"""
+    """
+Internal cache retrieval helper"""
     # This would use the global cache manager instance
     return None
 
 
 async def _set_to_cache(cache_key: str, value: Any, ttl: int) -> bool:
-    """Internal cache storage helper"""
+    """
+Internal cache storage helper"""
     # This would use the global cache manager instance
     return True
 
 
 def _generate_cache_key(func_name: str, prefix: str, args: tuple, kwargs: dict) -> str:
-    """Internal cache key generation helper"""
+    """
+Internal cache key generation helper"""
     return generate_cache_key(func_name, prefix, args, kwargs)
 
 import asyncio
@@ -809,7 +826,8 @@ from ..core.base_models import ModelStatus
 
 @dataclass
 class SystemHealth:
-    """System health status"""
+    """
+System health status"""
     status: str = "unknown"
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
@@ -1166,7 +1184,8 @@ class PerformanceTracker:
         self.start_time = datetime.now()
     
     def track_request(self, success: bool, response_time: float):
-        """Track a request and its performance"""
+        """
+Track a request and its performance"""
         self.metrics.total_requests += 1
         
         if success:
@@ -1189,22 +1208,26 @@ class PerformanceTracker:
             self.response_times = self.response_times[-1000:]
     
     def track_cache_hit(self):
-        """Track cache hit"""
+        """
+Track cache hit"""
         self.metrics.cache_hits += 1
     
     def track_cache_miss(self):
-        """Track cache miss"""
+        """
+Track cache miss"""
         self.metrics.cache_misses += 1
     
     def get_cache_hit_ratio(self) -> float:
-        """Calculate cache hit ratio"""
+        """
+Calculate cache hit ratio"""
         total_cache_requests = self.metrics.cache_hits + self.metrics.cache_misses
         if total_cache_requests == 0:
             return 0.0
         return self.metrics.cache_hits / total_cache_requests
     
     def get_metrics(self) -> PerformanceMetrics:
-        """Get current performance metrics"""
+        """
+Get current performance metrics"""
         # Update cache hit ratio
         if hasattr(self.metrics, 'cache_hit_ratio'):
             self.metrics.cache_hit_ratio = self.get_cache_hit_ratio()
@@ -1465,7 +1488,8 @@ def calculate_similarity(vector1: List[float], vector2: List[float]) -> float:
 
 
 def generate_content_hash(content: Dict[str, Any]) -> str:
-    """Generate consistent hash for content"""
+    """
+Generate consistent hash for content"""
     # Create a normalized string representation
     content_str = json.dumps(content, sort_keys=True, default=str)
     return hashlib.sha256(content_str.encode()).hexdigest()
@@ -1477,7 +1501,8 @@ async def batch_process(
     batch_size: int = 10,
     max_workers: int = 4
 ) -> List[Any]:
-    """Process items in batches with concurrency control"""
+    """
+Process items in batches with concurrency control"""
     results = []
     
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -1535,7 +1560,8 @@ async def validate_url(url: str) -> bool:
 
 
 def extract_hashtags(text: str) -> List[str]:
-    """Extract hashtags from text"""
+    """
+Extract hashtags from text"""
     import re
     hashtag_pattern = r'#\w+'
     hashtags = re.findall(hashtag_pattern, text)
@@ -1543,7 +1569,8 @@ def extract_hashtags(text: str) -> List[str]:
 
 
 def extract_mentions(text: str) -> List[str]:
-    """Extract mentions from text"""
+    """
+Extract mentions from text"""
     import re
     mention_pattern = r'@\w+'
     mentions = re.findall(mention_pattern, text)
@@ -1551,7 +1578,8 @@ def extract_mentions(text: str) -> List[str]:
 
 
 def normalize_platform_name(platform_name: str) -> Optional[Platform]:
-    """Normalize platform name to Platform enum"""
+    """
+Normalize platform name to Platform enum"""
     platform_mapping = {
         "youtube": Platform.YOUTUBE,
         "yt": Platform.YOUTUBE,

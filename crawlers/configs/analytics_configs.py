@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ import json
 from pathlib import Path
 
 class MetricType(Enum):
-    """Types of metrics to collect."""
+    """
+Types of metrics to collect."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -35,6 +38,7 @@ class MetricType(Enum):
 
 class AggregationType(Enum):
     """Aggregation methods for metrics."""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -46,6 +50,7 @@ class AggregationType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for analytics."""
+
     REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
@@ -57,6 +62,7 @@ class TimeGranularity(Enum):
 
 class DashboardType(Enum):
     """Types of analytics dashboards."""
+
     OPERATIONAL = "operational"
     BUSINESS = "business"
     TECHNICAL = "technical"
@@ -66,6 +72,7 @@ class DashboardType(Enum):
 
 class AlertCondition(Enum):
     """Alert condition types."""
+
     THRESHOLD_EXCEEDED = "threshold_exceeded"
     THRESHOLD_BELOW = "threshold_below"
     RATE_CHANGE = "rate_change"
@@ -192,7 +199,8 @@ class ReportingConfig:
 
 @dataclass
 class BusinessIntelligenceConfig:
-    """Configuration for business intelligence features."""
+    """
+Configuration for business intelligence features."""
     enabled: bool = True
     
     # Data mining
@@ -220,10 +228,12 @@ class BusinessIntelligenceConfig:
     data_exploration_tools: bool = True
 
 class AnalyticsConfigManager:
-    """Manager for analytics configurations."""
+    """
+Manager for analytics configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize analytics configuration manager."""
+        """
+Initialize analytics configuration manager."""
         self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.metrics: Dict[str, MetricDefinition] = {}
         self.dashboards: Dict[str, DashboardConfig] = {}
@@ -235,7 +245,8 @@ class AnalyticsConfigManager:
         self._setup_default_dashboards()
     
     def _load_configurations(self) -> None:
-        """Load analytics configurations from files."""
+        """
+Load analytics configurations from files."""
         try:
             config_file = self.config_dir / "analytics_config.json"
             if config_file.exists():
@@ -403,12 +414,14 @@ class AnalyticsConfigManager:
         self._save_configurations()
     
     def register_dashboard(self, dashboard: DashboardConfig) -> None:
-        """Register a new dashboard."""
+        """
+Register a new dashboard."""
         self.dashboards[dashboard.dashboard_id] = dashboard
         self._save_configurations()
     
     def get_metrics(self, enabled_only: bool = True, tags: Optional[List[str]] = None) -> List[MetricDefinition]:
-        """Get metrics, optionally filtered by enabled status and tags."""
+        """
+Get metrics, optionally filtered by enabled status and tags."""
         metrics = list(self.metrics.values())
         
         if enabled_only:
@@ -420,18 +433,21 @@ class AnalyticsConfigManager:
         return metrics
     
     def get_dashboard(self, dashboard_id: str) -> Optional[DashboardConfig]:
-        """Get dashboard configuration by ID."""
+        """
+Get dashboard configuration by ID."""
         return self.dashboards.get(dashboard_id)
     
     def get_dashboards_by_type(self, dashboard_type: DashboardType) -> List[DashboardConfig]:
-        """Get dashboards by type."""
+        """
+Get dashboards by type."""
         return [d for d in self.dashboards.values() if d.dashboard_type == dashboard_type]
     
     def generate_analytics_report(self, 
                                 start_time: datetime, 
                                 end_time: datetime,
                                 metrics: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Generate analytics report for specified time period."""
+        """
+Generate analytics report for specified time period."""
         report = {
             "period": {
                 "start": start_time.isoformat(),

@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -22,7 +23,8 @@ from azure.core.exceptions import AzureError
 
 @dataclass
 class AzureContainerConfig:
-    """Azure container configuration for specific content types."""
+    """
+Azure container configuration for specific content types."""
     
     name: str
     public_access: str = 'off'  # 'blob', 'container', 'off'
@@ -151,7 +153,8 @@ class AzureBlobConfig:
         return blob_service_client.get_container_client(container_name)
     
     def validate_configuration(self) -> bool:
-        """Validate Azure Blob Storage configuration and connectivity."""
+        """
+Validate Azure Blob Storage configuration and connectivity."""
         try:
             client = self.get_blob_service_client()
             # Test connectivity by listing containers
@@ -175,7 +178,8 @@ class AzureBlobConfig:
                 if key.endswith('-files')]
     
     def get_access_tier_for_content(self, content_type: str) -> str:
-        """Get appropriate access tier for content type."""
+        """
+Get appropriate access tier for content type."""
         container_key = f"{content_type}-files"
         if container_key in self.containers:
             return self.containers[container_key].tier
@@ -190,7 +194,8 @@ class AzureBlobConfig:
         }
     
     def get_lifecycle_management_policy(self) -> Dict[str, Any]:
-        """Get lifecycle management policy for blob storage optimization."""
+        """
+Get lifecycle management policy for blob storage optimization."""
         return {
             'rules': [
                 {

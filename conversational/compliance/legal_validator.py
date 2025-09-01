@@ -5,8 +5,9 @@ including risk assessment, regulatory compliance, and legal disclaimer managemen
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from ..security.encryption import EncryptionService
 
 
 class LegalRiskLevel(Enum):
-    """Legal risk severity levels"""
+    """
+Legal risk severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -31,6 +34,7 @@ class LegalRiskLevel(Enum):
 
 class LegalDomain(Enum):
     """Legal domain categories"""
+
     INTELLECTUAL_PROPERTY = "intellectual_property"
     PRIVACY_DATA = "privacy_data"
     DEFAMATION = "defamation"
@@ -59,7 +63,8 @@ class LegalRisk:
 
 @dataclass
 class LegalValidationResult:
-    """Legal validation result structure"""
+    """
+Legal validation result structure"""
     is_compliant: bool
     overall_risk_level: LegalRiskLevel
     risks: List[LegalRisk]
@@ -527,7 +532,8 @@ class LegalValidator:
         return LegalRiskLevel.NONE
     
     def _generate_violations(self, risks: List[LegalRisk]) -> List[Dict[str, Any]]:
-        """Generate violation records for high-risk content"""
+        """
+Generate violation records for high-risk content"""
         violations = []
         
         for risk in risks:
@@ -555,7 +561,8 @@ class LegalValidator:
         return list(recommendations)
     
     def _generate_disclaimers(self, risks: List[LegalRisk]) -> List[str]:
-        """Generate appropriate legal disclaimers"""
+        """
+Generate appropriate legal disclaimers"""
         disclaimers = set()
         
         for risk in risks:
@@ -565,7 +572,8 @@ class LegalValidator:
         return list(disclaimers)
     
     def _calculate_confidence_score(self, risks: List[LegalRisk]) -> float:
-        """Calculate confidence score for legal validation"""
+        """
+Calculate confidence score for legal validation"""
         if not risks:
             return 1.0
         
@@ -573,7 +581,8 @@ class LegalValidator:
         return total_confidence / len(risks)
     
     def _get_domain_recommendations(self, domain: LegalDomain) -> List[str]:
-        """Get domain-specific recommendations"""
+        """
+Get domain-specific recommendations"""
         recommendations = {
             LegalDomain.FINANCIAL_ADVICE: [
                 "Add financial advice disclaimers",
@@ -691,5 +700,6 @@ class LegalValidator:
         return list(self.jurisdiction_rules.keys())
     
     def get_risk_patterns_by_domain(self, domain: LegalDomain) -> List[Dict[str, Any]]:
-        """Get risk patterns for specific legal domain"""
+        """
+Get risk patterns for specific legal domain"""
         return self.legal_patterns.get(domain, [])

@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -40,7 +41,9 @@ settings = get_settings()
 
 
 class SimilarityMetric(Enum):
-    """Similarity calculation metrics"""
+    """
+Similarity calculation metrics"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -51,6 +54,7 @@ class SimilarityMetric(Enum):
 
 class SearchMode(Enum):
     """Search operation modes"""
+
     EXACT_MATCH = "exact_match"
     FUZZY_SEARCH = "fuzzy_search"
     SEMANTIC_SEARCH = "semantic_search"
@@ -60,6 +64,7 @@ class SearchMode(Enum):
 
 class RankingAlgorithm(Enum):
     """Result ranking algorithms"""
+
     SIMILARITY_SCORE = "similarity_score"
     WEIGHTED_FUSION = "weighted_fusion"
     RECIPROCAL_RANK = "reciprocal_rank"
@@ -85,7 +90,8 @@ class SearchQuery:
 
 @dataclass
 class SimilarityResult:
-    """Enhanced similarity search result"""
+    """
+Enhanced similarity search result"""
     content_id: str
     fingerprint_id: int
     similarity_score: float
@@ -100,7 +106,8 @@ class SimilarityResult:
 
 @dataclass
 class SearchExplanation:
-    """Detailed explanation of search results"""
+    """
+Detailed explanation of search results"""
     query_analysis: Dict[str, Any]
     matching_strategy: str
     ranking_factors: Dict[str, float]
@@ -111,7 +118,8 @@ class SearchExplanation:
 
 @dataclass
 class SearchSession:
-    """Search session for tracking and optimization"""
+    """
+Search session for tracking and optimization"""
     session_id: str
     user_id: int
     query_history: List[SearchQuery]
@@ -660,7 +668,8 @@ class SimilaritySearchEngine:
         query: SearchQuery,
         session: Optional[SearchSession]
     ) -> List[SimilarityResult]:
-        """Apply ranking algorithm to results"""
+        """
+Apply ranking algorithm to results"""
         if query.ranking_algorithm == RankingAlgorithm.SIMILARITY_SCORE:
             # Simple similarity-based ranking
             results.sort(key=lambda x: x.similarity_score, reverse=True)
@@ -727,7 +736,8 @@ class SimilaritySearchEngine:
         final_results: List[SimilarityResult],
         raw_results: List[Any]
     ) -> SearchExplanation:
-        """Generate detailed search explanation"""
+        """
+Generate detailed search explanation"""
         return SearchExplanation(
             query_analysis={
                 "content_type": query.content_type,
@@ -792,7 +802,8 @@ class SimilaritySearchEngine:
         return session
     
     def _generate_cache_key(self, query: SearchQuery) -> str:
-        """Generate cache key for query"""
+        """
+Generate cache key for query"""
         import hashlib
         
         key_data = {
@@ -916,17 +927,20 @@ class SimilaritySearchEngine:
         return float(cosine_similarity(vec1.reshape(1, -1), vec2.reshape(1, -1))[0, 0])
     
     def _euclidean_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate normalized euclidean distance (converted to similarity)"""
+        """
+Calculate normalized euclidean distance (converted to similarity)"""
         dist = euclidean_distances(vec1.reshape(1, -1), vec2.reshape(1, -1))[0, 0]
         return 1.0 / (1.0 + dist)  # Convert distance to similarity
     
     def _manhattan_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate normalized Manhattan distance (converted to similarity)"""
+        """
+Calculate normalized Manhattan distance (converted to similarity)"""
         dist = distance.cityblock(vec1, vec2)
         return 1.0 / (1.0 + dist)
     
     def _jaccard_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate Jaccard similarity (for binary vectors)"""
+        """
+Calculate Jaccard similarity (for binary vectors)"""
         # Convert to binary
         bin1 = (vec1 > 0.5).astype(int)
         bin2 = (vec2 > 0.5).astype(int)
@@ -937,7 +951,8 @@ class SimilaritySearchEngine:
         return intersection / max(union, 1)
     
     def _hamming_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate normalized Hamming distance (converted to similarity)"""
+        """
+Calculate normalized Hamming distance (converted to similarity)"""
         # Convert to binary
         bin1 = (vec1 > 0.5).astype(int)
         bin2 = (vec2 > 0.5).astype(int)
@@ -946,12 +961,14 @@ class SimilaritySearchEngine:
         return 1.0 - dist  # Convert distance to similarity
     
     def _pearson_correlation(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate Pearson correlation coefficient"""
+        """
+Calculate Pearson correlation coefficient"""
         correlation = np.corrcoef(vec1, vec2)[0, 1]
         return (correlation + 1.0) / 2.0  # Normalize to 0-1 range
     
     def _update_performance_metrics(self, response_time: float, result_count: int) -> None:
-        """Update search performance metrics"""
+        """
+Update search performance metrics"""
         # Update average response time
         total_searches = self.search_stats["total_searches"]
         current_avg = self.search_stats["avg_response_time"]

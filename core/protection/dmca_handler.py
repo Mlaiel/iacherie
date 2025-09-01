@@ -8,8 +8,9 @@ This module provides automated DMCA takedown request generation and submission:
 - Integration with legal databases and services
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 import aiohttp
@@ -39,7 +40,9 @@ settings = get_settings()
 
 
 class TakedownStatus(Enum):
-    """Status of DMCA takedown requests"""
+    """
+Status of DMCA takedown requests"""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     SUBMITTED = "submitted"
@@ -53,6 +56,7 @@ class TakedownStatus(Enum):
 
 class PlatformType(Enum):
     """Supported platforms for DMCA submissions"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -155,7 +159,8 @@ class PlatformConfig:
 
 
 class DMCATemplateEngine:
-    """Template engine for generating DMCA notices"""
+    """
+Template engine for generating DMCA notices"""
     
     def __init__(self):
         template_dir = Path(__file__).parent / "templates" / "dmca"
@@ -255,7 +260,8 @@ class DMCATemplateEngine:
         template_path.write_text(template_content)
     
     def generate_notice_html(self, dmca_notice: DMCANotice) -> str:
-        """Generate HTML DMCA notice"""
+        """
+Generate HTML DMCA notice"""
         try:
             template = self.template_env.get_template("basic_dmca_notice.html")
             
@@ -329,7 +335,8 @@ class PlatformSubmitter:
         self.platform_configs = self._load_platform_configs()
     
     def _load_platform_configs(self) -> Dict[PlatformType, PlatformConfig]:
-        """Load platform-specific configurations"""
+        """
+Load platform-specific configurations"""
         configs = {}
         
         # YouTube configuration
@@ -552,7 +559,8 @@ class DMCAHandler:
         )
     
     async def submit_takedown_request(self, violation_evidence: ViolationEvidence, evidence_data: Any = None) -> str:
-        """Submit automated DMCA takedown request"""
+        """
+Submit automated DMCA takedown request"""
         try:
             # Generate notice ID
             notice_id = f"dmca_{violation_evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
@@ -614,7 +622,8 @@ class DMCAHandler:
             return PlatformType.GENERIC_HOST
     
     def _create_dmca_notice(self, violation: ViolationEvidence, notice_id: str, platform: PlatformType) -> DMCANotice:
-        """Create DMCA notice from violation evidence"""
+        """
+Create DMCA notice from violation evidence"""
         dmca_notice = DMCANotice(
             notice_id=notice_id,
             violation_evidence=violation,
@@ -630,7 +639,8 @@ class DMCAHandler:
         return dmca_notice
     
     def _generate_work_description(self, violation: ViolationEvidence) -> str:
-        """Generate original work description"""
+        """
+Generate original work description"""
         violation_type = violation.violation_type
         
         if violation_type in [ViolationType.EXACT_DUPLICATE, ViolationType.MODIFIED_CONTENT]:
@@ -693,7 +703,8 @@ class DMCAHandler:
         }
     
     def get_dmca_statistics(self) -> Dict[str, Any]:
-        """Get DMCA system statistics"""
+        """
+Get DMCA system statistics"""
         total_notices = len(self.dmca_notices)
         
         if total_notices == 0:

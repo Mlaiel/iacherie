@@ -5,8 +5,9 @@ Professional data models for licensing management, royalty calculation,
 and revenue distribution in the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from datetime import datetime, date
 from typing import Optional, Dict, List, Any, Union
 from decimal import Decimal
@@ -26,7 +27,9 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """License type enumeration"""
+    """
+License type enumeration"""
+
     SYNC_LICENSING = "sync_licensing"
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
@@ -41,6 +44,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status enumeration"""
+
     DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
@@ -52,6 +56,7 @@ class LicenseStatus(Enum):
 
 class PaymentStatus(Enum):
     """Payment status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -63,6 +68,7 @@ class PaymentStatus(Enum):
 
 class RevenueSource(Enum):
     """Revenue source enumeration"""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     SYNC_LICENSE = "sync_license"
@@ -77,6 +83,7 @@ class RevenueSource(Enum):
 
 class TerritoryScope(Enum):
     """Territory scope enumeration"""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -88,6 +95,7 @@ class TerritoryScope(Enum):
 
 class UsageType(Enum):
     """Usage type enumeration"""
+
     COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     EDUCATIONAL = "educational"

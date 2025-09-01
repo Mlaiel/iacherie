@@ -12,7 +12,7 @@ Industrial Features:
 - Advanced threat hunting and investigation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -43,7 +44,9 @@ import networkx as nx
 logger = logging.getLogger(__name__)
 
 class ThreatSeverity(str, Enum):
-    """AI-assessed threat severity levels."""
+    """
+AI-assessed threat severity levels."""
+
     EXTREME = "extreme"         # Nation-state level, coordinated attacks
     CRITICAL = "critical"       # Organized crime, large-scale operations
     HIGH = "high"              # Professional piracy operations
@@ -53,6 +56,7 @@ class ThreatSeverity(str, Enum):
 
 class BehaviorPattern(str, Enum):
     """Behavioral pattern classifications."""
+
     SYSTEMATIC_SCRAPING = "systematic_scraping"
     MASS_DISTRIBUTION = "mass_distribution"
     MONETIZATION_FOCUSED = "monetization_focused"
@@ -64,6 +68,7 @@ class BehaviorPattern(str, Enum):
 
 class IntelligenceType(str, Enum):
     """Types of intelligence sources."""
+
     BEHAVIORAL = "behavioral"
     TECHNICAL = "technical"
     CONTEXTUAL = "contextual"
@@ -89,7 +94,8 @@ class ThreatIntelligence:
 
 @dataclass
 class BehavioralSignature:
-    """Behavioral signature for threat actors."""
+    """
+Behavioral signature for threat actors."""
     signature_id: str
     actor_fingerprint: str
     timing_patterns: Dict[str, Any]
@@ -100,7 +106,8 @@ class BehavioralSignature:
     success_indicators: Dict[str, float]
 
 class PredictiveThreatModel(BaseModel):
-    """Predictive threat assessment model."""
+    """
+Predictive threat assessment model."""
     model_id: str
     threat_type: str
     prediction_horizon: int  # hours
@@ -111,10 +118,12 @@ class PredictiveThreatModel(BaseModel):
     training_data_size: int
 
 class IntelligentSurveillanceEngine:
-    """Ultra-advanced AI surveillance and threat intelligence system."""
+    """
+Ultra-advanced AI surveillance and threat intelligence system."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the intelligent surveillance engine."""
+        """
+Initialize the intelligent surveillance engine."""
         self.config = config
         self.redis_client = None
         self.db_session = None
@@ -398,7 +407,8 @@ class IntelligentSurveillanceEngine:
         return [hour for hour, count in enumerate(hour_counts) if count > threshold]
 
     def _calculate_timing_consistency(self, hours: List[int]) -> float:
-        """Calculate consistency of timing patterns."""
+        """
+Calculate consistency of timing patterns."""
         if len(hours) < 2:
             return 0.0
         
@@ -409,7 +419,8 @@ class IntelligentSurveillanceEngine:
         return 1.0 - (entropy / max_entropy)
 
     def _detect_platform_hopping(self, time_patterns: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Detect platform hopping behavior."""
+        """
+Detect platform hopping behavior."""
         if len(time_patterns) < 2:
             return {"detected": False}
         

@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 import json
 import logging
@@ -46,7 +47,9 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class CVModelType(str, Enum):
-    """Computer vision model type enumeration."""
+    """
+Computer vision model type enumeration."""
+
     CLASSIFICATION = "classification"
     DETECTION = "detection"
     SEGMENTATION = "segmentation"
@@ -60,6 +63,7 @@ class CVModelType(str, Enum):
 
 class ImageFormat(str, Enum):
     """Image format enumeration."""
+
     JPEG = "jpeg"
     PNG = "png"
     BMP = "bmp"
@@ -69,6 +73,7 @@ class ImageFormat(str, Enum):
 
 class VideoFormat(str, Enum):
     """Video format enumeration."""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -78,6 +83,7 @@ class VideoFormat(str, Enum):
 
 class ProcessingQuality(str, Enum):
     """Processing quality enumeration."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -85,6 +91,7 @@ class ProcessingQuality(str, Enum):
 
 class FingerprintAlgorithm(str, Enum):
     """Fingerprinting algorithm enumeration."""
+
     PHASH = "phash"
     DHASH = "dhash"
     AHASH = "ahash"
@@ -110,7 +117,8 @@ class ImageMetadata:
 
 @dataclass
 class VideoMetadata:
-    """Video metadata information."""
+    """
+Video metadata information."""
     width: int
     height: int
     duration: float
@@ -125,7 +133,8 @@ class VideoMetadata:
 
 @dataclass
 class VisualFingerprint:
-    """Visual content fingerprint."""
+    """
+Visual content fingerprint."""
     fingerprint_id: str
     content_id: str
     algorithm: FingerprintAlgorithm
@@ -136,7 +145,8 @@ class VisualFingerprint:
 
 @dataclass
 class SimilarityResult:
-    """Visual similarity result."""
+    """
+Visual similarity result."""
     query_id: str
     match_id: str
     similarity_score: float
@@ -145,7 +155,8 @@ class SimilarityResult:
     match_metadata: Dict[str, Any]
 
 class CVModelConfig(BaseModel):
-    """Computer vision model configuration."""
+    """
+Computer vision model configuration."""
     model_id: str = Field(..., min_length=1)
     name: str = Field(..., min_length=1, max_length=255)
     model_type: CVModelType
@@ -165,7 +176,8 @@ class ComputerVisionModelRegistry:
     """
     
     def __init__(self):
-        """Initialize the computer vision model registry."""
+        """
+Initialize the computer vision model registry."""
         self.models = {}
         self.model_cache = {}
         self.deployment_configs = {}
@@ -451,16 +463,19 @@ class ComputerVisionModelRegistry:
         return self._create_generic_detector(config)
     
     async def _load_segmentation_model(self, config: CVModelConfig):
-        """Load segmentation model."""
+        """
+Load segmentation model."""
         # Mock segmentation model
         return self._create_generic_segmenter(config)
     
     async def _load_generic_model(self, config: CVModelConfig):
-        """Load generic model."""
+        """
+Load generic model."""
         return self._create_generic_model(config)
     
     def _create_generic_classifier(self, config: CVModelConfig):
-        """Create generic classification model."""
+        """
+Create generic classification model."""
         # Simple CNN classifier
         class SimpleCNN(nn.Module):
             def __init__(self, num_classes):
@@ -493,22 +508,26 @@ class ComputerVisionModelRegistry:
         return model
     
     def _create_generic_detector(self, config: CVModelConfig):
-        """Create generic detection model."""
+        """
+Create generic detection model."""
         # Mock detector
         return lambda x: torch.randn(1, 100, 4)  # Mock bounding boxes
     
     def _create_generic_segmenter(self, config: CVModelConfig):
-        """Create generic segmentation model."""
+        """
+Create generic segmentation model."""
         # Mock segmenter
         return lambda x: torch.randn(1, config.output_classes or 21, 224, 224)
     
     def _create_generic_model(self, config: CVModelConfig):
-        """Create generic model."""
+        """
+Create generic model."""
         # Mock generic model
         return lambda x: torch.randn(1, 10)
     
     async def _preprocess_input(self, input_data: np.ndarray, config: CVModelConfig) -> np.ndarray:
-        """Preprocess input data."""
+        """
+Preprocess input data."""
         # Convert to PIL Image for preprocessing
         if len(input_data.shape) == 3:
             image = Image.fromarray(input_data.astype(np.uint8))
@@ -574,7 +593,8 @@ class ComputerVisionModelRegistry:
         return 0.0
     
     def _update_model_stats(self, model_id: str, inference_time: float, success: bool):
-        """Update model performance statistics."""
+        """
+Update model performance statistics."""
         if model_id in self.performance_stats:
             stats = self.performance_stats[model_id]
             stats["total_inferences"] += 1
@@ -615,7 +635,8 @@ class ImageProcessingPipeline:
     """
     
     def __init__(self):
-        """Initialize the image processing pipeline."""
+        """
+Initialize the image processing pipeline."""
         self.processors = {}
         self.pipeline_configs = {}
         self.processing_stats = {}
@@ -783,7 +804,8 @@ class ImageProcessingPipeline:
         )
     
     async def _apply_processing_step(self, image: Image.Image, step: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply single processing step."""
+        """
+Apply single processing step."""
         step_type = step["type"]
         parameters = step.get("parameters", {})
         
@@ -876,7 +898,8 @@ class VideoAnalysisEngine:
     """
     
     def __init__(self):
-        """Initialize the video analysis engine."""
+        """
+Initialize the video analysis engine."""
         self.analyzers = {}
         self.video_cache = {}
         self.processing_queue = asyncio.Queue()
@@ -1069,7 +1092,8 @@ class ContentFingerprintingAI:
     """
     
     def __init__(self):
-        """Initialize the content fingerprinting system."""
+        """
+Initialize the content fingerprinting system."""
         self.fingerprint_store = {}
         self.algorithm_configs = {}
         self.similarity_cache = {}
@@ -1197,7 +1221,8 @@ class VisualSimilarityEngine:
     """
     
     def __init__(self, fingerprinting_ai: ContentFingerprintingAI):
-        """Initialize the visual similarity engine."""
+        """
+Initialize the visual similarity engine."""
         self.fingerprinting_ai = fingerprinting_ai
         self.similarity_models = {}
         self.similarity_cache = {}

@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class LicenseTypeEnum(str, Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -38,6 +41,7 @@ class LicenseTypeEnum(str, Enum):
 
 class UsageRightsEnum(str, Enum):
     """Types of usage rights"""
+
     REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution"
     PUBLIC_PERFORMANCE = "public_performance"
@@ -58,6 +62,7 @@ class UsageRightsEnum(str, Enum):
 
 class LicenseStatusEnum(str, Enum):
     """License agreement status"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -71,6 +76,7 @@ class LicenseStatusEnum(str, Enum):
 
 class TerritoryEnum(str, Enum):
     """Geographic territories for licensing"""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -90,6 +96,7 @@ class TerritoryEnum(str, Enum):
 
 class PaymentTermsEnum(str, Enum):
     """Payment terms for licensing"""
+
     UPFRONT = "upfront"
     QUARTERLY = "quarterly"
     SEMI_ANNUALLY = "semi_annually"

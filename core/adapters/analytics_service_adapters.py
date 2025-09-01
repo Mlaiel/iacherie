@@ -20,6 +20,7 @@ Supported Platforms:
 - Hotjar: Heatmaps, Session recordings, User feedback
 - Custom Analytics: Self-hosted analytics solutions
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -38,7 +39,9 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class AnalyticsPlatform(Enum):
-    """Supported analytics platforms."""
+    """
+Supported analytics platforms."""
+
     GOOGLE_ANALYTICS = "google_analytics"
     FACEBOOK_ANALYTICS = "facebook_analytics"
     ADOBE_ANALYTICS = "adobe_analytics"
@@ -52,6 +55,7 @@ class AnalyticsPlatform(Enum):
 
 class EventType(Enum):
     """Analytics event types."""
+
     PAGE_VIEW = "page_view"
     CLICK = "click"
     CONVERSION = "conversion"
@@ -71,6 +75,7 @@ class EventType(Enum):
 
 class MetricType(Enum):
     """Analytics metric types."""
+
     USERS = "users"
     SESSIONS = "sessions"
     PAGE_VIEWS = "page_views"
@@ -104,7 +109,8 @@ class AnalyticsEvent:
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query parameters."""
+    """
+Analytics query parameters."""
     start_date: datetime
     end_date: datetime
     metrics: List[MetricType]
@@ -562,7 +568,8 @@ class AnalyticsAdapterFactory:
     
     @classmethod
     def create_adapter(cls, platform: AnalyticsPlatform, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified analytics platform."""
+        """
+Create adapter for specified analytics platform."""
         if platform not in cls._adapters:
             raise AdapterError(f"Unsupported analytics platform: {platform}")
         

@@ -28,6 +28,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
 import logging
 import asyncio
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status."""
+    """
+Workflow execution status."""
+
     PENDING = "pending"                # Waiting to start
     RUNNING = "running"                # Currently executing
     PAUSED = "paused"                  # Temporarily paused
@@ -60,6 +63,7 @@ class WorkflowStatus(Enum):
 
 class WorkflowStepType(Enum):
     """Types of workflow steps."""
+
     NOTIFICATION = "notification"      # Send notification
     WAIT = "wait"                     # Wait for specified time
     CONDITION = "condition"           # Conditional branching
@@ -71,6 +75,7 @@ class WorkflowStepType(Enum):
 
 class WorkflowTrigger(Enum):
     """Workflow trigger types."""
+
     IMMEDIATE = "immediate"            # Execute immediately
     SCHEDULED = "scheduled"            # Execute at specific time
     CONDITIONAL = "conditional"        # Execute when condition met
@@ -96,7 +101,8 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition."""
+    """
+Complete workflow definition."""
     id: str
     name: str
     description: str
@@ -113,7 +119,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution instance."""
+    """
+Workflow execution instance."""
     id: str
     workflow_id: str
     user_id: str
@@ -130,7 +137,8 @@ class WorkflowExecution:
 
 @dataclass
 class WorkflowMetrics:
-    """Workflow performance metrics."""
+    """
+Workflow performance metrics."""
     workflow_id: str
     total_executions: int
     successful_completions: int
@@ -156,7 +164,8 @@ class WorkflowOrchestrator:
         notification_service: NotificationService,
         config: NotificationConfig
     ):
-        """Initialize workflow orchestrator."""
+        """
+Initialize workflow orchestrator."""
         self.notification_service = notification_service
         self.config = config
         self.business_rules = BUSINESS_RULES
@@ -785,7 +794,8 @@ class WorkflowOrchestrator:
             return False
     
     async def _evaluate_condition(self, execution: WorkflowExecution, condition: Dict[str, Any]) -> bool:
-        """Evaluate a single condition."""
+        """
+Evaluate a single condition."""
         try:
             condition_type = condition.get("type", "context")
             
@@ -875,13 +885,15 @@ class WorkflowOrchestrator:
         return elapsed_time > workflow_def.timeout
     
     def _get_next_sequential_step(self, execution: WorkflowExecution, current_step: WorkflowStep) -> Optional[str]:
-        """Get next sequential step if no explicit next step defined."""
+        """
+Get next sequential step if no explicit next step defined."""
         # This would implement logic to find the next step
         # For now, return None to end workflow
         return None
     
     def _create_escalated_notification(self, execution: WorkflowExecution, config: Dict[str, Any]):
-        """Create escalated notification request."""
+        """
+Create escalated notification request."""
         from .notification_models import NotificationRequest, NotificationContent
         
         return NotificationRequest(
@@ -1274,23 +1286,28 @@ class WorkflowOrchestrator:
         return self._active_executions.get(execution_id)
     
     def get_workflow_metrics(self, workflow_id: str) -> Optional[WorkflowMetrics]:
-        """Get workflow performance metrics."""
+        """
+Get workflow performance metrics."""
         return self._workflow_metrics.get(workflow_id)
     
     def get_orchestrator_stats(self) -> Dict[str, Any]:
-        """Get orchestrator performance statistics."""
+        """
+Get orchestrator performance statistics."""
         return self.orchestrator_stats.copy()
     
     def list_active_workflows(self) -> List[WorkflowExecution]:
-        """List all active workflow executions."""
+        """
+List all active workflow executions."""
         return list(self._active_executions.values())
     
     def list_workflow_definitions(self) -> List[WorkflowDefinition]:
-        """List all available workflow definitions."""
+        """
+List all available workflow definitions."""
         return list(self._workflow_definitions.values())
     
     async def shutdown(self):
-        """Shutdown workflow orchestrator."""
+        """
+Shutdown workflow orchestrator."""
         try:
             # Cancel background tasks
             for task in self._background_tasks:

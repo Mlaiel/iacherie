@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import sys
@@ -35,14 +36,16 @@ logger = logging.getLogger(__name__)
 
 
 class ProductionScalingDeployer:
-    """Deploy production scaling configuration"""
+    """
+Deploy production scaling configuration"""
     
     def __init__(self):
         self.scaling_manager = ResourceScalingManager()
         self.deployment_results = []
     
     async def deploy_production_hpa_configurations(self) -> Dict[str, Any]:
-        """Deploy all production HPA configurations"""
+        """
+Deploy all production HPA configurations"""
         logger.info("🚀 Deploying Production HPA Configurations...")
         
         hpa_configs = [

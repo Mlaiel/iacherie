@@ -7,6 +7,7 @@ behavioral segmentation, and predictive audience growth modeling for content cre
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from collections import defaultdict, Counter
 logger = logging.getLogger(__name__)
 
 class AudienceSegment(Enum):
-    """Predefined audience segments for targeted analysis"""
+    """
+Predefined audience segments for targeted analysis"""
+
     CORE_FANS = "core_fans"
     CASUAL_FOLLOWERS = "casual_followers"
     POTENTIAL_CONVERTS = "potential_converts"
@@ -38,6 +41,7 @@ class AudienceSegment(Enum):
 
 class DemographicCategory(Enum):
     """Demographic categories for audience analysis"""
+
     AGE_GROUP = "age_group"
     GENDER = "gender"
     LOCATION = "location"
@@ -64,7 +68,8 @@ class AudienceProfile:
 
 @dataclass
 class AudienceInsight:
-    """AI-generated audience insight with actionable recommendations"""
+    """
+AI-generated audience insight with actionable recommendations"""
     insight_id: str
     creator_id: str
     insight_category: str
@@ -91,7 +96,8 @@ class AudienceIntelligenceSystem:
         self.behavioral_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize audience intelligence system"""
+        """
+Initialize audience intelligence system"""
         try:
             await self._setup_database_tables()
             await self._load_audience_models()
@@ -155,7 +161,8 @@ class AudienceIntelligenceSystem:
             """)
 
     async def _load_audience_models(self) -> None:
-        """Load pre-trained audience segmentation models"""
+        """
+Load pre-trained audience segmentation models"""
         # In full implementation, this would load actual ML models
         self.segment_models = {
             'engagement_cluster': KMeans(n_clusters=7, random_state=42),
@@ -164,12 +171,14 @@ class AudienceIntelligenceSystem:
         }
 
     async def _initialize_segmentation_algorithms(self) -> None:
-        """Initialize audience segmentation algorithms"""
+        """
+Initialize audience segmentation algorithms"""
         # Initialize clustering and segmentation algorithms
         pass
 
     async def analyze_audience_comprehensive(self, creator_id: str, platform: str) -> AudienceProfile:
-        """Perform comprehensive audience analysis with AI-powered insights"""
+        """
+Perform comprehensive audience analysis with AI-powered insights"""
         try:
             # Collect audience data from multiple sources
             demographic_data = await self._collect_demographic_data(creator_id, platform)
@@ -473,7 +482,8 @@ class AudienceIntelligenceSystem:
         return (current - previous) / previous
 
     def _calculate_acceleration(self, series: List[float]) -> float:
-        """Calculate growth acceleration"""
+        """
+Calculate growth acceleration"""
         if len(series) < 14:  # Need at least 2 weeks
             return 0.0
         
@@ -483,7 +493,8 @@ class AudienceIntelligenceSystem:
         return recent_growth - previous_growth
 
     async def _generate_audience_insights(self, creator_id: str, demographic_data: Dict, behavioral_data: Dict, segment_distribution: Dict) -> List[str]:
-        """Generate AI-powered audience insights and recommendations"""
+        """
+Generate AI-powered audience insights and recommendations"""
         insights = []
         
         try:

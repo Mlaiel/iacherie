@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceChannel(Enum):
-    """Surveillance integration channels"""
+    """
+Surveillance integration channels"""
+
     WEB_MONITORING = "web_monitoring"
     PLATFORM_CRAWLER = "platform_crawler"
     SOCIAL_MEDIA = "social_media"
@@ -56,6 +59,7 @@ class SurveillanceChannel(Enum):
 
 class IntegrationStatus(Enum):
     """Integration connection status"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     ERROR = "error"
@@ -65,6 +69,7 @@ class IntegrationStatus(Enum):
 
 class SurveillanceEvent(Enum):
     """Types of surveillance events"""
+
     CONTENT_DETECTED = "content_detected"
     SIMILARITY_MATCH = "similarity_match"
     VIOLATION_SUSPECTED = "violation_suspected"
@@ -91,7 +96,8 @@ class SurveillanceMessage:
 
 @dataclass
 class SurveillanceConnection:
-    """Surveillance system connection details"""
+    """
+Surveillance system connection details"""
     channel: SurveillanceChannel
     status: IntegrationStatus = IntegrationStatus.DISCONNECTED
     endpoint_url: Optional[str] = None
@@ -104,7 +110,8 @@ class SurveillanceConnection:
 
 @dataclass
 class MonitoringRequest:
-    """Request for content monitoring"""
+    """
+Request for content monitoring"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     fingerprint_id: str = ""
     content_metadata: Optional[ContentMetadata] = None
@@ -182,7 +189,8 @@ class SurveillanceIntegrationManager:
         )
     
     async def start(self):
-        """Start surveillance integration system"""
+        """
+Start surveillance integration system"""
         if self.running:
             logger.warning("Surveillance integration already running")
             return
@@ -415,7 +423,8 @@ class SurveillanceIntegrationManager:
         event_type: SurveillanceEvent, 
         handler: Callable[[SurveillanceMessage], None]
     ):
-        """Register message handler for specific event type"""
+        """
+Register message handler for specific event type"""
         if event_type not in self.message_handlers:
             self.message_handlers[event_type] = []
         self.message_handlers[event_type].append(handler)
@@ -474,7 +483,8 @@ class SurveillanceIntegrationManager:
         metadata: Optional[ContentMetadata] = None,
         **kwargs
     ) -> str:
-        """Request content monitoring across surveillance networks"""
+        """
+Request content monitoring across surveillance networks"""
         request = MonitoringRequest(
             fingerprint_id=fingerprint_id,
             content_metadata=metadata,
@@ -614,7 +624,8 @@ class SurveillanceIntegrationManager:
         return status
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get monitoring statistics"""
+        """
+Get monitoring statistics"""
         return {
             'active_monitors': len(self.active_monitors),
             'total_handlers': sum(len(handlers) for handlers in self.message_handlers.values()),
@@ -636,7 +647,8 @@ _surveillance_manager: Optional[SurveillanceIntegrationManager] = None
 
 
 def get_surveillance_manager(config: Optional[FingerprintingSystemConfig] = None) -> SurveillanceIntegrationManager:
-    """Get or create surveillance integration manager instance"""
+    """
+Get or create surveillance integration manager instance"""
     global _surveillance_manager
     
     if _surveillance_manager is None:
@@ -649,7 +661,8 @@ def get_surveillance_manager(config: Optional[FingerprintingSystemConfig] = None
 
 
 def reset_surveillance_manager():
-    """Reset surveillance integration manager (for testing)"""
+    """
+Reset surveillance integration manager (for testing)"""
     global _surveillance_manager
     if _surveillance_manager:
         asyncio.create_task(_surveillance_manager.stop())
@@ -665,7 +678,8 @@ async def send_surveillance_message(
     target_channel: Optional[SurveillanceChannel] = None,
     priority: int = 5
 ) -> bool:
-    """Send surveillance message convenience function"""
+    """
+Send surveillance message convenience function"""
     manager = get_surveillance_manager()
     
     message = SurveillanceMessage(
@@ -685,7 +699,8 @@ async def request_monitoring(
     platforms: List[str],
     **kwargs
 ) -> str:
-    """Request content monitoring convenience function"""
+    """
+Request content monitoring convenience function"""
     manager = get_surveillance_manager()
     return await manager.request_content_monitoring(
         fingerprint_id, platforms, **kwargs
@@ -693,6 +708,7 @@ async def request_monitoring(
 
 
 async def stop_monitoring(request_id: str) -> bool:
-    """Stop monitoring convenience function"""
+    """
+Stop monitoring convenience function"""
     manager = get_surveillance_manager()
     return await manager.stop_monitoring(request_id)

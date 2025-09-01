@@ -9,6 +9,7 @@ This addresses the immediate testing gap while bypassing configuration issues.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Validate critical unit tests implementation
 """
+
 import sys
 import asyncio
 import traceback
@@ -18,7 +19,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 async def run_fingerprinting_tests():
-    """Run fingerprinting agent tests."""
+    """
+Run fingerprinting agent tests."""
     print("🚀 Running Critical Unit Tests for Ainflue Platform")
     print("=" * 60)
     

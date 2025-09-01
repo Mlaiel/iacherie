@@ -4,6 +4,7 @@ Enterprise-grade role-based access control with fine-grained permissions
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Backend Senior + Database Administrator
 """
+
 import json
 import re
 from datetime import datetime, timezone, timedelta
@@ -22,12 +23,15 @@ logger = logging.getLogger(__name__)
 
 
 class AuthorizationError(Exception):
-    """Custom authorization exception"""
+    """
+Custom authorization exception"""
     pass
 
 
 class AccessDecision(Enum):
-    """Access control decision enumeration"""
+    """
+Access control decision enumeration"""
+
     ALLOW = "allow"
     DENY = "deny"
     ABSTAIN = "abstain"
@@ -36,6 +40,7 @@ class AccessDecision(Enum):
 
 class PermissionType(Enum):
     """Permission type enumeration"""
+
     READ = "read"
     WRITE = "write"
     DELETE = "delete"
@@ -50,6 +55,7 @@ class PermissionType(Enum):
 
 class ResourceType(Enum):
     """Resource type enumeration"""
+
     CONTENT = "content"
     USER = "user"
     ROLE = "role"
@@ -64,6 +70,7 @@ class ResourceType(Enum):
 
 class PermissionScope(Enum):
     """Permission scope enumeration"""
+
     GLOBAL = "global"
     ORGANIZATION = "organization"
     PROJECT = "project"
@@ -84,12 +91,14 @@ class Permission:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def is_expired(self) -> bool:
-        """Check if permission has expired"""
+        """
+Check if permission has expired"""
         return self.expires_at is not None and datetime.now(timezone.utc) > self.expires_at
     
     def matches_request(self, resource_type: ResourceType, permission_type: PermissionType,
                        scope: PermissionScope = None) -> bool:
-        """Check if permission matches the request"""
+        """
+Check if permission matches the request"""
         if self.is_expired():
             return False
         
@@ -105,7 +114,8 @@ class Permission:
 
 @dataclass
 class Role:
-    """Role data structure"""
+    """
+Role data structure"""
     name: str
     description: str
     permissions: Set[Permission] = field(default_factory=set)
@@ -116,23 +126,27 @@ class Role:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def add_permission(self, permission: Permission):
-        """Add permission to role"""
+        """
+Add permission to role"""
         self.permissions.add(permission)
     
     def remove_permission(self, permission: Permission):
-        """Remove permission from role"""
+        """
+Remove permission from role"""
         self.permissions.discard(permission)
     
     def has_permission(self, resource_type: ResourceType, permission_type: PermissionType,
                       scope: PermissionScope = None) -> bool:
-        """Check if role has specific permission"""
+        """
+Check if role has specific permission"""
         return any(p.matches_request(resource_type, permission_type, scope) 
                   for p in self.permissions if not p.is_expired())
 
 
 @dataclass
 class AccessRequest:
-    """Access request data structure"""
+    """
+Access request data structure"""
     user_id: str
     resource_type: ResourceType
     resource_id: Optional[str]
@@ -144,7 +158,8 @@ class AccessRequest:
 
 @dataclass
 class AccessDecisionResult:
-    """Access decision result"""
+    """
+Access decision result"""
     decision: AccessDecision
     reason: str
     user_id: str
@@ -156,22 +171,26 @@ class AccessDecisionResult:
 
 
 class AccessControlPolicy(ABC):
-    """Abstract base class for access control policies"""
+    """
+Abstract base class for access control policies"""
     
     @abstractmethod
     def evaluate(self, request: AccessRequest, user_roles: List[Role], 
                 context: Dict[str, Any]) -> AccessDecisionResult:
-        """Evaluate access request against policy"""
+        """
+Evaluate access request against policy"""
         pass
     
     @abstractmethod
     def get_policy_name(self) -> str:
-        """Get policy name"""
+        """
+Get policy name"""
         pass
 
 
 class RoleBasedAccessPolicy(AccessControlPolicy):
-    """Role-based access control policy"""
+    """
+Role-based access control policy"""
     
     def get_policy_name(self) -> str:
         return "RBAC"
@@ -358,13 +377,15 @@ class PolicyEngine:
         self.policy_weights[policy.get_policy_name()] = weight
     
     def remove_policy(self, policy_name: str):
-        """Remove access control policy"""
+        """
+Remove access control policy"""
         self.policies = [p for p in self.policies if p.get_policy_name() != policy_name]
         self.policy_weights.pop(policy_name, None)
     
     def evaluate_access(self, request: AccessRequest, user_roles: List[Role], 
                        context: Dict[str, Any]) -> AccessDecisionResult:
-        """Evaluate access request using all policies"""
+        """
+Evaluate access request using all policies"""
         
         if not self.policies:
             return AccessDecisionResult(
@@ -523,7 +544,8 @@ class PolicyEngine:
 
 
 class PermissionManager:
-    """Permission management system"""
+    """
+Permission management system"""
     
     def __init__(self):
         self.permissions: Dict[str, Permission] = {}
@@ -534,7 +556,8 @@ class PermissionManager:
                          permission_type: PermissionType, scope: PermissionScope,
                          conditions: Dict[str, Any] = None, 
                          expires_at: datetime = None) -> Permission:
-        """Create new permission"""
+        """
+Create new permission"""
         
         permission = Permission(
             name=name,
@@ -549,12 +572,14 @@ class PermissionManager:
         return permission
     
     def get_permission(self, name: str) -> Optional[Permission]:
-        """Get permission by name"""
+        """
+Get permission by name"""
         return self.permissions.get(name)
     
     def list_permissions(self, resource_type: ResourceType = None, 
                         permission_type: PermissionType = None) -> List[Permission]:
-        """List permissions with optional filtering"""
+        """
+List permissions with optional filtering"""
         
         permissions = list(self.permissions.values())
         
@@ -567,11 +592,13 @@ class PermissionManager:
         return permissions
     
     def delete_permission(self, name: str) -> bool:
-        """Delete permission"""
+        """
+Delete permission"""
         return self.permissions.pop(name, None) is not None
     
     def create_default_permissions(self):
-        """Create default system permissions"""
+        """
+Create default system permissions"""
         
         default_permissions = [
             # Content permissions
@@ -619,7 +646,8 @@ class RoleBasedAccessControl:
     
     def create_role(self, name: str, description: str, 
                    parent_roles: List[str] = None) -> Role:
-        """Create new role"""
+        """
+Create new role"""
         
         role = Role(
             name=name,
@@ -636,11 +664,13 @@ class RoleBasedAccessControl:
         return role
     
     def get_role(self, name: str) -> Optional[Role]:
-        """Get role by name"""
+        """
+Get role by name"""
         return self.roles.get(name)
     
     def assign_permission_to_role(self, role_name: str, permission_name: str) -> bool:
-        """Assign permission to role"""
+        """
+Assign permission to role"""
         role = self.roles.get(role_name)
         permission = self.permission_manager.get_permission(permission_name)
         
@@ -651,7 +681,8 @@ class RoleBasedAccessControl:
         return False
     
     def remove_permission_from_role(self, role_name: str, permission_name: str) -> bool:
-        """Remove permission from role"""
+        """
+Remove permission from role"""
         role = self.roles.get(role_name)
         permission = self.permission_manager.get_permission(permission_name)
         
@@ -662,7 +693,8 @@ class RoleBasedAccessControl:
         return False
     
     def assign_role_to_user(self, user_id: str, role_name: str) -> bool:
-        """Assign role to user"""
+        """
+Assign role to user"""
         if role_name in self.roles:
             self.user_roles[user_id].add(role_name)
             return True
@@ -670,7 +702,8 @@ class RoleBasedAccessControl:
         return False
     
     def remove_role_from_user(self, user_id: str, role_name: str) -> bool:
-        """Remove role from user"""
+        """
+Remove role from user"""
         if role_name in self.user_roles.get(user_id, set()):
             self.user_roles[user_id].remove(role_name)
             return True
@@ -678,7 +711,8 @@ class RoleBasedAccessControl:
         return False
     
     def get_user_roles(self, user_id: str, include_inherited: bool = True) -> List[Role]:
-        """Get user roles with optional inheritance"""
+        """
+Get user roles with optional inheritance"""
         direct_roles = self.user_roles.get(user_id, set())
         
         if not include_inherited:
@@ -694,14 +728,16 @@ class RoleBasedAccessControl:
     
     def user_has_permission(self, user_id: str, resource_type: ResourceType,
                            permission_type: PermissionType, scope: PermissionScope = None) -> bool:
-        """Check if user has specific permission"""
+        """
+Check if user has specific permission"""
         user_roles = self.get_user_roles(user_id, include_inherited=True)
         
         return any(role.has_permission(resource_type, permission_type, scope) 
                   for role in user_roles)
     
     def _get_inherited_roles(self, role_name: str) -> Set[str]:
-        """Get all inherited roles recursively"""
+        """
+Get all inherited roles recursively"""
         inherited = set()
         
         if role_name in self.roles:
@@ -713,7 +749,8 @@ class RoleBasedAccessControl:
         return inherited
     
     def create_default_roles(self):
-        """Create default system roles"""
+        """
+Create default system roles"""
         
         # Create base roles
         self.create_role("admin", "System Administrator with full access")
@@ -766,21 +803,25 @@ class ResourceAccessManager:
         self.resource_attributes: Dict[str, Dict[str, Any]] = defaultdict(dict)
     
     def set_resource_owner(self, resource_id: str, owner_id: str):
-        """Set resource owner"""
+        """
+Set resource owner"""
         self.resource_owners[resource_id] = owner_id
     
     def get_resource_owner(self, resource_id: str) -> Optional[str]:
-        """Get resource owner"""
+        """
+Get resource owner"""
         return self.resource_owners.get(resource_id)
     
     def grant_resource_access(self, resource_id: str, user_id: str, 
                              permissions: List[str]):
-        """Grant specific permissions to user for resource"""
+        """
+Grant specific permissions to user for resource"""
         self.resource_permissions[resource_id][user_id].update(permissions)
     
     def revoke_resource_access(self, resource_id: str, user_id: str, 
                               permissions: List[str] = None):
-        """Revoke permissions from user for resource"""
+        """
+Revoke permissions from user for resource"""
         if permissions is None:
             # Revoke all permissions
             self.resource_permissions[resource_id].pop(user_id, None)
@@ -789,7 +830,8 @@ class ResourceAccessManager:
     
     def check_resource_access(self, resource_id: str, user_id: str, 
                              permission: str) -> bool:
-        """Check if user has specific permission for resource"""
+        """
+Check if user has specific permission for resource"""
         
         # Owner has all permissions
         if self.resource_owners.get(resource_id) == user_id:
@@ -800,16 +842,19 @@ class ResourceAccessManager:
         return permission in user_permissions
     
     def set_resource_attributes(self, resource_id: str, attributes: Dict[str, Any]):
-        """Set resource attributes for policy evaluation"""
+        """
+Set resource attributes for policy evaluation"""
         self.resource_attributes[resource_id].update(attributes)
     
     def get_resource_attributes(self, resource_id: str) -> Dict[str, Any]:
-        """Get resource attributes"""
+        """
+Get resource attributes"""
         return self.resource_attributes.get(resource_id, {})
 
 
 class AuthorizationManager:
-    """Main authorization manager"""
+    """
+Main authorization manager"""
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
@@ -874,7 +919,8 @@ class AuthorizationManager:
     
     async def bulk_authorize(self, requests: List[Tuple[str, ResourceType, str, PermissionType]],
                            context: Dict[str, Any] = None) -> List[AccessDecisionResult]:
-        """Authorize multiple access requests efficiently"""
+        """
+Authorize multiple access requests efficiently"""
         
         results = []
         for user_id, resource_type, resource_id, permission_type in requests:
@@ -885,11 +931,13 @@ class AuthorizationManager:
         return results
     
     def grant_permission(self, user_id: str, role_name: str) -> bool:
-        """Grant role to user"""
+        """
+Grant role to user"""
         return self.rbac.assign_role_to_user(user_id, role_name)
     
     def revoke_permission(self, user_id: str, role_name: str) -> bool:
-        """Revoke role from user"""
+        """
+Revoke role from user"""
         return self.rbac.remove_role_from_user(user_id, role_name)
     
     def create_resource_policy(self, resource_id: str, owner_id: str, 
@@ -912,7 +960,8 @@ class AuthorizationManager:
         return True
     
     def _get_cache_key(self, request: AccessRequest) -> str:
-        """Generate cache key for access request"""
+        """
+Generate cache key for access request"""
         return f"{request.user_id}:{request.resource_type.value}:{request.resource_id}:{request.permission_type.value}"
     
     async def _log_access_decision(self, request: AccessRequest, 

@@ -6,7 +6,7 @@ content recommendations, collaboration matching, revenue optimization,
 trend analysis, and intelligent recommendation algorithms.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -30,6 +30,7 @@ User Behavior → Content Analysis → Preference Modeling → Algorithm Selecti
 → Collaboration Matching → Revenue Optimization → Trend Integration → Quality Filtering
 → Personalization → Performance Tracking → Business Value Creation
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable, AsyncGenerator, Set
 import asyncio
 import numpy as np
@@ -151,6 +152,7 @@ __email__ = "mlaiel@live.de"
 # Recommendation Enums
 class RecommendationType(Enum):
     """Types of recommendations."""
+
     CONTENT_RECOMMENDATION = auto()
     COLLABORATION_RECOMMENDATION = auto()
     MONETIZATION_RECOMMENDATION = auto()
@@ -161,7 +163,9 @@ class RecommendationType(Enum):
     STRATEGY_RECOMMENDATION = auto()
 
 class AlgorithmType(Enum):
-    """Recommendation algorithm types."""
+    """
+Recommendation algorithm types."""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     MATRIX_FACTORIZATION = "matrix_factorization"
@@ -173,6 +177,7 @@ class AlgorithmType(Enum):
 
 class RecommendationDomain(Enum):
     """Recommendation domains."""
+
     MUSIC = "music"
     VISUAL_CONTENT = "visual_content"
     WRITTEN_CONTENT = "written_content"
@@ -184,6 +189,7 @@ class RecommendationDomain(Enum):
 
 class QualityFilter(Enum):
     """Quality filters for recommendations."""
+
     HIGH_QUALITY_ONLY = "high_quality"
     MODERATE_QUALITY = "moderate_quality"
     ALL_QUALITY = "all_quality"
@@ -192,6 +198,7 @@ class QualityFilter(Enum):
 
 class RecommendationObjective(Enum):
     """Recommendation objectives."""
+
     ENGAGEMENT_MAXIMIZATION = "engagement_max"
     REVENUE_OPTIMIZATION = "revenue_opt"
     COLLABORATION_ENHANCEMENT = "collaboration_enh"
@@ -360,7 +367,8 @@ class RecommendationFrameworkManager:
         self.performance_tracker = PerformanceTracker()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize recommendation capabilities."""
+        """
+Initialize recommendation capabilities."""
         capabilities = {}
         
         for category, components in self.architecture.items():
@@ -390,7 +398,8 @@ class RecommendationFrameworkManager:
     
     async def initialize_recommendation_system_comprehensive(self, 
                                                            recommendation_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize comprehensive recommendation system."""
+        """
+Initialize comprehensive recommendation system."""
         try:
             # Initialize recommendation engine
             engine_setup = await self.recommendation_engine.initialize(
@@ -476,7 +485,8 @@ class RecommendationFrameworkManager:
         }
     
     async def _setup_collaboration_matcher(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup collaboration matching system."""
+        """
+Setup collaboration matching system."""
         collaboration_matcher = CollaborationMatcher()
         await collaboration_matcher.initialize(config.get('collaboration_config', {}))
         
@@ -498,7 +508,8 @@ class RecommendationFrameworkManager:
         }
     
     async def _setup_revenue_optimizer(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup revenue optimization system."""
+        """
+Setup revenue optimization system."""
         revenue_optimizer = RevenueOptimizer()
         await revenue_optimizer.initialize(config.get('revenue_config', {}))
         
@@ -520,7 +531,8 @@ class RecommendationFrameworkManager:
         }
     
     async def _setup_trend_analyzer(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup trend analysis system."""
+        """
+Setup trend analysis system."""
         trend_analyzer = TrendAnalyzer()
         await trend_analyzer.initialize(config.get('trend_config', {}))
         
@@ -542,7 +554,8 @@ class RecommendationFrameworkManager:
         }
     
     async def _setup_protection_integrator(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup protection integration system."""
+        """
+Setup protection integration system."""
         protection_integrator = ProtectionIntegrator()
         await protection_integrator.initialize(config.get('protection_config', {}))
         
@@ -565,7 +578,8 @@ class RecommendationFrameworkManager:
     
     async def generate_recommendations_comprehensive(self, 
                                                    recommendation_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive recommendations based on request."""
+        """
+Generate comprehensive recommendations based on request."""
         # Extract request parameters
         recommendation_type = recommendation_request.get('type', 'content_recommendation')
         user_context = recommendation_request.get('user_context', {})
@@ -675,7 +689,8 @@ class RecommendationFrameworkManager:
                                        recommendation_results: Dict[str, Any],
                                        objectives: List[str],
                                        user_context: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Aggregate recommendations from multiple sources."""
+        """
+Aggregate recommendations from multiple sources."""
         all_recommendations = []
         
         for recommender_name, result in recommendation_results.items():
@@ -692,7 +707,8 @@ class RecommendationFrameworkManager:
         return unique_recommendations
     
     def _deduplicate_recommendations(self, recommendations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate recommendations based on similarity."""
+        """
+Remove duplicate recommendations based on similarity."""
         if not recommendations:
             return []
         
@@ -709,7 +725,8 @@ class RecommendationFrameworkManager:
         return unique_recs
     
     def _create_recommendation_signature(self, recommendation: Dict[str, Any]) -> str:
-        """Create unique signature for recommendation deduplication."""
+        """
+Create unique signature for recommendation deduplication."""
         key_attributes = [
             recommendation.get('id', ''),
             recommendation.get('title', ''),
@@ -721,7 +738,8 @@ class RecommendationFrameworkManager:
     async def _apply_quality_filters(self, 
                                    recommendations: List[Dict[str, Any]],
                                    quality_filter: str) -> List[Dict[str, Any]]:
-        """Apply quality filters to recommendations."""
+        """
+Apply quality filters to recommendations."""
         if quality_filter == 'high_quality':
             min_quality_score = 0.8
         elif quality_filter == 'moderate_quality':
@@ -745,7 +763,8 @@ class RecommendationFrameworkManager:
                                            recommendations: List[Dict[str, Any]],
                                            objectives: List[str],
                                            user_context: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Optimize the order of recommendations based on objectives."""
+        """
+Optimize the order of recommendations based on objectives."""
         if not recommendations:
             return []
         
@@ -775,7 +794,8 @@ class RecommendationFrameworkManager:
         return optimized_recommendations
     
     def _get_objective_weight(self, objective: str) -> float:
-        """Get weight for specific objective."""
+        """
+Get weight for specific objective."""
         objective_weights = {
             'user_satisfaction': 1.0,
             'engagement_maximization': 0.9,
@@ -791,7 +811,8 @@ class RecommendationFrameworkManager:
                            recommendation: Dict[str, Any],
                            objective: str,
                            user_context: Dict[str, Any]) -> float:
-        """Get score for recommendation based on specific objective."""
+        """
+Get score for recommendation based on specific objective."""
         if objective == 'engagement_maximization':
             return recommendation.get('engagement_score', 0.5)
         elif objective == 'revenue_optimization':
@@ -808,7 +829,8 @@ class RecommendationFrameworkManager:
     async def _track_recommendation_performance(self, 
                                               recommendations: List[Dict[str, Any]],
                                               request: Dict[str, Any]) -> Dict[str, Any]:
-        """Track recommendation performance metrics."""
+        """
+Track recommendation performance metrics."""
         return {
             'total_generated': len(recommendations),
             'average_quality_score': np.mean([rec.get('quality_score', 0) for rec in recommendations]) if recommendations else 0,
@@ -821,7 +843,8 @@ class RecommendationFrameworkManager:
         }
     
     def _calculate_confidence_score(self, recommendation_results: Dict[str, Any]) -> float:
-        """Calculate overall confidence score for recommendations."""
+        """
+Calculate overall confidence score for recommendations."""
         confidence_scores = []
         
         for result in recommendation_results.values():
@@ -834,7 +857,8 @@ class RecommendationFrameworkManager:
             return 0.5
     
     def _calculate_diversity_score(self, recommendations: List[Dict[str, Any]]) -> float:
-        """Calculate diversity score for recommendations."""
+        """
+Calculate diversity score for recommendations."""
         if len(recommendations) <= 1:
             return 1.0
         
@@ -852,7 +876,8 @@ class RecommendationFrameworkManager:
     def _calculate_novelty_score(self, 
                                recommendations: List[Dict[str, Any]],
                                user_context: Dict[str, Any]) -> float:
-        """Calculate novelty score for recommendations."""
+        """
+Calculate novelty score for recommendations."""
         # Simple novelty calculation based on user's historical interactions
         user_history = user_context.get('interaction_history', [])
         
@@ -871,15 +896,18 @@ class RecommendationFrameworkManager:
             return 0.5
     
     def get_supported_recommendation_types(self) -> List[str]:
-        """Get list of all supported recommendation types."""
+        """
+Get list of all supported recommendation types."""
         return [rt.name.lower() for rt in RecommendationType]
     
     def get_algorithm_types(self) -> List[str]:
-        """Get list of all supported algorithm types."""
+        """
+Get list of all supported algorithm types."""
         return [at.value for at in AlgorithmType]
     
     def get_recommendation_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive recommendation capabilities information."""
+        """
+Get comprehensive recommendation capabilities information."""
         total_capabilities = sum(len(category) for category in self.architecture.values())
         enterprise_capabilities = sum(
             1 for category in self.architecture.values()
@@ -939,7 +967,8 @@ class RecommendationFrameworkManager:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
+        """
+Validate complete business logic coverage."""
         required_business_logic = [
             'comprehensive_recommendation_intelligence',
             'intelligent_recommendation_optimization_system',
@@ -962,15 +991,18 @@ recommendation_framework = RecommendationFrameworkManager()
 
 # Recommendation Utility Functions
 async def initialize_enterprise_recommendation_system(config: Dict[str, Any]) -> Dict[str, Any]:
-    """Initialize enterprise-grade recommendation system."""
+    """
+Initialize enterprise-grade recommendation system."""
     return await recommendation_framework.initialize_recommendation_system_comprehensive(config)
 
 async def generate_intelligent_recommendations(request: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate intelligent multi-objective recommendations."""
+    """
+Generate intelligent multi-objective recommendations."""
     return await recommendation_framework.generate_recommendations_comprehensive(request)
 
 def get_recommendation_config_template(recommendation_type: str = 'content_recommendation') -> Dict[str, Any]:
-    """Get recommendation configuration template."""
+    """
+Get recommendation configuration template."""
     templates = {
         'content_recommendation': {
             'type': 'content_recommendation',
@@ -1005,7 +1037,8 @@ def get_recommendation_config_template(recommendation_type: str = 'content_recom
 
 def create_multi_objective_config(objectives: List[str], 
                                 constraints: Dict[str, Any] = None) -> Dict[str, Any]:
-    """Create multi-objective recommendation configuration."""
+    """
+Create multi-objective recommendation configuration."""
     return {
         'objectives': objectives,
         'constraints': constraints or {},

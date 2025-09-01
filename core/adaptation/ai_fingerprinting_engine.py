@@ -27,6 +27,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -65,7 +66,9 @@ from .exceptions import AdaptationError, ValidationError
 
 
 class FingerprintType(str, Enum):
-    """Comprehensive fingerprint types for all content formats"""
+    """
+Comprehensive fingerprint types for all content formats"""
+
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_WAVEFORM = "audio_waveform"
     AUDIO_MFCC = "audio_mfcc"
@@ -86,6 +89,7 @@ class FingerprintType(str, Enum):
 
 class ContentModality(str, Enum):
     """Content modality classification"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -97,6 +101,7 @@ class ContentModality(str, Enum):
 
 class FingerprintAlgorithm(str, Enum):
     """Advanced fingerprinting algorithms"""
+
     NEURAL_HASH = "neural_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
     SPECTRAL_HASH = "spectral_hash"
@@ -110,6 +115,7 @@ class FingerprintAlgorithm(str, Enum):
 
 class SimilarityMetric(str, Enum):
     """Similarity measurement metrics"""
+
     COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
@@ -142,7 +148,8 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Advanced fingerprint matching result with confidence scoring"""
+    """
+Advanced fingerprint matching result with confidence scoring"""
     match_id: str
     query_fingerprint_id: str
     matched_fingerprint_id: str
@@ -162,7 +169,8 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintRequest:
-    """Enterprise-grade fingerprinting request"""
+    """
+Enterprise-grade fingerprinting request"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -197,7 +205,8 @@ class FingerprintResult:
 
 
 class NeuralFingerprintExtractor(nn.Module):
-    """Advanced neural network for content fingerprint extraction"""
+    """
+Advanced neural network for content fingerprint extraction"""
     
     def __init__(self, input_size: int, hidden_size: int = 512, output_size: int = 256):
         super().__init__()
@@ -532,7 +541,8 @@ class AIFingerprintingEngine:
         return features, hash_value
     
     def _extract_with_neural_network(self, input_data: np.ndarray) -> np.ndarray:
-        """Extract features using the neural network"""
+        """
+Extract features using the neural network"""
         input_tensor = torch.FloatTensor(input_data[:2048]).unsqueeze(0).to(self.device)
         with torch.no_grad():
             features = self.neural_extractor(input_tensor)
@@ -543,7 +553,8 @@ class AIFingerprintingEngine:
         feature_vector: np.ndarray,
         content_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate quality metrics for fingerprint"""
+        """
+Calculate quality metrics for fingerprint"""
         return {
             "overall": 0.9,
             "distinctiveness": 0.85,
@@ -577,7 +588,8 @@ class AIFingerprintingEngine:
         fingerprints: List[ContentFingerprint],
         matches: List[FingerprintMatch]
     ) -> List[str]:
-        """Generate protection recommendations based on fingerprints"""
+        """
+Generate protection recommendations based on fingerprints"""
         return [
             "Enable real-time monitoring for content protection",
             "Set up automated alerts for similarity detection",
@@ -602,7 +614,8 @@ class AIFingerprintingEngine:
             self.fingerprint_store[fp.fingerprint_id] = fp
     
     def _load_algorithm_configs(self) -> Dict[str, Any]:
-        """Load algorithm-specific configurations"""
+        """
+Load algorithm-specific configurations"""
         return {
             "neural_hash": {"hidden_size": 512, "output_size": 256},
             "perceptual_hash": {"hash_size": 16},

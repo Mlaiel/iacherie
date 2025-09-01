@@ -20,6 +20,7 @@ This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -44,7 +45,9 @@ from ...models.platform_integration import PlatformConnection, APICredentials, P
 
 
 class PlatformType(Enum):
-    """Supported platform types for integration."""
+    """
+Supported platform types for integration."""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -61,6 +64,7 @@ class PlatformType(Enum):
 
 class AuthenticationType(Enum):
     """Authentication methods supported by platforms."""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
@@ -71,6 +75,7 @@ class AuthenticationType(Enum):
 
 class APIEndpointType(Enum):
     """API endpoint categories."""
+
     CONTENT_DISCOVERY = "content_discovery"
     CONTENT_UPLOAD = "content_upload"
     USER_MANAGEMENT = "user_management"
@@ -98,7 +103,8 @@ class PlatformCredentials:
 
 @dataclass
 class APIEndpoint:
-    """API endpoint configuration."""
+    """
+API endpoint configuration."""
     endpoint_type: APIEndpointType
     url: str
     method: str = "GET"
@@ -152,7 +158,8 @@ class PlatformIntegrationManager:
     """
     
     def __init__(self, config: Optional[PlatformConfig] = None):
-        """Initialize platform integration manager."""
+        """
+Initialize platform integration manager."""
         self.config = config or PlatformConfig()
         self.logger = get_logger(__name__)
         self.encryption_manager = EncryptionManager()
@@ -180,7 +187,8 @@ class PlatformIntegrationManager:
         self._initialize_platform_configs()
     
     def _initialize_platform_configs(self):
-        """Initialize default platform configurations."""
+        """
+Initialize default platform configurations."""
         # YouTube configuration
         youtube_endpoints = {
             APIEndpointType.CONTENT_DISCOVERY: APIEndpoint(
@@ -615,7 +623,8 @@ class PlatformIntegrationManager:
         metrics.average_response_time = total_time / metrics.total_requests
     
     async def _encrypt_and_store_credentials(self, platform: PlatformType, credentials: PlatformCredentials):
-        """Encrypt and store platform credentials."""
+        """
+Encrypt and store platform credentials."""
         try:
             # Serialize credentials
             credentials_data = {
@@ -662,15 +671,18 @@ class PlatformIntegrationManager:
         return self.metrics.get(platform)
     
     async def get_all_platform_metrics(self) -> Dict[PlatformType, PlatformMetrics]:
-        """Get metrics for all platforms."""
+        """
+Get metrics for all platforms."""
         return self.metrics.copy()
     
     async def check_platform_health(self, platform: PlatformType) -> bool:
-        """Check health status of specific platform."""
+        """
+Check health status of specific platform."""
         return await self._perform_health_check(platform)
     
     async def check_all_platform_health(self) -> Dict[PlatformType, bool]:
-        """Check health status of all platforms."""
+        """
+Check health status of all platforms."""
         health_results = {}
         
         for platform in self.platforms:
@@ -679,7 +691,8 @@ class PlatformIntegrationManager:
         return health_results
     
     async def close(self):
-        """Close all platform connections and cleanup resources."""
+        """
+Close all platform connections and cleanup resources."""
         try:
             # Close all HTTP sessions
             for session in self.sessions.values():
@@ -703,13 +716,15 @@ class PlatformIntegrationManager:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.close()
 
 
 # Factory functions and utilities
 async def create_platform_integration_manager(config: Optional[PlatformConfig] = None) -> PlatformIntegrationManager:
-    """Create and initialize platform integration manager."""
+    """
+Create and initialize platform integration manager."""
     return PlatformIntegrationManager(config)
 
 
@@ -717,7 +732,8 @@ async def initialize_all_platforms(
     manager: PlatformIntegrationManager,
     credentials_map: Dict[PlatformType, PlatformCredentials]
 ) -> Dict[PlatformType, bool]:
-    """Initialize all platforms with their credentials."""
+    """
+Initialize all platforms with their credentials."""
     results = {}
     
     for platform, credentials in credentials_map.items():
@@ -727,7 +743,8 @@ async def initialize_all_platforms(
 
 
 async def perform_bulk_health_check(manager: PlatformIntegrationManager) -> Dict[PlatformType, bool]:
-    """Perform health check on all configured platforms."""
+    """
+Perform health check on all configured platforms."""
     return await manager.check_all_platform_health()
 
 

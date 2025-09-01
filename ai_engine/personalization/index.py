@@ -21,7 +21,7 @@ Advanced Orchestration Features:
 - Machine Learning Pipeline Management
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -45,6 +45,7 @@ Multi-Format Creator → Content Upload → AI Processing → Rights Protection 
 User Profiling → Behavioral Analysis → Advanced Personalization → Collaboration Matching →
 SEO Optimization → Multi-Platform Distribution → Revenue Optimization → Analytics Intelligence
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable, AsyncGenerator, Set, Protocol
 import asyncio
 import numpy as np
@@ -164,6 +165,7 @@ __email__ = "mlaiel@live.de"
 # Personalization Enums
 class PersonalizationType(Enum):
     """Types of personalization."""
+
     CONTENT_RECOMMENDATION = auto()
     USER_INTERFACE = auto()
     CONTENT_ADAPTATION = auto()
@@ -174,7 +176,9 @@ class PersonalizationType(Enum):
     MULTIMODAL = auto()
 
 class AlgorithmType(Enum):
-    """Personalization algorithm types."""
+    """
+Personalization algorithm types."""
+
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -186,6 +190,7 @@ class AlgorithmType(Enum):
 
 class UserSegment(Enum):
     """User segment types."""
+
     NEW_USER = "new_user"
     CASUAL_USER = "casual_user"
     ACTIVE_USER = "active_user"
@@ -197,6 +202,7 @@ class UserSegment(Enum):
 
 class ContentCategory(Enum):
     """Content category types."""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -210,6 +216,7 @@ class ContentCategory(Enum):
 
 class PrivacyLevel(Enum):
     """Privacy levels for personalization."""
+
     PUBLIC = "public"
     ANONYMIZED = "anonymized"
     PRIVATE = "private"
@@ -358,7 +365,8 @@ class PersonalizationFrameworkManager:
         self.privacy_manager = PrivacyManager()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize personalization capabilities."""
+        """
+Initialize personalization capabilities."""
         capabilities = {}
         
         for category, components in self.architecture.items():
@@ -388,7 +396,8 @@ class PersonalizationFrameworkManager:
     
     async def initialize_personalization_comprehensive(self, 
                                                      personalization_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize comprehensive personalization system."""
+        """
+Initialize comprehensive personalization system."""
         try:
             # Initialize personalization engine
             engine_setup = await self.personalization_engine.initialize(
@@ -477,7 +486,8 @@ class PersonalizationFrameworkManager:
         }
     
     async def _setup_content_personalization(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup content personalization."""
+        """
+Setup content personalization."""
         content_personalizer = ContentPersonalizer()
         await content_personalizer.initialize(config.get('content_config', {}))
         
@@ -501,7 +511,8 @@ class PersonalizationFrameworkManager:
         }
     
     async def _setup_personalization_analytics(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup personalization analytics."""
+        """
+Setup personalization analytics."""
         analytics = PersonalizationAnalytics()
         await analytics.initialize(config.get('analytics_config', {}))
         
@@ -520,7 +531,8 @@ class PersonalizationFrameworkManager:
         }
     
     async def _setup_ab_testing(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup A/B testing system."""
+        """
+Setup A/B testing system."""
         ab_test_manager = ABTestManager()
         await ab_test_manager.initialize(config.get('ab_testing_config', {}))
         
@@ -537,7 +549,8 @@ class PersonalizationFrameworkManager:
                                               user_id: str,
                                               content_pool: List[Dict[str, Any]],
                                               personalization_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Personalize content with comprehensive algorithms."""
+        """
+Personalize content with comprehensive algorithms."""
         # Get user profile
         user_profile = await self.user_profile_manager.get_user_profile(user_id)
         
@@ -600,7 +613,8 @@ class PersonalizationFrameworkManager:
     
     async def analyze_personalization_performance(self, 
                                                 analysis_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze personalization system performance."""
+        """
+Analyze personalization system performance."""
         if 'analytics' not in self.active_personalizers:
             raise PersonalizationException("Analytics system not initialized")
         
@@ -664,11 +678,13 @@ class PersonalizationFrameworkManager:
         return [at.value for at in AlgorithmType]
     
     def get_user_segments(self) -> List[str]:
-        """Get list of all user segments."""
+        """
+Get list of all user segments."""
         return [us.value for us in UserSegment]
     
     def get_personalization_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive personalization capabilities information."""
+        """
+Get comprehensive personalization capabilities information."""
         total_capabilities = sum(len(category) for category in self.architecture.values())
         enterprise_capabilities = sum(
             1 for category in self.architecture.values()
@@ -728,7 +744,8 @@ class PersonalizationFrameworkManager:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
+        """
+Validate complete business logic coverage."""
         required_business_logic = [
             'comprehensive_personalization_intelligence',
             'intelligent_user_profiling_system',
@@ -750,23 +767,27 @@ personalization_framework = PersonalizationFrameworkManager()
 
 # Personalization Utility Functions
 async def initialize_enterprise_personalization(config: Dict[str, Any]) -> Dict[str, Any]:
-    """Initialize enterprise-grade personalization system."""
+    """
+Initialize enterprise-grade personalization system."""
     return await personalization_framework.initialize_personalization_comprehensive(config)
 
 async def personalize_user_content(user_id: str, 
                                  content_pool: List[Dict[str, Any]],
                                  config: Dict[str, Any]) -> Dict[str, Any]:
-    """Personalize content for specific user with privacy compliance."""
+    """
+Personalize content for specific user with privacy compliance."""
     return await personalization_framework.personalize_content_comprehensive(
         user_id, content_pool, config
     )
 
 async def analyze_personalization_effectiveness(analysis_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Analyze personalization system effectiveness and ROI."""
+    """
+Analyze personalization system effectiveness and ROI."""
     return await personalization_framework.analyze_personalization_performance(analysis_config)
 
 def get_personalization_config_template(personalization_type: str = 'content_recommendation') -> Dict[str, Any]:
-    """Get personalization configuration template."""
+    """
+Get personalization configuration template."""
     templates = {
         'content_recommendation': {
             'algorithms': ['hybrid', 'collaborative_filtering', 'content_based'],
@@ -793,7 +814,8 @@ def get_personalization_config_template(personalization_type: str = 'content_rec
 
 def create_privacy_compliant_config(base_config: Dict[str, Any], 
                                   privacy_level: str = 'private') -> Dict[str, Any]:
-    """Create privacy-compliant personalization configuration."""
+    """
+Create privacy-compliant personalization configuration."""
     config = base_config.copy()
     
     if privacy_level == 'zero_knowledge':

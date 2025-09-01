@@ -4,6 +4,7 @@ Professional collaboration management and orchestration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 import asyncio
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationManagerResponse:
-    """Standardized response from collaboration manager operations"""
+    """
+Standardized response from collaboration manager operations"""
     def __init__(
         self, 
         success: bool, 
@@ -106,7 +108,8 @@ class CollaborationManager:
         creator_profile: Dict[str, Any],
         preferences: Dict[str, Any] = None
     ) -> CollaborationManagerResponse:
-        """Discover available collaboration opportunities"""
+        """
+Discover available collaboration opportunities"""
         try:
             discovery_result = await self.discovery_service.discover_opportunities(
                 creator_id, creator_profile, preferences
@@ -622,22 +625,26 @@ class CollaborationManager:
         return None  # Placeholder
     
     async def _get_collaboration_data(self, collaboration_id: str) -> Optional[Dict[str, Any]]:
-        """Simulate database fetch for collaboration data"""
+        """
+Simulate database fetch for collaboration data"""
         # In real implementation, this would query the database
         return None  # Placeholder
     
     async def _get_contract_data(self, collaboration_id: str) -> Optional[Dict[str, Any]]:
-        """Simulate database fetch for contract data"""
+        """
+Simulate database fetch for contract data"""
         # In real implementation, this would query the database
         return None  # Placeholder
     
     async def _get_creator_collaboration_data(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Simulate database fetch for creator's collaboration history"""
+        """
+Simulate database fetch for creator's collaboration history"""
         # In real implementation, this would query the database
         return []  # Placeholder
     
     def _get_next_milestones(self, contract_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get next upcoming milestones"""
+        """
+Get next upcoming milestones"""
         if not contract_data or 'milestones' not in contract_data:
             return []
         
@@ -651,7 +658,8 @@ class CollaborationManager:
         return sorted(upcoming, key=lambda x: x.get('due_date', ''))[:3]  # Next 3 milestones
     
     def _calculate_estimated_completion(self, contract_data: Dict[str, Any]) -> Optional[str]:
-        """Calculate estimated completion date"""
+        """
+Calculate estimated completion date"""
         if not contract_data:
             return None
         
@@ -663,7 +671,8 @@ class CollaborationManager:
             return None
     
     def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate (simplified)"""
+        """
+Calculate cache hit rate (simplified)"""
         # In real implementation, this would track actual cache hits/misses
         return 0.75  # Placeholder 75% hit rate
 

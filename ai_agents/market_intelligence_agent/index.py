@@ -387,7 +387,8 @@ def health_check():
 
 # IP Protection Notice
 def show_ip_notice():
-    """Display intellectual property protection notice"""
+    """
+Display intellectual property protection notice"""
     notice = """
     ⚠️  INTELLECTUAL PROPERTY PROTECTION NOTICE ⚠️
     
@@ -399,7 +400,7 @@ def show_ip_notice():
     
     For licensing inquiries: mlaiel@live.de
     
-    © 2025 Fahed Mlaiel. All rights reserved.
+    (c) 2025 Fahed Mlaiel. All rights reserved.
     """
     print(notice)
 

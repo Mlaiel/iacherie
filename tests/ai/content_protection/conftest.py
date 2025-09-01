@@ -10,6 +10,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import pytest
 import asyncio
 import tempfile
@@ -28,7 +29,9 @@ from decimal import Decimal
 
 # Mock enums for testing
 class VerificationStatus(Enum):
-    """Blockchain verification status enumeration"""
+    """
+Blockchain verification status enumeration"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     VERIFIED = "verified"
@@ -38,6 +41,7 @@ class VerificationStatus(Enum):
 
 class BlockchainNetwork(Enum):
     """Mock blockchain network enum"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
@@ -101,7 +105,8 @@ def test_config():
 
 @pytest.fixture
 def sample_content_metadata():
-    """Sample content metadata fixture"""
+    """
+Sample content metadata fixture"""
     return {
         'content_id': 'content_fahed_mlaiel_001',
         'creator_id': 'fahed_mlaiel_official',
@@ -203,7 +208,8 @@ def sample_test_config():
 
 @pytest.fixture
 def test_creator_data():
-    """Test creator information"""
+    """
+Test creator information"""
     return {
         'creator_id': 'fahed_mlaiel_test',
         'name': 'Fahed Mlaiel',
@@ -217,7 +223,8 @@ def test_creator_data():
 
 @pytest.fixture
 def test_image_content():
-    """Generate test image content"""
+    """
+Generate test image content"""
     def _create_test_image(width=512, height=512, color='blue', format='PNG'):
         img = Image.new('RGB', (width, height), color=color)
         img_bytes = io.BytesIO()
@@ -229,7 +236,8 @@ def test_image_content():
 
 @pytest.fixture
 def test_audio_content():
-    """Generate test audio content"""
+    """
+Generate test audio content"""
     def _create_test_audio(duration=5.0, frequency=440.0, sample_rate=44100):
         t = np.linspace(0, duration, int(sample_rate * duration))
         audio_data = np.sin(2 * np.pi * frequency * t)
@@ -241,7 +249,8 @@ def test_audio_content():
 
 @pytest.fixture
 def test_video_metadata():
-    """Generate test video metadata"""
+    """
+Generate test video metadata"""
     def _create_video_metadata(content_id=None, creator_id='fahed_mlaiel_test'):
         return {
             'content_id': content_id or f'test_video_{datetime.now(timezone.utc).timestamp()}',
@@ -266,7 +275,8 @@ def test_video_metadata():
 
 @pytest.fixture
 def test_image_metadata():
-    """Generate test image metadata"""
+    """
+Generate test image metadata"""
     def _create_image_metadata(content_id=None, creator_id='fahed_mlaiel_test'):
         return {
             'content_id': content_id or f'test_image_{datetime.now(timezone.utc).timestamp()}',
@@ -289,7 +299,8 @@ def test_image_metadata():
 
 @pytest.fixture
 def test_audio_metadata():
-    """Generate test audio metadata"""
+    """
+Generate test audio metadata"""
     def _create_audio_metadata(content_id=None, creator_id='fahed_mlaiel_test'):
         return {
             'content_id': content_id or f'test_audio_{datetime.now(timezone.utc).timestamp()}',
@@ -315,7 +326,8 @@ def test_audio_metadata():
 
 @pytest.fixture
 def mock_external_apis():
-    """Mock external API responses"""
+    """
+Mock external API responses"""
     return {
         'youtube_api': {
             'video_upload': {'success': True, 'video_id': 'mock_youtube_123'},
@@ -341,7 +353,8 @@ def mock_external_apis():
 
 @pytest.fixture
 def test_infringement_scenarios():
-    """Common infringement scenarios for testing"""
+    """
+Common infringement scenarios for testing"""
     return {
         'exact_copy': {
             'similarity_score': 1.0,
@@ -383,7 +396,8 @@ def test_infringement_scenarios():
 
 @pytest.fixture
 def performance_benchmarks():
-    """Performance benchmarks for testing"""
+    """
+Performance benchmarks for testing"""
     return {
         'fingerprinting': {
             'image_processing_time_ms': 500,
@@ -410,11 +424,13 @@ def performance_benchmarks():
 
 
 class TestDataGenerator:
-    """Utility class for generating test data"""
+    """
+Utility class for generating test data"""
     
     @staticmethod
     def create_test_content_batch(count=5, content_type='image'):
-        """Create a batch of test content items"""
+        """
+Create a batch of test content items"""
         batch = []
         
         for i in range(count):
@@ -462,7 +478,8 @@ class TestDataGenerator:
     
     @staticmethod
     def create_modified_content(original_data, modification_type='compression'):
-        """Create modified versions of content for testing"""
+        """
+Create modified versions of content for testing"""
         if modification_type == 'compression':
             # Simulate compression by reducing data size
             return original_data[::2]  # Simple decimation
@@ -483,11 +500,13 @@ class TestDataGenerator:
 
 
 class TestAssertions:
-    """Custom assertions for content protection testing"""
+    """
+Custom assertions for content protection testing"""
     
     @staticmethod
     def assert_protection_result_valid(result):
-        """Assert that a protection result is valid"""
+        """
+Assert that a protection result is valid"""
         required_keys = ['protection_status', 'fingerprint', 'rights', 'blockchain_record', 'encrypted_content']
         for key in required_keys:
             assert key in result, f"Missing required key: {key}"
@@ -557,7 +576,7 @@ def professional_content_ownership_data():
         'registration_date': '2025-01-01T00:01:00Z',
         'copyright_status': 'registered',
         'licensing_terms': 'all_rights_reserved',
-        'copyright_notice': '© 2025 Fahed Mlaiel. All Rights Reserved.',
+        'copyright_notice': '(c) 2025 Fahed Mlaiel. All Rights Reserved.',
         'metadata': {
             'genre': 'electronic',
             'duration_seconds': 180,
@@ -583,7 +602,8 @@ def professional_content_ownership_data():
 
 @pytest.fixture
 def blockchain_verifier():
-    """Professional blockchain verification service for content protection"""
+    """
+Professional blockchain verification service for content protection"""
     from ai.content_protection.blockchain import BlockchainVerifier
     
     # Create real blockchain verifier instance
@@ -643,7 +663,8 @@ def content_detector():
             }
             
         async def create_proof_of_ownership(self, content_id, owner_id, content_hash, ownership_statement, metadata):
-            """Create blockchain proof of ownership"""
+            """
+Create blockchain proof of ownership"""
             # Register ownership for later verification
             self._registered_owners[content_id] = owner_id
             
@@ -691,7 +712,8 @@ def content_detector():
             }
             
         async def verify_content_integrity(self, content_id, content_hash):
-            """Verify content integrity using blockchain"""
+            """
+Verify content integrity using blockchain"""
             await asyncio.sleep(0.1)
             
             # Mock original content hash for testing - accept known good hashes
@@ -716,7 +738,8 @@ def content_detector():
                 }
                 
         async def _verify_across_networks(self):
-            """Internal method that can be mocked for testing"""
+            """
+Internal method that can be mocked for testing"""
             return {
                 'ethereum': {
                     'verified': True,
@@ -739,7 +762,8 @@ def content_detector():
             }
 
         async def verify_across_multiple_chains(self, content_id, content_hash=None, networks=None, consensus_threshold=None):
-            """Verify content across multiple blockchain networks with conflict resolution"""
+            """
+Verify content across multiple blockchain networks with conflict resolution"""
             await asyncio.sleep(0.1)
             
             # Always use the _verify_across_networks method (which can be mocked)
@@ -842,7 +866,8 @@ def content_detector():
             }
 
         async def generate_blockchain_analytics(self, start_date=None, end_date=None, include_cost_analysis=True, include_performance_metrics=True, **kwargs):
-            """Generate comprehensive blockchain analytics report"""
+            """
+Generate comprehensive blockchain analytics report"""
             return {
                 'success': True,
                 'analytics_period': {
@@ -878,7 +903,8 @@ def content_detector():
             }
 
         async def create_timestamped_record(self, content_version, owner_id, content_hash, timestamp, metadata=None, **kwargs):
-            """Create timestamped blockchain record"""
+            """
+Create timestamped blockchain record"""
             record_id = str(uuid.uuid4())
             return {
                 'success': True,
@@ -896,7 +922,8 @@ def content_detector():
             }
 
         async def get_chronological_records(self, content_id, **kwargs):
-            """Get chronological records for content"""
+            """
+Get chronological records for content"""
             return {
                 'success': True,
                 'content_id': content_id,
@@ -913,7 +940,8 @@ def content_detector():
             }
 
         async def detect_timestamp_tampering(self, content_id, **kwargs):
-            """Detect timestamp tampering"""
+            """
+Detect timestamp tampering"""
             return {
                 'success': True,
                 'content_id': content_id,
@@ -929,7 +957,8 @@ def content_detector():
             }
 
         async def verify_chronological_order(self, content_id, **kwargs):
-            """Verify chronological order of records"""
+            """
+Verify chronological order of records"""
             return {
                 'success': True,
                 'content_id': content_id,
@@ -940,7 +969,8 @@ def content_detector():
             }
 
         async def verify_chronological_order(self, content_ids, **kwargs):
-            """Verify chronological order of content records"""
+            """
+Verify chronological order of content records"""
             return {
                 'success': True,
                 'chronologically_valid': True,  # Required by test
@@ -963,7 +993,8 @@ def content_detector():
             }
 
         async def detect_timestamp_tampering(self, content_id, **kwargs):
-            """Detect timestamp tampering"""
+            """
+Detect timestamp tampering"""
             return {
                 'success': True,
                 'tampering_detected': True,  # Required by test to detect tampering
@@ -983,7 +1014,8 @@ def content_detector():
             }
             
         def _get_network_configs(self):
-            """Get blockchain network configurations"""
+            """
+Get blockchain network configurations"""
             return {
                 'ethereum': {
                     'rpc_url': 'https://mainnet.infura.io/v3/test',
@@ -1003,7 +1035,8 @@ def content_detector():
             }
             
         async def _register_on_blockchain(self, network, content_hash, owner_id):
-            """Register content on specific blockchain network"""
+            """
+Register content on specific blockchain network"""
             await asyncio.sleep(0.1)
             return {
                 'success': True,
@@ -1031,7 +1064,8 @@ def content_detector():
             }
             
         async def _deploy_smart_contract(self, contract_code, constructor_args):
-            """Deploy smart contract to blockchain"""
+            """
+Deploy smart contract to blockchain"""
             await asyncio.sleep(0.1)
             return {
                 'success': True,
@@ -1041,7 +1075,8 @@ def content_detector():
             }
             
         async def _verify_across_networks(self, content_id, networks):
-            """Verify content across multiple blockchain networks"""
+            """
+Verify content across multiple blockchain networks"""
             await asyncio.sleep(0.1)
             results = {}
             for network in networks:
@@ -1053,7 +1088,8 @@ def content_detector():
             return results
             
         async def create_timestamped_record(self, content_version, owner_id, content_hash, timestamp, metadata=None):
-            """Create timestamped record on blockchain"""
+            """
+Create timestamped record on blockchain"""
             await asyncio.sleep(0.1)
             return {
                 'success': True,
@@ -1087,7 +1123,8 @@ def content_detector():
             }
             
         async def deploy_content_protection_contract(self, contract_type, config=None, network=None, **kwargs):
-            """Deploy content protection smart contract"""
+            """
+Deploy content protection smart contract"""
             await asyncio.sleep(0.2)
             config = config or {}
             actual_network = network or config.get('network', 'ethereum')
@@ -1105,7 +1142,8 @@ def content_detector():
             }
             
         async def _interact_with_contract(self, contract_address, method_name, *args, **kwargs):
-            """Interact with deployed smart contract"""
+            """
+Interact with deployed smart contract"""
             await asyncio.sleep(0.1)
             return {
                 'success': True,
@@ -1118,7 +1156,8 @@ def content_detector():
             }
             
         async def register_content_on_contract(self, contract_address, content_id, content_hash, metadata=None, **kwargs):
-            """Register content on smart contract"""
+            """
+Register content on smart contract"""
             await asyncio.sleep(0.1)
             return {
                 'success': True,
@@ -1133,7 +1172,8 @@ def content_detector():
             }
             
         async def verify_across_multiple_chains(self, content_id, networks=None, **kwargs):
-            """Verify content across multiple blockchain networks"""
+            """
+Verify content across multiple blockchain networks"""
             await asyncio.sleep(0.2)
             networks = networks or ['ethereum', 'polygon', 'binance_smart_chain']
             results = {}
@@ -1184,7 +1224,8 @@ def content_detector():
             }
             
         async def store_blockchain_record(self, record):
-            """Store blockchain record"""
+            """
+Store blockchain record"""
             await asyncio.sleep(0.1)
             record_id = getattr(record, 'record_id', f'record_{hash(str(record))}')
             
@@ -1219,7 +1260,8 @@ def content_detector():
             )
             
         async def update_record_status(self, record_id, new_status, metadata=None, **kwargs):
-            """Update blockchain record status"""
+            """
+Update blockchain record status"""
             await asyncio.sleep(0.1)
             if record_id in self._stored_records:
                 record = self._stored_records[record_id]
@@ -1247,7 +1289,8 @@ def content_detector():
                 }
                 
         async def analyze_registration_costs(self, content_metadata, target_networks=None, networks=None, **kwargs):
-            """Analyze blockchain registration costs across networks"""
+            """
+Analyze blockchain registration costs across networks"""
             await asyncio.sleep(0.1)
             # Accept both 'networks' and 'target_networks' parameters for compatibility
             target_networks = target_networks or networks or ['ethereum', 'polygon', 'binance_smart_chain']
@@ -1390,7 +1433,8 @@ def content_detector():
             }
             
         async def store_reference_content(self, content_id, content_type, features, metadata):
-            """Store reference content for comparison"""
+            """
+Store reference content for comparison"""
             await asyncio.sleep(0.05)  # Simulate storage processing
             self.detection_count += 1
             return {
@@ -1440,7 +1484,8 @@ def content_detector():
             }
             
         async def detect_by_keypoint_matching(self, keypoints, content_type, min_matches=10):
-            """Detect content by SIFT keypoint matching"""
+            """
+Detect content by SIFT keypoint matching"""
             await asyncio.sleep(0.08)
             return {
                 'matches': [{
@@ -1452,7 +1497,8 @@ def content_detector():
             }
             
         async def detect_by_histogram_similarity(self, histogram, content_type, similarity_threshold=0.8):
-            """Detect content by histogram similarity"""
+            """
+Detect content by histogram similarity"""
             await asyncio.sleep(0.06)
             return {
                 'matches': [{
@@ -1464,7 +1510,8 @@ def content_detector():
             }
             
         async def detect_video_by_frames(self, frame_features, min_frame_matches=15, temporal_consistency_threshold=0.7):
-            """Detect video content by frame analysis"""
+            """
+Detect video content by frame analysis"""
             await asyncio.sleep(0.15)
             return {
                 'matches': [{
@@ -1477,7 +1524,8 @@ def content_detector():
             }
             
         async def detect_video_by_audio(self, audio_features, min_confidence=0.8):
-            """Detect video content by audio track"""
+            """
+Detect video content by audio track"""
             await asyncio.sleep(0.12)
             return {
                 'matches': [{
@@ -1489,7 +1537,8 @@ def content_detector():
             }
             
         async def analyze_scene_changes(self, frame_features, scene_change_threshold=0.3):
-            """Analyze scene changes in video content"""
+            """
+Analyze scene changes in video content"""
             await asyncio.sleep(0.10)
             return {
                 'scene_boundaries': [0, 10, 20, 30],
@@ -1499,7 +1548,8 @@ def content_detector():
             }
             
         async def detect_semantic_similarity(self, embeddings, min_similarity=0.8):
-            """Detect semantic similarity in text content"""
+            """
+Detect semantic similarity in text content"""
             await asyncio.sleep(0.08)
             return {
                 'matches': [{
@@ -1513,7 +1563,8 @@ def content_detector():
             }
             
         async def detect_n_gram_similarity(self, ngrams, similarity_threshold=0.7):
-            """Detect n-gram similarity for plagiarism detection"""
+            """
+Detect n-gram similarity for plagiarism detection"""
             await asyncio.sleep(0.06)
             return {
                 'matches': [{
@@ -1526,7 +1577,8 @@ def content_detector():
             }
             
         async def detect_stylometric_similarity(self, style_features, threshold=0.75):
-            """Detect stylometric similarity for authorship analysis"""
+            """
+Detect stylometric similarity for authorship analysis"""
             await asyncio.sleep(0.07)
             return {
                 'matches': [{
@@ -1539,7 +1591,8 @@ def content_detector():
             }
             
         async def detect_ngram_overlap(self, ngram_features, min_overlap_ratio=0.6):
-            """Detect n-gram overlap for text plagiarism detection"""
+            """
+Detect n-gram overlap for text plagiarism detection"""
             await asyncio.sleep(0.05)
             return {
                 'matches': [{
@@ -1552,7 +1605,8 @@ def content_detector():
             }
             
         async def detect_stylometric_patterns(self, style_features, similarity_threshold=0.7):
-            """Detect stylometric patterns for authorship analysis"""
+            """
+Detect stylometric patterns for authorship analysis"""
             await asyncio.sleep(0.06)
             return {
                 'matches': [{
@@ -1565,7 +1619,8 @@ def content_detector():
             }
             
         async def analyze_writing_style(self, style_features, reference_content_id):
-            """Analyze writing style for authorship detection"""
+            """
+Analyze writing style for authorship detection"""
             await asyncio.sleep(0.08)
             return {
                 'style_match': True,
@@ -1577,7 +1632,8 @@ def content_detector():
             }
             
         async def detect_plagiarism_patterns(self, text_features, threshold=0.75):
-            """Detect plagiarism patterns in text content"""
+            """
+Detect plagiarism patterns in text content"""
             await asyncio.sleep(0.09)
             return {
                 'plagiarism_detected': True,
@@ -1590,7 +1646,8 @@ def content_detector():
             }
             
         async def detect_cross_platform_content(self, features, platform_config, min_confidence=0.6):
-            """Detect content across different platforms with platform-specific optimizations"""
+            """
+Detect content across different platforms with platform-specific optimizations"""
             await asyncio.sleep(0.1)  # Simulate processing
             
             platform = platform_config.get('platform', 'unknown')
@@ -1666,7 +1723,8 @@ def content_detector():
                 }
 
         async def start_realtime_detection(self, buffer_size=10, detection_interval=0.5, confidence_threshold=0.8):
-            """Start real-time detection pipeline"""
+            """
+Start real-time detection pipeline"""
             await asyncio.sleep(0.1)  # Simulate startup
             
             class RealtimeDetectionPipeline:
@@ -1679,7 +1737,8 @@ def content_detector():
                     self.detection_results = []
                     
                 async def process_chunk(self, chunk):
-                    """Process a single content chunk"""
+                    """
+Process a single content chunk"""
                     await asyncio.sleep(0.01)  # Simulate processing
                     
                     # Add to buffer
@@ -1721,12 +1780,14 @@ def content_detector():
                     }
                 
                 async def start(self):
-                    """Start the pipeline"""
+                    """
+Start the pipeline"""
                     self.is_running = True
                     return {'status': 'started', 'pipeline_id': f'pipeline_{uuid.uuid4().hex[:8]}'}
                 
                 async def stop(self):
-                    """Stop the pipeline"""
+                    """
+Stop the pipeline"""
                     self.is_running = False
                     return {
                         'status': 'stopped',
@@ -1737,11 +1798,13 @@ def content_detector():
             return RealtimeDetectionPipeline(buffer_size, detection_interval, confidence_threshold)
 
         async def process_realtime_chunk(self, chunk, detection_pipeline):
-            """Process a real-time content chunk through the pipeline"""
+            """
+Process a real-time content chunk through the pipeline"""
             return await detection_pipeline.process_chunk(chunk)
 
         async def get_realtime_performance_metrics(self, detection_pipeline):
-            """Get performance metrics for the real-time detection pipeline"""
+            """
+Get performance metrics for the real-time detection pipeline"""
             await asyncio.sleep(0.01)  # Simulate metrics collection
             
             return {
@@ -1757,7 +1820,8 @@ def content_detector():
             }
 
         async def train_similarity_model(self, training_data, model_type='neural_network', validation_split=0.2, epochs=10):
-            """Train a machine learning model for similarity detection"""
+            """
+Train a machine learning model for similarity detection"""
             await asyncio.sleep(0.5)  # Simulate training time
             
             # Simulate training process
@@ -1785,7 +1849,8 @@ def content_detector():
             return training_metrics
 
         async def detect_with_ml_model(self, features_1, features_2, model_name='trained_similarity_model'):
-            """Detect similarity using trained ML model"""
+            """
+Detect similarity using trained ML model"""
             await asyncio.sleep(0.1)  # Simulate ML inference
             
             # Simulate ML-based similarity calculation
@@ -1810,7 +1875,8 @@ def content_detector():
             }
 
         async def detect_batch_content_matches(self, batch_queries, content_type, min_confidence=0.7):
-            """Detect content matches for a batch of queries"""
+            """
+Detect content matches for a batch of queries"""
             await asyncio.sleep(0.2)  # Simulate batch processing time
             
             batch_results = []
@@ -1842,7 +1908,8 @@ def content_detector():
     return ProfessionalContentDetector()
 @pytest.fixture
 def sample_proof_of_ownership():
-    """Sample proof of ownership for blockchain tests"""
+    """
+Sample proof of ownership for blockchain tests"""
     from datetime import datetime, timezone
     import uuid
     import hashlib
@@ -1862,7 +1929,7 @@ def sample_proof_of_ownership():
                 'genre': 'electronic',
                 'duration_seconds': 180,
                 'creation_date': '2025-01-01T00:00:00Z',
-                'copyright_notice': '© 2025 Fahed Mlaiel. All Rights Reserved.'
+                'copyright_notice': '(c) 2025 Fahed Mlaiel. All Rights Reserved.'
             }
     
     return SampleProofOfOwnership()
@@ -1870,7 +1937,8 @@ def sample_proof_of_ownership():
 
 @pytest.fixture
 def mock_blockchain_networks():
-    """Mock blockchain networks configuration"""
+    """
+Mock blockchain networks configuration"""
     return {
         'ethereum': {
             'network_id': 1,
@@ -1900,15 +1968,18 @@ def mock_blockchain_networks():
 
 
 def slow_test():
-    """Mark test as slow (for selective execution)"""
+    """
+Mark test as slow (for selective execution)"""
     return pytest.mark.slow
 
 
 def integration_test():
-    """Mark test as integration test"""
+    """
+Mark test as integration test"""
     return pytest.mark.integration
 
 
 def performance_test():
-    """Mark test as performance test"""
+    """
+Mark test as performance test"""
     return pytest.mark.performance

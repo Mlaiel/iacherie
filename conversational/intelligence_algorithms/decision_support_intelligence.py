@@ -27,6 +27,7 @@ This decision support intelligence system is proprietary intellectual property.
 Unauthorized use is strictly prohibited and legally prosecuted.
 Contact: mlaiel@live.de for authorization only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -52,7 +53,9 @@ import math
 logger = logging.getLogger(__name__)
 
 class DecisionType(Enum):
-    """Decision type classifications"""
+    """
+Decision type classifications"""
+
     CONTENT_STRATEGY = "content_strategy"
     COLLABORATION_CHOICE = "collaboration_choice"
     MONETIZATION_STRATEGY = "monetization_strategy"
@@ -66,6 +69,7 @@ class DecisionType(Enum):
 
 class DecisionUrgency(Enum):
     """Decision urgency levels"""
+
     IMMEDIATE = "immediate"      # < 24 hours
     URGENT = "urgent"           # < 1 week
     NORMAL = "normal"           # < 1 month
@@ -73,6 +77,7 @@ class DecisionUrgency(Enum):
 
 class RiskLevel(Enum):
     """Risk level classifications"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MODERATE = "moderate"
@@ -161,7 +166,8 @@ class DecisionRecommendation:
 
 @dataclass
 class DecisionRequest:
-    """Decision support request"""
+    """
+Decision support request"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     decision_context: DecisionContext = field(default_factory=DecisionContext)
@@ -182,7 +188,8 @@ class DecisionSupportIntelligence:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize decision support intelligence system"""
+        """
+Initialize decision support intelligence system"""
         self.config = config or {}
         self.decision_cache = {}
         self.historical_decisions = defaultdict(list)
@@ -427,7 +434,8 @@ class DecisionSupportIntelligence:
         criteria: List[DecisionCriteria],
         options: List[DecisionOption]
     ) -> Dict[str, Any]:
-        """Weighted Sum Method (WSM) implementation"""
+        """
+Weighted Sum Method (WSM) implementation"""
         
         # Create decision matrix
         decision_matrix = []
@@ -464,7 +472,8 @@ class DecisionSupportIntelligence:
         criteria: List[DecisionCriteria],
         options: List[DecisionOption]
     ) -> Dict[str, Any]:
-        """TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) implementation"""
+        """
+TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) implementation"""
         
         # Create decision matrix
         decision_matrix = []
@@ -524,7 +533,8 @@ class DecisionSupportIntelligence:
         criteria: List[DecisionCriteria],
         options: List[DecisionOption]
     ) -> Dict[str, Any]:
-        """Analytical Hierarchy Process (AHP) implementation"""
+        """
+Analytical Hierarchy Process (AHP) implementation"""
         
         # For simplicity, use pairwise comparison based on weights
         n_criteria = len(criteria)
@@ -583,7 +593,8 @@ class DecisionSupportIntelligence:
         criteria: List[DecisionCriteria],
         options: List[DecisionOption]
     ) -> Dict[str, Any]:
-        """PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluations)"""
+        """
+PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluations)"""
         
         # Create decision matrix
         decision_matrix = []
@@ -647,7 +658,8 @@ class DecisionSupportIntelligence:
         criteria: List[DecisionCriteria],
         options: List[DecisionOption]
     ) -> Dict[str, Any]:
-        """ELECTRE (Elimination and Choice Expressing Reality) method implementation"""
+        """
+ELECTRE (Elimination and Choice Expressing Reality) method implementation"""
         
         # Create decision matrix
         decision_matrix = []
@@ -735,7 +747,8 @@ class DecisionSupportIntelligence:
         options: List[DecisionOption],
         context: DecisionContext
     ) -> Dict[str, RiskAssessment]:
-        """Conduct comprehensive risk assessment for each option"""
+        """
+Conduct comprehensive risk assessment for each option"""
         risk_assessments = {}
         
         for option in options:
@@ -786,7 +799,8 @@ class DecisionSupportIntelligence:
         option: DecisionOption,
         context: DecisionContext
     ) -> Dict[str, float]:
-        """Calculate specific risk factors for an option"""
+        """
+Calculate specific risk factors for an option"""
         risk_factors = {}
         
         # Implementation risk
@@ -821,7 +835,8 @@ class DecisionSupportIntelligence:
         risk_factors: Dict[str, float],
         option: DecisionOption
     ) -> List[str]:
-        """Generate risk mitigation strategies"""
+        """
+Generate risk mitigation strategies"""
         strategies = []
         
         # Implementation risk mitigation
@@ -897,7 +912,8 @@ class DecisionSupportIntelligence:
         risk_factors: Dict[str, float],
         option: DecisionOption
     ) -> float:
-        """Calculate Value at Risk (VaR) at 95% confidence level"""
+        """
+Calculate Value at Risk (VaR) at 95% confidence level"""
         # Monte Carlo simulation for VaR calculation
         n_simulations = 1000
         
@@ -918,7 +934,8 @@ class DecisionSupportIntelligence:
         risk_factors: Dict[str, float],
         option: DecisionOption
     ) -> Tuple[float, float]:
-        """Calculate confidence interval for risk assessment"""
+        """
+Calculate confidence interval for risk assessment"""
         # Calculate standard error based on risk factor variance
         risk_values = list(risk_factors.values())
         std_error = np.std(risk_values) / np.sqrt(len(risk_values))
@@ -937,7 +954,8 @@ class DecisionSupportIntelligence:
         options: List[DecisionOption],
         mcda_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform sensitivity analysis on decision criteria"""
+        """
+Perform sensitivity analysis on decision criteria"""
         
         base_rankings = mcda_results['rankings']
         sensitivity_results = {
@@ -993,7 +1011,8 @@ class DecisionSupportIntelligence:
         original_rankings: List[Tuple[str, float]],
         new_rankings: List[Tuple[str, float]]
     ) -> float:
-        """Calculate the magnitude of ranking change"""
+        """
+Calculate the magnitude of ranking change"""
         if len(original_rankings) != len(new_rankings):
             return 1.0
         
@@ -1014,7 +1033,8 @@ class DecisionSupportIntelligence:
         options: List[DecisionOption],
         context: DecisionContext
     ) -> Dict[str, Any]:
-        """Perform scenario analysis for different future conditions"""
+        """
+Perform scenario analysis for different future conditions"""
         
         scenarios = {
             'optimistic': {'market_growth': 1.3, 'cost_reduction': 0.8, 'success_boost': 1.2},
@@ -1055,7 +1075,8 @@ class DecisionSupportIntelligence:
         risk_assessments: Dict[str, RiskAssessment],
         context: DecisionContext
     ) -> DecisionOption:
-        """Select the optimal option considering MCDA scores and risk"""
+        """
+Select the optimal option considering MCDA scores and risk"""
         
         rankings = mcda_results['rankings']
         if not rankings:
@@ -1186,7 +1207,8 @@ class DecisionSupportIntelligence:
         optimal_option: DecisionOption,
         context: DecisionContext
     ) -> List[str]:
-        """Define monitoring indicators for the decision"""
+        """
+Define monitoring indicators for the decision"""
         indicators = []
         
         # Universal indicators
@@ -1269,7 +1291,8 @@ class DecisionSupportIntelligence:
         return min(1.0, max(0.0, overall_confidence))
     
     async def _cache_decision_results(self, recommendation: DecisionRecommendation, creator_id: str):
-        """Cache decision results for future reference"""
+        """
+Cache decision results for future reference"""
         cache_key = f"decision_{creator_id}_{recommendation.generated_at.isoformat()}"
         self.decision_cache[cache_key] = recommendation
         
@@ -1292,7 +1315,8 @@ class DecisionSupportIntelligence:
         return sorted(history, key=lambda x: x.generated_at, reverse=True)[:limit]
     
     async def get_decision_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get decision analytics for a creator"""
+        """
+Get decision analytics for a creator"""
         history = self.historical_decisions.get(creator_id, [])
         
         if not history:

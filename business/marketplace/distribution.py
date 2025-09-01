@@ -9,6 +9,7 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from ...integrations.platform_apis import PlatformAPIManager
 
 
 class DistributionPlatform(Enum):
-    """Distribution platform enumeration."""
+    """
+Distribution platform enumeration."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -39,6 +42,7 @@ class DistributionPlatform(Enum):
 
 class ContentFormat(Enum):
     """Content format enumeration."""
+
     VIDEO_SHORT = "video_short"
     VIDEO_LONG = "video_long"
     IMAGE = "image"
@@ -62,7 +66,8 @@ class DistributionStrategy:
 
 @dataclass
 class ContentDistributionRequest:
-    """Content distribution request structure."""
+    """
+Content distribution request structure."""
     content_id: str
     creator_id: str
     content_format: ContentFormat
@@ -341,7 +346,8 @@ class PlatformDistribution:
         optimized_content: Dict[str, Dict[str, Any]],
         distribution_request: ContentDistributionRequest
     ) -> Dict[str, Dict[str, Any]]:
-        """Execute content distribution across multiple platforms."""
+        """
+Execute content distribution across multiple platforms."""
         distribution_results = {}
         
         # Execute distributions in parallel for efficiency
@@ -399,7 +405,8 @@ class PlatformDistribution:
         distribution_id: str,
         distribution_results: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Set up tracking for distributed content."""
+        """
+Set up tracking for distributed content."""
         tracking_config = {
             'distribution_id': distribution_id,
             'tracked_posts': {},
@@ -429,7 +436,8 @@ class PlatformDistribution:
         distribution_request: ContentDistributionRequest,
         distribution_results: Dict[str, Dict[str, Any]]
     ) -> None:
-        """Log distribution activity for analytics and auditing."""
+        """
+Log distribution activity for analytics and auditing."""
         activity_log = {
             'distribution_id': distribution_id,
             'content_id': distribution_request.content_id,
@@ -596,7 +604,8 @@ class ContentDistribution:
         prioritized_pipeline: List[Dict[str, Any]],
         global_strategy: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Execute content distribution in optimized batches."""
+        """
+Execute content distribution in optimized batches."""
         batch_size = global_strategy.get('batch_size', 5)
         batch_results = []
         
@@ -618,7 +627,8 @@ class ContentDistribution:
         self,
         content_batch: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute distribution for a batch of content."""
+        """
+Execute distribution for a batch of content."""
         batch_tasks = []
         
         # Create distribution tasks for each content in batch

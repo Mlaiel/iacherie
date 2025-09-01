@@ -28,14 +28,16 @@ class AinflueCrawlerManager:
     """
     
     def __init__(self):
-        """Initialize the crawler manager."""
+        """
+Initialize the crawler manager."""
         self.orchestrator = None
         self.monitoring_tasks = {}
         self.violation_handlers = []
         self.content_database = []  # Mock database
         
     async def initialize(self):
-        """Initialize the crawler orchestrator."""
+        """
+Initialize the crawler orchestrator."""
         try:
             # Import with proper path resolution
             import sys
@@ -280,7 +282,8 @@ class AinflueCrawlerManager:
         return len(intersection) / len(union) if union else 0.0
     
     def _assess_risk_level(self, result) -> str:
-        """Assess the risk level of found content."""
+        """
+Assess the risk level of found content."""
         # Simple risk assessment based on title similarity
         if hasattr(result, 'title') and result.title:
             # Check for exact matches or high similarity patterns
@@ -299,7 +302,8 @@ class AinflueCrawlerManager:
         return 'LOW'
     
     def _generate_recommendations(self, high_risk: List[Dict], medium_risk: List[Dict]) -> List[str]:
-        """Generate recommendations based on violations found."""
+        """
+Generate recommendations based on violations found."""
         recommendations = []
         
         if high_risk:

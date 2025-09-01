@@ -8,6 +8,7 @@ proper functionality across Business, Technical, and AI alert categories.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import unittest
 import asyncio
 from datetime import datetime, timedelta
@@ -30,10 +31,12 @@ from monitoring.alerts import (
 
 
 class TestIntelligentAlertSystem(unittest.TestCase):
-    """Test suite for the intelligent alert system"""
+    """
+Test suite for the intelligent alert system"""
     
     def setUp(self):
-        """Set up test environment"""
+        """
+Set up test environment"""
         self.coordinator = alert_coordinator
         
         # Clear any existing alerts for clean testing
@@ -41,7 +44,8 @@ class TestIntelligentAlertSystem(unittest.TestCase):
         self.coordinator.alert_manager.alert_history.clear()
     
     def test_business_alert_revenue_drop_detection(self):
-        """Test that business alerts properly detect revenue drops"""
+        """
+Test that business alerts properly detect revenue drops"""
         
         async def run_test():
             # Create metrics with significant revenue drop (45%)

@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive content generation capabilities using advanced AI models
 for text, image, video, and multi-modal content creation.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -18,7 +19,9 @@ import random
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types of content that can be generated"""
+    """
+Types of content that can be generated"""
+
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -30,6 +33,7 @@ class ContentType(Enum):
 
 class GenerationStrategy(Enum):
     """Content generation strategies"""
+
     CREATIVE = "creative"
     INFORMATIVE = "informative"
     PERSUASIVE = "persuasive"
@@ -60,7 +64,8 @@ class GeneratedContent:
     config_used: GenerationConfig
 
 class ContentGenerator:
-    """Main content generation engine"""
+    """
+Main content generation engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)

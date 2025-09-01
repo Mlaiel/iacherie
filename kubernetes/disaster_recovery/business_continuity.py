@@ -11,6 +11,7 @@ This module ensures business continuity during disasters and disruptions:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from backend.protection.content_protection import ContentProtectionManager
 
 
 class BusinessPriority(Enum):
-    """Business process priority levels"""
+    """
+Business process priority levels"""
+
     CRITICAL = 1      # Revenue-generating, user-facing
     HIGH = 2          # Core functionality, creator tools
     MEDIUM = 3        # Analytics, reporting
@@ -36,7 +39,9 @@ class BusinessPriority(Enum):
 
 
 class BusinessProcessStatus(Enum):
-    """Business process operational status"""
+    """
+Business process operational status"""
+
     OPERATIONAL = "operational"
     DEGRADED = "degraded"
     SUSPENDED = "suspended"
@@ -46,6 +51,7 @@ class BusinessProcessStatus(Enum):
 
 class ContinuityStrategy(Enum):
     """Business continuity strategies"""
+
     MAINTAIN_FULL_SERVICE = "maintain_full_service"
     GRACEFUL_DEGRADATION = "graceful_degradation"
     ESSENTIAL_ONLY = "essential_only"
@@ -75,7 +81,8 @@ class BusinessProcess:
 
 @dataclass
 class SLARequirement:
-    """Service Level Agreement requirements"""
+    """
+Service Level Agreement requirements"""
     sla_id: str
     process_id: str
     availability_target: float    # e.g., 99.9%
@@ -89,7 +96,8 @@ class SLARequirement:
 
 @dataclass
 class ContinuityPlan:
-    """Business continuity plan for specific scenarios"""
+    """
+Business continuity plan for specific scenarios"""
     plan_id: str
     scenario_description: str
     affected_processes: List[str]
@@ -146,7 +154,8 @@ class BusinessContinuityManager:
         self._initialize_core_processes()
 
     def _initialize_core_processes(self):
-        """Initialize core business processes for content protection platform"""
+        """
+Initialize core business processes for content protection platform"""
         core_processes = [
             {
                 'process_id': 'user_authentication',
@@ -604,7 +613,8 @@ class BusinessContinuityManager:
         }
 
     async def _assess_business_impact(self, affected_processes: List[str]) -> Dict[str, Any]:
-        """Assess business impact of affected processes"""
+        """
+Assess business impact of affected processes"""
         total_revenue_impact = 0.0
         total_user_impact = 0
         critical_processes_affected = 0
@@ -664,7 +674,8 @@ class BusinessContinuityManager:
     def _update_business_metrics(self, process: BusinessProcess, 
                                health_status: Dict[str, Any], 
                                sla_compliance: Dict[str, Any]):
-        """Update aggregated business impact metrics"""
+        """
+Update aggregated business impact metrics"""
         # Calculate total revenue at risk
         self.impact_metrics['total_revenue_at_risk'] = sum(
             p.revenue_impact for p in self.business_processes.values()
@@ -694,7 +705,8 @@ class BusinessContinuityManager:
             self.impact_metrics['business_continuity_score'] = (operational_processes / total_processes) * 100
 
     async def handle_emergency_situation(self, recovery_mode: str) -> Dict[str, Any]:
-        """Handle emergency situation with appropriate business continuity measures"""
+        """
+Handle emergency situation with appropriate business continuity measures"""
         try:
             emergency_id = f"emergency_{int(datetime.utcnow().timestamp())}"
             
@@ -994,11 +1006,13 @@ class BusinessContinuityManager:
         return 99.95
 
     async def _calculate_response_time(self, process_id: str, hours: int = 1) -> float:
-        """Calculate average response time over time period"""
+        """
+Calculate average response time over time period"""
         # Placeholder implementation
         return 250.0
 
     async def _calculate_error_rate(self, process_id: str, hours: int = 1) -> float:
-        """Calculate error rate over time period"""
+        """
+Calculate error rate over time period"""
         # Placeholder implementation
         return 0.01

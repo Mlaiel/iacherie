@@ -4,12 +4,13 @@ Architecture: Event Processing Middleware Chain
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
     Système de middleware pour le traitement d'événements avec chaîne de traitement,
     authentification, validation, logging et métriques.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Awaitable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class MiddlewareType(Enum):
-    """Types de middleware"""
+    """
+Types de middleware"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
@@ -44,6 +47,7 @@ class MiddlewareType(Enum):
 
 class MiddlewareAction(Enum):
     """Actions possibles du middleware"""
+
     CONTINUE = "continue"    # Continuer le traitement
     STOP = "stop"           # Arrêter le traitement
     REJECT = "reject"       # Rejeter l'événement
@@ -89,7 +93,8 @@ class EventMiddleware(ABC):
         pass
     
     async def execute(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
-        """Exécute le middleware avec métriques"""
+        """
+Exécute le middleware avec métriques"""
         if not self.enabled:
             return MiddlewareResult(action=MiddlewareAction.CONTINUE, event=event)
         
@@ -469,7 +474,8 @@ class RateLimitingMiddleware(EventMiddleware):
 
 
 class TransformationMiddleware(EventMiddleware):
-    """Middleware de transformation d'événements"""
+    """
+Middleware de transformation d'événements"""
     
     def __init__(
         self,
@@ -549,7 +555,8 @@ class MiddlewareChain:
         self._middlewares: List[EventMiddleware] = []
     
     def add_middleware(self, middleware: EventMiddleware):
-        """Ajoute un middleware à la chaîne"""
+        """
+Ajoute un middleware à la chaîne"""
         self._middlewares.append(middleware)
         # Tri par priorité (plus petit = plus prioritaire)
         self._middlewares.sort(key=lambda m: m.priority)

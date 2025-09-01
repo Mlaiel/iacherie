@@ -28,6 +28,7 @@ Team Specialties & Expertise:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -79,7 +80,9 @@ active_deliveries_gauge = Gauge('notification_active_deliveries',
 
 
 class DeliveryStrategy(Enum):
-    """Advanced delivery strategies for optimal notification delivery"""
+    """
+Advanced delivery strategies for optimal notification delivery"""
+
     IMMEDIATE = "immediate"
     BATCH_OPTIMIZED = "batch_optimized"
     TIME_SENSITIVE = "time_sensitive"
@@ -90,6 +93,7 @@ class DeliveryStrategy(Enum):
 
 class ChannelHealthStatus(Enum):
     """Channel health monitoring status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     CRITICAL = "critical"
@@ -99,6 +103,7 @@ class ChannelHealthStatus(Enum):
 
 class DeliveryPhase(Enum):
     """Notification delivery lifecycle phases"""
+
     QUEUED = "queued"
     ROUTING = "routing"
     PREPROCESSING = "preprocessing"
@@ -128,7 +133,8 @@ class DeliveryConfiguration:
 
 @dataclass
 class ChannelConfiguration:
-    """Channel-specific configuration with performance optimization"""
+    """
+Channel-specific configuration with performance optimization"""
     channel_id: str
     channel_type: str
     priority_weight: float = 1.0
@@ -144,7 +150,8 @@ class ChannelConfiguration:
 
 @dataclass
 class DeliveryRequest:
-    """Comprehensive delivery request with rich context"""
+    """
+Comprehensive delivery request with rich context"""
     id: str
     notification_id: str
     user_id: str
@@ -164,7 +171,8 @@ class DeliveryRequest:
 
 
 class ChannelHealthMonitor:
-    """Advanced channel health monitoring with predictive analytics"""
+    """
+Advanced channel health monitoring with predictive analytics"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -180,7 +188,8 @@ class ChannelHealthMonitor:
         self._initialize_ml_predictor()
         
     def _initialize_ml_predictor(self):
-        """Initialize ML-based health predictor"""
+        """
+Initialize ML-based health predictor"""
         try:
             # Load pre-trained model or create new one
             self.ml_predictor = RandomForestClassifier(
@@ -284,7 +293,8 @@ class ChannelHealthMonitor:
         })
         
     def get_healthy_channels(self, channel_ids: List[str]) -> List[str]:
-        """Filter channels by health status"""
+        """
+Filter channels by health status"""
         healthy_channels = []
         for channel_id in channel_ids:
             health = self.get_channel_health(channel_id)
@@ -294,7 +304,8 @@ class ChannelHealthMonitor:
 
 
 class IntelligentRouter:
-    """AI-powered intelligent routing with adaptive optimization"""
+    """
+AI-powered intelligent routing with adaptive optimization"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -305,7 +316,8 @@ class IntelligentRouter:
         self._initialize_ml_router()
         
     def _initialize_ml_router(self):
-        """Initialize ML-based routing optimizer"""
+        """
+Initialize ML-based routing optimizer"""
         try:
             # Advanced routing ML model would be loaded here
             # For now, using rule-based routing with learning
@@ -361,7 +373,8 @@ class IntelligentRouter:
         
     def _route_for_speed(self, channels: List[str], 
                         health_monitor: ChannelHealthMonitor) -> List[str]:
-        """Route prioritizing speed/latency"""
+        """
+Route prioritizing speed/latency"""
         channel_scores = []
         for channel_id in channels:
             health = health_monitor.get_channel_health(channel_id)
@@ -374,7 +387,8 @@ class IntelligentRouter:
         return [ch[0] for ch in channel_scores[:2]]  # Top 2 fastest
         
     def _route_for_cost(self, channels: List[str]) -> List[str]:
-        """Route prioritizing cost optimization"""
+        """
+Route prioritizing cost optimization"""
         # Select cheapest channels first
         channel_costs = []
         for channel_id in channels:
@@ -389,7 +403,8 @@ class IntelligentRouter:
     async def _route_intelligently(self, delivery_request: DeliveryRequest,
                                  channels: List[str], 
                                  health_monitor: ChannelHealthMonitor) -> List[str]:
-        """AI-powered intelligent routing with adaptive learning"""
+        """
+AI-powered intelligent routing with adaptive learning"""
         try:
             channel_scores = []
             
@@ -445,7 +460,8 @@ class IntelligentRouter:
         
     async def _record_routing_decision(self, delivery_request: DeliveryRequest,
                                      selected_channels: List[str]):
-        """Record routing decision for learning purposes"""
+        """
+Record routing decision for learning purposes"""
         try:
             decision_record = {
                 'timestamp': datetime.utcnow(),
@@ -490,7 +506,8 @@ class DeliveryOrchestrator:
         self._initialize_components()
         
     def _initialize_channels(self):
-        """Initialize channel integrations"""
+        """
+Initialize channel integrations"""
         try:
             self.channel_integrations = {
                 'email': EmailChannelIntegration(self.config),
@@ -523,7 +540,8 @@ class DeliveryOrchestrator:
         self._metrics_collector_task = None
         
     async def start(self):
-        """Start the delivery orchestrator"""
+        """
+Start the delivery orchestrator"""
         try:
             logger.info("Starting Delivery Orchestrator")
             
@@ -895,7 +913,8 @@ class DeliveryOrchestrator:
             return 'partial_success'
             
     async def _update_delivery_metrics(self, completion_record: Dict[str, Any]):
-        """Update delivery metrics and analytics"""
+        """
+Update delivery metrics and analytics"""
         try:
             await self.metrics_collector.record_delivery_completion(completion_record)
         except Exception as e:
@@ -996,7 +1015,8 @@ class DeliveryOrchestrator:
         return None
         
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics"""
+        """
+Get comprehensive performance metrics"""
         try:
             total_completed = len(self.completed_deliveries)
             total_failed = len(self.failed_deliveries)

@@ -6,6 +6,7 @@ analysis and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import re
@@ -18,7 +19,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of content optimizations"""
+    """
+Types of content optimizations"""
+
     SEO_OPTIMIZATION = "seo_optimization"
     READABILITY = "readability"
     ENGAGEMENT = "engagement"
@@ -30,6 +33,7 @@ class OptimizationType(Enum):
 
 class ContentType(Enum):
     """Types of content"""
+
     BLOG_POST = "blog_post"
     VIDEO_DESCRIPTION = "video_description"
     SOCIAL_MEDIA_POST = "social_media_post"
@@ -204,7 +208,8 @@ class OptimizationEngine:
         return optimized_content
 
     async def _apply_seo_optimization(self, content: Dict[str, Any], options: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply SEO optimizations"""
+        """
+Apply SEO optimizations"""
         optimized = content.copy()
         target_keywords = options.get('target_keywords', [])
         
@@ -223,13 +228,15 @@ class OptimizationEngine:
         return optimized
 
     async def _apply_engagement_optimization(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply engagement optimizations"""
+        """
+Apply engagement optimizations"""
         optimized = content.copy()
         optimized['engagement_score'] = 0.85
         return optimized
 
     async def _calculate_quality_scores(self, content: Dict[str, Any], content_type: ContentType) -> Dict[str, float]:
-        """Calculate quality scores for optimized content"""
+        """
+Calculate quality scores for optimized content"""
         return {
             'overall_quality': 0.85,
             'seo_score': 0.8,
@@ -238,7 +245,8 @@ class OptimizationEngine:
         }
 
     async def _generate_recommendations(self, optimization_types: List[OptimizationType]) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         recommendations = [
             "Monitor performance metrics after publishing",
             "Consider A/B testing different versions",
@@ -252,5 +260,6 @@ class OptimizationEngine:
         return job.status if job else None
 
     async def get_job_result(self, job_id: str) -> Optional[OptimizationResult]:
-        """Get the result of a completed optimization job"""
+        """
+Get the result of a completed optimization job"""
         return self.job_results.get(job_id)

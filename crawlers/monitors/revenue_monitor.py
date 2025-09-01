@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -39,7 +40,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Revenue source types."""
+    """
+Revenue source types."""
+
     SPOTIFY_ROYALTIES = "spotify_royalties"
     YOUTUBE_AD_REVENUE = "youtube_ad_revenue"
     INSTAGRAM_CREATOR_FUND = "instagram_creator_fund"
@@ -53,6 +56,7 @@ class RevenueSource(Enum):
 
 class MonetizationStrategy(Enum):
     """Monetization strategy types."""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     ADVERTISING_REVENUE = "advertising_revenue"
     SUBSCRIPTION_MODEL = "subscription_model"
@@ -64,6 +68,7 @@ class MonetizationStrategy(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -74,6 +79,7 @@ class PaymentStatus(Enum):
 
 class RevenueMetricType(Enum):
     """Revenue metric categories."""
+
     GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     RECURRING_REVENUE = "recurring_revenue"
@@ -116,7 +122,8 @@ class RevenueMetrics:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity identification."""
+    """
+Monetization opportunity identification."""
     opportunity_id: str
     creator_id: str
     content_id: str
@@ -128,7 +135,8 @@ class MonetizationOpportunity:
     expires_at: Optional[datetime] = None
 
 class MonetizationTracker:
-    """Monetization tracking and analytics component."""
+    """
+Monetization tracking and analytics component."""
     
     def __init__(self):
         self.monetization_patterns: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
@@ -139,7 +147,8 @@ class MonetizationTracker:
         self._initialize_platform_rates()
     
     def _initialize_platform_rates(self) -> None:
-        """Initialize platform commission rates and payout information."""
+        """
+Initialize platform commission rates and payout information."""
         self.platform_rates = {
             "spotify": {
                 "royalty_rate": 0.004,  # $0.004 per stream
@@ -287,7 +296,8 @@ class RevenueMonitor(MonitorEngine):
         self._initialize_anomaly_thresholds()
     
     def _initialize_revenue_targets(self) -> None:
-        """Initialize revenue targets and goals."""
+        """
+Initialize revenue targets and goals."""
         self.revenue_targets = {
             "daily": Decimal('1000.00'),
             "weekly": Decimal('7000.00'),
@@ -388,7 +398,8 @@ class RevenueMonitor(MonitorEngine):
             await self._process_revenue_event(event)
     
     async def _process_revenue_event(self, event: Dict[str, Any]) -> None:
-        """Process individual revenue event."""
+        """
+Process individual revenue event."""
         try:
             event_type = event.get("type", "")
             
@@ -673,7 +684,8 @@ class RevenueMonitor(MonitorEngine):
         )
     
     async def _get_top_revenue_creators(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get top revenue-generating creators."""
+        """
+Get top revenue-generating creators."""
         creator_revenues = defaultdict(Decimal)
         
         # Calculate total revenue per creator
@@ -704,17 +716,20 @@ class RevenueMonitor(MonitorEngine):
         return total_opportunities
     
     async def _load_historical_revenue_data(self) -> None:
-        """Load historical revenue data."""
+        """
+Load historical revenue data."""
         # Implementation would load from database
         pass
     
     async def _initialize_payment_gateways(self) -> None:
-        """Initialize payment gateway connections."""
+        """
+Initialize payment gateway connections."""
         # Implementation would setup payment gateway APIs
         pass
     
     async def _monitor_revenue_streams(self) -> None:
-        """Monitor revenue streams in real-time."""
+        """
+Monitor revenue streams in real-time."""
         while True:
             try:
                 # Monitor revenue streams

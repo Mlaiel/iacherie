@@ -8,7 +8,7 @@ Technologies: Python, Registry Pattern, Component Discovery
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Component registry → Module discovery → Service coordination → 
 Health monitoring → Performance tracking → Centralized management
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Type, Union
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComponentStatus(Enum):
-    """Component operational status"""
+    """
+Component operational status"""
+
     INITIALIZED = "initialized"
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -38,6 +41,7 @@ class ComponentStatus(Enum):
 
 class ComponentType(Enum):
     """Component types in the i18n system"""
+
     MANAGER = "manager"
     ENGINE = "engine"
     PROCESSOR = "processor"
@@ -114,7 +118,8 @@ class InternationalizationIndex:
         return self.component_instances.get(name)
     
     def get_component_info(self, name: str) -> Optional[ComponentInfo]:
-        """Get component information"""
+        """
+Get component information"""
         return self.components.get(name)
     
     def list_components(
@@ -122,7 +127,8 @@ class InternationalizationIndex:
         component_type: Optional[ComponentType] = None,
         status: Optional[ComponentStatus] = None
     ) -> List[ComponentInfo]:
-        """List components by type and/or status"""
+        """
+List components by type and/or status"""
         components = list(self.components.values())
         
         if component_type:
@@ -134,7 +140,8 @@ class InternationalizationIndex:
         return components
     
     def resolve_dependencies(self) -> List[str]:
-        """Resolve component dependencies and return initialization order"""
+        """
+Resolve component dependencies and return initialization order"""
         try:
             # Topological sort for dependency resolution
             visited = set()
@@ -379,7 +386,8 @@ def register_i18n_component(
 
 # Auto-register core components when module is imported
 def _auto_register_components():
-    """Auto-register core i18n components"""
+    """
+Auto-register core i18n components"""
     try:
         index = get_i18n_index()
         

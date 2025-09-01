@@ -2,8 +2,9 @@
 Advanced withdrawal request processing and validation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from ...security.fraud_detection import FraudDetectionEngine
 
 
 class WithdrawalStatus(Enum):
-    """Withdrawal request status"""
+    """
+Withdrawal request status"""
+
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
@@ -34,6 +37,7 @@ class WithdrawalStatus(Enum):
 
 class WithdrawalMethod(Enum):
     """Withdrawal methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -44,6 +48,7 @@ class WithdrawalMethod(Enum):
 
 class RejectionReason(Enum):
     """Reasons for withdrawal rejection"""
+
     INSUFFICIENT_BALANCE = "insufficient_balance"
     FRAUD_DETECTED = "fraud_detected"
     INVALID_BANK_DETAILS = "invalid_bank_details"
@@ -110,7 +115,8 @@ class WithdrawalValidationResult(BaseModel):
 
 
 class WithdrawalResponse(BaseModel):
-    """Withdrawal processing response"""
+    """
+Withdrawal processing response"""
     request_id: str
     status: WithdrawalStatus
     message: str
@@ -120,7 +126,8 @@ class WithdrawalResponse(BaseModel):
 
 
 class WithdrawalManager:
-    """Advanced withdrawal management system"""
+    """
+Advanced withdrawal management system"""
     
     def __init__(
         self,
@@ -137,7 +144,8 @@ class WithdrawalManager:
         request: WithdrawalRequest,
         session: AsyncSession
     ) -> WithdrawalResponse:
-        """Submit new withdrawal request"""
+        """
+Submit new withdrawal request"""
         try:
             # Validate request
             validation = await self._validate_withdrawal_request(request, session)
@@ -434,7 +442,8 @@ class WithdrawalManager:
         user_id: int,
         session: AsyncSession
     ) -> Optional[datetime]:
-        """Get timestamp of last withdrawal request"""
+        """
+Get timestamp of last withdrawal request"""
         result = await session.execute(
             select(func.max(DBWithdrawalRequest.created_at)).where(
                 DBWithdrawalRequest.user_id == user_id
@@ -447,7 +456,8 @@ class WithdrawalManager:
         self,
         request: WithdrawalRequest
     ) -> Dict[str, Any]:
-        """Validate payment method specific details"""
+        """
+Validate payment method specific details"""
         errors = []
         
         if request.method == WithdrawalMethod.BANK_TRANSFER:
@@ -569,7 +579,8 @@ class WithdrawalManager:
         return mapping.get(method, PaymentGateway.STRIPE)
     
     async def _schedule_automatic_processing(self, request_id: str) -> None:
-        """Schedule automatic processing for eligible requests"""
+        """
+Schedule automatic processing for eligible requests"""
         # This would typically use a task queue like Celery
         # For now, we'll just log the scheduling
         self.logger.info(f"Scheduled automatic processing for withdrawal {request_id}")

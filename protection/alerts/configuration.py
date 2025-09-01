@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Dynamic configuration management for alert system with hot-reload capabilities,
 environment-specific settings, and runtime optimization.
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationSource(str, Enum):
-    """Configuration source types."""
+    """
+Configuration source types."""
+
     FILE_SYSTEM = "file_system"
     ENVIRONMENT = "environment"
     DATABASE = "database"
@@ -45,6 +48,7 @@ class ConfigurationSource(str, Enum):
 
 class ConfigurationScope(str, Enum):
     """Configuration scope levels."""
+
     GLOBAL = "global"
     ENVIRONMENT = "environment"
     TENANT = "tenant"
@@ -67,7 +71,8 @@ class NotificationChannelConfig:
 
 @dataclass
 class EscalationConfig:
-    """Configuration for alert escalation."""
+    """
+Configuration for alert escalation."""
     enabled: bool = True
     auto_escalate: bool = True
     escalation_intervals: Dict[str, int] = field(default_factory=lambda: {
@@ -95,7 +100,8 @@ class MLClassifierConfig:
 
 @dataclass
 class EvidenceCollectionConfig:
-    """Configuration for evidence collection."""
+    """
+Configuration for evidence collection."""
     enabled: bool = True
     auto_collect: bool = True
     collection_timeout_seconds: int = 60
@@ -120,7 +126,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security settings."""
+    """
+Configuration for security settings."""
     encryption_enabled: bool = True
     audit_logging_enabled: bool = True
     rate_limiting_enabled: bool = True
@@ -132,7 +139,8 @@ class SecurityConfig:
 
 
 class AlertSystemConfiguration(BaseModel):
-    """Complete alert system configuration."""
+    """
+Complete alert system configuration."""
     
     # Basic settings
     environment: str = Field(default="production")
@@ -462,7 +470,8 @@ class ConfigurationManager:
         scope_id: Optional[str],
         config: AlertSystemConfiguration
     ):
-        """Store configuration to all applicable sources."""
+        """
+Store configuration to all applicable sources."""
         config_key = self._build_config_key(scope, scope_id)
         
         # Store in memory
@@ -586,7 +595,8 @@ class ConfigurationManager:
             return {'scope': ConfigurationScope.GLOBAL, 'scope_id': None}
 
     def _set_nested_value(self, dictionary: Dict, path: List[str], value: str):
-        """Set nested dictionary value from path list."""
+        """
+Set nested dictionary value from path list."""
         current = dictionary
         for key in path[:-1]:
             if key not in current:
@@ -598,7 +608,8 @@ class ConfigurationManager:
         current[path[-1]] = final_value
 
     def _convert_env_value(self, value: str) -> Any:
-        """Convert environment variable string to appropriate type."""
+        """
+Convert environment variable string to appropriate type."""
         # Boolean conversion
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
@@ -622,19 +633,22 @@ class ConfigurationManager:
         return value
 
     async def _get_default_configuration(self) -> AlertSystemConfiguration:
-        """Get default configuration."""
+        """
+Get default configuration."""
         return AlertSystemConfiguration()
 
 
 class ConfigFileEventHandler(FileSystemEventHandler):
-    """File system event handler for configuration hot-reload."""
+    """
+File system event handler for configuration hot-reload."""
     
     def __init__(self, config_manager: ConfigurationManager):
         self.config_manager = config_manager
         self._last_modified = {}
     
     def on_modified(self, event):
-        """Handle file modification events."""
+        """
+Handle file modification events."""
         if event.is_directory:
             return
         
@@ -654,7 +668,8 @@ class ConfigFileEventHandler(FileSystemEventHandler):
         asyncio.create_task(self._reload_config_file(file_path))
     
     async def _reload_config_file(self, file_path: Path):
-        """Reload configuration from modified file."""
+        """
+Reload configuration from modified file."""
         try:
             async with aiofiles.open(file_path, 'r') as f:
                 content = await f.read()

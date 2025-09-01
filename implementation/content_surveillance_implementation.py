@@ -5,6 +5,7 @@ content detection, and evidence collection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import hashlib
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for surveillance"""
+    """
+Content types for surveillance"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"

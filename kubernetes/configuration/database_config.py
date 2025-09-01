@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Enterprise-grade database cluster management and configuration.
 ==================================================================
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
@@ -23,7 +24,9 @@ from datetime import datetime, timedelta
 import json
 
 class DatabaseType(Enum):
-    """Database types"""
+    """
+Database types"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -33,6 +36,7 @@ class DatabaseType(Enum):
 
 class ClusterMode(Enum):
     """Database cluster modes"""
+
     STANDALONE = "standalone"
     MASTER_SLAVE = "master_slave"
     MASTER_REPLICA = "master_replica"
@@ -42,6 +46,7 @@ class ClusterMode(Enum):
 
 class BackupStrategy(Enum):
     """Backup strategies"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -50,6 +55,7 @@ class BackupStrategy(Enum):
 
 class ReplicationStrategy(Enum):
     """Replication strategies"""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     SEMI_SYNCHRONOUS = "semi_synchronous"
@@ -213,7 +219,8 @@ class ReplicationConfig:
 
 @dataclass
 class ShardingConfig:
-    """Sharding configuration"""
+    """
+Sharding configuration"""
     enabled: bool = False
     shard_count: int = 3
     shard_key: str = "id"
@@ -251,7 +258,8 @@ class DatabaseConfigManager:
     """
     
     def __init__(self):
-        """Initialize database configuration manager"""
+        """
+Initialize database configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Database configurations

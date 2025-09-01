@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -35,7 +36,7 @@ MODULE_INFO = {
     'description': 'Enterprise Content Scheduling & Timing Optimization System',
     'author': 'Fahed Mlaiel',
     'email': 'mlaiel@live.de',
-    'copyright': '© 2025 Fahed Mlaiel. All rights reserved.',
+    'copyright': '(c) 2025 Fahed Mlaiel. All rights reserved.',
     'license': 'Proprietary - Unauthorized use prohibited',
     'components': [
         'SchedulingAgent',
@@ -82,7 +83,8 @@ class SchedulingAgentModule:
     """
     
     def __init__(self):
-        """Initialize the module manager"""
+        """
+Initialize the module manager"""
         self.initialized = False
         self.components = {}
         self.health_status = {}
@@ -248,7 +250,8 @@ class SchedulingAgentModule:
             }
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information"""
+        """
+Get comprehensive module information"""
         return {
             **MODULE_INFO,
             'initialized': self.initialized,
@@ -260,11 +263,13 @@ class SchedulingAgentModule:
         }
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get initialized component by name"""
+        """
+Get initialized component by name"""
         return self.components.get(component_name)
     
     async def shutdown(self) -> Dict[str, Any]:
-        """Gracefully shutdown the module and cleanup resources"""
+        """
+Gracefully shutdown the module and cleanup resources"""
         try:
             shutdown_report = {
                 'module': MODULE_INFO['name'],
@@ -317,24 +322,29 @@ async def initialize_module(config: Optional[Dict[str, Any]] = None) -> Dict[str
     return await _module_instance.initialize(config)
 
 def get_module_info() -> Dict[str, Any]:
-    """Get module information"""
+    """
+Get module information"""
     return _module_instance.get_module_info()
 
 def get_component(component_name: str) -> Optional[Any]:
-    """Get initialized component"""
+    """
+Get initialized component"""
     return _module_instance.get_component(component_name)
 
 async def shutdown_module() -> Dict[str, Any]:
-    """Shutdown the module"""
+    """
+Shutdown the module"""
     return await _module_instance.shutdown()
 
 def is_initialized() -> bool:
-    """Check if module is initialized"""
+    """
+Check if module is initialized"""
     return _module_instance.initialized
 
 # Health check endpoint
 async def health_check() -> Dict[str, Any]:
-    """Perform module health check"""
+    """
+Perform module health check"""
     try:
         if not _module_instance.initialized:
             return {

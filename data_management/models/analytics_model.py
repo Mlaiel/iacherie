@@ -8,7 +8,7 @@ Responsibility: Modèles de données pour analytics et métriques avancées
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER ANALYTICS:
 Événement → Collecte → Agrégation → Analyse → Insights → 
 Prédictions → Recommandations → Actions → ROI
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -24,7 +25,9 @@ from decimal import Decimal
 import uuid
 
 class MetricType(Enum):
-    """Types de métriques"""
+    """
+Types de métriques"""
+
     CONTENT = "content"
     USER = "user"
     ENGAGEMENT = "engagement"
@@ -36,6 +39,7 @@ class MetricType(Enum):
 
 class EventType(Enum):
     """Types d'événements"""
+
     VIEW = "view"
     DOWNLOAD = "download"
     SHARE = "share"
@@ -50,6 +54,7 @@ class EventType(Enum):
 
 class TimeGranularity(Enum):
     """Granularité temporelle"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -190,7 +195,8 @@ class RevenueModel:
         return self.net_amount
     
     def convert_to_base_currency(self) -> Decimal:
-        """Convertit vers la devise de base"""
+        """
+Convertit vers la devise de base"""
         self.base_amount = self.net_amount * self.exchange_rate
         return self.base_amount
     
@@ -309,7 +315,8 @@ class AnalyticsModel:
         return self.engagement_rate
     
     def calculate_revenue_metrics(self) -> Dict[str, Decimal]:
-        """Calcule les métriques de revenus dérivées"""
+        """
+Calcule les métriques de revenus dérivées"""
         if self.total_views > 0:
             self.revenue_per_view = self.total_revenue / Decimal(str(self.total_views))
         

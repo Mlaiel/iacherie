@@ -5,7 +5,7 @@ Comprehensive validation framework for the IA Influencer Agent Platform
 providing enterprise-level data integrity, security, and compliance validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 
 Validation Capabilities:
@@ -18,6 +18,7 @@ Validation Capabilities:
 - Performance validation
 - Metadata validation
 """
+
 from .content_validator import (
     ContentValidator,
     ContentType,

@@ -7,6 +7,7 @@ Version: 3.0.0
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
 """
+
 from typing import Dict, Any, List, Optional, Callable, AsyncGenerator
 from datetime import datetime, timezone
 from dataclasses import dataclass
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class StreamPosition(Enum):
-    """Stream reading positions"""
+    """
+Stream reading positions"""
+
     BEGINNING = "beginning"
     LATEST = "latest"
     TIMESTAMP = "timestamp"
@@ -57,7 +60,8 @@ class StreamMessage:
 
 @dataclass
 class StreamConsumerConfig:
-    """Configuration for stream consumers"""
+    """
+Configuration for stream consumers"""
     
     consumer_group: str
     consumer_name: str
@@ -70,7 +74,8 @@ class StreamConsumerConfig:
 
 
 class StreamProducer:
-    """High-performance stream producer"""
+    """
+High-performance stream producer"""
     
     def __init__(self, redis_manager: RedisManager, 
                  metrics_collector: MetricsCollector):
@@ -83,7 +88,8 @@ class StreamProducer:
         self._shutdown_event = Event()
     
     async def start(self):
-        """Start the producer"""
+        """
+Start the producer"""
         if self._producer_task is None:
             self._producer_task = create_task(self._producer_loop())
             logger.info("Stream producer started")
@@ -209,11 +215,13 @@ class StreamConsumer:
         self._message_handlers: Dict[str, Callable] = {}
     
     def register_handler(self, event_type: str, handler: Callable):
-        """Register a message handler for specific event type"""
+        """
+Register a message handler for specific event type"""
         self._message_handlers[event_type] = handler
     
     async def start(self, streams: List[str]):
-        """Start consuming from streams"""
+        """
+Start consuming from streams"""
         if self._running:
             return
         
@@ -395,7 +403,8 @@ class EventStream:
     async def publish(self, event_type: str, payload: Dict[str, Any],
                      headers: Dict[str, str] = None,
                      correlation_id: str = None) -> str:
-        """Publish an event to the stream"""
+        """
+Publish an event to the stream"""
         message = StreamMessage(
             message_id=str(uuid4()),
             stream_name=self.stream_name,
@@ -415,7 +424,8 @@ class EventStream:
     
     async def subscribe(self, consumer_config: StreamConsumerConfig,
                        handlers: Dict[str, Callable]) -> StreamConsumer:
-        """Subscribe to the stream with handlers"""
+        """
+Subscribe to the stream with handlers"""
         consumer = StreamConsumer(self.redis, consumer_config, self.metrics)
         
         for event_type, handler in handlers.items():
@@ -425,7 +435,8 @@ class EventStream:
         return consumer
     
     async def get_stream_info(self) -> Dict[str, Any]:
-        """Get stream information"""
+        """
+Get stream information"""
         try:
             info = await self.redis.xinfo_stream(self.stream_name)
             return {
@@ -449,13 +460,15 @@ class StreamProcessor:
         self._processors: Dict[str, Callable] = {}
     
     def register_processor(self, name: str, processor: Callable):
-        """Register a stream processor"""
+        """
+Register a stream processor"""
         self._processors[name] = processor
     
     async def process_stream(self, input_stream: str, output_stream: str,
                            processor_name: str, 
                            consumer_config: StreamConsumerConfig):
-        """Process messages from input stream to output stream"""
+        """
+Process messages from input stream to output stream"""
         processor = self._processors.get(processor_name)
         if not processor:
             raise EventStreamingError(f"Unknown processor: {processor_name}")
@@ -512,7 +525,8 @@ class StreamingEngine:
         self._producers: List[StreamProducer] = []
     
     def create_stream(self, stream_name: str) -> EventStream:
-        """Create or get an event stream"""
+        """
+Create or get an event stream"""
         if stream_name not in self._streams:
             self._streams[stream_name] = EventStream(
                 stream_name, self.redis, self.metrics
@@ -520,7 +534,8 @@ class StreamingEngine:
         return self._streams[stream_name]
     
     async def shutdown(self):
-        """Shutdown all streams and consumers"""
+        """
+Shutdown all streams and consumers"""
         # Stop all consumers
         for consumer in self._consumers:
             await consumer.stop()

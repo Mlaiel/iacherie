@@ -17,6 +17,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import time
 import json
@@ -36,7 +37,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class HealthMetric:
-    """Individual health metric data point"""
+    """
+Individual health metric data point"""
     metric_name: str
     service_name: str
     value: float
@@ -48,7 +50,8 @@ class HealthMetric:
 
 @dataclass
 class AggregatedMetrics:
-    """Aggregated metrics for a time period"""
+    """
+Aggregated metrics for a time period"""
     service_name: str
     metric_name: str
     time_period_minutes: int
@@ -65,7 +68,8 @@ class AggregatedMetrics:
 
 @dataclass
 class HealthTrend:
-    """Health trend analysis result"""
+    """
+Health trend analysis result"""
     service_name: str
     metric_name: str
     trend_direction: str  # "improving", "degrading", "stable"
@@ -174,7 +178,8 @@ class HealthMetricsCollector:
         return status_mapping.get(status, 0.0)
 
     def _extract_detailed_metrics(self, result: HealthCheckResult) -> List[HealthMetric]:
-        """Extract detailed metrics from health check result details"""
+        """
+Extract detailed metrics from health check result details"""
         metrics = []
         details = result.details
         

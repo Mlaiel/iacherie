@@ -15,6 +15,7 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -45,7 +46,9 @@ settings = get_settings()
 
 
 class CompositionComplexity(Enum):
-    """Musical composition complexity levels"""
+    """
+Musical composition complexity levels"""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -54,6 +57,7 @@ class CompositionComplexity(Enum):
 
 class StructuralElement(Enum):
     """Musical structural elements"""
+
     INTRO = "intro"
     VERSE = "verse"
     CHORUS = "chorus"
@@ -80,7 +84,8 @@ class HarmonyAnalysis:
 
 @dataclass
 class RhythmAnalysis:
-    """Advanced rhythm pattern analysis"""
+    """
+Advanced rhythm pattern analysis"""
     time_signatures: List[str] = field(default_factory=list)
     rhythmic_patterns: List[Dict[str, Any]] = field(default_factory=list)
     syncopation_levels: List[float] = field(default_factory=list)
@@ -91,7 +96,8 @@ class RhythmAnalysis:
 
 @dataclass
 class MelodyAnalysis:
-    """Melodic content analysis"""
+    """
+Melodic content analysis"""
     melodic_contours: List[List[float]] = field(default_factory=list)
     phrase_structures: List[Dict[str, Any]] = field(default_factory=list)
     intervallic_patterns: List[str] = field(default_factory=list)
@@ -102,7 +108,8 @@ class MelodyAnalysis:
 
 @dataclass
 class StructuralAnalysis:
-    """Musical structure analysis"""
+    """
+Musical structure analysis"""
     form_type: str = "unknown"
     sections: List[Dict[str, Any]] = field(default_factory=list)
     section_durations: List[float] = field(default_factory=list)
@@ -149,7 +156,8 @@ class CompositionAnalyzer:
     rhythm, melody, and structure with AI-powered insights and recommendations.
     """
     def __init__(self):
-        """Initialize composition analyzer with ML models"""
+        """
+Initialize composition analyzer with ML models"""
         self.music_analyzer = MusicAnalyzer()
         self.style_analyzer = MusicStyleAnalyzer()
         self.beat_detector = BeatDetector()
@@ -581,7 +589,8 @@ class CompositionAnalyzer:
         return min(complexity, 1.0)
 
     async def _extract_melodic_contours(self, audio_path: str) -> List[List[float]]:
-        """Extract melodic contours using pitch tracking"""
+        """
+Extract melodic contours using pitch tracking"""
         try:
             import librosa
             
@@ -646,7 +655,8 @@ class CompositionAnalyzer:
         return phrase_structures
 
     def _analyze_intervallic_patterns(self, contours: List[List[float]]) -> List[str]:
-        """Analyze intervallic patterns in melodies"""
+        """
+Analyze intervallic patterns in melodies"""
         patterns = []
         
         for contour in contours:
@@ -677,7 +687,8 @@ class CompositionAnalyzer:
         self, 
         contours: List[List[float]]
     ) -> List[Dict[str, Any]]:
-        """Analyze motivic development and variation techniques"""
+        """
+Analyze motivic development and variation techniques"""
         developments = []
         
         if len(contours) < 2:
@@ -704,7 +715,8 @@ class CompositionAnalyzer:
         return developments
 
     def _calculate_melodic_complexity(self, melody_analysis: MelodyAnalysis) -> float:
-        """Calculate melodic complexity score"""
+        """
+Calculate melodic complexity score"""
         complexity = 0.0
         
         # Range contribution
@@ -732,7 +744,8 @@ class CompositionAnalyzer:
         return min(complexity, 1.0)
 
     async def _segment_audio_structure(self, audio_path: str) -> List[Dict[str, Any]]:
-        """Segment audio into structural sections"""
+        """
+Segment audio into structural sections"""
         try:
             import librosa
             
@@ -780,7 +793,8 @@ class CompositionAnalyzer:
             return StructuralElement.CHORUS.value
 
     def _identify_form_type(self, sections: List[Dict[str, Any]]) -> str:
-        """Identify musical form type"""
+        """
+Identify musical form type"""
         if not sections:
             return "unknown"
         
@@ -808,7 +822,8 @@ class CompositionAnalyzer:
         return patterns
 
     def _identify_developmental_techniques(self, sections: List[Dict[str, Any]]) -> List[str]:
-        """Identify developmental techniques used"""
+        """
+Identify developmental techniques used"""
         techniques = []
         
         if not sections:
@@ -868,7 +883,8 @@ class CompositionAnalyzer:
         result: CompositionAnalysisResult, 
         base_analysis: MusicAnalysisResult
     ) -> float:
-        """Calculate creativity score based on various factors"""
+        """
+Calculate creativity score based on various factors"""
         creativity = 0.0
         
         # Harmonic creativity
@@ -898,7 +914,8 @@ class CompositionAnalyzer:
         result: CompositionAnalysisResult, 
         base_analysis: MusicAnalysisResult
     ) -> float:
-        """Calculate commercial potential score"""
+        """
+Calculate commercial potential score"""
         commercial = 0.0
         
         # Structural familiarity
@@ -933,7 +950,8 @@ class CompositionAnalyzer:
         return min(commercial, 1.0)
 
     def _calculate_uniqueness_score(self, result: CompositionAnalysisResult) -> float:
-        """Calculate uniqueness score"""
+        """
+Calculate uniqueness score"""
         uniqueness = 0.0
         
         # Harmonic uniqueness
@@ -960,7 +978,8 @@ class CompositionAnalyzer:
         result: CompositionAnalysisResult, 
         base_analysis: MusicAnalysisResult
     ) -> List[str]:
-        """Identify composition strengths"""
+        """
+Identify composition strengths"""
         strengths = []
         
         # Harmonic strengths
@@ -1153,7 +1172,8 @@ class CompositionAnalyzer:
         return peak_index / len(contour)
 
     def _calculate_phrase_similarity(self, phrase1: List[float], phrase2: List[float]) -> float:
-        """Calculate similarity between two melodic phrases"""
+        """
+Calculate similarity between two melodic phrases"""
         if not phrase1 or not phrase2:
             return 0.0
         
@@ -1172,7 +1192,8 @@ class CompositionAnalyzer:
             return 0.0
 
     async def _calculate_confidence_score(self, result: CompositionAnalysisResult) -> float:
-        """Calculate overall confidence in the analysis"""
+        """
+Calculate overall confidence in the analysis"""
         confidence_factors = []
         
         # Data quality factors
@@ -1205,7 +1226,8 @@ class CompositionAnalyzer:
         return np.mean(confidence_factors) if confidence_factors else 0.5
 
     def get_analysis_summary(self, result: CompositionAnalysisResult) -> Dict[str, Any]:
-        """Get a concise summary of the analysis"""
+        """
+Get a concise summary of the analysis"""
         return {
             'composition_id': result.composition_id,
             'overall_complexity': result.overall_complexity.value,
@@ -1232,7 +1254,8 @@ class CompositionAnalyzer:
         audio_paths: List[str], 
         metadata_list: Optional[List[Dict[str, Any]]] = None
     ) -> List[CompositionAnalysisResult]:
-        """Analyze multiple compositions in batch"""
+        """
+Analyze multiple compositions in batch"""
         if metadata_list is None:
             metadata_list = [None] * len(audio_paths)
         

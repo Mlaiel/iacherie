@@ -5,13 +5,14 @@ Comprehensive data models for multi-modal content fingerprinting system.
 Supports audio, video, image, and text content types with advanced metadata.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -26,7 +27,9 @@ from sqlalchemy.dialects.postgresql import UUID
 Base = declarative_base()
 
 class ContentType(str, Enum):
-    """Supported content types for fingerprinting."""
+    """
+Supported content types for fingerprinting."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -34,6 +37,7 @@ class ContentType(str, Enum):
 
 class ProcessingStatus(str, Enum):
     """Processing status for fingerprint generation."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -42,6 +46,7 @@ class ProcessingStatus(str, Enum):
 
 class SimilarityAlgorithm(str, Enum):
     """Available similarity algorithms."""
+
     CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     CLIP_EMBEDDING = "clip_embedding"
@@ -63,7 +68,8 @@ class ProcessingMetrics:
 
 @dataclass 
 class QualityMetrics:
-    """Quality assessment metrics for content analysis."""
+    """
+Quality assessment metrics for content analysis."""
     confidence_score: float = Field(..., ge=0.0, le=1.0)
     reliability_score: float = Field(..., ge=0.0, le=1.0)
     completeness_score: float = Field(..., ge=0.0, le=1.0)
@@ -72,7 +78,8 @@ class QualityMetrics:
     quality_flags: Optional[List[str]] = None
 
 class BaseContentModel(BaseModel):
-    """Base model for all content types."""
+    """
+Base model for all content types."""
     id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int
     file_path: Optional[str] = None
@@ -84,14 +91,16 @@ class BaseContentModel(BaseModel):
     updated_at: Optional[datetime] = None
     
     class Config:
-        """Pydantic configuration."""
+        """
+Pydantic configuration."""
         arbitrary_types_allowed = True
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
 
 class AudioMetadata(BaseModel):
-    """Comprehensive audio metadata."""
+    """
+Comprehensive audio metadata."""
     duration: float
     sample_rate: int
     channels: int
@@ -109,7 +118,8 @@ class AudioMetadata(BaseModel):
     pitch: Optional[float] = None
 
 class VideoMetadata(BaseModel):
-    """Comprehensive video metadata."""
+    """
+Comprehensive video metadata."""
     duration: float
     width: int
     height: int
@@ -126,7 +136,8 @@ class VideoMetadata(BaseModel):
     contrast: Optional[float] = None
 
 class ImageMetadata(BaseModel):
-    """Comprehensive image metadata."""
+    """
+Comprehensive image metadata."""
     width: int
     height: int
     channels: int
@@ -145,7 +156,8 @@ class ImageMetadata(BaseModel):
     color_profile: Optional[str] = None
 
 class TextMetadata(BaseModel):
-    """Comprehensive text metadata."""
+    """
+Comprehensive text metadata."""
     char_count: int
     word_count: int
     sentence_count: int
@@ -162,7 +174,8 @@ class TextMetadata(BaseModel):
     encoding: Optional[str] = None
 
 class FingerprintData(BaseModel):
-    """Container for all fingerprint algorithm results."""
+    """
+Container for all fingerprint algorithm results."""
     # Audio fingerprints
     chromaprint: Optional[Dict[str, Any]] = None
     essentia: Optional[Dict[str, Any]] = None
@@ -200,7 +213,8 @@ class FingerprintData(BaseModel):
     processing_config: Optional[Dict[str, Any]] = None
 
 class SimilarityMatch(BaseModel):
-    """Result of similarity comparison between content items."""
+    """
+Result of similarity comparison between content items."""
     target_fingerprint_id: str
     source_fingerprint_id: str
     content_type: ContentType
@@ -217,13 +231,15 @@ class SimilarityMatch(BaseModel):
     
     @validator('similarity_score', 'confidence')
     def validate_scores(cls, v):
-        """Validate score ranges."""
+        """
+Validate score ranges."""
         if not 0.0 <= v <= 1.0:
             raise ValueError('Score must be between 0.0 and 1.0')
         return v
 
 class FingerprintResult(BaseContentModel):
-    """Complete result of content fingerprinting process."""
+    """
+Complete result of content fingerprinting process."""
     content_type: ContentType
     fingerprint_data: FingerprintData
     hash_value: str  # Combined hash for quick comparison
@@ -264,7 +280,8 @@ class FingerprintResult(BaseContentModel):
         return v
 
 class BatchProcessingJob(BaseModel):
-    """Batch processing job for multiple content items."""
+    """
+Batch processing job for multiple content items."""
     job_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int
     content_items: List[str]  # File paths or content IDs
@@ -292,7 +309,8 @@ class BatchProcessingJob(BaseModel):
     throughput_items_per_second: Optional[float] = None
 
 class SimilaritySearchQuery(BaseModel):
-    """Query for similarity search operations."""
+    """
+Query for similarity search operations."""
     query_fingerprint_id: Optional[str] = None
     query_content: Optional[str] = None  # For direct content input
     content_type: ContentType
@@ -315,7 +333,8 @@ class SimilaritySearchQuery(BaseModel):
     include_scores_breakdown: bool = False
 
 class SimilaritySearchResult(BaseModel):
-    """Result of similarity search operation."""
+    """
+Result of similarity search operation."""
     query_fingerprint_id: Optional[str] = None
     matches: List[SimilarityMatch]
     total_matches: int
@@ -330,7 +349,8 @@ class SimilaritySearchResult(BaseModel):
 # SQLAlchemy ORM Models for Database Storage
 
 class FingerprintDB(Base):
-    """Database model for storing fingerprint results."""
+    """
+Database model for storing fingerprint results."""
     __tablename__ = 'fingerprints'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -367,7 +387,8 @@ class FingerprintDB(Base):
     updated_at = Column(DateTime, onupdate=datetime.utcnow)
 
 class SimilarityMatchDB(Base):
-    """Database model for storing similarity matches."""
+    """
+Database model for storing similarity matches."""
     __tablename__ = 'similarity_matches'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -388,7 +409,8 @@ class SimilarityMatchDB(Base):
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow, index=True)
 
 class BatchJobDB(Base):
-    """Database model for batch processing jobs."""
+    """
+Database model for batch processing jobs."""
     __tablename__ = 'batch_jobs'
     
     job_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -422,7 +444,8 @@ class BatchJobDB(Base):
 # Utility functions and validators
 
 def validate_fingerprint_data(fingerprint_data: FingerprintData, content_type: ContentType) -> bool:
-    """Validate fingerprint data consistency with content type."""
+    """
+Validate fingerprint data consistency with content type."""
     required_fields_map = {
         ContentType.AUDIO: ['chromaprint', 'essentia', 'spectral'],
         ContentType.VIDEO: ['perceptual_frames', 'motion_analysis', 'object_detection'],
@@ -438,7 +461,8 @@ def validate_fingerprint_data(fingerprint_data: FingerprintData, content_type: C
 
 def calculate_overall_confidence(component_scores: Dict[str, float], 
                                algorithm_weights: Optional[Dict[str, float]] = None) -> float:
-    """Calculate overall confidence score from component scores."""
+    """
+Calculate overall confidence score from component scores."""
     if not component_scores:
         return 0.0
     

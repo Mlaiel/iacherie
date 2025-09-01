@@ -8,6 +8,7 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class AnalyticsIntelligenceStatus(Enum):
-    """Statuts du module Analytics Intelligence"""
+    """
+Statuts du module Analytics Intelligence"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -39,27 +42,32 @@ class AnalyticsIntelligenceConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class IAnalyticsIntelligenceService(ABC):
-    """Interface du service Analytics Intelligence"""
+    """
+Interface du service Analytics Intelligence"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
+        """
+Initialisation du service"""
         pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
+        """
+Traitement principal"""
         pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
+        """
+Validation des données"""
         pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class AnalyticsIntelligenceManager:
-    """Gestionnaire principal Analytics Intelligence"""
+    """
+Gestionnaire principal Analytics Intelligence"""
     
     def __init__(self, config: AnalyticsIntelligenceConfig):
         self.config = config
@@ -134,7 +142,8 @@ class AnalyticsIntelligenceService(IAnalyticsIntelligenceService):
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
+        """
+Exécution de la logique métier spécifique"""
         try:
             # Intelligence analytique pour influenceurs IA
             result = {
@@ -308,7 +317,8 @@ async def create_analyticsintelligence_service(config: Optional[AnalyticsIntelli
     return service
 
 def get_analyticsintelligence_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
+    """
+Récupération du statut du module"""
     return {
         "module": "Analytics Intelligence",
         "version": "1.0.0",
@@ -326,7 +336,8 @@ class AnalyticsIntelligenceAPI:
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
+        """
+Vérification de santé du module"""
         return {
             "status": "healthy",
             "module": "Analytics Intelligence",

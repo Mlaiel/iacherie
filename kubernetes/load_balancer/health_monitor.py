@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status enumeration"""
+    """
+Health status enumeration"""
+
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
@@ -39,6 +42,7 @@ class HealthStatus(Enum):
 
 class CheckType(Enum):
     """Health check type enumeration"""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -79,7 +83,8 @@ class HealthCheckResult:
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration"""
+    """
+Service endpoint configuration"""
     name: str
     host: str
     port: int
@@ -89,7 +94,8 @@ class ServiceEndpoint:
 
 
 class HealthChecker:
-    """Individual health checker implementation"""
+    """
+Individual health checker implementation"""
     
     def __init__(self, config: HealthCheckConfig):
         self.config = config
@@ -111,7 +117,8 @@ class HealthChecker:
             await self.session.close()
     
     async def check_http(self) -> HealthCheckResult:
-        """Perform HTTP/HTTPS health check"""
+        """
+Perform HTTP/HTTPS health check"""
         start_time = time.time()
         
         try:
@@ -358,7 +365,8 @@ class HealthMonitor:
         self.history_retention = timedelta(hours=24)
     
     def add_endpoint(self, endpoint: ServiceEndpoint) -> bool:
-        """Add service endpoint for monitoring"""
+        """
+Add service endpoint for monitoring"""
         try:
             self.endpoints[endpoint.name] = endpoint
             self.health_history[endpoint.name] = []
@@ -390,7 +398,8 @@ class HealthMonitor:
         self.alert_callbacks.append(callback)
     
     async def check_endpoint_health(self, endpoint: ServiceEndpoint) -> List[HealthCheckResult]:
-        """Check health of a single endpoint"""
+        """
+Check health of a single endpoint"""
         results = []
         
         for health_check in endpoint.health_checks:
@@ -423,7 +432,8 @@ class HealthMonitor:
         ]
     
     async def monitor_endpoint(self, endpoint: ServiceEndpoint) -> None:
-        """Continuously monitor a single endpoint"""
+        """
+Continuously monitor a single endpoint"""
         while self.running:
             try:
                 await self.check_endpoint_health(endpoint)

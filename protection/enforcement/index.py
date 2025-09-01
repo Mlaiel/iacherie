@@ -1,6 +1,7 @@
 """Index file for Content Protection Enforcement Module
 Main entry point and orchestration for comprehensive copyright enforcement system
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -523,7 +524,8 @@ async def process_violation(
 
 
 async def bulk_process_violations(violations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Quick function to process multiple violations"""
+    """
+Quick function to process multiple violations"""
     orchestrator = await get_enforcement_orchestrator()
     return await orchestrator.bulk_process_violations(violations)
 
@@ -535,7 +537,8 @@ async def generate_report(report_type: str = "comprehensive", days: int = 30) ->
 
 
 async def health_check() -> Dict[str, Any]:
-    """Quick function to check system health"""
+    """
+Quick function to check system health"""
     orchestrator = await get_enforcement_orchestrator()
     return await orchestrator.health_check()
 

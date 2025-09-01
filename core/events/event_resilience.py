@@ -5,7 +5,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
 Contact autorisations : mlaiel@live.de
@@ -15,6 +15,7 @@ Description:
     bulkheads, timeout gestion, retry avec backoff, et recovery automatique.
     Garantit la stabilité de la plateforme IA-Influencer-Agent.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -34,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 class CircuitState(Enum):
     """États du circuit breaker"""
+
     CLOSED = "closed"      # Circuit fermé, tout fonctionne
     OPEN = "open"          # Circuit ouvert, bloque les appels
     HALF_OPEN = "half_open"  # Test de récupération
@@ -41,6 +43,7 @@ class CircuitState(Enum):
 
 class BulkheadState(Enum):
     """États des bulkheads"""
+
     AVAILABLE = "available"
     SATURATED = "saturated"
     OVERLOADED = "overloaded"
@@ -48,6 +51,7 @@ class BulkheadState(Enum):
 
 class RetryPolicy(Enum):
     """Politiques de retry"""
+
     NONE = "none"
     FIXED = "fixed"
     LINEAR = "linear"
@@ -57,6 +61,7 @@ class RetryPolicy(Enum):
 
 class FailureType(Enum):
     """Types d'échecs"""
+
     TIMEOUT = "timeout"
     EXCEPTION = "exception"
     RESOURCE_EXHAUSTED = "resource_exhausted"
@@ -80,7 +85,8 @@ class CircuitBreakerConfig:
 
 @dataclass
 class BulkheadConfig:
-    """Configuration du bulkhead"""
+    """
+Configuration du bulkhead"""
     max_concurrent_calls: int = 100
     max_wait_duration: timedelta = timedelta(seconds=30)
     queue_capacity: int = 1000
@@ -89,7 +95,8 @@ class BulkheadConfig:
 
 @dataclass
 class RetryConfig:
-    """Configuration des retries"""
+    """
+Configuration des retries"""
     policy: RetryPolicy = RetryPolicy.EXPONENTIAL
     max_attempts: int = 3
     base_delay: timedelta = timedelta(seconds=1)
@@ -102,7 +109,8 @@ class RetryConfig:
 
 @dataclass
 class TimeoutConfig:
-    """Configuration des timeouts"""
+    """
+Configuration des timeouts"""
     call_timeout: timedelta = timedelta(seconds=30)
     total_timeout: timedelta = timedelta(minutes=5)
     connect_timeout: timedelta = timedelta(seconds=10)
@@ -111,7 +119,8 @@ class TimeoutConfig:
 
 @dataclass
 class MetricsSnapshot:
-    """Snapshot des métriques"""
+    """
+Snapshot des métriques"""
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     total_calls: int = 0
     successful_calls: int = 0
@@ -123,7 +132,8 @@ class MetricsSnapshot:
 
 
 class CircuitBreaker:
-    """Circuit breaker pour protection contre les cascades d'échecs"""
+    """
+Circuit breaker pour protection contre les cascades d'échecs"""
     
     def __init__(
         self,
@@ -245,7 +255,8 @@ class CircuitBreaker:
         self.response_times.append(response_time)
     
     async def _record_failure(self, exception: Exception, response_time: float):
-        """Enregistre un échec"""
+        """
+Enregistre un échec"""
         self.failed_calls += 1
         self.consecutive_failures += 1
         self.consecutive_successes = 0
@@ -254,14 +265,16 @@ class CircuitBreaker:
         self.response_times.append(response_time)
     
     async def _execute_fallback(self, *args, **kwargs) -> Any:
-        """Exécute la fonction de fallback"""
+        """
+Exécute la fonction de fallback"""
         if asyncio.iscoroutinefunction(self.fallback):
             return await self.fallback(*args, **kwargs)
         else:
             return self.fallback(*args, **kwargs)
     
     def _calculate_failure_rate(self) -> float:
-        """Calcule le taux d'échec"""
+        """
+Calcule le taux d'échec"""
         if not self.call_results:
             return 0.0
         
@@ -269,7 +282,8 @@ class CircuitBreaker:
         return (failures / len(self.call_results)) * 100.0
     
     def _calculate_slow_call_rate(self) -> float:
-        """Calcule le taux d'appels lents"""
+        """
+Calcule le taux d'appels lents"""
         if not self.response_times:
             return 0.0
         
@@ -278,7 +292,8 @@ class CircuitBreaker:
         return (slow_calls / len(self.response_times)) * 100.0
     
     def get_metrics(self) -> MetricsSnapshot:
-        """Retourne les métriques actuelles"""
+        """
+Retourne les métriques actuelles"""
         return MetricsSnapshot(
             total_calls=self.total_calls,
             successful_calls=self.successful_calls,
@@ -290,7 +305,8 @@ class CircuitBreaker:
         )
     
     def reset(self):
-        """Remet le circuit à zéro"""
+        """
+Remet le circuit à zéro"""
         self.state = CircuitState.CLOSED
         self.consecutive_failures = 0
         self.consecutive_successes = 0
@@ -367,7 +383,8 @@ class Bulkhead:
             return BulkheadState.AVAILABLE
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques du bulkhead"""
+        """
+Retourne les métriques du bulkhead"""
         return {
             "name": self.name,
             "state": self.get_state().value,
@@ -393,7 +410,8 @@ class RetryManager:
         *args,
         **kwargs
     ) -> Any:
-        """Exécute une fonction avec retry"""
+        """
+Exécute une fonction avec retry"""
         last_exception = None
         
         for attempt in range(self.config.max_attempts):
@@ -436,7 +454,8 @@ class RetryManager:
         return exception_name in self.config.retryable_exceptions
     
     def _calculate_delay(self, attempt: int) -> float:
-        """Calcule le délai pour le retry"""
+        """
+Calcule le délai pour le retry"""
         base_delay = self.config.base_delay.total_seconds()
         
         if self.config.policy == RetryPolicy.FIXED:
@@ -461,7 +480,8 @@ class RetryManager:
 
 
 class TimeoutManager:
-    """Gestionnaire de timeouts"""
+    """
+Gestionnaire de timeouts"""
     
     def __init__(self, config: TimeoutConfig):
         self.config = config
@@ -473,7 +493,8 @@ class TimeoutManager:
         *args,
         **kwargs
     ) -> Any:
-        """Exécute une fonction avec timeout"""
+        """
+Exécute une fonction avec timeout"""
         timeout_seconds = (timeout or self.config.call_timeout).total_seconds()
         
         try:
@@ -513,7 +534,8 @@ class ResilienceDecorator:
         self.fallback = fallback
     
     async def execute(self, func: Callable, *args, **kwargs) -> Any:
-        """Exécute une fonction avec toutes les protections"""
+        """
+Exécute une fonction avec toutes les protections"""
         
         # Fonction wrapper qui combine toutes les protections
         async def protected_execution():
@@ -659,7 +681,8 @@ class EventResilienceManager:
         handler: Callable,
         resilience_config: Optional[Dict[str, str]] = None
     ) -> Any:
-        """Exécute un handler d'événement avec résilience"""
+        """
+Exécute un handler d'événement avec résilience"""
         self.global_stats["total_events_processed"] += 1
         
         try:
@@ -736,17 +759,20 @@ class ResilienceError(Exception):
 
 
 class CircuitBreakerOpenError(ResilienceError):
-    """Exception levée quand le circuit breaker est ouvert"""
+    """
+Exception levée quand le circuit breaker est ouvert"""
     pass
 
 
 class BulkheadCapacityError(ResilienceError):
-    """Exception levée quand la capacité du bulkhead est dépassée"""
+    """
+Exception levée quand la capacité du bulkhead est dépassée"""
     pass
 
 
 class BulkheadTimeoutError(ResilienceError):
-    """Exception levée quand le timeout du bulkhead est atteint"""
+    """
+Exception levée quand le timeout du bulkhead est atteint"""
     pass
 
 
@@ -755,7 +781,8 @@ event_resilience_manager: Optional[EventResilienceManager] = None
 
 
 def initialize_resilience_manager(event_bus: EventBus) -> EventResilienceManager:
-    """Initialise le gestionnaire de résilience"""
+    """
+Initialise le gestionnaire de résilience"""
     global event_resilience_manager
     
     if event_resilience_manager is None:

@@ -11,6 +11,7 @@ property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distri
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
 prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentCategory(Enum):
-    """Content categories for watermarking"""
+    """
+Content categories for watermarking"""
+
     MUSIC_TRACK = "music_track"
     PODCAST_EPISODE = "podcast_episode"
     VOICE_RECORDING = "voice_recording"
@@ -57,6 +60,7 @@ class ContentCategory(Enum):
 
 class LicenseType(Enum):
     """License types for content"""
+
     ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS_BY = "cc_by"
     CREATIVE_COMMONS_SA = "cc_sa"
@@ -70,6 +74,7 @@ class LicenseType(Enum):
 
 class WatermarkPurpose(Enum):
     """Purpose of watermarking"""
+
     COPYRIGHT_PROTECTION = "copyright_protection"
     OWNERSHIP_VERIFICATION = "ownership_verification"
     USAGE_TRACKING = "usage_tracking"
@@ -82,6 +87,7 @@ class WatermarkPurpose(Enum):
 
 class WatermarkStatus(Enum):
     """Watermark processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -107,12 +113,14 @@ class ContentIdentification:
     language: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentIdentification':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         if 'category' in data and isinstance(data['category'], str):
             data['category'] = ContentCategory(data['category'])
         return cls(**data)
@@ -120,7 +128,8 @@ class ContentIdentification:
 
 @dataclass
 class OwnershipInfo:
-    """Content ownership information"""
+    """
+Content ownership information"""
     owner_id: str
     owner_name: str
     owner_email: str
@@ -130,18 +139,21 @@ class OwnershipInfo:
     copyright_year: Optional[int] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'OwnershipInfo':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         return cls(**data)
 
 
 @dataclass
 class LicensingInfo:
-    """Content licensing information"""
+    """
+Content licensing information"""
     license_type: LicenseType
     license_url: Optional[str] = None
     usage_restrictions: List[str] = None
@@ -157,7 +169,8 @@ class LicensingInfo:
             self.usage_restrictions = []
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['license_type'] = self.license_type.value
         if self.license_expiry:
@@ -166,7 +179,8 @@ class LicensingInfo:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'LicensingInfo':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         if 'license_type' in data and isinstance(data['license_type'], str):
             data['license_type'] = LicenseType(data['license_type'])
         if 'license_expiry' in data and isinstance(data['license_expiry'], str):
@@ -176,7 +190,8 @@ class LicensingInfo:
 
 @dataclass
 class WatermarkTechnicalInfo:
-    """Technical watermarking information"""
+    """
+Technical watermarking information"""
     watermark_id: str
     technique_used: str
     strength_level: str
@@ -191,14 +206,16 @@ class WatermarkTechnicalInfo:
     quality_metrics: Optional[Dict[str, float]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['embedding_timestamp'] = self.embedding_timestamp.isoformat()
         return data
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'WatermarkTechnicalInfo':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         if 'embedding_timestamp' in data and isinstance(data['embedding_timestamp'], str):
             data['embedding_timestamp'] = datetime.fromisoformat(data['embedding_timestamp'])
         return cls(**data)
@@ -206,7 +223,8 @@ class WatermarkTechnicalInfo:
 
 @dataclass
 class TrackingInfo:
-    """Content tracking and monitoring information"""
+    """
+Content tracking and monitoring information"""
     tracking_id: str
     monitoring_enabled: bool
     last_detection: Optional[datetime] = None
@@ -224,7 +242,8 @@ class TrackingInfo:
             self.geographic_usage = {}
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         if self.last_detection:
             data['last_detection'] = self.last_detection.isoformat()
@@ -234,7 +253,8 @@ class TrackingInfo:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TrackingInfo':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         if 'last_detection' in data and isinstance(data['last_detection'], str):
             data['last_detection'] = datetime.fromisoformat(data['last_detection'])
         if 'last_verification' in data and isinstance(data['last_verification'], str):
@@ -244,7 +264,8 @@ class TrackingInfo:
 
 @dataclass
 class WatermarkMetadata:
-    """Complete watermark metadata package"""
+    """
+Complete watermark metadata package"""
     
     # Core identification
     metadata_id: str
@@ -280,7 +301,8 @@ class WatermarkMetadata:
             self.custom_fields = {}
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert complete metadata to dictionary"""
+        """
+Convert complete metadata to dictionary"""
         return {
             'metadata_id': self.metadata_id,
             'version': self.version,
@@ -303,7 +325,8 @@ class WatermarkMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'WatermarkMetadata':
-        """Create metadata from dictionary"""
+        """
+Create metadata from dictionary"""
         # Convert enum fields
         if 'status' in data and isinstance(data['status'], str):
             data['status'] = WatermarkStatus(data['status'])
@@ -331,7 +354,8 @@ class WatermarkMetadata:
         return cls(**data)
     
     def update_status(self, new_status: WatermarkStatus, notes: Optional[str] = None):
-        """Update status with timestamp"""
+        """
+Update status with timestamp"""
         self.status = new_status
         self.updated_at = datetime.now(timezone.utc)
         if notes:
@@ -371,7 +395,8 @@ class WatermarkMetadata:
             self.custom_fields['revenue_by_currency'][currency] = amount
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get metadata summary"""
+        """
+Get metadata summary"""
         return {
             'metadata_id': self.metadata_id,
             'content_title': self.content_info.title,
@@ -386,7 +411,8 @@ class WatermarkMetadata:
 
 
 class MetadataEncryption:
-    """Encryption service for sensitive metadata"""
+    """
+Encryption service for sensitive metadata"""
     
     def __init__(self, encryption_key: Optional[bytes] = None):
         if not CRYPTO_AVAILABLE:
@@ -457,7 +483,8 @@ class WatermarkMetadataManager:
         self._load_index()
     
     def _load_index(self):
-        """Load metadata index"""
+        """
+Load metadata index"""
         try:
             if self.index_file.exists():
                 with open(self.index_file, 'r', encoding='utf-8') as f:
@@ -851,7 +878,8 @@ class WatermarkMetadataManager:
 def create_content_info_from_file(file_path: str, 
                                 title: Optional[str] = None,
                                 category: Optional[ContentCategory] = None) -> ContentIdentification:
-    """Create content identification from file"""
+    """
+Create content identification from file"""
     file_path = Path(file_path)
     
     # Auto-detect MIME type
@@ -898,7 +926,8 @@ def create_basic_ownership_info(owner_name: str,
 
 
 def create_standard_licensing_info(license_type: LicenseType = LicenseType.ALL_RIGHTS_RESERVED) -> LicensingInfo:
-    """Create standard licensing information"""
+    """
+Create standard licensing information"""
     return LicensingInfo(
         license_type=license_type,
         commercial_use_allowed=(license_type != LicenseType.ALL_RIGHTS_RESERVED),
@@ -911,7 +940,8 @@ def create_standard_licensing_info(license_type: LicenseType = LicenseType.ALL_R
 # Factory function
 def create_metadata_manager(storage_path: Optional[str] = None,
                           encryption_enabled: bool = True) -> WatermarkMetadataManager:
-    """Create metadata manager with standard configuration"""
+    """
+Create metadata manager with standard configuration"""
     return WatermarkMetadataManager(
         storage_path=storage_path,
         encryption_enabled=encryption_enabled

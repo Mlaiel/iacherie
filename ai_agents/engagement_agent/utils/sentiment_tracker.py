@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -47,7 +48,9 @@ from ...utils.statistical_analyzer import StatisticalAnalyzer
 logger = logging.getLogger(__name__)
 
 class EmotionType(Enum):
-    """Primary emotion classifications"""
+    """
+Primary emotion classifications"""
+
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -63,6 +66,7 @@ class EmotionType(Enum):
 
 class SentimentPolarity(Enum):
     """Sentiment polarity levels"""
+
     VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     SLIGHTLY_POSITIVE = "slightly_positive"
@@ -73,6 +77,7 @@ class SentimentPolarity(Enum):
 
 class MoodTrend(Enum):
     """Mood trend directions"""
+
     STRONGLY_IMPROVING = "strongly_improving"
     IMPROVING = "improving"
     STABLE = "stable"
@@ -615,7 +620,8 @@ class SentimentTracker:
 
     async def _determine_primary_emotion(self, 
                                        emotion_scores: Dict[str, float]) -> Tuple[EmotionType, float]:
-        """Determine primary emotion and confidence"""
+        """
+Determine primary emotion and confidence"""
         try:
             if not emotion_scores:
                 return EmotionType.TRUST, 0.0

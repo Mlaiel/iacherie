@@ -8,7 +8,7 @@ Technologies: Celery, Redis, Priority Queues, Load Balancing, Rate Limiting
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 URL surveillance → Priority analysis → Queue routing → Worker distribution → 
 Rate limiting → Content extraction → Protection analysis → Notification pipeline
 """
+
 from typing import Any, Dict, List, Optional, Union, Set, Tuple
 import logging
 import asyncio
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerPriority(Enum):
-    """Crawler-specific priority levels"""
+    """
+Crawler-specific priority levels"""
+
     PROTECTION_VIOLATION = 0      # Copyright infringement detected
     BRAND_MONITORING = 1          # Brand mention surveillance  
     COMPETITOR_ANALYSIS = 2       # Competitor content tracking
@@ -51,7 +54,9 @@ class CrawlerPriority(Enum):
 
 
 class CrawlerQueueType(Enum):
-    """Specialized crawler queue types"""
+    """
+Specialized crawler queue types"""
+
     PROTECTION_MONITOR = "protection_monitor"     # Real-time protection monitoring
     CONTENT_DISCOVERY = "content_discovery"      # New content discovery
     PLATFORM_SURVEILLANCE = "platform_surveillance"  # Platform-specific crawling
@@ -62,6 +67,7 @@ class CrawlerQueueType(Enum):
 
 class PlatformType(Enum):
     """Supported crawling platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -223,7 +229,8 @@ class CrawlerQueueManager:
         self._core_queue_manager: Optional[IntelligentQueueManager] = None
     
     async def initialize(self, core_queue_manager: IntelligentQueueManager = None) -> bool:
-        """Initialize crawler queue system"""
+        """
+Initialize crawler queue system"""
         try:
             self._core_queue_manager = core_queue_manager
             self._is_running = True
@@ -655,7 +662,8 @@ class CrawlerQueueManager:
         self._request_windows[platform].append(current_time)
     
     async def _get_available_worker(self, platform: PlatformType) -> Optional[str]:
-        """Get available worker for platform"""
+        """
+Get available worker for platform"""
         # Find least loaded worker or create new one
         available_workers = [
             worker_id for worker_id, info in self._active_crawlers.items()
@@ -677,7 +685,8 @@ class CrawlerQueueManager:
         return True
     
     async def _calculate_priority_score(self, task: CrawlerTask) -> int:
-        """Calculate dynamic priority score for task"""
+        """
+Calculate dynamic priority score for task"""
         base_priority = task.priority.value
         
         # Adjust based on platform urgency
@@ -691,7 +700,8 @@ class CrawlerQueueManager:
         return max(0, base_priority)
     
     def _map_to_core_priority(self, crawler_priority: CrawlerPriority) -> TaskPriority:
-        """Map crawler priority to core queue priority"""
+        """
+Map crawler priority to core queue priority"""
         mapping = {
             CrawlerPriority.PROTECTION_VIOLATION: TaskPriority.CRITICAL,
             CrawlerPriority.BRAND_MONITORING: TaskPriority.HIGH,
@@ -703,7 +713,8 @@ class CrawlerQueueManager:
         return mapping.get(crawler_priority, TaskPriority.MEDIUM)
     
     async def _execute_immediate_crawl(self, task: CrawlerTask) -> str:
-        """Execute immediate high-priority crawl"""
+        """
+Execute immediate high-priority crawl"""
         # For critical protection violations
         worker_id = f"immediate_crawler_{uuid.uuid4().hex[:8]}"
         asyncio.create_task(self._execute_crawler_task(worker_id, task))
@@ -729,7 +740,8 @@ class CrawlerQueueManager:
         pass
     
     async def _metrics_updater(self):
-        """Background metrics updater"""
+        """
+Background metrics updater"""
         while self._is_running:
             try:
                 self.metrics.last_updated = datetime.now()
@@ -761,7 +773,8 @@ class CrawlerQueueManager:
         pass
     
     async def _rebalance_queues(self) -> Dict[str, Any]:
-        """Rebalance crawler queues based on load"""
+        """
+Rebalance crawler queues based on load"""
         return {"rebalanced": True}
     
     async def _optimize_rate_limits(self) -> Dict[str, Any]:

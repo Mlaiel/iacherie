@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MetricDefinition:
-    """Metric definition configuration"""
+    """
+Metric definition configuration"""
     name: str
     metric_type: str  # counter, histogram, gauge, summary
     description: str
@@ -39,7 +41,8 @@ class MetricDefinition:
 
 @dataclass
 class Alert:
-    """Alert configuration"""
+    """
+Alert configuration"""
     name: str
     condition: str
     threshold: float
@@ -481,7 +484,8 @@ class MetricsCollector:
         self.alert_callbacks.append(callback)
     
     async def check_alerts(self):
-        """Check all alerts and trigger notifications"""
+        """
+Check all alerts and trigger notifications"""
         if not self.enabled:
             return
         

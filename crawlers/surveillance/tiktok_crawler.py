@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Intelligent TikTok crawler for surveillance and content monitoring.
 Provides advanced scraping, content analysis, and violation detection for TikTok platform.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TikTokUser:
-    """TikTok user profile data."""
+    """
+TikTok user profile data."""
     user_id: str
     username: str
     display_name: str
@@ -46,7 +48,8 @@ class TikTokUser:
 
 @dataclass
 class TikTokVideo:
-    """TikTok video data."""
+    """
+TikTok video data."""
     video_id: str
     user_id: str
     username: str
@@ -71,7 +74,8 @@ class TikTokVideo:
 
 @dataclass
 class TikTokComment:
-    """TikTok comment data."""
+    """
+TikTok comment data."""
     comment_id: str
     video_id: str
     user_id: str
@@ -85,7 +89,8 @@ class TikTokComment:
 
 @dataclass
 class TikTokHashtag:
-    """TikTok hashtag data."""
+    """
+TikTok hashtag data."""
     hashtag: str
     view_count: int
     video_count: int
@@ -95,7 +100,8 @@ class TikTokHashtag:
 
 @dataclass
 class TikTokCrawlResult:
-    """TikTok crawl operation result."""
+    """
+TikTok crawl operation result."""
     crawl_id: str
     crawl_type: str  # user, hashtag, video, search, trending
     target: str
@@ -126,7 +132,8 @@ class TikTokCrawler:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize TikTok crawler."""
+        """
+Initialize TikTok crawler."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -762,7 +769,8 @@ class TikTokCrawler:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""
+        """
+Get crawler statistics."""
         return {
             'users_collected': len(self.users),
             'videos_collected': len(self.videos),
@@ -774,7 +782,8 @@ class TikTokCrawler:
         }
     
     def get_recent_crawl_results(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get recent crawl results."""
+        """
+Get recent crawl results."""
         recent_results = sorted(
             self._crawl_results,
             key=lambda r: r.started_at,
@@ -800,7 +809,8 @@ class TikTokCrawler:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the TikTok crawler."""
+        """
+Shutdown the TikTok crawler."""
         try:
             self._logger.info("Shutting down TikTok crawler...")
             

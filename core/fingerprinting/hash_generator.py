@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import hashlib
 import hmac
 import secrets
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class HashResult:
-    """Result of hash generation operation"""
+    """
+Result of hash generation operation"""
     algorithm: str
     hash_value: str
     salt: Optional[str]

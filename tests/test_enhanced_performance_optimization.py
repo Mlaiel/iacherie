@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test Enhanced Performance Optimization Features
+"""
+Test Enhanced Performance Optimization Features
 
 This test validates the enhanced performance profiling, caching strategy,
 and database indexing optimizations.
 """
+
 import pytest
 import sys
 import os
@@ -28,10 +31,12 @@ from datetime import datetime, timedelta
 
 # Test Performance Optimization Profiling
 class TestEnhancedPerformanceProfiling:
-    """Test enhanced performance profiling capabilities"""
+    """
+Test enhanced performance profiling capabilities"""
     
     def test_advanced_performance_analyzer_initialization(self):
-        """Test AdvancedPerformanceAnalyzer initialization"""
+        """
+Test AdvancedPerformanceAnalyzer initialization"""
         from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
         
         config = {
@@ -268,7 +273,8 @@ class TestCacheStrategyEnhancements:
     """Test advanced caching strategy enhancements"""
     
     def test_cache_manager_initialization(self):
-        """Test cache manager initialization"""
+        """
+Test cache manager initialization"""
         # Test with simple import to avoid complex dependencies
         try:
             from crawlers.caching.memory_cache import MemoryCache
@@ -347,7 +353,8 @@ class TestDatabaseIndexingOptimization:
     """Test database indexing optimization enhancements"""
     
     def test_index_optimization_config(self):
-        """Test index optimization configuration"""
+        """
+Test index optimization configuration"""
         config = {
             "auto_optimization": True,
             "monitoring_enabled": True,
@@ -389,7 +396,8 @@ class TestCodeQualityRefactoring:
     """Test code quality improvements and refactoring"""
     
     def test_error_handling_standardization(self):
-        """Test standardized error handling"""
+        """
+Test standardized error handling"""
         from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
         
         config = {}
@@ -458,7 +466,8 @@ class TestPerformanceOptimizationIntegration:
     
     @pytest.mark.asyncio
     async def test_performance_monitoring_workflow(self):
-        """Test complete performance monitoring workflow"""
+        """
+Test complete performance monitoring workflow"""
         from core.pipeline.performance_optimizer import RealTimePerformanceMonitor, AdvancedPerformanceAnalyzer
         
         config = {

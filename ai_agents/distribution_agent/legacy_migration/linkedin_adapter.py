@@ -4,6 +4,7 @@ Handles professional content distribution, company pages, and B2B networking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LinkedInCredentials:
-    """LinkedIn API credentials configuration."""
+    """
+LinkedIn API credentials configuration."""
     client_id: str
     client_secret: str
     access_token: str
@@ -34,6 +36,7 @@ class LinkedInAdapter(BasePlatformAdapter):
     Advanced LinkedIn platform adapter for professional content distribution.
     Supports posts, articles, video content, and company page management.
     """
+
     
     PLATFORM_NAME = "linkedin"
     API_VERSION = "v2"

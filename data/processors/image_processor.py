@@ -29,6 +29,7 @@ Professional Features:
 - Artistic style transfer and creative filters
 - Automated workflow optimization
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -118,6 +119,7 @@ logger = logging.getLogger(__name__)
 
 class ProcessingMode(Enum):
     """Image processing modes"""
+
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     CREATIVE = "creative"
@@ -127,6 +129,7 @@ class ProcessingMode(Enum):
 
 class ColorSpace(Enum):
     """Color space options"""
+
     RGB = "RGB"
     HSV = "HSV"
     LAB = "LAB"
@@ -136,6 +139,7 @@ class ColorSpace(Enum):
 
 class PlatformProfile(Enum):
     """Social media platform profiles"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -168,7 +172,8 @@ class ImageMetadata:
 
 @dataclass
 class ImageFeatures:
-    """Professional image feature extraction results"""
+    """
+Professional image feature extraction results"""
     histogram: np.ndarray
     color_moments: np.ndarray
     texture_features: np.ndarray
@@ -195,7 +200,8 @@ class ImageFeatures:
 
 @dataclass
 class ImageFingerprint:
-    """Comprehensive image fingerprint data"""
+    """
+Comprehensive image fingerprint data"""
     perceptual_hash: Optional[str] = None
     average_hash: Optional[str] = None
     difference_hash: Optional[str] = None
@@ -209,7 +215,8 @@ class ImageFingerprint:
 
 @dataclass
 class EnhancementSettings:
-    """Professional enhancement settings"""
+    """
+Professional enhancement settings"""
     # Standard adjustments
     brightness: float = 0.0  # -1.0 to 1.0
     contrast: float = 0.0    # -1.0 to 1.0
@@ -250,7 +257,8 @@ class EnhancementSettings:
 
 @dataclass
 class QualityMetrics:
-    """Image quality assessment metrics"""
+    """
+Image quality assessment metrics"""
     technical_score: float = 0.0     # Overall technical quality
     aesthetic_score: float = 0.0     # Aesthetic appeal
     composition_score: float = 0.0   # Rule of thirds, etc.
@@ -269,7 +277,8 @@ class QualityMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Complete image processing result"""
+    """
+Complete image processing result"""
     success: bool
     processing_time: float
     original_metadata: ImageMetadata
@@ -284,7 +293,8 @@ class ProcessingResult:
     error_message: Optional[str] = None
 
 class ImageProcessor:
-    """Professional enterprise-grade image processing engine"""
+    """
+Professional enterprise-grade image processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
@@ -363,7 +373,8 @@ class ImageProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize professional image processing engines"""
+        """
+Initialize professional image processing engines"""
         try:
             # Ensure temp directory exists
             os.makedirs(self.config['temp_dir'], exist_ok=True)
@@ -413,7 +424,8 @@ class ImageProcessor:
         )
     
     def _initialize_feature_detectors(self):
-        """Initialize feature detection algorithms"""
+        """
+Initialize feature detection algorithms"""
         # Corner and feature detectors
         self.orb_detector = cv2.ORB_create(nfeatures=1000)
         self.sift_detector = cv2.SIFT_create() if hasattr(cv2, 'SIFT_create') else None
@@ -427,7 +439,8 @@ class ImageProcessor:
         self.hough_circle_params = {'dp': 1, 'min_dist': 50, 'param1': 100, 'param2': 30}
     
     def _initialize_color_engines(self):
-        """Initialize color analysis and correction engines"""
+        """
+Initialize color analysis and correction engines"""
         # Color space conversion matrices
         self.color_spaces = {
             'RGB': cv2.COLOR_BGR2RGB,
@@ -451,7 +464,8 @@ class ImageProcessor:
         }
     
     def _initialize_enhancement_engines(self):
-        """Initialize image enhancement algorithms"""
+        """
+Initialize image enhancement algorithms"""
         # Denoising algorithms
         self.denoise_methods = {
             'bilateral': cv2.bilateralFilter,
@@ -480,7 +494,8 @@ class ImageProcessor:
             ])
     
     def _initialize_quality_engines(self):
-        """Initialize quality assessment engines"""
+        """
+Initialize quality assessment engines"""
         # Quality metrics
         self.quality_metrics = [
             'sharpness', 'contrast', 'brightness', 'saturation',
@@ -499,7 +514,8 @@ class ImageProcessor:
         }
     
     def _load_ai_models(self):
-        """Load AI models for professional processing"""
+        """
+Load AI models for professional processing"""
         try:
             # Initialize CLIP model if available
             if CLIP_AVAILABLE and TORCH_AVAILABLE:
@@ -1145,7 +1161,8 @@ class ImageProcessor:
             return 5500  # Default daylight temperature
     
     def _analyze_white_balance(self, image_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze white balance characteristics"""
+        """
+Analyze white balance characteristics"""
         try:
             wb_analysis = {}
             
@@ -1189,7 +1206,8 @@ class ImageProcessor:
             return {'color_cast_detected': False, 'temperature_correction': 0}
     
     async def _extract_dominant_colors(self, image_array: np.ndarray, k: int = 8) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using professional clustering"""
+        """
+Extract dominant colors using professional clustering"""
         try:
             if not SKLEARN_AVAILABLE:
                 return [(128, 128, 128)]  # Default gray
@@ -1267,7 +1285,8 @@ class ImageProcessor:
         self,
         image_array: np.ndarray
     ) -> Dict[str, Any]:
-        """Extract comprehensive image features"""
+        """
+Extract comprehensive image features"""
         try:
             # Convert to different color spaces for analysis
             if len(image_array.shape) == 3:
@@ -1688,7 +1707,8 @@ class ImageProcessor:
         ]
     
     def cleanup(self):
-        """Cleanup temporary files and resources"""
+        """
+Cleanup temporary files and resources"""
         try:
             # Clean up temporary directory
             temp_dir = self.config['temp_dir']

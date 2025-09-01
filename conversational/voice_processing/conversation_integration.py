@@ -6,6 +6,7 @@ dialogue flows and content creator interaction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import json
@@ -21,7 +22,8 @@ from .config import ConversationConfig
 logger = logging.getLogger(__name__)
 
 class ConversationIntegrator:
-    """Main integration hub for voice-conversational AI systems"""
+    """
+Main integration hub for voice-conversational AI systems"""
     
     def __init__(self, config: ConversationConfig):
         self.config = config
@@ -31,7 +33,8 @@ class ConversationIntegrator:
         self.is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize conversation integration system"""
+        """
+Initialize conversation integration system"""
         try:
             # Initialize voice processor
             self.voice_processor = VoiceProcessor()

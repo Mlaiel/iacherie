@@ -4,13 +4,14 @@
 Ultra-professional performance benchmarking and stress testing for the parsers module.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BenchmarkResult:
-    """Performance benchmark result"""
+    """
+Performance benchmark result"""
     operation: str
     execution_time: float
     memory_usage_mb: float
@@ -43,7 +45,8 @@ class BenchmarkResult:
     
 @dataclass
 class StressTestResult:
-    """Stress test result"""
+    """
+Stress test result"""
     concurrent_operations: int
     total_operations: int
     average_response_time: float
@@ -57,7 +60,8 @@ class StressTestResult:
 
 
 class PerformanceMonitor:
-    """Real-time performance monitoring"""
+    """
+Real-time performance monitoring"""
     
     def __init__(self):
         self.monitoring = False
@@ -65,7 +69,8 @@ class PerformanceMonitor:
         self.process = psutil.Process()
         
     def start_monitoring(self, interval: float = 0.1):
-        """Start performance monitoring"""
+        """
+Start performance monitoring"""
         self.monitoring = True
         self.metrics = []
         
@@ -94,7 +99,8 @@ class PerformanceMonitor:
         self.monitoring = False
         
     def get_peak_metrics(self) -> Dict[str, float]:
-        """Get peak performance metrics"""
+        """
+Get peak performance metrics"""
         if not self.metrics:
             return {'cpu_peak': 0.0, 'memory_peak': 0.0}
             
@@ -110,14 +116,16 @@ class PerformanceMonitor:
 
 
 class ParsersBenchmark:
-    """Comprehensive parsers module benchmarking"""
+    """
+Comprehensive parsers module benchmarking"""
     
     def __init__(self):
         self.monitor = PerformanceMonitor()
         self.results: List[BenchmarkResult] = []
         
     async def benchmark_semantic_parser(self, iterations: int = 100) -> BenchmarkResult:
-        """Benchmark semantic content parser"""
+        """
+Benchmark semantic content parser"""
         logger.info(f"🧠 Benchmarking semantic parser ({iterations} iterations)")
         
         try:
@@ -408,7 +416,8 @@ class ParsersBenchmark:
         )
     
     async def run_comprehensive_benchmark(self) -> Dict[str, Any]:
-        """Run comprehensive benchmark suite"""
+        """
+Run comprehensive benchmark suite"""
         logger.info("🚀 Starting comprehensive performance benchmark...")
         
         # Individual parser benchmarks
@@ -450,7 +459,8 @@ class ParsersBenchmark:
         }
     
     def _calculate_grade(self, throughput: float, success_rate: float) -> str:
-        """Calculate performance grade"""
+        """
+Calculate performance grade"""
         if success_rate >= 99 and throughput >= 100:
             return "A+ (Excellent)"
         elif success_rate >= 95 and throughput >= 50:
@@ -497,7 +507,7 @@ async def main():
     logger.info("🚀 IA INFLUENCER AGENT - PARSERS MODULE PERFORMANCE BENCHMARK")
     logger.info("=" * 80)
     logger.info("Author: Fahed Mlaiel <mlaiel@live.de>")
-    logger.info("Copyright: © 2025 Fahed Mlaiel. All rights reserved.")
+    logger.info("Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.")
     logger.info("=" * 80)
     
     benchmark = ParsersBenchmark()

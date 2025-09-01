@@ -9,7 +9,7 @@ Module: backend/business/engagement/gamification_manager.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -26,6 +26,7 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Distribution → Monetization → Analytics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class GamificationEventType(str, Enum):
-    """Types of gamification events that trigger rewards."""
+    """
+Types of gamification events that trigger rewards."""
+
     CONTENT_UPLOAD = "content_upload"
     FIRST_UPLOAD = "first_upload"
     DAILY_UPLOAD = "daily_upload"
@@ -77,6 +80,7 @@ class GamificationEventType(str, Enum):
 
 class GamificationMetricType(str, Enum):
     """Types of metrics tracked for gamification."""
+
     EXPERIENCE_POINTS = "experience_points"
     CONTENT_COUNT = "content_count"
     COLLABORATION_COUNT = "collaboration_count"
@@ -101,6 +105,7 @@ class GamificationMetricType(str, Enum):
 
 class GamificationLevel(str, Enum):
     """User progression levels in the gamification system."""
+
     NEWCOMER = "newcomer"           # Level 1-5
     RISING_STAR = "rising_star"     # Level 6-15
     ESTABLISHED = "established"     # Level 16-30
@@ -136,7 +141,8 @@ class GamificationProfile:
     notification_preferences: Dict[str, bool] = field(default_factory=dict)
     
     def get_level_category(self) -> GamificationLevel:
-        """Get the level category based on current level."""
+        """
+Get the level category based on current level."""
         if self.level <= 5:
             return GamificationLevel.NEWCOMER
         elif self.level <= 15:
@@ -153,7 +159,8 @@ class GamificationProfile:
             return GamificationLevel.ICON
     
     def calculate_next_level_progress(self) -> Tuple[int, int, float]:
-        """Calculate progress to next level.
+        """
+Calculate progress to next level.
         
         Returns:
             Tuple of (current_level_threshold, next_level_threshold, progress_percentage)
@@ -187,7 +194,8 @@ class GamificationProfile:
 
 @dataclass
 class GamificationEvent:
-    """Represents a gamification event that occurred."""
+    """
+Represents a gamification event that occurred."""
     event_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     event_type: GamificationEventType = GamificationEventType.CONTENT_UPLOAD
@@ -208,7 +216,8 @@ class GamificationManager:
     """
     
     def __init__(self):
-        """Initialize the gamification manager."""
+        """
+Initialize the gamification manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._event_queue: List[GamificationEvent] = []
         self._processing_lock = asyncio.Lock()
@@ -374,7 +383,8 @@ class GamificationManager:
         return multiplier
     
     async def _calculate_level(self, experience_points: int) -> int:
-        """Calculate user level based on experience points."""
+        """
+Calculate user level based on experience points."""
         # Level progression follows exponential curve
         level_thresholds = {
             1: 0, 2: 100, 3: 300, 4: 600, 5: 1000,
@@ -402,7 +412,8 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> None:
-        """Update profile metrics based on the event."""
+        """
+Update profile metrics based on the event."""
         if not profile.metrics:
             profile.metrics = {}
         
@@ -432,7 +443,8 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> None:
-        """Update user activity streaks."""
+        """
+Update user activity streaks."""
         now = datetime.utcnow()
         
         # Only certain events count towards streaks
@@ -468,7 +480,8 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> List[str]:
-        """Check for new achievements based on the event and profile state."""
+        """
+Check for new achievements based on the event and profile state."""
         new_achievements = []
         
         # Define achievement conditions
@@ -726,12 +739,14 @@ async def record_gamification_event(
     event_type: GamificationEventType,
     metadata: Optional[Dict[str, Any]] = None
 ) -> GamificationEvent:
-    """Record a gamification event (convenience function)."""
+    """
+Record a gamification event (convenience function)."""
     manager = await get_gamification_manager()
     return await manager.record_event(user_id, event_type, metadata)
 
 
 async def get_user_gamification_stats(user_id: str) -> Dict[str, Any]:
-    """Get user gamification statistics (convenience function)."""
+    """
+Get user gamification statistics (convenience function)."""
     manager = await get_gamification_manager()
     return await manager.get_user_statistics(user_id)

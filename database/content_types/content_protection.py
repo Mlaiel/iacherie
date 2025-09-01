@@ -20,6 +20,7 @@ Contact: mlaiel@live.de
 - DMCA automatisé
 - Monétisation des violations détectées
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -46,7 +47,9 @@ from .multimedia_content import MultimediaContentManager, MultimediaFingerprint
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
-    """Security threat classification levels"""
+    """
+Security threat classification levels"""
+
     NONE = "none"
     LOW = "low"
     MEDIUM = "medium"
@@ -55,6 +58,7 @@ class ThreatLevel(Enum):
 
 class ProtectionRule(Enum):
     """Content protection rule types"""
+
     COPYRIGHT_DETECTION = "copyright_detection"
     WATERMARK_VERIFICATION = "watermark_verification"
     DUPLICATE_DETECTION = "duplicate_detection"
@@ -70,6 +74,7 @@ class ProtectionRule(Enum):
 
 class ViolationType(Enum):
     """Types of content protection violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_COPY = "unauthorized_copy"
     CONTENT_PIRACY = "content_piracy"
@@ -83,6 +88,7 @@ class ViolationType(Enum):
 
 class MonitoringStatus(Enum):
     """Content monitoring status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     SUSPENDED = "suspended"
@@ -108,7 +114,8 @@ class ProtectionPolicy:
 
 @dataclass
 class ContentViolation:
-    """Content protection violation record"""
+    """
+Content protection violation record"""
     violation_id: str
     content_id: str
     violation_type: ViolationType
@@ -146,7 +153,8 @@ class ProtectionMetrics:
 
 @dataclass
 class MonitoringTarget:
-    """Content monitoring target configuration"""
+    """
+Content monitoring target configuration"""
     target_id: str
     content_id: str
     fingerprint_hash: str
@@ -162,7 +170,8 @@ class MonitoringTarget:
     custom_parameters: Dict[str, Any] = field(default_factory=dict)
 
 class ContentScanner(ABC):
-    """Abstract base class for content scanners"""
+    """
+Abstract base class for content scanners"""
     
     @abstractmethod
     async def scan_content(
@@ -170,7 +179,8 @@ class ContentScanner(ABC):
         content_data: Dict[str, Any], 
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan content for violations"""
+        """
+Scan content for violations"""
         pass
     
     @abstractmethod
@@ -180,11 +190,13 @@ class ContentScanner(ABC):
         reference_fingerprint: Dict[str, Any],
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan remote URL for violations"""
+        """
+Scan remote URL for violations"""
         pass
 
 class DuplicateContentScanner(ContentScanner):
-    """Scanner for detecting duplicate and unauthorized copies"""
+    """
+Scanner for detecting duplicate and unauthorized copies"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.DuplicateContentScanner")
@@ -294,7 +306,8 @@ class DuplicateContentScanner(ContentScanner):
         ]
     
     async def _extract_url_fingerprint(self, url: str) -> Optional[Dict[str, Any]]:
-        """Extract fingerprint from content at URL"""
+        """
+Extract fingerprint from content at URL"""
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, timeout=30) as response:
@@ -339,7 +352,8 @@ class DuplicateContentScanner(ContentScanner):
             return 0.0
     
     def _assess_threat_level(self, similarity_score: float) -> ThreatLevel:
-        """Assess threat level based on similarity score"""
+        """
+Assess threat level based on similarity score"""
         if similarity_score >= 0.95:
             return ThreatLevel.CRITICAL
         elif similarity_score >= 0.90:
@@ -350,7 +364,8 @@ class DuplicateContentScanner(ContentScanner):
             return ThreatLevel.LOW
 
 class WatermarkScanner(ContentScanner):
-    """Scanner for detecting watermark tampering"""
+    """
+Scanner for detecting watermark tampering"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.WatermarkScanner")
@@ -403,13 +418,15 @@ class WatermarkScanner(ContentScanner):
         return []
     
     async def _detect_watermark(self, content_data: Dict[str, Any]) -> bool:
-        """Detect presence of watermark in content"""
+        """
+Detect presence of watermark in content"""
         # This would use actual watermark detection algorithms
         # For demonstration, returning mock result
         return content_data.get('has_watermark', False)
 
 class ContentProtectionEngine:
-    """Main content protection engine"""
+    """
+Main content protection engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
         """
@@ -668,7 +685,8 @@ class ContentProtectionEngine:
         violations: List[ContentViolation],
         policy: ProtectionPolicy
     ) -> List[Dict[str, str]]:
-        """Generate protection recommendations"""
+        """
+Generate protection recommendations"""
         recommendations = []
         
         # Analyze violations and suggest actions
@@ -726,7 +744,8 @@ class ContentProtectionEngine:
         self.metrics.last_updated = datetime.now(timezone.utc)
     
     async def scan_monitoring_targets(self) -> Dict[str, Any]:
-        """Scan all active monitoring targets"""
+        """
+Scan all active monitoring targets"""
         scan_results = {
             "targets_scanned": 0,
             "violations_found": 0,
@@ -866,7 +885,8 @@ class ContentProtectionEngine:
         resolution_action: str,
         reviewer_notes: Optional[str] = None
     ) -> bool:
-        """Resolve a content violation"""
+        """
+Resolve a content violation"""
         try:
             if violation_id not in self.violations:
                 raise ValueError(f"Violation not found: {violation_id}")
@@ -942,7 +962,8 @@ class ContentProtectionEngine:
         }
     
     def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive protection metrics"""
+        """
+Get comprehensive protection metrics"""
         # Update pending violations count
         self.metrics.pending_violations = len([
             v for v in self.violations.values() 

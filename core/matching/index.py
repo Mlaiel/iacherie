@@ -29,6 +29,7 @@ This unified matching service contains proprietary algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -91,7 +92,8 @@ from .workflow import (
 
 @dataclass
 class MatchingServiceConfig:
-    """Enterprise matching service configuration"""
+    """
+Enterprise matching service configuration"""
     # Core Services
     enable_ai_matching: bool = True
     enable_recommendation_engine: bool = True
@@ -153,7 +155,8 @@ class MatchingService:
         self.performance_metrics = {}
     
     def _initialize_services(self) -> None:
-        """Initialize all matching service components"""
+        """
+Initialize all matching service components"""
         try:
             # Core Matching Engine
             self.matching_engine = MatchingEngine(
@@ -424,63 +427,72 @@ class MatchingService:
         }
     
     def _get_compatibility_config(self) -> Dict[str, Any]:
-        """Get compatibility analyzer configuration"""
+        """
+Get compatibility analyzer configuration"""
         return {
             'detailed_analysis': True,
             'ai_enhanced': True
         }
     
     def _get_recommendation_config(self) -> Dict[str, Any]:
-        """Get recommendation engine configuration"""
+        """
+Get recommendation engine configuration"""
         return {
             'ai_enabled': self.config.enable_recommendation_engine,
             'personalization_level': 0.8
         }
     
     def _get_scoring_config(self) -> Dict[str, Any]:
-        """Get scoring service configuration"""
+        """
+Get scoring service configuration"""
         return {
             'business_intelligence': self.config.enable_revenue_optimization,
             'risk_assessment': self.config.enable_risk_assessment
         }
     
     def _get_preferences_config(self) -> Dict[str, Any]:
-        """Get preferences manager configuration"""
+        """
+Get preferences manager configuration"""
         return {
             'learning_enabled': self.config.enable_preferences_learning,
             'adaptation_rate': 0.1
         }
     
     def _get_criteria_config(self) -> Dict[str, Any]:
-        """Get criteria manager configuration"""
+        """
+Get criteria manager configuration"""
         return {
             'dynamic_optimization': True,
             'business_rules': True
         }
     
     def _get_validator_config(self) -> Dict[str, Any]:
-        """Get validator configuration"""
+        """
+Get validator configuration"""
         return {
             'validation_level': self.config.validation_level,
             'ai_validation': True
         }
     
     def _get_processor_config(self) -> Dict[str, Any]:
-        """Get processor configuration"""
+        """
+Get processor configuration"""
         return {
             'max_parallel': self.config.max_concurrent_matches,
             'timeout': self.config.processing_timeout
         }
     
     def _get_workflow_config(self) -> Dict[str, Any]:
-        """Get workflow manager configuration"""
+        """
+Get workflow manager configuration"""
         return {
             'optimization_enabled': True,
             'monitoring_enabled': True
         }
     
     async def _get_creator_profile(self, creator_id: int) -> CreatorProfile:
-        """Get creator profile for matching"""
+        """
+Get creator profile for matching"""
         # Implementation would fetch from database
         # This is a placeholder
         return CreatorProfile(user_id=creator_id, content_types=[], genres=[], 
@@ -490,7 +502,8 @@ class MatchingService:
                             content_tags=[], creation_frequency={}, quality_scores={})
     
     async def _get_creator_compatibility_profile(self, creator_id: int):
-        """Get creator compatibility profile"""
+        """
+Get creator compatibility profile"""
         # Implementation would build compatibility profile
         pass
     
@@ -499,7 +512,8 @@ class MatchingService:
         filters: Dict[str, Any],
         preferences: PreferenceProfile
     ) -> Dict[str, Any]:
-        """Apply user preferences to search filters"""
+        """
+Apply user preferences to search filters"""
         enhanced_filters = filters.copy()
         
         # Apply preference-based filters
@@ -512,7 +526,8 @@ class MatchingService:
         return enhanced_filters
     
     async def _check_service_health(self, service: Any) -> Dict[str, Any]:
-        """Check individual service health"""
+        """
+Check individual service health"""
         try:
             # Basic health check
             if hasattr(service, 'health_check'):
@@ -523,7 +538,8 @@ class MatchingService:
             return {'status': 'unhealthy', 'error': str(e), 'last_check': datetime.utcnow()}
     
     async def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for all services"""
+        """
+Get performance metrics for all services"""
         return {
             'cache_hit_rate': 0.85,
             'average_response_time': 250,  # ms
@@ -542,7 +558,8 @@ def create_matching_service(
     event_publisher: EventPublisher,
     config: Optional[MatchingServiceConfig] = None
 ) -> MatchingService:
-    """Factory function to create a fully configured matching service"""
+    """
+Factory function to create a fully configured matching service"""
     if config is None:
         config = MatchingServiceConfig()
     

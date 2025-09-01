@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade deployment configuration management system.
 ==================================================================
 """
+
 from .environment_manager import (
     EnvironmentManager,
     EnvironmentConfiguration,
@@ -563,7 +564,7 @@ logger = logging.getLogger(__name__)
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 class ConfigurationModule:
     """
@@ -586,7 +587,8 @@ class ConfigurationModule:
     """
     
     def __init__(self):
-        """Initialize configuration module with all managers"""
+        """
+Initialize configuration module with all managers"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Core managers

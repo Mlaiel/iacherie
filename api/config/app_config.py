@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -14,7 +15,8 @@ import secrets
 
 @dataclass
 class AppConfig:
-    """Base application configuration class"""
+    """
+Base application configuration class"""
     
     # Application Identity
     app_name: str = "IA Influencer Agent Platform"
@@ -186,7 +188,8 @@ class AppConfig:
         self._validate_config()
     
     def _validate_config(self):
-        """Validate configuration parameters"""
+        """
+Validate configuration parameters"""
         if self.creator_commission_rate + self.platform_commission_rate > 1.0:
             raise ValueError("Total commission rates cannot exceed 100%")
         
@@ -234,7 +237,8 @@ class AppConfig:
         }
     
     def get_database_config(self) -> Dict[str, Any]:
-        """Get database configuration as dictionary"""
+        """
+Get database configuration as dictionary"""
         return {
             'url': self.database_url,
             'host': self.database_host,
@@ -249,7 +253,8 @@ class AppConfig:
         }
     
     def get_redis_config(self) -> Dict[str, Any]:
-        """Get Redis configuration as dictionary"""
+        """
+Get Redis configuration as dictionary"""
         return {
             'url': self.redis_url,
             'host': self.redis_host,
@@ -260,7 +265,8 @@ class AppConfig:
         }
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration as dictionary"""
+        """
+Get security configuration as dictionary"""
         return {
             'secret_key': self.secret_key,
             'jwt_secret': self.jwt_secret,

@@ -6,7 +6,7 @@ Advanced workflow management with conditional processing, parallel execution,
 error recovery, and enterprise-grade monitoring and reporting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
@@ -23,6 +23,7 @@ PROJECT TEAM SPECIALTIES:
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
 """
+
 import asyncio
 import logging
 import json
@@ -56,7 +57,9 @@ from ...core.config import get_settings
 
 
 class WorkflowStage(Enum):
-    """Workflow processing stages"""
+    """
+Workflow processing stages"""
+
     INITIALIZATION = "initialization"
     VALIDATION = "validation" 
     PREPROCESSING = "preprocessing"
@@ -74,6 +77,7 @@ class WorkflowStage(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -85,6 +89,7 @@ class WorkflowStatus(Enum):
 
 class WorkflowPriority(IntEnum):
     """Workflow execution priority"""
+
     LOW = 1
     NORMAL = 3
     HIGH = 5
@@ -93,7 +98,9 @@ class WorkflowPriority(IntEnum):
 
 
 class ExecutionMode(Enum):
-    """Workflow execution modes"""
+    """
+Workflow execution modes"""
+
     SEQUENTIAL = "sequential"      # Execute stages one by one
     PARALLEL = "parallel"         # Execute compatible stages in parallel
     ADAPTIVE = "adaptive"         # Adapt execution based on resources
@@ -102,6 +109,7 @@ class ExecutionMode(Enum):
 
 class RetryStrategy(Enum):
     """Retry strategies for failed stages"""
+
     NONE = "none"               # No retry
     IMMEDIATE = "immediate"     # Immediate retry
     EXPONENTIAL = "exponential" # Exponential backoff
@@ -124,7 +132,8 @@ class WorkflowStageConfig:
 
 @dataclass 
 class WorkflowStageResult:
-    """Result of workflow stage execution"""
+    """
+Result of workflow stage execution"""
     stage: WorkflowStage
     status: WorkflowStatus
     success: bool
@@ -142,7 +151,8 @@ class WorkflowStageResult:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution context and state"""
+    """
+Workflow execution context and state"""
     workflow_id: str
     user_id: str
     content_info: Dict[str, Any]
@@ -179,7 +189,8 @@ class WorkflowExecution:
 
 
 class WorkflowConfiguration(BaseModel):
-    """Comprehensive workflow configuration"""
+    """
+Comprehensive workflow configuration"""
     
     # Basic settings
     name: str = Field(..., description="Workflow name")
@@ -297,7 +308,8 @@ class WorkflowOrchestrator:
         self._load_default_templates()
     
     def _initialize_stage_handlers(self):
-        """Initialize handlers for each workflow stage"""
+        """
+Initialize handlers for each workflow stage"""
         self.stage_handlers = {
             WorkflowStage.INITIALIZATION: self._handle_initialization,
             WorkflowStage.VALIDATION: self._handle_validation,
@@ -315,7 +327,8 @@ class WorkflowOrchestrator:
         }
     
     def _load_default_templates(self):
-        """Load default workflow templates"""
+        """
+Load default workflow templates"""
         # Basic content ingestion workflow
         basic_workflow = WorkflowConfiguration(
             name="basic_content_ingestion",
@@ -580,7 +593,8 @@ class WorkflowOrchestrator:
             raise
     
     async def _execute_streaming(self, execution: WorkflowExecution):
-        """Execute workflow with streaming processing"""
+        """
+Execute workflow with streaming processing"""
         try:
             # Stream processing with real-time updates
             # Process content in chunks with immediate feedback
@@ -619,7 +633,8 @@ class WorkflowOrchestrator:
             raise
     
     async def _execute_stage(self, execution: WorkflowExecution, stage_config: WorkflowStageConfig) -> WorkflowStageResult:
-        """Execute individual workflow stage"""
+        """
+Execute individual workflow stage"""
         stage_result = WorkflowStageResult(
             stage=stage_config.stage,
             status=WorkflowStatus.RUNNING,
@@ -953,18 +968,21 @@ class WorkflowOrchestrator:
         return image_data
     
     async def _preprocess_audio(self, audio_data: bytes) -> bytes:
-        """Preprocess audio data"""
+        """
+Preprocess audio data"""
         # Basic audio preprocessing
         return audio_data
     
     async def _preprocess_video(self, video_data: bytes) -> bytes:
-        """Preprocess video data"""
+        """
+Preprocess video data"""
         # Basic video preprocessing
         return video_data
     
     # Helper methods
     def _sort_stages_by_dependencies(self, stages: List[WorkflowStageConfig]) -> List[WorkflowStageConfig]:
-        """Sort stages by dependency order"""
+        """
+Sort stages by dependency order"""
         sorted_stages = []
         remaining_stages = stages.copy()
         
@@ -994,11 +1012,13 @@ class WorkflowOrchestrator:
         return True
     
     def _check_dependencies_executed(self, stage_config: WorkflowStageConfig, executed_stages: set) -> bool:
-        """Check if dependencies have been executed"""
+        """
+Check if dependencies have been executed"""
         return all(dep in executed_stages for dep in stage_config.dependencies)
     
     def _build_execution_graph(self, stages: List[WorkflowStageConfig]) -> Dict[WorkflowStage, List[WorkflowStage]]:
-        """Build execution dependency graph"""
+        """
+Build execution dependency graph"""
         graph = {}
         for stage in stages:
             graph[stage.stage] = stage.dependencies
@@ -1007,7 +1027,8 @@ class WorkflowOrchestrator:
     async def _handle_stage_failure(self, execution: WorkflowExecution, 
                                   stage_config: WorkflowStageConfig, 
                                   stage_result: WorkflowStageResult) -> bool:
-        """Handle stage failure with retry logic"""
+        """
+Handle stage failure with retry logic"""
         try:
             # Check retry strategy
             if stage_result.retry_count >= stage_config.retry_count:
@@ -1292,7 +1313,8 @@ class WorkflowOrchestrator:
         return self.workflow_templates.copy()
     
     async def get_orchestrator_metrics(self) -> Dict[str, Any]:
-        """Get orchestrator performance metrics"""
+        """
+Get orchestrator performance metrics"""
         try:
             return {
                 'total_workflows': self.metrics['total_workflows'],

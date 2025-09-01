@@ -22,6 +22,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Infrastructure automation and deployment pipelines
 - AI Prompt Engineer: Advanced AI interaction and optimization systems
 """
+
 import asyncio
 import logging
 import time
@@ -66,7 +67,9 @@ from ...ml.models import RevenuePredictor as MLRevenuePredictor
 logger = logging.getLogger(__name__)
 
 class ForecastModel(Enum):
-    """Types of forecasting models"""
+    """
+Types of forecasting models"""
+
     LINEAR_REGRESSION = "linear_regression"
     POLYNOMIAL_REGRESSION = "polynomial_regression"
     RANDOM_FOREST = "random_forest"
@@ -78,6 +81,7 @@ class ForecastModel(Enum):
 
 class MarketTrendType(Enum):
     """Types of market trends"""
+
     SEASONAL = "seasonal"
     CYCLICAL = "cyclical"
     TRENDING = "trending"
@@ -88,6 +92,7 @@ class MarketTrendType(Enum):
 
 class OpportunityType(Enum):
     """Types of revenue opportunities"""
+
     PLATFORM_EXPANSION = "platform_expansion"
     CONTENT_DIVERSIFICATION = "content_diversification"
     LICENSING_DEALS = "licensing_deals"
@@ -116,7 +121,8 @@ class ForecastResult:
 
 @dataclass
 class MarketAnalysis:
-    """Comprehensive market analysis result"""
+    """
+Comprehensive market analysis result"""
     analysis_id: str
     market_segment: str
     analysis_date: datetime
@@ -132,7 +138,8 @@ class MarketAnalysis:
 
 @dataclass
 class RevenueOpportunity:
-    """Identified revenue opportunity"""
+    """
+Identified revenue opportunity"""
     opportunity_id: str
     opportunity_type: OpportunityType
     title: str
@@ -192,7 +199,8 @@ class RevenuePredictor:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize revenue prediction models"""
+        """
+Initialize revenue prediction models"""
         try:
             # Initialize data processors
             await self.statistical_analyzer.initialize()
@@ -540,7 +548,8 @@ class MarketAnalyzer:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize market analyzer"""
+        """
+Initialize market analyzer"""
         try:
             await self.market_data_manager.initialize()
             await self.trend_analysis_manager.initialize()
@@ -639,7 +648,8 @@ class OpportunityIdentifier:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize opportunity identification system"""
+        """
+Initialize opportunity identification system"""
         try:
             # Load opportunity templates
             await self._load_opportunity_templates()

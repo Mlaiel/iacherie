@@ -15,6 +15,7 @@ Any unauthorized use is strictly prohibited.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 import time
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics"""
+    """
+Types of metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -45,6 +48,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -54,6 +58,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert status states"""
+
     ACTIVE = "active"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
@@ -71,7 +76,8 @@ class MetricPoint:
 
 @dataclass
 class ArchivalMetrics:
-    """Core archival system metrics"""
+    """
+Core archival system metrics"""
     
     # Storage metrics
     total_archives: int = 0
@@ -114,7 +120,8 @@ class ArchivalMetrics:
 
 @dataclass
 class PerformanceMetrics:
-    """Detailed performance analytics"""
+    """
+Detailed performance analytics"""
     
     # Throughput metrics
     operations_per_second: float = 0.0
@@ -152,7 +159,8 @@ class PerformanceMetrics:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""
+    """
+Alert rule definition"""
     rule_id: str
     name: str
     description: str
@@ -218,24 +226,28 @@ class MetricCollector(ABC):
     
     @abstractmethod
     async def collect_metrics(self) -> Dict[str, MetricPoint]:
-        """Collect metrics from source"""
+        """
+Collect metrics from source"""
         pass
     
     @abstractmethod
     def get_collector_name(self) -> str:
-        """Get collector identifier"""
+        """
+Get collector identifier"""
         pass
 
 
 class ArchivalSystemCollector(MetricCollector):
-    """Collector for core archival system metrics"""
+    """
+Collector for core archival system metrics"""
     
     def __init__(self, archive_manager):
         self.archive_manager = archive_manager
         self.collection_history: List[ArchivalMetrics] = []
     
     async def collect_metrics(self) -> Dict[str, MetricPoint]:
-        """Collect archival system metrics"""
+        """
+Collect archival system metrics"""
         try:
             timestamp = datetime.utcnow()
             metrics = {}
@@ -289,7 +301,8 @@ class PerformanceCollector(MetricCollector):
         self.start_time = time.time()
     
     async def collect_metrics(self) -> Dict[str, MetricPoint]:
-        """Collect performance metrics"""
+        """
+Collect performance metrics"""
         try:
             timestamp = datetime.utcnow()
             metrics = {}
@@ -342,7 +355,8 @@ class PerformanceCollector(MetricCollector):
 
 
 class AlertManager:
-    """Advanced alert management system"""
+    """
+Advanced alert management system"""
     
     def __init__(self):
         self.rules: Dict[str, AlertRule] = {}
@@ -458,7 +472,8 @@ class AlertManager:
         return alerts
     
     async def get_alert_stats(self) -> Dict[str, Any]:
-        """Get alert statistics"""
+        """
+Get alert statistics"""
         try:
             # Count by severity
             severity_counts = {}
@@ -593,7 +608,8 @@ class AlertManager:
             await self.resolve_alert(alert_id)
     
     async def _send_notifications(self, alert: Alert, rule: AlertRule):
-        """Send alert notifications"""
+        """
+Send alert notifications"""
         try:
             for channel in rule.notification_channels:
                 if channel in self.notification_handlers:
@@ -740,7 +756,8 @@ class ArchivalMonitoring:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[MetricPoint]:
-        """Get historical metrics for analysis"""
+        """
+Get historical metrics for analysis"""
         try:
             if metric_name not in self.metric_history:
                 return []

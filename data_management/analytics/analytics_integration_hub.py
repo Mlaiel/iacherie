@@ -14,7 +14,7 @@ Features:
 - Automated reporting and insights
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
@@ -55,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AnalyticsInsight:
-    """Insight analytique unifié"""
+    """
+Insight analytique unifié"""
     insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     type: str = ""
     title: str = ""
@@ -214,7 +215,8 @@ class AdvancedRevenueAnalyticsHub:
             """)
     
     async def _start_realtime_services(self):
-        """Démarre les services temps réel"""
+        """
+Démarre les services temps réel"""
         try:
             # Tâche de génération d'insights en continu
             asyncio.create_task(self._continuous_insights_generation())
@@ -604,7 +606,8 @@ class InsightsEngine:
         forecast_data: Optional[RevenueForecast],
         pricing_data: List[EnhancedPriceRecommendation]
     ) -> List[AnalyticsInsight]:
-        """Génère des insights à partir des données analytics"""
+        """
+Génère des insights à partir des données analytics"""
         insights = []
         
         try:

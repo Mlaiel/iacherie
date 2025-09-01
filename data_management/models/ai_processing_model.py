@@ -1,15 +1,18 @@
 """AI Processing Models - IA Influencer Agent Platform Enterprise
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 
 Advanced AI processing models for content analysis and ML workflows.
 """
+
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 from enum import Enum
 from dataclasses import dataclass
 
 class ProcessingStatus(str, Enum):
-    """AI processing status tracking."""
+    """
+AI processing status tracking."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -18,6 +21,7 @@ class ProcessingStatus(str, Enum):
 
 class AIModelType(str, Enum):
     """AI model types for content processing."""
+
     FINGERPRINT = "fingerprint"
     CLASSIFICATION = "classification"
     TRANSCRIPTION = "transcription"
@@ -45,7 +49,8 @@ ModelType = AIModelType
 
 @dataclass
 class ProcessingResult:
-    """Processing result model."""
+    """
+Processing result model."""
     result_id: str
     job_id: str
     status: ProcessingStatus
@@ -56,7 +61,8 @@ class ProcessingResult:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics."""
+    """
+Model performance metrics."""
     model_name: str
     accuracy: float
     precision: float
@@ -68,7 +74,8 @@ class ModelMetrics:
 
 @dataclass
 class ProcessingPipeline:
-    """Processing pipeline configuration."""
+    """
+Processing pipeline configuration."""
     pipeline_id: str
     name: str
     model_types: List[AIModelType]
@@ -78,7 +85,8 @@ class ProcessingPipeline:
 
 @dataclass
 class QualityAssessment:
-    """Quality assessment for processed content."""
+    """
+Quality assessment for processed content."""
     assessment_id: str
     job_id: str
     quality_score: float
@@ -88,7 +96,8 @@ class QualityAssessment:
 
 @dataclass
 class MLModelVersionModel:
-    """ML model version tracking."""
+    """
+ML model version tracking."""
     version_id: str
     model_name: str
     version: str

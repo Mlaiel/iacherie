@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -31,7 +32,9 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class ArchitectureType(Enum):
-    """Neural architecture types"""
+    """
+Neural architecture types"""
+
     TRANSFORMER = "transformer"
     CNN = "cnn"
     RNN = "rnn"
@@ -44,6 +47,7 @@ class ArchitectureType(Enum):
 
 class OptimizationType(Enum):
     """Model optimization techniques"""
+
     QUANTIZATION = "quantization"
     PRUNING = "pruning"
     DISTILLATION = "distillation"
@@ -192,7 +196,8 @@ class MultiModalTransformerArchitecture(nn.Module):
         return nn.Sequential(*layers)
     
     def _get_activation(self) -> nn.Module:
-        """Get activation function"""
+        """
+Get activation function"""
         activations = {
             "relu": nn.ReLU(),
             "gelu": nn.GELU(),
@@ -259,7 +264,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
         self.executor = ThreadPoolExecutor(max_workers=4)
         
     def _define_search_space(self) -> Dict[str, List]:
-        """Define neural architecture search space"""
+        """
+Define neural architecture search space"""
         return {
             "num_layers": [2, 4, 6, 8, 12, 16],
             "hidden_dims": [
@@ -405,7 +411,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
         return sum(p.numel() for p in model.parameters())
     
     def _estimate_memory_usage(self, model: nn.Module) -> float:
-        """Estimate memory usage in MB"""
+        """
+Estimate memory usage in MB"""
         param_size = sum(p.numel() * p.element_size() for p in model.parameters())
         buffer_size = sum(b.numel() * b.element_size() for b in model.buffers())
         return (param_size + buffer_size) / (1024 ** 2)  # Convert to MB
@@ -601,13 +608,15 @@ class ModelOptimizationEngine(BaseAIModel):
         return teacher_model  # Placeholder
     
     def _get_model_size(self, model: nn.Module) -> int:
-        """Get model size in bytes"""
+        """
+Get model size in bytes"""
         param_size = sum(p.numel() * p.element_size() for p in model.parameters())
         buffer_size = sum(b.numel() * b.element_size() for b in model.buffers())
         return param_size + buffer_size
     
     def _estimate_flops(self, model: nn.Module) -> int:
-        """Estimate FLOPs for model (simplified)"""
+        """
+Estimate FLOPs for model (simplified)"""
         # Simplified FLOP estimation
         total_params = sum(p.numel() for p in model.parameters())
         return total_params * 2  # Rough estimate
@@ -617,7 +626,8 @@ class ModelOptimizationEngine(BaseAIModel):
         original_model: nn.Module, 
         optimized_model: nn.Module
     ) -> Dict[str, float]:
-        """Evaluate optimized model performance"""
+        """
+Evaluate optimized model performance"""
         return {
             "size_reduction": self._get_model_size(original_model) / self._get_model_size(optimized_model),
             "parameter_reduction": sum(p.numel() for p in original_model.parameters()) / 

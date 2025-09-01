@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced SEO & Monetization Prompts Tests
+"""
+Advanced SEO & Monetization Prompts Tests
 Ultra-professional test suite for SEO & Monetization Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -43,11 +46,13 @@ from ai.prompts.seo_monetization_prompts import (
 
 
 class TestSEOMonetizationPrompts:
-    """Ultra-comprehensive test suite for SEO & Monetization Prompts"""
+    """
+Ultra-comprehensive test suite for SEO & Monetization Prompts"""
     
     @pytest.fixture
     async def seo_monetization_prompts(self):
-        """Create a fresh SEOMonetizationPrompts instance for each test"""
+        """
+Create a fresh SEOMonetizationPrompts instance for each test"""
         prompts = SEOMonetizationPrompts()
         await prompts.initialize()
         yield prompts
@@ -55,7 +60,8 @@ class TestSEOMonetizationPrompts:
     
     @pytest.fixture
     def sample_blog_seo_context(self):
-        """Create sample blog SEO context for testing"""
+        """
+Create sample blog SEO context for testing"""
         return SEOMonetizationContext(
             seo_strategy=SEOStrategy.ADVANCED,
             monetization_models=[MonetizationModel.ADVERTISING, MonetizationModel.AFFILIATE],
@@ -176,7 +182,8 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_seo_monetization_registry_loading(self, seo_monetization_prompts):
-        """Test that SEO monetization registry is properly loaded"""
+        """
+Test that SEO monetization registry is properly loaded"""
         registry = SEO_MONETIZATION_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)

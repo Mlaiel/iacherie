@@ -8,7 +8,7 @@ Responsibility: Advanced AI-powered content protection and monitoring system
 ==================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -21,6 +21,7 @@ PROTECTION REPOSITORY ARCHITECTURE:
 Content Registration → Fingerprint Generation → Monitoring Setup → 
 Violation Detection → Response Management → Legal Documentation → Recovery Tracking
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -33,7 +34,9 @@ from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 from ..models.protection_model import ProtectionModel, ViolationModel, TakedownModel
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -41,6 +44,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -50,6 +54,7 @@ class ViolationType(Enum):
 
 class ResponseAction(Enum):
     """Automated response actions"""
+
     MONITOR_ONLY = "monitor_only"
     SEND_WARNING = "send_warning"
     REQUEST_TAKEDOWN = "request_takedown"
@@ -59,6 +64,7 @@ class ResponseAction(Enum):
 
 class MonitoringStatus(Enum):
     """Content monitoring status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     SUSPENDED = "suspended"
@@ -79,7 +85,8 @@ class ProtectionSettings:
 
 @dataclass
 class ViolationDetails:
-    """Detailed violation information"""
+    """
+Detailed violation information"""
     violation_type: ViolationType
     detected_url: str
     detection_confidence: float
@@ -91,7 +98,8 @@ class ViolationDetails:
 
 @dataclass
 class MonitoringMetrics:
-    """Protection monitoring metrics"""
+    """
+Protection monitoring metrics"""
     total_scans: int
     violations_detected: int
     false_positives: int
@@ -203,7 +211,8 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
         ]
     
     def _generate_search_keywords(self, protection: ProtectionModel) -> List[str]:
-        """Generate search keywords for monitoring"""
+        """
+Generate search keywords for monitoring"""
         keywords = []
         
         # Basic keywords from content
@@ -226,7 +235,8 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
         return list(set(keywords))  # Remove duplicates
     
     def _classify_violation(self, violation_data: Dict[str, Any]) -> ViolationType:
-        """Classify type of violation using AI"""
+        """
+Classify type of violation using AI"""
         try:
             # Analyze violation context
             url = violation_data.get('detected_url', '')
@@ -625,12 +635,14 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def get_by_content_type(self, content_type: str, limit: int = 100, 
                            offset: int = 0) -> List[ProtectionModel]:
-        """Get protections by content type"""
+        """
+Get protections by content type"""
         filters = {'content_type': content_type}
         return self.list(filters=filters, limit=limit, offset=offset)
     
     def process_violation_detection(self, violation_data: Dict[str, Any]) -> ViolationDetails:
-        """Process detected violation and create response"""
+        """
+Process detected violation and create response"""
         try:
             # Create violation details
             violation = ViolationDetails(
@@ -727,7 +739,8 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
         return content_types
     
     def _get_analytics_by_platform(self, protections: List[ProtectionModel]) -> Dict[str, Any]:
-        """Get analytics breakdown by platform"""
+        """
+Get analytics breakdown by platform"""
         # This would require violation data by platform
         # Placeholder implementation
         return {
@@ -738,7 +751,8 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _get_protection_trends(self, protections: List[ProtectionModel], 
                              time_period: str) -> Dict[str, Any]:
-        """Get protection trends over time"""
+        """
+Get protection trends over time"""
         # This would require time-series data analysis
         # Placeholder implementation
         return {
@@ -748,7 +762,8 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
         }
     
     def _validate_protection(self, protection: ProtectionModel) -> bool:
-        """Validate protection before operations"""
+        """
+Validate protection before operations"""
         if not protection.content_title or len(protection.content_title.strip()) == 0:
             raise ValueError("Content title is required")
         

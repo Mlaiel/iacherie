@@ -29,7 +29,8 @@ from .market_intelligence_agent import MarketIntelligenceAgent
 
 @dataclass
 class AnalyticsRequest:
-    """Unified analytics request for all 6 agents."""
+    """
+Unified analytics request for all 6 agents."""
     request_id: str
     agents_to_run: List[str] = field(default_factory=lambda: [
         'predictive_analytics', 'user_behavior', 'performance_metrics',
@@ -82,7 +83,8 @@ class AnalyticsAgentsRegistry:
         self._unified_cache = {}
         
     def _initialize_agents(self) -> Dict[str, Any]:
-        """Initialize all 6 analytics agents."""
+        """
+Initialize all 6 analytics agents."""
         agents = {}
         
         try:
@@ -350,7 +352,8 @@ class AnalyticsAgentsRegistry:
         agent_results: Dict[str, Any],
         insights: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate unified recommendations from all agents."""
+        """
+Generate unified recommendations from all agents."""
         return [
             {
                 'priority': 'high',
@@ -382,7 +385,8 @@ class AnalyticsAgentsRegistry:
         ]
     
     async def _generate_unified_alerts(self, agent_results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate unified alerts from all agents."""
+        """
+Generate unified alerts from all agents."""
         alerts = []
         
         # Check for critical alerts from each agent
@@ -443,7 +447,8 @@ class AnalyticsAgentsRegistry:
         agent_results: Dict[str, Any],
         insights: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate unified analytics summary."""
+        """
+Generate unified analytics summary."""
         return {
             'status': 'healthy',
             'agents_status': {
@@ -468,7 +473,8 @@ class AnalyticsAgentsRegistry:
         }
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Get real-time unified analytics dashboard."""
+        """
+Get real-time unified analytics dashboard."""
         dashboard_data = {
             'timestamp': datetime.now().isoformat(),
             'overall_health': 8.7,
@@ -522,14 +528,16 @@ class AnalyticsAgentsRegistry:
         return dashboard_data
     
     def get_available_agents(self) -> List[str]:
-        """Get list of available analytics agents."""
+        """
+Get list of available analytics agents."""
         return [
             agent_name for agent_name, agent in self.agents.items()
             if agent is not None
         ]
     
     def get_agent_status(self) -> Dict[str, str]:
-        """Get status of all analytics agents."""
+        """
+Get status of all analytics agents."""
         return {
             agent_name: 'available' if agent is not None else 'unavailable'
             for agent_name, agent in self.agents.items()
@@ -542,7 +550,8 @@ analytics_registry = AnalyticsAgentsRegistry()
 
 # Convenience functions for quick access
 async def run_full_analytics(request_id: str = None, **kwargs) -> AnalyticsResult:
-    """Run full analytics across all 6 agents."""
+    """
+Run full analytics across all 6 agents."""
     import uuid
     if not request_id:
         request_id = str(uuid.uuid4())
@@ -552,10 +561,12 @@ async def run_full_analytics(request_id: str = None, **kwargs) -> AnalyticsResul
 
 
 async def get_analytics_dashboard() -> Dict[str, Any]:
-    """Get unified real-time analytics dashboard."""
+    """
+Get unified real-time analytics dashboard."""
     return await analytics_registry.get_real_time_dashboard()
 
 
 def get_analytics_agents_status() -> Dict[str, str]:
-    """Get status of all analytics agents."""
+    """
+Get status of all analytics agents."""
     return analytics_registry.get_agent_status()

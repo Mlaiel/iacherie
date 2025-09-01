@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -32,7 +33,9 @@ Base = declarative_base()
 
 
 class PaymentStatus(str, Enum):
-    """Payment transaction status enumeration."""
+    """
+Payment transaction status enumeration."""
+
     PENDING = "pending"
     PROCESSING = "processing" 
     COMPLETED = "completed"
@@ -44,6 +47,7 @@ class PaymentStatus(str, Enum):
 
 class PayoutStatus(str, Enum):
     """Payout status enumeration."""
+
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -54,6 +58,7 @@ class PayoutStatus(str, Enum):
 
 class PaymentMethodType(str, Enum):
     """Payment method type enumeration."""
+
     BANK_TRANSFER = "bank_transfer"
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
@@ -65,6 +70,7 @@ class PaymentMethodType(str, Enum):
 
 class TransactionType(str, Enum):
     """Transaction type enumeration."""
+
     REVENUE = "revenue"
     PAYOUT = "payout"
     REFUND = "refund"
@@ -487,7 +493,8 @@ class PaymentTransactionCreate(BaseModel):
 
 
 class PayoutScheduleCreate(BaseModel):
-    """Pydantic model for creating payout schedules."""
+    """
+Pydantic model for creating payout schedules."""
     creator_id: str = Field(..., description="Creator account identifier")
     amount: Decimal = Field(..., ge=0, description="Payout amount")
     currency: str = Field("EUR", description="Currency code")
@@ -529,7 +536,8 @@ class RevenueAllocationCreate(BaseModel):
 
 # Response models for API
 class PaymentTransactionResponse(BaseModel):
-    """API response model for payment transactions."""
+    """
+API response model for payment transactions."""
     id: str
     creator_id: str
     content_id: Optional[str]
@@ -551,7 +559,8 @@ class PaymentTransactionResponse(BaseModel):
 
 
 class PayoutScheduleResponse(BaseModel):
-    """API response model for payout schedules."""
+    """
+API response model for payout schedules."""
     id: str
     creator_id: str
     amount: str

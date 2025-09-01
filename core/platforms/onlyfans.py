@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -23,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 class OnlyFansPlatform(PlatformBase):
-    """OnlyFans platform integration"""
+    """
+OnlyFans platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize OnlyFans platform"""
+        """
+Initialize OnlyFans platform"""
         super().__init__(config)
         self.api_base = "https://onlyfans.com/api2/v2"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -40,7 +43,8 @@ class OnlyFansPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with OnlyFans"""
+        """
+Authenticate with OnlyFans"""
         try:
             # OnlyFans uses cookie-based authentication
             cookie = self.config.credentials.get('cookie')
@@ -84,7 +88,8 @@ class OnlyFansPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to OnlyFans API"""
+        """
+Make authenticated request to OnlyFans API"""
         try:
             session = await self._get_session()
             

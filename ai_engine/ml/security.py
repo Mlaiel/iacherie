@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive security capabilities for AI/ML systems including
 adversarial defense, model watermarking, and security monitoring.
 """
+
 import logging
 import json
 import os
@@ -22,7 +23,9 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class ThreatType(Enum):
-    """Types of AI/ML security threats"""
+    """
+Types of AI/ML security threats"""
+
     ADVERSARIAL_EXAMPLE = "adversarial_example"
     MODEL_INVERSION = "model_inversion"
     MEMBERSHIP_INFERENCE = "membership_inference"
@@ -33,6 +36,7 @@ class ThreatType(Enum):
 
 class DefenseType(Enum):
     """Types of defense mechanisms"""
+
     ADVERSARIAL_TRAINING = "adversarial_training"
     GRADIENT_MASKING = "gradient_masking"
     INPUT_PREPROCESSING = "input_preprocessing"
@@ -42,6 +46,7 @@ class DefenseType(Enum):
 
 class SecurityLevel(Enum):
     """Security protection levels"""
+
     BASIC = "basic"
     ENHANCED = "enhanced"
     MAXIMUM = "maximum"
@@ -59,7 +64,8 @@ class SecurityConfig:
 
 @dataclass
 class ThreatDetection:
-    """Threat detection result"""
+    """
+Threat detection result"""
     threat_type: ThreatType
     confidence: float
     severity: str
@@ -68,7 +74,8 @@ class ThreatDetection:
     mitigation_applied: bool
 
 class ModelSecurity:
-    """Main model security orchestrator"""
+    """
+Main model security orchestrator"""
     
     def __init__(self, config: SecurityConfig):
         self.config = config
@@ -275,7 +282,8 @@ class ModelSecurity:
         return np.random.random() * 0.3  # Low score for non-array data
     
     def _feature_analysis(self, input_data: Any) -> float:
-        """Perform feature analysis for adversarial detection"""
+        """
+Perform feature analysis for adversarial detection"""
         # Simplified feature analysis
         if isinstance(input_data, np.ndarray):
             # Check for unusual feature patterns
@@ -289,7 +297,8 @@ class ModelSecurity:
         return np.random.random() * 0.4  # Moderate score for non-array data
     
     def _log_security_event(self, event_type: str, details: Dict[str, Any]):
-        """Log security event"""
+        """
+Log security event"""
         event = {
             "event_type": event_type,
             "timestamp": datetime.utcnow().isoformat(),

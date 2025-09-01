@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, List, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,7 +23,9 @@ from datetime import datetime, timedelta
 
 
 class TakedownType(str, Enum):
-    """Types of takedown procedures."""
+    """
+Types of takedown procedures."""
+
     DMCA = "dmca"
     EU_COPYRIGHT = "eu_copyright"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -33,6 +36,7 @@ class TakedownType(str, Enum):
 
 class TakedownStatus(str, Enum):
     """Status of takedown requests."""
+
     PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -47,6 +51,7 @@ class TakedownStatus(str, Enum):
 
 class PlatformType(str, Enum):
     """Supported platforms for takedown procedures."""
+
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
     INSTAGRAM = "instagram"
@@ -63,6 +68,7 @@ class PlatformType(str, Enum):
 
 class LegalJurisdiction(str, Enum):
     """Legal jurisdictions for takedown procedures."""
+
     US = "us"
     EU = "eu"
     UK = "uk"
@@ -255,7 +261,8 @@ class TakedownConfig:
         self._load_from_environment()
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize default platform configurations."""
+        """
+Initialize default platform configurations."""
         platform_defaults = {
             PlatformType.YOUTUBE: {
                 "processing_time_hours": 24,
@@ -392,7 +399,8 @@ Sincerely,
         self.templates[template.template_id] = template
     
     def enable_platform(self, platform: PlatformType) -> None:
-        """Enable takedown for specific platform."""
+        """
+Enable takedown for specific platform."""
         if platform in self.platforms:
             self.platforms[platform].enabled = True
         else:
@@ -400,16 +408,19 @@ Sincerely,
             self.platforms[platform] = config
     
     def disable_platform(self, platform: PlatformType) -> None:
-        """Disable takedown for specific platform."""
+        """
+Disable takedown for specific platform."""
         if platform in self.platforms:
             self.platforms[platform].enabled = False
     
     def get_enabled_platforms(self) -> List[PlatformType]:
-        """Get list of enabled platforms."""
+        """
+Get list of enabled platforms."""
         return [platform for platform, config in self.platforms.items() if config.enabled]
     
     def should_auto_takedown(self, similarity_score: float, content_value: float = 0.0) -> bool:
-        """Determine if content should be automatically taken down."""
+        """
+Determine if content should be automatically taken down."""
         if not self.auto_takedown_enabled:
             return False
         
@@ -424,7 +435,8 @@ Sincerely,
     
     def should_escalate(self, status: TakedownStatus, days_elapsed: int, 
                        rejection_count: int = 0) -> bool:
-        """Determine if takedown should be escalated."""
+        """
+Determine if takedown should be escalated."""
         if not self.escalation.enable_escalation:
             return False
         
@@ -451,7 +463,8 @@ Sincerely,
         return None
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
+        """
+Validate current configuration and return any issues."""
         issues = []
         
         # Validate general settings

@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Optional, List, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,9 @@ from pydantic import BaseModel, validator
 
 
 class ContentType(str, Enum):
-    """Supported content types for fingerprinting"""
+    """
+Supported content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image" 
@@ -56,6 +59,7 @@ class FingerprintAlgorithm(str, Enum):
 
 class CacheStorageMode(str, Enum):
     """Storage modes for fingerprint data"""
+
     MEMORY_ONLY = "memory_only"
     PERSISTENT = "persistent"  
     HYBRID = "hybrid"
@@ -78,7 +82,8 @@ class FingerprintCacheSettings:
 
 @dataclass
 class ContentFingerprintCacheConfig:
-    """Complete configuration for content fingerprint caching"""
+    """
+Complete configuration for content fingerprint caching"""
     
     # Cache identification
     cache_name: str = "content_fingerprints"
@@ -179,26 +184,30 @@ class ContentFingerprintCacheConfig:
 
 
 class FingerprintCacheManager:
-    """Manager for fingerprint cache operations"""
+    """
+Manager for fingerprint cache operations"""
     
     def __init__(self, config: ContentFingerprintCacheConfig):
         self.config = config
         self._performance_metrics = {}
     
     def generate_content_hash(self, content_data: bytes, content_type: ContentType) -> str:
-        """Generate consistent hash for content identification"""
+        """
+Generate consistent hash for content identification"""
         hasher = hashlib.sha256()
         hasher.update(content_type.value.encode())
         hasher.update(content_data)
         return hasher.hexdigest()
     
     def validate_fingerprint_size(self, fingerprint_data: bytes, content_type: ContentType) -> bool:
-        """Validate fingerprint size against content type limits"""
+        """
+Validate fingerprint size against content type limits"""
         settings = self.config.get_settings_for_content_type(content_type)
         return len(fingerprint_data) <= settings.max_fingerprint_size
     
     def get_cache_metrics(self) -> Dict[str, Any]:
-        """Get current cache performance metrics"""
+        """
+Get current cache performance metrics"""
         return {
             "cache_size_mb": self._performance_metrics.get("cache_size_mb", 0),
             "hit_rate": self._performance_metrics.get("hit_rate", 0.0),

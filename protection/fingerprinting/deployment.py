@@ -5,13 +5,14 @@ Enterprise deployment system with container orchestration, load balancing,
 and production-ready infrastructure management for content fingerprinting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import json
@@ -46,7 +47,9 @@ from .models import ContentType
 logger = logging.getLogger(__name__)
 
 class DeploymentMode(str, Enum):
-    """Deployment modes."""
+    """
+Deployment modes."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -54,6 +57,7 @@ class DeploymentMode(str, Enum):
 
 class ScalingStrategy(str, Enum):
     """Auto-scaling strategies."""
+
     MANUAL = "manual"
     CPU_BASED = "cpu_based"
     QUEUE_BASED = "queue_based"
@@ -61,6 +65,7 @@ class ScalingStrategy(str, Enum):
 
 class LoadBalancingStrategy(str, Enum):
     """Load balancing strategies."""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED = "weighted"

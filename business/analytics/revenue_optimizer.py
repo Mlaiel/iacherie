@@ -7,6 +7,7 @@ monetization insights, and predictive revenue modeling for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger(__name__)
 
 class RevenueStream(Enum):
-    """Different revenue streams for content creators"""
+    """
+Different revenue streams for content creators"""
+
     SPONSORSHIPS = "sponsorships"
     MERCHANDISE = "merchandise"
     SUBSCRIPTIONS = "subscriptions"
@@ -40,6 +43,7 @@ class RevenueStream(Enum):
 
 class RevenueCategory(Enum):
     """Revenue categorization for analysis"""
+
     DIRECT = "direct"
     INDIRECT = "indirect"
     RECURRING = "recurring"
@@ -48,6 +52,7 @@ class RevenueCategory(Enum):
 
 class OptimizationStrategy(Enum):
     """Revenue optimization strategies"""
+
     PRICE_OPTIMIZATION = "price_optimization"
     AUDIENCE_SEGMENTATION = "audience_segmentation"
     CONTENT_MONETIZATION = "content_monetization"
@@ -73,7 +78,8 @@ class RevenueAnalysis:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation"""
+    """
+Revenue optimization recommendation"""
     optimization_id: str
     creator_id: str
     strategy: OptimizationStrategy
@@ -101,7 +107,8 @@ class RevenueOptimizationEngine:
         self.optimization_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize revenue optimization engine"""
+        """
+Initialize revenue optimization engine"""
         try:
             await self._setup_database_tables()
             await self._load_historical_data()
@@ -166,7 +173,8 @@ class RevenueOptimizationEngine:
             """)
 
     async def _load_historical_data(self) -> None:
-        """Load historical revenue data for model training"""
+        """
+Load historical revenue data for model training"""
         async with self.db_pool.acquire() as conn:
             historical_data = await conn.fetch("""
                 SELECT creator_id, revenue_stream, amount, transaction_date, metadata
@@ -180,7 +188,8 @@ class RevenueOptimizationEngine:
                 await self._train_revenue_models(df)
 
     async def _train_revenue_models(self, df: pd.DataFrame) -> None:
-        """Train machine learning models with historical revenue data"""
+        """
+Train machine learning models with historical revenue data"""
         try:
             # Prepare features for revenue prediction
             df['month'] = pd.to_datetime(df['transaction_date']).dt.month
@@ -215,7 +224,8 @@ class RevenueOptimizationEngine:
         pass
 
     async def analyze_revenue_comprehensive(self, creator_id: str, period_days: int = 30) -> RevenueAnalysis:
-        """Perform comprehensive revenue analysis with AI insights"""
+        """
+Perform comprehensive revenue analysis with AI insights"""
         try:
             period_end = datetime.now()
             period_start = period_end - timedelta(days=period_days)
@@ -483,7 +493,8 @@ class RevenueOptimizationEngine:
         return float(seasonality_strength)
 
     async def _identify_optimization_opportunities(self, creator_id: str, revenue_by_stream: Dict, conversion_rates: Dict, profitability_metrics: Dict) -> List[str]:
-        """Identify revenue optimization opportunities using AI analysis"""
+        """
+Identify revenue optimization opportunities using AI analysis"""
         opportunities = []
         
         try:

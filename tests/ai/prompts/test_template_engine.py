@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Template Engine Tests
+"""
+Advanced Template Engine Tests
 Ultra-professional test suite for the Template Engine system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -43,11 +46,13 @@ from ai.prompts.template_engine import (
 
 
 class TestTemplateEngine:
-    """Ultra-comprehensive test suite for TemplateEngine"""
+    """
+Ultra-comprehensive test suite for TemplateEngine"""
     
     @pytest.fixture
     async def template_engine(self):
-        """Create a fresh TemplateEngine instance for each test"""
+        """
+Create a fresh TemplateEngine instance for each test"""
         engine = TemplateEngine()
         await engine.initialize()
         yield engine
@@ -55,7 +60,8 @@ class TestTemplateEngine:
     
     @pytest.fixture
     def sample_template_variables(self):
-        """Create sample template variables for testing"""
+        """
+Create sample template variables for testing"""
         return [
             TemplateVariable(
                 name="user_name",
@@ -125,7 +131,8 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_engine_configuration(self, template_engine):
-        """Test TemplateEngine configuration"""
+        """
+Test TemplateEngine configuration"""
         config = await template_engine.get_configuration()
         assert config is not None
         assert "variable_syntax" in config

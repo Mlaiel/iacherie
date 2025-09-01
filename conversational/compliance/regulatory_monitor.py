@@ -5,8 +5,9 @@ including real-time regulatory updates, compliance requirement tracking, and pol
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -20,7 +21,9 @@ from ..integrations.regulatory_apis import RegulatoryAPIClient
 
 
 class RegulatoryFramework(Enum):
-    """Major regulatory frameworks"""
+    """
+Major regulatory frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
@@ -35,6 +38,7 @@ class RegulatoryFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIAL_COMPLIANCE = "partial_compliance"
@@ -44,6 +48,7 @@ class ComplianceStatus(Enum):
 
 class RegulatoryRequirementType(Enum):
     """Types of regulatory requirements"""
+
     DATA_PROTECTION = "data_protection"
     CONTENT_MODERATION = "content_moderation"
     TRANSPARENCY = "transparency"
@@ -56,6 +61,7 @@ class RegulatoryRequirementType(Enum):
 
 class Jurisdiction(Enum):
     """Regulatory jurisdictions"""
+
     EU = "eu"
     US = "us"
     UK = "uk"
@@ -89,7 +95,8 @@ class RegulatoryRequirement:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
+    """
+Compliance assessment result"""
     requirement_id: str
     status: ComplianceStatus
     compliance_score: float
@@ -104,7 +111,8 @@ class ComplianceAssessment:
 
 @dataclass
 class RegulatoryUpdate:
-    """Regulatory update notification"""
+    """
+Regulatory update notification"""
     update_id: str
     framework: RegulatoryFramework
     jurisdiction: Jurisdiction
@@ -120,7 +128,8 @@ class RegulatoryUpdate:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance report"""
+    """
+Comprehensive compliance report"""
     report_id: str
     reporting_period: Tuple[datetime, datetime]
     overall_compliance_score: float
@@ -198,7 +207,8 @@ class RegulatoryMonitor:
         }
     
     async def _initialize_regulatory_data(self) -> None:
-        """Initialize regulatory requirements and assessment data"""
+        """
+Initialize regulatory requirements and assessment data"""
         try:
             # Load regulatory requirements from database
             requirements_data = await self.db_manager.fetch_all(
@@ -1148,5 +1158,6 @@ class RegulatoryMonitor:
         return [framework.value for framework in RegulatoryFramework]
     
     def get_monitored_jurisdictions(self) -> List[str]:
-        """Get list of monitored jurisdictions"""
+        """
+Get list of monitored jurisdictions"""
         return [jurisdiction.value for jurisdiction in self.monitored_frameworks.keys()]

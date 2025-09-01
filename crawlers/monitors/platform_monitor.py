@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import aiohttp
@@ -39,7 +40,9 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Platform types for monitoring."""
+    """
+Platform types for monitoring."""
+
     SOCIAL_MEDIA = "social_media"
     STREAMING = "streaming"
     CONTENT_SHARING = "content_sharing"
@@ -51,6 +54,7 @@ class PlatformType(Enum):
 
 class PlatformStatus(Enum):
     """Platform operational status."""
+
     OPERATIONAL = "operational"
     DEGRADED = "degraded"
     PARTIAL_OUTAGE = "partial_outage"
@@ -60,6 +64,7 @@ class PlatformStatus(Enum):
 
 class ServiceHealth(Enum):
     """Service health status."""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -67,6 +72,7 @@ class ServiceHealth(Enum):
 
 class APIEndpointStatus(Enum):
     """API endpoint status."""
+
     AVAILABLE = "available"
     SLOW = "slow"
     TIMEOUT = "timeout"
@@ -90,7 +96,8 @@ class PlatformInfo:
 
 @dataclass
 class PlatformHealthCheck:
-    """Platform health check result."""
+    """
+Platform health check result."""
     platform_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     status: PlatformStatus = PlatformStatus.UNKNOWN
@@ -104,7 +111,8 @@ class PlatformHealthCheck:
 
 @dataclass
 class PlatformIncident:
-    """Platform incident record."""
+    """
+Platform incident record."""
     incident_id: str
     platform_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -136,7 +144,8 @@ class PlatformMonitor(MonitorEngine):
         self._initialize_thresholds()
     
     def _initialize_platforms(self) -> None:
-        """Initialize platform configurations."""
+        """
+Initialize platform configurations."""
         self.platforms = {
             "spotify": PlatformInfo(
                 platform_id="spotify",
@@ -307,7 +316,8 @@ class PlatformMonitor(MonitorEngine):
             await self._process_platform_event(event)
     
     async def _process_platform_event(self, event: Dict[str, Any]) -> None:
-        """Process individual platform event."""
+        """
+Process individual platform event."""
         try:
             event_type = event.get("type", "")
             platform_id = event.get("platform_id", "")
@@ -576,7 +586,8 @@ class PlatformMonitor(MonitorEngine):
         await self._create_platform_incident(platform_id, PlatformStatus.MAJOR_OUTAGE)
     
     async def _process_quota_exceeded_event(self, event: Dict[str, Any], platform_id: str) -> None:
-        """Process API quota exceeded event."""
+        """
+Process API quota exceeded event."""
         await self.trigger_alert("api_quota_exceeded", {
             "platform_id": platform_id,
             "severity": "critical"
@@ -605,7 +616,8 @@ class PlatformMonitor(MonitorEngine):
         pass
     
     async def _monitor_api_quotas(self) -> None:
-        """Monitor API quota usage across platforms."""
+        """
+Monitor API quota usage across platforms."""
         while True:
             try:
                 # Check API quota usage

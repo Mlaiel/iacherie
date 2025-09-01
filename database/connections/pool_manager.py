@@ -11,6 +11,7 @@ Manages connection pooling across all database systems:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Tuple
@@ -23,7 +24,9 @@ from .metrics import ConnectionMetrics
 
 
 class PoolType(Enum):
-    """Connection pool types"""
+    """
+Connection pool types"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -79,7 +82,8 @@ class ConnectionPoolManager:
         self.history_window = timedelta(minutes=15)
     
     async def initialize(self, handlers: Dict[str, Any]) -> None:
-        """Initialize pool manager with database handlers"""
+        """
+Initialize pool manager with database handlers"""
         self.handlers = handlers
         
         # Initialize default configurations
@@ -283,7 +287,8 @@ class ConnectionPoolManager:
         return self.pool_configs.get(db_type)
     
     def set_pool_config(self, db_type: str, config: PoolConfig) -> None:
-        """Set pool configuration for database type"""
+        """
+Set pool configuration for database type"""
         self.pool_configs[db_type] = config
         self.logger.info(f"Updated pool configuration for {db_type}")
     
@@ -294,7 +299,8 @@ class ConnectionPoolManager:
         return self.pool_stats.copy()
     
     def get_load_trends(self, db_type: str, hours: int = 1) -> Dict[str, Any]:
-        """Get load trends for a database type"""
+        """
+Get load trends for a database type"""
         if db_type not in self.load_history:
             return {}
         

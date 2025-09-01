@@ -28,6 +28,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -68,7 +69,9 @@ from .exceptions import QualityError, UnsupportedFormatError, ComplianceError
 
 
 class QualityMetric(str, Enum):
-    """Comprehensive quality assessment metrics for all content types"""
+    """
+Comprehensive quality assessment metrics for all content types"""
+
     TECHNICAL_QUALITY = "technical_quality"
     VISUAL_QUALITY = "visual_quality"
     AUDIO_QUALITY = "audio_quality"
@@ -131,6 +134,7 @@ class CreatorQualityMetric(str, Enum):
 
 class QualityLevel(str, Enum):
     """Advanced quality assessment levels with industry standards"""
+
     EXCEPTIONAL = "exceptional"     # 95-100% - Industry leading
     EXCELLENT = "excellent"         # 85-94% - Professional grade
     GOOD = "good"                  # 75-84% - Above average
@@ -142,6 +146,7 @@ class QualityLevel(str, Enum):
 
 class ContentType(str, Enum):
     """Comprehensive content types for quality assessment"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -161,6 +166,7 @@ class ContentType(str, Enum):
 
 class EnhancementType(str, Enum):
     """Types of quality enhancement available"""
+
     AUTOMATIC = "automatic"        # AI-powered automatic enhancement
     GUIDED = "guided"             # Step-by-step guided improvement
     MANUAL = "manual"             # Manual recommendations only
@@ -192,7 +198,8 @@ class QualityAssessment:
 
 @dataclass
 class EnhancementRecommendation:
-    """Advanced enhancement recommendation with implementation details"""
+    """
+Advanced enhancement recommendation with implementation details"""
     recommendation_id: str
     priority: str  # 'critical', 'high', 'medium', 'low'
     category: str
@@ -212,7 +219,8 @@ class EnhancementRecommendation:
 
 @dataclass
 class QualityRequest:
-    """Enterprise-grade quality assessment request with comprehensive configuration"""
+    """
+Enterprise-grade quality assessment request with comprehensive configuration"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -254,7 +262,8 @@ class ComplianceStatus:
 
 @dataclass
 class QualityResult:
-    """Comprehensive result of quality assessment and enhancement with actionable insights"""
+    """
+Comprehensive result of quality assessment and enhancement with actionable insights"""
     assessment_id: str
     creator_id: str
     creator_type: str
@@ -669,7 +678,8 @@ class QualityController:
         request: QualityRequest,
         session: AsyncSession
     ) -> QualityAssessment:
-        """Assess specific quality metric"""
+        """
+Assess specific quality metric"""
         
         if metric == QualityMetric.TECHNICAL_QUALITY:
             return await self._assess_technical_quality(content_data, request)
@@ -928,7 +938,8 @@ class QualityController:
             return QualityLevel.CRITICAL
     
     def _load_quality_standards(self) -> Dict[str, Dict[str, float]]:
-        """Load quality standards for different platforms"""
+        """
+Load quality standards for different platforms"""
         return {
             'youtube': {
                 'technical_quality': 0.85,
@@ -952,7 +963,8 @@ class QualityController:
         }
     
     def _load_benchmark_data(self) -> Dict[str, float]:
-        """Load industry benchmark data for quality metrics"""
+        """
+Load industry benchmark data for quality metrics"""
         return {
             'technical_quality': 0.8,
             'visual_quality': 0.85,
@@ -967,7 +979,8 @@ class QualityController:
         }
     
     def _initialize_enhancement_algorithms(self) -> Dict[str, Any]:
-        """Initialize quality enhancement algorithms"""
+        """
+Initialize quality enhancement algorithms"""
         return {
             'visual_enhancement': {
                 'brightness_adjustment': True,
@@ -1010,7 +1023,8 @@ class QualityController:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Load content data from storage"""
+        """
+Load content data from storage"""
         # Implementation would load from database/storage
         return {
             'id': content_id,
@@ -1032,6 +1046,7 @@ class QualityController:
         recommendations: List[Dict[str, Any]],
         session: AsyncSession
     ) -> None:
-        """Store quality assessment results in database"""
+        """
+Store quality assessment results in database"""
         # Implementation would store in database
         pass

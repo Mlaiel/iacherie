@@ -4,7 +4,7 @@
 Advanced real-time monitoring system for content violation detection and alerting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -30,6 +30,7 @@ This module provides:
 - Multi-channel notification delivery
 - Advanced threat intelligence integration
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Set
@@ -47,7 +48,9 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -56,6 +59,7 @@ class AlertSeverity(Enum):
 
 class ViolationType(Enum):
     """Types of violations detected."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -66,6 +70,7 @@ class ViolationType(Enum):
 
 class NotificationChannel(Enum):
     """Notification delivery channels."""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -76,6 +81,7 @@ class NotificationChannel(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring system status."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     MAINTENANCE = "maintenance"
@@ -102,7 +108,8 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringRule:
-    """Rule for monitoring and alerting."""
+    """
+Rule for monitoring and alerting."""
     rule_id: str
     rule_name: str
     description: str
@@ -117,7 +124,8 @@ class MonitoringRule:
 
 @dataclass
 class NotificationTemplate:
-    """Template for notifications."""
+    """
+Template for notifications."""
     template_id: str
     channel: NotificationChannel
     severity: AlertSeverity
@@ -128,7 +136,8 @@ class NotificationTemplate:
 
 @dataclass
 class EscalationPolicy:
-    """Escalation policy for alerts."""
+    """
+Escalation policy for alerts."""
     policy_id: str
     name: str
     levels: List[Dict[str, Any]]
@@ -138,14 +147,16 @@ class EscalationPolicy:
     active: bool
 
 class WebSocketManager:
-    """Manages WebSocket connections for real-time updates."""
+    """
+Manages WebSocket connections for real-time updates."""
     
     def __init__(self):
         self.connections: Set[WebSocketServerProtocol] = set()
         self.subscriptions: Dict[str, Set[WebSocketServerProtocol]] = defaultdict(set)
     
     def add_connection(self, websocket: WebSocketServerProtocol):
-        """Add new WebSocket connection."""
+        """
+Add new WebSocket connection."""
         self.connections.add(websocket)
         logger.info(f"WebSocket connection added: {websocket.remote_address}")
     
@@ -169,7 +180,8 @@ class WebSocketManager:
         self.subscriptions[topic].discard(websocket)
     
     async def broadcast_to_all(self, message: Dict[str, Any]):
-        """Broadcast message to all connected clients."""
+        """
+Broadcast message to all connected clients."""
         if not self.connections:
             return
         
@@ -220,7 +232,8 @@ class NotificationService:
         self._load_notification_templates()
     
     def _load_notification_templates(self):
-        """Load notification templates."""
+        """
+Load notification templates."""
         self.templates = {
             'copyright_violation_email': NotificationTemplate(
                 template_id='copyright_violation_email',
@@ -349,7 +362,8 @@ class AlertEngine:
         self.active_alerts = {}
     
     def add_monitoring_rule(self, rule: MonitoringRule):
-        """Add new monitoring rule."""
+        """
+Add new monitoring rule."""
         self.monitoring_rules[rule.rule_id] = rule
         logger.info(f"Monitoring rule added: {rule.rule_name}")
     
@@ -423,7 +437,8 @@ class AlertEngine:
         return True
     
     async def _create_alert(self, violation_data: Dict[str, Any], rule: MonitoringRule) -> ViolationAlert:
-        """Create violation alert."""
+        """
+Create violation alert."""
         alert_id = f"alert_{rule.rule_id}_{int(datetime.now().timestamp())}"
         
         # Calculate recommended actions
@@ -504,7 +519,8 @@ class AlertEngine:
         return impact
     
     async def _is_in_cooldown(self, rule_id: str, violation_data: Dict[str, Any]) -> bool:
-        """Check if rule is in cooldown period."""
+        """
+Check if rule is in cooldown period."""
         rule = self.monitoring_rules.get(rule_id)
         if not rule or rule.cooldown_minutes <= 0:
             return False
@@ -524,7 +540,8 @@ class AlertEngine:
         return False
     
     async def _send_rule_notifications(self, alert: ViolationAlert, rule: MonitoringRule):
-        """Send notifications for rule-triggered alert."""
+        """
+Send notifications for rule-triggered alert."""
         for channel in rule.notification_channels:
             try:
                 template_id = f"{alert.violation_type.value}_{channel.value}"
@@ -820,7 +837,8 @@ class RealtimeViolationMonitor:
         }
     
     async def shutdown(self):
-        """Gracefully shutdown monitoring system."""
+        """
+Gracefully shutdown monitoring system."""
         try:
             self.status = MonitoringStatus.MAINTENANCE
             

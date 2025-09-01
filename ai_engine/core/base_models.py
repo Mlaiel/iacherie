@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import asyncio
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -32,7 +33,9 @@ from .exceptions import ModelError, ValidationError
 
 
 class ModelType(Enum):
-    """Enumeration of supported AI model types"""
+    """
+Enumeration of supported AI model types"""
+
     AUDIO_MODEL = "audio_model"
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_MODEL = "video_model"
@@ -57,6 +60,7 @@ class ModelType(Enum):
 
 class ModelProvider(Enum):
     """Enumeration of model providers"""
+
     LOCAL = "local"
     CLOUD = "cloud"
     GPU = "gpu"
@@ -66,6 +70,7 @@ class ModelProvider(Enum):
 
 class ModelStatus(Enum):
     """Model status enumeration"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     LOADING = "loading"
@@ -113,7 +118,8 @@ class ModelMetrics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate percentage"""
+        """
+Calculate success rate percentage"""
         if self.total_requests == 0:
             return 0.0
         return (self.successful_requests / self.total_requests) * 100
@@ -121,7 +127,8 @@ class ModelMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Standard result structure for AI model processing"""
+    """
+Standard result structure for AI model processing"""
     success: bool
     data: Any
     confidence: float = 0.0
@@ -136,7 +143,8 @@ class BaseAIModel(ABC):
     """Abstract base class for all AI models"""
     
     def __init__(self, config: ModelConfig):
-        """Initialize base model with configuration"""
+        """
+Initialize base model with configuration"""
         self.config = config
         self.model_type = config.model_type
         self.provider = config.provider
@@ -153,30 +161,36 @@ class BaseAIModel(ABC):
     
     @property
     def model_name(self) -> str:
-        """Get model name"""
+        """
+Get model name"""
         return self.config.name
     
     @abstractmethod
     async def connect(self) -> bool:
-        """Connect and initialize the model"""
+        """
+Connect and initialize the model"""
         pass
     
     @abstractmethod
     async def disconnect(self) -> bool:
-        """Disconnect and cleanup the model"""
+        """
+Disconnect and cleanup the model"""
         pass
     
     async def cleanup(self) -> None:
-        """Cleanup resources and disconnect"""
+        """
+Cleanup resources and disconnect"""
         await self.disconnect()
     
     @abstractmethod
     async def process(self, input_data: Any, **kwargs) -> Any:
-        """Process input data and return results"""
+        """
+Process input data and return results"""
         pass
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the model"""
+        """
+Perform health check on the model"""
         try:
             # Basic health check
             health_status = {
@@ -223,11 +237,13 @@ class BaseAIModel(ABC):
         self.metrics.error_rate = (self.metrics.failed_requests / self.metrics.total_requests) * 100
     
     async def get_metrics(self) -> ModelMetrics:
-        """Get current model metrics"""
+        """
+Get current model metrics"""
         return self.metrics
     
     async def reset_metrics(self) -> None:
-        """Reset model metrics"""
+        """
+Reset model metrics"""
         self.metrics = ModelMetrics(model_name=self.config.name)
     
     def __str__(self) -> str:
@@ -298,27 +314,32 @@ def create_audio_model(config: ModelConfig) -> AudioModel:
 
 
 def create_video_model(config: ModelConfig) -> VideoModel:
-    """Factory function to create video models"""
+    """
+Factory function to create video models"""
     return VideoModel(config)
 
 
 def create_image_model(config: ModelConfig) -> ImageModel:
-    """Factory function to create image models"""
+    """
+Factory function to create image models"""
     return ImageModel(config)
 
 
 def create_text_model(config: ModelConfig) -> TextModel:
-    """Factory function to create text models"""
+    """
+Factory function to create text models"""
     return TextModel(config)
 
 
 def create_protection_model(config: ModelConfig) -> ProtectionModel:
-    """Factory function to create protection models"""
+    """
+Factory function to create protection models"""
     return ProtectionModel(config)
 
 
 def create_business_intelligence_model(config: ModelConfig) -> BusinessIntelligenceModel:
-    """Factory function to create business intelligence models"""
+    """
+Factory function to create business intelligence models"""
     return BusinessIntelligenceModel(config)
 
 
@@ -335,7 +356,8 @@ MODEL_REGISTRY = {
 
 
 async def create_model(config: ModelConfig) -> BaseAIModel:
-    """Create a model instance based on configuration"""
+    """
+Create a model instance based on configuration"""
     if config.model_type not in MODEL_REGISTRY:
         raise ModelError(f"Unsupported model type: {config.model_type}")
     

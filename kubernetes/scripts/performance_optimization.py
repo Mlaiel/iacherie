@@ -2,6 +2,7 @@
 """Performance Optimization Manager
 Automated performance monitoring, analysis, and optimization for the IA Influencer Agent platform
 """
+
 import os
 import sys
 import time
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Optimization type enumeration"""
+    """
+Optimization type enumeration"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -41,6 +44,7 @@ class OptimizationType(Enum):
 
 class OptimizationStatus(Enum):
     """Optimization status enumeration"""
+
     PENDING = "pending"
     ANALYZING = "analyzing"
     OPTIMIZING = "optimizing"
@@ -62,7 +66,8 @@ class PerformanceMetric:
 
 @dataclass
 class OptimizationTask:
-    """Optimization task data class"""
+    """
+Optimization task data class"""
     id: str
     optimization_type: OptimizationType
     description: str
@@ -82,7 +87,8 @@ class PerformanceOptimizer:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize performance optimizer"""
+        """
+Initialize performance optimizer"""
         self.config_path = config_path or "/etc/optimization/config.yaml"
         self.optimization_tasks = {}
         self.metrics_history = []
@@ -1073,7 +1079,8 @@ class SystemMonitor:
     """System performance monitor"""
     
     def get_metrics(self) -> Dict[str, float]:
-        """Get system metrics"""
+        """
+Get system metrics"""
         try:
             return {
                 "cpu_usage": psutil.cpu_percent(interval=1),
@@ -1095,7 +1102,8 @@ class SystemMonitor:
             return 0.0
     
     def _get_network_errors(self) -> float:
-        """Get network error count"""
+        """
+Get network error count"""
         try:
             net_io = psutil.net_io_counters()
             if net_io:
@@ -1106,13 +1114,15 @@ class SystemMonitor:
 
 
 class DatabaseMonitor:
-    """Database performance monitor"""
+    """
+Database performance monitor"""
     
     def __init__(self, db_config: Dict[str, Any]):
         self.db_config = db_config
     
     def get_metrics(self) -> Dict[str, float]:
-        """Get database metrics"""
+        """
+Get database metrics"""
         try:
             conn = psycopg2.connect(**self.db_config)
             cur = conn.cursor()
@@ -1154,7 +1164,8 @@ class ApplicationMonitor:
     """Application performance monitor"""
     
     def get_metrics(self) -> Dict[str, float]:
-        """Get application metrics"""
+        """
+Get application metrics"""
         try:
             # This would integrate with application metrics
             return {

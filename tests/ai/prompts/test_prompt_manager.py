@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced PromptManager Tests
+"""
+Advanced PromptManager Tests
 Ultra-professional test suite for the PromptManager system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -43,11 +46,13 @@ from ai.prompts.prompt_manager import (
 
 
 class TestPromptManager:
-    """Ultra-comprehensive test suite for PromptManager"""
+    """
+Ultra-comprehensive test suite for PromptManager"""
     
     @pytest.fixture
     async def prompt_manager(self):
-        """Create a fresh PromptManager instance for each test"""
+        """
+Create a fresh PromptManager instance for each test"""
         manager = PromptManager()
         await manager.initialize()
         yield manager
@@ -55,7 +60,8 @@ class TestPromptManager:
     
     @pytest.fixture
     def sample_prompt_template(self):
-        """Create a sample prompt template for testing"""
+        """
+Create a sample prompt template for testing"""
         return PromptTemplate(
             template_id=str(uuid.uuid4()),
             name="Test Content Creation Prompt",
@@ -131,7 +137,8 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_prompt_manager_configuration(self, prompt_manager):
-        """Test PromptManager configuration settings"""
+        """
+Test PromptManager configuration settings"""
         config = prompt_manager.get_configuration()
         assert config is not None
         assert "max_template_size" in config

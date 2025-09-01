@@ -12,6 +12,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class AudienceSegment(str, Enum):
-    """Audience segmentation categories"""
+    """
+Audience segmentation categories"""
+
     DEMOGRAPHICS = "demographics"
     PSYCHOGRAPHICS = "psychographics"
     BEHAVIORAL = "behavioral"
@@ -45,6 +48,7 @@ class AudienceSegment(str, Enum):
 
 class AudienceAction(str, Enum):
     """Audience interaction types"""
+
     VIEW = "view"
     LIKE = "like"
     SHARE = "share"
@@ -60,6 +64,7 @@ class AudienceAction(str, Enum):
 
 class EngagementLevel(str, Enum):
     """Audience engagement levels"""
+
     SUPER_FAN = "super_fan"        # Top 5% most engaged
     HIGHLY_ENGAGED = "highly_engaged"  # Top 20% engaged
     REGULARLY_ENGAGED = "regularly_engaged"  # Regular interaction
@@ -69,6 +74,7 @@ class EngagementLevel(str, Enum):
 
 class PredictionType(str, Enum):
     """Audience prediction types"""
+
     CHURN_RISK = "churn_risk"
     ENGAGEMENT_PROPENSITY = "engagement_propensity"
     CONVERSION_LIKELIHOOD = "conversion_likelihood"

@@ -9,6 +9,7 @@ ATTENTION: Ce code fait partie de la propriété intellectuelle de Fahed Mlaiel.
 Toute reproduction, distribution, ou utilisation non autorisée est strictement interdite.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 from typing import Dict, Any
@@ -20,7 +21,8 @@ from .exceptions import CachingAgentError
 
 
 async def basic_cache_example():
-    """Demonstrate basic cache operations."""
+    """
+Demonstrate basic cache operations."""
     print("=== Basic Cache Operations Example ===")
     
     # Initialize cache manager with development config
@@ -288,18 +290,21 @@ class CacheTestSuite:
         self.cache_manager = None
     
     async def setup(self):
-        """Set up test environment."""
+        """
+Set up test environment."""
         config = DEVELOPMENT_CONFIG
         self.cache_manager = CachingManager(config)
         await self.cache_manager.initialize()
     
     async def teardown(self):
-        """Clean up test environment."""
+        """
+Clean up test environment."""
         if self.cache_manager:
             await self.cache_manager.shutdown()
     
     async def test_basic_operations(self):
-        """Test basic cache operations."""
+        """
+Test basic cache operations."""
         # Test set and get
         await self.cache_manager.set("test:key", {"value": "test"})
         result = await self.cache_manager.get("test:key")
@@ -373,13 +378,15 @@ async def run_tests():
 
 # Example of integrating with the IA-Influencer-Agent platform
 class IAInfluencerCacheIntegration:
-    """Integration example for IA-Influencer-Agent platform."""
+    """
+Integration example for IA-Influencer-Agent platform."""
     
     def __init__(self):
         self.cache_manager = None
     
     async def initialize(self):
-        """Initialize cache for IA-Influencer platform."""
+        """
+Initialize cache for IA-Influencer platform."""
         # Use audio processing configuration for this platform
         config = get_config_for_environment("audio_processing")
         self.cache_manager = CachingManager(config)

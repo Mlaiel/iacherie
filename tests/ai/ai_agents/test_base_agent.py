@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for BaseAIAgent Framework
+"""
+Comprehensive Tests for BaseAIAgent Framework
 
 Industrial-grade testing for the base AI agent framework, covering initialization,
 lifecycle management, task execution, performance monitoring, and error handling.
@@ -38,6 +40,7 @@ Project Team Specialties:
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
 """
+
 import pytest
 import sys
 import os
@@ -93,16 +96,19 @@ class TestableAIAgent(BaseAIAgent):
         self.task_execution_times = []
     
     async def _custom_initialize(self) -> None:
-        """Test implementation of custom initialization"""
+        """
+Test implementation of custom initialization"""
         await asyncio.sleep(0.1)  # Simulate initialization time
         self.initialized = True
 
     async def _custom_shutdown(self) -> None:
-        """Test implementation of custom shutdown"""
+        """
+Test implementation of custom shutdown"""
         self.shutdown_called = True
 
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Test implementation of task execution"""
+        """
+Test implementation of task execution"""
         start_time = time.time()
         task_type = task.context.get("task_type", "unknown")
         
@@ -189,7 +195,8 @@ class TestBaseAIAgent:
     
     @pytest.fixture
     def basic_config(self) -> AgentConfiguration:
-        """Basic agent configuration for testing"""
+        """
+Basic agent configuration for testing"""
         return AgentConfiguration(
             agent_id="test_agent_001",
             agent_name="Test AI Agent",
@@ -240,7 +247,8 @@ class TestBaseAIAgent:
         await agent.shutdown()
     
     def test_agent_configuration_creation(self, basic_config):
-        """Test agent configuration creation and validation"""
+        """
+Test agent configuration creation and validation"""
         # Test valid configuration
         assert basic_config.agent_id == "test_agent_001"
         assert basic_config.agent_name == "Test AI Agent"
@@ -290,7 +298,8 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_task_execution_success(self, test_agent):
-        """Test successful task execution"""
+        """
+Test successful task execution"""
         task = AgentTask(
             task_type="test_success",
             context={"task_type": "test_success", "test_data": "sample_value"},
@@ -457,7 +466,8 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_graceful_shutdown(self, basic_config):
-        """Test graceful shutdown process"""
+        """
+Test graceful shutdown process"""
         agent = TestableAIAgent(basic_config)
         await agent.initialize()
         
@@ -503,7 +513,8 @@ class TestBaseAIAgent:
         assert agent.metrics.success_rate == 80.0
     
     def test_agent_task_creation(self):
-        """Test agent task creation and properties"""
+        """
+Test agent task creation and properties"""
         task = AgentTask(
             task_type="test_task",
             context={"key": "value"},
@@ -540,7 +551,8 @@ class TestBaseAIAgent:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, basic_config):
-        """Test performance benchmarks"""
+        """
+Test performance benchmarks"""
         # Test initialization time
         config = AgentConfiguration(
             agent_id="perf_test_agent",
@@ -860,7 +872,8 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_retry_logic_with_exponential_backoff(self, test_agent):
-        """Test retry logic with exponential backoff"""
+        """
+Test retry logic with exponential backoff"""
         task = AgentTask(
             task_type="test_failure",
             context={"task_type": "test_failure"},

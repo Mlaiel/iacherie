@@ -8,7 +8,7 @@ Responsibility: Advanced real-time content monitoring, web crawling, and violati
 ===================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -27,6 +27,7 @@ MONITORING TECHNOLOGIES:
 ├── 🎵 Audio Detection (Chromaprint + Spectral Analysis)
 └── 🛡️ Violation Evidence (Screenshots + Metadata + Legal)
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
@@ -113,6 +114,7 @@ logger = logging.getLogger(__name__)
 
 class MonitoringMode(Enum):
     """Modes de monitoring disponibles"""
+
     REAL_TIME = "real_time"      # Monitoring en temps réel
     SCHEDULED = "scheduled"      # Monitoring programmé
     ON_DEMAND = "on_demand"      # Monitoring à la demande
@@ -120,6 +122,7 @@ class MonitoringMode(Enum):
 
 class ViolationType(Enum):
     """Types de violations détectés"""
+
     EXACT_MATCH = "exact_match"           # Correspondance exacte
     HIGH_SIMILARITY = "high_similarity"   # Haute similarité
     PARTIAL_MATCH = "partial_match"       # Correspondance partielle
@@ -128,6 +131,7 @@ class ViolationType(Enum):
 
 class PlatformType(Enum):
     """Plateformes supportées pour le monitoring"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -140,6 +144,7 @@ class PlatformType(Enum):
 
 class AlertSeverity(Enum):
     """Niveaux de sévérité des alertes"""
+
     CRITICAL = "critical"    # Violation flagrante
     HIGH = "high"           # Violation probable
     MEDIUM = "medium"       # Violation possible
@@ -214,7 +219,8 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringJob:
-    """Job de monitoring d'un contenu"""
+    """
+Job de monitoring d'un contenu"""
     job_id: str
     fingerprint_id: str
     content_type: str
@@ -266,7 +272,8 @@ class BaseMonitor(ABC):
         return self.metrics.copy()
 
 class WebCrawlerMonitor(BaseMonitor):
-    """Monitor basé sur le crawling web avancé"""
+    """
+Monitor basé sur le crawling web avancé"""
     
     def __init__(self, config: MonitoringConfig):
         super().__init__(config)
@@ -275,7 +282,8 @@ class WebCrawlerMonitor(BaseMonitor):
         self._initialize_crawler()
     
     def _initialize_crawler(self):
-        """Initialise les outils de crawling"""
+        """
+Initialise les outils de crawling"""
         if not SELENIUM_AVAILABLE:
             logger.warning("Selenium not available - web crawling limited")
             return
@@ -636,7 +644,8 @@ class WebCrawlerMonitor(BaseMonitor):
         return intersection / union
     
     def _determine_severity(self, similarity_score: float) -> AlertSeverity:
-        """Détermine la sévérité basée sur le score de similarité"""
+        """
+Détermine la sévérité basée sur le score de similarité"""
         if similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity_score >= 0.85:
@@ -649,7 +658,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return AlertSeverity.INFO
     
     def _determine_violation_type(self, similarity_score: float) -> ViolationType:
-        """Détermine le type de violation basé sur le score"""
+        """
+Détermine le type de violation basé sur le score"""
         if similarity_score >= 0.95:
             return ViolationType.EXACT_MATCH
         elif similarity_score >= 0.85:
@@ -660,7 +670,8 @@ class WebCrawlerMonitor(BaseMonitor):
             return ViolationType.UNAUTHORIZED_USE
     
     async def _collect_evidence(self, result: Dict[str, Any], job: MonitoringJob) -> List[str]:
-        """Collecte des preuves de violation"""
+        """
+Collecte des preuves de violation"""
         evidence_paths = []
         
         try:
@@ -732,7 +743,8 @@ class PlatformAPIMonitor(BaseMonitor):
         self._initialize_api_clients()
     
     def _initialize_api_clients(self):
-        """Initialise les clients d'API pour chaque plateforme"""
+        """
+Initialise les clients d'API pour chaque plateforme"""
         # Note: En production, les clés API seraient configurées via des variables d'environnement
         
         # YouTube Data API
@@ -882,12 +894,14 @@ class PlatformAPIMonitor(BaseMonitor):
         return []
     
     async def _monitor_spotify_api(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Monitoring Spotify via l'API officielle"""
+        """
+Monitoring Spotify via l'API officielle"""
         # Implémentation similaire à YouTube mais pour Spotify
         return []
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calcule la similarité entre deux textes (même que WebCrawlerMonitor)"""
+        """
+Calcule la similarité entre deux textes (même que WebCrawlerMonitor)"""
         if not text1 or not text2:
             return 0.0
         
@@ -906,7 +920,8 @@ class PlatformAPIMonitor(BaseMonitor):
         return intersection / union
     
     def _determine_severity(self, similarity_score: float) -> AlertSeverity:
-        """Détermine la sévérité basée sur le score de similarité"""
+        """
+Détermine la sévérité basée sur le score de similarité"""
         if similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity_score >= 0.85:
@@ -919,7 +934,8 @@ class PlatformAPIMonitor(BaseMonitor):
             return AlertSeverity.INFO
     
     async def stop_monitoring(self):
-        """Arrête le monitoring des APIs"""
+        """
+Arrête le monitoring des APIs"""
         self.is_running = False
         logger.info("Platform API monitoring stopped")
 
@@ -930,7 +946,8 @@ class ViolationDetector:
         self.config = config
         
     async def analyze_content(self, content_url: str, original_fingerprint: Dict[str, Any]) -> Optional[ViolationAlert]:
-        """Analyse un contenu détecté pour confirmer une violation"""
+        """
+Analyse un contenu détecté pour confirmer une violation"""
         try:
             # Téléchargement et analyse du contenu
             content_data = await self._download_content(content_url)
@@ -1031,7 +1048,8 @@ class ViolationDetector:
             return ViolationType.UNAUTHORIZED_USE
     
     def _determine_severity(self, similarity_score: float) -> AlertSeverity:
-        """Détermine la sévérité basée sur le score de similarité"""
+        """
+Détermine la sévérité basée sur le score de similarité"""
         if similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity_score >= 0.85:
@@ -1044,7 +1062,8 @@ class ViolationDetector:
             return AlertSeverity.INFO
 
 class AlertManager:
-    """Gestionnaire d'alertes multi-canal"""
+    """
+Gestionnaire d'alertes multi-canal"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -1052,7 +1071,8 @@ class AlertManager:
         self.is_processing = False
         
     async def send_alert(self, violation: ViolationAlert) -> bool:
-        """Envoie une alerte via tous les canaux configurés"""
+        """
+Envoie une alerte via tous les canaux configurés"""
         success = True
         
         try:

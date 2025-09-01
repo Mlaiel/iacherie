@@ -3,11 +3,12 @@
 Specialized agents for trend identification, analysis, and prediction.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in trend analysis, viral content prediction,
 market trend identification, and content timing optimization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -21,7 +22,8 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
+    """
+Trend analysis results"""
     trend_score: float
     trend_direction: str  # rising, stable, declining
     peak_prediction: datetime
@@ -34,7 +36,8 @@ class TrendAnalysis:
 
 @dataclass
 class ViralPrediction:
-    """Viral content prediction structure"""
+    """
+Viral content prediction structure"""
     content_id: str
     viral_probability: float
     predicted_reach: int
@@ -432,7 +435,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return trend_data
 
     def _calculate_trend_momentum(self, trend_item: Dict[str, Any]) -> float:
-        """Calculate trend momentum score"""
+        """
+Calculate trend momentum score"""
         growth_rate = trend_item.get('growth_rate', 0.5)
         mention_count = trend_item.get('mention_count', 1000)
         
@@ -454,7 +458,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(momentum, 1.0)
 
     def _predict_trend_direction(self, trend_item: Dict[str, Any]) -> str:
-        """Predict trend direction based on current data"""
+        """
+Predict trend direction based on current data"""
         growth_rate = trend_item.get('growth_rate', 0.5)
         
         if growth_rate > 0.7:
@@ -484,7 +489,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(viral_potential, 1.0)
 
     def _predict_trend_peak(self, trend_item: Dict[str, Any], momentum: float) -> datetime:
-        """Predict when trend will reach its peak"""
+        """
+Predict when trend will reach its peak"""
         growth_rate = trend_item.get('growth_rate', 0.5)
         
         # Higher momentum = earlier peak
@@ -500,7 +506,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return datetime.now() + timedelta(days=days_to_peak)
 
     def _estimate_trend_longevity(self, trend_item: Dict[str, Any], direction: str) -> int:
-        """Estimate how long trend will remain relevant"""
+        """
+Estimate how long trend will remain relevant"""
         trend_type = trend_item.get('type', 'general')
         
         # Different types have different longevities
@@ -539,7 +546,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return primary_segments[:3]  # Top 3 segments
 
     def _generate_content_opportunities(self, trend_item: Dict[str, Any], niche: str) -> List[str]:
-        """Generate content opportunities based on trend"""
+        """
+Generate content opportunities based on trend"""
         trend_name = trend_item.get('name', 'Unknown Trend')
         trend_type = trend_item.get('type', 'general')
         
@@ -634,7 +642,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return velocity_score
 
     def _analyze_share_rate(self, content_data: Dict[str, Any]) -> float:
-        """Analyze content share rate"""
+        """
+Analyze content share rate"""
         performance = content_data.get('performance', {})
         views = performance.get('views', 0)
         shares = performance.get('shares', 0)
@@ -648,7 +657,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(share_rate / 0.05, 1.0)
 
     def _analyze_platform_presence(self, content_data: Dict[str, Any]) -> float:
-        """Analyze cross-platform presence"""
+        """
+Analyze cross-platform presence"""
         platforms = content_data.get('platforms', [])
         
         # Score based on number of platforms
@@ -657,7 +667,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(platform_score, 1.0)
 
     async def _analyze_influencer_adoption(self, content_data: Dict[str, Any]) -> float:
-        """Analyze influencer adoption of content/trend"""
+        """
+Analyze influencer adoption of content/trend"""
         # Simulate influencer adoption analysis
         # In production, this would analyze actual influencer engagement
         
@@ -674,7 +685,8 @@ class TrendAnalystAgent(BaseAIAgent):
             return np.random.uniform(0.0, 0.3)
 
     def _assess_algorithm_alignment(self, content_data: Dict[str, Any]) -> float:
-        """Assess how well content aligns with platform algorithms"""
+        """
+Assess how well content aligns with platform algorithms"""
         performance = content_data.get('performance', {})
         content_features = content_data.get('features', {})
         
@@ -711,7 +723,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(score, 1.0)
 
     def _analyze_posting_timing(self, content_data: Dict[str, Any]) -> float:
-        """Analyze posting timing optimization"""
+        """
+Analyze posting timing optimization"""
         publish_time = content_data.get('published_at')
         
         if not publish_time:
@@ -734,7 +747,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return (hour_score + weekday_score) / 2
 
     def _assess_content_quality(self, content_data: Dict[str, Any]) -> float:
-        """Assess overall content quality"""
+        """
+Assess overall content quality"""
         features = content_data.get('features', {})
         
         quality_score = 0.5  # Base score
@@ -757,7 +771,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(quality_score, 1.0)
 
     def _predict_viral_reach(self, viral_score: float, content_data: Dict[str, Any]) -> int:
-        """Predict potential viral reach"""
+        """
+Predict potential viral reach"""
         current_followers = content_data.get('creator_followers', 1000)
         
         # Base reach multiplier based on viral score
@@ -775,7 +790,8 @@ class TrendAnalystAgent(BaseAIAgent):
         return predicted_reach
 
     def _calculate_optimal_viral_timing(self, content_data: Dict[str, Any]) -> datetime:
-        """Calculate optimal timing for viral content"""
+        """
+Calculate optimal timing for viral content"""
         # Consider current trends and audience behavior
         now = datetime.now()
         
@@ -795,7 +811,8 @@ class TrendAnalystAgent(BaseAIAgent):
 
     def _generate_amplification_strategies(self, viral_score: float,
                                          content_data: Dict[str, Any]) -> List[str]:
-        """Generate strategies to amplify viral potential"""
+        """
+Generate strategies to amplify viral potential"""
         strategies = []
         
         if viral_score > 0.6:

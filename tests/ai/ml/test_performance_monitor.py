@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Performance Monitor Tests - Enterprise Grade Performance & Metrics Test Suite
+"""
+Performance Monitor Tests - Enterprise Grade Performance & Metrics Test Suite
 
 Comprehensive tests for performance monitoring, system metrics tracking, 
 optimization analysis, resource utilization, and performance intelligence systems.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -64,7 +67,8 @@ from ai.ml.performance_monitor import (
 
 @dataclass
 class MockSystemMetrics:
-    """Mock system metrics for testing"""
+    """
+Mock system metrics for testing"""
     cpu_percent: float
     memory_percent: float  
     disk_io_read_mb: float
@@ -75,10 +79,12 @@ class MockSystemMetrics:
 
 
 class TestPerformanceMonitor:
-    """Tests for core performance monitoring functionality"""
+    """
+Tests for core performance monitoring functionality"""
     
     def test_init_performance_monitor(self):
-        """Test performance monitor initialization"""
+        """
+Test performance monitor initialization"""
         monitor = PerformanceMonitor(
             monitoring_interval=1.0,
             metrics_to_collect=["cpu", "memory", "disk", "network", "gpu"],
@@ -387,7 +393,8 @@ class TestModelPerformanceTracker:
     """Tests for ML model performance tracking"""
     
     def test_init_model_performance_tracker(self):
-        """Test model performance tracker initialization"""
+        """
+Test model performance tracker initialization"""
         tracker = ModelPerformanceTracker(
             track_training_metrics=True,
             track_inference_metrics=True,
@@ -403,7 +410,8 @@ class TestModelPerformanceTracker:
         assert tracker.resource_efficiency_tracking
 
     def test_training_performance_monitoring(self, training_session_data):
-        """Test ML training performance monitoring"""
+        """
+Test ML training performance monitoring"""
         tracker = ModelPerformanceTracker(track_training_metrics=True)
         
         if not training_session_data:
@@ -642,7 +650,8 @@ class TestMemoryProfiler:
     """Tests for memory profiling and optimization"""
     
     def test_init_memory_profiler(self):
-        """Test memory profiler initialization"""
+        """
+Test memory profiler initialization"""
         profiler = MemoryProfiler(
             enable_detailed_tracking=True,
             track_allocations=True,
@@ -656,7 +665,8 @@ class TestMemoryProfiler:
         assert profiler.profile_garbage_collection
 
     def test_memory_usage_profiling(self, memory_intensive_function):
-        """Test memory usage profiling for functions"""
+        """
+Test memory usage profiling for functions"""
         profiler = MemoryProfiler()
         
         # Mock memory-intensive function if not provided
@@ -809,7 +819,8 @@ class TestLoadTestRunner:
     """Tests for load testing and scalability analysis"""
     
     def test_init_load_test_runner(self):
-        """Test load test runner initialization"""
+        """
+Test load test runner initialization"""
         load_tester = LoadTestRunner(
             max_concurrent_users=1000,
             test_duration_minutes=30,
@@ -1047,7 +1058,8 @@ class TestPerformanceMonitorIntegration:
     
     @pytest.mark.slow
     def test_comprehensive_performance_monitoring_pipeline(self, temp_dir):
-        """Test complete performance monitoring pipeline"""
+        """
+Test complete performance monitoring pipeline"""
         # Initialize all components
         monitor = PerformanceMonitor(output_directory=str(temp_dir))
         model_tracker = ModelPerformanceTracker()

@@ -5,12 +5,13 @@ Comprehensive monetization system with AI-powered revenue optimization,
 multiple revenue streams, automated payouts, and financial analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -29,7 +30,9 @@ from backend.utils.financial_calculator import FinancialCalculator
 
 
 class RevenueStream(str, Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
     LICENSING_FEES = "licensing_fees"
@@ -44,6 +47,7 @@ class RevenueStream(str, Enum):
 
 class PayoutStatus(str, Enum):
     """Payout processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -54,6 +58,7 @@ class PayoutStatus(str, Enum):
 
 class MonetizationModel(str, Enum):
     """Monetization models"""
+
     CPM = "cpm"  # Cost per thousand impressions
     CPC = "cpc"  # Cost per click
     CPA = "cpa"  # Cost per acquisition
@@ -78,7 +83,8 @@ class RevenueMetrics:
 
 @dataclass
 class MonetizationConfiguration:
-    """Monetization configuration settings"""
+    """
+Monetization configuration settings"""
     campaign_id: str
     enabled_revenue_streams: List[RevenueStream]
     monetization_model: MonetizationModel

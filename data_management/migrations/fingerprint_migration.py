@@ -17,7 +17,7 @@ Technical Infrastructure:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
 ==================================================
@@ -38,6 +38,7 @@ Business Logic Flow:
 Content Upload → Fingerprint Extraction → Algorithm Migration → Vector Storage → 
 Search Index Update → Matching Optimization → Protection Registration → Monitoring Setup
 """
+
 import asyncio
 import logging
 import traceback
@@ -82,7 +83,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Fingerprint algorithm types for migration"""
+    """
+Fingerprint algorithm types for migration"""
+
     CHROMAPRINT = "chromaprint"
     MFCC = "mfcc"
     SPECTRAL_CENTROID = "spectral_centroid"
@@ -100,6 +103,7 @@ class FingerprintType(Enum):
 
 class FingerprintVersion(Enum):
     """Fingerprint algorithm versions"""
+
     V1_LEGACY = "v1.0"
     V2_ENHANCED = "v2.0"
     V3_NEURAL = "v3.0"
@@ -109,6 +113,7 @@ class FingerprintVersion(Enum):
 
 class FingerprintQuality(Enum):
     """Fingerprint quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -138,7 +143,8 @@ class FingerprintConfig:
 
 @dataclass
 class FingerprintData:
-    """Fingerprint data structure"""
+    """
+Fingerprint data structure"""
     fingerprint_id: str
     content_id: str
     fingerprint_type: FingerprintType
@@ -154,7 +160,8 @@ class FingerprintData:
 
 @dataclass
 class FingerprintMigrationResult:
-    """Result of fingerprint migration operation"""
+    """
+Result of fingerprint migration operation"""
     content_id: str
     success: bool
     original_fingerprints: List[FingerprintData] = field(default_factory=list)
@@ -167,14 +174,16 @@ class FingerprintMigrationResult:
 
 
 class AudioFingerprintExtractor:
-    """Advanced audio fingerprint extraction engine"""
+    """
+Advanced audio fingerprint extraction engine"""
     
     def __init__(self, config: FingerprintConfig):
         self.config = config
         self.redis_client = redis.Redis(host='localhost', port=6379, db=0)
     
     async def extract_audio_fingerprints(self, audio_path: Path, content_metadata: ContentMetadata) -> List[FingerprintData]:
-        """Extract comprehensive audio fingerprints using multiple algorithms"""
+        """
+Extract comprehensive audio fingerprints using multiple algorithms"""
         fingerprints = []
         
         try:
@@ -262,7 +271,8 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_mfcc(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract MFCC (Mel-Frequency Cepstral Coefficients) features"""
+        """
+Extract MFCC (Mel-Frequency Cepstral Coefficients) features"""
         start_time = datetime.now()
         
         # Extract MFCC features
@@ -314,7 +324,8 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_chroma(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract Chroma features for harmonic content analysis"""
+        """
+Extract Chroma features for harmonic content analysis"""
         start_time = datetime.now()
         
         # Extract chroma features
@@ -358,7 +369,8 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_spectral_features(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract spectral features for timbral analysis"""
+        """
+Extract spectral features for timbral analysis"""
         start_time = datetime.now()
         
         # Extract spectral features
@@ -400,7 +412,8 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_tonnetz(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract Tonnetz features for harmonic analysis"""
+        """
+Extract Tonnetz features for harmonic analysis"""
         start_time = datetime.now()
         
         # Extract tonnetz features
@@ -435,7 +448,8 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_zero_crossing_rate(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract Zero Crossing Rate features"""
+        """
+Extract Zero Crossing Rate features"""
         start_time = datetime.now()
         
         # Extract zero crossing rate
@@ -473,7 +487,8 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_neural_fingerprint(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract neural network-based fingerprint"""
+        """
+Extract neural network-based fingerprint"""
         start_time = datetime.now()
         
         # Simulated neural fingerprint extraction (would use trained model in production)
@@ -522,13 +537,15 @@ class AudioFingerprintExtractor:
 
 
 class VideoFingerprintExtractor:
-    """Advanced video fingerprint extraction engine"""
+    """
+Advanced video fingerprint extraction engine"""
     
     def __init__(self, config: FingerprintConfig):
         self.config = config
     
     async def extract_video_fingerprints(self, video_path: Path, content_metadata: ContentMetadata) -> List[FingerprintData]:
-        """Extract comprehensive video fingerprints"""
+        """
+Extract comprehensive video fingerprints"""
         fingerprints = []
         
         try:
@@ -620,7 +637,8 @@ class VideoFingerprintExtractor:
         )
     
     async def _extract_frame_difference(self, video_path: Path, metadata: ContentMetadata) -> FingerprintData:
-        """Extract frame difference features for motion analysis"""
+        """
+Extract frame difference features for motion analysis"""
         start_time = datetime.now()
         
         cap = cv2.VideoCapture(str(video_path))
@@ -854,7 +872,8 @@ class FingerprintMigration(BaseMigration):
         session.commit()
     
     async def _migrate_existing_fingerprints(self, session: Session):
-        """Migrate existing fingerprints to new format and algorithms"""
+        """
+Migrate existing fingerprints to new format and algorithms"""
         # Get content that needs fingerprint migration
         content_query = """
         SELECT c.id, c.file_path, c.content_type, c.created_at
@@ -926,7 +945,8 @@ class FingerprintMigration(BaseMigration):
         })
     
     async def _optimize_fingerprint_storage(self, session: Session):
-        """Optimize fingerprint storage and create search indexes"""
+        """
+Optimize fingerprint storage and create search indexes"""
         # Create clusters for similar fingerprints
         clustering_sql = """
         WITH fingerprint_vectors AS (
@@ -944,7 +964,8 @@ class FingerprintMigration(BaseMigration):
         session.commit()
     
     async def _update_fingerprint_indexes(self, session: Session):
-        """Update and optimize fingerprint-related indexes"""
+        """
+Update and optimize fingerprint-related indexes"""
         index_sql = """
         -- Performance indexes for fingerprint queries
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_fingerprints_composite 
@@ -966,7 +987,8 @@ class FingerprintMigration(BaseMigration):
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback fingerprint migration changes"""
+        """
+Rollback fingerprint migration changes"""
         try:
             # Drop new tables and indexes
             rollback_sql = """

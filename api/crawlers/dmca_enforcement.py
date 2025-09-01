@@ -23,6 +23,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -73,7 +74,9 @@ from ..utils.rate_limiter import RateLimiter
 
 
 class DMCARequestType(Enum):
-    """Types of DMCA requests."""
+    """
+Types of DMCA requests."""
+
     TAKEDOWN_NOTICE = "takedown_notice"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
@@ -84,6 +87,7 @@ class DMCARequestType(Enum):
 
 class InfringementSeverity(Enum):
     """Severity levels for copyright infringement."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -94,6 +98,7 @@ class InfringementSeverity(Enum):
 
 class EnforcementStatus(Enum):
     """Status of enforcement actions."""
+
     PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -106,6 +111,7 @@ class EnforcementStatus(Enum):
 
 class PlatformDMCAPolicy(Enum):
     """Platform-specific DMCA policies."""
+
     YOUTUBE_COPYRIGHT = "youtube_copyright"
     INSTAGRAM_IP = "instagram_ip"
     TIKTOK_COPYRIGHT = "tiktok_copyright"
@@ -300,7 +306,8 @@ class DMCAEnforcementEngine:
     
     def _get_default_takedown_template(self) -> str:
         """Default DMCA takedown notice template."""
-        return """DMCA COPYRIGHT INFRINGEMENT TAKEDOWN NOTICE
+        return """
+DMCA COPYRIGHT INFRINGEMENT TAKEDOWN NOTICE
 
 To: {{ platform_name }} Copyright Agent
 From: {{ copyright_owner.full_name }}
@@ -351,8 +358,10 @@ This notice is sent in good faith compliance with the Digital Millennium Copyrig
 """
     
     def _get_default_counter_template(self) -> str:
-        """Default DMCA counter-notification template."""
-        return """DMCA COUNTER-NOTIFICATION
+        """
+Default DMCA counter-notification template."""
+        return """
+DMCA COUNTER-NOTIFICATION
 
 To: {{ platform_name }} Copyright Agent
 From: {{ user_name }}
@@ -388,8 +397,10 @@ Date: {{ notice_date }}
 """
     
     def _get_repeat_infringer_template(self) -> str:
-        """Repeat infringer notification template."""
-        return """REPEAT INFRINGER NOTIFICATION
+        """
+Repeat infringer notification template."""
+        return """
+REPEAT INFRINGER NOTIFICATION
 
 To: {{ platform_name }} Copyright Agent
 From: {{ copyright_owner.full_name }}
@@ -426,7 +437,8 @@ Sincerely,
         copyright_works: List[CopyrightWork],
         infringement_instances: List[InfringementEvidence]
     ) -> EnforcementCase:
-        """Create a new copyright enforcement case."""
+        """
+Create a new copyright enforcement case."""
         try:
             case_id = str(uuid.uuid4())
             
@@ -514,7 +526,8 @@ Sincerely,
         evidence_id: str,
         notice_type: DMCARequestType = DMCARequestType.TAKEDOWN_NOTICE
     ) -> DMCANotice:
-        """Generate a DMCA notice for specific infringement."""
+        """
+Generate a DMCA notice for specific infringement."""
         try:
             case = self.active_cases.get(case_id)
             if not case:
@@ -588,7 +601,8 @@ Sincerely,
             return InfringementSeverity.LOW
     
     async def _generate_notice_content(self, notice: DMCANotice):
-        """Generate the content of a DMCA notice."""
+        """
+Generate the content of a DMCA notice."""
         try:
             template_key = notice.notice_type.value
             template_str = self.notice_templates.get(template_key)
@@ -987,7 +1001,8 @@ Sincerely,
             return EnforcementStatus.PENDING
     
     async def generate_enforcement_report(self, case_id: str) -> Dict[str, Any]:
-        """Generate comprehensive enforcement report."""
+        """
+Generate comprehensive enforcement report."""
         try:
             case = self.active_cases.get(case_id)
             if not case:
@@ -1180,7 +1195,8 @@ class DMCAComplianceValidator:
     
     @staticmethod
     def validate_notice_completeness(notice: DMCANotice) -> Tuple[bool, List[str]]:
-        """Validate DMCA notice for completeness and compliance."""
+        """
+Validate DMCA notice for completeness and compliance."""
         errors = []
         
         # Required elements check

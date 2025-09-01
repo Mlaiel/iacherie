@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union
@@ -532,12 +533,14 @@ def get_dmca_index() -> DMCAAgentIndex:
 
 # Convenience functions for direct access
 async def process_copyright_violation(content_info: Dict[str, Any], options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Process a copyright violation case"""
+    """
+Process a copyright violation case"""
     index = get_dmca_index()
     return await index.process_copyright_violation(content_info, options)
 
 async def verify_copyright_ownership(claim_info: Dict[str, Any]) -> Dict[str, Any]:
-    """Verify copyright ownership"""
+    """
+Verify copyright ownership"""
     index = get_dmca_index()
     return await index.verify_copyright_ownership(claim_info)
 
@@ -547,11 +550,13 @@ async def check_legal_compliance(case_data: Dict[str, Any], framework: str = "dm
     return await index.check_legal_compliance(case_data, framework)
 
 async def generate_legal_document(document_request: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate legal document"""
+    """
+Generate legal document"""
     index = get_dmca_index()
     return await index.generate_legal_document(document_request)
 
 async def execute_takedown(takedown_request: Dict[str, Any]) -> Dict[str, Any]:
-    """Execute takedown"""
+    """
+Execute takedown"""
     index = get_dmca_index()
     return await index.execute_takedown(takedown_request)

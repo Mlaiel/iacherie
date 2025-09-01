@@ -10,7 +10,7 @@ Module: backend/business/surveillance/surveillance_orchestrator.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -29,6 +29,7 @@ Monitoring Activation → Real-time Surveillance → Threat Detection →
 Alert Processing → Automated Response → Evidence Collection → 
 Legal Action → Performance Analytics → System Optimization
 """
+
 import asyncio
 import logging
 import json
@@ -68,7 +69,9 @@ logger = logging.getLogger(__name__)
 
 
 class OrchestrationMode(Enum):
-    """Orchestration operation modes"""
+    """
+Orchestration operation modes"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -79,6 +82,7 @@ class OrchestrationMode(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -89,6 +93,7 @@ class WorkflowStatus(Enum):
 
 class ComponentStatus(Enum):
     """Individual component status"""
+
     INITIALIZED = "initialized"
     STARTING = "starting"
     ACTIVE = "active"
@@ -122,7 +127,8 @@ class SurveillanceWorkflow:
 
 @dataclass
 class ComponentHealth:
-    """Component health status"""
+    """
+Component health status"""
     component_name: str
     status: ComponentStatus
     last_heartbeat: datetime
@@ -134,7 +140,8 @@ class ComponentHealth:
 
 @dataclass
 class OrchestrationMetrics:
-    """Orchestration system metrics"""
+    """
+Orchestration system metrics"""
     timestamp: datetime
     active_workflows: int
     completed_workflows: int
@@ -163,7 +170,8 @@ class SurveillanceOrchestrator:
         storage_path: Optional[Path] = None,
         config: Optional[Dict[str, Any]] = None
     ):
-        """Initialize surveillance orchestrator"""
+        """
+Initialize surveillance orchestrator"""
         self.mode = mode
         self.redis_client = redis_client or redis.Redis(decode_responses=True)
         self.database_url = database_url
@@ -270,7 +278,8 @@ class SurveillanceOrchestrator:
                 conn.execute(text(tables_sql))
     
     def _initialize_components(self):
-        """Initialize surveillance components"""
+        """
+Initialize surveillance components"""
         try:
             # Fingerprinting Engine
             self.components['fingerprinting'] = FingerprintingEngine(

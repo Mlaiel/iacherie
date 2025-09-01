@@ -5,8 +5,9 @@ Advanced tax compliance processor with automated tax calculations,
 reporting, and remittance for global jurisdictions and payment types.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaxType(Enum):
-    """Tax types"""
+    """
+Tax types"""
+
     VAT = "vat"  # Value Added Tax (EU)
     GST = "gst"  # Goods and Services Tax (CA, AU, IN)
     SALES_TAX = "sales_tax"  # US State Sales Tax
@@ -34,6 +37,7 @@ class TaxType(Enum):
 
 class TaxJurisdiction(Enum):
     """Tax jurisdictions"""
+
     US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_VAT = "eu_vat"
@@ -48,6 +52,7 @@ class TaxJurisdiction(Enum):
 
 class TransactionCategory(Enum):
     """Transaction categories for tax purposes"""
+
     DIGITAL_GOODS = "digital_goods"
     DIGITAL_SERVICES = "digital_services"
     PHYSICAL_GOODS = "physical_goods"
@@ -73,7 +78,8 @@ class TaxRate:
 
 @dataclass
 class TaxableTransaction:
-    """Taxable transaction details"""
+    """
+Taxable transaction details"""
     id: str
     transaction_id: str
     amount: Decimal
@@ -91,7 +97,8 @@ class TaxableTransaction:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
+    """
+Tax calculation result"""
     transaction_id: str
     gross_amount: Decimal
     net_amount: Decimal
@@ -104,7 +111,8 @@ class TaxCalculation:
 
 @dataclass
 class TaxRemittance:
-    """Tax remittance record"""
+    """
+Tax remittance record"""
     id: str
     jurisdiction: TaxJurisdiction
     tax_type: TaxType
@@ -131,7 +139,8 @@ class TaxComplianceProcessor:
         config: Dict[str, Any],
         tax_service_apis: Optional[Dict[str, str]] = None
     ):
-        """Initialize tax compliance processor"""
+        """
+Initialize tax compliance processor"""
         self.config = config
         self.tax_service_apis = tax_service_apis or {}
         self.logger = logging.getLogger(__name__)
@@ -510,7 +519,8 @@ class TaxComplianceProcessor:
         self,
         transaction: TaxableTransaction
     ) -> List[TaxJurisdiction]:
-        """Determine applicable tax jurisdictions"""
+        """
+Determine applicable tax jurisdictions"""
         jurisdictions = []
         
         # EU VAT rules
@@ -559,7 +569,8 @@ class TaxComplianceProcessor:
         return True
     
     def _calculate_tax_amount(self, amount: Decimal, rate: TaxRate) -> Decimal:
-        """Calculate tax amount for a given rate"""
+        """
+Calculate tax amount for a given rate"""
         tax_amount = amount * (rate.rate / Decimal("100"))
         return tax_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     
@@ -641,7 +652,8 @@ class TaxComplianceProcessor:
         return period_end + timedelta(days=offset_days)
     
     def _get_compliance_notes(self, transaction: TaxableTransaction) -> List[str]:
-        """Get compliance notes for invoice"""
+        """
+Get compliance notes for invoice"""
         notes = []
         
         if transaction.is_b2b and transaction.customer_tax_id:

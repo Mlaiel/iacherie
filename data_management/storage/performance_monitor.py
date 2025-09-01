@@ -8,7 +8,7 @@ Advanced performance monitoring for storage operations
 with real-time analytics and predictive insights.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -27,6 +27,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 import asyncio
@@ -43,7 +44,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -55,6 +58,7 @@ class MetricType(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -71,7 +75,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
+    """
+Performance alert"""
     alert_id: str
     level: AlertLevel
     message: str
@@ -84,7 +89,8 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
+    """
+Performance threshold configuration"""
     metric_type: MetricType
     warning_threshold: float
     error_threshold: float
@@ -101,7 +107,8 @@ class ResourceMonitor:
         self.monitor_thread = None
         
     def start_monitoring(self, interval: float = 1.0):
-        """Start resource monitoring"""
+        """
+Start resource monitoring"""
         if self.monitoring:
             return
         
@@ -184,12 +191,14 @@ class MetricsAggregator:
         self.lock = threading.Lock()
     
     def add_metric(self, metric: PerformanceMetric):
-        """Add a performance metric"""
+        """
+Add a performance metric"""
         with self.lock:
             self.metrics[metric.metric_type].append(metric)
     
     def get_aggregated_stats(self, metric_type: MetricType, duration_minutes: int = 60) -> Dict[str, float]:
-        """Get aggregated statistics for a metric type"""
+        """
+Get aggregated statistics for a metric type"""
         with self.lock:
             cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
             recent_metrics = [
@@ -214,7 +223,8 @@ class MetricsAggregator:
             }
     
     def _percentile(self, values: List[float], percentile: int) -> float:
-        """Calculate percentile"""
+        """
+Calculate percentile"""
         if not values:
             return 0.0
         
@@ -229,7 +239,8 @@ class MetricsAggregator:
             return sorted_values[f] * (1 - c) + sorted_values[f + 1] * c
     
     def get_trend_analysis(self, metric_type: MetricType, duration_minutes: int = 60) -> Dict[str, Any]:
-        """Analyze trends in metrics"""
+        """
+Analyze trends in metrics"""
         with self.lock:
             cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
             recent_metrics = [
@@ -286,7 +297,8 @@ class PerformanceMonitor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize performance monitor"""
+        """
+Initialize performance monitor"""
         self.config = config or {}
         
         # Core components
@@ -445,7 +457,8 @@ class PerformanceMonitor:
         self.aggregator.add_metric(metric)
     
     def start_operation(self, operation_id: str, operation_type: str, metadata: Optional[Dict[str, Any]] = None):
-        """Start tracking an operation"""
+        """
+Start tracking an operation"""
         self.active_operations[operation_id] = {
             'operation_type': operation_type,
             'start_time': time.time(),
@@ -453,7 +466,8 @@ class PerformanceMonitor:
         }
     
     def end_operation(self, operation_id: str, success: bool, file_size: int = 0):
-        """End tracking an operation"""
+        """
+End tracking an operation"""
         if operation_id not in self.active_operations:
             logger.warning(f"Operation {operation_id} not found in active operations")
             return
@@ -479,7 +493,8 @@ class PerformanceMonitor:
         self.alert_callbacks.append(callback)
     
     async def get_metrics(self, duration_minutes: int = 60) -> Dict[str, Any]:
-        """Get comprehensive performance metrics"""
+        """
+Get comprehensive performance metrics"""
         
         cache_key = f"metrics_{duration_minutes}"
         if cache_key in self.analytics_cache:
@@ -576,7 +591,8 @@ class PerformanceMonitor:
         return report
     
     def _get_operation_statistics(self, duration_minutes: int) -> Dict[str, Any]:
-        """Get operation statistics"""
+        """
+Get operation statistics"""
         cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
         recent_ops = [op for op in self.operation_history if op['timestamp'] > cutoff_time]
         
@@ -612,7 +628,8 @@ class PerformanceMonitor:
         return stats
     
     def _get_alert_summary(self) -> Dict[str, Any]:
-        """Get alert summary"""
+        """
+Get alert summary"""
         active_alerts = [alert for alert in self.alerts if not alert.resolved]
         
         summary = {
@@ -636,7 +653,8 @@ class PerformanceMonitor:
         return summary
     
     def _generate_performance_recommendations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate performance improvement recommendations"""
+        """
+Generate performance improvement recommendations"""
         recommendations = []
         
         # Check latency

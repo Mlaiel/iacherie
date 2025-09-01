@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 MOTEUR DE RÈGLES DE VALIDATION CONFIGURABLE
@@ -15,6 +15,7 @@ Système de règles flexibles pour validation personnalisée
 - Support conditions complexes
 - Gestion des exceptions et cas spéciaux
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
@@ -35,7 +36,9 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class RuleType(Enum):
-    """Types de règles de validation"""
+    """
+Types de règles de validation"""
+
     FILE_SIZE = "file_size"
     FILE_FORMAT = "file_format"
     CONTENT_QUALITY = "content_quality"
@@ -46,6 +49,7 @@ class RuleType(Enum):
 
 class RuleOperator(Enum):
     """Opérateurs pour les règles"""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -64,12 +68,14 @@ class RuleOperator(Enum):
 
 class RuleCondition(Enum):
     """Conditions de combinaison des règles"""
+
     AND = "and"
     OR = "or"
     NOT = "not"
 
 class RuleSeverity(Enum):
     """Niveaux de sévérité des règles"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -111,7 +117,8 @@ class RuleEvaluationResult:
 
 @dataclass
 class RulesEvaluationResult:
-    """Résultat global d'évaluation des règles"""
+    """
+Résultat global d'évaluation des règles"""
     is_valid: bool
     total_rules: int
     passed_rules: int
@@ -284,7 +291,8 @@ class RuleEvaluator:
         """Enregistre les fonctions intégrées"""
         
         def validate_audio_duration(actual, expected, data):
-            """Valide la durée audio selon le type de créateur"""
+            """
+Valide la durée audio selon le type de créateur"""
             creator_type = data.get('creator_type', '')
             
             if creator_type == 'musician':
@@ -295,7 +303,8 @@ class RuleEvaluator:
                 return actual <= expected
         
         def validate_image_resolution(actual, expected, data):
-            """Valide la résolution image selon le type de créateur"""
+            """
+Valide la résolution image selon le type de créateur"""
             if not isinstance(actual, (list, tuple)) or len(actual) != 2:
                 return False
             
@@ -312,7 +321,8 @@ class RuleEvaluator:
                 return width >= min_width and height >= min_height
         
         def validate_file_extension_coherence(actual, expected, data):
-            """Valide la cohérence extension/type de contenu"""
+            """
+Valide la cohérence extension/type de contenu"""
             file_extension = data.get('file_extension', '').lower()
             content_type = data.get('content_type', '')
             
@@ -332,7 +342,8 @@ class RuleEvaluator:
         }
 
 class RuleSetManager:
-    """Gestionnaire de jeux de règles"""
+    """
+Gestionnaire de jeux de règles"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.RuleSetManager")
@@ -520,7 +531,8 @@ class RuleSetManager:
         )
     
     def _rule_to_dict(self, rule: ValidationRule) -> Dict[str, Any]:
-        """Convertit une règle en dictionnaire"""
+        """
+Convertit une règle en dictionnaire"""
         return {
             'id': rule.id,
             'name': rule.name,
@@ -540,7 +552,8 @@ class RuleSetManager:
         }
     
     def _load_default_rules(self):
-        """Charge les règles par défaut"""
+        """
+Charge les règles par défaut"""
         
         # Règles générales de taille de fichier
         file_size_rules = [
@@ -752,7 +765,8 @@ class RulesEngine:
         content_type: str,
         additional_data: Optional[Dict[str, Any]] = None
     ) -> RulesEvaluationResult:
-        """Valide un fichier avec les règles appropriées"""
+        """
+Valide un fichier avec les règles appropriées"""
         
         # Compilation des données de base
         data = {
@@ -779,7 +793,8 @@ class RulesEngine:
         return self.validate_with_rules(data, rule_sets, creator_type, content_type)
     
     def add_custom_rule(self, rule_set_name: str, rule_config: Dict[str, Any]) -> bool:
-        """Ajoute une règle personnalisée"""
+        """
+Ajoute une règle personnalisée"""
         try:
             rule = ValidationRule(
                 id=rule_config['id'],
@@ -831,7 +846,8 @@ class RulesEngine:
         }
     
     def _generate_cache_key(self, data: Dict[str, Any], rule_sets: List[str], creator_type: str, content_type: str) -> str:
-        """Génère une clé de cache pour les résultats"""
+        """
+Génère une clé de cache pour les résultats"""
         import hashlib
         
         # Création d'une signature des données importantes
@@ -847,7 +863,8 @@ class RulesEngine:
         return hashlib.md5(key_string.encode()).hexdigest()
 
 class AsyncRulesEngine:
-    """Version asynchrone du moteur de règles"""
+    """
+Version asynchrone du moteur de règles"""
     
     def __init__(self, config_path: Optional[str] = None):
         self.sync_engine = RulesEngine(config_path)
@@ -883,7 +900,8 @@ class AsyncRulesEngine:
         content_type: str,
         additional_data: Optional[Dict[str, Any]] = None
     ) -> RulesEvaluationResult:
-        """Valide un fichier avec des règles de manière asynchrone"""
+        """
+Valide un fichier avec des règles de manière asynchrone"""
         loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(

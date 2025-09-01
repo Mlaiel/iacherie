@@ -36,6 +36,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -69,6 +70,7 @@ logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
     """Types of metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -76,6 +78,7 @@ class MetricType(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -83,6 +86,7 @@ class AlertSeverity(str, Enum):
 
 class HealthStatus(str, Enum):
     """Health status levels"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -90,6 +94,7 @@ class HealthStatus(str, Enum):
 
 class MonitoringComponent(str, Enum):
     """Components being monitored"""
+
     CONNECTION_POOL = "connection_pool"
     DATABASE = "database"
     CACHE = "cache"
@@ -99,6 +104,7 @@ class MonitoringComponent(str, Enum):
 
 class NotificationChannel(str, Enum):
     """Notification channels"""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -119,7 +125,8 @@ class MetricPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric points"""
+    """
+Time series of metric points"""
     metric_name: str
     metric_type: MetricType
     points: deque = field(default_factory=lambda: deque(maxlen=1000))
@@ -127,7 +134,8 @@ class MetricSeries:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def add_point(self, value: Union[int, float], timestamp: Optional[datetime] = None) -> None:
-        """Add a metric point"""
+        """
+Add a metric point"""
         self.points.append(MetricPoint(
             metric_name=self.metric_name,
             metric_type=self.metric_type,
@@ -137,17 +145,20 @@ class MetricSeries:
         ))
     
     def get_latest(self) -> Optional[MetricPoint]:
-        """Get the latest metric point"""
+        """
+Get the latest metric point"""
         return self.points[-1] if self.points else None
     
     def get_average(self, duration: timedelta = timedelta(minutes=5)) -> Optional[float]:
-        """Get average value over duration"""
+        """
+Get average value over duration"""
         cutoff_time = datetime.utcnow() - duration
         recent_points = [p.value for p in self.points if p.timestamp >= cutoff_time]
         return statistics.mean(recent_points) if recent_points else None
     
     def get_percentile(self, percentile: float, duration: timedelta = timedelta(minutes=5)) -> Optional[float]:
-        """Get percentile value over duration"""
+        """
+Get percentile value over duration"""
         cutoff_time = datetime.utcnow() - duration
         recent_points = [p.value for p in self.points if p.timestamp >= cutoff_time]
         if not recent_points:
@@ -158,7 +169,8 @@ class MetricSeries:
 
 @dataclass
 class HealthCheck:
-    """Health check definition"""
+    """
+Health check definition"""
     check_id: str
     component: MonitoringComponent
     check_name: str
@@ -171,7 +183,8 @@ class HealthCheck:
 
 @dataclass
 class HealthCheckResult:
-    """Result of a health check"""
+    """
+Result of a health check"""
     check_id: str
     status: HealthStatus
     message: str
@@ -181,7 +194,8 @@ class HealthCheckResult:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""
+    """
+Alert rule definition"""
     rule_id: str
     rule_name: str
     metric_name: str
@@ -211,7 +225,8 @@ class Alert:
 
 @dataclass
 class PerformanceSnapshot:
-    """Performance snapshot for optimization"""
+    """
+Performance snapshot for optimization"""
     snapshot_id: str
     component: MonitoringComponent
     timestamp: datetime
@@ -223,7 +238,8 @@ class PerformanceSnapshot:
 # =============== POOL METRICS COLLECTOR ===============
 
 class PoolMetricsCollector:
-    """Collects metrics from database connection pools"""
+    """
+Collects metrics from database connection pools"""
     
     def __init__(self):
         self.metrics: Dict[str, MetricSeries] = {}
@@ -233,7 +249,8 @@ class PoolMetricsCollector:
         self._lock = threading.RLock()
     
     def register_pool(self, pool_id: str, pool_instance: Any) -> None:
-        """Register a pool for metrics collection"""
+        """
+Register a pool for metrics collection"""
         with self._lock:
             self.pools[pool_id] = pool_instance
             logger.info(f"✅ Pool registered for metrics: {pool_id}")
@@ -323,17 +340,20 @@ class PoolMetricsCollector:
         self.metrics[metric_name].add_point(value)
     
     def get_metric(self, metric_name: str) -> Optional[MetricSeries]:
-        """Get metric series by name"""
+        """
+Get metric series by name"""
         return self.metrics.get(metric_name)
     
     def get_all_metrics(self) -> Dict[str, MetricSeries]:
-        """Get all collected metrics"""
+        """
+Get all collected metrics"""
         return self.metrics.copy()
 
 # =============== HEALTH MONITOR ===============
 
 class HealthMonitor:
-    """Health monitoring system"""
+    """
+Health monitoring system"""
     
     def __init__(self):
         self.health_checks: Dict[str, HealthCheck] = {}
@@ -342,7 +362,8 @@ class HealthMonitor:
         self._lock = threading.RLock()
     
     def register_health_check(self, health_check: HealthCheck) -> None:
-        """Register a health check"""
+        """
+Register a health check"""
         with self._lock:
             self.health_checks[health_check.check_id] = health_check
             
@@ -372,7 +393,8 @@ class HealthMonitor:
             self._monitoring_tasks[health_check.check_id] = task
     
     async def _health_check_loop(self, health_check: HealthCheck) -> None:
-        """Main health check loop"""
+        """
+Main health check loop"""
         while True:
             try:
                 if health_check.enabled:
@@ -462,7 +484,8 @@ class HealthMonitor:
             return HealthStatus.HEALTHY
     
     def get_health_summary(self) -> Dict[str, Any]:
-        """Get overall health summary"""
+        """
+Get overall health summary"""
         summary = {
             "overall_status": HealthStatus.HEALTHY,
             "components": {},
@@ -502,7 +525,8 @@ class AlertManager:
         self._notification_handlers: Dict[NotificationChannel, Callable] = {}
     
     def register_alert_rule(self, alert_rule: AlertRule) -> None:
-        """Register an alert rule"""
+        """
+Register an alert rule"""
         with self._lock:
             self.alert_rules[alert_rule.rule_id] = alert_rule
             logger.info(f"✅ Alert rule registered: {alert_rule.rule_id}")
@@ -667,7 +691,8 @@ class AlertManager:
         return False
     
     async def _send_alert_notifications(self, alert: Alert, alert_rule: AlertRule) -> None:
-        """Send alert notifications"""
+        """
+Send alert notifications"""
         for channel in alert_rule.channels:
             handler = self._notification_handlers.get(channel)
             if handler:
@@ -697,7 +722,8 @@ class AlertManager:
 # =============== PERFORMANCE ANALYZER ===============
 
 class PerformanceAnalyzer:
-    """Performance analysis and optimization recommendations"""
+    """
+Performance analysis and optimization recommendations"""
     
     def __init__(self, metrics_collector: PoolMetricsCollector, health_monitor: HealthMonitor):
         self.metrics_collector = metrics_collector
@@ -705,7 +731,8 @@ class PerformanceAnalyzer:
         self.snapshots: deque = deque(maxlen=100)
     
     async def create_performance_snapshot(self, component: MonitoringComponent) -> PerformanceSnapshot:
-        """Create a performance snapshot for analysis"""
+        """
+Create a performance snapshot for analysis"""
         try:
             snapshot_metrics = {}
             resource_usage = {}
@@ -864,7 +891,8 @@ class PoolMonitoringManager:
         self._monitoring_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> bool:
-        """Initialize monitoring system"""
+        """
+Initialize monitoring system"""
         try:
             # Start components
             await self.metrics_collector.start_collection()
@@ -950,11 +978,13 @@ class PoolMonitoringManager:
         self.metrics_collector.register_pool(pool_id, pool_instance)
     
     def unregister_pool(self, pool_id: str) -> None:
-        """Unregister pool from monitoring"""
+        """
+Unregister pool from monitoring"""
         self.metrics_collector.unregister_pool(pool_id)
     
     def get_monitoring_dashboard(self) -> Dict[str, Any]:
-        """Get monitoring dashboard data"""
+        """
+Get monitoring dashboard data"""
         try:
             dashboard = {
                 "timestamp": datetime.utcnow(),
@@ -1047,7 +1077,8 @@ def get_monitoring_manager() -> PoolMonitoringManager:
     return _global_monitoring_manager
 
 async def initialize_monitoring_system() -> bool:
-    """Initialize global monitoring system"""
+    """
+Initialize global monitoring system"""
     global _global_monitoring_manager
     _global_monitoring_manager = PoolMonitoringManager()
     return await _global_monitoring_manager.initialize()

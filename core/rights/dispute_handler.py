@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Dispute Resolution Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ settings = get_settings()
 
 
 class DisputeType(str, Enum):
-    """Types of IP disputes."""
+    """
+Types of IP disputes."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     OWNERSHIP_CLAIM = "ownership_claim"
     LICENSE_VIOLATION = "license_violation"
@@ -51,6 +54,7 @@ class DisputeType(str, Enum):
 
 class DisputeStatus(str, Enum):
     """Dispute resolution status."""
+
     FILED = "filed"
     UNDER_REVIEW = "under_review"
     MEDIATION = "mediation"
@@ -64,6 +68,7 @@ class DisputeStatus(str, Enum):
 
 class ResolutionMethod(str, Enum):
     """Dispute resolution methods."""
+
     AUTOMATED_MEDIATION = "automated_mediation"
     HUMAN_MEDIATION = "human_mediation"
     ARBITRATION = "arbitration"
@@ -75,6 +80,7 @@ class ResolutionMethod(str, Enum):
 
 class Priority(str, Enum):
     """Dispute priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -99,7 +105,8 @@ class DisputeEvidence:
 
 
 class DisputeFilingRequest(BaseModel):
-    """Dispute filing request model."""
+    """
+Dispute filing request model."""
     content_id: str = Field(..., description="Content in dispute")
     dispute_type: DisputeType = Field(..., description="Type of dispute")
     disputed_party_id: str = Field(..., description="Party being disputed against")
@@ -129,7 +136,8 @@ class DisputeResponse(BaseModel):
 
 
 class ResolutionProposal(BaseModel):
-    """Resolution proposal model."""
+    """
+Resolution proposal model."""
     proposal_id: str
     dispute_id: str
     proposer_type: str  # system, mediator, party
@@ -142,7 +150,8 @@ class ResolutionProposal(BaseModel):
 
 
 class DisputeAnalytics(BaseModel):
-    """Dispute analytics and insights."""
+    """
+Dispute analytics and insights."""
     dispute_id: str
     conflict_complexity_score: float
     resolution_probability: float
@@ -160,7 +169,8 @@ class DisputeResolutionSystem:
     """
     
     def __init__(self, db_session: AsyncSession):
-        """Initialize dispute resolution system."""
+        """
+Initialize dispute resolution system."""
         self.db = db_session
         self.encryption = AdvancedEncryption()
         
@@ -731,7 +741,8 @@ class ConflictAnalysisEngine:
     async def analyze_dispute(
         self, filing_request: DisputeFilingRequest, evidence: List[DisputeEvidence]
     ) -> Dict[str, Any]:
-        """Analyze dispute complexity and characteristics."""
+        """
+Analyze dispute complexity and characteristics."""
         complexity_factors = [
             len(evidence),
             filing_request.monetary_claim or 0,
@@ -754,7 +765,8 @@ class AutomatedMediationEngine:
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automated mediation resolution."""
+        """
+Execute automated mediation resolution."""
         return {
             "method": "automated_mediation",
             "success": True,
@@ -769,7 +781,8 @@ class HumanMediationService:
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute human mediation resolution."""
+        """
+Execute human mediation resolution."""
         return {
             "method": "human_mediation",
             "mediator_assigned": True,
@@ -784,7 +797,8 @@ class ArbitrationService:
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute arbitration resolution."""
+        """
+Execute arbitration resolution."""
         return {
             "method": "arbitration",
             "arbitrator_assigned": True,
@@ -799,7 +813,8 @@ class LegalJudgmentService:
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute legal judgment resolution."""
+        """
+Execute legal judgment resolution."""
         return {
             "method": "legal_judgment",
             "court_filing": True,
@@ -814,7 +829,8 @@ class SettlementService:
     async def execute_resolution(
         self, dispute: Any, terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute settlement agreement."""
+        """
+Execute settlement agreement."""
         return {
             "method": "settlement_agreement",
             "agreement_signed": True,
@@ -829,7 +845,8 @@ class LegalAnalysisEngine:
     async def analyze_response(
         self, dispute: Any, response: DisputeResponse, evidence: List[DisputeEvidence]
     ) -> Dict[str, Any]:
-        """Analyze dispute response for legal validity."""
+        """
+Analyze dispute response for legal validity."""
         return {
             "response_validity": True,
             "legal_standing": "strong",

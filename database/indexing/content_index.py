@@ -15,7 +15,7 @@ multi-format content processing (audio, video, image, text).
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -38,7 +39,9 @@ from ..security.index_security import IndexSecurityManager
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content types for indexing optimization"""
+    """
+Content types for indexing optimization"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -47,6 +50,7 @@ class ContentType(Enum):
 
 class IndexStrategy(Enum):
     """Index strategies for different content processing scenarios"""
+
     PERFORMANCE_OPTIMIZED = "performance_optimized"
     STORAGE_OPTIMIZED = "storage_optimized"
     SEARCH_OPTIMIZED = "search_optimized"
@@ -66,7 +70,8 @@ class ContentIndexManager:
     """
     
     def __init__(self):
-        """Initialize content index manager with enterprise-grade components"""
+        """
+Initialize content index manager with enterprise-grade components"""
         self.db_manager = PostgreSQLManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = IndexSecurityManager()
@@ -284,7 +289,8 @@ class ContentIndexManager:
         return optimized_config
     
     async def _create_base_content_indexes(self) -> bool:
-        """Create essential base indexes for content management"""
+        """
+Create essential base indexes for content management"""
         try:
             base_indexes = [
                 {
@@ -537,7 +543,8 @@ class ContentIndexManager:
         return candidates
     
     async def _reindex_content_index(self, index_name: str) -> bool:
-        """Reindex a content index to improve performance"""
+        """
+Reindex a content index to improve performance"""
         try:
             sql = f"REINDEX INDEX CONCURRENTLY {index_name}"
             
@@ -619,7 +626,8 @@ class ContentIndexManager:
         return improvements
     
     async def _generate_optimization_recommendations(self, usage_stats: List[Dict[str, Any]]) -> List[str]:
-        """Generate optimization recommendations based on current statistics"""
+        """
+Generate optimization recommendations based on current statistics"""
         recommendations = []
         
         # Analyze statistics and generate recommendations
@@ -722,6 +730,7 @@ class ContentIndexManager:
         except Exception as e:
             logger.error(f"ContentIndexManager cleanup failed: {str(e)}")
     """Index creation strategies"""
+
     PERFORMANCE = "performance"
     STORAGE = "storage"
     BALANCED = "balanced"
@@ -740,7 +749,8 @@ class ContentIndexManager:
     """
     
     def __init__(self):
-        """Initialize content index manager"""
+        """
+Initialize content index manager"""
         self.db_manager = PostgreSQLManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = IndexSecurityManager()
@@ -999,7 +1009,8 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def optimize_content_indexes(self, content_type: Optional[ContentType] = None) -> Dict[str, Any]:
-        """Optimize indexes for specific content type or all content types"""
+        """
+Optimize indexes for specific content type or all content types"""
         try:
             optimization_results = {}
             
@@ -1067,7 +1078,8 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def get_index_statistics(self, index_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive statistics for content indexes"""
+        """
+Get comprehensive statistics for content indexes"""
         conn = await self.db_manager.get_connection()
         try:
             if index_name:
@@ -1105,7 +1117,8 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _load_existing_indexes(self):
-        """Load existing index information from database"""
+        """
+Load existing index information from database"""
         conn = await self.db_manager.get_connection()
         try:
             results = await conn.fetch("""
@@ -1159,7 +1172,8 @@ class ContentIndexManager:
                 }
     
     async def cleanup(self):
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         try:
             if self.performance_tracker:
                 await self.performance_tracker.cleanup()

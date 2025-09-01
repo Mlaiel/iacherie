@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 import re
 import hashlib
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class PIIType(Enum):
-    """Types of personally identifiable information"""
+    """
+Types of personally identifiable information"""
+
     EMAIL = "email"
     PHONE = "phone"
     SSN = "ssn"
@@ -49,6 +52,7 @@ class PIIType(Enum):
 
 class AnonymizationTechnique(Enum):
     """Data anonymization techniques"""
+
     MASKING = "masking"
     HASHING = "hashing"
     ENCRYPTION = "encryption"
@@ -62,6 +66,7 @@ class AnonymizationTechnique(Enum):
 
 class PrivacyLevel(Enum):
     """Privacy protection levels"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -84,7 +89,8 @@ class PIIDetectionResult:
 
 @dataclass
 class AnonymizationRule:
-    """Anonymization rule definition"""
+    """
+Anonymization rule definition"""
     rule_id: str
     name: str
     pii_types: List[PIIType]
@@ -97,7 +103,8 @@ class AnonymizationRule:
 
 @dataclass
 class AnonymizationRecord:
-    """Record of anonymization operation"""
+    """
+Record of anonymization operation"""
     record_id: str
     content_id: str
     original_hash: str
@@ -263,7 +270,8 @@ class BaseAnonymizer(ABC):
     """Base class for anonymization techniques"""
     
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Anonymize the data - base implementation"""
+        """
+Anonymize the data - base implementation"""
         try:
             logger.info(f"Anonymizing data with {self.__class__.__name__}")
             
@@ -314,10 +322,12 @@ class BaseAnonymizer(ABC):
 
 
 class MaskingAnonymizer(BaseAnonymizer):
-    """Data masking anonymizer"""
+    """
+Data masking anonymizer"""
     
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Mask data with specified character"""
+        """
+Mask data with specified character"""
         mask_char = parameters.get("mask_char", "*")
         preserve_length = parameters.get("preserve_length", True)
         preserve_prefix = parameters.get("preserve_prefix", 0)
@@ -347,7 +357,8 @@ class HashingAnonymizer(BaseAnonymizer):
     """Hashing-based anonymizer"""
     
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Hash data with salt"""
+        """
+Hash data with salt"""
         algorithm = parameters.get("algorithm", "sha256")
         salt = parameters.get("salt", "")
         
@@ -376,7 +387,8 @@ class TokenizationAnonymizer(BaseAnonymizer):
         self.reverse_mapping: Dict[str, str] = {}
     
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Replace data with random token"""
+        """
+Replace data with random token"""
         if data in self.token_mapping:
             return self.token_mapping[data]
         
@@ -404,7 +416,8 @@ class EncryptionAnonymizer(BaseAnonymizer):
     """Encryption-based anonymizer"""
     
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Encrypt data"""
+        """
+Encrypt data"""
         # This would use actual encryption libraries
         # Simplified implementation for demonstration
         key = parameters.get("key", "default_key")
@@ -420,7 +433,8 @@ class EncryptionAnonymizer(BaseAnonymizer):
         return True
     
     def _simple_encrypt(self, data: str, key: str) -> str:
-        """AES-256 encryption implementation"""
+        """
+AES-256 encryption implementation"""
         try:
             from cryptography.fernet import Fernet
             import base64
@@ -649,7 +663,8 @@ class PrivacyManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the privacy manager"""
+        """
+Initialize the privacy manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -877,7 +892,8 @@ class PrivacyManager(BaseManager):
         return results
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get privacy management metrics"""
+        """
+Get privacy management metrics"""
         return {
             **self.metrics,
             "total_rules": len(self.anonymization_rules),
@@ -984,7 +1000,8 @@ class PrivacyManager(BaseManager):
         return rules
     
     async def _validate_anonymization_rule(self, rule: AnonymizationRule) -> None:
-        """Validate anonymization rule configuration"""
+        """
+Validate anonymization rule configuration"""
         if not rule.rule_id or not rule.name:
             raise ValidationError("Rule ID and name are required")
         

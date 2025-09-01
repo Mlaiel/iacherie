@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -56,7 +57,9 @@ except ImportError:
 
 
 class ReportType(Enum):
-    """Types of reports"""
+    """
+Types of reports"""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYTICS = "detailed_analytics"
     FINANCIAL_REPORT = "financial_report"
@@ -71,6 +74,7 @@ class ReportType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     PDF = "pdf"
     HTML = "html"
     EXCEL = "excel"
@@ -82,6 +86,7 @@ class ReportFormat(Enum):
 
 class ReportFrequency(Enum):
     """Report generation frequency"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -94,6 +99,7 @@ class ReportFrequency(Enum):
 
 class KPICategory(Enum):
     """KPI categories"""
+
     FINANCIAL = "financial"
     OPERATIONAL = "operational"
     CUSTOMER = "customer"
@@ -125,7 +131,8 @@ class KPI:
         return (self.current_value / self.target_value) * 100
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             **asdict(self),
             'performance_percentage': self.calculate_performance(),
@@ -135,7 +142,8 @@ class KPI:
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration"""
+    """
+Report template configuration"""
     template_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     report_type: ReportType = ReportType.EXECUTIVE_SUMMARY
@@ -157,7 +165,8 @@ class VisualizationEngine:
         self.chart_cache = {}
         
     async def create_executive_dashboard(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create executive dashboard with key metrics"""
+        """
+Create executive dashboard with key metrics"""
         try:
             if not HAS_PLOTTING:
                 return {"error": "Plotting libraries not available"}
@@ -533,7 +542,8 @@ class ReportGenerator:
         self.report_cache = {}
         
     async def generate_executive_report(self, data: Dict[str, Any], template_id: Optional[str] = None) -> Dict[str, Any]:
-        """Generate comprehensive executive report"""
+        """
+Generate comprehensive executive report"""
         try:
             report_id = str(uuid4())
             
@@ -958,7 +968,8 @@ class ReportGenerator:
         return base_pages + section_pages + appendix_pages
     
     def _calculate_report_confidence(self, data: Dict[str, Any]) -> float:
-        """Calculate confidence score based on data completeness"""
+        """
+Calculate confidence score based on data completeness"""
         total_datasets = len(data)
         complete_datasets = 0
         
@@ -969,7 +980,8 @@ class ReportGenerator:
         return (complete_datasets / max(total_datasets, 1)) * 100
     
     def _calculate_growth_rate(self, df: pd.DataFrame, column: str) -> float:
-        """Calculate growth rate for a given column"""
+        """
+Calculate growth rate for a given column"""
         if len(df) < 2 or column not in df.columns:
             return 0.0
         
@@ -982,7 +994,8 @@ class ReportGenerator:
         return ((second_half - first_half) / first_half) * 100
     
     def _calculate_growth_indicators(self, data: Dict[str, Any]) -> Dict[str, str]:
-        """Calculate growth indicators across different metrics"""
+        """
+Calculate growth indicators across different metrics"""
         indicators = {}
         
         for data_type, dataset in data.items():
@@ -1031,7 +1044,8 @@ class AutomatedReportingEngine:
         self._start_automated_reporting()
     
     def _start_automated_reporting(self):
-        """Start automated reporting background process"""
+        """
+Start automated reporting background process"""
         threading.Thread(
             target=self._automated_reporting_loop,
             daemon=True,
@@ -1146,7 +1160,8 @@ class AutomatedReportingEngine:
             return now + timedelta(days=1)  # Default to daily
     
     async def _fetch_report_data(self, data_sources: List[str]) -> Dict[str, Any]:
-        """Fetch data from configured sources for report generation"""
+        """
+Fetch data from configured sources for report generation"""
         # This would typically fetch from databases, APIs, etc.
         # For now, return empty structure
         data = {}
@@ -1196,7 +1211,8 @@ class AutomatedReportingEngine:
         return list(self.scheduled_reports.values())
     
     def update_report_schedule(self, report_id: str, updates: Dict[str, Any]) -> bool:
-        """Update a scheduled report configuration"""
+        """
+Update a scheduled report configuration"""
         try:
             if report_id in self.scheduled_reports:
                 self.scheduled_reports[report_id].update(updates)

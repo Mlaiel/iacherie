@@ -19,6 +19,7 @@ Features:
 - Podcast analytics and trends
 - Content similarity detection
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -43,7 +44,8 @@ settings = get_settings()
 
 @dataclass
 class PodcastEpisode:
-    """Podcast episode data structure."""
+    """
+Podcast episode data structure."""
     episode_id: str
     platform: str
     podcast_id: str
@@ -76,7 +78,8 @@ class PodcastEpisode:
 
 @dataclass
 class PodcastShow:
-    """Podcast show data structure."""
+    """
+Podcast show data structure."""
     podcast_id: str
     platform: str
     title: str
@@ -105,7 +108,8 @@ class PodcastShow:
 
 @dataclass
 class PodcastHost:
-    """Podcast host data structure."""
+    """
+Podcast host data structure."""
     host_id: str
     name: str
     bio: str
@@ -130,7 +134,8 @@ class PodcastCrawler:
     """
     
     def __init__(self):
-        """Initialize podcast crawler."""
+        """
+Initialize podcast crawler."""
         self.rate_limiter = PodcastRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
@@ -205,7 +210,8 @@ class PodcastCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -615,38 +621,46 @@ class PodcastCrawler:
         return []
     
     async def _search_apple_podcasts(self, query: str, max_results: int) -> List[PodcastShow]:
-        """Search Apple Podcasts for shows."""
+        """
+Search Apple Podcasts for shows."""
         # Implementation would use iTunes Search API
         return []
     
     async def _search_google_podcasts(self, query: str, max_results: int) -> List[PodcastShow]:
-        """Search Google Podcasts for shows."""
+        """
+Search Google Podcasts for shows."""
         # Implementation would use web scraping
         return []
     
     async def _search_podcast_index(self, query: str, max_results: int) -> List[PodcastShow]:
-        """Search Podcast Index for shows."""
+        """
+Search Podcast Index for shows."""
         # Implementation would use Podcast Index API
         return []
     
     async def _search_spotify_episodes(self, query: str, max_results: int) -> List[PodcastEpisode]:
-        """Search Spotify for episodes."""
+        """
+Search Spotify for episodes."""
         return []
     
     async def _search_apple_episodes(self, query: str, max_results: int) -> List[PodcastEpisode]:
-        """Search Apple Podcasts for episodes."""
+        """
+Search Apple Podcasts for episodes."""
         return []
     
     async def _search_google_episodes(self, query: str, max_results: int) -> List[PodcastEpisode]:
-        """Search Google Podcasts for episodes."""
+        """
+Search Google Podcasts for episodes."""
         return []
     
     async def _search_podcast_index_episodes(self, query: str, max_results: int) -> List[PodcastEpisode]:
-        """Search Podcast Index for episodes."""
+        """
+Search Podcast Index for episodes."""
         return []
     
     def _deduplicate_podcasts(self, podcasts: List[PodcastShow]) -> List[PodcastShow]:
-        """Remove duplicate podcasts."""
+        """
+Remove duplicate podcasts."""
         seen_titles = set()
         unique_podcasts = []
         
@@ -671,63 +685,78 @@ class PodcastCrawler:
         return unique_episodes
     
     async def _get_podcast_details(self, podcast_id: str, platform: str) -> Optional[PodcastShow]:
-        """Get detailed podcast information."""
+        """
+Get detailed podcast information."""
         return None
     
     async def _get_recent_episodes(self, podcast_id: str, platform: str) -> List[PodcastEpisode]:
-        """Get recent episodes from a podcast."""
+        """
+Get recent episodes from a podcast."""
         return []
     
     async def _identify_new_episodes(self, podcast_id: str, episodes: List[PodcastEpisode]) -> List[PodcastEpisode]:
-        """Identify new episodes since last check."""
+        """
+Identify new episodes since last check."""
         return []
     
     async def _analyze_episodes_content(self, episodes: List[PodcastEpisode]) -> Dict:
-        """Analyze content across multiple episodes."""
+        """
+Analyze content across multiple episodes."""
         return {}
     
     async def _extract_content_themes(self, episodes: List[PodcastEpisode]) -> List[str]:
-        """Extract common themes from episodes."""
+        """
+Extract common themes from episodes."""
         return []
     
     async def _analyze_audio_characteristics(self, episodes: List[PodcastEpisode]) -> Dict:
-        """Analyze audio characteristics of episodes."""
+        """
+Analyze audio characteristics of episodes."""
         return {}
     
     async def _calculate_engagement_metrics(self, episodes: List[PodcastEpisode]) -> Dict:
-        """Calculate engagement metrics for episodes."""
+        """
+Calculate engagement metrics for episodes."""
         return {}
     
     async def _assess_content_quality(self, episodes: List[PodcastEpisode]) -> Dict:
-        """Assess content quality of episodes."""
+        """
+Assess content quality of episodes."""
         return {}
     
     async def _analyze_podcast_hosts(self, podcast: PodcastShow) -> Dict:
-        """Analyze podcast hosts."""
+        """
+Analyze podcast hosts."""
         return {}
     
     async def _compare_audio_fingerprints(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Compare audio fingerprints for similarity."""
+        """
+Compare audio fingerprints for similarity."""
         return 0.0
     
     async def _compare_content_fingerprints(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Compare content fingerprints for similarity."""
+        """
+Compare content fingerprints for similarity."""
         return 0.0
     
     async def _analyze_similarity_factors(self, episode1: PodcastEpisode, episode2: PodcastEpisode) -> Dict:
-        """Analyze factors contributing to episode similarity."""
+        """
+Analyze factors contributing to episode similarity."""
         return {}
     
     async def _analyze_platform_trends(self, platform: str, categories: List[str], time_period: int) -> Dict:
-        """Analyze trends for a specific platform."""
+        """
+Analyze trends for a specific platform."""
         return {}
     
     async def _analyze_cross_platform_trends(self, trends: Dict) -> Dict:
-        """Analyze trends across multiple platforms."""
+        """
+Analyze trends across multiple platforms."""
         return {}
     
     async def _calculate_mention_relevance(self, episode: PodcastEpisode, keywords: List[str]) -> float:
-        """Calculate relevance score for content mentions."""
+        """
+Calculate relevance score for content mentions."""
         return 0.0
 
 # Example usage

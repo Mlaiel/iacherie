@@ -13,6 +13,7 @@ the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
 """
+
 import asyncio
 import uuid
 import time
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class TransactionState(Enum):
-    """Transaction state enumeration"""
+    """
+Transaction state enumeration"""
+
     INIT = "initialized"
     ACTIVE = "active"
     PREPARING = "preparing"
@@ -44,6 +47,7 @@ class TransactionState(Enum):
 
 class TransactionPriority(Enum):
     """Transaction priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -52,7 +56,8 @@ class TransactionPriority(Enum):
 
 @dataclass
 class TransactionContext:
-    """Transaction context containing all transaction metadata"""
+    """
+Transaction context containing all transaction metadata"""
     transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     state: TransactionState = TransactionState.INIT
     priority: TransactionPriority = TransactionPriority.NORMAL
@@ -69,7 +74,8 @@ class TransactionContext:
     
     @property
     def duration(self) -> Optional[float]:
-        """Calculate transaction duration in seconds"""
+        """
+Calculate transaction duration in seconds"""
         if self.started_at and self.completed_at:
             return (self.completed_at - self.started_at).total_seconds()
         elif self.started_at:
@@ -78,7 +84,8 @@ class TransactionContext:
     
     @property
     def is_expired(self) -> bool:
-        """Check if transaction has expired"""
+        """
+Check if transaction has expired"""
         if self.started_at:
             elapsed = (datetime.now(timezone.utc) - self.started_at).total_seconds()
             return elapsed > self.timeout
@@ -86,7 +93,8 @@ class TransactionContext:
 
 
 class ResourceManager:
-    """Resource manager for transaction coordination"""
+    """
+Resource manager for transaction coordination"""
     
     def __init__(self):
         self.locks: Dict[str, threading.RLock] = {}
@@ -94,7 +102,8 @@ class ResourceManager:
         self.lock = threading.RLock()
     
     def acquire_resource(self, resource_id: str, timeout: float = 10.0) -> bool:
-        """Acquire exclusive access to a resource"""
+        """
+Acquire exclusive access to a resource"""
         with self.lock:
             if resource_id not in self.locks:
                 self.locks[resource_id] = threading.RLock()
@@ -102,17 +111,20 @@ class ResourceManager:
         return self.locks[resource_id].acquire(timeout=timeout)
     
     def release_resource(self, resource_id: str) -> None:
-        """Release resource lock"""
+        """
+Release resource lock"""
         if resource_id in self.locks:
             self.locks[resource_id].release()
     
     def register_resource(self, resource_id: str, resource: Any) -> None:
-        """Register a resource for management"""
+        """
+Register a resource for management"""
         with self.lock:
             self.resources[resource_id] = resource
     
     def get_resource(self, resource_id: str) -> Optional[Any]:
-        """Get registered resource"""
+        """
+Get registered resource"""
         return self.resources.get(resource_id)
 
 
@@ -319,7 +331,8 @@ class TransactionCoordinator:
         return True
     
     def add_commit_handler(self, transaction_id: str, handler: Callable) -> bool:
-        """Add commit handler to transaction"""
+        """
+Add commit handler to transaction"""
         
         context = self.active_transactions.get(transaction_id)
         if not context:
@@ -335,7 +348,8 @@ class TransactionCoordinator:
         timeout: int = 30,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Context manager for automatic transaction management"""
+        """
+Context manager for automatic transaction management"""
         
         context = await self.begin_transaction(priority, timeout, metadata)
         

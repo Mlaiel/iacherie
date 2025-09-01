@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -18,6 +18,7 @@ MISSION: Orchestrateur central des workflows de remix IA ultra-avancé
 TECHNOLOGIES: Workflow Engine, Pipeline Management, Resource Coordination, Quality Control
 LOGIQUE MÉTIER: Request → Analysis → Workflow Planning → Parallel Processing → Quality Control → Delivery
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -36,7 +37,9 @@ import time
 logger = logging.getLogger(__name__)
 
 class WorkflowState(Enum):
-    """Workflow execution states"""
+    """
+Workflow execution states"""
+
     PENDING = "pending"
     ANALYZING = "analyzing"
     PROCESSING = "processing"
@@ -48,6 +51,7 @@ class WorkflowState(Enum):
 
 class Priority(Enum):
     """Processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -55,6 +59,7 @@ class Priority(Enum):
 
 class ProcessingStage(Enum):
     """Processing pipeline stages"""
+
     AUDIO_ANALYSIS = "audio_analysis"
     GENRE_DETECTION = "genre_detection"
     STYLE_TRANSFER = "style_transfer"
@@ -80,7 +85,8 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""
+    """
+Complete workflow definition"""
     workflow_id: str
     name: str
     description: str
@@ -93,7 +99,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution context"""
+    """
+Workflow execution context"""
     execution_id: str
     workflow_definition: WorkflowDefinition
     input_data: Dict[str, Any]
@@ -111,7 +118,8 @@ class WorkflowExecution:
 
 @dataclass
 class RemixRequest:
-    """Remix generation request"""
+    """
+Remix generation request"""
     request_id: str
     user_id: str
     session_id: str
@@ -129,7 +137,8 @@ class WorkflowTemplates:
     
     @staticmethod
     def get_standard_remix_workflow() -> WorkflowDefinition:
-        """Standard remix generation workflow"""
+        """
+Standard remix generation workflow"""
         return WorkflowDefinition(
             workflow_id="standard_remix_v1",
             name="Standard Remix Generation",
@@ -392,7 +401,8 @@ class ResourceManager:
         return self.thread_pools.get(priority, self.thread_pools[Priority.NORMAL])
     
     def get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage"""
+        """
+Get current resource usage"""
         with self.resource_lock:
             return {
                 "current_usage": self.resource_usage.copy(),
@@ -416,7 +426,8 @@ class QualityController:
     
     async def validate_step_quality(self, step_id: str, result: Any,
                                   thresholds: Dict[str, float]) -> Tuple[bool, float, Dict[str, Any]]:
-        """Validate quality of workflow step result"""
+        """
+Validate quality of workflow step result"""
         try:
             quality_report = {
                 "step_id": step_id,
@@ -520,7 +531,8 @@ class QualityController:
         self.quality_validators[step_id] = validator_func
     
     def get_quality_statistics(self) -> Dict[str, Any]:
-        """Get quality validation statistics"""
+        """
+Get quality validation statistics"""
         if not self.quality_history:
             return {}
         
@@ -637,7 +649,8 @@ class WorkflowMonitor:
         self.monitoring_callbacks.append(callback)
     
     def get_monitoring_summary(self) -> Dict[str, Any]:
-        """Get monitoring summary"""
+        """
+Get monitoring summary"""
         return {
             "active_workflows": len(self.active_workflows),
             "completed_workflows": len(self.completed_workflows),

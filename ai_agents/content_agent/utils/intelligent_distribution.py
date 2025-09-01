@@ -16,6 +16,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -68,7 +69,9 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported content distribution platforms"""
+    """
+Supported content distribution platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -87,6 +90,7 @@ class Platform(Enum):
 
 class ContentFormat(Enum):
     """Content formats for different platforms"""
+
     VIDEO_SHORT = "video_short"  # TikTok, Instagram Reels, YouTube Shorts
     VIDEO_LONG = "video_long"    # YouTube, Facebook, LinkedIn
     IMAGE_SINGLE = "image_single" # Instagram, Twitter, Pinterest
@@ -100,6 +104,7 @@ class ContentFormat(Enum):
 
 class OptimizationStrategy(Enum):
     """Content optimization strategies"""
+
     ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
     REACH_OPTIMIZATION = "reach_optimization"
     CONVERSION_FOCUS = "conversion_focus"
@@ -136,7 +141,8 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionRequest:
-    """Content distribution request"""
+    """
+Content distribution request"""
     content_id: str
     creator_id: str
     content_path: str

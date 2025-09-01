@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class PredictionModel(Enum):
-    """AI prediction model types"""
+    """
+AI prediction model types"""
+
     LSTM_REVENUE_FORECASTING = "lstm_revenue_forecasting"
     TRANSFORMER_TREND_ANALYSIS = "transformer_trend_analysis"
     RANDOM_FOREST_ENGAGEMENT = "random_forest_engagement"
@@ -50,6 +53,7 @@ class PredictionModel(Enum):
 
 class AnalyticsScope(Enum):
     """Analytics time scope"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -62,6 +66,7 @@ class AnalyticsScope(Enum):
 
 class OptimizationTarget(Enum):
     """Revenue optimization targets"""
+
     MAXIMIZE_REVENUE = "maximize_revenue"
     INCREASE_ENGAGEMENT = "increase_engagement"
     EXPAND_AUDIENCE = "expand_audience"
@@ -74,6 +79,7 @@ class OptimizationTarget(Enum):
 
 class MarketTrend(Enum):
     """Market trend classifications"""
+
     BULLISH = "bullish"
     BEARISH = "bearish"
     SIDEWAYS = "sideways"

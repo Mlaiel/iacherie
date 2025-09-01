@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -27,7 +28,9 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class DatabaseType(Enum):
-    """Supported database types"""
+    """
+Supported database types"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -36,6 +39,7 @@ class DatabaseType(Enum):
 
 class DatabaseMode(Enum):
     """Database deployment modes"""
+
     STANDALONE = "standalone"
     REPLICA_SET = "replica_set"
     CLUSTER = "cluster"
@@ -70,26 +74,31 @@ class DatabaseProvisionerInterface(ABC):
     
     @abstractmethod
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision database instance"""
+        """
+Provision database instance"""
         pass
     
     @abstractmethod
     async def configure_backup(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Configure database backup"""
+        """
+Configure database backup"""
         pass
     
     @abstractmethod
     async def setup_monitoring(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Setup database monitoring"""
+        """
+Setup database monitoring"""
         pass
     
     @abstractmethod
     async def scale_database(self, name: str, replicas: int) -> Dict[str, Any]:
-        """Scale database replicas"""
+        """
+Scale database replicas"""
         pass
 
 class PostgreSQLProvisioner(DatabaseProvisionerInterface):
-    """PostgreSQL database provisioner"""
+    """
+PostgreSQL database provisioner"""
     
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
@@ -97,7 +106,8 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
         self.core_v1 = client.CoreV1Api() if k8s_client else None
         
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision PostgreSQL database"""
+        """
+Provision PostgreSQL database"""
         try:
             if spec.mode == DatabaseMode.HIGH_AVAILABILITY:
                 return await self._provision_postgresql_ha(spec)
@@ -342,7 +352,8 @@ class RedisProvisioner(DatabaseProvisionerInterface):
         self.core_v1 = client.CoreV1Api() if k8s_client else None
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision Redis database"""
+        """
+Provision Redis database"""
         try:
             if spec.mode == DatabaseMode.CLUSTER:
                 return await self._provision_redis_cluster(spec)
@@ -470,7 +481,8 @@ class MongoDBProvisioner(DatabaseProvisionerInterface):
         self.core_v1 = client.CoreV1Api() if k8s_client else None
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision MongoDB database"""
+        """
+Provision MongoDB database"""
         try:
             if spec.mode == DatabaseMode.REPLICA_SET:
                 return await self._provision_mongodb_replica_set(spec)
@@ -544,7 +556,8 @@ class ElasticsearchProvisioner(DatabaseProvisionerInterface):
         self.core_v1 = client.CoreV1Api() if k8s_client else None
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision Elasticsearch cluster"""
+        """
+Provision Elasticsearch cluster"""
         try:
             logger.info(f"Provisioning Elasticsearch cluster: {spec.name}")
             return {
@@ -597,7 +610,8 @@ class DatabaseProvisioner:
         }
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision database based on type"""
+        """
+Provision database based on type"""
         try:
             provisioner = self.provisioners.get(spec.db_type)
             if not provisioner:

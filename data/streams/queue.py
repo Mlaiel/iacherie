@@ -5,8 +5,9 @@ Enterprise-grade queue management with intelligent prioritization,
 load balancing, and guaranteed message delivery.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 import json
@@ -31,7 +32,9 @@ settings = get_settings()
 
 
 class QueuePriority(int, Enum):
-    """Queue priority levels"""
+    """
+Queue priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -40,7 +43,9 @@ class QueuePriority(int, Enum):
 
 
 class MessageStatus(str, Enum):
-    """Message processing status"""
+    """
+Message processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -51,6 +56,7 @@ class MessageStatus(str, Enum):
 
 class QueueType(str, Enum):
     """Queue type definitions"""
+
     FIFO = "fifo"
     PRIORITY = "priority"
     DELAY = "delay"
@@ -77,12 +83,14 @@ class QueueMessage:
     consumer_id: Optional[str] = None
     
     def __lt__(self, other):
-        """Priority comparison for heap operations"""
+        """
+Priority comparison for heap operations"""
         return self.priority.value > other.priority.value
 
 
 class QueueConfig(BaseModel):
-    """Queue configuration"""
+    """
+Queue configuration"""
     name: str = Field(..., description="Queue name")
     queue_type: QueueType = Field(default=QueueType.FIFO, description="Queue type")
     max_size: int = Field(default=10000, description="Maximum queue size")
@@ -121,7 +129,8 @@ class MessageProcessor:
         self.error_count = 0
         
     async def process(self, message: QueueMessage) -> bool:
-        """Process a single message"""
+        """
+Process a single message"""
         try:
             self.current_message = message
             message.processing_started_at = datetime.now(timezone.utc)
@@ -411,7 +420,8 @@ class DistributedQueue:
         return len(self.pending_queue)
         
     async def get_metrics(self) -> QueueMetrics:
-        """Get queue performance metrics"""
+        """
+Get queue performance metrics"""
         # Update average processing time
         if self.processing_times:
             self.metrics.avg_processing_time = sum(self.processing_times) / len(self.processing_times)
@@ -419,7 +429,8 @@ class DistributedQueue:
         return self.metrics
         
     async def purge(self) -> bool:
-        """Clear all messages from queue"""
+        """
+Clear all messages from queue"""
         try:
             self.pending_queue.clear()
             self.processing_messages.clear()
@@ -499,7 +510,8 @@ class StreamQueue:
         self._monitor_task: Optional[asyncio.Task] = None
         
     async def initialize(self) -> None:
-        """Initialize queue system"""
+        """
+Initialize queue system"""
         try:
             # Initialize Redis connection
             redis_url = settings.redis_url or "redis://localhost:6379"
@@ -613,14 +625,16 @@ class StreamQueue:
         return await self.queues[queue_name].dequeue(processor_id)
         
     async def acknowledge(self, queue_name: str, message_id: str) -> bool:
-        """Acknowledge message completion"""
+        """
+Acknowledge message completion"""
         if queue_name not in self.queues:
             return False
             
         return await self.queues[queue_name].acknowledge(message_id)
         
     async def reject(self, queue_name: str, message_id: str, requeue: bool = True) -> bool:
-        """Reject message"""
+        """
+Reject message"""
         if queue_name not in self.queues:
             return False
             
@@ -681,7 +695,8 @@ class StreamQueue:
         return None
         
     async def list_queues(self) -> List[Dict[str, Any]]:
-        """List all queues with metrics"""
+        """
+List all queues with metrics"""
         queues = []
         
         for queue_name, queue in self.queues.items():

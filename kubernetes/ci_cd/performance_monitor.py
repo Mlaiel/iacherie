@@ -23,6 +23,7 @@ Business Logic Monitoring:
 - Multi-platform distribution performance
 ================================================================
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Callable, Union
 import asyncio
 import logging
@@ -49,7 +50,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Performance metric type enumeration for IA Influencer platform"""
+    """
+Performance metric type enumeration for IA Influencer platform"""
     # Standard performance metrics
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
@@ -94,6 +96,7 @@ class MetricType(Enum):
 
 class SeverityLevel(Enum):
     """Alert severity level enumeration"""
+
     CRITICAL = "critical"
     HIGH = "high"
     WARNING = "warning"
@@ -137,6 +140,7 @@ class ComponentType(Enum):
 
 class MonitoringMode(Enum):
     """Monitoring mode enumeration"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     CONTINUOUS = "continuous"
@@ -205,7 +209,8 @@ class PerformanceAlert:
 
 @dataclass
 class CreatorExperienceMetrics:
-    """Creator experience performance metrics"""
+    """
+Creator experience performance metrics"""
     creator_id: str
     creator_type: str  # "musician", "blogger", "photographer", "influencer", "comedian"
     session_id: str
@@ -286,7 +291,8 @@ class SLAReport:
     recommendations: List[str] = field(default_factory=list)
 
 class CreatorPerformanceTracker:
-    """Advanced creator experience performance tracking"""
+    """
+Advanced creator experience performance tracking"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -727,7 +733,8 @@ class PerformanceMonitor:
     """Enterprise performance monitoring system for IA Influencer platform"""
     
     def __init__(self):
-        """Initialize performance monitor"""
+        """
+Initialize performance monitor"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.metrics_storage: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.sla_thresholds: Dict[Tuple[ComponentType, MetricType], SLAThreshold] = {}
@@ -1094,7 +1101,8 @@ class PerformanceMonitor:
         return None
     
     async def _check_alert_resolution(self, component: ComponentType, metric_type: MetricType) -> None:
-        """Check if alerts can be resolved"""
+        """
+Check if alerts can be resolved"""
         active_alert = self._find_active_alert(component, metric_type)
         if not active_alert:
             return

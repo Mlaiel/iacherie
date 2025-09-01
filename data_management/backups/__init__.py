@@ -8,7 +8,7 @@ Responsibility: Sauvegarde intelligente multi-format avec protection et récupé
 ====================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -24,7 +24,8 @@ BACKUP STRATEGY:
 🔐 Encrypted: Chiffrement bout-en-bout AES-256
 ☁️ Multi-cloud: AWS S3 + Azure + Google Cloud redundancy
 🎯 Point-in-time: Récupération à n'importe quel moment
-"""__version__ = "3.0.0"
+"""
+__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __team__ = "Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices"
 
@@ -52,6 +53,7 @@ from .index import BackupIndex
 # Backup Types Enumeration
 class BackupType(str, Enum):
     """Types de sauvegarde supportés"""
+
     FULL = "full"                    # Sauvegarde complète
     INCREMENTAL = "incremental"      # Sauvegarde incrémentale
     DIFFERENTIAL = "differential"    # Sauvegarde différentielle
@@ -61,6 +63,7 @@ class BackupType(str, Enum):
 
 class BackupPriority(str, Enum):
     """Priorités de sauvegarde"""
+
     CRITICAL = "critical"           # Contenu critique (revenus)
     HIGH = "high"                  # Contenu haute valeur
     MEDIUM = "medium"              # Contenu standard
@@ -69,6 +72,7 @@ class BackupPriority(str, Enum):
 
 class StorageClass(str, Enum):
     """Classes de stockage optimisées"""
+
     HOT = "hot"                    # Accès fréquent (< 1 mois)
     WARM = "warm"                  # Accès occasionnel (1-6 mois)
     COLD = "cold"                  # Accès rare (6 mois - 2 ans)
@@ -176,11 +180,13 @@ def get_backup_manager() -> BackupManager:
     return BackupManager()
 
 def get_recovery_engine() -> RecoveryEngine:
-    """Factory function pour obtenir le moteur de récupération"""
+    """
+Factory function pour obtenir le moteur de récupération"""
     return RecoveryEngine()
 
 def initialize_backup_system() -> None:
-    """Initialise le système de sauvegarde avec la configuration par défaut"""
+    """
+Initialise le système de sauvegarde avec la configuration par défaut"""
     logger.info("Initializing backup system for IA Influencer Agent Platform")
     
     # Vérification des dépendances

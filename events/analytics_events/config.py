@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
@@ -19,7 +20,9 @@ import os
 
 
 class AnalyticsEnvironment(Enum):
-    """Analytics environment types"""
+    """
+Analytics environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -28,6 +31,7 @@ class AnalyticsEnvironment(Enum):
 
 class MLModelType(Enum):
     """Machine learning model types"""
+
     ENGAGEMENT_PREDICTOR = "engagement_predictor"
     REVENUE_FORECASTER = "revenue_forecaster"
     COLLABORATION_MATCHER = "collaboration_matcher"
@@ -118,7 +122,8 @@ class PerformanceThresholds:
 
 @dataclass
 class StreamingConfig:
-    """Real-time streaming configuration"""
+    """
+Real-time streaming configuration"""
     kafka_brokers: List[str] = field(default_factory=lambda: ["localhost:9092"])
     kafka_topics: Dict[str, str] = field(default_factory=lambda: {
         "engagement_events": "analytics.engagement",
@@ -201,7 +206,8 @@ class OptimizationConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Third-party integration configuration"""
+    """
+Third-party integration configuration"""
     # Payment processors
     stripe_api_key: str = "sk_test_..."
     stripe_webhook_secret: str = "whsec_..."
@@ -331,7 +337,8 @@ class AnalyticsConfig:
             self._load_testing_config()
     
     def _load_production_config(self) -> None:
-        """Load production environment configuration"""
+        """
+Load production environment configuration"""
         # Database configuration
         self.database.host = os.getenv("PROD_DB_HOST", "prod-analytics-db.cluster-xyz.eu-central-1.rds.amazonaws.com")
         self.database.port = int(os.getenv("PROD_DB_PORT", "5432"))
@@ -388,15 +395,18 @@ class AnalyticsConfig:
         return self.ml_models.get(model_type)
     
     def update_model_config(self, model_type: MLModelType, config: MLModelConfig) -> None:
-        """Update configuration for specific ML model"""
+        """
+Update configuration for specific ML model"""
         self.ml_models[model_type] = config
     
     def get_threshold(self, threshold_name: str) -> Any:
-        """Get specific performance threshold"""
+        """
+Get specific performance threshold"""
         return getattr(self.thresholds, threshold_name, None)
     
     def validate_config(self) -> bool:
-        """Validate configuration completeness and correctness"""
+        """
+Validate configuration completeness and correctness"""
         try:
             # Validate database configuration
             if not all([self.database.host, self.database.database, 
@@ -422,7 +432,8 @@ class AnalyticsConfig:
             return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         return {
             "environment": self.environment.value,
             "database": self.database.__dict__,

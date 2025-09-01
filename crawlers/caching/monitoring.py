@@ -9,6 +9,7 @@ alerting, and real-time analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -28,7 +29,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -37,6 +40,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Monitoring metric types."""
+
     HIT_RATE = "hit_rate"
     MISS_RATE = "miss_rate"
     RESPONSE_TIME = "response_time"
@@ -50,6 +54,7 @@ class MetricType(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring system status."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -66,7 +71,8 @@ class MetricData:
 
 @dataclass
 class Alert:
-    """Monitoring alert."""
+    """
+Monitoring alert."""
     alert_id: str
     severity: AlertSeverity
     metric_type: MetricType
@@ -81,7 +87,8 @@ class Alert:
 
 @dataclass
 class Threshold:
-    """Monitoring threshold."""
+    """
+Monitoring threshold."""
     metric_type: MetricType
     operator: str  # >, <, >=, <=, ==, !=
     value: float
@@ -692,7 +699,8 @@ class AlertManager:
     """Manage alert notifications and escalations."""
     
     def __init__(self):
-        """Initialize alert manager."""
+        """
+Initialize alert manager."""
         self.notification_channels: List[Callable] = []
         self.escalation_rules: List[Dict[str, Any]] = []
         self.logger = logging.getLogger(f"{__name__}.AlertManager")
@@ -702,7 +710,8 @@ class AlertManager:
         self.notification_channels.append(handler)
     
     async def handle_alert(self, alert: Alert) -> None:
-        """Handle alert notification."""
+        """
+Handle alert notification."""
         try:
             for channel in self.notification_channels:
                 try:
@@ -720,7 +729,8 @@ class MetricsExporter:
     """Export metrics to external systems."""
     
     def __init__(self, monitor: CacheMonitor):
-        """Initialize metrics exporter."""
+        """
+Initialize metrics exporter."""
         self.monitor = monitor
         self.exporters: List[Callable] = []
         self.logger = logging.getLogger(f"{__name__}.MetricsExporter")
@@ -730,7 +740,8 @@ class MetricsExporter:
         self.exporters.append(exporter)
     
     async def export_metrics(self, time_range_hours: int = 1) -> None:
-        """Export metrics to external systems."""
+        """
+Export metrics to external systems."""
         try:
             summary = await self.monitor.get_metrics_summary(time_range_hours=time_range_hours)
             

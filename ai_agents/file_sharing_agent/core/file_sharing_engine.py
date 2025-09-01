@@ -5,6 +5,7 @@ Core engine for file sharing operations with enterprise-grade file sharing capab
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FileSharingJob:
-    """File Sharing operation job"""
+    """
+File Sharing operation job"""
     job_id: str
     operation_type: str
     data: Optional[Dict[str, Any]] = None
@@ -24,7 +26,8 @@ class FileSharingJob:
 
 @dataclass
 class FileSharingResult:
-    """File Sharing operation result"""
+    """
+File Sharing operation result"""
     job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
@@ -33,7 +36,8 @@ class FileSharingResult:
     completed_at: datetime = None
 
 class FileSharingEngine:
-    """Core file sharing processing engine"""
+    """
+Core file sharing processing engine"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}

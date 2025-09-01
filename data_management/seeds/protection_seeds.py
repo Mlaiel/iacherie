@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels available on the platform."""
+    """
+Content protection levels available on the platform."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -27,6 +30,7 @@ class ProtectionLevel(str, Enum):
 
 class DetectionMethod(str, Enum):
     """AI detection methods for content protection."""
+
     FINGERPRINTING = "fingerprinting"
     WATERMARKING = "watermarking"
     BLOCKCHAIN = "blockchain"
@@ -37,6 +41,7 @@ class DetectionMethod(str, Enum):
 
 class ThreatLevel(str, Enum):
     """Threat levels for content violations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -46,6 +51,7 @@ class ThreatLevel(str, Enum):
 
 class ResponseAction(str, Enum):
     """Automated response actions for detected violations."""
+
     MONITOR = "monitor"
     ALERT = "alert"
     TAKEDOWN_REQUEST = "takedown_request"
@@ -57,6 +63,7 @@ class ResponseAction(str, Enum):
 
 class ContentType(str, Enum):
     """Content types for protection."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -67,6 +74,7 @@ class ContentType(str, Enum):
 
 class PlatformScope(str, Enum):
     """Platforms to monitor for content protection."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -96,7 +104,8 @@ class ProtectionConfiguration:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert structure."""
+    """
+Content violation alert structure."""
     alert_id: str
     content_id: str
     violation_type: str
@@ -127,7 +136,8 @@ class ProtectionSeedsManager:
     """
     
     def __init__(self):
-        """Initialize protection seeds manager with enterprise configurations."""
+        """
+Initialize protection seeds manager with enterprise configurations."""
         self.protection_policies = {}
         self.detection_algorithms = {}
         self.response_strategies = {}
@@ -140,7 +150,8 @@ class ProtectionSeedsManager:
         self.analytics_configurations = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all protection-related seed data with full enterprise support."""
+        """
+Initialize all protection-related seed data with full enterprise support."""
         logger.info("Initializing comprehensive protection seeds data...")
         start_time = datetime.now(timezone.utc)
         
@@ -366,7 +377,8 @@ class ProtectionSeedsManager:
         }
     
     async def _initialize_detection_methods(self) -> Dict[str, Any]:
-        """Initialize AI detection methods and algorithms."""
+        """
+Initialize AI detection methods and algorithms."""
         detection_methods = {
             DetectionMethod.FINGERPRINTING: {
                 'name': 'AI Fingerprinting',
@@ -626,7 +638,8 @@ class ProtectionSeedsManager:
         }
     
     async def _initialize_threat_assessment(self) -> Dict[str, Any]:
-        """Initialize threat assessment configurations and scoring."""
+        """
+Initialize threat assessment configurations and scoring."""
         threat_assessment = {
             ThreatLevel.LOW: {
                 'score_range': [0, 25],
@@ -761,7 +774,8 @@ class ProtectionSeedsManager:
         }
     
     async def _initialize_response_strategies(self) -> Dict[str, Any]:
-        """Initialize automated response strategies for different threat levels."""
+        """
+Initialize automated response strategies for different threat levels."""
         response_strategies = {
             ResponseAction.MONITOR: {
                 'name': 'Monitor Only',
@@ -908,7 +922,8 @@ class ProtectionSeedsManager:
         }
     
     async def _initialize_platform_monitoring(self) -> Dict[str, Any]:
-        """Initialize platform-specific monitoring configurations."""
+        """
+Initialize platform-specific monitoring configurations."""
         platform_configs = {
             'youtube': {
                 'api_endpoints': {
@@ -1000,7 +1015,8 @@ class ProtectionSeedsManager:
         }
     
     async def _initialize_legal_frameworks(self) -> Dict[str, Any]:
-        """Initialize legal framework configurations for different jurisdictions."""
+        """
+Initialize legal framework configurations for different jurisdictions."""
         legal_frameworks = {
             'european_union': {
                 'applicable_laws': [
@@ -1095,7 +1111,8 @@ class ProtectionSeedsManager:
         }
     
     async def _initialize_security_protocols(self) -> Dict[str, Any]:
-        """Initialize security protocols for content protection."""
+        """
+Initialize security protocols for content protection."""
         security_protocols = {
             'data_encryption': {
                 'at_rest': {
@@ -1172,7 +1189,8 @@ class ProtectionSeedsManager:
         }
     
     async def _initialize_alert_configurations(self) -> Dict[str, Any]:
-        """Initialize alert and notification configurations."""
+        """
+Initialize alert and notification configurations."""
         alert_configs = {
             'alert_types': {
                 'content_detection': {
@@ -1266,7 +1284,8 @@ class ProtectionSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all protection seed data (use with caution)."""
+        """
+Reset all protection seed data (use with caution)."""
         logger.warning("Resetting protection seeds data...")
         
         self.protection_policies.clear()

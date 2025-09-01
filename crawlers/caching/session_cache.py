@@ -9,6 +9,7 @@ with intelligent session lifecycle management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -25,7 +26,9 @@ from .cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class SessionType(Enum):
-    """Session type enumeration."""
+    """
+Session type enumeration."""
+
     USER = "user"
     CRAWLER = "crawler"
     API = "api"
@@ -49,20 +52,23 @@ class SessionData:
     user_agent: Optional[str] = None
     
     def is_expired(self) -> bool:
-        """Check if session is expired."""
+        """
+Check if session is expired."""
         if self.expires_at is None:
             return False
         return datetime.now() > self.expires_at
     
     def extend_session(self, extension_seconds: int) -> None:
-        """Extend session expiration."""
+        """
+Extend session expiration."""
         if self.expires_at:
             self.expires_at += timedelta(seconds=extension_seconds)
         else:
             self.expires_at = datetime.now() + timedelta(seconds=extension_seconds)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
+        """
+Convert to dictionary for serialization."""
         return {
             "session_id": self.session_id,
             "session_type": self.session_type.value,
@@ -155,7 +161,8 @@ class SessionCache:
         return self.cache_manager
     
     def _make_session_key(self, session_id: str) -> str:
-        """Create session cache key."""
+        """
+Create session cache key."""
         return f"{self.session_key_prefix}{session_id}"
     
     def _make_user_index_key(self, user_id: str) -> str:
@@ -529,7 +536,8 @@ class UserCache(SessionCache):
     """
     
     def __init__(self, **kwargs):
-        """Initialize user cache."""
+        """
+Initialize user cache."""
         super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.UserCache")
         
@@ -544,7 +552,8 @@ class CrawlerSessionCache(SessionCache):
     """
     
     def __init__(self, **kwargs):
-        """Initialize crawler session cache."""
+        """
+Initialize crawler session cache."""
         super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.CrawlerSessionCache")
         

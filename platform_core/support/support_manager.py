@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE SUPPORT CLIENT ENTERPRISE
@@ -15,6 +15,7 @@ Support intelligent avec IA et automatisation avancée
 - Knowledge base avec recherche sémantique
 - Analytics et KPIs de satisfaction client
 """
+
 import asyncio
 import logging
 import json
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class TicketStatus(Enum):
-    """Statuts des tickets"""
+    """
+Statuts des tickets"""
+
     OPEN = "open"
     IN_PROGRESS = "in_progress"
     PENDING_CUSTOMER = "pending_customer"
@@ -40,6 +43,7 @@ class TicketStatus(Enum):
 
 class TicketPriority(Enum):
     """Priorités des tickets"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -49,6 +53,7 @@ class TicketPriority(Enum):
 
 class TicketCategory(Enum):
     """Catégories de tickets"""
+
     TECHNICAL = "technical"
     BILLING = "billing"
     ACCOUNT = "account"
@@ -61,6 +66,7 @@ class TicketCategory(Enum):
 
 class AgentType(Enum):
     """Types d'agents de support"""
+
     AI_BOT = "ai_bot"
     HUMAN_AGENT = "human_agent"
     SPECIALIST = "specialist"
@@ -88,7 +94,8 @@ class SupportTicket:
 
 @dataclass
 class TicketMessage:
-    """Message dans un ticket"""
+    """
+Message dans un ticket"""
     message_id: str
     ticket_id: str
     sender_id: str
@@ -102,7 +109,8 @@ class TicketMessage:
 
 @dataclass
 class KnowledgeBaseArticle:
-    """Article de la base de connaissances"""
+    """
+Article de la base de connaissances"""
     article_id: str
     title: str
     content: str
@@ -119,7 +127,8 @@ class KnowledgeBaseArticle:
 
 @dataclass
 class ChatSession:
-    """Session de chat live"""
+    """
+Session de chat live"""
     session_id: str
     user_id: str
     agent_id: Optional[str]
@@ -132,7 +141,8 @@ class ChatSession:
 
 
 class SupportManager:
-    """Gestionnaire principal du support"""
+    """
+Gestionnaire principal du support"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -502,7 +512,8 @@ class KnowledgeBaseManager:
         self._create_default_articles()
     
     def _create_default_articles(self) -> None:
-        """Créer les articles par défaut"""
+        """
+Créer les articles par défaut"""
         default_articles = [
             KnowledgeBaseArticle(
                 article_id="getting_started",

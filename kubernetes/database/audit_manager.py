@@ -71,6 +71,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Index optimization
 - Query performance monitoring
 """
+
 import asyncio
 import json
 import hashlib
@@ -97,7 +98,8 @@ from backend.deployment.database.encryption_manager import get_encryption_manage
 
 
 class AuditEventType(Enum):
-    """Types d'événements d'audit"""
+    """
+Types d'événements d'audit"""
     # Database operations
     DATABASE_CREATE = "database_create"
     DATABASE_DROP = "database_drop"
@@ -149,6 +151,7 @@ class AuditEventType(Enum):
 
 class AuditSeverity(Enum):
     """Niveaux de gravité des événements"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -158,6 +161,7 @@ class AuditSeverity(Enum):
 
 class ComplianceFramework(Enum):
     """Frameworks de compliance supportés"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
@@ -1098,7 +1102,8 @@ class DatabaseAuditManager:
             return False
     
     async def _verify_checksum(self, audit_record: Dict[str, Any]) -> bool:
-        """Vérifie le checksum d'un enregistrement d'audit"""
+        """
+Vérifie le checksum d'un enregistrement d'audit"""
         try:
             if not audit_record.get('checksum'):
                 return False
@@ -1119,7 +1124,8 @@ class DatabaseAuditManager:
             return False
     
     async def _send_integrity_alert(self, results: Dict[str, Any]):
-        """Envoie une alerte en cas de problème d'intégrité"""
+        """
+Envoie une alerte en cas de problème d'intégrité"""
         try:
             alert_message = f"""
             🚨 AUDIT INTEGRITY ALERT 🚨
@@ -1357,7 +1363,8 @@ class DatabaseAuditManager:
         }
     
     async def _analyze_hipaa_compliance(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse de conformité HIPAA"""
+        """
+Analyse de conformité HIPAA"""
         # Implementation for HIPAA healthcare compliance
         return {
             'phi_access': 0,
@@ -1367,7 +1374,8 @@ class DatabaseAuditManager:
         }
     
     async def _analyze_pci_compliance(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse de conformité PCI DSS"""
+        """
+Analyse de conformité PCI DSS"""
         # Implementation for PCI payment card compliance
         return {
             'cardholder_data_access': 0,
@@ -1381,7 +1389,8 @@ class DatabaseAuditManager:
         events: List[Dict[str, Any]],
         framework: ComplianceFramework
     ) -> List[Dict[str, Any]]:
-        """Détecte les violations de compliance"""
+        """
+Détecte les violations de compliance"""
         violations = []
         
         try:
@@ -1430,7 +1439,8 @@ class DatabaseAuditManager:
         report: Dict[str, Any],
         framework: ComplianceFramework
     ) -> List[str]:
-        """Génère des recommandations de compliance"""
+        """
+Génère des recommandations de compliance"""
         recommendations = []
         
         try:
@@ -1785,7 +1795,8 @@ async def audit_log(
     user_id: Optional[str] = None,
     **kwargs
 ) -> str:
-    """Interface simplifiée pour l'audit logging"""
+    """
+Interface simplifiée pour l'audit logging"""
     manager = get_audit_manager()
     return await manager.log_audit_event(event_type, user_id, **kwargs)
 

@@ -8,7 +8,7 @@ Enterprise backup storage management with automated scheduling,
 incremental backups, verification, and multi-tier restoration.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 ÉQUIPE PROJET - SPÉCIALITÉS:
@@ -17,6 +17,7 @@ Contact: mlaiel@live.de
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 import logging
 import asyncio
@@ -37,7 +38,9 @@ import tempfile
 logger = logging.getLogger(__name__)
 
 class BackupType(Enum):
-    """Types of backup operations"""
+    """
+Types of backup operations"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -46,6 +49,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup operation status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -55,6 +59,7 @@ class BackupStatus(Enum):
 
 class RestoreStrategy(Enum):
     """Data restoration strategies"""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
@@ -88,7 +93,8 @@ class BackupJob:
 
 @dataclass
 class BackupRecord:
-    """Record of a completed backup operation"""
+    """
+Record of a completed backup operation"""
     backup_id: str
     job_id: str
     backup_type: BackupType
@@ -150,7 +156,8 @@ class BackupStorageManager:
     """
     
     def __init__(self, config: BackupConfig):
-        """Initialize backup storage manager"""
+        """
+Initialize backup storage manager"""
         self.config = config
         self.backup_jobs: Dict[str, BackupJob] = {}
         self.backup_records: Dict[str, BackupRecord] = {}
@@ -737,7 +744,8 @@ class BackupStorageManager:
             return False
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
-        """Calculate SHA-256 checksum of file"""
+        """
+Calculate SHA-256 checksum of file"""
         try:
             hash_sha256 = hashlib.sha256()
             
@@ -782,7 +790,8 @@ class BackupStorageManager:
             self.metrics['failed_backups'] += 1
     
     async def _save_job_configuration(self, backup_job: BackupJob) -> None:
-        """Save backup job configuration to disk"""
+        """
+Save backup job configuration to disk"""
         try:
             config_path = Path(self.config.backup_root_path) / "metadata" / f"{backup_job.job_id}.json"
             
@@ -846,17 +855,20 @@ class BackupScheduler:
     """Manages backup job scheduling"""
     
     def __init__(self, backup_manager: BackupStorageManager):
-        """Initialize backup scheduler"""
+        """
+Initialize backup scheduler"""
         self.backup_manager = backup_manager
         self.scheduled_jobs: Dict[str, asyncio.Task] = {}
         self.scheduler_task = None
     
     async def start(self) -> None:
-        """Start the backup scheduler"""
+        """
+Start the backup scheduler"""
         self.scheduler_task = asyncio.create_task(self._scheduler_loop())
     
     async def stop(self) -> None:
-        """Stop the backup scheduler"""
+        """
+Stop the backup scheduler"""
         if self.scheduler_task:
             self.scheduler_task.cancel()
         
@@ -865,13 +877,15 @@ class BackupScheduler:
             task.cancel()
     
     async def add_job(self, backup_job: BackupJob) -> None:
-        """Add job to scheduler"""
+        """
+Add job to scheduler"""
         # Schedule next execution
         if backup_job.enabled and backup_job.schedule:
             self._schedule_next_execution(backup_job)
     
     def _schedule_next_execution(self, backup_job: BackupJob) -> None:
-        """Schedule next execution of backup job"""
+        """
+Schedule next execution of backup job"""
         try:
             cron = croniter.croniter(backup_job.schedule, datetime.now())
             next_run = cron.get_next(datetime)
@@ -912,11 +926,13 @@ class BackupVerifier:
     """Verifies backup integrity"""
     
     def __init__(self, backup_manager: BackupStorageManager):
-        """Initialize backup verifier"""
+        """
+Initialize backup verifier"""
         self.backup_manager = backup_manager
     
     async def verify_backup(self, backup_record: BackupRecord) -> Dict[str, Any]:
-        """Verify backup integrity"""
+        """
+Verify backup integrity"""
         try:
             backup_path = Path(backup_record.backup_path)
             
@@ -979,7 +995,8 @@ class IncrementalBackupEngine:
     """Handles incremental backup operations"""
     
     def __init__(self, backup_manager: BackupStorageManager):
-        """Initialize incremental backup engine"""
+        """
+Initialize incremental backup engine"""
         self.backup_manager = backup_manager
         self.file_cache: Dict[str, Dict[str, Any]] = {}
     
@@ -988,7 +1005,8 @@ class IncrementalBackupEngine:
         backup_job: BackupJob,
         backup_record: BackupRecord
     ) -> Dict[str, Any]:
-        """Execute incremental backup"""
+        """
+Execute incremental backup"""
         try:
             # Find last full backup
             last_full_backup = await self._find_last_full_backup(backup_job.job_id)
@@ -1042,7 +1060,8 @@ class IncrementalBackupEngine:
         backup_job: BackupJob,
         last_backup: BackupRecord
     ) -> List[str]:
-        """Find files that changed since last backup"""
+        """
+Find files that changed since last backup"""
         changed_files = []
         last_backup_time = last_backup.start_time
         
@@ -1076,7 +1095,8 @@ class IncrementalBackupEngine:
         backup_record: BackupRecord,
         changed_files: List[str]
     ) -> Dict[str, Any]:
-        """Create incremental backup archive"""
+        """
+Create incremental backup archive"""
         try:
             # Create backup file path
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -1124,7 +1144,8 @@ class SnapshotManager:
     """Manages snapshot-based backups"""
     
     def __init__(self, backup_manager: BackupStorageManager):
-        """Initialize snapshot manager"""
+        """
+Initialize snapshot manager"""
         self.backup_manager = backup_manager
     
     async def create_snapshot(
@@ -1132,7 +1153,8 @@ class SnapshotManager:
         backup_job: BackupJob,
         backup_record: BackupRecord
     ) -> Dict[str, Any]:
-        """Create snapshot backup"""
+        """
+Create snapshot backup"""
         try:
             # For this implementation, snapshot is similar to full backup
             # In a real system, this might use filesystem snapshots (LVM, ZFS, etc.)

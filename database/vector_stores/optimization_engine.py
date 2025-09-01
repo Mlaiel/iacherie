@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -47,7 +48,9 @@ settings = get_settings()
 
 
 class OptimizationStrategy(Enum):
-    """Vector database optimization strategies"""
+    """
+Vector database optimization strategies"""
+
     PERFORMANCE = "performance"      # Focus on query speed
     MEMORY = "memory"               # Focus on memory efficiency
     BALANCED = "balanced"           # Balance speed and memory
@@ -57,6 +60,7 @@ class OptimizationStrategy(Enum):
 
 class IndexType(Enum):
     """FAISS index types for optimization"""
+
     FLAT = "Flat"                   # Brute force, exact search
     IVF_FLAT = "IVFFlat"           # Inverted file with flat quantizer
     IVF_PQ = "IVFPQ"               # Inverted file with product quantization
@@ -81,7 +85,8 @@ class OptimizationConfig:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for optimization analysis"""
+    """
+Performance metrics for optimization analysis"""
     query_latency_ms: float
     memory_usage_mb: float
     accuracy_score: float
@@ -94,7 +99,8 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization process"""
+    """
+Result of optimization process"""
     original_metrics: PerformanceMetrics
     optimized_metrics: PerformanceMetrics
     improvement_ratio: float
@@ -118,7 +124,8 @@ class VectorDatabaseOptimizer:
     """
     
     def __init__(self):
-        """Initialize vector database optimizer"""
+        """
+Initialize vector database optimizer"""
         self.vector_manager = VectorStoreManager()
         self.metrics_collector = MetricsCollector()
         self.automl_optimizer = AutoMLOptimizer()
@@ -725,7 +732,8 @@ class VectorDatabaseOptimizer:
             return 0.0
     
     async def _collect_baseline_metrics(self, content_type: str) -> PerformanceMetrics:
-        """Collect baseline performance metrics"""
+        """
+Collect baseline performance metrics"""
         try:
             # Generate sample data for testing
             test_vectors = await self._generate_test_vectors(content_type, 100)

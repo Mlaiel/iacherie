@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 from typing import Dict, List, Type, Any
 import logging
 
@@ -35,7 +36,8 @@ class FingerprintingIndex:
     """
     
     def __init__(self):
-        """Initialize the fingerprinting index"""
+        """
+Initialize the fingerprinting index"""
         self._engines = {}
         self._services = {}
         self._initialized = False
@@ -43,7 +45,8 @@ class FingerprintingIndex:
         self._initialize_components()
     
     def _initialize_components(self):
-        """Initialize all fingerprinting components"""
+        """
+Initialize all fingerprinting components"""
         try:
             # Core engines
             self._engines = {
@@ -74,7 +77,8 @@ class FingerprintingIndex:
     
     @property
     def services(self) -> Dict[str, Type]:
-        """Get available fingerprinting services"""
+        """
+Get available fingerprinting services"""
         return self._services.copy()
     
     def get_engine(self, content_type: str) -> Type:
@@ -262,23 +266,28 @@ fingerprinting_index = FingerprintingIndex()
 
 # Convenience functions
 def get_fingerprinting_system() -> Dict[str, Any]:
-    """Get complete fingerprinting system"""
+    """
+Get complete fingerprinting system"""
     return fingerprinting_index.create_complete_fingerprinting_system()
 
 def get_engine_for_content(content_type: str) -> Type:
-    """Get appropriate engine for content type"""
+    """
+Get appropriate engine for content type"""
     return fingerprinting_index.get_engine(content_type)
 
 def get_supported_formats() -> Dict[str, List[str]]:
-    """Get supported file formats"""
+    """
+Get supported file formats"""
     return fingerprinting_index.get_supported_formats()
 
 def validate_fingerprinting_system() -> Dict[str, bool]:
-    """Validate system requirements"""
+    """
+Validate system requirements"""
     return fingerprinting_index.validate_system_requirements()
 
 def get_fingerprinting_info() -> Dict[str, Any]:
-    """Get comprehensive fingerprinting system information"""
+    """
+Get comprehensive fingerprinting system information"""
     return fingerprinting_index.get_system_info()
 
 

@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 import secrets
 from typing import Dict, List, Optional, Any, Union
@@ -18,7 +19,9 @@ from passlib.context import CryptContext
 
 
 class AuthenticationMethod(Enum):
-    """Supported authentication methods"""
+    """
+Supported authentication methods"""
+
     JWT = "jwt"
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
@@ -28,6 +31,7 @@ class AuthenticationMethod(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Supported encryption algorithms"""
+
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
@@ -211,7 +215,8 @@ class SecurityConfig:
         self._setup_encryption()
     
     def _validate_configuration(self):
-        """Validate security configuration parameters"""
+        """
+Validate security configuration parameters"""
         if self.jwt_access_token_expire_minutes <= 0:
             raise ValueError("JWT access token expiration must be positive")
         
@@ -257,30 +262,36 @@ class SecurityConfig:
     
     @property
     def jwt_access_token_expire_delta(self) -> timedelta:
-        """Get JWT access token expiration as timedelta"""
+        """
+Get JWT access token expiration as timedelta"""
         return timedelta(minutes=self.jwt_access_token_expire_minutes)
     
     @property
     def jwt_refresh_token_expire_delta(self) -> timedelta:
-        """Get JWT refresh token expiration as timedelta"""
+        """
+Get JWT refresh token expiration as timedelta"""
         return timedelta(days=self.jwt_refresh_token_expire_days)
     
     @property
     def session_timeout_delta(self) -> timedelta:
-        """Get session timeout as timedelta"""
+        """
+Get session timeout as timedelta"""
         return timedelta(minutes=self.session_timeout_minutes)
     
     @property
     def login_lockout_delta(self) -> timedelta:
-        """Get login lockout duration as timedelta"""
+        """
+Get login lockout duration as timedelta"""
         return timedelta(minutes=self.login_lockout_duration_minutes)
     
     def hash_password(self, password: str) -> str:
-        """Hash a password using configured algorithm"""
+        """
+Hash a password using configured algorithm"""
         return self.password_context.hash(password)
     
     def verify_password(self, password: str, hashed: str) -> bool:
-        """Verify a password against its hash"""
+        """
+Verify a password against its hash"""
         return self.password_context.verify(password, hashed)
     
     def encrypt_data(self, data: str) -> str:
@@ -496,11 +507,13 @@ class SecurityConfig:
         return secrets.token_urlsafe(self.api_key_length)
     
     def generate_csrf_token(self) -> str:
-        """Generate CSRF token"""
+        """
+Generate CSRF token"""
         return secrets.token_urlsafe(32)
     
     def create_hmac_signature(self, data: str) -> str:
-        """Create HMAC signature for data integrity"""
+        """
+Create HMAC signature for data integrity"""
         return hmac.new(
             self.secret_key.encode(),
             data.encode(),
@@ -508,12 +521,14 @@ class SecurityConfig:
         ).hexdigest()
     
     def verify_hmac_signature(self, data: str, signature: str) -> bool:
-        """Verify HMAC signature"""
+        """
+Verify HMAC signature"""
         expected_signature = self.create_hmac_signature(data)
         return hmac.compare_digest(signature, expected_signature)
     
     def validate_password_strength(self, password: str) -> Dict[str, bool]:
-        """Validate password against security requirements"""
+        """
+Validate password against security requirements"""
         validations = {
             'min_length': len(password) >= self.password_min_length,
             'has_uppercase': any(c.isupper() for c in password) if self.password_require_uppercase else True,
@@ -530,7 +545,8 @@ class SecurityConfig:
         return all(validations.values())
     
     def get_csp_header(self) -> str:
-        """Generate Content Security Policy header"""
+        """
+Generate Content Security Policy header"""
         if not self.csp_enabled:
             return ""
         
@@ -567,7 +583,8 @@ class SecurityConfig:
         return content_type in self.allowed_file_types
     
     def get_oauth_config(self, provider: str) -> Optional[Dict[str, str]]:
-        """Get OAuth configuration for specific provider"""
+        """
+Get OAuth configuration for specific provider"""
         oauth_configs = {
             "google": {
                 "client_id": self.google_oauth_client_id,

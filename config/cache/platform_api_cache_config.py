@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Optional, List, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,7 +25,9 @@ from pydantic import BaseModel, validator
 
 
 class PlatformType(str, Enum):
-    """Supported external platforms"""
+    """
+Supported external platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -70,6 +73,7 @@ class APIEndpointType(str, Enum):
 
 class CacheDataType(str, Enum):
     """Types of data being cached"""
+
     JSON = "json"
     XML = "xml"
     BINARY = "binary"
@@ -92,7 +96,8 @@ class RateLimitConfig:
 
 @dataclass
 class PlatformAPISettings:
-    """Cache settings for individual platform API"""
+    """
+Cache settings for individual platform API"""
     platform: PlatformType
     endpoint_type: APIEndpointType
     data_type: CacheDataType
@@ -109,7 +114,8 @@ class PlatformAPISettings:
 
 @dataclass
 class PlatformAPICacheConfig:
-    """Complete configuration for platform API caching"""
+    """
+Complete configuration for platform API caching"""
     
     # Cache identification
     cache_name: str = "platform_apis"
@@ -298,7 +304,8 @@ class PlatformAPICacheConfig:
     
     def get_settings_for_platform_endpoint(self, platform: PlatformType, 
                                          endpoint: APIEndpointType) -> Optional[PlatformAPISettings]:
-        """Get cache settings for specific platform and endpoint"""
+        """
+Get cache settings for specific platform and endpoint"""
         all_configs = self.get_all_platform_configs()
         for config in all_configs.values():
             if config.platform == platform and config.endpoint_type == endpoint:
@@ -307,7 +314,8 @@ class PlatformAPICacheConfig:
 
 
 class PlatformAPICacheManager:
-    """Manager for platform API cache operations"""
+    """
+Manager for platform API cache operations"""
     
     def __init__(self, config: PlatformAPICacheConfig):
         self.config = config
@@ -316,14 +324,16 @@ class PlatformAPICacheManager:
         self._api_quotas = {}
     
     def generate_params_hash(self, params: Dict[str, Any]) -> str:
-        """Generate consistent hash for API parameters"""
+        """
+Generate consistent hash for API parameters"""
         # Sort parameters for consistent hashing
         sorted_params = sorted(params.items())
         params_str = str(sorted_params)
         return hashlib.sha256(params_str.encode()).hexdigest()[:16]
     
     def check_rate_limit(self, platform: PlatformType, endpoint: APIEndpointType) -> bool:
-        """Check if request is within rate limits"""
+        """
+Check if request is within rate limits"""
         settings = self.config.get_settings_for_platform_endpoint(platform, endpoint)
         if not settings:
             return True

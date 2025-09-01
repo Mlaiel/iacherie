@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -20,6 +20,7 @@ Matching collaboration + gamifications → Distribution multi-plateformes → Re
 
 ARCHITECTURE: Enterprise-grade service pour remix IA industriel avec sécurité avancée
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -35,7 +36,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class RemixContentType(Enum):
-    """Supported content types for remix processing."""
+    """
+Supported content types for remix processing."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -44,6 +47,7 @@ class RemixContentType(Enum):
 
 class RemixQualityLevel(Enum):
     """Quality levels for remix processing."""
+
     STANDARD = "standard"
     HIGH = "high"
     PROFESSIONAL = "professional"
@@ -51,6 +55,7 @@ class RemixQualityLevel(Enum):
 
 class RemixProcessingStatus(Enum):
     """Processing status for remix operations."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -72,7 +77,8 @@ class RemixRequest:
     created_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
+        """
+Convert to dictionary representation."""
         return {
             "request_id": self.request_id,
             "user_id": self.user_id,
@@ -100,7 +106,8 @@ class RemixResult:
     completed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
+        """
+Convert to dictionary representation."""
         return {
             "request_id": self.request_id,
             "result_id": self.result_id,
@@ -430,7 +437,8 @@ class RemixSecurityManager:
         self.config = config
     
     async def validate_request(self, request: RemixRequest) -> Dict[str, Any]:
-        """Validate security aspects of remix request."""
+        """
+Validate security aspects of remix request."""
         try:
             # Security validation logic
             return {
@@ -451,7 +459,8 @@ class RemixPerformanceOptimizer:
         self.config = config
     
     async def optimize_output(self, output_path: str) -> Dict[str, Any]:
-        """Optimize output for performance."""
+        """
+Optimize output for performance."""
         try:
             return {
                 "output_path": output_path,
@@ -485,7 +494,8 @@ class RemixConfigurationManager:
         return self.config.get(key, self.default_config.get(key))
     
     def update_configuration(self, updates: Dict[str, Any]) -> bool:
-        """Update configuration."""
+        """
+Update configuration."""
         try:
             self.config.update(updates)
             return True

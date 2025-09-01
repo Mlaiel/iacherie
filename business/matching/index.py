@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 from typing import Dict, Any, List, Optional
 import logging
 
@@ -74,7 +75,7 @@ __all__ = [
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 def get_module_info() -> Dict[str, Any]:
     """Get comprehensive module information"""
@@ -103,7 +104,8 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 def validate_module_integrity() -> Dict[str, bool]:
-    """Validate that all required modules are properly loaded"""
+    """
+Validate that all required modules are properly loaded"""
     validation_results = {}
     
     try:

@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import logging
 from typing import Dict, Any, Optional, Type, Union
 
@@ -514,17 +515,20 @@ def get_module_info() -> Dict[str, Any]:
 
 
 def list_available_processors() -> List[str]:
-    """List all available processor types"""
+    """
+List all available processor types"""
     return list(PROCESSOR_FACTORIES.keys())
 
 
 def get_processor_class(processor_type: str) -> Optional[Type]:
-    """Get processor class by type"""
+    """
+Get processor class by type"""
     return PROCESSOR_CLASSES.get(processor_type)
 
 
 def is_processor_available(processor_type: str) -> bool:
-    """Check if a processor type is available"""
+    """
+Check if a processor type is available"""
     return processor_type in PROCESSOR_FACTORIES
 
 

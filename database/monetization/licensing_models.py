@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -43,7 +44,8 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
     # Music licensing
     SYNCHRONIZATION = "synchronization"  # Sync rights for media
     MECHANICAL = "mechanical"  # Reproduction rights
@@ -90,6 +92,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License agreement status"""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     UNDER_NEGOTIATION = "under_negotiation"
@@ -104,6 +107,7 @@ class LicenseStatus(Enum):
 
 class RoyaltyType(Enum):
     """Types of royalty calculations"""
+
     PERCENTAGE = "percentage"  # Percentage of revenue
     FLAT_FEE = "flat_fee"  # Fixed amount
     PER_UNIT = "per_unit"  # Per play/download/view
@@ -115,6 +119,7 @@ class RoyaltyType(Enum):
 
 class PaymentFrequency(Enum):
     """Payment frequency for royalties"""
+
     REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -127,6 +132,7 @@ class PaymentFrequency(Enum):
 
 class Territory(Enum):
     """Geographic territories for licensing"""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -157,6 +163,7 @@ class Territory(Enum):
 
 class UsageRights(Enum):
     """Specific usage rights granted"""
+
     REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution"
     PUBLIC_PERFORMANCE = "public_performance"
@@ -334,7 +341,8 @@ class LicenseAgreement(Base):
     
     @property
     def days_until_expiration(self) -> Optional[int]:
-        """Calculate days until license expiration"""
+        """
+Calculate days until license expiration"""
         if self.expiration_date:
             delta = self.expiration_date - datetime.utcnow()
             return max(0, delta.days)
@@ -342,7 +350,8 @@ class LicenseAgreement(Base):
     
     @property
     def is_renewable(self) -> bool:
-        """Check if license can be renewed"""
+        """
+Check if license can be renewed"""
         return self.auto_renewal or self.license_status == LicenseStatus.ACTIVE
 
 

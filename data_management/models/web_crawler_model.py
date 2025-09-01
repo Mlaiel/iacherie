@@ -8,7 +8,7 @@ Responsibility: Web surveillance and content protection data models
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ WEB CRAWLER MODEL ARCHITECTURE:
 Crawl Scheduling → Multi-Platform Monitoring → Content Fingerprinting → 
 Violation Detection → Evidence Collection → Alert Generation → Takedown Processing
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
@@ -28,7 +29,9 @@ import uuid
 import json
 
 class CrawlStatus(Enum):
-    """Crawl job status enumeration"""
+    """
+Crawl job status enumeration"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
@@ -40,6 +43,7 @@ class CrawlStatus(Enum):
 
 class PlatformType(Enum):
     """Supported platforms for crawling"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -58,6 +62,7 @@ class PlatformType(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -69,6 +74,7 @@ class ViolationType(Enum):
 
 class EvidenceType(Enum):
     """Types of evidence collected"""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_SAMPLE = "audio_sample"
@@ -80,6 +86,7 @@ class EvidenceType(Enum):
 
 class TakedownStatus(Enum):
     """Takedown request status"""
+
     PENDING = "pending"
     SUBMITTED = "submitted"
     IN_REVIEW = "in_review"
@@ -202,7 +209,8 @@ class CrawlJobModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'CrawlJobModel':
-        """Create instance from dictionary"""
+        """
+Create instance from dictionary"""
         # Convert datetime strings
         datetime_fields = ['scheduled_at', 'started_at', 'completed_at', 'next_run_at', 'created_at', 'updated_at']
         for field_name in datetime_fields:
@@ -218,16 +226,19 @@ class CrawlJobModel:
         return cls(**data)
     
     def is_ready_to_run(self) -> bool:
-        """Check if job is ready to run"""
+        """
+Check if job is ready to run"""
         return (self.status == CrawlStatus.PENDING and 
                 self.scheduled_at <= datetime.now(timezone.utc))
     
     def can_retry(self) -> bool:
-        """Check if job can be retried"""
+        """
+Check if job can be retried"""
         return self.status == CrawlStatus.FAILED
     
     def calculate_next_run(self):
-        """Calculate next run time for recurring jobs"""
+        """
+Calculate next run time for recurring jobs"""
         if not self.is_recurring or not self.recurrence_pattern:
             return
         
@@ -359,7 +370,8 @@ class DetectedContentModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'DetectedContentModel':
-        """Create instance from dictionary"""
+        """
+Create instance from dictionary"""
         # Convert datetime strings
         datetime_fields = ['detected_at', 'upload_date', 'takedown_submitted_at', 
                           'takedown_completed_at', 'created_at', 'updated_at']
@@ -378,19 +390,22 @@ class DetectedContentModel:
         return cls(**data)
     
     def is_high_priority(self) -> bool:
-        """Check if detection is high priority"""
+        """
+Check if detection is high priority"""
         return (self.urgency_level >= 8 or 
                 self.similarity_score >= 0.95 or
                 (self.revenue_estimate and self.revenue_estimate > 1000))
     
     def requires_immediate_action(self) -> bool:
-        """Check if detection requires immediate action"""
+        """
+Check if detection requires immediate action"""
         return (self.urgency_level >= 9 or
                 self.violation_type in [ViolationType.COPYRIGHT_INFRINGEMENT, ViolationType.REVENUE_THEFT])
 
 @dataclass
 class EvidenceModel:
-    """Model for evidence collected during crawling"""
+    """
+Model for evidence collected during crawling"""
     evidence_id: str = field(default_factory=lambda: f"evidence_{uuid.uuid4().hex[:12]}")
     detection_id: str = ""
     job_id: str = ""
@@ -471,7 +486,8 @@ class EvidenceModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EvidenceModel':
-        """Create instance from dictionary"""
+        """
+Create instance from dictionary"""
         # Convert datetime strings
         datetime_fields = ['captured_at', 'expiry_date', 'created_at', 'updated_at']
         for field_name in datetime_fields:
@@ -485,7 +501,8 @@ class EvidenceModel:
         return cls(**data)
     
     def is_expired(self) -> bool:
-        """Check if evidence has expired"""
+        """
+Check if evidence has expired"""
         if not self.expiry_date:
             return False
         return datetime.now(timezone.utc) > self.expiry_date
@@ -502,7 +519,8 @@ class EvidenceModel:
 
 @dataclass
 class CrawlMetricsModel:
-    """Model for crawl performance metrics"""
+    """
+Model for crawl performance metrics"""
     metrics_id: str = field(default_factory=lambda: f"metrics_{uuid.uuid4().hex[:12]}")
     job_id: str = ""
     
@@ -547,7 +565,8 @@ class CrawlMetricsModel:
             self.success_rate = (self.pages_crawled / total_requests) * 100
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         return {
             'metrics_id': self.metrics_id,
             'job_id': self.job_id,

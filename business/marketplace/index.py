@@ -14,6 +14,7 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.responses import JSONResponse
@@ -61,7 +62,8 @@ class MarketplaceIndex:
         }
     
     def setup_routes(self):
-        """Setup all marketplace API routes"""
+        """
+Setup all marketplace API routes"""
         
         @self.router.get("/", response_model=Dict[str, Any])
         async def marketplace_index():
@@ -286,7 +288,8 @@ class MarketplaceIndex:
         return self.services.get(service_name)
     
     async def shutdown(self):
-        """Graceful shutdown of all marketplace services"""
+        """
+Graceful shutdown of all marketplace services"""
         logger.info("Shutting down marketplace services...")
         
         for service_name, service in self.services.items():
@@ -311,12 +314,14 @@ class MarketplaceServiceRegistry:
         self._dependencies = {}
     
     def register_service(self, name: str, service: Any, dependencies: List[str] = None):
-        """Register a service with optional dependencies"""
+        """
+Register a service with optional dependencies"""
         self._services[name] = service
         self._dependencies[name] = dependencies or []
     
     def get_service(self, name: str) -> Any:
-        """Get registered service"""
+        """
+Get registered service"""
         if name not in self._services:
             raise ValueError(f"Service {name} not registered")
         return self._services[name]
@@ -326,7 +331,8 @@ class MarketplaceServiceRegistry:
         return self._services.copy()
     
     async def initialize_services(self):
-        """Initialize all services in dependency order"""
+        """
+Initialize all services in dependency order"""
         initialized = set()
         
         async def init_service(name: str):

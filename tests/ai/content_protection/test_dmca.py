@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests Ultra-Industriels Avancés pour le Module DMCA Management
+"""
+Tests Ultra-Industriels Avancés pour le Module DMCA Management
 
 🚨 AVERTISSEMENT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie.
@@ -30,6 +32,7 @@ IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import sys
 import os
@@ -69,7 +72,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DMCATestScenario:
-    """DMCA test scenario for comprehensive testing"""
+    """
+DMCA test scenario for comprehensive testing"""
     scenario_name: str
     infringement_type: str
     platform_type: str
@@ -81,7 +85,8 @@ class DMCATestScenario:
 
 @dataclass
 class LegalComplianceMetrics:
-    """Legal compliance metrics for DMCA validation"""
+    """
+Legal compliance metrics for DMCA validation"""
     compliance_score: float
     legal_accuracy: float
     response_time: float
@@ -103,7 +108,8 @@ class TestUltraIndustrialDMCAManagement:
     """
     @pytest.fixture
     def enterprise_dmca_config(self):
-        """Configuration ultra-avancée pour le DMCA management"""
+        """
+Configuration ultra-avancée pour le DMCA management"""
         return {
             'legal_frameworks': {
                 'dmca_us': {
@@ -196,13 +202,15 @@ class TestUltraIndustrialDMCAManagement:
 
     @pytest.fixture
     def enterprise_dmca_manager(self, enterprise_dmca_config):
-        """Create enterprise-grade DMCA management system"""
+        """
+Create enterprise-grade DMCA management system"""
         dmca_manager = DMCAManager(enterprise_dmca_config)
         return dmca_manager
 
     @pytest.fixture
     def legal_compliance_engine(self, enterprise_dmca_config):
-        """Create legal compliance validation engine"""
+        """
+Create legal compliance validation engine"""
         # Mock the compliance engine since it doesn't exist in backend
         compliance_engine = Mock()
         compliance_engine.config = enterprise_dmca_config
@@ -210,7 +218,8 @@ class TestUltraIndustrialDMCAManagement:
 
     @pytest.fixture
     def comprehensive_dmca_scenarios(self):
-        """Generate comprehensive DMCA test scenarios"""
+        """
+Generate comprehensive DMCA test scenarios"""
         scenarios = []
         
         # High-profile music piracy
@@ -303,7 +312,8 @@ class TestUltraIndustrialDMCAManagement:
 
     @pytest.mark.asyncio
     async def test_ultra_advanced_automated_infringement_detection(self, enterprise_dmca_manager, comprehensive_dmca_scenarios):
-        """Test ultra-advanced automated infringement detection system"""
+        """
+Test ultra-advanced automated infringement detection system"""
         logger.info("Testing ultra-advanced automated infringement detection")
         
         detection_results = []
@@ -1064,7 +1074,8 @@ Contact: mlaiel@live.de
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_dmca_system_performance(self, enterprise_dmca_manager):
-        """Test DMCA system performance under load"""
+        """
+Test DMCA system performance under load"""
         
         import time
         
@@ -1204,7 +1215,8 @@ Contact: mlaiel@live.de
 
     @pytest.mark.asyncio
     async def test_international_jurisdiction_handling(self, enterprise_dmca_manager):
-        """Test handling of international jurisdictions and laws"""
+        """
+Test handling of international jurisdictions and laws"""
         
         # Test different jurisdictional templates and requirements
         international_cases = [

@@ -10,6 +10,7 @@ Features:
 - Metrics collection base
 - Health monitoring utilities
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -27,7 +28,8 @@ class BaseDeploymentManager(ABC):
     including logging, error handling, and metrics collection.
     """
     def __init__(self):
-        """Initialize base deployment manager."""
+        """
+Initialize base deployment manager."""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.setLevel(logging.INFO)
         
@@ -131,11 +133,13 @@ class BaseDeploymentManager(ABC):
         return {}
 
     def increment_error_count(self) -> None:
-        """Increment error counter."""
+        """
+Increment error counter."""
         self.error_count += 1
 
     def increment_warning_count(self) -> None:
-        """Increment warning counter."""
+        """
+Increment warning counter."""
         self.warning_count += 1
 
     def log_operation(self, operation: str, success: bool, details: Optional[str] = None) -> None:

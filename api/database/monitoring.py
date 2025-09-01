@@ -10,6 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import asyncio
 import psutil
 import time
@@ -37,7 +38,9 @@ settings = get_settings()
 
 
 class HealthStatus(Enum):
-    """Health check status enumeration"""
+    """
+Health check status enumeration"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -47,6 +50,7 @@ class HealthStatus(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -95,7 +99,8 @@ class DatabaseMetrics:
 
 @dataclass
 class HealthCheckResult:
-    """Health check result"""
+    """
+Health check result"""
     component: str
     status: HealthStatus
     response_time_ms: float
@@ -110,7 +115,8 @@ class HealthCheckResult:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
+    """
+Alert rule configuration"""
     name: str
     metric_path: str
     operator: str  # gt, gte, lt, lte, eq, ne
@@ -138,28 +144,33 @@ class Alert:
 
 
 class MetricsCollector(ABC):
-    """Abstract metrics collector interface"""
+    """
+Abstract metrics collector interface"""
     
     @abstractmethod
     async def collect_metrics(self) -> Dict[str, Any]:
-        """Collect metrics from the monitored component"""
+        """
+Collect metrics from the monitored component"""
         pass
     
     @abstractmethod
     async def check_health(self) -> HealthCheckResult:
-        """Perform health check"""
+        """
+Perform health check"""
         pass
 
 
 class PostgreSQLMetricsCollector(MetricsCollector):
-    """PostgreSQL metrics collector"""
+    """
+PostgreSQL metrics collector"""
     
     def __init__(self, connection: DatabaseConnection):
         self.connection = connection
         self.session_manager = SessionManager()
     
     async def collect_metrics(self) -> Dict[str, Any]:
-        """Collect PostgreSQL metrics"""
+        """
+Collect PostgreSQL metrics"""
         start_time = time.time()
         
         try:
@@ -494,7 +505,8 @@ class RedisMetricsCollector(MetricsCollector):
         self.redis = redis_client
     
     async def collect_metrics(self) -> Dict[str, Any]:
-        """Collect Redis metrics"""
+        """
+Collect Redis metrics"""
         try:
             info = await self.redis.info()
             
@@ -585,7 +597,8 @@ class DatabaseMonitor:
         self.health_check_interval = 30  # seconds
     
     async def initialize(self):
-        """Initialize monitoring system"""
+        """
+Initialize monitoring system"""
         try:
             # Get database connection
             db_connection = await DatabaseConnection.get_instance()
@@ -858,7 +871,8 @@ class DatabaseMonitor:
             return None
     
     def _check_threshold(self, value: float, operator: str, threshold: float) -> bool:
-        """Check if value breaches threshold according to operator"""
+        """
+Check if value breaches threshold according to operator"""
         if operator == "gt":
             return value > threshold
         elif operator == "gte":
@@ -926,7 +940,8 @@ class DatabaseMonitor:
         return self.metrics_history[-1] if self.metrics_history else None
     
     async def get_current_health(self) -> Optional[List[Dict[str, Any]]]:
-        """Get current health status"""
+        """
+Get current health status"""
         if self.cache:
             return await self.cache.get('health:latest')
         
@@ -935,7 +950,8 @@ class DatabaseMonitor:
     async def get_metrics_history(self, 
                                  component: Optional[str] = None,
                                  hours: int = 24) -> List[Dict[str, Any]]:
-        """Get metrics history"""
+        """
+Get metrics history"""
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         history = [
@@ -955,12 +971,14 @@ class DatabaseMonitor:
         return history
     
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get active alerts"""
+        """
+Get active alerts"""
         return [asdict(alert) for alert in self.active_alerts.values()]
 
 
 class PerformanceMonitor:
-    """Database performance monitoring and optimization recommendations"""
+    """
+Database performance monitoring and optimization recommendations"""
     
     def __init__(self, database_monitor: DatabaseMonitor):
         self.monitor = database_monitor
@@ -973,7 +991,8 @@ class PerformanceMonitor:
         }
     
     async def analyze_performance(self, hours: int = 1) -> Dict[str, Any]:
-        """Analyze database performance over time period"""
+        """
+Analyze database performance over time period"""
         metrics_history = await self.monitor.get_metrics_history(hours=hours)
         
         if not metrics_history:
@@ -1007,7 +1026,8 @@ class PerformanceMonitor:
         return analysis
     
     def _analyze_trends(self, metrics_history: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
-        """Analyze metric trends"""
+        """
+Analyze metric trends"""
         trends = {}
         
         # Define metrics to analyze
@@ -1048,7 +1068,8 @@ class PerformanceMonitor:
         return trends
     
     def _identify_issues(self, metrics_history: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Identify performance issues"""
+        """
+Identify performance issues"""
         issues = []
         
         if not metrics_history:
@@ -1205,7 +1226,8 @@ class PerformanceMonitor:
         return recommendations
     
     def _calculate_performance_score(self, issues: List[Dict[str, Any]]) -> int:
-        """Calculate overall performance score (0-100)"""
+        """
+Calculate overall performance score (0-100)"""
         base_score = 100
         
         for issue in issues:
@@ -1220,7 +1242,8 @@ class PerformanceMonitor:
         return max(0, base_score)
     
     def _create_performance_summary(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Create performance summary"""
+        """
+Create performance summary"""
         issues = analysis.get('issues', [])
         score = analysis.get('performance_score', 0)
         
@@ -1249,13 +1272,15 @@ class PerformanceMonitor:
 
 
 class HealthChecker:
-    """Comprehensive database health checker"""
+    """
+Comprehensive database health checker"""
     
     def __init__(self, database_monitor: DatabaseMonitor):
         self.monitor = database_monitor
     
     async def comprehensive_health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
+        """
+Perform comprehensive health check"""
         health_report = {
             'timestamp': datetime.utcnow(),
             'overall_status': HealthStatus.UNKNOWN,
@@ -1303,7 +1328,8 @@ class HealthChecker:
         return health_report
     
     def _determine_overall_status(self, statuses: List[HealthStatus]) -> HealthStatus:
-        """Determine overall health status from component statuses"""
+        """
+Determine overall health status from component statuses"""
         if not statuses:
             return HealthStatus.UNKNOWN
         
@@ -1319,7 +1345,8 @@ class HealthChecker:
             return HealthStatus.UNKNOWN
     
     def _create_health_summary(self, statuses: List[HealthStatus]) -> Dict[str, Any]:
-        """Create health summary"""
+        """
+Create health summary"""
         status_counts = {}
         for status in statuses:
             status_counts[status.value] = status_counts.get(status.value, 0) + 1
@@ -1334,7 +1361,8 @@ class HealthChecker:
         }
     
     def _generate_health_recommendations(self, components: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate health-based recommendations"""
+        """
+Generate health-based recommendations"""
         recommendations = []
         
         for component, health_data in components.items():
@@ -1387,7 +1415,8 @@ class HealthChecker:
 
 
 class AlertManager:
-    """Alert management system"""
+    """
+Alert management system"""
     
     def __init__(self, database_monitor: DatabaseMonitor):
         self.monitor = database_monitor
@@ -1395,11 +1424,13 @@ class AlertManager:
         self.alert_history = []
     
     def add_notification_handler(self, handler: Callable[[Alert], None]):
-        """Add alert notification handler"""
+        """
+Add alert notification handler"""
         self.notification_handlers.append(handler)
     
     async def process_alert(self, alert: Alert):
-        """Process and notify about alert"""
+        """
+Process and notify about alert"""
         # Add to history
         self.alert_history.append(alert)
         
@@ -1439,7 +1470,8 @@ _monitor_instance: Optional[DatabaseMonitor] = None
 
 
 async def get_database_monitor() -> DatabaseMonitor:
-    """Get global database monitor instance"""
+    """
+Get global database monitor instance"""
     global _monitor_instance
     
     if _monitor_instance is None:
@@ -1451,12 +1483,14 @@ async def get_database_monitor() -> DatabaseMonitor:
 
 
 async def get_performance_monitor() -> PerformanceMonitor:
-    """Get performance monitor instance"""
+    """
+Get performance monitor instance"""
     monitor = await get_database_monitor()
     return PerformanceMonitor(monitor)
 
 
 async def get_health_checker() -> HealthChecker:
-    """Get health checker instance"""
+    """
+Get health checker instance"""
     monitor = await get_database_monitor()
     return HealthChecker(monitor)

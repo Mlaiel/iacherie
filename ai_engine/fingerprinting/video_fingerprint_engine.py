@@ -4,6 +4,7 @@ Video fingerprinting with frame analysis, motion detection, and YOLO object dete
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import cv2
 import numpy as np
@@ -30,7 +31,8 @@ from ...config import settings
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data structure"""
+    """
+Video fingerprint data structure"""
     file_id: str
     frame_hashes: List[str]
     motion_vectors: List[Dict[str, Any]]

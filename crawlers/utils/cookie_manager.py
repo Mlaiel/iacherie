@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import json
 import logging
 import pickle
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CookieData:
-    """Cookie data structure."""
+    """
+Cookie data structure."""
     name: str
     value: str
     domain: str
@@ -72,7 +74,8 @@ class CookieData:
         return False
 
     def is_valid_for_domain(self, domain: str) -> bool:
-        """Check if cookie is valid for given domain."""
+        """
+Check if cookie is valid for given domain."""
         if self.domain.startswith('.'):
             # Domain cookie
             return domain.endswith(self.domain[1:])
@@ -81,7 +84,8 @@ class CookieData:
             return domain == self.domain
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         data = asdict(self)
         if data['expires']:
             data['expires'] = data['expires'].isoformat()
@@ -93,7 +97,8 @@ class CookieData:
 
     @classmethod
     def from_dict(cls, data: Dict) -> 'CookieData':
-        """Create from dictionary."""
+        """
+Create from dictionary."""
         if data.get('expires'):
             data['expires'] = datetime.fromisoformat(data['expires'])
         if data.get('created_at'):
@@ -115,12 +120,14 @@ class CookieJar:
     """
     
     def __init__(self):
-        """Initialize cookie jar."""
+        """
+Initialize cookie jar."""
         self.cookies: Dict[str, Dict[str, CookieData]] = {}
         self.policy = CookiePolicy()
     
     def add_cookie(self, cookie: CookieData) -> None:
-        """Add cookie to jar."""
+        """
+Add cookie to jar."""
         # Validate cookie
         if not self.policy.should_accept_cookie(cookie):
             logger.debug(f"Cookie rejected by policy: {cookie.name}")
@@ -161,7 +168,8 @@ class CookieJar:
         return valid_cookies
     
     def _path_matches(self, cookie_path: str, request_path: str) -> bool:
-        """Check if cookie path matches request path."""
+        """
+Check if cookie path matches request path."""
         if cookie_path == "/":
             return True
         return request_path.startswith(cookie_path)
@@ -217,7 +225,8 @@ class CookieJar:
         return sum(len(domain_cookies) for domain_cookies in self.cookies.values())
     
     def get_domains(self) -> Set[str]:
-        """Get all domains with cookies."""
+        """
+Get all domains with cookies."""
         return set(self.cookies.keys())
 
 class CookiePolicy:
@@ -232,7 +241,8 @@ class CookiePolicy:
     """
     
     def __init__(self):
-        """Initialize cookie policy."""
+        """
+Initialize cookie policy."""
         self.max_cookie_size = 4096  # RFC 6265 recommendation
         self.max_cookies_per_domain = 50
         self.max_total_cookies = 3000
@@ -242,7 +252,8 @@ class CookiePolicy:
         self.block_third_party = False
     
     def should_accept_cookie(self, cookie: CookieData) -> bool:
-        """Determine if cookie should be accepted."""
+        """
+Determine if cookie should be accepted."""
         # Size check
         if len(cookie.value) > self.max_cookie_size:
             logger.debug(f"Cookie too large: {len(cookie.value)} bytes")
@@ -305,7 +316,8 @@ class CookieManager:
         redis_client: Optional[redis.Redis] = None,
         enable_encryption: bool = True
     ):
-        """Initialize cookie manager."""
+        """
+Initialize cookie manager."""
         self.cookie_jar = CookieJar()
         self.storage_path = storage_path or Path("cookies.db")
         self.redis_client = redis_client
@@ -331,7 +343,8 @@ class CookieManager:
             self._init_sqlite_storage()
     
     def _init_sqlite_storage(self) -> None:
-        """Initialize SQLite storage."""
+        """
+Initialize SQLite storage."""
         try:
             conn = sqlite3.connect(self.storage_path)
             cursor = conn.cursor()
@@ -428,14 +441,16 @@ class CookieManager:
             await self._load_from_sqlite()
     
     async def save_cookies(self) -> None:
-        """Save cookies to persistent storage."""
+        """
+Save cookies to persistent storage."""
         if self.redis_client:
             await self._save_to_redis()
         elif self.storage_path:
             await self._save_to_sqlite()
     
     async def _load_from_sqlite(self) -> None:
-        """Load cookies from SQLite."""
+        """
+Load cookies from SQLite."""
         try:
             conn = sqlite3.connect(self.storage_path)
             cursor = conn.cursor()
@@ -540,14 +555,16 @@ class CookieManager:
         return False
     
     async def _persist_cookie(self, cookie: CookieData) -> None:
-        """Persist single cookie immediately."""
+        """
+Persist single cookie immediately."""
         if self.redis_client:
             await self._persist_cookie_redis(cookie)
         elif self.storage_path:
             await self._persist_cookie_sqlite(cookie)
     
     async def _persist_cookie_sqlite(self, cookie: CookieData) -> None:
-        """Persist single cookie to SQLite."""
+        """
+Persist single cookie to SQLite."""
         try:
             conn = sqlite3.connect(self.storage_path)
             cursor = conn.cursor()
@@ -620,18 +637,21 @@ class CookieManager:
         }
     
     async def clear_domain_cookies(self, domain: str) -> None:
-        """Clear cookies for specific domain."""
+        """
+Clear cookies for specific domain."""
         self.cookie_jar.clear_domain_cookies(domain)
         await self.save_cookies()
     
     async def clear_all_cookies(self) -> None:
-        """Clear all cookies."""
+        """
+Clear all cookies."""
         self.cookie_jar.clear_all_cookies()
         await self.save_cookies()
 
 # Cookie utilities
 def parse_cookie_string(cookie_string: str) -> Dict[str, str]:
-    """Parse cookie string into name-value pairs."""
+    """
+Parse cookie string into name-value pairs."""
     cookies = {}
     
     try:
@@ -653,11 +673,13 @@ def is_secure_cookie(cookie: CookieData) -> bool:
     return cookie.secure and cookie.http_only
 
 def get_cookie_domain_level(domain: str) -> int:
-    """Get domain level (number of dots + 1)."""
+    """
+Get domain level (number of dots + 1)."""
     return domain.count('.') + 1
 
 def extract_domain_from_url(url: str) -> str:
-    """Extract domain from URL for cookie purposes."""
+    """
+Extract domain from URL for cookie purposes."""
     try:
         return urlparse(url).netloc.lower()
     except Exception:

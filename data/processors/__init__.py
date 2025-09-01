@@ -25,6 +25,7 @@ Components:
 - CompressionProcessor: Intelligent content compression
 - OrchestrationProcessor: Professional workflow orchestration
 """
+
 from typing import Dict, Any, List, Optional, Union
 import asyncio
 import logging
@@ -91,7 +92,8 @@ class ProcessorRegistry:
         self._initialize_processors()
     
     def _initialize_processors(self):
-        """Initialize all processor instances"""
+        """
+Initialize all processor instances"""
         self._processors = {
             'audio': AudioProcessor(),
             'video': VideoProcessor(),
@@ -111,18 +113,21 @@ class ProcessorRegistry:
         return self._processors.get(processor_type)
     
     def list_processors(self) -> List[str]:
-        """List all available processor types"""
+        """
+List all available processor types"""
         return list(self._processors.keys())
 
 # Global processor registry
 processor_registry = ProcessorRegistry()
 
 def get_processor(processor_type: str):
-    """Get processor instance by type"""
+    """
+Get processor instance by type"""
     return processor_registry.get_processor(processor_type)
 
 def list_processors() -> List[str]:
-    """List all available processor types"""
+    """
+List all available processor types"""
     return processor_registry.list_processors()
 
 async def process_content(

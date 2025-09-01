@@ -6,12 +6,14 @@ Tests core functionality without complex imports to verify the module works.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import sys
 import asyncio
 from datetime import datetime, timezone
 
 def test_business_monitoring():
-    """Test business process monitoring components"""
+    """
+Test business process monitoring components"""
     print("🧪 Testing Business Process Monitoring...")
     
     try:

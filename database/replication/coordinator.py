@@ -7,6 +7,7 @@ and Vector stores with conflict resolution and data consistency.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple
@@ -18,7 +19,9 @@ import hashlib
 
 
 class SyncOperation(Enum):
-    """Synchronization operation types"""
+    """
+Synchronization operation types"""
+
     INSERT = "insert"
     UPDATE = "update"
     DELETE = "delete"
@@ -28,6 +31,7 @@ class SyncOperation(Enum):
 
 class ConflictResolutionStrategy(Enum):
     """Conflict resolution strategies"""
+
     LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MANUAL_REVIEW = "manual_review"
@@ -76,7 +80,8 @@ class ReplicationCoordinator:
     """
     
     def __init__(self, config):
-        """Initialize replication coordinator"""
+        """
+Initialize replication coordinator"""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationCoordinator")
         
@@ -398,7 +403,8 @@ class ReplicationCoordinator:
         return hashlib.sha256(data_str.encode()).hexdigest()
     
     async def _apply_insert(self, handler: Any, sync_record: SyncRecord) -> None:
-        """Apply insert operation"""
+        """
+Apply insert operation"""
         # Implementation would depend on the specific handler
         self.logger.debug(f"Applying insert for {sync_record.table_name}")
     

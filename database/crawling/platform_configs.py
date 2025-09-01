@@ -11,6 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -33,7 +34,9 @@ from ..core.exceptions import (
 
 
 class PlatformType(Enum):
-    """Supported crawling platforms."""
+    """
+Supported crawling platforms."""
+
     YOUTUBE = 'youtube'
     TIKTOK = 'tiktok'
     INSTAGRAM = 'instagram'
@@ -42,7 +45,9 @@ class PlatformType(Enum):
 
 
 class DefaultConfigurations:
-    """Default configurations for each platform."""
+    """
+Default configurations for each platform."""
+
     
     YOUTUBE = {
         'api_version': 'v3',

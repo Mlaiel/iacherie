@@ -4,6 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Simple copyright detection module for content protection.
 """
+
 import logging
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
@@ -12,7 +13,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class DetectionResult(Enum):
-    """Copyright detection results"""
+    """
+Copyright detection results"""
+
     CLEAR = "clear"
     POTENTIAL_MATCH = "potential_match"
     COPYRIGHT_VIOLATION = "copyright_violation"

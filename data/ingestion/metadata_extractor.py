@@ -6,13 +6,14 @@ Provides comprehensive metadata extraction, enhancement, and standardization
 for audio, video, image, and text content with AI-powered analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -49,7 +50,9 @@ from ...core.exceptions import MetadataExtractionError, ValidationError
 
 
 class MetadataType(Enum):
-    """Types of metadata that can be extracted"""
+    """
+Types of metadata that can be extracted"""
+
     TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
@@ -60,6 +63,7 @@ class MetadataType(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats for metadata extraction"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -111,7 +115,8 @@ class MetadataExtractor:
     """
     
     def __init__(self):
-        """Initialize MetadataExtractor with AI models and processors."""
+        """
+Initialize MetadataExtractor with AI models and processors."""
         self.logger = logging.getLogger(__name__)
         
         # Initialize AI models for content analysis
@@ -134,7 +139,8 @@ class MetadataExtractor:
         }
     
     def _init_ai_models(self):
-        """Initialize AI models for content analysis"""
+        """
+Initialize AI models for content analysis"""
         try:
             # Image analysis models
             self.image_classifier = pipeline(
@@ -1390,7 +1396,8 @@ class MetadataExtractor:
         return {fmt.value: exts for fmt, exts in self.supported_formats.items()}
     
     def get_extraction_capabilities(self) -> Dict[str, Any]:
-        """Get extractor capabilities and configuration"""
+        """
+Get extractor capabilities and configuration"""
         return {
             'supported_formats': self.get_supported_formats(),
             'ai_models_available': {

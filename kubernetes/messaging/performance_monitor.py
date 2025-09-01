@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import logging
 import statistics
@@ -33,7 +34,8 @@ settings = get_settings()
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics data structure"""
+    """
+Performance metrics data structure"""
     timestamp: float
     cpu_usage: float
     memory_usage: float
@@ -46,7 +48,8 @@ class PerformanceMetrics:
 
 
 class AlertRule(BaseModel):
-    """Alert rule configuration"""
+    """
+Alert rule configuration"""
     name: str = Field(..., description="Alert rule name")
     metric: str = Field(..., description="Metric to monitor")
     threshold: float = Field(..., description="Alert threshold")
@@ -87,7 +90,8 @@ class MessagingPerformanceMonitor:
         self.is_running = False
 
     async def initialize(self) -> None:
-        """Initialize performance monitor"""
+        """
+Initialize performance monitor"""
         try:
             # Setup Redis connection
             self.redis_client = aioredis.from_url(
@@ -1072,7 +1076,8 @@ class MessagingPerformanceMonitor:
         return self.optimization_recommendations.copy()
 
     async def shutdown(self) -> None:
-        """Shutdown performance monitor"""
+        """
+Shutdown performance monitor"""
         try:
             logger.info("Shutting down performance monitor")
             

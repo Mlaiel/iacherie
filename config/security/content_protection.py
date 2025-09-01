@@ -20,6 +20,7 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -28,7 +29,9 @@ from enum import Enum
 
 
 class ContentType(Enum):
-    """Supported content types for protection."""
+    """
+Supported content types for protection."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -40,6 +43,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection security levels."""
+
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -71,6 +75,7 @@ class FingerprintAlgorithm(Enum):
 
 class ThreatLevel(Enum):
     """Content threat assessment levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -136,7 +141,8 @@ class FingerprintConfig:
 
 @dataclass
 class ContentValidationConfig:
-    """Content validation and scanning configuration."""
+    """
+Content validation and scanning configuration."""
     # Malware scanning
     malware_scanning_enabled: bool = True
     scan_engines: List[str] = field(default_factory=lambda: [
@@ -401,7 +407,8 @@ def get_content_protection_config() -> ContentProtectionConfig:
 
 
 def validate_content_protection_config(config: ContentProtectionConfig) -> bool:
-    """Validate content protection configuration settings."""
+    """
+Validate content protection configuration settings."""
     # Validate similarity thresholds
     for content_type, threshold in config.fingerprint.similarity_thresholds.items():
         if not 0.0 <= threshold <= 1.0:

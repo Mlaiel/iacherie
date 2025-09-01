@@ -23,6 +23,7 @@ Specialties of Project Team:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -51,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 class PredictionType(str, Enum):
     """Types of predictions available"""
+
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     AUDIENCE_GROWTH = "audience_growth"
@@ -60,6 +62,7 @@ class PredictionType(str, Enum):
 
 class TimeHorizon(str, Enum):
     """Prediction time horizons"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -68,6 +71,7 @@ class TimeHorizon(str, Enum):
 
 class ModelType(str, Enum):
     """Available ML model types"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -90,7 +94,8 @@ class PredictionResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics"""
+    """
+Model performance metrics"""
     model_type: ModelType
     mae: float
     r2_score: float
@@ -801,7 +806,8 @@ class PredictiveAnalytics:
         return horizon_map.get(time_horizon, timedelta(days=30))
     
     def _get_time_periods_for_horizon(self, time_horizon: TimeHorizon) -> int:
-        """Get number of time periods for horizon"""
+        """
+Get number of time periods for horizon"""
         period_map = {
             TimeHorizon.DAILY: 1,
             TimeHorizon.WEEKLY: 7,
@@ -812,7 +818,8 @@ class PredictiveAnalytics:
         return period_map.get(time_horizon, 30)
     
     def _get_seasonal_multiplier(self, time_horizon: TimeHorizon) -> float:
-        """Calculate seasonal multiplier for revenue"""
+        """
+Calculate seasonal multiplier for revenue"""
         current_month = datetime.utcnow().month
         
         # Simple seasonal adjustment (can be enhanced with historical data)
@@ -834,18 +841,21 @@ class PredictiveAnalytics:
         return seasonal_factors.get(current_month, 1.0)
     
     async def _get_historical_engagement_data(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get historical engagement data for ML training"""
+        """
+Get historical engagement data for ML training"""
         # This would query the content_performance_analytics table
         # For now, return empty list (would be implemented with actual DB queries)
         return []
     
     async def _get_historical_revenue_data(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get historical revenue data for ML training"""
+        """
+Get historical revenue data for ML training"""
         # This would query the revenue_analytics table
         return []
     
     async def _get_historical_audience_data(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get historical audience data for ML training"""
+        """
+Get historical audience data for ML training"""
         # This would query the audience_intelligence table
         return []
     
@@ -855,7 +865,8 @@ class PredictiveAnalytics:
         audience_quality: float,
         monetization_features: Dict[str, Any]
     ) -> float:
-        """Calculate readiness score for monetization (0-1)"""
+        """
+Calculate readiness score for monetization (0-1)"""
         
         # Base factors
         audience_size_score = min(1.0, current_metrics.get('audience_size', 0) / 10000)
@@ -879,7 +890,8 @@ class PredictiveAnalytics:
         monetization_features: Dict[str, Any],
         time_horizon: TimeHorizon
     ) -> float:
-        """Estimate potential revenue based on metrics"""
+        """
+Estimate potential revenue based on metrics"""
         
         audience_size = current_metrics.get('audience_size', 0)
         engagement_rate = current_metrics.get('engagement_rate', 0)
@@ -905,7 +917,8 @@ class PredictiveAnalytics:
         return monthly_potential * time_multiplier
     
     async def _get_current_performance_metrics(self, user_id: int) -> Dict[str, Any]:
-        """Get current performance metrics for user"""
+        """
+Get current performance metrics for user"""
         # This would query current audience and engagement data
         # Returning defaults for now
         return {
@@ -916,7 +929,8 @@ class PredictiveAnalytics:
         }
     
     async def _analyze_audience_quality(self, user_id: int) -> float:
-        """Analyze audience quality score (0-1)"""
+        """
+Analyze audience quality score (0-1)"""
         # This would analyze audience authenticity, engagement patterns, etc.
         # For now, return a default quality score
         return 0.75

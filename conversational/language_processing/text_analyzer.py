@@ -24,6 +24,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -53,7 +54,9 @@ logger = get_logger(__name__)
 
 
 class SentimentLevel(Enum):
-    """Sentiment intensity levels"""
+    """
+Sentiment intensity levels"""
+
     VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
@@ -63,6 +66,7 @@ class SentimentLevel(Enum):
 
 class EmotionalTone(Enum):
     """Emotional tone categories for content"""
+
     EXCITED = "excited"
     CALM = "calm"
     PROFESSIONAL = "professional"
@@ -92,7 +96,8 @@ class SentimentResult:
 
 @dataclass
 class TextAnalysisResult:
-    """Complete text analysis result"""
+    """
+Complete text analysis result"""
     text_length: int
     word_count: int
     sentence_count: int
@@ -110,7 +115,8 @@ class TextAnalysisResult:
 
 
 class SentimentAnalyzer:
-    """Enterprise sentiment analysis for content creators"""
+    """
+Enterprise sentiment analysis for content creators"""
     
     def __init__(self):
         self.vader_analyzer = SentimentIntensityAnalyzer()
@@ -119,7 +125,8 @@ class SentimentAnalyzer:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize ML models for sentiment analysis"""
+        """
+Initialize ML models for sentiment analysis"""
         try:
             model_name = "cardiffnlp/twitter-roberta-base-sentiment-latest"
             self.transformer_tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -243,7 +250,8 @@ class SentimentAnalyzer:
             return SentimentLevel.NEUTRAL
             
     async def _determine_emotional_tone(self, text: str, emotions: Dict[str, float]) -> EmotionalTone:
-        """Determine emotional tone based on content analysis"""
+        """
+Determine emotional tone based on content analysis"""
         try:
             # Analyze text patterns for tone detection
             text_lower = text.lower()
@@ -317,7 +325,8 @@ class TextAnalyzer:
         self.sentiment_analyzer = SentimentAnalyzer()
         
     def _initialize_nlp(self):
-        """Initialize spaCy NLP pipeline"""
+        """
+Initialize spaCy NLP pipeline"""
         try:
             self.nlp = spacy.load("en_core_web_sm")
             logger.info("spaCy NLP pipeline initialized")

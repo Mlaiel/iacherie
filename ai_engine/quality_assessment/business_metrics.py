@@ -4,7 +4,7 @@ Advanced business intelligence and performance metrics for content creators and 
 Provides comprehensive ROI analysis, monetization insights, and business growth indicators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
     PRODUCT_SALES = "product_sales"
@@ -52,6 +55,7 @@ class RevenueStream(Enum):
 
 class BusinessModel(Enum):
     """Business model types for creators"""
+
     INFLUENCER = "influencer"
     EDUCATOR = "educator"
     ENTERTAINER = "entertainer"
@@ -64,6 +68,7 @@ class BusinessModel(Enum):
 
 class GrowthStage(Enum):
     """Business growth stages"""
+
     STARTUP = "startup"  # < 10K followers
     EMERGING = "emerging"  # 10K - 100K followers
     ESTABLISHED = "established"  # 100K - 1M followers
@@ -72,6 +77,7 @@ class GrowthStage(Enum):
 
 class MonetizationMaturity(Enum):
     """Monetization maturity levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -103,7 +109,8 @@ class AudienceMetrics:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Content performance business metrics"""
+    """
+Content performance business metrics"""
     average_views: float = field(default=0.0)
     average_engagement: float = field(default=0.0)
     content_consistency_score: float = field(default=50.0)
@@ -125,7 +132,8 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization and revenue metrics"""
+    """
+Monetization and revenue metrics"""
     total_revenue: float = field(default=0.0)
     revenue_per_follower: float = field(default=0.0)
     revenue_per_post: float = field(default=0.0)
@@ -148,7 +156,8 @@ class MonetizationMetrics:
 
 @dataclass
 class BrandMetrics:
-    """Brand development and partnership metrics"""
+    """
+Brand development and partnership metrics"""
     brand_awareness_score: float = field(default=30.0)
     brand_perception_score: float = field(default=50.0)
     brand_consistency_score: float = field(default=50.0)
@@ -171,7 +180,8 @@ class BrandMetrics:
 
 @dataclass
 class BusinessGrowthMetrics:
-    """Business growth and development metrics"""
+    """
+Business growth and development metrics"""
     growth_stage: GrowthStage = field(default=GrowthStage.STARTUP)
     growth_velocity: float = field(default=5.0)
     scalability_score: float = field(default=50.0)
@@ -194,7 +204,8 @@ class BusinessGrowthMetrics:
 
 @dataclass
 class BusinessHealthMetrics:
-    """Overall business health indicators"""
+    """
+Overall business health indicators"""
     financial_stability_score: float = field(default=50.0)
     operational_efficiency_score: float = field(default=50.0)
     strategic_position_score: float = field(default=50.0)
@@ -216,7 +227,8 @@ class BusinessHealthMetrics:
 
 @dataclass
 class BusinessMetricsProfile:
-    """Comprehensive business metrics profile"""
+    """
+Comprehensive business metrics profile"""
     # Business identification
     business_model: BusinessModel = field(default=BusinessModel.INFLUENCER)
     monetization_maturity: MonetizationMaturity = field(default=MonetizationMaturity.BEGINNER)
@@ -247,7 +259,8 @@ class BusinessMetricsProfile:
 
 @dataclass
 class BusinessMetricsAnalysis:
-    """Business metrics analysis container"""
+    """
+Business metrics analysis container"""
     profile: BusinessMetricsProfile = field(default_factory=BusinessMetricsProfile)
     
     # Performance indicators
@@ -285,7 +298,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize business metrics analyzer"""
+        """
+Initialize business metrics analyzer"""
         super().__init__(config or ModelConfig(
             name="business_metrics_analyzer",
             model_type=ModelType.BUSINESS_INTELLIGENCE,
@@ -1179,7 +1193,8 @@ class BusinessMetricsAnalyzer(BaseAIModel):
         profile.optimization_priorities = priorities
     
     async def _calculate_performance_indicators(self, profile: BusinessMetricsProfile, analysis: BusinessMetricsAnalysis):
-        """Calculate performance indicators"""
+        """
+Calculate performance indicators"""
         try:
             # Revenue efficiency
             revenue_factors = [
@@ -1379,15 +1394,18 @@ class BusinessMetricsAnalyzer(BaseAIModel):
         return max(0.5, min(1.0, confidence))
 
     async def connect(self) -> bool:
-        """Connect to business metrics analysis service"""
+        """
+Connect to business metrics analysis service"""
         return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from business metrics analysis service"""
+        """
+Disconnect from business metrics analysis service"""
         return True
     
     async def process(self, data: Any) -> Dict[str, Any]:
-        """Process business metrics data"""
+        """
+Process business metrics data"""
         return await self.analyze_business_metrics(data)
 
 

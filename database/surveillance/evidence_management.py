@@ -5,8 +5,9 @@ Comprehensive evidence collection and management system.
 Handles automated screenshot capture, metadata extraction, and secure evidence storage.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, BytesIO
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceType(Enum):
-    """Evidence type enumeration."""
+    """
+Evidence type enumeration."""
+
     SCREENSHOT = "screenshot"
     VIDEO_CAPTURE = "video_capture"
     METADATA = "metadata"
@@ -36,6 +39,7 @@ class EvidenceType(Enum):
 
 class EvidenceStatus(Enum):
     """Evidence status enumeration."""
+
     PENDING = "pending"
     COLLECTED = "collected"
     VERIFIED = "verified"
@@ -61,7 +65,8 @@ class EvidenceItem:
 
 @dataclass
 class ScreenshotRequest:
-    """Screenshot capture request."""
+    """
+Screenshot capture request."""
     url: str
     output_path: str
     viewport_width: int = 1920
@@ -801,7 +806,8 @@ class MetadataExtractor:
         return og_data
     
     def _extract_twitter_cards(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract Twitter Card metadata."""
+        """
+Extract Twitter Card metadata."""
         twitter_data = {}
         twitter_tags = soup.find_all('meta', attrs={'name': lambda x: x and x.startswith('twitter:')})
         
@@ -814,7 +820,8 @@ class MetadataExtractor:
         return twitter_data
     
     def _extract_canonical_url(self, soup: BeautifulSoup) -> str:
-        """Extract canonical URL."""
+        """
+Extract canonical URL."""
         canonical = soup.find('link', rel='canonical')
         return canonical.get('href', '') if canonical else ""
     
@@ -833,7 +840,8 @@ class MetadataExtractor:
         return structured_data
     
     def _extract_images(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract image information."""
+        """
+Extract image information."""
         images = []
         img_tags = soup.find_all('img')
         
@@ -859,7 +867,8 @@ class MetadataExtractor:
         return images
     
     def _extract_videos(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract video information."""
+        """
+Extract video information."""
         videos = []
         
         # Video tags
@@ -891,7 +900,8 @@ class MetadataExtractor:
         return videos
     
     def _extract_links(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract link information."""
+        """
+Extract link information."""
         links = []
         link_tags = soup.find_all('a', href=True)
         
@@ -917,7 +927,8 @@ class MetadataExtractor:
         return links
     
     def _extract_text_content(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract text content from main elements."""
+        """
+Extract text content from main elements."""
         content = {}
         
         # Main content areas
@@ -949,7 +960,8 @@ class MetadataExtractor:
         return content
     
     async def shutdown(self) -> None:
-        """Shutdown metadata extractor."""
+        """
+Shutdown metadata extractor."""
         logger.info("MetadataExtractor shutdown complete")
 
 
@@ -995,7 +1007,8 @@ class EvidenceStorage:
         pass
     
     async def store_evidence(self, evidence_item: EvidenceItem) -> bool:
-        """Store evidence item."""
+        """
+Store evidence item."""
         try:
             # Store in registry
             self.evidence_registry[evidence_item.evidence_id] = evidence_item
@@ -1017,7 +1030,8 @@ class EvidenceStorage:
         pass
     
     async def get_evidence(self, evidence_id: str) -> Optional[EvidenceItem]:
-        """Get evidence item by ID."""
+        """
+Get evidence item by ID."""
         try:
             # Try registry first
             if evidence_id in self.evidence_registry:
@@ -1039,7 +1053,8 @@ class EvidenceStorage:
         return None
     
     async def archive_old_evidence(self, cutoff_date: datetime) -> int:
-        """Archive old evidence items."""
+        """
+Archive old evidence items."""
         try:
             archived_count = 0
             
@@ -1093,7 +1108,8 @@ def get_evidence_collector() -> Optional[EvidenceCollector]:
 
 
 def initialize_evidence_collector(config: Dict[str, Any]) -> EvidenceCollector:
-    """Initialize global evidence collector."""
+    """
+Initialize global evidence collector."""
     global _evidence_collector
     _evidence_collector = EvidenceCollector(config)
     return _evidence_collector

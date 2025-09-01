@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ from pathlib import Path
 
 @dataclass
 class KubernetesResourceLimits:
-    """Resource limits configuration for Kubernetes pods"""
+    """
+Resource limits configuration for Kubernetes pods"""
     cpu_request: str = "100m"
     cpu_limit: str = "500m"
     memory_request: str = "128Mi"

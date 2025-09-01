@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Quality Metrics Tests
+"""
+Quality Metrics Tests
 
 Comprehensive tests for quality metrics system that evaluates
 content quality, readability, SEO, and overall content effectiveness.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -49,12 +52,14 @@ class TestQualityMetrics:
     
     @pytest.fixture
     def quality_metrics(self):
-        """Create a quality metrics instance"""
+        """
+Create a quality metrics instance"""
         return QualityMetrics()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for quality analysis"""
+        """
+Create sample content for quality analysis"""
         return {
             "title": "The Ultimate Guide to AI Content Creation: 10 Tools That Will Transform Your Workflow",
             "content": """# The Ultimate Guide to AI Content Creation: 10 Tools That Will Transform Your Workflow
@@ -148,7 +153,8 @@ end.
     
     @pytest.mark.asyncio
     async def test_analyze_content_quality(self, quality_metrics, sample_content):
-        """Test comprehensive content quality analysis"""
+        """
+Test comprehensive content quality analysis"""
         with patch.object(quality_metrics, '_analyze_quality') as mock_analyze:
             mock_analyze.return_value = {
                 "success": True,
@@ -636,11 +642,13 @@ class TestContentQualityAnalyzer:
     
     @pytest.fixture
     def content_analyzer(self):
-        """Create a content quality analyzer instance"""
+        """
+Create a content quality analyzer instance"""
         return ContentQualityAnalyzer()
     
     def test_content_analyzer_initialization(self, content_analyzer):
-        """Test content analyzer initialization"""
+        """
+Test content analyzer initialization"""
         assert content_analyzer is not None
         assert hasattr(content_analyzer, 'quality_criteria')
         assert hasattr(content_analyzer, 'scoring_algorithm')
@@ -648,7 +656,8 @@ class TestContentQualityAnalyzer:
     
     @pytest.mark.asyncio
     async def test_structural_analysis(self, content_analyzer):
-        """Test content structural analysis"""
+        """
+Test content structural analysis"""
         content = {
             "title": "Complete Guide to AI Content Creation",
             "content": "# Introduction\n\nContent with proper structure...\n\n## Section 1\n\nDetailed content...\n\n## Conclusion\n\nSummary and next steps.",

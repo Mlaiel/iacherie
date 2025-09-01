@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class CollaborationType(str, Enum):
-    """Types of collaborations supported."""
+    """
+Types of collaborations supported."""
+
     
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
@@ -39,6 +42,7 @@ class CollaborationType(str, Enum):
 
 class CollaborationStatus(str, Enum):
     """Collaboration request statuses."""
+
     
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -51,6 +55,7 @@ class CollaborationStatus(str, Enum):
 
 class MatchingCriteria(str, Enum):
     """Criteria for collaboration matching."""
+
     
     GENRE_SIMILARITY = "genre_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -64,6 +69,7 @@ class MatchingCriteria(str, Enum):
 
 class CreatorTier(str, Enum):
     """Creator tier classifications."""
+
     
     EMERGING = "emerging"  # < 10K followers
     RISING = "rising"      # 10K - 100K followers
@@ -393,7 +399,8 @@ class CollaborationConfig(BaseSettings):
         estimated_engagement: float, 
         collaboration_type: CollaborationType
     ) -> float:
-        """Calculate estimated revenue potential."""
+        """
+Calculate estimated revenue potential."""
         
         # Base calculation: reach * engagement * type multiplier
         type_multipliers = {
@@ -417,7 +424,8 @@ class CollaborationConfig(BaseSettings):
         creator_2: Dict, 
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Generate suggested collaboration terms."""
+        """
+Generate suggested collaboration terms."""
         
         return {
             "revenue_split": self.DEFAULT_REVENUE_SPLIT,
@@ -460,7 +468,8 @@ class CollaborationConfig(BaseSettings):
         return timelines.get(collaboration_type, 21)
     
     def _get_collaboration_deliverables(self, collaboration_type: CollaborationType) -> List[str]:
-        """Get expected deliverables for collaboration type."""
+        """
+Get expected deliverables for collaboration type."""
         
         deliverables = {
             CollaborationType.MUSIC_COLLABORATION: [

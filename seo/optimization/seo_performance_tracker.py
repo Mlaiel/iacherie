@@ -6,6 +6,7 @@ with real-time metrics, historical data analysis, and performance optimization i
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of SEO metrics"""
+    """
+Types of SEO metrics"""
+
     RANKING = "ranking"
     TRAFFIC = "traffic"
     CONVERSION = "conversion"
@@ -29,6 +32,7 @@ class MetricType(Enum):
 
 class TimeRange(Enum):
     """Time ranges for performance analysis"""
+
     DAY = "1d"
     WEEK = "7d"
     MONTH = "30d"
@@ -38,6 +42,7 @@ class TimeRange(Enum):
 
 class AlertLevel(Enum):
     """Alert levels for performance issues"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -73,7 +78,8 @@ class KeywordPerformance:
 
 @dataclass
 class PagePerformance:
-    """Individual page SEO performance"""
+    """
+Individual page SEO performance"""
     url: str
     title: str
     traffic: int
@@ -88,7 +94,8 @@ class PagePerformance:
 
 @dataclass
 class SEOAlert:
-    """SEO performance alert"""
+    """
+SEO performance alert"""
     alert_id: str
     level: AlertLevel
     metric: str
@@ -101,7 +108,8 @@ class SEOAlert:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive SEO performance report"""
+    """
+Comprehensive SEO performance report"""
     report_date: str
     domain: str
     overall_score: float
@@ -465,7 +473,8 @@ class SEOPerformanceTracker:
         return keyword_performance
 
     def _analyze_page_performance(self, time_range: TimeRange) -> List[PagePerformance]:
-        """Analyze individual page SEO performance"""
+        """
+Analyze individual page SEO performance"""
         
         page_performance = []
         
@@ -1094,7 +1103,8 @@ class SEOPerformanceTracker:
         return html_template
 
     def _generate_html_metrics(self, metrics: Dict[MetricType, List[SEOMetric]]) -> str:
-        """Generate HTML for metrics section"""
+        """
+Generate HTML for metrics section"""
         
         html_parts = []
         
@@ -1113,7 +1123,8 @@ class SEOPerformanceTracker:
         return ''.join(html_parts)
 
     def _generate_html_alerts(self, alerts: List[SEOAlert]) -> str:
-        """Generate HTML for alerts section"""
+        """
+Generate HTML for alerts section"""
         
         html_parts = []
         
@@ -1128,7 +1139,8 @@ class SEOPerformanceTracker:
         return ''.join(html_parts)
 
     def _generate_html_recommendations(self, recommendations: List[str]) -> str:
-        """Generate HTML for recommendations section"""
+        """
+Generate HTML for recommendations section"""
         
         return ''.join([f"<li>{rec}</li>" for rec in recommendations])
 

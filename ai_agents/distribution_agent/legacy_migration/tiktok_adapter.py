@@ -14,6 +14,7 @@ immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -43,7 +44,9 @@ from ...models.distribution import DistributionResult, PlatformConfig
 
 
 class TikTokContentType(Enum):
-    """TikTok content type enumeration"""
+    """
+TikTok content type enumeration"""
+
     VIDEO = "video"
     PHOTO = "photo"
     LIVE = "live"
@@ -52,6 +55,7 @@ class TikTokContentType(Enum):
 
 class TikTokVideoFormat(Enum):
     """TikTok video format enumeration"""
+
     MP4 = "mp4"
     MOV = "mov"
     WEBM = "webm"
@@ -59,6 +63,7 @@ class TikTokVideoFormat(Enum):
 
 class TikTokPrivacy(Enum):
     """TikTok privacy settings enumeration"""
+
     PUBLIC = "PUBLIC_TO_EVERYONE"
     FRIENDS = "MUTUAL_FOLLOW_FRIENDS"
     PRIVATE = "SELF_ONLY"
@@ -67,6 +72,7 @@ class TikTokPrivacy(Enum):
 
 class TikTokDuetStatus(Enum):
     """TikTok duet permission enumeration"""
+
     ENABLED = "ENABLED"
     DISABLED = "DISABLED"
     FRIENDS_ONLY = "FRIENDS_ONLY"
@@ -74,6 +80,7 @@ class TikTokDuetStatus(Enum):
 
 class TikTokStitchStatus(Enum):
     """TikTok stitch permission enumeration"""
+
     ENABLED = "ENABLED"
     DISABLED = "DISABLED"
     FRIENDS_ONLY = "FRIENDS_ONLY"
@@ -109,7 +116,8 @@ class TikTokMetadata:
 
 @dataclass
 class TikTokAnalytics:
-    """TikTok analytics data structure"""
+    """
+TikTok analytics data structure"""
     views: int = 0
     likes: int = 0
     comments: int = 0
@@ -674,22 +682,26 @@ class TikTokAdapter(BaseAgent):
         pass
     
     async def _configure_brand_content(self, post_id: str, metadata: TikTokMetadata) -> None:
-        """Configure brand content settings"""
+        """
+Configure brand content settings"""
         # Implementation would configure brand content
         pass
     
     async def _monitor_initial_engagement(self, post_id: str) -> None:
-        """Monitor initial engagement metrics"""
+        """
+Monitor initial engagement metrics"""
         # Implementation would monitor early engagement
         pass
     
     async def _collect_initial_analytics(self, post_id: str) -> TikTokAnalytics:
-        """Collect initial analytics for published video"""
+        """
+Collect initial analytics for published video"""
         # Return basic analytics structure
         return TikTokAnalytics()
     
     async def _make_api_request(self, method: str, url: str, **kwargs) -> Dict[str, Any]:
-        """Make authenticated TikTok API request"""
+        """
+Make authenticated TikTok API request"""
         if not self.session:
             raise PlatformError("HTTP session not initialized")
         
@@ -716,7 +728,8 @@ class TikTokAdapter(BaseAgent):
         return duration
     
     def _resize_and_crop_frame(self, frame: np.ndarray, target_width: int, target_height: int) -> np.ndarray:
-        """Resize and crop frame to target dimensions"""
+        """
+Resize and crop frame to target dimensions"""
         height, width = frame.shape[:2]
         
         # Calculate scaling factors
@@ -741,7 +754,8 @@ class TikTokAdapter(BaseAgent):
         return frame_cropped
     
     def _enhance_video_quality(self, frame: np.ndarray) -> np.ndarray:
-        """Enhance video frame quality"""
+        """
+Enhance video frame quality"""
         # Apply subtle sharpening
         kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
         frame_sharpened = cv2.filter2D(frame, -1, kernel)
@@ -752,7 +766,8 @@ class TikTokAdapter(BaseAgent):
         return frame_enhanced
     
     async def _find_relevant_hashtags(self, content: ContentItem, title: str) -> List[str]:
-        """Find relevant hashtags for content"""
+        """
+Find relevant hashtags for content"""
         # AI-powered hashtag suggestion implementation
         return ["#fyp", "#viral", "#trending"]
     
@@ -777,27 +792,32 @@ class TikTokAdapter(BaseAgent):
         return True
     
     async def _fetch_video_analytics(self, video_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Fetch video-specific analytics"""
+        """
+Fetch video-specific analytics"""
         # Implementation would fetch analytics data
         return {}
     
     async def _fetch_engagement_metrics(self, video_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Fetch engagement metrics"""
+        """
+Fetch engagement metrics"""
         # Implementation would fetch engagement data
         return {}
     
     async def _fetch_demographics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Fetch audience demographics"""
+        """
+Fetch audience demographics"""
         # Implementation would fetch demographics data
         return {}
     
     async def _analyze_hashtag_performance(self, video_id: str, start_date: datetime, end_date: datetime) -> Dict[str, int]:
-        """Analyze hashtag performance"""
+        """
+Analyze hashtag performance"""
         # Implementation would analyze hashtag performance
         return {}
     
     async def cleanup(self) -> None:
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         if self.session:
             await self.session.close()
             self.session = None

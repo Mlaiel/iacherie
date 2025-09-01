@@ -6,7 +6,7 @@ automated royalty calculations, and blockchain-secured rights verification.
 Handles all types of content licensing for creators.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 Contact mlaiel@live.de for licensing inquiries.
@@ -14,6 +14,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Content Registration → Rights Verification → License Generation → Royalty Tracking
 ==================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     SYNC_LICENSING = "sync_licensing"          # Music for media
     MECHANICAL_LICENSING = "mechanical_licensing"  # Reproduction rights
     PERFORMANCE_LICENSING = "performance_licensing"  # Public performance
@@ -55,6 +58,7 @@ class LicenseType(Enum):
 
 class RightsType(Enum):
     """Types of intellectual property rights"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -66,6 +70,7 @@ class RightsType(Enum):
 
 class RoyaltyModel(Enum):
     """Royalty calculation models"""
+
     PERCENTAGE_OF_REVENUE = "percentage_of_revenue"
     FLAT_FEE = "flat_fee"
     TIERED_PERCENTAGE = "tiered_percentage"
@@ -77,6 +82,7 @@ class RoyaltyModel(Enum):
 
 class LicenseStatus(Enum):
     """License agreement status"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -119,7 +125,8 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyCalculation:
-    """Royalty payment calculation details"""
+    """
+Royalty payment calculation details"""
     calculation_id: str
     license_id: str
     period_start: datetime
@@ -154,7 +161,8 @@ class ContentRights:
 
 
 class RoyaltyCalculator:
-    """Advanced royalty calculation engine"""
+    """
+Advanced royalty calculation engine"""
     
     def __init__(self, database: DatabaseManager):
         self.database = database
@@ -470,7 +478,8 @@ class RightsManager:
     # Private helper methods
     
     async def _get_content_rights(self, content_id: str) -> List[ContentRights]:
-        """Fetch content rights from database"""
+        """
+Fetch content rights from database"""
         try:
             # This would query the database
             return []  # Placeholder
@@ -610,7 +619,8 @@ class ContractManager:
         start_date: datetime,
         end_date: Optional[datetime]
     ) -> str:
-        """Format license duration for display"""
+        """
+Format license duration for display"""
         if end_date is None:
             return f"From {start_date.strftime('%Y-%m-%d')} (Perpetual)"
         else:
@@ -984,7 +994,8 @@ class LicensingEngine:
     # Private helper methods
     
     async def _store_license_agreement(self, agreement: LicenseAgreement):
-        """Store license agreement in database"""
+        """
+Store license agreement in database"""
         try:
             # This would store in the database
             pass

@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -53,7 +54,8 @@ settings = get_settings()
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track data structure."""
+    """
+SoundCloud track data structure."""
     track_id: str
     title: str
     description: str
@@ -84,7 +86,8 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist data structure."""
+    """
+SoundCloud playlist data structure."""
     playlist_id: str
     title: str
     description: str
@@ -103,7 +106,8 @@ class SoundCloudPlaylist:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user data structure."""
+    """
+SoundCloud user data structure."""
     user_id: str
     username: str
     permalink: str
@@ -126,7 +130,8 @@ class SoundCloudUser:
 
 @dataclass
 class SoundCloudComment:
-    """SoundCloud comment data structure."""
+    """
+SoundCloud comment data structure."""
     comment_id: str
     track_id: str
     user_id: str
@@ -153,7 +158,8 @@ class SoundCloudCrawler:
     """
     
     def __init__(self):
-        """Initialize SoundCloud crawler."""
+        """
+Initialize SoundCloud crawler."""
         self.client_id = settings.SOUNDCLOUD_CLIENT_ID
         self.client_secret = settings.SOUNDCLOUD_CLIENT_SECRET
         self.access_token = settings.SOUNDCLOUD_ACCESS_TOKEN
@@ -650,7 +656,8 @@ class SoundCloudCrawler:
             return True
     
     def _extract_track_from_element(self, element) -> Optional[SoundCloudTrack]:
-        """Extract track data from Selenium web element."""
+        """
+Extract track data from Selenium web element."""
         try:
             # Extract title
             title_element = element.find_element(By.CSS_SELECTOR, ".soundTitle__title")

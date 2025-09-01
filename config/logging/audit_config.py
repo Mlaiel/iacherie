@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import json
 import uuid
 import hashlib
@@ -34,7 +35,9 @@ import base64
 
 
 class AuditLevel(str, Enum):
-    """Audit severity levels"""
+    """
+Audit severity levels"""
+
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
@@ -109,6 +112,7 @@ class AuditCategory(str, Enum):
 
 class AuditOutcome(str, Enum):
     """Audit event outcomes"""
+
     SUCCESS = "SUCCESS"
     FAILURE = "FAILURE"
     WARNING = "WARNING"
@@ -252,7 +256,8 @@ class AuditConfig:
         self._buffer_lock = threading.Lock()
     
     def _initialize_encryption(self, key: str) -> None:
-        """Initialize encryption for audit logs"""
+        """
+Initialize encryption for audit logs"""
         try:
             # Derive key from password
             password = key.encode()
@@ -358,12 +363,14 @@ class AuditConfig:
         ]
     
     def _initialize_storage(self) -> None:
-        """Initialize audit log storage"""
+        """
+Initialize audit log storage"""
         storage_path = Path(self.storage_path)
         storage_path.mkdir(parents=True, exist_ok=True)
     
     def _initialize_audit_logger(self) -> None:
-        """Initialize dedicated audit logger"""
+        """
+Initialize dedicated audit logger"""
         self._audit_logger = logging.getLogger('ia_influencer_audit')
         self._audit_logger.setLevel(logging.INFO)
         
@@ -422,7 +429,8 @@ class AuditConfig:
         return encrypted_data
     
     def _anonymize_pii(self, event: AuditEvent) -> AuditEvent:
-        """Anonymize PII data if enabled"""
+        """
+Anonymize PII data if enabled"""
         if not self.anonymization_enabled:
             return event
         
@@ -556,7 +564,8 @@ class AuditConfig:
         ip_address: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Log authentication-related audit event"""
+        """
+Log authentication-related audit event"""
         return self.log_audit_event(
             category=AuditCategory.AUTHENTICATION,
             action=action,
@@ -577,7 +586,8 @@ class AuditConfig:
         user_id: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Log content protection audit event"""
+        """
+Log content protection audit event"""
         return self.log_audit_event(
             category=AuditCategory.VIOLATION_DETECTED,
             action=action,
@@ -599,7 +609,8 @@ class AuditConfig:
         transaction_id: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Log financial operation audit event"""
+        """
+Log financial operation audit event"""
         financial_details = {
             'amount': amount,
             'currency': currency,
@@ -624,7 +635,8 @@ class AuditConfig:
         threat_indicators: Optional[List[str]] = None,
         details: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Log security incident audit event"""
+        """
+Log security incident audit event"""
         return self.log_audit_event(
             category=AuditCategory.SECURITY_INCIDENT,
             action=f"security_incident_{incident_type}",
@@ -667,7 +679,8 @@ class AuditConfig:
         )
     
     def verify_event_integrity(self, event: AuditEvent) -> bool:
-        """Verify the integrity of an audit event"""
+        """
+Verify the integrity of an audit event"""
         if not self.integrity_checking or not event.checksum:
             return True
         
@@ -676,14 +689,16 @@ class AuditConfig:
         return calculated_checksum == event.checksum
     
     def get_retention_policy(self, category: AuditCategory) -> Optional[AuditRetentionPolicy]:
-        """Get retention policy for audit category"""
+        """
+Get retention policy for audit category"""
         for policy in self.retention_policies:
             if policy.category == category:
                 return policy
         return None
     
     def cleanup_expired_events(self) -> int:
-        """Clean up expired audit events based on retention policies"""
+        """
+Clean up expired audit events based on retention policies"""
         # This would implement actual cleanup logic
         # For now, return 0 as placeholder
         cleanup_count = 0
@@ -724,7 +739,8 @@ def initialize_audit_logging(
 
 
 def get_audit_config() -> AuditConfig:
-    """Get the global audit configuration"""
+    """
+Get the global audit configuration"""
     if not _audit_config:
         initialize_audit_logging()
     

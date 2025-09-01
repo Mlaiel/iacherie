@@ -7,6 +7,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class ClaimStatus(str, Enum):
-    """Revenue claim status enumeration"""
+    """
+Revenue claim status enumeration"""
+
     INITIATED = "initiated"
     PROCESSING = "processing"
     APPROVED = "approved"
@@ -43,6 +46,7 @@ class ClaimStatus(str, Enum):
 
 class RevenueType(str, Enum):
     """Types of revenue streams"""
+
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATION = "donation"
@@ -55,6 +59,7 @@ class RevenueType(str, Enum):
 
 class PaymentMethod(str, Enum):
     """Payment recovery methods"""
+
     PLATFORM_SPLIT = "platform_split"
     DIRECT_PAYMENT = "direct_payment"
     ESCROW = "escrow"
@@ -80,7 +85,8 @@ class RevenueClaimRequest:
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization tracking metrics"""
+    """
+Monetization tracking metrics"""
     total_claims: int
     total_recovered: Decimal
     average_recovery_time: float
@@ -90,7 +96,8 @@ class MonetizationMetrics:
 
 
 class RevenueClaimManager:
-    """Advanced revenue claim management system"""
+    """
+Advanced revenue claim management system"""
     
     def __init__(self):
         self.payment_processor = PaymentProcessor()
@@ -356,7 +363,8 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate revenue split between parties"""
+        """
+Calculate revenue split between parties"""
         total_revenue = Decimal(str(revenue_data.get("total_revenue", 0)))
         
         # Standard splits (configurable per platform)
@@ -419,7 +427,8 @@ class RevenueClaimManager:
         return result.scalars().all()
     
     async def _check_platform_payment_status(self, claim: RevenueClaim) -> Dict[str, Any]:
-        """Check payment status on platform"""
+        """
+Check payment status on platform"""
         try:
             status_response = await self.platform_api.check_payment_status(
                 claim.platform,
@@ -573,7 +582,8 @@ class RevenueClaimManager:
         return min(efficiency, 1.0)
     
     async def _assess_platform_responsiveness(self, claim: RevenueClaim) -> float:
-        """Assess platform responsiveness score"""
+        """
+Assess platform responsiveness score"""
         # This would analyze platform communication patterns
         return 0.75  # Placeholder
     
@@ -582,7 +592,8 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         recovery_records: List[PaymentRecovery]
     ) -> List[Dict[str, Any]]:
-        """Identify process bottlenecks"""
+        """
+Identify process bottlenecks"""
         bottlenecks = []
         
         # Check for long delays
@@ -620,7 +631,8 @@ class RevenueClaimManager:
         await session.commit()
     
     async def _submit_claim_to_platform(self, claim: RevenueClaim) -> Dict[str, Any]:
-        """Submit claim to platform"""
+        """
+Submit claim to platform"""
         return {"success": True, "platform_reference": "PLAT-12345"}
     
     async def _setup_claim_monitoring(self, claim: RevenueClaim) -> Dict[str, Any]:
@@ -648,7 +660,8 @@ class RevenueClaimManager:
         await session.commit()
     
     async def _increase_communication_frequency(self, claim: RevenueClaim) -> None:
-        """Increase communication frequency with platform"""
+        """
+Increase communication frequency with platform"""
         # Implementation for increasing communication
         pass
     
@@ -657,13 +670,15 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         recommendation: Dict[str, Any]
     ) -> None:
-        """Implement process improvement"""
+        """
+Implement process improvement"""
         # Implementation for process improvements
         pass
 
 
 class MonetizationTracker:
-    """Advanced monetization tracking and analytics"""
+    """
+Advanced monetization tracking and analytics"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -675,7 +690,8 @@ class MonetizationTracker:
         period_end: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate comprehensive monetization report"""
+        """
+Generate comprehensive monetization report"""
         try:
             # Get all claims for user in period
             claims_result = await session.execute(
@@ -826,7 +842,8 @@ class PaymentRecovery:
         payment_data: Dict[str, Any],
         session: AsyncSession
     ) -> Tuple[bool, str]:
-        """Process incoming payment recovery"""
+        """
+Process incoming payment recovery"""
         try:
             # Validate payment data
             if not self._validate_payment_data(payment_data):

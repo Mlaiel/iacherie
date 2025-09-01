@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Quality Enhancer Tests
+"""
+Quality Enhancer Tests
 
 Comprehensive tests for the QualityEnhancer class that handles
 content quality improvement and validation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -48,12 +51,14 @@ class TestQualityEnhancer:
     
     @pytest.fixture
     def enhancer(self):
-        """Create a quality enhancer instance"""
+        """
+Create a quality enhancer instance"""
         return QualityEnhancer()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for quality analysis"""
+        """
+Create sample content for quality analysis"""
         return """
         The artficial inteligence revoluton is here. It's transforming how we work, live, and interact with technology.
         
@@ -66,7 +71,8 @@ class TestQualityEnhancer:
     
     @pytest.fixture
     def high_quality_content(self):
-        """Create high-quality content for comparison"""
+        """
+Create high-quality content for comparison"""
         return """
         The artificial intelligence revolution is here. It's transforming how we work, live, and interact with technology.
         
@@ -78,7 +84,8 @@ class TestQualityEnhancer:
         """
     
     def test_enhancer_initialization(self, enhancer):
-        """Test quality enhancer initialization"""
+        """
+Test quality enhancer initialization"""
         assert enhancer is not None
         assert hasattr(enhancer, 'grammar_checker')
         assert hasattr(enhancer, 'style_analyzer')
@@ -89,7 +96,8 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_comprehensive_quality_analysis(self, enhancer, sample_content):
-        """Test comprehensive quality analysis"""
+        """
+Test comprehensive quality analysis"""
         with patch.object(enhancer, '_analyze_quality') as mock_analysis:
             mock_analysis.return_value = {
                 "success": True,
@@ -614,7 +622,8 @@ class TestQualityMetrics:
     """Test suite for QualityMetrics model"""
     
     def test_quality_metrics_creation(self):
-        """Test quality metrics creation"""
+        """
+Test quality metrics creation"""
         metrics = QualityMetrics(
             grammar_score=85.5,
             spelling_score=92.3,
@@ -633,10 +642,12 @@ class TestQualityMetrics:
 
 
 class TestGrammarCheck:
-    """Test suite for GrammarCheck model"""
+    """
+Test suite for GrammarCheck model"""
     
     def test_grammar_check_creation(self):
-        """Test grammar check result creation"""
+        """
+Test grammar check result creation"""
         check = GrammarCheck(
             error_count=5,
             corrections=[

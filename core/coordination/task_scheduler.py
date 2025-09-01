@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Task Creation → Scheduling → Dependency Resolution → Resource Allocation → Execution → Monitoring
 """
+
 import asyncio
 import uuid
 import heapq
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(Enum):
-    """Task scheduling types"""
+    """
+Task scheduling types"""
+
     IMMEDIATE = "immediate"
     DELAYED = "delayed"
     PERIODIC = "periodic"
@@ -44,6 +47,7 @@ class ScheduleType(Enum):
 
 class TaskPriority(Enum):
     """Task execution priority levels"""
+
     URGENT = 1
     HIGH = 2
     NORMAL = 3
@@ -52,7 +56,9 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""
+    """
+Task execution status"""
+
     SCHEDULED = "scheduled"
     PENDING = "pending"
     RUNNING = "running"
@@ -65,6 +71,7 @@ class TaskStatus(Enum):
 
 class TaskType(Enum):
     """Types of tasks in the system"""
+
     CONTENT_ANALYSIS = "content_analysis"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     PROTECTION_SCAN = "protection_scan"
@@ -117,7 +124,8 @@ class TaskConfiguration:
 
 @dataclass
 class TaskExecution:
-    """Task execution state and tracking"""
+    """
+Task execution state and tracking"""
     execution_id: str
     task_id: str
     configuration: TaskConfiguration
@@ -134,7 +142,8 @@ class TaskExecution:
 
 @dataclass
 class ScheduledTask:
-    """Task in the scheduler queue"""
+    """
+Task in the scheduler queue"""
     execution_time: datetime
     priority: int
     task_id: str
@@ -147,7 +156,8 @@ class ScheduledTask:
 
 
 class TaskScheduler:
-    """Enterprise task scheduling and execution management system"""
+    """
+Enterprise task scheduling and execution management system"""
     
     def __init__(self, max_concurrent_tasks: int = 20):
         self.max_concurrent_tasks = max_concurrent_tasks
@@ -361,7 +371,8 @@ class TaskScheduler:
             self.dependency_graph[dep.task_id].add(config.task_id)
     
     def _schedule_next_execution(self, config: TaskConfiguration):
-        """Schedule next execution for a task"""
+        """
+Schedule next execution for a task"""
         try:
             next_time = self._calculate_next_execution_time(config)
             if next_time:
@@ -472,7 +483,8 @@ class TaskScheduler:
                     heapq.heappush(self.scheduled_tasks, scheduled_task)
     
     def _check_dependency_resolutions(self):
-        """Check if any waiting tasks can now be executed"""
+        """
+Check if any waiting tasks can now be executed"""
         resolved_tasks = []
         
         for task_id, waiting_list in self.waiting_tasks.items():
@@ -485,7 +497,8 @@ class TaskScheduler:
             self._schedule_dependency_resolved_task(execution_id)
     
     def _are_dependencies_satisfied(self, task_id: str) -> bool:
-        """Check if all dependencies for a task are satisfied"""
+        """
+Check if all dependencies for a task are satisfied"""
         try:
             config = self.task_configurations.get(task_id)
             if not config:
@@ -515,7 +528,8 @@ class TaskScheduler:
         return False
     
     def _schedule_dependency_resolved_task(self, execution_id: str):
-        """Schedule a task whose dependencies are now resolved"""
+        """
+Schedule a task whose dependencies are now resolved"""
         # This would integrate with the actual task execution
         logger.info(f"Dependencies resolved for task execution {execution_id}")
     
@@ -534,7 +548,8 @@ class TaskScheduler:
             asyncio.create_task(self._retry_task_execution(execution))
     
     async def _execute_task(self, scheduled_task: ScheduledTask):
-        """Execute a scheduled task"""
+        """
+Execute a scheduled task"""
         try:
             config = self.task_configurations.get(scheduled_task.task_id)
             if not config:
@@ -632,7 +647,8 @@ class TaskScheduler:
         ]
     
     async def _complete_task_execution(self, execution: TaskExecution):
-        """Complete task execution and cleanup"""
+        """
+Complete task execution and cleanup"""
         try:
             # Calculate execution time
             if execution.started_at:
@@ -856,11 +872,13 @@ class TaskScheduler:
         self.event_handlers[event_type].append(handler)
     
     def register_task_listener(self, task_id: str, listener: Callable):
-        """Register listener for specific task"""
+        """
+Register listener for specific task"""
         self.task_listeners[task_id].append(listener)
     
     def enable_task(self, task_id: str) -> bool:
-        """Enable a task for scheduling"""
+        """
+Enable a task for scheduling"""
         try:
             if task_id in self.task_configurations:
                 config = self.task_configurations[task_id]

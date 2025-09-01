@@ -22,6 +22,7 @@ Features:
 - Comprehensive user analytics and behavior analysis
 - Content fingerprinting for copyright protection
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator, Tuple
@@ -56,7 +57,8 @@ settings = get_settings()
 
 @dataclass
 class ThreadsPost:
-    """Threads post data structure with enhanced analysis."""
+    """
+Threads post data structure with enhanced analysis."""
     post_id: str
     text: Optional[str]
     created_at: datetime
@@ -97,7 +99,8 @@ class ThreadsPost:
 
 @dataclass
 class ThreadsUser:
-    """Threads user data structure."""
+    """
+Threads user data structure."""
     user_id: str
     username: str
     display_name: str
@@ -128,7 +131,8 @@ class ThreadsUser:
 
 @dataclass
 class ThreadsThread:
-    """Complete Threads conversation thread."""
+    """
+Complete Threads conversation thread."""
     thread_id: str
     root_post: ThreadsPost
     replies: List[ThreadsPost]
@@ -196,11 +200,13 @@ class ThreadsCrawler:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.close()
         
     async def initialize(self):
-        """Initialize the crawler session and browser."""
+        """
+Initialize the crawler session and browser."""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers=self.user_agent_rotator.get_headers()
@@ -497,7 +503,8 @@ class ThreadsCrawler:
         return posts
     
     async def get_user_profile(self, username: str) -> ThreadsUser:
-        """Get user profile information."""
+        """
+Get user profile information."""
         try:
             if self.use_selenium:
                 return await self._get_user_profile_selenium(username)
@@ -518,11 +525,13 @@ class ThreadsCrawler:
         return min(viral_score, 100.0)  # Cap at 100
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between content fingerprints."""
+        """
+Calculate similarity between content fingerprints."""
         return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
-        """Get crawler statistics and status."""
+        """
+Get crawler statistics and status."""
         return {
             'platform': 'threads',
             'selenium_enabled': bool(self.driver),
@@ -579,6 +588,7 @@ logger = logging.getLogger(__name__)
 
 class ThreadsPostType(str, Enum):
     """Threads post types"""
+
     TEXT = "text"
     PHOTO = "photo"
     VIDEO = "video"
@@ -589,6 +599,7 @@ class ThreadsPostType(str, Enum):
 
 class ThreadsInteractionType(str, Enum):
     """Threads interaction types"""
+
     LIKE = "like"
     REPLY = "reply"
     REPOST = "repost"
@@ -598,6 +609,7 @@ class ThreadsInteractionType(str, Enum):
 
 class ThreadsContentVisibility(str, Enum):
     """Threads content visibility levels"""
+
     PUBLIC = "public"
     FOLLOWERS = "followers"
     MENTIONED_ONLY = "mentioned_only"
@@ -627,7 +639,8 @@ class ThreadsUser(BaseModel):
 
 
 class ThreadsMedia(BaseModel):
-    """Threads media data model"""
+    """
+Threads media data model"""
     media_id: str
     media_type: str  # "image", "video", "carousel_album"
     url: str
@@ -692,7 +705,8 @@ class ThreadsConversation(BaseModel):
 
 
 class ThreadsTrend(BaseModel):
-    """Threads trending topic data model"""
+    """
+Threads trending topic data model"""
     trend_id: str
     hashtag: str
     posts_count: int
@@ -706,7 +720,8 @@ class ThreadsTrend(BaseModel):
 
 
 class ThreadsSearchResults(BaseModel):
-    """Threads search results data model"""
+    """
+Threads search results data model"""
     query: str
     total_results: int
     users: List[ThreadsUser] = Field(default_factory=list)
@@ -721,7 +736,8 @@ class ThreadsSearchResults(BaseModel):
 
 
 class ThreadsAnalytics(BaseModel):
-    """Threads analytics data model"""
+    """
+Threads analytics data model"""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int
@@ -1276,12 +1292,14 @@ class ThreadsCrawler(BaseCrawler):
         return []
 
     async def _get_related_hashtags(self, hashtag: str) -> List[str]:
-        """Get related hashtags"""
+        """
+Get related hashtags"""
         # Implementation would require hashtag suggestion API
         return []
 
     async def _get_user_recent_posts(self, username: str) -> List[ThreadsPost]:
-        """Get recent posts from user"""
+        """
+Get recent posts from user"""
         try:
             # First get user ID from username
             user_id = await self._get_user_id_from_username(username)
@@ -1529,12 +1547,14 @@ class ThreadsCrawler(BaseCrawler):
         return []
 
     async def _calculate_similarity(self, post: ThreadsPost) -> float:
-        """Calculate similarity score against protected content"""
+        """
+Calculate similarity score against protected content"""
         # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, post: ThreadsPost) -> str:
-        """Check protection status of post"""
+        """
+Check protection status of post"""
         if post.post_id in self.protected_content:
             return "protected"
         return "unprotected"

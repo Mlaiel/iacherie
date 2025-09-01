@@ -5,12 +5,13 @@ with real-time alerts, violation detection, and preventive compliance measures.
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from ..models.monitoring_models import ComplianceAlert, MonitoringTask, Violatio
 
 
 class MonitoringType(Enum):
-    """Types of compliance monitoring"""
+    """
+Types of compliance monitoring"""
+
     REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -42,6 +45,7 @@ class MonitoringType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -50,6 +54,7 @@ class AlertSeverity(Enum):
 
 class MonitoringScope(Enum):
     """Monitoring scope levels"""
+
     CONTENT = "content"
     USER = "user"
     PLATFORM = "platform"
@@ -58,6 +63,7 @@ class MonitoringScope(Enum):
 
 class ComplianceMetric(Enum):
     """Compliance metrics to monitor"""
+
     COPYRIGHT_VIOLATIONS = "copyright_violations"
     CONTENT_VIOLATIONS = "content_violations"
     PLATFORM_VIOLATIONS = "platform_violations"
@@ -81,7 +87,8 @@ class MonitoringConfig:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert structure"""
+    """
+Compliance alert structure"""
     alert_id: str
     monitoring_type: MonitoringType
     severity: AlertSeverity
@@ -98,7 +105,8 @@ class ComplianceAlert:
 
 @dataclass
 class MonitoringReport:
-    """Monitoring report structure"""
+    """
+Monitoring report structure"""
     report_id: str
     monitoring_period: Dict[str, datetime]
     scope: MonitoringScope

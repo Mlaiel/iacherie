@@ -15,6 +15,7 @@ Cloud environment configuration for multi-cloud deployment.
 Handles AWS, GCP, Azure infrastructure provisioning and management.
 ===============================================
 """
+
 import os
 import json
 import logging
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
+    """
+Supported cloud providers"""
+
     AWS = "aws"
     GCP = "gcp" 
     AZURE = "azure"
@@ -83,7 +86,8 @@ class AWSConfig:
 
 @dataclass
 class GCPConfig:
-    """Google Cloud Platform configuration"""
+    """
+Google Cloud Platform configuration"""
     project_id: str = os.getenv('GCP_PROJECT_ID', '')
     region: str = os.getenv('GCP_REGION', 'europe-west3')
     zone: str = os.getenv('GCP_ZONE', 'europe-west3-a')
@@ -129,7 +133,8 @@ class GCPConfig:
 
 @dataclass
 class AzureConfig:
-    """Microsoft Azure configuration"""
+    """
+Microsoft Azure configuration"""
     subscription_id: str = os.getenv('AZURE_SUBSCRIPTION_ID', '')
     tenant_id: str = os.getenv('AZURE_TENANT_ID', '')
     client_id: str = os.getenv('AZURE_CLIENT_ID', '')
@@ -176,7 +181,8 @@ class AzureConfig:
 
 @dataclass
 class CloudSecurityConfig:
-    """Cloud security configuration"""
+    """
+Cloud security configuration"""
     encryption_at_rest: bool = True
     encryption_in_transit: bool = True
     kms_key_rotation: bool = True
@@ -191,7 +197,8 @@ class CloudSecurityConfig:
 
 @dataclass
 class CloudMonitoringConfig:
-    """Cloud monitoring and observability configuration"""
+    """
+Cloud monitoring and observability configuration"""
     centralized_logging: bool = True
     metrics_collection: bool = True
     distributed_tracing: bool = True
@@ -497,7 +504,8 @@ class CloudEnvironmentManager:
     
     # Private helper methods for provider-specific configurations
     def _get_aws_configuration(self) -> Dict[str, Any]:
-        """Get AWS-specific configuration"""
+        """
+Get AWS-specific configuration"""
         return {
             'region': self.aws_config.region,
             'account_id': self.aws_config.account_id,
@@ -526,7 +534,8 @@ class CloudEnvironmentManager:
         }
     
     def _get_gcp_configuration(self) -> Dict[str, Any]:
-        """Get GCP-specific configuration"""
+        """
+Get GCP-specific configuration"""
         return {
             'project_id': self.gcp_config.project_id,
             'region': self.gcp_config.region,
@@ -552,7 +561,8 @@ class CloudEnvironmentManager:
         }
     
     def _get_azure_configuration(self) -> Dict[str, Any]:
-        """Get Azure-specific configuration"""
+        """
+Get Azure-specific configuration"""
         return {
             'subscription_id': self.azure_config.subscription_id,
             'location': self.azure_config.location,
@@ -580,81 +590,99 @@ class CloudEnvironmentManager:
     
     # Infrastructure provisioning methods
     def _provision_aws_infrastructure(self, environment: str) -> bool:
-        """Provision AWS infrastructure"""
+        """
+Provision AWS infrastructure"""
         # Implementation would use Terraform or AWS CDK
         return True
     
     def _provision_gcp_infrastructure(self, environment: str) -> bool:
-        """Provision GCP infrastructure"""
+        """
+Provision GCP infrastructure"""
         # Implementation would use Terraform or Google Cloud Deployment Manager
         return True
     
     def _provision_azure_infrastructure(self, environment: str) -> bool:
-        """Provision Azure infrastructure"""
+        """
+Provision Azure infrastructure"""
         # Implementation would use Terraform or Azure Resource Manager
         return True
     
     # Managed services setup methods
     def _setup_managed_databases(self):
-        """Setup managed databases"""
+        """
+Setup managed databases"""
         pass
     
     def _setup_managed_caching(self):
-        """Setup managed caching services"""
+        """
+Setup managed caching services"""
         pass
     
     def _setup_object_storage(self):
-        """Setup object storage"""
+        """
+Setup object storage"""
         pass
     
     def _setup_cdn(self):
-        """Setup Content Delivery Network"""
+        """
+Setup Content Delivery Network"""
         pass
     
     def _setup_load_balancers(self):
-        """Setup load balancers"""
+        """
+Setup load balancers"""
         pass
     
     def _setup_monitoring_services(self):
-        """Setup cloud monitoring services"""
+        """
+Setup cloud monitoring services"""
         pass
     
     # Security setup methods
     def _setup_vpc_security(self):
-        """Setup VPC and network security"""
+        """
+Setup VPC and network security"""
         pass
     
     def _setup_iam_security(self):
-        """Setup IAM and access control"""
+        """
+Setup IAM and access control"""
         pass
     
     def _setup_encryption(self):
-        """Setup encryption and key management"""
+        """
+Setup encryption and key management"""
         pass
     
     def _setup_security_monitoring(self):
-        """Setup security monitoring"""
+        """
+Setup security monitoring"""
         pass
     
     def _setup_compliance_auditing(self):
-        """Setup compliance and auditing"""
+        """
+Setup compliance and auditing"""
         pass
     
     # Disaster recovery methods
     def _setup_cross_region_replication(self):
-        """Setup cross-region replication"""
+        """
+Setup cross-region replication"""
         pass
     
     def _setup_automated_backups(self):
-        """Setup automated backups"""
+        """
+Setup automated backups"""
         pass
     
     def _setup_disaster_recovery_procedures(self):
-        """Setup disaster recovery procedures"""
+        """
+Setup disaster recovery procedures"""
         pass
     
     def _setup_failover_mechanisms(self):
-        """Setup failover mechanisms"""
+        """
+Setup failover mechanisms"""
         pass
     
     # Cost optimization methods

@@ -9,6 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class WorkflowExecutionMode(Enum):
-    """Workflow execution modes."""
+    """
+Workflow execution modes."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -43,6 +46,7 @@ class WorkflowExecutionMode(Enum):
 
 class ContentProcessingProfile(Enum):
     """Content processing profiles."""
+
     CREATOR_BASIC = "creator_basic"
     CREATOR_PRO = "creator_pro"
     ENTERPRISE_STANDARD = "enterprise_standard"
@@ -52,6 +56,7 @@ class ContentProcessingProfile(Enum):
 
 class WorkflowPriority(Enum):
     """Workflow execution priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -61,7 +66,8 @@ class WorkflowPriority(Enum):
 
 @dataclass
 class WorkflowConfiguration:
-    """Comprehensive workflow system configuration."""
+    """
+Comprehensive workflow system configuration."""
     execution_mode: WorkflowExecutionMode = WorkflowExecutionMode.PRODUCTION
     processing_profile: ContentProcessingProfile = ContentProcessingProfile.ENTERPRISE_PREMIUM
     max_concurrent_workflows: int = 10
@@ -101,7 +107,8 @@ class WorkflowRequest:
 
 @dataclass
 class WorkflowExecutionResult:
-    """Comprehensive workflow execution result."""
+    """
+Comprehensive workflow execution result."""
     request_id: str
     execution_id: str
     status: str
@@ -1172,7 +1179,8 @@ class WorkflowOrchestrator:
         execution_result: WorkflowExecutionResult,
         workflow_request: WorkflowRequest
     ):
-        """Send execution completion notifications."""
+        """
+Send execution completion notifications."""
         # In real implementation, would send actual notifications
         self.logger.info(f"Execution completed notification sent for: {execution_result.execution_id}")
 

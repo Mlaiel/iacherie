@@ -28,6 +28,7 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
+
 import hashlib
 import json
 import secrets
@@ -54,7 +55,9 @@ settings = get_settings()
 
 
 class EvidenceType(Enum):
-    """Types of digital evidence"""
+    """
+Types of digital evidence"""
+
     DIGITAL_FINGERPRINT = "digital_fingerprint"
     CONTENT_COPY = "content_copy"
     METADATA_RECORD = "metadata_record"
@@ -69,6 +72,7 @@ class EvidenceType(Enum):
 
 class ForensicsStatus(Enum):
     """Forensics investigation status"""
+
     INITIATED = "initiated"
     COLLECTING = "collecting_evidence"
     ANALYZING = "analyzing"
@@ -79,6 +83,7 @@ class ForensicsStatus(Enum):
 
 class EvidenceIntegrity(Enum):
     """Evidence integrity status"""
+
     INTACT = "intact"
     VERIFIED = "cryptographically_verified"
     TAMPERED = "tampered"
@@ -88,6 +93,7 @@ class EvidenceIntegrity(Enum):
 
 class LegalWeight(Enum):
     """Legal admissibility weight"""
+
     HIGH = "high_admissible"
     MEDIUM = "medium_admissible"
     LOW = "low_admissible"
@@ -246,7 +252,8 @@ class DigitalForensicsEngine:
         self._setup_forensics_environment()
     
     def _setup_forensics_environment(self):
-        """Initialize forensics environment and tools"""
+        """
+Initialize forensics environment and tools"""
         self.evidence_storage_path = Path("/tmp/forensics_evidence")
         self.evidence_storage_path.mkdir(exist_ok=True)
         
@@ -490,7 +497,8 @@ class DigitalForensicsEngine:
         return hashes
     
     async def _extract_comprehensive_metadata(self, evidence: DigitalEvidence) -> Dict[str, Any]:
-        """Extract comprehensive metadata from evidence"""
+        """
+Extract comprehensive metadata from evidence"""
         try:
             metadata = {
                 "collection_timestamp": evidence.collected_at.isoformat(),
@@ -961,18 +969,21 @@ async def collect_digital_evidence(
     metadata: Optional[Dict[str, Any]] = None,
     investigation_id: Optional[str] = None
 ) -> DigitalEvidence:
-    """Collect digital evidence"""
+    """
+Collect digital evidence"""
     return await forensics_engine.collect_evidence(
         evidence_type, source_location, content_data, metadata, investigation_id
     )
 
 async def generate_court_report(investigation_id: str) -> Dict[str, Any]:
-    """Generate court-ready legal report"""
+    """
+Generate court-ready legal report"""
     return await forensics_engine.generate_legal_report(investigation_id)
 
 async def export_legal_package(
     investigation_id: str,
     include_raw_data: bool = False
 ) -> bytes:
-    """Export legal evidence package"""
+    """
+Export legal evidence package"""
     return await forensics_engine.export_evidence_package(investigation_id, include_raw_data)

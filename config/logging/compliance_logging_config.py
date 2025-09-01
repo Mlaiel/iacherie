@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -29,7 +30,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class ComplianceRegulation(str, Enum):
-    """Compliance regulations and standards"""
+    """
+Compliance regulations and standards"""
+
     GDPR = "gdpr"                          # General Data Protection Regulation (EU)
     CCPA = "ccpa"                          # California Consumer Privacy Act
     PIPEDA = "pipeda"                      # Personal Information Protection (Canada)
@@ -52,6 +55,7 @@ class ComplianceRegulation(str, Enum):
 
 class DataCategory(str, Enum):
     """Categories of data for compliance tracking"""
+
     PERSONAL_DATA = "personal_data"
     SENSITIVE_PERSONAL_DATA = "sensitive_personal_data"
     BIOMETRIC_DATA = "biometric_data"
@@ -68,6 +72,7 @@ class DataCategory(str, Enum):
 
 class ComplianceEvent(str, Enum):
     """Types of compliance events"""
+
     DATA_COLLECTION = "data_collection"
     DATA_PROCESSING = "data_processing"
     DATA_SHARING = "data_sharing"
@@ -129,14 +134,16 @@ class ComplianceLogConfig:
 
 
 class ComplianceLogger:
-    """Specialized logger for compliance operations"""
+    """
+Specialized logger for compliance operations"""
     
     def __init__(self, config: ComplianceLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for compliance"""
+        """
+Setup structured logger for compliance"""
         processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
@@ -177,7 +184,8 @@ class ComplianceLogger:
         cross_border_transfer: bool = False,
         automated_decision_making: bool = False
     ) -> None:
-        """Log GDPR compliance events"""
+        """
+Log GDPR compliance events"""
         if not self.config.enable_gdpr_logging:
             return
             
@@ -523,12 +531,14 @@ class ComplianceLoggingConfig:
     
     @staticmethod
     def create_default_config() -> ComplianceLogConfig:
-        """Create default compliance logging configuration"""
+        """
+Create default compliance logging configuration"""
         return ComplianceLogConfig()
     
     @staticmethod
     def create_full_compliance_config() -> ComplianceLogConfig:
-        """Create full compliance logging configuration for all regulations"""
+        """
+Create full compliance logging configuration for all regulations"""
         return ComplianceLogConfig(
             enable_gdpr_logging=True,
             enable_ccpa_logging=True,

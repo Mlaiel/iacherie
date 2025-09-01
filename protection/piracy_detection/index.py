@@ -4,7 +4,7 @@
 Advanced AI-Powered Content Protection Platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -12,6 +12,7 @@ and will result in immediate legal action under German and international copyrig
 
 This index provides quick access to all piracy detection system components.
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 
@@ -63,7 +64,8 @@ class PiracyDetectionIndex:
     """
     
     def __init__(self):
-        """Initialize the piracy detection index."""
+        """
+Initialize the piracy detection index."""
         self.logger = logging.getLogger(__name__)
         self.components = {}
         self.system_info = {
@@ -74,7 +76,8 @@ class PiracyDetectionIndex:
         }
     
     def get_system_info(self) -> Dict[str, Any]:
-        """Get comprehensive system information."""
+        """
+Get comprehensive system information."""
         return {
             **self.system_info,
             'available_components': self.list_components(),
@@ -88,7 +91,8 @@ class PiracyDetectionIndex:
         }
     
     def list_components(self) -> Dict[str, List[str]]:
-        """List all available components by category."""
+        """
+List all available components by category."""
         return {
             'core_detection': [
                 'PiracyDetector',
@@ -201,11 +205,13 @@ class PiracyDetectionIndex:
         return self.components.get(component_name)
     
     def list_created_components(self) -> List[str]:
-        """List all currently created components."""
+        """
+List all currently created components."""
         return list(self.components.keys())
     
     def destroy_component(self, component_name: str) -> bool:
-        """Destroy and clean up a component."""
+        """
+Destroy and clean up a component."""
         try:
             if component_name in self.components:
                 component = self.components[component_name]
@@ -332,23 +338,28 @@ def create_system(config: Optional[Dict[str, Any]] = None) -> PiracyDetectionSys
     return detection_index.create_complete_system(config)
 
 def create_component(component_name: str, config: Optional[Dict[str, Any]] = None) -> Any:
-    """Create a specific component."""
+    """
+Create a specific component."""
     return detection_index.create_component(component_name, config)
 
 def get_system_info() -> Dict[str, Any]:
-    """Get system information."""
+    """
+Get system information."""
     return detection_index.get_system_info()
 
 def list_components() -> Dict[str, List[str]]:
-    """List available components."""
+    """
+List available components."""
     return detection_index.list_components()
 
 def get_config_template(component_name: str) -> Dict[str, Any]:
-    """Get configuration template for component."""
+    """
+Get configuration template for component."""
     return detection_index.get_configuration_template(component_name)
 
 def validate_config(component_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate component configuration."""
+    """
+Validate component configuration."""
     return detection_index.validate_configuration(component_name, config)
 
 # Export index and convenience functions

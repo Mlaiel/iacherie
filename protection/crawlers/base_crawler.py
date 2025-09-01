@@ -17,12 +17,13 @@ Enterprise Features:
 - Multi-threaded and async operation support
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -39,7 +40,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class CrawlerStatus(str, Enum):
-    """Comprehensive crawler status enumeration."""
+    """
+Comprehensive crawler status enumeration."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -51,6 +54,7 @@ class CrawlerStatus(str, Enum):
 
 class ContentType(str, Enum):
     """Content type enumeration for standardized classification."""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -67,6 +71,7 @@ class ContentType(str, Enum):
 
 class Priority(str, Enum):
     """Task priority levels for intelligent scheduling."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -116,7 +121,8 @@ class RateLimitInfo:
 
 @dataclass
 class CircuitBreakerState:
-    """Circuit breaker pattern implementation for fault tolerance."""
+    """
+Circuit breaker pattern implementation for fault tolerance."""
     failure_threshold: int = 5
     recovery_timeout: int = 60
     failure_count: int = 0
@@ -136,7 +142,8 @@ class PerformanceMetrics:
         self.cache_misses = 0
         
     def record_request(self, duration: float, success: bool, error_type: str = None):
-        """Record request performance metrics."""
+        """
+Record request performance metrics."""
         self.request_times.append(duration)
         self.total_requests += 1
         
@@ -146,11 +153,13 @@ class PerformanceMetrics:
             self.error_rates[error_type] += 1
     
     def get_avg_response_time(self) -> float:
-        """Calculate average response time."""
+        """
+Calculate average response time."""
         return sum(self.request_times) / len(self.request_times) if self.request_times else 0.0
     
     def get_success_rate(self) -> float:
-        """Calculate success rate percentage."""
+        """
+Calculate success rate percentage."""
         return (self.success_count / max(self.total_requests, 1)) * 100
 
 class BasePlatformCrawler(ABC):
@@ -177,7 +186,8 @@ class BasePlatformCrawler(ABC):
     )
     
     def __init__(self, platform: str, config: Dict[str, Any]):
-        """Initialize enhanced base crawler with enterprise features."""
+        """
+Initialize enhanced base crawler with enterprise features."""
         self.platform = platform
         self.config = config
         self.status = CrawlerStatus.INITIALIZING
@@ -274,7 +284,8 @@ class BasePlatformCrawler(ABC):
     # Enterprise utility methods
     
     def _load_rate_limits(self) -> RateLimitInfo:
-        """Load platform-specific rate limits from configuration."""
+        """
+Load platform-specific rate limits from configuration."""
         return RateLimitInfo(
             requests_per_minute=self.config.get('rate_limit_rpm', self.DEFAULT_RATE_LIMITS.requests_per_minute),
             requests_per_hour=self.config.get('rate_limit_rph', self.DEFAULT_RATE_LIMITS.requests_per_hour),
@@ -282,7 +293,8 @@ class BasePlatformCrawler(ABC):
         )
     
     def _load_user_agents(self) -> List[str]:
-        """Load diverse user agent strings for anti-detection."""
+        """
+Load diverse user agent strings for anti-detection."""
         default_agents = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
@@ -293,7 +305,8 @@ class BasePlatformCrawler(ABC):
         return self.config.get('user_agents', default_agents)
     
     async def _check_circuit_breaker(self) -> bool:
-        """Check and manage circuit breaker state for fault tolerance."""
+        """
+Check and manage circuit breaker state for fault tolerance."""
         now = datetime.utcnow()
         
         if self.circuit_breaker.state == "open":
@@ -360,7 +373,8 @@ class BasePlatformCrawler(ABC):
         return random.choice(self.user_agents)
     
     def _get_next_proxy(self) -> Optional[str]:
-        """Get next proxy from rotation pool."""
+        """
+Get next proxy from rotation pool."""
         if not self.proxy_pool:
             return None
         
@@ -369,17 +383,20 @@ class BasePlatformCrawler(ABC):
         return proxy
     
     def _generate_content_hash(self, content: Union[str, bytes]) -> str:
-        """Generate SHA-256 hash for content deduplication."""
+        """
+Generate SHA-256 hash for content deduplication."""
         if isinstance(content, str):
             content = content.encode('utf-8')
         return hashlib.sha256(content).hexdigest()
     
     def _is_duplicate_content(self, content_hash: str) -> bool:
-        """Check if content has been seen before."""
+        """
+Check if content has been seen before."""
         return content_hash in self.seen_content_hashes
     
     def _add_to_content_cache(self, result: CrawlResult):
-        """Add result to content cache with size management."""
+        """
+Add result to content cache with size management."""
         if len(self.content_cache) > 10000:  # Limit cache size
             # Remove oldest entries
             oldest_keys = list(self.content_cache.keys())[:1000]
@@ -405,7 +422,8 @@ class BasePlatformCrawler(ABC):
         self.webhook_callbacks.append(callback)
     
     async def _check_alert_conditions(self):
-        """Check performance metrics against alert thresholds."""
+        """
+Check performance metrics against alert thresholds."""
         metrics = self.performance_metrics
         
         # Check error rate

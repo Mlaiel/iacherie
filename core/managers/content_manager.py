@@ -8,7 +8,7 @@ Technologies: Python, AI/ML Processing, Multi-Format Support, Cloud Storage, CDN
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Upload créateur → Validation IA → Processing multi-format → 
 Optimisation automatique → Stockage sécurisé → Distribution CDN → Analytics performance
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, IO
 import logging
 import asyncio
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
+    """
+Types de contenu supportés"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -82,6 +85,7 @@ class ContentFormat(Enum):
 
 class ContentStatus(Enum):
     """Statuts du contenu"""
+
     UPLOADED = "uploaded"
     PROCESSING = "processing"
     PROCESSED = "processed"
@@ -94,6 +98,7 @@ class ContentStatus(Enum):
 
 class ProcessingPriority(Enum):
     """Priorités de traitement"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -103,6 +108,7 @@ class ProcessingPriority(Enum):
 
 class QualityLevel(Enum):
     """Niveaux de qualité"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -252,7 +258,8 @@ class ContentItem:
 
 @dataclass
 class ProcessingTask:
-    """Tâche de traitement de contenu"""
+    """
+Tâche de traitement de contenu"""
     id: str
     content_id: str
     task_type: str  # enhance, convert, optimize, analyze
@@ -725,7 +732,8 @@ class ContentManager(ABC):
             return content_items[offset:offset + limit]
     
     async def _get_format_from_extension(self, extension: str) -> ContentFormat:
-        """Get content format from file extension"""
+        """
+Get content format from file extension"""
         format_mapping = {
             "mp3": ContentFormat.MP3,
             "wav": ContentFormat.WAV,

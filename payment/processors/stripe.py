@@ -5,8 +5,9 @@ Enterprise-grade Stripe Connect payment processor with advanced features
 including marketplace functionality, multi-party payments, and Connect accounts.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class StripeAccountType(Enum):
-    """Stripe Connect account types"""
+    """
+Stripe Connect account types"""
+
     STANDARD = "standard"
     EXPRESS = "express"
     CUSTOM = "custom"
@@ -30,6 +33,7 @@ class StripeAccountType(Enum):
 
 class StripeCapability(Enum):
     """Stripe Connect capabilities"""
+
     CARD_PAYMENTS = "card_payments"
     TRANSFERS = "transfers"
     TAX_REPORTING_US_1099_K = "tax_reporting_us_1099_k"
@@ -73,7 +77,8 @@ class StripeConnectProcessor:
     """
     
     def __init__(self, api_key: str, webhook_secret: str, connect_enabled: bool = True):
-        """Initialize Stripe Connect processor"""
+        """
+Initialize Stripe Connect processor"""
         self.api_key = api_key
         self.webhook_secret = webhook_secret
         self.connect_enabled = connect_enabled

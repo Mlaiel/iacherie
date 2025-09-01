@@ -10,8 +10,9 @@ Professional contract lifecycle management system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Contract Specialist + Blockchain Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
@@ -26,7 +27,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ContractStatus(Enum):
-    """Contract lifecycle status"""
+    """
+Contract lifecycle status"""
+
     DRAFT = "draft"
     PENDING_SIGNATURE = "pending_signature"
     ACTIVE = "active"
@@ -37,6 +40,7 @@ class ContractStatus(Enum):
 
 class ContractType(Enum):
     """Types of contracts"""
+
     LICENSING_AGREEMENT = "licensing_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
     MANAGEMENT_AGREEMENT = "management_agreement"
@@ -46,6 +50,7 @@ class ContractType(Enum):
 
 class AmendmentType(Enum):
     """Types of contract amendments"""
+
     TERM_EXTENSION = "term_extension"
     REVENUE_MODIFICATION = "revenue_modification"
     TERRITORY_CHANGE = "territory_change"
@@ -66,7 +71,8 @@ class ContractParty:
 
 @dataclass
 class ContractTerms:
-    """Contract terms and conditions"""
+    """
+Contract terms and conditions"""
     effective_date: datetime
     expiration_date: Optional[datetime]
     territory: str
@@ -78,7 +84,8 @@ class ContractTerms:
 
 @dataclass
 class ContractRecord:
-    """Complete contract record"""
+    """
+Complete contract record"""
     contract_id: str
     license_id: str
     contract_type: ContractType
@@ -101,7 +108,8 @@ class ContractManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize contract manager with configuration."""
+        """
+Initialize contract manager with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -324,7 +332,8 @@ class ContractManager:
         license_data: Dict[str, Any],
         royalty_structure: Dict[str, Any]
     ) -> ContractTerms:
-        """Create contract terms from license and royalty data."""
+        """
+Create contract terms from license and royalty data."""
         license_terms = license_data.get('terms', {})
         license_metadata = license_data.get('metadata', {})
         
@@ -344,12 +353,14 @@ class ContractManager:
         )
     
     def _calculate_contract_hash(self, contract_data: Dict[str, Any]) -> str:
-        """Calculate SHA-256 hash of contract for integrity verification."""
+        """
+Calculate SHA-256 hash of contract for integrity verification."""
         contract_string = json.dumps(contract_data, sort_keys=True, separators=(',', ':'))
         return hashlib.sha256(contract_string.encode()).hexdigest()
     
     async def _store_on_blockchain(self, contract: ContractRecord, smart_contract_address: str):
-        """Store contract hash on blockchain for immutability."""
+        """
+Store contract hash on blockchain for immutability."""
         try:
             # This would integrate with actual blockchain
             blockchain_record = {
@@ -568,7 +579,8 @@ class ContractManager:
         current_expiration: str,
         renewal_period: str
     ) -> str:
-        """Calculate new expiration date for license renewal."""
+        """
+Calculate new expiration date for license renewal."""
         try:
             current_date = datetime.fromisoformat(current_expiration)
             
@@ -596,7 +608,8 @@ class ContractManager:
         return len([c for c in self.contracts.values() if c.status == ContractStatus.ACTIVE])
     
     async def monitor_contract_performance(self, contract_id: str) -> Dict[str, Any]:
-        """Monitor contract performance and compliance."""
+        """
+Monitor contract performance and compliance."""
         contract = self.contracts.get(contract_id)
         if not contract:
             raise ValueError(f"Contract {contract_id} not found")
@@ -636,7 +649,8 @@ class ContractManager:
         }
     
     def _calculate_average_duration(self, contracts: List[ContractRecord]) -> float:
-        """Calculate average contract duration in days."""
+        """
+Calculate average contract duration in days."""
         if not contracts:
             return 0.0
         

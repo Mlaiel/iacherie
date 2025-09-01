@@ -199,7 +199,8 @@ def get_module_info() -> dict:
     return MODULE_INFO.copy()
 
 def get_health_status() -> dict:
-    """Get module health status and operational metrics"""
+    """
+Get module health status and operational metrics"""
     return {
         "status": "operational",
         "version": __version__,

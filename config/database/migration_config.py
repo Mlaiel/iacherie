@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationEnvironment(Enum):
-    """Migration environment types"""
+    """
+Migration environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -46,6 +49,7 @@ class MigrationEnvironment(Enum):
 
 class MigrationStatus(Enum):
     """Migration status types"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -55,6 +59,7 @@ class MigrationStatus(Enum):
 
 class DatabaseSchema(Enum):
     """Database schema types for different domains"""
+
     CORE = "core"                          # Core platform schemas
     CONTENT_PROTECTION = "content_protection"  # Content fingerprinting and protection
     ANALYTICS = "analytics"                 # Analytics and reporting
@@ -97,7 +102,8 @@ class MigrationRecord:
 
 
 class PostgreSQLMigrationManager:
-    """PostgreSQL-specific migration management using Alembic"""
+    """
+PostgreSQL-specific migration management using Alembic"""
     
     def __init__(self, engine: Engine, schema: DatabaseSchema, config: MigrationConfig):
         self.engine = engine
@@ -214,6 +220,7 @@ Revises: {revision.down_revision}
 Create Date: {datetime.now()}
 
 """
+
 from alembic import op
 import sqlalchemy as sa
 
@@ -224,12 +231,14 @@ branch_labels = None
 depends_on = None
 
 def upgrade():
-    """Upgrade database schema"""
+    """
+Upgrade database schema"""
     # Custom upgrade SQL
     {self._format_sql_for_migration(upgrade_sql)}
 
 def downgrade():
-    """Downgrade database schema"""
+    """
+Downgrade database schema"""
     # Custom downgrade SQL
     {self._format_sql_for_migration(downgrade_sql) if downgrade_sql else "pass"}
 '''
@@ -545,7 +554,8 @@ class MigrationManager:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup migration logging"""
+        """
+Setup migration logging"""
         self.logger = logging.getLogger(f"migration_manager.{self.environment.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()

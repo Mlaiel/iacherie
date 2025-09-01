@@ -9,6 +9,7 @@ dependencies, and event-driven invalidation strategies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import re
@@ -26,7 +27,9 @@ from .cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class InvalidationType(Enum):
-    """Cache invalidation types."""
+    """
+Cache invalidation types."""
+
     IMMEDIATE = "immediate"
     DELAYED = "delayed"
     CONDITIONAL = "conditional"
@@ -37,6 +40,7 @@ class InvalidationType(Enum):
 
 class InvalidationTrigger(Enum):
     """Invalidation trigger types."""
+
     MANUAL = "manual"
     DATA_CHANGE = "data_change"
     USER_ACTION = "user_action"
@@ -64,7 +68,8 @@ class InvalidationRule:
     trigger_count: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "rule_id": self.rule_id,
             "name": self.name,
@@ -108,7 +113,8 @@ class InvalidationRule:
 
 @dataclass
 class InvalidationEvent:
-    """Cache invalidation event."""
+    """
+Cache invalidation event."""
     event_id: str
     rule_id: str
     trigger: InvalidationTrigger
@@ -130,7 +136,8 @@ class CacheInvalidator:
     """
     
     def __init__(self, cache_manager: Optional[CacheManager] = None):
-        """Initialize cache invalidator."""
+        """
+Initialize cache invalidator."""
         self.cache_manager = cache_manager
         self.logger = logging.getLogger(f"{__name__}.CacheInvalidator")
         
@@ -426,11 +433,13 @@ class CacheInvalidator:
             self.invalidation_events = self.invalidation_events[-self.max_events:]
     
     async def get_events(self, limit: int = 100) -> List[InvalidationEvent]:
-        """Get recent invalidation events."""
+        """
+Get recent invalidation events."""
         return self.invalidation_events[-limit:]
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get invalidation statistics."""
+        """
+Get invalidation statistics."""
         total_events = len(self.invalidation_events)
         successful_events = sum(1 for event in self.invalidation_events if event.success)
         
@@ -460,7 +469,8 @@ class SmartInvalidator(CacheInvalidator):
     """
     
     def __init__(self, cache_manager: Optional[CacheManager] = None):
-        """Initialize smart invalidator."""
+        """
+Initialize smart invalidator."""
         super().__init__(cache_manager)
         self.logger = logging.getLogger(f"{__name__}.SmartInvalidator")
         

@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class RuleType(Enum):
-    """Automation rule types"""
+    """
+Automation rule types"""
+
     CONDITION_BASED = "condition_based"
     TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
@@ -44,6 +47,7 @@ class RuleType(Enum):
 
 class RuleStatus(Enum):
     """Rule execution status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PAUSED = "paused"
@@ -53,6 +57,7 @@ class RuleStatus(Enum):
 
 class ActionType(Enum):
     """Automation action types"""
+
     STATE_TRANSITION = "state_transition"
     WORKFLOW_START = "workflow_start"
     NOTIFICATION = "notification"
@@ -65,6 +70,7 @@ class ActionType(Enum):
 
 class TriggerOperator(Enum):
     """Trigger condition operators"""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -91,7 +97,8 @@ class TriggerCondition:
 
 @dataclass
 class AutomationRule:
-    """Automation rule definition"""
+    """
+Automation rule definition"""
     rule_id: str
     name: str
     description: str
@@ -116,7 +123,8 @@ class AutomationRule:
 
 @dataclass
 class RuleExecution:
-    """Rule execution instance"""
+    """
+Rule execution instance"""
     execution_id: str
     rule_id: str
     content_id: str
@@ -135,7 +143,8 @@ class RuleExecution:
 
 @dataclass
 class PerformanceMetrics:
-    """Content performance metrics for rule evaluation"""
+    """
+Content performance metrics for rule evaluation"""
     content_id: str
     views: int
     likes: int
@@ -154,7 +163,8 @@ class PerformanceMetrics:
 
 
 class AutomationRulesEngine:
-    """Advanced automation rules engine for content lifecycle management"""
+    """
+Advanced automation rules engine for content lifecycle management"""
     
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
@@ -167,7 +177,8 @@ class AutomationRulesEngine:
         self.rule_cache_ttl = 1800  # 30 minutes
         
     def _initialize_condition_evaluators(self) -> Dict[str, Callable]:
-        """Initialize condition evaluation functions"""
+        """
+Initialize condition evaluation functions"""
         return {
             TriggerOperator.EQUALS: lambda a, b: a == b,
             TriggerOperator.NOT_EQUALS: lambda a, b: a != b,
@@ -182,7 +193,8 @@ class AutomationRulesEngine:
         }
     
     def _initialize_action_executors(self) -> Dict[str, Callable]:
-        """Initialize action execution functions"""
+        """
+Initialize action execution functions"""
         return {
             ActionType.STATE_TRANSITION: self._execute_state_transition,
             ActionType.WORKFLOW_START: self._execute_workflow_start,
@@ -195,7 +207,8 @@ class AutomationRulesEngine:
         }
     
     async def initialize(self) -> None:
-        """Initialize the automation rules engine"""
+        """
+Initialize the automation rules engine"""
         try:
             # Load predefined rules
             await self._load_predefined_rules()
@@ -1101,37 +1114,44 @@ class AutomationRulesEngine:
         pass
     
     async def _store_rule_in_db(self, rule: AutomationRule) -> None:
-        """Store rule in database"""
+        """
+Store rule in database"""
         # Placeholder implementation
         pass
     
     async def _update_rule_in_db(self, rule: AutomationRule) -> None:
-        """Update rule in database"""
+        """
+Update rule in database"""
         # Placeholder implementation
         pass
     
     async def _delete_rule_from_db(self, rule_id: str) -> None:
-        """Delete rule from database"""
+        """
+Delete rule from database"""
         # Placeholder implementation
         pass
     
     async def _load_rule_from_db(self, rule_id: str) -> Optional[AutomationRule]:
-        """Load rule from database"""
+        """
+Load rule from database"""
         # Placeholder implementation
         return None
     
     async def _load_user_rules(self) -> None:
-        """Load user-defined rules from database"""
+        """
+Load user-defined rules from database"""
         # Placeholder implementation
         pass
     
     async def _store_execution_in_db(self, execution: RuleExecution) -> None:
-        """Store rule execution in database"""
+        """
+Store rule execution in database"""
         # Placeholder implementation
         pass
     
     async def _calculate_rule_statistics(self, rule_id: str) -> Dict[str, Any]:
-        """Calculate rule execution statistics"""
+        """
+Calculate rule execution statistics"""
         # Placeholder implementation
         return {}
     
@@ -1142,27 +1162,32 @@ class AutomationRulesEngine:
         rule_type: Optional[RuleType], 
         limit: int
     ) -> List[AutomationRule]:
-        """Fetch user rules from database"""
+        """
+Fetch user rules from database"""
         # Placeholder implementation
         return []
     
     async def _find_matching_content_for_rule(self, rule: AutomationRule) -> List[Dict[str, Any]]:
-        """Find content matching rule criteria"""
+        """
+Find content matching rule criteria"""
         # Placeholder implementation
         return []
     
     async def _setup_scheduled_rule(self, rule: AutomationRule) -> None:
-        """Setup scheduled rule execution"""
+        """
+Setup scheduled rule execution"""
         # Placeholder implementation
         pass
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for intelligent automation"""
+        """
+Initialize machine learning models for intelligent automation"""
         # Placeholder implementation
         pass
     
     def _regex_match(self, text: str, pattern: str) -> bool:
-        """Regex pattern matching"""
+        """
+Regex pattern matching"""
         import re
         try:
             return bool(re.search(pattern, str(text)))
@@ -1177,7 +1202,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute state transition action"""
+        """
+Execute state transition action"""
         return {"transitioned": True, "new_state": action.get("target_state")}
     
     async def _execute_workflow_start(

@@ -8,7 +8,7 @@ Responsibility: Database schema evolution for text content processing, NLP analy
 ========================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -24,6 +24,7 @@ Text Content Types Supported:
 - Marketing Content: Ads, newsletters, press releases
 - Technical Documentation: Manuals, API docs, specifications
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class TextFormat(Enum):
-    """Supported text formats"""
+    """
+Supported text formats"""
+
     PLAIN_TEXT = "plain_text"
     MARKDOWN = "markdown"
     HTML = "html"
@@ -59,6 +62,7 @@ class TextFormat(Enum):
 
 class TextContentType(Enum):
     """Text content categorization"""
+
     BLOG_ARTICLE = "blog_article"
     CREATIVE_WRITING = "creative_writing"
     ACADEMIC_CONTENT = "academic_content"
@@ -71,6 +75,7 @@ class TextContentType(Enum):
 
 class LanguageCode(Enum):
     """Supported language codes (ISO 639-1)"""
+
     EN = "en"  # English
     FR = "fr"  # French
     DE = "de"  # German

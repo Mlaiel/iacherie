@@ -9,6 +9,7 @@ Any unauthorized use, reproduction, or distribution without explicit
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import logging
@@ -30,7 +31,9 @@ from .log_aggregator import LogEntry, LogLevel
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -39,6 +42,7 @@ class AlertSeverity(str, Enum):
 
 class TrendDirection(str, Enum):
     """Trend direction indicators"""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -61,7 +65,8 @@ class LogAlert:
     trigger_count: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         if self.created_at:
             data['created_at'] = self.created_at.isoformat()
@@ -72,7 +77,8 @@ class LogAlert:
 
 @dataclass
 class LogMetric:
-    """Log metric definition"""
+    """
+Log metric definition"""
     name: str
     description: str
     query: str
@@ -82,27 +88,31 @@ class LogMetric:
     time_window_minutes: int = 60
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class AnalyticsResult:
-    """Analytics computation result"""
+    """
+Analytics computation result"""
     metric_name: str
     value: Union[float, int, str]
     timestamp: datetime
     metadata: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         return data
 
 
 class AnomalyDetector:
-    """Machine learning-based anomaly detection for logs"""
+    """
+Machine learning-based anomaly detection for logs"""
     
     def __init__(self):
         self.isolation_forest = IsolationForest(
@@ -113,7 +123,8 @@ class AnomalyDetector:
         self.is_trained = False
     
     def prepare_features(self, log_data: List[Dict[str, Any]]) -> np.ndarray:
-        """Prepare features for anomaly detection"""
+        """
+Prepare features for anomaly detection"""
         features = []
         
         for log_entry in log_data:
@@ -145,7 +156,8 @@ class AnomalyDetector:
         return np.array(features)
     
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train anomaly detection model"""
+        """
+Train anomaly detection model"""
         if len(training_data) < 100:
             raise AnalyticsError("Insufficient training data (minimum 100 samples)")
         
@@ -190,7 +202,8 @@ class LogPatternAnalyzer:
         self.clustering_model = DBSCAN(eps=0.5, min_samples=5)
     
     async def analyze_error_patterns(self, error_logs: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in error logs"""
+        """
+Analyze patterns in error logs"""
         if not error_logs:
             return {"patterns": [], "summary": "No error logs to analyze"}
         
@@ -313,7 +326,8 @@ class LogPatternAnalyzer:
         return hourly_totals.index(max(hourly_totals))
     
     def _calculate_service_distribution(self, user_activity: Dict[str, Any]) -> Dict[str, int]:
-        """Calculate service usage distribution"""
+        """
+Calculate service usage distribution"""
         service_counts = {}
         for data in user_activity.values():
             for service in data['services_used']:
@@ -323,12 +337,14 @@ class LogPatternAnalyzer:
 
 
 class TrendAnalyzer:
-    """Analyze trends in log data"""
+    """
+Analyze trends in log data"""
     
     async def analyze_volume_trends(self, 
                                    log_data: List[Dict[str, Any]],
                                    time_bucket_minutes: int = 60) -> Dict[str, Any]:
-        """Analyze log volume trends over time"""
+        """
+Analyze log volume trends over time"""
         if not log_data:
             return {"trend": TrendDirection.STABLE, "data_points": []}
         
@@ -404,7 +420,8 @@ class TrendAnalyzer:
                 return TrendDirection.STABLE
     
     def _calculate_volatility(self, values: List[int]) -> float:
-        """Calculate volatility score"""
+        """
+Calculate volatility score"""
         if len(values) < 2:
             return 0.0
         
@@ -416,7 +433,8 @@ class TrendAnalyzer:
 
 
 class LogAnalyticsEngine:
-    """Complete log analytics engine for IA Influencer Agent"""
+    """
+Complete log analytics engine for IA Influencer Agent"""
     
     def __init__(self, elasticsearch_manager: ElasticsearchManager):
         self.es_manager = elasticsearch_manager
@@ -428,7 +446,8 @@ class LogAnalyticsEngine:
         self._setup_default_alerts_and_metrics()
     
     def _setup_default_alerts_and_metrics(self):
-        """Setup default alerts and metrics for IA Influencer Agent"""
+        """
+Setup default alerts and metrics for IA Influencer Agent"""
         
         # Default alerts
         default_alerts = [
@@ -781,18 +800,21 @@ class LogAnalyticsEngine:
         self.alerts.append(alert)
     
     def add_metric(self, metric: LogMetric):
-        """Add custom metric"""
+        """
+Add custom metric"""
         self.metrics.append(metric)
     
     def get_alert(self, alert_id: str) -> Optional[LogAlert]:
-        """Get alert by ID"""
+        """
+Get alert by ID"""
         for alert in self.alerts:
             if alert.id == alert_id:
                 return alert
         return None
     
     def update_alert(self, alert_id: str, **kwargs) -> bool:
-        """Update alert configuration"""
+        """
+Update alert configuration"""
         alert = self.get_alert(alert_id)
         if alert:
             for key, value in kwargs.items():
@@ -802,7 +824,8 @@ class LogAnalyticsEngine:
         return False
     
     def delete_alert(self, alert_id: str) -> bool:
-        """Delete alert"""
+        """
+Delete alert"""
         for i, alert in enumerate(self.alerts):
             if alert.id == alert_id:
                 del self.alerts[i]

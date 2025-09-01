@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import asyncio
 import logging
 import socket
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkProtocol(Enum):
-    """Network protocol types"""
+    """
+Network protocol types"""
+
     TCP = "tcp"
     UDP = "udp"
     ICMP = "icmp"
@@ -49,6 +52,7 @@ class NetworkProtocol(Enum):
 
 class NetworkThreatType(Enum):
     """Network-specific threat types"""
+
     PORT_SCAN = "port_scan"
     NETWORK_INTRUSION = "network_intrusion"
     SUSPICIOUS_TRAFFIC = "suspicious_traffic"
@@ -62,6 +66,7 @@ class NetworkThreatType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -89,7 +94,8 @@ class NetworkConnection:
 
 @dataclass
 class NetworkPacket:
-    """Network packet information"""
+    """
+Network packet information"""
     timestamp: datetime
     source_ip: str
     destination_ip: str
@@ -105,7 +111,8 @@ class NetworkPacket:
 
 @dataclass
 class NetworkAlert:
-    """Network security alert"""
+    """
+Network security alert"""
     alert_id: str
     threat_type: NetworkThreatType
     severity: AlertSeverity
@@ -122,7 +129,8 @@ class NetworkAlert:
 
 @dataclass
 class TrafficPattern:
-    """Network traffic pattern for analysis"""
+    """
+Network traffic pattern for analysis"""
     pattern_id: str
     source_ip: str
     destination_ports: Set[int]

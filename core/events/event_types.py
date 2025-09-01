@@ -4,13 +4,14 @@ Architecture: Event Type System for Business Logic
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
     Définitions des types d'événements métier pour la plateforme IA-Influencer-Agent.
     Couvre tous les événements de la logique métier : contenu, protection, monétisation, 
     collaboration et système.
 """
+
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -21,7 +22,8 @@ from .event_bus import Event, EventPriority
 
 
 class EventType(Enum):
-    """Types d'événements principaux de la plateforme"""
+    """
+Types d'événements principaux de la plateforme"""
     
     # Événements contenu
     CONTENT_UPLOADED = "content.uploaded"
@@ -449,20 +451,24 @@ def create_content_event(event_type: str, content_id: str, **kwargs) -> ContentE
 
 
 def create_protection_event(event_type: str, content_id: str, **kwargs) -> ProtectionEvent:
-    """Fonction helper pour créer des événements de protection"""
+    """
+Fonction helper pour créer des événements de protection"""
     return ProtectionEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_monetization_event(event_type: str, content_id: str, **kwargs) -> MonetizationEvent:
-    """Fonction helper pour créer des événements de monétisation"""
+    """
+Fonction helper pour créer des événements de monétisation"""
     return MonetizationEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_collaboration_event(event_type: str, project_id: str, **kwargs) -> CollaborationEvent:
-    """Fonction helper pour créer des événements de collaboration"""
+    """
+Fonction helper pour créer des événements de collaboration"""
     return CollaborationEvent(type=event_type, project_id=project_id, **kwargs)
 
 
 def create_system_event(event_type: str, component: str, **kwargs) -> SystemEvent:
-    """Fonction helper pour créer des événements système"""
+    """
+Fonction helper pour créer des événements système"""
     return SystemEvent(type=event_type, component=component, **kwargs)

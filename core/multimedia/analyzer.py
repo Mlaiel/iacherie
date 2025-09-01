@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import os
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalysisType(Enum):
-    """Analysis types"""
+    """
+Analysis types"""
+
     CONTENT = "content"
     TECHNICAL = "technical"
     SEMANTIC = "semantic"
@@ -65,6 +68,7 @@ class AnalysisType(Enum):
 
 class ContentCategory(Enum):
     """Content categories"""
+
     MUSIC = "music"
     SPEECH = "speech"
     NATURE = "nature"

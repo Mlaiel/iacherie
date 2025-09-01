@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Union
@@ -24,10 +25,12 @@ logger = logging.getLogger(__name__)
 
 
 class MastodonPlatform(PlatformBase):
-    """Mastodon platform integration"""
+    """
+Mastodon platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Mastodon platform"""
+        """
+Initialize Mastodon platform"""
         super().__init__(config)
         
         # Instance URL must be provided
@@ -47,7 +50,8 @@ class MastodonPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Mastodon"""
+        """
+Authenticate with Mastodon"""
         try:
             access_token = self.config.credentials.get('access_token')
             
@@ -86,7 +90,8 @@ class MastodonPlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Mastodon API"""
+        """
+Make authenticated request to Mastodon API"""
         try:
             session = await self._get_session()
             

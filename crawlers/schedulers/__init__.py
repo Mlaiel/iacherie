@@ -27,6 +27,7 @@ Creator content upload → Scheduler coordination → AI processing →
 Protection layer → Multi-platform distribution → Performance optimization → 
 Revenue maximization → User satisfaction → Business growth → Market leadership
 """
+
 from .main_scheduler import (
     MainScheduler,
     SchedulerType,
@@ -316,12 +317,14 @@ class SchedulerFactory:
     
     @classmethod
     def list_instances(cls) -> List[str]:
-        """List all scheduler instance names."""
+        """
+List all scheduler instance names."""
         return list(cls._instances.keys())
     
     @classmethod
     async def initialize_all(cls) -> None:
-        """Initialize all created scheduler instances."""
+        """
+Initialize all created scheduler instances."""
         for name, scheduler in cls._instances.items():
             try:
                 if hasattr(scheduler, 'initialize'):
@@ -380,7 +383,8 @@ class SchedulerManager:
     """
     
     def __init__(self):
-        """Initialize scheduler manager."""
+        """
+Initialize scheduler manager."""
         self.main_scheduler: Optional[MainScheduler] = None
         self.is_initialized = False
         
@@ -388,7 +392,8 @@ class SchedulerManager:
         self,
         configuration: Optional[SchedulerConfiguration] = None
     ) -> None:
-        """Initialize scheduler system."""
+        """
+Initialize scheduler system."""
         try:
             # Create main scheduler
             self.main_scheduler = SchedulerFactory.create_main_scheduler(
@@ -467,7 +472,8 @@ class SchedulerManager:
         }
     
     async def stop(self) -> None:
-        """Stop scheduler system."""
+        """
+Stop scheduler system."""
         if self.main_scheduler:
             await self.main_scheduler.stop()
         
@@ -547,13 +553,15 @@ async def schedule_task(
 
 
 async def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive scheduler system status."""
+    """
+Get comprehensive scheduler system status."""
     manager = await get_scheduler_manager()
     return await manager.get_system_status()
 
 
 async def stop_schedulers() -> None:
-    """Stop the global scheduler system."""
+    """
+Stop the global scheduler system."""
     manager = await get_scheduler_manager()
     await manager.stop()
 

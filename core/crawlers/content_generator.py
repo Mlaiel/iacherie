@@ -4,6 +4,7 @@ Advanced AI-Powered Content Generation and Personalization System
 This module provides comprehensive content generation capabilities including
 text generation, media creation, personalization, and multi-modal content synthesis.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(str, Enum):
-    """Content format types"""
+    """
+Content format types"""
+
     TEXT = "text"
     MARKDOWN = "markdown"
     HTML = "html"
@@ -44,6 +47,7 @@ class ContentFormat(str, Enum):
 
 class GenerationStyle(str, Enum):
     """Content generation styles"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     FORMAL = "formal"
@@ -58,6 +62,7 @@ class GenerationStyle(str, Enum):
 
 class ContentTone(str, Enum):
     """Content tone options"""
+
     FRIENDLY = "friendly"
     AUTHORITATIVE = "authoritative"
     HUMOROUS = "humorous"
@@ -72,6 +77,7 @@ class ContentTone(str, Enum):
 
 class TargetAudience(str, Enum):
     """Target audience types"""
+
     GENERAL = "general"
     PROFESSIONALS = "professionals"
     STUDENTS = "students"
@@ -86,6 +92,7 @@ class TargetAudience(str, Enum):
 
 class ContentLength(str, Enum):
     """Content length categories"""
+
     SHORT = "short"         # <100 words
     MEDIUM = "medium"       # 100-500 words
     LONG = "long"          # 500-1500 words
@@ -101,7 +108,8 @@ class PersonalizationParameter(BaseModel):
 
 
 class ContentTemplate(BaseModel):
-    """Content generation template"""
+    """
+Content generation template"""
     template_id: str
     template_name: str
     template_category: str
@@ -113,7 +121,8 @@ class ContentTemplate(BaseModel):
 
 
 class GenerationRequest(BaseModel):
-    """Content generation request specification"""
+    """
+Content generation request specification"""
     request_id: str
     content_topic: str
     content_format: ContentFormat
@@ -146,7 +155,8 @@ class GenerationRequest(BaseModel):
 
 
 class GeneratedContent(BaseModel):
-    """Generated content result"""
+    """
+Generated content result"""
     content_id: str
     request_id: str
     generated_content: str
@@ -181,7 +191,8 @@ class GeneratedContent(BaseModel):
 
 
 class ContentVariation(BaseModel):
-    """Content variation with different approaches"""
+    """
+Content variation with different approaches"""
     variation_id: str
     variation_type: str
     generated_content: GeneratedContent
@@ -190,7 +201,8 @@ class ContentVariation(BaseModel):
 
 
 class GenerationResult(BaseModel):
-    """Complete generation result with all outputs"""
+    """
+Complete generation result with all outputs"""
     request_id: str
     primary_content: GeneratedContent
     content_variations: List[ContentVariation] = Field(default_factory=list)
@@ -542,7 +554,8 @@ class AIContentGenerator(BaseCrawler):
         self,
         request: GenerationRequest
     ) -> GeneratedContent:
-        """Generate primary content using AI models"""
+        """
+Generate primary content using AI models"""
         try:
             # Build generation prompt
             prompt = await self._build_generation_prompt(request)
@@ -601,7 +614,8 @@ class AIContentGenerator(BaseCrawler):
         request: GenerationRequest,
         previous_content: GeneratedContent
     ) -> GeneratedContent:
-        """Regenerate content with improvements based on previous attempt"""
+        """
+Regenerate content with improvements based on previous attempt"""
         # Adjust generation parameters
         improved_request = request.copy(deep=True)
         improved_request.creativity_level = min(1.0, request.creativity_level + 0.1)
@@ -622,7 +636,8 @@ class AIContentGenerator(BaseCrawler):
         primary_content: GeneratedContent,
         num_variations: int
     ) -> List[ContentVariation]:
-        """Generate content variations with different approaches"""
+        """
+Generate content variations with different approaches"""
         variations = []
         
         variation_styles = [
@@ -745,8 +760,10 @@ When working with {request.content_topic}, consider these proven strategies:
 {request.content_topic} represents a significant opportunity for {request.target_audience.value} to achieve their objectives more effectively. By following the strategies outlined in this guide, you can maximize the benefits while minimizing risks.
 """
     def _generate_email_sample(self, request: GenerationRequest) -> str:
-        """Generate sample email content"""
-        return f"""Subject: Important Update on {request.content_topic}
+        """
+Generate sample email content"""
+        return f"""
+Subject: Important Update on {request.content_topic}
 
 Dear {request.target_audience.value.title()},
 
@@ -764,7 +781,8 @@ Best regards,
 [Your Name]
 """
     def _generate_blog_sample(self, request: GenerationRequest) -> str:
-        """Generate sample blog post content"""
+        """
+Generate sample blog post content"""
         return f"""# The Future of {request.content_topic}: What {request.target_audience.value.title()} Need to Know
 
 *Published on {datetime.now().strftime('%B %d, %Y')}*
@@ -794,7 +812,8 @@ The future of {request.content_topic} holds immense promise. By staying informed
 *What are your thoughts on {request.content_topic}? Share your insights in the comments below.*
 """
     async def _post_process_content(self, content: str, request: GenerationRequest) -> str:
-        """Post-process generated content"""
+        """
+Post-process generated content"""
         processed_content = content.strip()
         
         # Apply format-specific processing
@@ -809,12 +828,14 @@ The future of {request.content_topic} holds immense promise. By staying informed
         return processed_content
 
     def _format_as_markdown(self, content: str) -> str:
-        """Format content as markdown"""
+        """
+Format content as markdown"""
         # Basic markdown formatting
         return content
 
     def _format_as_html(self, content: str) -> str:
-        """Format content as HTML"""
+        """
+Format content as HTML"""
         # Basic HTML formatting
         lines = content.split('\n')
         html_lines = [f"<p>{line}</p>" if line.strip() else "<br>" for line in lines]
@@ -874,7 +895,8 @@ The future of {request.content_topic} holds immense promise. By staying informed
         }
 
     async def _predict_content_performance(self, content: GeneratedContent) -> Dict[str, float]:
-        """Predict content performance metrics"""
+        """
+Predict content performance metrics"""
         # Simplified performance prediction
         return {
             'engagement_rate': min(content.quality_score * 0.8, 1.0),
@@ -884,7 +906,8 @@ The future of {request.content_topic} holds immense promise. By staying informed
         }
 
     async def _generate_optimization_suggestions(self, content: GeneratedContent) -> List[str]:
-        """Generate content optimization suggestions"""
+        """
+Generate content optimization suggestions"""
         suggestions = []
         
         if content.quality_score < 0.8:
@@ -912,13 +935,15 @@ The future of {request.content_topic} holds immense promise. By staying informed
         }
 
     async def _calculate_content_difference(self, content_a: str, content_b: str) -> float:
-        """Calculate difference score between two contents"""
+        """
+Calculate difference score between two contents"""
         # Simplified difference calculation
         from difflib import SequenceMatcher
         return 1.0 - SequenceMatcher(None, content_a, content_b).ratio()
 
     async def _extract_unique_elements(self, primary_content: str, variation_content: str) -> List[str]:
-        """Extract unique elements from variation"""
+        """
+Extract unique elements from variation"""
         primary_words = set(primary_content.lower().split())
         variation_words = set(variation_content.lower().split())
         
@@ -931,7 +956,8 @@ The future of {request.content_topic} holds immense promise. By staying informed
         param: PersonalizationParameter,
         context: Dict[str, Any]
     ) -> str:
-        """Apply individual personalization parameter"""
+        """
+Apply individual personalization parameter"""
         # Simplified personalization application
         return content
 
@@ -940,7 +966,8 @@ The future of {request.content_topic} holds immense promise. By staying informed
         content: str,
         context: Dict[str, Any]
     ) -> str:
-        """Apply context-based personalization"""
+        """
+Apply context-based personalization"""
         # Simplified context personalization
         return content
 
@@ -949,7 +976,8 @@ The future of {request.content_topic} holds immense promise. By staying informed
         content: str,
         platform_config: Dict[str, Any]
     ) -> str:
-        """Apply platform-specific optimizations"""
+        """
+Apply platform-specific optimizations"""
         # Apply length constraints
         if 'max_length' in platform_config:
             if len(content) > platform_config['max_length']:
@@ -968,7 +996,8 @@ The future of {request.content_topic} holds immense promise. By staying informed
         pass
 
     async def close(self):
-        """Close generator and cleanup resources"""
+        """
+Close generator and cleanup resources"""
         try:
             await self.cache_manager.close()
             await super().close()

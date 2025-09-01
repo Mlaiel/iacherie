@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import hashlib
 import hmac
 import secrets
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithm enumeration"""
+    """
+Encryption algorithm enumeration"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     FERNET = "fernet"
@@ -42,6 +45,7 @@ class EncryptionAlgorithm(Enum):
 
 class HashAlgorithm(Enum):
     """Hash algorithm enumeration"""
+
     SHA256 = "sha256"
     SHA512 = "sha512"
     BLAKE2B = "blake2b"
@@ -61,7 +65,8 @@ class EncryptedData:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
+        """
+Convert to dictionary for storage"""
         return {
             'ciphertext': base64.b64encode(self.ciphertext).decode(),
             'algorithm': self.algorithm.value,
@@ -74,7 +79,8 @@ class EncryptedData:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EncryptedData':
-        """Create from dictionary"""
+        """
+Create from dictionary"""
         return cls(
             ciphertext=base64.b64decode(data['ciphertext']),
             algorithm=EncryptionAlgorithm(data['algorithm']),
@@ -88,7 +94,8 @@ class EncryptedData:
 
 @dataclass
 class KeyPair:
-    """RSA key pair container"""
+    """
+RSA key pair container"""
     private_key: bytes
     public_key: bytes
     key_id: str
@@ -96,18 +103,21 @@ class KeyPair:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def get_private_key_object(self):
-        """Get private key object"""
+        """
+Get private key object"""
         return serialization.load_pem_private_key(
             self.private_key, password=None
         )
     
     def get_public_key_object(self):
-        """Get public key object"""
+        """
+Get public key object"""
         return serialization.load_pem_public_key(self.public_key)
 
 
 class EncryptionManager:
-    """Advanced encryption and decryption management"""
+    """
+Advanced encryption and decryption management"""
     
     def __init__(self, master_key: Optional[bytes] = None):
         self.master_key = master_key or self._generate_master_key()
@@ -117,11 +127,13 @@ class EncryptionManager:
         self._initialize_fernet()
         
     def _generate_master_key(self) -> bytes:
-        """Generate secure master key"""
+        """
+Generate secure master key"""
         return secrets.token_bytes(32)  # 256-bit key
     
     def _initialize_fernet(self):
-        """Initialize Fernet instance with master key"""
+        """
+Initialize Fernet instance with master key"""
         # Derive Fernet key from master key
         fernet_key = base64.urlsafe_b64encode(self.master_key)
         self.fernet_instance = Fernet(fernet_key)
@@ -130,7 +142,8 @@ class EncryptionManager:
                          data: Union[str, bytes], 
                          algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
                          key_id: Optional[str] = None) -> EncryptedData:
-        """Encrypt data using specified algorithm"""
+        """
+Encrypt data using specified algorithm"""
         try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
@@ -188,7 +201,8 @@ class EncryptionManager:
         return self.fernet_instance.decrypt(encrypted_data.ciphertext)
     
     async def _encrypt_aes_gcm(self, data: bytes, key_id: Optional[str]) -> EncryptedData:
-        """Encrypt using AES-256-GCM"""
+        """
+Encrypt using AES-256-GCM"""
         if not key_id:
             key_id = f"aes_gcm_{secrets.token_hex(8)}"
         
@@ -416,18 +430,21 @@ class EncryptionManager:
         )
     
     def _pad_data(self, data: bytes, block_size: int) -> bytes:
-        """PKCS7 padding"""
+        """
+PKCS7 padding"""
         padding_length = block_size - (len(data) % block_size)
         padding = bytes([padding_length] * padding_length)
         return data + padding
     
     def _unpad_data(self, padded_data: bytes) -> bytes:
-        """Remove PKCS7 padding"""
+        """
+Remove PKCS7 padding"""
         padding_length = padded_data[-1]
         return padded_data[:-padding_length]
     
     def export_key(self, key_id: str, password: Optional[str] = None) -> Optional[Dict[str, str]]:
-        """Export encryption key or key pair"""
+        """
+Export encryption key or key pair"""
         if key_id in self.encryption_keys:
             # For symmetric keys, we can't export safely without encryption
             if password:
@@ -469,7 +486,8 @@ class EncryptionManager:
 
 
 class HashGenerator:
-    """Advanced hashing and message authentication"""
+    """
+Advanced hashing and message authentication"""
     
     def __init__(self):
         self.hash_functions = {
@@ -481,7 +499,8 @@ class HashGenerator:
     def generate_hash(self, data: Union[str, bytes], 
                      algorithm: HashAlgorithm = HashAlgorithm.SHA256,
                      salt: Optional[bytes] = None) -> str:
-        """Generate hash with optional salt"""
+        """
+Generate hash with optional salt"""
         if isinstance(data, str):
             data = data.encode('utf-8')
         
@@ -516,18 +535,21 @@ class HashGenerator:
         return base64.b64encode(salt + key).decode()
     
     def _generate_bcrypt_hash(self, data: bytes) -> str:
-        """Generate bcrypt hash"""
+        """
+Generate bcrypt hash"""
         return bcrypt.hashpw(data, bcrypt.gensalt()).decode()
     
     def verify_bcrypt_hash(self, data: Union[str, bytes], hashed: str) -> bool:
-        """Verify bcrypt hash"""
+        """
+Verify bcrypt hash"""
         if isinstance(data, str):
             data = data.encode('utf-8')
         
         return bcrypt.checkpw(data, hashed.encode())
     
     def verify_scrypt_hash(self, data: Union[str, bytes], hashed: str) -> bool:
-        """Verify Scrypt hash"""
+        """
+Verify Scrypt hash"""
         if isinstance(data, str):
             data = data.encode('utf-8')
         
@@ -552,7 +574,8 @@ class HashGenerator:
     
     def generate_hmac(self, data: Union[str, bytes], key: bytes, 
                      algorithm: HashAlgorithm = HashAlgorithm.SHA256) -> str:
-        """Generate HMAC"""
+        """
+Generate HMAC"""
         if isinstance(data, str):
             data = data.encode('utf-8')
         
@@ -571,7 +594,8 @@ class HashGenerator:
 
 
 class TokenValidator:
-    """JWT token generation and validation"""
+    """
+JWT token generation and validation"""
     
     def __init__(self, secret_key: Optional[str] = None):
         self.secret_key = secret_key or secrets.token_urlsafe(32)
@@ -579,7 +603,8 @@ class TokenValidator:
     
     def generate_token(self, payload: Dict[str, Any], 
                       expires_in: Optional[int] = 3600) -> str:
-        """Generate JWT token"""
+        """
+Generate JWT token"""
         if expires_in:
             payload['exp'] = datetime.utcnow() + timedelta(seconds=expires_in)
         
@@ -588,7 +613,8 @@ class TokenValidator:
         return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
     
     def validate_token(self, token: str) -> Dict[str, Any]:
-        """Validate and decode JWT token"""
+        """
+Validate and decode JWT token"""
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return {'valid': True, 'payload': payload}
@@ -598,7 +624,8 @@ class TokenValidator:
             return {'valid': False, 'error': f'Invalid token: {str(e)}'}
     
     def refresh_token(self, token: str, expires_in: Optional[int] = 3600) -> Optional[str]:
-        """Refresh JWT token"""
+        """
+Refresh JWT token"""
         validation_result = self.validate_token(token)
         
         if validation_result['valid']:
@@ -613,7 +640,8 @@ class TokenValidator:
 
 
 class SecureStorage:
-    """Secure file and data storage"""
+    """
+Secure file and data storage"""
     
     def __init__(self, storage_path: str, encryption_manager: EncryptionManager):
         self.storage_path = Path(storage_path)
@@ -622,7 +650,8 @@ class SecureStorage:
     
     async def store_encrypted_file(self, data: Union[str, bytes], filename: str,
                                  algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM) -> Dict[str, Any]:
-        """Store encrypted file"""
+        """
+Store encrypted file"""
         try:
             # Encrypt data
             encrypted_data = await self.encryption_manager.encrypt_data(data, algorithm)
@@ -704,21 +733,25 @@ class SecureStorage:
 
 
 class CryptoHelper:
-    """Cryptographic utility functions"""
+    """
+Cryptographic utility functions"""
     
     @staticmethod
     def generate_secure_random(length: int) -> bytes:
-        """Generate cryptographically secure random bytes"""
+        """
+Generate cryptographically secure random bytes"""
         return secrets.token_bytes(length)
     
     @staticmethod
     def generate_secure_token(length: int = 32) -> str:
-        """Generate secure URL-safe token"""
+        """
+Generate secure URL-safe token"""
         return secrets.token_urlsafe(length)
     
     @staticmethod
     def constant_time_compare(a: Union[str, bytes], b: Union[str, bytes]) -> bool:
-        """Constant-time string comparison"""
+        """
+Constant-time string comparison"""
         if isinstance(a, str):
             a = a.encode('utf-8')
         if isinstance(b, str):
@@ -729,7 +762,8 @@ class CryptoHelper:
     @staticmethod
     def derive_key_from_password(password: str, salt: bytes, 
                                key_length: int = 32, iterations: int = 100000) -> bytes:
-        """Derive encryption key from password using PBKDF2"""
+        """
+Derive encryption key from password using PBKDF2"""
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=key_length,
@@ -741,25 +775,30 @@ class CryptoHelper:
     
     @staticmethod
     def generate_salt(length: int = 16) -> bytes:
-        """Generate random salt"""
+        """
+Generate random salt"""
         return secrets.token_bytes(length)
     
     @staticmethod
     def encode_base64(data: bytes) -> str:
-        """Base64 encode data"""
+        """
+Base64 encode data"""
         return base64.b64encode(data).decode('ascii')
     
     @staticmethod
     def decode_base64(data: str) -> bytes:
-        """Base64 decode data"""
+        """
+Base64 decode data"""
         return base64.b64decode(data.encode('ascii'))
 
 
 class EncryptionError(Exception):
-    """Custom exception for encryption errors"""
+    """
+Custom exception for encryption errors"""
     pass
 
 
 class HashError(Exception):
-    """Custom exception for hashing errors"""
+    """
+Custom exception for hashing errors"""
     pass

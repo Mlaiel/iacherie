@@ -12,6 +12,7 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
 """
+
 import numpy as np
 import librosa
 import scipy.signal as signal
@@ -31,7 +32,9 @@ from ..core.validators import AudioValidator
 
 
 class QualityLevel(Enum):
-    """Audio quality assessment levels"""
+    """
+Audio quality assessment levels"""
+
     EXCELLENT = "excellent"    # 90-100%
     GOOD = "good"             # 75-89%
     FAIR = "fair"             # 60-74%
@@ -41,6 +44,7 @@ class QualityLevel(Enum):
 
 class MetricCategory(Enum):
     """Audio quality metric categories"""
+
     TEMPORAL = "temporal"          # Time-domain metrics
     SPECTRAL = "spectral"          # Frequency-domain metrics
     PSYCHOACOUSTIC = "psychoacoustic"  # Perceptual metrics
@@ -110,7 +114,8 @@ class QualityMetrics:
 
 @dataclass
 class ComparisonResult:
-    """Audio quality comparison results"""
+    """
+Audio quality comparison results"""
     reference_metrics: QualityMetrics
     test_metrics: QualityMetrics
     improvement_scores: Dict[str, float] = field(default_factory=dict)
@@ -128,7 +133,8 @@ class PsychoacousticAnalyzer:
         self.a_weighting_filter = self._create_a_weighting_filter()
     
     def _create_bark_scale(self) -> np.ndarray:
-        """Create Bark scale frequency boundaries"""
+        """
+Create Bark scale frequency boundaries"""
         # Bark scale critical bands (Hz)
         return np.array([
             20, 100, 200, 300, 400, 510, 630, 770, 920, 1080,
@@ -137,7 +143,8 @@ class PsychoacousticAnalyzer:
         ])
     
     def _create_a_weighting_filter(self) -> Dict[str, np.ndarray]:
-        """Create A-weighting filter coefficients"""
+        """
+Create A-weighting filter coefficients"""
         # Simplified A-weighting approximation
         freqs = np.logspace(np.log10(20), np.log10(20000), 1000)
         
@@ -165,7 +172,8 @@ class PsychoacousticAnalyzer:
         }
     
     def analyze_loudness(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Analyze perceptual loudness using ITU-R BS.1770 standard"""
+        """
+Analyze perceptual loudness using ITU-R BS.1770 standard"""
         # Pre-filter (high-pass)
         sos = signal.butter(2, 48, btype='high', fs=sample_rate, output='sos')
         filtered_audio = signal.sosfilt(sos, audio, axis=0)
@@ -233,7 +241,8 @@ class PsychoacousticAnalyzer:
         }
     
     def calculate_sharpness(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate perceptual sharpness (Zwicker and Fastl)"""
+        """
+Calculate perceptual sharpness (Zwicker and Fastl)"""
         # FFT analysis
         n_fft = 2048
         hop_length = n_fft // 4
@@ -266,7 +275,8 @@ class PsychoacousticAnalyzer:
         return np.mean(sharpness_values)
     
     def calculate_roughness(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate perceptual roughness"""
+        """
+Calculate perceptual roughness"""
         # Analyze modulation in critical bands
         n_fft = 2048
         hop_length = n_fft // 8  # High temporal resolution
@@ -318,7 +328,8 @@ class AudioQualityAnalyzer:
     """
     
     def __init__(self):
-        """Initialize the audio quality analyzer"""
+        """
+Initialize the audio quality analyzer"""
         self.logger = logging.getLogger(__name__)
         self.validator = AudioValidator()
         self.psychoacoustic_analyzer = PsychoacousticAnalyzer()
@@ -330,7 +341,8 @@ class AudioQualityAnalyzer:
         self._analysis_cache = {}
         
     def _init_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality assessment thresholds"""
+        """
+Initialize quality assessment thresholds"""
         return {
             'snr_db': {
                 'excellent': 50.0,
@@ -467,7 +479,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_spectral_metrics(self, audio: np.ndarray, sample_rate: int,
                                  metrics: QualityMetrics):
-        """Analyze frequency-domain characteristics"""
+        """
+Analyze frequency-domain characteristics"""
         try:
             # Spectral features using librosa
             spectral_centroids = librosa.feature.spectral_centroid(y=audio, sr=sample_rate)[0]
@@ -513,7 +526,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_harmonic_metrics(self, audio: np.ndarray, sample_rate: int,
                                  metrics: QualityMetrics):
-        """Analyze harmonic content"""
+        """
+Analyze harmonic content"""
         try:
             # Fundamental frequency detection
             f0, voiced_flag, voiced_probs = librosa.pyin(audio, 
@@ -648,7 +662,8 @@ class AudioQualityAnalyzer:
     
     def _analyze_psychoacoustic_metrics(self, audio: np.ndarray, sample_rate: int,
                                        metrics: QualityMetrics):
-        """Analyze psychoacoustic characteristics"""
+        """
+Analyze psychoacoustic characteristics"""
         try:
             # Perceptual sharpness
             metrics.sharpness = self.psychoacoustic_analyzer.calculate_sharpness(audio, sample_rate)
@@ -718,7 +733,8 @@ class AudioQualityAnalyzer:
         return max(0.0, min(100.0, overall_score))
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level based on overall score"""
+        """
+Determine quality level based on overall score"""
         if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
@@ -917,7 +933,8 @@ class AudioQualityAnalyzer:
             json.dump(metrics_dict, f, indent=2, default=str)
     
     def get_quality_report(self, metrics: QualityMetrics) -> str:
-        """Generate human-readable quality report"""
+        """
+Generate human-readable quality report"""
         report = []
         report.append("=== AUDIO QUALITY ANALYSIS REPORT ===\n")
         

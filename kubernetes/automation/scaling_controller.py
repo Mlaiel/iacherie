@@ -7,6 +7,7 @@ predictive scaling capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from ..ai.prediction_engine import PredictionEngine
 
 
 class ScalingDirection(Enum):
-    """Scaling direction"""
+    """
+Scaling direction"""
+
     UP = "up"
     DOWN = "down"
     MAINTAIN = "maintain"
@@ -34,6 +37,7 @@ class ScalingDirection(Enum):
 
 class ScalingTriggerType(Enum):
     """Scaling trigger types"""
+
     CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     REQUEST_RATE = "request_rate"
@@ -46,6 +50,7 @@ class ScalingTriggerType(Enum):
 
 class ScalingStrategy(Enum):
     """Scaling strategies"""
+
     REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     HYBRID = "hybrid"
@@ -68,7 +73,8 @@ class ScalingMetric:
 
 @dataclass
 class ScalingPolicy:
-    """Scaling policy configuration"""
+    """
+Scaling policy configuration"""
     service_name: str
     min_replicas: int = 1
     max_replicas: int = 20
@@ -85,7 +91,8 @@ class ScalingPolicy:
 
 @dataclass
 class ScalingEvent:
-    """Scaling event record"""
+    """
+Scaling event record"""
     event_id: str
     service_name: str
     timestamp: datetime
@@ -103,7 +110,8 @@ class ScalingEvent:
 
 @dataclass
 class ResourcePrediction:
-    """Resource prediction data"""
+    """
+Resource prediction data"""
     service_name: str
     predicted_load: float
     confidence: float
@@ -255,7 +263,8 @@ class ScalingController(BaseComponent):
         self._initialize_creator_focused_policies()
 
     def _initialize_default_policies(self) -> None:
-        """Initialize default scaling policies for IA services"""
+        """
+Initialize default scaling policies for IA services"""
         
         for service_name, service_config in self.ia_services.items():
             sensitivity = service_config['scaling_sensitivity']
@@ -791,7 +800,8 @@ class ScalingController(BaseComponent):
         policy: ScalingPolicy,
         current_replicas: int
     ) -> Dict[str, Any]:
-        """Make scheduled scaling decision based on time patterns"""
+        """
+Make scheduled scaling decision based on time patterns"""
         
         decision = {
             'action': ScalingDirection.MAINTAIN,
@@ -965,7 +975,8 @@ class ScalingController(BaseComponent):
         return ScalingTriggerType.CPU_UTILIZATION  # Default
 
     def _is_service_in_cooldown(self, service_name: str, policy: ScalingPolicy) -> bool:
-        """Check if service is in scaling cooldown period"""
+        """
+Check if service is in scaling cooldown period"""
         
         if service_name not in self.last_scaling_times:
             return False
@@ -988,7 +999,8 @@ class ScalingController(BaseComponent):
         return time_since_last_scaling < cooldown_period
 
     def _exceeds_scaling_rate_limit(self, service_name: str) -> bool:
-        """Check if service exceeds scaling rate limits"""
+        """
+Check if service exceeds scaling rate limits"""
         
         # Count scaling events in the last hour
         one_hour_ago = datetime.utcnow() - timedelta(hours=1)
@@ -1001,7 +1013,8 @@ class ScalingController(BaseComponent):
         return len(recent_events) >= self.max_scaling_events_per_hour
 
     async def _update_resource_predictions(self, environment: str) -> None:
-        """Update resource predictions for all services"""
+        """
+Update resource predictions for all services"""
         
         for service_name in self.scaling_policies.keys():
             try:
@@ -1057,7 +1070,8 @@ class ScalingController(BaseComponent):
         prediction: Dict[str, Any],
         current_replicas: int
     ) -> int:
-        """Calculate recommended replicas based on prediction"""
+        """
+Calculate recommended replicas based on prediction"""
         
         predicted_load = prediction['predicted_load']
         
@@ -1090,7 +1104,8 @@ class ScalingController(BaseComponent):
         return recommended_replicas
 
     async def _collect_scaling_metrics(self, environment: str) -> None:
-        """Collect metrics for all services"""
+        """
+Collect metrics for all services"""
         
         namespace = f"ia-influencer-{environment}"
         
@@ -1175,7 +1190,8 @@ class ScalingController(BaseComponent):
         service_name: str,
         hours: int = 24
     ) -> List[Dict[str, Any]]:
-        """Get scaling metrics history for a service"""
+        """
+Get scaling metrics history for a service"""
         
         if service_name not in self.metric_history:
             return []
@@ -1188,7 +1204,8 @@ class ScalingController(BaseComponent):
         ]
 
     async def enable_scaling(self, service_name: Optional[str] = None) -> None:
-        """Enable scaling for a service or globally"""
+        """
+Enable scaling for a service or globally"""
         
         if service_name:
             if service_name in self.scaling_policies:

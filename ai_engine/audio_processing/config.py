@@ -4,8 +4,9 @@ Centralized configuration system for all audio processing components.
 Supports multiple environments, validation, and dynamic updates.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import os
 import json
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -29,6 +32,7 @@ class Environment(Enum):
 
 class LogLevel(Enum):
     """Logging levels"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -279,7 +283,8 @@ class AudioProcessingConfig:
             return format_name in self.supported_output_formats
     
     def get_api_timeout(self, api_name: str) -> float:
-        """Get timeout for specific API"""
+        """
+Get timeout for specific API"""
         return self.api_timeouts.get(api_name, self.api_timeouts.get("default", 30.0))
     
     def update_parameter(self, parameter_path: str, value: Any):
@@ -318,7 +323,8 @@ class AudioProcessingConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'AudioProcessingConfig':
-        """Create configuration from dictionary"""
+        """
+Create configuration from dictionary"""
         # Convert string paths back to Path objects
         for key in ['temp_directory', 'cache_directory', 'ml_model_directory']:
             if key in config_dict and config_dict[key] is not None:
@@ -334,7 +340,8 @@ class AudioProcessingConfig:
         return cls(**config_dict)
     
     def save_to_file(self, file_path: Union[str, Path]):
-        """Save configuration to file"""
+        """
+Save configuration to file"""
         file_path = Path(file_path)
         config_dict = self.to_dict()
         
@@ -545,7 +552,8 @@ class ConfigurationManager:
         return AudioProcessingConfig.from_dict(merged_dict)
     
     def validate_config(self, config: AudioProcessingConfig) -> List[str]:
-        """Validate configuration and return list of issues"""
+        """
+Validate configuration and return list of issues"""
         issues = []
         
         try:
@@ -602,7 +610,8 @@ class ConfigurationManager:
         return self.current_config
     
     def set_current_config(self, config: AudioProcessingConfig):
-        """Set current configuration"""
+        """
+Set current configuration"""
         self.current_config = config
         logger.info(f"Current configuration set to {config.environment.value} mode")
 
@@ -621,7 +630,8 @@ def get_config() -> AudioProcessingConfig:
 
 
 def set_config(config: AudioProcessingConfig):
-    """Set current audio processing configuration"""
+    """
+Set current audio processing configuration"""
     _config_manager.set_current_config(config)
 
 
@@ -639,19 +649,22 @@ def save_config(config: AudioProcessingConfig,
 
 
 def get_template(template_name: str) -> AudioProcessingConfig:
-    """Get configuration template"""
+    """
+Get configuration template"""
     return _config_manager.get_template(template_name)
 
 
 def create_config_from_template(template_name: str,
                                overrides: Optional[Dict[str, Any]] = None) -> AudioProcessingConfig:
-    """Create configuration from template"""
+    """
+Create configuration from template"""
     return _config_manager.create_config_from_template(template_name, overrides)
 
 
 # Environment detection
 def detect_environment() -> Environment:
-    """Detect current environment from environment variables"""
+    """
+Detect current environment from environment variables"""
     env_name = os.getenv('AUDIO_PROCESSING_ENV', 'development').lower()
     
     env_mapping = {
@@ -669,7 +682,8 @@ def detect_environment() -> Environment:
 
 
 def initialize_config(environment: Optional[Environment] = None) -> AudioProcessingConfig:
-    """Initialize configuration for current environment"""
+    """
+Initialize configuration for current environment"""
     if environment is None:
         environment = detect_environment()
     

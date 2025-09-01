@@ -160,11 +160,13 @@ STORAGE_CONFIGS = {
 }
 
 def get_storage_config(storage_type: str):
-    """Get storage configuration by type."""
+    """
+Get storage configuration by type."""
     return STORAGE_CONFIGS.get(storage_type)
 
 def validate_all_storage_configs() -> bool:
-    """Validate all storage configurations."""
+    """
+Validate all storage configurations."""
     results = {}
     for name, config in STORAGE_CONFIGS.items():
         if hasattr(config, 'validate_configuration'):

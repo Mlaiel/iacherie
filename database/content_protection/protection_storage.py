@@ -5,7 +5,7 @@ fingerprints, and violation tracking with enterprise-grade performance and secur
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import hashlib
 import json
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionStorageError(Exception):
-    """Custom exception for protection storage operations"""
+    """
+Custom exception for protection storage operations"""
     pass
 
 

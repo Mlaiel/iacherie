@@ -4,6 +4,7 @@ Handles intelligent pricing strategies, A/B testing, and revenue optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class PricingStrategy(Enum):
-    """Available pricing strategies."""
+    """
+Available pricing strategies."""
+
     FIXED = "fixed"
     DYNAMIC = "dynamic"
     DEMAND_BASED = "demand_based"
@@ -36,6 +39,7 @@ class PricingStrategy(Enum):
 
 class PriceTestStatus(Enum):
     """A/B test status for pricing."""
+
     ACTIVE = "active"
     COMPLETED = "completed"
     PAUSED = "paused"
@@ -44,6 +48,7 @@ class PriceTestStatus(Enum):
 
 class ContentType(Enum):
     """Content types for pricing."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -134,7 +139,8 @@ class PriceTest:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def get_price_for_user(self, user_id: str) -> Decimal:
-        """Get price for specific user based on test assignment."""
+        """
+Get price for specific user based on test assignment."""
         # Simple hash-based assignment for consistency
         user_hash = hash(user_id + self.test_id) % 100
         cumulative_split = 0
@@ -150,7 +156,8 @@ class PriceTest:
         return self.control_price
     
     def record_conversion(self, user_id: str, price: Decimal, revenue: Decimal) -> None:
-        """Record conversion for the test."""
+        """
+Record conversion for the test."""
         price_key = f"price_{price}"
         
         if price_key not in self.metrics:
@@ -196,7 +203,8 @@ class DemandData:
     demand_score: float = 1.0
     
     def calculate_demand_factor(self) -> float:
-        """Calculate demand factor based on data."""
+        """
+Calculate demand factor based on data."""
         if self.view_count == 0:
             return 1.0
         
@@ -225,7 +233,8 @@ class PricingEngine:
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize pricing engine."""
+        """
+Initialize pricing engine."""
         try:
             # Create default price points
             for price_point in self.default_prices:
@@ -629,14 +638,16 @@ class PricingEngine:
         return self._get_price_point(content_type)
     
     def list_active_tests(self) -> List[PriceTest]:
-        """List all active price tests."""
+        """
+List all active price tests."""
         return [
             test for test in self.active_tests.values()
             if test.status == PriceTestStatus.ACTIVE
         ]
     
     async def _get_price_point(self, content_type: ContentType) -> Optional[PricePoint]:
-        """Get price point for content type."""
+        """
+Get price point for content type."""
         # Find exact match first
         for price_point in self.price_points.values():
             if price_point.content_type == content_type and price_point.is_active:

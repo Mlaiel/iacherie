@@ -14,6 +14,7 @@ This module provides comprehensive monitoring capabilities for the IA Influencer
 Agent platform across multiple cloud providers, including real-time metrics,
 alerting, anomaly detection, and performance analytics.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -32,7 +33,9 @@ from sklearn.preprocessing import StandardScaler
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -41,6 +44,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -49,6 +53,7 @@ class MetricType(Enum):
 
 class AlertState(Enum):
     """Alert states"""
+
     FIRING = "firing"
     RESOLVED = "resolved"
     SUPPRESSED = "suppressed"
@@ -56,6 +61,7 @@ class AlertState(Enum):
 
 class MonitoringProvider(Enum):
     """Monitoring providers"""
+
     PROMETHEUS = "prometheus"
     CLOUDWATCH = "cloudwatch"
     AZURE_MONITOR = "azure_monitor"
@@ -78,7 +84,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""
+    """
+Alert rule definition"""
     rule_id: str
     name: str
     description: str
@@ -94,7 +101,8 @@ class AlertRule:
 
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert"""
+    """
+Monitoring alert"""
     alert_id: str
     rule_id: str
     name: str
@@ -110,14 +118,16 @@ class MonitoringAlert:
 
 @dataclass
 class MetricDataPoint:
-    """Metric data point"""
+    """
+Metric data point"""
     timestamp: datetime
     value: float
     labels: Dict[str, str]
 
 @dataclass
 class MonitoringDashboard:
-    """Monitoring dashboard configuration"""
+    """
+Monitoring dashboard configuration"""
     dashboard_id: str
     name: str
     description: str
@@ -129,7 +139,8 @@ class MonitoringDashboard:
 
 @dataclass
 class AnomalyDetectionResult:
-    """Anomaly detection result"""
+    """
+Anomaly detection result"""
     metric_name: str
     timestamp: datetime
     value: float
@@ -139,10 +150,12 @@ class AnomalyDetectionResult:
     context: Dict[str, Any]
 
 class CloudMonitoringSystem:
-    """Enterprise cloud monitoring system"""
+    """
+Enterprise cloud monitoring system"""
     
     def __init__(self):
-        """Initialize cloud monitoring system"""
+        """
+Initialize cloud monitoring system"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.providers: Dict[str, Any] = {}
         self.metrics_store: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
@@ -164,7 +177,8 @@ class CloudMonitoringSystem:
         self.metric_handlers: List[Callable] = []
         
     async def initialize(self) -> bool:
-        """Initialize monitoring system"""
+        """
+Initialize monitoring system"""
         try:
             self.logger.info("Initializing cloud monitoring system")
             
@@ -538,7 +552,8 @@ class CloudMonitoringSystem:
             return CustomProvider(config)
     
     async def _validate_metric_definition(self, metric_def: MetricDefinition) -> bool:
-        """Validate metric definition"""
+        """
+Validate metric definition"""
         if not metric_def.name:
             return False
         if metric_def.collection_interval <= 0:
@@ -548,7 +563,8 @@ class CloudMonitoringSystem:
         return True
     
     async def _validate_alert_rule(self, rule: AlertRule) -> Dict[str, Any]:
-        """Validate alert rule"""
+        """
+Validate alert rule"""
         errors = []
         
         if not rule.name:
@@ -577,7 +593,8 @@ class CloudMonitoringSystem:
         return True
     
     async def _validate_notification_config(self, channel_type: str, config: Dict[str, Any]) -> bool:
-        """Validate notification channel configuration"""
+        """
+Validate notification channel configuration"""
         if channel_type == "email":
             return "smtp_server" in config and "recipients" in config
         elif channel_type == "slack":
@@ -673,7 +690,8 @@ class CloudMonitoringSystem:
         pass
     
     async def _metrics_collection_loop(self) -> None:
-        """Metrics collection loop"""
+        """
+Metrics collection loop"""
         while True:
             try:
                 # Collect metrics from all providers
@@ -722,7 +740,8 @@ class CloudMonitoringSystem:
         pass
     
     async def _evaluate_alert_rule(self, rule: AlertRule) -> None:
-        """Evaluate alert rule"""
+        """
+Evaluate alert rule"""
         # Get recent metrics for evaluation
         end_time = datetime.now()
         start_time = end_time - timedelta(seconds=rule.evaluation_window)
@@ -789,7 +808,8 @@ class CloudMonitoringSystem:
                 await self._send_to_channel(alert, channel)
     
     async def _send_to_channel(self, alert: MonitoringAlert, channel: Dict[str, Any]) -> None:
-        """Send alert to specific channel"""
+        """
+Send alert to specific channel"""
         try:
             if channel["type"] == "webhook":
                 await self._send_webhook_notification(alert, channel["config"])
@@ -861,21 +881,24 @@ class CloudWatchProvider:
 
 
 class AzureMonitorProvider:
-    """Azure Monitor provider"""
+    """
+Azure Monitor provider"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
 
 
 class StackdriverProvider:
-    """Google Cloud Stackdriver provider"""
+    """
+Google Cloud Stackdriver provider"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
 
 
 class CustomProvider:
-    """Custom monitoring provider"""
+    """
+Custom monitoring provider"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config

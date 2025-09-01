@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, Any, Optional, List, Union
 from pathlib import Path
@@ -454,7 +455,8 @@ class FingerprintingSystemIndex:
             return 'unknown'
     
     async def _extract_metadata_safe(self, file_path: str) -> Optional[Dict[str, Any]]:
-        """Safely extract metadata with error handling"""
+        """
+Safely extract metadata with error handling"""
         try:
             metadata = await self.metadata_extractor(file_path)
             return metadata.to_dict() if metadata else None
@@ -493,7 +495,8 @@ class FingerprintingSystemIndex:
         }
     
     def _calculate_confidence_score(self, fingerprint_result: Any) -> float:
-        """Calculate confidence score for fingerprint quality"""
+        """
+Calculate confidence score for fingerprint quality"""
         try:
             # Implementation would analyze fingerprint quality metrics
             # Placeholder calculation
@@ -505,7 +508,8 @@ class FingerprintingSystemIndex:
             return 0.5
     
     def _generate_security_hash(self, content_id: str, fingerprint_result: Any) -> str:
-        """Generate security hash for fingerprint integrity"""
+        """
+Generate security hash for fingerprint integrity"""
         try:
             content = f"{content_id}_{datetime.utcnow().isoformat()}"
             if hasattr(fingerprint_result, 'perceptual_hash'):
@@ -562,7 +566,8 @@ class FingerprintingSystemIndex:
             return False
     
     def _detect_metadata_changes(self, original: Dict[str, Any], current: Dict[str, Any]) -> List[str]:
-        """Detect changes in metadata"""
+        """
+Detect changes in metadata"""
         try:
             changes = []
             # Implementation would compare metadata fields
@@ -571,7 +576,8 @@ class FingerprintingSystemIndex:
             return []
     
     def _check_component_status(self, component) -> Dict[str, Any]:
-        """Check status of a system component"""
+        """
+Check status of a system component"""
         try:
             return {
                 'status': 'healthy',
@@ -585,7 +591,8 @@ class FingerprintingSystemIndex:
             }
     
     def _assess_system_health(self) -> Dict[str, Any]:
-        """Assess overall system health"""
+        """
+Assess overall system health"""
         try:
             total_operations = (self.stats['total_fingerprints_generated'] + 
                               self.stats['successful_matches'])
@@ -619,35 +626,41 @@ class FingerprintingSystemIndex:
 _system_instance = None
 
 def get_fingerprinting_system(config: Optional[FingerprintingSystemConfig] = None) -> FingerprintingSystemIndex:
-    """Get global fingerprinting system instance"""
+    """
+Get global fingerprinting system instance"""
     global _system_instance
     if _system_instance is None:
         _system_instance = FingerprintingSystemIndex(config)
     return _system_instance
 
 def reset_fingerprinting_system():
-    """Reset global fingerprinting system instance"""
+    """
+Reset global fingerprinting system instance"""
     global _system_instance
     _system_instance = None
 
 # Convenience functions for direct access
 async def fingerprint_content(content_id: str, file_path: str, content_type: str = None) -> Dict[str, Any]:
-    """Convenience function to fingerprint content"""
+    """
+Convenience function to fingerprint content"""
     system = get_fingerprinting_system()
     return await system.generate_comprehensive_fingerprint(content_id, file_path, content_type)
 
 async def find_similar_content(query_fingerprint: Dict[str, Any], 
                              similarity_threshold: float = 0.8) -> List[Dict[str, Any]]:
-    """Convenience function to find similar content"""
+    """
+Convenience function to find similar content"""
     system = get_fingerprinting_system()
     return await system.find_content_matches(query_fingerprint, similarity_threshold)
 
 async def batch_fingerprint_content(content_list: List[Dict[str, str]]) -> Dict[str, Any]:
-    """Convenience function for batch fingerprinting"""
+    """
+Convenience function for batch fingerprinting"""
     system = get_fingerprinting_system()
     return await system.batch_process_content(content_list)
 
 def get_system_stats() -> Dict[str, Any]:
-    """Convenience function to get system statistics"""
+    """
+Convenience function to get system statistics"""
     system = get_fingerprinting_system()
     return system.get_system_statistics()

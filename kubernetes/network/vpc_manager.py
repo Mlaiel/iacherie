@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import ipaddress
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
+    """
+Supported cloud providers"""
+
     AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
@@ -48,6 +51,7 @@ class CloudProvider(Enum):
 
 class NetworkTier(Enum):
     """Network performance tiers"""
+
     STANDARD = "standard"
     PREMIUM = "premium"
     ULTRA = "ultra"
@@ -55,6 +59,7 @@ class NetworkTier(Enum):
 
 class SubnetType(Enum):
     """Subnet types and purposes"""
+
     PUBLIC = "public"
     PRIVATE = "private"
     DATABASE = "database"

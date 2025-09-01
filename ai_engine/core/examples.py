@@ -4,10 +4,11 @@ Comprehensive examples demonstrating how to use the AI core module
 for different creator types and business scenarios.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import logging
 from pathlib import Path
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 def example_basic_setup():
-    """Example: Basic module setup and configuration"""
+    """
+Example: Basic module setup and configuration"""
     print("=== AI Core Module Setup Example ===")
     
     # Quick setup with default configuration

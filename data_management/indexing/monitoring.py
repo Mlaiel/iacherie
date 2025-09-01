@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
+    """
+Types of metrics collected"""
+
     COUNTER = "counter"
     HISTOGRAM = "histogram" 
     GAUGE = "gauge"
@@ -42,6 +45,7 @@ class MetricType(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -64,7 +68,8 @@ class PerformanceMetrics:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
+    """
+Alert rule configuration"""
     name: str
     metric_name: str
     threshold: float
@@ -77,7 +82,8 @@ class AlertRule:
 
 @dataclass
 class IndexingMetrics:
-    """Indexing operation metrics"""
+    """
+Indexing operation metrics"""
     content_indexed_total: int
     indexing_rate_per_minute: float
     average_processing_time_ms: float
@@ -89,7 +95,8 @@ class IndexingMetrics:
 
 
 class MetricsCollector:
-    """Collects and aggregates metrics from indexing operations"""
+    """
+Collects and aggregates metrics from indexing operations"""
     
     def __init__(self, redis_url: str, collection_interval: int = 60):
         self.redis_url = redis_url
@@ -102,7 +109,8 @@ class MetricsCollector:
         self._setup_prometheus_metrics()
         
     def _setup_prometheus_metrics(self):
-        """Initialize Prometheus metrics"""
+        """
+Initialize Prometheus metrics"""
         self.processing_time = Histogram(
             'indexing_processing_time_seconds',
             'Time spent processing content for indexing',
@@ -138,7 +146,8 @@ class MetricsCollector:
         )
     
     async def initialize(self):
-        """Initialize metrics collector"""
+        """
+Initialize metrics collector"""
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -318,7 +327,8 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """Manages alerting for indexing operations"""
+    """
+Manages alerting for indexing operations"""
     
     def __init__(self, redis_url: str, notification_config: Dict[str, Any]):
         self.redis_url = redis_url
@@ -328,7 +338,8 @@ class AlertManager:
         self.active_alerts = {}
         
     async def initialize(self):
-        """Initialize alert manager"""
+        """
+Initialize alert manager"""
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -508,7 +519,8 @@ class PerformanceAnalyzer:
     async def analyze_performance_trends(
         self, time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """Analyze performance trends over specified time window"""
+        """
+Analyze performance trends over specified time window"""
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=time_window_hours)
             

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
@@ -45,7 +46,8 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize Content Optimization Repository"""
+        """
+Initialize Content Optimization Repository"""
         super().__init__(db_session, ContentOptimization)
         
     def create_optimization_analysis(self, 
@@ -293,7 +295,8 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         return distribution
         
     def _calculate_monthly_progress(self, optimizations: List[ContentOptimization]) -> Dict[str, Any]:
-        """Calculate monthly progress in SEO scores"""
+        """
+Calculate monthly progress in SEO scores"""
         monthly_data = {}
         
         for opt in optimizations:

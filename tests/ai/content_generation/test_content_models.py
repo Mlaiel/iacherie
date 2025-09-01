@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Content Models Tests
+"""
+Content Models Tests
 
 Comprehensive tests for Pydantic models and data structures
 used in the content generation system.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -65,7 +68,8 @@ class TestEnums:
     """Test suite for enum definitions"""
     
     def test_platform_enum(self):
-        """Test Platform enum values"""
+        """
+Test Platform enum values"""
         assert Platform.INSTAGRAM.value == "instagram"
         assert Platform.TWITTER.value == "twitter"
         assert Platform.LINKEDIN.value == "linkedin"
@@ -138,7 +142,8 @@ class TestContentRequest:
     """Test suite for ContentGenerationRequest model"""
     
     def test_basic_content_request(self):
-        """Test basic content request creation"""
+        """
+Test basic content request creation"""
         request = ContentGenerationRequest(
             content_type=ContentType.SOCIAL_POST,
             platform=Platform.INSTAGRAM,
@@ -211,7 +216,8 @@ class TestContentResponse:
     """Test suite for ContentGenerationResponse model"""
     
     def test_successful_content_response(self):
-        """Test successful content response creation"""
+        """
+Test successful content response creation"""
         response = ContentGenerationResponse(
             content_id="content_123",
             content_type=ContentType.SOCIAL_POST,
@@ -275,7 +281,8 @@ class TestABTestConfiguration:
     """Test suite for ABTestConfiguration model"""
     
     def test_basic_ab_test_config(self):
-        """Test basic A/B test configuration"""
+        """
+Test basic A/B test configuration"""
         config = ABTestConfiguration(
             test_id="test_001",
             test_name="CTA Button Test",
@@ -344,7 +351,8 @@ class TestContentMetadata:
     """Test suite for ContentMetadata model"""
     
     def test_content_metadata_creation(self):
-        """Test content metadata creation"""
+        """
+Test content metadata creation"""
         metadata = ContentMetadata(
             title="AI Content Generation Guide",
             description="Complete guide to AI-powered content creation",
@@ -384,7 +392,8 @@ class TestQualityScoreResponse:
     """Test suite for QualityScoreResponse model"""
     
     def test_quality_score_response_creation(self):
-        """Test quality score response creation"""
+        """
+Test quality score response creation"""
         response = QualityScoreResponse(
             overall_score=0.875,
             readability_score=0.912,
@@ -429,7 +438,8 @@ class TestPerformanceMetrics:
     """Test suite for PerformanceMetrics model"""
     
     def test_performance_metrics_creation(self):
-        """Test performance metrics creation"""
+        """
+Test performance metrics creation"""
         from datetime import datetime, timezone
         
         metrics = PerformanceMetrics(
@@ -487,7 +497,8 @@ class TestContentOptimizationRequest:
     """Test suite for ContentOptimizationRequest model"""
     
     def test_content_optimization_request_creation(self):
-        """Test content optimization request creation"""
+        """
+Test content optimization request creation"""
         request = ContentOptimizationRequest(
             content="Basic content about AI technology",
             target_platform=Platform.INSTAGRAM,
@@ -519,7 +530,8 @@ class TestTemplateRequest:
     """Test suite for TemplateRequest model"""
     
     def test_template_request_creation(self):
-        """Test template request creation"""
+        """
+Test template request creation"""
         request = TemplateRequest(
             template_type="blog_post",
             content_type=ContentType.BLOG_POST,
@@ -554,7 +566,8 @@ class TestBatchContentRequest:
     """Test suite for BatchContentRequest model"""
     
     def test_batch_content_request_creation(self):
-        """Test batch content request creation"""
+        """
+Test batch content request creation"""
         individual_requests = [
             {
                 "content_type": "social_post",
@@ -600,7 +613,8 @@ class TestPerformanceAnalysisRequest:
     """Test suite for PerformanceAnalysisRequest model"""
     
     def test_performance_analysis_request_creation(self):
-        """Test performance analysis request creation"""
+        """
+Test performance analysis request creation"""
         request = PerformanceAnalysisRequest(
             content_ids=["content_1", "content_2", "content_3"],
             analysis_types=["engagement", "reach", "conversion"],
@@ -631,7 +645,8 @@ class TestContentGenerationResponse:
     """Test suite for ContentGenerationResponse model"""
     
     def test_content_generation_response_creation(self):
-        """Test content generation response creation"""
+        """
+Test content generation response creation"""
         response = ContentGenerationResponse(
             content_id="content_123",
             content_type=ContentType.BLOG_POST,
@@ -669,7 +684,8 @@ class TestContentOptimizationResponse:
     """Test suite for ContentOptimizationResponse model"""
     
     def test_content_optimization_response_creation(self):
-        """Test content optimization response creation"""
+        """
+Test content optimization response creation"""
         response = ContentOptimizationResponse(
             original_content="Basic AI content",
             optimized_content="Enhanced AI content with better engagement and SEO optimization",
@@ -705,7 +721,8 @@ class TestContentError:
     """Test suite for ContentError model"""
     
     def test_content_error_creation(self):
-        """Test content error creation"""
+        """
+Test content error creation"""
         error = ContentError(
             error_code="GENERATION_FAILED",
             error_message="Failed to generate content due to API timeout",

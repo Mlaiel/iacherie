@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class PostingStrategy(Enum):
-    """Content posting strategies"""
+    """
+Content posting strategies"""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     OPTIMAL_TIME = "optimal_time"
@@ -39,6 +42,7 @@ class PostingStrategy(Enum):
 
 class EngagementGoal(Enum):
     """Engagement optimization goals"""
+
     REACH = "reach"
     ENGAGEMENT_RATE = "engagement_rate"
     CONVERSIONS = "conversions"
@@ -160,7 +164,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
         self.post_performance: Dict[str, EngagementMetrics] = {}
     
     async def _custom_initialize(self) -> None:
-        """Initialize social media management components"""
+        """
+Initialize social media management components"""
         try:
             # Initialize platform integrations
             self.platform_manager = SocialPlatformManager()

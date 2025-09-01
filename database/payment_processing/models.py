@@ -27,6 +27,7 @@ ENTERPRISE FEATURES:
 - International tax calculation and reporting
 - Advanced dispute management and resolution
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Decimal, Boolean, Text, 
     ForeignKey, Index, CheckConstraint, UniqueConstraint, JSON,
@@ -48,7 +49,9 @@ Base = declarative_base()
 
 
 class PaymentStatus(Enum):
-    """Payment transaction status enumeration with comprehensive states"""
+    """
+Payment transaction status enumeration with comprehensive states"""
+
     CREATED = "created"
     PENDING = "pending"
     AUTHORIZED = "authorized"
@@ -222,6 +225,7 @@ class TransactionType(Enum):
 
 class PayoutStatus(Enum):
     """Comprehensive payout status tracking"""
+
     CREATED = "created"
     PENDING = "pending"
     SCHEDULED = "scheduled"
@@ -241,6 +245,7 @@ class PayoutStatus(Enum):
 
 class BillingFrequency(Enum):
     """Flexible billing frequency options"""
+
     ONE_TIME = "one_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -330,6 +335,7 @@ class CurrencyCode(Enum):
 
 class FraudRisk(Enum):
     """Fraud risk assessment levels"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -340,6 +346,7 @@ class FraudRisk(Enum):
 
 class SecurityLevel(Enum):
     """Security level classifications"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -349,6 +356,7 @@ class SecurityLevel(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status for regulatory requirements"""
+
     COMPLIANT = "compliant"
     PENDING_REVIEW = "pending_review"
     NON_COMPLIANT = "non_compliant"
@@ -358,6 +366,7 @@ class ComplianceStatus(Enum):
 
 class RevenueSource(Enum):
     """Revenue source classification for analytics"""
+
     YOUTUBE_ADS = "youtube_ads"
     YOUTUBE_PREMIUM = "youtube_premium"
     YOUTUBE_MEMBERSHIPS = "youtube_memberships"
@@ -394,6 +403,7 @@ class RevenueSource(Enum):
 
 class TaxCategory(Enum):
     """Tax categories for international compliance"""
+
     PERSONAL_INCOME = "personal_income"
     BUSINESS_INCOME = "business_income"
     CAPITAL_GAINS = "capital_gains"
@@ -419,6 +429,7 @@ class TaxCategory(Enum):
 
 class PaymentMethodType(Enum):
     """Payment method type enumeration"""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
@@ -442,6 +453,7 @@ class PaymentMethodType(Enum):
 
 class PaymentProvider(Enum):
     """Payment provider enumeration"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -456,6 +468,7 @@ class PaymentProvider(Enum):
 
 class TransactionType(Enum):
     """Transaction type enumeration"""
+
     PAYMENT = "payment"
     PAYOUT = "payout"
     REFUND = "refund"
@@ -470,6 +483,7 @@ class TransactionType(Enum):
 
 class PayoutStatus(Enum):
     """Payout status enumeration"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
@@ -482,6 +496,7 @@ class PayoutStatus(Enum):
 
 class BillingFrequency(Enum):
     """Billing frequency enumeration"""
+
     ONE_TIME = "one_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -523,6 +538,7 @@ class CurrencyCode(Enum):
 
 class FraudRisk(Enum):
     """Fraud risk level enumeration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -531,6 +547,7 @@ class FraudRisk(Enum):
 
 class SecurityLevel(Enum):
     """Security level enumeration"""
+
     BASIC = "basic"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
@@ -1182,7 +1199,8 @@ def get_table_names() -> List[str]:
 
 
 def validate_financial_data(amount: PyDecimal, currency: str) -> bool:
-    """Validate financial data consistency"""
+    """
+Validate financial data consistency"""
     if amount <= 0:
         return False
     if currency not in [c.value for c in CurrencyCode]:

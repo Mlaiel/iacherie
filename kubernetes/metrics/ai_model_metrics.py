@@ -31,6 +31,7 @@ Features:
 - Resource utilization for ML workloads
 - Bias and fairness metrics
 """
+
 import asyncio
 import json
 import numpy as np
@@ -53,7 +54,8 @@ metrics_config = get_metrics_config()
 
 
 class ModelType(Enum):
-    """AI model types"""
+    """
+AI model types"""
     # Audio models
     AUDIO_FINGERPRINT = "audio_fingerprint"
     AUDIO_CLASSIFICATION = "audio_classification"
@@ -85,6 +87,7 @@ class ModelType(Enum):
 
 class ModelStage(Enum):
     """Model development stages"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -94,6 +97,7 @@ class ModelStage(Enum):
 
 class InferenceStatus(Enum):
     """Inference status"""
+
     SUCCESS = "success"
     FAILED = "failed"
     TIMEOUT = "timeout"
@@ -137,7 +141,8 @@ class ModelMetrics:
 
 @dataclass
 class InferenceRecord:
-    """Individual inference record"""
+    """
+Individual inference record"""
     inference_id: str
     model_id: str
     model_version: str
@@ -165,7 +170,8 @@ class InferenceRecord:
 
 @dataclass
 class ModelTrainingMetrics:
-    """Model training performance metrics"""
+    """
+Model training performance metrics"""
     training_id: str
     model_id: str
     model_version: str
@@ -235,7 +241,8 @@ class AIModelMetricsCollector:
         input_features: Optional[Dict[str, Any]] = None,
         resource_usage: Optional[Dict[str, float]] = None
     ) -> str:
-        """Track individual model inference"""
+        """
+Track individual model inference"""
         
         inference_id = f"inf_{int(datetime.now().timestamp())}_{model_id}"
         
@@ -673,18 +680,21 @@ class AIModelMetricsCollector:
         model_version: str,
         start_time: datetime
     ) -> Optional[float]:
-        """Calculate model bias score (mock implementation)"""
+        """
+Calculate model bias score (mock implementation)"""
         # In production, this would analyze predictions across different
         # demographic groups to detect bias
         return 0.02  # Mock low bias score
     
     async def _get_model_stage(self, model_id: str, model_version: str) -> ModelStage:
-        """Get model deployment stage"""
+        """
+Get model deployment stage"""
         # This would query model registry or deployment system
         return ModelStage.PRODUCTION  # Mock
     
     async def _get_model_type(self, model_id: str) -> ModelType:
-        """Get model type from model registry"""
+        """
+Get model type from model registry"""
         # This would query model registry
         if "audio" in model_id.lower():
             return ModelType.AUDIO_FINGERPRINT

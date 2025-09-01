@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Distribution Service Tests
+"""
+Distribution Service Tests
 
 Comprehensive tests for the DistributionService class that handles
 multi-platform content publishing and scheduling.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -51,12 +54,14 @@ class TestDistributionService:
     
     @pytest.fixture
     def service(self):
-        """Create a distribution service instance"""
+        """
+Create a distribution service instance"""
         return DistributionService()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for testing"""
+        """
+Create sample content for testing"""
         return "This is a sample social media post about AI technology trends. #AI #tech #innovation"
     
     @pytest.fixture
@@ -77,7 +82,8 @@ class TestDistributionService:
         """
     
     def test_service_initialization(self, service):
-        """Test distribution service initialization"""
+        """
+Test distribution service initialization"""
         assert service is not None
         assert hasattr(service, 'platform_configs')
         assert hasattr(service, 'publishing_queue')
@@ -94,7 +100,8 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_schedule_publication_single_platform(self, service, sample_content):
-        """Test scheduling publication to a single platform"""
+        """
+Test scheduling publication to a single platform"""
         scheduled_time = datetime.now() + timedelta(hours=1)
         
         task_ids = await service.schedule_publication(
@@ -205,7 +212,8 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_publication_tracking(self, service, sample_content):
-        """Test publication tracking and metrics"""
+        """
+Test publication tracking and metrics"""
         content_id = "tracking_test_001"
         
         result = {
@@ -498,11 +506,13 @@ class TestPlatformConfig:
     
     @pytest.fixture
     def service(self):
-        """Create service for platform config testing"""
+        """
+Create service for platform config testing"""
         return DistributionService()
     
     def test_platform_configurations_exist(self, service):
-        """Test that all platform configurations exist"""
+        """
+Test that all platform configurations exist"""
         required_platforms = [
             Platform.INSTAGRAM,
             Platform.TWITTER,
@@ -517,7 +527,8 @@ class TestPlatformConfig:
             assert isinstance(config, PlatformConfig)
     
     def test_platform_config_completeness(self, service):
-        """Test platform configuration completeness"""
+        """
+Test platform configuration completeness"""
         for platform, config in service.platform_configs.items():
             assert config.platform == platform
             assert config.api_endpoint is not None
@@ -528,7 +539,8 @@ class TestPlatformConfig:
             assert isinstance(config.supported_formats, list)
     
     def test_rate_limits_configuration(self, service):
-        """Test rate limits configuration"""
+        """
+Test rate limits configuration"""
         for platform, config in service.platform_configs.items():
             rate_limits = config.rate_limits
             
@@ -541,7 +553,8 @@ class TestPlatformConfig:
                 assert limit_value > 0
     
     def test_content_limits_configuration(self, service):
-        """Test content limits configuration"""
+        """
+Test content limits configuration"""
         for platform, config in service.platform_configs.items():
             content_limits = config.content_limits
             
@@ -574,7 +587,8 @@ class TestPublishingTask:
     """Test suite for PublishingTask"""
     
     def test_task_creation(self):
-        """Test publishing task creation"""
+        """
+Test publishing task creation"""
         task = PublishingTask(
             task_id="test_task_123",
             content_id="content_456",

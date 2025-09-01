@@ -24,6 +24,7 @@ Team Specialists:
 - DevOps: ML Model Deployment & Scaling
 - IA Prompt Engineer: Conversational Intelligence Optimization
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -68,7 +69,9 @@ logger = get_logger(__name__)
 
 
 class PredictionType(Enum):
-    """Types of session predictions"""
+    """
+Types of session predictions"""
+
     ENGAGEMENT_LEVEL = "engagement_level"
     SESSION_DURATION = "session_duration"
     CONVERSION_PROBABILITY = "conversion_probability"
@@ -81,6 +84,7 @@ class PredictionType(Enum):
 
 class OptimizationType(Enum):
     """Types of session optimizations"""
+
     RESPONSE_TIME = "response_time"
     USER_SATISFACTION = "user_satisfaction"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -159,7 +163,8 @@ class PredictionResult(BaseModel):
 
 
 class OptimizationRecommendation(BaseModel):
-    """Session optimization recommendation"""
+    """
+Session optimization recommendation"""
     recommendation_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     optimization_type: OptimizationType
@@ -181,7 +186,8 @@ class OptimizationRecommendation(BaseModel):
 
 @dataclass
 class IntelligenceConfig:
-    """Session intelligence configuration"""
+    """
+Session intelligence configuration"""
     enable_real_time_prediction: bool = True
     enable_batch_prediction: bool = True
     model_update_frequency: int = 3600  # seconds
@@ -195,7 +201,8 @@ class IntelligenceConfig:
 
 
 class ConversationPredictionModel:
-    """ML model for conversation outcome prediction"""
+    """
+ML model for conversation outcome prediction"""
     
     def __init__(self, config: IntelligenceConfig):
         self.config = config
@@ -217,7 +224,8 @@ class ConversationPredictionModel:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for different prediction types"""
+        """
+Initialize ML models for different prediction types"""
         
         try:
             # Engagement prediction model
@@ -411,7 +419,8 @@ class ConversationPredictionModel:
             return 0.5  # Default neutral score
     
     def _features_to_array(self, features: SessionFeatures) -> np.ndarray:
-        """Convert features to numpy array for ML models"""
+        """
+Convert features to numpy array for ML models"""
         
         try:
             # Numeric features
@@ -765,7 +774,8 @@ class SessionOptimizationAlgorithm:
         session_id: str,
         features: SessionFeatures
     ) -> List[OptimizationRecommendation]:
-        """Generate comprehensive optimization recommendations"""
+        """
+Generate comprehensive optimization recommendations"""
         
         try:
             recommendations = []
@@ -1011,7 +1021,8 @@ class UserEngagementPredictor:
         self.user_profiles: Dict[str, Dict[str, Any]] = {}
     
     async def analyze_engagement_patterns(self, user_id: str, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user engagement patterns over time"""
+        """
+Analyze user engagement patterns over time"""
         
         try:
             if len(historical_data) < 3:
@@ -1142,7 +1153,8 @@ class UserEngagementPredictor:
             return 0.5
     
     async def get_engagement_recommendations(self, user_id: str) -> List[str]:
-        """Get personalized engagement recommendations"""
+        """
+Get personalized engagement recommendations"""
         
         try:
             if user_id not in self.user_profiles:
@@ -1204,7 +1216,8 @@ class SessionIntelligenceEngine:
         self.background_tasks: List[asyncio.Task] = []
     
     async def initialize(self):
-        """Initialize the intelligence engine"""
+        """
+Initialize the intelligence engine"""
         
         # Start background tasks
         if self.config.enable_batch_prediction:

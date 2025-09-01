@@ -5,7 +5,7 @@ This module orchestrates the deployment of all fingerprinting services
 for comprehensive content protection across audio, video, image, and text.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This code is the exclusive property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentMode(Enum):
-    """Deployment modes for fingerprinting infrastructure"""
+    """
+Deployment modes for fingerprinting infrastructure"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -46,6 +49,7 @@ class DeploymentMode(Enum):
 
 class ContentProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -55,6 +59,7 @@ class ContentProtectionLevel(Enum):
 
 class ScalingStrategy(Enum):
     """Auto-scaling strategies"""
+
     CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
@@ -1176,7 +1181,8 @@ class FingerprintingDeploymentOrchestrator:
         return total
     
     async def _validate_complete_deployment(self) -> bool:
-        """Validate the complete deployment"""
+        """
+Validate the complete deployment"""
         try:
             # Check core infrastructure
             core_services = [

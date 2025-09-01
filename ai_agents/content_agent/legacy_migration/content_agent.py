@@ -5,6 +5,7 @@ Integrates with AI models for intelligent content understanding and enhancement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import time
@@ -202,7 +203,8 @@ class ContentAgent(BaseAgent):
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Route content to appropriate processor based on type"""
+        """
+Route content to appropriate processor based on type"""
         
         base_results = {
             'content_path': str(content_path),
@@ -257,7 +259,8 @@ class ContentAgent(BaseAgent):
         return hash_sha256.hexdigest()
     
     async def _perform_ai_analysis(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Perform AI-powered analysis on content"""
+        """
+Perform AI-powered analysis on content"""
         ai_results = {}
         
         try:
@@ -400,7 +403,8 @@ class AudioContentProcessor:
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process audio content with comprehensive analysis"""
+        """
+Process audio content with comprehensive analysis"""
         
         try:
             # Load audio file
@@ -467,7 +471,8 @@ class AudioContentProcessor:
         }
     
     async def _assess_audio_quality(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Assess audio quality metrics"""
+        """
+Assess audio quality metrics"""
         
         # Signal-to-noise ratio estimation
         stft = librosa.stft(y)
@@ -503,7 +508,8 @@ class AudioContentProcessor:
         }
     
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio metadata"""
+        """
+Extract audio metadata"""
         try:
             import mutagen
             from mutagen.id3 import ID3NoHeaderError
@@ -539,7 +545,8 @@ class VideoContentProcessor:
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process video content with comprehensive analysis"""
+        """
+Process video content with comprehensive analysis"""
         
         try:
             # Open video file
@@ -633,7 +640,8 @@ class VideoContentProcessor:
         }
     
     async def _assess_video_quality(self, cap: cv2.VideoCapture, frame_count: int, fps: float) -> Dict[str, Any]:
-        """Assess video quality metrics"""
+        """
+Assess video quality metrics"""
         
         # Resolution-based quality
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -687,7 +695,8 @@ class VideoContentProcessor:
         }
     
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract video metadata"""
+        """
+Extract video metadata"""
         try:
             import ffmpeg
             
@@ -721,7 +730,8 @@ class ImageContentProcessor:
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process image content with comprehensive analysis"""
+        """
+Process image content with comprehensive analysis"""
         
         try:
             # Open image
@@ -785,7 +795,8 @@ class ImageContentProcessor:
         }
     
     def _get_dominant_color(self, img_array: np.ndarray) -> List[int]:
-        """Get dominant color using k-means clustering"""
+        """
+Get dominant color using k-means clustering"""
         try:
             from sklearn.cluster import KMeans
             
@@ -808,7 +819,8 @@ class ImageContentProcessor:
             return np.mean(img_array, axis=(0, 1)).astype(int).tolist()
     
     async def _assess_image_quality(self, img: Image.Image) -> Dict[str, Any]:
-        """Assess image quality metrics"""
+        """
+Assess image quality metrics"""
         
         width, height = img.size
         
@@ -843,7 +855,8 @@ class ImageContentProcessor:
         }
     
     async def _extract_image_metadata(self, img: Image.Image) -> Dict[str, Any]:
-        """Extract image EXIF metadata"""
+        """
+Extract image EXIF metadata"""
         try:
             from PIL.ExifTags import TAGS
             
@@ -890,7 +903,8 @@ class TextContentProcessor:
         self.model = None
     
     async def initialize_models(self):
-        """Initialize NLP models"""
+        """
+Initialize NLP models"""
         try:
             from transformers import AutoTokenizer, AutoModel
             
@@ -981,7 +995,8 @@ class TextContentProcessor:
         }
     
     async def _detect_language(self, text: str) -> str:
-        """Detect text language"""
+        """
+Detect text language"""
         try:
             from langdetect import detect
             return detect(text)
@@ -989,7 +1004,8 @@ class TextContentProcessor:
             return 'unknown'
     
     async def _assess_text_quality(self, text: str) -> Dict[str, Any]:
-        """Assess text quality metrics"""
+        """
+Assess text quality metrics"""
         
         # Readability assessment using simple metrics
         words = text.split()
@@ -1030,7 +1046,8 @@ class TextContentProcessor:
         }
     
     async def _analyze_seo_factors(self, text: str) -> Dict[str, Any]:
-        """Analyze SEO factors in text"""
+        """
+Analyze SEO factors in text"""
         
         import re
         from collections import Counter

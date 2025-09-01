@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class WorkflowType(Enum):
-    """Workflow type classification."""
+    """
+Workflow type classification."""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -39,6 +42,7 @@ class WorkflowType(Enum):
 
 class ComponentType(Enum):
     """Workflow component types."""
+
     TASK = "task"
     CONDITION = "condition"
     LOOP = "loop"
@@ -53,6 +57,7 @@ class ComponentType(Enum):
 
 class TemplateScope(Enum):
     """Template scope levels."""
+
     GLOBAL = "global"
     DOMAIN = "domain"
     PROJECT = "project"
@@ -79,7 +84,8 @@ class WorkflowComponent:
 
 @dataclass
 class WorkflowTemplate:
-    """Workflow template definition."""
+    """
+Workflow template definition."""
     template_id: str
     name: str
     description: str
@@ -697,7 +703,8 @@ class WorkflowFactory:
         return applied_components
     
     async def _substitute_parameters(self, data: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Substitute template parameters in data."""
+        """
+Substitute template parameters in data."""
         result = {}
         
         for key, value in data.items():
@@ -776,7 +783,8 @@ class WorkflowFactory:
         blueprint: WorkflowBlueprint,
         workflow_id: str
     ) -> Optional[WorkflowDefinition]:
-        """Generate workflow from blueprint."""
+        """
+Generate workflow from blueprint."""
         try:
             # Parse blueprint pattern
             pattern = blueprint.pattern
@@ -1043,7 +1051,8 @@ class WorkflowFactory:
         workflow_type: WorkflowType,
         requirements: Dict[str, Any]
     ) -> str:
-        """Get reason for component recommendation."""
+        """
+Get reason for component recommendation."""
         reasons = []
         
         if component.component_type == ComponentType.TASK:
@@ -1079,7 +1088,8 @@ class WorkflowFactory:
         return len(workflow.components) < original_count
     
     async def _optimize_parallel_execution(self, workflow: WorkflowDefinition) -> bool:
-        """Optimize parallel execution in workflow."""
+        """
+Optimize parallel execution in workflow."""
         if workflow.workflow_type != WorkflowType.PARALLEL:
             return False
         
@@ -1146,7 +1156,8 @@ class WorkflowFactory:
         workflow: WorkflowDefinition,
         validation_result: Dict[str, Any]
     ) -> WorkflowDefinition:
-        """Auto-fix common workflow issues."""
+        """
+Auto-fix common workflow issues."""
         # Fix missing component IDs
         for i, component in enumerate(workflow.components):
             if not component.component_id:
@@ -1225,7 +1236,8 @@ class WorkflowFactory:
         return True
     
     async def _has_circular_dependencies(self, components: List[WorkflowComponent]) -> bool:
-        """Check for circular dependencies."""
+        """
+Check for circular dependencies."""
         # Simple circular dependency check
         component_map = {comp.component_id: comp for comp in components}
         
@@ -1254,7 +1266,8 @@ class WorkflowFactory:
         return False
     
     async def _export_to_json(self, workflow: WorkflowDefinition) -> str:
-        """Export workflow to JSON format."""
+        """
+Export workflow to JSON format."""
         workflow_dict = {
             'workflow_id': workflow.workflow_id,
             'name': workflow.name,
@@ -1282,7 +1295,8 @@ class WorkflowFactory:
         return json.dumps(workflow_dict, indent=2, default=str)
     
     async def _export_to_yaml(self, workflow: WorkflowDefinition) -> str:
-        """Export workflow to YAML format."""
+        """
+Export workflow to YAML format."""
         workflow_dict = {
             'workflow_id': workflow.workflow_id,
             'name': workflow.name,
@@ -1310,7 +1324,8 @@ class WorkflowFactory:
         return yaml.dump(workflow_dict, default_flow_style=False)
     
     async def _export_to_bpmn(self, workflow: WorkflowDefinition) -> str:
-        """Export workflow to BPMN format."""
+        """
+Export workflow to BPMN format."""
         # Simplified BPMN export
         bpmn_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL">
@@ -1329,7 +1344,8 @@ class WorkflowFactory:
         return bpmn_xml
     
     async def _import_from_json(self, workflow_data: str) -> Optional[WorkflowDefinition]:
-        """Import workflow from JSON format."""
+        """
+Import workflow from JSON format."""
         try:
             data = json.loads(workflow_data)
             
@@ -1419,7 +1435,8 @@ class WorkflowFactory:
         return self.workflow_definitions.get(workflow_id)
     
     async def list_workflows(self) -> List[Dict[str, Any]]:
-        """List all workflows."""
+        """
+List all workflows."""
         return [
             {
                 'workflow_id': workflow.workflow_id,
@@ -1435,7 +1452,8 @@ class WorkflowFactory:
         ]
     
     async def list_templates(self) -> List[Dict[str, Any]]:
-        """List all workflow templates."""
+        """
+List all workflow templates."""
         return [
             {
                 'template_id': template.template_id,
@@ -1451,7 +1469,8 @@ class WorkflowFactory:
         ]
     
     async def get_factory_stats(self) -> Dict[str, Any]:
-        """Get workflow factory statistics."""
+        """
+Get workflow factory statistics."""
         return {
             **self.factory_stats,
             'total_workflows': len(self.workflow_definitions),

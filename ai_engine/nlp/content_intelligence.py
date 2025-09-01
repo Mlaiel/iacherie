@@ -4,11 +4,12 @@ Intelligent content analysis, understanding, and optimization for multi-format c
 Handles textual analysis for music, video, blog, photography, and influencer content.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for specialized processing."""
+    """
+Content type enumeration for specialized processing."""
+
     MUSIC_LYRICS = "music_lyrics"
     VIDEO_SCRIPT = "video_script"
     BLOG_POST = "blog_post"
@@ -42,6 +45,7 @@ class ContentType(Enum):
 
 class ContentCategory(Enum):
     """Content category classification."""
+
     ENTERTAINMENT = "entertainment"
     EDUCATIONAL = "educational"
     PROMOTIONAL = "promotional"
@@ -68,7 +72,8 @@ class ContentMetrics:
 
 @dataclass
 class ContentInsight:
-    """Deep content analysis insights."""
+    """
+Deep content analysis insights."""
     content_id: str
     content_type: ContentType
     category: ContentCategory
@@ -94,7 +99,8 @@ class ContentIntelligenceEngine:
     """
     
     def __init__(self):
-        """Initialize the content intelligence engine."""
+        """
+Initialize the content intelligence engine."""
         self.nlp = None
         self.sentiment_analyzer = None
         self.tokenizer = None
@@ -126,7 +132,8 @@ class ContentIntelligenceEngine:
         }
     
     def _load_models(self):
-        """Load NLP models and tools."""
+        """
+Load NLP models and tools."""
         try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_sm")
@@ -277,7 +284,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _calculate_engagement_potential(self, content: str, content_type: ContentType) -> float:
-        """Calculate potential for audience engagement."""
+        """
+Calculate potential for audience engagement."""
         try:
             engagement_indicators = [
                 r'\b(amazing|incredible|wow|awesome)\b',
@@ -308,7 +316,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _calculate_viral_probability(self, content: str, content_type: ContentType) -> float:
-        """Calculate probability of content going viral."""
+        """
+Calculate probability of content going viral."""
         try:
             viral_indicators = [
                 r'\b(trending|viral|breaking|exclusive)\b',
@@ -338,7 +347,8 @@ class ContentIntelligenceEngine:
             return 0.3
     
     def _calculate_monetization_score(self, content: str, content_type: ContentType) -> float:
-        """Calculate monetization potential."""
+        """
+Calculate monetization potential."""
         try:
             monetization_indicators = [
                 r'\b(buy|purchase|sale|discount|offer)\b',
@@ -369,7 +379,8 @@ class ContentIntelligenceEngine:
             return 0.4
     
     def _calculate_seo_strength(self, content: str) -> float:
-        """Calculate SEO optimization strength."""
+        """
+Calculate SEO optimization strength."""
         try:
             seo_factors = {
                 'title_keywords': len(re.findall(r'\b[A-Z][a-z]+\b', content[:100])) * 0.1,
@@ -385,7 +396,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _calculate_authenticity_score(self, content: str) -> float:
-        """Calculate content authenticity and originality."""
+        """
+Calculate content authenticity and originality."""
         try:
             authenticity_indicators = [
                 r'\b(I|my|me|personal|experience)\b',
@@ -412,7 +424,8 @@ class ContentIntelligenceEngine:
             return 0.6
     
     def _calculate_creativity_index(self, content: str, content_type: ContentType) -> float:
-        """Calculate creativity and uniqueness index."""
+        """
+Calculate creativity and uniqueness index."""
         try:
             creativity_indicators = [
                 r'\b(creative|unique|original|innovative)\b',
@@ -442,7 +455,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _assess_technical_quality(self, content: str) -> float:
-        """Assess technical quality of content."""
+        """
+Assess technical quality of content."""
         try:
             # Grammar and spelling approximation
             sentences = re.split(r'[.!?]+', content)
@@ -465,7 +479,8 @@ class ContentIntelligenceEngine:
             return 0.7
     
     def _assess_market_relevance(self, content: str, content_type: ContentType) -> float:
-        """Assess market relevance and timeliness."""
+        """
+Assess market relevance and timeliness."""
         try:
             trending_terms = [
                 r'\b(2025|latest|new|current|today)\b',
@@ -488,7 +503,8 @@ class ContentIntelligenceEngine:
             return 0.6
     
     async def _extract_keywords(self, content: str, content_type: ContentType) -> List[str]:
-        """Extract relevant keywords from content."""
+        """
+Extract relevant keywords from content."""
         try:
             # Process with spaCy
             doc = self.nlp(content)
@@ -530,7 +546,8 @@ class ContentIntelligenceEngine:
             return []
     
     async def _extract_entities(self, content: str) -> List[Dict[str, Any]]:
-        """Extract named entities from content."""
+        """
+Extract named entities from content."""
         try:
             doc = self.nlp(content)
             entities = []
@@ -813,10 +830,12 @@ class ContentIntelligenceEngine:
 
 
 class ContentBatchProcessor:
-    """Batch processor for multiple content pieces."""
+    """
+Batch processor for multiple content pieces."""
     
     def __init__(self, engine: ContentIntelligenceEngine):
-        """Initialize batch processor."""
+        """
+Initialize batch processor."""
         self.engine = engine
         self.batch_size = 10
     
@@ -824,7 +843,8 @@ class ContentBatchProcessor:
         self, 
         content_batch: List[Dict[str, Any]]
     ) -> List[ContentInsight]:
-        """Process multiple content pieces in batches."""
+        """
+Process multiple content pieces in batches."""
         try:
             results = []
             

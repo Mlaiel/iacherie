@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set, Union
@@ -24,7 +25,9 @@ from datetime import datetime, timedelta
 
 
 class SubscriptionStatus(str, Enum):
-    """Comprehensive subscription status states."""
+    """
+Comprehensive subscription status states."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
@@ -44,6 +47,7 @@ class SubscriptionStatus(str, Enum):
 
 class SubscriptionType(str, Enum):
     """Types of subscriptions available."""
+
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -58,6 +62,7 @@ class SubscriptionType(str, Enum):
 
 class BillingInterval(str, Enum):
     """Billing frequency options."""
+
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -70,6 +75,7 @@ class BillingInterval(str, Enum):
 
 class PaymentStatus(str, Enum):
     """Payment attempt status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     SUCCEEDED = "succeeded"
@@ -85,6 +91,7 @@ class PaymentStatus(str, Enum):
 
 class RenewalAction(str, Enum):
     """Actions to take on subscription renewal."""
+
     AUTO_RENEW = "auto_renew"
     REQUIRE_CONFIRMATION = "require_confirmation"
     PAUSE = "pause"
@@ -96,6 +103,7 @@ class RenewalAction(str, Enum):
 
 class ChurnReason(str, Enum):
     """Reasons for subscription cancellation."""
+
     PRICE_TOO_HIGH = "price_too_high"
     LACK_OF_FEATURES = "lack_of_features"
     POOR_PERFORMANCE = "poor_performance"
@@ -150,7 +158,8 @@ class RetryPolicy:
 
 @dataclass
 class TrialConfiguration:
-    """Free trial configuration options."""
+    """
+Free trial configuration options."""
     enabled: bool = True
     duration_days: int = 14
     
@@ -173,7 +182,8 @@ class TrialConfiguration:
 
 @dataclass
 class CancellationPolicy:
-    """Subscription cancellation and retention policies."""
+    """
+Subscription cancellation and retention policies."""
     # Immediate vs. end of period cancellation
     immediate_cancellation: bool = False
     cancel_at_period_end: bool = True
@@ -332,7 +342,8 @@ class NotificationConfig:
 
 @dataclass
 class SubscriptionConfig:
-    """Professional subscription management configuration."""
+    """
+Professional subscription management configuration."""
     
     # Global Subscription Settings
     ENABLE_SUBSCRIPTIONS: bool = True
@@ -528,17 +539,20 @@ class SubscriptionConfig:
     
     def is_status_transition_allowed(self, from_status: SubscriptionStatus, 
                                    to_status: SubscriptionStatus) -> bool:
-        """Check if status transition is allowed."""
+        """
+Check if status transition is allowed."""
         allowed_transitions = self.ALLOWED_STATUS_TRANSITIONS.get(from_status, [])
         return to_status in allowed_transitions
     
     def get_tier_settings(self, tier: str) -> Dict[str, Any]:
-        """Get tier-specific subscription settings."""
+        """
+Get tier-specific subscription settings."""
         return self.TIER_SPECIFIC_SETTINGS.get(tier.lower(), {})
     
     def calculate_proration(self, old_price: Decimal, new_price: Decimal, 
                            days_remaining: int, days_in_period: int) -> Decimal:
-        """Calculate prorated amount for plan changes."""
+        """
+Calculate prorated amount for plan changes."""
         if not self.BUSINESS_RULES.get("prorate_plan_changes", True):
             return Decimal("0.00")
         
@@ -600,6 +614,7 @@ from datetime import datetime, timedelta
 
 class SubscriptionStatus(str, Enum):
     """Subscription status types."""
+
     ACTIVE = "active"
     TRIAL = "trial"
     PAST_DUE = "past_due"
@@ -613,6 +628,7 @@ class SubscriptionStatus(str, Enum):
 
 class BillingCycle(str, Enum):
     """Billing cycle options."""
+
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     SEMI_ANNUALLY = "semi_annually"
@@ -622,6 +638,7 @@ class BillingCycle(str, Enum):
 
 class SubscriptionEvent(str, Enum):
     """Subscription event types."""
+
     CREATED = "created"
     ACTIVATED = "activated"
     RENEWED = "renewed"
@@ -639,6 +656,7 @@ class SubscriptionEvent(str, Enum):
 
 class RenewalPolicy(str, Enum):
     """Subscription renewal policies."""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     GRACE_PERIOD = "grace_period"
@@ -659,7 +677,8 @@ class TrialConfig:
 
 @dataclass
 class GracePeriodConfig:
-    """Grace period configuration for failed payments."""
+    """
+Grace period configuration for failed payments."""
     enabled: bool = True
     duration_days: int = 5
     retry_attempts: int = 3
@@ -670,7 +689,8 @@ class GracePeriodConfig:
 
 @dataclass
 class ProrationConfig:
-    """Proration configuration for subscription changes."""
+    """
+Proration configuration for subscription changes."""
     enabled: bool = True
     prorate_upgrades: bool = True
     prorate_downgrades: bool = False
@@ -692,7 +712,8 @@ class CancellationConfig:
 
 @dataclass
 class SubscriptionTierConfig:
-    """Configuration for subscription tiers."""
+    """
+Configuration for subscription tiers."""
     tier_id: str
     name: str
     description: str
@@ -1043,7 +1064,8 @@ class SubscriptionConfig:
         return self.SUBSCRIPTION_TIERS.get(tier_id)
     
     def get_available_tiers(self) -> List[str]:
-        """Get list of available subscription tiers."""
+        """
+Get list of available subscription tiers."""
         return list(self.SUBSCRIPTION_TIERS.keys())
     
     def calculate_proration(
@@ -1053,7 +1075,8 @@ class SubscriptionConfig:
         days_remaining: int,
         days_in_cycle: int
     ) -> Decimal:
-        """Calculate proration amount for subscription changes."""
+        """
+Calculate proration amount for subscription changes."""
         if not self.PRORATION_CONFIG.enabled:
             return Decimal("0.00")
         
@@ -1088,7 +1111,8 @@ class SubscriptionConfig:
             return current_date + timedelta(days=30)  # Default to monthly
     
     def calculate_annual_savings(self, tier_id: str) -> Decimal:
-        """Calculate savings percentage for annual billing."""
+        """
+Calculate savings percentage for annual billing."""
         tier_config = self.get_tier_config(tier_id)
         if not tier_config:
             return Decimal("0.00")

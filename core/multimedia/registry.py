@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type, Callable, Set
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComponentType(Enum):
-    """Multimedia component types"""
+    """
+Multimedia component types"""
+
     PROCESSOR = "processor"
     CONVERTER = "converter"
     ANALYZER = "analyzer"
@@ -44,6 +47,7 @@ class ComponentType(Enum):
 
 class ComponentStatus(Enum):
     """Component status"""
+
     REGISTERED = "registered"
     INITIALIZED = "initialized"
     ACTIVE = "active"
@@ -75,7 +79,8 @@ class ComponentMetadata:
 
 @dataclass
 class ComponentRegistration:
-    """Component registration details"""
+    """
+Component registration details"""
     metadata: ComponentMetadata
     component_class: Type
     instance: Optional[Any] = None
@@ -88,35 +93,42 @@ class ComponentRegistration:
 
 
 class MultimediaComponent(ABC):
-    """Base class for multimedia components"""
+    """
+Base class for multimedia components"""
     
     @abstractmethod
     async def initialize(self, config: Dict[str, Any] = None):
-        """Initialize component"""
+        """
+Initialize component"""
         pass
         
     @abstractmethod
     async def process(self, data: Any, options: Dict[str, Any] = None) -> Any:
-        """Process multimedia data"""
+        """
+Process multimedia data"""
         pass
         
     @abstractmethod
     async def health_check(self) -> Dict[str, Any]:
-        """Component health check"""
+        """
+Component health check"""
         pass
         
     @abstractmethod
     def get_metadata(self) -> ComponentMetadata:
-        """Get component metadata"""
+        """
+Get component metadata"""
         pass
         
     async def cleanup(self):
-        """Cleanup component resources"""
+        """
+Cleanup component resources"""
         pass
 
 
 class MultimediaRegistry:
-    """Enterprise multimedia component registry"""
+    """
+Enterprise multimedia component registry"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -223,15 +235,18 @@ class MultimediaRegistry:
         return self.component_types.get(component_type, [])
         
     def find_components_by_format(self, format_name: str) -> List[str]:
-        """Find components that support specific format"""
+        """
+Find components that support specific format"""
         return self.format_mappings.get(format_name.lower(), [])
         
     def find_components_by_capability(self, capability: str) -> List[str]:
-        """Find components by capability"""
+        """
+Find components by capability"""
         return self.capability_index.get(capability, [])
         
     async def search_components(self, criteria: Dict[str, Any]) -> List[ComponentRegistration]:
-        """Search components by multiple criteria"""
+        """
+Search components by multiple criteria"""
         results = []
         
         for component_id, registration in self.components.items():
@@ -256,7 +271,8 @@ class MultimediaRegistry:
         return registration.metadata if registration else None
         
     def list_components(self, component_type: Optional[ComponentType] = None) -> List[ComponentMetadata]:
-        """List all registered components"""
+        """
+List all registered components"""
         if component_type:
             component_ids = self.component_types.get(component_type, [])
             return [
@@ -268,7 +284,8 @@ class MultimediaRegistry:
             return [reg.metadata for reg in self.components.values()]
             
     async def unregister_component(self, component_id: str) -> bool:
-        """Unregister component"""
+        """
+Unregister component"""
         try:
             registration = self.components.get(component_id)
             if not registration:
@@ -326,7 +343,8 @@ class MultimediaRegistry:
         return False
         
     async def disable_component(self, component_id: str) -> bool:
-        """Disable component"""
+        """
+Disable component"""
         registration = self.components.get(component_id)
         if registration:
             registration.metadata.enabled = False
@@ -338,7 +356,8 @@ class MultimediaRegistry:
         return False
         
     def get_registry_stats(self) -> Dict[str, Any]:
-        """Get registry statistics"""
+        """
+Get registry statistics"""
         active_count = len([
             r for r in self.components.values()
             if r.metadata.status == ComponentStatus.ACTIVE
@@ -413,7 +432,8 @@ class MultimediaRegistry:
             self.component_types[comp_type] = []
             
     async def _discover_components(self):
-        """Discover components from configured paths"""
+        """
+Discover components from configured paths"""
         for path in self.discovery_paths:
             try:
                 await self._discover_components_in_path(path)
@@ -520,7 +540,8 @@ class MultimediaRegistry:
             self.capability_index[capability].append(metadata.component_id)
             
     def _remove_from_indexes(self, metadata: ComponentMetadata):
-        """Remove component from indexes"""
+        """
+Remove component from indexes"""
         # Type index
         if metadata.component_type in self.component_types:
             if metadata.component_id in self.component_types[metadata.component_type]:
@@ -540,7 +561,8 @@ class MultimediaRegistry:
                     self.capability_index[capability].remove(metadata.component_id)
                     
     def _matches_criteria(self, registration: ComponentRegistration, criteria: Dict[str, Any]) -> bool:
-        """Check if component matches search criteria"""
+        """
+Check if component matches search criteria"""
         metadata = registration.metadata
         
         # Component type filter

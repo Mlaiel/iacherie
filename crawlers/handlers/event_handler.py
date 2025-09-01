@@ -30,6 +30,7 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
+
 import asyncio
 import logging
 import json
@@ -62,7 +63,8 @@ logger = get_logger(__name__)
 
 
 class EventType(Enum):
-    """Enumeration of supported event types."""
+    """
+Enumeration of supported event types."""
     
     # Content Events
     CONTENT_UPLOADED = "content.uploaded"
@@ -103,6 +105,7 @@ class EventType(Enum):
 
 class EventPriority(Enum):
     """Event priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -112,7 +115,8 @@ class EventPriority(Enum):
 
 @dataclass
 class Event:
-    """Event data structure with comprehensive metadata."""
+    """
+Event data structure with comprehensive metadata."""
     
     event_id: str
     event_type: EventType
@@ -137,7 +141,8 @@ class Event:
             self.correlation_id = str(uuid.uuid4())
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert event to dictionary."""
+        """
+Convert event to dictionary."""
         return {
             'event_id': self.event_id,
             'event_type': self.event_type.value,
@@ -156,7 +161,8 @@ class Event:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Event':
-        """Create event from dictionary."""
+        """
+Create event from dictionary."""
         return cls(
             event_id=data['event_id'],
             event_type=EventType(data['event_type']),
@@ -175,7 +181,8 @@ class Event:
 
 
 class EventHandler:
-    """Base class for event handlers."""
+    """
+Base class for event handlers."""
     
     def __init__(self, name: str, handler_id: Optional[str] = None):
         self.name = name
@@ -254,7 +261,8 @@ class EventHandler:
         return self.is_active
     
     def update_stats(self, success: bool):
-        """Update handler execution statistics."""
+        """
+Update handler execution statistics."""
         self.execution_count += 1
         self.last_execution = datetime.utcnow()
         if not success:
@@ -262,7 +270,8 @@ class EventHandler:
 
 
 class AsyncEventHandler(EventHandler):
-    """Async event handler with coroutine support."""
+    """
+Async event handler with coroutine support."""
     
     def __init__(
         self, 
@@ -276,7 +285,8 @@ class AsyncEventHandler(EventHandler):
         self.event_types = event_types or []
     
     async def handle(self, event: Event) -> bool:
-        """Execute the async handler function."""
+        """
+Execute the async handler function."""
         try:
             result = await self.handler_func(event)
             self.update_stats(True)
@@ -298,7 +308,8 @@ class AsyncEventHandler(EventHandler):
 
 
 class SyncEventHandler(EventHandler):
-    """Synchronous event handler with thread pool execution."""
+    """
+Synchronous event handler with thread pool execution."""
     
     def __init__(
         self, 
@@ -313,7 +324,8 @@ class SyncEventHandler(EventHandler):
         self.executor = ThreadPoolExecutor(max_workers=2)
     
     async def handle(self, event: Event) -> bool:
-        """Execute the sync handler function in thread pool."""
+        """
+Execute the sync handler function in thread pool."""
         try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
@@ -338,7 +350,8 @@ class SyncEventHandler(EventHandler):
 
 
 class EventQueue:
-    """Professional event queue with Redis backend and priority handling."""
+    """
+Professional event queue with Redis backend and priority handling."""
     
     def __init__(self, redis_client: aioredis.Redis):
         self.redis = redis_client
@@ -604,7 +617,8 @@ class EventRegistry:
 
 
 class EventDispatcher:
-    """Main event dispatcher orchestrating event processing."""
+    """
+Main event dispatcher orchestrating event processing."""
     
     def __init__(
         self, 
@@ -814,7 +828,8 @@ async def create_content_event(
     data: Dict[str, Any],
     priority: EventPriority = EventPriority.NORMAL
 ) -> Event:
-    """Create a content-related event."""
+    """
+Create a content-related event."""
     return Event(
         event_id=str(uuid.uuid4()),
         event_type=event_type,

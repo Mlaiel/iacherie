@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -52,7 +53,9 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 class ContentCategory(Enum):
-    """Content categories for classification."""
+    """
+Content categories for classification."""
+
     MUSIC = "music"
     PHOTOGRAPHY = "photography"
     VIDEO_CONTENT = "video_content"
@@ -77,6 +80,7 @@ class ContentCategory(Enum):
 
 class ClassificationConfidence(Enum):
     """Classification confidence levels."""
+
     VERY_HIGH = "very_high"  # > 0.9
     HIGH = "high"           # 0.7 - 0.9
     MEDIUM = "medium"       # 0.5 - 0.7
@@ -85,6 +89,7 @@ class ClassificationConfidence(Enum):
 
 class ClassificationMethod(Enum):
     """Classification methods."""
+
     DEEP_LEARNING = "deep_learning"
     TRADITIONAL_ML = "traditional_ml"
     RULE_BASED = "rule_based"
@@ -407,7 +412,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform deep learning-based classification."""
+        """
+Perform deep learning-based classification."""
         category_scores = {}
         features_used = []
         
@@ -456,7 +462,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform traditional ML-based classification."""
+        """
+Perform traditional ML-based classification."""
         # Use keyword-based classification for now
         # In production, this would use trained traditional ML models
         return await self._rule_based_classification(content_id, content_data)
@@ -466,7 +473,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform rule-based classification using keywords and patterns."""
+        """
+Perform rule-based classification using keywords and patterns."""
         category_scores = {category: 0.0 for category in ContentCategory}
         features_used = ['keywords', 'metadata']
         
@@ -547,7 +555,8 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform ensemble classification combining multiple methods."""
+        """
+Perform ensemble classification combining multiple methods."""
         results = []
         
         # Get predictions from different methods
@@ -611,13 +620,15 @@ class ContentClassifier:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ClassificationResult:
-        """Perform multimodal classification combining text, image, audio, video."""
+        """
+Perform multimodal classification combining text, image, audio, video."""
         # For now, use ensemble method
         # In production, this would use specialized multimodal models
         return await self._ensemble_classification(content_id, content_data)
     
     async def _classify_text_with_bert(self, content_data: Dict[str, Any]) -> Dict[ContentCategory, float]:
-        """Classify text content using BERT model."""
+        """
+Classify text content using BERT model."""
         try:
             text = content_data.get('text', '')
             if not text and 'text_features' in content_data:
@@ -774,7 +785,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _classify_by_platform(self, platform: str) -> ContentCategory:
-        """Classify content based on platform."""
+        """
+Classify content based on platform."""
         platform_lower = platform.lower()
         
         if platform_lower in ['youtube']:
@@ -791,7 +803,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _classify_by_extension(self, extension: str) -> ContentCategory:
-        """Classify content based on file extension."""
+        """
+Classify content based on file extension."""
         ext_lower = extension.lower()
         
         if ext_lower in ['.mp3', '.wav', '.flac', '.ogg', '.m4a', '.aac']:
@@ -806,7 +819,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _classify_by_mime_type(self, mime_type: str) -> ContentCategory:
-        """Classify content based on MIME type."""
+        """
+Classify content based on MIME type."""
         if mime_type.startswith('audio/'):
             return ContentCategory.MUSIC
         elif mime_type.startswith('image/'):
@@ -819,7 +833,8 @@ class ContentClassifier:
         return ContentCategory.UNKNOWN
     
     def _determine_confidence_level(self, confidence: float) -> ClassificationConfidence:
-        """Determine confidence level based on score."""
+        """
+Determine confidence level based on score."""
         if confidence >= 0.9:
             return ClassificationConfidence.VERY_HIGH
         elif confidence >= 0.7:
@@ -836,7 +851,8 @@ class ContentClassifier:
         result: ClassificationResult,
         content_data: Dict[str, Any]
     ) -> None:
-        """Assess content safety and flag inappropriate content."""
+        """
+Assess content safety and flag inappropriate content."""
         try:
             text_content = content_data.get('text', '')
             

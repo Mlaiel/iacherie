@@ -4,6 +4,7 @@ Professional content distribution and platform synchronization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime, timedelta, timezone
 from enum import Enum
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for distribution"""
+    """
+Supported platform types for distribution"""
+
     MUSIC_STREAMING = "music_streaming"      # Spotify, Apple Music, etc.
     VIDEO_PLATFORMS = "video_platforms"      # YouTube, TikTok, etc.
     SOCIAL_MEDIA = "social_media"           # Instagram, Twitter, etc.
@@ -31,6 +34,7 @@ class PlatformType(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status tracking"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     DISTRIBUTED = "distributed"
@@ -42,6 +46,7 @@ class DistributionStatus(Enum):
 
 class ContentFormat(Enum):
     """Content formats for distribution"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -70,7 +75,8 @@ class PlatformConfig:
 
 @dataclass
 class DistributionTarget:
-    """Individual distribution target configuration"""
+    """
+Individual distribution target configuration"""
     platform_config: PlatformConfig
     custom_settings: Dict[str, Any] = field(default_factory=dict)
     content_modifications: Dict[str, Any] = field(default_factory=dict)
@@ -81,7 +87,8 @@ class DistributionTarget:
 
 
 class DistributionRequest(BaseModel):
-    """Distribution request model"""
+    """
+Distribution request model"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     collaboration_id: Optional[str] = None
     content_id: str
@@ -154,7 +161,8 @@ class MultiPlatformDistributor:
         asyncio.create_task(self._initialize_distributor())
     
     async def _initialize_distributor(self):
-        """Initialize the multi-platform distributor"""
+        """
+Initialize the multi-platform distributor"""
         try:
             await self._load_platform_configurations()
             await self._initialize_content_processors()
@@ -480,7 +488,8 @@ class MultiPlatformDistributor:
         }
     
     async def _setup_scheduling_engine(self):
-        """Setup distribution scheduling engine"""
+        """
+Setup distribution scheduling engine"""
         self.scheduling_engine = {
             'queue': [],
             'optimal_timing_model': None,
@@ -489,7 +498,8 @@ class MultiPlatformDistributor:
         }
     
     async def _initialize_analytics_tracking(self):
-        """Initialize analytics tracking system"""
+        """
+Initialize analytics tracking system"""
         self.analytics_tracker = {
             'enabled': True,
             'real_time_tracking': True,
@@ -498,14 +508,16 @@ class MultiPlatformDistributor:
         }
     
     async def _setup_monitoring_systems(self):
-        """Setup monitoring and alerting systems"""
+        """
+Setup monitoring and alerting systems"""
         pass  # Implementation would setup monitoring
     
     async def _validate_distribution_request(
         self, 
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Validate distribution request"""
+        """
+Validate distribution request"""
         try:
             # Check if platforms are supported
             for target in request.distribution_targets:
@@ -551,7 +563,8 @@ class MultiPlatformDistributor:
         request: DistributionRequest,
         prepared_content: Dict[str, Any]
     ) -> List[DistributionResult]:
-        """Execute simultaneous distribution to all platforms"""
+        """
+Execute simultaneous distribution to all platforms"""
         tasks = []
         
         for target in request.distribution_targets:
@@ -589,7 +602,8 @@ class MultiPlatformDistributor:
         request: DistributionRequest,
         prepared_content: Dict[str, Any]
     ) -> List[DistributionResult]:
-        """Execute sequential distribution to platforms"""
+        """
+Execute sequential distribution to platforms"""
         results = []
         
         # Sort targets by priority
@@ -633,7 +647,8 @@ class MultiPlatformDistributor:
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> DistributionResult:
-        """Distribute content to specific platform"""
+        """
+Distribute content to specific platform"""
         try:
             platform_id = target.platform_config.platform_id
             
@@ -702,7 +717,8 @@ class MultiPlatformDistributor:
         }
     
     def _determine_overall_status(self, results: List[DistributionResult]) -> DistributionStatus:
-        """Determine overall distribution status"""
+        """
+Determine overall distribution status"""
         if not results:
             return DistributionStatus.FAILED
         
@@ -722,7 +738,8 @@ class MultiPlatformDistributor:
         request: DistributionRequest, 
         target: DistributionTarget
     ) -> Dict[str, Any]:
-        """Process audio content for platform"""
+        """
+Process audio content for platform"""
         return {
             'content_type': 'audio',
             'format': 'mp3',
@@ -737,7 +754,8 @@ class MultiPlatformDistributor:
         request: DistributionRequest, 
         target: DistributionTarget
     ) -> Dict[str, Any]:
-        """Process video content for platform"""
+        """
+Process video content for platform"""
         return {
             'content_type': 'video',
             'format': 'mp4',
@@ -752,7 +770,8 @@ class MultiPlatformDistributor:
         request: DistributionRequest, 
         target: DistributionTarget
     ) -> Dict[str, Any]:
-        """Process image content for platform"""
+        """
+Process image content for platform"""
         return {
             'content_type': 'image',
             'format': 'jpg',
@@ -766,7 +785,8 @@ class MultiPlatformDistributor:
         request: DistributionRequest, 
         target: DistributionTarget
     ) -> Dict[str, Any]:
-        """Process text content for platform"""
+        """
+Process text content for platform"""
         return {
             'content_type': 'text',
             'format': 'html',
@@ -776,7 +796,8 @@ class MultiPlatformDistributor:
     
     # Additional helper methods (simplified implementations)
     async def _calculate_optimal_timing(self, request: DistributionRequest) -> Dict[str, Any]:
-        """Calculate optimal timing for distribution"""
+        """
+Calculate optimal timing for distribution"""
         return {
             'best_time': datetime.utcnow() + timedelta(hours=2),
             'confidence': 0.85,
@@ -784,7 +805,8 @@ class MultiPlatformDistributor:
         }
     
     async def _add_to_schedule_queue(self, request: DistributionRequest) -> Dict[str, Any]:
-        """Add distribution to schedule queue"""
+        """
+Add distribution to schedule queue"""
         self.scheduling_engine['queue'].append(request)
         return {
             'queue_position': len(self.scheduling_engine['queue']),
@@ -796,7 +818,8 @@ class MultiPlatformDistributor:
         request: DistributionRequest, 
         results: List[DistributionResult]
     ):
-        """Setup tracking for distributed content"""
+        """
+Setup tracking for distributed content"""
         # Implementation would setup analytics tracking
         pass
     
@@ -806,7 +829,8 @@ class MultiPlatformDistributor:
         content_item: Dict[str, Any], 
         strategy: Dict[str, Any]
     ) -> DistributionRequest:
-        """Create distribution request for collaborative content"""
+        """
+Create distribution request for collaborative content"""
         # Implementation would create proper collaborative request
         return DistributionRequest(
             collaboration_id=collaboration_id,
@@ -823,7 +847,8 @@ class MultiPlatformDistributor:
         result: Dict[str, Any], 
         strategy: Dict[str, Any]
     ):
-        """Execute cross-promotion for collaborative content"""
+        """
+Execute cross-promotion for collaborative content"""
         # Implementation would handle cross-promotion logic
         pass
     
@@ -832,7 +857,8 @@ class MultiPlatformDistributor:
         collaboration_id: str, 
         results: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Aggregate results from collaborative distribution"""
+        """
+Aggregate results from collaborative distribution"""
         total_successful = sum(1 for r in results if r['success'])
         return {
             'collaboration_id': collaboration_id,
@@ -847,7 +873,8 @@ class MultiPlatformDistributor:
         self, 
         distribution: DistributionRequest
     ) -> Dict[str, Any]:
-        """Analyze distribution performance"""
+        """
+Analyze distribution performance"""
         return {
             'overall_performance': 'good',
             'best_performing_platform': 'youtube',
@@ -860,7 +887,8 @@ class MultiPlatformDistributor:
         performance: Dict[str, Any], 
         goals: List[str]
     ) -> List[str]:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         return [
             "Post during peak audience hours (7-9 PM)",
             "Use trending hashtags for better discoverability",
@@ -894,7 +922,8 @@ class MultiPlatformDistributor:
         self, 
         analytics_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comparative analysis of platform performance"""
+        """
+Generate comparative analysis of platform performance"""
         return {
             'best_performing_platform': 'youtube',
             'platform_rankings': ['youtube', 'instagram', 'spotify'],
@@ -905,7 +934,8 @@ class MultiPlatformDistributor:
         self, 
         analytics_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate performance scores"""
+        """
+Calculate performance scores"""
         return {
             'overall_score': 0.82,
             'reach_score': 0.85,
@@ -920,7 +950,8 @@ class MultiPlatformDistributor:
         comparative_analysis: Dict[str, Any], 
         performance_scores: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable analytics insights"""
+        """
+Generate actionable analytics insights"""
         return [
             "YouTube shows highest engagement rates - focus more content here",
             "Instagram stories perform better than posts - adjust strategy",

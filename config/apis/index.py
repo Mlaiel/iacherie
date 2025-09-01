@@ -16,6 +16,7 @@ serving as the main entry point for API management and integration services.
 Business Logic: User (musician/blogger/photographer/influencer/comedian) → Multi-format upload → 
 AI rights protection → Pro SEO → Collaboration matching → Multi-platform distribution
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Type
@@ -206,7 +207,8 @@ class APIRegistry:
         return self._api_status.copy()
     
     def get_registered_apis(self) -> List[str]:
-        """Get list of all registered API names"""
+        """
+Get list of all registered API names"""
         return list(self._api_configs.keys())
     
     async def health_check(self, api_name: Optional[str] = None) -> Dict[str, Dict[str, Any]]:
@@ -329,12 +331,14 @@ async def get_platform_client(platform: str, user_id: Optional[str] = None) -> A
     return await registry.get_authenticated_client(platform, user_id)
 
 async def get_payment_client(provider: str, user_id: Optional[str] = None) -> Any:
-    """Get authenticated client for payment provider"""
+    """
+Get authenticated client for payment provider"""
     registry = get_api_registry()
     return await registry.get_authenticated_client(provider, user_id)
 
 async def get_protection_client(service: str, user_id: Optional[str] = None) -> Any:
-    """Get authenticated client for content protection service"""
+    """
+Get authenticated client for content protection service"""
     registry = get_api_registry()
     return await registry.get_authenticated_client(service, user_id)
 
@@ -345,7 +349,8 @@ async def execute_platform_request(
     data: Optional[Dict[str, Any]] = None,
     user_id: Optional[str] = None
 ) -> Dict[str, Any]:
-    """Execute request to social media/streaming platform"""
+    """
+Execute request to social media/streaming platform"""
     registry = get_api_registry()
     return await registry.execute_api_request(platform, method, endpoint, data, user_id)
 

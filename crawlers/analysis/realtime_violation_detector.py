@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import hashlib
@@ -51,7 +52,9 @@ import xxhash
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Violation type enumeration."""
+    """
+Violation type enumeration."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -63,6 +66,7 @@ class ViolationType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -70,7 +74,9 @@ class AlertSeverity(Enum):
     EMERGENCY = 5
 
 class DetectionStatus(Enum):
-    """Detection status enumeration."""
+    """
+Detection status enumeration."""
+
     MONITORING = "monitoring"
     DETECTED = "detected"
     INVESTIGATING = "investigating"
@@ -80,6 +86,7 @@ class DetectionStatus(Enum):
 
 class MonitoringChannel(Enum):
     """Monitoring channel types."""
+
     WEB_CRAWLER = "web_crawler"
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
@@ -108,7 +115,8 @@ class ViolationAlert:
     false_positive_probability: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert alert to dictionary."""
+        """
+Convert alert to dictionary."""
         return {
             'alert_id': self.alert_id,
             'violation_type': self.violation_type.value,
@@ -129,7 +137,8 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringTarget:
-    """Content monitoring target."""
+    """
+Content monitoring target."""
     target_id: str
     content_id: str
     content_type: str
@@ -144,7 +153,8 @@ class MonitoringTarget:
 
 @dataclass
 class DetectionRule:
-    """Violation detection rule."""
+    """
+Violation detection rule."""
     rule_id: str
     name: str
     violation_type: ViolationType
@@ -172,7 +182,8 @@ class RealTimeViolationDetector:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the real-time violation detector."""
+        """
+Initialize the real-time violation detector."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -394,7 +405,8 @@ class RealTimeViolationDetector:
         return time_since_scan >= target.scan_frequency
     
     async def _scan_target(self, target: MonitoringTarget) -> None:
-        """Scan a specific monitoring target."""
+        """
+Scan a specific monitoring target."""
         try:
             target.last_scan = datetime.now()
             
@@ -412,22 +424,26 @@ class RealTimeViolationDetector:
         await self._perform_web_search(target)
     
     async def _init_social_media_monitor(self, target: MonitoringTarget) -> None:
-        """Initialize social media monitoring."""
+        """
+Initialize social media monitoring."""
         # Implementation for social media monitoring
         await self._perform_social_media_search(target)
     
     async def _init_video_platform_monitor(self, target: MonitoringTarget) -> None:
-        """Initialize video platform monitoring."""
+        """
+Initialize video platform monitoring."""
         # Implementation for video platform monitoring
         await self._perform_video_platform_search(target)
     
     async def _init_webhook_monitor(self, target: MonitoringTarget) -> None:
-        """Initialize webhook monitoring."""
+        """
+Initialize webhook monitoring."""
         # Webhook monitoring is passive - handled by receive_webhook
         pass
     
     async def _perform_web_search(self, target: MonitoringTarget) -> None:
-        """Perform web search for potential violations."""
+        """
+Perform web search for potential violations."""
         try:
             # Search using keywords
             for keyword in target.keywords:
@@ -558,7 +574,8 @@ class RealTimeViolationDetector:
         return time_since_alert < self.alert_cooldown
     
     async def _extract_content_from_result(self, result: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Extract content from search result."""
+        """
+Extract content from search result."""
         content_data = {}
         
         try:
@@ -610,7 +627,8 @@ class RealTimeViolationDetector:
         target: MonitoringTarget,
         content_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate similarity scores between target and found content."""
+        """
+Calculate similarity scores between target and found content."""
         similarity_scores = {}
         
         try:
@@ -734,7 +752,8 @@ class RealTimeViolationDetector:
         result: Dict[str, Any],
         similarity_scores: Dict[str, float]
     ) -> List[DetectionRule]:
-        """Check similarity scores against detection rules."""
+        """
+Check similarity scores against detection rules."""
         violations = []
         
         for rule in self.detection_rules.values():
@@ -753,7 +772,8 @@ class RealTimeViolationDetector:
         result: Dict[str, Any],
         similarity_scores: Dict[str, float]
     ) -> bool:
-        """Check if a detection rule matches."""
+        """
+Check if a detection rule matches."""
         try:
             conditions = rule.conditions
             
@@ -907,7 +927,8 @@ class RealTimeViolationDetector:
         result: Dict[str, Any],
         similarity_scores: Dict[str, float]
     ) -> float:
-        """Calculate probability of false positive."""
+        """
+Calculate probability of false positive."""
         # This would use ML models trained on historical data
         # For now, use heuristic approach
         
@@ -931,7 +952,8 @@ class RealTimeViolationDetector:
         return sum(factors) / len(factors) if factors else 0.5
     
     async def _trigger_alert_handlers(self, alert: ViolationAlert) -> None:
-        """Trigger all registered alert handlers."""
+        """
+Trigger all registered alert handlers."""
         try:
             # Call registered handlers
             for handler in self.alert_handlers:
@@ -974,11 +996,13 @@ class RealTimeViolationDetector:
         self.alert_handlers.append(handler)
     
     def add_webhook_url(self, url: str) -> None:
-        """Add webhook URL for notifications."""
+        """
+Add webhook URL for notifications."""
         self.webhook_urls.append(url)
     
     async def receive_webhook(self, webhook_data: Dict[str, Any]) -> None:
-        """Receive webhook data for processing."""
+        """
+Receive webhook data for processing."""
         try:
             # Process webhook data for potential violations
             # This would be called by webhook endpoints
@@ -1028,7 +1052,8 @@ class RealTimeViolationDetector:
         return sorted(alerts, key=lambda x: x.detection_timestamp, reverse=True)
     
     async def update_alert_status(self, alert_id: str, new_status: DetectionStatus) -> bool:
-        """Update alert status."""
+        """
+Update alert status."""
         try:
             if alert_id in self.active_alerts:
                 self.active_alerts[alert_id].status = new_status

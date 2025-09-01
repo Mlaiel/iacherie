@@ -8,7 +8,7 @@ Technologies: AsyncIO, Dynamic Scaling, Load Balancing, Health Monitoring
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Task submission → Load analysis → Worker selection → 
 Task distribution → Execution monitoring → Result aggregation → Auto-scaling
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class PoolStatus(Enum):
-    """Worker pool status states"""
+    """
+Worker pool status states"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     DEGRADED = "degraded"
@@ -54,6 +57,7 @@ class PoolStatus(Enum):
 
 class LoadBalancingStrategy(Enum):
     """Load balancing strategies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -81,7 +85,8 @@ class PoolConfig:
 
 @dataclass
 class PoolMetrics:
-    """Worker pool performance metrics"""
+    """
+Worker pool performance metrics"""
     pool_id: str
     total_workers: int = 0
     active_workers: int = 0
@@ -102,7 +107,8 @@ class PoolMetrics:
 
 @dataclass
 class TaskAssignment:
-    """Task assignment tracking"""
+    """
+Task assignment tracking"""
     task_id: str
     worker_id: str
     assigned_at: datetime
@@ -159,7 +165,8 @@ class WorkerPool:
         self.worker_statistics: Dict[str, Dict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
 
     async def start(self) -> bool:
-        """Start the worker pool"""
+        """
+Start the worker pool"""
         try:
             logger.info(f"🚀 Starting worker pool: {self.pool_id}")
             
@@ -814,7 +821,8 @@ class WorkerPool:
             await asyncio.sleep(1)
 
     def _get_priority_value(self, priority: TaskPriority) -> int:
-        """Convert priority enum to integer value for queue"""
+        """
+Convert priority enum to integer value for queue"""
         priority_values = {
             TaskPriority.CRITICAL: 1,
             TaskPriority.HIGH: 2,
@@ -825,7 +833,8 @@ class WorkerPool:
         return priority_values.get(priority, 3)
 
     async def _validate_task(self, task: CrawlerTask) -> bool:
-        """Validate task before queueing"""
+        """
+Validate task before queueing"""
         try:
             # Basic validation
             if not task.task_id or not task.target_url:

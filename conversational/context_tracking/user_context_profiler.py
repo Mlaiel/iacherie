@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from ...utils.nlp import TextProcessor
 
 
 class CreatorType(Enum):
-    """Content creator types"""
+    """
+Content creator types"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -41,6 +44,7 @@ class CreatorType(Enum):
 
 class ExpertiseLevel(Enum):
     """User expertise levels"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -50,6 +54,7 @@ class ExpertiseLevel(Enum):
 
 class ContentPreference(Enum):
     """Content format preferences"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -165,7 +170,8 @@ class UserContextProfile:
     last_insights: Optional[PersonalizationInsights] = None
     
     def calculate_completeness(self) -> float:
-        """Calculate profile completeness score"""
+        """
+Calculate profile completeness score"""
         total_fields = 10
         completed_fields = 0
         
@@ -952,7 +958,8 @@ class UserContextProfiler:
         return recommendations[:3]
     
     async def _find_optimal_times(self, profile: UserContextProfile) -> List[int]:
-        """Find optimal engagement times"""
+        """
+Find optimal engagement times"""
         temporal_patterns = [p for p in profile.behavior_patterns if p.pattern_type == "temporal"]
         
         optimal_hours = []
@@ -1057,7 +1064,8 @@ class UserContextProfiler:
         return [platform for platform, usage in sorted_platforms[:3] if usage > 0.3]
     
     async def _suggest_platform_strategy(self, profile: UserContextProfile) -> Dict[str, str]:
-        """Suggest cross-platform strategy"""
+        """
+Suggest cross-platform strategy"""
         strategy = {}
         
         primary_platforms = await self._identify_primary_platforms(profile)
@@ -1142,7 +1150,8 @@ class UserContextProfiler:
         pass
     
     async def _load_profiles(self):
-        """Load profiles from persistent storage"""
+        """
+Load profiles from persistent storage"""
         try:
             profiles_data = await self.cache_manager.get("user_context_profiles")
             if profiles_data:

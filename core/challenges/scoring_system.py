@@ -8,7 +8,7 @@ Responsibility: Enterprise scoring algorithms and leaderboard management
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ SCORING ARCHITECTURE:
 Metric Collection → Score Algorithms → Ranking Engine → 
 Leaderboard Manager → Performance Analytics → Fraud Detection
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -32,7 +33,9 @@ import statistics
 from abc import ABC, abstractmethod
 
 class ScoreMetric(Enum):
-    """Available scoring metrics"""
+    """
+Available scoring metrics"""
+
     EXPERIENCE_POINTS = "experience_points"
     CONTENT_QUALITY = "content_quality"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -56,6 +59,7 @@ class ScoreMetric(Enum):
 
 class ScoreWeight(Enum):
     """Score weight categories"""
+
     MINIMAL = 0.1
     LOW = 0.25
     NORMAL = 0.5
@@ -65,7 +69,9 @@ class ScoreWeight(Enum):
     MAXIMUM = 2.0
 
 class RankingTier(Enum):
-    """User ranking tiers"""
+    """
+User ranking tiers"""
+
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -77,6 +83,7 @@ class RankingTier(Enum):
 
 class ScoreModifier(Enum):
     """Score modifiers for special conditions"""
+
     EARLY_COMPLETION = "early_completion"
     PERFECT_SCORE = "perfect_score"
     FIRST_ATTEMPT = "first_attempt"
@@ -132,7 +139,8 @@ class ScoreCalculator:
     """Advanced score calculation engine"""
     
     def __init__(self):
-        """Initialize score calculator with algorithms"""
+        """
+Initialize score calculator with algorithms"""
         self.logger = logging.getLogger(__name__)
         
         # Score normalization ranges
@@ -177,7 +185,8 @@ class ScoreCalculator:
                        components: List[ScoreComponent],
                        modifiers: Optional[List[ScoreModifier]] = None,
                        context: Optional[Dict[str, Any]] = None) -> ScoreCalculation:
-        """Calculate comprehensive score from components"""
+        """
+Calculate comprehensive score from components"""
         try:
             total_score = Decimal('0.00')
             weighted_score = Decimal('0.00')
@@ -307,7 +316,8 @@ class ScoreCalculator:
         return Decimal(str(normalized))
     
     def _determine_tier(self, score: Decimal, context: Optional[Dict[str, Any]] = None) -> RankingTier:
-        """Determine tier based on score"""
+        """
+Determine tier based on score"""
         score_float = float(score)
         
         for tier, threshold in reversed(list(self._tier_thresholds.items())):
@@ -317,7 +327,8 @@ class ScoreCalculator:
         return RankingTier.BRONZE
     
     def _calculate_percentile_rank(self, score: Decimal, context: Optional[Dict[str, Any]] = None) -> float:
-        """Calculate percentile rank (simplified without population data)"""
+        """
+Calculate percentile rank (simplified without population data)"""
         # In real implementation, this would use actual population statistics
         score_float = float(score)
         
@@ -340,7 +351,8 @@ class ScoreCalculator:
             return score_float / 20 * 15
     
     def _get_modifier_description(self, modifier: ScoreModifier) -> str:
-        """Get description for score modifier"""
+        """
+Get description for score modifier"""
         descriptions = {
             ScoreModifier.EARLY_COMPLETION: "Completed ahead of schedule",
             ScoreModifier.PERFECT_SCORE: "Achieved perfect performance",
@@ -359,7 +371,8 @@ class RankingEngine:
     """Advanced ranking and tier management engine"""
     
     def __init__(self, score_calculator: ScoreCalculator):
-        """Initialize ranking engine"""
+        """
+Initialize ranking engine"""
         self.score_calculator = score_calculator
         self.logger = logging.getLogger(__name__)
         
@@ -650,7 +663,8 @@ class RankingEngine:
         return numerator / denominator
     
     def _get_ranking_factors(self, user_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get factors contributing to user ranking"""
+        """
+Get factors contributing to user ranking"""
         factors = []
         
         # Top contributing factors
@@ -754,7 +768,8 @@ class LeaderboardManager:
     """Enterprise leaderboard management system"""
     
     def __init__(self, ranking_engine: RankingEngine):
-        """Initialize leaderboard manager"""
+        """
+Initialize leaderboard manager"""
         self.ranking_engine = ranking_engine
         self.logger = logging.getLogger(__name__)
         
@@ -860,7 +875,8 @@ class ScoringSystem:
                  user_service=None,
                  cache_service=None,
                  notification_service=None):
-        """Initialize scoring system"""
+        """
+Initialize scoring system"""
         self.analytics_service = analytics_service
         self.user_service = user_service
         self.cache_service = cache_service
@@ -874,7 +890,8 @@ class ScoringSystem:
         self.logger = logging.getLogger(__name__)
     
     async def calculate_user_score(self, user_id: str) -> Dict[str, Any]:
-        """Calculate comprehensive user score"""
+        """
+Calculate comprehensive user score"""
         try:
             # Get user data
             user_data = await self._get_user_data(user_id)

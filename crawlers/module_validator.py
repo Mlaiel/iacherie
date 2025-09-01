@@ -12,6 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import os
 import sys
 import asyncio
@@ -24,7 +25,8 @@ import inspect
 
 @dataclass
 class ModuleValidation:
-    """Module validation result."""
+    """
+Module validation result."""
     module_name: str
     exists: bool
     has_init: bool
@@ -36,7 +38,8 @@ class ModuleValidation:
 
 @dataclass
 class ArchitectureValidation:
-    """Architecture validation result."""
+    """
+Architecture validation result."""
     depth_compliance: bool
     naming_compliance: bool
     structure_compliance: bool
@@ -141,7 +144,8 @@ class CrawlerModuleValidator:
         return results
     
     async def _validate_module(self, module_name: str) -> ModuleValidation:
-        """Validate individual module."""
+        """
+Validate individual module."""
         module_path = self.base_path / f"{module_name}.py"
         missing_elements = []
         
@@ -201,7 +205,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_naming_compliance(self) -> bool:
-        """Check naming compliance (no amateur patterns)."""
+        """
+Check naming compliance (no amateur patterns)."""
         try:
             for root, dirs, files in os.walk(self.base_path):
                 # Check directory names
@@ -221,7 +226,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_structure_compliance(self) -> bool:
-        """Check if all required subdirectories exist."""
+        """
+Check if all required subdirectories exist."""
         try:
             existing_dirs = [d.name for d in self.base_path.iterdir() if d.is_dir()]
             missing_dirs = set(self.required_subdirs) - set(existing_dirs)
@@ -230,7 +236,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_documentation_compliance(self) -> bool:
-        """Check if all required documentation files exist."""
+        """
+Check if all required documentation files exist."""
         try:
             existing_files = [f.name for f in self.base_path.iterdir() if f.is_file()]
             missing_docs = set(self.required_docs) - set(existing_files)
@@ -239,7 +246,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_security_compliance(self) -> bool:
-        """Check security compliance in modules."""
+        """
+Check security compliance in modules."""
         try:
             # Check for proper copyright notices and warnings
             for py_file in self.base_path.glob("*.py"):
@@ -400,7 +408,8 @@ class CrawlerModuleValidator:
         return report
     
     async def run_full_validation(self) -> Tuple[bool, str]:
-        """Run complete validation and return status with report."""
+        """
+Run complete validation and return status with report."""
         try:
             report = await self.generate_compliance_report()
             arch_validation = await self.validate_complete_architecture()

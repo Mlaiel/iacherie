@@ -14,7 +14,7 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
-All rights reserved © 2025 Fahed Mlaiel
+All rights reserved (c) 2025 Fahed Mlaiel
 
 ADVANCED ENFORCEMENT FEATURES:
 - AI-Powered Legal Strategy Selection & Optimization
@@ -26,6 +26,7 @@ ADVANCED ENFORCEMENT FEATURES:
 - Integration with Legal Case Management Systems
 - Comprehensive Evidence Collection & Documentation
 """
+
 import asyncio
 import logging
 import uuid
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementStage(Enum):
-    """Enforcement escalation stages"""
+    """
+Enforcement escalation stages"""
+
     NONE = "none"
     INITIAL_NOTICE = "initial_notice"
     FIRST_REMINDER = "first_reminder"
@@ -73,6 +76,7 @@ class EnforcementStage(Enum):
 
 class EnforcementType(Enum):
     """Types of enforcement actions"""
+
     ADMINISTRATIVE = "administrative"
     CIVIL_LITIGATION = "civil_litigation"
     CRIMINAL_REFERRAL = "criminal_referral"
@@ -89,6 +93,7 @@ class EnforcementType(Enum):
 
 class LegalJurisdiction(Enum):
     """Legal jurisdictions for enforcement"""
+
     US_FEDERAL = "us_federal"
     US_STATE_CALIFORNIA = "us_state_california"
     US_STATE_NEW_YORK = "us_state_new_york"
@@ -109,6 +114,7 @@ class LegalJurisdiction(Enum):
 
 class EnforcementPriority(Enum):
     """Priority levels for enforcement actions"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -137,7 +143,8 @@ class EnforcementConfig:
 
 @dataclass
 class EnforcementMetrics:
-    """Metrics for enforcement performance tracking"""
+    """
+Metrics for enforcement performance tracking"""
     enforcement_id: str
     success_rate: float
     cost_efficiency: float
@@ -153,7 +160,8 @@ class EnforcementMetrics:
 
 @dataclass
 class LegalActionPlan:
-    """Comprehensive legal action plan"""
+    """
+Comprehensive legal action plan"""
     plan_id: str
     enforcement_id: str
     action_type: EnforcementType
@@ -173,7 +181,8 @@ class LegalActionPlan:
 
 @dataclass
 class SettlementProposal:
-    """Settlement proposal details"""
+    """
+Settlement proposal details"""
     proposal_id: str
     enforcement_id: str
     monetary_amount: Optional[Decimal]
@@ -206,7 +215,8 @@ class EnforcementEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enterprise enforcement engine"""
+        """
+Initialize enterprise enforcement engine"""
         self.config = config or {}
         self.db = get_database()
         self.validation_service = ValidationService(config)
@@ -633,7 +643,8 @@ class EnforcementEngine:
     async def _select_optimal_jurisdiction(self, 
                                          notice_details: Dict[str, Any],
                                          analysis: Dict[str, Any]) -> LegalJurisdiction:
-        """Select optimal jurisdiction for enforcement"""
+        """
+Select optimal jurisdiction for enforcement"""
         # AI-powered jurisdiction selection
         jurisdiction_scores = {}
         
@@ -673,7 +684,8 @@ class EnforcementEngine:
                                      notice_details: Dict[str, Any],
                                      analysis: Dict[str, Any],
                                      jurisdiction: LegalJurisdiction) -> Dict[str, Any]:
-        """Generate comprehensive legal strategy"""
+        """
+Generate comprehensive legal strategy"""
         jurisdiction_config = self.jurisdiction_configs.get(jurisdiction, {})
         
         strategy = {
@@ -706,7 +718,8 @@ class EnforcementEngine:
     async def _perform_cost_benefit_analysis(self, 
                                            strategy: Dict[str, Any],
                                            notice_details: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive cost-benefit analysis"""
+        """
+Perform comprehensive cost-benefit analysis"""
         estimated_costs = strategy.get('estimated_cost', Decimal('0'))
         
         # Estimate potential recovery
@@ -750,7 +763,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementStage(Enum):
-    """Enforcement stages"""
+    """
+Enforcement stages"""
+
     INITIAL_NOTICE = "initial_notice"
     FIRST_REMINDER = "first_reminder"
     FINAL_WARNING = "final_warning"
@@ -762,6 +777,7 @@ class EnforcementStage(Enum):
 
 class EnforcementType(Enum):
     """Types of enforcement actions"""
+
     AUTOMATED_REMINDER = "automated_reminder"
     ENHANCED_NOTICE = "enhanced_notice"
     LEGAL_WARNING = "legal_warning"
@@ -773,6 +789,7 @@ class EnforcementType(Enum):
 
 class LegalStrategy(Enum):
     """Legal strategy approaches"""
+
     AGGRESSIVE = "aggressive"
     MODERATE = "moderate"
     DIPLOMATIC = "diplomatic"
@@ -795,7 +812,8 @@ class EnforcementPolicy:
 
 @dataclass
 class EnforcementContext:
-    """Context for enforcement decisions"""
+    """
+Context for enforcement decisions"""
     content_value: float
     infringement_severity: float
     repeat_offender: bool
@@ -808,7 +826,8 @@ class EnforcementContext:
 
 @dataclass
 class LegalActionPlan:
-    """Comprehensive legal action plan"""
+    """
+Comprehensive legal action plan"""
     action_id: str
     strategy: LegalStrategy
     timeline: List[Dict[str, Any]]
@@ -833,7 +852,8 @@ class EnforcementEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enforcement engine"""
+        """
+Initialize enforcement engine"""
         self.config = config or {}
         self.db = get_database()
         self.compliance_tracker = ComplianceTracker(config)
@@ -1276,7 +1296,8 @@ class EnforcementEngine:
         )
     
     async def _analyze_enforcement_context(self, notice: Any) -> EnforcementContext:
-        """Analyze context for enforcement decisions"""
+        """
+Analyze context for enforcement decisions"""
         # Extract platform from URL
         platform = notice.infringing_url.split('/')[2] if notice.infringing_url else 'unknown'
         
@@ -1295,7 +1316,8 @@ class EnforcementEngine:
                                        notice: Any,
                                        context: EnforcementContext,
                                        requested_policy: Optional[str]) -> EnforcementPolicy:
-        """Select appropriate enforcement policy"""
+        """
+Select appropriate enforcement policy"""
         if requested_policy and requested_policy in self.policies:
             return self.policies[requested_policy]
         
@@ -1311,7 +1333,8 @@ class EnforcementEngine:
                                      notice: Any,
                                      policy: EnforcementPolicy,
                                      context: EnforcementContext) -> Dict[str, Any]:
-        """Create detailed enforcement plan"""
+        """
+Create detailed enforcement plan"""
         return {
             'plan_id': str(uuid.uuid4()),
             'policy_used': policy.policy_id,
@@ -1331,7 +1354,8 @@ class EnforcementEngine:
         }
     
     def _calculate_success_probability(self, context: EnforcementContext) -> float:
-        """Calculate probability of enforcement success"""
+        """
+Calculate probability of enforcement success"""
         base_probability = 0.7
         
         # Adjust based on context factors
@@ -1349,7 +1373,8 @@ class EnforcementEngine:
         return min(max(base_probability, 0.0), 1.0)
     
     def _assess_enforcement_risks(self, context: EnforcementContext) -> Dict[str, Any]:
-        """Assess risks associated with enforcement"""
+        """
+Assess risks associated with enforcement"""
         return {
             'financial_risk': 'low' if context.enforcement_costs < context.potential_damages else 'high',
             'reputation_risk': 'low' if context.platform_cooperation_history > 0.7 else 'medium',
@@ -1361,7 +1386,8 @@ class EnforcementEngine:
                                        enforcement_id: str,
                                        stage: EnforcementStage,
                                        context: EnforcementContext) -> Dict[str, Any]:
-        """Execute specific enforcement stage"""
+        """
+Execute specific enforcement stage"""
         self.logger.info(f"Executing enforcement stage: {stage.value}")
         
         if stage == EnforcementStage.INITIAL_NOTICE:
@@ -1389,7 +1415,8 @@ class EnforcementEngine:
         }
     
     async def _send_reminder_notice(self, enforcement_id: str) -> Dict[str, Any]:
-        """Send reminder notice"""
+        """
+Send reminder notice"""
         return {
             'action': 'reminder_sent',
             'method': 'email',
@@ -1399,7 +1426,8 @@ class EnforcementEngine:
         }
     
     async def _send_final_warning(self, enforcement_id: str) -> Dict[str, Any]:
-        """Send final warning notice"""
+        """
+Send final warning notice"""
         return {
             'action': 'final_warning_sent',
             'method': 'registered_mail',
@@ -1409,7 +1437,8 @@ class EnforcementEngine:
         }
     
     async def _send_legal_demand(self, enforcement_id: str) -> Dict[str, Any]:
-        """Send legal demand letter"""
+        """
+Send legal demand letter"""
         return {
             'action': 'legal_demand_sent',
             'method': 'legal_counsel',
@@ -1419,7 +1448,8 @@ class EnforcementEngine:
         }
     
     async def _escalate_to_platform(self, enforcement_id: str) -> Dict[str, Any]:
-        """Escalate to platform abuse team"""
+        """
+Escalate to platform abuse team"""
         return {
             'action': 'platform_escalation',
             'method': 'platform_abuse_report',
@@ -1429,7 +1459,8 @@ class EnforcementEngine:
         }
     
     async def _initiate_legal_proceedings(self, enforcement_id: str) -> Dict[str, Any]:
-        """Initiate legal proceedings"""
+        """
+Initiate legal proceedings"""
         return {
             'action': 'legal_proceedings_initiated',
             'case_number': f"CASE_{datetime.now().strftime('%Y%m%d_%H%M%S')}",

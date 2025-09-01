@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import re
 import hashlib
 import time
@@ -34,7 +35,9 @@ from ...ai.analysis.query_optimization_ai import QueryOptimizationAI
 
 
 class QueryType(Enum):
-    """SQL query type classification"""
+    """
+SQL query type classification"""
+
     SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
@@ -49,6 +52,7 @@ class QueryType(Enum):
 
 class OptimizationPriority(Enum):
     """Query optimization priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -73,7 +77,8 @@ class QueryPattern:
     complexity_score: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['query_type'] = self.query_type.value
         return data
@@ -81,7 +86,8 @@ class QueryPattern:
 
 @dataclass
 class QueryPerformanceMetrics:
-    """Query performance metrics"""
+    """
+Query performance metrics"""
     query_hash: str
     execution_count: int
     total_time_ms: float
@@ -100,7 +106,8 @@ class QueryPerformanceMetrics:
     last_seen: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['first_seen'] = self.first_seen.isoformat()
         data['last_seen'] = self.last_seen.isoformat()
@@ -109,7 +116,8 @@ class QueryPerformanceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Query optimization recommendation"""
+    """
+Query optimization recommendation"""
     recommendation_id: str
     query_hash: str
     priority: OptimizationPriority
@@ -124,7 +132,8 @@ class OptimizationRecommendation:
     created_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['priority'] = self.priority.value
         data['created_at'] = self.created_at.isoformat()
@@ -306,7 +315,8 @@ class QueryAnalyzer:
         return normalized
     
     def _get_query_type(self, query: str) -> QueryType:
-        """Determine SQL query type"""
+        """
+Determine SQL query type"""
         query_upper = query.strip().upper()
         
         if query_upper.startswith('SELECT'):
@@ -331,7 +341,8 @@ class QueryAnalyzer:
             return QueryType.UNKNOWN
     
     def _extract_table_names(self, parsed) -> List[str]:
-        """Extract table names from parsed SQL"""
+        """
+Extract table names from parsed SQL"""
         table_names = []
         
         def extract_from_token(token):
@@ -352,7 +363,8 @@ class QueryAnalyzer:
         return list(set(table_names))  # Remove duplicates
     
     def _extract_column_names(self, parsed) -> List[str]:
-        """Extract column names from parsed SQL"""
+        """
+Extract column names from parsed SQL"""
         # Simplified column extraction
         column_names = []
         try:
@@ -377,18 +389,21 @@ class QueryAnalyzer:
         return list(set(column_names))
     
     def _count_joins(self, query: str) -> int:
-        """Count JOIN operations in query"""
+        """
+Count JOIN operations in query"""
         join_pattern = r'\b(?:INNER\s+|LEFT\s+|RIGHT\s+|FULL\s+)?JOIN\b'
         return len(re.findall(join_pattern, query, re.IGNORECASE))
     
     def _count_subqueries(self, query: str) -> int:
-        """Count subqueries in query"""
+        """
+Count subqueries in query"""
         # Count SELECT statements (main query + subqueries)
         select_count = len(re.findall(r'\bSELECT\b', query, re.IGNORECASE))
         return max(0, select_count - 1)  # Subtract main query
     
     def _count_where_conditions(self, query: str) -> int:
-        """Count WHERE conditions"""
+        """
+Count WHERE conditions"""
         where_match = re.search(r'\bWHERE\s+(.*?)(?:\s+ORDER\s+BY|\s+GROUP\s+BY|\s+LIMIT|$)', 
                                query, re.IGNORECASE | re.DOTALL)
         if where_match:
@@ -400,7 +415,8 @@ class QueryAnalyzer:
         return 0
     
     def _extract_order_by_columns(self, parsed) -> List[str]:
-        """Extract ORDER BY columns"""
+        """
+Extract ORDER BY columns"""
         try:
             query_str = str(parsed)
             order_match = re.search(r'\bORDER\s+BY\s+(.*?)(?:\s+LIMIT|$)', 
@@ -414,7 +430,8 @@ class QueryAnalyzer:
         return []
     
     def _extract_group_by_columns(self, parsed) -> List[str]:
-        """Extract GROUP BY columns"""
+        """
+Extract GROUP BY columns"""
         try:
             query_str = str(parsed)
             group_match = re.search(r'\bGROUP\s+BY\s+(.*?)(?:\s+ORDER\s+BY|\s+LIMIT|$)', 
@@ -428,7 +445,8 @@ class QueryAnalyzer:
         return []
     
     def _has_aggregation_functions(self, query: str) -> bool:
-        """Check if query has aggregation functions"""
+        """
+Check if query has aggregation functions"""
         agg_functions = ['COUNT', 'SUM', 'AVG', 'MAX', 'MIN', 'GROUP_CONCAT']
         pattern = r'\b(?:' + '|'.join(agg_functions) + r')\s*\('
         return bool(re.search(pattern, query, re.IGNORECASE))
@@ -441,7 +459,8 @@ class QueryAnalyzer:
         table_count: int,
         has_aggregation: bool
     ) -> float:
-        """Calculate query complexity score (0-10)"""
+        """
+Calculate query complexity score (0-10)"""
         score = 1.0  # Base score
         
         # Add complexity factors
@@ -456,7 +475,8 @@ class QueryAnalyzer:
         return min(score, 10.0)  # Cap at 10
     
     def _get_query_hash(self, query: str) -> str:
-        """Generate hash for query"""
+        """
+Generate hash for query"""
         return hashlib.md5(query.encode()).hexdigest()
     
     async def _update_performance_metrics(
@@ -466,7 +486,8 @@ class QueryAnalyzer:
         rows_examined: int = None,
         rows_returned: int = None
     ) -> None:
-        """Update performance metrics for query"""
+        """
+Update performance metrics for query"""
         try:
             now = datetime.utcnow()
             

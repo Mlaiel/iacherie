@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class MediumMembershipType(str, Enum):
-    """Medium membership types"""
+    """
+Medium membership types"""
+
     FREE = "free"
     MEMBER = "member"
     FRIEND_OF_MEDIUM = "friend"
@@ -47,6 +50,7 @@ class MediumMembershipType(str, Enum):
 
 class MediumContentType(str, Enum):
     """Medium content types"""
+
     STORY = "story"
     SERIES = "series"
     PUBLICATION = "publication"
@@ -62,13 +66,15 @@ class MediumReadingTime(BaseModel):
 
 
 class MediumVirtue(BaseModel):
-    """Medium virtue/category data model"""
+    """
+Medium virtue/category data model"""
     slug: str
     name: str
 
 
 class MediumTag(BaseModel):
-    """Medium tag data model"""
+    """
+Medium tag data model"""
     slug: str
     name: str
     post_count: Optional[int] = None
@@ -76,7 +82,8 @@ class MediumTag(BaseModel):
 
 
 class MediumUser(BaseModel):
-    """Medium user data model"""
+    """
+Medium user data model"""
     user_id: str
     username: str
     name: str
@@ -103,7 +110,8 @@ class MediumUser(BaseModel):
 
 
 class MediumPublication(BaseModel):
-    """Medium publication data model"""
+    """
+Medium publication data model"""
     publication_id: str
     name: str
     slug: str
@@ -124,7 +132,8 @@ class MediumPublication(BaseModel):
 
 
 class MediumStory(BaseModel):
-    """Medium story data model"""
+    """
+Medium story data model"""
     story_id: str
     title: str
     subtitle: Optional[str] = None
@@ -183,7 +192,8 @@ class MediumResponse(BaseModel):
 
 
 class MediumList(BaseModel):
-    """Medium list data model"""
+    """
+Medium list data model"""
     list_id: str
     name: str
     description: Optional[str] = None
@@ -198,7 +208,8 @@ class MediumList(BaseModel):
 
 
 class MediumSearchResults(BaseModel):
-    """Medium search results data model"""
+    """
+Medium search results data model"""
     query: str
     total_results: int
     stories: List[MediumStory] = Field(default_factory=list)
@@ -214,7 +225,8 @@ class MediumSearchResults(BaseModel):
 
 
 class MediumAnalytics(BaseModel):
-    """Medium analytics data model"""
+    """
+Medium analytics data model"""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_stories_published: int
@@ -1012,7 +1024,8 @@ class MediumCrawler(BaseCrawler):
         return hashlib.md5(url.encode()).hexdigest()[:12]
 
     async def _parse_story_from_html(self, html_content: str, url: str) -> Optional[MediumStory]:
-        """Parse story from HTML page"""
+        """
+Parse story from HTML page"""
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             
@@ -1064,27 +1077,32 @@ class MediumCrawler(BaseCrawler):
         return []
 
     async def _parse_publications_from_html(self, html_content: str, limit: int) -> List[MediumPublication]:
-        """Parse publications from search results HTML"""
+        """
+Parse publications from search results HTML"""
         # Simplified implementation
         return []
 
     async def _parse_tags_from_html(self, html_content: str, limit: int) -> List[MediumTag]:
-        """Parse tags from search results HTML"""
+        """
+Parse tags from search results HTML"""
         # Simplified implementation
         return []
 
     async def _get_author_recent_stories(self, username: str, since: datetime) -> List[MediumStory]:
-        """Get recent stories from author"""
+        """
+Get recent stories from author"""
         # Simplified implementation
         return []
 
     async def _get_publication_recent_stories(self, publication: str, since: datetime) -> List[MediumStory]:
-        """Get recent stories from publication"""
+        """
+Get recent stories from publication"""
         # Simplified implementation
         return []
 
     async def _get_tag_recent_stories(self, tag: str, since: datetime) -> List[MediumStory]:
-        """Get recent stories for tag"""
+        """
+Get recent stories for tag"""
         # Simplified implementation
         return []
 
@@ -1094,17 +1112,20 @@ class MediumCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[MediumStory]:
-        """Get user's stories in specific time period"""
+        """
+Get user's stories in specific time period"""
         # Simplified implementation
         return []
 
     async def _calculate_similarity(self, story: MediumStory) -> float:
-        """Calculate similarity score against protected content"""
+        """
+Calculate similarity score against protected content"""
         # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, story: MediumStory) -> str:
-        """Check protection status of story"""
+        """
+Check protection status of story"""
         if story.story_id in self.protected_content:
             return "protected"
         return "unprotected"

@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
@@ -45,7 +46,9 @@ from ...models.copyright import CopyrightRecord, OwnershipProof, VerificationSta
 logger = logging.getLogger(__name__)
 
 class VerificationMethod(Enum):
-    """Copyright verification methods"""
+    """
+Copyright verification methods"""
+
     BLOCKCHAIN_PROOF = "blockchain_proof"
     DIGITAL_SIGNATURE = "digital_signature"
     COPYRIGHT_REGISTRY = "copyright_registry"
@@ -57,6 +60,7 @@ class VerificationMethod(Enum):
 
 class OwnershipStrength(Enum):
     """Copyright ownership strength levels"""
+
     DEFINITIVE = "definitive"      # 95-100% certainty
     STRONG = "strong"              # 85-94% certainty  
     MODERATE = "moderate"          # 70-84% certainty
@@ -66,6 +70,7 @@ class OwnershipStrength(Enum):
 
 class CopyrightType(Enum):
     """Types of copyrighted content"""
+
     MUSICAL_WORK = "musical_work"
     SOUND_RECORDING = "sound_recording"
     LITERARY_WORK = "literary_work"
@@ -93,7 +98,8 @@ class CopyrightClaim:
     
 @dataclass
 class VerificationResult:
-    """Copyright verification result"""
+    """
+Copyright verification result"""
     claim_id: str
     content_id: str
     verification_score: float  # 0-100%
@@ -110,7 +116,8 @@ class VerificationResult:
 
 @dataclass
 class OwnershipEvidence:
-    """Evidence supporting copyright ownership"""
+    """
+Evidence supporting copyright ownership"""
     evidence_id: str
     evidence_type: str
     content: str
@@ -159,7 +166,8 @@ class CopyrightVerification:
         }
     
     def _initialize_registries(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize copyright registry configurations"""
+        """
+Initialize copyright registry configurations"""
         return {
             "us_copyright_office": {
                 "name": "US Copyright Office",
@@ -324,7 +332,8 @@ class CopyrightVerification:
         claim: CopyrightClaim,
         evidence: List[OwnershipEvidence]
     ) -> float:
-        """Run specific verification method"""
+        """
+Run specific verification method"""
         method_evidence = [e for e in evidence if method.value in e.evidence_type]
         
         if method == VerificationMethod.BLOCKCHAIN_PROOF:
@@ -359,7 +368,8 @@ class CopyrightVerification:
         claim: CopyrightClaim,
         evidence: List[OwnershipEvidence]
     ) -> float:
-        """Verify blockchain-based copyright proof"""
+        """
+Verify blockchain-based copyright proof"""
         try:
             if not claim.blockchain_hash:
                 return 0.0
@@ -681,7 +691,8 @@ class CopyrightVerification:
         return (total_score / total_weight) * 100 if total_weight > 0 else 0.0
     
     def _determine_ownership_strength(self, verification_score: float) -> OwnershipStrength:
-        """Determine ownership strength based on verification score"""
+        """
+Determine ownership strength based on verification score"""
         if verification_score >= 95.0:
             return OwnershipStrength.DEFINITIVE
         elif verification_score >= 85.0:
@@ -698,7 +709,8 @@ class CopyrightVerification:
         claim: CopyrightClaim,
         evidence: List[OwnershipEvidence]
     ) -> List[Dict[str, Any]]:
-        """Build chain of ownership evidence"""
+        """
+Build chain of ownership evidence"""
         chain = []
         
         # Sort evidence by creation date
@@ -882,7 +894,8 @@ class CopyrightVerification:
         claim: CopyrightClaim,
         registration_data: Dict[str, Any]
     ) -> float:
-        """Calculate how well registration data matches claim"""
+        """
+Calculate how well registration data matches claim"""
         score = 0.0
         
         # Check name match
@@ -930,7 +943,8 @@ class CopyrightVerification:
         return 0.7  # Placeholder
     
     async def _check_verification_badges(self, metadata: Dict[str, Any]) -> float:
-        """Check for platform verification badges"""
+        """
+Check for platform verification badges"""
         return 0.5 if metadata.get("verified_account") else 0.0
     
     async def _analyze_legal_document(self, doc_data: Dict[str, Any], claim: CopyrightClaim) -> float:
@@ -938,11 +952,13 @@ class CopyrightVerification:
         return 0.6  # Placeholder
     
     async def _watermark_contains_owner_info(self, watermark_data: Dict[str, Any], claim: CopyrightClaim) -> bool:
-        """Check if watermark contains owner information"""
+        """
+Check if watermark contains owner information"""
         return False  # Placeholder
     
     async def _calculate_fingerprint_similarity(self, fingerprint_data: Dict[str, Any], content_id: str) -> float:
-        """Calculate fingerprint similarity"""
+        """
+Calculate fingerprint similarity"""
         return 0.9  # Placeholder
     
     async def batch_verify_claims(
@@ -950,7 +966,8 @@ class CopyrightVerification:
         claims: List[CopyrightClaim],
         evidence_files_list: Optional[List[List[Dict[str, Any]]]] = None
     ) -> List[VerificationResult]:
-        """Batch verify multiple copyright claims"""
+        """
+Batch verify multiple copyright claims"""
         max_concurrent = 10
         semaphore = asyncio.Semaphore(max_concurrent)
         

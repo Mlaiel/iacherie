@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioGenerationRequest:
-    """Comprehensive audio generation request parameters"""
+    """
+Comprehensive audio generation request parameters"""
     # Text-to-Audio parameters
     text_prompt: Optional[str] = None
     description: Optional[str] = None
@@ -199,7 +201,8 @@ class NeuralAudioGenerator(nn.Module):
         return audio
 
 class ProceduralAudioGenerator:
-    """Procedural audio generation system"""
+    """
+Procedural audio generation system"""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
@@ -426,7 +429,8 @@ class ProceduralAudioGenerator:
         return envelope
     
     def _generate_kick_drum(self, duration: float) -> np.ndarray:
-        """Generate kick drum sound"""
+        """
+Generate kick drum sound"""
         t = np.linspace(0, duration, int(duration * self.sample_rate))
         
         # Low-frequency sine wave with pitch envelope
@@ -440,7 +444,8 @@ class ProceduralAudioGenerator:
         return kick
     
     def _generate_snare_drum(self, duration: float) -> np.ndarray:
-        """Generate snare drum sound"""
+        """
+Generate snare drum sound"""
         t = np.linspace(0, duration, int(duration * self.sample_rate))
         
         # Mix of tone and noise
@@ -454,7 +459,8 @@ class ProceduralAudioGenerator:
         return snare * 0.6
     
     def _generate_hihat(self, duration: float) -> np.ndarray:
-        """Generate hi-hat sound"""
+        """
+Generate hi-hat sound"""
         t = np.linspace(0, min(duration, 0.1), int(min(duration, 0.1) * self.sample_rate))
         
         # High-frequency noise
@@ -925,7 +931,8 @@ class AIAudioGenerator:
         return compressed
     
     def _apply_mastering_limiter(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply mastering limiter"""
+        """
+Apply mastering limiter"""
         limited = audio_data.copy()
         threshold = 0.95
         
@@ -935,7 +942,8 @@ class AIAudioGenerator:
         return limited
     
     def _normalize_audio(self, audio_data: np.ndarray) -> np.ndarray:
-        """Normalize audio to optimal level"""
+        """
+Normalize audio to optimal level"""
         peak = np.max(np.abs(audio_data))
         if peak > 0:
             return audio_data / peak * 0.95  # Leave some headroom
@@ -946,7 +954,8 @@ class AIAudioGenerator:
                              sample_rate: int,
                              output_format: str,
                              request: AudioGenerationRequest) -> str:
-        """Save audio to file with metadata"""
+        """
+Save audio to file with metadata"""
         try:
             # Generate filename
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -987,7 +996,7 @@ class AIAudioGenerator:
                 "genre": request.genre or "Generated",
                 "date": datetime.now().strftime("%Y-%m-%d"),
                 "comment": f"Generated using {request.generation_method} method",
-                "copyright": "© 2025 Fahed Mlaiel - AI Generated Content"
+                "copyright": "(c) 2025 Fahed Mlaiel - AI Generated Content"
             }
             
             # In a real implementation, you would use a library like mutagen
@@ -1095,7 +1104,8 @@ class AudioSynthesizer:
         self.effects = self._initialize_effects()
     
     def _initialize_oscillators(self) -> Dict[str, callable]:
-        """Initialize oscillator functions"""
+        """
+Initialize oscillator functions"""
         return {
             "sine": lambda t, f: np.sin(2 * np.pi * f * t),
             "saw": lambda t, f: 2 * (t * f - np.floor(t * f + 0.5)),
@@ -1202,7 +1212,8 @@ class AudioSynthesizer:
                     modulator_freq: float,
                     modulation_index: float,
                     duration: float) -> np.ndarray:
-        """Frequency modulation synthesis"""
+        """
+Frequency modulation synthesis"""
         t = np.linspace(0, duration, int(duration * self.sample_rate))
         
         # FM synthesis formula: sin(2π * fc * t + I * sin(2π * fm * t))
@@ -1253,7 +1264,8 @@ class AudioSynthesizer:
         return output_audio / np.max(np.abs(output_audio))  # Normalize
     
     def _create_envelope(self, t: np.ndarray, params: Dict[str, float]) -> np.ndarray:
-        """Create ADSR envelope"""
+        """
+Create ADSR envelope"""
         attack = params.get("attack", 0.1)
         decay = params.get("decay", 0.2)
         sustain = params.get("sustain", 0.6)

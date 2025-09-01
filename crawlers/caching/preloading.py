@@ -9,6 +9,7 @@ and intelligent content prefetching.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -27,7 +28,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class PreloadStrategy(Enum):
-    """Preloading strategies."""
+    """
+Preloading strategies."""
+
     EAGER = "eager"
     LAZY = "lazy"
     PREDICTIVE = "predictive"
@@ -36,6 +39,7 @@ class PreloadStrategy(Enum):
 
 class PreloadPriority(Enum):
     """Preload priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -43,7 +47,9 @@ class PreloadPriority(Enum):
     BACKGROUND = 5
 
 class PreloadTrigger(Enum):
-    """Preload triggers."""
+    """
+Preload triggers."""
+
     TIME_BASED = "time_based"
     ACCESS_PATTERN = "access_pattern"
     USER_BEHAVIOR = "user_behavior"
@@ -67,12 +73,14 @@ class PreloadTask:
     max_retries: int = 3
     
     def __lt__(self, other):
-        """For priority queue ordering."""
+        """
+For priority queue ordering."""
         return self.priority.value < other.priority.value
 
 @dataclass
 class PreloadResult:
-    """Preload operation result."""
+    """
+Preload operation result."""
     task_id: str
     key: str
     success: bool
@@ -83,7 +91,8 @@ class PreloadResult:
 
 @dataclass
 class AccessPrediction:
-    """Access prediction model."""
+    """
+Access prediction model."""
     key: str
     probability: float
     predicted_time: datetime
@@ -488,7 +497,8 @@ class AccessPredictor:
     """Predict future cache access patterns."""
     
     def __init__(self):
-        """Initialize access predictor."""
+        """
+Initialize access predictor."""
         self.access_history: List[Dict[str, Any]] = []
         self.pattern_weights: Dict[str, float] = {
             'temporal': 0.3,
@@ -500,7 +510,8 @@ class AccessPredictor:
     
     async def record_access(self, key: str, hit: bool, 
                           timestamp: Optional[datetime] = None) -> None:
-        """Record cache access."""
+        """
+Record cache access."""
         try:
             access_record = {
                 'key': key,
@@ -619,7 +630,8 @@ class AccessPredictor:
             return 0.0
     
     async def _calculate_frequency_score(self, accesses: List[Dict[str, Any]]) -> float:
-        """Calculate frequency score."""
+        """
+Calculate frequency score."""
         try:
             if not accesses:
                 return 0.0
@@ -638,7 +650,8 @@ class AccessPredictor:
             return 0.0
     
     async def _calculate_recency_score(self, accesses: List[Dict[str, Any]]) -> float:
-        """Calculate recency score."""
+        """
+Calculate recency score."""
         try:
             if not accesses:
                 return 0.0
@@ -653,7 +666,8 @@ class AccessPredictor:
             return 0.0
     
     async def _calculate_sequence_score(self, key: str, accesses: List[Dict[str, Any]]) -> float:
-        """Calculate sequence pattern score."""
+        """
+Calculate sequence pattern score."""
         try:
             # Simple sequence scoring - would be more sophisticated in practice
             return 0.5  # Placeholder
@@ -662,7 +676,8 @@ class AccessPredictor:
             return 0.0
     
     async def _predict_next_access_time(self, accesses: List[Dict[str, Any]]) -> datetime:
-        """Predict next access time."""
+        """
+Predict next access time."""
         try:
             if len(accesses) < 2:
                 return datetime.now() + timedelta(hours=1)
@@ -682,14 +697,17 @@ class AccessPredictor:
             return datetime.now() + timedelta(hours=1)
 
 class PatternAnalyzer:
-    """Analyze access patterns for preloading optimization."""
+    """
+Analyze access patterns for preloading optimization."""
     
     def __init__(self):
-        """Initialize pattern analyzer."""
+        """
+Initialize pattern analyzer."""
         self.patterns: Dict[str, Any] = {}
     
     async def analyze_access(self, key: str, timestamp: datetime) -> None:
-        """Analyze access pattern."""
+        """
+Analyze access pattern."""
         try:
             # Pattern analysis implementation
             pass
@@ -701,11 +719,13 @@ class PreloadScheduler:
     """Schedule preload tasks based on predictions and policies."""
     
     def __init__(self):
-        """Initialize preload scheduler."""
+        """
+Initialize preload scheduler."""
         self.schedules: Dict[str, Dict[str, Any]] = {}
     
     async def schedule_preload(self, key: str, predicted_time: datetime) -> None:
-        """Schedule preload task."""
+        """
+Schedule preload task."""
         try:
             # Scheduling implementation
             pass

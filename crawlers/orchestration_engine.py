@@ -17,6 +17,7 @@ User (musician/blogger/photographer/influencer/comedian) →
 Upload multi-format → AI protection rights → Professional SEO → 
 Collaboration matching → Multi-platform distribution
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -36,7 +37,9 @@ from ..utils.priority_queue import PriorityQueue
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type classifications."""
+    """
+Content type classifications."""
+
     MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
@@ -48,6 +51,7 @@ class ContentType(Enum):
 
 class CreatorType(Enum):
     """Creator type classifications."""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -59,6 +63,7 @@ class CreatorType(Enum):
 
 class BusinessPriority(Enum):
     """Business priority levels."""
+
     CRITICAL = "critical"      # High-revenue content
     HIGH = "high"             # Trending content
     MEDIUM = "medium"         # Regular content
@@ -85,7 +90,8 @@ class ContentProfile:
 
 @dataclass
 class OrchestrationTask:
-    """Orchestration task definition."""
+    """
+Orchestration task definition."""
     id: str
     content_id: str
     task_type: str
@@ -120,7 +126,8 @@ class IntelligentOrchestrationEngine:
     """
     
     def __init__(self):
-        """Initialize orchestration engine."""
+        """
+Initialize orchestration engine."""
         self.ml_engine = MLEngine()
         self.revenue_calculator = RevenueCalculator()
         self.protection_manager = ContentProtectionManager()
@@ -367,7 +374,8 @@ class IntelligentOrchestrationEngine:
         return round(estimated_value, 2)
     
     async def _analyze_content_quality(self, content_data: Dict[str, Any]) -> float:
-        """Analyze content quality using AI."""
+        """
+Analyze content quality using AI."""
         quality_factors = []
         
         # File quality analysis
@@ -429,7 +437,8 @@ class IntelligentOrchestrationEngine:
         self,
         content_profile: ContentProfile
     ) -> Dict[str, Any]:
-        """Advanced AI content analysis."""
+        """
+Advanced AI content analysis."""
         analysis_results = {}
         
         # Content sentiment analysis

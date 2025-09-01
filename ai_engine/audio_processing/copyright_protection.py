@@ -2,7 +2,7 @@
 Professional-grade content protection and intellectual property management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
 This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
@@ -11,6 +11,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 STRICTLY PROHIBITED and will result in immediate legal action.
 All rights reserved. Patent pending.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -41,7 +42,9 @@ Base = declarative_base()
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -51,6 +54,7 @@ class ProtectionLevel(Enum):
 
 class LicenseType(Enum):
     """Content license types"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -61,6 +65,7 @@ class LicenseType(Enum):
 
 class UsageRight(Enum):
     """Content usage rights"""
+
     STREAM = "stream"
     DOWNLOAD = "download"
     REMIX = "remix"
@@ -73,6 +78,7 @@ class UsageRight(Enum):
 
 class ProtectionStatus(Enum):
     """Protection status states"""
+
     PROTECTED = "protected"
     PENDING = "pending"
     VIOLATED = "violated"
@@ -98,7 +104,8 @@ class ContentFingerprint:
 
 @dataclass
 class OwnershipRecord:
-    """Content ownership record"""
+    """
+Content ownership record"""
     owner_id: str
     owner_name: str
     owner_email: str
@@ -111,7 +118,8 @@ class OwnershipRecord:
 
 @dataclass
 class LicenseAgreement:
-    """Content license agreement"""
+    """
+Content license agreement"""
     license_id: str
     license_type: LicenseType
     usage_rights: List[UsageRight]
@@ -128,7 +136,8 @@ class LicenseAgreement:
 
 @dataclass
 class ViolationReport:
-    """Copyright violation report"""
+    """
+Copyright violation report"""
     violation_id: str
     content_id: str
     violator_info: Dict[str, Any]
@@ -141,7 +150,8 @@ class ViolationReport:
 
 
 class ContentProtectionDatabase(Base):
-    """Database model for content protection"""
+    """
+Database model for content protection"""
     __tablename__ = 'protected_content'
     
     id = Column(String, primary_key=True)
@@ -160,7 +170,8 @@ class ContentProtectionDatabase(Base):
 
 
 class ViolationDatabase(Base):
-    """Database model for violations"""
+    """
+Database model for violations"""
     __tablename__ = 'violations'
     
     id = Column(String, primary_key=True)
@@ -173,13 +184,15 @@ class ViolationDatabase(Base):
 
 
 class AdvancedFingerprintEngine:
-    """Advanced multi-modal audio fingerprinting"""
+    """
+Advanced multi-modal audio fingerprinting"""
     
     def __init__(self):
         self.feature_extractors = self._initialize_extractors()
     
     def _initialize_extractors(self) -> Dict[str, Any]:
-        """Initialize feature extraction models"""
+        """
+Initialize feature extraction models"""
         return {
             'spectral': self._create_spectral_extractor(),
             'temporal': self._create_temporal_extractor(),
@@ -188,7 +201,8 @@ class AdvancedFingerprintEngine:
         }
     
     def _create_spectral_extractor(self):
-        """Create spectral feature extractor"""
+        """
+Create spectral feature extractor"""
         class SpectralExtractor:
             def extract(self, audio: np.ndarray, sr: int) -> np.ndarray:
                 # Spectral centroid, bandwidth, rolloff
@@ -204,7 +218,8 @@ class AdvancedFingerprintEngine:
         return SpectralExtractor()
     
     def _create_temporal_extractor(self):
-        """Create temporal feature extractor"""
+        """
+Create temporal feature extractor"""
         class TemporalExtractor:
             def extract(self, audio: np.ndarray, sr: int) -> np.ndarray:
                 import librosa
@@ -220,7 +235,8 @@ class AdvancedFingerprintEngine:
         return TemporalExtractor()
     
     def _create_perceptual_extractor(self):
-        """Create perceptual feature extractor"""
+        """
+Create perceptual feature extractor"""
         class PerceptualExtractor:
             def extract(self, audio: np.ndarray, sr: int) -> np.ndarray:
                 import librosa
@@ -235,7 +251,8 @@ class AdvancedFingerprintEngine:
         return PerceptualExtractor()
     
     def _create_harmonic_extractor(self):
-        """Create harmonic feature extractor"""
+        """
+Create harmonic feature extractor"""
         class HarmonicExtractor:
             def extract(self, audio: np.ndarray, sr: int) -> np.ndarray:
                 import librosa
@@ -253,7 +270,8 @@ class AdvancedFingerprintEngine:
     async def create_fingerprint(self, 
                                audio_path: Path,
                                additional_metadata: Optional[Dict[str, Any]] = None) -> ContentFingerprint:
-        """Create comprehensive audio fingerprint"""
+        """
+Create comprehensive audio fingerprint"""
         try:
             import librosa
             import soundfile as sf
@@ -304,7 +322,8 @@ class AdvancedFingerprintEngine:
         return hashlib.sha256(audio_bytes).hexdigest()
     
     def _compute_perceptual_hash(self, audio: np.ndarray, sr: int) -> str:
-        """Compute perceptual hash for similarity detection"""
+        """
+Compute perceptual hash for similarity detection"""
         import librosa
         
         # Use MFCC for perceptual hashing
@@ -318,7 +337,8 @@ class AdvancedFingerprintEngine:
         return hashlib.md5(hash_string.encode()).hexdigest()
     
     def _compute_quality_metrics(self, audio: np.ndarray, sr: int) -> Dict[str, float]:
-        """Compute audio quality metrics"""
+        """
+Compute audio quality metrics"""
         import librosa
         
         # Basic quality metrics
@@ -339,7 +359,8 @@ class AdvancedFingerprintEngine:
         }
     
     def _estimate_snr(self, audio: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio"""
+        """
+Estimate signal-to-noise ratio"""
         # Simple SNR estimation
         signal_power = np.mean(audio**2)
         noise_floor = np.percentile(audio**2, 10)  # Assume 10th percentile is noise
@@ -353,7 +374,8 @@ class AdvancedFingerprintEngine:
 
 
 class BlockchainCopyrightLedger:
-    """Blockchain-based copyright ledger for immutable records"""
+    """
+Blockchain-based copyright ledger for immutable records"""
     
     def __init__(self, blockchain_config: Dict[str, Any]):
         self.config = blockchain_config
@@ -361,7 +383,8 @@ class BlockchainCopyrightLedger:
         self.cipher_suite = Fernet(self.encryption_key)
     
     def _derive_key(self, passphrase: str) -> bytes:
-        """Derive encryption key from passphrase"""
+        """
+Derive encryption key from passphrase"""
         password = passphrase.encode()
         salt = b'stable_salt_for_demo'  # In production, use random salt
         kdf = PBKDF2HMAC(
@@ -377,7 +400,8 @@ class BlockchainCopyrightLedger:
                                content_id: str,
                                fingerprint: ContentFingerprint,
                                ownership_records: List[OwnershipRecord]) -> str:
-        """Register copyright on blockchain"""
+        """
+Register copyright on blockchain"""
         try:
             # Create copyright record
             copyright_record = {
@@ -429,7 +453,8 @@ class BlockchainCopyrightLedger:
     async def verify_copyright(self, 
                              content_id: str, 
                              blockchain_hash: str) -> bool:
-        """Verify copyright record on blockchain"""
+        """
+Verify copyright record on blockchain"""
         try:
             # In real implementation, this would query the blockchain
             # For demo, we'll simulate verification
@@ -455,7 +480,8 @@ class LicenseManagementSystem:
     async def create_license(self, 
                            content_id: str,
                            license_agreement: LicenseAgreement) -> str:
-        """Create new license agreement"""
+        """
+Create new license agreement"""
         try:
             # Validate license terms
             validation_result = await self._validate_license_terms(license_agreement)
@@ -560,7 +586,8 @@ class LicenseManagementSystem:
 
 
 class CopyrightViolationDetector:
-    """Advanced copyright violation detection system"""
+    """
+Advanced copyright violation detection system"""
     
     def __init__(self, 
                  fingerprint_engine: AdvancedFingerprintEngine,
@@ -582,7 +609,8 @@ class CopyrightViolationDetector:
     async def detect_violations(self, 
                               suspected_content_path: Path,
                               metadata: Dict[str, Any]) -> List[ViolationReport]:
-        """Detect copyright violations in uploaded content"""
+        """
+Detect copyright violations in uploaded content"""
         try:
             # Create fingerprint for suspected content
             suspected_fingerprint = await self.fingerprint_engine.create_fingerprint(
@@ -659,7 +687,8 @@ class CopyrightViolationDetector:
     def _compute_similarity(self, 
                           fingerprint1: ContentFingerprint, 
                           fingerprint2_data: Dict[str, Any]) -> float:
-        """Compute similarity between two fingerprints"""
+        """
+Compute similarity between two fingerprints"""
         # Hamming distance for perceptual hashes
         hash1 = fingerprint1.perceptual_hash
         hash2 = fingerprint2_data.get('perceptual_hash', '')
@@ -680,7 +709,8 @@ class CopyrightViolationDetector:
     async def _generate_evidence(self, 
                                suspected_fingerprint: ContentFingerprint,
                                protected_content: Dict[str, Any]) -> List[str]:
-        """Generate evidence for violation report"""
+        """
+Generate evidence for violation report"""
         evidence = []
         
         # Hash comparison
@@ -748,7 +778,8 @@ class ComprehensiveCopyrightManager:
                              ownership_records: List[OwnershipRecord],
                              protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
                              metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Register content for copyright protection"""
+        """
+Register content for copyright protection"""
         try:
             # Generate unique content ID
             content_id = str(uuid.uuid4())
@@ -871,13 +902,15 @@ class ComprehensiveCopyrightManager:
                                 content_id: str,
                                 user_id: str,
                                 requested_usage: UsageRight) -> bool:
-        """Verify user's usage rights for content"""
+        """
+Verify user's usage rights for content"""
         return await self.license_manager.check_usage_rights(
             content_id, requested_usage, user_id
         )
     
     async def get_protection_analytics(self) -> Dict[str, Any]:
-        """Get copyright protection analytics"""
+        """
+Get copyright protection analytics"""
         try:
             # Query database for analytics
             total_protected = self.session.query(ContentProtectionDatabase).filter(

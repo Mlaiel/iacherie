@@ -4,6 +4,7 @@ Handles visual content distribution, board management, and e-commerce integratio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PinterestCredentials:
-    """Pinterest API credentials configuration."""
+    """
+Pinterest API credentials configuration."""
     client_id: str
     client_secret: str
     access_token: str
@@ -34,6 +36,7 @@ class PinterestAdapter(BasePlatformAdapter):
     Advanced Pinterest platform adapter for visual content distribution.
     Supports pins, boards, shopping features, and analytics.
     """
+
     
     PLATFORM_NAME = "pinterest"
     API_VERSION = "v5"

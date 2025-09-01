@@ -5,6 +5,7 @@ optimization recommendations, and intelligent categorization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -48,7 +49,9 @@ from ...security.content_validator import ContentValidator
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for analysis"""
+    """
+Supported content types for analysis"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -58,6 +61,7 @@ class ContentType(Enum):
 
 class QualityLevel(Enum):
     """Content quality assessment levels"""
+
     POOR = "poor"           # 0.0 - 0.3
     FAIR = "fair"           # 0.3 - 0.5
     GOOD = "good"           # 0.5 - 0.7
@@ -84,7 +88,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content analysis results"""
+    """
+Comprehensive content analysis results"""
     content_id: str
     content_type: ContentType
     metadata: ContentMetadata
@@ -377,7 +382,8 @@ class ContentAnalyzer:
         return ContentType.UNKNOWN
     
     def _detect_content_type_from_data(self, content_data: Any) -> ContentType:
-        """Detect content type from data analysis."""
+        """
+Detect content type from data analysis."""
         if isinstance(content_data, str):
             return ContentType.TEXT
         elif isinstance(content_data, bytes):
@@ -396,7 +402,8 @@ class ContentAnalyzer:
         return ContentType.UNKNOWN
     
     async def _extract_metadata(self, content_data: Any, content_type: ContentType) -> ContentMetadata:
-        """Extract comprehensive metadata from content."""
+        """
+Extract comprehensive metadata from content."""
         metadata = ContentMetadata(
             file_name="unknown",
             file_size=len(content_data) if isinstance(content_data, bytes) else len(str(content_data)),
@@ -685,7 +692,8 @@ class ContentAnalyzer:
     
     async def _generate_optimization_recommendations(self, analysis: ContentAnalysis, 
                                                    creator_type: str = None) -> None:
-        """Generate intelligent optimization recommendations."""
+        """
+Generate intelligent optimization recommendations."""
         recommendations = analysis.optimization_suggestions.copy()
         
         # Quality-based recommendations
@@ -749,7 +757,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range of audio."""
+        """
+Calculate dynamic range of audio."""
         try:
             peak = np.max(np.abs(audio_data))
             rms = np.sqrt(np.mean(audio_data ** 2))
@@ -759,7 +768,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_frequency_balance(self, audio_data: np.ndarray, sr: int) -> float:
-        """Analyze frequency balance in audio."""
+        """
+Analyze frequency balance in audio."""
         try:
             # Simple frequency balance analysis
             fft = np.fft.fft(audio_data)
@@ -779,7 +789,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _detect_clipping(self, audio_data: np.ndarray) -> float:
-        """Detect audio clipping."""
+        """
+Detect audio clipping."""
         try:
             threshold = 0.99
             clipped_samples = np.sum(np.abs(audio_data) >= threshold)
@@ -789,7 +800,8 @@ class ContentAnalyzer:
             return 0.0
     
     def _calculate_silence_ratio(self, audio_data: np.ndarray) -> float:
-        """Calculate silence ratio in audio."""
+        """
+Calculate silence ratio in audio."""
         try:
             threshold = 0.01
             silent_samples = np.sum(np.abs(audio_data) < threshold)
@@ -799,7 +811,8 @@ class ContentAnalyzer:
             return 0.0
     
     def _calculate_energy_level(self, audio_data: np.ndarray) -> str:
-        """Calculate energy level category."""
+        """
+Calculate energy level category."""
         try:
             energy = np.mean(audio_data ** 2)
             if energy > 0.1:
@@ -848,7 +861,8 @@ class ContentAnalyzer:
             return 0.2
     
     def _calculate_sharpness(self, img_array: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance."""
+        """
+Calculate image sharpness using Laplacian variance."""
         try:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY) if len(img_array.shape) == 3 else img_array
             laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
@@ -858,7 +872,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_brightness(self, img_array: np.ndarray) -> float:
-        """Analyze image brightness."""
+        """
+Analyze image brightness."""
         try:
             # Convert to grayscale and calculate mean brightness
             if len(img_array.shape) == 3:
@@ -879,7 +894,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_contrast(self, img_array: np.ndarray) -> float:
-        """Analyze image contrast."""
+        """
+Analyze image contrast."""
         try:
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -892,7 +908,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_color_balance(self, img_array: np.ndarray) -> float:
-        """Analyze color balance in image."""
+        """
+Analyze color balance in image."""
         try:
             if len(img_array.shape) != 3:
                 return 1.0  # Grayscale images are balanced by definition
@@ -911,22 +928,26 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_composition(self, img_array: np.ndarray) -> float:
-        """Analyze image composition (simplified)."""
+        """
+Analyze image composition (simplified)."""
         # Placeholder implementation - would use more sophisticated analysis
         return 0.7
     
     def _analyze_color_harmony(self, img_array: np.ndarray) -> float:
-        """Analyze color harmony in image."""
+        """
+Analyze color harmony in image."""
         # Placeholder implementation - would use color theory analysis
         return 0.6
     
     def _analyze_visual_balance(self, img_array: np.ndarray) -> float:
-        """Analyze visual balance in image."""
+        """
+Analyze visual balance in image."""
         # Placeholder implementation - would use visual weight analysis
         return 0.6
     
     def _categorize_text_length(self, word_count: int) -> str:
-        """Categorize text length."""
+        """
+Categorize text length."""
         if word_count < 50:
             return "short"
         elif word_count < 300:

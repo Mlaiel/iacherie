@@ -11,10 +11,11 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -50,7 +51,9 @@ from ...database.connection import get_async_session
 logger = get_structured_logger(__name__)
 
 class ReportType(str, Enum):
-    """Report type enumeration"""
+    """
+Report type enumeration"""
+
     COMMISSION_SUMMARY = "commission_summary"
     REVENUE_ANALYSIS = "revenue_analysis"
     TIER_PERFORMANCE = "tier_performance"
@@ -62,6 +65,7 @@ class ReportType(str, Enum):
 
 class TimeFrame(str, Enum):
     """Time frame enumeration"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -71,6 +75,7 @@ class TimeFrame(str, Enum):
 
 class MetricType(str, Enum):
     """Metric type enumeration"""
+
     TOTAL_COMMISSION = "total_commission"
     AVERAGE_COMMISSION = "average_commission"
     COMMISSION_COUNT = "commission_count"
@@ -137,7 +142,8 @@ class CommissionAnalyticsService:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission Analytics Service"""
+        """
+Initialize Commission Analytics Service"""
         self.config = config or {}
         
         # Dependencies
@@ -678,14 +684,16 @@ class CommissionAnalyticsService:
         pass
     
     def _setup_metric_calculators(self) -> None:
-        """Setup metric calculators"""
+        """
+Setup metric calculators"""
         # Metric calculators would be initialized here
         # This is a placeholder for extensibility
         pass
     
     # Cache methods
     async def _get_cached_report(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get cached report"""
+        """
+Get cached report"""
         try:
             if not self._redis_client:
                 return None
@@ -724,7 +732,8 @@ class CommissionBusinessService:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission Business Service"""
+        """
+Initialize Commission Business Service"""
         self.config = config or {}
         
         # Core components
@@ -979,7 +988,7 @@ class CommissionBusinessService:
             logger.error(f"Business service shutdown error: {e}")
 
 """Professional Commission Services
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This module provides comprehensive commission business services including analytics,
 reporting, and high-level business logic coordination.

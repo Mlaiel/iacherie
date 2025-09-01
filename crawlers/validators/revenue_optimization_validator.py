@@ -6,7 +6,7 @@ comprehensive revenue tracking, optimization recommendations, and monetization
 eligibility validation for content creators across multiple platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 LEGAL WARNING: This intellectual property is protected under German and
@@ -21,6 +21,7 @@ Features:
 - Content performance optimization recommendations
 - Licensing and rights management validation
 """
+
 import re
 import json
 import hashlib
@@ -51,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 class Platform(Enum):
     """Supported monetization platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -65,6 +67,7 @@ class Platform(Enum):
 
 class RevenueType(Enum):
     """Types of revenue streams"""
+
     STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -79,6 +82,7 @@ class RevenueType(Enum):
 
 class MonetizationStatus(Enum):
     """Monetization eligibility status"""
+
     ELIGIBLE = "eligible"
     PENDING = "pending"
     INELIGIBLE = "ineligible"
@@ -89,6 +93,7 @@ class MonetizationStatus(Enum):
 
 class OptimizationLevel(Enum):
     """Revenue optimization levels"""
+
     BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -113,7 +118,8 @@ class CreatorProfile:
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics for revenue optimization"""
+    """
+Content performance metrics for revenue optimization"""
     views: int = 0
     likes: int = 0
     shares: int = 0
@@ -130,7 +136,8 @@ class ContentMetrics:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendations"""
+    """
+Revenue optimization recommendations"""
     optimization_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     platform: Platform
     recommended_actions: List[str] = field(default_factory=list)
@@ -923,7 +930,8 @@ class RevenueOptimizationValidator:
         platform: Platform,
         month: int
     ) -> float:
-        """Predict revenue using ML models"""
+        """
+Predict revenue using ML models"""
         if not self.models_trained:
             return self._predict_statistical_revenue([], month)
         
@@ -967,7 +975,8 @@ class RevenueOptimizationValidator:
         return historical_revenues[-1] * (1.1 ** month)  # 10% monthly growth
     
     def get_platform_revenue_benchmarks(self, platform: Platform) -> Dict[str, Any]:
-        """Get revenue benchmarks for specific platform"""
+        """
+Get revenue benchmarks for specific platform"""
         benchmarks = {
             Platform.YOUTUBE: {
                 "average_cpm": {"low": 0.5, "medium": 2.0, "high": 5.0},

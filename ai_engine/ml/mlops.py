@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive MLOps capabilities including data pipelines,
 model pipelines, deployment pipelines, and ML workflow automation.
 """
+
 import logging
 import json
 import os
@@ -22,7 +23,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
+    """
+Pipeline execution status"""
+
     CREATED = "created"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -32,6 +35,7 @@ class PipelineStatus(Enum):
 
 class StepStatus(Enum):
     """Individual step status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -40,6 +44,7 @@ class StepStatus(Enum):
 
 class TriggerType(Enum):
     """Pipeline trigger types"""
+
     MANUAL = "manual"
     SCHEDULED = "scheduled"
     DATA_CHANGE = "data_change"
@@ -61,7 +66,8 @@ class PipelineStep:
 
 @dataclass
 class StepExecution:
-    """Execution record for a pipeline step"""
+    """
+Execution record for a pipeline step"""
     step_id: str
     status: StepStatus
     started_at: Optional[datetime]
@@ -73,7 +79,8 @@ class StepExecution:
 
 @dataclass
 class PipelineExecution:
-    """Execution record for a complete pipeline"""
+    """
+Execution record for a complete pipeline"""
     execution_id: str
     pipeline_id: str
     status: PipelineStatus
@@ -85,7 +92,8 @@ class PipelineExecution:
     metadata: Dict[str, Any]
 
 class MLOpsManager:
-    """Main MLOps orchestration manager"""
+    """
+Main MLOps orchestration manager"""
     
     def __init__(self, workspace_path: str = "./mlops_workspace"):
         self.workspace_path = Path(workspace_path)
@@ -243,7 +251,8 @@ class MLOpsManager:
         return self.executions.get(execution_id)
     
     def list_pipelines(self) -> List[Dict[str, Any]]:
-        """List all registered pipelines"""
+        """
+List all registered pipelines"""
         return [
             {
                 "pipeline_id": pipeline_id,
@@ -279,7 +288,8 @@ class Pipeline(ABC):
         self.created_at = datetime.utcnow()
     
     def add_step(self, step: PipelineStep):
-        """Add a step to the pipeline"""
+        """
+Add a step to the pipeline"""
         self.steps.append(step)
         self.logger.info(f"Added step to pipeline: {step.step_id}")
     
@@ -385,7 +395,8 @@ class Pipeline(ABC):
         pass
 
 class DataPipeline(Pipeline):
-    """Data processing pipeline"""
+    """
+Data processing pipeline"""
     
     def __init__(self, pipeline_id: str, name: str, workspace_path: Path):
         super().__init__(pipeline_id, name, workspace_path)

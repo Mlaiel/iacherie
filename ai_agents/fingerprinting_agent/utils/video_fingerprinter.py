@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -51,7 +52,8 @@ except ImportError:
 from ...utils.video_utils import VideoProcessor
 from ...ml.video_models import VideoEmbeddingModel
 
-"""Video Fingerprinter - Advanced AI-Powered Video Content Identification
+"""
+Video Fingerprinter - Advanced AI-Powered Video Content Identification
 
 Ultra-sophisticated video fingerprinting system using computer vision, temporal analysis,
 and deep learning for precise video content identification and similarity matching.
@@ -63,6 +65,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -110,7 +113,9 @@ from .audio_fingerprinter import AudioFingerprinter
 logger = logging.getLogger(__name__)
 
 class VideoFingerprintQuality(Enum):
-    """Video fingerprint quality levels"""
+    """
+Video fingerprint quality levels"""
+
     BASIC = "basic"          # Frame hashes only
     STANDARD = "standard"    # + Motion analysis
     ADVANCED = "advanced"    # + Temporal features, audio
@@ -118,6 +123,7 @@ class VideoFingerprintQuality(Enum):
 
 class VideoFeatureType(Enum):
     """Types of video features extracted"""
+
     FRAME_HASH = "frame_hash"
     MOTION_FEATURES = "motion_features"
     TEMPORAL_FEATURES = "temporal_features"
@@ -140,7 +146,8 @@ class VideoFeatureVector:
 
 @dataclass
 class VideoFingerprint:
-    """Complete video fingerprint structure"""
+    """
+Complete video fingerprint structure"""
     fingerprint_id: str
     video_hash: str
     frame_hashes: List[str]
@@ -590,7 +597,9 @@ class VideoFingerprinter:
         ]
 
 class VideoFingerprintQuality(Enum):
-    """Video fingerprint quality levels"""
+    """
+Video fingerprint quality levels"""
+
     BASIC = "basic"          # Frame hashing only
     STANDARD = "standard"    # + Motion analysis
     ADVANCED = "advanced"    # + Deep features
@@ -647,7 +656,8 @@ class VideoFingerprinter:
         }
         
     async def initialize(self):
-        """Initialize video fingerprinting system"""
+        """
+Initialize video fingerprinting system"""
         try:
             # Initialize deep learning models
             await self._initialize_deep_models()
@@ -907,7 +917,8 @@ class VideoFingerprinter:
         return np.array(motion_features)
     
     async def _extract_visual_features(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Extract deep visual features using ResNet"""
+        """
+Extract deep visual features using ResNet"""
         if self.resnet_model is None:
             logger.warning("ResNet model not loaded, using fallback features")
             return np.random.rand(512)  # Fallback features
@@ -984,7 +995,8 @@ class VideoFingerprinter:
         return np.array(scene_features)
     
     async def _generate_temporal_embedding(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Generate temporal sequence embedding using CLIP"""
+        """
+Generate temporal sequence embedding using CLIP"""
         if self.clip_model is None:
             logger.warning("CLIP model not loaded, using fallback embedding")
             return np.random.rand(512)
@@ -1110,7 +1122,8 @@ class VideoFingerprinter:
             return np.zeros(128)
     
     async def _initialize_deep_models(self):
-        """Initialize deep learning models"""
+        """
+Initialize deep learning models"""
         try:
             # Load ResNet for visual features
             self.resnet_model = resnet50(pretrained=True)

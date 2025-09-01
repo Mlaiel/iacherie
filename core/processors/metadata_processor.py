@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import json
@@ -74,7 +75,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataType(str, Enum):
-    """Types of metadata"""
+    """
+Types of metadata"""
+
     TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
@@ -89,6 +92,7 @@ class MetadataType(str, Enum):
 
 class ContentFormat(str, Enum):
     """Content format types"""
+
     IMAGE_JPEG = "image/jpeg"
     IMAGE_PNG = "image/png"
     IMAGE_GIF = "image/gif"
@@ -111,6 +115,7 @@ class ContentFormat(str, Enum):
 
 class MetadataSchema(str, Enum):
     """Metadata schema standards"""
+
     DUBLIN_CORE = "dublin_core"
     EXIF = "exif"
     IPTC = "iptc"
@@ -173,7 +178,8 @@ class MetadataProcessingConfig:
 
 @dataclass
 class TechnicalMetadata:
-    """Technical metadata for content"""
+    """
+Technical metadata for content"""
     # File properties
     filename: Optional[str] = None
     file_size: Optional[int] = None
@@ -207,7 +213,8 @@ class TechnicalMetadata:
 
 @dataclass
 class DescriptiveMetadata:
-    """Descriptive metadata for content"""
+    """
+Descriptive metadata for content"""
     # Basic description
     title: Optional[str] = None
     description: Optional[str] = None
@@ -245,7 +252,8 @@ class DescriptiveMetadata:
 
 @dataclass
 class AdministrativeMetadata:
-    """Administrative metadata for content"""
+    """
+Administrative metadata for content"""
     # Content management
     content_id: Optional[str] = None
     version: Optional[str] = None
@@ -278,7 +286,8 @@ class AdministrativeMetadata:
 
 @dataclass
 class StructuralMetadata:
-    """Structural metadata for content"""
+    """
+Structural metadata for content"""
     # Content structure
     components: List[Dict[str, Any]] = field(default_factory=list)
     relationships: List[Dict[str, Any]] = field(default_factory=list)
@@ -302,7 +311,8 @@ class StructuralMetadata:
 
 @dataclass
 class PreservationMetadata:
-    """Preservation metadata for content"""
+    """
+Preservation metadata for content"""
     # Preservation information
     preservation_level: Optional[str] = None
     preservation_actions: List[Dict[str, Any]] = field(default_factory=list)
@@ -326,7 +336,8 @@ class PreservationMetadata:
 
 @dataclass
 class ContextualMetadata:
-    """Contextual metadata for content"""
+    """
+Contextual metadata for content"""
     # Temporal context
     creation_context: Optional[Dict[str, Any]] = None
     publication_context: Optional[Dict[str, Any]] = None
@@ -349,7 +360,8 @@ class ContextualMetadata:
 
 @dataclass
 class ContentMetadata:
-    """Complete metadata package for content"""
+    """
+Complete metadata package for content"""
     # Metadata components
     technical: TechnicalMetadata = field(default_factory=TechnicalMetadata)
     descriptive: DescriptiveMetadata = field(default_factory=DescriptiveMetadata)

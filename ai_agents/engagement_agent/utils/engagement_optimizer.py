@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class OptimizationObjective(Enum):
-    """Engagement optimization objectives"""
+    """
+Engagement optimization objectives"""
+
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT_RATE = "maximize_engagement_rate" 
     MAXIMIZE_CONVERSIONS = "maximize_conversions"
@@ -59,6 +62,7 @@ class OptimizationObjective(Enum):
 
 class ExperimentType(Enum):
     """A/B testing experiment types"""
+
     POSTING_TIME = "posting_time"
     CONTENT_FORMAT = "content_format"
     HASHTAG_STRATEGY = "hashtag_strategy"
@@ -83,7 +87,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ABTestExperiment:
-    """A/B testing experiment configuration"""
+    """
+A/B testing experiment configuration"""
     experiment_id: str
     experiment_type: ExperimentType
     hypothesis: str
@@ -99,7 +104,8 @@ class ABTestExperiment:
 
 @dataclass
 class InteractionPattern:
-    """User interaction pattern analysis"""
+    """
+User interaction pattern analysis"""
     user_id: str
     platform: str
     interaction_type: str

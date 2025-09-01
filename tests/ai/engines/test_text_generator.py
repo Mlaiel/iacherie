@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Text Generator Engine Testing Module
+"""
+Text Generator Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for text generator engine.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -56,20 +59,24 @@ from ai.engines.text_generator import AdvancedTextGenerator
 
 
 class TestTextGeneratorEngine:
-    """Comprehensive tests for Text Generator Engine module"""
+    """
+Comprehensive tests for Text Generator Engine module"""
     
     @pytest.fixture
     def mock_text_generator(self):
-        """Create mock text generator instance"""
+        """
+Create mock text generator instance"""
         return Mock(spec=AdvancedTextGenerator)
     
     def test_text_generator_import(self):
-        """Test that TextContentGenerator can be imported"""
+        """
+Test that TextContentGenerator can be imported"""
         assert TextContentGenerator is not None
         assert hasattr(TextContentGenerator, '__name__')
     
     def test_text_generator_module_attributes(self):
-        """Test module has required attributes"""
+        """
+Test module has required attributes"""
         from ai.engines import text_generator
         assert hasattr(text_generator, '__all__')
         assert "TextContentGenerator" in text_generator.__all__
@@ -84,7 +91,8 @@ class TestTextGeneratorEngine:
     
     @pytest.mark.asyncio
     async def test_text_generator_compatibility(self, mock_text_generator):
-        """Test compatibility with the main text engine"""
+        """
+Test compatibility with the main text engine"""
         # Test that the re-exported class maintains compatibility
         mock_text_generator.generate_text = AsyncMock(return_value="Generated text")
         
@@ -102,5 +110,5 @@ class TestTextGeneratorEngine:
     def test_text_generator_copyright_protection(self):
         """Test copyright protection is maintained"""
         from ai.engines import text_generator
-        assert "© 2025 Fahed Mlaiel" in text_generator.__doc__
+        assert "(c) 2025 Fahed Mlaiel" in text_generator.__doc__
         assert "COPYRIGHT WARNING" in text_generator.__doc__

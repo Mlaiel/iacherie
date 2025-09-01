@@ -10,6 +10,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import time
 from typing import Dict, List, Optional, Callable, Any
 from collections import defaultdict, deque
@@ -22,7 +23,9 @@ import logging
 
 
 class MetricType(Enum):
-    """Metric type definitions."""
+    """
+Metric type definitions."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -38,7 +41,8 @@ class MetricPoint:
     labels: Dict[str, str] = None
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
@@ -48,7 +52,8 @@ class MetricPoint:
 
 
 class MetricsCollector:
-    """Enhanced metrics collector with enterprise features."""
+    """
+Enhanced metrics collector with enterprise features."""
     
     def __init__(self, retention_hours: int = 24, service_name: str = "ia-influencer"):
         self.retention_hours = retention_hours
@@ -80,14 +85,16 @@ class MetricsCollector:
             self._record_time_series(metric_key, self.counters[metric_key], labels)
 
     def set_gauge(self, name: str, value: float, labels: Optional[Dict] = None):
-        """Set a gauge metric with labels support."""
+        """
+Set a gauge metric with labels support."""
         with self._lock:
             metric_key = self._build_key(name, labels)
             self.gauges[metric_key] = value
             self._record_time_series(metric_key, value, labels)
 
     def record_histogram(self, name: str, value: float, labels: Optional[Dict] = None):
-        """Record a histogram metric with labels support."""
+        """
+Record a histogram metric with labels support."""
         with self._lock:
             metric_key = self._build_key(name, labels)
             self.histograms[metric_key].append(value)
@@ -99,7 +106,8 @@ class MetricsCollector:
             self._record_time_series(metric_key, value, labels)
 
     def record_business_metric(self, metric_name: str, value: float, user_id: Optional[str] = None):
-        """Record business-specific metrics."""
+        """
+Record business-specific metrics."""
         with self._lock:
             self.business_metrics[metric_name] += value
             
@@ -170,7 +178,8 @@ class MetricsCollector:
         return TimingContext(self, name, labels)
 
     def get_metrics_summary(self) -> Dict:
-        """Get comprehensive metrics summary."""
+        """
+Get comprehensive metrics summary."""
         with self._lock:
             current_time = datetime.utcnow()
             
@@ -315,7 +324,8 @@ class MetricsCollector:
         return (compliant_count / len(values) * 100)
 
     def cleanup_old_metrics(self):
-        """Clean up old metric data points beyond retention period."""
+        """
+Clean up old metric data points beyond retention period."""
         cutoff_time = datetime.utcnow() - timedelta(hours=self.retention_hours)
         
         with self._lock:
@@ -324,7 +334,8 @@ class MetricsCollector:
                     time_series.popleft()
 
     def export_prometheus_format(self) -> str:
-        """Export metrics in Prometheus format with enhanced metadata."""
+        """
+Export metrics in Prometheus format with enhanced metadata."""
         lines = []
         
         # Add service info
@@ -420,17 +431,20 @@ class MetricsCollector:
         self.metrics_data[metric_key].append(data_point)
 
     def _get_histogram_avg(self, name: str) -> float:
-        """Get average value from histogram."""
+        """
+Get average value from histogram."""
         values = self.histograms.get(name, [])
         return sum(values) / len(values) if values else 0.0
 
     def _get_histogram_percentile(self, name: str, percentile: float) -> float:
-        """Get percentile value from histogram."""
+        """
+Get percentile value from histogram."""
         values = sorted(self.histograms.get(name, []))
         return self._calculate_percentile(values, percentile)
 
     def _calculate_percentile(self, values: List[float], percentile: float) -> float:
-        """Calculate percentile value."""
+        """
+Calculate percentile value."""
         if not values:
             return 0.0
         
@@ -439,7 +453,8 @@ class MetricsCollector:
 
 
 class ContentMetricsCollector:
-    """Specialized metrics collector for content processing operations."""
+    """
+Specialized metrics collector for content processing operations."""
     
     def __init__(self, base_collector: MetricsCollector):
         self.base_collector = base_collector
@@ -450,7 +465,8 @@ class ContentMetricsCollector:
         self.content_by_user = defaultdict(int)
         
     def record_upload(self, user_id: str, content_type: str, file_size: int, success: bool, duration_ms: float):
-        """Record content upload event."""
+        """
+Record content upload event."""
         labels = {
             "content_type": content_type,
             "success": str(success),
@@ -567,15 +583,18 @@ class TimingContext:
         self.metadata = {}
 
     def add_label(self, key: str, value: Any):
-        """Add a label to the timing context."""
+        """
+Add a label to the timing context."""
         self.labels[key] = str(value)
 
     def add_metadata(self, key: str, value: Any):
-        """Add metadata to be recorded with the timing."""
+        """
+Add metadata to be recorded with the timing."""
         self.metadata[key] = value
 
     def set_success(self, success: bool):
-        """Set the success status of the operation."""
+        """
+Set the success status of the operation."""
         self.success = success
 
     def __enter__(self):

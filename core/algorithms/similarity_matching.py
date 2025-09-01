@@ -16,6 +16,7 @@ Professional similarity matching engine for content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SimilarityResult:
-    """Similarity matching result"""
+    """
+Similarity matching result"""
     similarity_score: float
     content_type: str
     match_confidence: float
@@ -47,7 +49,8 @@ class SimilarityResult:
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint representation"""
+    """
+Content fingerprint representation"""
     content_id: str
     content_type: str
     fingerprint: Union[str, np.ndarray]
@@ -56,7 +59,8 @@ class ContentFingerprint:
 
 @dataclass
 class MatchResult:
-    """Content match result"""
+    """
+Content match result"""
     query_id: str
     matched_id: str
     similarity_score: float
@@ -728,93 +732,111 @@ class SimilarityMatchingEngine:
         return self._cosine_similarity(a, b)
     
     def _perceptual_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate perceptual similarity"""
+        """
+Calculate perceptual similarity"""
         # This would use perceptual models for human-like similarity judgment
         return self._cosine_similarity(a, b)
     
     def _structural_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate structural similarity"""
+        """
+Calculate structural similarity"""
         # This would analyze structural patterns in the data
         return self._cosine_similarity(a, b)
     
     # Content-specific similarity methods
     def _audio_chromaprint_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio Chromaprint similarity"""
+        """
+Calculate audio Chromaprint similarity"""
         # Implementation would use Chromaprint library
         return 0.0
     
     def _audio_spectral_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio spectral similarity"""
+        """
+Calculate audio spectral similarity"""
         # Implementation would compare spectral features
         return 0.0
     
     def _audio_mfcc_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio MFCC similarity"""
+        """
+Calculate audio MFCC similarity"""
         # Implementation would compare MFCC features
         return 0.0
     
     def _audio_tempo_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio tempo similarity"""
+        """
+Calculate audio tempo similarity"""
         # Implementation would compare tempo features
         return 0.0
     
     def _video_frame_hash_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate video frame hash similarity"""
+        """
+Calculate video frame hash similarity"""
         # Implementation would compare frame hashes
         return 0.0
     
     def _video_optical_flow_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate video optical flow similarity"""
+        """
+Calculate video optical flow similarity"""
         # Implementation would compare optical flow patterns
         return 0.0
     
     def _video_scene_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate video scene similarity"""
+        """
+Calculate video scene similarity"""
         # Implementation would compare scene features
         return 0.0
     
     def _image_phash_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image perceptual hash similarity"""
+        """
+Calculate image perceptual hash similarity"""
         # Implementation would use pHash algorithm
         return 0.0
     
     def _image_dhash_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image difference hash similarity"""
+        """
+Calculate image difference hash similarity"""
         # Implementation would use dHash algorithm
         return 0.0
     
     def _image_feature_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image feature similarity"""
+        """
+Calculate image feature similarity"""
         # Implementation would compare SIFT/ORB features
         return 0.0
     
     def _image_color_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image color similarity"""
+        """
+Calculate image color similarity"""
         # Implementation would compare color histograms
         return 0.0
     
     def _text_tfidf_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text TF-IDF similarity"""
+        """
+Calculate text TF-IDF similarity"""
         # Implementation would use TF-IDF vectors
         return 0.0
     
     def _text_embedding_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text embedding similarity"""
+        """
+Calculate text embedding similarity"""
         # Implementation would use text embeddings
         return 0.0
     
     def _text_ngram_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text n-gram similarity"""
+        """
+Calculate text n-gram similarity"""
         # Implementation would compare n-grams
         return 0.0
     
     def _text_semantic_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text semantic similarity"""
+        """
+Calculate text semantic similarity"""
         # Implementation would use semantic models
         return 0.0
     
     def _generate_similarity_report(self, similarity_results: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive similarity report"""
+        """
+Generate comprehensive similarity report"""
         try:
             report = {
                 'summary': {},

@@ -8,6 +8,7 @@ authorship analysis, and 644 languages support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import asyncio
 import numpy as np
@@ -53,7 +54,8 @@ class TestIndustrialEmbeddingsEngine:
     """Test suite for Industrial Embeddings Engine"""
     
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         try:
             from ai_agents.nlp_agent.core.industrial_embeddings_engine import (
                 IndustrialEmbeddingsEngine, IndustrialEmbeddingConfig
@@ -131,7 +133,8 @@ class TestSemanticPlagiarismDetector:
     """Test suite for Semantic Plagiarism Detector"""
     
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         try:
             from ai_agents.nlp_agent.core.industrial_embeddings_engine import (
                 IndustrialEmbeddingsEngine, IndustrialEmbeddingConfig
@@ -192,7 +195,8 @@ class TestAdvancedAuthorshipAnalyzer:
     """Test suite for Advanced Authorship Analyzer"""
     
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         try:
             from ai_agents.nlp_agent.core.industrial_embeddings_engine import (
                 IndustrialEmbeddingsEngine, IndustrialEmbeddingConfig
@@ -257,7 +261,8 @@ class TestEnhanced644LanguageSupport:
     """Test suite for Enhanced 644 Language Support"""
     
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         try:
             from conversational.multilingual_support.enhanced_644_language_support import (
                 Enhanced644LanguageSupport, MultilingualAnalysisConfig
@@ -330,7 +335,8 @@ class TestIndustrialTextProcessingEngine:
     """Test suite for Industrial Text Processing Engine"""
     
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         try:
             from ai_agents.nlp_agent.core.industrial_text_processing_engine import (
                 IndustrialTextProcessingEngine, IndustrialProcessingConfig, ProcessingMode, AnalysisType
@@ -410,7 +416,8 @@ class TestIntegrationScenarios:
     """Integration test scenarios"""
     
     def setup_method(self):
-        """Setup for integration tests"""
+        """
+Setup for integration tests"""
         try:
             from ai_agents.nlp_agent.core.industrial_text_processing_engine import (
                 create_fast_processing_engine
@@ -481,7 +488,8 @@ class TestPerformanceBenchmarks:
     """Performance benchmark tests"""
     
     def setup_method(self):
-        """Setup for performance tests"""
+        """
+Setup for performance tests"""
         try:
             from ai_agents.nlp_agent.core.industrial_text_processing_engine import (
                 create_fast_processing_engine

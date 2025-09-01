@@ -16,6 +16,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type
@@ -56,7 +57,8 @@ class ContentManagementSystem:
     """
     
     def __init__(self, config: Optional[ContentConfig] = None):
-        """Initialize the content management system."""
+        """
+Initialize the content management system."""
         self.config = config or ContentConfig()
         self.engines = {}
         self.is_initialized = False
@@ -321,11 +323,13 @@ class ContentManagementSystem:
         return self.engines.get(engine_name)
     
     def get_all_engines(self) -> Dict[str, Any]:
-        """Get all engine instances."""
+        """
+Get all engine instances."""
         return self.engines.copy()
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check."""
+        """
+Perform comprehensive system health check."""
         if not self.is_initialized:
             return {
                 'status': 'not_initialized',
@@ -387,7 +391,8 @@ class ContentManagementSystem:
         return health_results
     
     async def shutdown(self):
-        """Gracefully shutdown all engines."""
+        """
+Gracefully shutdown all engines."""
         logger.info("🛑 Shutting down Content Management System...")
         
         # Shutdown engines in reverse dependency order
@@ -503,12 +508,14 @@ async def initialize_content_system(config: Optional[ContentConfig] = None) -> C
 
 
 def get_content_system() -> Optional[ContentManagementSystem]:
-    """Get the global content management system instance."""
+    """
+Get the global content management system instance."""
     return _content_system
 
 
 async def shutdown_content_system():
-    """Shutdown the global content management system."""
+    """
+Shutdown the global content management system."""
     global _content_system
     
     if _content_system:
@@ -518,31 +525,36 @@ async def shutdown_content_system():
 
 # Convenience functions for direct engine access
 def get_content_processor():
-    """Get the content processor engine."""
+    """
+Get the content processor engine."""
     system = get_content_system()
     return system.get_engine('content_processor') if system else None
 
 
 def get_ai_enhancer():
-    """Get the AI enhancer engine."""
+    """
+Get the AI enhancer engine."""
     system = get_content_system()
     return system.get_engine('ai_enhancer') if system else None
 
 
 def get_distribution_manager():
-    """Get the distribution manager engine."""
+    """
+Get the distribution manager engine."""
     system = get_content_system()
     return system.get_engine('distribution_manager') if system else None
 
 
 def get_monetization_engine():
-    """Get the monetization engine."""
+    """
+Get the monetization engine."""
     system = get_content_system()
     return system.get_engine('monetization_engine') if system else None
 
 
 def get_protection_engine():
-    """Get the content protection engine."""
+    """
+Get the content protection engine."""
     system = get_content_system()
     return system.get_engine('protection_engine') if system else None
 
@@ -563,7 +575,8 @@ __all__ = [
 
 # Example usage and integration test
 async def main():
-    """Example usage of the content management system."""
+    """
+Example usage of the content management system."""
     print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                IA Influencer Agent - Content Management System              ║
 ║                                                                              ║

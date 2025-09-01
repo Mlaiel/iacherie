@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""
+    """
+Quality assessment dimensions"""
+
     RELEVANCE = "relevance"
     COHERENCE = "coherence"
     FLUENCY = "fluency"
@@ -54,6 +57,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Quality level classifications"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -75,7 +79,8 @@ class QualityMetrics:
 
 
 class QualityRule(BaseModel):
-    """Quality rule definition"""
+    """
+Quality rule definition"""
     rule_id: str
     name: str
     description: str
@@ -88,7 +93,8 @@ class QualityRule(BaseModel):
 
 
 class ResponseQualityValidator:
-    """Advanced response quality validation system"""
+    """
+Advanced response quality validation system"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -113,7 +119,8 @@ class ResponseQualityValidator:
         }
     
     def _initialize_nlp_models(self):
-        """Initialize NLP models for quality assessment"""
+        """
+Initialize NLP models for quality assessment"""
         try:
             self.spacy_model = spacy.load("en_core_web_sm")
             self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
@@ -389,7 +396,8 @@ class ResponseQualityValidator:
         return weighted_sum / total_weight if total_weight > 0 else 0.5
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level based on score"""
+        """
+Determine quality level based on score"""
         for level, threshold in sorted(
             self.quality_thresholds.items(),
             key=lambda x: x[1],
@@ -404,7 +412,8 @@ class ResponseQualityValidator:
         text: str,
         metrics: QualityMetrics
     ) -> List[str]:
-        """Generate specific improvement suggestions"""
+        """
+Generate specific improvement suggestions"""
         suggestions = []
         
         # Analyze weak dimensions
@@ -419,7 +428,8 @@ class ResponseQualityValidator:
         return list(set(suggestions))  # Remove duplicates
     
     def _get_dimension_suggestions(self, dimension: QualityDimension, score: float) -> List[str]:
-        """Get suggestions for specific quality dimension"""
+        """
+Get suggestions for specific quality dimension"""
         suggestions = {
             QualityDimension.FLUENCY: [
                 "Review grammar and sentence structure",
@@ -512,7 +522,8 @@ class ResponseEnhancer:
         self.enhancement_strategies = self._initialize_enhancement_strategies()
     
     def _initialize_enhancement_strategies(self) -> Dict[str, Any]:
-        """Initialize enhancement strategies"""
+        """
+Initialize enhancement strategies"""
         return {
             QualityDimension.FLUENCY: self._enhance_fluency,
             QualityDimension.RELEVANCE: self._enhance_relevance,
@@ -527,7 +538,8 @@ class ResponseEnhancer:
         quality_metrics: QualityMetrics,
         context: Dict[str, Any]
     ) -> str:
-        """Enhance response based on quality metrics"""
+        """
+Enhance response based on quality metrics"""
         enhanced_response = response
         
         try:
@@ -551,35 +563,41 @@ class ResponseEnhancer:
         return response
     
     async def _enhance_relevance(self, response: str, context: Dict[str, Any], score: float) -> str:
-        """Enhance response relevance"""
+        """
+Enhance response relevance"""
         # Implement relevance enhancement logic
         return response
     
     async def _enhance_coherence(self, response: str, context: Dict[str, Any], score: float) -> str:
-        """Enhance response coherence"""
+        """
+Enhance response coherence"""
         # Implement coherence enhancement logic
         return response
     
     async def _enhance_appropriateness(self, response: str, context: Dict[str, Any], score: float) -> str:
-        """Enhance response appropriateness"""
+        """
+Enhance response appropriateness"""
         # Implement appropriateness enhancement logic
         return response
     
     async def _enhance_business_alignment(self, response: str, context: Dict[str, Any], score: float) -> str:
-        """Enhance business alignment"""
+        """
+Enhance business alignment"""
         # Implement business alignment enhancement logic
         return response
 
 
 class QualityMetricsCollector:
-    """Quality metrics collection and analysis"""
+    """
+Quality metrics collection and analysis"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics_history: List[QualityMetrics] = []
     
     async def collect_metrics(self, metrics: QualityMetrics, context: Dict[str, Any]):
-        """Collect and store quality metrics"""
+        """
+Collect and store quality metrics"""
         try:
             # Add context information
             metrics.metadata.update({
@@ -603,7 +621,8 @@ class QualityMetricsCollector:
         pass
     
     def get_quality_trends(self, time_window: int = 24) -> Dict[str, Any]:
-        """Get quality trends analysis"""
+        """
+Get quality trends analysis"""
         recent_metrics = [
             m for m in self.metrics_history[-100:]  # Last 100 responses
         ]
@@ -621,7 +640,8 @@ class QualityMetricsCollector:
         }
     
     def _calculate_trend(self, scores: List[float]) -> str:
-        """Calculate score trend direction"""
+        """
+Calculate score trend direction"""
         if len(scores) < 5:
             return "insufficient_data"
         
@@ -644,7 +664,8 @@ class QualityMetricsCollector:
         return distribution
     
     def _identify_common_issues(self, metrics: List[QualityMetrics]) -> List[str]:
-        """Identify most common quality issues"""
+        """
+Identify most common quality issues"""
         issue_counts = {}
         for metric in metrics:
             for issue in metric.issues_detected:
@@ -655,14 +676,16 @@ class QualityMetricsCollector:
 
 
 class ResponseRefinementEngine:
-    """Advanced response refinement and optimization"""
+    """
+Advanced response refinement and optimization"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.refinement_models = self._initialize_refinement_models()
     
     def _initialize_refinement_models(self):
-        """Initialize refinement models"""
+        """
+Initialize refinement models"""
         try:
             return {
                 'style_refiner': pipeline("text2text-generation", model="t5-base"),
@@ -704,16 +727,19 @@ class ResponseRefinementEngine:
         return response
     
     async def _enhance_engagement(self, response: str, context: Dict[str, Any]) -> str:
-        """Enhance response engagement"""
+        """
+Enhance response engagement"""
         # Implement engagement enhancement logic
         return response
     
     async def _optimize_length(self, response: str, context: Dict[str, Any]) -> str:
-        """Optimize response length"""
+        """
+Optimize response length"""
         # Implement length optimization logic
         return response
     
     async def _add_business_focus(self, response: str, context: Dict[str, Any]) -> str:
-        """Add business-focused elements"""
+        """
+Add business-focused elements"""
         # Implement business focus enhancement logic
         return response

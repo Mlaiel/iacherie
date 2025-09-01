@@ -4,7 +4,7 @@
 =====================================================
 
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
-Copyright © 2025 Fahed Mlaiel (mlaiel@live.de)
+Copyright (c) 2025 Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This software and its source code are the exclusive property of Fahed Mlaiel.
@@ -14,6 +14,7 @@ and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import os
 import sys
 import importlib
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationModuleChecker:
-    """Ultra-advanced configuration module integrity checker"""
+    """
+Ultra-advanced configuration module integrity checker"""
     
     def __init__(self, config_path: str = None):
         self.config_path = config_path or os.path.dirname(__file__)
@@ -35,7 +37,8 @@ class ConfigurationModuleChecker:
         self.errors = []
         
     def check_all_modules(self) -> Dict[str, Any]:
-        """Check all configuration modules"""
+        """
+Check all configuration modules"""
         logger.info("🔍 Starting comprehensive configuration module check...")
         
         # Define expected modules
@@ -214,7 +217,8 @@ class ConfigurationModuleChecker:
         return report
     
     def _get_recommendations(self) -> List[str]:
-        """Get recommendations based on check results"""
+        """
+Get recommendations based on check results"""
         recommendations = []
         
         if self.errors:

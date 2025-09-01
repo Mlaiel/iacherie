@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -45,7 +46,9 @@ CIRCUIT_BREAKER_STATE = Gauge('circuit_breaker_state', 'Circuit breaker state', 
 
 
 class RoutingStrategy(Enum):
-    """Request routing strategies"""
+    """
+Request routing strategies"""
+
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
@@ -58,6 +61,7 @@ class RoutingStrategy(Enum):
 
 class ServiceType(Enum):
     """Platform service types"""
+
     FINGERPRINTING = "fingerprinting"
     PROTECTION = "protection"
     MONETIZATION = "monetization"
@@ -70,6 +74,7 @@ class ServiceType(Enum):
 
 class HealthStatus(Enum):
     """Service health status"""
+
     HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
@@ -135,7 +140,8 @@ class ServiceInstance:
 
 @dataclass
 class RoutingRule:
-    """Request routing rule configuration"""
+    """
+Request routing rule configuration"""
     name: str
     description: str
     enabled: bool = True

@@ -8,7 +8,7 @@ Responsibility: Database schema evolution for multi-format content creators (mus
 ============================================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -24,6 +24,7 @@ Content Creator Types Supported:
 - Comedians: Stand-up videos, sketches, podcasts, live shows
 - Video Creators: YouTube videos, TikToks, documentaries, tutorials
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Supported creator types with specialized workflows"""
+    """
+Supported creator types with specialized workflows"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -59,6 +62,7 @@ class CreatorType(Enum):
 
 class ContentFormat(Enum):
     """Content formats supported by creator type"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"

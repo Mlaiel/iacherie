@@ -2,6 +2,7 @@
 """AI Fingerprinting Service Deployment Manager
 Specialized deployment for multi-modal AI fingerprinting engines
 """
+
 import os
 import sys
 import time
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintingAlgorithm(Enum):
-    """AI fingerprinting algorithms"""
+    """
+AI fingerprinting algorithms"""
+
     CHROMAPRINT_AUDIO = "chromaprint_audio"
     ESSENTIA_AUDIO = "essentia_audio"
     OPENCV_VIDEO = "opencv_video"
@@ -49,6 +52,7 @@ class FingerprintingAlgorithm(Enum):
 
 class AccuracyLevel(Enum):
     """Fingerprinting accuracy levels"""
+
     BASIC = "basic"          # >85% accuracy
     STANDARD = "standard"    # >90% accuracy
     HIGH = "high"           # >95% accuracy
@@ -57,6 +61,7 @@ class AccuracyLevel(Enum):
 
 class ProcessingMode(Enum):
     """Processing mode for fingerprinting"""
+
     REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     HYBRID_MODE = "hybrid_mode"
@@ -79,7 +84,8 @@ class FingerprintingDeploymentConfig:
 
 @dataclass
 class FingerprintingEngineMetrics:
-    """Metrics for fingerprinting engines"""
+    """
+Metrics for fingerprinting engines"""
     algorithm: FingerprintingAlgorithm
     accuracy_score: float
     processing_speed_fps: float
@@ -97,7 +103,8 @@ class AIFingerprintingDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize AI fingerprinting deployment manager"""
+        """
+Initialize AI fingerprinting deployment manager"""
         self.config_path = config_path or "/etc/ia-influencer/fingerprinting-deployment.yaml"
         self.config = self._load_configuration()
         self.docker_client = docker.from_env()
@@ -271,7 +278,8 @@ class AIFingerprintingDeploymentManager:
         }
     
     def _load_model_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Load model-specific configurations"""
+        """
+Load model-specific configurations"""
         return {
             'audio_chromaprint': {
                 'model_path': '/models/chromaprint',
@@ -326,7 +334,8 @@ class AIFingerprintingDeploymentManager:
         }
     
     def _initialize_metrics_collection(self) -> None:
-        """Initialize metrics collection for fingerprinting engines"""
+        """
+Initialize metrics collection for fingerprinting engines"""
         metrics_config = {
             'collection_interval': 30,
             'retention_days': 30,
@@ -539,7 +548,8 @@ class AIFingerprintingDeploymentManager:
         return config
     
     def _create_fingerprinting_engine_manifest(self, algorithm: FingerprintingAlgorithm, algo_config: Dict[str, Any], deployment_config: FingerprintingDeploymentConfig) -> Dict[str, Any]:
-        """Create fingerprinting engine deployment manifest"""
+        """
+Create fingerprinting engine deployment manifest"""
         engine_name = algorithm.value.replace('_', '-')
         resource_reqs = algo_config.get('resource_requirements', {})
         
@@ -616,7 +626,8 @@ class AIFingerprintingDeploymentManager:
         }
     
     def _create_multimodal_fusion_manifest(self, config: FingerprintingDeploymentConfig) -> Dict[str, Any]:
-        """Create multimodal fusion engine deployment manifest"""
+        """
+Create multimodal fusion engine deployment manifest"""
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -673,7 +684,8 @@ class AIFingerprintingDeploymentManager:
         }
     
     def _create_processing_orchestrator_manifest(self, config: FingerprintingDeploymentConfig) -> Dict[str, Any]:
-        """Create processing orchestrator deployment manifest"""
+        """
+Create processing orchestrator deployment manifest"""
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -726,7 +738,8 @@ class AIFingerprintingDeploymentManager:
         }
     
     def get_fingerprinting_status(self) -> Dict[str, Any]:
-        """Get comprehensive fingerprinting system status"""
+        """
+Get comprehensive fingerprinting system status"""
         status = {
             'timestamp': datetime.now().isoformat(),
             'engines': self._get_engines_status(),
@@ -748,7 +761,8 @@ class AIFingerprintingDeploymentManager:
         return status
     
     def _get_engines_status(self) -> Dict[str, Any]:
-        """Get status of all fingerprinting engines"""
+        """
+Get status of all fingerprinting engines"""
         engines_status = {}
         
         for algorithm in FingerprintingAlgorithm:
@@ -796,7 +810,8 @@ class AIFingerprintingDeploymentManager:
         return engines_status
     
     def _get_engine_metrics(self, algorithm: FingerprintingAlgorithm) -> FingerprintingEngineMetrics:
-        """Get metrics for specific fingerprinting engine"""
+        """
+Get metrics for specific fingerprinting engine"""
         # In production, these would be real metrics from monitoring system
         return FingerprintingEngineMetrics(
             algorithm=algorithm,
@@ -811,7 +826,8 @@ class AIFingerprintingDeploymentManager:
         )
     
     def _verify_fingerprinting_deployment(self, deployment_id: str) -> bool:
-        """Verify fingerprinting system deployment"""
+        """
+Verify fingerprinting system deployment"""
         logger.info(f"Verifying fingerprinting deployment: {deployment_id}")
         
         try:

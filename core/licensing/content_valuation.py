@@ -18,6 +18,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -46,7 +47,9 @@ from ..utils.ai_optimization import AIOptimizationEngine
 
 
 class ContentType(Enum):
-    """Types of content for valuation"""
+    """
+Types of content for valuation"""
+
     MUSIC = "music"
     VIDEO = "video"
     PHOTOGRAPHY = "photography"
@@ -63,6 +66,7 @@ class ContentType(Enum):
 
 class ValuationMethod(Enum):
     """Valuation methodologies"""
+
     AI_ANALYSIS = "ai_analysis"
     MARKET_COMPARISON = "market_comparison"
     HISTORICAL_PERFORMANCE = "historical_performance"
@@ -77,6 +81,7 @@ class ValuationMethod(Enum):
 
 class PricingStrategy(Enum):
     """Pricing strategies"""
+
     PREMIUM = "premium"
     COMPETITIVE = "competitive"
     PENETRATION = "penetration"
@@ -91,6 +96,7 @@ class PricingStrategy(Enum):
 
 class MarketCondition(Enum):
     """Market conditions affecting valuation"""
+
     BULL_MARKET = "bull_market"
     BEAR_MARKET = "bear_market"
     STABLE = "stable"
@@ -105,6 +111,7 @@ class MarketCondition(Enum):
 
 class QualityScore(Enum):
     """Content quality scoring levels"""
+
     EXCEPTIONAL = "exceptional"  # 90-100%
     HIGH = "high"               # 80-89%
     GOOD = "good"              # 70-79%
@@ -150,7 +157,8 @@ class ContentMetrics:
 
 @dataclass
 class MarketAnalysis:
-    """Market analysis for content valuation"""
+    """
+Market analysis for content valuation"""
     analysis_id: str
     content_type: ContentType
     analysis_timestamp: datetime
@@ -186,7 +194,8 @@ class MarketAnalysis:
 
 @dataclass
 class ContentValuation:
-    """Comprehensive content valuation result"""
+    """
+Comprehensive content valuation result"""
     valuation_id: str
     content_id: str
     content_type: ContentType
@@ -227,7 +236,8 @@ class ContentValuation:
 
 @dataclass
 class PricingRecommendation:
-    """AI-powered pricing recommendation"""
+    """
+AI-powered pricing recommendation"""
     recommendation_id: str
     content_id: str
     content_valuation_id: str
@@ -294,7 +304,8 @@ class ContentValuationEngine:
         self.quality_models: Dict[str, Any] = {}
         
     async def initialize_valuation_engine(self, config: Dict[str, Any]):
-        """Initialize content valuation engine"""
+        """
+Initialize content valuation engine"""
         try:
             # Load AI models for content analysis
             await self._load_content_analysis_models(config.get('model_config', {}))
@@ -953,11 +964,13 @@ class ContentValuationEngine:
         pass
     
     async def _save_pricing_recommendation(self, recommendation: PricingRecommendation):
-        """Save pricing recommendation to database"""
+        """
+Save pricing recommendation to database"""
         # Implementation would save to database
         pass
     
     async def _save_market_analysis(self, analysis: MarketAnalysis):
-        """Save market analysis to database"""
+        """
+Save market analysis to database"""
         # Implementation would save to database
         pass

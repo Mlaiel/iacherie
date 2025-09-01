@@ -166,13 +166,15 @@ def get_config() -> AppConfig:
 
 
 def set_config(config: AppConfig):
-    """Set global configuration instance"""
+    """
+Set global configuration instance"""
     global _global_config
     _global_config = config
 
 
 def get_config_manager() -> ConfigManager:
-    """Get global configuration manager instance"""
+    """
+Get global configuration manager instance"""
     global _config_manager
     
     if _config_manager is None:

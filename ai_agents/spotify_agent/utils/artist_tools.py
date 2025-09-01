@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -36,7 +37,9 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class ArtistTier(Enum):
-    """Artist career tiers for targeted strategies"""
+    """
+Artist career tiers for targeted strategies"""
+
     EMERGING = "emerging"          # <10k monthly listeners
     DEVELOPING = "developing"      # 10k-100k monthly listeners
     ESTABLISHED = "established"    # 100k-1M monthly listeners
@@ -45,6 +48,7 @@ class ArtistTier(Enum):
 
 class ReleaseStrategy(Enum):
     """Release strategy types"""
+
     SINGLE_FOCUS = "single_focus"
     EP_CAMPAIGN = "ep_campaign"
     ALBUM_ROLLOUT = "album_rollout"
@@ -54,6 +58,7 @@ class ReleaseStrategy(Enum):
 
 class OptimizationArea(Enum):
     """Areas for artist optimization"""
+
     PROFILE_COMPLETENESS = "profile_completeness"
     CONTENT_STRATEGY = "content_strategy"
     AUDIENCE_ENGAGEMENT = "audience_engagement"
@@ -79,7 +84,8 @@ class ArtistProfileScore:
 
 @dataclass
 class ReleaseOptimizationPlan:
-    """Comprehensive release optimization strategy"""
+    """
+Comprehensive release optimization strategy"""
     optimal_release_date: datetime
     alternative_dates: List[datetime] = field(default_factory=list)
     pre_release_timeline: Dict[str, datetime] = field(default_factory=dict)
@@ -90,7 +96,8 @@ class ReleaseOptimizationPlan:
     confidence_level: float = 0.0
 
 class ArtistProfileManager:
-    """Advanced artist profile management and optimization"""
+    """
+Advanced artist profile management and optimization"""
     
     def __init__(self, api_client: SpotifyAPIClient):
         self.api_client = api_client
@@ -288,7 +295,8 @@ class ArtistProfileManager:
     
     def _calculate_discoverability_score(self, artist_info: Dict[str, Any], 
                                        tracks: List[Dict[str, Any]]) -> float:
-        """Calculate discoverability potential score"""
+        """
+Calculate discoverability potential score"""
         factors = []
         
         # Genre presence (popular genres score higher)
@@ -352,7 +360,8 @@ class ArtistProfileManager:
     async def _generate_profile_recommendations(self, artist_info: Dict[str, Any],
                                               profile_score: ArtistProfileScore,
                                               artist_tier: ArtistTier) -> List[Dict[str, Any]]:
-        """Generate targeted profile optimization recommendations"""
+        """
+Generate targeted profile optimization recommendations"""
         recommendations = []
         
         # Profile completeness recommendations
@@ -795,7 +804,8 @@ class ReleaseOptimizer:
         return base_score * weekday_score
     
     def _calculate_competition_score(self, date: datetime, competitive_landscape: Dict[str, Any]) -> float:
-        """Calculate competition level score (higher = less competition)"""
+        """
+Calculate competition level score (higher = less competition)"""
         # Simulated competition analysis
         # In production, this would analyze confirmed release dates
         
@@ -811,7 +821,8 @@ class ReleaseOptimizer:
         return base_competition
     
     def _calculate_audience_readiness_score(self, date: datetime, audience_behavior: Dict[str, Any]) -> float:
-        """Calculate audience readiness score"""
+        """
+Calculate audience readiness score"""
         # Based on historical engagement patterns
         base_readiness = np.random.uniform(0.6, 0.9)
         
@@ -829,7 +840,8 @@ class ReleaseOptimizer:
     async def _calculate_success_scenarios(self, track_data: Dict[str, Any],
                                          historical_performance: Dict[str, Any],
                                          optimal_windows: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate success probabilities for different scenarios"""
+        """
+Calculate success probabilities for different scenarios"""
         
         scenarios = {}
         

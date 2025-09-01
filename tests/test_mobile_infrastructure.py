@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Centralized Unit Tests for Mobile Infrastructure
+"""
+Centralized Unit Tests for Mobile Infrastructure
 Comprehensive test suite for mobile platform components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Test coverage for creators → upload multi-format → AI processing → protection → monetization → collaboration
 """
+
 import asyncio
 import pytest
 import sys
@@ -46,17 +49,20 @@ class TestMobileBackend:
     
     @pytest.fixture
     def device_manager(self):
-        """Create device manager for testing."""
+        """
+Create device manager for testing."""
         return MobileDeviceManager()
     
     @pytest.fixture
     def auth_manager(self, device_manager):
-        """Create auth manager for testing."""
+        """
+Create auth manager for testing."""
         return MobileAuthManager(device_manager)
     
     @pytest.mark.asyncio
     async def test_device_registration(self, device_manager):
-        """Test mobile device registration."""
+        """
+Test mobile device registration."""
         
         device = await device_manager.register_device(
             device_id="test_device_123",
@@ -154,17 +160,20 @@ class TestMobileServices:
     
     @pytest.fixture
     def content_service(self):
-        """Create content service for testing."""
+        """
+Create content service for testing."""
         return MobileContentService()
     
     @pytest.fixture
     def collaboration_service(self):
-        """Create collaboration service for testing."""
+        """
+Create collaboration service for testing."""
         return MobileCollaborationService()
     
     @pytest.mark.asyncio
     async def test_upload_validation(self, content_service):
-        """Test mobile upload validation."""
+        """
+Test mobile upload validation."""
         
         # Test valid upload
         validation = await content_service.validate_mobile_upload(
@@ -265,19 +274,22 @@ class TestMobileSecurity:
     
     @pytest.fixture
     def security_manager(self):
-        """Create security manager for testing."""
+        """
+Create security manager for testing."""
         return MobileSecurityManager()
     
     @pytest.fixture
     def biometric_manager(self):
-        """Create biometric manager for testing."""
+        """
+Create biometric manager for testing."""
         from mobile.security import MobileEncryptionManager
         encryption_manager = MobileEncryptionManager()
         return BiometricAuthManager(encryption_manager)
     
     @pytest.mark.asyncio
     async def test_security_profile_creation(self, security_manager):
-        """Test security profile creation."""
+        """
+Test security profile creation."""
         
         device_info = {
             "platform": "android",
@@ -376,21 +388,25 @@ class TestMobileAPI:
     
     @pytest.fixture
     def response_optimizer(self):
-        """Create response optimizer for testing."""
+        """
+Create response optimizer for testing."""
         return MobileResponseOptimizer()
     
     @pytest.fixture
     def offline_sync_manager(self):
-        """Create offline sync manager for testing."""
+        """
+Create offline sync manager for testing."""
         return OfflineSyncManager()
     
     @pytest.fixture
     def api_router(self):
-        """Create API router for testing."""
+        """
+Create API router for testing."""
         return MobileAPIRouter()
     
     def test_response_optimization(self, response_optimizer):
-        """Test mobile response optimization."""
+        """
+Test mobile response optimization."""
         
         # Create mock request
         mock_request = Mock()
@@ -455,17 +471,20 @@ class TestMobileAnalytics:
     
     @pytest.fixture
     def analytics(self):
-        """Create analytics for testing."""
+        """
+Create analytics for testing."""
         return MobileAnalytics()
     
     @pytest.fixture
     def performance_tracker(self, analytics):
-        """Create performance tracker for testing."""
+        """
+Create performance tracker for testing."""
         return PerformanceTracker(analytics)
     
     @pytest.mark.asyncio
     async def test_event_tracking(self, analytics):
-        """Test mobile event tracking."""
+        """
+Test mobile event tracking."""
         
         event_id = await analytics.track_event(
             user_id="user123",
@@ -561,11 +580,13 @@ class TestMobileConfig:
     
     @pytest.fixture
     def mobile_config(self):
-        """Create mobile config for testing."""
+        """
+Create mobile config for testing."""
         return MobileConfig()
     
     def test_feature_flags(self, mobile_config):
-        """Test feature flag functionality."""
+        """
+Test feature flag functionality."""
         
         # Get feature flags for user
         flags = mobile_config.get_feature_flags(
@@ -647,7 +668,8 @@ class TestMobileIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_mobile_workflow(self):
-        """Test complete mobile workflow integration."""
+        """
+Test complete mobile workflow integration."""
         
         # Initialize components
         analytics = MobileAnalytics()

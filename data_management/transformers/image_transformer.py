@@ -5,13 +5,14 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
 de ce code ou de cette technologie est strictement interdite et sera
 poursuivie selon les lois allemandes et internationales.
 """
+
 import asyncio
 import logging
 import time
@@ -45,7 +46,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
-    """Formats d'image supportés"""
+    """
+Formats d'image supportés"""
+
     JPEG = "jpg"
     PNG = "png"
     WEBP = "webp"
@@ -57,6 +60,7 @@ class ImageFormat(Enum):
 
 class ImageQuality(Enum):
     """Niveaux de qualité d'image"""
+
     ULTRA = "ultra"      # Qualité maximale, pas de compression
     HIGH = "high"        # Haute qualité, compression minimale
     STANDARD = "standard" # Qualité équilibrée
@@ -64,6 +68,7 @@ class ImageQuality(Enum):
 
 class ColorSpace(Enum):
     """Espaces colorimétriques supportés"""
+
     RGB = "RGB"
     RGBA = "RGBA"
     CMYK = "CMYK"
@@ -73,6 +78,7 @@ class ColorSpace(Enum):
 
 class ContentType(Enum):
     """Types de contenu image pour optimisation"""
+
     PORTRAIT = "portrait"
     LANDSCAPE = "landscape"
     PRODUCT = "product"
@@ -96,7 +102,8 @@ class ImageProcessingResult:
     errors: List[str]
 
 class ImageAnalyzer:
-    """Analyseur d'image intelligent pour créateurs visuels"""
+    """
+Analyseur d'image intelligent pour créateurs visuels"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -269,7 +276,8 @@ class ImageAnalyzer:
         }
     
     def _extract_dominant_colors(self, img_array: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Extrait les couleurs dominantes par k-means"""
+        """
+Extrait les couleurs dominantes par k-means"""
         
         try:
             # Reshape pour k-means
@@ -335,7 +343,8 @@ class ImageAnalyzer:
         }
     
     def _calculate_rule_of_thirds(self, gray: np.ndarray) -> float:
-        """Calcule le score de la règle des tiers"""
+        """
+Calcule le score de la règle des tiers"""
         
         height, width = gray.shape
         
@@ -374,7 +383,8 @@ class ImageAnalyzer:
         return score
     
     def _calculate_symmetry(self, gray: np.ndarray) -> float:
-        """Calcule le score de symétrie"""
+        """
+Calcule le score de symétrie"""
         
         height, width = gray.shape
         
@@ -406,7 +416,8 @@ class ImageAnalyzer:
         return max(0.0, symmetry_score)
     
     def _calculate_balance(self, gray: np.ndarray) -> float:
-        """Calcule le score d'équilibre visuel"""
+        """
+Calcule le score d'équilibre visuel"""
         
         height, width = gray.shape
         
@@ -468,7 +479,8 @@ class ImageAnalyzer:
         }
     
     def _detect_faces(self, img_array: np.ndarray) -> List[Dict[str, Any]]:
-        """Détecte les visages dans l'image"""
+        """
+Détecte les visages dans l'image"""
         
         faces_info = []
         
@@ -571,7 +583,8 @@ class ImageAnalyzer:
         objects: List[Dict],
         color_analysis: Dict
     ) -> List[str]:
-        """Génère des tags automatiques"""
+        """
+Génère des tags automatiques"""
         
         tags = []
         
@@ -648,7 +661,8 @@ class ImageAnalyzer:
         quality_assessment: Dict[str, float],
         composition_analysis: Dict[str, float]
     ) -> float:
-        """Calcule un score de qualité global"""
+        """
+Calcule un score de qualité global"""
         
         # Pondération des différents aspects
         technical_score = (
@@ -669,7 +683,8 @@ class ImageAnalyzer:
         return round(overall_score, 3)
 
 class ImageEnhancer:
-    """Améliorateur d'image IA pour créateurs visuels"""
+    """
+Améliorateur d'image IA pour créateurs visuels"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -714,7 +729,8 @@ class ImageEnhancer:
         return np.array(enhanced)
     
     def _denoise_image(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Réduit le bruit dans l'image"""
+        """
+Réduit le bruit dans l'image"""
         
         # Débruitage avec filtrage bilatéral
         h = int(intensity * 20 + 5)  # Force du débruitage
@@ -723,7 +739,8 @@ class ImageEnhancer:
         return denoised
     
     def _enhance_colors(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Améliore les couleurs de l'image"""
+        """
+Améliore les couleurs de l'image"""
         
         img_pil = Image.fromarray(img_array)
         
@@ -735,7 +752,8 @@ class ImageEnhancer:
         return np.array(enhanced)
     
     def _enhance_contrast(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Améliore le contraste de l'image"""
+        """
+Améliore le contraste de l'image"""
         
         # Égalisation d'histogramme adaptative
         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -753,7 +771,8 @@ class ImageEnhancer:
         return enhanced
     
     def _upscale_image(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Upscale l'image avec interpolation avancée"""
+        """
+Upscale l'image avec interpolation avancée"""
         
         # Facteur d'upscaling basé sur l'intensité
         scale_factor = 1.0 + intensity
@@ -772,7 +791,8 @@ class ImageEnhancer:
         return upscaled
     
     def _balanced_enhancement(self, img_array: np.ndarray, intensity: float) -> np.ndarray:
-        """Amélioration équilibrée"""
+        """
+Amélioration équilibrée"""
         
         enhanced = img_array.copy()
         
@@ -788,7 +808,8 @@ class ImageEnhancer:
         return enhanced
 
 class ImageTransformer:
-    """Transformateur d'image principal pour créateurs visuels"""
+    """
+Transformateur d'image principal pour créateurs visuels"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -847,7 +868,8 @@ class ImageTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation d'image selon configuration"""
+        """
+Transformation d'image selon configuration"""
         
         start_time = time.time()
         operations = []
@@ -990,7 +1012,8 @@ class ImageTransformer:
             return cv2.resize(img_array, (target_width, target_height), interpolation=cv2.INTER_LANCZOS4)
     
     def _enhance_image(self, img_array: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
-        """Améliore l'image"""
+        """
+Améliore l'image"""
         
         enhancement_type = params.get('type', 'balanced')
         intensity = params.get('intensity', 0.5)
@@ -1003,7 +1026,8 @@ class ImageTransformer:
         output_path: str,
         config: 'TransformationConfig'
     ) -> None:
-        """Sauvegarde l'image traitée"""
+        """
+Sauvegarde l'image traitée"""
         
         # Création du répertoire si nécessaire
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
@@ -1060,7 +1084,8 @@ class ImageTransformer:
         img_pil.save(output_path, **save_params)
     
     def _generate_output_path(self, input_path: str, config: 'TransformationConfig') -> str:
-        """Génère le chemin de sortie automatiquement"""
+        """
+Génère le chemin de sortie automatiquement"""
         
         input_path_obj = Path(input_path)
         
@@ -1111,7 +1136,8 @@ class ImageTransformer:
         )
 
 class AsyncImageTransformer:
-    """Version asynchrone du transformateur d'image"""
+    """
+Version asynchrone du transformateur d'image"""
     
     def __init__(self):
         self.sync_transformer = ImageTransformer()
@@ -1123,7 +1149,8 @@ class AsyncImageTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation d'image asynchrone"""
+        """
+Transformation d'image asynchrone"""
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
@@ -1139,7 +1166,8 @@ class AsyncImageTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 6  # Plus de concurrence pour images
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""
+        """
+Transformation en lot asynchrone"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         

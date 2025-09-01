@@ -4,10 +4,11 @@ This module provides comprehensive audio enhancement capabilities including
 upsampling, spatial audio, and immersive audio generation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class SpatialFormat(Enum):
-    """Spatial audio format types."""
+    """
+Spatial audio format types."""
+
     STEREO = "stereo"
     SURROUND_5_1 = "5.1"
     SURROUND_7_1 = "7.1"
@@ -50,7 +53,8 @@ class HRTFDatabase:
         self._generate_simplified_hrtf()
         
     def _generate_simplified_hrtf(self) -> None:
-        """Generate simplified HRTF responses."""
+        """
+Generate simplified HRTF responses."""
         # Azimuth angles (degrees)
         azimuths = np.arange(0, 360, 15)
         # Elevation angles (degrees)
@@ -119,7 +123,8 @@ class HRTFDatabase:
         return hrtf_ir[:self.hrtf_length].astype(np.float32)
         
     def _calculate_ild(self, azimuth: float, elevation: float, freqs: np.ndarray, ear: str) -> np.ndarray:
-        """Calculate interaural level difference."""
+        """
+Calculate interaural level difference."""
         # Simplified ILD model
         if ear == 'left':
             angle_factor = np.cos(azimuth)
@@ -133,7 +138,8 @@ class HRTFDatabase:
         return np.clip(ild, 0.1, 2.0)
         
     def _calculate_head_shadow(self, azimuth: float, elevation: float, freqs: np.ndarray, ear: str) -> np.ndarray:
-        """Calculate head shadowing effects."""
+        """
+Calculate head shadowing effects."""
         # Simplified head shadow model
         if ear == 'left':
             shadow_angle = azimuth
@@ -147,7 +153,8 @@ class HRTFDatabase:
         return np.clip(shadow_factor, 0.1, 1.0)
         
     def get_hrtf(self, azimuth: float, elevation: float) -> Dict[str, np.ndarray]:
-        """Get HRTF for specific direction (with interpolation)."""
+        """
+Get HRTF for specific direction (with interpolation)."""
         # Find nearest angles
         available_angles = list(self.hrtfs.keys())
         
@@ -165,7 +172,8 @@ class HRTFDatabase:
 
 @dataclass
 class SpatialConfig:
-    """Configuration for spatial audio processing."""
+    """
+Configuration for spatial audio processing."""
     sample_rate: int = 44100
     format: SpatialFormat = SpatialFormat.STEREO
     room_size: Tuple[float, float, float] = (10.0, 8.0, 3.0)  # width, depth, height in meters
@@ -176,7 +184,8 @@ class SpatialConfig:
 
 
 class AudioUpsampling:
-    """Advanced audio upsampling with neural enhancement."""
+    """
+Advanced audio upsampling with neural enhancement."""
     
     def __init__(self, target_sample_rate: int = 48000):
         self.target_sample_rate = target_sample_rate
@@ -185,7 +194,8 @@ class AudioUpsampling:
         self.upsampling_net = self._build_upsampling_network()
         
     def _build_upsampling_network(self) -> nn.Module:
-        """Build neural network for upsampling enhancement."""
+        """
+Build neural network for upsampling enhancement."""
         class UpsamplingNet(nn.Module):
             def __init__(self):
                 super().__init__()
@@ -218,7 +228,8 @@ class AudioUpsampling:
         return UpsamplingNet()
         
     def upsample(self, audio: np.ndarray, source_sample_rate: int) -> np.ndarray:
-        """Upsample audio with neural enhancement."""
+        """
+Upsample audio with neural enhancement."""
         if source_sample_rate >= self.target_sample_rate:
             return audio
             
@@ -236,7 +247,8 @@ class AudioUpsampling:
         return upsampled_audio.astype(np.float32)
         
     def _apply_neural_enhancement(self, audio: np.ndarray) -> np.ndarray:
-        """Apply neural enhancement to upsampled audio."""
+        """
+Apply neural enhancement to upsampled audio."""
         # Prepare input tensor
         audio_tensor = torch.FloatTensor(audio).unsqueeze(0).unsqueeze(0)
         
@@ -251,18 +263,21 @@ class AudioUpsampling:
         
     def batch_upsample(self, audio_list: List[np.ndarray], 
                       source_sample_rate: int) -> List[np.ndarray]:
-        """Batch upsample multiple audio files."""
+        """
+Batch upsample multiple audio files."""
         return [self.upsample(audio, source_sample_rate) for audio in audio_list]
 
 
 class StereoEnhancement:
-    """Stereo enhancement and widening effects."""
+    """
+Stereo enhancement and widening effects."""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
     def enhance_stereo_width(self, stereo_audio: np.ndarray, width: float = 1.5) -> np.ndarray:
-        """Enhance stereo width using M-S processing."""
+        """
+Enhance stereo width using M-S processing."""
         if stereo_audio.shape[1] != 2:
             raise ValueError("Input must be stereo (2 channels)")
             
@@ -305,7 +320,8 @@ class StereoEnhancement:
         return stereo_audio.astype(np.float32)
         
     def _apply_subtle_filter(self, audio: np.ndarray, filter_type: str) -> np.ndarray:
-        """Apply subtle filtering for stereo separation."""
+        """
+Apply subtle filtering for stereo separation."""
         nyquist = self.sample_rate / 2
         
         if filter_type == 'high':
@@ -321,7 +337,8 @@ class StereoEnhancement:
             
     def haas_effect(self, stereo_audio: np.ndarray, delay_ms: float = 15.0,
                    mix: float = 0.5) -> np.ndarray:
-        """Apply Haas effect for spatial enhancement."""
+        """
+Apply Haas effect for spatial enhancement."""
         if stereo_audio.shape[1] != 2:
             raise ValueError("Input must be stereo")
             
@@ -352,7 +369,8 @@ class SpatialAudioSynthesis:
         self.room_ir = self._generate_room_impulse_response()
         
     def _generate_room_impulse_response(self) -> np.ndarray:
-        """Generate room impulse response for reverb."""
+        """
+Generate room impulse response for reverb."""
         # Simplified room modeling
         reverb_length = int(self.config.reverb_time * self.config.sample_rate)
         
@@ -371,7 +389,8 @@ class SpatialAudioSynthesis:
         return room_ir.astype(np.float32)
         
     def _generate_early_reflections(self) -> np.ndarray:
-        """Generate early reflections based on room geometry."""
+        """
+Generate early reflections based on room geometry."""
         width, depth, height = self.config.room_size
         listener_x, listener_y, listener_z = self.config.listener_position
         
@@ -406,7 +425,8 @@ class SpatialAudioSynthesis:
     def spatialize_mono_source(self, mono_audio: np.ndarray, 
                               azimuth: float, elevation: float = 0.0,
                               distance: float = 1.0) -> np.ndarray:
-        """Spatialize mono audio source at specified position."""
+        """
+Spatialize mono audio source at specified position."""
         # Get HRTFs for the direction
         hrtfs = self.hrtf_db.get_hrtf(azimuth, elevation)
         
@@ -440,7 +460,8 @@ class SpatialAudioSynthesis:
         return spatialized.astype(np.float32)
         
     def _apply_air_absorption(self, audio: np.ndarray, distance: float) -> np.ndarray:
-        """Apply high-frequency attenuation due to air absorption."""
+        """
+Apply high-frequency attenuation due to air absorption."""
         # Air absorption is frequency-dependent (higher frequencies attenuated more)
         nyquist = self.config.sample_rate / 2
         
@@ -455,7 +476,8 @@ class SpatialAudioSynthesis:
         
     def create_moving_source(self, mono_audio: np.ndarray, 
                            trajectory: List[Tuple[float, float, float]]) -> np.ndarray:
-        """Create moving sound source with Doppler effect."""
+        """
+Create moving sound source with Doppler effect."""
         if not trajectory:
             return self.spatialize_mono_source(mono_audio, 0, 0, 1)
             
@@ -484,7 +506,8 @@ class SpatialAudioSynthesis:
         return np.vstack(output_audio) if output_audio else np.zeros((len(mono_audio), 2))
         
     def _apply_doppler_effect(self, audio: np.ndarray, velocity: float) -> np.ndarray:
-        """Apply Doppler effect for moving sources."""
+        """
+Apply Doppler effect for moving sources."""
         sound_speed = 343.0  # m/s
         
         # Calculate frequency shift
@@ -504,14 +527,16 @@ class SpatialAudioSynthesis:
 
 
 class ImmersiveAudioGenerator:
-    """Generate immersive audio experiences."""
+    """
+Generate immersive audio experiences."""
     
     def __init__(self, config: SpatialConfig):
         self.config = config
         self.spatial_synthesizer = SpatialAudioSynthesis(config)
         
     def create_soundscape(self, audio_sources: Dict[str, Dict]) -> np.ndarray:
-        """Create immersive soundscape from multiple sources.
+        """
+Create immersive soundscape from multiple sources.
         
         Args:
             audio_sources: Dict with source_name -> {
@@ -562,7 +587,8 @@ class ImmersiveAudioGenerator:
         return output.astype(np.float32)
         
     def create_reverb_zones(self, audio: np.ndarray, zones: List[Dict]) -> np.ndarray:
-        """Create different reverb zones in the soundscape."""
+        """
+Create different reverb zones in the soundscape."""
         # Simplified implementation - would be more complex in practice
         output = audio.copy()
         
@@ -579,7 +605,8 @@ class ImmersiveAudioGenerator:
         return output.astype(np.float32)
         
     def _generate_zone_reverb(self, audio: np.ndarray, reverb_type: str) -> np.ndarray:
-        """Generate reverb for specific acoustic zone."""
+        """
+Generate reverb for specific acoustic zone."""
         reverb_configs = {
             'hall': {'reverb_time': 2.5, 'damping': 0.7},
             'room': {'reverb_time': 1.0, 'damping': 0.8},
@@ -606,7 +633,8 @@ class ImmersiveAudioGenerator:
 
 
 class BinauralSynthesis:
-    """Binaural synthesis for headphone listening."""
+    """
+Binaural synthesis for headphone listening."""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
@@ -614,7 +642,8 @@ class BinauralSynthesis:
         
     def synthesize_binaural_beats(self, base_frequency: float, beat_frequency: float,
                                 duration: float, amplitude: float = 0.3) -> np.ndarray:
-        """Generate binaural beats for brainwave entrainment."""
+        """
+Generate binaural beats for brainwave entrainment."""
         num_samples = int(duration * self.sample_rate)
         t = np.linspace(0, duration, num_samples)
         
@@ -631,7 +660,8 @@ class BinauralSynthesis:
         return binaural_audio.astype(np.float32)
         
     def create_3d_soundfield(self, sources: List[Dict]) -> np.ndarray:
-        """Create 3D sound field for binaural listening."""
+        """
+Create 3D sound field for binaural listening."""
         if not sources:
             return np.zeros((1000, 2), dtype=np.float32)
             
@@ -680,7 +710,8 @@ class BinauralSynthesis:
 
 
 class AmbisonicsGenerator:
-    """Ambisonics encoding and decoding for 360-degree audio."""
+    """
+Ambisonics encoding and decoding for 360-degree audio."""
     
     def __init__(self, order: int = 1, sample_rate: int = 44100):
         self.order = order
@@ -689,7 +720,8 @@ class AmbisonicsGenerator:
         
     def encode_source(self, mono_audio: np.ndarray, azimuth: float, 
                      elevation: float) -> np.ndarray:
-        """Encode mono source to Ambisonics format."""
+        """
+Encode mono source to Ambisonics format."""
         # Convert angles to radians
         az_rad = np.radians(azimuth)
         el_rad = np.radians(elevation)
@@ -706,7 +738,8 @@ class AmbisonicsGenerator:
         return encoded
         
     def _calculate_spherical_harmonics(self, azimuth: float, elevation: float) -> List[float]:
-        """Calculate spherical harmonics coefficients."""
+        """
+Calculate spherical harmonics coefficients."""
         coefficients = []
         
         for n in range(self.order + 1):
@@ -731,7 +764,8 @@ class AmbisonicsGenerator:
         return coefficients
         
     def decode_to_stereo(self, ambisonics_audio: np.ndarray) -> np.ndarray:
-        """Decode Ambisonics to stereo."""
+        """
+Decode Ambisonics to stereo."""
         if ambisonics_audio.shape[1] < 4:
             raise ValueError("Minimum first-order Ambisonics required (4 channels)")
             
@@ -773,14 +807,16 @@ class AmbisonicsGenerator:
 
 
 class SurroundSoundSynthesis:
-    """Surround sound synthesis for multi-channel systems."""
+    """
+Surround sound synthesis for multi-channel systems."""
     
     def __init__(self, format: SpatialFormat = SpatialFormat.SURROUND_5_1):
         self.format = format
         self.channel_positions = self._get_channel_positions()
         
     def _get_channel_positions(self) -> Dict[str, Tuple[float, float]]:
-        """Get speaker positions for surround format."""
+        """
+Get speaker positions for surround format."""
         if self.format == SpatialFormat.SURROUND_5_1:
             return {
                 'front_left': (-30, 0),
@@ -806,7 +842,8 @@ class SurroundSoundSynthesis:
             
     def encode_to_surround(self, mono_audio: np.ndarray, 
                           source_position: Tuple[float, float]) -> np.ndarray:
-        """Encode mono source to surround channels."""
+        """
+Encode mono source to surround channels."""
         azimuth, elevation = source_position
         
         # Calculate gain for each channel based on distance to speakers
@@ -845,7 +882,8 @@ class SurroundSoundSynthesis:
         return surround_audio
         
     def _extract_lfe(self, audio: np.ndarray) -> np.ndarray:
-        """Extract low frequency effects for subwoofer."""
+        """
+Extract low frequency effects for subwoofer."""
         # Apply lowpass filter for LFE channel
         nyquist = 22050 / 2  # Assuming 44.1kHz
         cutoff = 120  # LFE cutoff frequency
@@ -857,13 +895,15 @@ class SurroundSoundSynthesis:
 
 
 class AudioWidening:
-    """Advanced audio widening techniques."""
+    """
+Advanced audio widening techniques."""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
     def harmonic_widening(self, stereo_audio: np.ndarray, amount: float = 0.5) -> np.ndarray:
-        """Apply harmonic widening effect."""
+        """
+Apply harmonic widening effect."""
         if stereo_audio.shape[1] != 2:
             raise ValueError("Input must be stereo")
             
@@ -903,7 +943,8 @@ class AudioWidening:
     def chorus_widening(self, stereo_audio: np.ndarray, 
                        delay_ms: float = 25, depth: float = 2, 
                        rate: float = 0.5) -> np.ndarray:
-        """Apply chorus-based widening."""
+        """
+Apply chorus-based widening."""
         if stereo_audio.shape[1] != 2:
             raise ValueError("Input must be stereo")
             

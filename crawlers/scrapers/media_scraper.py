@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -28,7 +29,8 @@ import base64
 
 @dataclass
 class MediaMetadata:
-    """Media file metadata."""
+    """
+Media file metadata."""
     url: str
     filename: str
     content_type: str
@@ -44,7 +46,8 @@ class MediaMetadata:
 
 @dataclass
 class MediaContent:
-    """Comprehensive media content structure."""
+    """
+Comprehensive media content structure."""
     media_id: str
     source_url: str
     media_type: str  # image, video, audio
@@ -96,17 +99,20 @@ class MediaScraper:
         ]
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
             
     async def _initialize_session(self):
-        """Initialize HTTP session."""
+        """
+Initialize HTTP session."""
         connector = aiohttp.TCPConnector(
             limit=50,
             limit_per_host=10,
@@ -119,7 +125,8 @@ class MediaScraper:
         )
         
     def detect_media_type(self, url: str) -> str:
-        """Detect media type from URL."""
+        """
+Detect media type from URL."""
         domain = urlparse(url).netloc.lower()
         
         # Video platforms
@@ -150,7 +157,8 @@ class MediaScraper:
         return 'unknown'
         
     async def extract_media_content(self, url: str) -> Optional[MediaContent]:
-        """Extract comprehensive media content information."""
+        """
+Extract comprehensive media content information."""
         media_type = self.detect_media_type(url)
         
         if media_type == 'video':
@@ -163,7 +171,8 @@ class MediaScraper:
             return await self._extract_generic_media(url)
             
     async def _extract_video_content(self, url: str) -> Optional[MediaContent]:
-        """Extract video content information."""
+        """
+Extract video content information."""
         try:
             # Get page content
             headers = {
@@ -367,7 +376,8 @@ class MediaScraper:
         return any(path.endswith(ext) for ext in image_extensions)
         
     def _generate_image_hash(self, image: Image.Image) -> str:
-        """Generate perceptual hash for image similarity."""
+        """
+Generate perceptual hash for image similarity."""
         try:
             # Simple average hash implementation
             # Convert to grayscale and resize
@@ -392,7 +402,8 @@ class MediaScraper:
             return hashlib.md5(str(image.size).encode()).hexdigest()[:16]
             
     async def _parse_video_metadata(self, html: str, url: str) -> Dict[str, Any]:
-        """Parse video metadata from HTML."""
+        """
+Parse video metadata from HTML."""
         metadata = {}
         
         # Extract Open Graph metadata
@@ -412,7 +423,8 @@ class MediaScraper:
         return metadata
         
     async def _parse_audio_metadata(self, html: str, url: str) -> Dict[str, Any]:
-        """Parse audio metadata from HTML."""
+        """
+Parse audio metadata from HTML."""
         metadata = {}
         
         # Extract Open Graph metadata
@@ -432,7 +444,8 @@ class MediaScraper:
         return metadata
         
     async def _parse_image_metadata(self, html: str, url: str) -> Dict[str, Any]:
-        """Parse image metadata from HTML."""
+        """
+Parse image metadata from HTML."""
         metadata = {}
         
         # Extract Open Graph metadata
@@ -450,7 +463,8 @@ class MediaScraper:
         return metadata
         
     def _extract_open_graph(self, html: str) -> Dict[str, Any]:
-        """Extract Open Graph metadata."""
+        """
+Extract Open Graph metadata."""
         import re
         
         og_data = {}
@@ -509,17 +523,20 @@ class MediaScraper:
         return {}
         
     async def _parse_soundcloud_metadata(self, html: str) -> Dict[str, Any]:
-        """Parse SoundCloud-specific metadata."""
+        """
+Parse SoundCloud-specific metadata."""
         # SoundCloud metadata extraction would go here
         return {}
         
     async def _parse_instagram_metadata(self, html: str) -> Dict[str, Any]:
-        """Parse Instagram-specific metadata."""
+        """
+Parse Instagram-specific metadata."""
         # Instagram metadata extraction would go here
         return {}
         
     async def _analyze_video_technical(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video technical properties."""
+        """
+Analyze video technical properties."""
         return {
             'duration_parsed': self._parse_duration(metadata.get('duration', '')),
             'quality_estimate': self._estimate_video_quality(metadata),
@@ -527,7 +544,8 @@ class MediaScraper:
         }
         
     async def _analyze_audio_technical(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audio technical properties."""
+        """
+Analyze audio technical properties."""
         return {
             'duration_parsed': self._parse_duration(metadata.get('duration', '')),
             'quality_estimate': self._estimate_audio_quality(metadata),
@@ -535,7 +553,8 @@ class MediaScraper:
         }
         
     async def _analyze_image_technical(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image technical properties."""
+        """
+Analyze image technical properties."""
         return {
             'resolution_category': self._categorize_resolution(metadata.get('dimensions')),
             'quality_estimate': self._estimate_image_quality(metadata),
@@ -543,7 +562,8 @@ class MediaScraper:
         }
         
     def _parse_duration(self, duration_str: str) -> Optional[float]:
-        """Parse duration string to seconds."""
+        """
+Parse duration string to seconds."""
         if not duration_str:
             return None
             
@@ -560,12 +580,14 @@ class MediaScraper:
         return None
         
     def _extract_filename(self, url: str) -> str:
-        """Extract filename from URL."""
+        """
+Extract filename from URL."""
         path = urlparse(url).path
         return path.split('/')[-1] if path else 'unknown'
         
     def _extract_platform(self, url: str) -> str:
-        """Extract platform name from URL."""
+        """
+Extract platform name from URL."""
         domain = urlparse(url).netloc.lower()
         
         platform_map = {
@@ -586,22 +608,26 @@ class MediaScraper:
         return domain
         
     def _estimate_video_quality(self, metadata: Dict[str, Any]) -> str:
-        """Estimate video quality from metadata."""
+        """
+Estimate video quality from metadata."""
         # Basic quality estimation logic
         return 'medium'  # Placeholder
         
     def _estimate_audio_quality(self, metadata: Dict[str, Any]) -> str:
-        """Estimate audio quality from metadata."""
+        """
+Estimate audio quality from metadata."""
         # Basic quality estimation logic
         return 'medium'  # Placeholder
         
     def _estimate_image_quality(self, metadata: Dict[str, Any]) -> str:
-        """Estimate image quality from metadata."""
+        """
+Estimate image quality from metadata."""
         # Basic quality estimation logic
         return 'medium'  # Placeholder
         
     def _categorize_resolution(self, dimensions: Optional[Tuple[int, int]]) -> str:
-        """Categorize image resolution."""
+        """
+Categorize image resolution."""
         if not dimensions:
             return 'unknown'
             
@@ -616,22 +642,26 @@ class MediaScraper:
             return 'low'
             
     def _check_platform_optimization(self, metadata: Dict[str, Any]) -> bool:
-        """Check if video is optimized for platform."""
+        """
+Check if video is optimized for platform."""
         # Platform optimization check logic
         return True  # Placeholder
         
     def _check_streaming_optimization(self, metadata: Dict[str, Any]) -> bool:
-        """Check if audio is optimized for streaming."""
+        """
+Check if audio is optimized for streaming."""
         # Streaming optimization check logic
         return True  # Placeholder
         
     def _check_web_optimization(self, metadata: Dict[str, Any]) -> bool:
-        """Check if image is optimized for web."""
+        """
+Check if image is optimized for web."""
         # Web optimization check logic
         return True  # Placeholder
         
     async def _extract_generic_media(self, url: str) -> Optional[MediaContent]:
-        """Extract generic media content when type is unknown."""
+        """
+Extract generic media content when type is unknown."""
         try:
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'

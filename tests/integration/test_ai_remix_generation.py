@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Test: AI Remix Generation with Models
+"""
+Integration Test: AI Remix Generation with Models
 ================================================
 
 Tests the complete AI remix generation system including:
@@ -24,6 +26,7 @@ Tests the complete AI remix generation system including:
 
 Author: Integration Test Suite
 """
+
 import asyncio
 import pytest
 import sys
@@ -41,11 +44,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestAIRemixGeneration:
-    """Integration tests for AI remix generation system"""
+    """
+Integration tests for AI remix generation system"""
     
     @pytest.fixture
     def sample_audio_metadata(self):
-        """Sample audio metadata for testing"""
+        """
+Sample audio metadata for testing"""
         return {
             "file_path": "/tmp/test_audio.mp3",
             "duration": 180.5,  # seconds

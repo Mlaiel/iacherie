@@ -4,6 +4,7 @@ AI-powered remix and music generation service.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RemixParameters:
-    """Remix generation parameters"""
+    """
+Remix generation parameters"""
     source_content_id: str
     remix_style: str
     tempo_change: float
@@ -39,7 +41,8 @@ class RemixResult:
 
 
 class RemixGenerator:
-    """AI-powered remix and music generation engine"""
+    """
+AI-powered remix and music generation engine"""
     
     def __init__(self):
         self.remix_history = {}

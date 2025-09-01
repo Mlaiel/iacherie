@@ -12,7 +12,7 @@ Technical Specifications:
 - Interactive analytics interface
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -40,7 +41,9 @@ from .performance_optimizer import PerformanceOptimizer, OptimizationTarget
 logger = logging.getLogger(__name__)
 
 class DashboardWidgetType(str, Enum):
-    """Types of dashboard widgets."""
+    """
+Types of dashboard widgets."""
+
     METRICS_CHART = "metrics_chart"
     THREAT_MAP = "threat_map"
     PLATFORM_STATUS = "platform_status"
@@ -54,6 +57,7 @@ class DashboardWidgetType(str, Enum):
 
 class DashboardLayout(str, Enum):
     """Dashboard layout types."""
+
     EXECUTIVE = "executive"
     TECHNICAL = "technical"
     SECURITY = "security"
@@ -62,6 +66,7 @@ class DashboardLayout(str, Enum):
 
 class TimeRange(str, Enum):
     """Time range options for dashboard data."""
+
     LAST_HOUR = "1h"
     LAST_6_HOURS = "6h"
     LAST_24_HOURS = "24h"
@@ -92,7 +97,8 @@ class DashboardConfig(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class RealtimeData(BaseModel):
-    """Real-time dashboard data structure."""
+    """
+Real-time dashboard data structure."""
     timestamp: datetime
     widget_id: str
     data_type: str
@@ -100,7 +106,8 @@ class RealtimeData(BaseModel):
     user_id: Optional[int] = None
 
 class DashboardMetrics(BaseModel):
-    """Dashboard metrics summary."""
+    """
+Dashboard metrics summary."""
     total_violations: int = 0
     active_sessions: int = 0
     threat_level_distribution: Dict[str, int] = Field(default_factory=dict)
@@ -112,7 +119,8 @@ class DashboardMetrics(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class ConnectionManager:
-    """Manage WebSocket connections for real-time updates."""
+    """
+Manage WebSocket connections for real-time updates."""
     
     def __init__(self):
         self.active_connections: Dict[str, WebSocket] = {}
@@ -120,7 +128,8 @@ class ConnectionManager:
         self.connection_subscriptions: Dict[str, List[str]] = {}
     
     async def connect(self, websocket: WebSocket, connection_id: str, user_id: int):
-        """Accept a new WebSocket connection."""
+        """
+Accept a new WebSocket connection."""
         await websocket.accept()
         self.active_connections[connection_id] = websocket
         
@@ -169,16 +178,19 @@ class ConnectionManager:
                 await self.send_personal_message(message, connection_id)
     
     async def broadcast(self, message: dict):
-        """Broadcast message to all connections."""
+        """
+Broadcast message to all connections."""
         for connection_id in self.active_connections:
             await self.send_personal_message(message, connection_id)
     
     def subscribe_to_data(self, connection_id: str, data_types: List[str]):
-        """Subscribe connection to specific data types."""
+        """
+Subscribe connection to specific data types."""
         self.connection_subscriptions[connection_id] = data_types
     
     async def send_to_subscribers(self, data_type: str, message: dict):
-        """Send message to connections subscribed to data type."""
+        """
+Send message to connections subscribed to data type."""
         for connection_id, subscriptions in self.connection_subscriptions.items():
             if data_type in subscriptions:
                 await self.send_personal_message(message, connection_id)
@@ -756,7 +768,8 @@ class DashboardController:
         user_id: int,
         time_range: TimeRange
     ) -> Dict[str, Any]:
-        """Generate data for a specific widget."""
+        """
+Generate data for a specific widget."""
         try:
             widget_type = widget_config.widget_type
             
@@ -1076,7 +1089,8 @@ class DashboardController:
         return color_map.get(metric, f'rgba(128, 128, 128, {alpha})')
     
     def _get_gauge_status(self, value: float) -> str:
-        """Get status for gauge visualization."""
+        """
+Get status for gauge visualization."""
         if value >= 90:
             return 'critical'
         elif value >= 75:
@@ -1087,7 +1101,8 @@ class DashboardController:
             return 'excellent'
     
     def _get_health_status(self, value: float) -> str:
-        """Get health status based on value."""
+        """
+Get health status based on value."""
         if value >= 90:
             return 'excellent'
         elif value >= 75:
@@ -1098,7 +1113,8 @@ class DashboardController:
             return 'critical'
     
     async def _calculate_overall_health(self, performance_metrics: Dict) -> float:
-        """Calculate overall system health score."""
+        """
+Calculate overall system health score."""
         try:
             if not performance_metrics:
                 return 100.0
@@ -1284,6 +1300,7 @@ class DashboardController:
 
 class ChartType(str, Enum):
     """Chart types for visualization."""
+
     LINE = "line"
     BAR = "bar"
     PIE = "pie"
@@ -1320,7 +1337,8 @@ class RealTimeDataPoint(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class DashboardMetrics(BaseModel):
-    """Dashboard metrics summary."""
+    """
+Dashboard metrics summary."""
     total_violations: int = 0
     active_monitors: int = 0
     detection_rate: float = 0.0
@@ -1331,7 +1349,8 @@ class DashboardMetrics(BaseModel):
     platform_status: Dict[str, str] = Field(default_factory=dict)
 
 class WebSocketConnection:
-    """WebSocket connection manager."""
+    """
+WebSocket connection manager."""
     
     def __init__(self, websocket: WebSocket, user_id: int):
         self.websocket = websocket
@@ -1357,7 +1376,8 @@ class DashboardController:
         analytics: MonitoringAnalytics,
         performance_optimizer: PerformanceOptimizer
     ):
-        """Initialize dashboard controller."""
+        """
+Initialize dashboard controller."""
         self.realtime_monitor = realtime_monitor
         self.analytics = analytics
         self.performance_optimizer = performance_optimizer
@@ -1600,7 +1620,8 @@ class DashboardController:
     ) -> StreamingResponse:
         """Stream real-time data for dashboard components."""
         async def generate_data():
-            """Generate streaming data."""
+            """
+Generate streaming data."""
             try:
                 while True:
                     # Get real-time data based on type
@@ -1691,7 +1712,8 @@ class DashboardController:
         return chart_data
 
     async def _get_threat_map_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for threat map widget."""
+        """
+Get data for threat map widget."""
         # Mock geographical threat data
         threat_data = {
             'type': 'geographical',
@@ -1725,7 +1747,8 @@ class DashboardController:
         return threat_data
 
     async def _get_platform_status_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for platform status widget."""
+        """
+Get data for platform status widget."""
         platforms = config.get('platforms', ['youtube', 'spotify', 'instagram', 'tiktok'])
         
         status_data = {
@@ -1747,7 +1770,8 @@ class DashboardController:
         return status_data
 
     async def _get_performance_gauge_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for performance gauge widget."""
+        """
+Get data for performance gauge widget."""
         metric_type = config.get('metric', 'system_health')
         
         # Get current performance metrics
@@ -1776,7 +1800,8 @@ class DashboardController:
         return gauge_data
 
     async def _get_violation_feed_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for violation feed widget."""
+        """
+Get data for violation feed widget."""
         limit = config.get('limit', 10)
         
         # Mock violation feed data
@@ -1848,7 +1873,8 @@ class DashboardController:
         return health_data
 
     async def _get_optimization_panel_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for optimization panel widget."""
+        """
+Get data for optimization panel widget."""
         # Get optimization recommendations
         recommendations = await self.performance_optimizer.generate_optimization_recommendations()
         
@@ -1892,7 +1918,8 @@ class DashboardController:
         connection: WebSocketConnection,
         data: Dict[str, Any]
     ) -> None:
-        """Handle WebSocket unsubscription request."""
+        """
+Handle WebSocket unsubscription request."""
         subscription_type = data.get('subscription_type')
         if subscription_type in connection.subscriptions:
             connection.subscriptions.remove(subscription_type)
@@ -1909,7 +1936,8 @@ class DashboardController:
         connection: WebSocketConnection,
         data: Dict[str, Any]
     ) -> None:
-        """Handle WebSocket data request."""
+        """
+Handle WebSocket data request."""
         widget_type = data.get('widget_type')
         widget_config = data.get('config', {})
         
@@ -1991,7 +2019,8 @@ class DashboardController:
         }
 
     async def _get_realtime_metrics(self, filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Get real-time metrics data."""
+        """
+Get real-time metrics data."""
         metrics = await self.realtime_monitor.get_realtime_metrics()
         return {
             'detection_accuracy': metrics.detection_accuracy,
@@ -2001,7 +2030,8 @@ class DashboardController:
         }
 
     async def _get_realtime_performance(self, filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Get real-time performance data."""
+        """
+Get real-time performance data."""
         performance_metrics = await self.performance_optimizer.monitor_system_performance()
         
         return {
@@ -2012,7 +2042,8 @@ class DashboardController:
         }
 
     async def _load_default_layouts(self) -> None:
-        """Load default dashboard layouts."""
+        """
+Load default dashboard layouts."""
         try:
             # Create default monitoring dashboard
             default_layout = DashboardLayout(

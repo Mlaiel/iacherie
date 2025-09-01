@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -24,7 +25,9 @@ from datetime import datetime, timedelta
 
 
 class LicenseType(str, Enum):
-    """Content license types."""
+    """
+Content license types."""
+
     SYNC_RIGHTS = "sync_rights"
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
@@ -43,6 +46,7 @@ class LicenseType(str, Enum):
 
 class LicenseScope(str, Enum):
     """License scope and territory."""
+
     WORLDWIDE = "worldwide"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -56,6 +60,7 @@ class LicenseScope(str, Enum):
 
 class RoyaltyType(str, Enum):
     """Royalty distribution types."""
+
     PERFORMANCE_ROYALTY = "performance_royalty"
     MECHANICAL_ROYALTY = "mechanical_royalty"
     SYNC_ROYALTY = "sync_royalty"
@@ -67,6 +72,7 @@ class RoyaltyType(str, Enum):
 
 class LicenseStatus(str, Enum):
     """License agreement status."""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -78,6 +84,7 @@ class LicenseStatus(str, Enum):
 
 class RightsOrganization(str, Enum):
     """Rights management organizations."""
+
     GEMA = "gema"  # Germany
     BMI = "bmi"  # USA
     ASCAP = "ascap"  # USA
@@ -121,7 +128,8 @@ class LicenseTerms:
 
 @dataclass
 class LicensingRate:
-    """Licensing rate configuration."""
+    """
+Licensing rate configuration."""
     license_type: LicenseType
     base_rate: Decimal
     currency: str = "EUR"
@@ -198,7 +206,8 @@ class LicenseManagementConfig:
     """
     
     def __init__(self):
-        """Initialize license management configuration."""
+        """
+Initialize license management configuration."""
         
         # Database Configuration
         self.LICENSING_DB_URL = os.getenv(
@@ -414,7 +423,8 @@ class LicenseManagementConfig:
         return self.PRO_INTEGRATIONS.get(organization)
     
     def get_default_rate(self, license_type: LicenseType) -> Optional[LicensingRate]:
-        """Get default licensing rate for a license type."""
+        """
+Get default licensing rate for a license type."""
         return self.DEFAULT_LICENSING_RATES.get(license_type)
     
     def calculate_license_fee(

@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -21,7 +22,9 @@ from ..security.encryption import EncryptionManager
 
 
 class ContractType(Enum):
-    """Smart contract types"""
+    """
+Smart contract types"""
+
     COPYRIGHT_PROTECTION = "copyright_protection"
     DIGITAL_RIGHTS_MANAGEMENT = "digital_rights_management"
     REVENUE_SHARING = "revenue_sharing"
@@ -36,6 +39,7 @@ class ContractType(Enum):
 
 class ContractStatus(Enum):
     """Smart contract status"""
+
     DEPLOYING = "deploying"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -64,7 +68,8 @@ class SmartContract:
 
 @dataclass
 class ContractInteraction:
-    """Contract interaction record"""
+    """
+Contract interaction record"""
     interaction_id: str
     contract_address: str
     function_name: str

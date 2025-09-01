@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -45,7 +46,9 @@ DetectorFactory.seed = 0
 logger = logging.getLogger(__name__)
 
 class LanguageConfidence(Enum):
-    """Language detection confidence levels"""
+    """
+Language detection confidence levels"""
+
     VERY_HIGH = "very_high"    # > 0.95
     HIGH = "high"              # > 0.85
     MEDIUM = "medium"          # > 0.70
@@ -54,6 +57,7 @@ class LanguageConfidence(Enum):
 
 class TranslationQuality(Enum):
     """Translation quality levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -74,7 +78,8 @@ class LanguageDetectionResult:
 
 @dataclass
 class TranslationResult:
-    """Translation result with quality assessment"""
+    """
+Translation result with quality assessment"""
     source_text: str
     translated_text: str
     source_language: str
@@ -253,7 +258,8 @@ class LanguageDetector:
         return text.strip()
     
     async def _ensemble_detection(self, text: str) -> LanguageDetectionResult:
-        """Use ensemble of multiple detection methods"""
+        """
+Use ensemble of multiple detection methods"""
         detections = {}
         
         # LangDetect
@@ -289,7 +295,8 @@ class LanguageDetector:
         return await self._combine_detection_results(detections, text)
     
     async def _single_method_detection(self, text: str, method: str) -> LanguageDetectionResult:
-        """Use single detection method"""
+        """
+Use single detection method"""
         if method == "langdetect":
             return await self._langdetect_detection(text)
         elif method == "polyglot":
@@ -502,7 +509,8 @@ class LanguageDetector:
             return LanguageConfidence.VERY_LOW
     
     async def _segment_text_for_multilang_detection(self, text: str) -> List[str]:
-        """Segment text for multi-language detection"""
+        """
+Segment text for multi-language detection"""
         # Simple segmentation by sentences and paragraphs
         segments = []
         
@@ -725,7 +733,8 @@ class TranslationEngine:
         target_lang: str,
         service: str
     ) -> Tuple[str, float]:
-        """Translate text using specified service"""
+        """
+Translate text using specified service"""
         if service == 'google' and 'google' in self.translators:
             return await self._google_translate(text, source_lang, target_lang)
         elif service == 'marian' and 'marian' in self.translators:
@@ -838,7 +847,8 @@ class TranslationEngine:
         return alternatives
     
     async def _update_translation_stats(self, result: TranslationResult):
-        """Update translation statistics"""
+        """
+Update translation statistics"""
         self.translation_stats["total_translations"] += 1
         
         if result.quality_assessment != TranslationQuality.POOR:

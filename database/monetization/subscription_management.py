@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class SubscriptionTier(Enum):
-    """Subscription tier levels"""
+    """
+Subscription tier levels"""
+
     BASIC = "basic"
     PREMIUM = "premium"
     PROFESSIONAL = "professional"
@@ -51,6 +54,7 @@ class SubscriptionTier(Enum):
 
 class SubscriptionStatus(Enum):
     """Subscription status types"""
+
     ACTIVE = "active"
     PENDING = "pending"
     SUSPENDED = "suspended"
@@ -61,6 +65,7 @@ class SubscriptionStatus(Enum):
 
 class BillingCycle(Enum):
     """Billing cycle types"""
+
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     ANNUALLY = "annually"
@@ -70,6 +75,7 @@ class BillingCycle(Enum):
 
 class PaymentStatus(Enum):
     """Payment status for subscriptions"""
+
     PENDING = "pending"
     PAID = "paid"
     FAILED = "failed"
@@ -79,6 +85,7 @@ class PaymentStatus(Enum):
 
 class ChurnReason(Enum):
     """Reasons for subscription cancellation"""
+
     PRICE_TOO_HIGH = "price_too_high"
     LACK_OF_FEATURES = "lack_of_features"
     POOR_PERFORMANCE = "poor_performance"
@@ -148,7 +155,8 @@ class SubscriptionPlan(Base):
     )
 
 class Subscription(Base):
-    """Customer subscription records"""
+    """
+Customer subscription records"""
     __tablename__ = 'subscriptions'
     
     # Primary identification
@@ -413,7 +421,8 @@ class SubscriptionMetrics(Base):
     )
 
 class ChurnPrediction(Base):
-    """ML-powered churn prediction for subscribers"""
+    """
+ML-powered churn prediction for subscribers"""
     __tablename__ = 'churn_predictions'
     
     # Primary identification
@@ -481,7 +490,8 @@ class SubscriptionAnalytics:
     geographic_breakdown: Dict[str, float]
 
 class SubscriptionEvent(Base):
-    """Subscription lifecycle events tracking"""
+    """
+Subscription lifecycle events tracking"""
     __tablename__ = 'subscription_events'
     
     # Primary identification

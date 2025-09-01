@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -13,7 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""Test TODO Completion Implementation
+"""
+Test TODO Completion Implementation
 ==================================
 
 Simple validation script to verify that the critical TODO items have been 
@@ -21,13 +23,15 @@ properly implemented without external dependencies.
 
 Author: Copilot Assistant
 """
+
 import os
 import re
 import sys
 from pathlib import Path
 
 def test_licensing_enforcement_implementation():
-    """Test that licensing enforcement TODOs are implemented"""
+    """
+Test that licensing enforcement TODOs are implemented"""
     file_path = "business/protection/licensing_enforcement.py"
     
     if not os.path.exists(file_path):

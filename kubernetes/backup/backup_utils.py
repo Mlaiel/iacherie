@@ -11,6 +11,7 @@ WARNING: This code and concept are the exclusive intellectual property of Fahed 
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -732,7 +733,8 @@ async def async_file_copy(
 
 
 def validate_backup_path(path: Union[str, Path]) -> bool:
-    """Validate backup file path."""
+    """
+Validate backup file path."""
     path = Path(path)
     
     # Check if path is valid
@@ -753,7 +755,8 @@ def validate_backup_path(path: Union[str, Path]) -> bool:
 
 
 def get_backup_file_extension(compression_algorithm: CompressionAlgorithm) -> str:
-    """Get appropriate file extension for backup file."""
+    """
+Get appropriate file extension for backup file."""
     extensions = {
         CompressionAlgorithm.GZIP: ".backup.gz",
         CompressionAlgorithm.BZIP2: ".backup.bz2",

@@ -18,6 +18,7 @@ Violators will be prosecuted to the full extent of the law.
 - DevOps Engineer: Cloud Infrastructure & CI/CD
 - IA Prompt Engineer: Advanced Prompt Engineering & LLM Integration
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -27,7 +28,9 @@ from pydantic import BaseModel, Field, validator
 
 
 class ContentType(str, Enum):
-    """Professional content type enumeration"""
+    """
+Professional content type enumeration"""
+
     MUSIC = "music"
     VIDEO = "video" 
     PHOTO = "photo"
@@ -43,6 +46,7 @@ class ContentType(str, Enum):
 
 class PlatformType(str, Enum):
     """Professional platform type enumeration"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -66,6 +70,7 @@ class PlatformType(str, Enum):
 
 class DistributionStatus(str, Enum):
     """Professional distribution status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     SCHEDULED = "scheduled"

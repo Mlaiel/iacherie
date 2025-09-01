@@ -16,6 +16,7 @@ Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional, List, Set, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class IntegrationMethod(str, Enum):
-    """Platform integration methods."""
+    """
+Platform integration methods."""
+
     API = "api"
     SCRAPING = "scraping"
     HYBRID = "hybrid"
@@ -32,6 +35,7 @@ class IntegrationMethod(str, Enum):
 
 class AuthenticationMethod(str, Enum):
     """Authentication methods for platform integration."""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT_TOKEN = "jwt_token"
@@ -42,6 +46,7 @@ class AuthenticationMethod(str, Enum):
 
 class PlatformCapability(str, Enum):
     """Platform capabilities and features."""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_SEARCH = "content_search"
     CONTENT_DOWNLOAD = "content_download"
@@ -56,6 +61,7 @@ class PlatformCapability(str, Enum):
 
 class DataFormat(str, Enum):
     """Supported data formats for platform integration."""
+
     JSON = "json"
     XML = "xml"
     RSS = "rss"
@@ -85,7 +91,8 @@ class RateLimitConfig:
 
 @dataclass
 class AuthConfig:
-    """Authentication configuration for platform integration."""
+    """
+Authentication configuration for platform integration."""
     method: AuthenticationMethod
     
     # OAuth2 settings
@@ -113,7 +120,8 @@ class AuthConfig:
 
 @dataclass
 class ContentFilterConfig:
-    """Content filtering configuration for platform monitoring."""
+    """
+Content filtering configuration for platform monitoring."""
     # Content type filters
     include_audio: bool = True
     include_video: bool = True
@@ -169,7 +177,8 @@ class MonitoringConfig:
 
 @dataclass
 class DataExtractionConfig:
-    """Data extraction configuration for platform content."""
+    """
+Data extraction configuration for platform content."""
     # Metadata extraction
     extract_basic_metadata: bool = True
     extract_engagement_metrics: bool = True
@@ -191,7 +200,8 @@ class DataExtractionConfig:
 
 @dataclass
 class ErrorHandlingConfig:
-    """Error handling configuration for platform integration."""
+    """
+Error handling configuration for platform integration."""
     # Retry settings
     max_retries: int = 3
     retry_delay_seconds: int = 1
@@ -240,13 +250,15 @@ class PlatformConfig:
     custom_settings: Dict[str, Any] = field(default_factory=dict)
     
     def is_capable(self, capability: PlatformCapability) -> bool:
-        """Check if platform supports a specific capability."""
+        """
+Check if platform supports a specific capability."""
         return capability in self.capabilities
 
 
 @dataclass
 class YoutubeConfig(PlatformConfig):
-    """YouTube platform integration configuration."""
+    """
+YouTube platform integration configuration."""
     
     def __post_init__(self):
         self.platform_name = "YouTube"
@@ -466,7 +478,8 @@ class PlatformIntegrationConfig:
             self._initialize_default_platforms()
     
     def _initialize_default_platforms(self):
-        """Initialize default platform configurations."""
+        """
+Initialize default platform configurations."""
         if "youtube" in self.enabled_platforms:
             self.platforms["youtube"] = YoutubeConfig()
         
@@ -490,11 +503,13 @@ class PlatformIntegrationConfig:
         return self.platforms.get(platform_name.lower())
     
     def is_platform_enabled(self, platform_name: str) -> bool:
-        """Check if a platform is enabled."""
+        """
+Check if a platform is enabled."""
         return platform_name.lower() in self.enabled_platforms
     
     def get_platforms_with_capability(self, capability: PlatformCapability) -> List[str]:
-        """Get list of platforms that support a specific capability."""
+        """
+Get list of platforms that support a specific capability."""
         platforms = []
         for name, config in self.platforms.items():
             if config.is_capable(capability):
@@ -502,7 +517,8 @@ class PlatformIntegrationConfig:
         return platforms
     
     def validate_config(self) -> bool:
-        """Validate the platform integration configuration."""
+        """
+Validate the platform integration configuration."""
         try:
             if not self.enabled_platforms:
                 raise ValueError("At least one platform must be enabled")
@@ -566,7 +582,8 @@ class PlatformIntegrationConfig:
 # Factory functions for different environments
 
 def create_production_platform_config() -> PlatformIntegrationConfig:
-    """Create production platform integration configuration."""
+    """
+Create production platform integration configuration."""
     config = PlatformIntegrationConfig()
     
     # Production settings
@@ -586,7 +603,8 @@ def create_production_platform_config() -> PlatformIntegrationConfig:
 
 
 def create_development_platform_config() -> PlatformIntegrationConfig:
-    """Create development platform integration configuration."""
+    """
+Create development platform integration configuration."""
     config = PlatformIntegrationConfig()
     
     # Development settings

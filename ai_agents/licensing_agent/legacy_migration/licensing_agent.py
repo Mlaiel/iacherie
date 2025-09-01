@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -56,7 +57,9 @@ from ...utils.email_service import EmailService
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Types of content licenses"""
+    """
+Types of content licenses"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive" 
     ROYALTY_FREE = "royalty_free"
@@ -74,6 +77,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status states"""
+
     PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -84,6 +88,7 @@ class LicenseStatus(Enum):
 
 class RoyaltyType(Enum):
     """Types of royalty calculations"""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED = "tiered"
@@ -112,7 +117,8 @@ class LicenseTerms:
     
 @dataclass
 class LicenseRequest:
-    """Licensing request structure"""
+    """
+Licensing request structure"""
     content_id: str
     licensee_id: str
     licensor_id: str
@@ -147,6 +153,7 @@ class LicensingMetrics:
 
 class LicenseStatus(Enum):
     """Status of licenses"""
+
     PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -156,6 +163,7 @@ class LicenseStatus(Enum):
 
 class RoyaltyType(Enum):
     """Types of royalty payments"""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     PER_USE = "per_use"
@@ -164,6 +172,7 @@ class RoyaltyType(Enum):
 
 class ContractTemplate(Enum):
     """Contract templates"""
+
     MUSIC_LICENSING = "music_licensing"
     VIDEO_LICENSING = "video_licensing"
     IMAGE_LICENSING = "image_licensing"
@@ -195,7 +204,8 @@ class LicenseRequest:
 
 @dataclass
 class LicenseAgreement:
-    """Complete license agreement structure"""
+    """
+Complete license agreement structure"""
     license_id: str
     content_id: str
     licensor_id: str
@@ -216,7 +226,8 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyCalculation:
-    """Royalty calculation result"""
+    """
+Royalty calculation result"""
     content_id: str
     license_id: str
     period_start: datetime
@@ -849,7 +860,8 @@ class LicensingAgentManager:
         self.active_workflows = {}
         
     async def initialize(self):
-        """Initialize licensing agent manager"""
+        """
+Initialize licensing agent manager"""
         # Create main licensing agent
         self.agents["primary"] = LicensingAgent()
         

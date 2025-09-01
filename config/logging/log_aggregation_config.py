@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import json
 import time
 import threading
@@ -38,7 +39,9 @@ from kafka import KafkaProducer, KafkaConsumer
 
 
 class AggregationBackend(str, Enum):
-    """Supported log aggregation backends"""
+    """
+Supported log aggregation backends"""
+
     ELASTICSEARCH = "elasticsearch"
     KAFKA = "kafka"
     REDIS_STREAMS = "redis_streams"
@@ -52,6 +55,7 @@ class AggregationBackend(str, Enum):
 
 class StreamingMode(str, Enum):
     """Log streaming modes"""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     BATCH = "batch"
@@ -60,6 +64,7 @@ class StreamingMode(str, Enum):
 
 class IndexingStrategy(str, Enum):
     """Elasticsearch indexing strategies"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -249,7 +254,8 @@ class LogAggregationConfig:
         self._start_background_processes()
     
     def _initialize_backends(self) -> None:
-        """Initialize aggregation backends"""
+        """
+Initialize aggregation backends"""
         self._backend_clients = {}
         
         for backend in self.backends:
@@ -523,7 +529,8 @@ class LogAggregationConfig:
         self._buffer_lock = threading.Lock()
     
     def _start_background_processes(self) -> None:
-        """Start background processing threads"""
+        """
+Start background processing threads"""
         self._stop_event = threading.Event()
         
         # Start buffer flush thread
@@ -542,7 +549,8 @@ class LogAggregationConfig:
             self._metrics_thread.start()
     
     def _flush_buffer_worker(self) -> None:
-        """Background worker to flush log buffer"""
+        """
+Background worker to flush log buffer"""
         while not self._stop_event.is_set():
             try:
                 # Collect logs from buffer
@@ -844,7 +852,8 @@ class LogAggregationConfig:
             await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _send_to_elasticsearch_async(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to Elasticsearch asynchronously"""
+        """
+Send log entries to Elasticsearch asynchronously"""
         try:
             es_client = self._backend_clients["elasticsearch_async"]
             es_config = self.elasticsearch_config
@@ -959,7 +968,8 @@ class ElasticsearchHandler(logging.Handler):
         self.aggregation_config = aggregation_config
     
     def emit(self, record: logging.LogRecord) -> None:
-        """Emit a log record to Elasticsearch"""
+        """
+Emit a log record to Elasticsearch"""
         try:
             # Convert log record to dictionary
             log_entry = {
@@ -1012,7 +1022,8 @@ def initialize_log_aggregation(
 
 
 def get_aggregation_config() -> LogAggregationConfig:
-    """Get the global log aggregation configuration"""
+    """
+Get the global log aggregation configuration"""
     if not _aggregation_config:
         initialize_log_aggregation()
     

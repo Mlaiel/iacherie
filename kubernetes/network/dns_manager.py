@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import socket
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class DNSRecordType(Enum):
-    """DNS record types"""
+    """
+DNS record types"""
+
     A = "A"
     AAAA = "AAAA"
     CNAME = "CNAME"
@@ -65,6 +68,7 @@ class DNSRecordType(Enum):
 
 class DNSProvider(Enum):
     """DNS service providers"""
+
     AWS_ROUTE53 = "aws_route53"
     GCP_CLOUD_DNS = "gcp_cloud_dns"
     AZURE_DNS = "azure_dns"
@@ -77,6 +81,7 @@ class DNSProvider(Enum):
 
 class HealthCheckType(Enum):
     """Health check types"""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -160,7 +165,8 @@ class DNSFailoverConfiguration:
 
 @dataclass
 class GeoDNSConfiguration:
-    """Geographic DNS routing configuration"""
+    """
+Geographic DNS routing configuration"""
     name: str
     default_endpoint: str
     geo_routing_rules: List[Dict[str, Any]] = field(default_factory=list)

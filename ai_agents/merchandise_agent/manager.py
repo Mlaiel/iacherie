@@ -6,6 +6,7 @@ control and monitoring capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,7 +19,9 @@ from .core.merchandise_engine import MerchandiseEngine
 logger = logging.getLogger(__name__)
 
 class MerchandiseSystemStatus(Enum):
-    """System status for merchandise management"""
+    """
+System status for merchandise management"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -60,7 +63,8 @@ class MerchandiseManager:
         )
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the merchandise management system"""
+        """
+Initialize the merchandise management system"""
         try:
             logger.info("Initializing Merchandise Manager...")
             

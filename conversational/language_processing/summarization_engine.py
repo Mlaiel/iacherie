@@ -25,6 +25,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -62,7 +63,9 @@ logger = get_logger(__name__)
 
 
 class SummarizationType(Enum):
-    """Types of summarization"""
+    """
+Types of summarization"""
+
     EXTRACTIVE = "extractive"
     ABSTRACTIVE = "abstractive"
     HYBRID = "hybrid"
@@ -72,6 +75,7 @@ class SummarizationType(Enum):
 
 class SummarizationLength(Enum):
     """Summarization length options"""
+
     VERY_SHORT = "very_short"  # 1-2 sentences
     SHORT = "short"           # 3-5 sentences
     MEDIUM = "medium"         # 1-2 paragraphs
@@ -81,6 +85,7 @@ class SummarizationLength(Enum):
 
 class ContentType(Enum):
     """Types of content to summarize"""
+
     ARTICLE = "article"
     BLOG_POST = "blog_post"
     NEWS = "news"
@@ -106,7 +111,8 @@ class SentenceScore:
 
 @dataclass
 class KeyPoint:
-    """Represents a key point from content"""
+    """
+Represents a key point from content"""
     text: str
     importance_score: float
     supporting_sentences: List[str] = field(default_factory=list)
@@ -132,7 +138,8 @@ class SummaryResult:
 
 
 class SummarizationEngine:
-    """Advanced content summarization engine"""
+    """
+Advanced content summarization engine"""
     
     def __init__(self):
         self.nlp = None
@@ -142,7 +149,8 @@ class SummarizationEngine:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize summarization models"""
+        """
+Initialize summarization models"""
         try:
             # Initialize spaCy
             self.nlp = spacy.load("en_core_web_lg")

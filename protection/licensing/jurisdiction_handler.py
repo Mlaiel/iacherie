@@ -10,8 +10,9 @@ Professional multi-jurisdiction legal compliance system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + International Legal Specialist + Compliance Officer + Policy Analyst
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
@@ -24,7 +25,9 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class LegalFramework(Enum):
-    """Legal framework types"""
+    """
+Legal framework types"""
+
     COMMON_LAW = "common_law"
     CIVIL_LAW = "civil_law"
     MIXED_LAW = "mixed_law"
@@ -33,6 +36,7 @@ class LegalFramework(Enum):
 
 class CopyrightRegime(Enum):
     """Copyright protection regimes"""
+
     BERNE_CONVENTION = "berne_convention"
     UNIVERSAL_COPYRIGHT = "universal_copyright"
     BILATERAL_TREATIES = "bilateral_treaties"
@@ -41,6 +45,7 @@ class CopyrightRegime(Enum):
 
 class DataProtectionRegime(Enum):
     """Data protection frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
@@ -68,7 +73,8 @@ class JurisdictionProfile:
 
 @dataclass
 class ComplianceRequirement:
-    """Individual compliance requirement"""
+    """
+Individual compliance requirement"""
     requirement_id: str
     jurisdiction: str
     category: str
@@ -80,7 +86,8 @@ class ComplianceRequirement:
 
 @dataclass
 class CrossBorderRule:
-    """Cross-border legal rule"""
+    """
+Cross-border legal rule"""
     rule_id: str
     source_jurisdiction: str
     target_jurisdiction: str
@@ -97,7 +104,8 @@ class JurisdictionHandler:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize jurisdiction handler with configuration."""
+        """
+Initialize jurisdiction handler with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -489,7 +497,8 @@ class JurisdictionHandler:
         return considerations
     
     async def _get_applicable_treaties(self, jurisdiction: str) -> List[Dict[str, Any]]:
-        """Get treaties applicable to a jurisdiction."""
+        """
+Get treaties applicable to a jurisdiction."""
         jurisdiction_profile = self.jurisdictions.get(jurisdiction)
         if not jurisdiction_profile:
             return []
@@ -511,7 +520,8 @@ class JurisdictionHandler:
         return applicable_treaties
     
     async def _get_regulatory_alerts(self, jurisdiction: str) -> List[Dict[str, Any]]:
-        """Get recent regulatory updates and alerts for a jurisdiction."""
+        """
+Get recent regulatory updates and alerts for a jurisdiction."""
         # This would typically connect to legal update services
         # For now, return sample alerts
         sample_alerts = [
@@ -791,7 +801,8 @@ class JurisdictionHandler:
         ]
     
     def get_jurisdiction_metrics(self) -> Dict[str, Any]:
-        """Get jurisdiction handler performance metrics."""
+        """
+Get jurisdiction handler performance metrics."""
         return {
             **self.metrics,
             'total_requirements': len(self.compliance_requirements),

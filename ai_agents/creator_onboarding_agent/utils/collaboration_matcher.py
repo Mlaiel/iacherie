@@ -5,6 +5,7 @@ opportunities with compatibility analysis, project matching, and networking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ from ...business.networking import NetworkingManager
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of creator collaborations"""
+    """
+Types of creator collaborations"""
+
     CONTENT_COLLABORATION = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PROJECT = "joint_project"
@@ -46,6 +49,7 @@ class CollaborationType(Enum):
 
 class CompatibilityFactor(Enum):
     """Factors influencing collaboration compatibility"""
+
     CONTENT_STYLE = "content_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     SKILL_COMPLEMENTARITY = "skill_complementarity"
@@ -58,6 +62,7 @@ class CompatibilityFactor(Enum):
 
 class MatchingPriority(Enum):
     """Priority levels for collaboration matching"""
+
     URGENT = "urgent"       # Immediate opportunities
     HIGH = "high"          # Strong potential matches
     MEDIUM = "medium"      # Good potential matches
@@ -234,7 +239,8 @@ class CollaborationMatcher:
         }
     
     def _initialize_collaboration_templates(self) -> Dict[CollaborationType, Dict[str, Any]]:
-        """Initialize collaboration project templates."""
+        """
+Initialize collaboration project templates."""
         return {
             CollaborationType.CONTENT_COLLABORATION: {
                 'typical_duration': '2-4 weeks',
@@ -914,7 +920,8 @@ class CollaborationMatcher:
         match.match_confidence = available_factors / total_factors
     
     def _determine_match_priority(self, match: CollaborationMatch) -> None:
-        """Determine match priority based on compatibility and potential."""
+        """
+Determine match priority based on compatibility and potential."""
         score = match.overall_compatibility_score
         confidence = match.match_confidence
         
@@ -935,7 +942,8 @@ class CollaborationMatcher:
     async def _generate_collaboration_recommendations(self, match: CollaborationMatch,
                                                     creator: CreatorProfile,
                                                     candidate: CreatorProfile) -> None:
-        """Generate specific collaboration type recommendations."""
+        """
+Generate specific collaboration type recommendations."""
         recommendations = []
         
         # Content Collaboration
@@ -972,7 +980,8 @@ class CollaborationMatcher:
     async def _assess_collaboration_risks_benefits(self, match: CollaborationMatch,
                                                  creator: CreatorProfile,
                                                  candidate: CreatorProfile) -> None:
-        """Assess potential risks and benefits of collaboration."""
+        """
+Assess potential risks and benefits of collaboration."""
         # Benefits for primary creator
         benefits_primary = []
         if match.compatibility_scores.get(CompatibilityFactor.SKILL_COMPLEMENTARITY, 0) >= 0.7:
@@ -1050,7 +1059,8 @@ class CollaborationMatcher:
         return False
     
     def _get_proximity_level(self, location1: Dict[str, Any], location2: Dict[str, Any]) -> str:
-        """Get proximity level description."""
+        """
+Get proximity level description."""
         if not location1 or not location2:
             return "unknown"
         

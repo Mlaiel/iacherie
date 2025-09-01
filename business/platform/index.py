@@ -4,8 +4,9 @@ This module serves as the main entry point for all platform-level operations
 including orchestration, content processing, distribution, analytics, and more.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Optional, Any
 
@@ -180,47 +181,58 @@ async def initialize_platform() -> bool:
     return await platform_manager.initialize()
 
 def get_orchestrator() -> PlatformOrchestrator:
-    """Get platform orchestrator instance"""
+    """
+Get platform orchestrator instance"""
     return platform_manager.orchestrator
 
 def get_content_processor() -> ContentProcessor:
-    """Get content processor instance"""
+    """
+Get content processor instance"""
     return platform_manager.content_processor
 
 def get_distribution_manager() -> DistributionManager:
-    """Get distribution manager instance"""
+    """
+Get distribution manager instance"""
     return platform_manager.distribution_manager
 
 def get_analytics() -> PlatformAnalytics:
-    """Get platform analytics instance"""
+    """
+Get platform analytics instance"""
     return platform_manager.analytics
 
 def get_integration_hub() -> IntegrationHub:
-    """Get integration hub instance"""
+    """
+Get integration hub instance"""
     return platform_manager.integration_hub
 
 def get_security() -> PlatformSecurity:
-    """Get platform security instance"""
+    """
+Get platform security instance"""
     return platform_manager.security
 
 def get_monetization() -> MonetizationController:
-    """Get monetization controller instance"""
+    """
+Get monetization controller instance"""
     return platform_manager.monetization
 
 def get_collaboration() -> CollaborationEngine:
-    """Get collaboration engine instance"""
+    """
+Get collaboration engine instance"""
     return platform_manager.collaboration
 
 def get_notifications() -> NotificationDispatcher:
-    """Get notification dispatcher instance"""
+    """
+Get notification dispatcher instance"""
     return platform_manager.notifications
 
 def get_quality_assurance() -> QualityAssurance:
-    """Get quality assurance instance"""
+    """
+Get quality assurance instance"""
     return platform_manager.quality_assurance
 
 async def platform_health_check() -> Dict[str, Any]:
-    """Perform platform health check"""
+    """
+Perform platform health check"""
     return await platform_manager.health_check()
 
 __all__ = [

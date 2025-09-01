@@ -7,10 +7,11 @@ success metrics, optimize content strategy, and maximize ROI.
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel - All rights reserved
+Copyright (c) 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -43,7 +44,9 @@ from ..cache.redis_cache import RedisCache
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
@@ -60,6 +63,7 @@ class MetricType(Enum):
 
 class PredictionHorizon(Enum):
     """Prediction time horizons"""
+
     HOURS_1 = "1h"
     HOURS_6 = "6h"
     HOURS_24 = "24h"
@@ -71,6 +75,7 @@ class PredictionHorizon(Enum):
 
 class ConfidenceLevel(Enum):
     """Prediction confidence levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -104,7 +109,8 @@ class PerformancePrediction:
 
 @dataclass
 class SuccessMetrics:
-    """Success metrics analysis"""
+    """
+Success metrics analysis"""
     metrics_id: str
     creator_id: str
     timeframe: str
@@ -125,7 +131,8 @@ class SuccessMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Content optimization recommendation"""
+    """
+Content optimization recommendation"""
     recommendation_id: str
     recommendation_type: str
     title: str
@@ -155,7 +162,8 @@ class PerformancePredictor:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize performance predictor"""
+        """
+Initialize performance predictor"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -189,7 +197,8 @@ class PerformancePredictor:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for performance prediction"""
+        """
+Initialize ML models for performance prediction"""
         try:
             # Initialize models for each metric type
             for metric_type in MetricType:
@@ -270,7 +279,8 @@ class PerformancePredictor:
         }
     
     def _create_time_series_model(self) -> Dict[str, Any]:
-        """Create time series models"""
+        """
+Create time series models"""
         return {
             'arima': None,  # Will be fitted per prediction
             'exponential_smoothing': None,  # Will be fitted per prediction
@@ -582,7 +592,8 @@ class PerformancePredictor:
         return features
     
     async def _extract_creator_features(self, creator_profile: Dict[str, Any]) -> List[float]:
-        """Extract creator-specific features"""
+        """
+Extract creator-specific features"""
         features = []
         
         # Follower count (log-normalized)
@@ -619,7 +630,8 @@ class PerformancePredictor:
         return features
     
     async def _extract_temporal_features(self, content_data: Dict[str, Any]) -> List[float]:
-        """Extract temporal features"""
+        """
+Extract temporal features"""
         features = []
         
         # Posting time
@@ -654,7 +666,8 @@ class PerformancePredictor:
         return features
     
     async def _extract_platform_features(self, platform: str) -> List[float]:
-        """Extract platform-specific features"""
+        """
+Extract platform-specific features"""
         features = []
         
         # Platform encoding (one-hot)
@@ -676,7 +689,8 @@ class PerformancePredictor:
         return features
     
     async def _extract_trending_features(self, content_data: Dict[str, Any]) -> List[float]:
-        """Extract trending-related features"""
+        """
+Extract trending-related features"""
         features = []
         
         # Uses trending audio
@@ -707,7 +721,8 @@ class PerformancePredictor:
         baseline: float,
         horizon: PredictionHorizon
     ) -> float:
-        """Apply domain-specific constraints to predictions"""
+        """
+Apply domain-specific constraints to predictions"""
         try:
             # Ensure non-negative values
             prediction = max(0, prediction)
@@ -802,7 +817,8 @@ class SuccessMetricsEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize success metrics engine"""
+        """
+Initialize success metrics engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

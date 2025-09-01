@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -36,7 +37,8 @@ from ..platforms.generic_crawler import GenericCrawler
 
 @dataclass
 class PlatformContent:
-    """Standardized platform content structure."""
+    """
+Standardized platform content structure."""
     platform: str
     content_id: str
     url: str
@@ -59,7 +61,8 @@ class PlatformContent:
 
 @dataclass
 class PlatformProfile:
-    """Standardized platform profile structure."""
+    """
+Standardized platform profile structure."""
     platform: str
     username: str
     user_id: str
@@ -97,7 +100,8 @@ class PlatformScraper:
         self.supported_platforms = list(self.crawlers.keys())
         
     def _initialize_crawlers(self) -> Dict[str, Any]:
-        """Initialize platform-specific crawlers."""
+        """
+Initialize platform-specific crawlers."""
         return {
             'youtube': YouTubeCrawler(),
             'instagram': InstagramCrawler(),
@@ -115,7 +119,8 @@ class PlatformScraper:
         }
         
     def detect_platform(self, url: str) -> str:
-        """Detect platform from URL."""
+        """
+Detect platform from URL."""
         domain = urlparse(url).netloc.lower()
         
         platform_domains = {
@@ -144,7 +149,8 @@ class PlatformScraper:
         return 'generic'
         
     async def scrape_content(self, url: str, **kwargs) -> Optional[PlatformContent]:
-        """Scrape content from platform URL."""
+        """
+Scrape content from platform URL."""
         platform = self.detect_platform(url)
         
         if platform not in self.crawlers:
@@ -356,7 +362,8 @@ class PlatformScraper:
         )
         
     def _normalize_profile(self, platform: str, url: str, raw_data: Dict[str, Any]) -> PlatformProfile:
-        """Normalize raw profile data to standard structure."""
+        """
+Normalize raw profile data to standard structure."""
         return PlatformProfile(
             platform=platform,
             username=str(self._get_nested_value(raw_data, 'username') or ''),
@@ -378,7 +385,8 @@ class PlatformScraper:
         )
         
     def _get_nested_value(self, data: Dict[str, Any], path: str) -> Any:
-        """Get nested dictionary value using dot notation."""
+        """
+Get nested dictionary value using dot notation."""
         keys = path.split('.')
         value = data
         
@@ -391,7 +399,8 @@ class PlatformScraper:
         return value
         
     def _parse_datetime(self, date_str: Any) -> Optional[datetime]:
-        """Parse datetime from various formats."""
+        """
+Parse datetime from various formats."""
         if not date_str:
             return None
             
@@ -415,19 +424,22 @@ class PlatformScraper:
         return None
         
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text."""
+        """
+Extract hashtags from text."""
         if not text:
             return []
         return re.findall(r'#(\w+)', text)
         
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text."""
+        """
+Extract mentions from text."""
         if not text:
             return []
         return re.findall(r'@(\w+)', text)
         
     def _extract_media_urls(self, raw_data: Dict[str, Any], platform: str) -> List[str]:
-        """Extract media URLs from raw data."""
+        """
+Extract media URLs from raw data."""
         media_urls = []
         
         # Common media fields across platforms
@@ -447,7 +459,8 @@ class PlatformScraper:
         return media_urls
         
     def _detect_content_type(self, raw_data: Dict[str, Any], platform: str) -> str:
-        """Detect content type from raw data."""
+        """
+Detect content type from raw data."""
         # Platform-specific content type detection
         if platform == 'youtube':
             return 'video'
@@ -468,7 +481,8 @@ class PlatformScraper:
         return 'post'
         
     def _detect_language(self, text: str) -> str:
-        """Detect language from text."""
+        """
+Detect language from text."""
         try:
             import langdetect
             if text and len(text) > 20:
@@ -478,7 +492,8 @@ class PlatformScraper:
         return 'unknown'
         
     def _extract_contact_info(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract contact information from profile data."""
+        """
+Extract contact information from profile data."""
         contact_info = {}
         
         # Common contact fields
@@ -492,7 +507,8 @@ class PlatformScraper:
         return contact_info
         
     def _extract_metadata(self, raw_data: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Extract platform-specific metadata."""
+        """
+Extract platform-specific metadata."""
         metadata = {
             'platform_specific': {},
             'extraction_method': 'api' if 'api_response' in raw_data else 'scraping',
@@ -533,7 +549,8 @@ class PlatformScraper:
         return metadata
         
     def _assess_data_quality(self, raw_data: Dict[str, Any]) -> str:
-        """Assess quality of extracted data."""
+        """
+Assess quality of extracted data."""
         required_fields = ['id', 'title', 'author']
         present_fields = sum(1 for field in required_fields if self._get_nested_value(raw_data, field))
         
@@ -545,11 +562,13 @@ class PlatformScraper:
             return 'low'
             
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms."""
+        """
+Get list of supported platforms."""
         return self.supported_platforms
         
     def get_platform_capabilities(self, platform: str) -> Dict[str, bool]:
-        """Get capabilities of specific platform crawler."""
+        """
+Get capabilities of specific platform crawler."""
         if platform not in self.crawlers:
             return {}
             

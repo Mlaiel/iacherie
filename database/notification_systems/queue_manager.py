@@ -5,7 +5,7 @@ retry logic, dead letter queues et processing distribué.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, Queue Systems Expert
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 AVERTISSEMENT LÉGAL:
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class QueuePriority(Enum):
-    """Priorités des queues"""
+    """
+Priorités des queues"""
+
     VERY_LOW = 1
     LOW = 2
     NORMAL = 3
@@ -46,7 +49,9 @@ class QueuePriority(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Statuts de traitement"""
+    """
+Statuts de traitement"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -58,6 +63,7 @@ class ProcessingStatus(Enum):
 
 class QueueType(Enum):
     """Types de queues"""
+
     EMAIL = "email"
     PUSH = "push"
     SMS = "sms"
@@ -124,23 +130,27 @@ class MessageProcessor(ABC):
     
     @abstractmethod
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter un message"""
+        """
+Traiter un message"""
         pass
     
     @abstractmethod
     def get_queue_type(self) -> QueueType:
-        """Retourner le type de queue supporté"""
+        """
+Retourner le type de queue supporté"""
         pass
 
 
 class EmailProcessor(MessageProcessor):
-    """Processeur de messages email"""
+    """
+Processeur de messages email"""
     
     def __init__(self, email_manager):
         self.email_manager = email_manager
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter un message email"""
+        """
+Traiter un message email"""
         try:
             start_time = datetime.utcnow()
             
@@ -200,7 +210,8 @@ class PushProcessor(MessageProcessor):
         self.push_manager = push_manager
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter une notification push"""
+        """
+Traiter une notification push"""
         try:
             start_time = datetime.utcnow()
             
@@ -259,7 +270,8 @@ class WebhookProcessor(MessageProcessor):
         self.http_client = http_client
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
-        """Traiter un webhook"""
+        """
+Traiter un webhook"""
         try:
             start_time = datetime.utcnow()
             
@@ -332,7 +344,8 @@ class RedisQueueBackend:
         self.redis = redis_client
         
     async def enqueue(self, queue_name: str, message: QueueMessage, delay: Optional[int] = None):
-        """Ajouter un message à la queue"""
+        """
+Ajouter un message à la queue"""
         try:
             # Sérialiser le message
             serialized_message = self._serialize_message(message)
@@ -913,7 +926,8 @@ class NotificationQueueManager:
             )
     
     async def _save_stats_snapshot(self, stats: QueueStats):
-        """Sauvegarder un snapshot de statistiques"""
+        """
+Sauvegarder un snapshot de statistiques"""
         async with self.db_pool.acquire() as conn:
             query = """
                 INSERT INTO notification_queue_stats (
@@ -933,7 +947,8 @@ class NotificationQueueManager:
             )
     
     async def get_queue_status(self, queue_type: Optional[QueueType] = None) -> Dict[str, QueueStats]:
-        """Récupérer le statut des queues"""
+        """
+Récupérer le statut des queues"""
         try:
             status = {}
             

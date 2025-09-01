@@ -27,6 +27,7 @@ Creator content upload → AI priority analysis → Priority queue →
 Resource allocation → Execution optimization → Performance monitoring → 
 SEO integration → Collaboration coordination → Multi-platform distribution
 """
+
 import asyncio
 import logging
 import time
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class PriorityLevel(IntEnum):
-    """Task priority levels with numeric values for heap operations."""
+    """
+Task priority levels with numeric values for heap operations."""
+
     CRITICAL = 0  # Creator content protection
     URGENT = 1    # Real-time violations
     HIGH = 2      # User requests
@@ -56,7 +59,9 @@ class PriorityLevel(IntEnum):
 
 
 class SchedulingStrategy(Enum):
-    """Scheduling strategy types."""
+    """
+Scheduling strategy types."""
+
     PRIORITY_FIRST = "priority_first"
     ROUND_ROBIN = "round_robin"
     SHORTEST_JOB_FIRST = "shortest_job_first"
@@ -67,6 +72,7 @@ class SchedulingStrategy(Enum):
 
 class TaskType(Enum):
     """Types of crawler tasks."""
+
     CONTENT_MONITORING = "content_monitoring"
     VIOLATION_DETECTION = "violation_detection"
     PLATFORM_CRAWLING = "platform_crawling"
@@ -79,6 +85,7 @@ class TaskType(Enum):
 
 class TaskStatus(Enum):
     """Task execution status."""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
@@ -102,7 +109,8 @@ class ResourceRequirements:
 
 @dataclass
 class TaskMetadata:
-    """Task metadata and context."""
+    """
+Task metadata and context."""
     creator_id: Optional[str] = None
     content_id: Optional[str] = None
     platform: Optional[str] = None
@@ -119,7 +127,8 @@ class TaskMetadata:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task with complete context."""
+    """
+Scheduled task with complete context."""
     task_id: str
     task_type: TaskType
     priority: PriorityLevel
@@ -141,7 +150,8 @@ class ScheduledTask:
     execution_log: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        """Post-initialization processing."""
+        """
+Post-initialization processing."""
         if not self.task_id:
             self.task_id = f"task_{uuid.uuid4().hex[:8]}"
         if not self.scheduled_for:
@@ -184,13 +194,15 @@ class ScheduledTask:
     
     @property
     def is_overdue(self) -> bool:
-        """Check if task is overdue."""
+        """
+Check if task is overdue."""
         if not self.deadline:
             return False
         return datetime.utcnow() > self.deadline
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
+        """
+Convert to dictionary representation."""
         return {
             'task_id': self.task_id,
             'task_type': self.task_type.value,
@@ -214,7 +226,8 @@ class ScheduledTask:
 
 @dataclass
 class SchedulerMetrics:
-    """Scheduler performance metrics."""
+    """
+Scheduler performance metrics."""
     total_tasks_scheduled: int = 0
     total_tasks_completed: int = 0
     total_tasks_failed: int = 0
@@ -252,7 +265,8 @@ class PriorityScheduler:
         enable_deadline_enforcement: bool = True,
         enable_resource_monitoring: bool = True
     ):
-        """Initialize priority scheduler."""
+        """
+Initialize priority scheduler."""
         self.max_concurrent_tasks = max_concurrent_tasks
         self.strategy = strategy
         self.enable_ml_optimization = enable_ml_optimization
@@ -455,7 +469,8 @@ class PriorityScheduler:
         return base_time * multiplier * load_factor
     
     async def start_scheduler(self) -> None:
-        """Start the scheduler background process."""
+        """
+Start the scheduler background process."""
         if self.running:
             logger.warning("Scheduler already running")
             return
@@ -551,7 +566,8 @@ class PriorityScheduler:
             self.metrics.active_tasks = len(self.active_tasks)
     
     async def _check_dependencies(self, task: ScheduledTask) -> bool:
-        """Check if task dependencies are satisfied."""
+        """
+Check if task dependencies are satisfied."""
         for dep_id in task.dependencies:
             # Check if dependency is completed
             dep_completed = any(
@@ -591,7 +607,8 @@ class PriorityScheduler:
         return True
     
     async def _start_task_execution(self, task: ScheduledTask) -> None:
-        """Start executing a task."""
+        """
+Start executing a task."""
         try:
             # Allocate resources
             await self._allocate_resources(task)
@@ -679,7 +696,8 @@ class PriorityScheduler:
             self.metrics.active_tasks = len(self.active_tasks)
     
     async def _allocate_resources(self, task: ScheduledTask) -> None:
-        """Allocate resources for task execution."""
+        """
+Allocate resources for task execution."""
         req = task.resource_requirements
         
         self.allocated_resources['cpu_cores'] += req.cpu_cores
@@ -691,7 +709,8 @@ class PriorityScheduler:
             self.allocated_resources['gpu_allocated'] += 1
     
     async def _deallocate_resources(self, task: ScheduledTask) -> None:
-        """Deallocate resources after task completion."""
+        """
+Deallocate resources after task completion."""
         req = task.resource_requirements
         
         self.allocated_resources['cpu_cores'] -= req.cpu_cores
@@ -707,7 +726,8 @@ class PriorityScheduler:
             self.allocated_resources[key] = max(0, self.allocated_resources[key])
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a scheduled or running task."""
+        """
+Cancel a scheduled or running task."""
         async with self.lock:
             # Check if task exists
             task = None
@@ -758,7 +778,8 @@ class PriorityScheduler:
         return None
     
     async def get_queue_status(self) -> Dict[str, Any]:
-        """Get comprehensive queue status."""
+        """
+Get comprehensive queue status."""
         async with self.lock:
             # Calculate priority distribution
             priority_dist = defaultdict(int)
@@ -785,7 +806,8 @@ class PriorityScheduler:
             }
     
     async def _metrics_updater(self) -> None:
-        """Update scheduler metrics periodically."""
+        """
+Update scheduler metrics periodically."""
         while self.running:
             try:
                 await self._update_metrics()
@@ -820,7 +842,8 @@ class PriorityScheduler:
         self.metrics.last_updated = datetime.utcnow()
     
     async def _deadline_monitor(self) -> None:
-        """Monitor task deadlines and handle overdue tasks."""
+        """
+Monitor task deadlines and handle overdue tasks."""
         while self.running:
             try:
                 await self._check_deadlines()
@@ -871,7 +894,8 @@ class PriorityScheduler:
         self.task_callbacks[event_type].append(callback)
     
     async def _call_callbacks(self, event_type: str, task: ScheduledTask) -> None:
-        """Call registered callbacks for an event."""
+        """
+Call registered callbacks for an event."""
         for callback in self.task_callbacks.get(event_type, []):
             try:
                 if asyncio.iscoroutinefunction(callback):
@@ -886,7 +910,8 @@ class PriorityScheduler:
         return self.metrics
     
     async def optimize_queue(self) -> None:
-        """Optimize queue ordering based on current conditions."""
+        """
+Optimize queue ordering based on current conditions."""
         if not self.enable_ml_optimization:
             return
         

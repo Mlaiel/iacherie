@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import json
 import logging
@@ -36,7 +37,8 @@ settings = get_settings()
 
 
 class KafkaBrokerConfig(BaseModel):
-    """Configuration for Kafka broker"""
+    """
+Configuration for Kafka broker"""
     id: int = Field(..., description="Broker ID")
     name: str = Field(..., description="Broker name")
     host: str = Field(..., description="Broker host")
@@ -97,7 +99,8 @@ class KafkaManager:
         self.monitoring_tasks: List[asyncio.Task] = []
 
     def _get_default_config(self) -> KafkaClusterConfig:
-        """Get default Kafka cluster configuration"""
+        """
+Get default Kafka cluster configuration"""
         return KafkaClusterConfig(
             cluster_name="ia-influencer-kafka",
             brokers=[

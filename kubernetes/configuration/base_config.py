@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Core configuration management foundation for enterprise deployment.
 ==================================================================
 """
+
 import os
 import yaml
 import json
@@ -25,11 +26,14 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 class ConfigurationError(Exception):
-    """Base exception for configuration-related errors"""
+    """
+Base exception for configuration-related errors"""
     pass
 
 class ConfigFormat(Enum):
-    """Supported configuration formats"""
+    """
+Supported configuration formats"""
+
     YAML = "yaml"
     JSON = "json"
     TOML = "toml"
@@ -38,6 +42,7 @@ class ConfigFormat(Enum):
 
 class ValidationLevel(Enum):
     """Configuration validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -57,7 +62,8 @@ class ConfigurationSchema:
 
 @dataclass
 class ConfigurationSource:
-    """Configuration source definition"""
+    """
+Configuration source definition"""
     name: str
     path: str
     format_type: ConfigFormat
@@ -283,7 +289,8 @@ class BaseConfigurationManager:
         return env_config
     
     async def _set_nested_value(self, config: Dict[str, Any], key: str, value: str) -> None:
-        """Set nested configuration value from dot notation"""
+        """
+Set nested configuration value from dot notation"""
         keys = key.split('.')
         current = config
         
@@ -306,7 +313,8 @@ class BaseConfigurationManager:
             current[keys[-1]] = value
     
     async def _merge_configurations(self) -> Dict[str, Any]:
-        """Merge configurations from all sources based on priority"""
+        """
+Merge configurations from all sources based on priority"""
         merged = {}
         
         # Start with lowest priority and merge upwards
@@ -317,7 +325,8 @@ class BaseConfigurationManager:
         return merged
     
     async def _deep_merge(self, target: Dict[str, Any], source: Dict[str, Any]) -> None:
-        """Deep merge source configuration into target"""
+        """
+Deep merge source configuration into target"""
         for key, value in source.items():
             if key in target and isinstance(target[key], dict) and isinstance(value, dict):
                 await self._deep_merge(target[key], value)
@@ -325,7 +334,8 @@ class BaseConfigurationManager:
                 target[key] = value
     
     async def _setup_file_watchers(self) -> None:
-        """Setup file watchers for hot configuration reload"""
+        """
+Setup file watchers for hot configuration reload"""
         # Implementation would use file system watchers
         # For now, we'll just log that watchers are set up
         self.logger.info("File watchers set up for configuration hot-reload")
@@ -346,7 +356,8 @@ class BaseConfigurationManager:
         return await self._get_nested_value(self.merged_config, key)
     
     async def _get_nested_value(self, config: Dict[str, Any], key: str) -> Any:
-        """Get nested configuration value using dot notation"""
+        """
+Get nested configuration value using dot notation"""
         keys = key.split('.')
         current = config
         

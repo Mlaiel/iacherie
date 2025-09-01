@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import traceback
@@ -26,7 +27,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels."""
+    """
+Error severity levels."""
+
     DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
@@ -37,6 +40,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Error category classification."""
+
     SYSTEM = "system"
     BUSINESS = "business"
     NETWORK = "network"
@@ -51,6 +55,7 @@ class ErrorCategory(Enum):
 
 class RecoveryStrategy(Enum):
     """Error recovery strategies."""
+
     RETRY = "retry"
     FALLBACK = "fallback"
     CIRCUIT_BREAKER = "circuit_breaker"
@@ -63,6 +68,7 @@ class RecoveryStrategy(Enum):
 
 class ErrorStatus(Enum):
     """Error handling status."""
+
     NEW = "new"
     PROCESSING = "processing"
     RESOLVED = "resolved"
@@ -88,7 +94,8 @@ class ErrorDefinition:
 
 @dataclass
 class ErrorInstance:
-    """Individual error occurrence."""
+    """
+Individual error occurrence."""
     instance_id: str
     error_id: str
     component_id: str
@@ -109,7 +116,8 @@ class ErrorInstance:
 
 @dataclass
 class RecoveryAction:
-    """Error recovery action definition."""
+    """
+Error recovery action definition."""
     action_id: str
     error_id: str
     strategy: RecoveryStrategy
@@ -122,7 +130,8 @@ class RecoveryAction:
 
 @dataclass
 class ErrorPattern:
-    """Error pattern for analysis and prediction."""
+    """
+Error pattern for analysis and prediction."""
     pattern_id: str
     name: str
     conditions: Dict[str, Any]
@@ -136,7 +145,8 @@ class ErrorPattern:
 
 @dataclass
 class ErrorAnalysis:
-    """Error analysis result."""
+    """
+Error analysis result."""
     analysis_id: str
     component_id: str
     time_window: int
@@ -467,7 +477,8 @@ class ErrorHandler:
         return False
     
     async def _execute_fallback_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute fallback recovery strategy."""
+        """
+Execute fallback recovery strategy."""
         fallback_config = definition.fallback_config
         
         # Try primary fallback
@@ -482,7 +493,8 @@ class ErrorHandler:
         return await self._execute_fallback_action(error, fallback_config.get('default'))
     
     async def _execute_degradation_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute graceful degradation strategy."""
+        """
+Execute graceful degradation strategy."""
         # Reduce service quality but maintain basic functionality
         degradation_config = definition.fallback_config.get('degradation', {})
         
@@ -494,7 +506,8 @@ class ErrorHandler:
         return await self._execute_recovery_actions(error)
     
     async def _execute_compensation_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute compensation recovery strategy."""
+        """
+Execute compensation recovery strategy."""
         compensation_config = definition.fallback_config.get('compensation', {})
         
         # Execute compensation actions
@@ -594,7 +607,8 @@ class ErrorHandler:
             error.context['stakeholders_notified'] = True
     
     async def _check_action_conditions(self, action: RecoveryAction, error: ErrorInstance) -> bool:
-        """Check if recovery action conditions are met."""
+        """
+Check if recovery action conditions are met."""
         conditions = action.conditions
         
         if not conditions:
@@ -620,7 +634,8 @@ class ErrorHandler:
         return True
     
     async def _should_retry(self, error: ErrorInstance, definition: ErrorDefinition, attempt: int) -> bool:
-        """Check if error should be retried."""
+        """
+Check if error should be retried."""
         retry_policy = definition.retry_policy
         
         # Check max retries
@@ -640,7 +655,8 @@ class ErrorHandler:
         return True
     
     async def _should_escalate(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Check if error should be escalated."""
+        """
+Check if error should be escalated."""
         escalation_rules = definition.escalation_rules
         
         if not escalation_rules:
@@ -668,7 +684,8 @@ class ErrorHandler:
         return False
     
     async def _escalate_error(self, error: ErrorInstance, definition: ErrorDefinition) -> None:
-        """Escalate error to higher level handling."""
+        """
+Escalate error to higher level handling."""
         escalation_rules = definition.escalation_rules
         
         # Send notifications
@@ -691,7 +708,8 @@ class ErrorHandler:
         error.context['escalation_time'] = datetime.now().isoformat()
     
     async def _send_error_notifications(self, error: ErrorInstance, config: Dict[str, Any]) -> None:
-        """Send error notifications."""
+        """
+Send error notifications."""
         # Simulate notification sending
         notification_types = config.get('types', [])
         
@@ -719,7 +737,8 @@ class ErrorHandler:
                     await self._handle_pattern_detection(pattern, recent_matches)
     
     async def _matches_pattern(self, error: ErrorInstance, pattern: ErrorPattern) -> bool:
-        """Check if error matches pattern conditions."""
+        """
+Check if error matches pattern conditions."""
         conditions = pattern.conditions
         
         # Check component condition
@@ -746,7 +765,8 @@ class ErrorHandler:
         return True
     
     def _is_recent_match(self, match_id: str, time_window: int) -> bool:
-        """Check if match is within time window."""
+        """
+Check if match is within time window."""
         # Find error instance
         error = self.active_errors.get(match_id)
         if not error:
@@ -759,7 +779,8 @@ class ErrorHandler:
         return age <= time_window
     
     async def _handle_pattern_detection(self, pattern: ErrorPattern, matches: List[str]) -> None:
-        """Handle detected error pattern."""
+        """
+Handle detected error pattern."""
         await self.event_dispatcher.emit('error_pattern_detected', {
             'pattern_id': pattern.pattern_id,
             'pattern_name': pattern.name,
@@ -820,7 +841,8 @@ class ErrorHandler:
         return True
     
     async def _record_circuit_breaker_failure(self, error_id: str) -> None:
-        """Record circuit breaker failure."""
+        """
+Record circuit breaker failure."""
         if error_id not in self.circuit_breakers:
             return
         
@@ -839,7 +861,8 @@ class ErrorHandler:
             })
     
     async def _reset_circuit_breaker(self, error_id: str) -> None:
-        """Reset circuit breaker after successful recovery."""
+        """
+Reset circuit breaker after successful recovery."""
         if error_id in self.circuit_breakers:
             cb = self.circuit_breakers[error_id]
             cb['state'] = 'closed'
@@ -847,14 +870,16 @@ class ErrorHandler:
             cb['last_failure_time'] = None
     
     async def _open_circuit_breaker(self, component_id: str) -> None:
-        """Open circuit breaker for component."""
+        """
+Open circuit breaker for component."""
         # Find relevant circuit breakers
         for error_id, cb in self.circuit_breakers.items():
             cb['state'] = 'open'
             cb['last_failure_time'] = datetime.now()
     
     async def _finalize_error_handling(self, error: ErrorInstance, start_time: datetime) -> None:
-        """Finalize error handling and update statistics."""
+        """
+Finalize error handling and update statistics."""
         error.resolution_time = datetime.now()
         resolution_duration = (error.resolution_time - start_time).total_seconds()
         
@@ -895,7 +920,8 @@ class ErrorHandler:
         self.error_history.append(error)
     
     async def _update_error_statistics(self, error: ErrorInstance) -> None:
-        """Update error rate statistics."""
+        """
+Update error rate statistics."""
         # Update category statistics
         category = error.category.value
         if category not in self.error_stats['error_rate_by_category']:
@@ -909,7 +935,8 @@ class ErrorHandler:
         self.error_stats['error_rate_by_severity'][severity] += 1
     
     async def _create_default_error_definition(self, error: ErrorInstance) -> ErrorDefinition:
-        """Create default error definition for unregistered errors."""
+        """
+Create default error definition for unregistered errors."""
         return ErrorDefinition(
             error_id=error.error_id,
             name=f"Auto-generated for {error.error_id}",
@@ -1002,7 +1029,8 @@ class ErrorHandler:
         )
     
     async def _analyze_error_trends(self, errors: List[ErrorInstance], time_window: int) -> Dict[str, Any]:
-        """Analyze error trends."""
+        """
+Analyze error trends."""
         if len(errors) < 2:
             return {'trend': 'insufficient_data'}
         
@@ -1044,7 +1072,8 @@ class ErrorHandler:
         severity_dist: Dict[str, int],
         category_dist: Dict[str, int]
     ) -> List[str]:
-        """Generate error handling recommendations."""
+        """
+Generate error handling recommendations."""
         recommendations = []
         
         # High error rate
@@ -1171,19 +1200,23 @@ class ErrorHandler:
         return bool(definition.error_id and definition.name)
     
     async def _validate_recovery_action(self, action: RecoveryAction) -> bool:
-        """Validate recovery action."""
+        """
+Validate recovery action."""
         return bool(action.action_id and action.error_id and action.handler_function)
     
     async def _validate_error_pattern(self, pattern: ErrorPattern) -> bool:
-        """Validate error pattern."""
+        """
+Validate error pattern."""
         return bool(pattern.pattern_id and pattern.name and pattern.conditions)
     
     async def _validate_error_instance(self, error: ErrorInstance) -> bool:
-        """Validate error instance."""
+        """
+Validate error instance."""
         return bool(error.instance_id and error.error_id and error.component_id and error.message)
     
     async def get_error_status(self, instance_id: str) -> Optional[Dict[str, Any]]:
-        """Get error handling status."""
+        """
+Get error handling status."""
         # Check active errors
         if instance_id in self.active_errors:
             error = self.active_errors[instance_id]
@@ -1207,7 +1240,8 @@ class ErrorHandler:
         }
     
     async def get_component_errors(self, component_id: str, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get recent errors for component."""
+        """
+Get recent errors for component."""
         cutoff_time = datetime.now() - timedelta(hours=hours)
         
         errors = []
@@ -1248,7 +1282,8 @@ class ErrorHandler:
         return errors
     
     async def get_error_stats(self) -> Dict[str, Any]:
-        """Get error handling statistics."""
+        """
+Get error handling statistics."""
         return {
             **self.error_stats,
             'active_errors': len(self.active_errors),

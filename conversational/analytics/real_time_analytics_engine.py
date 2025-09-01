@@ -29,13 +29,14 @@ analytics, business intelligence, and comprehensive performance monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary analytics platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -70,7 +71,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Analytics metric types"""
+    """
+Analytics metric types"""
+
     CONVERSATION_PERFORMANCE = "conversation_performance"
     ENGAGEMENT_RATE = "engagement_rate"
     CONVERSION_RATE = "conversion_rate"
@@ -85,6 +88,7 @@ class MetricType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for analytics"""
+
     REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
@@ -120,7 +124,8 @@ class ConversationAnalyticsData:
 
 @dataclass
 class AnalyticsInsight:
-    """Advanced analytics insight with actionable intelligence"""
+    """
+Advanced analytics insight with actionable intelligence"""
     insight_id: str
     category: str
     title: str
@@ -263,7 +268,8 @@ class RealTimeAnalyticsEngine:
         self,
         conversation_data: ConversationAnalyticsData
     ):
-        """Track conversation analytics in real-time"""
+        """
+Track conversation analytics in real-time"""
         try:
             # Add to processing queue
             await self.processing_queues["conversation_events"].put(conversation_data)
@@ -819,7 +825,8 @@ class RealTimeAnalyticsEngine:
         return []
     
     async def _load_pretrained_models(self):
-        """Load pre-trained ML models"""
+        """
+Load pre-trained ML models"""
         try:
             # Implementation would load models from storage
             logger.info("Pre-trained models loaded")
@@ -832,17 +839,20 @@ class RealTimeAnalyticsEngine:
         pass
     
     async def _process_performance_events(self):
-        """Process performance events"""
+        """
+Process performance events"""
         # Similar implementation to conversation events
         pass
     
     async def _process_revenue_events(self):
-        """Process revenue events"""
+        """
+Process revenue events"""
         # Similar implementation to conversation events
         pass
     
     async def get_real_time_metrics(self, user_id: str) -> Dict[str, Any]:
-        """Get real-time metrics for a user"""
+        """
+Get real-time metrics for a user"""
         cache_key = f"metrics:realtime:{user_id}"
         cached_metrics = await self.cache.get(cache_key)
         
@@ -903,7 +913,8 @@ class RealTimeAnalyticsEngine:
 async def create_analytics_engine(
     config: Optional[Dict[str, Any]] = None
 ) -> RealTimeAnalyticsEngine:
-    """Create and initialize analytics engine"""
+    """
+Create and initialize analytics engine"""
     engine = RealTimeAnalyticsEngine(config)
     return engine
 

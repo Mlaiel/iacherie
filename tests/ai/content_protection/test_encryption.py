@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests Ultra-Industriels Avancés pour le Module Content Encryption
+"""
+Tests Ultra-Industriels Avancés pour le Module Content Encryption
 
 🚨 AVERTISSEMENT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie.
@@ -30,6 +32,7 @@ IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import sys
 import os
@@ -80,7 +83,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EncryptionTestScenario:
-    """Encryption test scenario for comprehensive testing"""
+    """
+Encryption test scenario for comprehensive testing"""
     scenario_name: str
     content_type: str
     content_size: int
@@ -92,7 +96,8 @@ class EncryptionTestScenario:
 
 @dataclass
 class SecurityTestVector:
-    """Security test vector for cryptographic validation"""
+    """
+Security test vector for cryptographic validation"""
     attack_type: str
     expected_resistance: bool
     security_margin: float
@@ -113,7 +118,8 @@ class TestUltraIndustrialContentEncryption:
     """
     @pytest.fixture
     def enterprise_encryption_config(self):
-        """Configuration ultra-avancée pour le chiffrement"""
+        """
+Configuration ultra-avancée pour le chiffrement"""
         return {
             'algorithms': {
                 'symmetric': {
@@ -166,25 +172,29 @@ class TestUltraIndustrialContentEncryption:
 
     @pytest.fixture
     def enterprise_content_encryption(self, enterprise_encryption_config):
-        """Create enterprise-grade content encryption system"""
+        """
+Create enterprise-grade content encryption system"""
         encryption_system = ContentEncryption(enterprise_encryption_config)
         return encryption_system
 
     @pytest.fixture
     def enterprise_secure_storage(self, enterprise_encryption_config):
-        """Create enterprise-grade secure storage system"""
+        """
+Create enterprise-grade secure storage system"""
         # Use ContentEncryption as SecureStorage doesn't exist
         storage_system = ContentEncryption(enterprise_encryption_config)
         return storage_system
 
     @pytest.fixture
     def content_encryptor(self, enterprise_encryption_config):
-        """Create content encryptor instance"""
+        """
+Create content encryptor instance"""
         return ContentEncryption(enterprise_encryption_config)
 
     @pytest.fixture
     def sample_encryption_keys(self):
-        """Generate sample encryption keys for testing"""
+        """
+Generate sample encryption keys for testing"""
         # Generate RSA key pair
         private_key = rsa.generate_private_key(
             public_exponent=65537,
@@ -200,7 +210,8 @@ class TestUltraIndustrialContentEncryption:
 
     @pytest.fixture
     def sample_content_data(self):
-        """Generate sample content data for testing"""
+        """
+Generate sample content data for testing"""
         return {
             'text_content': "This is a test content for encryption testing by Fahed Mlaiel AI system",
             'json_content': json.dumps({
@@ -1288,7 +1299,8 @@ class TestUltraIndustrialContentEncryption:
 
     @pytest.mark.asyncio
     async def test_hybrid_encryption(self, content_encryptor, sample_encryption_keys, sample_content_data):
-        """Test hybrid encryption (RSA + AES) for large content"""
+        """
+Test hybrid encryption (RSA + AES) for large content"""
         
         large_content = sample_content_data['large_content']
         private_key = sample_encryption_keys['rsa_private_key']
@@ -1321,7 +1333,8 @@ class TestUltraIndustrialContentEncryption:
 
     @pytest.mark.asyncio
     async def test_key_derivation(self, content_encryptor, sample_encryption_keys):
-        """Test key derivation functionality"""
+        """
+Test key derivation functionality"""
         
         password = "strong_password_for_key_derivation_testing"
         salt = sample_encryption_keys['salt']
@@ -1415,7 +1428,8 @@ class TestUltraIndustrialContentEncryption:
 
     @pytest.mark.asyncio
     async def test_content_integrity_verification(self, content_encryptor, sample_content_data):
-        """Test content integrity verification during encryption/decryption"""
+        """
+Test content integrity verification during encryption/decryption"""
         
         content = sample_content_data['json_content'].encode('utf-8')
         key = secrets.token_bytes(32)
@@ -1466,7 +1480,8 @@ class TestUltraIndustrialContentEncryption:
 
     @pytest.mark.asyncio
     async def test_streaming_encryption(self, content_encryptor):
-        """Test streaming encryption for large files"""
+        """
+Test streaming encryption for large files"""
         
         # Simulate large file streaming
         chunk_size = 64 * 1024  # 64KB chunks
@@ -1541,20 +1556,23 @@ class TestUltraIndustrialContentEncryption:
 
 
 class TestDigitalWatermarker:
-    """Comprehensive tests for DigitalWatermarker class"""
+    """
+Comprehensive tests for DigitalWatermarker class"""
     @pytest.fixture
     def digital_watermarker(self, test_config):
-        """Create DigitalWatermarker instance for testing"""
+        """
+Create DigitalWatermarker instance for testing"""
         return DigitalWatermarker(test_config.get('watermarking', {}))
 
     @pytest.fixture
     def sample_watermark_data(self):
-        """Generate sample watermark data"""
+        """
+Generate sample watermark data"""
         return {
             'copyright_info': {
                 'owner': 'Fahed Mlaiel',
                 'creation_date': '2025-01-31',
-                'copyright_notice': '© 2025 Fahed Mlaiel. All rights reserved.',
+                'copyright_notice': '(c) 2025 Fahed Mlaiel. All rights reserved.',
                 'license_type': 'proprietary',
                 'contact': 'mlaiel@live.de'
             },
@@ -1574,7 +1592,8 @@ class TestDigitalWatermarker:
 
     @pytest.fixture
     def sample_media_content(self):
-        """Generate sample media content for watermarking"""
+        """
+Generate sample media content for watermarking"""
         return {
             'audio_data': np.random.random(44100 * 10).astype(np.float32),  # 10 seconds at 44.1kHz
             'image_data': np.random.randint(0, 256, (1080, 1920, 3), dtype=np.uint8),  # 1080p RGB image
@@ -1734,7 +1753,8 @@ class TestDigitalWatermarker:
 
     @pytest.mark.asyncio
     async def test_text_watermarking(self, digital_watermarker, sample_watermark_data, sample_media_content):
-        """Test text watermarking functionality"""
+        """
+Test text watermarking functionality"""
         
         text_content = sample_media_content['text_content']
         watermark_payload = sample_watermark_data['tracking_info']['tracking_code']
@@ -1784,7 +1804,8 @@ class TestDigitalWatermarker:
         assert paraphrase_extraction['confidence_score'] >= 0.5
 
     def _simulate_jpeg_compression(self, image, quality=80):
-        """Simulate JPEG compression artifacts"""
+        """
+Simulate JPEG compression artifacts"""
         # Handle bytes input - convert back to numpy array or return as-is
         if isinstance(image, bytes):
             # For bytes input, just return as-is (watermarked image already in bytes)
@@ -1796,7 +1817,8 @@ class TestDigitalWatermarker:
         return compressed
 
     def _add_gaussian_noise(self, image, sigma=5):
-        """Add Gaussian noise to image"""
+        """
+Add Gaussian noise to image"""
         # Handle bytes input
         if isinstance(image, bytes):
             return image
@@ -1806,7 +1828,8 @@ class TestDigitalWatermarker:
         return noisy
 
     def _scale_image(self, image, factor=0.8):
-        """Simulate image scaling"""
+        """
+Simulate image scaling"""
         # Handle bytes input
         if isinstance(image, bytes):
             return image
@@ -1823,7 +1846,8 @@ class TestDigitalWatermarker:
         return padded
 
     def _rotate_image(self, image, angle=2):
-        """Simulate small rotation"""
+        """
+Simulate small rotation"""
         # Handle bytes input
         if isinstance(image, bytes):
             return image
@@ -1834,7 +1858,8 @@ class TestDigitalWatermarker:
         return rotated
 
     async def _simulate_paraphrasing(self, text):
-        """Simulate text paraphrasing"""
+        """
+Simulate text paraphrasing"""
         # Simple simulation: synonym replacement
         words = text.split()
         synonym_map = {
@@ -1857,7 +1882,8 @@ class TestDigitalWatermarker:
 
     @pytest.mark.asyncio
     async def test_multi_layer_watermarking(self, digital_watermarker, sample_watermark_data, sample_media_content):
-        """Test multi-layer watermarking for enhanced security"""
+        """
+Test multi-layer watermarking for enhanced security"""
         
         image_data = sample_media_content['image_data']
         
@@ -1931,7 +1957,8 @@ class TestDigitalWatermarker:
 
     @pytest.mark.asyncio
     async def test_watermark_detection_and_forensics(self, digital_watermarker, sample_media_content):
-        """Test watermark detection and forensic analysis"""
+        """
+Test watermark detection and forensic analysis"""
         
         image_data = sample_media_content['image_data']
         
@@ -1985,7 +2012,8 @@ class TestDigitalWatermarker:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_watermarking_performance(self, digital_watermarker):
-        """Test watermarking performance and scalability"""
+        """
+Test watermarking performance and scalability"""
         
         import time
         
@@ -2026,7 +2054,8 @@ class TestCryptoProvider:
     """Tests for cryptographic provider functionality"""
     @pytest.mark.asyncio
     async def test_random_key_generation(self):
-        """Test cryptographically secure random key generation"""
+        """
+Test cryptographically secure random key generation"""
         
         crypto_provider = CryptoProvider()
         
@@ -2073,7 +2102,8 @@ class TestEncryptionIntegration:
     """Integration tests for encryption system"""
     @pytest.mark.asyncio
     async def test_end_to_end_content_protection_workflow(self, test_config, sample_content_metadata):
-        """Test complete content protection workflow with encryption and watermarking"""
+        """
+Test complete content protection workflow with encryption and watermarking"""
         
         content_encryptor = ContentEncryptor(test_config.get('encryption', {}))
         digital_watermarker = DigitalWatermarker(test_config.get('watermarking', {}))

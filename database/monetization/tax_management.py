@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class TaxJurisdiction(Enum):
-    """Tax jurisdiction types"""
+    """
+Tax jurisdiction types"""
+
     FEDERAL = "federal"
     STATE = "state"
     LOCAL = "local"
@@ -52,6 +55,7 @@ class TaxJurisdiction(Enum):
 
 class TaxType(Enum):
     """Tax type classifications"""
+
     INCOME_TAX = "income_tax"
     CORPORATE_TAX = "corporate_tax"
     VAT_GST = "vat_gst"
@@ -64,6 +68,7 @@ class TaxType(Enum):
 
 class TaxStatus(Enum):
     """Tax calculation and filing status"""
+
     CALCULATED = "calculated"
     PENDING_REVIEW = "pending_review"
     APPROVED = "approved"
@@ -75,6 +80,7 @@ class TaxStatus(Enum):
 
 class DeductionCategory(Enum):
     """Tax deduction categories"""
+
     BUSINESS_EXPENSES = "business_expenses"
     EQUIPMENT_DEPRECIATION = "equipment_depreciation"
     HOME_OFFICE = "home_office"
@@ -157,7 +163,8 @@ class TaxJurisdictionProfile(Base):
     )
 
 class CreatorTaxProfile(Base):
-    """Creator tax profile and configuration"""
+    """
+Creator tax profile and configuration"""
     __tablename__ = 'creator_tax_profiles'
     
     # Primary identification
@@ -230,7 +237,8 @@ class CreatorTaxProfile(Base):
     )
 
 class TaxCalculation(Base):
-    """Tax calculations for specific periods and jurisdictions"""
+    """
+Tax calculations for specific periods and jurisdictions"""
     __tablename__ = 'tax_calculations'
     
     # Primary identification
@@ -470,7 +478,8 @@ class TaxOptimizationStrategy(Base):
     )
 
 class TaxDocument(Base):
-    """Tax-related documents and forms"""
+    """
+Tax-related documents and forms"""
     __tablename__ = 'tax_documents'
     
     # Primary identification
@@ -555,7 +564,8 @@ class TaxSummary:
     jurisdictions: List[str]
 
 class TaxAlert(Base):
-    """Tax-related alerts and reminders"""
+    """
+Tax-related alerts and reminders"""
     __tablename__ = 'tax_alerts'
     
     # Primary identification

@@ -7,6 +7,7 @@ content protection in the IA-Influencer ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -43,7 +44,9 @@ from .threat_intelligence import ThreatIntelligenceEngine
 logger = logging.getLogger(__name__)
 
 class FraudType(Enum):
-    """Comprehensive fraud classification system"""
+    """
+Comprehensive fraud classification system"""
+
     CONTENT_THEFT = "content_theft"
     REVENUE_MANIPULATION = "revenue_manipulation" 
     IDENTITY_IMPERSONATION = "identity_impersonation"
@@ -57,6 +60,7 @@ class FraudType(Enum):
 
 class FraudSeverity(Enum):
     """Fraud severity classification"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -65,7 +69,8 @@ class FraudSeverity(Enum):
 
 @dataclass
 class FraudDetectionResult:
-    """Comprehensive fraud detection result"""
+    """
+Comprehensive fraud detection result"""
     fraud_detected: bool
     fraud_type: Optional[FraudType]
     confidence_score: float
@@ -83,7 +88,8 @@ class FraudDetectionResult:
 
 @dataclass
 class FraudContext:
-    """Fraud detection context and metadata"""
+    """
+Fraud detection context and metadata"""
     user_id: str
     content_id: Optional[str]
     platform: str
@@ -384,7 +390,8 @@ class FraudDetectionAgent(BaseAgent):
         return min(composite_score, 1.0)
 
     async def _classify_fraud_type(self, *detection_results) -> FraudType:
-        """Classify the primary fraud type based on detection results"""
+        """
+Classify the primary fraud type based on detection results"""
         behavioral_result, pattern_result, revenue_result, deepfake_result, anomaly_result, threat_result = detection_results
         
         # Check for deepfake content
@@ -412,7 +419,8 @@ class FraudDetectionAgent(BaseAgent):
         return FraudType.PLATFORM_ABUSE
 
     def _determine_severity(self, fraud_score: float, fraud_type: FraudType) -> FraudSeverity:
-        """Determine fraud severity based on score and type"""
+        """
+Determine fraud severity based on score and type"""
         critical_types = [
             FraudType.REVENUE_MANIPULATION, 
             FraudType.PAYMENT_FRAUD,
@@ -429,7 +437,8 @@ class FraudDetectionAgent(BaseAgent):
             return FraudSeverity.LOW
 
     async def _compile_evidence(self, results: Dict[str, Dict]) -> Dict[str, Any]:
-        """Compile comprehensive evidence from all detection methods"""
+        """
+Compile comprehensive evidence from all detection methods"""
         evidence = {
             'behavioral_anomalies': results.get('behavioral', {}).get('anomalies', []),
             'pattern_matches': results.get('pattern', {}).get('matches', []),
@@ -442,7 +451,8 @@ class FraudDetectionAgent(BaseAgent):
         return evidence
 
     async def _extract_risk_factors(self, evidence: Dict[str, Any]) -> List[str]:
-        """Extract key risk factors from evidence"""
+        """
+Extract key risk factors from evidence"""
         risk_factors = []
         
         for category, indicators in evidence.items():

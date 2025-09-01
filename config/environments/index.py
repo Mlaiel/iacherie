@@ -15,6 +15,7 @@ Point d'entrée principal pour le système de configuration d'environnements.
 Fournit des fonctions utilitaires et des raccourcis pour l'utilisation quotidienne.
 ==================================================================
 """
+
 import os
 import sys
 from typing import Dict, Any, Optional, List
@@ -92,7 +93,8 @@ class ConfigurationManager:
         return self._current_config
         
     def switch_environment(self, env_type: EnvironmentType) -> None:
-        """Change d'environnement actuel"""
+        """
+Change d'environnement actuel"""
         self._current_config = self.get_config(env_type=env_type)
         
     def export_config(
@@ -239,7 +241,8 @@ config_manager = ConfigurationManager()
 
 
 def get_config_manager() -> ConfigurationManager:
-    """Retourne l'instance globale du gestionnaire de configuration"""
+    """
+Retourne l'instance globale du gestionnaire de configuration"""
     return config_manager
 
 

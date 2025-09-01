@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import json
@@ -66,7 +67,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(str, Enum):
-    """Quality assessment dimensions"""
+    """
+Quality assessment dimensions"""
+
     TECHNICAL_QUALITY = "technical_quality"
     CONTENT_QUALITY = "content_quality"
     AESTHETIC_QUALITY = "aesthetic_quality"
@@ -79,6 +82,7 @@ class QualityDimension(str, Enum):
 
 class QualityLevel(str, Enum):
     """Quality levels"""
+
     POOR = "poor"          # 0.0 - 0.3
     FAIR = "fair"          # 0.3 - 0.5
     GOOD = "good"          # 0.5 - 0.7
@@ -88,6 +92,7 @@ class QualityLevel(str, Enum):
 
 class ContentType(str, Enum):
     """Content types for quality assessment"""
+
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -100,6 +105,7 @@ class ContentType(str, Enum):
 
 class ImprovementCategory(str, Enum):
     """Categories of quality improvements"""
+
     RESOLUTION = "resolution"
     LIGHTING = "lighting"
     COMPOSITION = "composition"
@@ -156,7 +162,8 @@ class QualityProcessingConfig:
 
 @dataclass
 class TechnicalQualityMetrics:
-    """Technical quality assessment metrics"""
+    """
+Technical quality assessment metrics"""
     # Image/Video metrics
     resolution: Optional[Tuple[int, int]] = None
     aspect_ratio: Optional[float] = None
@@ -190,7 +197,8 @@ class TechnicalQualityMetrics:
 
 @dataclass
 class ContentQualityMetrics:
-    """Content quality assessment metrics"""
+    """
+Content quality assessment metrics"""
     # Content structure
     information_density: Optional[float] = None
     content_depth: Optional[float] = None
@@ -225,7 +233,8 @@ class ContentQualityMetrics:
 
 @dataclass
 class AestheticQualityMetrics:
-    """Aesthetic quality assessment metrics"""
+    """
+Aesthetic quality assessment metrics"""
     # Visual aesthetics
     visual_appeal: Optional[float] = None
     color_scheme_quality: Optional[float] = None
@@ -255,7 +264,8 @@ class AestheticQualityMetrics:
 
 @dataclass
 class EngagementQualityMetrics:
-    """Engagement quality assessment metrics"""
+    """
+Engagement quality assessment metrics"""
     # Attention factors
     attention_grabbing: Optional[float] = None
     retention_potential: Optional[float] = None
@@ -283,7 +293,8 @@ class EngagementQualityMetrics:
 
 @dataclass
 class AccessibilityQualityMetrics:
-    """Accessibility quality assessment metrics"""
+    """
+Accessibility quality assessment metrics"""
     # Visual accessibility
     color_contrast_ratio: Optional[float] = None
     text_readability: Optional[float] = None
@@ -311,7 +322,8 @@ class AccessibilityQualityMetrics:
 
 @dataclass
 class SEOQualityMetrics:
-    """SEO quality assessment metrics"""
+    """
+SEO quality assessment metrics"""
     # Content SEO
     keyword_optimization: Optional[float] = None
     title_effectiveness: Optional[float] = None
@@ -335,7 +347,8 @@ class SEOQualityMetrics:
 
 @dataclass
 class QualityAssessmentResult:
-    """Comprehensive quality assessment result"""
+    """
+Comprehensive quality assessment result"""
     # Basic information
     content_id: str
     content_type: ContentType
@@ -979,7 +992,8 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> EngagementQualityMetrics:
-        """Assess engagement quality metrics"""
+        """
+Assess engagement quality metrics"""
         metrics = EngagementQualityMetrics()
         
         # Engagement assessment would be implemented here
@@ -993,7 +1007,8 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> AccessibilityQualityMetrics:
-        """Assess accessibility quality metrics"""
+        """
+Assess accessibility quality metrics"""
         metrics = AccessibilityQualityMetrics()
         
         # Accessibility assessment would be implemented here
@@ -1007,7 +1022,8 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> SEOQualityMetrics:
-        """Assess SEO quality metrics"""
+        """
+Assess SEO quality metrics"""
         metrics = SEOQualityMetrics()
         
         # SEO assessment would be implemented here
@@ -1016,7 +1032,8 @@ class QualityProcessor:
         return metrics
     
     async def _calculate_technical_score(self, metrics: TechnicalQualityMetrics) -> float:
-        """Calculate overall technical quality score"""
+        """
+Calculate overall technical quality score"""
         scores = []
         
         if metrics.sharpness_score is not None:
@@ -1034,7 +1051,8 @@ class QualityProcessor:
         return sum(scores) / len(scores) if scores else 0.5
     
     async def _calculate_content_score(self, metrics: ContentQualityMetrics) -> float:
-        """Calculate overall content quality score"""
+        """
+Calculate overall content quality score"""
         scores = []
         
         if metrics.readability_score is not None:
@@ -1056,7 +1074,8 @@ class QualityProcessor:
         assessment: QualityAssessmentResult,
         results: List[Any]
     ):
-        """Process assessment results from different dimensions"""
+        """
+Process assessment results from different dimensions"""
         try:
             for i, result in enumerate(results):
                 if isinstance(result, Exception):

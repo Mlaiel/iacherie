@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -27,7 +28,9 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class BeRealMoment(Enum):
-    """BeReal moment types"""
+    """
+BeReal moment types"""
+
     DAILY_MOMENT = "daily_moment"
     LATE_POST = "late_post"
     RETAKE = "retake"
@@ -37,6 +40,7 @@ class BeRealMoment(Enum):
 
 class AuthenticityLevel(Enum):
     """Content authenticity levels"""
+
     AUTHENTIC = "authentic"
     POTENTIALLY_STAGED = "potentially_staged"
     SUSPICIOUS = "suspicious"
@@ -229,7 +233,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return moment_type in moment_types
         
     def _determine_moment_type(self, post: Dict[str, Any]) -> BeRealMoment:
-        """Determine moment type from post data"""
+        """
+Determine moment type from post data"""
         
         is_late = post.get('isLate', False)
         retakes_count = post.get('retakeCounter', 0)
@@ -245,7 +250,8 @@ class BeRealEngine(BaseCrawlerEngine):
             return BeRealMoment.DAILY_MOMENT
             
     async def _process_bereal_post(self, raw_post: Dict[str, Any]) -> Optional[BeRealPost]:
-        """Process and analyze BeReal post with authenticity verification"""
+        """
+Process and analyze BeReal post with authenticity verification"""
         
         try:
             post_id = raw_post.get('id')
@@ -374,7 +380,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return min(authenticity_score, 1.0)
         
     async def _analyze_dual_camera_consistency(self, post: Dict[str, Any]) -> float:
-        """Analyze consistency between front and back camera photos"""
+        """
+Analyze consistency between front and back camera photos"""
         
         primary_photo = post.get('primaryPhoto', {})
         secondary_photo = post.get('secondaryPhoto', {})
@@ -406,7 +413,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return max(consistency_score, 0.0)
         
     def _analyze_timing_authenticity(self, post: Dict[str, Any]) -> float:
-        """Analyze timing authenticity factors"""
+        """
+Analyze timing authenticity factors"""
         
         timing_score = 1.0
         
@@ -433,7 +441,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return max(timing_score, 0.0)
         
     def _analyze_location_authenticity(self, post: Dict[str, Any]) -> float:
-        """Analyze location data for authenticity"""
+        """
+Analyze location data for authenticity"""
         
         location = post.get('location')
         if not location:
@@ -443,7 +452,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return 0.9
         
     async def _analyze_content_naturalness(self, post: Dict[str, Any]) -> float:
-        """Analyze content for natural vs staged appearance"""
+        """
+Analyze content for natural vs staged appearance"""
         
         # This would use advanced image analysis
         # For now, return a baseline score
@@ -454,7 +464,8 @@ class BeRealEngine(BaseCrawlerEngine):
         authenticity_score: float, 
         post: Dict[str, Any]
     ) -> AuthenticityLevel:
-        """Determine authenticity level based on score and factors"""
+        """
+Determine authenticity level based on score and factors"""
         
         if authenticity_score >= 0.9:
             return AuthenticityLevel.AUTHENTIC
@@ -473,7 +484,8 @@ class BeRealEngine(BaseCrawlerEngine):
             return AuthenticityLevel.FAKE
             
     def _calculate_engagement_rate(self, post: Dict[str, Any]) -> float:
-        """Calculate engagement rate for BeReal post"""
+        """
+Calculate engagement rate for BeReal post"""
         
         reactions = len(post.get('realmojis', []))
         comments = post.get('comment', {}).get('count', 0)
@@ -492,7 +504,8 @@ class BeRealEngine(BaseCrawlerEngine):
         post: Dict[str, Any],
         authenticity_score: float
     ) -> float:
-        """Calculate viral potential for BeReal post"""
+        """
+Calculate viral potential for BeReal post"""
         
         # Factors: authenticity, timing, engagement, uniqueness
         engagement_rate = self._calculate_engagement_rate(post)
@@ -516,7 +529,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return min(viral_potential, 1.0)
         
     async def _analyze_social_impact(self, post: Dict[str, Any]) -> float:
-        """Analyze social impact and influence of the post"""
+        """
+Analyze social impact and influence of the post"""
         
         # Factors: engagement quality, authenticity, reach
         reactions = len(post.get('realmojis', []))
@@ -539,7 +553,8 @@ class BeRealEngine(BaseCrawlerEngine):
         limit: int = 100,
         region: Optional[str] = None
     ) -> List[BeRealPost]:
-        """Crawl trending BeReal moments"""
+        """
+Crawl trending BeReal moments"""
         
         self.logger.info(f"Crawling trending BeReal moments, limit: {limit}")
         
@@ -637,7 +652,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return distribution
         
     def _analyze_timing_patterns(self, posts: List[BeRealPost]) -> Dict[str, Any]:
-        """Analyze posting timing patterns"""
+        """
+Analyze posting timing patterns"""
         
         if not posts:
             return {}
@@ -653,7 +669,8 @@ class BeRealEngine(BaseCrawlerEngine):
         }
         
     def _analyze_engagement_authenticity_correlation(self, posts: List[BeRealPost]) -> Dict[str, float]:
-        """Analyze correlation between engagement and authenticity"""
+        """
+Analyze correlation between engagement and authenticity"""
         
         if not posts:
             return {}
@@ -670,7 +687,8 @@ class BeRealEngine(BaseCrawlerEngine):
         return engagement_by_authenticity
         
     def _analyze_location_impact(self, posts: List[BeRealPost]) -> Dict[str, Any]:
-        """Analyze impact of location sharing on authenticity and engagement"""
+        """
+Analyze impact of location sharing on authenticity and engagement"""
         
         posts_with_location = [p for p in posts if p.location_data]
         posts_without_location = [p for p in posts if not p.location_data]
@@ -684,7 +702,8 @@ class BeRealEngine(BaseCrawlerEngine):
         }
         
     def _analyze_retake_patterns(self, posts: List[BeRealPost]) -> Dict[str, Any]:
-        """Analyze retake patterns and their impact"""
+        """
+Analyze retake patterns and their impact"""
         
         if not posts:
             return {}
@@ -701,7 +720,8 @@ class BeRealEngine(BaseCrawlerEngine):
         }
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
+        """
+Get authenticated headers for API requests"""
         
         return {
             'User-Agent': 'BeReal/1.0',
@@ -727,11 +747,13 @@ class BeRealEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
+        """
+Apply rate limiting to prevent API abuse"""
         
         await asyncio.sleep(60 / self.rate_limit_per_minute)
 class BeRealPost:
-    """BeReal post data structure"""
+    """
+BeReal post data structure"""
     id: str
     user_id: str
     username: str
@@ -754,7 +776,8 @@ class BeRealPost:
 
 @dataclass
 class BeRealUser:
-    """BeReal user data structure"""
+    """
+BeReal user data structure"""
     id: str
     username: str
     display_name: str
@@ -774,7 +797,8 @@ class BeRealUser:
 
 @dataclass
 class BeRealMemory:
-    """BeReal memory data structure"""
+    """
+BeReal memory data structure"""
     id: str
     user_id: str
     date: datetime
@@ -801,7 +825,8 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize BeReal crawler engine"""
+        """
+Initialize BeReal crawler engine"""
         super().__init__(platform="bereal", config=config)
         
         # Rate limiting (very conservative due to API limitations)
@@ -859,7 +884,8 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver for web content"""
+        """
+Setup Selenium WebDriver for web content"""
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')

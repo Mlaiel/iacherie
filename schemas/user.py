@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from typing import Dict, List, Optional
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class UserAuthentication(BaseSchema):
-    """User authentication credentials schema."""
+    """
+User authentication credentials schema."""
     
     email: EmailStr = Field(description="User email address")
     password: str = Field(min_length=8, description="User password")
@@ -49,14 +51,16 @@ class UserCreate(BaseSchema):
     
     @validator('terms_accepted', 'privacy_accepted')
     def validate_required_consents(cls, v):
-        """Validate required legal consents."""
+        """
+Validate required legal consents."""
         if not v:
             raise ValueError('Terms and privacy policy must be accepted')
         return v
 
 
 class UserUpdate(BaseSchema):
-    """Schema for updating user information."""
+    """
+Schema for updating user information."""
     
     first_name: Optional[str] = Field(None, min_length=2, max_length=50)
     last_name: Optional[str] = Field(None, min_length=2, max_length=50)
@@ -68,7 +72,8 @@ class UserUpdate(BaseSchema):
 
 
 class UserOut(UUIDSchema, TimestampSchema):
-    """Public user information schema."""
+    """
+Public user information schema."""
     
     email: EmailStr
     username: str
@@ -86,7 +91,8 @@ class UserOut(UUIDSchema, TimestampSchema):
     
     @property
     def display_name(self) -> str:
-        """Get user display name."""
+        """
+Get user display name."""
         return f"{self.first_name} {self.last_name}"
 
 
@@ -129,7 +135,8 @@ class UserProfile(UUIDSchema, TimestampSchema):
 
 
 class UserSettings(UUIDSchema, TimestampSchema):
-    """User application settings schema."""
+    """
+User application settings schema."""
     
     user_id: UUID
     
@@ -181,12 +188,14 @@ class UserVerification(UUIDSchema, TimestampSchema):
     
     @property
     def attempts_remaining(self) -> int:
-        """Get remaining verification attempts."""
+        """
+Get remaining verification attempts."""
         return max(0, self.max_attempts - self.attempts_count)
 
 
 class UserSession(UUIDSchema, TimestampSchema):
-    """User session management schema."""
+    """
+User session management schema."""
     
     user_id: UUID
     session_id: str = Field(description="Unique session identifier")
@@ -213,12 +222,14 @@ class UserSession(UUIDSchema, TimestampSchema):
     
     @property
     def time_since_last_activity(self) -> int:
-        """Get seconds since last activity."""
+        """
+Get seconds since last activity."""
         return int((datetime.utcnow() - self.last_activity).total_seconds())
 
 
 class PasswordChange(BaseSchema):
-    """Password change request schema."""
+    """
+Password change request schema."""
     
     current_password: str = Field(description="Current password")
     new_password: str = Field(min_length=8, description="New password")
@@ -233,7 +244,8 @@ class PasswordChange(BaseSchema):
 
 
 class PasswordReset(BaseSchema):
-    """Password reset request schema."""
+    """
+Password reset request schema."""
     
     email: EmailStr = Field(description="User email for password reset")
     
@@ -254,7 +266,8 @@ class PasswordResetConfirm(BaseSchema):
 
 
 class TwoFactorSetup(BaseSchema):
-    """Two-factor authentication setup schema."""
+    """
+Two-factor authentication setup schema."""
     
     method: str = Field(description="2FA method (totp, sms, email)")
     phone_number: Optional[str] = Field(None, description="Phone number for SMS")

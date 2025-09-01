@@ -4,11 +4,12 @@ Comprehensive analytics system for content performance, engagement metrics,
 audience insights, and business intelligence for creators and influencers.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -29,7 +30,9 @@ import json
 logger = logging.getLogger(__name__)
 
 class MetricCategory(Enum):
-    """Categories of metrics"""
+    """
+Categories of metrics"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     GROWTH = "growth"
@@ -43,6 +46,7 @@ class MetricCategory(Enum):
 
 class TimeFrame(Enum):
     """Time frame options for analytics"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -54,6 +58,7 @@ class TimeFrame(Enum):
 
 class Platform(Enum):
     """Supported platforms for analytics"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -76,7 +81,8 @@ class MetricPoint:
 
 @dataclass
 class EngagementMetrics:
-    """Comprehensive engagement metrics"""
+    """
+Comprehensive engagement metrics"""
     likes: int = 0
     comments: int = 0
     shares: int = 0
@@ -93,7 +99,8 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceMetrics:
-    """Audience analytics and insights"""
+    """
+Audience analytics and insights"""
     total_followers: int = 0
     follower_growth_rate: float = 0.0
     follower_quality_score: float = 0.0
@@ -108,7 +115,8 @@ class AudienceMetrics:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Content performance analytics"""
+    """
+Content performance analytics"""
     total_content_pieces: int = 0
     avg_performance_score: float = 0.0
     top_performing_content: List[str] = field(default_factory=list)
@@ -120,7 +128,8 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class BusinessMetrics:
-    """Business and revenue metrics"""
+    """
+Business and revenue metrics"""
     total_revenue: float = 0.0
     revenue_growth_rate: float = 0.0
     revenue_per_follower: float = 0.0
@@ -133,7 +142,8 @@ class BusinessMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     report_id: str
     creator_id: str
     time_period: Dict[str, datetime]
@@ -174,7 +184,8 @@ class AdvancedAnalyticsEngine:
         self.report_templates = {}
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
+        """
+Get default configuration"""
         return {
             'update_frequency': timedelta(minutes=5),
             'retention_period': timedelta(days=365),
@@ -191,7 +202,8 @@ class AdvancedAnalyticsEngine:
         }
     
     async def initialize(self):
-        """Initialize analytics engine"""
+        """
+Initialize analytics engine"""
         try:
             logger.info("Initializing advanced analytics engine...")
             
@@ -816,7 +828,8 @@ class AdvancedAnalyticsEngine:
         }
     
     async def _initialize_ml_models(self):
-        """Initialize ML models for analytics"""
+        """
+Initialize ML models for analytics"""
         # Placeholder - would load real trained models
         self.ml_models = {
             'engagement_predictor': None,
@@ -826,7 +839,8 @@ class AdvancedAnalyticsEngine:
         }
     
     async def _load_industry_benchmarks(self):
-        """Load industry benchmark data"""
+        """
+Load industry benchmark data"""
         # Placeholder - would load real benchmark data
         self.benchmarks = {
             'general': {
@@ -837,7 +851,8 @@ class AdvancedAnalyticsEngine:
         }
     
     async def _initialize_report_templates(self):
-        """Initialize report templates"""
+        """
+Initialize report templates"""
         self.report_templates = {
             'standard': {'sections': ['engagement', 'growth', 'content']},
             'detailed': {'sections': ['engagement', 'growth', 'content', 'audience', 'business']},

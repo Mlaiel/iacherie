@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -75,7 +76,8 @@ from . import (
 
 
 class ObservabilityIndex:
-    """Central index and factory for all observability components"""
+    """
+Central index and factory for all observability components"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -84,7 +86,8 @@ class ObservabilityIndex:
         self._initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all observability components"""
+        """
+Initialize all observability components"""
         try:
             self.logger.info("Initializing Observability Suite...")
             
@@ -217,37 +220,44 @@ class ObservabilityIndex:
         return self.get_component('business_orchestrator')
     
     def get_content_monitor(self) -> Optional[ContentProcessingMonitor]:
-        """Get content processing monitor"""
+        """
+Get content processing monitor"""
         return self.get_component('content_monitor')
     
     def get_collaboration_monitor(self) -> Optional[CollaborationMonitor]:
-        """Get collaboration monitor"""
+        """
+Get collaboration monitor"""
         return self.get_component('collaboration_monitor')
     
     def get_monetization_monitor(self) -> Optional[MonetizationMonitor]:
-        """Get monetization monitor"""
+        """
+Get monetization monitor"""
         return self.get_component('monetization_monitor')
     
     async def track_content_processing(self, **kwargs) -> None:
-        """Track content processing through the pipeline"""
+        """
+Track content processing through the pipeline"""
         content_monitor = self.get_content_monitor()
         if content_monitor:
             await content_monitor.track_content_processing(**kwargs)
     
     async def track_collaboration_match(self, **kwargs) -> None:
-        """Track collaboration matching"""
+        """
+Track collaboration matching"""
         collaboration_monitor = self.get_collaboration_monitor()
         if collaboration_monitor:
             await collaboration_monitor.track_collaboration_match(**kwargs)
     
     async def track_revenue_event(self, **kwargs) -> None:
-        """Track revenue generation event"""
+        """
+Track revenue generation event"""
         monetization_monitor = self.get_monetization_monitor()
         if monetization_monitor:
             await monetization_monitor.track_revenue_event(**kwargs)
     
     async def get_business_intelligence_report(self) -> Dict[str, Any]:
-        """Get comprehensive business intelligence report"""
+        """
+Get comprehensive business intelligence report"""
         business_orchestrator = self.get_business_orchestrator()
         if business_orchestrator:
             return await business_orchestrator.get_comprehensive_business_report()
@@ -255,7 +265,8 @@ class ObservabilityIndex:
     
     # Existing component access methods
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get a specific component by name"""
+        """
+Get a specific component by name"""
         if not self._initialized:
             self.logger.warning("Observability suite not initialized")
             return None
@@ -267,27 +278,33 @@ class ObservabilityIndex:
         return self.get_component('monitoring_system')
     
     def get_analytics_manager(self) -> Optional[AdvancedAnalyticsManager]:
-        """Get the advanced analytics manager"""
+        """
+Get the advanced analytics manager"""
         return self.get_component('analytics_manager')
     
     def get_report_generator(self) -> Optional[ReportGenerator]:
-        """Get the report generator"""
+        """
+Get the report generator"""
         return self.get_component('report_generator')
     
     def get_content_analyzer(self) -> Optional[ContentPerformanceAnalyzer]:
-        """Get the content performance analyzer"""
+        """
+Get the content performance analyzer"""
         return self.get_component('content_analyzer')
     
     def get_user_analytics(self) -> Optional[UserBehaviorAnalytics]:
-        """Get the user behavior analytics"""
+        """
+Get the user behavior analytics"""
         return self.get_component('user_analytics')
     
     def get_roi_optimizer(self) -> Optional[ROIOptimizer]:
-        """Get the ROI optimizer"""
+        """
+Get the ROI optimizer"""
         return self.get_component('roi_optimizer')
     
     async def generate_executive_dashboard(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive dashboard with all key metrics"""
+        """
+Generate executive dashboard with all key metrics"""
         try:
             if not self._initialized:
                 await self.initialize()
@@ -396,7 +413,8 @@ class ObservabilityIndex:
         return list(self.components.keys())
     
     def get_system_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive system capabilities"""
+        """
+Get comprehensive system capabilities"""
         return {
             "observability_suite_version": "3.0.0",
             "initialized": self._initialized,
@@ -524,22 +542,26 @@ def get_observability_index(config: Optional[Dict[str, Any]] = None) -> Observab
     return _observability_index
 
 async def initialize_observability(config: Optional[Dict[str, Any]] = None) -> bool:
-    """Initialize the global observability suite"""
+    """
+Initialize the global observability suite"""
     index = get_observability_index(config)
     return await index.initialize()
 
 async def generate_executive_summary(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate executive summary using the observability suite"""
+    """
+Generate executive summary using the observability suite"""
     index = get_observability_index()
     return await index.generate_executive_dashboard(data)
 
 async def run_system_analysis(analysis_request: Dict[str, Any]) -> Dict[str, Any]:
-    """Run system-wide analysis"""
+    """
+Run system-wide analysis"""
     index = get_observability_index()
     return await index.run_comprehensive_analysis(analysis_request)
 
 def get_system_capabilities() -> Dict[str, Any]:
-    """Get system capabilities"""
+    """
+Get system capabilities"""
     index = get_observability_index()
     return index.get_system_capabilities()
 
@@ -625,7 +647,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ObservabilityConfiguration:
-    """Configuration for observability system"""
+    """
+Configuration for observability system"""
     environment: str = "production"
     monitoring_level: str = "detailed"
     business_context: str = "ia_influencer_platform"
@@ -829,7 +852,8 @@ class ObservabilityIndex:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all components"""
+        """
+Perform health check on all components"""
         if not self._initialized:
             return {"status": "not_initialized", "components": {}}
         
@@ -906,19 +930,22 @@ async def get_monitoring_component(name: str) -> Any:
 
 
 async def get_analytics_component(name: str) -> Any:
-    """Get an analytics component by name"""
+    """
+Get an analytics component by name"""
     return observability_index.get_component('analytics', name)
 
 
 async def get_dashboard_component(name: str) -> Any:
-    """Get a dashboard component by name"""
+    """
+Get a dashboard component by name"""
     return observability_index.get_component('dashboards', name)
 
 
 async def initialize_observability(
     config: Optional[ObservabilityConfiguration] = None
 ) -> ObservabilityIndex:
-    """Initialize the global observability system"""
+    """
+Initialize the global observability system"""
     global observability_index
     
     if config:
@@ -929,7 +956,8 @@ async def initialize_observability(
 
 
 async def shutdown_observability() -> None:
-    """Shutdown the global observability system"""
+    """
+Shutdown the global observability system"""
     await observability_index.shutdown()
 
 

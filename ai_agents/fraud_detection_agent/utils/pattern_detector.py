@@ -6,6 +6,7 @@ attack signatures, and emerging threats through machine learning and rule-based 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -36,7 +37,9 @@ from ...data.models.fraud_patterns import FraudPatternModel, PatternSignature
 logger = logging.getLogger(__name__)
 
 class PatternCategory(Enum):
-    """Fraud pattern categories"""
+    """
+Fraud pattern categories"""
+
     AUTOMATED_BEHAVIOR = "automated_behavior"
     CONTENT_SCRAPING = "content_scraping" 
     ACCOUNT_TAKEOVER = "account_takeover"
@@ -63,7 +66,8 @@ class PatternSignature:
 
 @dataclass 
 class PatternMatch:
-    """Pattern detection match result"""
+    """
+Pattern detection match result"""
     pattern_id: str
     pattern_name: str
     category: PatternCategory
@@ -222,7 +226,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]],
         metadata: Dict[str, Any]
     ) -> List[PatternMatch]:
-        """Detect known fraud signatures in activity sequence"""
+        """
+Detect known fraud signatures in activity sequence"""
         matches = []
         
         try:
@@ -579,7 +584,8 @@ class PatternDetector:
         return list(set(patterns))  # Remove duplicates
 
     def _has_scraping_indicators(self, content_data: Dict[str, Any]) -> bool:
-        """Check for content scraping indicators"""
+        """
+Check for content scraping indicators"""
         indicators = [
             # Metadata preservation from original source
             'original_url' in content_data,
@@ -597,7 +603,8 @@ class PatternDetector:
         fingerprint: str, 
         fingerprint_key: str
     ) -> float:
-        """Check fingerprint similarity with existing fingerprints"""
+        """
+Check fingerprint similarity with existing fingerprints"""
         try:
             # Get sample of existing fingerprints
             existing_fps = await self.redis_client.srandmember(fingerprint_key, 100)
@@ -628,7 +635,8 @@ class PatternDetector:
         return SequenceMatcher(None, str1, str2).ratio()
 
     def _get_activity_timespan(self, activity_sequence: List[Dict[str, Any]]) -> float:
-        """Get timespan of activity sequence in seconds"""
+        """
+Get timespan of activity sequence in seconds"""
         if len(activity_sequence) < 2:
             return 1.0
             
@@ -636,7 +644,8 @@ class PatternDetector:
         return max(timestamps) - min(timestamps)
 
     def _contains_subsequence(self, sequence: List[str], pattern: List[str]) -> bool:
-        """Check if sequence contains the pattern subsequence"""
+        """
+Check if sequence contains the pattern subsequence"""
         if len(pattern) > len(sequence):
             return False
             
@@ -647,7 +656,8 @@ class PatternDetector:
         return False
 
     def _check_timing_pattern(self, timing_type: str, activity_sequence: List[Dict[str, Any]]) -> bool:
-        """Check specific timing patterns"""
+        """
+Check specific timing patterns"""
         if len(activity_sequence) < 2:
             return False
             
@@ -688,7 +698,8 @@ class PatternDetector:
         return min(1.0, composite)
 
     def _filter_and_rank_matches(self, matches: List[PatternMatch]) -> List[PatternMatch]:
-        """Filter and rank pattern matches by relevance"""
+        """
+Filter and rank pattern matches by relevance"""
         # Filter low-confidence matches
         filtered = [match for match in matches if match.confidence >= 0.3]
         
@@ -704,7 +715,8 @@ class PatternDetector:
         activity_sequence: List[Dict[str, Any]],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive pattern analysis"""
+        """
+Generate comprehensive pattern analysis"""
         if not matches:
             return {
                 'summary': 'No significant fraud patterns detected',
@@ -752,7 +764,8 @@ class PatternDetector:
         }
 
     async def _update_pattern_statistics(self, matches: List[PatternMatch], user_id: str):
-        """Update pattern detection statistics"""
+        """
+Update pattern detection statistics"""
         try:
             for match in matches:
                 # Update global pattern statistics

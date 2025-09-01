@@ -6,8 +6,9 @@ de réseaux sociaux et détection de violations de contenu.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import json
@@ -33,7 +34,9 @@ from ...utils.captcha_solver import CaptchaSolver
 
 
 class SocialPlatform(Enum):
-    """Plateformes de réseaux sociaux supportées"""
+    """
+Plateformes de réseaux sociaux supportées"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -72,7 +75,8 @@ class SocialContent:
 
 @dataclass
 class ViolationDetection:
-    """Détection de violation sur réseau social"""
+    """
+Détection de violation sur réseau social"""
     original_content: SocialContent
     violating_content: SocialContent
     similarity_score: float
@@ -727,15 +731,18 @@ class SocialMediaTracker:
         return await self.content_analyzer.compare_video_content(url1, url2)
 
     async def _compare_images(self, url1: str, url2: str) -> float:
-        """Compare deux images"""
+        """
+Compare deux images"""
         return await self.content_analyzer.compare_image_content(url1, url2)
 
     async def _compare_audio(self, url1: str, url2: str) -> float:
-        """Compare deux audios"""
+        """
+Compare deux audios"""
         return await self.content_analyzer.compare_audio_content(url1, url2)
 
     async def _compare_text(self, text1: str, text2: str) -> float:
-        """Compare deux textes"""
+        """
+Compare deux textes"""
         return await self.content_analyzer.compare_text_similarity(text1, text2)
 
     def _compare_metadata(self, content1: SocialContent, content2: SocialContent) -> float:
@@ -838,7 +845,8 @@ class SocialMediaTracker:
         return min(1.0, confidence)
 
     def _get_tiktok_headers(self) -> Dict[str, str]:
-        """Génère des headers pour TikTok"""
+        """
+Génère des headers pour TikTok"""
         return {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -949,7 +957,8 @@ class SocialMediaTracker:
         pass
 
     async def _collect_violation_evidence(self, violation: ViolationDetection) -> None:
-        """Collecte les preuves de violation"""
+        """
+Collecte les preuves de violation"""
         try:
             # Capture d'écran/enregistrement
             evidence_path = await self._capture_violation_evidence(violation.violating_content)
@@ -1006,7 +1015,8 @@ class SocialMediaTracker:
         pass
 
     async def _instagram_takedown_request(self, violation: ViolationDetection) -> None:
-        """Demande de retrait Instagram"""
+        """
+Demande de retrait Instagram"""
         # Implémentation via l'API Instagram/Facebook
         pass
 
@@ -1045,7 +1055,8 @@ class SocialMediaTracker:
         }
 
     async def cleanup_old_data(self) -> None:
-        """Nettoie les anciennes données"""
+        """
+Nettoie les anciennes données"""
         cutoff_date = datetime.now() - timedelta(
             days=self.config.get('data_retention_days', 90)
         )

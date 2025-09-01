@@ -13,6 +13,7 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -34,7 +35,9 @@ from ..core.exceptions import (
 
 
 class PlatformType(Enum):
-    """Supported platform types for specialized crawling."""
+    """
+Supported platform types for specialized crawling."""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -47,6 +50,7 @@ class PlatformType(Enum):
 
 class CrawlerCapability(Enum):
     """Crawler capabilities and features."""
+
     CONTENT_DISCOVERY = "content_discovery"
     METADATA_EXTRACTION = "metadata_extraction"
     ENGAGEMENT_TRACKING = "engagement_tracking"
@@ -59,6 +63,7 @@ class CrawlerCapability(Enum):
 
 class CrawlerStatus(Enum):
     """Crawler operational status."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     DISABLED = "disabled"
@@ -83,7 +88,8 @@ class PlatformCrawlerManager(DatabaseManager):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize platform crawler manager."""
+        """
+Initialize platform crawler manager."""
         super().__init__(db_session)
         self.platform_configs = {}
         self._load_platform_configurations()

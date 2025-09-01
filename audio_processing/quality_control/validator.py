@@ -6,7 +6,7 @@ against professional audio standards.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -14,6 +14,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""
+    """
+Validation strictness levels"""
+
     BASIC = "basic"           # Basic quality checks
     STANDARD = "standard"     # Standard professional validation
     STRICT = "strict"         # Strict validation requirements
@@ -41,6 +44,7 @@ class ValidationLevel(Enum):
 
 class ValidationCategory(Enum):
     """Audio validation categories"""
+
     TECHNICAL = "technical"
     PERCEPTUAL = "perceptual"
     CONTENT = "content"
@@ -558,7 +562,8 @@ class AudioQualityValidator:
         return clipped_samples / len(audio_data)
     
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio"""
+        """
+Calculate signal-to-noise ratio"""
         # Simple SNR estimation using signal power vs noise floor
         signal_power = np.mean(audio_data ** 2)
         
@@ -573,7 +578,8 @@ class AudioQualityValidator:
         return 10 * np.log10(snr_linear + 1e-10)
     
     def _calculate_thd(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate total harmonic distortion"""
+        """
+Calculate total harmonic distortion"""
         # Find dominant frequency
         fft = np.fft.fft(audio_data[:min(len(audio_data), sample_rate)])  # Use 1 second max
         freqs = np.fft.fftfreq(len(fft), 1/sample_rate)
@@ -614,7 +620,8 @@ class AudioQualityValidator:
         return min(thd, 100.0)  # Cap at 100%
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range"""
+        """
+Calculate dynamic range"""
         if len(audio_data) == 0:
             return 0.0
         
@@ -641,7 +648,8 @@ class AudioQualityValidator:
         return min(dynamic_range, 120.0)  # Cap at 120 dB
     
     def _analyze_frequency_balance(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze frequency balance quality"""
+        """
+Analyze frequency balance quality"""
         # Calculate spectral centroid and spread
         spectral_centroids = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0]
         spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_data, sr=sample_rate)[0]
@@ -689,7 +697,8 @@ class AudioQualityValidator:
         return max(0.0, (centroid_score + balance_score) / 2.0)
     
     def _analyze_loudness_quality(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze loudness quality"""
+        """
+Analyze loudness quality"""
         # Calculate LUFS-style loudness
         try:
             import pyloudnorm as pyln
@@ -723,7 +732,8 @@ class AudioQualityValidator:
                 return max(0.0, 1.0 - (rms_db + 12) / 20)
     
     def _analyze_stereo_imaging(self, audio_data: np.ndarray) -> float:
-        """Analyze stereo imaging quality"""
+        """
+Analyze stereo imaging quality"""
         if audio_data.ndim == 1:
             return 1.0  # Mono audio, no stereo issues
         
@@ -755,7 +765,8 @@ class AudioQualityValidator:
         return (correlation_score + width_score) / 2.0
     
     def _analyze_temporal_consistency(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze temporal consistency"""
+        """
+Analyze temporal consistency"""
         # Calculate RMS in overlapping windows
         window_size = min(len(audio_data) // 20, sample_rate // 4)  # 250ms windows max
         if window_size < 100:
@@ -788,12 +799,14 @@ class AudioQualityValidator:
         return consistency_score
     
     def _calculate_silence_ratio(self, audio_data: np.ndarray, threshold: float = 0.001) -> float:
-        """Calculate ratio of silent samples"""
+        """
+Calculate ratio of silent samples"""
         silent_samples = np.sum(np.abs(audio_data) < threshold)
         return silent_samples / len(audio_data)
     
     def _detect_content_type(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Detect audio content type"""
+        """
+Detect audio content type"""
         # Basic content type detection based on spectral characteristics
         
         # Calculate spectral features
@@ -837,7 +850,8 @@ class AudioQualityValidator:
         return overall_score / max(total_weight, 1.0)
     
     def _calculate_category_scores(self, validation_results: List[ValidationResult]) -> Dict[ValidationCategory, float]:
-        """Calculate scores by category"""
+        """
+Calculate scores by category"""
         category_scores = {}
         category_counts = {}
         
@@ -858,7 +872,8 @@ class AudioQualityValidator:
         return category_scores
     
     def _generate_recommendations(self, validation_results: List[ValidationResult]) -> List[str]:
-        """Generate improvement recommendations"""
+        """
+Generate improvement recommendations"""
         recommendations = []
         
         # Collect all recommendations from failed tests

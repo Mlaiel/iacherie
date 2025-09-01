@@ -5,6 +5,7 @@ content analysis, rights protection setup, and intelligent platform integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import time
@@ -57,7 +58,9 @@ from .onboarding_workflow import OnboardingWorkflow
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Supported creator types for specialized onboarding"""
+    """
+Supported creator types for specialized onboarding"""
+
     MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
@@ -70,6 +73,7 @@ class CreatorType(Enum):
 
 class OnboardingStage(Enum):
     """Onboarding workflow stages"""
+
     INITIAL_REGISTRATION = "initial_registration"
     PROFILE_CREATION = "profile_creation"
     CONTENT_ANALYSIS = "content_analysis"
@@ -728,7 +732,8 @@ class CreatorOnboardingAgent(BaseAgent):
         return min((completed_stages / total_stages) * 100, 100.0)
     
     async def _generate_recommendations(self, session: OnboardingSession) -> List[Dict[str, Any]]:
-        """Generate AI-powered recommendations for creator."""
+        """
+Generate AI-powered recommendations for creator."""
         recommendations = []
         
         # Content optimization recommendations
@@ -770,7 +775,8 @@ class CreatorOnboardingAgent(BaseAgent):
         return recommendations
     
     async def _get_next_steps(self, session: OnboardingSession) -> List[Dict[str, Any]]:
-        """Get next recommended steps for onboarding."""
+        """
+Get next recommended steps for onboarding."""
         current_stage_index = list(OnboardingStage).index(session.current_stage)
         next_stages = list(OnboardingStage)[current_stage_index + 1:]
         
@@ -787,7 +793,8 @@ class CreatorOnboardingAgent(BaseAgent):
         return next_steps
     
     async def _generate_completion_summary(self, session: OnboardingSession) -> Dict[str, Any]:
-        """Generate comprehensive onboarding completion summary."""
+        """
+Generate comprehensive onboarding completion summary."""
         return {
             'user_id': session.user_id,
             'creator_type': session.creator_type.value,
@@ -803,7 +810,8 @@ class CreatorOnboardingAgent(BaseAgent):
         }
     
     async def _get_post_onboarding_steps(self, session: OnboardingSession) -> List[Dict[str, Any]]:
-        """Get recommended steps after onboarding completion."""
+        """
+Get recommended steps after onboarding completion."""
         return [
             {
                 'action': 'upload_content',
@@ -829,7 +837,8 @@ class CreatorOnboardingAgent(BaseAgent):
     
     # Stage processors (placeholder implementations - would be fully implemented)
     async def _process_profile_creation(self, session: OnboardingSession, stage_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process profile creation stage."""
+        """
+Process profile creation stage."""
         return {"status": "completed", "profile_score": 0.85}
     
     async def _process_content_analysis(self, session: OnboardingSession, stage_data: Dict[str, Any]) -> Dict[str, Any]:

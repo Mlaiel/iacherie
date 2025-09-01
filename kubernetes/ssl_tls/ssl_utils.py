@@ -13,6 +13,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import os
 import ssl
 import socket
@@ -39,7 +40,9 @@ from OpenSSL import crypto
 
 
 class SSLGrade(Enum):
-    """SSL security grade enumeration"""
+    """
+SSL security grade enumeration"""
+
     A_PLUS = "A+"
     A = "A"
     A_MINUS = "A-"
@@ -53,6 +56,7 @@ class SSLGrade(Enum):
 
 class VulnerabilityType(Enum):
     """SSL vulnerability types"""
+
     HEARTBLEED = "heartbleed"
     CCS_INJECTION = "ccs_injection"
     POODLE = "poodle"
@@ -111,7 +115,8 @@ class SSLScanResult:
 
 @dataclass
 class CertificateValidationResult:
-    """Certificate validation result"""
+    """
+Certificate validation result"""
     valid: bool
     issues: List[str]
     warnings: List[str]
@@ -123,7 +128,8 @@ class CertificateValidationResult:
 
 
 class SSLValidationError(Exception):
-    """SSL validation exception"""
+    """
+SSL validation exception"""
     pass
 
 
@@ -397,7 +403,8 @@ class SSLValidator:
         intermediate_certs: List[x509.Certificate],
         ca_path: Optional[Path]
     ) -> bool:
-        """Verify certificate chain using OpenSSL"""
+        """
+Verify certificate chain using OpenSSL"""
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
                 temp_path = Path(temp_dir)
@@ -643,7 +650,8 @@ class SSLScanner:
         }
     
     def _scan_cipher_suites(self, hostname: str, port: int) -> Dict[str, Any]:
-        """Scan supported cipher suites"""
+        """
+Scan supported cipher suites"""
         supported_ciphers = []
         weak_ciphers = []
         
@@ -685,7 +693,8 @@ class SSLScanner:
         return any(pattern in cipher_name.upper() for pattern in weak_patterns)
     
     def _check_security_features(self, hostname: str, port: int) -> Dict[str, Any]:
-        """Check SSL security features"""
+        """
+Check SSL security features"""
         security_features = {
             'hsts_enabled': False,
             'hsts_details': {},
@@ -754,7 +763,8 @@ class SSLScanner:
         return details
     
     def _test_vulnerabilities(self, hostname: str, port: int) -> List[Dict[str, Any]]:
-        """Test for known SSL vulnerabilities"""
+        """
+Test for known SSL vulnerabilities"""
         vulnerabilities = []
         
         # Test for Heartbleed
@@ -778,7 +788,8 @@ class SSLScanner:
         return vulnerabilities
     
     def _test_heartbleed(self, hostname: str, port: int) -> bool:
-        """Test for Heartbleed vulnerability"""
+        """
+Test for Heartbleed vulnerability"""
         # Simplified Heartbleed test
         # In production, use specialized libraries like testssl.sh
         try:
@@ -805,7 +816,8 @@ class SSLScanner:
         return False  # Conservative default
     
     def _test_poodle(self, hostname: str, port: int) -> bool:
-        """Test for POODLE vulnerability"""
+        """
+Test for POODLE vulnerability"""
         # Test if SSLv3 is supported (basic POODLE indicator)
         try:
             context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
@@ -827,7 +839,8 @@ class SSLScanner:
         return False
     
     def _measure_handshake_time(self, hostname: str, port: int) -> float:
-        """Measure SSL handshake time"""
+        """
+Measure SSL handshake time"""
         try:
             start_time = time.time()
             
@@ -844,7 +857,8 @@ class SSLScanner:
             return 0.0
     
     def _calculate_certificate_grade(self, cert_result: Dict[str, Any]) -> SSLGrade:
-        """Calculate certificate grade"""
+        """
+Calculate certificate grade"""
         if not cert_result.get('valid', False):
             return SSLGrade.F
         
@@ -867,7 +881,8 @@ class SSLScanner:
         return SSLGrade.A
     
     def _calculate_cipher_grade(self, cipher_result: Dict[str, Any]) -> SSLGrade:
-        """Calculate cipher grade"""
+        """
+Calculate cipher grade"""
         weak_ciphers = cipher_result.get('weak', [])
         supported_ciphers = cipher_result.get('supported', [])
         
@@ -892,7 +907,8 @@ class SSLScanner:
             return SSLGrade.B
     
     def _calculate_vulnerability_grade(self, vulnerabilities: List[Dict[str, Any]]) -> SSLGrade:
-        """Calculate vulnerability grade"""
+        """
+Calculate vulnerability grade"""
         if not vulnerabilities:
             return SSLGrade.A
         
@@ -912,7 +928,8 @@ class SSLScanner:
         cipher_grade: SSLGrade, 
         vuln_grade: SSLGrade
     ) -> SSLGrade:
-        """Calculate overall SSL grade"""
+        """
+Calculate overall SSL grade"""
         # Use worst grade as overall grade
         grades = [cert_grade, cipher_grade, vuln_grade]
         grade_values = {
@@ -941,7 +958,8 @@ class SSLScanner:
         security_result: Dict[str, Any],
         vuln_result: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate security recommendations"""
+        """
+Generate security recommendations"""
         recommendations = []
         
         # Certificate recommendations
@@ -994,7 +1012,8 @@ class CertificateConverter:
     """
     
     def __init__(self):
-        """Initialize certificate converter"""
+        """
+Initialize certificate converter"""
         self.logger = logging.getLogger(__name__)
         self.logger.info("Certificate converter initialized")
     

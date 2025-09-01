@@ -36,6 +36,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -73,6 +74,7 @@ logger = logging.getLogger(__name__)
 
 class EnvironmentType(str, Enum):
     """Environment types"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -80,6 +82,7 @@ class EnvironmentType(str, Enum):
 
 class ConfigurationFormat(str, Enum):
     """Configuration file formats"""
+
     JSON = "json"
     YAML = "yaml"
     TOML = "toml"
@@ -87,6 +90,7 @@ class ConfigurationFormat(str, Enum):
 
 class SecurityLevel(str, Enum):
     """Security levels for configuration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -94,6 +98,7 @@ class SecurityLevel(str, Enum):
 
 class CredentialType(str, Enum):
     """Types of credentials"""
+
     DATABASE = "database"
     CACHE = "cache"
     STORAGE = "storage"
@@ -116,7 +121,8 @@ class EncryptedCredential:
 
 @dataclass
 class ConfigurationTemplate:
-    """Configuration template for pool types"""
+    """
+Configuration template for pool types"""
     template_id: str
     pool_type: DatabaseType
     environment: EnvironmentType
@@ -129,7 +135,8 @@ class ConfigurationTemplate:
 
 @dataclass
 class ConfigurationAuditLog:
-    """Audit log for configuration changes"""
+    """
+Audit log for configuration changes"""
     log_id: str
     action: str  # create, update, delete, access
     resource_type: str
@@ -142,7 +149,8 @@ class ConfigurationAuditLog:
 
 @dataclass
 class PoolConfigurationSet:
-    """Complete configuration set for all pools"""
+    """
+Complete configuration set for all pools"""
     environment: EnvironmentType
     pool_configs: Dict[str, PoolConfig]
     connection_infos: Dict[str, DatabaseConnectionInfo]
@@ -231,7 +239,8 @@ class CredentialEncryption:
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _init_cipher(self) -> None:
-        """Initialize cipher suite"""
+        """
+Initialize cipher suite"""
         try:
             key_bytes = base64.urlsafe_b64decode(self.master_key.encode())
             self._cipher_suite = Fernet(base64.urlsafe_b64encode(key_bytes))
@@ -290,7 +299,8 @@ class ConfigurationValidator:
         self.validator = cerberus.Validator()
     
     def validate_pool_config(self, pool_type: DatabaseType, config_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate pool configuration"""
+        """
+Validate pool configuration"""
         try:
             schema = POOL_CONFIG_SCHEMA.get(pool_type.value)
             if not schema:
@@ -348,7 +358,8 @@ class ConfigurationFileHandler(FileSystemEventHandler):
         self.last_modified = {}
     
     def on_modified(self, event):
-        """Handle file modification events"""
+        """
+Handle file modification events"""
         if not event.is_directory and event.src_path.endswith(('.json', '.yaml', '.yml')):
             # Debounce rapid file changes
             current_time = datetime.utcnow()
@@ -364,7 +375,8 @@ class ConfigurationFileHandler(FileSystemEventHandler):
 # =============== POOL CONFIGURATION MANAGER ===============
 
 class PoolConfigurationManager:
-    """Central manager for pool configurations"""
+    """
+Central manager for pool configurations"""
     
     def __init__(self, config_dir: str = "config/pools", master_key: Optional[str] = None):
         self.config_dir = Path(config_dir)
@@ -795,7 +807,8 @@ class PoolConfigurationManager:
         return asdict(config_set)
     
     async def _start_file_watching(self) -> None:
-        """Start file system watching for configuration changes"""
+        """
+Start file system watching for configuration changes"""
         try:
             self.file_handler = ConfigurationFileHandler(self)
             self.file_observer = Observer()
@@ -854,7 +867,8 @@ class PoolConfigurationManager:
         self._change_listeners.append(callback)
     
     async def _notify_change_listeners(self, change_type: str, data: Dict[str, Any]) -> None:
-        """Notify configuration change listeners"""
+        """
+Notify configuration change listeners"""
         try:
             for listener in self._change_listeners:
                 try:
@@ -869,7 +883,8 @@ class PoolConfigurationManager:
         return self.audit_logs[-limit:]
     
     async def close(self) -> None:
-        """Close configuration manager"""
+        """
+Close configuration manager"""
         try:
             # Stop file watching
             if self.file_observer:

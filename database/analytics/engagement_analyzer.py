@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementType(Enum):
-    """Types of engagement interactions"""
+    """
+Types of engagement interactions"""
+
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
@@ -59,6 +62,7 @@ class EngagementType(Enum):
 
 class SentimentType(Enum):
     """Sentiment analysis types"""
+
     POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
@@ -144,7 +148,8 @@ class EngagementInsight:
     time_frame: str
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
+        """
+Convert to dictionary for JSON serialization"""
         return {
             "insight_type": self.insight_type,
             "title": self.title,
@@ -749,7 +754,8 @@ class EngagementAnalyzer:
         return estimated_total
     
     def _calculate_active_audience_percentage(self, engagement_data: List[EngagementMetric]) -> float:
-        """Calculate active audience percentage"""
+        """
+Calculate active audience percentage"""
         if not engagement_data:
             return 0.0
         
@@ -768,7 +774,8 @@ class EngagementAnalyzer:
         return min(100.0, (total_engagers / total_audience) * 100)
     
     def _calculate_audience_growth_rate(self, engagement_data: List[EngagementMetric]) -> float:
-        """Calculate audience growth rate"""
+        """
+Calculate audience growth rate"""
         if len(engagement_data) < 14:  # Need at least 2 weeks of data
             return 0.0
         
@@ -791,7 +798,8 @@ class EngagementAnalyzer:
         return growth_rate
     
     def _calculate_engagement_distribution(self, engagement_data: List[EngagementMetric]) -> Dict[str, float]:
-        """Calculate engagement type distribution"""
+        """
+Calculate engagement type distribution"""
         engagement_counts = defaultdict(int)
         total_engagement = 0
         
@@ -811,7 +819,8 @@ class EngagementAnalyzer:
         return distribution
     
     def _extract_top_content_themes(self, engagement_data: List[EngagementMetric]) -> List[str]:
-        """Extract top content themes from content elements"""
+        """
+Extract top content themes from content elements"""
         theme_performance = defaultdict(list)
         
         for metric in engagement_data:
@@ -972,7 +981,8 @@ class EngagementAnalyzer:
         return min(100.0, influence_score)
     
     def _calculate_community_health_score(self, engagement_data: List[EngagementMetric]) -> float:
-        """Calculate community health score"""
+        """
+Calculate community health score"""
         if not engagement_data:
             return 0.0
         

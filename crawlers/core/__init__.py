@@ -16,7 +16,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class CrawlerStatus(Enum):
-    """Crawler status enumeration."""
+    """
+Crawler status enumeration."""
+
     IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
@@ -38,7 +40,8 @@ class CrawlerResult:
     raw_data: Dict[str, Any]
 
 class RateLimiter:
-    """Basic rate limiter."""
+    """
+Basic rate limiter."""
     
     def __init__(self, max_requests: int = 60, time_window: int = 60):
         self.max_requests = max_requests
@@ -46,7 +49,8 @@ class RateLimiter:
         self.requests = []
     
     async def wait_if_needed(self):
-        """Wait if rate limit would be exceeded."""
+        """
+Wait if rate limit would be exceeded."""
         now = time.time()
         # Remove old requests outside time window
         self.requests = [req_time for req_time in self.requests 
@@ -60,7 +64,8 @@ class RateLimiter:
         self.requests.append(now)
 
 class BaseCrawler(ABC):
-    """Abstract base crawler class."""
+    """
+Abstract base crawler class."""
     
     def __init__(self, platform_name: str, rate_limit: int = 60):
         self.platform_name = platform_name
@@ -69,16 +74,19 @@ class BaseCrawler(ABC):
         
     @abstractmethod
     async def search_content(self, query: str, max_results: int = 50) -> List[CrawlerResult]:
-        """Search for content on the platform."""
+        """
+Search for content on the platform."""
         pass
     
     @abstractmethod
     async def get_content_details(self, content_id: str) -> Optional[CrawlerResult]:
-        """Get detailed information about specific content."""
+        """
+Get detailed information about specific content."""
         pass
     
     async def monitor_real_time(self, keywords: List[str], callback=None):
-        """Monitor platform for real-time content updates."""
+        """
+Monitor platform for real-time content updates."""
         # Default implementation - override in platform-specific crawlers
         while True:
             try:

@@ -23,6 +23,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -45,7 +46,9 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class VectorType(Enum):
-    """Vector embedding types."""
+    """
+Vector embedding types."""
+
     AUDIO_EMBEDDING = "audio_embedding"
     IMAGE_EMBEDDING = "image_embedding"
     VIDEO_EMBEDDING = "video_embedding"
@@ -58,6 +61,7 @@ class VectorType(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity calculation metrics."""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
@@ -68,6 +72,7 @@ class SimilarityMetric(Enum):
 
 class IndexType(Enum):
     """Vector index types."""
+
     FLAT = "flat"
     IVF = "ivf"  # Inverted File
     HNSW = "hnsw"  # Hierarchical Navigable Small World
@@ -95,7 +100,8 @@ class VectorEmbedding:
 
 @dataclass
 class VectorSearchQuery:
-    """Vector search query specification."""
+    """
+Vector search query specification."""
     query_vector: np.ndarray
     vector_type: VectorType
     similarity_metric: SimilarityMetric = SimilarityMetric.COSINE
@@ -110,7 +116,8 @@ class VectorSearchQuery:
 
 @dataclass
 class VectorSearchResult:
-    """Vector search result."""
+    """
+Vector search result."""
     vector_id: str
     content_id: str
     user_id: str
@@ -122,7 +129,8 @@ class VectorSearchResult:
 
 @dataclass
 class VectorCluster:
-    """Vector cluster information."""
+    """
+Vector cluster information."""
     cluster_id: str
     centroid: np.ndarray
     vector_ids: List[str]
@@ -132,7 +140,8 @@ class VectorCluster:
 
 @dataclass
 class VectorSimilarityGroup:
-    """Similar vectors group."""
+    """
+Similar vectors group."""
     group_id: str
     representative_vector_id: str
     similar_vector_ids: List[str]
@@ -163,7 +172,8 @@ class VectorStorageProvider(BaseStorageProvider):
         self.clustering_enabled = config.get('clustering_enabled', True)
 
     async def initialize(self) -> None:
-        """Initialize vector storage provider."""
+        """
+Initialize vector storage provider."""
         try:
             await self._create_connections()
             await self._create_tables()
@@ -608,22 +618,26 @@ class VectorStorageProvider(BaseStorageProvider):
         pass
 
     async def _create_tables(self) -> None:
-        """Create vector tables with proper schema."""
+        """
+Create vector tables with proper schema."""
         # Implementation depends on storage backend
         pass
 
     async def _initialize_indexes(self) -> None:
-        """Initialize vector indexes."""
+        """
+Initialize vector indexes."""
         # Implementation depends on vector library (FAISS, etc.)
         pass
 
     async def _load_existing_vectors(self) -> None:
-        """Load existing vectors into indexes."""
+        """
+Load existing vectors into indexes."""
         # Implementation for loading existing data
         pass
 
     async def _validate_vector(self, embedding: VectorEmbedding) -> None:
-        """Validate vector embedding."""
+        """
+Validate vector embedding."""
         if embedding.embedding is None or len(embedding.embedding) == 0:
             raise ValidationException("Empty embedding vector")
         
@@ -647,31 +661,37 @@ class VectorStorageProvider(BaseStorageProvider):
         return vector / norm
 
     async def _store_vector_data(self, embedding: VectorEmbedding) -> None:
-        """Store vector data to database."""
+        """
+Store vector data to database."""
         # Implementation depends on storage backend
         pass
 
     async def _store_vectors_batch_data(self, embeddings: List[VectorEmbedding]) -> None:
-        """Store vectors batch to database."""
+        """
+Store vectors batch to database."""
         # Implementation depends on storage backend
         pass
 
     async def _update_index(self, embedding: VectorEmbedding) -> None:
-        """Update vector index with new embedding."""
+        """
+Update vector index with new embedding."""
         # Implementation depends on vector library
         pass
 
     async def _update_index_batch(self, embeddings: List[VectorEmbedding]) -> None:
-        """Update vector index with batch of embeddings."""
+        """
+Update vector index with batch of embeddings."""
         # Implementation depends on vector library
         pass
 
     def _get_index_for_type(self, vector_type: VectorType) -> Optional[Any]:
-        """Get vector index for specific type."""
+        """
+Get vector index for specific type."""
         return self.vector_indexes.get(vector_type.value)
 
     async def _vector_search(self, index: Any, query: VectorSearchQuery) -> List[VectorSearchResult]:
-        """Perform vector search using index."""
+        """
+Perform vector search using index."""
         # Implementation depends on vector library
         return []
 
@@ -680,7 +700,8 @@ class VectorStorageProvider(BaseStorageProvider):
         candidates: List[VectorSearchResult], 
         query: VectorSearchQuery
     ) -> List[VectorSearchResult]:
-        """Apply additional filters to search results."""
+        """
+Apply additional filters to search results."""
         filtered = []
         
         for result in candidates:
@@ -712,7 +733,8 @@ class VectorStorageProvider(BaseStorageProvider):
         vector2: np.ndarray, 
         metric: SimilarityMetric
     ) -> float:
-        """Calculate similarity between two vectors."""
+        """
+Calculate similarity between two vectors."""
         if metric == SimilarityMetric.COSINE:
             return float(np.dot(vector1, vector2) / (np.linalg.norm(vector1) * np.linalg.norm(vector2)))
         elif metric == SimilarityMetric.EUCLIDEAN:
@@ -725,37 +747,44 @@ class VectorStorageProvider(BaseStorageProvider):
             return 0.0
 
     async def _check_similarity_groups(self, embedding: VectorEmbedding) -> None:
-        """Check for similarity groups after adding new vector."""
+        """
+Check for similarity groups after adding new vector."""
         # Implementation for similarity group checking
         pass
 
     async def _update_clustering(self) -> None:
-        """Update clustering after adding new vectors."""
+        """
+Update clustering after adding new vectors."""
         # Implementation for clustering update
         pass
 
     async def _get_vectors_by_content_id(self, content_id: str) -> List[VectorEmbedding]:
-        """Get all vectors for a content ID."""
+        """
+Get all vectors for a content ID."""
         # Implementation depends on storage backend
         return []
 
     async def _get_vectors_by_user_and_type(self, user_id: str, vector_type: VectorType) -> List[VectorEmbedding]:
-        """Get vectors by user and type."""
+        """
+Get vectors by user and type."""
         # Implementation depends on storage backend
         return []
 
     async def _get_vectors_by_type(self, vector_type: VectorType) -> List[VectorEmbedding]:
-        """Get all vectors of specific type."""
+        """
+Get all vectors of specific type."""
         # Implementation depends on storage backend
         return []
 
     async def _store_similarity_group(self, group: VectorSimilarityGroup) -> None:
-        """Store similarity group."""
+        """
+Store similarity group."""
         # Implementation depends on storage backend
         pass
 
     async def _perform_kmeans_clustering(self, embeddings: np.ndarray, n_clusters: int) -> List[Tuple]:
-        """Perform K-means clustering on embeddings."""
+        """
+Perform K-means clustering on embeddings."""
         # Implementation using scikit-learn or similar
         from sklearn.cluster import KMeans
         
@@ -772,67 +801,80 @@ class VectorStorageProvider(BaseStorageProvider):
         return clusters
 
     async def _store_cluster(self, cluster: VectorCluster) -> None:
-        """Store vector cluster."""
+        """
+Store vector cluster."""
         # Implementation depends on storage backend
         pass
 
     async def _get_vector_statistics(self, filters: Dict[str, Any]) -> Dict[str, Any]:
-        """Get vector statistics from database."""
+        """
+Get vector statistics from database."""
         # Implementation depends on storage backend
         return {}
 
     async def _get_index_statistics(self, index: Any) -> Dict[str, Any]:
-        """Get index statistics."""
+        """
+Get index statistics."""
         # Implementation depends on vector library
         return {}
 
     async def _measure_index_performance(self, index: Any) -> Dict[str, Any]:
-        """Measure index performance."""
+        """
+Measure index performance."""
         # Implementation for performance measurement
         return {'avg_search_time': 0.1, 'memory_usage': 100}
 
     async def _optimize_index(self, index: Any) -> None:
-        """Optimize vector index."""
+        """
+Optimize vector index."""
         # Implementation depends on vector library
         pass
 
     async def _get_vectors_before_date(self, cutoff_date: datetime) -> List[VectorEmbedding]:
-        """Get vectors created before cutoff date."""
+        """
+Get vectors created before cutoff date."""
         # Implementation depends on storage backend
         return []
 
     async def _remove_from_index(self, vector: VectorEmbedding) -> None:
-        """Remove vector from index."""
+        """
+Remove vector from index."""
         # Implementation depends on vector library
         pass
 
     async def _delete_vector_data(self, vector_id: str) -> None:
-        """Delete vector data from database."""
+        """
+Delete vector data from database."""
         # Implementation depends on storage backend
         pass
 
     async def _cleanup_empty_clusters(self) -> None:
-        """Cleanup empty clusters."""
+        """
+Cleanup empty clusters."""
         # Implementation for cluster cleanup
         pass
 
     async def _cleanup_empty_similarity_groups(self) -> None:
-        """Cleanup empty similarity groups."""
+        """
+Cleanup empty similarity groups."""
         # Implementation for similarity group cleanup
         pass
 
     async def _check_index_health(self, index: Any) -> Dict[str, Any]:
-        """Check index health."""
+        """
+Check index health."""
         # Implementation for index health check
         return {'healthy': True, 'issue': None}
 
     async def _test_connection(self) -> bool:
-        """Test database connection."""
+        """
+Test database connection."""
         # Implementation for connection test
         return True
 
 class InMemoryVectorStorage(VectorStorageProvider):
-    """In-memory vector storage for testing and development."""
+    """
+In-memory vector storage for testing and development."""
     
     def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
@@ -842,7 +884,8 @@ class InMemoryVectorStorage(VectorStorageProvider):
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize in-memory storage."""
+        """
+Initialize in-memory storage."""
         self.is_initialized = True
         logger.info(f"In-memory vector storage {self.provider_id} initialized")
     
@@ -851,7 +894,8 @@ class InMemoryVectorStorage(VectorStorageProvider):
         self.vectors_store.append(embedding)
     
     async def _get_vectors_by_content_id(self, content_id: str) -> List[VectorEmbedding]:
-        """Get vectors from memory."""
+        """
+Get vectors from memory."""
         return [v for v in self.vectors_store if v.content_id == content_id]
 
 # Vector storage factory
@@ -860,7 +904,8 @@ def create_vector_storage(
     provider_id: str, 
     config: Dict[str, Any]
 ) -> VectorStorageProvider:
-    """Create vector storage provider instance."""
+    """
+Create vector storage provider instance."""
     if provider_type == 'memory':
         return InMemoryVectorStorage(provider_id, config)
     elif provider_type == 'faiss':

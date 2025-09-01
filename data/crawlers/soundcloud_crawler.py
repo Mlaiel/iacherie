@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -47,7 +48,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track information"""
+    """
+SoundCloud track information"""
     track_id: str
     title: str
     description: str
@@ -92,7 +94,8 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user/artist information"""
+    """
+SoundCloud user/artist information"""
     user_id: str
     username: str
     permalink: str
@@ -141,7 +144,8 @@ class SoundCloudUser:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist information"""
+    """
+SoundCloud playlist information"""
     playlist_id: str
     title: str
     description: Optional[str]
@@ -180,7 +184,8 @@ class SoundCloudPlaylist:
 
 @dataclass
 class SoundCloudComment:
-    """SoundCloud comment information"""
+    """
+SoundCloud comment information"""
     comment_id: str
     user_id: str
     username: str

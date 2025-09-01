@@ -4,12 +4,13 @@ Architecture: Event Publishing and Real-time Notifications
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
     Système de publication d'événements avec notifications temps réel,
     intégrations multi-canaux et orchestration pour la plateforme IA-Influencer-Agent.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationPriority(Enum):
-    """Priorité des notifications"""
+    """
+Priorité des notifications"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -44,6 +47,7 @@ class NotificationPriority(Enum):
 
 class NotificationStatus(Enum):
     """Statut des notifications"""
+
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -53,6 +57,7 @@ class NotificationStatus(Enum):
 
 class ChannelType(Enum):
     """Types de canaux de notification"""
+
     EMAIL = "email"
     WEBSOCKET = "websocket"
     PUSH = "push"
@@ -125,11 +130,13 @@ class NotificationChannel(ABC):
     
     @abstractmethod
     async def validate_config(self) -> bool:
-        """Valide la configuration du canal"""
+        """
+Valide la configuration du canal"""
         pass
     
     def can_send(self) -> bool:
-        """Vérifie si le canal peut envoyer (rate limiting)"""
+        """
+Vérifie si le canal peut envoyer (rate limiting)"""
         if not self.enabled:
             return False
         
@@ -141,12 +148,14 @@ class NotificationChannel(ABC):
         return self._sent_count < self.rate_limit
     
     def increment_sent(self):
-        """Incrémente le compteur d'envois"""
+        """
+Incrémente le compteur d'envois"""
         self._sent_count += 1
 
 
 class EmailChannel(NotificationChannel):
-    """Canal de notification par email"""
+    """
+Canal de notification par email"""
     
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, config)
@@ -233,7 +242,8 @@ class WebSocketChannel(NotificationChannel):
             await self.server.wait_closed()
     
     async def handle_connection(self, websocket, path):
-        """Gère une nouvelle connexion WebSocket"""
+        """
+Gère une nouvelle connexion WebSocket"""
         connection_id = str(uuid.uuid4())
         self.connections[connection_id] = websocket
         
@@ -267,7 +277,8 @@ class WebSocketChannel(NotificationChannel):
         return True  # Configuration simple
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie via WebSocket"""
+        """
+Envoie via WebSocket"""
         if not self.can_send():
             return False
         
@@ -586,7 +597,8 @@ class EventPublisher:
         return True
     
     def _get_subscribed_channels(self, event_type: str) -> List[NotificationChannel]:
-        """Trouve les canaux abonnés à un type d'événement"""
+        """
+Trouve les canaux abonnés à un type d'événement"""
         channels = []
         
         # Recherche exacte et wildcard
@@ -642,7 +654,8 @@ class EventPublisher:
         template: NotificationTemplate,
         channel: NotificationChannel
     ) -> Optional[NotificationMessage]:
-        """Crée un message depuis un template"""
+        """
+Crée un message depuis un template"""
         try:
             # Variables pour le template
             variables = {
@@ -767,7 +780,8 @@ class NotificationService:
         self._initialized = False
     
     async def initialize(self, config: Dict[str, Any]):
-        """Initialise le service avec la configuration"""
+        """
+Initialise le service avec la configuration"""
         if self._initialized:
             return
         
@@ -843,7 +857,8 @@ class NotificationService:
         return await self.publisher.publish_event(event)
     
     async def send_direct(self, message: NotificationMessage) -> bool:
-        """Envoie une notification directe"""
+        """
+Envoie une notification directe"""
         return await self.publisher.send_notification(message)
 
 

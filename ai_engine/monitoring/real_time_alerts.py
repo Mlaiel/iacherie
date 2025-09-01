@@ -4,10 +4,11 @@ Enterprise-grade intelligent alerting system for IA Influencer Agent platform.
 Provides real-time monitoring, anomaly detection, and automated response capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 import json
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -45,6 +48,7 @@ class AlertSeverity(Enum):
 
 class AlertCategory(Enum):
     """Alert category classifications"""
+
     PERFORMANCE = "performance"
     SECURITY = "security"
     BUSINESS = "business"
@@ -57,6 +61,7 @@ class AlertCategory(Enum):
 
 class AlertChannel(Enum):
     """Alert delivery channels"""
+
     EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -68,6 +73,7 @@ class AlertChannel(Enum):
 
 class AlertStatus(Enum):
     """Alert status states"""
+
     TRIGGERED = "triggered"
     ACKNOWLEDGED = "acknowledged"
     INVESTIGATING = "investigating"
@@ -124,7 +130,8 @@ class Alert:
 
 @dataclass
 class AlertMetrics:
-    """Alert system metrics"""
+    """
+Alert system metrics"""
     total_alerts: int = 0
     active_alerts: int = 0
     resolved_alerts: int = 0
@@ -185,7 +192,8 @@ class RealTimeAlerts:
         self._load_default_alert_rules()
         
     async def start_alerting(self) -> None:
-        """Start the real-time alerting system"""
+        """
+Start the real-time alerting system"""
         if self.is_monitoring:
             logger.warning("Real-time alerting is already running")
             return
@@ -234,7 +242,8 @@ class RealTimeAlerts:
         return False
         
     def disable_rule(self, rule_id: str) -> bool:
-        """Disable an alert rule"""
+        """
+Disable an alert rule"""
         if rule_id in self.alert_rules:
             self.alert_rules[rule_id].enabled = False
             return True
@@ -247,7 +256,8 @@ class RealTimeAlerts:
         context: Optional[Dict[str, Any]] = None,
         affected_entities: Optional[List[str]] = None
     ) -> Optional[Alert]:
-        """Manually trigger an alert"""
+        """
+Manually trigger an alert"""
         if rule_id not in self.alert_rules:
             raise AlertingError(f"Alert rule {rule_id} not found")
             
@@ -639,13 +649,15 @@ class RealTimeAlerts:
         return None
         
     def _should_retrigger(self, existing_alert: Alert, current_value: float) -> bool:
-        """Determine if an alert should be retriggered"""
+        """
+Determine if an alert should be retriggered"""
         # Retrigger if value has increased significantly
         value_increase = (current_value - existing_alert.current_value) / existing_alert.current_value
         return value_increase > 0.5  # 50% increase
         
     async def _send_alert_notifications(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert notifications through configured channels"""
+        """
+Send alert notifications through configured channels"""
         for channel in rule.channels:
             try:
                 handler = self.channel_handlers.get(channel)
@@ -916,7 +928,8 @@ class RealTimeAlerts:
         )
         
     def _update_resolution_metrics(self, resolve_time: float) -> None:
-        """Update resolution time metrics"""
+        """
+Update resolution time metrics"""
         current_mean = self.alert_metrics.mean_time_to_resolve
         total_resolved = self.alert_metrics.resolved_alerts
         
@@ -925,7 +938,8 @@ class RealTimeAlerts:
         )
         
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
+        """
+Main monitoring loop"""
         while self.is_monitoring:
             try:
                 # Check for suppressed alerts that should be unsuppressed
@@ -1000,7 +1014,8 @@ class RealTimeAlerts:
         threshold: float,
         operator: str
     ) -> bool:
-        """Check if threshold is breached"""
+        """
+Check if threshold is breached"""
         if operator == "gt":
             return current_value > threshold
         elif operator == "lt":
@@ -1061,7 +1076,8 @@ class RealTimeAlerts:
         )
         
     async def _cleanup_old_alerts(self) -> None:
-        """Clean up old alert data"""
+        """
+Clean up old alert data"""
         cutoff_time = datetime.utcnow() - timedelta(days=7)
         
         # Clean alert history

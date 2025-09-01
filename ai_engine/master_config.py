@@ -3,13 +3,14 @@ IA-Influencer-Agent | Enterprise Content Protection Platform
 
 Master configuration system for all AI module components and services.
 
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This configuration system contains proprietary settings and algorithms.
 Unauthorized use is strictly prohibited.
 """
+
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,7 +24,9 @@ import yaml
 logger = logging.getLogger(__name__)
 
 class EnvironmentType(Enum):
-    """Environment type enumeration"""
+    """
+Environment type enumeration"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -31,6 +34,7 @@ class EnvironmentType(Enum):
 
 class LogLevel(Enum):
     """Log level enumeration"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -152,7 +156,8 @@ class AIModuleMasterConfig:
     """
     
     def __init__(self, environment: EnvironmentType = EnvironmentType.DEVELOPMENT):
-        """Initialize master configuration"""
+        """
+Initialize master configuration"""
         self.environment = environment
         self.config_dir = Path(__file__).parent.parent / "config"
         self.config_dir.mkdir(exist_ok=True)
@@ -233,7 +238,8 @@ class AIModuleMasterConfig:
                         setattr(config_obj, key, value)
     
     def get_database_url(self) -> str:
-        """Get database connection URL"""
+        """
+Get database connection URL"""
         return (
             f"postgresql://{self.database.username}:{self.database.password}@"
             f"{self.database.host}:{self.database.port}/{self.database.database}"
@@ -283,7 +289,8 @@ class AIModuleMasterConfig:
         }
     
     def get_cors_config(self) -> Dict[str, Any]:
-        """Get CORS configuration"""
+        """
+Get CORS configuration"""
         return {
             'allow_origins': self.security.allowed_origins,
             'allow_credentials': True,
@@ -292,7 +299,8 @@ class AIModuleMasterConfig:
         }
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of issues"""
+        """
+Validate configuration and return list of issues"""
         issues = []
         
         # Validate database configuration
@@ -334,7 +342,8 @@ class AIModuleMasterConfig:
         return config_dict
     
     def save_config_template(self, file_path: Optional[str] = None):
-        """Save configuration template file"""
+        """
+Save configuration template file"""
         if file_path is None:
             file_path = self.config_dir / f"config.{self.environment.value}.template.yaml"
         
@@ -382,7 +391,8 @@ class AIModuleMasterConfig:
     
     @classmethod
     def from_file(cls, config_file: str, environment: EnvironmentType = EnvironmentType.DEVELOPMENT):
-        """Create configuration from file"""
+        """
+Create configuration from file"""
         config = cls(environment)
         
         if Path(config_file).exists():
@@ -410,23 +420,28 @@ def get_config(environment: Optional[EnvironmentType] = None) -> AIModuleMasterC
     return AIModuleMasterConfig(environment)
 
 def get_database_config() -> DatabaseConfig:
-    """Get database configuration"""
+    """
+Get database configuration"""
     return master_config.database
 
 def get_redis_config() -> RedisConfig:
-    """Get Redis configuration"""
+    """
+Get Redis configuration"""
     return master_config.redis
 
 def get_ai_models_config() -> AIModelsConfig:
-    """Get AI models configuration"""
+    """
+Get AI models configuration"""
     return master_config.ai_models
 
 def get_security_config() -> SecurityConfig:
-    """Get security configuration"""
+    """
+Get security configuration"""
     return master_config.security
 
 def get_monitoring_config() -> MonitoringConfig:
-    """Get monitoring configuration"""
+    """
+Get monitoring configuration"""
     return master_config.monitoring
 
 # Export all configuration classes and functions

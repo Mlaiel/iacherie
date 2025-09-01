@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import logging
 import smtplib
@@ -38,7 +39,8 @@ settings = get_settings()
 
 
 class EmailTemplate(BaseModel):
-    """Email template configuration"""
+    """
+Email template configuration"""
     name: str = Field(..., description="Template name")
     subject: str = Field(..., description="Email subject")
     html_template: str = Field(..., description="HTML template path")
@@ -488,7 +490,8 @@ class MultiChannelNotificationManager:
         data: Dict[str, any],
         channels: Optional[List[str]] = None
     ) -> Dict[str, bool]:
-        """Send notification through multiple channels based on user preferences"""
+        """
+Send notification through multiple channels based on user preferences"""
         try:
             # Get user and preferences
             user = await self._get_user(user_id)
@@ -919,7 +922,8 @@ class MultiChannelNotificationManager:
     async def update_user_preferences(
         self, user_id: str, preferences: NotificationPreferences
     ) -> bool:
-        """Update user notification preferences"""
+        """
+Update user notification preferences"""
         try:
             self.user_preferences[user_id] = preferences
             # Save to database

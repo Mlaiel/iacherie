@@ -18,6 +18,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 import os
@@ -43,7 +44,8 @@ from utils.logger import setup_monitoring_logger
 
 @dataclass
 class SetupStatus:
-    """Status tracking for setup operations"""
+    """
+Status tracking for setup operations"""
     component: str
     status: str  # pending, running, completed, failed
     start_time: Optional[datetime] = None

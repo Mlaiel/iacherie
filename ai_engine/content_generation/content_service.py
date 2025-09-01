@@ -4,11 +4,12 @@ Professional service layer that orchestrates content generation workflows,
 manages business rules, and provides high-level API for content operations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
@@ -42,7 +43,8 @@ class ContentService:
     """
     
     def __init__(self):
-        """Initialize content service"""
+        """
+Initialize content service"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Initialize core components
@@ -511,7 +513,8 @@ class ContentService:
         request_data: Dict[str, Any],
         current_content: Optional[str]
     ) -> Dict[str, Any]:
-        """Execute a specific workflow step"""
+        """
+Execute a specific workflow step"""
         
         if step == 'generate':
             # Use generation manager for initial content creation

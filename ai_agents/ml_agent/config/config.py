@@ -12,7 +12,7 @@ This configuration system and methodologies are the exclusive intellectual prope
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 
 Team Specialties:
 - Lead AI Developer & Backend Senior Engineer
@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
@@ -30,7 +31,9 @@ import json
 from enum import Enum
 
 class Environment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -38,6 +41,7 @@ class Environment(Enum):
 
 class ModelFramework(Enum):
     """Supported ML frameworks"""
+
     SCIKIT_LEARN = "scikit_learn"
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
@@ -106,7 +110,8 @@ class TrainingConfig:
 
 @dataclass
 class InferenceConfig:
-    """Model inference configuration"""
+    """
+Model inference configuration"""
     max_batch_size: int = 32
     default_timeout: int = 30
     max_concurrent_requests: int = 100
@@ -118,7 +123,8 @@ class InferenceConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Model deployment configuration"""
+    """
+Model deployment configuration"""
     default_replicas: int = 2
     max_replicas: int = 10
     cpu_request: str = "500m"
@@ -192,7 +198,8 @@ class MLAgentConfig:
     
     @classmethod
     def from_file(cls, config_path: Union[str, Path]) -> 'MLAgentConfig':
-        """Load configuration from file"""
+        """
+Load configuration from file"""
         config_path = Path(config_path)
         
         if not config_path.exists():
@@ -231,7 +238,8 @@ class MLAgentConfig:
     
     @classmethod
     def from_environment(cls) -> 'MLAgentConfig':
-        """Create configuration from environment variables"""
+        """
+Create configuration from environment variables"""
         config = cls()
         
         # Environment
@@ -283,7 +291,8 @@ class MLAgentConfig:
         return config
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         return {
             'environment': self.environment.value,
             'debug': self.debug,
@@ -384,7 +393,8 @@ class MLAgentConfig:
         }
     
     def save_to_file(self, config_path: Union[str, Path], format: str = 'yaml'):
-        """Save configuration to file"""
+        """
+Save configuration to file"""
         config_path = Path(config_path)
         config_dict = self.to_dict()
         
@@ -448,7 +458,8 @@ class MLAgentConfig:
         return self.environment == Environment.PRODUCTION
     
     def is_development(self) -> bool:
-        """Check if running in development environment"""
+        """
+Check if running in development environment"""
         return self.environment == Environment.DEVELOPMENT
 
 # Default configuration instance

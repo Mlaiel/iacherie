@@ -8,7 +8,7 @@ Responsibility: Traitement avancé d'analytics avec ML predictive et insights bu
 ===================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER ANALYTICS:
 Raw Data Collection → Data Validation → Statistical Analysis → ML Predictions → 
 Trend Detection → Performance Insights → Business Intelligence → Actionable Recommendations
 """
+
 import json
 import logging
 import asyncio
@@ -38,7 +39,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class AnalyticsProcessor(BaseProcessor):
-    """Processeur d'analytics avancé avec ML - Production Enterprise"""
+    """
+Processeur d'analytics avancé avec ML - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -119,7 +121,8 @@ class AnalyticsProcessor(BaseProcessor):
         }
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite les données analytics complètes"""
+        """
+Traite les données analytics complètes"""
         user_id = input_data.get('user_id')
         time_period = input_data.get('time_period', 'monthly')
         metrics_data = input_data.get('metrics_data', {})
@@ -434,7 +437,8 @@ class AnalyticsProcessor(BaseProcessor):
             return 'approximately_normal'
     
     def _detect_outliers(self, data: pd.Series) -> Dict[str, Any]:
-        """Détecte les valeurs aberrantes"""
+        """
+Détecte les valeurs aberrantes"""
         outliers = {
             'method': 'iqr',
             'count': 0,
@@ -468,7 +472,8 @@ class AnalyticsProcessor(BaseProcessor):
         return outliers
     
     def _decompose_time_series(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Décompose les séries temporelles"""
+        """
+Décompose les séries temporelles"""
         decomposition = {}
         
         try:
@@ -510,7 +515,8 @@ class AnalyticsProcessor(BaseProcessor):
         return decomposition
     
     def _calculate_trend_strength(self, decomp) -> float:
-        """Calcule la force de la tendance"""
+        """
+Calcule la force de la tendance"""
         try:
             trend_var = np.var(decomp.trend.dropna())
             residual_var = np.var(decomp.resid.dropna())
@@ -519,7 +525,8 @@ class AnalyticsProcessor(BaseProcessor):
             return 0
     
     def _calculate_seasonal_strength(self, decomp) -> float:
-        """Calcule la force de la saisonnalité"""
+        """
+Calcule la force de la saisonnalité"""
         try:
             seasonal_var = np.var(decomp.seasonal.dropna())
             residual_var = np.var(decomp.resid.dropna())
@@ -528,7 +535,8 @@ class AnalyticsProcessor(BaseProcessor):
             return 0
     
     def _perform_predictive_analytics(self, metrics_data: Dict[str, Any], time_period: str) -> Dict[str, Any]:
-        """Effectue l'analyse prédictive"""
+        """
+Effectue l'analyse prédictive"""
         predictive = {
             'growth_forecast': {},
             'engagement_prediction': {},
@@ -623,7 +631,8 @@ class AnalyticsProcessor(BaseProcessor):
         return forecast
     
     def _predict_engagement(self, df: pd.DataFrame, engagement_cols: List[str]) -> Dict[str, Any]:
-        """Prédit l'engagement futur"""
+        """
+Prédit l'engagement futur"""
         prediction = {
             'predicted_rates': {},
             'optimal_posting_times': [],
@@ -665,7 +674,8 @@ class AnalyticsProcessor(BaseProcessor):
         return prediction
     
     def _forecast_revenue(self, df: pd.DataFrame, revenue_cols: List[str]) -> Dict[str, Any]:
-        """Prévoit les revenus futurs"""
+        """
+Prévoit les revenus futurs"""
         forecast = {
             'revenue_predictions': {},
             'growth_potential': {},
@@ -701,7 +711,8 @@ class AnalyticsProcessor(BaseProcessor):
         return forecast
     
     def _project_trends(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Projette les tendances futures"""
+        """
+Projette les tendances futures"""
         projections = {}
         
         try:
@@ -733,7 +744,8 @@ class AnalyticsProcessor(BaseProcessor):
         return projections
     
     def _perform_diagnostic_analytics(self, metrics_data: Dict[str, Any], descriptive: Dict[str, Any]) -> Dict[str, Any]:
-        """Effectue l'analyse diagnostique"""
+        """
+Effectue l'analyse diagnostique"""
         diagnostic = {
             'performance_drivers': {},
             'bottleneck_analysis': {},
@@ -790,7 +802,8 @@ class AnalyticsProcessor(BaseProcessor):
         return any(action in metric.lower() for action in actionable_metrics)
     
     def _perform_prescriptive_analytics(self, descriptive: Dict, predictive: Dict, diagnostic: Dict) -> Dict[str, Any]:
-        """Effectue l'analyse prescriptive"""
+        """
+Effectue l'analyse prescriptive"""
         prescriptive = {
             'optimization_recommendations': [],
             'resource_allocation': {},
@@ -895,7 +908,8 @@ class AnalyticsProcessor(BaseProcessor):
         return f'Analyze root causes and implement targeted improvements for {metric}'
     
     def _detect_anomalies(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Détecte les anomalies dans les métriques"""
+        """
+Détecte les anomalies dans les métriques"""
         anomalies = {
             'detected_anomalies': [],
             'anomaly_summary': {},
@@ -987,7 +1001,8 @@ class AnalyticsProcessor(BaseProcessor):
             return 'low'
     
     def _suggest_anomaly_causes(self, metric: str, anomalies: pd.Series, normal_data: pd.Series) -> List[str]:
-        """Suggère les causes potentielles des anomalies"""
+        """
+Suggère les causes potentielles des anomalies"""
         causes = []
         
         # Determine if anomalies are spikes or drops
@@ -1022,7 +1037,8 @@ class AnalyticsProcessor(BaseProcessor):
         return causes[:4]  # Return top 4 potential causes
     
     def _perform_benchmarking(self, descriptive: Dict, platforms: List[str]) -> Dict[str, Any]:
-        """Compare les performances avec les benchmarks industrie"""
+        """
+Compare les performances avec les benchmarks industrie"""
         benchmarking = {
             'platform_comparisons': {},
             'performance_gaps': {},
@@ -1134,7 +1150,8 @@ class AnalyticsProcessor(BaseProcessor):
         return position
     
     def _generate_visualizations(self, descriptive: Dict, predictive: Dict) -> Dict[str, Any]:
-        """Génère les visualisations des données"""
+        """
+Génère les visualisations des données"""
         visualizations = {
             'charts_generated': [],
             'chart_urls': {},
@@ -1324,7 +1341,8 @@ class AnalyticsProcessor(BaseProcessor):
 
 
 class AsyncAnalyticsProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur d'analytics"""
+    """
+Version asynchrone du processeur d'analytics"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -1332,7 +1350,8 @@ class AsyncAnalyticsProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone des analytics"""
+        """
+Traitement asynchrone des analytics"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1341,5 +1360,6 @@ class AsyncAnalyticsProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
+        """
+Validation asynchrone"""
         return self.sync_processor.validate_input(input_data)

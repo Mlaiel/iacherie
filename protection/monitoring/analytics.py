@@ -12,7 +12,7 @@ Technical Specifications:
 - Machine learning-based insights
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -42,7 +43,9 @@ from sklearn.preprocessing import StandardScaler
 logger = logging.getLogger(__name__)
 
 class AnalyticsTimeRange(str, Enum):
-    """Time range options for analytics."""
+    """
+Time range options for analytics."""
+
     LAST_HOUR = "1h"
     LAST_6_HOURS = "6h"
     LAST_24_HOURS = "24h"
@@ -55,6 +58,7 @@ class AnalyticsTimeRange(str, Enum):
 
 class MetricType(str, Enum):
     """Types of monitoring metrics."""
+
     DETECTION_RATE = "detection_rate"
     FALSE_POSITIVE_RATE = "false_positive_rate"
     RESPONSE_TIME = "response_time"
@@ -68,6 +72,7 @@ class MetricType(str, Enum):
 
 class TrendDirection(str, Enum):
     """Trend direction indicators."""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -88,7 +93,8 @@ class AnalyticsInsight:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result."""
+    """
+Trend analysis result."""
     metric_name: str
     time_range: str
     direction: TrendDirection
@@ -98,7 +104,8 @@ class TrendAnalysis:
     confidence_interval: Optional[Tuple[float, float]] = None
 
 class PredictiveModel(BaseModel):
-    """Predictive analytics model configuration."""
+    """
+Predictive analytics model configuration."""
     model_type: str = "isolation_forest"
     lookback_days: int = 30
     prediction_horizon_days: int = 7
@@ -122,7 +129,8 @@ class RealTimeMetrics(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class PerformanceMetrics(BaseModel):
-    """Performance analytics metrics."""
+    """
+Performance analytics metrics."""
     average_response_time_ms: float = 0.0
     p95_response_time_ms: float = 0.0
     p99_response_time_ms: float = 0.0
@@ -555,7 +563,8 @@ class MonitoringAnalytics:
     # Private helper methods
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for analytics."""
+        """
+Initialize machine learning models for analytics."""
         try:
             # Initialize anomaly detector
             self.anomaly_detector = IsolationForest(
@@ -655,7 +664,8 @@ class MonitoringAnalytics:
         }
     
     async def _setup_performance_monitor(self):
-        """Setup performance monitoring"""
+        """
+Setup performance monitoring"""
         return {
             'type': 'performance_monitor',
             'interval': 60,
@@ -670,7 +680,8 @@ class MonitoringAnalytics:
         }
     
     async def _setup_activity_tracker(self):
-        """Setup user activity tracking"""
+        """
+Setup user activity tracking"""
         return {
             'type': 'activity_tracker',
             'interval': 10,
@@ -681,7 +692,8 @@ class MonitoringAnalytics:
         }
     
     async def _setup_health_monitor(self):
-        """Setup system health monitoring"""
+        """
+Setup system health monitoring"""
         return {
             'type': 'health_monitor',
             'interval': 30,
@@ -696,7 +708,8 @@ class MonitoringAnalytics:
         }
     
     async def _setup_security_collector(self):
-        """Setup security event collection"""
+        """
+Setup security event collection"""
         return {
             'type': 'security_collector',
             'interval': 5,
@@ -708,7 +721,8 @@ class MonitoringAnalytics:
         }
     
     async def _run_collector(self, collector_name: str, collector_config: dict):
-        """Run individual collector in background"""
+        """
+Run individual collector in background"""
         try:
             while True:
                 if not collector_config.get('enabled', True):
@@ -740,27 +754,32 @@ class MonitoringAnalytics:
         pass
     
     async def _collect_performance_metrics(self):
-        """Collect real-time performance metrics"""
+        """
+Collect real-time performance metrics"""
         # Implementation for performance metrics
         pass
     
     async def _collect_activity_metrics(self):
-        """Collect real-time user activity metrics"""
+        """
+Collect real-time user activity metrics"""
         # Implementation for activity tracking
         pass
     
     async def _collect_health_metrics(self):
-        """Collect real-time system health metrics"""
+        """
+Collect real-time system health metrics"""
         # Implementation for health monitoring
         pass
     
     async def _collect_security_metrics(self):
-        """Collect real-time security metrics"""
+        """
+Collect real-time security metrics"""
         # Implementation for security monitoring
         pass
     
     async def _run_data_aggregation(self):
-        """Run data aggregation pipeline"""
+        """
+Run data aggregation pipeline"""
         try:
             while True:
                 # Aggregate collected metrics every minute
@@ -984,7 +1003,8 @@ class MonitoringAnalytics:
         values: List[float],
         timestamps: List[datetime]
     ) -> Tuple[Optional[float], Optional[Tuple[float, float]]]:
-        """Predict next value using simple trend extrapolation."""
+        """
+Predict next value using simple trend extrapolation."""
         try:
             if len(values) < 3:
                 return None, None
@@ -1486,6 +1506,7 @@ class MonitoringAnalytics:
 
 class MetricType(str, Enum):
     """Types of metrics tracked."""
+
     DETECTION_RATE = "detection_rate"
     FALSE_POSITIVE_RATE = "false_positive_rate"
     RESPONSE_TIME = "response_time"
@@ -1496,6 +1517,7 @@ class MetricType(str, Enum):
 
 class TrendDirection(str, Enum):
     """Trend direction indicators."""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -1509,7 +1531,8 @@ class MetricPoint:
     metadata: Dict[str, Any] = None
 
 class TrendAnalysis(BaseModel):
-    """Trend analysis result."""
+    """
+Trend analysis result."""
     metric_type: MetricType
     direction: TrendDirection
     confidence: float = Field(..., ge=0.0, le=1.0)
@@ -1530,7 +1553,8 @@ class PlatformPerformance(BaseModel):
     threat_levels: Dict[str, int] = Field(default_factory=dict)
 
 class UserEngagementMetrics(BaseModel):
-    """User engagement and activity metrics."""
+    """
+User engagement and activity metrics."""
     user_id: int
     total_content_protected: int = 0
     violations_detected: int = 0
@@ -1551,7 +1575,8 @@ class SystemHealthMetrics(BaseModel):
     availability: float = 100.0
 
 class AnalyticsReport(BaseModel):
-    """Comprehensive analytics report."""
+    """
+Comprehensive analytics report."""
     report_id: str
     generated_at: datetime = Field(default_factory=datetime.utcnow)
     time_range: AnalyticsTimeRange
@@ -1598,7 +1623,8 @@ class MonitoringAnalytics:
         redis_client: Optional[aioredis.Redis] = None,
         db_session: Optional[AsyncSession] = None
     ):
-        """Initialize monitoring analytics."""
+        """
+Initialize monitoring analytics."""
         self.config = config
         self.redis_client = redis_client
         self.db_session = db_session
@@ -1787,7 +1813,8 @@ class MonitoringAnalytics:
         metric_type: MetricType,
         lookback_hours: int = 24
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in metrics data."""
+        """
+Detect anomalies in metrics data."""
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=lookback_hours)
         
@@ -1830,7 +1857,8 @@ class MonitoringAnalytics:
         self,
         platform: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get performance insights and optimization recommendations."""
+        """
+Get performance insights and optimization recommendations."""
         insights = {
             'overall_performance': {},
             'platform_specific': {},
@@ -1870,7 +1898,8 @@ class MonitoringAnalytics:
         return insights
 
     async def _initialize_anomaly_detectors(self) -> None:
-        """Initialize machine learning models for anomaly detection."""
+        """
+Initialize machine learning models for anomaly detection."""
         for metric_type in MetricType:
             # Initialize isolation forest for anomaly detection
             self._anomaly_detectors[metric_type] = IsolationForest(
@@ -1887,7 +1916,8 @@ class MonitoringAnalytics:
         metric_type: MetricType,
         training_data: np.ndarray
     ) -> None:
-        """Train anomaly detector for a specific metric type."""
+        """
+Train anomaly detector for a specific metric type."""
         if len(training_data) < 10:
             return  # Not enough data to train
         
@@ -2070,11 +2100,13 @@ class MonitoringAnalytics:
         return None
 
     async def _cache_data(self, cache_key: str, data: Any) -> None:
-        """Cache data with timestamp."""
+        """
+Cache data with timestamp."""
         self._analytics_cache[cache_key] = (datetime.utcnow(), data)
 
     async def _cleanup_expired_cache(self) -> None:
-        """Clean up expired cache entries."""
+        """
+Clean up expired cache entries."""
         current_time = datetime.utcnow()
         expired_keys = [
             key for key, (timestamp, _) in self._analytics_cache.items()
@@ -2128,7 +2160,8 @@ class MonitoringAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get metrics data for a specific type and time range."""
+        """
+Get metrics data for a specific type and time range."""
         # Get data from Redis
         pattern = f"metric:{metric_type.value}:*"
         data_points = []
@@ -2181,7 +2214,8 @@ class MonitoringAnalytics:
         report: AnalyticsReport,
         metrics_data: Dict[MetricType, List[Dict[str, Any]]]
     ) -> None:
-        """Analyze platform-specific performance."""
+        """
+Analyze platform-specific performance."""
         platforms = await self._get_active_platforms()
         
         for platform in platforms:
@@ -2193,7 +2227,8 @@ class MonitoringAnalytics:
         report: AnalyticsReport,
         metrics_data: Dict[MetricType, List[Dict[str, Any]]]
     ) -> None:
-        """Perform trend analysis on metrics."""
+        """
+Perform trend analysis on metrics."""
         for metric_type, data in metrics_data.items():
             if len(data) < 10:
                 continue  # Not enough data for trend analysis
@@ -2203,7 +2238,8 @@ class MonitoringAnalytics:
             report.trends.append(trend)
 
     async def _calculate_trend(self, values: List[float]) -> TrendAnalysis:
-        """Calculate trend analysis for a series of values."""
+        """
+Calculate trend analysis for a series of values."""
         if len(values) < 2:
             return TrendAnalysis(
                 metric_type=MetricType.DETECTION_RATE,
@@ -2274,7 +2310,8 @@ class MonitoringAnalytics:
         )
 
     async def shutdown(self) -> None:
-        """Shutdown the analytics engine."""
+        """
+Shutdown the analytics engine."""
         logger.info("Shutting down Monitoring Analytics...")
         
         self._running = False

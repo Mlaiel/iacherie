@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
+
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -35,7 +36,9 @@ from ...utils.cache import RedisCache
 
 
 class ResourceType(Enum):
-    """System resource types"""
+    """
+System resource types"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -45,6 +48,7 @@ class ResourceType(Enum):
 
 class ResourceStatus(Enum):
     """Resource utilization status"""
+
     OPTIMAL = "optimal"
     NORMAL = "normal"
     WARNING = "warning"
@@ -68,13 +72,15 @@ class CPUMetrics:
     interrupts_per_sec: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class MemoryMetrics:
-    """Memory utilization metrics"""
+    """
+Memory utilization metrics"""
     total_mb: float
     available_mb: float
     used_mb: float
@@ -89,13 +95,15 @@ class MemoryMetrics:
     database_memory_mb: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class DiskMetrics:
-    """Disk I/O and storage metrics"""
+    """
+Disk I/O and storage metrics"""
     total_space_gb: float
     used_space_gb: float
     free_space_gb: float
@@ -109,13 +117,15 @@ class DiskMetrics:
     queue_depth: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class NetworkMetrics:
-    """Network utilization metrics"""
+    """
+Network utilization metrics"""
     bytes_sent_per_sec: float
     bytes_recv_per_sec: float
     packets_sent_per_sec: float
@@ -126,13 +136,15 @@ class NetworkMetrics:
     bandwidth_utilization_percent: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class DatabaseResourceMetrics:
-    """Database-specific resource metrics"""
+    """
+Database-specific resource metrics"""
     shared_buffers_mb: float
     effective_cache_size_mb: float
     work_mem_mb: float
@@ -144,13 +156,15 @@ class DatabaseResourceMetrics:
     temp_files_size_mb: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return asdict(self)
 
 
 @dataclass
 class ResourceSnapshot:
-    """Complete resource utilization snapshot"""
+    """
+Complete resource utilization snapshot"""
     timestamp: datetime
     cpu_metrics: CPUMetrics
     memory_metrics: MemoryMetrics
@@ -162,7 +176,8 @@ class ResourceSnapshot:
     recommendations: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['cpu_metrics'] = self.cpu_metrics.to_dict()
@@ -588,7 +603,8 @@ class ResourceMonitor:
         network: NetworkMetrics,
         database: DatabaseResourceMetrics
     ) -> List[str]:
-        """Identify system bottlenecks"""
+        """
+Identify system bottlenecks"""
         bottlenecks = []
         
         # CPU bottlenecks
@@ -689,7 +705,8 @@ class ResourceMonitor:
         bottlenecks: List[str], 
         status: ResourceStatus
     ) -> List[str]:
-        """Generate optimization recommendations based on bottlenecks"""
+        """
+Generate optimization recommendations based on bottlenecks"""
         recommendations = []
         
         for bottleneck in bottlenecks:
@@ -837,7 +854,8 @@ class ResourceMonitor:
         return baseline
     
     async def get_resource_summary(self) -> Dict[str, Any]:
-        """Get current resource summary"""
+        """
+Get current resource summary"""
         try:
             if not self.resource_history:
                 return {"error": "No resource data available", "monitoring_active": self.monitoring_active}
@@ -954,7 +972,8 @@ class ResourceMonitor:
             return 0.0
     
     def _project_capacity(self, trend: float, threshold: float) -> Dict[str, Any]:
-        """Project when capacity threshold will be reached"""
+        """
+Project when capacity threshold will be reached"""
         try:
             if trend <= 0:
                 return {"days_to_threshold": None, "action_needed": False}

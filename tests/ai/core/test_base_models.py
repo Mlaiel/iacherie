@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Base AI Models and Core Components
+"""
+Comprehensive Tests for Base AI Models and Core Components
 Enterprise-grade testing for foundational AI model classes
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -26,6 +28,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -64,10 +67,12 @@ from ai.core.exceptions import ModelError, ValidationError
 
 
 class TestModelConfig:
-    """Test suite for ModelConfig dataclass"""
+    """
+Test suite for ModelConfig dataclass"""
     
     def test_model_config_creation_valid(self):
-        """Test creating valid ModelConfig instances"""
+        """
+Test creating valid ModelConfig instances"""
         config = ModelConfig(
             name="test_model",
             provider=ModelProvider.LOCAL,
@@ -161,7 +166,8 @@ class TestModelMetrics:
     """Test suite for ModelMetrics dataclass"""
     
     def test_model_metrics_creation(self):
-        """Test creating ModelMetrics instances"""
+        """
+Test creating ModelMetrics instances"""
         metrics = ModelMetrics(model_name="test_model")
         
         assert metrics.model_name == "test_model"
@@ -204,7 +210,8 @@ class TestProcessingResult:
     """Test suite for ProcessingResult dataclass"""
     
     def test_processing_result_creation_minimal(self):
-        """Test creating minimal ProcessingResult"""
+        """
+Test creating minimal ProcessingResult"""
         result = ProcessingResult(
             success=True,
             data={"output": "test_result"}
@@ -267,7 +274,8 @@ class MockAIModel(BaseAIModel):
         self.should_fail_process = False
     
     async def connect(self) -> bool:
-        """Mock connect implementation"""
+        """
+Mock connect implementation"""
         self.connect_called = True
         if self.should_fail_connect:
             self.status = ModelStatus.ERROR
@@ -278,14 +286,16 @@ class MockAIModel(BaseAIModel):
         return True
     
     async def disconnect(self) -> bool:
-        """Mock disconnect implementation"""
+        """
+Mock disconnect implementation"""
         self.disconnect_called = True
         self._is_connected = False
         self.status = ModelStatus.MAINTENANCE
         return True
     
     async def process(self, input_data: Any, **kwargs) -> Any:
-        """Mock process implementation"""
+        """
+Mock process implementation"""
         self.process_called = True
         if self.should_fail_process:
             raise ModelError("Mock processing error")
@@ -298,7 +308,8 @@ class TestBaseAIModel:
     
     @pytest.fixture
     def mock_config(self):
-        """Fixture for mock model configuration"""
+        """
+Fixture for mock model configuration"""
         return ModelConfig(
             name="mock_model",
             provider=ModelProvider.LOCAL,
@@ -311,7 +322,8 @@ class TestBaseAIModel:
         return MockAIModel(mock_config)
     
     def test_base_model_initialization(self, mock_model, mock_config):
-        """Test BaseAIModel initialization"""
+        """
+Test BaseAIModel initialization"""
         assert mock_model.config == mock_config
         assert mock_model.model_type == ModelType.AUDIO_MODEL
         assert mock_model.provider == ModelProvider.LOCAL
@@ -334,7 +346,8 @@ class TestBaseAIModel:
     
     @pytest.mark.asyncio
     async def test_model_connect_failure(self, mock_model):
-        """Test failed model connection"""
+        """
+Test failed model connection"""
         mock_model.should_fail_connect = True
         result = await mock_model.connect()
         
@@ -345,7 +358,8 @@ class TestBaseAIModel:
     
     @pytest.mark.asyncio
     async def test_model_disconnect(self, mock_model):
-        """Test model disconnection"""
+        """
+Test model disconnection"""
         # First connect
         await mock_model.connect()
         assert mock_model.is_connected is True
@@ -360,7 +374,8 @@ class TestBaseAIModel:
     
     @pytest.mark.asyncio
     async def test_model_cleanup(self, mock_model):
-        """Test model cleanup"""
+        """
+Test model cleanup"""
         await mock_model.connect()
         await mock_model.cleanup()
         
@@ -369,7 +384,8 @@ class TestBaseAIModel:
     
     @pytest.mark.asyncio
     async def test_model_process_success(self, mock_model):
-        """Test successful model processing"""
+        """
+Test successful model processing"""
         test_data = {"input": "test"}
         test_kwargs = {"param1": "value1", "param2": 42}
         
@@ -429,7 +445,8 @@ class TestBaseAIModel:
         assert mock_model.metrics.last_used is not None
     
     def test_update_metrics_failure(self, mock_model):
-        """Test updating metrics for failed operation"""
+        """
+Test updating metrics for failed operation"""
         mock_model.update_metrics(success=False, response_time=1.0)
         
         assert mock_model.metrics.total_requests == 1
@@ -439,7 +456,8 @@ class TestBaseAIModel:
         assert mock_model.metrics.error_rate == 100.0
     
     def test_update_metrics_multiple_operations(self, mock_model):
-        """Test updating metrics over multiple operations"""
+        """
+Test updating metrics over multiple operations"""
         # First operation (success)
         mock_model.update_metrics(success=True, response_time=0.5)
         # Second operation (failure)
@@ -455,7 +473,8 @@ class TestBaseAIModel:
     
     @pytest.mark.asyncio
     async def test_get_metrics(self, mock_model):
-        """Test getting model metrics"""
+        """
+Test getting model metrics"""
         metrics = await mock_model.get_metrics()
         
         assert isinstance(metrics, ModelMetrics)
@@ -477,7 +496,8 @@ class TestBaseAIModel:
         assert mock_model.metrics.failed_requests == 0
     
     def test_string_representations(self, mock_model):
-        """Test string representations of the model"""
+        """
+Test string representations of the model"""
         str_repr = str(mock_model)
         repr_repr = repr(mock_model)
         
@@ -491,7 +511,8 @@ class TestSpecializedModels:
     """Test suite for specialized model classes"""
     
     def test_audio_model_creation_valid(self):
-        """Test creating valid AudioModel"""
+        """
+Test creating valid AudioModel"""
         config = ModelConfig(
             name="audio_test",
             provider=ModelProvider.LOCAL,
@@ -658,7 +679,8 @@ class TestFactoryFunctions:
     """Test suite for model factory functions"""
     
     def test_create_audio_model(self):
-        """Test create_audio_model factory function"""
+        """
+Test create_audio_model factory function"""
         config = ModelConfig(
             name="factory_audio",
             provider=ModelProvider.LOCAL,
@@ -786,7 +808,8 @@ class TestModelRegistry:
     """Test suite for MODEL_REGISTRY"""
     
     def test_model_registry_completeness(self):
-        """Test that MODEL_REGISTRY contains all expected model types"""
+        """
+Test that MODEL_REGISTRY contains all expected model types"""
         expected_types = {
             ModelType.AUDIO_MODEL,
             ModelType.VIDEO_MODEL,
@@ -801,7 +824,8 @@ class TestModelRegistry:
         assert registry_types == expected_types
     
     def test_model_registry_factory_functions(self):
-        """Test that MODEL_REGISTRY contains correct factory functions"""
+        """
+Test that MODEL_REGISTRY contains correct factory functions"""
         assert MODEL_REGISTRY[ModelType.AUDIO_MODEL] == create_audio_model
         assert MODEL_REGISTRY[ModelType.VIDEO_MODEL] == create_video_model
         assert MODEL_REGISTRY[ModelType.IMAGE_MODEL] == create_image_model
@@ -812,10 +836,12 @@ class TestModelRegistry:
 
 
 class TestEnums:
-    """Test suite for enum classes"""
+    """
+Test suite for enum classes"""
     
     def test_model_type_enum_values(self):
-        """Test ModelType enum has expected values"""
+        """
+Test ModelType enum has expected values"""
         expected_values = {
             "audio_model",
             "video_model",
@@ -863,7 +889,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_full_model_lifecycle(self):
-        """Test complete model lifecycle"""
+        """
+Test complete model lifecycle"""
         config = ModelConfig(
             name="lifecycle_test",
             provider=ModelProvider.LOCAL,
@@ -971,7 +998,8 @@ class TestPerformanceMetrics:
     
     @pytest.mark.asyncio
     async def test_model_creation_performance(self):
-        """Test performance of model creation"""
+        """
+Test performance of model creation"""
         start_time = datetime.now()
         
         configs = []

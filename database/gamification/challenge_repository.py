@@ -8,7 +8,7 @@ Responsibility: Challenge lifecycle management and competition data persistence
 ===============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ CHALLENGE REPOSITORY ARCHITECTURE:
 Challenge Lifecycle → Participation Management → Progress Analytics → 
 Competition Engine → Reward Calculation → Performance Optimization
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -32,7 +33,9 @@ from decimal import Decimal
 from ...data_management.repositories.base_repository import BaseRepository, OperationType
 
 class ChallengeType(Enum):
-    """Challenge duration types"""
+    """
+Challenge duration types"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -42,6 +45,7 @@ class ChallengeType(Enum):
 
 class ChallengeCategory(Enum):
     """Challenge content categories"""
+
     CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     ENGAGEMENT = "engagement"
@@ -53,6 +57,7 @@ class ChallengeCategory(Enum):
 
 class ChallengeStatus(Enum):
     """Challenge lifecycle status"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -62,6 +67,7 @@ class ChallengeStatus(Enum):
 
 class ParticipationStatus(Enum):
     """User participation status"""
+
     REGISTERED = "registered"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -92,7 +98,8 @@ class Challenge:
 
 @dataclass
 class ChallengeParticipation:
-    """User challenge participation"""
+    """
+User challenge participation"""
     participation_id: str
     user_id: str
     challenge_id: str
@@ -109,7 +116,8 @@ class ChallengeParticipation:
     metadata: Dict[str, Any]
 
 class ChallengeRepository(BaseRepository[Challenge]):
-    """Enterprise challenge management repository"""
+    """
+Enterprise challenge management repository"""
     
     def __init__(self, db_connection=None, cache_manager=None,
                  analytics_service=None, notification_service=None,
@@ -656,7 +664,8 @@ class ChallengeRepository(BaseRepository[Challenge]):
         participation: ChallengeParticipation,
         challenge: Challenge
     ) -> float:
-        """Calculate time-based completion bonus"""
+        """
+Calculate time-based completion bonus"""
         if not participation.completion_date:
             return 0.0
         
@@ -677,7 +686,8 @@ class ChallengeRepository(BaseRepository[Challenge]):
         challenge: Challenge,
         score: float
     ) -> Dict[str, Any]:
-        """Calculate rewards based on challenge completion"""
+        """
+Calculate rewards based on challenge completion"""
         base_rewards = challenge.rewards.copy()
         
         # Apply score multiplier to numeric rewards
@@ -693,12 +703,14 @@ class ChallengeRepository(BaseRepository[Challenge]):
         return calculated_rewards
     
     def _schedule_challenge_activation(self, challenge_id: str, start_date: datetime):
-        """Schedule challenge activation"""
+        """
+Schedule challenge activation"""
         # Implementation would schedule task for challenge activation
         pass
     
     def get_participant_count(self, challenge_id: str) -> int:
-        """Get current participant count"""
+        """
+Get current participant count"""
         # Implementation would count participants
         return 0
     
@@ -707,12 +719,14 @@ class ChallengeRepository(BaseRepository[Challenge]):
         user_id: str,
         challenge_id: str
     ) -> Optional[ChallengeParticipation]:
-        """Get user participation record"""
+        """
+Get user participation record"""
         # Implementation would query participation table
         return None
     
     def _save_participation(self, participation: ChallengeParticipation) -> ChallengeParticipation:
-        """Save participation record"""
+        """
+Save participation record"""
         # Implementation would save to database
         return participation
     
@@ -722,7 +736,8 @@ class ChallengeRepository(BaseRepository[Challenge]):
         limit: int,
         offset: int
     ) -> List[Challenge]:
-        """Query challenges with filters"""
+        """
+Query challenges with filters"""
         # Implementation would execute filtered query
         return []
     
@@ -732,7 +747,8 @@ class ChallengeRepository(BaseRepository[Challenge]):
         limit: int,
         offset: int
     ) -> List[ChallengeParticipation]:
-        """Query participations with filters"""
+        """
+Query participations with filters"""
         # Implementation would execute filtered query
         return []
     
@@ -741,54 +757,64 @@ class ChallengeRepository(BaseRepository[Challenge]):
         challenge_id: str,
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Calculate challenge leaderboard"""
+        """
+Calculate challenge leaderboard"""
         # Implementation would calculate leaderboard
         return []
     
     def _calculate_challenge_analytics(self, challenge_id: str) -> Dict[str, Any]:
-        """Calculate challenge analytics"""
+        """
+Calculate challenge analytics"""
         # Implementation would calculate analytics
         return {}
     
     def _get_user_level(self, user_id: str) -> int:
-        """Get user level"""
+        """
+Get user level"""
         # Implementation would get user level
         return 1
     
     def _get_user_achievement_ids(self, user_id: str) -> List[str]:
-        """Get user achievement IDs"""
+        """
+Get user achievement IDs"""
         # Implementation would get achievement IDs
         return []
     
     def _get_user_activity_score(self, user_id: str) -> float:
-        """Get user activity score"""
+        """
+Get user activity score"""
         # Implementation would calculate activity score
         return 0.0
     
     # BaseRepository abstract method implementations
     def create(self, entity: Challenge, **kwargs) -> Challenge:
-        """Create challenge entity"""
+        """
+Create challenge entity"""
         self._validate_entity(entity)
         # Implementation would save to database
         return entity
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[Challenge]:
-        """Get challenge by ID"""
+        """
+Get challenge by ID"""
         # Implementation would query database
         return None
     
     def update(self, entity: Challenge, **kwargs) -> Challenge:
-        """Update challenge entity"""
+        """
+Update challenge entity"""
         self._validate_entity(entity)
         # Implementation would update database
         return entity
     
     def delete(self, entity_id: str, **kwargs) -> bool:
-        """Delete challenge"""
+        """
+Delete challenge"""
         # Implementation would delete from database
         return True
     
     def list_all(self, limit: int = 100, offset: int = 0, **filters) -> List[Challenge]:
-        """List all challenges with filtering"""
+        """
+List all challenges with filtering"""
         # Implementation would query with filters
         return []

@@ -13,6 +13,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import json
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Analytics metric types"""
+    """
+Analytics metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -62,6 +65,7 @@ class MetricType(Enum):
 
 class DataSource(Enum):
     """Data source types"""
+
     DATABASE = "database"
     API = "api"
     FILE = "file"
@@ -74,6 +78,7 @@ class DataSource(Enum):
 
 class VisualizationType(Enum):
     """Chart and visualization types"""
+
     LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -91,6 +96,7 @@ class VisualizationType(Enum):
 
 class ReportFormat(Enum):
     """Report output formats"""
+
     PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
@@ -101,6 +107,7 @@ class ReportFormat(Enum):
 
 class AggregationMethod(Enum):
     """Data aggregation methods"""
+
     SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
@@ -144,7 +151,8 @@ class MetricDataPoint:
     tags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'metric_id': self.metric_id,
             'value': self.value,
@@ -157,7 +165,8 @@ class MetricDataPoint:
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""
+    """
+Dashboard widget configuration"""
     widget_id: str
     title: str
     widget_type: VisualizationType
@@ -172,7 +181,8 @@ class DashboardWidget:
 
 @dataclass
 class Dashboard:
-    """Analytics dashboard configuration"""
+    """
+Analytics dashboard configuration"""
     dashboard_id: str
     name: str
     description: str
@@ -205,7 +215,8 @@ class ReportTemplate:
 
 
 class DataCollector:
-    """Advanced data collection and ingestion system"""
+    """
+Advanced data collection and ingestion system"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -215,7 +226,8 @@ class DataCollector:
         self._elasticsearch: Optional[elasticsearch.AsyncElasticsearch] = None
         
     async def initialize(self):
-        """Initialize data collector"""
+        """
+Initialize data collector"""
         try:
             # Initialize Redis for caching
             if 'redis_url' in self.config:
@@ -398,7 +410,8 @@ class KPITracker:
         self._kpi_alerts: Dict[str, List[Dict[str, Any]]] = {}
         
     async def register_kpi(self, kpi_definition: KPIDefinition) -> bool:
-        """Register a new KPI"""
+        """
+Register a new KPI"""
         try:
             self._kpi_definitions[kpi_definition.kpi_id] = kpi_definition
             self._kpi_values[kpi_definition.kpi_id] = []
@@ -557,7 +570,8 @@ class BusinessIntelligence:
         target: str,
         training_data: pd.DataFrame
     ) -> bool:
-        """Create predictive analytics model"""
+        """
+Create predictive analytics model"""
         try:
             # Prepare data
             X = training_data[features]
@@ -760,7 +774,8 @@ class VisualizationEngine:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create visualization from data"""
+        """
+Create visualization from data"""
         try:
             if chart_type not in self._chart_templates:
                 raise ValueError(f"Unsupported chart type: {chart_type}")
@@ -804,7 +819,8 @@ class VisualizationEngine:
         return fig
     
     async def _create_bar_chart(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create bar chart"""
+        """
+Create bar chart"""
         fig = go.Figure()
         
         x_col = config.get('x_column', data.columns[0])
@@ -827,7 +843,8 @@ class VisualizationEngine:
         return fig
     
     async def _create_pie_chart(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create pie chart"""
+        """
+Create pie chart"""
         fig = go.Figure()
         
         labels_col = config.get('labels_column', data.columns[0])
@@ -847,7 +864,8 @@ class VisualizationEngine:
         return fig
     
     async def _create_scatter_plot(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create scatter plot"""
+        """
+Create scatter plot"""
         fig = go.Figure()
         
         x_col = config.get('x_column', data.columns[0])
@@ -874,7 +892,8 @@ class VisualizationEngine:
         return fig
     
     async def _create_heatmap(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create heatmap"""
+        """
+Create heatmap"""
         fig = go.Figure()
         
         # Assume data is already in matrix form or pivot as needed
@@ -894,7 +913,8 @@ class VisualizationEngine:
         return fig
     
     async def _create_gauge(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create gauge chart"""
+        """
+Create gauge chart"""
         fig = go.Figure()
         
         value = config.get('value', data.iloc[0, 0] if not data.empty else 0)
@@ -943,14 +963,16 @@ class VisualizationEngine:
 
 
 class ReportGenerator:
-    """Advanced report generation system"""
+    """
+Advanced report generation system"""
     
     def __init__(self, visualization_engine: VisualizationEngine):
         self.visualization_engine = visualization_engine
         self._report_templates: Dict[str, ReportTemplate] = {}
         
     async def create_report_template(self, template: ReportTemplate) -> bool:
-        """Create report template"""
+        """
+Create report template"""
         try:
             self._report_templates[template.template_id] = template
             logger.info(f"Created report template: {template.template_id}")
@@ -1106,7 +1128,8 @@ class EnterpriseAnalytics:
         self._dashboards: Dict[str, Dashboard] = {}
         
     async def initialize(self):
-        """Initialize analytics system"""
+        """
+Initialize analytics system"""
         try:
             await self.data_collector.initialize()
             logger.info("Enterprise analytics system initialized")

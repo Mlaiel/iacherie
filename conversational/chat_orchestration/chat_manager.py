@@ -7,12 +7,13 @@ and monetization capabilities. Provides advanced session management, context tra
 and AI-powered response generation with creator-specific optimizations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -43,7 +44,9 @@ from .chat_analytics import ChatAnalytics
 
 
 class ChatStatus(Enum):
-    """Chat session status enumeration with extended states"""
+    """
+Chat session status enumeration with extended states"""
+
     ACTIVE = "active"
     PAUSED = "paused" 
     ENDED = "ended"
@@ -58,6 +61,7 @@ class ChatStatus(Enum):
 
 class CreatorType(Enum):
     """Supported creator types with specialized handling"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -70,6 +74,7 @@ class CreatorType(Enum):
 
 class ConversationPriority(Enum):
     """Conversation priority levels for resource allocation"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -79,6 +84,7 @@ class ConversationPriority(Enum):
 
 class MessageSentiment(Enum):
     """Message sentiment classification"""
+
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
@@ -117,7 +123,8 @@ class ConversationMetrics:
 
 @dataclass
 class ChatSession:
-    """Enhanced chat session data structure with comprehensive tracking"""
+    """
+Enhanced chat session data structure with comprehensive tracking"""
     session_id: str
     user_id: str
     creator_profile: CreatorProfile
@@ -216,7 +223,8 @@ class ChatManager:
         asyncio.create_task(self._protection_monitoring_task())
     
     async def _session_cleanup_task(self) -> None:
-        """Background task to cleanup expired sessions"""
+        """
+Background task to cleanup expired sessions"""
         while True:
             try:
                 current_time = datetime.utcnow()
@@ -703,7 +711,8 @@ class ChatManager:
         return round(duration.total_seconds() / 60, 2)
     
     async def cleanup_expired_sessions(self) -> int:
-        """Cleanup expired sessions - called by background task"""
+        """
+Cleanup expired sessions - called by background task"""
         cleaned_count = 0
         expired_sessions = []
         

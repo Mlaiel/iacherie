@@ -25,7 +25,7 @@ Features:
 - Automated content tagging and categorization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This revolutionary content processing system is protected intellectual property.
 Any unauthorized copying, distribution, or modification is strictly prohibited and will
@@ -40,6 +40,7 @@ Expert Development Team Specialties:
 - Security Expert - Content protection and encryption systems
 - DevOps Engineer - Scalable infrastructure and deployment automation
 """
+
 import asyncio
 import logging
 import hashlib
@@ -113,7 +114,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentFingerprint:
-    """Advanced content fingerprint with multi-modal features."""
+    """
+Advanced content fingerprint with multi-modal features."""
     content_id: str
     content_type: str
     primary_hash: str
@@ -227,7 +229,8 @@ class ContentMetadata:
 
 @dataclass 
 class ContentFingerprint:
-    """Advanced fingerprint container for content protection."""
+    """
+Advanced fingerprint container for content protection."""
     content_id: str
     fingerprint_type: str
     fingerprint_data: Union[str, bytes, np.ndarray]
@@ -250,10 +253,12 @@ class ContentFingerprint:
     created_at: datetime = field(default_factory=datetime.now)
 
 class ContentAdapter(ABC):
-    """Enterprise base class for all content adapters."""
+    """
+Enterprise base class for all content adapters."""
     
     def __init__(self, **config):
-        """Initialize content adapter with enterprise configuration."""
+        """
+Initialize content adapter with enterprise configuration."""
         self.config = config
         self.supported_formats: List[str] = []
         self.supported_mime_types: List[str] = []
@@ -279,7 +284,8 @@ class ContentAdapter(ABC):
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize AI models and processors."""
+        """
+Initialize AI models and processors."""
         try:
             # Initialize sentence transformer for embeddings
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -304,18 +310,21 @@ class ContentAdapter(ABC):
     
     @abstractmethod
     async def generate_fingerprint(self, content: Union[bytes, str, BinaryIO]) -> ContentFingerprint:
-        """Generate advanced fingerprint for content protection."""
+        """
+Generate advanced fingerprint for content protection."""
         pass
     
     @abstractmethod
     async def extract_metadata(self, content: Union[bytes, str, BinaryIO]) -> ContentMetadata:
-        """Extract comprehensive metadata from content."""
+        """
+Extract comprehensive metadata from content."""
         pass
     
     async def calculate_similarity(self, 
                                  fingerprint1: ContentFingerprint, 
                                  fingerprint2: ContentFingerprint) -> float:
-        """Calculate similarity between two content fingerprints."""
+        """
+Calculate similarity between two content fingerprints."""
         if fingerprint1.fingerprint_type != fingerprint2.fingerprint_type:
             return 0.0
         
@@ -334,7 +343,8 @@ class ContentAdapter(ABC):
         return 0.0
     
     async def validate_content(self, content: Union[bytes, str, BinaryIO]) -> bool:
-        """Enterprise-grade content validation."""
+        """
+Enterprise-grade content validation."""
         try:
             # File size validation
             if hasattr(content, 'seek') and hasattr(content, 'tell'):
@@ -432,7 +442,8 @@ class ContentAdapter(ABC):
         return [r for r in results if not isinstance(r, Exception)]
     
     def _process_single_content(self, content: Union[bytes, str, BinaryIO]) -> Dict[str, Any]:
-        """Process a single content item synchronously."""
+        """
+Process a single content item synchronously."""
         try:
             # This would be implemented in child classes
             return {
@@ -448,14 +459,17 @@ class ContentAdapter(ABC):
             }
     
     def _calculate_checksum(self, content: bytes) -> str:
-        """Calculate SHA256 checksum for content."""
+        """
+Calculate SHA256 checksum for content."""
         return hashlib.sha256(content).hexdigest()
 
 class AudioContentAdapter(ContentAdapter):
-    """Adapter for audio content processing."""
+    """
+Adapter for audio content processing."""
     
     def __init__(self, **config):
-        """Initialize audio adapter."""
+        """
+Initialize audio adapter."""
         super().__init__(**config)
         self.supported_formats = [
             'audio/mp3', 'audio/wav', 'audio/flac', 'audio/aac',
@@ -466,7 +480,8 @@ class AudioContentAdapter(ContentAdapter):
         self.hop_length = config.get('hop_length', 512)
     
     async def extract_features(self, content: Union[bytes, BinaryIO]) -> Dict[str, Any]:
-        """Extract audio features for fingerprinting."""
+        """
+Extract audio features for fingerprinting."""
         try:
             # Load audio data
             if isinstance(content, bytes):
@@ -568,7 +583,8 @@ class VideoContentAdapter(ContentAdapter):
     """Adapter for video content processing."""
     
     def __init__(self, **config):
-        """Initialize video adapter."""
+        """
+Initialize video adapter."""
         super().__init__(**config)
         self.supported_formats = [
             'video/mp4', 'video/avi', 'video/mov', 'video/mkv',
@@ -578,7 +594,8 @@ class VideoContentAdapter(ContentAdapter):
         self.max_frames = config.get('max_frames', 100)
     
     async def extract_features(self, content: Union[bytes, BinaryIO]) -> Dict[str, Any]:
-        """Extract video features for fingerprinting."""
+        """
+Extract video features for fingerprinting."""
         try:
             # Save to temporary file for processing
             import tempfile
@@ -717,7 +734,8 @@ class ImageContentAdapter(ContentAdapter):
     """Adapter for image content processing."""
     
     def __init__(self, **config):
-        """Initialize image adapter."""
+        """
+Initialize image adapter."""
         super().__init__(**config)
         self.supported_formats = [
             'image/jpeg', 'image/jpg', 'image/png', 'image/gif',
@@ -726,7 +744,8 @@ class ImageContentAdapter(ContentAdapter):
         self.hash_size = config.get('hash_size', 8)
     
     async def extract_features(self, content: Union[bytes, BinaryIO]) -> Dict[str, Any]:
-        """Extract image features for fingerprinting."""
+        """
+Extract image features for fingerprinting."""
         try:
             if isinstance(content, bytes):
                 image = Image.open(io.BytesIO(content))
@@ -847,7 +866,8 @@ class TextContentAdapter(ContentAdapter):
     """Adapter for text content processing."""
     
     def __init__(self, **config):
-        """Initialize text adapter."""
+        """
+Initialize text adapter."""
         super().__init__(**config)
         self.supported_formats = [
             'text/plain', 'text/html', 'text/markdown',
@@ -972,7 +992,8 @@ class DocumentAdapter(ContentAdapter):
     """Adapter for document content processing (PDF, DOCX, XLSX)."""
     
     def __init__(self, **config):
-        """Initialize document adapter."""
+        """
+Initialize document adapter."""
         super().__init__(**config)
         self.supported_formats = [
             'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -981,7 +1002,8 @@ class DocumentAdapter(ContentAdapter):
         ]
     
     async def extract_features(self, content: Union[bytes, BinaryIO]) -> Dict[str, Any]:
-        """Extract document features for fingerprinting."""
+        """
+Extract document features for fingerprinting."""
         try:
             if isinstance(content, bytes):
                 content_stream = io.BytesIO(content)

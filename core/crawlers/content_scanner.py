@@ -6,8 +6,9 @@ utilisant l'IA et les techniques de comparaison avancées.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright: (c) 2025 Fahed Mlaiel. Tous droits réservés.
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ from ...utils.video_processor import VideoProcessor
 
 
 class ViolationType(Enum):
-    """Types de violations détectables"""
+    """
+Types de violations détectables"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     MODIFIED_COPY = "modified_copy"
@@ -48,6 +51,7 @@ class ViolationType(Enum):
 
 class ConfidenceLevel(Enum):
     """Niveaux de confiance"""
+
     VERY_HIGH = 0.95
     HIGH = 0.85
     MEDIUM = 0.75
@@ -56,7 +60,8 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class ScanResult:
-    """Résultat d'un scan de violation"""
+    """
+Résultat d'un scan de violation"""
     original_url: str
     suspect_url: str
     violation_type: ViolationType
@@ -70,7 +75,8 @@ class ScanResult:
 
 @dataclass
 class ContentSignature:
-    """Signature avancée d'un contenu"""
+    """
+Signature avancée d'un contenu"""
     content_hash: str
     perceptual_hash: str
     feature_vector: np.ndarray
@@ -774,20 +780,24 @@ class ContentViolationScanner:
         return content_type in ['image', 'video']
 
     async def _is_audio_content(self, url: str) -> bool:
-        """Vérifie si le contenu est audio"""
+        """
+Vérifie si le contenu est audio"""
         content_type = await self._detect_content_type(url)
         return content_type in ['audio', 'video']
 
     async def _create_visual_comparison(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
-        """Crée une comparaison visuelle"""
+        """
+Crée une comparaison visuelle"""
         return await self.image_processor.create_comparison_analysis(original_url, suspect_url)
 
     async def _create_audio_analysis(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
-        """Crée une analyse audio comparative"""
+        """
+Crée une analyse audio comparative"""
         return await self.audio_processor.create_comparison_analysis(original_url, suspect_url)
 
     async def _analyze_metadata_differences(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
-        """Analyse les différences de métadonnées"""
+        """
+Analyse les différences de métadonnées"""
         return await self.content_analyzer.analyze_metadata_differences(original_url, suspect_url)
 
     async def _compare_metadata(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
@@ -908,7 +918,8 @@ class ContentViolationScanner:
             await self._initiate_takedown_process(result)
 
     async def _send_violation_alert(self, result: ScanResult) -> None:
-        """Envoie une alerte de violation"""
+        """
+Envoie une alerte de violation"""
         alert_data = {
             'type': 'high_confidence_violation',
             'original_url': result.original_url,
@@ -943,7 +954,8 @@ class ContentViolationScanner:
         }
 
     async def clear_cache(self) -> None:
-        """Vide le cache des signatures"""
+        """
+Vide le cache des signatures"""
         self.signature_cache.clear()
         self.logger.info("Cache des signatures vidé")
 

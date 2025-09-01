@@ -24,6 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -38,7 +39,9 @@ Base = declarative_base()
 
 
 class SearchEngine(Enum):
-    """Supported search engines"""
+    """
+Supported search engines"""
+
     GOOGLE = "google"
     BING = "bing"
     YAHOO = "yahoo"
@@ -57,6 +60,7 @@ class SearchEngine(Enum):
 
 class OptimizationType(Enum):
     """Types of SEO optimization"""
+
     CONTENT_OPTIMIZATION = "content_optimization"
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     METADATA_OPTIMIZATION = "metadata_optimization"
@@ -75,6 +79,7 @@ class OptimizationType(Enum):
 
 class KeywordDifficulty(Enum):
     """Keyword competition difficulty levels"""
+
     VERY_EASY = "very_easy"      # 0-20
     EASY = "easy"                # 21-40
     MODERATE = "moderate"        # 41-60
@@ -84,6 +89,7 @@ class KeywordDifficulty(Enum):
 
 class SearchIntent(Enum):
     """User search intent categories"""
+
     INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     TRANSACTIONAL = "transactional"
@@ -96,6 +102,7 @@ class SearchIntent(Enum):
 
 class OptimizationStatus(Enum):
     """SEO optimization status"""
+
     PENDING = "pending"
     ANALYZING = "analyzing"
     OPTIMIZING = "optimizing"
@@ -108,6 +115,7 @@ class OptimizationStatus(Enum):
 
 class ContentType(Enum):
     """Content types for SEO optimization"""
+
     MUSIC_TRACK = "music_track"
     MUSIC_VIDEO = "music_video"
     PODCAST_EPISODE = "podcast_episode"
@@ -382,7 +390,8 @@ class SEOOptimization(Base):
         return min(sum(scores), 100.0)
     
     def get_keyword_performance(self) -> Dict[str, Any]:
-        """Get keyword performance summary"""
+        """
+Get keyword performance summary"""
         if not self.keyword_rankings:
             return {}
         
@@ -450,7 +459,8 @@ class SEOOptimization(Base):
         return estimated_value
     
     def needs_optimization_update(self) -> bool:
-        """Check if optimization needs an update"""
+        """
+Check if optimization needs an update"""
         if not self.last_optimization_date:
             return True
         

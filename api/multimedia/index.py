@@ -15,6 +15,7 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
@@ -75,7 +76,8 @@ class MultimediaIndex:
         asyncio.create_task(self._initialize_components())
     
     async def _initialize_components(self):
-        """Initialize all multimedia processing components"""
+        """
+Initialize all multimedia processing components"""
         try:
             logger.info("Initializing multimedia processing components...")
             
@@ -469,7 +471,8 @@ async def process_content(
     content_type: str,
     options: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content processing"""
+    """
+Convenience function for content processing"""
     index = get_multimedia_index()
     return await index.process_content(content, content_type, options)
 
@@ -478,7 +481,8 @@ async def analyze_content(
     content_format: ContentFormat,
     options: Optional[Dict[str, Any]] = None
 ) -> Optional[Dict[str, Any]]:
-    """Convenience function for content analysis"""
+    """
+Convenience function for content analysis"""
     index = get_multimedia_index()
     return await index.analyze_content(content, content_format, options)
 
@@ -488,7 +492,8 @@ async def distribute_content(
     user_id: str,
     options: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content distribution"""
+    """
+Convenience function for content distribution"""
     index = get_multimedia_index()
     return await index.distribute_content(content, platforms, user_id, options)
 
@@ -496,7 +501,8 @@ async def monitor_content(
     content_id: str,
     monitoring_config: Optional[MonitoringConfig] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content monitoring"""
+    """
+Convenience function for content monitoring"""
     index = get_multimedia_index()
     return await index.monitor_content(content_id, monitoring_config)
 
@@ -504,17 +510,20 @@ async def find_collaboration_matches(
     creator_id: str,
     preferences: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for finding collaboration matches"""
+    """
+Convenience function for finding collaboration matches"""
     index = get_multimedia_index()
     return await index.find_collaboration_matches(creator_id, preferences)
 
 def get_supported_formats() -> Dict[str, List[str]]:
-    """Convenience function to get supported formats"""
+    """
+Convenience function to get supported formats"""
     index = get_multimedia_index()
     return index.get_supported_formats()
 
 async def get_system_status() -> Dict[str, Any]:
-    """Convenience function to get system status"""
+    """
+Convenience function to get system status"""
     index = get_multimedia_index()
     return await index.get_system_status()
 

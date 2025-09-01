@@ -12,13 +12,14 @@ Team Specialties:
 - Integration Engineer: Cross-pipeline data flow management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This proprietary orchestration technology and workflow management systems
 belong exclusively to Fahed Mlaiel. Any unauthorized use, reverse engineering,
 or competitive implementation will result in immediate legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -59,7 +60,9 @@ settings = get_settings()
 
 
 class WorkflowType(str, Enum):
-    """Types of orchestrated workflows"""
+    """
+Types of orchestrated workflows"""
+
     CONTENT_LIFECYCLE = "content_lifecycle"           # Full content processing
     PROTECTION_ACTIVATION = "protection_activation"   # Content protection setup
     REVENUE_OPTIMIZATION = "revenue_optimization"     # Monetization optimization
@@ -71,6 +74,7 @@ class WorkflowType(str, Enum):
 
 class PipelineStatus(str, Enum):
     """Pipeline execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -81,6 +85,7 @@ class PipelineStatus(str, Enum):
 
 class WorkflowPriority(str, Enum):
     """Workflow execution priority"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -934,7 +939,8 @@ class PipelineOrchestrator:
         self.health_checker = HealthChecker()
         
     async def start_orchestration_services(self):
-        """Start all orchestration services"""
+        """
+Start all orchestration services"""
         logger.info("Starting pipeline orchestration services")
         
         # Start background health monitoring

@@ -19,6 +19,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -46,7 +47,8 @@ class WorkflowAgent(BaseAgent):
     orchestration, execution, templating, scheduling, and monitoring.
     """
     def __init__(self):
-        """Initialize the workflow agent."""
+        """
+Initialize the workflow agent."""
         super().__init__()
         self.logger = logging.getLogger(__name__)
         
@@ -74,7 +76,8 @@ class WorkflowAgent(BaseAgent):
         }
 
     async def initialize(self):
-        """Initialize the workflow agent and all components."""
+        """
+Initialize the workflow agent and all components."""
         try:
             self.logger.info("Initializing Workflow Agent...")
             
@@ -747,6 +750,7 @@ class WorkflowAgent(BaseAgent):
 
 class WorkflowPriority(Enum):
     """Workflow execution priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -756,7 +760,8 @@ class WorkflowPriority(Enum):
 
 @dataclass
 class WorkflowTask:
-    """Individual workflow task definition."""
+    """
+Individual workflow task definition."""
     id: str
     name: str
     function: Callable
@@ -774,7 +779,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition structure."""
+    """
+Complete workflow definition structure."""
     id: str
     name: str
     description: str
@@ -788,7 +794,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution state and tracking."""
+    """
+Workflow execution state and tracking."""
     id: str
     workflow_id: str
     status: WorkflowStatus = WorkflowStatus.PENDING
@@ -814,7 +821,8 @@ class WorkflowAgent(BaseAgent):
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Workflow Agent with enterprise configuration."""
+        """
+Initialize the Workflow Agent with enterprise configuration."""
         super().__init__(config)
         
         # Core configuration
@@ -1181,7 +1189,8 @@ class WorkflowAgent(BaseAgent):
         return graph
     
     async def _validate_workflow(self, workflow: WorkflowDefinition):
-        """Validate workflow definition for consistency and correctness."""
+        """
+Validate workflow definition for consistency and correctness."""
         # Check for circular dependencies
         visited = set()
         rec_stack = set()
@@ -1236,7 +1245,8 @@ class WorkflowAgent(BaseAgent):
             self.workflow_stats['peak_concurrent_workflows'] = current_concurrent
     
     async def _learn_from_execution(self, workflow_id: str, execution: WorkflowExecution):
-        """AI-powered learning from workflow execution for optimization."""
+        """
+AI-powered learning from workflow execution for optimization."""
         if execution.status == WorkflowStatus.COMPLETED and execution.execution_time:
             workflow = self.workflows[workflow_id]
             
@@ -1252,7 +1262,8 @@ class WorkflowAgent(BaseAgent):
                     task.timeout = max(new_timeout, 30)  # Minimum 30 seconds
     
     async def get_workflow_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive workflow analytics and statistics."""
+        """
+Get comprehensive workflow analytics and statistics."""
         active_workflows = len(self.running_workflows)
         total_workflows = len(self.workflows)
         
@@ -1275,7 +1286,8 @@ class WorkflowAgent(BaseAgent):
         }
     
     async def cleanup_completed_executions(self, older_than_hours: int = 24):
-        """Clean up old completed workflow executions to free memory."""
+        """
+Clean up old completed workflow executions to free memory."""
         cutoff_time = datetime.now() - timedelta(hours=older_than_hours)
         
         executions_to_remove = []

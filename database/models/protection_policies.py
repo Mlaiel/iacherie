@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class PolicyType(Enum):
-    """Protection policy type enumeration"""
+    """
+Protection policy type enumeration"""
+
     COPYRIGHT_PROTECTION = "copyright_protection"
     TRADEMARK_PROTECTION = "trademark_protection"
     CONTENT_MONITORING = "content_monitoring"
@@ -56,6 +59,7 @@ class PolicyType(Enum):
 
 class EnforcementLevel(Enum):
     """Enforcement level enumeration"""
+
     MONITORING_ONLY = "monitoring_only"
     WARNING = "warning"
     SOFT_ENFORCEMENT = "soft_enforcement"
@@ -67,6 +71,7 @@ class EnforcementLevel(Enum):
 
 class ActionType(Enum):
     """Automated action types"""
+
     NOTIFY_OWNER = "notify_owner"
     SEND_WARNING = "send_warning"
     SEND_TAKEDOWN_NOTICE = "send_takedown_notice"
@@ -85,6 +90,7 @@ class ActionType(Enum):
 
 class TriggerCondition(Enum):
     """Policy trigger conditions"""
+
     EXACT_MATCH = "exact_match"
     PARTIAL_MATCH = "partial_match"
     SIMILARITY_THRESHOLD = "similarity_threshold"
@@ -101,6 +107,7 @@ class TriggerCondition(Enum):
 
 class PolicyStatus(Enum):
     """Policy status enumeration"""
+
     DRAFT = "draft"
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -114,6 +121,7 @@ class PolicyStatus(Enum):
 
 class Scope(Enum):
     """Policy scope enumeration"""
+
     GLOBAL = "global"
     PLATFORM_SPECIFIC = "platform_specific"
     GEOGRAPHIC = "geographic"
@@ -394,7 +402,8 @@ class ProtectionPolicy(Base):
         return True
     
     def _evaluate_condition(self, condition: Dict[str, Any], data: Dict[str, Any]) -> bool:
-        """Evaluate a single trigger condition"""
+        """
+Evaluate a single trigger condition"""
         condition_type = condition.get('type')
         
         if condition_type == TriggerCondition.SIMILARITY_THRESHOLD.value:
@@ -420,7 +429,8 @@ class ProtectionPolicy(Base):
         return False
     
     def execute_automated_actions(self, detection_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Execute automated actions based on policy configuration"""
+        """
+Execute automated actions based on policy configuration"""
         if not self.auto_execution_enabled:
             return []
         
@@ -450,7 +460,8 @@ class ProtectionPolicy(Base):
         return executed_actions
     
     def _execute_action(self, action_type: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a specific action type"""
+        """
+Execute a specific action type"""
         # This would contain the actual implementation for each action type
         # For now, return a mock result
         return {
@@ -461,7 +472,8 @@ class ProtectionPolicy(Base):
         }
     
     def update_performance_metrics(self, success: bool, false_positive: bool = False) -> None:
-        """Update performance metrics based on action results"""
+        """
+Update performance metrics based on action results"""
         if success:
             self.successful_actions += 1
         
@@ -476,7 +488,8 @@ class ProtectionPolicy(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary"""
+        """
+Get comprehensive performance summary"""
         return {
             'execution_metrics': {
                 'total_executions': self.executions_count,
@@ -498,7 +511,8 @@ class ProtectionPolicy(Base):
         }
     
     def clone_policy(self, new_name: str, user_id: str = None) -> 'ProtectionPolicy':
-        """Clone policy with new configuration"""
+        """
+Clone policy with new configuration"""
         new_policy = ProtectionPolicy(
             user_id=user_id or self.user_id,
             policy_type=self.policy_type,

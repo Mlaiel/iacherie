@@ -94,7 +94,9 @@ from ..core.models import BaseModel
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams available to creators."""
+    """
+Types of revenue streams available to creators."""
+
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     LICENSING = "licensing"
@@ -111,6 +113,7 @@ class RevenueStreamType(Enum):
 
 class PricingStrategy(Enum):
     """Pricing strategy models."""
+
     FIXED = "fixed"
     DYNAMIC = "dynamic"
     TIERED = "tiered"
@@ -123,6 +126,7 @@ class PricingStrategy(Enum):
 
 class PaymentFrequency(Enum):
     """Payment frequency options."""
+
     ONE_TIME = "one_time"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -133,6 +137,7 @@ class PaymentFrequency(Enum):
 
 class Currency(Enum):
     """Supported currencies."""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -147,6 +152,7 @@ class Currency(Enum):
 
 class SubscriptionTier(Enum):
     """Subscription tier levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -175,7 +181,8 @@ class PricingTier:
 
 @dataclass
 class RevenueStream:
-    """Revenue stream configuration."""
+    """
+Revenue stream configuration."""
     stream_id: str
     creator_id: str
     stream_type: RevenueStreamType
@@ -193,7 +200,8 @@ class RevenueStream:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics."""
+    """
+Revenue performance metrics."""
     total_revenue: Decimal
     monthly_recurring_revenue: Decimal
     average_revenue_per_user: Decimal
@@ -209,7 +217,8 @@ class RevenueMetrics:
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction record."""
+    """
+Payment transaction record."""
     transaction_id: str
     user_id: str
     creator_id: str
@@ -649,7 +658,8 @@ class MonetizationEngine:
         amount: Decimal,
         payment_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through payment gateway."""
+        """
+Process payment through payment gateway."""
         # In production, this would integrate with actual payment gateways
         # For now, simulate successful payment processing
         
@@ -982,7 +992,8 @@ class MonetizationEngine:
         creator_id: str,
         period_days: int
     ) -> float:
-        """Calculate revenue growth rate."""
+        """
+Calculate revenue growth rate."""
         current_period_end = datetime.utcnow()
         current_period_start = current_period_end - timedelta(days=period_days)
         previous_period_start = current_period_start - timedelta(days=period_days)
@@ -1008,7 +1019,8 @@ class MonetizationEngine:
         return 0.0 if current_revenue == 0 else 1.0  # 100% growth from zero
     
     async def _count_active_subscriptions(self, creator_id: str) -> int:
-        """Count active subscriptions for creator."""
+        """
+Count active subscriptions for creator."""
         count = 0
         now = datetime.utcnow()
         

@@ -14,6 +14,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
@@ -265,7 +266,8 @@ class DatabaseConnectionsIndex:
         )
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get comprehensive health status of all database connections."""
+        """
+Get comprehensive health status of all database connections."""
         if not self._initialized:
             return {"status": "not_initialized"}
         
@@ -543,7 +545,8 @@ async def get_connection(
     tenant_id: Optional[str] = None,
     readonly: bool = False
 ) -> Any:
-    """Convenience function to get database connection."""
+    """
+Convenience function to get database connection."""
     db_index = await get_database_index()
     return await db_index.get_connection(database_type, tenant_id, readonly)
 
@@ -562,7 +565,8 @@ async def distributed_transaction(
     tenant_id: Optional[str] = None,
     databases: Optional[List[str]] = None
 ):
-    """Convenience function for distributed transaction context manager."""
+    """
+Convenience function for distributed transaction context manager."""
     db_index = await get_database_index()
     return db_index.distributed_transaction(tenant_id, databases)
 

@@ -8,7 +8,7 @@ Technologies: Python Module System, Component Registration, Factory Patterns
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ ARCHITECTURE WORKERS:
 Crawler Worker → Worker Pool → Queue Processor → Resource Manager → 
 Task Orchestrator → Event Processor → Notification Engine → Background Processor
 """
+
 from typing import Dict, Any, List, Optional, Type
 import logging
 from enum import Enum
@@ -207,13 +208,14 @@ from .monetization_task_router import (
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. Tous droits réservés."
+__copyright__ = "(c) 2025 Fahed Mlaiel. Tous droits réservés."
 
 logger = logging.getLogger(__name__)
 
 
 class WorkerComponentType(Enum):
     """Worker component types"""
+
     CRAWLER_WORKER = "crawler_worker"
     WORKER_POOL = "worker_pool"
     QUEUE_PROCESSOR = "queue_processor"
@@ -226,6 +228,7 @@ class WorkerComponentType(Enum):
 
 class WorkerSystemStatus(Enum):
     """Worker system status"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     SCALING = "scaling"

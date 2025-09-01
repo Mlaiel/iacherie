@@ -14,6 +14,7 @@ This module provides comprehensive disaster recovery capabilities for the IA
 Influencer Agent platform, including automated failover, data replication,
 recovery orchestration, and business continuity management.
 """
+
 import logging
 import asyncio
 import json
@@ -31,7 +32,9 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class DisasterType(Enum):
-    """Types of disasters that can occur"""
+    """
+Types of disasters that can occur"""
+
     INFRASTRUCTURE_FAILURE = "infrastructure_failure"
     DATA_CENTER_OUTAGE = "data_center_outage"
     NATURAL_DISASTER = "natural_disaster"
@@ -43,6 +46,7 @@ class DisasterType(Enum):
 
 class RecoveryTier(Enum):
     """Recovery tier classifications"""
+
     TIER_0 = "tier_0"  # Critical - RTO < 15 min, RPO < 5 min
     TIER_1 = "tier_1"  # High - RTO < 1 hour, RPO < 15 min
     TIER_2 = "tier_2"  # Medium - RTO < 4 hours, RPO < 1 hour
@@ -50,6 +54,7 @@ class RecoveryTier(Enum):
 
 class RecoveryStatus(Enum):
     """Recovery operation status"""
+
     MONITORING = "monitoring"
     ALERT_TRIGGERED = "alert_triggered"
     ASSESSMENT = "assessment"
@@ -62,6 +67,7 @@ class RecoveryStatus(Enum):
 
 class FailoverMode(Enum):
     """Failover execution modes"""
+
     AUTOMATIC = "automatic"
     MANUAL = "manual"
     PLANNED = "planned"
@@ -78,7 +84,8 @@ class RecoveryObjective:
 
 @dataclass
 class DisasterRecoveryPlan:
-    """Disaster recovery plan configuration"""
+    """
+Disaster recovery plan configuration"""
     plan_id: str
     name: str
     description: str
@@ -95,7 +102,8 @@ class DisasterRecoveryPlan:
 
 @dataclass
 class DisasterEvent:
-    """Disaster event representation"""
+    """
+Disaster event representation"""
     event_id: str
     disaster_type: DisasterType
     affected_resources: List[str]
@@ -107,7 +115,8 @@ class DisasterEvent:
 
 @dataclass
 class RecoveryOperation:
-    """Recovery operation tracking"""
+    """
+Recovery operation tracking"""
     operation_id: str
     event_id: str
     plan_id: str
@@ -120,10 +129,12 @@ class RecoveryOperation:
     logs: List[str] = field(default_factory=list)
 
 class DisasterRecoveryService:
-    """Enterprise disaster recovery and business continuity service"""
+    """
+Enterprise disaster recovery and business continuity service"""
     
     def __init__(self):
-        """Initialize disaster recovery service"""
+        """
+Initialize disaster recovery service"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Cloud clients
@@ -327,7 +338,8 @@ class DisasterRecoveryService:
         return procedures
 
     async def _setup_resource_monitoring(self, dr_plan: DisasterRecoveryPlan):
-        """Setup monitoring for protected resources"""
+        """
+Setup monitoring for protected resources"""
         try:
             for resource in dr_plan.protected_resources:
                 resource_id = resource['id']
@@ -522,7 +534,8 @@ class DisasterRecoveryService:
         return None
 
     async def _initiate_automated_recovery(self, event: DisasterEvent, dr_plan: DisasterRecoveryPlan):
-        """Initiate automated disaster recovery"""
+        """
+Initiate automated disaster recovery"""
         try:
             operation_id = f"recovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -723,7 +736,8 @@ class DisasterRecoveryService:
         }
 
     async def get_recovery_metrics(self) -> Dict[str, Any]:
-        """Get disaster recovery metrics and analytics"""
+        """
+Get disaster recovery metrics and analytics"""
         if not self.recovery_history:
             return {'message': 'No recovery history available'}
         

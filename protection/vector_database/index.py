@@ -5,7 +5,7 @@ Unified entry point for the advanced vector database system.
 Provides high-level API for content fingerprint storage, search, and analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
 =====================================
@@ -28,6 +28,7 @@ Audio: Signal Processing & Fingerprinting
 DevOps: Infrastructure & Cloud Deployment
 IA Prompt Engineer: AI Model Integration & Optimization
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -108,7 +109,8 @@ class VectorDatabaseManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the complete vector database system"""
+        """
+Initialize the complete vector database system"""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorDatabaseManager")
         
@@ -542,7 +544,8 @@ class VectorDatabaseManager:
         return mapping.get(content_type.lower(), EmbeddingType.COMPOSITE_MULTIMODAL)
     
     def _format_search_result(self, result) -> Dict[str, Any]:
-        """Format search result for consistent output"""
+        """
+Format search result for consistent output"""
         if hasattr(result, '__dict__'):
             return {
                 'content_id': getattr(result, 'content_id', ''),
@@ -554,13 +557,15 @@ class VectorDatabaseManager:
         return result
     
     async def _get_all_vectors_and_metadata(self) -> Tuple[List[np.ndarray], List[Dict[str, Any]]]:
-        """Get all vectors and metadata for analysis"""
+        """
+Get all vectors and metadata for analysis"""
         # This would typically iterate through the vector store
         # For now, return empty lists as placeholder
         return [], []
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
+        """
+Get comprehensive system status"""
         try:
             status = {
                 'system_info': {

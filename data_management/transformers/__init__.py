@@ -5,9 +5,10 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 from pathlib import Path
@@ -44,7 +45,8 @@ from .stream_transformer import (
 )
 
 class TransformationType(Enum):
-    """Types de transformations supportées"""
+    """
+Types de transformations supportées"""
     # Transformations audio
     AUDIO_NORMALIZE = "audio_normalize"
     AUDIO_CONVERT = "audio_convert"
@@ -111,7 +113,8 @@ class TransformationResult:
     processing_time: float
 
 class TransformationManager:
-    """Gestionnaire principal des transformations"""
+    """
+Gestionnaire principal des transformations"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -230,7 +233,8 @@ class TransformationManager:
         output_path: Optional[str] = None,
         creator_type: Optional[str] = None
     ) -> TransformationResult:
-        """Effectue une transformation selon la configuration"""
+        """
+Effectue une transformation selon la configuration"""
         
         try:
             # Déterminer le transformateur approprié
@@ -288,7 +292,8 @@ class TransformationManager:
         self,
         transformations: List[TransformationConfig]
     ) -> 'TransformationPipeline':
-        """Crée un pipeline de transformations séquentielles"""
+        """
+Crée un pipeline de transformations séquentielles"""
         return TransformationPipeline(transformations, self)
     
     def get_optimal_config(
@@ -297,7 +302,8 @@ class TransformationManager:
         target_use_case: str,
         creator_type: str
     ) -> List[TransformationConfig]:
-        """Suggère une configuration optimale selon l'usage cible"""
+        """
+Suggère une configuration optimale selon l'usage cible"""
         
         file_ext = Path(input_path).suffix.lower().lstrip('.')
         configs = []
@@ -329,7 +335,8 @@ class TransformationManager:
         config: TransformationConfig,
         defaults: Dict[str, Any]
     ) -> TransformationConfig:
-        """Applique les paramètres par défaut du type de créateur"""
+        """
+Applique les paramètres par défaut du type de créateur"""
         
         # Copier la config existante
         new_params = config.parameters.copy()
@@ -348,7 +355,8 @@ class TransformationManager:
         )
     
     def _get_web_publish_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations optimales pour publication web"""
+        """
+Configurations optimales pour publication web"""
         configs = []
         
         if content_type == 'audio':
@@ -373,7 +381,8 @@ class TransformationManager:
         return configs
     
     def _get_social_media_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations optimales pour réseaux sociaux"""
+        """
+Configurations optimales pour réseaux sociaux"""
         configs = []
         
         if content_type == 'video':
@@ -392,7 +401,8 @@ class TransformationManager:
         return configs
     
     def _get_archive_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations pour archivage long terme"""
+        """
+Configurations pour archivage long terme"""
         configs = []
         
         if content_type == 'audio':
@@ -406,7 +416,8 @@ class TransformationManager:
         return configs
     
     def _get_distribution_configs(self, content_type: str, creator_type: str) -> List[TransformationConfig]:
-        """Configurations pour distribution commerciale"""
+        """
+Configurations pour distribution commerciale"""
         configs = []
         
         # Normalisation des métadonnées pour tous types
@@ -419,7 +430,8 @@ class TransformationManager:
         return configs
 
 class TransformationPipeline:
-    """Pipeline de transformations séquentielles"""
+    """
+Pipeline de transformations séquentielles"""
     
     def __init__(self, transformations: List[TransformationConfig], manager: TransformationManager):
         self.transformations = transformations
@@ -427,7 +439,8 @@ class TransformationPipeline:
         self.logger = logging.getLogger(__name__)
     
     def execute(self, input_path: str, creator_type: Optional[str] = None) -> List[TransformationResult]:
-        """Exécute le pipeline sur un fichier"""
+        """
+Exécute le pipeline sur un fichier"""
         results = []
         current_path = input_path
         

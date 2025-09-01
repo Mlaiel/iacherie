@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import hashlib
 import json
 import logging
@@ -26,7 +27,9 @@ from .smart_contracts import SmartContractManager
 
 
 class CopyrightType(Enum):
-    """Content copyright types for IA platform"""
+    """
+Content copyright types for IA platform"""
+
     MUSIC_COMPOSITION = "music_composition"
     MUSIC_RECORDING = "music_recording"
     BLOG_POST = "blog_post"
@@ -40,6 +43,7 @@ class CopyrightType(Enum):
 
 class ProtectionLevel(Enum):
     """Blockchain protection levels"""
+
     BASIC = "basic"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -68,7 +72,8 @@ class CopyrightAsset:
 
 @dataclass
 class CopyrightProof:
-    """Blockchain copyright proof"""
+    """
+Blockchain copyright proof"""
     proof_id: str
     asset_id: str
     creator_id: str
@@ -397,12 +402,14 @@ class CopyrightRegistryManager:
         return hashlib.sha3_256(content_data).hexdigest()
     
     def _generate_metadata_hash(self, metadata: Dict[str, Any]) -> str:
-        """Generate metadata hash"""
+        """
+Generate metadata hash"""
         metadata_str = json.dumps(metadata, sort_keys=True)
         return hashlib.sha3_256(metadata_str.encode()).hexdigest()
     
     def _generate_verification_signature(self, asset: CopyrightAsset) -> str:
-        """Generate verification signature"""
+        """
+Generate verification signature"""
         signature_data = f"{asset.asset_id}_{asset.creator_id}_{asset.content_hash}"
         return hashlib.sha256(signature_data.encode()).hexdigest()
     
@@ -452,14 +459,16 @@ class CopyrightRegistryManager:
 
 
 class CopyrightAnalytics:
-    """Advanced copyright analytics and reporting"""
+    """
+Advanced copyright analytics and reporting"""
     
     def __init__(self, registry_manager: CopyrightRegistryManager):
         self.registry_manager = registry_manager
         self.logger = logging.getLogger(__name__)
     
     async def get_copyright_statistics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive copyright statistics"""
+        """
+Get comprehensive copyright statistics"""
         try:
             stats = {
                 'total_assets': 0,

@@ -23,6 +23,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
@@ -44,7 +45,9 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Time series metric types."""
+    """
+Time series metric types."""
+
     COUNTER = "counter"  # Monotonically increasing
     GAUGE = "gauge"      # Point-in-time values
     HISTOGRAM = "histogram"  # Distribution of values
@@ -53,6 +56,7 @@ class MetricType(Enum):
 
 class AggregationType(Enum):
     """Time series aggregation types."""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -68,6 +72,7 @@ class AggregationType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for aggregation."""
+
     SECOND = "1s"
     MINUTE = "1m"
     FIVE_MINUTES = "5m"
@@ -98,7 +103,8 @@ class TimeSeriesMetric:
 
 @dataclass
 class TimeSeriesQuery:
-    """Time series query specification."""
+    """
+Time series query specification."""
     series_names: List[str]
     start_time: datetime
     end_time: datetime
@@ -115,7 +121,8 @@ class TimeSeriesQuery:
 
 @dataclass
 class TimeSeriesAggregation:
-    """Time series aggregation result."""
+    """
+Time series aggregation result."""
     series_name: str
     timestamp: datetime
     aggregated_value: Union[int, float, Decimal]
@@ -125,7 +132,8 @@ class TimeSeriesAggregation:
 
 @dataclass
 class TimeSeriesStatistics:
-    """Time series statistics."""
+    """
+Time series statistics."""
     series_name: str
     start_time: datetime
     end_time: datetime
@@ -140,7 +148,8 @@ class TimeSeriesStatistics:
 
 @dataclass
 class TimeSeriesForecast:
-    """Time series forecast result."""
+    """
+Time series forecast result."""
     series_name: str
     forecast_start: datetime
     forecast_end: datetime
@@ -179,7 +188,8 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         self.cache_ttl = config.get('cache_ttl', 300)  # 5 minutes
 
     async def initialize(self) -> None:
-        """Initialize time-series storage provider."""
+        """
+Initialize time-series storage provider."""
         try:
             await self._create_connections()
             await self._create_tables()
@@ -604,27 +614,32 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         pass
 
     async def _create_tables(self) -> None:
-        """Create time-series tables with proper schema."""
+        """
+Create time-series tables with proper schema."""
         # Implementation depends on storage backend
         pass
 
     async def _create_indexes(self) -> None:
-        """Create optimized indexes for time-series queries."""
+        """
+Create optimized indexes for time-series queries."""
         # Implementation depends on storage backend
         pass
 
     async def _setup_retention_policies(self) -> None:
-        """Setup data retention policies."""
+        """
+Setup data retention policies."""
         # Implementation for retention setup
         pass
 
     async def _start_background_tasks(self) -> None:
-        """Start background tasks for maintenance."""
+        """
+Start background tasks for maintenance."""
         # Implementation for background tasks
         pass
 
     async def _flush_buffer(self) -> None:
-        """Flush metric buffer to storage."""
+        """
+Flush metric buffer to storage."""
         if not self.metric_buffer:
             return
         
@@ -641,12 +656,14 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         pass
 
     async def _update_realtime_aggregations(self, metrics: List[TimeSeriesMetric]) -> None:
-        """Update real-time aggregations."""
+        """
+Update real-time aggregations."""
         # Implementation for real-time aggregation updates
         pass
 
     def _generate_cache_key(self, query: TimeSeriesQuery) -> str:
-        """Generate cache key for query."""
+        """
+Generate cache key for query."""
         key_data = {
             'series': query.series_names,
             'start': query.start_time.isoformat(),
@@ -657,17 +674,20 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         return hashlib.md5(json.dumps(key_data, sort_keys=True).encode()).hexdigest()
 
     def _is_cache_valid(self, cached_result: Any) -> bool:
-        """Check if cached result is still valid."""
+        """
+Check if cached result is still valid."""
         # Implementation for cache validation
         return False
 
     def _cached_to_result(self, cached_result: Any, query: TimeSeriesQuery) -> TimeSeriesResult:
-        """Convert cached result to TimeSeriesResult."""
+        """
+Convert cached result to TimeSeriesResult."""
         # Implementation for cache conversion
         return TimeSeriesResult([], query, 0, 0, {'cache_hit': True})
 
     async def _execute_timeseries_query(self, query: TimeSeriesQuery) -> List[TimeSeriesPoint]:
-        """Execute time-series query against storage."""
+        """
+Execute time-series query against storage."""
         # Implementation depends on storage backend
         return []
 
@@ -676,7 +696,8 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         raw_data: List[TimeSeriesPoint], 
         query: TimeSeriesQuery
     ) -> List[TimeSeriesPoint]:
-        """Aggregate raw data according to query specifications."""
+        """
+Aggregate raw data according to query specifications."""
         # Implementation for data aggregation
         return raw_data
 
@@ -685,12 +706,14 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         data: List[TimeSeriesPoint], 
         query: TimeSeriesQuery
     ) -> List[TimeSeriesPoint]:
-        """Fill missing data points."""
+        """
+Fill missing data points."""
         # Implementation for missing data filling
         return data
 
     async def _cache_result(self, cache_key: str, result: TimeSeriesResult) -> None:
-        """Cache query result."""
+        """
+Cache query result."""
         # Implementation for result caching
         pass
 
@@ -701,7 +724,8 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         forecast_duration: timedelta,
         model_type: str
     ) -> Tuple[List[TimeSeriesPoint], List[Tuple[float, float]], float]:
-        """Generate forecast using specified model."""
+        """
+Generate forecast using specified model."""
         # Implementation for forecasting
         forecast_points = []
         confidence_intervals = []
@@ -710,42 +734,50 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         return forecast_points, confidence_intervals, accuracy
 
     async def _archive_old_metrics(self, cutoff_date: datetime) -> int:
-        """Archive old metrics."""
+        """
+Archive old metrics."""
         # Implementation for data archiving
         return 0
 
     async def _delete_old_metrics(self, cutoff_date: datetime) -> int:
-        """Delete old metrics."""
+        """
+Delete old metrics."""
         # Implementation for data deletion
         return 0
 
     async def _cleanup_cache(self) -> None:
-        """Cleanup aggregation cache."""
+        """
+Cleanup aggregation cache."""
         # Implementation for cache cleanup
         self.aggregation_cache.clear()
 
     async def _test_connection(self) -> bool:
-        """Test database connection."""
+        """
+Test database connection."""
         # Implementation for connection test
         return True
 
     async def _get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage statistics."""
+        """
+Get storage statistics."""
         # Implementation for storage statistics
         return {}
 
     async def _get_latest_data_age(self) -> float:
-        """Get age of latest data in minutes."""
+        """
+Get age of latest data in minutes."""
         # Implementation for data age calculation
         return 5.0
 
     async def _get_average_query_time(self) -> float:
-        """Get average query execution time in ms."""
+        """
+Get average query execution time in ms."""
         # Implementation for query time calculation
         return 100.0
 
 class InMemoryTimeSeriesStorage(TimeSeriesStorageProvider):
-    """In-memory time-series storage for testing and development."""
+    """
+In-memory time-series storage for testing and development."""
     
     def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
@@ -753,7 +785,8 @@ class InMemoryTimeSeriesStorage(TimeSeriesStorageProvider):
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize in-memory storage."""
+        """
+Initialize in-memory storage."""
         self.is_initialized = True
         logger.info(f"In-memory time-series storage {self.provider_id} initialized")
     
@@ -762,7 +795,8 @@ class InMemoryTimeSeriesStorage(TimeSeriesStorageProvider):
         self.metrics_store.extend(metrics)
     
     async def _execute_timeseries_query(self, query: TimeSeriesQuery) -> List[TimeSeriesPoint]:
-        """Execute query on in-memory data."""
+        """
+Execute query on in-memory data."""
         # Simple implementation for testing
         results = []
         for metric in self.metrics_store:
@@ -783,7 +817,8 @@ def create_timeseries_storage(
     provider_id: str, 
     config: Dict[str, Any]
 ) -> TimeSeriesStorageProvider:
-    """Create time-series storage provider instance."""
+    """
+Create time-series storage provider instance."""
     if provider_type == 'memory':
         return InMemoryTimeSeriesStorage(provider_id, config)
     elif provider_type == 'influxdb':

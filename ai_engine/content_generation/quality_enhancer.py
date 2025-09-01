@@ -4,11 +4,12 @@ Professional content quality enhancement system that improves content
 quality, readability, and overall presentation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 import re
@@ -32,7 +33,8 @@ class QualityEnhancer:
     """
     
     def __init__(self):
-        """Initialize the quality enhancer"""
+        """
+Initialize the quality enhancer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Quality enhancement settings
@@ -56,7 +58,8 @@ class QualityEnhancer:
         }
     
     def _initialize_nlp_models(self) -> None:
-        """Initialize NLP models for quality enhancement"""
+        """
+Initialize NLP models for quality enhancement"""
         try:
             # Try to load spaCy model
             self.nlp = spacy.load('en_core_web_sm')
@@ -175,7 +178,8 @@ class QualityEnhancer:
             return str(content)
     
     async def _analyze_quality(self, content: str) -> Dict[str, Any]:
-        """Analyze content quality across multiple dimensions"""
+        """
+Analyze content quality across multiple dimensions"""
         analysis = {}
         
         # Grammar analysis
@@ -202,7 +206,8 @@ class QualityEnhancer:
         return analysis
     
     async def _analyze_grammar(self, content: str) -> Dict[str, Any]:
-        """Analyze grammar quality"""
+        """
+Analyze grammar quality"""
         grammar_issues = []
         
         # Basic grammar checks
@@ -311,7 +316,8 @@ class QualityEnhancer:
         }
     
     async def _analyze_engagement(self, content: str) -> Dict[str, Any]:
-        """Analyze content engagement potential"""
+        """
+Analyze content engagement potential"""
         # Engagement indicators
         question_count = content.count('?')
         exclamation_count = content.count('!')
@@ -358,7 +364,8 @@ class QualityEnhancer:
         }
     
     async def _analyze_formatting(self, content: str) -> Dict[str, Any]:
-        """Analyze content formatting quality"""
+        """
+Analyze content formatting quality"""
         # Check for formatting elements
         has_headers = bool(re.search(r'^#+\s+', content, re.MULTILINE))
         has_lists = bool(re.search(r'^[\*\-\+]\s+', content, re.MULTILINE))
@@ -395,7 +402,8 @@ class QualityEnhancer:
         }
     
     async def _analyze_tone(self, content: str) -> Dict[str, Any]:
-        """Analyze content tone"""
+        """
+Analyze content tone"""
         content_lower = content.lower()
         
         # Tone indicators
@@ -455,7 +463,8 @@ class QualityEnhancer:
         }
     
     async def _calculate_overall_quality_score(self, analysis: Dict[str, Any]) -> float:
-        """Calculate overall quality score"""
+        """
+Calculate overall quality score"""
         score = 0.0
         
         # Weighted sum of all quality dimensions
@@ -474,7 +483,8 @@ class QualityEnhancer:
         analysis: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Enhance blog content specifically"""
+        """
+Enhance blog content specifically"""
         enhanced = content
         
         # Improve structure
@@ -497,7 +507,8 @@ class QualityEnhancer:
         analysis: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Enhance social media content"""
+        """
+Enhance social media content"""
         enhanced = content
         
         # Optimize for social platforms
@@ -514,7 +525,8 @@ class QualityEnhancer:
         analysis: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Enhance email content"""
+        """
+Enhance email content"""
         enhanced = content
         
         # Improve email structure
@@ -531,7 +543,8 @@ class QualityEnhancer:
         analysis: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Enhance marketing content"""
+        """
+Enhance marketing content"""
         enhanced = content
         
         # Strengthen persuasive elements
@@ -548,7 +561,8 @@ class QualityEnhancer:
         analysis: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Enhance general content"""
+        """
+Enhance general content"""
         enhanced = content
         
         # Apply basic improvements
@@ -557,7 +571,8 @@ class QualityEnhancer:
         return enhanced
     
     async def _improve_paragraph_structure(self, content: str) -> str:
-        """Improve paragraph structure"""
+        """
+Improve paragraph structure"""
         paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
         improved_paragraphs = []
         
@@ -575,7 +590,8 @@ class QualityEnhancer:
         return '\n\n'.join(improved_paragraphs)
     
     async def _add_headers_if_needed(self, content: str) -> str:
-        """Add headers to structure content"""
+        """
+Add headers to structure content"""
         if '##' in content:  # Already has headers
             return content
         
@@ -624,7 +640,8 @@ class QualityEnhancer:
         return ''.join(improved_sentences)
     
     async def _enhance_engagement(self, content: str) -> str:
-        """Enhance content engagement"""
+        """
+Enhance content engagement"""
         enhanced = content
         
         # Add questions if none exist
@@ -698,7 +715,8 @@ class QualityEnhancer:
         return content
     
     async def _apply_basic_improvements(self, content: str) -> str:
-        """Apply basic content improvements"""
+        """
+Apply basic content improvements"""
         enhanced = content
         
         # Fix common issues
@@ -720,7 +738,8 @@ class QualityEnhancer:
         original_analysis: Dict[str, Any],
         enhanced_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate improvement score"""
+        """
+Calculate improvement score"""
         original_score = original_analysis.get('overall_score', 0.0)
         enhanced_score = enhanced_analysis.get('overall_score', 0.0)
         
@@ -732,7 +751,8 @@ class QualityEnhancer:
         original_content: str,
         enhanced_content: str
     ) -> List[str]:
-        """Get list of enhancements applied"""
+        """
+Get list of enhancements applied"""
         enhancements = []
         
         if len(enhanced_content) != len(original_content):

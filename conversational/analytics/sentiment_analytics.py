@@ -10,6 +10,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ import json
 
 
 class SentimentDimension(Enum):
-    """Dimensions of sentiment analysis."""
+    """
+Dimensions of sentiment analysis."""
+
     POLARITY = "polarity"  # positive/negative
     INTENSITY = "intensity"  # strength of emotion
     EMOTION = "emotion"  # specific emotions
@@ -42,6 +45,7 @@ class SentimentDimension(Enum):
 
 class EmotionType(Enum):
     """Specific emotion types for detailed analysis."""
+
     JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -75,7 +79,8 @@ class SentimentScore:
 
 @dataclass
 class EmotionalProfile:
-    """User's emotional profile based on conversation history."""
+    """
+User's emotional profile based on conversation history."""
     user_id: str
     dominant_emotions: List[EmotionType]
     emotional_stability: float
@@ -528,7 +533,8 @@ class SentimentAnalytics:
         return max(-1.0, min(1.0, combined))
     
     def _calculate_sentiment_intensity(self, roberta_result: Dict, vader_result: Dict) -> float:
-        """Calculate sentiment intensity based on model confidence and scores."""
+        """
+Calculate sentiment intensity based on model confidence and scores."""
         # Use confidence from RoBERTa and absolute values from VADER
         roberta_intensity = roberta_result.get('confidence', 0)
         vader_intensity = abs(vader_result.get('polarity', 0))
@@ -536,7 +542,8 @@ class SentimentAnalytics:
         return (roberta_intensity + vader_intensity) / 2
     
     def _determine_sentiment_trend(self, polarity: float, intensity: float) -> str:
-        """Determine sentiment trend based on polarity and intensity."""
+        """
+Determine sentiment trend based on polarity and intensity."""
         if polarity > 0.2 and intensity > 0.6:
             return "strongly_positive"
         elif polarity > 0.2:

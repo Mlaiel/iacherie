@@ -8,7 +8,7 @@ Responsibility: Optimisation SEO intelligente pour contenu créateurs multi-plat
 ====================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER SEO:
 Content Analysis → Keyword Research → Competition Analysis → SEO Optimization → 
 Hashtag Strategy → Platform-Specific SEO → Performance Tracking → Recommendation Engine
 """
+
 import json
 import logging
 import asyncio
@@ -37,7 +38,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class SEOProcessor(BaseProcessor):
-    """Processeur SEO avancé multi-plateformes - Production Enterprise"""
+    """
+Processeur SEO avancé multi-plateformes - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -297,7 +299,8 @@ class SEOProcessor(BaseProcessor):
             return {'error': str(e)}
     
     def _analyze_keyword_density(self, text: str) -> Dict[str, Any]:
-        """Analyse la densité des mots-clés"""
+        """
+Analyse la densité des mots-clés"""
         try:
             # Clean and tokenize text
             words = re.findall(r'\b\w+\b', text.lower())
@@ -337,7 +340,8 @@ class SEOProcessor(BaseProcessor):
             return {'error': str(e)}
     
     def _perform_semantic_analysis(self, text: str) -> Dict[str, Any]:
-        """Effectue l'analyse sémantique du contenu"""
+        """
+Effectue l'analyse sémantique du contenu"""
         analysis = {
             'sentiment': {},
             'entities': [],
@@ -388,7 +392,8 @@ class SEOProcessor(BaseProcessor):
             return 'neutral'
     
     def _identify_topics(self, text: str) -> List[str]:
-        """Identifie les sujets principaux"""
+        """
+Identifie les sujets principaux"""
         topics = []
         
         for category, keywords in self.keyword_categories.items():
@@ -398,7 +403,8 @@ class SEOProcessor(BaseProcessor):
         return topics
     
     def _categorize_content(self, text: str) -> str:
-        """Catégorise le contenu"""
+        """
+Catégorise le contenu"""
         text_lower = text.lower()
         
         # Count matches for each category
@@ -414,7 +420,8 @@ class SEOProcessor(BaseProcessor):
             return 'general'
     
     def _extract_themes(self, text: str) -> List[str]:
-        """Extrait les thèmes principaux"""
+        """
+Extrait les thèmes principaux"""
         themes = []
         
         # Look for common content themes
@@ -437,7 +444,8 @@ class SEOProcessor(BaseProcessor):
         return themes
     
     def _check_platform_compliance(self, content_structure: Dict, platform_reqs: Dict) -> Dict[str, Any]:
-        """Vérifie la conformité aux exigences de la plateforme"""
+        """
+Vérifie la conformité aux exigences de la plateforme"""
         compliance = {
             'overall_score': 0,
             'compliant_aspects': [],
@@ -600,7 +608,8 @@ class SEOProcessor(BaseProcessor):
         return platform_keywords + category_keywords
     
     def _generate_keyword_suggestions(self, current_keywords: List[str], category: str, target_audience: Dict) -> Dict[str, List[str]]:
-        """Génère des suggestions de mots-clés"""
+        """
+Génère des suggestions de mots-clés"""
         suggestions = {
             'primary': [],
             'secondary': [],
@@ -685,7 +694,8 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _find_keyword_opportunities(self, current: List[str], suggested: Dict, trending: List[str]) -> List[Dict[str, Any]]:
-        """Trouve les opportunités d'optimisation des mots-clés"""
+        """
+Trouve les opportunités d'optimisation des mots-clés"""
         opportunities = []
         
         # Missing trending keywords
@@ -724,7 +734,8 @@ class SEOProcessor(BaseProcessor):
         return opportunities
     
     def _optimize_for_platform(self, content_data: Dict, platform: str, keyword_data: Dict) -> Dict[str, Any]:
-        """Optimise pour une plateforme spécifique"""
+        """
+Optimise pour une plateforme spécifique"""
         optimization = {
             'platform_specific_tips': [],
             'content_structure_optimization': {},
@@ -780,7 +791,8 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_instagram(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à Instagram"""
+        """
+Optimisation spécifique à Instagram"""
         return {
             'platform_specific_tips': [
                 'Use 11 hashtags for optimal reach',
@@ -807,7 +819,8 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_tiktok(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à TikTok"""
+        """
+Optimisation spécifique à TikTok"""
         return {
             'platform_specific_tips': [
                 'Use trending sounds and music',
@@ -834,7 +847,8 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_twitter(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à Twitter"""
+        """
+Optimisation spécifique à Twitter"""
         return {
             'platform_specific_tips': [
                 'Tweet during peak hours (9-10 AM, 7-9 PM)',
@@ -861,7 +875,8 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_linkedin(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à LinkedIn"""
+        """
+Optimisation spécifique à LinkedIn"""
         return {
             'platform_specific_tips': [
                 'Post professional, value-driven content',
@@ -888,7 +903,8 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _develop_hashtag_strategy(self, keyword_data: Dict, platform: str, target_audience: Dict) -> Dict[str, Any]:
-        """Développe une stratégie de hashtags"""
+        """
+Développe une stratégie de hashtags"""
         strategy = {
             'recommended_hashtags': [],
             'hashtag_mix': {},
@@ -1276,7 +1292,8 @@ class SEOProcessor(BaseProcessor):
 
 
 class AsyncSEOProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur SEO"""
+    """
+Version asynchrone du processeur SEO"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -1284,7 +1301,8 @@ class AsyncSEOProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone du SEO"""
+        """
+Traitement asynchrone du SEO"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1293,5 +1311,6 @@ class AsyncSEOProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
+        """
+Validation asynchrone"""
         return self.sync_processor.validate_input(input_data)

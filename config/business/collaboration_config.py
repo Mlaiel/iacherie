@@ -13,6 +13,7 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Tuple
 from dataclasses import dataclass
@@ -21,7 +22,9 @@ import uuid
 
 
 class CollaborationType(str, Enum):
-    """Types of collaborations supported."""
+    """
+Types of collaborations supported."""
+
     MUSIC_COLLAB = "music_collaboration"
     VIDEO_COLLAB = "video_collaboration"
     CROSS_PROMOTION = "cross_promotion"
@@ -38,6 +41,7 @@ class CollaborationType(str, Enum):
 
 class CollaborationStatus(str, Enum):
     """Collaboration request and project status."""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -51,6 +55,7 @@ class CollaborationStatus(str, Enum):
 
 class MatchingCriteria(str, Enum):
     """Criteria for collaboration matching."""
+
     GENRE_SIMILARITY = "genre_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     LOCATION_PROXIMITY = "location_proximity"
@@ -67,6 +72,7 @@ class MatchingCriteria(str, Enum):
 
 class RevenueShareModel(str, Enum):
     """Revenue sharing models for collaborations."""
+
     EQUAL_SPLIT = "equal_split"
     WEIGHTED_CONTRIBUTION = "weighted_contribution"
     FOLLOWER_BASED = "follower_based"
@@ -94,7 +100,8 @@ class CollaborationTerms:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for collaboration matching."""
+    """
+Creator profile for collaboration matching."""
     creator_id: str
     creator_type: str
     genres: List[str]
@@ -113,7 +120,8 @@ class CreatorProfile:
 
 
 class CollaborationConfig:
-    """Enterprise collaboration management configuration."""
+    """
+Enterprise collaboration management configuration."""
     # Collaboration type configurations
     COLLABORATION_TYPES = {
         CollaborationType.MUSIC_COLLAB: {

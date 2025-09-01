@@ -29,6 +29,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class PriorityLevel(Enum):
-    """Enhanced priority levels for notification classification."""
+    """
+Enhanced priority levels for notification classification."""
+
     CRITICAL = "critical"          # System failures, security breaches, immediate threats
     URGENT = "urgent"              # Revenue opportunities, collaboration matches
     HIGH = "high"                  # Content protection alerts, performance issues
@@ -59,6 +62,7 @@ class PriorityLevel(Enum):
 
 class UrgencyContext(Enum):
     """Contextual urgency factors for enhanced classification."""
+
     REVENUE_IMPACT = "revenue_impact"          # Direct revenue implications
     LEGAL_COMPLIANCE = "legal_compliance"      # Legal or compliance requirements
     SECURITY_THREAT = "security_threat"        # Security-related notifications
@@ -84,7 +88,8 @@ class PriorityScore:
 
 @dataclass
 class ClassificationFeatures:
-    """Feature vector for priority classification."""
+    """
+Feature vector for priority classification."""
     content_importance: float      # Content business importance
     user_engagement_score: float   # User historical engagement
     temporal_urgency: float        # Time-sensitive factors
@@ -98,10 +103,12 @@ class ClassificationFeatures:
 
 
 class MLPriorityModel:
-    """Machine learning model for priority classification."""
+    """
+Machine learning model for priority classification."""
     
     def __init__(self, model_path: Optional[Path] = None):
-        """Initialize ML model for priority classification."""
+        """
+Initialize ML model for priority classification."""
         self.model_path = model_path
         self.model = None
         self.scaler = None
@@ -124,7 +131,8 @@ class MLPriorityModel:
             self._load_model()
     
     def _load_model(self):
-        """Load pre-trained model from disk."""
+        """
+Load pre-trained model from disk."""
         try:
             with open(self.model_path, 'rb') as f:
                 model_data = pickle.load(f)
@@ -223,7 +231,8 @@ class PriorityClassifier:
     """
     
     def __init__(self, config: NotificationConfig):
-        """Initialize priority classifier with configuration."""
+        """
+Initialize priority classifier with configuration."""
         self.config = config
         self.business_rules = BUSINESS_RULES
         self.urgency_factors = URGENCY_FACTORS
@@ -846,7 +855,8 @@ class PriorityClassifier:
         request: NotificationRequest,
         features: ClassificationFeatures
     ) -> List[UrgencyContext]:
-        """Analyze urgency context factors."""
+        """
+Analyze urgency context factors."""
         contexts = []
         
         # Revenue impact
@@ -896,7 +906,8 @@ class PriorityClassifier:
         return priority_scores.get(priority, 0.4)
     
     def _extract_factor_scores(self, features: ClassificationFeatures) -> Dict[str, float]:
-        """Extract factor scores for transparency."""
+        """
+Extract factor scores for transparency."""
         return {
             "content_importance": features.content_importance,
             "user_engagement": features.user_engagement_score,
@@ -968,7 +979,8 @@ class PriorityClassifier:
         return time_diff <= self._cache_ttl
     
     def _update_classification_stats(self, processing_time: float):
-        """Update classification performance statistics."""
+        """
+Update classification performance statistics."""
         self.classification_stats["total_classifications"] += 1
         
         # Update average processing time
@@ -986,6 +998,7 @@ class PriorityClassifier:
         return self.classification_stats.copy()
     
     def clear_cache(self):
-        """Clear classification cache."""
+        """
+Clear classification cache."""
         self._classification_cache.clear()
         logger.info("Priority classification cache cleared")

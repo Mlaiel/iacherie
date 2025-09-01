@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type, Callable, Union
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class FactoryMode(Enum):
-    """Factory creation modes"""
+    """
+Factory creation modes"""
+
     SINGLETON = "singleton"
     PROTOTYPE = "prototype"
     POOLED = "pooled"
@@ -60,7 +63,8 @@ class ComponentBlueprint:
 
 @dataclass
 class ComponentInstance:
-    """Component instance wrapper"""
+    """
+Component instance wrapper"""
     instance_id: str
     component: MultimediaComponent
     blueprint: ComponentBlueprint
@@ -357,7 +361,8 @@ class MultimediaFactory:
         return component
         
     async def _get_pooled_instance(self, blueprint: ComponentBlueprint, config: Dict[str, Any]) -> MultimediaComponent:
-        """Get instance from pool"""
+        """
+Get instance from pool"""
         pool = self.pools.get(blueprint.component_id, [])
         
         # Find idle instance

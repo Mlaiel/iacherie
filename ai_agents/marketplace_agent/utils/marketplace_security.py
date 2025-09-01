@@ -4,8 +4,9 @@ Provides comprehensive security features including fraud detection,
 threat analysis, user verification, and transaction security.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,7 +21,9 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceTransaction
 
 
 class ThreatLevel(Enum):
-    """Security threat levels."""
+    """
+Security threat levels."""
+
     MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
@@ -30,6 +33,7 @@ class ThreatLevel(Enum):
 
 class SecurityEventType(Enum):
     """Types of security events."""
+
     FRAUD_ATTEMPT = "fraud_attempt"
     SUSPICIOUS_LOGIN = "suspicious_login"
     UNUSUAL_TRANSACTION = "unusual_transaction"
@@ -41,6 +45,7 @@ class SecurityEventType(Enum):
 
 class UserRiskLevel(Enum):
     """User risk assessment levels."""
+
     TRUSTED = "trusted"
     LOW_RISK = "low_risk"
     MEDIUM_RISK = "medium_risk"
@@ -64,7 +69,8 @@ class SecurityValidation:
 
 @dataclass
 class FraudAnalysis:
-    """Fraud detection analysis result."""
+    """
+Fraud detection analysis result."""
     fraud_score: float = 0.0
     is_fraudulent: bool = False
     fraud_indicators: List[str] = field(default_factory=list)
@@ -76,7 +82,8 @@ class FraudAnalysis:
 
 @dataclass
 class SecurityEvent:
-    """Security event record."""
+    """
+Security event record."""
     id: Optional[str] = None
     event_type: SecurityEventType = SecurityEventType.POLICY_VIOLATION
     severity: ThreatLevel = ThreatLevel.LOW
@@ -496,7 +503,8 @@ class MarketplaceSecurity:
         self,
         transaction: MarketplaceTransaction
     ) -> Dict[str, List[str]]:
-        """Perform basic security validation checks."""
+        """
+Perform basic security validation checks."""
         try:
             flags = []
             warnings = []

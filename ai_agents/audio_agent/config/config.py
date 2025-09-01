@@ -10,6 +10,7 @@ Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sec
 This configuration contains proprietary settings and business logic owned exclusively by Fahed Mlaiel.
 Unauthorized access, modification, or distribution is strictly prohibited.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -17,7 +18,8 @@ from pathlib import Path
 
 @dataclass
 class AudioProcessingConfig:
-    """Core audio processing configuration"""
+    """
+Core audio processing configuration"""
     
     # Audio Quality Settings
     DEFAULT_SAMPLE_RATE: int = 44100
@@ -49,7 +51,8 @@ class AudioProcessingConfig:
 
 @dataclass 
 class AIModelsConfig:
-    """AI models configuration and paths"""
+    """
+AI models configuration and paths"""
     
     # Model Paths (configure according to your setup)
     DIFFUSION_MODEL_PATH: str = "facebook/musicgen-small"
@@ -276,7 +279,8 @@ class AudioAgentConfig:
             Path(path).mkdir(parents=True, exist_ok=True)
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for logging"""
+        """
+Get configuration summary for logging"""
         return {
             "environment": self.environment,
             "audio_processing": {

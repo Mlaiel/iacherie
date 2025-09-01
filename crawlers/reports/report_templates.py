@@ -50,6 +50,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import logging
 import warnings
 import json
@@ -217,6 +218,7 @@ class TemplateType(Enum):
 
 class TemplateFormat(Enum):
     """Template output format enumeration."""
+
     HTML = "html"
     PDF = "pdf"
     WORD = "word"
@@ -233,6 +235,7 @@ class TemplateFormat(Enum):
 
 class TemplateStyle(Enum):
     """Template styling themes."""
+
     CORPORATE = "corporate"
     MODERN = "modern"
     MINIMAL = "minimal"
@@ -247,6 +250,7 @@ class TemplateStyle(Enum):
 
 class TemplateLanguage(Enum):
     """Supported template languages."""
+
     ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
@@ -271,6 +275,7 @@ class TemplateLanguage(Enum):
 
 class OutputFormat(Enum):
     """Output format enumeration."""
+
     HTML = "html"
     PDF = "pdf"
     DOCX = "docx"
@@ -281,6 +286,7 @@ class OutputFormat(Enum):
 
 class TemplateStyle(Enum):
     """Template style themes."""
+
     CORPORATE = "corporate"
     MODERN = "modern"
     MINIMAL = "minimal"
@@ -292,6 +298,7 @@ class TemplateStyle(Enum):
 
 class SectionType(Enum):
     """Report section types."""
+
     TITLE = "title"
     EXECUTIVE_SUMMARY = "executive_summary"
     TABLE_OF_CONTENTS = "table_of_contents"
@@ -476,7 +483,8 @@ class ReportTemplate(ABC):
             return str(date_value)
     
     def _format_number(self, value: Union[int, float], decimal_places: int = 2) -> str:
-        """Format number with thousand separators."""
+        """
+Format number with thousand separators."""
         try:
             if isinstance(value, int):
                 return f"{value:,}"
@@ -567,7 +575,8 @@ class ReportTemplate(ABC):
         pass
     
     async def render_section(self, section: TemplateSection, data: Dict[str, Any], variables: Dict[str, Any]) -> str:
-        """Render a specific template section."""
+        """
+Render a specific template section."""
         try:
             # Check condition if specified
             if section.condition:
@@ -832,7 +841,8 @@ class ReportTemplate(ABC):
         """
     
     def _get_theme_css(self) -> str:
-        """Get theme-specific CSS styles."""
+        """
+Get theme-specific CSS styles."""
         theme_styles = {
             TemplateStyle.CORPORATE: """
                 :root {
@@ -1000,7 +1010,8 @@ class ReportTemplate(ABC):
         """
     
     def _get_default_footer_template(self) -> str:
-        """Get default footer template."""
+        """
+Get default footer template."""
         return """
         <div class="report-footer">
             <p>&copy; {{ current_date.year }} {{ company_name }}. All rights reserved.</p>
@@ -1028,7 +1039,8 @@ class ExecutiveTemplate(ReportTemplate):
         super().__init__(config)
     
     def _get_default_executive_config(self) -> TemplateConfiguration:
-        """Get default configuration for executive template."""
+        """
+Get default configuration for executive template."""
         config = TemplateConfiguration(
             name="Executive Summary Report",
             description="High-level executive summary with key metrics and insights",
@@ -1189,7 +1201,8 @@ class ExecutiveTemplate(ReportTemplate):
         """
     
     def _get_kpi_template(self) -> str:
-        """Get KPI metrics template."""
+        """
+Get KPI metrics template."""
         return """
         <div class="section kpi-section">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1247,7 +1260,8 @@ class ExecutiveTemplate(ReportTemplate):
         """
     
     def _get_dashboard_template(self) -> str:
-        """Get dashboard visualization template."""
+        """
+Get dashboard visualization template."""
         return """
         <div class="section dashboard-section">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1292,7 +1306,8 @@ class ExecutiveTemplate(ReportTemplate):
         """
     
     def _get_recommendations_template(self) -> str:
-        """Get strategic recommendations template."""
+        """
+Get strategic recommendations template."""
         return """
         <div class="section recommendations-section">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1364,7 +1379,8 @@ class TechnicalTemplate(ReportTemplate):
         super().__init__(config)
     
     def _get_default_technical_config(self) -> TemplateConfiguration:
-        """Get default configuration for technical template."""
+        """
+Get default configuration for technical template."""
         config = TemplateConfiguration(
             name="Technical Analysis Report",
             description="Detailed technical analysis with performance metrics and system data",
@@ -1557,7 +1573,8 @@ class TechnicalTemplate(ReportTemplate):
         """
     
     def _get_technical_overview_template(self) -> str:
-        """Get technical overview template."""
+        """
+Get technical overview template."""
         return """
         <div class="section technical-overview">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1615,7 +1632,8 @@ class TechnicalTemplate(ReportTemplate):
         """
     
     def _get_performance_metrics_template(self) -> str:
-        """Get performance metrics template."""
+        """
+Get performance metrics template."""
         return """
         <div class="section performance-metrics">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1667,7 +1685,8 @@ class TechnicalTemplate(ReportTemplate):
         """
     
     def _get_system_stats_template(self) -> str:
-        """Get system statistics template."""
+        """
+Get system statistics template."""
         return """
         <div class="section system-stats">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1733,7 +1752,8 @@ class TechnicalTemplate(ReportTemplate):
         """
     
     def _get_technical_analysis_template(self) -> str:
-        """Get technical analysis template."""
+        """
+Get technical analysis template."""
         return """
         <div class="section technical-analysis">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1796,7 +1816,8 @@ class TechnicalTemplate(ReportTemplate):
         """
     
     def _get_technical_recommendations_template(self) -> str:
-        """Get technical recommendations template."""
+        """
+Get technical recommendations template."""
         return """
         <div class="section technical-recommendations">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1882,7 +1903,8 @@ class ComplianceTemplate(ReportTemplate):
         super().__init__(config)
     
     def _get_default_compliance_config(self) -> TemplateConfiguration:
-        """Get default configuration for compliance template."""
+        """
+Get default configuration for compliance template."""
         config = TemplateConfiguration(
             name="Compliance Report",
             description="Regulatory compliance and audit report",
@@ -2084,7 +2106,8 @@ class ComplianceTemplate(ReportTemplate):
         """
     
     def _get_compliance_overview_template(self) -> str:
-        """Get compliance overview template."""
+        """
+Get compliance overview template."""
         return """
         <div class="section compliance-overview">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2148,7 +2171,8 @@ class ComplianceTemplate(ReportTemplate):
         """
     
     def _get_compliance_metrics_template(self) -> str:
-        """Get compliance metrics template."""
+        """
+Get compliance metrics template."""
         return """
         <div class="section compliance-metrics">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2189,7 +2213,8 @@ class ComplianceTemplate(ReportTemplate):
         """
     
     def _get_audit_trail_template(self) -> str:
-        """Get audit trail template."""
+        """
+Get audit trail template."""
         return """
         <div class="section audit-trail">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2257,7 +2282,8 @@ class ComplianceTemplate(ReportTemplate):
         """
     
     def _get_risk_assessment_template(self) -> str:
-        """Get risk assessment template."""
+        """
+Get risk assessment template."""
         return """
         <div class="section risk-assessment">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2336,7 +2362,8 @@ class ComplianceTemplate(ReportTemplate):
         """
     
     def _get_compliance_actions_template(self) -> str:
-        """Get compliance actions template."""
+        """
+Get compliance actions template."""
         return """
         <div class="section compliance-actions">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2662,12 +2689,14 @@ async def create_executive_template(config: Optional[TemplateConfiguration] = No
 
 
 async def create_technical_template(config: Optional[TemplateConfiguration] = None) -> TechnicalTemplate:
-    """Create a technical template instance."""
+    """
+Create a technical template instance."""
     return TechnicalTemplate(config)
 
 
 async def create_compliance_template(config: Optional[TemplateConfiguration] = None) -> ComplianceTemplate:
-    """Create a compliance template instance."""
+    """
+Create a compliance template instance."""
     return ComplianceTemplate(config)
 
 
@@ -2676,7 +2705,8 @@ _template_manager = None
 
 
 def get_template_manager() -> TemplateManager:
-    """Get the global template manager instance."""
+    """
+Get the global template manager instance."""
     global _template_manager
     if _template_manager is None:
         _template_manager = TemplateManager()

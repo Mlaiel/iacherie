@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import math
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class IndexingStrategy(Enum):
-    """Indexing strategy types"""
+    """
+Indexing strategy types"""
+
     BATCH = "batch"
     REALTIME = "realtime"
     HYBRID = "hybrid"
@@ -36,6 +39,7 @@ class IndexingStrategy(Enum):
 
 class SimilarityAlgorithm(Enum):
     """Similarity calculation algorithms"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -45,6 +49,7 @@ class SimilarityAlgorithm(Enum):
 
 class RankingMethod(Enum):
     """Ranking methods for search results"""
+
     RELEVANCE = "relevance"
     RECENCY = "recency"
     POPULARITY = "popularity"
@@ -66,7 +71,8 @@ class IndexingContext:
 
 @dataclass
 class SimilarityContext:
-    """Context for similarity calculations"""
+    """
+Context for similarity calculations"""
     query_type: str
     content_types: List[str]
     algorithm: SimilarityAlgorithm
@@ -76,7 +82,8 @@ class SimilarityContext:
 
 @dataclass
 class RankingContext:
-    """Context for ranking operations"""
+    """
+Context for ranking operations"""
     user_preferences: Dict[str, Any] = None
     creator_weights: Dict[str, float] = None
     content_type_weights: Dict[str, float] = None
@@ -85,7 +92,8 @@ class RankingContext:
 
 
 class BaseStrategy(ABC):
-    """Abstract base class for all strategies"""
+    """
+Abstract base class for all strategies"""
     
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -134,7 +142,8 @@ class ContentIndexingStrategy(BaseStrategy):
         self.processing_strategy = IndexingStrategy.HYBRID
     
     async def optimize_index(self, content_id: str, record: Any) -> Dict[str, Any]:
-        """Optimize indexing based on content characteristics"""
+        """
+Optimize indexing based on content characteristics"""
         try:
             start_time = datetime.now()
             
@@ -397,7 +406,8 @@ class VectorEmbeddingStrategy(BaseStrategy):
     
     async def optimize_embedding(self, content_type: str, text_data: str, 
                                context: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Optimize embedding generation based on content characteristics"""
+        """
+Optimize embedding generation based on content characteristics"""
         try:
             start_time = datetime.now()
             
@@ -596,7 +606,8 @@ class SimilaritySearchStrategy(BaseStrategy):
     
     async def optimize_search(self, query_vector: List[float], 
                             context: SimilarityContext) -> Dict[str, Any]:
-        """Optimize similarity search based on context"""
+        """
+Optimize similarity search based on context"""
         try:
             start_time = datetime.now()
             

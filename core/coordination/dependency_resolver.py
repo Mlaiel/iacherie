@@ -16,6 +16,7 @@ Contact: mlaiel@live.de for authorization.
 Service Registration → Dependency Analysis → Resolution Strategy → 
 Execution Order → Monitoring → Health Checks
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class DependencyType(Enum):
-    """Types of dependencies in the system"""
+    """
+Types of dependencies in the system"""
+
     SERVICE_DEPENDENCY = "service_dependency"
     DATA_DEPENDENCY = "data_dependency"
     RESOURCE_DEPENDENCY = "resource_dependency"
@@ -45,6 +48,7 @@ class DependencyType(Enum):
 
 class ResolutionStrategy(Enum):
     """Dependency resolution strategies"""
+
     LAZY_LOADING = "lazy_loading"
     EAGER_LOADING = "eager_loading"
     PARALLEL_RESOLUTION = "parallel_resolution"
@@ -56,6 +60,7 @@ class ResolutionStrategy(Enum):
 
 class DependencyStatus(Enum):
     """Dependency resolution status"""
+
     UNRESOLVED = "unresolved"
     RESOLVING = "resolving"
     RESOLVED = "resolved"
@@ -67,6 +72,7 @@ class DependencyStatus(Enum):
 
 class DependencyPriority(Enum):
     """Dependency resolution priority"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -76,7 +82,8 @@ class DependencyPriority(Enum):
 
 @dataclass
 class DependencyDefinition:
-    """Individual dependency definition"""
+    """
+Individual dependency definition"""
     dependency_id: str
     name: str
     dependency_type: DependencyType
@@ -94,7 +101,8 @@ class DependencyDefinition:
 
 @dataclass
 class ServiceDefinition:
-    """Service definition with dependencies"""
+    """
+Service definition with dependencies"""
     service_id: str
     name: str
     service_type: str
@@ -109,7 +117,8 @@ class ServiceDefinition:
 
 @dataclass
 class ResolutionResult:
-    """Dependency resolution result"""
+    """
+Dependency resolution result"""
     dependency_id: str
     status: DependencyStatus
     resolved_at: datetime
@@ -122,7 +131,8 @@ class ResolutionResult:
 
 @dataclass
 class ResolutionContext:
-    """Context for dependency resolution"""
+    """
+Context for dependency resolution"""
     context_id: str
     requested_service: str
     resolution_strategy: ResolutionStrategy
@@ -136,7 +146,8 @@ class ResolutionContext:
 
 
 class DependencyResolver:
-    """Enterprise dependency management and resolution engine"""
+    """
+Enterprise dependency management and resolution engine"""
     
     def __init__(self, cache_size: int = 1000, max_resolution_depth: int = 20):
         self.cache_size = cache_size
@@ -652,7 +663,8 @@ class DependencyResolver:
         service_id: str,
         context: ResolutionContext
     ) -> ResolutionResult:
-        """Resolve a single dependency"""
+        """
+Resolve a single dependency"""
         try:
             start_time = datetime.now(timezone.utc)
             
@@ -821,7 +833,8 @@ class DependencyResolver:
             self.cache_hit_rate = alpha * hit_value + (1 - alpha) * self.cache_hit_rate
     
     def _is_critical_dependency(self, service_id: str) -> bool:
-        """Check if dependency is critical"""
+        """
+Check if dependency is critical"""
         for dep in self.dependency_definitions.values():
             if (dep.target_service == service_id and 
                 dep.priority in [DependencyPriority.CRITICAL, DependencyPriority.HIGH] and
@@ -830,7 +843,8 @@ class DependencyResolver:
         return False
     
     def _get_topological_order(self, service_id: str) -> List[List[str]]:
-        """Get topological order of dependencies for hierarchical resolution"""
+        """
+Get topological order of dependencies for hierarchical resolution"""
         try:
             # Create subgraph with only dependencies of the service
             service_deps = self._get_all_dependencies(service_id)
@@ -973,7 +987,8 @@ class DependencyResolver:
         self.event_handlers[event_type].append(handler)
     
     def get_resolution_metrics(self) -> Dict[str, Any]:
-        """Get resolution performance metrics"""
+        """
+Get resolution performance metrics"""
         try:
             avg_resolution_times = {}
             for service_id, times in self.resolution_metrics.items():

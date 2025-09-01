@@ -21,6 +21,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -46,7 +47,9 @@ from ..core.exceptions import PlatformAPIException, AuthenticationException
 
 
 class PlatformType(Enum):
-    """Supported content platforms."""
+    """
+Supported content platforms."""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -63,6 +66,7 @@ class PlatformType(Enum):
 
 class DataType(Enum):
     """Types of data collected from platforms."""
+
     REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     ANALYTICS = "analytics"
@@ -73,6 +77,7 @@ class DataType(Enum):
 
 class AuthMethod(Enum):
     """Platform authentication methods."""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
@@ -101,7 +106,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformData:
-    """Standardized platform data structure."""
+    """
+Standardized platform data structure."""
     platform: PlatformType
     creator_id: str
     data_type: DataType
@@ -114,7 +120,8 @@ class PlatformData:
 
 @dataclass
 class APICallResult:
-    """Result of platform API call."""
+    """
+Result of platform API call."""
     platform: PlatformType
     endpoint: str
     success: bool
@@ -354,7 +361,8 @@ class PlatformAPIManager:
         return credentials
     
     async def _store_credentials(self, creator_id: str, credentials: PlatformCredentials):
-        """Store encrypted credentials in database."""
+        """
+Store encrypted credentials in database."""
         try:
             query = """
             INSERT INTO platform_credentials (
@@ -598,7 +606,8 @@ class PlatformAPIManager:
         await self._refresh_access_token(credentials)
     
     async def _refresh_access_token(self, credentials: PlatformCredentials):
-        """Refresh OAuth2 access token."""
+        """
+Refresh OAuth2 access token."""
         try:
             platform_config = self.platform_configs.get(credentials.platform)
             if not platform_config or not platform_config.get("auth_url"):
@@ -665,7 +674,8 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect Spotify revenue data."""
+        """
+Collect Spotify revenue data."""
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.SPOTIFY]["base_url"]

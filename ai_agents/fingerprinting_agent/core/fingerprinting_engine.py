@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -72,7 +73,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprints that can be generated"""
+    """
+Types of fingerprints that can be generated"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -81,6 +84,7 @@ class FingerprintType(Enum):
 
 class SimilarityAlgorithm(Enum):
     """Similarity matching algorithms"""
+
     HAMMING = "hamming"
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
@@ -100,7 +104,8 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result between content items"""
+    """
+Similarity match result between content items"""
     source_content_id: str
     target_content_id: str
     similarity_score: float
@@ -455,7 +460,8 @@ class FingerprintingEngine:
         vector_fingerprint: Optional[Any],  # Changed from np.ndarray
         perceptual_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence score based on fingerprint quality"""
+        """
+Calculate confidence score based on fingerprint quality"""
         score = 0.0
         
         # Hash fingerprint always contributes
@@ -477,7 +483,8 @@ class FingerprintingEngine:
         return min(1.0, score)
 
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process fingerprinting operation (legacy interface)"""
+        """
+Process fingerprinting operation (legacy interface)"""
         try:
             content_type_str = data.get('content_type', 'text')
             content_type = FingerprintType(content_type_str)
@@ -530,7 +537,8 @@ class AudioFingerprintProcessor:
         self.window_size = config.get('window_size', 2048)
         
     async def process(self, audio_data: Union[bytes, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Process audio content and extract fingerprint features"""
+        """
+Process audio content and extract fingerprint features"""
         try:
             # Simulate audio processing (would use librosa in production)
             if isinstance(audio_data, bytes):
@@ -566,7 +574,8 @@ class VideoFingerprintProcessor:
         self.keyframe_interval = config.get('keyframe_interval', 30)
         
     async def process(self, video_data: Union[bytes, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Process video content and extract fingerprint features"""
+        """
+Process video content and extract fingerprint features"""
         try:
             # Simulate video processing (would use OpenCV/FFmpeg in production)
             vector_features = np.random().rand(512)  # Placeholder for real video analysis
@@ -597,7 +606,8 @@ class ImageFingerprintProcessor:
         self.target_size = config.get('target_size', (224, 224))
         
     async def process(self, image_data: Union[bytes, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Process image content and extract fingerprint features"""
+        """
+Process image content and extract fingerprint features"""
         try:
             # Simulate image processing (would use PIL/OpenCV in production)
             vector_features = np.random().rand(512)  # Placeholder for real feature extraction
@@ -633,7 +643,8 @@ class TextFingerprintProcessor:
         self.max_length = config.get('max_length', 10000)
         
     async def process(self, text_data: Union[str, bytes]) -> Tuple[Any, Dict[str, Any]]:
-        """Process text content and extract fingerprint features"""
+        """
+Process text content and extract fingerprint features"""
         try:
             if isinstance(text_data, bytes):
                 text = text_data.decode('utf-8', errors='ignore')

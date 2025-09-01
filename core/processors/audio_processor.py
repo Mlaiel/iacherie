@@ -23,6 +23,7 @@ Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(str, Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -74,6 +77,7 @@ class AudioFormat(str, Enum):
 
 class AudioQuality(str, Enum):
     """Audio quality levels"""
+
     LOW = "low"          # 64 kbps
     MEDIUM = "medium"    # 128 kbps
     HIGH = "high"        # 320 kbps
@@ -82,6 +86,7 @@ class AudioQuality(str, Enum):
 
 class AudioProcessingType(str, Enum):
     """Types of audio processing"""
+
     ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
     CONVERSION = "conversion"
@@ -117,7 +122,8 @@ class AudioProcessingConfig:
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata"""
+    """
+Comprehensive audio metadata"""
     duration: float
     sample_rate: int
     channels: int
@@ -141,7 +147,8 @@ class AudioMetadata:
 
 @dataclass
 class AudioFeatures:
-    """Advanced audio features extracted via AI"""
+    """
+Advanced audio features extracted via AI"""
     tempo: Optional[float] = None
     key: Optional[str] = None
     time_signature: Optional[str] = None
@@ -163,7 +170,8 @@ class AudioFeatures:
 
 @dataclass
 class AudioAnalysisResult:
-    """Result of audio analysis"""
+    """
+Result of audio analysis"""
     success: bool
     metadata: Optional[AudioMetadata] = None
     features: Optional[AudioFeatures] = None
@@ -777,7 +785,8 @@ class AudioProcessor:
             return 0.5
     
     async def _calculate_acousticness(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate acousticness score"""
+        """
+Calculate acousticness score"""
         try:
             # Simplified acousticness based on harmonic content
             harmonic, percussive = librosa.effects.hpss(audio_data)
@@ -787,7 +796,8 @@ class AudioProcessor:
             return 0.5
     
     async def _calculate_instrumentalness(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate instrumentalness score"""
+        """
+Calculate instrumentalness score"""
         try:
             # Simplified instrumentalness (inverse of speechiness)
             speechiness = await self._calculate_speechiness(audio_data, sample_rate)
@@ -796,7 +806,8 @@ class AudioProcessor:
             return 0.5
     
     async def _calculate_liveness(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate liveness score"""
+        """
+Calculate liveness score"""
         try:
             # Simplified liveness based on spectral contrast and audience noise
             spectral_contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sample_rate)
@@ -806,7 +817,8 @@ class AudioProcessor:
             return 0.3
     
     async def _calculate_valence(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate valence (positivity) score"""
+        """
+Calculate valence (positivity) score"""
         try:
             # Simplified valence based on tempo and spectral brightness
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
@@ -818,7 +830,8 @@ class AudioProcessor:
             return 0.5
     
     async def _calculate_danceability(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate danceability score"""
+        """
+Calculate danceability score"""
         try:
             # Simplified danceability based on tempo stability and rhythm
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
@@ -842,7 +855,8 @@ class AudioProcessor:
             return 0.5
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the audio processor"""
+        """
+Perform health check on the audio processor"""
         return {
             "status": "healthy" if self._initialized else "not_initialized",
             "audio_libs_available": AUDIO_LIBS_AVAILABLE,

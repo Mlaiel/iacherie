@@ -19,7 +19,7 @@ Expert Team Specialties:
 - AI Prompt Engineering Expert
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -34,6 +34,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -56,7 +57,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MatchingVector:
-    """Multi-dimensional matching vector for creator comparison"""
+    """
+Multi-dimensional matching vector for creator comparison"""
     creator_id: str
     content_vector: np.ndarray
     audience_vector: np.ndarray
@@ -69,7 +71,8 @@ class MatchingVector:
 
 @dataclass
 class MatchingResult:
-    """Comprehensive matching result with detailed scoring"""
+    """
+Comprehensive matching result with detailed scoring"""
     primary_creator_id: str
     matched_creator_id: str
     overall_compatibility: float
@@ -83,7 +86,8 @@ class MatchingResult:
 
 
 class SemanticMatcher:
-    """Advanced semantic matching using NLP and embeddings"""
+    """
+Advanced semantic matching using NLP and embeddings"""
     
     def __init__(self, db_session, embedding_model, nlp_processor):
         self.db = db_session

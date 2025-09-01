@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -15,7 +16,9 @@ from web3 import Web3
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
+
     ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
     POLYGON_MAINNET = "polygon_mainnet"
@@ -30,6 +33,7 @@ class BlockchainNetwork(Enum):
 
 class ContractType(Enum):
     """Smart contract types"""
+
     CONTENT_PROTECTION = "content_protection"
     COPYRIGHT_REGISTRY = "copyright_registry"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
@@ -55,7 +59,8 @@ class NetworkConfig:
 
 @dataclass
 class BlockchainConfig:
-    """Comprehensive blockchain configuration"""
+    """
+Comprehensive blockchain configuration"""
     
     # Default Network
     default_network: BlockchainNetwork = field(default_factory=lambda: 
@@ -217,7 +222,8 @@ class BlockchainConfig:
         self._initialize_contract_abis()
     
     def _validate_configuration(self):
-        """Validate blockchain configuration"""
+        """
+Validate blockchain configuration"""
         if not self.private_key and not self.mnemonic and not self.keystore_path:
             if not self.development_mode:
                 raise ValueError("Private key, mnemonic, or keystore must be provided")
@@ -280,7 +286,8 @@ class BlockchainConfig:
         return self.networks.get(target_network)
     
     def get_web3_instance(self, network: Optional[BlockchainNetwork] = None) -> Web3:
-        """Create Web3 instance for specified network"""
+        """
+Create Web3 instance for specified network"""
         network_config = self.get_network_config(network)
         if not network_config:
             raise ValueError(f"Network configuration not found for {network}")
@@ -306,12 +313,14 @@ class BlockchainConfig:
         return self.contract_addresses.get(contract_type, {}).get(target_network)
     
     def get_contract_abi(self, contract_type: ContractType) -> Optional[List[Dict]]:
-        """Get smart contract ABI for specified type"""
+        """
+Get smart contract ABI for specified type"""
         return self.contract_abis.get(contract_type)
     
     def get_contract_instance(self, contract_type: ContractType, 
                             network: Optional[BlockchainNetwork] = None):
-        """Get contract instance for specified type and network"""
+        """
+Get contract instance for specified type and network"""
         w3 = self.get_web3_instance(network)
         address = self.get_contract_address(contract_type, network)
         abi = self.get_contract_abi(contract_type)
@@ -384,7 +393,8 @@ class BlockchainConfig:
     
     def sign_and_send_transaction(self, transaction_dict: Dict[str, Any], 
                                  network: Optional[BlockchainNetwork] = None) -> str:
-        """Sign and send transaction"""
+        """
+Sign and send transaction"""
         if not self.private_key:
             raise ValueError("Private key required to sign transactions")
         
@@ -415,7 +425,8 @@ class BlockchainConfig:
     
     def get_transaction_status(self, tx_hash: str, 
                              network: Optional[BlockchainNetwork] = None) -> Dict[str, Any]:
-        """Get transaction status and details"""
+        """
+Get transaction status and details"""
         w3 = self.get_web3_instance(network)
         
         try:
@@ -443,7 +454,8 @@ class BlockchainConfig:
     
     def get_balance(self, address: str, 
                    network: Optional[BlockchainNetwork] = None) -> Dict[str, Union[int, str]]:
-        """Get account balance"""
+        """
+Get account balance"""
         w3 = self.get_web3_instance(network)
         network_config = self.get_network_config(network)
         

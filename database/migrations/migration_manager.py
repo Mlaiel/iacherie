@@ -8,7 +8,7 @@ Responsibility: Complete orchestration of database schema evolution for content 
 ===========================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ ENTERPRISE MIGRATION LOGIC:
 Request Analysis → Schema Validation → Dependency Resolution → Backup Creation → 
 Migration Execution → Performance Optimization → Rollback Preparation → Monitoring Setup
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Set, Tuple, Any
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationExecutionStrategy(Enum):
-    """Migration execution strategies for different environments"""
+    """
+Migration execution strategies for different environments"""
+
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     MANUAL_APPROVAL = "manual_approval"
@@ -60,6 +63,7 @@ class MigrationExecutionStrategy(Enum):
 
 class MigrationValidationLevel(Enum):
     """Validation levels for migration safety"""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -85,7 +89,8 @@ class MigrationConfiguration:
 
 @dataclass
 class MigrationResult:
-    """Comprehensive migration execution result"""
+    """
+Comprehensive migration execution result"""
     migration_id: str
     execution_id: str
     status: MigrationStatus
@@ -526,12 +531,14 @@ class EnterpriseMigrationManager:
         pass
     
     async def _migration_exists(self, migration_id: str) -> bool:
-        """Check if migration exists in the migration directory"""
+        """
+Check if migration exists in the migration directory"""
         # Implementation to check if migration file exists
         return True  # Placeholder
     
     async def _validate_dependencies(self, migration_id: str) -> Dict[str, Any]:
-        """Validate migration dependencies are satisfied"""
+        """
+Validate migration dependencies are satisfied"""
         return {"valid": True, "errors": []}  # Placeholder
     
     async def _validate_schema_compatibility(self, migration_id: str) -> Dict[str, Any]:
@@ -574,7 +581,8 @@ class EnterpriseMigrationManager:
         )
     
     async def _record_migration_execution(self, result: MigrationResult):
-        """Record migration execution in tracking tables"""
+        """
+Record migration execution in tracking tables"""
         try:
             async with self.connection_manager.get_session() as session:
                 await session.execute(text("""
@@ -634,7 +642,8 @@ class EnterpriseMigrationManager:
         )
     
     async def _get_current_schema_version(self, session: AsyncSession) -> Optional[str]:
-        """Get current schema version from database"""
+        """
+Get current schema version from database"""
         try:
             result = await session.execute(text("""
                 SELECT version_number FROM schema_versions 
@@ -649,12 +658,14 @@ class EnterpriseMigrationManager:
             return None
     
     async def _get_pending_migrations(self, session: AsyncSession) -> List[str]:
-        """Get list of pending migrations"""
+        """
+Get list of pending migrations"""
         # Implementation to compare available migrations with applied ones
         return []  # Placeholder
     
     async def _get_recent_migrations(self, session: AsyncSession, limit: int = 10) -> List[Dict]:
-        """Get recent migration executions"""
+        """
+Get recent migration executions"""
         try:
             result = await session.execute(text("""
                 SELECT migration_id, status, start_time, end_time, duration_seconds

@@ -4,6 +4,7 @@ Handles music distribution, analytics, and creator monetization on Spotify.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpotifyCredentials:
-    """Spotify API credentials configuration."""
+    """
+Spotify API credentials configuration."""
     client_id: str
     client_secret: str
     redirect_uri: str
@@ -35,6 +37,7 @@ class SpotifyAdapter(BasePlatformAdapter):
     Advanced Spotify platform adapter for music distribution and analytics.
     Supports artist profile management, track uploads, playlist management, and revenue tracking.
     """
+
     
     PLATFORM_NAME = "spotify"
     MAX_TRACK_SIZE_MB = 50

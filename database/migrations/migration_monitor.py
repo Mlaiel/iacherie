@@ -8,7 +8,7 @@ Responsibility: Advanced monitoring and observability for content protection and
 =======================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ MONITORING STRATEGY:
 Real-time Tracking → Performance Metrics → Error Detection → 
 Alert Management → Dashboard Generation → Historical Analysis
 """
+
 import asyncio
 import logging
 import json
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringEventType(Enum):
-    """Types of monitoring events"""
+    """
+Types of monitoring events"""
+
     MIGRATION_STARTED = "migration_started"
     MIGRATION_COMPLETED = "migration_completed" 
     MIGRATION_FAILED = "migration_failed"
@@ -65,6 +68,7 @@ class MonitoringEventType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -74,6 +78,7 @@ class AlertSeverity(Enum):
 
 class MonitoringChannel(Enum):
     """Monitoring channels for different stakeholders"""
+
     TECHNICAL = "technical"          # Technical team notifications
     BUSINESS = "business"            # Business stakeholder updates
     SECURITY = "security"            # Security team alerts
@@ -140,7 +145,8 @@ class MigrationMetrics:
 
 @dataclass
 class AlertDefinition:
-    """Alert rule definition"""
+    """
+Alert rule definition"""
     alert_id: str
     name: str
     description: str
@@ -636,7 +642,8 @@ class EnterpriseMigrationMonitor:
         """Setup WebSocket server for real-time updates"""
         
         async def handle_websocket(websocket, path):
-            """Handle WebSocket connections"""
+            """
+Handle WebSocket connections"""
             self.websocket_connections.append(websocket)
             try:
                 await websocket.wait_closed()
@@ -722,7 +729,8 @@ class EnterpriseMigrationMonitor:
         alert_def: AlertDefinition,
         event: Dict[str, Any]
     ):
-        """Trigger an alert"""
+        """
+Trigger an alert"""
         
         alert = {
             "alert_id": alert_def.alert_id,
@@ -923,7 +931,8 @@ class AlertManager:
     """Manage alert rules and processing"""
     
     def __init__(self):
-        """Initialize alert management system"""
+        """
+Initialize alert management system"""
         self.logger = logging.getLogger(f"{__name__}.AlertManager")
         self.alert_rules = {}
         self.active_alerts = {}
@@ -938,7 +947,8 @@ class NotificationService:
     """Handle alert notifications"""
     
     async def initialize(self):
-        """Initialize notification service"""
+        """
+Initialize notification service"""
         logger.info("📬 Notification service initialized")
     
     async def send_alert(self, alert: Dict[str, Any]):

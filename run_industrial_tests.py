@@ -40,14 +40,16 @@ class TestResult:
             self.success_rate = (self.passed / self.total_tests) * 100
 
 class IndustrialTestRunner:
-    """Industrial test suite runner."""
+    """
+Industrial test suite runner."""
     
     def __init__(self, base_path: Path):
         self.base_path = base_path
         self.results: List[TestResult] = []
         
     async def run_unit_tests(self) -> TestResult:
-        """Run unit tests with 95%+ coverage requirement."""
+        """
+Run unit tests with 95%+ coverage requirement."""
         logger.info("🧪 Running Unit Tests (95%+ coverage, 0 mocks for business logic)")
         
         cmd = [

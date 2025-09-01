@@ -28,7 +28,7 @@ Technical Excellence:
 
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  MAXIMUM SECURITY FINANCIAL IP WARNING: Unauthorized use, reproduction, reverse 
     engineering, or distribution of this financial compliance code is strictly prohibited. 
@@ -36,6 +36,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     methodologies protected by international copyright laws, financial regulations, and patents.
     Violations will be prosecuted to the full extent of the law with criminal charges.
 """
+
 import asyncio
 import logging
 import json
@@ -123,7 +124,9 @@ from ..ml.models.revenue_models import RevenuePredicationModel, MonetizationOpti
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""
+    """
+Revenue source types"""
+
     YOUTUBE_ADS = "youtube_ads"
     YOUTUBE_MEMBERSHIPS = "youtube_memberships"
     INSTAGRAM_CREATOR = "instagram_creator"
@@ -139,6 +142,7 @@ class RevenueSource(Enum):
 
 class MonetizationStrategy(Enum):
     """Monetization strategy types"""
+
     PASSIVE_INCOME = "passive_income"
     ACTIVE_PROMOTION = "active_promotion"
     PREMIUM_CONTENT = "premium_content"
@@ -150,6 +154,7 @@ class MonetizationStrategy(Enum):
 
 class RevenueMetric(Enum):
     """Revenue tracking metrics"""
+
     TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING = "monthly_recurring"
     AVERAGE_RPM = "average_rpm"
@@ -179,7 +184,8 @@ class RevenueEntry:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics result structure"""
+    """
+Revenue analytics result structure"""
     user_id: int
     analysis_period: Tuple[datetime, datetime]
     total_revenue: Decimal
@@ -196,7 +202,8 @@ class RevenueAnalytics:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity structure"""
+    """
+Monetization opportunity structure"""
     opportunity_id: str
     user_id: int
     content_id: Optional[str]
@@ -213,7 +220,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation"""
+    """
+Revenue optimization recommendation"""
     optimization_id: str
     user_id: int
     current_performance: Dict[str, float]
@@ -261,7 +269,8 @@ class RevenueAnalyticsEngine:
         self._update_currency_rates()
     
     def _initialize_platform_apis(self):
-        """Initialize platform API clients for revenue data"""
+        """
+Initialize platform API clients for revenue data"""
         try:
             # YouTube Analytics API
             self.youtube_analytics = self._init_youtube_analytics()
@@ -1124,22 +1133,26 @@ class RevenueAnalyticsEngine:
         return None
     
     def _init_instagram_api(self):
-        """Initialize Instagram Creator API client"""
+        """
+Initialize Instagram Creator API client"""
         # Would initialize actual Instagram API
         return None
     
     def _init_tiktok_api(self):
-        """Initialize TikTok Creator API client"""
+        """
+Initialize TikTok Creator API client"""
         # Would initialize actual TikTok API
         return None
     
     def _init_spotify_api(self):
-        """Initialize Spotify for Artists API client"""
+        """
+Initialize Spotify for Artists API client"""
         # Would initialize actual Spotify API
         return None
     
     def _get_stripe_key(self) -> str:
-        """Get Stripe API key from secure configuration"""
+        """
+Get Stripe API key from secure configuration"""
         return "sk_test_..."
     
     def _get_paypal_client_id(self) -> str:
@@ -1156,54 +1169,66 @@ class RevenueAnalyticsEngine:
         return []
     
     async def _sync_instagram_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Sync revenue from Instagram Creator API"""
+        """
+Sync revenue from Instagram Creator API"""
         # Would implement actual Instagram revenue sync
         return []
     
     async def _sync_tiktok_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Sync revenue from TikTok Creator API"""
+        """
+Sync revenue from TikTok Creator API"""
         # Would implement actual TikTok revenue sync
         return []
     
     async def _sync_spotify_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Sync revenue from Spotify for Artists API"""
+        """
+Sync revenue from Spotify for Artists API"""
         # Would implement actual Spotify revenue sync
         return []
     
     # Additional helper methods (stubs)
     
     async def _update_currency_rates(self):
-        """Update currency conversion rates"""
+        """
+Update currency conversion rates"""
         pass
     
     async def _fetch_user_data(self, user_id: int) -> Dict:
-        """Fetch user data from database"""
+        """
+Fetch user data from database"""
         return {'created_at': datetime.now() - timedelta(days=365)}
     
     async def _fetch_user_content_portfolio(self, user_id: int) -> Dict:
-        """Fetch user's content portfolio"""
+        """
+Fetch user's content portfolio"""
         return {}
     
     async def _fetch_revenue_history(self, user_id: int) -> List:
-        """Fetch complete revenue history"""
+        """
+Fetch complete revenue history"""
         return []
     
     async def _analyze_content_performance(self, user_id: int) -> Dict:
-        """Analyze content performance metrics"""
+        """
+Analyze content performance metrics"""
         return {}
     
     async def _fetch_market_conditions(self, strategy: MonetizationStrategy) -> Dict:
-        """Fetch market conditions for monetization strategy"""
+        """
+Fetch market conditions for monetization strategy"""
         return {}
     
     async def _analyze_competition(self, user_id: int, strategy: MonetizationStrategy) -> Dict:
-        """Analyze competitive landscape"""
+        """
+Analyze competitive landscape"""
         return {}
     
     async def _update_user_revenue_cache(self, user_id: int):
-        """Update user revenue cache"""
+        """
+Update user revenue cache"""
         pass
     
     async def _trigger_analytics_update(self, user_id: int):
-        """Trigger analytics update for user"""
+        """
+Trigger analytics update for user"""
         pass

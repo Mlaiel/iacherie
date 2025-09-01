@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
+    """
+Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -42,6 +45,7 @@ class ThreatLevel(Enum):
 
 class ThreatType(Enum):
     """Types of security threats"""
+
     BRUTE_FORCE = "brute_force"
     DDOS = "ddos"
     INJECTION = "injection"
@@ -58,6 +62,7 @@ class ThreatType(Enum):
 
 class AttackVector(Enum):
     """Attack vectors"""
+
     WEB_API = "web_api"
     SSH = "ssh"
     DATABASE = "database"
@@ -88,7 +93,8 @@ class ThreatIndicator:
 
 @dataclass
 class SecurityEvent:
-    """Security event data structure"""
+    """
+Security event data structure"""
     event_id: str
     event_type: str
     source_ip: str
@@ -106,7 +112,8 @@ class SecurityEvent:
 
 @dataclass
 class BehaviorProfile:
-    """User behavior profile for anomaly detection"""
+    """
+User behavior profile for anomaly detection"""
     user_id: str
     normal_login_hours: Set[int]
     normal_ip_ranges: Set[str]

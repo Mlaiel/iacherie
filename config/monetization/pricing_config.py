@@ -14,6 +14,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union
@@ -22,7 +23,9 @@ from enum import Enum
 
 
 class PricingModel(str, Enum):
-    """Available pricing models."""
+    """
+Available pricing models."""
+
     FREE = "free"
     FREEMIUM = "freemium"
     SUBSCRIPTION = "subscription"
@@ -36,6 +39,7 @@ class PricingModel(str, Enum):
 
 class PricingTier(str, Enum):
     """Subscription tier levels."""
+
     FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
@@ -46,6 +50,7 @@ class PricingTier(str, Enum):
 
 class BillingPeriod(str, Enum):
     """Billing period options."""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -58,6 +63,7 @@ class BillingPeriod(str, Enum):
 
 class FeatureType(str, Enum):
     """Feature types for pricing tiers."""
+
     CONTENT_UPLOADS = "content_uploads"
     STORAGE_GB = "storage_gb"
     BANDWIDTH_GB = "bandwidth_gb"
@@ -74,6 +80,7 @@ class FeatureType(str, Enum):
 
 class DiscountType(str, Enum):
     """Discount types."""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     FREE_PERIOD = "free_period"
@@ -137,7 +144,8 @@ class RevenueShareConfig:
 
 @dataclass
 class DiscountConfig:
-    """Discount configuration."""
+    """
+Discount configuration."""
     code: str
     type: DiscountType
     value: Decimal  # Percentage or fixed amount
@@ -632,7 +640,8 @@ class PricingConfig:
         return self.PRICING_TIERS.get(tier)
     
     def get_enabled_tiers(self) -> List[PricingTier]:
-        """Get list of enabled pricing tiers."""
+        """
+Get list of enabled pricing tiers."""
         return [
             tier for tier, config in self.PRICING_TIERS.items() 
             if config.enabled
@@ -643,7 +652,8 @@ class PricingConfig:
         base_price: Decimal, 
         country_code: str
     ) -> Decimal:
-        """Calculate price including tax for a specific country."""
+        """
+Calculate price including tax for a specific country."""
         tax_rate = self.TAX_SETTINGS["tax_by_country"].get(
             country_code, 
             self.TAX_SETTINGS["default_tax_rate"]

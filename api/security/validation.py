@@ -4,6 +4,7 @@ Enterprise-grade validation against common web vulnerabilities
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Web Security Specialist + Backend Senior
 """
+
 import re
 import html
 import json
@@ -28,12 +29,15 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationError(Exception):
-    """Custom validation exception"""
+    """
+Custom validation exception"""
     pass
 
 
 class SecurityThreat(Enum):
-    """Security threat types"""
+    """
+Security threat types"""
+
     XSS = "xss"
     SQL_INJECTION = "sql_injection"
     CSRF = "csrf"
@@ -50,6 +54,7 @@ class SecurityThreat(Enum):
 
 class ValidationSeverity(Enum):
     """Validation error severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -71,7 +76,8 @@ class ValidationResult:
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule configuration"""
+    """
+Rate limiting rule configuration"""
     max_requests: int
     time_window: int  # seconds
     block_duration: int = 300  # 5 minutes default
@@ -79,21 +85,25 @@ class RateLimitRule:
 
 
 class BaseValidator(ABC):
-    """Base validator interface"""
+    """
+Base validator interface"""
     
     @abstractmethod
     def validate(self, value: Any, context: Dict[str, Any] = None) -> ValidationResult:
-        """Validate input value"""
+        """
+Validate input value"""
         pass
     
     @abstractmethod
     def sanitize(self, value: Any, context: Dict[str, Any] = None) -> Any:
-        """Sanitize input value"""
+        """
+Sanitize input value"""
         pass
 
 
 class InputValidator:
-    """Comprehensive input validation system"""
+    """
+Comprehensive input validation system"""
     
     def __init__(self):
         self.validation_patterns = self._initialize_patterns()
@@ -107,7 +117,8 @@ class InputValidator:
         self.max_file_size = 100 * 1024 * 1024  # 100MB default
         
     def _initialize_patterns(self) -> Dict[str, re.Pattern]:
-        """Initialize validation regex patterns"""
+        """
+Initialize validation regex patterns"""
         return {
             'email': re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
             'phone': re.compile(r'^\+?[\d\s\-\(\)]{7,15}$'),
@@ -123,7 +134,8 @@ class InputValidator:
     
     def validate_string(self, value: str, min_length: int = 0, max_length: int = 1000,
                        pattern: str = None, required: bool = True) -> ValidationResult:
-        """Validate string input"""
+        """
+Validate string input"""
         
         if not value and required:
             return ValidationResult(
@@ -173,7 +185,8 @@ class InputValidator:
     
     def validate_integer(self, value: Union[str, int], min_value: int = None,
                         max_value: int = None, required: bool = True) -> ValidationResult:
-        """Validate integer input"""
+        """
+Validate integer input"""
         
         if value is None and required:
             return ValidationResult(
@@ -211,7 +224,8 @@ class InputValidator:
     
     def validate_float(self, value: Union[str, float], min_value: float = None,
                       max_value: float = None, required: bool = True) -> ValidationResult:
-        """Validate float input"""
+        """
+Validate float input"""
         
         if value is None and required:
             return ValidationResult(
@@ -248,7 +262,8 @@ class InputValidator:
         )
     
     def validate_email(self, email: str, required: bool = True) -> ValidationResult:
-        """Validate email address"""
+        """
+Validate email address"""
         
         if not email and required:
             return ValidationResult(
@@ -280,7 +295,8 @@ class InputValidator:
     
     def validate_password(self, password: str, min_length: int = 12,
                          require_complexity: bool = True) -> ValidationResult:
-        """Validate password strength"""
+        """
+Validate password strength"""
         
         if not password:
             return ValidationResult(
@@ -333,7 +349,8 @@ class InputValidator:
     
     def validate_url(self, url: str, allowed_schemes: List[str] = None,
                     required: bool = True) -> ValidationResult:
-        """Validate URL"""
+        """
+Validate URL"""
         
         if not url and required:
             return ValidationResult(
@@ -491,7 +508,8 @@ class InputValidator:
             )
     
     def _sanitize_string(self, value: str) -> str:
-        """Basic string sanitization"""
+        """
+Basic string sanitization"""
         # HTML escape
         sanitized = html.escape(value)
         
@@ -501,7 +519,8 @@ class InputValidator:
         return sanitized.strip()
     
     def _calculate_password_strength(self, password: str) -> int:
-        """Calculate password strength score (0-100)"""
+        """
+Calculate password strength score (0-100)"""
         score = 0
         
         # Length bonus
@@ -530,7 +549,8 @@ class InputValidator:
         return max(0, min(score, 100))
     
     def _contains_suspicious_url_patterns(self, url: str) -> bool:
-        """Check for suspicious URL patterns"""
+        """
+Check for suspicious URL patterns"""
         suspicious_patterns = [
             r'localhost',
             r'127\.0\.0\.1',
@@ -551,7 +571,8 @@ class InputValidator:
         return any(re.search(pattern, url_lower) for pattern in suspicious_patterns)
     
     def _validate_file_magic_number(self, file_content: bytes, expected_ext: str) -> Dict[str, Any]:
-        """Validate file magic number matches extension"""
+        """
+Validate file magic number matches extension"""
         
         if len(file_content) < 4:
             return {'is_valid': False, 'error': 'File too small to validate'}
@@ -637,7 +658,8 @@ class InputValidator:
 
 
 class XSSProtection:
-    """Cross-Site Scripting (XSS) protection"""
+    """
+Cross-Site Scripting (XSS) protection"""
     
     def __init__(self):
         self.xss_patterns = self._initialize_xss_patterns()
@@ -657,7 +679,8 @@ class XSSProtection:
         }
     
     def _initialize_xss_patterns(self) -> List[re.Pattern]:
-        """Initialize XSS detection patterns"""
+        """
+Initialize XSS detection patterns"""
         patterns = [
             r'<script[^>]*>.*?</script>',
             r'javascript:',
@@ -689,7 +712,8 @@ class XSSProtection:
         return [re.compile(pattern, re.IGNORECASE | re.DOTALL) for pattern in patterns]
     
     def detect_xss(self, content: str) -> ValidationResult:
-        """Detect XSS attacks in content"""
+        """
+Detect XSS attacks in content"""
         
         if not content:
             return ValidationResult(is_valid=True)
@@ -713,7 +737,8 @@ class XSSProtection:
         return ValidationResult(is_valid=True)
     
     def sanitize_html(self, content: str, level: str = 'basic') -> str:
-        """Sanitize HTML content"""
+        """
+Sanitize HTML content"""
         
         if not content:
             return ''
@@ -732,18 +757,21 @@ class XSSProtection:
         return sanitized
     
     def escape_html_entities(self, content: str) -> str:
-        """Escape HTML entities"""
+        """
+Escape HTML entities"""
         return html.escape(content, quote=True)
 
 
 class SQLInjectionProtection:
-    """SQL Injection protection"""
+    """
+SQL Injection protection"""
     
     def __init__(self):
         self.sql_patterns = self._initialize_sql_patterns()
     
     def _initialize_sql_patterns(self) -> List[re.Pattern]:
-        """Initialize SQL injection detection patterns"""
+        """
+Initialize SQL injection detection patterns"""
         patterns = [
             r"('|\"|;).*(-{2}|#|\/\*)",  # Comments after quotes
             r"union\s+select",
@@ -950,7 +978,8 @@ class RateLimiter:
     
     async def check_rate_limit(self, identifier: str, rule_name: str = 'default',
                               context: Dict[str, Any] = None) -> ValidationResult:
-        """Check if request is within rate limits"""
+        """
+Check if request is within rate limits"""
         
         rule = self.rules.get(rule_name)
         if not rule:
@@ -1065,7 +1094,8 @@ class RateLimiter:
 
 
 class SecurityValidator:
-    """Comprehensive security validator combining all protection mechanisms"""
+    """
+Comprehensive security validator combining all protection mechanisms"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -1085,7 +1115,8 @@ class SecurityValidator:
     
     async def validate_request(self, request_data: Dict[str, Any],
                               context: Dict[str, Any] = None) -> ValidationResult:
-        """Comprehensive request validation"""
+        """
+Comprehensive request validation"""
         
         context = context or {}
         errors = []
@@ -1175,7 +1206,8 @@ class SecurityValidator:
         )
     
     def validate_authentication(self, user_context: Dict[str, Any]) -> bool:
-        """Validate authentication context"""
+        """
+Validate authentication context"""
         required_fields = ['user_id', 'session_id', 'authenticated_at']
         
         for field in required_fields:
@@ -1195,7 +1227,8 @@ class SecurityValidator:
     
     def validate_authorization(self, user_context: Dict[str, Any], 
                              request_data: Dict[str, Any]) -> bool:
-        """Validate authorization context"""
+        """
+Validate authorization context"""
         # Basic authorization validation
         user_roles = user_context.get('roles', [])
         required_role = request_data.get('required_role')
@@ -1206,28 +1239,33 @@ class SecurityValidator:
         return True
     
     def validate_input(self, request_data: Dict[str, Any]) -> bool:
-        """Validate input data structure"""
+        """
+Validate input data structure"""
         # Check for required fields, data types, etc.
         # This is a simplified implementation
         return isinstance(request_data, dict)
     
     def validate_csrf_token(self, request_data: Dict[str, Any]) -> bool:
-        """Check if CSRF token is present when required"""
+        """
+Check if CSRF token is present when required"""
         # This would be called from validate_request
         return True  # Placeholder
     
     def check_rate_limits(self, user_context: Dict[str, Any]) -> bool:
-        """Check if user is within rate limits"""
+        """
+Check if user is within rate limits"""
         # This would be called from validate_request
         return True  # Placeholder
     
     def scan_for_threats(self, request_data: Dict[str, Any]) -> bool:
-        """Scan for security threats"""
+        """
+Scan for security threats"""
         # This would be called from validate_request
         return True  # Placeholder
     
     def get_security_metrics(self) -> Dict[str, Any]:
-        """Get security validation metrics"""
+        """
+Get security validation metrics"""
         return {
             'threat_counts': dict(self.threat_counter),
             'blocked_ips_count': len(self.blocked_ips),

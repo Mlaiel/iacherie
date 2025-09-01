@@ -16,6 +16,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 import uuid
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationStatus(Enum):
-    """Integration execution status"""
+    """
+Integration execution status"""
+
     PENDING = "pending"
     CONNECTING = "connecting"
     SYNCING = "syncing"
@@ -47,6 +50,7 @@ class IntegrationStatus(Enum):
 
 class PlatformType(Enum):
     """Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -63,6 +67,7 @@ class PlatformType(Enum):
 
 class SyncDirection(Enum):
     """Data synchronization direction"""
+
     PULL = "pull"
     PUSH = "push"
     BIDIRECTIONAL = "bidirectional"
@@ -84,7 +89,8 @@ class PlatformCredentials:
 
 @dataclass
 class IntegrationTask:
-    """Individual integration task"""
+    """
+Individual integration task"""
     task_id: str
     platform: PlatformType
     operation: str
@@ -133,7 +139,8 @@ class IntegrationAutomator:
         self._setup_platform_configurations()
     
     def _setup_platform_configurations(self):
-        """Setup platform-specific configurations"""
+        """
+Setup platform-specific configurations"""
         self.platform_configs = {
             PlatformType.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
@@ -407,7 +414,8 @@ class PlatformWorkflows:
         self._setup_platform_workflows()
     
     def _setup_platform_workflows(self):
-        """Setup platform-specific workflows"""
+        """
+Setup platform-specific workflows"""
         self.platform_workflows = {
             PlatformType.SPOTIFY: {
                 "sync_playlists": self._spotify_sync_playlists,
@@ -518,7 +526,8 @@ class APIAutomation:
         headers: Optional[Dict[str, str]] = None,
         timeout: int = 30
     ) -> bool:
-        """Register a new API client"""
+        """
+Register a new API client"""
         try:
             client = httpx.AsyncClient(
                 base_url=base_url,
@@ -639,7 +648,8 @@ class CrossPlatformSync:
         self.sync_scheduler = None
     
     def add_sync_configuration(self, config: SyncConfiguration):
-        """Add synchronization configuration"""
+        """
+Add synchronization configuration"""
         self.sync_configurations[config.sync_id] = config
         logger.info(f"Sync configuration added: {config.name}")
     
@@ -767,7 +777,8 @@ class CrossPlatformSync:
         return transformed
     
     def get_sync_status(self, sync_id: str) -> Dict[str, Any]:
-        """Get synchronization status"""
+        """
+Get synchronization status"""
         config = self.sync_configurations.get(sync_id)
         active_sync = self.active_syncs.get(sync_id)
         
@@ -978,7 +989,8 @@ class CloudIntegration:
         provider_name: str,
         provider_config: Dict[str, Any]
     ):
-        """Register cloud service provider"""
+        """
+Register cloud service provider"""
         self.cloud_providers[provider_name] = {
             **provider_config,
             "registered_at": datetime.utcnow(),
@@ -1137,7 +1149,8 @@ class DatabaseIntegration:
         db_name: str,
         connection_config: Dict[str, Any]
     ):
-        """Register database connection"""
+        """
+Register database connection"""
         self.database_connections[db_name] = {
             **connection_config,
             "registered_at": datetime.utcnow(),
@@ -1287,7 +1300,8 @@ class EventDrivenIntegration:
         stream_name: str,
         stream_config: Dict[str, Any]
     ) -> str:
-        """Create event stream for real-time integration"""
+        """
+Create event stream for real-time integration"""
         stream_id = str(uuid.uuid4())
         
         stream = {
@@ -1324,7 +1338,8 @@ class EventDrivenIntegration:
         event_data: Dict[str, Any],
         stream_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Publish event to integration system"""
+        """
+Publish event to integration system"""
         event = {
             "event_id": str(uuid.uuid4()),
             "event_type": event_type,

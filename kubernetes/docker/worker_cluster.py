@@ -14,6 +14,7 @@ Professional Docker configuration for distributed worker cluster
 supporting high-performance async task processing, queue management,
 and auto-scaling for IA-Influencer multi-format content processing.
 """
+
 from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WorkerClusterDockerConfig:
-    """Enterprise Worker Cluster Docker Configuration"""
+    """
+Enterprise Worker Cluster Docker Configuration"""
     
     # Image Configuration
     image_name: str = "ia-influencer/worker-cluster"
@@ -222,7 +224,8 @@ ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 CMD ["celery", "worker", "-A", "workers.celery_app", "--loglevel=info"]
 """
     def generate_docker_compose_services(self) -> Dict[str, Any]:
-        """Generate Docker Compose services for worker cluster"""
+        """
+Generate Docker Compose services for worker cluster"""
         services = {}
         
         # Generate worker services for each queue
@@ -532,7 +535,8 @@ pytest-asyncio==0.21.1
 pytest-celery==0.0.0a1
 """
     def generate_worker_config_files(self) -> Dict[str, str]:
-        """Generate worker configuration files"""
+        """
+Generate worker configuration files"""
         configs = {}
         
         # Celery configuration
@@ -773,7 +777,8 @@ AUTOSCALER_CONFIG: Dict[str, Any] = {
         return configs
     
     def generate_scripts(self) -> Dict[str, str]:
-        """Generate worker scripts"""
+        """
+Generate worker scripts"""
         scripts = {}
         
         # Entrypoint script
@@ -943,7 +948,8 @@ echo "✅ All ML models downloaded successfully!"
         return scripts
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all worker cluster configuration files"""
+        """
+Save all worker cluster configuration files"""
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         

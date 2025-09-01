@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -18,7 +19,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class CurrencyEnum(str, Enum):
-    """Supported currencies"""
+    """
+Supported currencies"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -36,6 +39,7 @@ class CurrencyEnum(str, Enum):
 
 class RevenueSourceEnum(str, Enum):
     """Sources of revenue"""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     ADVERTISING = "advertising"
@@ -57,6 +61,7 @@ class RevenueSourceEnum(str, Enum):
 
 class PaymentStatusEnum(str, Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -70,6 +75,7 @@ class PaymentStatusEnum(str, Enum):
 
 class PaymentMethodEnum(str, Enum):
     """Payment methods"""
+
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -83,6 +89,7 @@ class PaymentMethodEnum(str, Enum):
 
 class MonetizationRuleTypeEnum(str, Enum):
     """Types of monetization rules"""
+
     PERCENTAGE_SPLIT = "percentage_split"
     FIXED_AMOUNT = "fixed_amount"
     TIERED_COMMISSION = "tiered_commission"
@@ -95,6 +102,7 @@ class MonetizationRuleTypeEnum(str, Enum):
 
 class TaxStatusEnum(str, Enum):
     """Tax status categories"""
+
     INDIVIDUAL = "individual"
     BUSINESS = "business"
     NON_PROFIT = "non_profit"
@@ -197,7 +205,8 @@ class RevenueTrackingBaseSchema(BaseModel):
 
 
 class RevenueTrackingCreateSchema(RevenueTrackingBaseSchema):
-    """Schema for creating revenue tracking entries"""
+    """
+Schema for creating revenue tracking entries"""
     # Additional metadata
     transaction_id: Optional[str] = Field(None, description="External transaction ID")
     reference_id: Optional[str] = Field(None, description="Platform reference ID")

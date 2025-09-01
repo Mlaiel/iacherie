@@ -2,6 +2,7 @@
 """System Maintenance Manager
 Automated system maintenance, updates, and housekeeping for the IA Influencer Agent platform
 """
+
 import os
 import sys
 import time
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class MaintenanceType(Enum):
-    """Maintenance type enumeration"""
+    """
+Maintenance type enumeration"""
+
     SYSTEM_UPDATE = "system_update"
     DATABASE_MAINTENANCE = "database_maintenance"
     LOG_ROTATION = "log_rotation"
@@ -44,6 +47,7 @@ class MaintenanceType(Enum):
 
 class MaintenanceStatus(Enum):
     """Maintenance status enumeration"""
+
     SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -53,6 +57,7 @@ class MaintenanceStatus(Enum):
 
 class Priority(Enum):
     """Priority enumeration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -73,7 +78,8 @@ class MaintenanceWindow:
 
 @dataclass
 class MaintenanceTask:
-    """Maintenance task data class"""
+    """
+Maintenance task data class"""
     id: str
     name: str
     description: str
@@ -93,7 +99,8 @@ class MaintenanceTask:
 
 @dataclass
 class SystemHealth:
-    """System health data class"""
+    """
+System health data class"""
     timestamp: datetime
     cpu_usage: float
     memory_usage: float
@@ -112,7 +119,8 @@ class SystemMaintenance:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize system maintenance manager"""
+        """
+Initialize system maintenance manager"""
         self.config_path = config_path or "/etc/maintenance/config.yaml"
         self.maintenance_windows = {}
         self.scheduled_tasks = {}

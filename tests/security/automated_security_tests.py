@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE TESTS DE SÉCURITÉ AUTOMATISÉS COMPLET
@@ -19,6 +19,7 @@ Tests de sécurité enterprise-grade pour toutes les couches:
 - Tests de sécurité API et microservices
 - Tests de sécurité infrastructure et conteneurs
 """
+
 import asyncio
 import logging
 import json
@@ -72,6 +73,7 @@ logger = logging.getLogger(__name__)
 
 class SecurityTestType(Enum):
     """Types de tests de sécurité"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     INPUT_VALIDATION = "input_validation"
@@ -91,6 +93,7 @@ class SecurityTestType(Enum):
 
 class SecurityTestSeverity(Enum):
     """Niveaux de sévérité des tests"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -100,6 +103,7 @@ class SecurityTestSeverity(Enum):
 
 class SecurityTestStatus(Enum):
     """Statuts des tests de sécurité"""
+
     PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
@@ -129,7 +133,8 @@ class SecurityTestResult:
     compliance_impact: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertir en dictionnaire"""
+        """
+Convertir en dictionnaire"""
         return {
             "test_id": self.test_id,
             "test_name": self.test_name,
@@ -744,7 +749,8 @@ class SecurityTestSuite:
 
 
 class SecurityTestRunner:
-    """Lanceur de tests de sécurité"""
+    """
+Lanceur de tests de sécurité"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -802,7 +808,8 @@ async def create_security_test_suite(target_host: str = "localhost", target_port
 
 # CLI interface pour les tests de sécurité
 async def main():
-    """Interface CLI pour les tests de sécurité"""
+    """
+Interface CLI pour les tests de sécurité"""
     import argparse
     
     parser = argparse.ArgumentParser(description="Automated Security Testing Suite")

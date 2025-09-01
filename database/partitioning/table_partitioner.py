@@ -20,6 +20,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import logging
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Tuple
@@ -40,7 +41,8 @@ from .partition_manager import (
 logger = logging.getLogger(__name__)
 
 class PartitioningError(Exception):
-    """Custom exception for partitioning operations"""
+    """
+Custom exception for partitioning operations"""
     pass
 
 class TablePartitioner(ABC):
@@ -73,16 +75,19 @@ class TablePartitioner(ABC):
 
     @abstractmethod
     def get_partition_name(self, **kwargs) -> str:
-        """Get partition name for given parameters"""
+        """
+Get partition name for given parameters"""
         pass
 
     @abstractmethod
     def get_partition_for_data(self, **kwargs) -> str:
-        """Determine which partition should contain specific data"""
+        """
+Determine which partition should contain specific data"""
         pass
 
     def _create_base_indexes(self, session: Session, partition_name: str):
-        """Create base indexes common to all partitions"""
+        """
+Create base indexes common to all partitions"""
         try:
             # Primary key index (usually exists by default)
             session.execute(text(f"""
@@ -107,7 +112,8 @@ class TablePartitioner(ABC):
         pass
 
     def validate_partition_health(self, partition_name: str) -> bool:
-        """Validate partition health and integrity"""
+        """
+Validate partition health and integrity"""
         try:
             with self.session_factory() as session:
                 # Check if partition exists
@@ -222,7 +228,8 @@ class ContentFingerprintPartitioner(TablePartitioner):
         super().__init__(session_factory, 'content_fingerprints', config)
 
     def create_partitions(self) -> bool:
-        """Create time+user composite partitions for content fingerprints"""
+        """
+Create time+user composite partitions for content fingerprints"""
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -366,7 +373,8 @@ class RevenueTrackingPartitioner(TablePartitioner):
         super().__init__(session_factory, 'revenue_tracking', config)
 
     def create_partitions(self) -> bool:
-        """Create temporal partitions for revenue tracking"""
+        """
+Create temporal partitions for revenue tracking"""
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -495,7 +503,8 @@ class ProtectionAlertPartitioner(TablePartitioner):
         super().__init__(session_factory, 'protection_alerts', config)
 
     def create_partitions(self) -> bool:
-        """Create time+severity composite partitions for protection alerts"""
+        """
+Create time+severity composite partitions for protection alerts"""
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -643,7 +652,8 @@ class UserContentPartitioner(TablePartitioner):
         super().__init__(session_factory, 'user_content', config)
 
     def create_partitions(self) -> bool:
-        """Create user-based hash partitions for user content"""
+        """
+Create user-based hash partitions for user content"""
         try:
             with self.session_factory() as session:
                 # Create hash partitions based on user_id
@@ -777,7 +787,8 @@ class AnalyticsPartitioner(TablePartitioner):
         super().__init__(session_factory, table_name, config)
 
     def create_partitions(self) -> bool:
-        """Create temporal partitions for analytics data"""
+        """
+Create temporal partitions for analytics data"""
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -911,7 +922,8 @@ class AuditLogPartitioner(TablePartitioner):
         super().__init__(session_factory, 'audit_logs', config)
 
     def create_partitions(self) -> bool:
-        """Create temporal partitions for audit logs"""
+        """
+Create temporal partitions for audit logs"""
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)

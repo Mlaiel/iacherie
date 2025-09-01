@@ -5,8 +5,9 @@ Advanced monitoring and alerting system for real-time stream health,
 performance tracking, and automated incident response.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -29,7 +30,9 @@ settings = get_settings()
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -39,6 +42,7 @@ class AlertSeverity(str, Enum):
 
 class MonitoringMetric(str, Enum):
     """Monitoring metric types"""
+
     THROUGHPUT = "throughput"
     LATENCY = "latency"
     ERROR_RATE = "error_rate"
@@ -66,7 +70,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
+    """
+Alert instance"""
     id: str
     rule_id: str
     severity: AlertSeverity
@@ -80,7 +85,8 @@ class Alert:
 
 
 class StreamHealth(BaseModel):
-    """Stream health status"""
+    """
+Stream health status"""
     stream_id: str = Field(description="Stream identifier")
     status: str = Field(description="Health status")
     last_activity: datetime = Field(description="Last activity timestamp")
@@ -121,7 +127,8 @@ class StreamMonitor:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream monitor with dependencies"""
+        """
+Initialize stream monitor with dependencies"""
         try:
             from ...core.cache import get_redis_client
             self.redis = await get_redis_client()
@@ -252,11 +259,13 @@ class StreamMonitor:
         return self.stream_health.get(stream_id)
         
     async def get_all_stream_health(self) -> List[StreamHealth]:
-        """Get health status for all monitored streams"""
+        """
+Get health status for all monitored streams"""
         return list(self.stream_health.values())
         
     async def get_monitoring_stats(self) -> MonitoringStats:
-        """Get comprehensive monitoring statistics"""
+        """
+Get comprehensive monitoring statistics"""
         try:
             total_events = sum(health.event_count for health in self.stream_health.values())
             total_errors = sum(health.error_count for health in self.stream_health.values())
@@ -326,7 +335,8 @@ class StreamMonitor:
         return [alert for alert in self.active_alerts.values() if not alert.resolved_at]
         
     async def acknowledge_alert(self, alert_id: str) -> bool:
-        """Acknowledge alert"""
+        """
+Acknowledge alert"""
         if alert_id in self.active_alerts:
             self.active_alerts[alert_id].acknowledged = True
             logger.info(f"Acknowledged alert: {alert_id}")
@@ -352,7 +362,8 @@ class StreamMonitor:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Get historical metrics data"""
+        """
+Get historical metrics data"""
         try:
             # Filter metrics based on parameters
             if stream_id:
@@ -483,7 +494,8 @@ class StreamMonitor:
         return metric_map.get(metric, 0.0)
         
     def _evaluate_condition(self, value: float, threshold: float, operator: str) -> bool:
-        """Evaluate alert condition"""
+        """
+Evaluate alert condition"""
         operators = {
             ">": lambda v, t: v > t,
             "<": lambda v, t: v < t,

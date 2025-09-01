@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Enterprise Features Module Tests
+"""
+Enterprise Features Module Tests
 ===============================
 
 Comprehensive unit tests for enterprise features including white-label management,
@@ -26,6 +28,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import pytest
 import sys
 import os
@@ -87,7 +90,8 @@ class TestWhiteLabelManager:
     
     @pytest.fixture
     def white_label_manager(self):
-        """Mock white-label manager fixture"""
+        """
+Mock white-label manager fixture"""
         config = {
             'storage_path': '/tmp/test_wl',
             'default_theme': 'corporate_blue'
@@ -96,7 +100,8 @@ class TestWhiteLabelManager:
     
     @pytest.mark.asyncio
     async def test_create_tenant_configuration(self, white_label_manager):
-        """Test tenant configuration creation"""
+        """
+Test tenant configuration creation"""
         # Mock successful configuration creation
         mock_config = Mock()
         mock_config.tenant_id = "test_tenant_123"
@@ -171,12 +176,14 @@ class TestBrandingEngine:
     
     @pytest.fixture
     def branding_engine(self):
-        """Mock branding engine fixture"""
+        """
+Mock branding engine fixture"""
         return Mock(spec=BrandingEngine)
     
     @pytest.mark.asyncio
     async def test_color_intelligence_analysis(self, branding_engine):
-        """Test color analysis functionality"""
+        """
+Test color analysis functionality"""
         mock_analysis = {
             'dominant_colors': ['#1e40af', '#3b82f6'],
             'color_harmony': 'analogous',
@@ -195,7 +202,8 @@ class TestBrandingEngine:
     
     @pytest.mark.asyncio
     async def test_logo_processing(self, branding_engine):
-        """Test logo processing and optimization"""
+        """
+Test logo processing and optimization"""
         mock_variants = [
             {'variant_id': 'logo_web_256x256', 'use_case': 'web_header'},
             {'variant_id': 'logo_mobile_120x120', 'use_case': 'mobile_app'}
@@ -245,12 +253,14 @@ class TestEnterpriseSSO:
     
     @pytest.fixture
     def enterprise_sso(self):
-        """Mock enterprise SSO fixture"""
+        """
+Mock enterprise SSO fixture"""
         return Mock(spec=EnterpriseSSO)
     
     @pytest.mark.asyncio
     async def test_saml_provider_configuration(self, enterprise_sso):
-        """Test SAML provider configuration"""
+        """
+Test SAML provider configuration"""
         enterprise_sso.configure_saml_provider = AsyncMock(return_value=True)
         
         saml_config = {
@@ -327,12 +337,14 @@ class TestCustomAITrainer:
     
     @pytest.fixture
     def ai_trainer(self):
-        """Mock AI trainer fixture"""
+        """
+Mock AI trainer fixture"""
         return Mock(spec=CustomAITrainer)
     
     @pytest.mark.asyncio
     async def test_training_job_creation(self, ai_trainer):
-        """Test training job creation"""
+        """
+Test training job creation"""
         ai_trainer.create_training_job = AsyncMock(return_value="training_123")
         
         model_config = {
@@ -410,12 +422,14 @@ class TestOnPremiseDeployment:
     
     @pytest.fixture
     def deployment_manager(self):
-        """Mock deployment manager fixture"""
+        """
+Mock deployment manager fixture"""
         return Mock(spec=OnPremiseDeployment)
     
     @pytest.mark.asyncio
     async def test_deployment_plan_creation(self, deployment_manager):
-        """Test deployment plan creation"""
+        """
+Test deployment plan creation"""
         deployment_manager.create_deployment_plan = AsyncMock(return_value="deployment_123")
         
         infrastructure_config = {
@@ -483,12 +497,14 @@ class TestEnterpriseAnalytics:
     
     @pytest.fixture
     def analytics_engine(self):
-        """Mock analytics engine fixture"""
+        """
+Mock analytics engine fixture"""
         return Mock(spec=EnterpriseAnalytics)
     
     @pytest.mark.asyncio
     async def test_dashboard_creation(self, analytics_engine):
-        """Test analytics dashboard creation"""
+        """
+Test analytics dashboard creation"""
         analytics_engine.create_dashboard = AsyncMock(return_value="dashboard_123")
         
         dashboard_config = {
@@ -552,12 +568,14 @@ class TestComplianceManager:
     
     @pytest.fixture
     def compliance_manager(self):
-        """Mock compliance manager fixture"""
+        """
+Mock compliance manager fixture"""
         return Mock(spec=ComplianceManager)
     
     @pytest.mark.asyncio
     async def test_compliance_assessment(self, compliance_manager):
-        """Test compliance assessment execution"""
+        """
+Test compliance assessment execution"""
         mock_assessment_id = "assessment_123"
         compliance_manager.conduct_compliance_assessment = AsyncMock(return_value=mock_assessment_id)
         
@@ -645,12 +663,14 @@ class TestEnterpriseIntegration:
     
     @pytest.fixture
     def enterprise_index(self):
-        """Mock enterprise index fixture"""
+        """
+Mock enterprise index fixture"""
         return Mock(spec=EnterpriseIndex)
     
     @pytest.mark.asyncio
     async def test_enterprise_index_initialization(self, enterprise_index):
-        """Test enterprise index initialization"""
+        """
+Test enterprise index initialization"""
         enterprise_index.initialize = AsyncMock(return_value=True)
         
         result = await enterprise_index.initialize()
@@ -660,7 +680,8 @@ class TestEnterpriseIntegration:
     
     @pytest.mark.asyncio
     async def test_service_coordination(self, enterprise_index):
-        """Test enterprise service coordination"""
+        """
+Test enterprise service coordination"""
         mock_white_label_service = Mock()
         mock_branding_service = Mock()
         mock_sso_service = Mock()
@@ -683,7 +704,8 @@ class TestEnterpriseIntegration:
     
     @pytest.mark.asyncio
     async def test_enterprise_health_check(self, enterprise_index):
-        """Test enterprise system health check"""
+        """
+Test enterprise system health check"""
         mock_health_status = {
             'status': 'healthy',
             'total_services': 7,
@@ -705,11 +727,13 @@ class TestEnterpriseIntegration:
 
 
 class TestEnterpriseWorkflow:
-    """Test complete enterprise workflow integration"""
+    """
+Test complete enterprise workflow integration"""
     
     @pytest.mark.asyncio
     async def test_complete_enterprise_onboarding_workflow(self):
-        """Test complete enterprise customer onboarding workflow"""
+        """
+Test complete enterprise customer onboarding workflow"""
         # Mock all enterprise services
         white_label_manager = Mock()
         branding_engine = Mock()
@@ -768,7 +792,8 @@ class TestEnterprisePerformance:
     
     @pytest.mark.asyncio
     async def test_concurrent_tenant_operations(self):
-        """Test concurrent tenant operations performance"""
+        """
+Test concurrent tenant operations performance"""
         white_label_manager = Mock()
         white_label_manager.create_tenant_configuration = AsyncMock(
             side_effect=lambda tenant_id, org_name: Mock(tenant_id=tenant_id)
@@ -817,7 +842,8 @@ class TestEnterpriseErrorHandling:
     
     @pytest.mark.asyncio
     async def test_white_label_invalid_configuration(self):
-        """Test white-label manager with invalid configuration"""
+        """
+Test white-label manager with invalid configuration"""
         white_label_manager = Mock()
         white_label_manager.create_tenant_configuration = AsyncMock(
             side_effect=ValueError("Invalid tenant configuration")

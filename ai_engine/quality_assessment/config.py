@@ -4,7 +4,7 @@ Advanced configuration settings and constants for the quality assessment module.
 Provides customizable thresholds, parameters, and platform-specific settings.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software and all associated concepts, algorithms, and implementations are the exclusive 
@@ -13,6 +13,7 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
+
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -20,7 +21,9 @@ import json
 
 
 class ConfigurationLevel(Enum):
-    """Configuration complexity levels"""
+    """
+Configuration complexity levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -200,7 +203,8 @@ class QualityThresholds:
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration settings"""
+    """
+Platform-specific configuration settings"""
     
     platform_specs: Dict[str, Dict[str, Any]] = field(default_factory=lambda: {
         'youtube': {
@@ -313,7 +317,8 @@ class PlatformConfiguration:
 
 @dataclass
 class ProcessingConfiguration:
-    """Processing and performance configuration"""
+    """
+Processing and performance configuration"""
     
     # Performance settings
     max_workers: int = field(default=8)
@@ -402,7 +407,8 @@ class SecurityConfiguration:
 
 
 class QualityAssessmentConfig:
-    """Main configuration class for Quality Assessment Module"""
+    """
+Main configuration class for Quality Assessment Module"""
     
     def __init__(self, config_level: ConfigurationLevel = ConfigurationLevel.ADVANCED):
         self.config_level = config_level
@@ -416,7 +422,8 @@ class QualityAssessmentConfig:
         self._apply_config_level_settings()
     
     def _apply_config_level_settings(self):
-        """Apply configuration based on complexity level"""
+        """
+Apply configuration based on complexity level"""
         if self.config_level == ConfigurationLevel.BASIC:
             self.processing.max_workers = 4
             self.processing.use_gpu = False
@@ -435,7 +442,8 @@ class QualityAssessmentConfig:
             self.security.content_safety_checking = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         return {
             'config_level': self.config_level.value,
             'thresholds': {
@@ -472,13 +480,15 @@ class QualityAssessmentConfig:
         }
     
     def save_to_file(self, file_path: str):
-        """Save configuration to JSON file"""
+        """
+Save configuration to JSON file"""
         with open(file_path, 'w') as f:
             json.dump(self.to_dict(), f, indent=2)
     
     @classmethod
     def load_from_file(cls, file_path: str) -> 'QualityAssessmentConfig':
-        """Load configuration from JSON file"""
+        """
+Load configuration from JSON file"""
         with open(file_path, 'r') as f:
             config_data = json.load(f)
         

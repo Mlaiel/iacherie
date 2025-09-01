@@ -4,6 +4,7 @@ Advanced revenue tracking and analytics system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueMetrics:
-    """Revenue metrics data structure"""
+    """
+Revenue metrics data structure"""
     period_start: datetime
     period_end: datetime
     total_revenue: float

@@ -13,6 +13,7 @@ Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROH
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -31,7 +32,8 @@ Base = declarative_base()
 
 
 class MetricType(Enum):
-    """Performance metric types."""
+    """
+Performance metric types."""
     
     # System Metrics
     CPU_UTILIZATION = "cpu_utilization"
@@ -71,6 +73,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels."""
+
     
     CRITICAL = "critical"    # System failure or severe degradation
     HIGH = "high"           # Performance significantly impacted
@@ -81,6 +84,7 @@ class AlertSeverity(Enum):
 
 class ScalingEventType(Enum):
     """Scaling event types."""
+
     
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
@@ -92,6 +96,7 @@ class ScalingEventType(Enum):
 
 class SLAStatus(Enum):
     """SLA compliance status."""
+
     
     COMPLIANT = "compliant"
     WARNING = "warning"
@@ -113,7 +118,8 @@ class PerformanceMetric:
 
 @dataclass
 class AlertContext:
-    """Alert context information."""
+    """
+Alert context information."""
     
     alert_id: str
     metric_type: MetricType
@@ -128,7 +134,8 @@ class AlertContext:
 
 
 class PerformanceLog(Base):
-    """Performance monitoring audit log model."""
+    """
+Performance monitoring audit log model."""
     
     __tablename__ = "performance_monitoring_logs"
     
@@ -176,7 +183,8 @@ class MetricsCollector:
     """Advanced metrics collection and processing system."""
     
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize metrics collector."""
+        """
+Initialize metrics collector."""
         self.db_session = db_session
         self.config = config or {}
         self.metric_buffer = {}
@@ -308,7 +316,8 @@ class MetricsCollector:
                 await self._trigger_alert(metric, AlertSeverity.HIGH)
     
     async def _trigger_alert(self, metric: PerformanceMetric, severity: AlertSeverity):
-        """Trigger performance alert."""
+        """
+Trigger performance alert."""
         alert_id = f"PERF-{uuid.uuid4().hex[:8].upper()}"
         
         # Alert will be handled by AlertManager
@@ -333,10 +342,12 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """Advanced alert management and escalation system."""
+    """
+Advanced alert management and escalation system."""
     
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize alert manager."""
+        """
+Initialize alert manager."""
         self.db_session = db_session
         self.config = config or {}
         self.active_alerts = {}
@@ -525,10 +536,12 @@ class AlertManager:
 
 
 class ResourceTracker:
-    """Advanced resource utilization tracking system."""
+    """
+Advanced resource utilization tracking system."""
     
     def __init__(self, db_session=None):
-        """Initialize resource tracker."""
+        """
+Initialize resource tracker."""
         self.db_session = db_session
         self.resource_baselines = {}
         self.capacity_forecasts = {}
@@ -611,7 +624,8 @@ class ResourceTracker:
         return min(100.0, weighted_sum)
     
     def _get_utilization_severity(self, score: float) -> str:
-        """Get severity based on utilization score."""
+        """
+Get severity based on utilization score."""
         if score >= 90:
             return "critical"
         elif score >= 75:
@@ -637,10 +651,12 @@ class ResourceTracker:
 
 
 class ScalingEventLogger:
-    """Advanced scaling event logging and analysis."""
+    """
+Advanced scaling event logging and analysis."""
     
     def __init__(self, db_session=None):
-        """Initialize scaling event logger."""
+        """
+Initialize scaling event logger."""
         self.db_session = db_session
         self.scaling_history = {}
     
@@ -727,7 +743,8 @@ class SLAMonitor:
     """Advanced SLA monitoring and compliance tracking."""
     
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize SLA monitor."""
+        """
+Initialize SLA monitor."""
         self.db_session = db_session
         self.config = config or {}
         self.sla_targets = self.config.get('sla_targets', {
@@ -993,10 +1010,12 @@ class SLAMonitor:
 
 
 class PerformanceMonitor:
-    """Main performance monitoring orchestrator."""
+    """
+Main performance monitoring orchestrator."""
     
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize performance monitor."""
+        """
+Initialize performance monitor."""
         self.db_session = db_session
         self.config = config or {}
         
@@ -1092,7 +1111,8 @@ class PerformanceMonitor:
         }
     
     async def _audit_alerts(self, service_name: str) -> Dict[str, Any]:
-        """Audit alerts for service."""
+        """
+Audit alerts for service."""
         # Implementation would query alert logs
         return {
             'alerts_triggered_24h': 5,
@@ -1102,7 +1122,8 @@ class PerformanceMonitor:
         }
     
     async def _audit_resources(self, service_name: str) -> Dict[str, Any]:
-        """Audit resource utilization for service."""
+        """
+Audit resource utilization for service."""
         # Implementation would query resource logs
         return {
             'average_cpu_utilization': 65.5,
@@ -1112,7 +1133,8 @@ class PerformanceMonitor:
         }
     
     async def _audit_scaling(self, service_name: str) -> Dict[str, Any]:
-        """Audit scaling events for service."""
+        """
+Audit scaling events for service."""
         # Implementation would query scaling logs
         return {
             'scaling_events_7d': 12,
@@ -1122,7 +1144,8 @@ class PerformanceMonitor:
         }
     
     async def _audit_sla(self, service_name: str) -> Dict[str, Any]:
-        """Audit SLA compliance for service."""
+        """
+Audit SLA compliance for service."""
         # Implementation would query SLA logs
         return {
             'overall_sla_compliance': 99.2,
@@ -1132,7 +1155,8 @@ class PerformanceMonitor:
         }
     
     def _generate_audit_summary(self, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate audit summary."""
+        """
+Generate audit summary."""
         summary = {
             'overall_health_score': 90,
             'performance_grade': 'A',
@@ -1172,7 +1196,8 @@ class PerformanceMonitor:
         return summary
     
     def _generate_audit_recommendations(self, results: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Generate audit recommendations."""
+        """
+Generate audit recommendations."""
         recommendations = []
         
         # Resource optimization recommendations

@@ -28,6 +28,7 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
+
 import hashlib
 import json
 import secrets
@@ -54,7 +55,9 @@ settings = get_settings()
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE = "binance_smart_chain"
@@ -65,6 +68,7 @@ class BlockchainNetwork(Enum):
 
 class TransactionStatus(Enum):
     """Blockchain transaction status"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -73,6 +77,7 @@ class TransactionStatus(Enum):
 
 class SmartContractType(Enum):
     """Smart contract types"""
+
     COPYRIGHT_REGISTRATION = "copyright_registration"
     LICENSE_AGREEMENT = "license_agreement"
     REVENUE_SHARING = "revenue_sharing"
@@ -146,7 +151,8 @@ class SmartContract:
     parameters: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "contract_id": self.contract_id,
             "contract_type": self.contract_type.value,
@@ -170,7 +176,8 @@ class BlockchainSecurityManager:
         self._setup_cryptographic_keys()
     
     def _setup_blockchain_connections(self):
-        """Initialize blockchain network connections"""
+        """
+Initialize blockchain network connections"""
         self.network_configs = {
             BlockchainNetwork.ETHEREUM: {
                 "rpc_url": settings.ETHEREUM_RPC_URL or "https://mainnet.infura.io/v3/",
@@ -209,7 +216,8 @@ class BlockchainSecurityManager:
         metadata: Dict[str, Any],
         network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> BlockchainRecord:
-        """Register content ownership on blockchain"""
+        """
+Register content ownership on blockchain"""
         try:
             # Create content fingerprint hash
             fingerprint_data = {
@@ -675,7 +683,8 @@ async def verify_ownership(
     content_hash: str,
     network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
 ) -> Optional[Dict[str, Any]]:
-    """Verify content ownership on blockchain"""
+    """
+Verify content ownership on blockchain"""
     return await blockchain_manager.verify_content_ownership(content_hash, network)
 
 async def create_copyright_certificate(
@@ -684,7 +693,8 @@ async def create_copyright_certificate(
     content_data: bytes,
     metadata: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Create blockchain copyright certificate"""
+    """
+Create blockchain copyright certificate"""
     return await blockchain_manager.create_copyright_proof(
         content_id, creator_id, content_data, metadata
     )
@@ -694,7 +704,8 @@ async def deploy_protection_contract(
     network: BlockchainNetwork,
     parameters: Dict[str, Any]
 ) -> SmartContract:
-    """Deploy smart contract for protection"""
+    """
+Deploy smart contract for protection"""
     return await blockchain_manager.deploy_smart_contract(
         contract_type, network, parameters
     )

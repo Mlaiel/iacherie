@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -44,7 +45,9 @@ from ..core.base_models import ModelStatus
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -54,6 +57,7 @@ class ProtectionLevel(Enum):
 
 class RightsType(Enum):
     """Types of intellectual property rights"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
@@ -66,6 +70,7 @@ class RightsType(Enum):
 
 class ViolationType(Enum):
     """Types of IP violations"""
+
     DIRECT_COPY = "direct_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -78,6 +83,7 @@ class ViolationType(Enum):
 
 class ContentSource(Enum):
     """Sources of content for rights checking"""
+
     ORIGINAL = "original"
     LICENSED = "licensed"
     PUBLIC_DOMAIN = "public_domain"
@@ -188,7 +194,8 @@ class ProtectionIntegrator:
     """
     
     def __init__(self):
-        """Initialize protection integrator"""
+        """
+Initialize protection integrator"""
         self.logger = logging.getLogger(__name__)
         self.status = ModelStatus.INITIALIZING
         
@@ -648,7 +655,8 @@ class ProtectionIntegrator:
         protection_policy: ProtectionPolicy,
         rights_verification: RightsVerification
     ) -> ContentRecommendation:
-        """Apply protection measures to recommendation"""
+        """
+Apply protection measures to recommendation"""
         protected_recommendation = recommendation
         
         # Add watermarking if enabled
@@ -677,7 +685,8 @@ class ProtectionIntegrator:
         recommendation: ContentRecommendation,
         rights_verification: RightsVerification
     ) -> List[str]:
-        """Generate legal compliance notes"""
+        """
+Generate legal compliance notes"""
         notes = []
         
         if rights_verification.attribution_required:
@@ -702,7 +711,8 @@ class ProtectionIntegrator:
         return True  # Placeholder
     
     async def _check_rights_conflicts(self, creator_profile: CreatorProfile, collaborator_id: str) -> List[str]:
-        """Check for rights conflicts between creators"""
+        """
+Check for rights conflicts between creators"""
         conflicts = []
         
         # Check for exclusive contracts
@@ -712,7 +722,8 @@ class ProtectionIntegrator:
         return conflicts  # Placeholder
     
     async def _assess_legal_compatibility(self, collaboration_match: CollaborationMatch) -> float:
-        """Assess legal compatibility for collaboration"""
+        """
+Assess legal compatibility for collaboration"""
         # Simplified compatibility assessment
         return 0.8  # Placeholder
     
@@ -721,7 +732,8 @@ class ProtectionIntegrator:
         creator_profile: CreatorProfile,
         collaboration_match: CollaborationMatch
     ) -> Dict[str, Any]:
-        """Generate collaboration agreement template"""
+        """
+Generate collaboration agreement template"""
         agreement = {
             "agreement_type": "content_collaboration",
             "parties": [creator_profile.creator_id, collaboration_match.collaborator_id],
@@ -793,7 +805,8 @@ class ProtectionIntegrator:
         return violations
     
     async def _assess_violation_severity(self, violation: Dict[str, Any], content: Dict[str, Any]) -> str:
-        """Assess severity of violation"""
+        """
+Assess severity of violation"""
         similarity = violation.get("similarity", 0.0)
         
         if similarity > 0.9:

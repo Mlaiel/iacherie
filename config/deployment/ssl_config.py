@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -27,7 +28,9 @@ from pathlib import Path
 
 
 class CertificateType(Enum):
-    """SSL certificate types"""
+    """
+SSL certificate types"""
+
     SELF_SIGNED = "self_signed"
     LETS_ENCRYPT = "lets_encrypt"
     COMMERCIAL = "commercial"
@@ -38,6 +41,7 @@ class CertificateType(Enum):
 
 class TLSVersion(Enum):
     """Supported TLS versions"""
+
     TLS_1_2 = "TLSv1.2"
     TLS_1_3 = "TLSv1.3"
 
@@ -515,7 +519,8 @@ upstream {upstream_name} {{
 """
     
     def get_aws_alb_ssl_config(self) -> LoadBalancerSSLConfig:
-        """Get AWS Application Load Balancer SSL configuration"""
+        """
+Get AWS Application Load Balancer SSL configuration"""
         return LoadBalancerSSLConfig(
             ssl_policy="ELBSecurityPolicy-TLS-1-2-2019-07",
             certificate_arn=f"arn:aws:acm:eu-central-1:123456789012:certificate/{self.project_name}-{self.environment}",

@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -48,7 +49,8 @@ settings = get_settings()
 
 @dataclass
 class VimeoVideo:
-    """Vimeo video data structure"""
+    """
+Vimeo video data structure"""
     id: str
     name: str
     description: Optional[str]
@@ -79,7 +81,8 @@ class VimeoVideo:
 
 @dataclass
 class VimeoUser:
-    """Vimeo user data structure"""
+    """
+Vimeo user data structure"""
     id: str
     name: str
     link: str
@@ -109,7 +112,8 @@ class VimeoUser:
 
 @dataclass
 class VimeoChannel:
-    """Vimeo channel/showcase data structure"""
+    """
+Vimeo channel/showcase data structure"""
     id: str
     name: str
     description: Optional[str]
@@ -140,7 +144,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Vimeo crawler engine"""
+        """
+Initialize Vimeo crawler engine"""
         super().__init__(platform="vimeo", config=config)
         
         # Rate limiting
@@ -472,7 +477,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         return (total_engagement / video.play_count) * 100
     
     def _calculate_quality_score(self, video: VimeoVideo) -> float:
-        """Calculate quality score based on video attributes"""
+        """
+Calculate quality score based on video attributes"""
         score = 0.0
         
         # Resolution quality
@@ -503,7 +509,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         return min(score, 1.0)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
+        """
+Clean up resources"""
         try:
             if self.session:
                 await self.session.close()

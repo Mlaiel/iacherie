@@ -4,13 +4,14 @@ Architecture: Core Event Bus for Real-time Event Distribution
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
     Bus central d'événements pour la distribution temps réel des événements
     dans la plateforme IA-Influencer-Agent. Support pub/sub pattern avec 
     persistance et routage intelligent.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class EventPriority(Enum):
-    """Priorité des événements pour le routage"""
+    """
+Priorité des événements pour le routage"""
+
     LOW = "low"
     NORMAL = "normal"  
     HIGH = "high"
@@ -35,6 +38,7 @@ class EventPriority(Enum):
 
 class EventStatus(Enum):
     """Statut de traitement des événements"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -128,7 +132,8 @@ class EventSubscription:
         self.active = True
     
     def matches(self, event: Event) -> bool:
-        """Vérifie si l'événement correspond aux filtres"""
+        """
+Vérifie si l'événement correspond aux filtres"""
         if not self.active:
             return False
             
@@ -359,7 +364,8 @@ class EventBus:
         return matching
     
     async def _execute_handler(self, event: Event, subscription: EventSubscription):
-        """Exécute un handler d'événement"""
+        """
+Exécute un handler d'événement"""
         try:
             # Exécution dans l'executor si handler synchrone
             if asyncio.iscoroutinefunction(subscription.handler):

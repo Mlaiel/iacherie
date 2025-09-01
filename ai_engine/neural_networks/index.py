@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 from typing import Dict, List, Type
 from .base_networks import BaseNeuralNetwork, NetworkType
 
@@ -386,18 +387,21 @@ def get_networks_by_capability(capability: str) -> List[str]:
     return CAPABILITY_INDEX.get(capability, [])
 
 def get_networks_by_modality(modality: str) -> List[str]:
-    """Get all networks that support a specific modality"""
+    """
+Get all networks that support a specific modality"""
     return MODALITY_SUPPORT.get(modality, [])
 
 def get_network_info(network_name: str) -> Dict:
-    """Get detailed information about a specific network"""
+    """
+Get detailed information about a specific network"""
     for category in NEURAL_NETWORK_REGISTRY.values():
         if network_name in category:
             return category[network_name]
     return {}
 
 def get_production_ready_networks() -> List[str]:
-    """Get all production-ready networks"""
+    """
+Get all production-ready networks"""
     return CAPABILITY_INDEX["production_ready"]
 
 def get_networks_by_type(network_type: NetworkType) -> List[str]:

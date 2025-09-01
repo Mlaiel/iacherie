@@ -10,8 +10,9 @@ Advanced AI prediction system for content protection:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + ML Engineer + Data Scientist
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import numpy as np
 import pandas as pd
@@ -542,7 +543,8 @@ class PredictionEngine:
         }
     
     def _extract_classification_features(self, classification: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract classification-based features"""
+        """
+Extract classification-based features"""
         classifications = classification.get('classifications', {})
         return {
             'adult_content_score': classifications.get('adult_content', 0.0),
@@ -552,7 +554,8 @@ class PredictionEngine:
         }
     
     def _extract_threat_features(self, threats: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Extract threat-based features"""
+        """
+Extract threat-based features"""
         if not threats:
             return {'threat_count': 0, 'max_severity': 0.0, 'avg_confidence': 0.0}
         
@@ -568,7 +571,8 @@ class PredictionEngine:
         }
     
     def _extract_pattern_features(self, patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract pattern-based features"""
+        """
+Extract pattern-based features"""
         return {
             'anomaly_count': len(patterns.get('anomalies', [])),
             'usage_pattern_confidence': patterns.get('usage', {}).get('confidence', 0.0),
@@ -577,7 +581,8 @@ class PredictionEngine:
         }
     
     def _extract_temporal_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract temporal features"""
+        """
+Extract temporal features"""
         now = datetime.utcnow()
         upload_time = content_data.get('upload_time')
         
@@ -595,7 +600,8 @@ class PredictionEngine:
         }
     
     def _extract_user_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract user-based features"""
+        """
+Extract user-based features"""
         user_data = content_data.get('user_data', {})
         return {
             'user_reputation': user_data.get('reputation_score', 0.5),
@@ -606,7 +612,8 @@ class PredictionEngine:
         }
     
     def _extract_technical_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract technical features"""
+        """
+Extract technical features"""
         return {
             'fingerprint_strength': content_data.get('fingerprint_strength', 0.8),
             'compression_ratio': content_data.get('compression_ratio', 1.0),
@@ -615,7 +622,8 @@ class PredictionEngine:
         }
     
     def _flatten_features(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Flatten nested feature dictionary"""
+        """
+Flatten nested feature dictionary"""
         flattened = {}
         for category, category_features in features.items():
             for feature_name, feature_value in category_features.items():
@@ -640,7 +648,8 @@ class PredictionEngine:
         return vector
     
     def _get_relevant_features(self, prediction_type: str) -> List[str]:
-        """Get relevant features for specific prediction type"""
+        """
+Get relevant features for specific prediction type"""
         # This would be configured based on feature importance analysis
         base_features = [
             'content_features_file_size', 'content_features_quality_score',
@@ -651,12 +660,14 @@ class PredictionEngine:
     
     # Additional helper methods...
     def _map_severity_to_score(self, severity: str) -> float:
-        """Map severity string to numeric score"""
+        """
+Map severity string to numeric score"""
         mapping = {'low': 0.2, 'medium': 0.4, 'high': 0.7, 'critical': 1.0}
         return mapping.get(severity, 0.2)
     
     def _map_score_to_severity(self, score: float) -> str:
-        """Map numeric score to severity string"""
+        """
+Map numeric score to severity string"""
         if score >= 0.8:
             return 'critical'
         elif score >= 0.6:
@@ -667,7 +678,8 @@ class PredictionEngine:
             return 'low'
     
     def _predict_time_to_violation(self, probability: float) -> str:
-        """Predict time until potential violation"""
+        """
+Predict time until potential violation"""
         if probability >= 0.8:
             return 'within_24_hours'
         elif probability >= 0.6:
@@ -678,7 +690,8 @@ class PredictionEngine:
             return 'unlikely'
     
     def _predict_violation_type(self, features: Dict[str, Any]) -> str:
-        """Predict most likely type of violation"""
+        """
+Predict most likely type of violation"""
         # Simplified logic - would use ML model in practice
         copyright_risk = features.get('classification_features_copyright_risk_score', 0.0)
         if copyright_risk > 0.7:
@@ -690,7 +703,8 @@ class PredictionEngine:
     
     # Additional methods would continue here for completeness...
     def _calculate_prediction_confidence(self, predictions: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate confidence scores for all predictions"""
+        """
+Calculate confidence scores for all predictions"""
         confidences = {}
         for pred_type, pred_data in predictions.items():
             if isinstance(pred_data, dict) and 'confidence' in pred_data:
@@ -705,17 +719,20 @@ class PredictionEngine:
         return confidences
     
     def _extract_feature_importance(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract feature importance from trained models"""
+        """
+Extract feature importance from trained models"""
         # Placeholder implementation
         return {'top_features': ['copyright_risk', 'user_reputation', 'threat_count']}
     
     def _identify_risk_factors(self, predictions: Dict[str, Any], features: Dict[str, Any]) -> Dict[str, Any]:
-        """Identify key risk factors from predictions"""
+        """
+Identify key risk factors from predictions"""
         # Placeholder implementation
         return {'primary_risks': ['high_copyright_risk', 'suspicious_user_behavior']}
     
     async def _generate_recommendations(self, predictions: Dict[str, Any], features: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations based on predictions"""
+        """
+Generate actionable recommendations based on predictions"""
         # Placeholder implementation
         return [
             {'action': 'increase_monitoring', 'priority': 'high', 'reason': 'High violation likelihood'},

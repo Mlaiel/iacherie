@@ -7,9 +7,10 @@ in collaborative projects.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class OptimizationType(Enum):
-    """Types of AI-driven optimizations"""
+    """
+Types of AI-driven optimizations"""
+
     RESOURCE_ALLOCATION = "resource_allocation"
     TIMELINE_OPTIMIZATION = "timeline_optimization"
     BUDGET_OPTIMIZATION = "budget_optimization"
@@ -54,6 +57,7 @@ class OptimizationType(Enum):
 
 class PredictionConfidence(Enum):
     """Confidence levels for AI predictions"""
+
     VERY_LOW = "very_low"      # 0-20%
     LOW = "low"                # 20-40%
     MEDIUM = "medium"          # 40-60%
@@ -62,6 +66,7 @@ class PredictionConfidence(Enum):
 
 class OptimizationStatus(Enum):
     """Status of optimization processes"""
+
     QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -291,7 +296,8 @@ class AIInsight(Base):
 
 @dataclass
 class OptimizationRequest:
-    """Request configuration for AI optimization"""
+    """
+Request configuration for AI optimization"""
     project_id: str
     optimization_type: OptimizationType
     parameters: Dict[str, Any]

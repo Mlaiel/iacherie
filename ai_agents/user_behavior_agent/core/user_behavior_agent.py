@@ -184,7 +184,8 @@ class UserBehaviorAgent(BaseAIAgent):
         metrics, 
         user_ids: Optional[List[str]]
     ) -> List[BehaviorPrediction]:
-        """Generate behavioral predictions for users."""
+        """
+Generate behavioral predictions for users."""
         predictions = []
         
         if not user_ids:
@@ -257,7 +258,8 @@ class UserBehaviorAgent(BaseAIAgent):
         insights: Dict[str, Any], 
         user_segments: List[UserSegmentProfile]
     ) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations."""
+        """
+Generate actionable recommendations."""
         return [
             {
                 'type': 'retention_improvement',
@@ -290,7 +292,8 @@ class UserBehaviorAgent(BaseAIAgent):
         ]
     
     async def get_real_time_behavior_metrics(self) -> Dict[str, Any]:
-        """Get real-time behavior metrics."""
+        """
+Get real-time behavior metrics."""
         return {
             'active_users_now': 1247,
             'content_being_created': 23,

@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional
 import logging
 from datetime import datetime
@@ -49,13 +50,15 @@ class MonitoringModuleIndex:
     """
     
     def __init__(self):
-        """Initialize monitoring module index"""
+        """
+Initialize monitoring module index"""
         self.modules = self._build_module_index()
         self.capabilities = self._build_capability_map()
         self.integration_points = self._build_integration_map()
     
     def _build_module_index(self) -> Dict[str, Dict[str, Any]]:
-        """Build comprehensive module index"""
+        """
+Build comprehensive module index"""
         return {
             "core_monitoring": {
                 "prometheus": {
@@ -226,7 +229,8 @@ class MonitoringModuleIndex:
         return self.capabilities.get(capability, [])
     
     def get_integration_dependencies(self, module_name: str) -> List[str]:
-        """Get integration dependencies for a module"""
+        """
+Get integration dependencies for a module"""
         return self.integration_points.get("dependency_graph", {}).get(module_name, [])
     
     def get_data_flow_targets(self, module_name: str) -> List[str]:
@@ -241,7 +245,8 @@ class MonitoringModuleIndex:
         }
     
     def get_monitoring_stack_overview(self) -> Dict[str, Any]:
-        """Get comprehensive overview of the monitoring stack"""
+        """
+Get comprehensive overview of the monitoring stack"""
         total_modules = sum(len(modules) for modules in self.modules.values())
         total_capabilities = len(self.capabilities)
         

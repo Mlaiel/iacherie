@@ -22,6 +22,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import logging
 import time
 import threading
@@ -45,7 +46,9 @@ import redis
 logger = logging.getLogger(__name__)
 
 class ShardingTrigger(Enum):
-    """Triggers for dynamic sharding operations"""
+    """
+Triggers for dynamic sharding operations"""
+
     HOTSPOT_DETECTED = "hotspot_detected"
     CAPACITY_THRESHOLD = "capacity_threshold"
     PERFORMANCE_DEGRADATION = "performance_degradation"
@@ -56,6 +59,7 @@ class ShardingTrigger(Enum):
 
 class ReshardingStrategy(Enum):
     """Strategies for resharding operations"""
+
     SPLIT_HOTSPOT = "split_hotspot"
     MERGE_UNDERUTILIZED = "merge_underutilized"
     REBALANCE_LOAD = "rebalance_load"
@@ -66,6 +70,7 @@ class ReshardingStrategy(Enum):
 
 class MigrationStatus(Enum):
     """Data migration status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -94,7 +99,8 @@ class ShardMetrics:
 
 @dataclass
 class HotspotInfo:
-    """Information about detected hotspots"""
+    """
+Information about detected hotspots"""
     shard_id: str
     hotspot_type: str  # 'read', 'write', 'cpu', 'memory'
     severity: float  # 0-1 scale
@@ -105,7 +111,8 @@ class HotspotInfo:
     
 @dataclass
 class MigrationTask:
-    """Data migration task definition"""
+    """
+Data migration task definition"""
     task_id: str
     source_shard: str
     target_shard: str
@@ -123,7 +130,8 @@ class MigrationTask:
 
 @dataclass
 class RebalancingPlan:
-    """Comprehensive rebalancing plan"""
+    """
+Comprehensive rebalancing plan"""
     plan_id: str
     strategy: ReshardingStrategy
     trigger: ShardingTrigger
@@ -136,7 +144,8 @@ class RebalancingPlan:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class HotspotDetector:
-    """Intelligent hotspot detection system"""
+    """
+Intelligent hotspot detection system"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -146,7 +155,8 @@ class HotspotDetector:
         self.anomaly_detection_enabled = self.config.get('anomaly_detection', True)
         
     def analyze_shard_metrics(self, shard_metrics: List[ShardMetrics]) -> List[HotspotInfo]:
-        """Analyze shard metrics to detect hotspots"""
+        """
+Analyze shard metrics to detect hotspots"""
         hotspots = []
         
         # Update metrics history
@@ -183,7 +193,8 @@ class HotspotDetector:
         return hotspots
     
     def _detect_cpu_hotspot(self, shard_id: str, metrics: List[ShardMetrics]) -> Optional[HotspotInfo]:
-        """Detect CPU-based hotspots"""
+        """
+Detect CPU-based hotspots"""
         cpu_values = [m.cpu_usage for m in metrics]
         avg_cpu = statistics.mean(cpu_values)
         
@@ -203,7 +214,8 @@ class HotspotDetector:
         return None
     
     def _detect_memory_hotspot(self, shard_id: str, metrics: List[ShardMetrics]) -> Optional[HotspotInfo]:
-        """Detect memory-based hotspots"""
+        """
+Detect memory-based hotspots"""
         memory_values = [m.memory_usage for m in metrics]
         avg_memory = statistics.mean(memory_values)
         
@@ -223,7 +235,8 @@ class HotspotDetector:
         return None
     
     def _detect_io_hotspot(self, shard_id: str, metrics: List[ShardMetrics]) -> Optional[HotspotInfo]:
-        """Detect I/O-based hotspots"""
+        """
+Detect I/O-based hotspots"""
         io_values = [m.disk_io + m.network_io for m in metrics]
         avg_io = statistics.mean(io_values)
         
@@ -251,7 +264,8 @@ class HotspotDetector:
         return None
     
     def _detect_query_hotspot(self, shard_id: str, metrics: List[ShardMetrics]) -> Optional[HotspotInfo]:
-        """Detect query load hotspots"""
+        """
+Detect query load hotspots"""
         qps_values = [m.queries_per_second for m in metrics]
         response_times = [m.response_time for m in metrics]
         
@@ -277,7 +291,8 @@ class HotspotDetector:
         return None
 
 class LoadDistributor:
-    """Intelligent load distribution system"""
+    """
+Intelligent load distribution system"""
     
     def __init__(self, shard_coordinator):
         self.shard_coordinator = shard_coordinator
@@ -285,7 +300,8 @@ class LoadDistributor:
         self.rebalancing_in_progress = False
         
     def analyze_load_distribution(self) -> Dict[str, Any]:
-        """Analyze current load distribution across shards"""
+        """
+Analyze current load distribution across shards"""
         shard_loads = {}
         total_load = 0.0
         
@@ -334,7 +350,8 @@ class LoadDistributor:
         }
     
     def create_load_balancing_plan(self, analysis: Dict[str, Any]) -> Optional[RebalancingPlan]:
-        """Create plan for load balancing"""
+        """
+Create plan for load balancing"""
         if analysis['balanced']:
             return None
         
@@ -390,7 +407,8 @@ class ShardRebalancer:
         self.last_rebalancing = None
         
     def should_rebalance(self, analysis: Dict[str, Any]) -> bool:
-        """Determine if rebalancing should be triggered"""
+        """
+Determine if rebalancing should be triggered"""
         # Check if enough time has passed since last rebalancing
         if (self.last_rebalancing and 
             (datetime.utcnow() - self.last_rebalancing).seconds < self.min_rebalancing_interval):
@@ -407,7 +425,8 @@ class ShardRebalancer:
         return False
     
     def execute_rebalancing_plan(self, plan: RebalancingPlan) -> bool:
-        """Execute rebalancing plan"""
+        """
+Execute rebalancing plan"""
         try:
             logger.info(f"Executing rebalancing plan: {plan.plan_id}")
             
@@ -465,7 +484,8 @@ class DataMigrationManager:
         
     def create_migration_task(self, source_shard: str, target_shard: str, 
                             table_name: str, key_ranges: List[Tuple[Any, Any]]) -> MigrationTask:
-        """Create new migration task"""
+        """
+Create new migration task"""
         task_id = f"migration_{int(time.time())}_{source_shard}_{target_shard}"
         
         # Estimate migration size
@@ -518,7 +538,8 @@ class DataMigrationManager:
         return future
     
     def _execute_migration(self, task: MigrationTask) -> bool:
-        """Execute migration with zero downtime"""
+        """
+Execute migration with zero downtime"""
         try:
             logger.info(f"Starting migration: {task.task_id}")
             
@@ -812,7 +833,8 @@ class DynamicShardingManager:
         self.performance_trends['overloaded_count'].append((timestamp, len(analysis.get('overloaded_shards', []))))
     
     def _handle_hotspots(self, hotspots: List[HotspotInfo]):
-        """Handle detected hotspots"""
+        """
+Handle detected hotspots"""
         for hotspot in hotspots:
             if hotspot.severity > 0.8:  # Critical hotspot
                 logger.warning(f"Critical hotspot detected on {hotspot.shard_id}, taking action")

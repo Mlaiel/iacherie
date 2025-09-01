@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME D'ALERTES BILLING INTELLIGENT
@@ -15,6 +15,7 @@ Monitoring et alertes automatiques pour la facturation
 - Monitoring revenus et seuils critiques
 - Notifications multi-canaux et escalation
 """
+
 import asyncio
 import json
 import logging
@@ -29,7 +30,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class AlertType(Enum):
-    """Types d'alertes"""
+    """
+Types d'alertes"""
+
     PAYMENT_FAILED = "payment_failed"
     INVOICE_OVERDUE = "invoice_overdue"
     SUBSCRIPTION_EXPIRED = "subscription_expired"
@@ -43,6 +46,7 @@ class AlertType(Enum):
 
 class AlertSeverity(Enum):
     """Niveaux de sévérité"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -50,6 +54,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """États des alertes"""
+
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
@@ -57,6 +62,7 @@ class AlertStatus(Enum):
 
 class NotificationChannel(Enum):
     """Canaux de notification"""
+
     EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
@@ -166,7 +172,8 @@ class BillingAlerts:
         self._load_default_rules()
         
     def _load_default_rules(self):
-        """Charge les règles d'alerte par défaut"""
+        """
+Charge les règles d'alerte par défaut"""
         
         # Échec de paiement
         self.add_rule(AlertRule(
@@ -385,13 +392,15 @@ class BillingAlerts:
         return alerts
         
     def add_handler(self, alert_type: AlertType, handler: Callable):
-        """Ajoute un handler personnalisé pour un type d'alerte"""
+        """
+Ajoute un handler personnalisé pour un type d'alerte"""
         if alert_type not in self.handlers:
             self.handlers[alert_type] = []
         self.handlers[alert_type].append(handler)
         
     async def _monitoring_loop(self):
-        """Boucle de monitoring automatique"""
+        """
+Boucle de monitoring automatique"""
         while self._running:
             try:
                 await asyncio.sleep(300)  # Vérifier toutes les 5 minutes
@@ -418,7 +427,8 @@ class BillingAlerts:
         await self._check_refund_rate()
         
     async def _check_overdue_invoices(self):
-        """Vérifie les factures en retard"""
+        """
+Vérifie les factures en retard"""
         # Dans un vrai système, on interrogerait la base de données
         # pour trouver les factures en retard
         
@@ -522,7 +532,8 @@ class BillingAlerts:
                 rule.trigger_count_today = 0
                 
     async def _send_notifications(self, alert: BillingAlert, rule: AlertRule):
-        """Envoie les notifications pour une alerte"""
+        """
+Envoie les notifications pour une alerte"""
         
         for channel in rule.notification_channels:
             try:
@@ -620,7 +631,8 @@ class AlertManager:
         self.billing_alerts = billing_alerts
         
     async def process_payment_failure(self, payment_data: Dict[str, Any]):
-        """Traite un échec de paiement"""
+        """
+Traite un échec de paiement"""
         await self.billing_alerts.trigger_alert(
             alert_type=AlertType.PAYMENT_FAILED,
             title=f"Échec de paiement",

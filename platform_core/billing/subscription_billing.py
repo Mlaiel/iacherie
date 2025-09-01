@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME D'ABONNEMENTS ET FACTURATION RÉCURRENTE
@@ -15,6 +15,7 @@ Gestion complète des abonnements SaaS avec billing automatique
 - Usage-based billing et facturation à l'usage
 - Gestion des essais gratuits et coupons
 """
+
 import asyncio
 import json
 import logging
@@ -30,7 +31,9 @@ import calendar
 logger = logging.getLogger(__name__)
 
 class BillingPeriod(Enum):
-    """Périodes de facturation"""
+    """
+Périodes de facturation"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -40,6 +43,7 @@ class BillingPeriod(Enum):
 
 class SubscriptionStatus(Enum):
     """États des abonnements"""
+
     TRIAL = "trial"
     ACTIVE = "active"
     PAST_DUE = "past_due"
@@ -51,6 +55,7 @@ class SubscriptionStatus(Enum):
 
 class PricingModel(Enum):
     """Modèles de tarification"""
+
     FLAT_RATE = "flat_rate"
     PER_UNIT = "per_unit"
     TIERED = "tiered"
@@ -60,6 +65,7 @@ class PricingModel(Enum):
 
 class ProrationPolicy(Enum):
     """Politiques de prorata"""
+
     IMMEDIATE = "immediate"
     END_OF_PERIOD = "end_of_period"
     CREATE_CREDIT = "create_credit"
@@ -232,14 +238,16 @@ class Subscription:
         
     @property
     def is_in_trial(self) -> bool:
-        """Vérifie si l'abonnement est en période d'essai"""
+        """
+Vérifie si l'abonnement est en période d'essai"""
         if not self.trial_end:
             return False
         return self.status == SubscriptionStatus.TRIAL and datetime.utcnow() <= self.trial_end
         
     @property
     def days_until_renewal(self) -> int:
-        """Nombre de jours avant le renouvellement"""
+        """
+Nombre de jours avant le renouvellement"""
         if self.current_period_end:
             delta = self.current_period_end - datetime.utcnow()
             return max(0, delta.days)
@@ -247,7 +255,8 @@ class Subscription:
 
 @dataclass
 class BillingCycle:
-    """Cycle de facturation"""
+    """
+Cycle de facturation"""
     cycle_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     subscription_id: str = ""
     
@@ -290,7 +299,8 @@ class SubscriptionBilling:
                          base_price: Decimal,
                          billing_period: BillingPeriod = BillingPeriod.MONTHLY,
                          **kwargs) -> SubscriptionPlan:
-        """Crée un nouveau plan d'abonnement"""
+        """
+Crée un nouveau plan d'abonnement"""
         plan = SubscriptionPlan(
             name=name,
             base_price=base_price,
@@ -587,7 +597,8 @@ class SubscriptionBilling:
                                           subscription: Subscription,
                                           old_plan: SubscriptionPlan,
                                           new_plan: SubscriptionPlan):
-        """Gère la prorata lors d'un changement de plan"""
+        """
+Gère la prorata lors d'un changement de plan"""
         now = datetime.utcnow()
         
         # Calculer la période restante
@@ -642,7 +653,8 @@ class SubscriptionBilling:
         return None
         
     async def get_subscription(self, subscription_id: str) -> Optional[Subscription]:
-        """Récupère un abonnement par ID"""
+        """
+Récupère un abonnement par ID"""
         if subscription_id in self.subscriptions_cache:
             return self.subscriptions_cache[subscription_id]
             
@@ -655,19 +667,22 @@ class SubscriptionBilling:
         return None
         
     async def update_subscription(self, subscription: Subscription):
-        """Met à jour un abonnement"""
+        """
+Met à jour un abonnement"""
         if self.database_client:
             await self._save_subscription(subscription)
         self.subscriptions_cache[subscription.subscription_id] = subscription
         
     async def _get_subscriptions_due_for_billing(self) -> List[Subscription]:
-        """Récupère les abonnements à facturer"""
+        """
+Récupère les abonnements à facturer"""
         # Dans un vrai système, on ferait une requête en base
         # pour récupérer les abonnements dont current_period_end <= maintenant
         return []
         
     async def _save_plan(self, plan: SubscriptionPlan):
-        """Sauvegarde un plan en base"""
+        """
+Sauvegarde un plan en base"""
         try:
             # In a real system, this would save to database
             plan_data = {

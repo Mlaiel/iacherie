@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -58,7 +59,9 @@ from .webhook_security import WebhookSecurity
 logger = logging.getLogger(__name__)
 
 class WebhookEventType(Enum):
-    """Webhook event types for platform integrations"""
+    """
+Webhook event types for platform integrations"""
+
     CONTENT_PROTECTION_ALERT = "content_protection_alert"
     COPYRIGHT_MATCH_FOUND = "copyright_match_found" 
     TAKEDOWN_REQUEST_SUBMITTED = "takedown_request_submitted"
@@ -74,6 +77,7 @@ class WebhookEventType(Enum):
 
 class WebhookDirection(Enum):
     """Webhook direction types"""
+
     INCOMING = "incoming"
     OUTGOING = "outgoing"
     BIDIRECTIONAL = "bidirectional"
@@ -99,7 +103,8 @@ class WebhookEvent:
 
 @dataclass 
 class WebhookEndpoint:
-    """Webhook endpoint configuration"""
+    """
+Webhook endpoint configuration"""
     endpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     url: str = None
     platform: str = None
@@ -527,7 +532,8 @@ class WebhookAgent(BaseAgent):
         return health_data
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook agent"""
+        """
+Graceful shutdown of webhook agent"""
         try:
             logger.info(f"Shutting down WebhookAgent: {self.agent_id}")
             
@@ -590,7 +596,8 @@ class WebhookAgent(BaseAgent):
         self._processing_tasks.add(task)
 
     async def _process_event_queue(self) -> None:
-        """Background task to process webhook events from queue"""
+        """
+Background task to process webhook events from queue"""
         while self.status == AgentStatus.ACTIVE:
             try:
                 # Get event from queue with timeout
@@ -662,7 +669,8 @@ class WebhookAgent(BaseAgent):
             }
 
     def _determine_event_type(self, event_data: Dict[str, Any]) -> WebhookEventType:
-        """Determine webhook event type from payload"""
+        """
+Determine webhook event type from payload"""
         event_type = event_data.get('event_type', '').lower()
         
         event_type_mapping = {
@@ -680,7 +688,8 @@ class WebhookAgent(BaseAgent):
         return event_type_mapping.get(event_type, WebhookEventType.SYSTEM_NOTIFICATION)
 
     async def _update_metrics(self, webhook_event: Optional[WebhookEvent], success: bool) -> None:
-        """Update internal metrics"""
+        """
+Update internal metrics"""
         self._metrics.total_events += 1
         
         if success:
@@ -698,7 +707,8 @@ class WebhookAgent(BaseAgent):
         self._metrics.last_event_timestamp = datetime.now(timezone.utc)
 
     async def _collect_metrics(self) -> None:
-        """Background task for metrics collection"""
+        """
+Background task for metrics collection"""
         while self.status == AgentStatus.ACTIVE:
             try:
                 # Calculate events per minute
@@ -759,7 +769,8 @@ class WebhookAgent(BaseAgent):
         self._websocket_connections -= disconnected
 
     async def _register_default_handlers(self) -> None:
-        """Register default event handlers"""
+        """
+Register default event handlers"""
         # Copyright match handler
         await self.register_event_handler(
             WebhookEventType.COPYRIGHT_MATCH_FOUND,
@@ -779,7 +790,8 @@ class WebhookAgent(BaseAgent):
         )
 
     async def _handle_copyright_match(self, webhook_event: WebhookEvent) -> None:
-        """Handle copyright match events"""
+        """
+Handle copyright match events"""
         logger.info(f"Processing copyright match: {webhook_event.event_id}")
         # Implementation would trigger protection workflows
 

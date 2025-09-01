@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import time
 import asyncio
 import logging
@@ -47,6 +48,7 @@ logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
     """Metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -55,6 +57,7 @@ class MetricType(Enum):
 
 class MetricScope(Enum):
     """Metric scope"""
+
     GLOBAL = "global"
     PER_SERVICE = "per_service"
     PER_ENDPOINT = "per_endpoint"
@@ -103,7 +106,8 @@ class LoadBalancerMetrics:
 
 
 class MetricsBuffer:
-    """Buffered metrics storage for batch processing"""
+    """
+Buffered metrics storage for batch processing"""
     
     def __init__(self, max_size: int = 10000, flush_interval: int = 30):
         self.max_size = max_size
@@ -114,11 +118,13 @@ class MetricsBuffer:
         self.flush_callbacks: List[Callable] = []
     
     def add_callback(self, callback: Callable[[List[MetricData]], None]) -> None:
-        """Add flush callback"""
+        """
+Add flush callback"""
         self.flush_callbacks.append(callback)
     
     def add_metric(self, metric: MetricData) -> None:
-        """Add metric to buffer"""
+        """
+Add metric to buffer"""
         with self.lock:
             self.buffer.append(metric)
             
@@ -128,7 +134,8 @@ class MetricsBuffer:
                 self._flush()
     
     def _flush(self) -> None:
-        """Flush buffer to callbacks"""
+        """
+Flush buffer to callbacks"""
         if not self.buffer:
             return
         
@@ -150,7 +157,8 @@ class MetricsBuffer:
 
 
 class PrometheusExporter:
-    """Prometheus metrics exporter"""
+    """
+Prometheus metrics exporter"""
     
     def __init__(self, registry: Optional[CollectorRegistry] = None):
         if not PROMETHEUS_AVAILABLE:
@@ -286,7 +294,8 @@ class InfluxDBExporter:
 
 
 class SystemMetricsCollector:
-    """System metrics collector using psutil"""
+    """
+System metrics collector using psutil"""
     
     def __init__(self):
         self.last_network_io = None
@@ -295,7 +304,8 @@ class SystemMetricsCollector:
         self.last_measurement_time = None
     
     def collect_system_metrics(self) -> Dict[str, float]:
-        """Collect system metrics"""
+        """
+Collect system metrics"""
         try:
             current_time = time.time()
             metrics = {}
@@ -417,12 +427,14 @@ class ResponseTimeTracker:
         self.lock = threading.Lock()
     
     def add_response_time(self, response_time: float) -> None:
-        """Add response time measurement"""
+        """
+Add response time measurement"""
         with self.lock:
             self.response_times.append(response_time)
     
     def get_statistics(self) -> Dict[str, float]:
-        """Get response time statistics"""
+        """
+Get response time statistics"""
         with self.lock:
             if not self.response_times:
                 return {
@@ -452,7 +464,8 @@ class ResponseTimeTracker:
 
 
 class MetricsCollector:
-    """Enterprise Metrics Collector for Load Balancer"""
+    """
+Enterprise Metrics Collector for Load Balancer"""
     
     def __init__(self, 
                  prometheus_enabled: bool = True,
@@ -639,7 +652,8 @@ class MetricsCollector:
             self.prometheus_exporter.update_metric(metric)
     
     async def _collect_system_metrics(self) -> None:
-        """Collect system metrics periodically"""
+        """
+Collect system metrics periodically"""
         while self.running:
             try:
                 # Collect system metrics

@@ -26,6 +26,7 @@ Features:
 - Licensing violation monitoring
 - Rights management automation
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -88,7 +89,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Content protection threat levels"""
+    """
+Content protection threat levels"""
+
     CRITICAL = "critical"      # Major commercial infringement
     HIGH = "high"             # Significant unauthorized use
     MEDIUM = "medium"         # Moderate infringement concern
@@ -98,6 +101,7 @@ class ThreatLevel(Enum):
 
 class InfringementType(Enum):
     """Types of content infringement"""
+
     FULL_COPY = "full_copy"                    # Complete unauthorized copy
     PARTIAL_COPY = "partial_copy"              # Significant portion copied
     DERIVATIVE_WORK = "derivative_work"        # Unauthorized derivative
@@ -111,6 +115,7 @@ class InfringementType(Enum):
 
 class ProtectionAction(Enum):
     """Available protection actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_ACTION = "legal_action"
@@ -416,7 +421,8 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         threat_assessment: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Analyze available legal options"""
+        """
+Analyze available legal options"""
         # Implementation details...
         pass
     
@@ -427,7 +433,8 @@ class ContentProtectionResponseEngine:
         legal_options: List[Dict[str, Any]],
         user_preferences: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate prioritized recommended actions"""
+        """
+Generate prioritized recommended actions"""
         # Implementation details...
         pass
     
@@ -436,7 +443,8 @@ class ContentProtectionResponseEngine:
         incident: InfringementIncident,
         recommended_actions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Prepare required legal documents"""
+        """
+Prepare required legal documents"""
         # Implementation details...
         pass
 

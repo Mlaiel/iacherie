@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Enterprise-grade configuration validation with comprehensive rules.
 ==================================================================
 """
+
 import logging
 import asyncio
 import re
@@ -26,7 +27,9 @@ import json
 import yaml
 
 class ValidationType(Enum):
-    """Validation types"""
+    """
+Validation types"""
+
     SCHEMA = "schema"
     SYNTAX = "syntax"
     SEMANTIC = "semantic"
@@ -38,6 +41,7 @@ class ValidationType(Enum):
 
 class ValidationSeverity(Enum):
     """Validation severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -46,6 +50,7 @@ class ValidationSeverity(Enum):
 
 class ValidationResult(Enum):
     """Validation results"""
+
     PASS = "pass"
     FAIL = "fail"
     SKIP = "skip"
@@ -67,7 +72,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationIssue:
-    """Validation issue found"""
+    """
+Validation issue found"""
     rule_id: str
     path: str
     message: str
@@ -108,7 +114,8 @@ class ValidationEngine:
     """
     
     def __init__(self):
-        """Initialize validation engine"""
+        """
+Initialize validation engine"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Validation rules
@@ -631,7 +638,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Execute a single validation rule"""
+        """
+Execute a single validation rule"""
         
         if rule.rule_function and rule.rule_function in self.custom_validators:
             validator_func = self.custom_validators[rule.rule_function]
@@ -909,7 +917,8 @@ class ValidationEngine:
         config_data: Dict[str, Any],
         config_path: str
     ) -> List[ValidationIssue]:
-        """Detect hardcoded secrets"""
+        """
+Detect hardcoded secrets"""
         issues = []
         
         secret_patterns = [

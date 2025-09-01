@@ -5,12 +5,13 @@ Advanced revenue tracking, analysis, and optimization for multi-platform monetiz
 Provides comprehensive revenue insights, forecasting, and optimization recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ from sklearn.preprocessing import PolynomialFeatures
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     SPONSORSHIP = "sponsorship"
@@ -46,6 +49,7 @@ class RevenueStream(Enum):
 
 class PaymentStatus(Enum):
     """Payment status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -56,6 +60,7 @@ class PaymentStatus(Enum):
 
 class RevenueCategory(Enum):
     """Revenue category classification"""
+
     DIRECT = "direct"
     INDIRECT = "indirect"
     RECURRING = "recurring"
@@ -81,7 +86,8 @@ class RevenueMetric:
 
 @dataclass
 class RevenueBreakdown:
-    """Detailed revenue breakdown"""
+    """
+Detailed revenue breakdown"""
     total_revenue: Decimal
     platform_breakdown: Dict[str, Decimal]
     stream_breakdown: Dict[str, Decimal]
@@ -93,7 +99,8 @@ class RevenueBreakdown:
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecast data"""
+    """
+Revenue forecast data"""
     forecast_period: str
     predicted_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
@@ -105,7 +112,8 @@ class RevenueForecast:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization insights"""
+    """
+Revenue optimization insights"""
     current_efficiency: float
     optimization_potential: Decimal
     priority_actions: List[Dict]

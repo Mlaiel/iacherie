@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for alerts"""
+    """
+Supported platform types for alerts"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -67,6 +70,7 @@ class PlatformType(Enum):
 
 class AlertChannel(Enum):
     """Alert delivery channels"""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -80,6 +84,7 @@ class AlertChannel(Enum):
 
 class AlertActionType(Enum):
     """Types of automated actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     PLATFORM_REPORT = "platform_report"
     LEGAL_NOTICE = "legal_notice"
@@ -92,6 +97,7 @@ class AlertActionType(Enum):
 
 class AlertStatus(Enum):
     """Alert processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     SENT = "sent"
@@ -120,7 +126,8 @@ class PlatformCredentials:
 
 @dataclass
 class AlertTemplate:
-    """Alert message template"""
+    """
+Alert message template"""
     template_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     platform: PlatformType = PlatformType.GENERIC_WEB
@@ -384,7 +391,8 @@ Please review and take appropriate action.
         }
     
     async def start(self):
-        """Start alert processing system"""
+        """
+Start alert processing system"""
         if self.running:
             logger.warning("Platform alerts system already running")
             return
@@ -586,7 +594,8 @@ Please review and take appropriate action.
         return None
     
     def _summarize_evidence(self, evidence: Dict[str, Any]) -> str:
-        """Create a summary of evidence"""
+        """
+Create a summary of evidence"""
         summary_parts = []
         
         if "screenshot_url" in evidence:
@@ -698,7 +707,8 @@ Please review and take appropriate action.
             await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _process_single_alert(self, alert: PlatformAlert):
-        """Process a single alert"""
+        """
+Process a single alert"""
         try:
             alert.status = AlertStatus.PROCESSING
             alert.attempts += 1
@@ -991,7 +1001,8 @@ Please review and take appropriate action.
         }
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get alert system statistics"""
+        """
+Get alert system statistics"""
         return {
             **self.stats,
             'pending_alerts': len([a for a in self.pending_alerts.values() if a.status == AlertStatus.PENDING]),
@@ -1009,7 +1020,8 @@ _platform_alerts_manager: Optional[PlatformAlertsManager] = None
 
 
 def get_platform_alerts_manager(config: Optional[FingerprintingSystemConfig] = None) -> PlatformAlertsManager:
-    """Get or create platform alerts manager instance"""
+    """
+Get or create platform alerts manager instance"""
     global _platform_alerts_manager
     
     if _platform_alerts_manager is None:
@@ -1022,7 +1034,8 @@ def get_platform_alerts_manager(config: Optional[FingerprintingSystemConfig] = N
 
 
 def reset_platform_alerts_manager():
-    """Reset platform alerts manager (for testing)"""
+    """
+Reset platform alerts manager (for testing)"""
     global _platform_alerts_manager
     if _platform_alerts_manager:
         asyncio.create_task(_platform_alerts_manager.stop())
@@ -1039,7 +1052,8 @@ async def send_violation_alert(
     evidence: Dict[str, Any],
     **kwargs
 ) -> List[str]:
-    """Send violation alert convenience function"""
+    """
+Send violation alert convenience function"""
     manager = get_platform_alerts_manager()
     return await manager.send_platform_alert(
         fingerprint_id, content_id, platform, violation_url, 

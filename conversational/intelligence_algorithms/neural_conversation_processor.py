@@ -25,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This neural conversation system is proprietary intellectual property.
 Unauthorized use is strictly prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -61,7 +62,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ConversationContext:
-    """Advanced conversation context with neural processing capabilities"""
+    """
+Advanced conversation context with neural processing capabilities"""
     conversation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     context_embeddings: Optional[np.ndarray] = None
@@ -97,7 +99,8 @@ class NeuralProcessingResult:
 
 
 class ConversationNeuralNetwork(nn.Module):
-    """Advanced neural network for conversation processing"""
+    """
+Advanced neural network for conversation processing"""
     
     def __init__(self, input_dim: int = 768, hidden_dim: int = 512, output_dim: int = 256):
         super(ConversationNeuralNetwork, self).__init__()
@@ -142,7 +145,8 @@ class ConversationNeuralNetwork(nn.Module):
         )
     
     def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
-        """Forward pass through the neural network"""
+        """
+Forward pass through the neural network"""
         # Encode conversation
         encoded = self.conversation_encoder(x)
         
@@ -159,7 +163,8 @@ class ConversationNeuralNetwork(nn.Module):
 
 
 class ConversationEmbeddingEngine:
-    """Advanced conversation embedding engine with multiple models"""
+    """
+Advanced conversation embedding engine with multiple models"""
     
     def __init__(self):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -170,7 +175,8 @@ class ConversationEmbeddingEngine:
         self.is_loaded = False
         
     async def initialize(self) -> bool:
-        """Initialize embedding models"""
+        """
+Initialize embedding models"""
         try:
             # Load sentence transformer for advanced embeddings
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
@@ -239,7 +245,8 @@ class ConversationVectorizer:
         self.vector_metadata = {}
         
     async def initialize_vector_store(self) -> bool:
-        """Initialize FAISS vector store"""
+        """
+Initialize FAISS vector store"""
         try:
             # Initialize FAISS index for conversation similarity
             self.faiss_index = faiss.IndexFlatIP(self.vector_dim)
@@ -317,7 +324,8 @@ class ConversationContextAnalyzer:
     async def analyze_context(self, conversation_text: str, 
                             conversation_history: List[Dict[str, Any]],
                             user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze conversation context with business intelligence"""
+        """
+Analyze conversation context with business intelligence"""
         try:
             context_analysis = {
                 "conversation_intent": await self._analyze_intent(conversation_text),
@@ -543,7 +551,8 @@ class NeuralConversationProcessor:
         self.is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all neural processing components"""
+        """
+Initialize all neural processing components"""
         try:
             # Initialize embedding engine
             await self.embedding_engine.initialize()

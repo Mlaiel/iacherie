@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,13 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test suite for Trend Analysis AI Agents
+"""
+Test suite for Trend Analysis AI Agents
 
 Tests all functionalities of trend detection, market analysis, 
 prediction algorithms, and trend-based content strategy agents.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -26,6 +28,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -49,16 +52,19 @@ from ai.ai_agents.trend_analysis_agents import (
 
 
 class TestTrendAnalysisAgent:
-    """Test TrendAnalysisAgent functionality"""
+    """
+Test TrendAnalysisAgent functionality"""
     
     @pytest.fixture
     def agent(self):
-        """Create TrendAnalysisAgent instance"""
+        """
+Create TrendAnalysisAgent instance"""
         return TrendAnalysisAgent()
     
     @pytest.fixture
     def sample_trend_data(self):
-        """Sample trend data for analysis"""
+        """
+Sample trend data for analysis"""
         return {
             "analysis_id": "trend_001",
             "market_segment": "tech_education",
@@ -231,12 +237,14 @@ class TestMarketTrendAnalyzer:
     
     @pytest.fixture
     def agent(self):
-        """Create MarketTrendAnalyzer instance"""
+        """
+Create MarketTrendAnalyzer instance"""
         return MarketTrendAnalyzer()
     
     @pytest.fixture
     def sample_market_data(self):
-        """Sample market data for analysis"""
+        """
+Sample market data for analysis"""
         return {
             "market_id": "digital_marketing_2025",
             "industry_segment": "content_creation",
@@ -413,12 +421,14 @@ class TestContentTrendAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create ContentTrendAgent instance"""
+        """
+Create ContentTrendAgent instance"""
         return ContentTrendAgent()
     
     @pytest.fixture
     def sample_content_trends(self):
-        """Sample content trend data"""
+        """
+Sample content trend data"""
         return {
             "content_analysis_id": "content_trends_001",
             "platforms": ["youtube", "tiktok", "instagram", "twitter"],
@@ -577,12 +587,14 @@ class TestPredictiveTrendAgent:
     
     @pytest.fixture
     def agent(self):
-        """Create PredictiveTrendAgent instance"""
+        """
+Create PredictiveTrendAgent instance"""
         return PredictiveTrendAgent()
     
     @pytest.fixture
     def sample_prediction_data(self):
-        """Sample data for trend prediction"""
+        """
+Sample data for trend prediction"""
         return {
             "prediction_id": "pred_001",
             "historical_data": {
@@ -780,7 +792,8 @@ class TestIntegrationScenarios:
     
     @pytest.fixture
     def agents(self):
-        """Create all trend analysis agents for integration testing"""
+        """
+Create all trend analysis agents for integration testing"""
         return {
             "trend": TrendAnalysisAgent(),
             "market": MarketTrendAnalyzer(),
@@ -831,12 +844,14 @@ class TestErrorHandling:
     
     @pytest.fixture
     def agent(self):
-        """Create TrendAnalysisAgent for error testing"""
+        """
+Create TrendAnalysisAgent for error testing"""
         return TrendAnalysisAgent()
     
     @pytest.mark.asyncio
     async def test_insufficient_trend_data(self, agent):
-        """Test handling of insufficient trend data"""
+        """
+Test handling of insufficient trend data"""
         minimal_data = {"analysis_id": "test"}
         
         with pytest.raises((ValueError, KeyError)):
@@ -885,12 +900,14 @@ class TestPerformanceAndScaling:
     
     @pytest.fixture
     def agent(self):
-        """Create TrendAnalysisAgent for performance testing"""
+        """
+Create TrendAnalysisAgent for performance testing"""
         return TrendAnalysisAgent()
     
     @pytest.mark.asyncio
     async def test_bulk_trend_analysis(self, agent):
-        """Test bulk trend analysis performance"""
+        """
+Test bulk trend analysis performance"""
         trend_batch = [
             {
                 "analysis_id": f"bulk_trend_{i}",

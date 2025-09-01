@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -89,7 +90,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AgentStatus(Enum):
-    """Agent operational status levels"""
+    """
+Agent operational status levels"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     BUSY = "busy"
@@ -99,6 +102,7 @@ class AgentStatus(Enum):
 
 class AgentPriority(Enum):
     """Request processing priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -106,7 +110,9 @@ class AgentPriority(Enum):
     CRITICAL = 5
 
 class ResourceType(Enum):
-    """System resource types for monitoring"""
+    """
+System resource types for monitoring"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -130,7 +136,8 @@ class AgentMetrics:
     
 @dataclass
 class AgentRequest:
-    """Standardized request format for all agents"""
+    """
+Standardized request format for all agents"""
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: Optional[str] = None
     tenant_id: Optional[str] = None
@@ -196,7 +203,8 @@ class BaseAgent(ABC):
                 return self
                 
             def inc(self): 
-                """Increment counter metric for monitoring agent performance"""
+                """
+Increment counter metric for monitoring agent performance"""
                 self._value += 1
                 logging.debug(f"MockMetric incremented to {self._value} with labels {self._labels}")
                 
@@ -317,7 +325,8 @@ class BaseAgent(ABC):
     
     @abstractmethod
     def get_required_config_keys(self) -> List[str]:
-        """Return list of required configuration keys for this agent"""
+        """
+Return list of required configuration keys for this agent"""
         return []
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
@@ -411,7 +420,8 @@ class BaseAgent(ABC):
         pass
     
     async def _validate_request(self, request: AgentRequest):
-        """Comprehensive request validation"""
+        """
+Comprehensive request validation"""
         # Basic validation
         if not request.action:
             raise ValidationError("Request action is required")
@@ -500,12 +510,14 @@ class BaseAgent(ABC):
         pass
     
     def _validate_tenant_access(self, tenant_id: str) -> bool:
-        """Validate tenant access permissions"""
+        """
+Validate tenant access permissions"""
         # Implement tenant validation logic
         return True
     
     async def _check_rate_limits(self, request: AgentRequest):
-        """Check and enforce rate limiting"""
+        """
+Check and enforce rate limiting"""
         client_id = request.user_id or request.source_ip or "anonymous"
         
         if not self.rate_limiter.is_allowed(client_id):
@@ -554,7 +566,8 @@ class BaseAgent(ABC):
         )
     
     def _update_success_metrics(self, execution_time: float):
-        """Update success metrics"""
+        """
+Update success metrics"""
         self.metrics.total_requests += 1
         self.metrics.successful_requests += 1
         self.metrics.last_request_time = datetime.now(timezone.utc)
@@ -573,13 +586,15 @@ class BaseAgent(ABC):
             self.metrics.peak_response_time = execution_time
     
     def _update_error_metrics(self):
-        """Update error metrics"""
+        """
+Update error metrics"""
         self.metrics.total_requests += 1
         self.metrics.failed_requests += 1
         self.metrics.error_rate = self.metrics.failed_requests / self.metrics.total_requests
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get comprehensive agent health status"""
+        """
+Get comprehensive agent health status"""
         uptime = (datetime.now(timezone.utc) - self.created_at).total_seconds()
         
         return {

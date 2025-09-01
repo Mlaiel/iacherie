@@ -29,6 +29,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of analytics metrics."""
+    """
+Types of analytics metrics."""
+
     PERFORMANCE = "performance"        # Delivery, open, click rates
     ENGAGEMENT = "engagement"          # User interaction metrics
     BUSINESS = "business"              # Revenue, ROI, conversion metrics
@@ -59,6 +62,7 @@ class MetricType(Enum):
 
 class AggregationPeriod(Enum):
     """Time periods for metric aggregation."""
+
     REAL_TIME = "real_time"            # Live metrics
     HOURLY = "hourly"                  # Hourly aggregation
     DAILY = "daily"                    # Daily aggregation
@@ -70,6 +74,7 @@ class AggregationPeriod(Enum):
 
 class AnalyticsScope(Enum):
     """Scope of analytics analysis."""
+
     GLOBAL = "global"                  # Platform-wide analytics
     USER = "user"                      # Individual user analytics
     CAMPAIGN = "campaign"              # Specific campaign analytics
@@ -91,7 +96,8 @@ class MetricValue:
 
 @dataclass
 class PerformanceMetrics:
-    """Notification performance metrics."""
+    """
+Notification performance metrics."""
     delivery_rate: float               # Successfully delivered notifications
     open_rate: float                   # Opened notifications
     click_rate: float                  # Clicked notifications
@@ -105,7 +111,8 @@ class PerformanceMetrics:
 
 @dataclass
 class BusinessMetrics:
-    """Business intelligence metrics."""
+    """
+Business intelligence metrics."""
     revenue_attributed: float          # Revenue attributed to notifications
     roi: float                        # Return on investment
     cost_per_engagement: float         # Cost per user engagement
@@ -118,7 +125,8 @@ class BusinessMetrics:
 
 @dataclass
 class EngagementMetrics:
-    """User engagement metrics."""
+    """
+User engagement metrics."""
     session_duration: float            # Average session duration
     interaction_depth: float           # Depth of user interactions
     preference_alignment: float        # Alignment with user preferences
@@ -130,7 +138,8 @@ class EngagementMetrics:
 
 @dataclass
 class TechnicalMetrics:
-    """Technical performance metrics."""
+    """
+Technical performance metrics."""
     processing_time: float             # Average processing time
     error_rate: float                  # Error rate percentage
     system_uptime: float              # System uptime percentage
@@ -142,7 +151,8 @@ class TechnicalMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""
+    """
+Comprehensive analytics report."""
     report_id: str
     scope: AnalyticsScope
     period: AggregationPeriod
@@ -168,7 +178,8 @@ class AnalyticsEngine:
     """
     
     def __init__(self, config: NotificationConfig):
-        """Initialize analytics engine with configuration."""
+        """
+Initialize analytics engine with configuration."""
         self.config = config
         self.analytics_metrics = ANALYTICS_METRICS
         self.business_kpi = BUSINESS_KPI
@@ -949,7 +960,8 @@ class AnalyticsEngine:
         return MockEngagementPredictor()
     
     def _initialize_churn_predictor(self):
-        """Initialize churn prediction model."""
+        """
+Initialize churn prediction model."""
         class MockChurnPredictor:
             def predict(self, features):
                 return 0.3  # Mock churn probability
@@ -957,7 +969,8 @@ class AnalyticsEngine:
         return MockChurnPredictor()
     
     def _initialize_optimization_model(self):
-        """Initialize optimization model."""
+        """
+Initialize optimization model."""
         class MockOptimizationModel:
             def recommend(self, data):
                 return {"optimize_timing": True, "personalize_content": True}
@@ -1193,7 +1206,8 @@ class AnalyticsEngine:
         return max(0.0, quality_score)
     
     async def _calculate_event_importance(self, event_type: str, event_data: Dict[str, Any]) -> float:
-        """Calculate the importance score of an event."""
+        """
+Calculate the importance score of an event."""
         importance_weights = {
             'conversion_tracked': 1.0,
             'revenue_generated': 1.0,
@@ -1214,7 +1228,8 @@ class AnalyticsEngine:
         return min(1.0, base_importance)
     
     async def _update_delivery_metrics(self, metrics_update: Dict[str, Any]):
-        """Update delivery-specific metrics."""
+        """
+Update delivery-specific metrics."""
         self.logger.debug(f"Updating delivery metrics: {metrics_update['event_type']}")
     
     async def _update_engagement_metrics(self, metrics_update: Dict[str, Any]):
@@ -1234,44 +1249,54 @@ class AnalyticsEngine:
         pass
     
     async def _update_dashboard_metrics(self, metrics_update: Dict[str, Any]):
-        """Update dashboard metrics for real-time visualization."""
+        """
+Update dashboard metrics for real-time visualization."""
         pass
     
     async def _trigger_alert_rules(self, metrics_update: Dict[str, Any]):
-        """Trigger alert rules based on metric updates."""
+        """
+Trigger alert rules based on metric updates."""
         pass
     
     async def _get_historical_baseline(self, event_type: str, metric_name: str):
-        """Get historical baseline for anomaly detection."""
+        """
+Get historical baseline for anomaly detection."""
         return {'mean': 100, 'std': 15, 'trend': 0.05}
     
     async def _detect_statistical_anomaly(self, metric, historical_data):
-        """Detect statistical anomalies using z-score."""
+        """
+Detect statistical anomalies using z-score."""
         z_score = abs((metric.value - historical_data['mean']) / historical_data['std'])
         return {'anomaly_detected': z_score > 3, 'severity': 'high' if z_score > 5 else 'medium', 'confidence': min(z_score / 5, 1.0)}
     
     async def _detect_trend_anomaly(self, metric, historical_data):
-        """Detect trend-based anomalies."""
+        """
+Detect trend-based anomalies."""
         return {'anomaly_detected': False, 'severity': 'low', 'confidence': 0.5}
     
     async def _detect_seasonal_anomaly(self, metric, historical_data):
-        """Detect seasonal anomalies."""
+        """
+Detect seasonal anomalies."""
         return {'anomaly_detected': False, 'severity': 'low', 'confidence': 0.5}
     
     async def _detect_correlation_anomaly(self, metric, event_type):
-        """Detect correlation-based anomalies."""
+        """
+Detect correlation-based anomalies."""
         return {'anomaly_detected': False, 'severity': 'low', 'confidence': 0.5}
     
     async def _detect_threshold_anomaly(self, metric, event_type):
-        """Detect threshold-based anomalies."""
+        """
+Detect threshold-based anomalies."""
         return {'anomaly_detected': False, 'severity': 'low', 'confidence': 0.5}
     
     async def _generate_anomaly_recommendations(self, detection_result):
-        """Generate recommendations for handling anomalies."""
+        """
+Generate recommendations for handling anomalies."""
         return ['investigate_root_cause', 'check_system_health', 'review_recent_changes']
     
     async def _store_anomaly_events(self, anomalies):
-        """Store anomaly events for historical analysis."""
+        """
+Store anomaly events for historical analysis."""
         self.logger.info(f"Stored {len(anomalies)} anomaly events")
     
     async def _trigger_anomaly_alerts(self, anomalies):
@@ -1285,19 +1310,23 @@ class AnalyticsEngine:
         return 0.45  # Mock system load
     
     async def _get_critical_metrics(self):
-        """Get list of critical metrics that must be refreshed."""
+        """
+Get list of critical metrics that must be refreshed."""
         return ['conversion_rate', 'revenue_per_user', 'system_health']
     
     async def _get_important_metrics(self):
-        """Get list of important metrics for refresh."""
+        """
+Get list of important metrics for refresh."""
         return ['conversion_rate', 'revenue_per_user', 'system_health', 'engagement_rate', 'delivery_rate']
     
     async def _get_all_refreshable_metrics(self):
-        """Get all metrics that can be refreshed."""
+        """
+Get all metrics that can be refreshed."""
         return ['conversion_rate', 'revenue_per_user', 'system_health', 'engagement_rate', 'delivery_rate', 'user_growth', 'retention_rate']
     
     async def _refresh_single_metric(self, metric_name: str):
-        """Refresh a single metric."""
+        """
+Refresh a single metric."""
         # Simulate metric refresh
         await asyncio.sleep(0.01)  # Simulate processing time
         return f"refreshed_{metric_name}"
@@ -1320,11 +1349,13 @@ class AnalyticsEngine:
             return end_time - timedelta(hours=1)
     
     def _is_cache_valid(self, report: AnalyticsReport) -> bool:
-        """Check if cached report is still valid."""
+        """
+Check if cached report is still valid."""
         return datetime.now(timezone.utc) - report.generated_at <= self._cache_ttl
     
     def _update_engine_stats(self, processing_time: float):
-        """Update engine performance statistics."""
+        """
+Update engine performance statistics."""
         # Update average processing time
         total_reports = self.engine_stats["reports_generated"]
         if total_reports > 0:
@@ -1339,11 +1370,13 @@ class AnalyticsEngine:
     
     # Public API methods
     def get_engine_stats(self) -> Dict[str, Any]:
-        """Get analytics engine performance statistics."""
+        """
+Get analytics engine performance statistics."""
         return self.engine_stats.copy()
     
     async def shutdown(self):
-        """Shutdown analytics engine."""
+        """
+Shutdown analytics engine."""
         try:
             # Cancel background tasks
             for task in self._background_tasks:

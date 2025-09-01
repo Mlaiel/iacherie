@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Configuration management for content fingerprinting system
 """
+
 import os
 import json
 from typing import Dict, Any, Optional
@@ -22,6 +23,7 @@ class FingerprintConfig:
     Professional configuration manager for fingerprinting system
     Handles environment variables, config files, and default settings
     """
+
     
     DEFAULT_CONFIG = {
         # Global settings
@@ -169,7 +171,8 @@ class FingerprintConfig:
         deep_update(self.config, new_config)
     
     def _apply_env_overrides(self):
-        """Apply environment variable overrides"""
+        """
+Apply environment variable overrides"""
         env_mappings = {
             'IA_SIMILARITY_THRESHOLD': ('similarity_threshold', float),
             'IA_MAX_FILE_SIZE': ('max_file_size', int),
@@ -233,7 +236,8 @@ class FingerprintConfig:
         current[keys[-1]] = value
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value using dot notation"""
+        """
+Get configuration value using dot notation"""
         try:
             keys = key.split('.')
             current = self.config
@@ -246,39 +250,48 @@ class FingerprintConfig:
             return default
     
     def get_database_config(self) -> Dict[str, Any]:
-        """Get database configuration"""
+        """
+Get database configuration"""
         return self.config.get('database', {})
     
     def get_audio_config(self) -> Dict[str, Any]:
-        """Get audio processing configuration"""
+        """
+Get audio processing configuration"""
         return self.config.get('audio', {})
     
     def get_video_config(self) -> Dict[str, Any]:
-        """Get video processing configuration"""
+        """
+Get video processing configuration"""
         return self.config.get('video', {})
     
     def get_image_config(self) -> Dict[str, Any]:
-        """Get image processing configuration"""
+        """
+Get image processing configuration"""
         return self.config.get('image', {})
     
     def get_text_config(self) -> Dict[str, Any]:
-        """Get text processing configuration"""
+        """
+Get text processing configuration"""
         return self.config.get('text', {})
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration"""
+        """
+Get security configuration"""
         return self.config.get('security', {})
     
     def get_monitoring_config(self) -> Dict[str, Any]:
-        """Get monitoring configuration"""
+        """
+Get monitoring configuration"""
         return self.config.get('monitoring', {})
     
     def get_logging_config(self) -> Dict[str, Any]:
-        """Get logging configuration"""
+        """
+Get logging configuration"""
         return self.config.get('logging', {})
     
     def validate_config(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         # Validate similarity thresholds
@@ -317,11 +330,13 @@ class FingerprintConfig:
         return len(self.validate_config()) == 0
     
     def get_full_config(self) -> Dict[str, Any]:
-        """Get full configuration dictionary"""
+        """
+Get full configuration dictionary"""
         return self.config.copy()
     
     def __str__(self) -> str:
-        """String representation of configuration"""
+        """
+String representation of configuration"""
         # Create a safe copy without sensitive information
         safe_config = self.config.copy()
         if 'database' in safe_config and 'password' in safe_config['database']:
@@ -333,19 +348,22 @@ class FingerprintConfig:
 _global_config = None
 
 def get_global_config() -> FingerprintConfig:
-    """Get global configuration instance"""
+    """
+Get global configuration instance"""
     global _global_config
     if _global_config is None:
         _global_config = FingerprintConfig()
     return _global_config
 
 def set_global_config(config: FingerprintConfig):
-    """Set global configuration instance"""
+    """
+Set global configuration instance"""
     global _global_config
     _global_config = config
 
 def load_config_from_file(config_file: Path) -> FingerprintConfig:
-    """Load configuration from file and set as global"""
+    """
+Load configuration from file and set as global"""
     config = FingerprintConfig(config_file=config_file)
     set_global_config(config)
     return config

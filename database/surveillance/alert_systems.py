@@ -5,12 +5,13 @@ Advanced alert and notification systems for content surveillance.
 Manages real-time alerts, escalation procedures, and notification dispatch.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All Rights Reserved.
+(c) 2025 Fahed Mlaiel. All Rights Reserved.
 
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import asyncio
 import logging
 import smtplib
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
+    """
+Alert severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -41,6 +44,7 @@ class AlertSeverity(Enum):
 
 class AlertStatus(Enum):
     """Alert status enumeration."""
+
     PENDING = "pending"
     ACKNOWLEDGED = "acknowledged"
     IN_PROGRESS = "in_progress"
@@ -50,6 +54,7 @@ class AlertStatus(Enum):
 
 class AlertChannel(Enum):
     """Alert notification channels."""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -61,6 +66,7 @@ class AlertChannel(Enum):
 
 class AlertCategory(Enum):
     """Alert category types."""
+
     COPYRIGHT_VIOLATION = "copyright_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     PLAGIARISM = "plagiarism"
@@ -90,7 +96,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert data structure."""
+    """
+Alert data structure."""
     alert_id: str
     rule_id: str
     user_id: str
@@ -117,7 +124,8 @@ class Alert:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template structure."""
+    """
+Notification template structure."""
     template_id: str
     name: str
     channel: AlertChannel
@@ -129,7 +137,8 @@ class NotificationTemplate:
 
 
 class BaseNotificationChannel(ABC):
-    """Base class for notification channels."""
+    """
+Base class for notification channels."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -143,11 +152,13 @@ class BaseNotificationChannel(ABC):
     
     @abstractmethod
     async def test_connection(self) -> bool:
-        """Test channel connectivity."""
+        """
+Test channel connectivity."""
         pass
     
     def format_message(self, template: NotificationTemplate, alert: Alert) -> Dict[str, str]:
-        """Format message using template and alert data."""
+        """
+Format message using template and alert data."""
         try:
             alert_dict = asdict(alert)
             
@@ -495,7 +506,8 @@ class NotificationDispatcher:
         self.dispatch_rules: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize notification dispatcher."""
+        """
+Initialize notification dispatcher."""
         try:
             # Initialize notification channels
             await self._initialize_channels()
@@ -757,7 +769,8 @@ class EscalationHandler:
         self.active_escalations: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self) -> bool:
-        """Initialize escalation handler."""
+        """
+Initialize escalation handler."""
         try:
             # Load escalation policies
             await self._load_escalation_policies()
@@ -961,7 +974,8 @@ class AlertRepository:
         self.alert_rules: Dict[str, AlertRule] = {}
         
     async def initialize(self) -> bool:
-        """Initialize alert repository."""
+        """
+Initialize alert repository."""
         try:
             # Load default alert rules
             await self._load_default_rules()
@@ -1029,7 +1043,8 @@ class AlertRepository:
         return self.alerts.get(alert_id)
     
     async def update_alert(self, alert: Alert) -> bool:
-        """Update existing alert."""
+        """
+Update existing alert."""
         try:
             if alert.alert_id in self.alerts:
                 alert.updated_at = datetime.utcnow()
@@ -1057,14 +1072,16 @@ class AlertRepository:
         return alerts
     
     async def get_alerts_by_status(self, status: AlertStatus) -> List[Alert]:
-        """Get alerts by status."""
+        """
+Get alerts by status."""
         return [
             alert for alert in self.alerts.values()
             if alert.status == status
         ]
     
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get alert statistics."""
+        """
+Get alert statistics."""
         total_alerts = len(self.alerts)
         
         if total_alerts == 0:
@@ -1298,23 +1315,27 @@ class AlertManager:
         return await self.repository.get_alerts_by_user(user_id, status)
     
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get system-wide alert statistics."""
+        """
+Get system-wide alert statistics."""
         return await self.repository.get_alert_statistics()
     
     async def test_notification_channels(self) -> Dict[AlertChannel, bool]:
-        """Test all notification channels."""
+        """
+Test all notification channels."""
         return await self.dispatcher.test_all_channels()
 
 
 # Factory functions for easy access
 def get_alert_manager() -> Optional[AlertManager]:
-    """Get alert manager instance."""
+    """
+Get alert manager instance."""
     # Implementation would return configured alert manager
     return None
 
 
 def get_notification_dispatcher() -> Optional[NotificationDispatcher]:
-    """Get notification dispatcher instance."""
+    """
+Get notification dispatcher instance."""
     # Implementation would return configured dispatcher
     return None
     severity: AlertSeverity
@@ -1330,7 +1351,8 @@ def get_notification_dispatcher() -> Optional[NotificationDispatcher]:
 
 
 class BaseNotificationChannel(ABC):
-    """Base class for notification channels."""
+    """
+Base class for notification channels."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -1345,7 +1367,8 @@ class BaseNotificationChannel(ABC):
         pass
     
     def can_send(self) -> bool:
-        """Check if notification can be sent (rate limiting)."""
+        """
+Check if notification can be sent (rate limiting)."""
         if not self.enabled:
             return False
         
@@ -1367,10 +1390,12 @@ class BaseNotificationChannel(ABC):
 
 
 class EmailNotificationChannel(BaseNotificationChannel):
-    """Email notification channel."""
+    """
+Email notification channel."""
     
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send email notification."""
+        """
+Send email notification."""
         if not self.can_send():
             logger.warning("Email rate limit exceeded")
             return False
@@ -1456,17 +1481,19 @@ class EmailNotificationChannel(BaseNotificationChannel):
                 <hr style="margin: 20px 0;">
                 <p style="font-size: 12px; color: #666;">
                     This is an automated alert from IA Influencer Agent Surveillance System.<br>
-                    © 2025 Fahed Mlaiel. All Rights Reserved.
+                    (c) 2025 Fahed Mlaiel. All Rights Reserved.
                 </p>
             </div>
         </body>
         </html>
         """
 class SlackNotificationChannel(BaseNotificationChannel):
-    """Slack notification channel."""
+    """
+Slack notification channel."""
     
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send Slack notification."""
+        """
+Send Slack notification."""
         if not self.can_send():
             logger.warning("Slack rate limit exceeded")
             return False
@@ -1552,7 +1579,8 @@ class WebhookNotificationChannel(BaseNotificationChannel):
     """Generic webhook notification channel."""
     
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send webhook notification."""
+        """
+Send webhook notification."""
         if not self.can_send():
             logger.warning("Webhook rate limit exceeded")
             return False
@@ -1614,7 +1642,8 @@ class AlertManager:
         self.escalation_tasks: Set[asyncio.Task] = set()
         
     async def initialize(self) -> bool:
-        """Initialize alert manager."""
+        """
+Initialize alert manager."""
         try:
             # Load alert rules
             await self._load_alert_rules()
@@ -1931,7 +1960,8 @@ class AlertManager:
         return list(self.active_alerts.values())
     
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get alert statistics."""
+        """
+Get alert statistics."""
         now = datetime.utcnow()
         last_24h = now - timedelta(hours=24)
         
@@ -1972,7 +2002,8 @@ class AlertManager:
         return total_time / len(resolved_alerts) / 60  # Convert to minutes
     
     async def shutdown(self) -> None:
-        """Shutdown alert manager."""
+        """
+Shutdown alert manager."""
         logger.info("Shutting down AlertManager...")
         
         # Cancel escalation tasks
@@ -2082,7 +2113,8 @@ class NotificationDispatcher:
         await self.notification_queue.put(notification)
     
     async def shutdown(self) -> None:
-        """Shutdown notification dispatcher."""
+        """
+Shutdown notification dispatcher."""
         logger.info("Shutting down NotificationDispatcher...")
         
         # Cancel dispatcher tasks
@@ -2107,7 +2139,8 @@ class EscalationHandler:
         self.escalation_rules: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize escalation handler."""
+        """
+Initialize escalation handler."""
         try:
             await self._load_escalation_rules()
             logger.info("EscalationHandler initialized successfully")
@@ -2167,7 +2200,8 @@ class AlertRepository:
         self.connection_pool = None
         
     async def initialize(self) -> bool:
-        """Initialize alert repository."""
+        """
+Initialize alert repository."""
         try:
             # Initialize database connection
             await self._initialize_database()
@@ -2184,7 +2218,8 @@ class AlertRepository:
         pass
     
     async def store_alert(self, alert: Alert) -> bool:
-        """Store alert in repository."""
+        """
+Store alert in repository."""
         try:
             # Store alert in database
             return True
@@ -2224,7 +2259,8 @@ def get_alert_manager() -> Optional[AlertManager]:
 
 
 def initialize_alert_manager(config: Dict[str, Any]) -> AlertManager:
-    """Initialize global alert manager."""
+    """
+Initialize global alert manager."""
     global _alert_manager
     _alert_manager = AlertManager(config)
     return _alert_manager

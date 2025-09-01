@@ -4,7 +4,7 @@ Validation complète du module NLP selon les exigences strictes du client.
 Vérification de tous les composants professionnels implémentés.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 ⚠️ AVERTISSEMENT COPYRIGHT STRICT - Utilisation non autorisée interdite ⚠️
 Ce logiciel est propriétaire et confidentiel. Contact: mlaiel@live.de
@@ -20,6 +20,7 @@ Ce logiciel est propriétaire et confidentiel. Contact: mlaiel@live.de
 - Ingénieur DevOps : Fahed Mlaiel
 - Ingénieur Prompts IA : Fahed Mlaiel
 """
+
 import os
 import logging
 from typing import Dict, List, Any, Tuple, Optional
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationStatus(Enum):
-    """Statuts de validation pour les composants."""
+    """
+Statuts de validation pour les composants."""
+
     COMPLETE = "complete"
     PARTIAL = "partial"
     MISSING = "missing"
@@ -42,6 +45,7 @@ class ValidationStatus(Enum):
 
 class RequirementLevel(Enum):
     """Niveaux d'exigence pour les composants."""
+
     CRITICAL = "critical"
     ESSENTIAL = "essential"
     IMPORTANT = "important"
@@ -198,7 +202,7 @@ class NLPModuleValidator:
                 ])
                 
                 # Vérification du copyright
-                validation.copyright_present = "© 2025 Fahed Mlaiel" in content
+                validation.copyright_present = "(c) 2025 Fahed Mlaiel" in content
                 
                 # Vérification des langues de documentation
                 if "English:" in content or "Description:" in content:
@@ -278,7 +282,7 @@ class NLPModuleValidator:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
                     validation.lines_of_code = len(content.split('\n'))
-                    validation.copyright_present = "© 2025 Fahed Mlaiel" in content
+                    validation.copyright_present = "(c) 2025 Fahed Mlaiel" in content
                     validation.status = ValidationStatus.COMPLETE
                     
                     # Vérification du contenu professionnel
@@ -320,7 +324,7 @@ class NLPModuleValidator:
                         line for line in content.split('\n') 
                         if line.strip() and not line.strip().startswith('#')
                     ])
-                    validation.copyright_present = "© 2025 Fahed Mlaiel" in content
+                    validation.copyright_present = "(c) 2025 Fahed Mlaiel" in content
             
             self.validation_results[f"struct_{file_name}"] = validation
     
@@ -376,7 +380,7 @@ class NLPModuleValidator:
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
-                    if "© 2025 Fahed Mlaiel" in content:
+                    if "(c) 2025 Fahed Mlaiel" in content:
                         copyright_files += 1
                     else:
                         issues.append(f"Copyright manquant dans {file_path.name}")

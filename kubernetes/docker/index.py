@@ -14,6 +14,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Production-ready Docker infrastructure index for comprehensive platform deployment
 and management of IA-Influencer multi-format content protection system.
 """
+
 import asyncio
 import logging
 import sys
@@ -53,7 +54,8 @@ logger = logging.getLogger(__name__)
 console = Console()
 
 def display_header():
-    """Display application header"""
+    """
+Display application header"""
     header_text = Text()
     header_text.append("🐳 IA-Influencer Docker Infrastructure Manager\n", style="bold blue")
     header_text.append("Production-Ready Enterprise Platform Deployment\n\n", style="bold green")
@@ -155,7 +157,8 @@ def cli(ctx):
 
 @cli.command()
 def info():
-    """Display platform information"""
+    """
+Display platform information"""
     console.print("\n")
     display_team_specialties()
     console.print("\n")

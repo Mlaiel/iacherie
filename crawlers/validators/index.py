@@ -5,7 +5,7 @@ Central index for enterprise-grade validation infrastructure providing comprehen
 validation capabilities for the crawler subsystem of the IA Influencer Agent Platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 LEGAL WARNING: This intellectual property is protected under German and
@@ -228,7 +228,7 @@ from .integration_test_validator import (
 # Version and metadata
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary - All Rights Reserved"
 
 # Supported validator types

@@ -8,6 +8,7 @@ Ultra-advanced pipeline optimization for workflow automation, process efficiency
 intelligent scheduling, dynamic priority management, and real-time performance optimization.
 Features ML-powered optimization algorithms, advanced graph analysis, and predictive analytics.
 """
+
 import asyncio
 import time
 import numpy as np
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Advanced pipeline execution status with detailed states"""
+    """
+Advanced pipeline execution status with detailed states"""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     RUNNING = "running"
@@ -63,6 +66,7 @@ class PipelineStatus(Enum):
 
 class TaskStatus(Enum):
     """Comprehensive task execution status"""
+
     QUEUED = "queued"
     PENDING = "pending"
     INITIALIZING = "initializing"
@@ -78,6 +82,7 @@ class TaskStatus(Enum):
 
 class Priority(Enum):
     """Dynamic priority levels with numerical values"""
+
     EMERGENCY = ("emergency", 100)
     CRITICAL = ("critical", 80)
     HIGH = ("high", 60)
@@ -93,6 +98,7 @@ class Priority(Enum):
 
 class OptimizationStrategy(Enum):
     """Pipeline optimization strategies"""
+
     THROUGHPUT_MAXIMIZE = "throughput_maximize"     # Maximum tasks per time unit
     LATENCY_MINIMIZE = "latency_minimize"           # Minimum response time
     RESOURCE_OPTIMIZE = "resource_optimize"         # Optimal resource utilization
@@ -105,6 +111,7 @@ class OptimizationStrategy(Enum):
 
 class PipelineType(Enum):
     """Types of optimizable pipelines"""
+
     CONTENT_PROCESSING = "content_processing"
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
     VIDEO_FINGERPRINTING = "video_fingerprinting"
@@ -125,6 +132,7 @@ class PipelineType(Enum):
 
 class ResourceType(Enum):
     """Types of system resources"""
+
     CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
@@ -187,7 +195,8 @@ class TaskDefinition:
 
 @dataclass
 class PipelineDefinition:
-    """Advanced pipeline definition with comprehensive configuration"""
+    """
+Advanced pipeline definition with comprehensive configuration"""
     pipeline_id: str
     name: str
     description: str
@@ -237,7 +246,8 @@ class PipelineDefinition:
 
 @dataclass
 class PipelineMetrics:
-    """Comprehensive pipeline performance metrics"""
+    """
+Comprehensive pipeline performance metrics"""
     pipeline_id: str
     measurement_time: datetime
     
@@ -325,7 +335,8 @@ class OptimizationResult:
 
 @dataclass
 class ScheduleOptimization:
-    """Advanced schedule optimization result"""
+    """
+Advanced schedule optimization result"""
     schedule_id: str
     optimization_time: datetime
     
@@ -353,7 +364,8 @@ class ScheduleOptimization:
 
 
 class WorkflowOptimizer(BaseEngine):
-    """Ultra-advanced workflow optimization engine with ML-powered insights"""
+    """
+Ultra-advanced workflow optimization engine with ML-powered insights"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)

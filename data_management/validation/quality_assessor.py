@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME D'ÉVALUATION QUALITÉ CONTENU IA
@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 - Recommandations d'amélioration personnalisées
 - Standards de qualité par type de créateur
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -56,7 +57,9 @@ from sklearn.model_selection import cross_val_score
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Dimensions de qualité évaluées"""
+    """
+Dimensions de qualité évaluées"""
+
     TECHNICAL_QUALITY = "technical_quality"
     AESTHETIC_QUALITY = "aesthetic_quality"
     CONTENT_RELEVANCE = "content_relevance"
@@ -67,6 +70,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Niveaux de qualité"""
+
     POOR = "poor"           # 0.0 - 0.3
     FAIR = "fair"           # 0.3 - 0.5
     GOOD = "good"           # 0.5 - 0.7
@@ -84,7 +88,8 @@ class QualityScore:
 
 @dataclass
 class QualityAssessmentResult:
-    """Résultat complet d'évaluation qualité"""
+    """
+Résultat complet d'évaluation qualité"""
     overall_score: float  # 0.0 - 1.0
     overall_level: QualityLevel
     dimension_scores: Dict[QualityDimension, QualityScore]
@@ -96,7 +101,8 @@ class QualityAssessmentResult:
     metadata: Dict[str, Any]
 
 class AudioQualityAnalyzer:
-    """Analyseur de qualité audio avancé"""
+    """
+Analyseur de qualité audio avancé"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioQualityAnalyzer")
@@ -507,7 +513,8 @@ class AudioQualityAnalyzer:
         return 0.0
     
     def _generate_improvement_suggestions(self, dimension_scores: Dict, metrics: Dict) -> List[str]:
-        """Génère des suggestions d'amélioration globales"""
+        """
+Génère des suggestions d'amélioration globales"""
         suggestions = []
         
         # Collecte toutes les recommandations
@@ -568,7 +575,8 @@ class AudioQualityAnalyzer:
             return QualityLevel.POOR
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
-        """Crée un résultat d'erreur"""
+        """
+Crée un résultat d'erreur"""
         return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
@@ -967,7 +975,8 @@ class VideoQualityAnalyzer:
             return QualityLevel.POOR
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
-        """Crée un résultat d'erreur"""
+        """
+Crée un résultat d'erreur"""
         return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
@@ -1149,7 +1158,8 @@ class ImageQualityAnalyzer:
             return QualityLevel.POOR
     
     def _get_image_suggestions(self, score: float, megapixels: float, format_name: str) -> List[str]:
-        """Get improvement suggestions for images"""
+        """
+Get improvement suggestions for images"""
         suggestions = []
         
         if megapixels < 2:
@@ -1251,7 +1261,8 @@ class TextQualityAnalyzer:
             return QualityLevel.POOR
     
     def _get_text_suggestions(self, score: float, word_count: int, avg_words_per_sentence: float) -> List[str]:
-        """Get improvement suggestions for text"""
+        """
+Get improvement suggestions for text"""
         suggestions = []
         
         if word_count < 100:

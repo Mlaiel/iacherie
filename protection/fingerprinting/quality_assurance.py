@@ -5,13 +5,14 @@ Comprehensive quality control system with validation, testing, and
 continuous quality monitoring for enterprise-grade reliability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import asyncio
 import logging
 import time
@@ -37,7 +38,9 @@ from .utils import SimilarityCalculator
 logger = logging.getLogger(__name__)
 
 class QualityLevel(str, Enum):
-    """Quality assessment levels."""
+    """
+Quality assessment levels."""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -46,6 +49,7 @@ class QualityLevel(str, Enum):
 
 class ValidationStatus(str, Enum):
     """Validation status codes."""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -53,6 +57,7 @@ class ValidationStatus(str, Enum):
 
 class TestType(str, Enum):
     """Types of quality tests."""
+
     ACCURACY = "accuracy"
     CONSISTENCY = "consistency"
     PERFORMANCE = "performance"
@@ -85,7 +90,8 @@ class ValidationResult:
 
 @dataclass
 class QualityReport:
-    """Comprehensive quality assessment report."""
+    """
+Comprehensive quality assessment report."""
     report_id: str
     content_type: ContentType
     fingerprint_id: str
@@ -99,7 +105,8 @@ class QualityReport:
 
 @dataclass
 class BenchmarkSuite:
-    """Test suite for benchmarking fingerprinting quality."""
+    """
+Test suite for benchmarking fingerprinting quality."""
     suite_id: str
     name: str
     description: str
@@ -110,7 +117,8 @@ class BenchmarkSuite:
     similarity_pairs: List[Tuple[str, str, float]]  # file1, file2, expected_similarity
 
 class FingerprintValidator:
-    """Comprehensive fingerprint validation system."""
+    """
+Comprehensive fingerprint validation system."""
     
     def __init__(self):
         self.validation_rules = {}
@@ -126,7 +134,8 @@ class FingerprintValidator:
         self._initialize_default_rules()
         
     def _initialize_default_rules(self):
-        """Initialize default validation rules."""
+        """
+Initialize default validation rules."""
         self.validation_rules = {
             'completeness_check': ValidationRule(
                 rule_id='completeness_check',
@@ -182,7 +191,8 @@ class FingerprintValidator:
     async def validate_fingerprint(self, 
                                  fingerprint: FingerprintResult,
                                  processing_metrics: Optional[ProcessingMetrics] = None) -> QualityReport:
-        """Validate fingerprint quality and generate report."""
+        """
+Validate fingerprint quality and generate report."""
         
         validation_results = []
         
@@ -427,7 +437,8 @@ class FingerprintValidator:
         return weighted_sum / total_weight if total_weight > 0 else 0.0
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score."""
+        """
+Determine quality level from score."""
         for level, threshold in sorted(self.quality_thresholds.items(), 
                                      key=lambda x: x[1], reverse=True):
             if score >= threshold:
@@ -437,7 +448,8 @@ class FingerprintValidator:
     def _generate_recommendations(self, 
                                 validation_results: List[ValidationResult],
                                 fingerprint: FingerprintResult) -> List[str]:
-        """Generate optimization recommendations."""
+        """
+Generate optimization recommendations."""
         recommendations = []
         
         failed_rules = [r for r in validation_results if r.status == ValidationStatus.FAILED]
@@ -478,7 +490,8 @@ class BenchmarkingSystem:
         self.benchmark_results = {}
         
     def add_benchmark_suite(self, suite: BenchmarkSuite):
-        """Add benchmark suite for testing."""
+        """
+Add benchmark suite for testing."""
         self.benchmark_suites[suite.suite_id] = suite
         logger.info(f"Added benchmark suite: {suite.name}")
     
@@ -630,7 +643,8 @@ class BenchmarkingSystem:
         return 0.0
     
     def generate_benchmark_report(self, suite_id: str) -> str:
-        """Generate detailed benchmark report."""
+        """
+Generate detailed benchmark report."""
         
         results = self.benchmark_results.get(suite_id)
         if not results:
@@ -739,7 +753,8 @@ class QualityAssuranceSystem:
         return report
     
     def _track_quality_metrics(self, report: QualityReport):
-        """Track quality metrics for trending analysis."""
+        """
+Track quality metrics for trending analysis."""
         
         quality_point = {
             'timestamp': report.timestamp,
@@ -761,7 +776,8 @@ class QualityAssuranceSystem:
         self.quality_trends[f'{content_type}_processing_time'].append(report.performance_metrics.processing_time_seconds)
     
     def _check_quality_regression(self, report: QualityReport) -> List[str]:
-        """Check for quality regressions compared to historical data."""
+        """
+Check for quality regressions compared to historical data."""
         
         alerts = []
         content_type = report.content_type.value
@@ -854,7 +870,8 @@ class QualityAssuranceSystem:
         return dashboard
     
     async def run_continuous_monitoring(self, interval_seconds: int = 300):
-        """Run continuous quality monitoring."""
+        """
+Run continuous quality monitoring."""
         
         logger.info(f"Starting continuous quality monitoring (interval: {interval_seconds}s)")
         

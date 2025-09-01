@@ -4,6 +4,7 @@ Core configuration management for the AI-powered content protection platform.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 from typing import Optional, List
 from pydantic_settings import BaseSettings
@@ -11,7 +12,8 @@ from pydantic import Field, PostgresDsn, RedisDsn
 
 
 class APISettings(BaseSettings):
-    """API and web server configuration"""
+    """
+API and web server configuration"""
     
     # Server Configuration
     host: str = Field(default="0.0.0.0", env="API_HOST")
@@ -335,5 +337,6 @@ settings = Settings()
 
 # Compatibility aliases for existing code
 def get_settings():
-    """Get settings instance for dependency injection."""
+    """
+Get settings instance for dependency injection."""
     return settings

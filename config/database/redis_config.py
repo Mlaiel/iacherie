@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class RedisEnvironment(Enum):
-    """Redis environment configurations"""
+    """
+Redis environment configurations"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -41,6 +44,7 @@ class RedisEnvironment(Enum):
 
 class RedisDeploymentType(Enum):
     """Redis deployment types"""
+
     STANDALONE = "standalone"
     CLUSTER = "cluster"
     SENTINEL = "sentinel"
@@ -48,6 +52,7 @@ class RedisDeploymentType(Enum):
 
 class RedisWorkloadType(Enum):
     """Redis workload optimization types"""
+
     CACHE = "cache"
     SESSION = "session"
     PUBSUB = "pubsub"
@@ -87,7 +92,8 @@ class RedisPoolConfig:
 
 @dataclass
 class RedisCacheConfig:
-    """Redis caching configuration"""
+    """
+Redis caching configuration"""
     default_ttl: int = 3600  # 1 hour
     key_prefix: str = "ia_influencer:"
     serializer: str = "json"  # json, pickle, msgpack
@@ -132,7 +138,8 @@ class RedisConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup Redis-specific logging"""
+        """
+Setup Redis-specific logging"""
         self.logger = logging.getLogger(f"redis.{self.environment.value}.{self.workload_type.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()

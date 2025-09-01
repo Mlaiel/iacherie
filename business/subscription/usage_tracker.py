@@ -4,10 +4,11 @@ Real-time usage tracking and quota management system for subscription features.
 Monitors feature usage, enforces limits, and provides usage analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List
@@ -48,7 +49,8 @@ class UsageTracker:
     """
     
     def __init__(self):
-        """Initialize usage tracker."""
+        """
+Initialize usage tracker."""
         self.logger = get_logger(__name__)
         self.cache = CacheManager()
         self.events = EventPublisher()
@@ -454,7 +456,8 @@ class UsageTracker:
         feature_name: str,
         db: Session
     ) -> UsageMetrics:
-        """Get or create usage metric for current period."""
+        """
+Get or create usage metric for current period."""
         current_time = datetime.utcnow()
         
         # Try to get existing metric for current period
@@ -501,7 +504,8 @@ class UsageTracker:
         feature_name: str,
         db: Session
     ) -> Optional[UsageMetrics]:
-        """Get current usage metric for feature."""
+        """
+Get current usage metric for feature."""
         return db.query(UsageMetrics).filter(
             UsageMetrics.user_id == user_id,
             UsageMetrics.feature_name == feature_name,
@@ -509,7 +513,8 @@ class UsageTracker:
         ).first()
     
     async def _check_quota_status(self, usage_metric: UsageMetrics) -> Dict[str, Any]:
-        """Check quota status for usage metric."""
+        """
+Check quota status for usage metric."""
         quota_status = {
             "has_limit": usage_metric.quota_limit is not None,
             "within_limit": True,

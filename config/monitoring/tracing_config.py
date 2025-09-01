@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -22,7 +23,9 @@ from enum import Enum
 
 
 class TracingBackend(Enum):
-    """Supported tracing backends"""
+    """
+Supported tracing backends"""
+
     JAEGER = "jaeger"
     ZIPKIN = "zipkin"
     OTLP = "otlp"
@@ -31,6 +34,7 @@ class TracingBackend(Enum):
 
 class SamplingStrategy(Enum):
     """Sampling strategies for trace collection"""
+
     ALWAYS_ON = "always_on"
     ALWAYS_OFF = "always_off"
     RATIO_BASED = "ratio_based"
@@ -48,7 +52,8 @@ class SpanAttribute:
 
 @dataclass
 class InstrumentationConfig:
-    """Service instrumentation configuration"""
+    """
+Service instrumentation configuration"""
     service_name: str
     service_version: str
     environment: str
@@ -57,7 +62,8 @@ class InstrumentationConfig:
 
 
 class TracingConfig:
-    """Professional distributed tracing configuration for IA-Influencer platform"""
+    """
+Professional distributed tracing configuration for IA-Influencer platform"""
     
     def __init__(self):
         self.tracing_enabled = os.getenv("TRACING_ENABLED", "true").lower() == "true"

@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional Helm chart management and Kubernetes deployment automation.
 Includes chart templating, dependency management, and release lifecycle.
 """
+
 import os
 import yaml
 import json
@@ -30,7 +31,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ReleaseStatus(Enum):
-    """Helm release status"""
+    """
+Helm release status"""
+
     UNKNOWN = "unknown"
     DEPLOYED = "deployed"
     UNINSTALLED = "uninstalled"
@@ -43,6 +46,7 @@ class ReleaseStatus(Enum):
 
 class ChartVersion(Enum):
     """Chart API versions"""
+
     V1 = "v1"
     V2 = "v2"
 
@@ -92,7 +96,8 @@ class HelmRepository:
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration"""
+    """
+Deployment configuration"""
     release_name: str
     namespace: str
     chart_path: str
@@ -106,7 +111,8 @@ class DeploymentConfig:
     create_namespace: bool = True
 
 class HelmChartManager:
-    """Professional Helm chart manager"""
+    """
+Professional Helm chart manager"""
     
     def __init__(self, charts_path: str = "/app/charts", config_path: str = "/app/config/helm"):
         self.charts_path = Path(charts_path)
@@ -771,7 +777,8 @@ class HelmChartManager:
     async def _create_deployment_template(self, templates_path: Path, chart_name: str, app_type: str) -> None:
         """Create deployment template"""
         try:
-            deployment_template = f"""apiVersion: apps/v1
+            deployment_template = f"""
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{{{ include "{chart_name}.fullname" . }}}}
@@ -863,7 +870,8 @@ spec:
     async def _create_service_template(self, templates_path: Path, chart_name: str) -> None:
         """Create service template"""
         try:
-            service_template = f"""apiVersion: v1
+            service_template = f"""
+apiVersion: v1
 kind: Service
 metadata:
   name: {{{{ include "{chart_name}.fullname" . }}}}

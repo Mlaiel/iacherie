@@ -14,6 +14,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import numpy as np
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EmotionFeatures:
-    """Voice emotion features"""
+    """
+Voice emotion features"""
     prosodic_features: Dict[str, float]
     spectral_features: Dict[str, float]
     temporal_features: Dict[str, float]
@@ -37,7 +39,8 @@ class EmotionFeatures:
 
 @dataclass
 class EmotionFrame:
-    """Single frame emotion analysis"""
+    """
+Single frame emotion analysis"""
     timestamp: float
     emotion: EmotionType
     confidence: float
@@ -59,7 +62,8 @@ class EmotionDetector:
     """
     
     def __init__(self, config: EmotionConfig):
-        """Initialize emotion detector"""
+        """
+Initialize emotion detector"""
         self.config = config
         self.is_initialized = False
         
@@ -775,7 +779,8 @@ class VoiceEmotionAnalyzer:
         self.detector = detector
     
     async def analyze_emotional_profile(self, audio_samples: List[np.ndarray]) -> Dict[str, float]:
-        """Analyze emotional profile across multiple samples"""
+        """
+Analyze emotional profile across multiple samples"""
         results = []
         for audio in audio_samples:
             result = await self.detector.detect_emotion(audio)
@@ -789,22 +794,26 @@ class VoiceEmotionAnalyzer:
         return {emotion: count/total_count for emotion, count in emotion_counts.items()}
 
 class SentimentProcessor:
-    """Sentiment processing utilities"""
+    """
+Sentiment processing utilities"""
     def __init__(self, detector: EmotionDetector):
         self.detector = detector
     
     async def calculate_sentiment_score(self, audio_data: np.ndarray) -> float:
-        """Calculate overall sentiment score (-1 to 1)"""
+        """
+Calculate overall sentiment score (-1 to 1)"""
         result = await self.detector.detect_emotion(audio_data)
         return result.valence_level
 
 class EmotionalStateClassifier:
-    """Emotional state classification utilities"""
+    """
+Emotional state classification utilities"""
     def __init__(self, detector: EmotionDetector):
         self.detector = detector
     
     async def classify_emotional_state(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Classify comprehensive emotional state"""
+        """
+Classify comprehensive emotional state"""
         result = await self.detector.detect_emotion(audio_data)
         
         return {
@@ -822,7 +831,8 @@ class MoodExtractor:
         self.detector = detector
     
     async def extract_mood_profile(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Extract detailed mood profile"""
+        """
+Extract detailed mood profile"""
         result = await self.detector.detect_emotion(audio_data)
         
         # Map emotions to mood categories

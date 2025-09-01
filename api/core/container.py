@@ -2,8 +2,9 @@
 Implements professional IoC patterns with lifecycle management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Dict, Type, TypeVar, Callable, Optional, Generic
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -17,7 +18,9 @@ T = TypeVar('T')
 
 
 class ServiceLifetime(Enum):
-    """Service lifetime management strategies."""
+    """
+Service lifetime management strategies."""
+
     SINGLETON = "singleton"
     TRANSIENT = "transient"
     SCOPED = "scoped"
@@ -35,36 +38,43 @@ class ServiceDescriptor:
 
 
 class IServiceContainer(ABC):
-    """Interface for dependency injection container."""
+    """
+Interface for dependency injection container."""
     
     @abstractmethod
     def register_singleton(self, service_type: Type[T], implementation: Type[T] = None) -> None:
-        """Register a singleton service."""
+        """
+Register a singleton service."""
         pass
     
     @abstractmethod
     def register_transient(self, service_type: Type[T], implementation: Type[T] = None) -> None:
-        """Register a transient service."""
+        """
+Register a transient service."""
         pass
     
     @abstractmethod
     def register_scoped(self, service_type: Type[T], implementation: Type[T] = None) -> None:
-        """Register a scoped service."""
+        """
+Register a scoped service."""
         pass
     
     @abstractmethod
     def register_factory(self, service_type: Type[T], factory: Callable[[], T]) -> None:
-        """Register a service factory."""
+        """
+Register a service factory."""
         pass
     
     @abstractmethod
     def resolve(self, service_type: Type[T]) -> T:
-        """Resolve a service instance."""
+        """
+Resolve a service instance."""
         pass
 
 
 class ServiceContainer(IServiceContainer):
-    """Professional dependency injection container implementation."""
+    """
+Professional dependency injection container implementation."""
     
     def __init__(self):
         self._services: Dict[Type, ServiceDescriptor] = {}
@@ -74,7 +84,8 @@ class ServiceContainer(IServiceContainer):
         self._scope_stack = []
     
     def register_singleton(self, service_type: Type[T], implementation: Type[T] = None) -> None:
-        """Register a singleton service with lifetime management."""
+        """
+Register a singleton service with lifetime management."""
         impl_type = implementation or service_type
         
         with self._lock:
@@ -86,7 +97,8 @@ class ServiceContainer(IServiceContainer):
             )
     
     def register_transient(self, service_type: Type[T], implementation: Type[T] = None) -> None:
-        """Register a transient service (new instance every time)."""
+        """
+Register a transient service (new instance every time)."""
         impl_type = implementation or service_type
         
         with self._lock:
@@ -98,7 +110,8 @@ class ServiceContainer(IServiceContainer):
             )
     
     def register_scoped(self, service_type: Type[T], implementation: Type[T] = None) -> None:
-        """Register a scoped service (one instance per scope)."""
+        """
+Register a scoped service (one instance per scope)."""
         impl_type = implementation or service_type
         
         with self._lock:
@@ -110,7 +123,8 @@ class ServiceContainer(IServiceContainer):
             )
     
     def register_factory(self, service_type: Type[T], factory: Callable[[], T]) -> None:
-        """Register a service factory function."""
+        """
+Register a service factory function."""
         with self._lock:
             self._services[service_type] = ServiceDescriptor(
                 service_type=service_type,
@@ -119,7 +133,8 @@ class ServiceContainer(IServiceContainer):
             )
     
     def register_instance(self, service_type: Type[T], instance: T) -> None:
-        """Register a pre-created instance as singleton."""
+        """
+Register a pre-created instance as singleton."""
         with self._lock:
             self._services[service_type] = ServiceDescriptor(
                 service_type=service_type,
@@ -129,7 +144,8 @@ class ServiceContainer(IServiceContainer):
             self._singletons[service_type] = instance
     
     def resolve(self, service_type: Type[T]) -> T:
-        """Resolve a service instance with dependency injection."""
+        """
+Resolve a service instance with dependency injection."""
         if service_type not in self._services:
             raise ValueError(f"Service {service_type.__name__} is not registered")
         
@@ -157,7 +173,8 @@ class ServiceContainer(IServiceContainer):
             return instance
     
     def _resolve_scoped(self, service_type: Type[T], descriptor: ServiceDescriptor) -> T:
-        """Resolve scoped instance within current scope."""
+        """
+Resolve scoped instance within current scope."""
         if service_type in self._scoped_instances:
             return self._scoped_instances[service_type]
         
@@ -166,11 +183,13 @@ class ServiceContainer(IServiceContainer):
         return instance
     
     def _resolve_transient(self, descriptor: ServiceDescriptor) -> T:
-        """Resolve transient instance (always new)."""
+        """
+Resolve transient instance (always new)."""
         return self._create_instance(descriptor)
     
     def _create_instance(self, descriptor: ServiceDescriptor) -> Any:
-        """Create service instance with dependency injection."""
+        """
+Create service instance with dependency injection."""
         # Use pre-created instance
         if descriptor.instance is not None:
             return descriptor.instance
@@ -211,7 +230,8 @@ class ServiceContainer(IServiceContainer):
     
     @contextmanager
     def create_scope(self):
-        """Create a dependency injection scope."""
+        """
+Create a dependency injection scope."""
         self._scope_stack.append({})
         old_scoped = self._scoped_instances
         self._scoped_instances = {}
@@ -223,20 +243,24 @@ class ServiceContainer(IServiceContainer):
             self._scope_stack.pop()
     
     def clear_scope(self):
-        """Clear current scope instances."""
+        """
+Clear current scope instances."""
         self._scoped_instances.clear()
     
     def is_registered(self, service_type: Type) -> bool:
-        """Check if service type is registered."""
+        """
+Check if service type is registered."""
         return service_type in self._services
     
     def get_registered_services(self) -> Dict[Type, ServiceDescriptor]:
-        """Get all registered services for debugging."""
+        """
+Get all registered services for debugging."""
         return self._services.copy()
 
 
 class ServiceLocator:
-    """Service locator pattern implementation."""
+    """
+Service locator pattern implementation."""
     
     _instance: Optional['ServiceLocator'] = None
     _container: Optional[IServiceContainer] = None
@@ -250,12 +274,14 @@ class ServiceLocator:
         return cls._instance
     
     def set_container(self, container: IServiceContainer) -> None:
-        """Set the service container."""
+        """
+Set the service container."""
         with self._lock:
             self._container = container
     
     def resolve(self, service_type: Type[T]) -> T:
-        """Resolve service using configured container."""
+        """
+Resolve service using configured container."""
         if self._container is None:
             raise RuntimeError("Service container not configured")
         
@@ -281,54 +307,64 @@ def register_singleton(service_type: Type[T], implementation: Type[T] = None) ->
 
 
 def register_transient(service_type: Type[T], implementation: Type[T] = None) -> None:
-    """Register transient service in global container."""
+    """
+Register transient service in global container."""
     _global_container.register_transient(service_type, implementation)
 
 
 def register_scoped(service_type: Type[T], implementation: Type[T] = None) -> None:
-    """Register scoped service in global container."""
+    """
+Register scoped service in global container."""
     _global_container.register_scoped(service_type, implementation)
 
 
 def register_factory(service_type: Type[T], factory: Callable[[], T]) -> None:
-    """Register service factory in global container."""
+    """
+Register service factory in global container."""
     _global_container.register_factory(service_type, factory)
 
 
 def register_instance(service_type: Type[T], instance: T) -> None:
-    """Register instance as singleton in global container."""
+    """
+Register instance as singleton in global container."""
     _global_container.register_instance(service_type, instance)
 
 
 def resolve(service_type: Type[T]) -> T:
-    """Resolve service from global container."""
+    """
+Resolve service from global container."""
     return _global_container.resolve(service_type)
 
 
 def get_container() -> ServiceContainer:
-    """Get global service container."""
+    """
+Get global service container."""
     return _global_container
 
 
 def create_scope():
-    """Create dependency injection scope."""
+    """
+Create dependency injection scope."""
     return _global_container.create_scope()
 
 
 class Injectable:
-    """Base class for injectable services."""
+    """
+Base class for injectable services."""
     pass
 
 
 def injectable(cls: Type[T]) -> Type[T]:
-    """Decorator to mark class as injectable service."""
+    """
+Decorator to mark class as injectable service."""
     if not hasattr(cls, '__injectable__'):
         cls.__injectable__ = True
     return cls
 
 
 def service(lifetime: ServiceLifetime = ServiceLifetime.TRANSIENT):
-    """Decorator to register service with specific lifetime."""
+    """
+Decorator to register service with specific lifetime."""
     def decorator(cls: Type[T]) -> Type[T]:
         if lifetime == ServiceLifetime.SINGLETON:
             register_singleton(cls)

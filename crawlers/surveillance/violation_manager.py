@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -22,6 +22,7 @@ Professional violation management system implementing comprehensive violation de
 classification, response automation, and legal documentation for all creator types
 across multiple digital platforms.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationType(Enum):
-    """Types of content violations."""
+    """
+Types of content violations."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -55,6 +58,7 @@ class ViolationType(Enum):
 
 class ViolationSeverity(Enum):
     """Violation severity levels."""
+
     INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
@@ -65,6 +69,7 @@ class ViolationSeverity(Enum):
 
 class ViolationStatus(Enum):
     """Violation processing status."""
+
     DETECTED = "detected"
     ANALYZING = "analyzing"
     CONFIRMED = "confirmed"
@@ -79,6 +84,7 @@ class ViolationStatus(Enum):
 
 class ResponseAction(Enum):
     """Available response actions for violations."""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     MANUAL_REVIEW = "manual_review"
     AUTOMATED_CLAIM = "automated_claim"
@@ -94,6 +100,7 @@ class ResponseAction(Enum):
 
 class EvidenceType(Enum):
     """Types of evidence for violations."""
+
     SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_FINGERPRINT = "audio_fingerprint"
@@ -201,7 +208,8 @@ class EvidenceCollector:
     """Advanced evidence collection system for legal documentation."""
     
     def __init__(self):
-        """Initialize evidence collector."""
+        """
+Initialize evidence collector."""
         self.evidence_storage: Dict[str, Evidence] = {}
         self.collection_methods: Dict[EvidenceType, Callable] = {}
         self.authenticity_verifiers: List[Callable] = []
@@ -325,7 +333,8 @@ class EvidenceCollector:
         }
     
     def _compare_metadata(self, original: Dict, infringing: Dict) -> Dict[str, Any]:
-        """Compare metadata between original and infringing content."""
+        """
+Compare metadata between original and infringing content."""
         differences = {}
         similarities = {}
         
@@ -350,7 +359,8 @@ class EvidenceCollector:
         }
     
     def _find_similarity_indicators(self, original: Dict, infringing: Dict) -> List[str]:
-        """Find indicators of content similarity."""
+        """
+Find indicators of content similarity."""
         indicators = []
         
         # Check for exact matches in key fields
@@ -368,7 +378,8 @@ class TakedownManager:
     """Automated takedown request management system."""
     
     def __init__(self):
-        """Initialize takedown manager."""
+        """
+Initialize takedown manager."""
         self.platform_apis: Dict[str, Dict] = {}
         self.takedown_templates: Dict[str, str] = {}
         self.pending_requests: Dict[str, TakedownRequest] = {}
@@ -383,7 +394,8 @@ class TakedownManager:
         violation: ViolationEvent,
         platform_specific_data: Optional[Dict] = None
     ) -> TakedownRequest:
-        """Submit DMCA takedown request."""
+        """
+Submit DMCA takedown request."""
         try:
             request_id = f"dmca_{uuid.uuid4().hex[:8]}"
             
@@ -528,9 +540,11 @@ class TakedownManager:
         }
     
     def _setup_takedown_templates(self) -> None:
-        """Setup takedown notice templates."""
+        """
+Setup takedown notice templates."""
         self.takedown_templates = {
-            'dmca': """DMCA Takedown Notice
+            'dmca': """
+DMCA Takedown Notice
 
 I am writing to notify you of copyright infringement on your platform.
 
@@ -545,7 +559,8 @@ I declare under penalty of perjury that the information in this notification is 
 Signature: {signature}
 Date: {date}
             """,
-            'cease_desist': """Cease and Desist Notice
+            'cease_desist': """
+Cease and Desist Notice
 
 This letter serves as formal notice that you are infringing upon intellectual property rights.
 
@@ -566,16 +581,20 @@ Failure to comply may result in legal action seeking monetary damages and injunc
         }
     
     def _get_platform_takedown_url(self, platform: str) -> str:
-        """Get takedown URL for platform."""
+        """
+Get takedown URL for platform."""
         return self.platform_apis.get(platform, {}).get('takedown_url', '')
     
     def _get_platform_report_url(self, platform: str) -> str:
-        """Get report URL for platform."""
+        """
+Get report URL for platform."""
         return self.platform_apis.get(platform, {}).get('report_url', '')
     
     def _generate_violation_description(self, violation: ViolationEvent) -> str:
-        """Generate violation description for reports."""
-        return f"""Violation Type: {violation.violation_type.value}
+        """
+Generate violation description for reports."""
+        return f"""
+Violation Type: {violation.violation_type.value}
 Severity: {violation.severity.value}
 Original Content: {violation.original_content_url}
 Infringing Content: {violation.infringing_url}
@@ -586,7 +605,8 @@ This content violates copyright and intellectual property rights.
         """.strip()
     
     async def _submit_to_platform(self, request: TakedownRequest) -> bool:
-        """Submit request to platform."""
+        """
+Submit request to platform."""
         try:
             # Implementation would make actual API calls to platforms
             # For now, simulate submission
@@ -626,7 +646,8 @@ class ViolationAnalyzer:
     """Advanced violation analysis and classification system."""
     
     def __init__(self):
-        """Initialize violation analyzer."""
+        """
+Initialize violation analyzer."""
         self.classification_rules: List[Dict] = []
         self.severity_weights: Dict[str, float] = {}
         self.false_positive_patterns: List[Dict] = []
@@ -636,7 +657,8 @@ class ViolationAnalyzer:
         self._setup_severity_weights()
     
     async def analyze_violation(self, violation: ViolationEvent) -> Dict[str, Any]:
-        """Perform comprehensive violation analysis."""
+        """
+Perform comprehensive violation analysis."""
         try:
             analysis = {
                 'violation_id': violation.violation_id,
@@ -688,7 +710,8 @@ class ViolationAnalyzer:
         }
     
     async def _calculate_financial_impact(self, violation: ViolationEvent) -> Dict[str, float]:
-        """Calculate estimated financial impact."""
+        """
+Calculate estimated financial impact."""
         base_loss = 100.0  # Base loss amount
         
         # Platform-specific multipliers
@@ -728,7 +751,8 @@ class ViolationAnalyzer:
         }
     
     async def _assess_legal_strength(self, violation: ViolationEvent) -> Dict[str, Any]:
-        """Assess legal strength of the case."""
+        """
+Assess legal strength of the case."""
         strength_factors = {
             'evidence_quality': self._assess_evidence_quality(violation.evidence),
             'clear_ownership': self._verify_ownership_clarity(violation),
@@ -747,7 +771,8 @@ class ViolationAnalyzer:
         }
     
     async def _recommend_responses(self, violation: ViolationEvent) -> List[Dict[str, Any]]:
-        """Recommend response actions based on analysis."""
+        """
+Recommend response actions based on analysis."""
         recommendations = []
         
         # Based on severity
@@ -784,7 +809,8 @@ class ViolationAnalyzer:
         return sorted(recommendations, key=lambda x: x['priority'])
     
     def _setup_classification_rules(self) -> None:
-        """Setup violation classification rules."""
+        """
+Setup violation classification rules."""
         self.classification_rules = [
             {
                 'name': 'exact_duplicate',
@@ -807,7 +833,8 @@ class ViolationAnalyzer:
         ]
     
     def _setup_severity_weights(self) -> None:
-        """Setup severity weights for violation types."""
+        """
+Setup severity weights for violation types."""
         self.severity_weights = {
             'copyright_infringement': 0.8,
             'monetization_theft': 0.9,
@@ -819,7 +846,8 @@ class ViolationAnalyzer:
         }
     
     def _estimate_platform_reach(self, platform: str) -> float:
-        """Estimate platform reach factor."""
+        """
+Estimate platform reach factor."""
         reach_factors = {
             'youtube': 0.9,
             'tiktok': 0.85,
@@ -831,12 +859,14 @@ class ViolationAnalyzer:
         return reach_factors.get(platform, 0.5)
     
     def _assess_creator_impact(self, violation: ViolationEvent) -> float:
-        """Assess impact on creator."""
+        """
+Assess impact on creator."""
         # This would integrate with creator business data
         return 0.7  # Default moderate impact
     
     def _detect_commercial_use(self, violation: ViolationEvent) -> float:
-        """Detect if violation involves commercial use."""
+        """
+Detect if violation involves commercial use."""
         commercial_indicators = [
             'monetization' in violation.metadata.get('description', '').lower(),
             'sponsored' in violation.metadata.get('description', '').lower(),
@@ -845,7 +875,8 @@ class ViolationAnalyzer:
         return sum(commercial_indicators) / len(commercial_indicators)
     
     def _check_attribution_removal(self, violation: ViolationEvent) -> float:
-        """Check if attribution was removed."""
+        """
+Check if attribution was removed."""
         original_attribution = violation.metadata.get('original_attribution', '')
         copy_attribution = violation.metadata.get('copy_attribution', '')
         
@@ -856,7 +887,8 @@ class ViolationAnalyzer:
         return 0.0
     
     def _score_to_severity(self, score: float) -> ViolationSeverity:
-        """Convert severity score to severity level."""
+        """
+Convert severity score to severity level."""
         if score >= 0.9:
             return ViolationSeverity.CRITICAL
         elif score >= 0.7:
@@ -869,7 +901,8 @@ class ViolationAnalyzer:
             return ViolationSeverity.INFORMATIONAL
     
     def _assess_evidence_quality(self, evidence: List[Evidence]) -> float:
-        """Assess quality of collected evidence."""
+        """
+Assess quality of collected evidence."""
         if not evidence:
             return 0.0
         
@@ -887,7 +920,8 @@ class ViolationAnalyzer:
         return min(quality_score / len(evidence), 1.0)
     
     def _verify_ownership_clarity(self, violation: ViolationEvent) -> float:
-        """Verify clarity of ownership."""
+        """
+Verify clarity of ownership."""
         ownership_indicators = [
             violation.original_content_url is not None,
             violation.original_publication_date is not None,
@@ -897,7 +931,8 @@ class ViolationAnalyzer:
         return sum(ownership_indicators) / len(ownership_indicators)
     
     def _check_documentation(self, violation: ViolationEvent) -> float:
-        """Check completeness of documentation."""
+        """
+Check completeness of documentation."""
         required_fields = [
             violation.infringing_url,
             violation.original_content_url,
@@ -908,7 +943,8 @@ class ViolationAnalyzer:
         return completeness
     
     def _verify_timestamps(self, violation: ViolationEvent) -> float:
-        """Verify timestamp validity."""
+        """
+Verify timestamp validity."""
         if not violation.original_publication_date:
             return 0.5  # Unknown, but not necessarily bad
         
@@ -918,7 +954,8 @@ class ViolationAnalyzer:
             return 0.0  # Suspicious timing
     
     def _recommend_legal_action(self, strength: float) -> str:
-        """Recommend legal action based on strength."""
+        """
+Recommend legal action based on strength."""
         if strength >= 0.8:
             return "strong_case_proceed"
         elif strength >= 0.6:
@@ -939,7 +976,8 @@ class ViolationAnalyzer:
         return any(escalation_triggers)
     
     async def _assess_false_positive_risk(self, violation: ViolationEvent) -> float:
-        """Assess risk of false positive."""
+        """
+Assess risk of false positive."""
         risk_factors = []
         
         # Low similarity score
@@ -975,7 +1013,8 @@ class ViolationManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize violation manager."""
+        """
+Initialize violation manager."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -1163,7 +1202,8 @@ class ViolationManager:
         ]
     
     async def _collect_evidence(self, violation: ViolationEvent) -> None:
-        """Collect evidence for a violation."""
+        """
+Collect evidence for a violation."""
         try:
             # Collect screenshot evidence
             screenshot = await self.evidence_collector.collect_screenshot_evidence(

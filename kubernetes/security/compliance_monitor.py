@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import os
 import json
 import logging
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
@@ -44,6 +47,7 @@ class ComplianceFramework(Enum):
 
 class AuditEventType(Enum):
     """Types of audit events"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
@@ -57,6 +61,7 @@ class AuditEventType(Enum):
 
 class SeverityLevel(Enum):
     """Severity levels for audit events"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -84,7 +89,8 @@ class AuditEvent:
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition"""
+    """
+Compliance rule definition"""
     rule_id: str
     framework: ComplianceFramework
     category: str
@@ -98,7 +104,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
+    """
+Compliance assessment report"""
     framework: ComplianceFramework
     assessment_date: datetime
     total_rules: int
@@ -496,7 +503,8 @@ class ComplianceChecker:
             return False
     
     def _check_access_logging(self, context: Dict[str, Any]) -> bool:
-        """Check if access logging is properly implemented"""
+        """
+Check if access logging is properly implemented"""
         try:
             # Check if audit logging is enabled
             audit_enabled = context.get('audit_logging_enabled', False)
@@ -510,7 +518,8 @@ class ComplianceChecker:
             return False
     
     def _check_data_retention(self, context: Dict[str, Any]) -> bool:
-        """Check if data retention policies are enforced"""
+        """
+Check if data retention policies are enforced"""
         try:
             # Check if retention policies are defined
             policies_defined = context.get('retention_policies_defined', False)
@@ -524,7 +533,8 @@ class ComplianceChecker:
             return False
     
     def _check_access_controls(self, context: Dict[str, Any]) -> bool:
-        """Check if access controls are properly implemented"""
+        """
+Check if access controls are properly implemented"""
         try:
             # Check role-based access control
             rbac_enabled = context.get('rbac_enabled', False)
@@ -538,7 +548,8 @@ class ComplianceChecker:
             return False
     
     def _check_system_monitoring(self, context: Dict[str, Any]) -> bool:
-        """Check if system monitoring is properly implemented"""
+        """
+Check if system monitoring is properly implemented"""
         try:
             # Check monitoring system status
             monitoring_enabled = context.get('monitoring_enabled', False)
@@ -552,7 +563,8 @@ class ComplianceChecker:
             return False
     
     def _check_incident_management(self, context: Dict[str, Any]) -> bool:
-        """Check if incident management process is defined"""
+        """
+Check if incident management process is defined"""
         try:
             # Check incident response procedures
             procedures_defined = context.get('incident_procedures_defined', False)

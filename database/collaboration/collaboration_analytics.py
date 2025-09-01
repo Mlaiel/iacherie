@@ -6,9 +6,10 @@ team efficiency measurement, and project success metrics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class AnalyticsMetricType(Enum):
-    """Analytics metric types for collaboration tracking"""
+    """
+Analytics metric types for collaboration tracking"""
+
     PROJECT_PERFORMANCE = "project_performance"
     TEAM_EFFICIENCY = "team_efficiency"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -47,6 +50,7 @@ class AnalyticsMetricType(Enum):
 
 class MetricAggregationType(Enum):
     """Metric aggregation methods"""
+
     SUM = "sum"
     AVERAGE = "average"
     MEDIAN = "median"
@@ -233,7 +237,8 @@ class CreatorPerformanceMetrics(Base):
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query configuration for data retrieval"""
+    """
+Analytics query configuration for data retrieval"""
     metric_types: List[AnalyticsMetricType]
     start_date: datetime
     end_date: datetime
@@ -503,7 +508,8 @@ class CollaborationAnalyticsEngine:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _calculate_team_efficiency_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall team efficiency score"""
+        """
+Calculate overall team efficiency score"""
         scores = []
         
         # Productivity component (40%)

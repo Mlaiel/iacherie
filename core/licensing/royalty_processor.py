@@ -18,6 +18,7 @@ Business Logic Integration:
 Multi-format creators → Content monetization → AI revenue optimization → Blockchain security
 → Real-time distribution → Collaborative profit sharing → Professional analytics
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -47,7 +48,9 @@ from ..compliance.financial_compliance import FinancialComplianceValidator
 
 
 class AdvancedRoyaltyType(Enum):
-    """Enhanced royalty calculation types"""
+    """
+Enhanced royalty calculation types"""
+
     PERCENTAGE = "percentage"
     FLAT_FEE = "flat_fee"
     PER_UNIT = "per_unit"
@@ -70,6 +73,7 @@ class AdvancedRoyaltyType(Enum):
 
 class PaymentStatus(Enum):
     """Enhanced payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -88,6 +92,7 @@ class PaymentStatus(Enum):
 
 class EnhancedCurrency(Enum):
     """Extended currency support including crypto"""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -111,6 +116,7 @@ class EnhancedCurrency(Enum):
 
 class RevenueStreamType(Enum):
     """Types of revenue streams"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     SYNC_LICENSING = "sync_licensing"
@@ -134,6 +140,7 @@ class RevenueStreamType(Enum):
 
 class StakeholderType(Enum):
     """Types of revenue stakeholders"""
+
     PRIMARY_CREATOR = "primary_creator"
     COLLABORATOR = "collaborator"
     PUBLISHER = "publisher"
@@ -184,7 +191,8 @@ class AdvancedRevenueSource:
 
 @dataclass
 class EnhancedRoyaltyShare:
-    """Advanced royalty share with AI optimization"""
+    """
+Advanced royalty share with AI optimization"""
     stakeholder_id: str
     stakeholder_type: StakeholderType
     share_percentage: Decimal
@@ -322,7 +330,8 @@ class UltraAdvancedRoyaltyProcessor:
         
         self.is_initialized = False
 class RoyaltyCalculation:
-    """Comprehensive royalty calculation result"""
+    """
+Comprehensive royalty calculation result"""
     calculation_id: str
     license_id: str
     content_id: str
@@ -342,7 +351,8 @@ class RoyaltyCalculation:
 
 @dataclass
 class PaymentInstruction:
-    """Payment processing instruction"""
+    """
+Payment processing instruction"""
     payment_id: str
     recipient_id: str
     amount: Decimal
@@ -357,7 +367,8 @@ class PaymentInstruction:
 
 @dataclass
 class DistributionResult:
-    """Royalty distribution processing result"""
+    """
+Royalty distribution processing result"""
     distribution_id: str
     calculation_id: str
     total_amount_distributed: Decimal
@@ -414,7 +425,8 @@ class RoyaltyProcessor:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize royalty processor and payment systems"""
+        """
+Initialize royalty processor and payment systems"""
         try:
             self.logger.info("Initializing RoyaltyProcessor")
             
@@ -824,7 +836,8 @@ class RoyaltyProcessor:
         calculation_method: RoyaltyType,
         usage_metrics: Dict[str, Any]
     ) -> List[RoyaltyShare]:
-        """Calculate individual royalty shares for stakeholders"""
+        """
+Calculate individual royalty shares for stakeholders"""
         shares = []
         
         for stakeholder in stakeholders:
@@ -864,7 +877,8 @@ class RoyaltyProcessor:
         usage_metrics: Dict[str, Any],
         performance_metrics: Dict[str, Any]
     ) -> Decimal:
-        """Calculate performance-based multiplier for royalty shares"""
+        """
+Calculate performance-based multiplier for royalty shares"""
         base_multiplier = Decimal('1.0')
         
         # Example performance factors
@@ -881,7 +895,8 @@ class RoyaltyProcessor:
         license_id: str,
         royalty_amount: Decimal
     ) -> Decimal:
-        """Calculate advance recoupment amount"""
+        """
+Calculate advance recoupment amount"""
         advance_balance = self.advance_balances.get(license_id, {})
         outstanding_advance = Decimal(str(advance_balance.get('outstanding', 0)))
         
@@ -897,7 +912,8 @@ class RoyaltyProcessor:
         royalty_shares: List[RoyaltyShare],
         recoupment_amount: Decimal
     ) -> List[RoyaltyShare]:
-        """Apply advance recoupment to royalty shares"""
+        """
+Apply advance recoupment to royalty shares"""
         total_shares_amount = sum(share.share_amount for share in royalty_shares)
         
         if total_shares_amount <= 0 or recoupment_amount <= 0:
@@ -914,7 +930,8 @@ class RoyaltyProcessor:
         return royalty_shares
     
     async def _calculate_tax_withholdings(self, royalty_shares: List[RoyaltyShare]) -> Decimal:
-        """Calculate tax withholdings for royalty shares"""
+        """
+Calculate tax withholdings for royalty shares"""
         total_withholdings = Decimal('0')
         
         for share in royalty_shares:
@@ -927,7 +944,8 @@ class RoyaltyProcessor:
         return total_withholdings
     
     def _aggregate_usage_metrics(self, revenue_sources: List[RevenueSource]) -> Dict[str, Any]:
-        """Aggregate usage metrics from all revenue sources"""
+        """
+Aggregate usage metrics from all revenue sources"""
         aggregated = {
             'total_plays': 0,
             'total_streams': 0,
@@ -961,7 +979,8 @@ class RoyaltyProcessor:
         self,
         calculation: RoyaltyCalculation
     ) -> List[PaymentInstruction]:
-        """Generate payment instructions from royalty calculation"""
+        """
+Generate payment instructions from royalty calculation"""
         instructions = []
         
         for share in calculation.royalty_shares:
@@ -995,7 +1014,8 @@ class RoyaltyProcessor:
         return batches
     
     async def _process_payment_batch(self, batch: List[PaymentInstruction]) -> Any:
-        """Process a batch of payments"""
+        """
+Process a batch of payments"""
         # Mock payment batch result
         class PaymentBatchResult:
             def __init__(self):
@@ -1047,7 +1067,8 @@ class RoyaltyProcessor:
         return result
     
     def _calculate_processing_fee(self, amount: Decimal) -> Decimal:
-        """Calculate payment processing fee"""
+        """
+Calculate payment processing fee"""
         fee_percentage = Decimal('0.029')  # 2.9%
         fixed_fee = Decimal('0.30')  # $0.30
         
@@ -1057,7 +1078,8 @@ class RoyaltyProcessor:
         self,
         successful_payments: List[Dict[str, Any]]
     ) -> List[str]:
-        """Record payment transactions on blockchain"""
+        """
+Record payment transactions on blockchain"""
         transaction_hashes = []
         
         if not self.blockchain_enabled:
@@ -1096,7 +1118,8 @@ class RoyaltyProcessor:
             self.advance_balances[license_id]['outstanding'] = float(max(new_balance, Decimal('0')))
     
     def _calculate_platform_breakdown(self, revenue_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate revenue breakdown by platform"""
+        """
+Calculate revenue breakdown by platform"""
         platform_totals = defaultdict(float)
         
         for item in revenue_data:
@@ -1111,7 +1134,8 @@ class RoyaltyProcessor:
         revenue_data: List[Dict[str, Any]],
         period_days: int
     ) -> List[Dict[str, Any]]:
-        """Calculate daily revenue trend"""
+        """
+Calculate daily revenue trend"""
         daily_revenue = defaultdict(float)
         
         for item in revenue_data:
@@ -1130,7 +1154,8 @@ class RoyaltyProcessor:
         return trend
     
     def _project_revenue(self, revenue_trend: List[Dict[str, Any]]) -> float:
-        """Project revenue for next 30 days based on trend"""
+        """
+Project revenue for next 30 days based on trend"""
         if len(revenue_trend) < 7:  # Need at least a week of data
             return 0.0
         
@@ -1141,7 +1166,8 @@ class RoyaltyProcessor:
         return daily_average * 30  # Project for 30 days
     
     async def _get_license_info(self, license_id: str) -> Dict[str, Any]:
-        """Get license information"""
+        """
+Get license information"""
         # Mock license info - would fetch from licensing engine
         return {
             'license_id': license_id,
@@ -1152,7 +1178,8 @@ class RoyaltyProcessor:
         }
     
     async def _get_license_stakeholders(self, license_id: str) -> List[Dict[str, Any]]:
-        """Get stakeholders for a license"""
+        """
+Get stakeholders for a license"""
         # Mock stakeholders - would fetch from rights management
         return [
             {
@@ -1178,7 +1205,8 @@ class RoyaltyProcessor:
         license_id: str,
         up_to_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get unreported revenue for a license"""
+        """
+Get unreported revenue for a license"""
         # Mock unreported revenue
         return []
     
@@ -1188,7 +1216,8 @@ class RoyaltyProcessor:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get revenue data for period"""
+        """
+Get revenue data for period"""
         # Mock revenue data
         return []
     
@@ -1197,7 +1226,8 @@ class RoyaltyProcessor:
         from_currency: Currency,
         to_currency: Currency
     ) -> Decimal:
-        """Get current exchange rate between currencies"""
+        """
+Get current exchange rate between currencies"""
         # Mock exchange rates
         rates = {
             ('USD', 'EUR'): Decimal('0.85'),
@@ -1210,7 +1240,8 @@ class RoyaltyProcessor:
         return rates.get(key, Decimal('1.0'))
     
     async def _load_exchange_rates(self) -> None:
-        """Load current exchange rates"""
+        """
+Load current exchange rates"""
         self.logger.info("Exchange rates loaded")
     
     async def _load_payment_fees(self) -> None:

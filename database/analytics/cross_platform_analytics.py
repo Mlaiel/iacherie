@@ -10,6 +10,7 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 """
+
 from typing import Dict, List, Optional, Tuple, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -28,7 +29,9 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Supported platforms for analytics tracking"""
+    """
+Supported platforms for analytics tracking"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -45,6 +48,7 @@ class PlatformType(Enum):
 
 class ContentFormat(Enum):
     """Multi-format content types supported"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -59,6 +63,7 @@ class ContentFormat(Enum):
 
 class MetricCategory(Enum):
     """Analytics metric categories"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
@@ -89,7 +94,8 @@ class PlatformMetrics:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate engagement rate based on platform metrics"""
+        """
+Calculate engagement rate based on platform metrics"""
         if self.reach == 0:
             return 0.0
         
@@ -98,7 +104,8 @@ class PlatformMetrics:
 
 
 class CrossPlatformAnalytics(Base):
-    """Database model for cross-platform analytics"""
+    """
+Database model for cross-platform analytics"""
     __tablename__ = "cross_platform_analytics"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
@@ -173,7 +180,8 @@ class CrossPlatformAnalyticsEngine:
         self.ml_models = {}
         
     def _load_platform_configurations(self) -> Dict[str, Dict]:
-        """Load platform-specific configuration and API settings"""
+        """
+Load platform-specific configuration and API settings"""
         return {
             PlatformType.YOUTUBE.value: {
                 "api_endpoint": "youtube.googleapis.com/youtube/v3",
@@ -420,7 +428,8 @@ class CrossPlatformAnalyticsEngine:
         return ((values[-1] - values[0]) / values[0]) * 100
     
     def _generate_audience_insights(self, analytics_data: List[CrossPlatformAnalytics]) -> Dict[str, Any]:
-        """Generate audience insights across platforms"""
+        """
+Generate audience insights across platforms"""
         # Aggregate audience demographics
         all_demographics = []
         for record in analytics_data:
@@ -537,7 +546,8 @@ class CrossPlatformAnalyticsEngine:
         return ContentFormat.VIDEO.value
     
     async def get_real_time_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Get real-time dashboard data for immediate insights"""
+        """
+Get real-time dashboard data for immediate insights"""
         # Get latest analytics data (last 24 hours)
         last_24h = datetime.utcnow() - timedelta(days=1)
         recent_data = self.db_session.query(CrossPlatformAnalytics).filter(

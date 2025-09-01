@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -57,7 +58,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class StorageBackendType(Enum):
-    """Supported storage backend types"""
+    """
+Supported storage backend types"""
+
     LOCAL_FILESYSTEM = "local_filesystem"
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
@@ -70,6 +73,7 @@ class StorageBackendType(Enum):
 
 class StorageAccessMode(Enum):
     """Storage access modes"""
+
     READ_ONLY = "read_only"
     WRITE_ONLY = "write_only"
     READ_WRITE = "read_write"
@@ -77,6 +81,7 @@ class StorageAccessMode(Enum):
 
 class StorageRedundancyLevel(Enum):
     """Storage redundancy and durability levels"""
+
     NONE = "none"
     LOCAL_REDUNDANT = "local_redundant"
     ZONE_REDUNDANT = "zone_redundant"
@@ -85,6 +90,7 @@ class StorageRedundancyLevel(Enum):
 
 class CompressionAlgorithm(Enum):
     """Supported compression algorithms"""
+
     NONE = "none"
     GZIP = "gzip"
     LZMA = "lzma"
@@ -93,6 +99,7 @@ class CompressionAlgorithm(Enum):
 
 class EncryptionType(Enum):
     """Supported encryption types"""
+
     NONE = "none"
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
@@ -129,7 +136,8 @@ class StorageConfiguration:
 
 @dataclass
 class StorageMetrics:
-    """Storage backend metrics and statistics"""
+    """
+Storage backend metrics and statistics"""
     total_files: int = 0
     total_size_bytes: int = 0
     available_space_bytes: Optional[int] = None
@@ -147,7 +155,8 @@ class StorageMetrics:
 
 @dataclass
 class StorageOperation:
-    """Storage operation metadata"""
+    """
+Storage operation metadata"""
     operation_id: str
     operation_type: str  # upload, download, delete, copy, move
     file_path: str
@@ -161,7 +170,8 @@ class StorageOperation:
     metadata: Optional[Dict[str, Any]] = None
 
 class StorageBackend(ABC):
-    """Abstract base class for storage backends"""
+    """
+Abstract base class for storage backends"""
     
     def __init__(self, config: StorageConfiguration):
         self.config = config
@@ -177,7 +187,8 @@ class StorageBackend(ABC):
     
     @abstractmethod
     async def disconnect(self):
-        """Disconnect from the storage backend"""
+        """
+Disconnect from the storage backend"""
         pass
     
     @abstractmethod
@@ -187,7 +198,8 @@ class StorageBackend(ABC):
         remote_path: str,
         metadata: Optional[Dict[str, str]] = None
     ) -> StorageOperation:
-        """Upload a file to the storage backend"""
+        """
+Upload a file to the storage backend"""
         pass
     
     @abstractmethod
@@ -196,12 +208,14 @@ class StorageBackend(ABC):
         remote_path: str, 
         local_path: Union[str, Path]
     ) -> StorageOperation:
-        """Download a file from the storage backend"""
+        """
+Download a file from the storage backend"""
         pass
     
     @abstractmethod
     async def delete_file(self, remote_path: str) -> StorageOperation:
-        """Delete a file from the storage backend"""
+        """
+Delete a file from the storage backend"""
         pass
     
     @abstractmethod
@@ -215,17 +229,20 @@ class StorageBackend(ABC):
     
     @abstractmethod
     async def file_exists(self, remote_path: str) -> bool:
-        """Check if a file exists in the storage backend"""
+        """
+Check if a file exists in the storage backend"""
         pass
     
     @abstractmethod
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Get metadata for a file"""
+        """
+Get metadata for a file"""
         pass
     
     @abstractmethod
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the storage backend"""
+        """
+Perform health check on the storage backend"""
         pass
     
     async def copy_file(
@@ -233,7 +250,8 @@ class StorageBackend(ABC):
         source_path: str, 
         destination_path: str
     ) -> StorageOperation:
-        """Copy a file within the storage backend"""
+        """
+Copy a file within the storage backend"""
         # Default implementation using download/upload
         operation = StorageOperation(
             operation_id=str(uuid.uuid4()),
@@ -273,7 +291,8 @@ class StorageBackend(ABC):
         return self.metrics
     
     def update_metrics(self, operation: StorageOperation):
-        """Update metrics based on completed operation"""
+        """
+Update metrics based on completed operation"""
         if operation.operation_type == "upload":
             self.metrics.write_operations += 1
         elif operation.operation_type == "download":
@@ -295,7 +314,8 @@ class LocalFilesystemBackend(StorageBackend):
     """Local filesystem storage backend"""
     
     async def connect(self) -> bool:
-        """Connect to local filesystem"""
+        """
+Connect to local filesystem"""
         try:
             self.base_path = Path(self.config.base_path or "/tmp/content_storage")
             self.base_path.mkdir(parents=True, exist_ok=True)
@@ -462,7 +482,8 @@ class LocalFilesystemBackend(StorageBackend):
             return False
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Get file metadata from local filesystem"""
+        """
+Get file metadata from local filesystem"""
         try:
             file_path = self.base_path / remote_path.lstrip('/')
             
@@ -525,7 +546,8 @@ class LocalFilesystemBackend(StorageBackend):
             }
 
 class AWSS3Backend(StorageBackend):
-    """AWS S3 storage backend"""
+    """
+AWS S3 storage backend"""
     
     def __init__(self, config: StorageConfiguration):
         super().__init__(config)
@@ -784,7 +806,8 @@ class AWSS3Backend(StorageBackend):
             }
 
 class StorageManager:
-    """Main storage manager for handling multiple storage backends"""
+    """
+Main storage manager for handling multiple storage backends"""
     
     def __init__(self, configurations: List[StorageConfiguration]):
         """
@@ -990,7 +1013,8 @@ class StorageManager:
         return metrics
     
     async def health_check_all(self) -> Dict[str, Dict[str, Any]]:
-        """Perform health check on all backends"""
+        """
+Perform health check on all backends"""
         results = {}
         
         for name, backend in self.backends.items():
@@ -1005,7 +1029,8 @@ class StorageManager:
         return results
     
     def get_backend_info(self) -> Dict[str, Dict[str, Any]]:
-        """Get information about all configured backends"""
+        """
+Get information about all configured backends"""
         info = {}
         
         for name, backend in self.backends.items():

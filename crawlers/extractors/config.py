@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import os
 import json
 from typing import Dict, List, Any, Optional
@@ -37,7 +38,9 @@ from enum import Enum
 from pathlib import Path
 
 class Environment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -45,6 +48,7 @@ class Environment(Enum):
 
 class PerformanceTier(Enum):
     """Performance tier configurations"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"

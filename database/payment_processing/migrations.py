@@ -12,6 +12,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, List, Optional, Callable
 from sqlalchemy import (
     text, MetaData, Table, Column, Integer, String, DateTime,
@@ -28,12 +29,14 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationError(Exception):
-    """Exception for migration-related errors"""
+    """
+Exception for migration-related errors"""
     pass
 
 
 class Migration:
-    """Base class for database migrations"""
+    """
+Base class for database migrations"""
     
     def __init__(self, version: str, description: str):
         self.version = version
@@ -42,15 +45,18 @@ class Migration:
         self.checksum = self._calculate_checksum()
     
     def up(self, engine) -> None:
-        """Apply migration (must be implemented by subclasses)"""
+        """
+Apply migration (must be implemented by subclasses)"""
         pass
     
     def down(self, engine) -> None:
-        """Rollback migration (must be implemented by subclasses)"""
+        """
+Rollback migration (must be implemented by subclasses)"""
         pass
     
     def _calculate_checksum(self) -> str:
-        """Calculate migration checksum"""
+        """
+Calculate migration checksum"""
         content = f"{self.version}:{self.description}:{self.__class__.__name__}"
         return hashlib.md5(content.encode('utf-8')).hexdigest()
 
@@ -84,7 +90,8 @@ class MigrationManager:
             conn.commit()
     
     def register_migration(self, migration: Migration):
-        """Register a migration"""
+        """
+Register a migration"""
         self.migrations.append(migration)
         logger.info(f"Registered migration {migration.version}: {migration.description}")
     
@@ -108,7 +115,8 @@ class MigrationManager:
         ]
     
     def apply_migration(self, migration: Migration) -> bool:
-        """Apply a single migration"""
+        """
+Apply a single migration"""
         try:
             start_time = datetime.utcnow()
             
@@ -522,7 +530,8 @@ class AddForeignKeysMigration(Migration):
 
 
 class AddUpdateTriggersMigration(Migration):
-    """Migration to add update timestamp triggers"""
+    """
+Migration to add update timestamp triggers"""
     
     def __init__(self):
         super().__init__("007", "Add update timestamp triggers")
@@ -580,7 +589,8 @@ class AddUpdateTriggersMigration(Migration):
 
 
 def create_migration_manager(engine) -> MigrationManager:
-    """Create and configure migration manager with all migrations"""
+    """
+Create and configure migration manager with all migrations"""
     manager = MigrationManager(engine)
     
     # Register all migrations in order
@@ -596,12 +606,14 @@ def create_migration_manager(engine) -> MigrationManager:
 
 
 def run_migrations(engine, target_version: Optional[str] = None) -> int:
-    """Run all pending migrations"""
+    """
+Run all pending migrations"""
     manager = create_migration_manager(engine)
     return manager.migrate_up(target_version)
 
 
 def rollback_migrations(engine, target_version: str) -> int:
-    """Rollback migrations to target version"""
+    """
+Rollback migrations to target version"""
     manager = create_migration_manager(engine)
     return manager.migrate_down(target_version)

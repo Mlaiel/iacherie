@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import subprocess
@@ -70,7 +71,9 @@ from ...utils.compression_utils import CompressionManager
 logger = logging.getLogger(__name__)
 
 class ProcessingType(str, Enum):
-    """File processing types"""
+    """
+File processing types"""
+
     AUDIO_CONVERSION = "audio_conversion"
     VIDEO_CONVERSION = "video_conversion"
     IMAGE_OPTIMIZATION = "image_optimization"
@@ -80,6 +83,7 @@ class ProcessingType(str, Enum):
 
 class AudioFormat(str, Enum):
     """Supported audio formats"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -90,6 +94,7 @@ class AudioFormat(str, Enum):
 
 class VideoFormat(str, Enum):
     """Supported video formats"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -100,6 +105,7 @@ class VideoFormat(str, Enum):
 
 class ImageFormat(str, Enum):
     """Supported image formats"""
+
     JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
@@ -855,7 +861,8 @@ class FileProcessor:
         return priorities[0].value
     
     def _get_best_video_format(self, current_extension: str, options: ProcessingOptions) -> str:
-        """Get best video format for optimization"""
+        """
+Get best video format for optimization"""
         priorities = self.config['format_priorities']['video']
         
         current_format = current_extension[1:].lower()
@@ -865,7 +872,8 @@ class FileProcessor:
         return priorities[0].value
     
     def _get_best_image_format(self, current_extension: str, options: ProcessingOptions) -> str:
-        """Get best image format for optimization"""
+        """
+Get best image format for optimization"""
         priorities = self.config['format_priorities']['image']
         
         current_format = current_extension[1:].lower()
@@ -886,7 +894,8 @@ class FileProcessor:
         file_category: str,
         options: ProcessingOptions
     ) -> Path:
-        """Generate output path for processed file"""
+        """
+Generate output path for processed file"""
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         
         output_name = f"{input_path.stem}_processed_{timestamp}"
@@ -970,7 +979,8 @@ class FileProcessor:
         }
     
     async def cleanup(self):
-        """Cleanup processor resources"""
+        """
+Cleanup processor resources"""
         try:
             # Clean temporary files older than 1 hour
             cutoff_time = datetime.utcnow() - timedelta(hours=1)

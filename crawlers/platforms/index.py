@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any
@@ -40,7 +41,8 @@ settings = get_settings()
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for platform crawler."""
+    """
+Configuration for platform crawler."""
     platform: str
     api_key: Optional[str] = None
     access_token: Optional[str] = None
@@ -54,7 +56,8 @@ class CrawlerConfig:
 
 @dataclass
 class CrawlTask:
-    """Individual crawling task configuration."""
+    """
+Individual crawling task configuration."""
     platform: str
     task_type: str  # search, profile, content, monitor
     query: str
@@ -66,7 +69,8 @@ class CrawlTask:
 
 @dataclass
 class CrawlResult:
-    """Unified crawl result structure."""
+    """
+Unified crawl result structure."""
     platform: str
     task_type: str
     query: str
@@ -429,7 +433,8 @@ class PlatformCrawlerOrchestrator:
             return await self._execute_search(crawler, task)
     
     def get_platform_stats(self) -> Dict[str, Any]:
-        """Get statistics about supported platforms and active crawlers."""
+        """
+Get statistics about supported platforms and active crawlers."""
         return {
             'total_platforms': len(get_supported_platforms()),
             'active_crawlers': len(self.active_crawlers),
@@ -445,7 +450,8 @@ class PlatformCrawlerOrchestrator:
         }
     
     async def cleanup(self):
-        """Cleanup resources and close active crawlers."""
+        """
+Cleanup resources and close active crawlers."""
         self.logger.info("Cleaning up platform crawlers")
         
         for platform, crawler in self.active_crawlers.items():

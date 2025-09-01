@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Union
 from datetime import datetime
@@ -20,7 +21,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ErrorSeverity(Enum):
-    """Error severity levels for DMCA operations"""
+    """
+Error severity levels for DMCA operations"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -28,6 +31,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Categories of DMCA operation errors"""
+
     LEGAL_COMPLIANCE = "legal_compliance"
     TAKEDOWN_AUTOMATION = "takedown_automation"
     COPYRIGHT_VERIFICATION = "copyright_verification"
@@ -77,7 +81,8 @@ class DMCABaseException(Exception):
         self._log_exception()
     
     def _log_exception(self):
-        """Log the exception with appropriate level based on severity"""
+        """
+Log the exception with appropriate level based on severity"""
         log_data = {
             "error_code": self.error_code,
             "severity": self.severity.value,
@@ -123,7 +128,8 @@ class LegalComplianceException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class InvalidJurisdictionException(LegalComplianceException):
-    """Exception for invalid or unsupported jurisdictions"""
+    """
+Exception for invalid or unsupported jurisdictions"""
     
     def __init__(self, jurisdiction: str, supported_jurisdictions: List[str], **kwargs):
         message = f"Jurisdiction '{jurisdiction}' is not supported. Supported: {', '.join(supported_jurisdictions)}"
@@ -184,7 +190,8 @@ class TakedownException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class PlatformNotSupportedException(TakedownException):
-    """Exception for unsupported platforms"""
+    """
+Exception for unsupported platforms"""
     
     def __init__(self, platform: str, supported_platforms: List[str], **kwargs):
         message = f"Platform '{platform}' is not supported for automated takedowns"
@@ -265,7 +272,8 @@ class CopyrightVerificationException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class InsufficientProofException(CopyrightVerificationException):
-    """Exception when copyright proof is insufficient"""
+    """
+Exception when copyright proof is insufficient"""
     
     def __init__(self, verification_score: float, minimum_required: float, **kwargs):
         message = f"Copyright verification score {verification_score:.2f} is below required {minimum_required:.2f}"
@@ -332,7 +340,8 @@ class DocumentGenerationException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class TemplateNotFoundException(DocumentGenerationException):
-    """Exception when required template is not found"""
+    """
+Exception when required template is not found"""
     
     def __init__(self, template_name: str, template_path: str, **kwargs):
         message = f"Template '{template_name}' not found at path: {template_path}"
@@ -393,7 +402,8 @@ class PlatformIntegrationException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class APIException(PlatformIntegrationException):
-    """Exception for platform API errors"""
+    """
+Exception for platform API errors"""
     
     def __init__(self, platform: str, endpoint: str, status_code: int, response: str, **kwargs):
         message = f"API error from {platform} at {endpoint}: {status_code} - {response}"
@@ -440,7 +450,8 @@ class SecurityException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class InvalidSignatureException(SecurityException):
-    """Exception for invalid digital signatures"""
+    """
+Exception for invalid digital signatures"""
     
     def __init__(self, signature_info: str, **kwargs):
         message = f"Invalid digital signature: {signature_info}"
@@ -485,7 +496,8 @@ class DatabaseException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class CaseNotFoundException(DatabaseException):
-    """Exception when a case is not found in the database"""
+    """
+Exception when a case is not found in the database"""
     
     def __init__(self, case_id: str, **kwargs):
         message = f"Case not found: {case_id}"
@@ -532,7 +544,8 @@ class ConfigurationException(DMCABaseException):
         super().__init__(message, **kwargs)
 
 class MissingConfigurationException(ConfigurationException):
-    """Exception for missing required configuration"""
+    """
+Exception for missing required configuration"""
     
     def __init__(self, config_key: str, config_section: str, **kwargs):
         message = f"Missing required configuration: {config_key} in section {config_section}"

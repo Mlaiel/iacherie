@@ -29,6 +29,7 @@ Contact: mlaiel@live.de pour toute demande d'autorisation.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import sys
@@ -104,6 +105,7 @@ from .scripts import (
 
 class DeploymentStatus(Enum):
     """États de déploiement possibles."""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     VALIDATING = "validating"
@@ -119,6 +121,7 @@ class DeploymentStatus(Enum):
 
 class EnvironmentType(Enum):
     """Types d'environnements supportés."""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -205,7 +208,8 @@ class ProvisioningOrchestrator:
         self.deployment_history: List[DeploymentContext] = []
 
     def _setup_logging(self) -> logging.Logger:
-        """Configure le système de logging."""
+        """
+Configure le système de logging."""
         logger = logging.getLogger("provisioning_orchestrator")
         logger.setLevel(logging.INFO)
         
@@ -657,11 +661,13 @@ class ProvisioningOrchestrator:
         return None
 
     async def list_active_deployments(self) -> List[DeploymentContext]:
-        """Liste tous les déploiements actifs."""
+        """
+Liste tous les déploiements actifs."""
         return list(self.active_deployments.values())
 
     async def cancel_deployment(self, deployment_id: str) -> bool:
-        """Annule un déploiement en cours."""
+        """
+Annule un déploiement en cours."""
         if deployment_id not in self.active_deployments:
             return False
         
@@ -670,7 +676,8 @@ class ProvisioningOrchestrator:
         return True
 
     async def cleanup_resources(self, deployment_id: str) -> bool:
-        """Nettoie les ressources d'un déploiement."""
+        """
+Nettoie les ressources d'un déploiement."""
         context = await self.get_deployment_status(deployment_id)
         if not context:
             return False

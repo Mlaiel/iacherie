@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List, Callable, Awaitable, Union
 from pydantic import BaseSettings, Field
@@ -26,7 +27,9 @@ import logging
 
 
 class HandlerPriority(int, Enum):
-    """Handler execution priority levels."""
+    """
+Handler execution priority levels."""
+
     CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
@@ -35,7 +38,9 @@ class HandlerPriority(int, Enum):
 
 
 class HandlerStatus(str, Enum):
-    """Handler execution status."""
+    """
+Handler execution status."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -57,7 +62,8 @@ class HandlerResult:
 
 @dataclass
 class HandlerConfig:
-    """Webhook handler configuration."""
+    """
+Webhook handler configuration."""
     name: str
     handler_func: Callable[[Dict[str, Any]], Awaitable[HandlerResult]]
     priority: HandlerPriority = HandlerPriority.MEDIUM
@@ -130,7 +136,8 @@ class WebhookHandlerRegistry:
         event_type: str, 
         handler_config: HandlerConfig
     ) -> None:
-        """Register a webhook handler for specific event type."""
+        """
+Register a webhook handler for specific event type."""
         if event_type not in self.handlers:
             self.handlers[event_type] = []
             
@@ -150,7 +157,8 @@ class WebhookHandlerRegistry:
         event_type: str, 
         payload: Dict[str, Any]
     ) -> List[HandlerResult]:
-        """Execute all handlers for a specific event type."""
+        """
+Execute all handlers for a specific event type."""
         handlers = self.get_handlers(event_type)
         if not handlers:
             self.logger.warning(f"No handlers registered for event type: {event_type}")
@@ -276,7 +284,8 @@ class DefaultHandlerConfigs:
     
     @staticmethod
     async def spotify_track_handler(payload: Dict[str, Any]) -> HandlerResult:
-        """Handle Spotify track events."""
+        """
+Handle Spotify track events."""
         # Implementation would process Spotify track updates
         return HandlerResult(
             success=True,

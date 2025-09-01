@@ -23,7 +23,8 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 def test_module_imports():
-    """Test that modules can be imported correctly"""
+    """
+Test that modules can be imported correctly"""
     print("🔍 Testing module imports...")
     
     try:

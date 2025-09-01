@@ -4,6 +4,7 @@ Real-time alerting and notification system endpoints.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from enum import Enum
@@ -732,7 +733,8 @@ def _validate_alert_conditions(alert_type: AlertType, conditions: Dict[str, Any]
 
 
 def _validate_phone_number(phone: str) -> bool:
-    """Validate phone number format"""
+    """
+Validate phone number format"""
     import re
     # Basic international phone number validation
     pattern = r'^\+[1-9]\d{1,14}$'
@@ -740,7 +742,8 @@ def _validate_phone_number(phone: str) -> bool:
 
 
 def _validate_email(email: str) -> bool:
-    """Validate email address format"""
+    """
+Validate email address format"""
     import re
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return bool(re.match(pattern, email))
@@ -748,7 +751,8 @@ def _validate_email(email: str) -> bool:
 
 # Background task functions
 async def _send_alert_immediately(alert_id: str, alert: ManualAlert, target_users: List[str]):
-    """Send alert immediately to target users"""
+    """
+Send alert immediately to target users"""
     try:
         for user_id in target_users:
             # Get user notification preferences

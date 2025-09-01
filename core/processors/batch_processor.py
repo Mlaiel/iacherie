@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import hashlib
@@ -57,7 +58,9 @@ logger = logging.getLogger(__name__)
 
 
 class BatchType(str, Enum):
-    """Types of batch operations"""
+    """
+Types of batch operations"""
+
     BULK_UPLOAD = "bulk_upload"
     BULK_ANALYSIS = "bulk_analysis"
     BULK_ENHANCEMENT = "bulk_enhancement"
@@ -74,6 +77,7 @@ class BatchType(str, Enum):
 
 class BatchStatus(str, Enum):
     """Batch operation status"""
+
     PENDING = "pending"
     PREPARING = "preparing"
     RUNNING = "running"
@@ -86,6 +90,7 @@ class BatchStatus(str, Enum):
 
 class BatchPriority(str, Enum):
     """Batch processing priority"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -94,6 +99,7 @@ class BatchPriority(str, Enum):
 
 class ProcessingStrategy(str, Enum):
     """Batch processing strategies"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     ADAPTIVE = "adaptive"
@@ -213,7 +219,8 @@ class BatchJob:
 
 @dataclass
 class BatchReport:
-    """Batch processing report"""
+    """
+Batch processing report"""
     batch_id: str
     batch_name: Optional[str] = None
     execution_summary: Dict[str, Any] = field(default_factory=dict)

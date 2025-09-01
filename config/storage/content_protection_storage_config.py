@@ -14,13 +14,16 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
 class ProtectionContentType(Enum):
-    """Types of content that can be protected."""
+    """
+Types of content that can be protected."""
+
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -30,6 +33,7 @@ class ProtectionContentType(Enum):
 
 class FingerprintingEngine(Enum):
     """Available fingerprinting engines for content protection."""
+
     CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     ESSENTIA = "essentia"        # Advanced audio analysis
     OPENCV_PHASH = "opencv_phash"  # Perceptual hash for images/video
@@ -156,20 +160,24 @@ class ContentProtectionStorageConfig:
         return self.fingerprint_storage_by_type[content_type]['storage_path']
     
     def get_engines_for_content_type(self, content_type: ProtectionContentType) -> List[FingerprintingEngine]:
-        """Get fingerprinting engines for specific content type."""
+        """
+Get fingerprinting engines for specific content type."""
         return self.fingerprint_storage_by_type[content_type]['engines']
     
     def get_vector_storage_config(self) -> Dict[str, Any]:
-        """Get vector database configuration for similarity search."""
+        """
+Get vector database configuration for similarity search."""
         return self.vector_storage_config
     
     def is_backup_enabled(self) -> bool:
-        """Check if backup is enabled for protection data."""
+        """
+Check if backup is enabled for protection data."""
         return self.protection_backup_config.get('enable_backup', False)
 
 @dataclass
 class MonitoringStorageConfig:
-    """Configuration for content monitoring and surveillance storage."""
+    """
+Configuration for content monitoring and surveillance storage."""
     
     # Monitoring data storage paths
     crawl_data_path: str = "monitoring/crawl_data"
@@ -257,7 +265,8 @@ def validate_content_protection_storage_config() -> bool:
         return False
 
 def validate_monitoring_storage_config() -> bool:
-    """Validate monitoring storage configuration."""
+    """
+Validate monitoring storage configuration."""
     try:
         # Validate required paths
         required_paths = [

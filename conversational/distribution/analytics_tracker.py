@@ -5,11 +5,12 @@ Provides comprehensive performance monitoring, predictive analytics, and busines
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -65,6 +66,7 @@ metrics = MetricsCollector("distribution.analytics_tracker")
 
 class MetricType(str, Enum):
     """Analytics metric types"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -87,6 +89,7 @@ class MetricType(str, Enum):
 
 class TimeGranularity(str, Enum):
     """Time granularity for analytics"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -99,6 +102,7 @@ class TimeGranularity(str, Enum):
 
 class AnalysisType(str, Enum):
     """Types of analytics analysis"""
+
     DESCRIPTIVE = "descriptive"
     DIAGNOSTIC = "diagnostic"
     PREDICTIVE = "predictive"
@@ -113,6 +117,7 @@ class AnalysisType(str, Enum):
 
 class AudienceSegment(str, Enum):
     """Audience segmentation types"""
+
     DEMOGRAPHIC = "demographic"
     BEHAVIORAL = "behavioral"
     PSYCHOGRAPHIC = "psychographic"
@@ -154,7 +159,8 @@ class PerformanceMetrics:
     influence_score: float = 0.0
     
     def calculate_derived_metrics(self):
-        """Calculate derived performance metrics"""
+        """
+Calculate derived performance metrics"""
         if self.impressions > 0:
             self.engagement_rate = (self.likes + self.comments + self.shares) / self.impressions
             self.click_through_rate = self.clicks / self.impressions
@@ -172,7 +178,8 @@ class PerformanceMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Comprehensive audience insights"""
+    """
+Comprehensive audience insights"""
     total_followers: int = 0
     active_followers: int = 0
     new_followers: int = 0
@@ -193,7 +200,8 @@ class AudienceInsights:
 
 @dataclass
 class ContentAnalytics:
-    """Comprehensive content analytics"""
+    """
+Comprehensive content analytics"""
     content_id: int
     platform: PlatformType
     published_at: datetime
@@ -209,7 +217,8 @@ class ContentAnalytics:
 
 
 class AnalyticsReport(BaseModel):
-    """Comprehensive analytics report"""
+    """
+Comprehensive analytics report"""
     user_id: int
     report_type: AnalysisType
     time_period: Tuple[datetime, datetime]
@@ -278,18 +287,21 @@ class AdvancedAnalyticsTracker:
         self.executor = ThreadPoolExecutor(max_workers=20)
         
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.redis_client = await aioredis.from_url(settings.REDIS_URL)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.redis_client:
             await self.redis_client.close()
         self.executor.shutdown(wait=True)
     
     def _load_analytics_models(self) -> Dict[str, Any]:
-        """Load ML models for analytics processing"""
+        """
+Load ML models for analytics processing"""
         models = {}
         
         try:
@@ -546,6 +558,7 @@ logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
     """Types of distribution metrics"""
+
     REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
@@ -563,6 +576,7 @@ class MetricType(str, Enum):
 
 class TimeRange(str, Enum):
     """Time range options for analytics"""
+
     LAST_24H = "last_24h"
     LAST_7D = "last_7d"
     LAST_30D = "last_30d"
@@ -593,7 +607,8 @@ class PlatformMetrics:
 
 @dataclass
 class CrossPlatformInsights:
-    """Cross-platform distribution insights"""
+    """
+Cross-platform distribution insights"""
     total_reach: int
     total_engagement: int
     total_revenue: float
@@ -605,7 +620,8 @@ class CrossPlatformInsights:
 
 
 class AnalyticsRequest(BaseModel):
-    """Analytics request model"""
+    """
+Analytics request model"""
     user_id: int
     content_id: Optional[int] = None
     platforms: Optional[List[PlatformType]] = None
@@ -643,7 +659,8 @@ class DistributionAnalyticsTracker:
         self.insight_generators = self._initialize_insight_generators()
         
     def _initialize_metric_calculators(self) -> Dict[MetricType, callable]:
-        """Initialize metric calculation functions"""
+        """
+Initialize metric calculation functions"""
         return {
             MetricType.REACH: self._calculate_reach,
             MetricType.IMPRESSIONS: self._calculate_impressions,
@@ -661,7 +678,8 @@ class DistributionAnalyticsTracker:
         }
     
     def _initialize_insight_generators(self) -> Dict[str, callable]:
-        """Initialize insight generation functions"""
+        """
+Initialize insight generation functions"""
         return {
             "performance_trends": self._generate_performance_trends,
             "platform_comparison": self._generate_platform_comparison,
@@ -800,7 +818,8 @@ class DistributionAnalyticsTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[DistributionAnalyticsModel]:
-        """Fetch analytics data from database"""
+        """
+Fetch analytics data from database"""
         query = self.db.query(DistributionAnalyticsModel).filter(
             DistributionAnalyticsModel.user_id == request.user_id,
             DistributionAnalyticsModel.created_at >= start_date,
@@ -825,7 +844,8 @@ class DistributionAnalyticsTracker:
         analytics_data: List[DistributionAnalyticsModel],
         requested_metrics: List[MetricType]
     ) -> Dict[str, Any]:
-        """Calculate total metrics across all data"""
+        """
+Calculate total metrics across all data"""
         total_metrics = {}
         
         for metric in requested_metrics:
@@ -840,7 +860,8 @@ class DistributionAnalyticsTracker:
         analytics_data: List[DistributionAnalyticsModel],
         requested_metrics: List[MetricType]
     ) -> Dict[str, Dict[str, Any]]:
-        """Calculate metrics broken down by platform"""
+        """
+Calculate metrics broken down by platform"""
         platform_breakdown = {}
         
         # Group data by platform
@@ -871,7 +892,8 @@ class DistributionAnalyticsTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Calculate trend data over time"""
+        """
+Calculate trend data over time"""
         trend_data = []
         
         # Determine time intervals based on granularity
@@ -1182,7 +1204,8 @@ class DistributionAnalyticsTracker:
         return total_clicks / total_reach if total_reach > 0 else 0
     
     async def _calculate_revenue(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate total revenue"""
+        """
+Calculate total revenue"""
         return sum(
             record.metrics.get("revenue", 0.0) if record.metrics else 0.0
             for record in data
@@ -1196,14 +1219,16 @@ class DistributionAnalyticsTracker:
         return (total_revenue / total_impressions * 1000) if total_impressions > 0 else 0
     
     async def _calculate_ctr(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate click-through rate"""
+        """
+Calculate click-through rate"""
         total_clicks = await self._calculate_clicks(data)
         total_impressions = await self._calculate_impressions(data)
         
         return total_clicks / total_impressions if total_impressions > 0 else 0
     
     async def _calculate_engagement_rate(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate engagement rate"""
+        """
+Calculate engagement rate"""
         total_engagement = await self._calculate_engagement(data)
         total_reach = await self._calculate_reach(data)
         
@@ -1216,7 +1241,8 @@ class DistributionAnalyticsTracker:
         platform: PlatformType,
         metrics: Dict[str, Any]
     ) -> None:
-        """Track real-time metrics for a piece of content"""
+        """
+Track real-time metrics for a piece of content"""
         try:
             # Create or update analytics record
             existing = self.db.query(DistributionAnalyticsModel).filter(

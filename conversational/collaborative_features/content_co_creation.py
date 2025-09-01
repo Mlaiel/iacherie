@@ -22,6 +22,7 @@ Project Team Specialties:
 - Security Engineer: Enterprise Security/Compliance
 - Microservices Architect: Distributed Systems
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for co-creation"""
+    """
+Supported content types for co-creation"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -63,6 +66,7 @@ class ContentType(Enum):
 
 class EditingMode(Enum):
     """Content editing modes"""
+
     REAL_TIME = "real_time"
     TURN_BASED = "turn_based"
     PARALLEL = "parallel"
@@ -72,6 +76,7 @@ class EditingMode(Enum):
 
 class ConflictResolutionStrategy(Enum):
     """Strategies for resolving content conflicts"""
+
     MERGE = "merge"
     OVERRIDE = "override"
     BRANCH = "branch"
@@ -105,7 +110,8 @@ class CoCreationWorkspace:
     active_sessions: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Initialize workspace resources"""
+        """
+Initialize workspace resources"""
         self.cache_manager = CacheManager()
         self.content_processor = ContentProcessor()
         self.notification_service = NotificationService()
@@ -387,7 +393,8 @@ class CollaborativeEditingEngine:
         return bool(result)
     
     async def _load_content_state(self, content_id: str) -> Dict[str, Any]:
-        """Load current content state"""
+        """
+Load current content state"""
         try:
             cache_key = f"content_state:{content_id}"
             cached_state = await self.cache_manager.get(cache_key)
@@ -749,7 +756,8 @@ class CreativeWorkflowManager:
         content_goals: Dict[str, Any],
         timeline: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create a new creative workflow"""
+        """
+Create a new creative workflow"""
         try:
             workflow_id = f"workflow_{project_id}_{uuid.uuid4().hex[:8]}"
             
@@ -949,7 +957,8 @@ class MultiFormatCoCreator:
         content: Dict[str, Any],
         target_format: str
     ) -> Dict[str, Any]:
-        """Optimize content for specific format"""
+        """
+Optimize content for specific format"""
         try:
             return await self.format_manager.optimize_content(content, target_format)
         except Exception as e:

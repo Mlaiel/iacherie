@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -13,11 +14,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
-"""Tests Ultra-Industriels Avancés pour le Module Content Protection Core
+"""
+Tests Ultra-Industriels Avancés pour le Module Content Protection Core
 
 🚨 AVERTISSEMENT STRICT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie 
-au maximum de la loi. Tous droits réservés. Copyright © 2025 Fahed Mlaiel.
+au maximum de la loi. Tous droits réservés. Copyright (c) 2025 Fahed Mlaiel.
 
 ⚖️ INTERDICTION FORMELLE : Il est formellement interdit de copier, voler, utiliser ou s'inspirer de ce code/concept sans 
 autorisation personnelle écrite de Fahed Mlaiel. Violation = Poursuites légales immédiates.
@@ -35,6 +37,7 @@ IA Prompt Engineer
 
 Contact Officiel : Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import pytest
 import sys
@@ -67,7 +70,8 @@ logger = logging.getLogger(__name__)
 
 @pytest.fixture
 def event_loop():
-    """Create an instance of the default event loop for the test session."""
+    """
+Create an instance of the default event loop for the test session."""
     loop = asyncio.new_event_loop()
     yield loop
     loop.close()
@@ -87,7 +91,8 @@ class TestContentProtectorUltraIndustrial:
     """
     @pytest.fixture
     def enterprise_protection_config(self):
-        """Configuration ultra-avancée pour le système de protection"""
+        """
+Configuration ultra-avancée pour le système de protection"""
         return {
             'protection_engines': {
                 'watermarking': {
@@ -139,13 +144,15 @@ class TestContentProtectorUltraIndustrial:
 
     @pytest.fixture
     def enterprise_content_protector(self, enterprise_protection_config):
-        """Create enterprise-grade content protector"""
+        """
+Create enterprise-grade content protector"""
         protector = ContentProtector(enterprise_protection_config)
         return protector
 
     @pytest.fixture
     def professional_audio_content(self):
-        """Generate professional audio content for testing"""
+        """
+Generate professional audio content for testing"""
         # Simulate high-quality audio data
         sample_rate = 48000
         duration = 30.0  # 30 seconds

@@ -22,6 +22,7 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
+
 import asyncio
 from datetime import datetime, timezone, timedelta
 from typing import Dict, Any, List
@@ -53,7 +54,8 @@ class AuditLogsDemo:
     """
     
     def __init__(self, db_session):
-        """Initialize the audit logs demo."""
+        """
+Initialize the audit logs demo."""
         self.audit_manager = create_audit_logs_manager(
             db_session=db_session,
             service_name="ia_influencer_agent_demo",

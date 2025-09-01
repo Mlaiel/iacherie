@@ -7,6 +7,7 @@ Implements Instagram Basic Display API and Graph API integration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -35,7 +36,8 @@ class InstagramCrawler(BaseCrawler):
     """
     
     def __init__(self, access_token: Optional[str] = None):
-        """Initialize Instagram crawler."""
+        """
+Initialize Instagram crawler."""
         super().__init__("instagram", rate_limit=200)  # 200 requests per hour
         self.access_token = access_token or os.getenv('INSTAGRAM_ACCESS_TOKEN')
         self.base_url = "https://graph.instagram.com"

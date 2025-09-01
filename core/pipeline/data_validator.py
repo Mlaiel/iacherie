@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Data Ingestion → Schema Validation → Quality Analysis → Anomaly Detection → Data Enrichment → Compliance Verification
 """
+
 import asyncio
 import logging
 import time
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationType(Enum):
-    """Validation types"""
+    """
+Validation types"""
+
     SCHEMA = "schema"
     FORMAT = "format"
     RANGE = "range"
@@ -46,6 +49,7 @@ class ValidationType(Enum):
 
 class DataType(Enum):
     """Data types"""
+
     STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
@@ -65,6 +69,7 @@ class DataType(Enum):
 
 class ValidationLevel(Enum):
     """Validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -73,6 +78,7 @@ class ValidationLevel(Enum):
 
 class ValidationStatus(Enum):
     """Validation status"""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -82,6 +88,7 @@ class ValidationStatus(Enum):
 
 class CorrectionAction(Enum):
     """Data correction actions"""
+
     NONE = "none"
     REMOVE = "remove"
     REPLACE = "replace"
@@ -276,24 +283,29 @@ class ValidationReport:
 
 
 class BaseValidator(ABC):
-    """Abstract base validator"""
+    """
+Abstract base validator"""
     
     @abstractmethod
     async def validate(self, value: Any, rule: ValidationRule) -> ValidationResult:
-        """Validate value against rule"""
+        """
+Validate value against rule"""
         pass
     
     @abstractmethod
     def supports_type(self, data_type: DataType) -> bool:
-        """Check if validator supports data type"""
+        """
+Check if validator supports data type"""
         pass
 
 
 class SchemaValidator(BaseValidator):
-    """Schema validation"""
+    """
+Schema validation"""
     
     async def validate(self, value: Any, rule: ValidationRule) -> ValidationResult:
-        """Validate schema compliance"""
+        """
+Validate schema compliance"""
         result = ValidationResult(
             rule_id=rule.rule_id,
             field_name=rule.field_name,
@@ -379,17 +391,20 @@ class SchemaValidator(BaseValidator):
             return False
     
     def _is_valid_email(self, value: str) -> bool:
-        """Validate email format"""
+        """
+Validate email format"""
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return bool(re.match(pattern, value))
     
     def _is_valid_url(self, value: str) -> bool:
-        """Validate URL format"""
+        """
+Validate URL format"""
         pattern = r'^https?://[^\s/$.?#].[^\s]*$'
         return bool(re.match(pattern, value))
     
     def _is_valid_uuid(self, value: str) -> bool:
-        """Validate UUID format"""
+        """
+Validate UUID format"""
         try:
             uuid.UUID(value)
             return True
@@ -397,7 +412,8 @@ class SchemaValidator(BaseValidator):
             return False
     
     def _is_valid_json(self, value: Any) -> bool:
-        """Validate JSON format"""
+        """
+Validate JSON format"""
         try:
             if isinstance(value, str):
                 json.loads(value)
@@ -406,7 +422,8 @@ class SchemaValidator(BaseValidator):
             return False
     
     def _attempt_type_correction(self, value: Any, target_type: DataType) -> Any:
-        """Attempt to correct type"""
+        """
+Attempt to correct type"""
         try:
             if target_type == DataType.INTEGER:
                 if isinstance(value, str) and value.isdigit():
@@ -431,10 +448,12 @@ class SchemaValidator(BaseValidator):
 
 
 class RangeValidator(BaseValidator):
-    """Range and constraint validation"""
+    """
+Range and constraint validation"""
     
     async def validate(self, value: Any, rule: ValidationRule) -> ValidationResult:
-        """Validate range constraints"""
+        """
+Validate range constraints"""
         result = ValidationResult(
             rule_id=rule.rule_id,
             field_name=rule.field_name,
@@ -525,10 +544,12 @@ class RangeValidator(BaseValidator):
 
 
 class PatternValidator(BaseValidator):
-    """Pattern and format validation"""
+    """
+Pattern and format validation"""
     
     async def validate(self, value: Any, rule: ValidationRule) -> ValidationResult:
-        """Validate pattern matching"""
+        """
+Validate pattern matching"""
         result = ValidationResult(
             rule_id=rule.rule_id,
             field_name=rule.field_name,
@@ -598,7 +619,8 @@ class PatternValidator(BaseValidator):
 
 
 class AnomalyDetector:
-    """AI-powered anomaly detection"""
+    """
+AI-powered anomaly detection"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -631,7 +653,8 @@ class AnomalyDetector:
         return list(set(anomaly_indices))  # Remove duplicates
     
     def _detect_numeric_anomalies(self, values: List[Union[int, float]], data: List[Dict[str, Any]], field_name: str) -> List[int]:
-        """Detect numeric anomalies using statistical methods"""
+        """
+Detect numeric anomalies using statistical methods"""
         anomaly_indices = []
         
         if len(values) < 3:
@@ -669,7 +692,8 @@ class AnomalyDetector:
         return anomaly_indices
     
     def _detect_string_anomalies(self, values: List[str], data: List[Dict[str, Any]], field_name: str) -> List[int]:
-        """Detect string anomalies using pattern analysis"""
+        """
+Detect string anomalies using pattern analysis"""
         anomaly_indices = []
         
         # Length-based anomalies
@@ -707,7 +731,8 @@ class AnomalyDetector:
         return anomaly_indices
     
     def _extract_pattern(self, value: str) -> str:
-        """Extract pattern from string value"""
+        """
+Extract pattern from string value"""
         # Replace digits with 'D', letters with 'L', special chars with 'S'
         pattern = ""
         for char in value:
@@ -749,7 +774,8 @@ class DataProfiler:
         return profiles
     
     async def profile_field(self, data: List[Dict[str, Any]], field_name: str) -> DataProfile:
-        """Profile individual field"""
+        """
+Profile individual field"""
         profile = DataProfile(field_name=field_name)
         
         # Extract values for this field
@@ -918,7 +944,8 @@ class DataProfiler:
             return False
     
     def _assess_validity(self, values: List[Any], data_type: DataType) -> float:
-        """Assess data validity based on type"""
+        """
+Assess data validity based on type"""
         if not values:
             return 0.0
         
@@ -931,7 +958,8 @@ class DataProfiler:
         return valid_count / len(values)
     
     def _is_valid_for_type(self, value: Any, data_type: DataType) -> bool:
-        """Check if value is valid for data type"""
+        """
+Check if value is valid for data type"""
         try:
             str_value = str(value)
             
@@ -1034,7 +1062,8 @@ class DataValidator:
         self.validators[ValidationType.PATTERN] = PatternValidator()
     
     def register_validator(self, validation_type: ValidationType, validator: BaseValidator):
-        """Register custom validator"""
+        """
+Register custom validator"""
         self.validators[validation_type] = validator
         self.logger.info(f"Registered validator for type: {validation_type.value}")
     
@@ -1166,7 +1195,8 @@ class DataValidator:
         return all_results
     
     async def _validate_batch(self, batch: List[Dict[str, Any]], rules: List[ValidationRule], start_idx: int) -> List[ValidationResult]:
-        """Validate a batch of records"""
+        """
+Validate a batch of records"""
         batch_results = []
         
         for record_idx, record in enumerate(batch):
@@ -1176,7 +1206,8 @@ class DataValidator:
         return batch_results
     
     async def _validate_record(self, record: Dict[str, Any], rules: List[ValidationRule], record_idx: int) -> List[ValidationResult]:
-        """Validate single record against all rules"""
+        """
+Validate single record against all rules"""
         results = []
         
         for rule in rules:
@@ -1309,7 +1340,8 @@ class DataValidator:
         return self.validation_history.copy()
     
     def get_field_statistics(self, dataset_name: str) -> Dict[str, Any]:
-        """Get field statistics for dataset"""
+        """
+Get field statistics for dataset"""
         dataset_reports = [r for r in self.validation_history if r.dataset_name == dataset_name]
         
         if not dataset_reports:
@@ -1347,7 +1379,8 @@ class DataValidator:
         data_type: DataType,
         **kwargs
     ) -> ValidationRule:
-        """Helper to create validation rule"""
+        """
+Helper to create validation rule"""
         return ValidationRule(
             rule_name=kwargs.get("rule_name", f"{field_name}_{validation_type.value}"),
             validation_type=validation_type,

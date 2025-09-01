@@ -2,7 +2,7 @@
 Enterprise-Grade Complete System Management and Coordination Hub
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides the unified orchestration hub for the IA Influencer Agent platform,
 coordinating all pipeline components, deployment processes, and system services.
@@ -21,6 +21,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 import signal
@@ -117,7 +118,8 @@ class UnifiedPipelineOrchestrator:
         logging.getLogger('security_manager').setLevel(logging.INFO)
         
     async def initialize_components(self):
-        """Initialize all pipeline system components"""
+        """
+Initialize all pipeline system components"""
         self.logger.info("Initializing IA Influencer Agent Pipeline System...")
         
         try:
@@ -188,7 +190,8 @@ class UnifiedPipelineOrchestrator:
         """Setup integrations between components"""
         # Connect notification handlers to pipeline manager
         async def pipeline_notification_handler(execution, success):
-            """Handle pipeline completion notifications"""
+            """
+Handle pipeline completion notifications"""
             from .notification_manager import NotificationEvent
             
             event = NotificationEvent.PIPELINE_COMPLETED if success else NotificationEvent.PIPELINE_FAILED
@@ -198,7 +201,8 @@ class UnifiedPipelineOrchestrator:
         
         # Connect monitoring to pipeline events
         def pipeline_metrics_handler(event_type, execution):
-            """Handle pipeline metrics collection"""
+            """
+Handle pipeline metrics collection"""
             self.monitoring_manager.record_pipeline_event(event_type, execution)
             
         # Note: This would need proper event system implementation
@@ -389,7 +393,8 @@ class UnifiedPipelineCLI:
         self.orchestrator: Optional[UnifiedPipelineOrchestrator] = None
         
     def create_parser(self) -> argparse.ArgumentParser:
-        """Create command line argument parser"""
+        """
+Create command line argument parser"""
         parser = argparse.ArgumentParser(
             description="IA Influencer Agent Unified Pipeline & Deployment Management System",
             formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -466,7 +471,8 @@ class UnifiedPipelineCLI:
         return parser
         
     async def run_command(self, args):
-        """Execute CLI command"""
+        """
+Execute CLI command"""
         try:
             if args.command == 'start':
                 await self._cmd_start(args)
@@ -608,7 +614,7 @@ def main():
     IA INFLUENCER AGENT - ENTERPRISE PIPELINE MANAGEMENT SYSTEM
     
     Author: Fahed Mlaiel <mlaiel@live.de>
-    Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
     
     WARNING: This software is proprietary and confidential.
     Unauthorized use is strictly prohibited and will be prosecuted to the full extent of the law.

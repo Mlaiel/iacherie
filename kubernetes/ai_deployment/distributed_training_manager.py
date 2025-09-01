@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrainingBackend(Enum):
-    """Distributed training backends"""
+    """
+Distributed training backends"""
+
     PYTORCH_DDP = "pytorch_ddp"
     PYTORCH_FSDP = "pytorch_fsdp"
     HOROVOD = "horovod"
@@ -54,6 +57,7 @@ class TrainingBackend(Enum):
 
 class ScalingStrategy(Enum):
     """Training scaling strategies"""
+
     STATIC = "static"
     DYNAMIC = "dynamic"
     ELASTIC = "elastic"
@@ -63,6 +67,7 @@ class ScalingStrategy(Enum):
 
 class FaultToleranceMode(Enum):
     """Fault tolerance modes"""
+
     CHECKPOINT_RESTART = "checkpoint_restart"
     ELASTIC_RECOVERY = "elastic_recovery"
     PREEMPTION_HANDLING = "preemption_handling"
@@ -72,6 +77,7 @@ class FaultToleranceMode(Enum):
 
 class OptimizationStrategy(Enum):
     """Training optimization strategies"""
+
     GRADIENT_COMPRESSION = "gradient_compression"
     MIXED_PRECISION = "mixed_precision"
     GRADIENT_ACCUMULATION = "gradient_accumulation"

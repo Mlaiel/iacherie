@@ -10,6 +10,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from sklearn.preprocessing import StandardScaler
 
 
 class InteractionType(Enum):
-    """Types of user interactions to track."""
+    """
+Types of user interactions to track."""
+
     MESSAGE_SENT = "message_sent"
     MESSAGE_RECEIVED = "message_received"
     VOICE_INPUT = "voice_input"
@@ -49,6 +52,7 @@ class InteractionType(Enum):
 
 class UserSegment(Enum):
     """User behavior segments."""
+
     POWER_USER = "power_user"
     CASUAL_USER = "casual_user"
     NEW_USER = "new_user"
@@ -78,7 +82,8 @@ class InteractionEvent:
 
 @dataclass
 class UserInteractionProfile:
-    """Comprehensive user interaction profile."""
+    """
+Comprehensive user interaction profile."""
     user_id: str
     total_interactions: int
     interaction_frequency: float
@@ -95,7 +100,8 @@ class UserInteractionProfile:
 
 @dataclass
 class InteractionFlow:
-    """User interaction flow analysis."""
+    """
+User interaction flow analysis."""
     flow_id: str
     user_id: str
     interaction_sequence: List[InteractionType]
@@ -150,7 +156,8 @@ class InteractionAnalytics:
         self.behavior_clusters = None
     
     async def track_interaction(self, interaction_event: InteractionEvent) -> bool:
-        """Track a user interaction event."""
+        """
+Track a user interaction event."""
         try:
             # Validate interaction event
             if not await self._validate_interaction_event(interaction_event):

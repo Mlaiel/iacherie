@@ -11,6 +11,7 @@ This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -58,7 +59,9 @@ from ...integrations.legal_apis import LegalAPIClient
 logger = logging.getLogger(__name__)
 
 class PolicyUpdateType(Enum):
-    """Types of policy updates"""
+    """
+Types of policy updates"""
+
     NEW_REGULATION = "new_regulation"
     AMENDMENT = "amendment"
     ENFORCEMENT_CHANGE = "enforcement_change"
@@ -68,6 +71,7 @@ class PolicyUpdateType(Enum):
 
 class PolicyPriority(Enum):
     """Priority levels for policy updates"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -76,6 +80,7 @@ class PolicyPriority(Enum):
 
 class JurisdictionScope(Enum):
     """Jurisdictional scope of regulations"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -99,7 +104,8 @@ class RegulatorySource:
 
 @dataclass
 class PolicyUpdate:
-    """Regulatory policy update record"""
+    """
+Regulatory policy update record"""
     id: str
     source_id: str
     title: str
@@ -120,7 +126,8 @@ class PolicyUpdate:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert for policy changes"""
+    """
+Compliance alert for policy changes"""
     id: str
     policy_update_id: str
     alert_type: str
@@ -143,7 +150,8 @@ class RegulatoryMonitor:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize regulatory monitor with comprehensive source management"""
+        """
+Initialize regulatory monitor with comprehensive source management"""
         self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
@@ -738,7 +746,8 @@ class RegulatoryMonitor:
         return False
     
     def _calculate_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity (simple implementation)"""
+        """
+Calculate text similarity (simple implementation)"""
         words1 = set(text1.split())
         words2 = set(text2.split())
         
@@ -753,7 +762,8 @@ class RegulatoryMonitor:
         return intersection / union if union > 0 else 0.0
     
     async def _cache_source_status(self, source: RegulatorySource):
-        """Cache source status in Redis"""
+        """
+Cache source status in Redis"""
         if not self.redis_client:
             return
         
@@ -966,7 +976,8 @@ class PolicyTracker:
         self.trend_analysis_cache: Dict[str, Any] = {}
     
     async def track_policy_changes(self, framework: str, lookback_days: int = 90) -> Dict[str, Any]:
-        """Track and analyze policy changes for a specific framework"""
+        """
+Track and analyze policy changes for a specific framework"""
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=lookback_days)
             

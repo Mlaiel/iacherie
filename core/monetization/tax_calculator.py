@@ -2,8 +2,9 @@
 Multi-jurisdiction tax calculation and compliance management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
@@ -17,7 +18,9 @@ from ...database.models import User, TaxRecord
 
 
 class TaxJurisdiction(Enum):
-    """Supported tax jurisdictions"""
+    """
+Supported tax jurisdictions"""
+
     GERMANY = "DE"
     UNITED_STATES = "US"
     UNITED_KINGDOM = "GB"
@@ -32,6 +35,7 @@ class TaxJurisdiction(Enum):
 
 class TaxType(Enum):
     """Types of taxes"""
+
     INCOME_TAX = "income_tax"
     VAT = "vat"
     WITHHOLDING_TAX = "withholding_tax"
@@ -43,6 +47,7 @@ class TaxType(Enum):
 
 class BusinessType(Enum):
     """Business entity types"""
+
     INDIVIDUAL = "individual"
     SOLE_PROPRIETORSHIP = "sole_proprietorship"
     LLC = "llc"
@@ -74,7 +79,8 @@ class TaxRate:
 
 @dataclass
 class TaxConfiguration:
-    """Tax configuration for user"""
+    """
+Tax configuration for user"""
     user_id: int
     jurisdiction: TaxJurisdiction
     business_type: BusinessType
@@ -123,7 +129,8 @@ class TaxCalculationResult(BaseModel):
     calculation_date: datetime
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get calculation summary"""
+        """
+Get calculation summary"""
         return {
             "gross_amount": float(self.gross_amount),
             "total_tax": float(self.total_tax),
@@ -143,7 +150,8 @@ class TaxCalculator:
         self._initialize_tax_rates()
         
     def _initialize_tax_rates(self) -> None:
-        """Initialize tax rates for supported jurisdictions"""
+        """
+Initialize tax rates for supported jurisdictions"""
         
         # Germany tax rates (2025)
         germany_rates = {
@@ -487,7 +495,8 @@ class TaxCalculator:
         return None
     
     def _determine_jurisdiction_from_country(self, country_code: str) -> TaxJurisdiction:
-        """Determine tax jurisdiction from country code"""
+        """
+Determine tax jurisdiction from country code"""
         mapping = {
             "DE": TaxJurisdiction.GERMANY,
             "US": TaxJurisdiction.UNITED_STATES,

@@ -14,12 +14,13 @@ Features:
 - Performance monitoring and analytics integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -40,7 +41,9 @@ from backend.utils.text_processor import TextProcessor
 
 
 class PrimaryIntentCategory(Enum):
-    """Primary intent categories for creator conversations"""
+    """
+Primary intent categories for creator conversations"""
+
     CONTENT_CREATION = "content_creation"
     MONETIZATION = "monetization"
     PROTECTION = "protection"
@@ -95,6 +98,7 @@ class CreatorSpecificIntent(Enum):
 
 class IntentUrgency(Enum):
     """Intent urgency levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -104,6 +108,7 @@ class IntentUrgency(Enum):
 
 class IntentComplexity(Enum):
     """Intent complexity levels"""
+
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
@@ -125,7 +130,8 @@ class IntentContext:
 
 @dataclass
 class IntentClassificationResult:
-    """Comprehensive intent classification result"""
+    """
+Comprehensive intent classification result"""
     classification_id: str
     primary_intent: PrimaryIntentCategory
     secondary_intents: List[PrimaryIntentCategory] = field(default_factory=list)
@@ -506,7 +512,8 @@ class EnterpriseIntentClassifier:
         context: IntentContext,
         creator_profile: Any
     ) -> PrimaryIntentCategory:
-        """Classify primary intent using ML models and pattern matching"""
+        """
+Classify primary intent using ML models and pattern matching"""
         
         # Use ML model if available
         if self.intent_model:
@@ -629,7 +636,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         context: IntentContext
     ) -> Optional[CreatorSpecificIntent]:
-        """Classify creator-specific intent subcategories"""
+        """
+Classify creator-specific intent subcategories"""
         
         creator_type = creator_profile.creator_type.value
         content_lower = content.lower()
@@ -770,7 +778,8 @@ class EnterpriseIntentClassifier:
         creator_specific_intent: Optional[CreatorSpecificIntent],
         entities: Dict[str, List[str]]
     ) -> float:
-        """Calculate overall confidence score for the classification"""
+        """
+Calculate overall confidence score for the classification"""
         
         base_confidence = 0.8  # Base confidence for pattern matching
         
@@ -954,12 +963,14 @@ class EnterpriseIntentClassifier:
         return {}
     
     def _load_creator_vocabularies(self) -> Dict[str, Dict[str, List[str]]]:
-        """Load creator-specific vocabularies"""
+        """
+Load creator-specific vocabularies"""
         # Implementation would load from configuration files
         return {}
     
     def _initialize_entity_extractors(self) -> Dict[str, Any]:
-        """Initialize entity extraction models"""
+        """
+Initialize entity extraction models"""
         # Implementation would initialize NER models
         return {}
     
@@ -970,7 +981,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         context: IntentContext
     ) -> List[str]:
-        """Generate suggested actions based on classified intent"""
+        """
+Generate suggested actions based on classified intent"""
         
         actions = []
         
@@ -1041,7 +1053,8 @@ class EnterpriseIntentClassifier:
         context_analysis: Dict[str, Any],
         processed_message: Any
     ) -> Dict[str, Any]:
-        """Extract context factors that influenced classification"""
+        """
+Extract context factors that influenced classification"""
         
         return {
             "conversation_length": len(intent_context.conversation_history),
@@ -1116,7 +1129,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         error: str
     ) -> IntentClassificationResult:
-        """Create fallback classification result for errors"""
+        """
+Create fallback classification result for errors"""
         
         return IntentClassificationResult(
             classification_id=classification_id,

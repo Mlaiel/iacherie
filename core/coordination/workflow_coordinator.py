@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Content Upload → Analysis → Protection → Optimization → Distribution → Monitoring
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status enumeration"""
+    """
+Workflow execution status enumeration"""
+
     PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
@@ -43,6 +46,7 @@ class WorkflowStatus(Enum):
 
 class WorkflowPriority(Enum):
     """Workflow execution priority levels"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -51,7 +55,9 @@ class WorkflowPriority(Enum):
 
 
 class WorkflowType(Enum):
-    """Types of workflows supported"""
+    """
+Types of workflows supported"""
+
     CONTENT_PROCESSING = "content_processing"
     PROTECTION_ANALYSIS = "protection_analysis"
     MONETIZATION_TRACKING = "monetization_tracking"
@@ -78,7 +84,8 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""
+    """
+Complete workflow definition"""
     workflow_id: str
     name: str
     description: str
@@ -92,7 +99,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution state and tracking"""
+    """
+Workflow execution state and tracking"""
     execution_id: str
     workflow_id: str
     user_id: str
@@ -108,7 +116,8 @@ class WorkflowExecution:
 
 
 class WorkflowCoordinator:
-    """Enterprise workflow coordination and orchestration engine"""
+    """
+Enterprise workflow coordination and orchestration engine"""
     
     def __init__(self, max_concurrent_workflows: int = 50):
         self.max_concurrent_workflows = max_concurrent_workflows
@@ -339,7 +348,8 @@ class WorkflowCoordinator:
         execution_context: Dict[str, Any] = None,
         priority_override: Optional[WorkflowPriority] = None
     ) -> str:
-        """Execute a workflow with specified parameters"""
+        """
+Execute a workflow with specified parameters"""
         try:
             if workflow_id not in self.workflow_definitions:
                 raise ValueError(f"Workflow '{workflow_id}' not found")
@@ -623,11 +633,13 @@ class WorkflowCoordinator:
         self.event_handlers[event_type].append(handler)
     
     def register_workflow_listener(self, workflow_id: str, listener: Callable):
-        """Register listener for specific workflow"""
+        """
+Register listener for specific workflow"""
         self.workflow_listeners[workflow_id].append(listener)
     
     def get_execution_metrics(self) -> Dict[str, Any]:
-        """Get workflow execution performance metrics"""
+        """
+Get workflow execution performance metrics"""
         active_count = len(self.active_executions)
         queued_count = len(self.execution_queue)
         completed_count = len(self.completed_executions)

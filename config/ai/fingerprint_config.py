@@ -15,6 +15,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -23,7 +24,9 @@ import os
 
 
 class FingerprintType(str, Enum):
-    """Supported fingerprint types for content protection."""
+    """
+Supported fingerprint types for content protection."""
+
     
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
@@ -41,6 +44,7 @@ class FingerprintType(str, Enum):
 
 class SimilarityMetric(str, Enum):
     """Similarity metrics for fingerprint matching."""
+
     
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
@@ -355,7 +359,8 @@ class FingerprintAIConfig(BaseSettings):
         return specs[0] if specs else self._get_default_spec(FingerprintType.AUDIO_CHROMAPRINT)
     
     def get_similarity_config(self) -> Dict[str, Any]:
-        """Get similarity matching configuration."""
+        """
+Get similarity matching configuration."""
         return {
             "thresholds": self.MATCH_CONFIDENCE_LEVELS,
             "global_threshold": self.SIMILARITY_THRESHOLD_GLOBAL,

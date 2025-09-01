@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -46,7 +47,9 @@ from ...ml.keyword_models import KeywordSimilarityModel, TrendPredictionModel
 logger = logging.getLogger(__name__)
 
 class KeywordDifficulty(Enum):
-    """Keyword difficulty levels"""
+    """
+Keyword difficulty levels"""
+
     VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
@@ -55,6 +58,7 @@ class KeywordDifficulty(Enum):
 
 class KeywordIntent(Enum):
     """Search intent types"""
+
     INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     COMMERCIAL = "commercial"
@@ -63,6 +67,7 @@ class KeywordIntent(Enum):
 
 class TrendDirection(Enum):
     """Trend direction"""
+
     RISING = "rising"
     STABLE = "stable"
     DECLINING = "declining"
@@ -89,7 +94,8 @@ class KeywordMetrics:
 
 @dataclass
 class TrendData:
-    """Keyword trend analysis data"""
+    """
+Keyword trend analysis data"""
     keyword: str
     trend_direction: TrendDirection
     growth_rate: float
@@ -101,7 +107,8 @@ class TrendData:
 
 @dataclass
 class CompetitorKeywords:
-    """Competitor keyword analysis"""
+    """
+Competitor keyword analysis"""
     competitor_url: str
     domain_authority: float
     top_keywords: List[KeywordMetrics]
@@ -154,7 +161,8 @@ class KeywordAnalyzer:
         self.cache_ttl = timedelta(hours=24)
         
     async def initialize(self):
-        """Initialize keyword analyzer components"""
+        """
+Initialize keyword analyzer components"""
         try:
             # Initialize AI models
             self.similarity_model = KeywordSimilarityModel()
@@ -615,7 +623,8 @@ class TrendAnalyzer:
         self.prediction_horizon = timedelta(days=90)
         
     async def initialize(self):
-        """Initialize trend analyzer"""
+        """
+Initialize trend analyzer"""
         try:
             # Initialize prediction model
             self.trend_prediction_model = TrendPredictionModel()
@@ -872,7 +881,8 @@ class CompetitorAnalyzer:
         self.market_intelligence: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self):
-        """Initialize competitor analyzer"""
+        """
+Initialize competitor analyzer"""
         try:
             await self.search_apis.initialize()
             await self.keyword_analyzer.initialize()

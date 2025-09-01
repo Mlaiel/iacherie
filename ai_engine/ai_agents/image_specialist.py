@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -26,7 +27,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
-    """Image format types"""
+    """
+Image format types"""
+
     INSTAGRAM_POST = "instagram_post"
     INSTAGRAM_STORY = "instagram_story"
     TWITTER_POST = "twitter_post"
@@ -40,6 +43,7 @@ class ImageFormat(Enum):
 
 class ImageStyle(Enum):
     """Image style categories"""
+
     MINIMALIST = "minimalist"
     VIBRANT = "vibrant"
     PROFESSIONAL = "professional"
@@ -53,6 +57,7 @@ class ImageStyle(Enum):
 
 class ProcessingType(Enum):
     """Image processing types"""
+
     ENHANCEMENT = "enhancement"
     COLOR_CORRECTION = "color_correction"
     BACKGROUND_REMOVAL = "background_removal"
@@ -98,7 +103,8 @@ class GenerationRequest:
     additional_parameters: Dict[str, Any] = field(default_factory=dict)
 
 class ImageSpecialistAgent(BaseAIAgent):
-    """AI agent for image creation, editing, and optimization"""
+    """
+AI agent for image creation, editing, and optimization"""
     
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
@@ -440,7 +446,8 @@ class ImageSpecialistAgent(BaseAIAgent):
         return dimension_map.get(format, (1080, 1080))
     
     def _load_style_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Load predefined style presets"""
+        """
+Load predefined style presets"""
         return {
             "minimalist": {
                 "color_palette": ["#FFFFFF", "#F5F5F5", "#CCCCCC"],

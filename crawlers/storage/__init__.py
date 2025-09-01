@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import logging
 from typing import Dict, List, Optional, Any
 
@@ -599,15 +600,18 @@ def create_s3_provider(
     return S3ObjectStorageProvider(provider_id, config)
 
 def get_provider_types() -> List[str]:
-    """Get list of supported provider types."""
+    """
+Get list of supported provider types."""
     return list(STORAGE_PROVIDERS.keys())
 
 def get_content_provider_types() -> List[str]:
-    """Get list of supported content provider types."""
+    """
+Get list of supported content provider types."""
     return list(CONTENT_PROVIDERS.keys())
 
 def get_violation_provider_types() -> List[str]:
-    """Get list of supported violation provider types."""
+    """
+Get list of supported violation provider types."""
     return list(VIOLATION_PROVIDERS.keys())
 
 def validate_provider_config(provider_type: str, config: Dict[str, Any]) -> List[str]:

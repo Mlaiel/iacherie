@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RetryAttemptModel(Base):
-    """Database model for retry attempts"""
+    """
+Database model for retry attempts"""
     __tablename__ = "webhook_retry_attempts"
     
     attempt_id = Column(String, primary_key=True)
@@ -90,6 +92,7 @@ class RetryPolicyModel(Base):
 
 class RetryReason(Enum):
     """Reasons for webhook retry"""
+
     TIMEOUT = "timeout"
     CONNECTION_ERROR = "connection_error"
     SERVER_ERROR = "server_error"
@@ -102,6 +105,7 @@ class RetryReason(Enum):
 
 class RetryStrategy(Enum):
     """Retry strategies"""
+
     EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
     FIXED_DELAY = "fixed_delay"
@@ -110,6 +114,7 @@ class RetryStrategy(Enum):
 
 class CircuitBreakerState(Enum):
     """Circuit breaker states"""
+
     CLOSED = "closed"
     OPEN = "open"
     HALF_OPEN = "half_open"
@@ -164,7 +169,8 @@ class RetryAttempt:
 
 @dataclass
 class CircuitBreaker:
-    """Circuit breaker for endpoint protection"""
+    """
+Circuit breaker for endpoint protection"""
     endpoint_id: str
     state: CircuitBreakerState = CircuitBreakerState.CLOSED
     failure_count: int = 0
@@ -722,7 +728,8 @@ class RetryHandler:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of retry handler"""
+        """
+Graceful shutdown of retry handler"""
         try:
             logger.info("Shutting down RetryHandler")
             
@@ -876,7 +883,8 @@ class RetryHandler:
         return delay
 
     async def _get_circuit_breaker(self, endpoint_id: str) -> CircuitBreaker:
-        """Get or create circuit breaker for endpoint"""
+        """
+Get or create circuit breaker for endpoint"""
         if endpoint_id not in self._circuit_breakers:
             self._circuit_breakers[endpoint_id] = CircuitBreaker(endpoint_id=endpoint_id)
         
@@ -886,7 +894,8 @@ class RetryHandler:
         self,
         circuit_breaker: CircuitBreaker
     ) -> bool:
-        """Check if circuit breaker should attempt recovery"""
+        """
+Check if circuit breaker should attempt recovery"""
         if circuit_breaker.state != CircuitBreakerState.OPEN:
             return True
         
@@ -903,7 +912,8 @@ class RetryHandler:
         circuit_breaker: CircuitBreaker,
         success: bool
     ) -> None:
-        """Update circuit breaker based on operation result"""
+        """
+Update circuit breaker based on operation result"""
         current_time = datetime.now(timezone.utc)
         
         if success:
@@ -1014,53 +1024,66 @@ class RetryHandler:
         pass
     
     async def _update_retry_attempt(self, retry_attempt: RetryAttempt) -> None:
-        """Update retry attempt in database - placeholder"""
+        """
+Update retry attempt in database - placeholder"""
         pass
     
     async def _get_retry_attempt(self, attempt_id: str) -> Optional[RetryAttempt]:
-        """Get retry attempt from database - placeholder"""
+        """
+Get retry attempt from database - placeholder"""
         return None
     
     async def _add_to_retry_queue(self, retry_attempt: RetryAttempt) -> None:
-        """Add retry attempt to processing queue - placeholder"""
+        """
+Add retry attempt to processing queue - placeholder"""
         pass
     
     async def _cache_retry_attempt(self, retry_attempt: RetryAttempt) -> None:
-        """Cache retry attempt in Redis - placeholder"""
+        """
+Cache retry attempt in Redis - placeholder"""
         pass
     
     async def _load_retry_policies(self) -> None:
-        """Load retry policies from database - placeholder"""
+        """
+Load retry policies from database - placeholder"""
         pass
     
     async def _store_retry_policy(self, policy: RetryPolicy) -> None:
-        """Store retry policy in database - placeholder"""
+        """
+Store retry policy in database - placeholder"""
         pass
     
     async def _initialize_circuit_breakers(self) -> None:
-        """Initialize circuit breakers from database - placeholder"""
+        """
+Initialize circuit breakers from database - placeholder"""
         pass
     
     async def _update_circuit_breaker(self, circuit_breaker: CircuitBreaker) -> None:
-        """Update circuit breaker state - placeholder"""
+        """
+Update circuit breaker state - placeholder"""
         pass
     
     async def _start_retry_workers(self) -> None:
-        """Start retry worker tasks - placeholder"""
+        """
+Start retry worker tasks - placeholder"""
         pass
     
     async def _start_cleanup_tasks(self) -> None:
-        """Start cleanup tasks - placeholder"""
+        """
+Start cleanup tasks - placeholder"""
         pass
     
     async def _cancel_pending_retries(self, webhook_id: str) -> None:
-        """Cancel pending retries for webhook - placeholder"""
+        """
+Cancel pending retries for webhook - placeholder"""
         pass
     
     async def _remove_retry_from_cache(self, attempt_id: str) -> None:
-        """Remove retry from cache - placeholder"""
+        """
+Remove retry from cache - placeholder"""
         pass
     
     async def _handle_circuit_breaker_blocked(self, retry_attempt: RetryAttempt) -> None:
-        """Handle circuit breaker blocked retry - placeholder"""
+        """
+Handle circuit breaker blocked retry - placeholder"""
         pass

@@ -15,6 +15,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -36,7 +37,9 @@ from ...core.database import get_database_session
 
 
 class ExportFormat(Enum):
-    """Supported export formats."""
+    """
+Supported export formats."""
+
     EXCEL = "excel"
     PDF = "pdf"
     JSON = "json"
@@ -48,6 +51,7 @@ class ExportFormat(Enum):
 
 class ExportDestination(Enum):
     """Export destination types."""
+
     LOCAL_FILE = "local_file"
     CLOUD_STORAGE = "cloud_storage"
     EMAIL = "email"
@@ -72,7 +76,8 @@ class ExportConfiguration:
 
 @dataclass
 class ExportJob:
-    """Export job tracking."""
+    """
+Export job tracking."""
     job_id: str
     export_type: str
     configuration: ExportConfiguration
@@ -362,7 +367,7 @@ class ExcelExporter:
         wb.properties.keywords = "analytics, AI, content protection, influencer, Fahed Mlaiel"
         
         # Add copyright notice to all sheets
-        copyright_text = "© 2025 Fahed Mlaiel - IA Influencer Agent. All rights reserved. Email: mlaiel@live.de"
+        copyright_text = "(c) 2025 Fahed Mlaiel - IA Influencer Agent. All rights reserved. Email: mlaiel@live.de"
         
         for ws in wb.worksheets:
             last_row = ws.max_row + 2
@@ -570,7 +575,7 @@ class PDFReporter:
             </div>
             
             <div class="footer">
-                <p><strong>© 2025 Fahed Mlaiel - IA Influencer Agent Platform</strong></p>
+                <p><strong>(c) 2025 Fahed Mlaiel - IA Influencer Agent Platform</strong></p>
                 <p>Email: mlaiel@live.de | Advanced AI-Powered Content Protection & Monetization</p>
                 <p>This report contains confidential and proprietary information. Distribution restricted.</p>
             </div>

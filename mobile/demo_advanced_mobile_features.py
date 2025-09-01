@@ -28,7 +28,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class AdvancedMobileFeaturesDemo:
-    """Comprehensive demo of advanced mobile features"""
+    """
+Comprehensive demo of advanced mobile features"""
     
     def __init__(self):
         self.demo_data = {
@@ -39,7 +40,8 @@ class AdvancedMobileFeaturesDemo:
         }
         
     async def run_complete_demo(self):
-        """Run comprehensive demo of all advanced mobile features"""
+        """
+Run comprehensive demo of all advanced mobile features"""
         print("\n" + "="*70)
         print("🚀 AINFLUE ADVANCED MOBILE FEATURES DEMONSTRATION")
         print("="*70)

@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Audio quality metrics"""
+    """
+Audio quality metrics"""
+
     SNR = "signal_noise_ratio"
     THD = "total_harmonic_distortion"
     DYNAMIC_RANGE = "dynamic_range"
@@ -45,6 +48,7 @@ class QualityMetric(Enum):
 
 class QualityGrade(Enum):
     """Audio quality grades"""
+
     EXCELLENT = "excellent"      # 90-100%
     GOOD = "good"               # 75-89%
     ACCEPTABLE = "acceptable"    # 60-74%
@@ -54,6 +58,7 @@ class QualityGrade(Enum):
 
 class QualityStandard(Enum):
     """Audio quality standards"""
+
     BROADCAST = "broadcast"      # EBU R128, ITU-R BS.1770
     STREAMING = "streaming"      # Platform-specific standards
     MASTERING = "mastering"      # Professional mastering standards
@@ -64,6 +69,7 @@ class QualityStandard(Enum):
 
 class AnalysisDepth(Enum):
     """Quality analysis depth levels"""
+
     QUICK = "quick"             # Basic metrics only
     STANDARD = "standard"       # Standard quality assessment
     COMPREHENSIVE = "comprehensive"  # Full quality analysis
@@ -89,7 +95,8 @@ class QualityThresholds:
 
 @dataclass
 class PerceptualQualityConfig:
-    """Perceptual quality assessment configuration"""
+    """
+Perceptual quality assessment configuration"""
     enable_psychoacoustic_model: bool = True
     use_bark_scale: bool = True
     use_critical_bands: bool = True
@@ -101,7 +108,8 @@ class PerceptualQualityConfig:
 
 @dataclass
 class TechnicalQualityConfig:
-    """Technical quality assessment configuration"""
+    """
+Technical quality assessment configuration"""
     analyze_frequency_response: bool = True
     analyze_phase_response: bool = True
     analyze_harmonic_distortion: bool = True
@@ -113,7 +121,8 @@ class TechnicalQualityConfig:
 
 @dataclass
 class EnhancementConfig:
-    """Quality enhancement configuration"""
+    """
+Quality enhancement configuration"""
     enable_noise_reduction: bool = True
     enable_dynamic_range_enhancement: bool = True
     enable_spectral_enhancement: bool = True
@@ -132,7 +141,8 @@ class AudioQualityConfig:
     """
     
     def __init__(self):
-        """Initialize audio quality configuration"""
+        """
+Initialize audio quality configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core configuration
@@ -610,7 +620,8 @@ class AudioQualityConfig:
             return 50.0  # Default middle value
     
     def _get_target_lufs(self) -> float:
-        """Get target LUFS for current quality standard"""
+        """
+Get target LUFS for current quality standard"""
         standard_config = self._standard_configs.get(self._quality_standard, {})
         return standard_config.get("target_lufs", -16.0)
     
@@ -630,7 +641,8 @@ class AudioQualityConfig:
     def _generate_recommendations(self, 
                                 metric_scores: Dict[str, Dict[str, float]], 
                                 overall_score: float) -> List[str]:
-        """Generate quality improvement recommendations"""
+        """
+Generate quality improvement recommendations"""
         recommendations = []
         
         try:

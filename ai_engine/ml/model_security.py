@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import json
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat levels"""
+    """
+Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -42,6 +45,7 @@ class SecurityThreatLevel(Enum):
 
 class ValidationStatus(Enum):
     """Model validation status"""
+
     PENDING = "pending"
     VALIDATING = "validating"
     PASSED = "passed"
@@ -406,7 +410,8 @@ class ModelSecurityValidator:
         return score
     
     def _determine_threat_level(self, metrics: SecurityMetrics) -> SecurityThreatLevel:
-        """Determine threat level based on security metrics"""
+        """
+Determine threat level based on security metrics"""
         if metrics.security_score >= 0.8 and len(metrics.known_vulnerabilities) == 0:
             return SecurityThreatLevel.LOW
         elif metrics.security_score >= 0.6 and len(metrics.known_vulnerabilities) <= 2:
@@ -417,7 +422,8 @@ class ModelSecurityValidator:
             return SecurityThreatLevel.CRITICAL
     
     def _determine_validation_status(self, metrics: SecurityMetrics) -> ValidationStatus:
-        """Determine validation status"""
+        """
+Determine validation status"""
         if metrics.security_score >= self.security_thresholds['min_security_score']:
             if metrics.threat_level in [SecurityThreatLevel.LOW, SecurityThreatLevel.MEDIUM]:
                 return ValidationStatus.PASSED
@@ -427,7 +433,8 @@ class ModelSecurityValidator:
             return ValidationStatus.FAILED
     
     def _generate_security_recommendations(self, metrics: SecurityMetrics) -> List[str]:
-        """Generate security improvement recommendations"""
+        """
+Generate security improvement recommendations"""
         recommendations = []
         
         if metrics.integrity_score < 0.8:

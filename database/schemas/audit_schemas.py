@@ -13,6 +13,7 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copyin
 modification, or distribution is strictly prohibited and will result in immediate 
 legal action under German and international copyright law.
 """
+
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -24,7 +25,9 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class AuditEventTypeEnum(str, Enum):
-    """Types of audit events"""
+    """
+Types of audit events"""
+
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     USER_REGISTRATION = "user_registration"
@@ -49,6 +52,7 @@ class AuditEventTypeEnum(str, Enum):
 
 class ComplianceFrameworkEnum(str, Enum):
     """Compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
@@ -68,6 +72,7 @@ class ComplianceFrameworkEnum(str, Enum):
 
 class ComplianceStatusEnum(str, Enum):
     """Compliance status levels"""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
@@ -80,6 +85,7 @@ class ComplianceStatusEnum(str, Enum):
 
 class RiskLevelEnum(str, Enum):
     """Risk assessment levels"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -90,6 +96,7 @@ class RiskLevelEnum(str, Enum):
 
 class DataCategoryEnum(str, Enum):
     """Data categories for privacy compliance"""
+
     PERSONAL_IDENTITY = "personal_identity"
     FINANCIAL_DATA = "financial_data"
     BIOMETRIC_DATA = "biometric_data"

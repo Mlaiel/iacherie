@@ -29,6 +29,7 @@ property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying,
 modification, distribution, or reverse engineering of this code or its concepts
 is strictly prohibited and will result in legal action.
 """
+
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from enum import Enum
@@ -37,7 +38,9 @@ import json
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types"""
+    """
+Deployment environment types"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -46,6 +49,7 @@ class DeploymentEnvironment(Enum):
 
 class PerformanceProfile(Enum):
     """Performance optimization profiles"""
+
     BALANCED = "balanced"
     SPEED_OPTIMIZED = "speed_optimized"
     ACCURACY_OPTIMIZED = "accuracy_optimized"
@@ -177,7 +181,8 @@ class MonitoringConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security settings"""
+    """
+Configuration for security settings"""
     encryption_enabled: bool = True
     encryption_algorithm: str = "aes_256"
     
@@ -223,7 +228,8 @@ class PerformanceConfig:
 
 @dataclass
 class AdvancedProtectionConfig:
-    """Complete configuration for Advanced Protection Agent"""
+    """
+Complete configuration for Advanced Protection Agent"""
     
     # Environment
     environment: DeploymentEnvironment = DeploymentEnvironment.PRODUCTION
@@ -251,7 +257,8 @@ class AdvancedProtectionConfig:
     
     @classmethod
     def from_environment(cls) -> 'AdvancedProtectionConfig':
-        """Create configuration from environment variables"""
+        """
+Create configuration from environment variables"""
         config = cls()
         
         # Environment detection
@@ -270,7 +277,8 @@ class AdvancedProtectionConfig:
     
     @classmethod
     def from_file(cls, config_file: str) -> 'AdvancedProtectionConfig':
-        """Load configuration from JSON file"""
+        """
+Load configuration from JSON file"""
         try:
             with open(config_file, 'r') as f:
                 data = json.load(f)
@@ -303,7 +311,8 @@ class AdvancedProtectionConfig:
         return result
     
     def save_to_file(self, config_file: str):
-        """Save configuration to JSON file"""
+        """
+Save configuration to JSON file"""
         try:
             with open(config_file, 'w') as f:
                 json.dump(self.to_dict(), f, indent=2, default=str)

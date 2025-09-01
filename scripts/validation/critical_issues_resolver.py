@@ -5,6 +5,7 @@ Automatically fixes critical business files with issues to address the 991 criti
 Author: GitHub Copilot Assistant
 Purpose: Address critical business issues affecting revenue generation
 """
+
 import os
 import re
 import json
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class CriticalIssuesResolver:
-    """Resolves critical business issues in the codebase"""
+    """
+Resolves critical business issues in the codebase"""
     
     def __init__(self):
         self.project_root = Path.cwd()
@@ -27,7 +29,8 @@ class CriticalIssuesResolver:
         self.total_fixes = 0
         
     def resolve_critical_issues(self) -> Dict[str, Any]:
-        """Resolve all critical business issues"""
+        """
+Resolve all critical business issues"""
         logger.info("🎯 Starting Critical Business Issues Resolution")
         logger.info("=" * 60)
         

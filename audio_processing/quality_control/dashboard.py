@@ -5,7 +5,7 @@ of audio quality control operations with comprehensive analytics and reporting.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class DashboardMetricType(Enum):
-    """Dashboard metric types"""
+    """
+Dashboard metric types"""
+
     QUALITY_SCORE = "quality_score"
     PROCESSING_TIME = "processing_time"
     SUCCESS_RATE = "success_rate"
@@ -49,6 +52,7 @@ class DashboardMetricType(Enum):
 
 class TimeRange(Enum):
     """Time range options for analytics"""
+
     LAST_HOUR = "1h"
     LAST_6_HOURS = "6h"
     LAST_24_HOURS = "24h"
@@ -360,7 +364,8 @@ class RealTimeDashboard:
         return self.monitor.get_active_alerts()
 
     async def _get_recent_reports(self, start_time: datetime, end_time: datetime) -> List[Dict[str, Any]]:
-        """Get recent quality reports"""
+        """
+Get recent quality reports"""
         
         # Get quality reports from controller history
         processing_history = self.controller.get_processing_history(
@@ -482,7 +487,8 @@ class RealTimeDashboard:
         return (datetime.now() - self.cache_timestamps[cache_key]).total_seconds() < self.cache_ttl
 
     async def get_widget_data(self, widget_id: str) -> Dict[str, Any]:
-        """Get data for a specific widget"""
+        """
+Get data for a specific widget"""
         
         if widget_id not in self.widgets:
             return {"error": "Widget not found"}

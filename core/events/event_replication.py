@@ -5,7 +5,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
 Contact autorisations : mlaiel@live.de
@@ -14,6 +14,7 @@ Description:
     Système avancé de réplication d'événements pour multi-tenant, disaster recovery,
     synchronisation cross-region et intégrations externes pour IA-Influencer-Agent.
 """
+
 from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReplicationStrategy(Enum):
-    """Stratégies de réplication"""
+    """
+Stratégies de réplication"""
+
     SYNCHRONOUS = "synchronous"  # Réplication synchrone
     ASYNCHRONOUS = "asynchronous"  # Réplication asynchrone
     EVENTUAL = "eventual"  # Cohérence éventuelle
@@ -48,6 +51,7 @@ class ReplicationStrategy(Enum):
 
 class ReplicationStatus(Enum):
     """Statut de réplication"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -58,6 +62,7 @@ class ReplicationStatus(Enum):
 
 class ConflictResolution(Enum):
     """Stratégies de résolution de conflits"""
+
     LATEST_WINS = "latest_wins"  # Le plus récent gagne
     SOURCE_WINS = "source_wins"  # La source gagne
     MANUAL = "manual"  # Résolution manuelle
@@ -66,6 +71,7 @@ class ConflictResolution(Enum):
 
 class ReplicationType(Enum):
     """Types de réplication"""
+
     FULL = "full"  # Réplication complète
     INCREMENTAL = "incremental"  # Réplication incrémentale
     SELECTIVE = "selective"  # Réplication sélective
@@ -162,27 +168,32 @@ class ReplicationConnector(ABC):
     
     @abstractmethod
     async def disconnect(self):
-        """Ferme la connexion"""
+        """
+Ferme la connexion"""
         pass
     
     @abstractmethod
     async def replicate_event(self, event: Event) -> bool:
-        """Réplique un événement"""
+        """
+Réplique un événement"""
         pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Vérifie la santé de la connexion"""
+        """
+Vérifie la santé de la connexion"""
         pass
     
     @abstractmethod
     async def get_last_event_timestamp(self) -> Optional[datetime]:
-        """Retourne le timestamp du dernier événement répliqué"""
+        """
+Retourne le timestamp du dernier événement répliqué"""
         pass
 
 
 class DatabaseReplicationConnector(ReplicationConnector):
-    """Connecteur de réplication vers base de données"""
+    """
+Connecteur de réplication vers base de données"""
     
     def __init__(self, target: ReplicationTarget):
         self.target = target
@@ -250,7 +261,8 @@ class DatabaseReplicationConnector(ReplicationConnector):
             self.connection_pool = None
     
     async def replicate_event(self, event: Event) -> bool:
-        """Réplique un événement vers la base de données"""
+        """
+Réplique un événement vers la base de données"""
         if not self.connection_pool:
             return False
         
@@ -310,7 +322,8 @@ class DatabaseReplicationConnector(ReplicationConnector):
 
 
 class APIReplicationConnector(ReplicationConnector):
-    """Connecteur de réplication via API REST"""
+    """
+Connecteur de réplication via API REST"""
     
     def __init__(self, target: ReplicationTarget):
         self.target = target
@@ -352,7 +365,8 @@ class APIReplicationConnector(ReplicationConnector):
             self.session = None
     
     async def replicate_event(self, event: Event) -> bool:
-        """Réplique un événement via API"""
+        """
+Réplique un événement via API"""
         if not self.session:
             return False
         
@@ -449,7 +463,8 @@ class WebSocketReplicationConnector(ReplicationConnector):
             self._connected = False
     
     async def replicate_event(self, event: Event) -> bool:
-        """Réplique un événement via WebSocket"""
+        """
+Réplique un événement via WebSocket"""
         if not self.websocket or not self._connected:
             return False
         
@@ -473,13 +488,15 @@ class WebSocketReplicationConnector(ReplicationConnector):
         return self._connected and self.websocket and not self.websocket.closed
     
     async def get_last_event_timestamp(self) -> Optional[datetime]:
-        """Retourne le timestamp du dernier événement"""
+        """
+Retourne le timestamp du dernier événement"""
         # WebSocket ne maintient pas d'historique par défaut
         return None
 
 
 class RedisReplicationConnector(ReplicationConnector):
-    """Connecteur de réplication via Redis"""
+    """
+Connecteur de réplication via Redis"""
     
     def __init__(self, target: ReplicationTarget):
         self.target = target
@@ -516,7 +533,8 @@ class RedisReplicationConnector(ReplicationConnector):
             self.redis_client = None
     
     async def replicate_event(self, event: Event) -> bool:
-        """Réplique un événement vers Redis Stream"""
+        """
+Réplique un événement vers Redis Stream"""
         if not self.redis_client:
             return False
         
@@ -550,7 +568,8 @@ class RedisReplicationConnector(ReplicationConnector):
             return False
     
     async def get_last_event_timestamp(self) -> Optional[datetime]:
-        """Retourne le timestamp du dernier événement"""
+        """
+Retourne le timestamp du dernier événement"""
         if not self.redis_client:
             return None
         
@@ -726,7 +745,8 @@ class EventReplicationManager:
                 await self._queue_event_for_target(event, target_id, target)
     
     def _event_matches_filters(self, event: Event, filters: Dict[str, Any]) -> bool:
-        """Vérifie si un événement correspond aux filtres"""
+        """
+Vérifie si un événement correspond aux filtres"""
         if not filters:
             return True
         
@@ -788,7 +808,8 @@ class EventReplicationManager:
         return priority_values.get(priority, 2)
     
     async def _replication_loop(self):
-        """Boucle principale de réplication"""
+        """
+Boucle principale de réplication"""
         while self._replicating:
             try:
                 # Traitement de la queue de priorité
@@ -926,7 +947,8 @@ class EventReplicationManager:
         return hashlib.sha256(event_str.encode()).hexdigest()
     
     async def _handle_conflict(self, conflict: ConflictRecord, event: Event, target_id: str):
-        """Gère un conflit de réplication"""
+        """
+Gère un conflit de réplication"""
         target = self.targets[target_id]
         resolution = target.conflict_resolution
         
@@ -979,7 +1001,8 @@ class EventReplicationManager:
         event: Event,
         target_id: str
     ):
-        """Gère les échecs de réplication"""
+        """
+Gère les échecs de réplication"""
         target = self.targets[target_id]
         retry_policy = target.retry_policy
         

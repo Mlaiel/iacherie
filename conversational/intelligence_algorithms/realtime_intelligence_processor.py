@@ -28,6 +28,7 @@ for live conversation analysis and adaptive intelligence. Unauthorized use,
 copying, or reverse engineering is strictly prohibited and legally prosecuted.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingMode(Enum):
-    """Real-time processing modes"""
+    """
+Real-time processing modes"""
+
     STREAMING = "streaming"
     BATCH_REALTIME = "batch_realtime"
     HYBRID = "hybrid"
@@ -65,6 +68,7 @@ class ProcessingMode(Enum):
 
 class IntelligenceLevel(Enum):
     """Intelligence processing levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -106,7 +110,8 @@ class RealtimeIntelligenceResult:
 
 @dataclass
 class ConversationContext:
-    """Enhanced conversation context for real-time processing"""
+    """
+Enhanced conversation context for real-time processing"""
     conversation_id: str
     participants: List[str] = field(default_factory=list)
     conversation_history: deque = field(default_factory=lambda: deque(maxlen=100))
@@ -462,7 +467,8 @@ class LiveConversationAnalyzer:
     async def analyze_live_conversation(self,
                                       conversation_stream: AsyncGenerator[str, None],
                                       analysis_config: Dict[str, Any]) -> AsyncGenerator[Dict[str, Any], None]:
-        """Analyze live conversation stream with real-time intelligence"""
+        """
+Analyze live conversation stream with real-time intelligence"""
         try:
             async for message in conversation_stream:
                 # Perform live analysis
@@ -523,7 +529,8 @@ class DynamicResponseOptimizer:
                                       original_response: str,
                                       conversation_context: Dict[str, Any],
                                       optimization_goals: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize response dynamically for real-time conversation"""
+        """
+Optimize response dynamically for real-time conversation"""
         try:
             # Quick optimization analysis
             optimization_analysis = await self._quick_optimization_analysis(
@@ -566,7 +573,8 @@ class ContextualIntelligenceEngine:
                                             conversation_data: Dict[str, Any],
                                             historical_context: Dict[str, Any],
                                             business_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process contextual intelligence with adaptive learning"""
+        """
+Process contextual intelligence with adaptive learning"""
         try:
             # Contextual understanding
             context_understanding = await self._understand_context(
@@ -616,7 +624,8 @@ class AdaptiveConversationEngine:
                                         conversation_history: List[Dict[str, Any]],
                                         user_preferences: Dict[str, Any],
                                         business_objectives: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt conversation strategy based on learning and context"""
+        """
+Adapt conversation strategy based on learning and context"""
         try:
             # Analyze conversation patterns
             patterns = await self._analyze_conversation_patterns(conversation_history)

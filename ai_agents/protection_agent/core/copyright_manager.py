@@ -5,6 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Copyright protection levels"""
+    """
+Copyright protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard" 
     PREMIUM = "premium"
@@ -29,6 +32,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of copyright violations"""
+
     EXACT_COPY = "exact_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     PARTIAL_USE = "partial_use"
@@ -497,23 +501,27 @@ class AdvancedCopyrightManager:
         return ProtectionLevel.STANDARD
         
     async def _store_protection_record(self, content_id: str, record: Dict):
-        """Store content protection record in database"""
+        """
+Store content protection record in database"""
         # Implementation would store in database
         pass
         
     async def _start_content_monitoring(self, content_id: str):
-        """Start continuous monitoring for content"""
+        """
+Start continuous monitoring for content"""
         # Implementation would set up monitoring tasks
         pass
         
     async def _get_protected_fingerprints(self, content_type: str) -> List[ContentFingerprint]:
-        """Retrieve protected content fingerprints for comparison"""
+        """
+Retrieve protected content fingerprints for comparison"""
         # Implementation would query database
         return []
         
     async def _create_copyright_claim(self, fingerprint: ContentFingerprint, 
                                     match: Dict, source_url: str = None) -> CopyrightClaim:
-        """Create copyright claim from detected match"""
+        """
+Create copyright claim from detected match"""
         claim_id = f"CLAIM_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{fingerprint.content_id[:8]}"
         
         # Determine violation type based on similarity
@@ -546,7 +554,8 @@ class AdvancedCopyrightManager:
             return ViolationType.DERIVATIVE_WORK
             
     async def _validate_copyright_claim(self, claim: CopyrightClaim) -> bool:
-        """Validate copyright claim before processing"""
+        """
+Validate copyright claim before processing"""
         # Check claim completeness
         if not all([claim.content_id, claim.owner_id, claim.violation_type]):
             return False
@@ -561,7 +570,8 @@ class AdvancedCopyrightManager:
         return True
         
     async def _get_protection_policy(self, owner_id: str) -> ProtectionPolicy:
-        """Get protection policy for owner"""
+        """
+Get protection policy for owner"""
         # Return stored policy or default
         return self.protection_policies.get(owner_id, ProtectionPolicy(
             policy_id=f"DEFAULT_{owner_id}",
@@ -593,12 +603,14 @@ class AdvancedCopyrightManager:
         pass
         
     async def _schedule_claim_monitoring(self, claim: CopyrightClaim):
-        """Schedule follow-up monitoring for claim"""
+        """
+Schedule follow-up monitoring for claim"""
         # Implementation would create monitoring tasks
         pass
         
     def _generate_violation_description(self, claim: CopyrightClaim) -> str:
-        """Generate legal description of violation"""
+        """
+Generate legal description of violation"""
         return f"Unauthorized use of copyrighted content detected with {claim.confidence_score:.2%} confidence. " \
                f"Violation type: {claim.violation_type.value}. " \
                f"Evidence includes fingerprint analysis and similarity matching."
@@ -620,22 +632,26 @@ class AdvancedCopyrightManager:
         pass
         
     async def _get_dmca_notice(self, notice_id: str) -> DMCANotice:
-        """Retrieve DMCA notice by ID"""
+        """
+Retrieve DMCA notice by ID"""
         # Implementation would query database
         return None
         
     def _validate_counter_notice(self, counter_notice: Dict) -> bool:
-        """Validate DMCA counter-notice"""
+        """
+Validate DMCA counter-notice"""
         required_fields = ['name', 'address', 'phone', 'email', 'statement', 'signature']
         return all(field in counter_notice for field in required_fields)
         
     async def _notify_owner_counter_notice(self, claim: CopyrightClaim, counter_notice: Dict):
-        """Notify content owner of counter-notice"""
+        """
+Notify content owner of counter-notice"""
         # Implementation would send notification
         pass
         
     async def _initiate_legal_review(self, claim: CopyrightClaim, counter_notice: Dict) -> Dict:
-        """Initiate legal review process"""
+        """
+Initiate legal review process"""
         return {
             'review_id': f"LEGAL_{claim.claim_id}",
             'next_steps': ['legal_consultation', 'evidence_review', 'decision']
@@ -647,26 +663,31 @@ class AdvancedCopyrightManager:
         return None
         
     def _get_monitored_platforms(self) -> List[str]:
-        """Get list of platforms being monitored"""
+        """
+Get list of platforms being monitored"""
         return ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook']
         
     async def _search_platform_content(self, platform: str, fingerprint: ContentFingerprint) -> List[Dict]:
-        """Search platform for content matches"""
+        """
+Search platform for content matches"""
         # Implementation would use platform APIs
         return []
         
     async def _analyze_usage_for_violation(self, original: ContentFingerprint, usage: Dict) -> Dict:
-        """Analyze detected usage for copyright violation"""
+        """
+Analyze detected usage for copyright violation"""
         # Implementation would perform detailed analysis
         return {'is_violation': False, 'similarity_score': 0.0}
         
     async def _update_monitoring_record(self, content_id: str, update: Dict):
-        """Update content monitoring record"""
+        """
+Update content monitoring record"""
         # Implementation would update database
         pass
         
     def _generate_protection_recommendations(self, stats: Dict) -> List[str]:
-        """Generate protection recommendations based on statistics"""
+        """
+Generate protection recommendations based on statistics"""
         recommendations = []
         
         if stats['pending_claims'] > 5:

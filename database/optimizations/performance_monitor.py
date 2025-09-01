@@ -6,6 +6,7 @@ alerting, and intelligent performance insights.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import json
 import time
@@ -32,7 +33,9 @@ logger = get_logger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -41,6 +44,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Metric types"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -91,7 +95,8 @@ class DatabaseStats:
 
 
 class MetricsCollector:
-    """Collects and stores performance metrics"""
+    """
+Collects and stores performance metrics"""
     
     def __init__(self, retention_hours: int = 168):  # 7 days
         self.retention_hours = retention_hours
@@ -100,7 +105,8 @@ class MetricsCollector:
         self.alert_rules: Dict[str, Dict[str, Any]] = {}
         
     def add_metric(self, metric: PerformanceMetric):
-        """Add a metric data point"""
+        """
+Add a metric data point"""
         self.metrics[metric.name].append({
             'value': metric.value,
             'timestamp': metric.timestamp,
@@ -113,7 +119,8 @@ class MetricsCollector:
     def get_metric_values(self, metric_name: str, 
                          start_time: Optional[datetime] = None,
                          end_time: Optional[datetime] = None) -> List[Dict[str, Any]]:
-        """Get metric values within time range"""
+        """
+Get metric values within time range"""
         if metric_name not in self.metrics:
             return []
         
@@ -134,7 +141,8 @@ class MetricsCollector:
     
     def get_metric_statistics(self, metric_name: str, 
                             hours_back: int = 1) -> Dict[str, float]:
-        """Get statistical summary of metric"""
+        """
+Get statistical summary of metric"""
         end_time = datetime.now()
         start_time = end_time - timedelta(hours=hours_back)
         
@@ -165,7 +173,8 @@ class MetricsCollector:
         }
     
     def _check_alert_rules(self, metric: PerformanceMetric):
-        """Check if metric triggers any alerts"""
+        """
+Check if metric triggers any alerts"""
         rule = self.alert_rules.get(metric.name)
         if not rule:
             return
@@ -186,7 +195,8 @@ class MetricsCollector:
             self._resolve_alert(metric.name)
     
     def _trigger_alert(self, metric: PerformanceMetric, rule: Dict[str, Any]):
-        """Trigger a new alert"""
+        """
+Trigger a new alert"""
         alert_id = f"{metric.name}_{int(time.time())}"
         
         alert = PerformanceAlert(
@@ -215,7 +225,8 @@ class MetricsCollector:
         return [alert for alert in self.alerts.values() if not alert.resolved_at]
     
     def cleanup_old_data(self):
-        """Clean up old metrics data"""
+        """
+Clean up old metrics data"""
         cutoff_time = datetime.now() - timedelta(hours=self.retention_hours)
         
         for metric_name in list(self.metrics.keys()):
@@ -227,7 +238,8 @@ class MetricsCollector:
 
 
 class DatabasePerformanceMonitor:
-    """Database performance monitoring system"""
+    """
+Database performance monitoring system"""
     
     def __init__(self, engines: Dict[str, AsyncEngine]):
         self.engines = engines
@@ -247,7 +259,8 @@ class DatabasePerformanceMonitor:
         self._setup_default_alerts()
     
     def _setup_default_alerts(self):
-        """Setup default alert rules"""
+        """
+Setup default alert rules"""
         # Database connection alerts
         self.metrics_collector.add_alert_rule(
             "active_connections", 80, AlertSeverity.WARNING, "greater_than"

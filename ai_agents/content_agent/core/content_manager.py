@@ -5,6 +5,7 @@ for content processing operations across multiple formats.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -70,7 +71,8 @@ class ContentAgentManager:
         }
     
     async def initialize(self):
-        """Initialize the content agent manager"""
+        """
+Initialize the content agent manager"""
         try:
             # Initialize the content agent
             self.agent = ContentAgent(config=self.config)
@@ -325,7 +327,8 @@ class ContentAgentManager:
         return status
     
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a processing job"""
+        """
+Cancel a processing job"""
         if job_id not in self.processing_jobs:
             return False
         
@@ -449,7 +452,8 @@ class ContentAgentManager:
         return hashlib.md5(key_string.encode()).hexdigest()
     
     async def _validate_content_file(self, content_path: Path) -> bool:
-        """Validate content file before processing"""
+        """
+Validate content file before processing"""
         try:
             # Check file existence
             if not content_path.exists():

@@ -22,6 +22,7 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
+
 import hashlib
 import hmac
 import secrets
@@ -53,7 +54,9 @@ import whois
 logger = logging.getLogger(__name__)
 
 class SecurityLevel(Enum):
-    """Security level classifications."""
+    """
+Security level classifications."""
+
     SAFE = "safe"
     LOW_RISK = "low_risk"
     MEDIUM_RISK = "medium_risk"
@@ -63,6 +66,7 @@ class SecurityLevel(Enum):
 
 class ThreatType(Enum):
     """Types of security threats."""
+
     MALWARE = "malware"
     PHISHING = "phishing"
     SCAM = "scam"
@@ -76,6 +80,7 @@ class ThreatType(Enum):
 
 class EncryptionMethod(Enum):
     """Encryption methods."""
+
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
@@ -95,7 +100,8 @@ class SecurityAssessment:
 
 @dataclass
 class EncryptedData:
-    """Encrypted data container."""
+    """
+Encrypted data container."""
     encrypted_content: bytes
     encryption_method: EncryptionMethod
     key_id: Optional[str]
@@ -116,7 +122,8 @@ class SecurityScanner:
     """
     
     def __init__(self):
-        """Initialize security scanner."""
+        """
+Initialize security scanner."""
         self.malicious_domains = set()
         self.phishing_patterns = []
         self.suspicious_keywords = []
@@ -508,7 +515,8 @@ class SecurityScanner:
         return count
     
     def _detect_homograph_attack(self, domain: str) -> bool:
-        """Detect possible homograph attacks in domain."""
+        """
+Detect possible homograph attacks in domain."""
         # Check for mixed scripts
         try:
             # Simple check for non-ASCII characters that could be spoofing
@@ -526,7 +534,8 @@ class SecurityScanner:
             return False
     
     def _calculate_security_level(self, assessment: SecurityAssessment) -> SecurityLevel:
-        """Calculate overall security level from assessment."""
+        """
+Calculate overall security level from assessment."""
         score = assessment.confidence_score
         
         if score >= 0.9:
@@ -543,7 +552,8 @@ class SecurityScanner:
             return SecurityLevel.SAFE
     
     def _generate_recommendations(self, assessment: SecurityAssessment) -> List[str]:
-        """Generate security recommendations."""
+        """
+Generate security recommendations."""
         recommendations = []
         
         if assessment.security_level in [SecurityLevel.MALICIOUS, SecurityLevel.CRITICAL_RISK]:
@@ -594,12 +604,14 @@ class ContentEncryption:
     """
     
     def __init__(self):
-        """Initialize encryption utilities."""
+        """
+Initialize encryption utilities."""
         self.keys: Dict[str, bytes] = {}
         self.key_metadata: Dict[str, Dict[str, Any]] = {}
         
     def generate_key(self, method: EncryptionMethod = EncryptionMethod.FERNET) -> Tuple[str, bytes]:
-        """Generate encryption key."""
+        """
+Generate encryption key."""
         key_id = secrets.token_hex(16)
         
         if method == EncryptionMethod.FERNET:
@@ -782,7 +794,8 @@ class ContentEncryption:
         return key, salt
     
     def secure_delete_key(self, key_id: str) -> bool:
-        """Securely delete encryption key."""
+        """
+Securely delete encryption key."""
         try:
             if key_id in self.keys:
                 # Overwrite key memory with random data
@@ -811,14 +824,16 @@ class AccessControl:
     """
     
     def __init__(self):
-        """Initialize access control."""
+        """
+Initialize access control."""
         self.api_keys: Dict[str, Dict[str, Any]] = {}
         self.rate_limits: Dict[str, List[datetime]] = {}
         self.blocked_ips: Set[str] = set()
         self.trusted_ips: Set[str] = set()
     
     def generate_api_key(self, user_id: str, permissions: List[str]) -> str:
-        """Generate API key with permissions."""
+        """
+Generate API key with permissions."""
         api_key = secrets.token_urlsafe(32)
         
         self.api_keys[api_key] = {
@@ -833,7 +848,8 @@ class AccessControl:
         return api_key
     
     def validate_api_key(self, api_key: str, required_permission: str = None) -> bool:
-        """Validate API key and permissions."""
+        """
+Validate API key and permissions."""
         key_data = self.api_keys.get(api_key)
         if not key_data or not key_data['is_active']:
             return False
@@ -848,7 +864,8 @@ class AccessControl:
         return True
     
     def check_rate_limit(self, identifier: str, max_requests: int = 100, window_minutes: int = 60) -> bool:
-        """Check rate limiting for identifier."""
+        """
+Check rate limiting for identifier."""
         now = datetime.now()
         window_start = now - timedelta(minutes=window_minutes)
         
@@ -871,11 +888,13 @@ class AccessControl:
         return True
     
     def is_ip_blocked(self, ip_address: str) -> bool:
-        """Check if IP address is blocked."""
+        """
+Check if IP address is blocked."""
         return ip_address in self.blocked_ips
     
     def is_ip_trusted(self, ip_address: str) -> bool:
-        """Check if IP address is trusted."""
+        """
+Check if IP address is trusted."""
         return ip_address in self.trusted_ips
     
     def block_ip(self, ip_address: str, reason: str = "") -> None:
@@ -894,20 +913,24 @@ def create_security_scanner() -> SecurityScanner:
     return SecurityScanner()
 
 def create_content_encryption() -> ContentEncryption:
-    """Create content encryption instance."""
+    """
+Create content encryption instance."""
     return ContentEncryption()
 
 def create_access_control() -> AccessControl:
-    """Create access control instance."""
+    """
+Create access control instance."""
     return AccessControl()
 
 async def quick_security_scan(url: str) -> SecurityAssessment:
-    """Quick security scan of URL."""
+    """
+Quick security scan of URL."""
     scanner = create_security_scanner()
     return await scanner.scan_url(url)
 
 def quick_encrypt_content(content: str, method: EncryptionMethod = EncryptionMethod.FERNET) -> EncryptedData:
-    """Quick content encryption."""
+    """
+Quick content encryption."""
     encryption = create_content_encryption()
     return encryption.encrypt_content(content, method=method)
 

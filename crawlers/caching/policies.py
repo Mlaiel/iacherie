@@ -9,6 +9,7 @@ lifecycle management, and intelligent decision making.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -26,7 +27,9 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class PolicyType(Enum):
-    """Cache policy types."""
+    """
+Cache policy types."""
+
     EVICTION = "eviction"
     RETENTION = "retention"
     ACCESS = "access"
@@ -36,6 +39,7 @@ class PolicyType(Enum):
 
 class PolicyScope(Enum):
     """Policy scope levels."""
+
     GLOBAL = "global"
     NAMESPACE = "namespace"
     KEY_PATTERN = "key_pattern"
@@ -44,6 +48,7 @@ class PolicyScope(Enum):
 
 class PolicyAction(Enum):
     """Policy actions."""
+
     ALLOW = "allow"
     DENY = "deny"
     MODIFY = "modify"
@@ -53,6 +58,7 @@ class PolicyAction(Enum):
 
 class ConditionOperator(Enum):
     """Condition operators."""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
@@ -72,7 +78,8 @@ class PolicyCondition:
 
 @dataclass
 class PolicyRule:
-    """Policy rule definition."""
+    """
+Policy rule definition."""
     rule_id: str
     name: str
     description: str
@@ -86,7 +93,8 @@ class PolicyRule:
 
 @dataclass
 class CachePolicy:
-    """Cache policy definition."""
+    """
+Cache policy definition."""
     policy_id: str
     name: str
     description: str
@@ -101,7 +109,8 @@ class CachePolicy:
 
 @dataclass
 class PolicyEvaluation:
-    """Policy evaluation result."""
+    """
+Policy evaluation result."""
     policy_id: str
     rule_id: Optional[str]
     action: PolicyAction
@@ -123,7 +132,8 @@ class PolicyEngine:
     """
     
     def __init__(self):
-        """Initialize policy engine."""
+        """
+Initialize policy engine."""
         self.logger = logging.getLogger(f"{__name__}.PolicyEngine")
         
         # Policy storage
@@ -368,7 +378,8 @@ class PolicyEngine:
     
     async def _evaluate_policy(self, policy: CachePolicy,
                              context: Dict[str, Any]) -> Optional[PolicyEvaluation]:
-        """Evaluate single policy against context."""
+        """
+Evaluate single policy against context."""
         try:
             # Evaluate rules in priority order
             for rule in sorted(policy.rules, key=lambda r: r.priority, reverse=True):
@@ -438,12 +449,14 @@ class PolicyEngine:
     
     def _evaluate_not_equals(self, field_value: Any, condition_value: Any,
                            case_sensitive: bool) -> bool:
-        """Evaluate not equals condition."""
+        """
+Evaluate not equals condition."""
         return not self._evaluate_equals(field_value, condition_value, case_sensitive)
     
     def _evaluate_greater_than(self, field_value: Any, condition_value: Any,
                              case_sensitive: bool) -> bool:
-        """Evaluate greater than condition."""
+        """
+Evaluate greater than condition."""
         try:
             return float(field_value) > float(condition_value)
         except (ValueError, TypeError):
@@ -451,7 +464,8 @@ class PolicyEngine:
     
     def _evaluate_less_than(self, field_value: Any, condition_value: Any,
                           case_sensitive: bool) -> bool:
-        """Evaluate less than condition."""
+        """
+Evaluate less than condition."""
         try:
             return float(field_value) < float(condition_value)
         except (ValueError, TypeError):
@@ -459,7 +473,8 @@ class PolicyEngine:
     
     def _evaluate_contains(self, field_value: Any, condition_value: Any,
                          case_sensitive: bool) -> bool:
-        """Evaluate contains condition."""
+        """
+Evaluate contains condition."""
         try:
             field_str = str(field_value)
             condition_str = str(condition_value)
@@ -474,7 +489,8 @@ class PolicyEngine:
     
     def _evaluate_regex_match(self, field_value: Any, condition_value: Any,
                             case_sensitive: bool) -> bool:
-        """Evaluate regex match condition."""
+        """
+Evaluate regex match condition."""
         try:
             flags = 0 if case_sensitive else re.IGNORECASE
             return bool(re.search(str(condition_value), str(field_value), flags))
@@ -483,7 +499,8 @@ class PolicyEngine:
     
     def _evaluate_in_list(self, field_value: Any, condition_value: Any,
                         case_sensitive: bool) -> bool:
-        """Evaluate in list condition."""
+        """
+Evaluate in list condition."""
         try:
             if not isinstance(condition_value, list):
                 return False
@@ -498,12 +515,14 @@ class PolicyEngine:
     
     def _evaluate_not_in_list(self, field_value: Any, condition_value: Any,
                             case_sensitive: bool) -> bool:
-        """Evaluate not in list condition."""
+        """
+Evaluate not in list condition."""
         return not self._evaluate_in_list(field_value, condition_value, case_sensitive)
     
     def _generate_cache_key(self, policy_type: PolicyType,
                           context: Dict[str, Any]) -> str:
-        """Generate cache key for evaluation."""
+        """
+Generate cache key for evaluation."""
         try:
             # Create deterministic key from policy type and context
             key_parts = [policy_type.value]

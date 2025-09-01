@@ -10,6 +10,7 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Tuple
@@ -37,7 +38,9 @@ from ...ml.sentiment_analyzer import SentimentAnalyzer
 
 
 class VideoCategory(Enum):
-    """YouTube video categories"""
+    """
+YouTube video categories"""
+
     ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     MUSIC = "music"
@@ -52,6 +55,7 @@ class VideoCategory(Enum):
 
 class VideoQuality(Enum):
     """Video content quality levels"""
+
     EXCEPTIONAL = "exceptional"
     HIGH_QUALITY = "high_quality"
     PROFESSIONAL = "professional"
@@ -63,6 +67,7 @@ class VideoQuality(Enum):
 
 class MonetizationStatus(Enum):
     """Video monetization status"""
+
     MONETIZED = "monetized"
     DEMONETIZED = "demonetized"
     LIMITED = "limited"
@@ -115,7 +120,8 @@ class YouTubeVideo:
 
 @dataclass 
 class YouTubeChannel:
-    """YouTube channel data structure"""
+    """
+YouTube channel data structure"""
     channel_id: str
     title: str
     description: str
@@ -491,7 +497,8 @@ class YouTubeVideoData:
 
 @dataclass
 class YouTubeChannelData:
-    """YouTube channel data structure"""
+    """
+YouTube channel data structure"""
     channel_id: str
     title: str
     description: str
@@ -523,7 +530,8 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, api_key: str, config: Optional[Dict] = None):
-        """Initialize YouTube crawler engine"""
+        """
+Initialize YouTube crawler engine"""
         super().__init__(config)
         self.api_key = api_key
         self.youtube_service = None
@@ -539,7 +547,8 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_youtube_service(self) -> None:
-        """Setup YouTube Data API service"""
+        """
+Setup YouTube Data API service"""
         try:
             self.youtube_service = googleapiclient.discovery.build(
                 'youtube', 'v3', 

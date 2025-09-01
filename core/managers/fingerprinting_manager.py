@@ -8,7 +8,7 @@ Technologies: Python, TensorFlow, PyTorch, OpenCV, ChromaPrint, FAISS, CLIP, BER
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Upload créateur → Analyse multi-format → Génération empreintes IA → 
 Stockage vectoriel → Recherche similarité → Détection duplicata → Protection droits
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Types d'empreintes digitales supportées"""
+    """
+Types d'empreintes digitales supportées"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -51,6 +54,7 @@ class FingerprintType(Enum):
 
 class SimilarityAlgorithm(Enum):
     """Algorithmes de similarité disponibles"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -62,6 +66,7 @@ class SimilarityAlgorithm(Enum):
 
 class FingerprintQuality(Enum):
     """Qualité de l'empreinte générée"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -665,7 +670,8 @@ class FingerprintingManager(ABC):
         max_results: int,
         algorithm: SimilarityAlgorithm
     ) -> List[SimilarityMatch]:
-        """Brute force similarity search for small datasets"""
+        """
+Brute force similarity search for small datasets"""
         return await self._vector_similarity_search(fingerprint, threshold, max_results, algorithm)
     
     async def _calculate_similarity(
@@ -674,7 +680,8 @@ class FingerprintingManager(ABC):
         vector2: np.ndarray,
         algorithm: SimilarityAlgorithm
     ) -> float:
-        """Calculate similarity between two vectors"""
+        """
+Calculate similarity between two vectors"""
         try:
             if algorithm == SimilarityAlgorithm.COSINE:
                 dot_product = np.dot(vector1, vector2)
@@ -709,7 +716,8 @@ class FingerprintingManager(ABC):
         return match.similarity_score > 0.95
     
     async def _add_to_vector_index(self, fingerprint: ContentFingerprint) -> bool:
-        """Add fingerprint to vector index for fast search"""
+        """
+Add fingerprint to vector index for fast search"""
         try:
             # Implementation would add to FAISS index
             fingerprint.indexed = True
@@ -731,7 +739,8 @@ class FingerprintingManager(ABC):
     
     @asynccontextmanager
     async def get_fingerprinting_session(self):
-        """Context manager for fingerprinting operations"""
+        """
+Context manager for fingerprinting operations"""
         session_id = str(uuid.uuid4())
         try:
             logger.info(f"🔍 Fingerprinting session started: {session_id}")

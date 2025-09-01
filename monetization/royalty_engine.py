@@ -7,6 +7,7 @@ Handles complex royalty calculations, multi-tier distributions, and automated pa
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class RoyaltyType(Enum):
-    """Types of royalty calculations"""
+    """
+Types of royalty calculations"""
+
     FLAT_RATE = "flat_rate"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
@@ -29,6 +32,7 @@ class RoyaltyType(Enum):
 
 class PaymentStatus(Enum):
     """Payment status for royalties"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     PAID = "paid"
@@ -56,7 +60,8 @@ class RoyaltyCalculation:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment record"""
+    """
+Royalty payment record"""
     payment_id: str
     calculation_id: str
     payee_id: int
@@ -86,7 +91,8 @@ class RoyaltyEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize royalty engine"""
+        """
+Initialize royalty engine"""
         self.config = config or {}
         
         # Default royalty rates by usage type

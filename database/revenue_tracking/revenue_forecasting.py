@@ -12,6 +12,7 @@ Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -50,7 +51,9 @@ Base = declarative_base()
 
 
 class ForecastHorizon(Enum):
-    """Horizons de prévision"""
+    """
+Horizons de prévision"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -60,6 +63,7 @@ class ForecastHorizon(Enum):
 
 class ForecastModel(Enum):
     """Modèles de prévision disponibles"""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -74,6 +78,7 @@ class ForecastModel(Enum):
 
 class ForecastAccuracy(Enum):
     """Niveaux de précision des prévisions"""
+
     EXCELLENT = "excellent"  # > 95%
     VERY_GOOD = "very_good"  # 90-95%
     GOOD = "good"           # 80-90%

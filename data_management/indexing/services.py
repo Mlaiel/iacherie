@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexingRequest:
-    """Request structure for content indexing"""
+    """
+Request structure for content indexing"""
     content_id: Optional[str] = None
     creator_id: str = ""
     file_path: Optional[str] = None
@@ -79,7 +81,8 @@ class IndexingResult:
 
 @dataclass
 class SearchRequest:
-    """Request structure for search operations"""
+    """
+Request structure for search operations"""
     query_text: Optional[str] = None
     query_vector: Optional[List[float]] = None
     content_types: Optional[List[str]] = None
@@ -107,7 +110,8 @@ class SearchResult:
 
 
 class IndexingService:
-    """High-level service for content indexing operations"""
+    """
+High-level service for content indexing operations"""
     
     def __init__(self, 
                  indexing_config: IndexingConfig,
@@ -139,7 +143,8 @@ class IndexingService:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all components"""
+        """
+Initialize all components"""
         try:
             # Initialize engines
             await asyncio.gather(
@@ -564,7 +569,8 @@ class SearchService:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize search components"""
+        """
+Initialize search components"""
         try:
             await asyncio.gather(
                 self.content_engine.initialize(),
@@ -838,7 +844,8 @@ class RealtimeIndexService:
         self._running = False
     
     async def start(self, num_workers: int = 3) -> None:
-        """Start real-time processing workers"""
+        """
+Start real-time processing workers"""
         try:
             self._running = True
             

@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
+
 import asyncio
 import aiohttp
 import time
@@ -30,7 +31,8 @@ from pathlib import Path
 
 @dataclass
 class BatchJob:
-    """Batch scraping job definition."""
+    """
+Batch scraping job definition."""
     job_id: str
     urls: List[str]
     callback: Optional[Callable] = None
@@ -48,7 +50,8 @@ class BatchJob:
 
 @dataclass
 class BatchConfig:
-    """Batch scraping configuration."""
+    """
+Batch scraping configuration."""
     concurrent_jobs: int = 5
     concurrent_urls_per_job: int = 10
     max_retries: int = 3
@@ -112,16 +115,19 @@ class BatchScraper:
         Path(self.config.output_dir).mkdir(parents=True, exist_ok=True)
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.stop()
         
     async def _initialize_session(self):
-        """Initialize HTTP session."""
+        """
+Initialize HTTP session."""
         connector = aiohttp.TCPConnector(
             limit=100,
             limit_per_host=20,
@@ -138,7 +144,8 @@ class BatchScraper:
         )
         
     def submit_job(self, job: BatchJob) -> str:
-        """Submit batch job to queue."""
+        """
+Submit batch job to queue."""
         job.job_id = job.job_id or self._generate_job_id()
         job.status = 'pending'
         
@@ -163,7 +170,8 @@ class BatchScraper:
         )
         
     def _generate_job_id(self) -> str:
-        """Generate unique job ID."""
+        """
+Generate unique job ID."""
         timestamp = str(int(time.time() * 1000))
         random_part = hashlib.md5(f"{timestamp}{time.time()}".encode()).hexdigest()[:8]
         return f"job_{timestamp}_{random_part}"
@@ -369,7 +377,8 @@ class BatchScraper:
                     await asyncio.sleep(2 ** attempt)  # Exponential backoff
                     
     def _get_cached_result(self, url: str) -> Optional[Dict[str, Any]]:
-        """Get cached result for URL."""
+        """
+Get cached result for URL."""
         url_hash = hashlib.md5(url.encode()).hexdigest()
         
         if url_hash in self.cache:
@@ -385,7 +394,8 @@ class BatchScraper:
         return None
         
     def _cache_result(self, url: str, result: Dict[str, Any]):
-        """Cache result for URL."""
+        """
+Cache result for URL."""
         url_hash = hashlib.md5(url.encode()).hexdigest()
         
         self.cache[url_hash] = {
@@ -394,7 +404,8 @@ class BatchScraper:
         }
         
     async def _save_job_results(self, job: BatchJob):
-        """Save job results to file."""
+        """
+Save job results to file."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         if self.config.result_format == 'json':
@@ -518,7 +529,8 @@ class BatchScraper:
         }
         
     def get_all_jobs(self) -> List[Dict[str, Any]]:
-        """Get status of all jobs."""
+        """
+Get status of all jobs."""
         all_jobs = []
         
         # Active jobs
@@ -532,7 +544,8 @@ class BatchScraper:
         return sorted(all_jobs, key=lambda x: x['created_at'], reverse=True)
         
     def get_stats(self) -> Dict[str, Any]:
-        """Get batch scraper statistics."""
+        """
+Get batch scraper statistics."""
         current_stats = self.stats.copy()
         
         if current_stats['start_time']:
@@ -552,12 +565,14 @@ class BatchScraper:
         return current_stats
         
     async def wait_for_completion(self):
-        """Wait for all jobs to complete."""
+        """
+Wait for all jobs to complete."""
         while self.active_jobs or not self.job_queue.empty():
             await asyncio.sleep(1)
             
     def clear_completed_jobs(self):
-        """Clear completed jobs from memory."""
+        """
+Clear completed jobs from memory."""
         self.completed_jobs.clear()
         self.logger.info("Cleared completed jobs from memory")
         

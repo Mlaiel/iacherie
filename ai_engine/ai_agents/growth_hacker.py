@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -26,7 +27,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class GrowthStrategy(Enum):
-    """Growth hacking strategies"""
+    """
+Growth hacking strategies"""
+
     VIRAL_CONTENT = "viral_content"
     COLLABORATION_NETWORK = "collaboration_network"
     TREND_HIJACKING = "trend_hijacking"
@@ -38,6 +41,7 @@ class GrowthStrategy(Enum):
 
 class GrowthMetric(Enum):
     """Key growth metrics to track"""
+
     FOLLOWER_COUNT = "follower_count"
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
@@ -49,6 +53,7 @@ class GrowthMetric(Enum):
 
 class GrowthPhase(Enum):
     """Growth phases"""
+
     DISCOVERY = "discovery"
     VALIDATION = "validation"
     SCALING = "scaling"
@@ -86,7 +91,8 @@ class GrowthOpportunity:
 
 @dataclass
 class AudienceSegment:
-    """Audience segment for targeted growth"""
+    """
+Audience segment for targeted growth"""
     segment_id: str
     name: str
     demographics: Dict[str, Any]
@@ -97,7 +103,8 @@ class AudienceSegment:
     conversion_potential: float
 
 class GrowthHackerAgent(BaseAIAgent):
-    """AI agent for growth hacking and rapid audience expansion"""
+    """
+AI agent for growth hacking and rapid audience expansion"""
     
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
@@ -382,7 +389,8 @@ class GrowthHackerAgent(BaseAIAgent):
         }
     
     async def _execute_tactic(self, experiment: GrowthExperiment, tactic: str):
-        """Execute a specific growth tactic"""
+        """
+Execute a specific growth tactic"""
         # Simulate tactic execution
         await asyncio.sleep(0.1)
         logger.info(f"Executing tactic for {experiment.experiment_id}: {tactic}")

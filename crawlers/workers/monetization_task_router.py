@@ -8,7 +8,7 @@ Technologies: ML-based Routing, Revenue Prediction, Platform Analytics, Performa
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Revenue task → Platform analysis → ML routing decision → 
 Optimal worker selection → Performance tracking → Revenue optimization
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationTaskType(Enum):
-    """Monetization task types"""
+    """
+Monetization task types"""
+
     REVENUE_TRACKING = "revenue_tracking"
     ANALYTICS_GENERATION = "analytics_generation"
     PERFORMANCE_OPTIMIZATION = "performance_optimization"
@@ -53,6 +56,7 @@ class MonetizationTaskType(Enum):
 
 class PlatformPriority(Enum):
     """Platform priority levels"""
+
     CRITICAL = "critical"  # Spotify, YouTube
     HIGH = "high"         # Instagram, TikTok
     MEDIUM = "medium"     # SoundCloud, Bandcamp
@@ -61,6 +65,7 @@ class PlatformPriority(Enum):
 
 class RevenueUrgency(Enum):
     """Revenue task urgency"""
+
     IMMEDIATE = "immediate"    # Payment processing
     URGENT = "urgent"         # End of month analytics
     NORMAL = "normal"         # Regular tracking
@@ -105,7 +110,8 @@ class MonetizationWorkerProfile:
 
 @dataclass
 class RoutingDecision:
-    """Monetization routing decision result"""
+    """
+Monetization routing decision result"""
     selected_worker: Optional[str]
     confidence_score: float
     reasoning: str
@@ -978,7 +984,8 @@ async def get_monetization_task_router() -> Optional[MonetizationTaskRouter]:
 
 
 async def initialize_monetization_task_router(router_id: str = None) -> bool:
-    """Initialize global monetization task router"""
+    """
+Initialize global monetization task router"""
     global _monetization_task_router
     try:
         if _monetization_task_router is None:

@@ -14,7 +14,7 @@ Features:
 - Gestion des erreurs et fallback automatique
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL NOTICE ⚠️
 This software and all associated intellectual property are the exclusive property
@@ -27,6 +27,7 @@ or unauthorized derivative works.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, Optional, Any, Type, Union, List
@@ -89,7 +90,9 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Available service types"""
+    """
+Available service types"""
+
     MEMORY_MANAGER = "memory_manager"
     HISTORY_MANAGER = "history_manager"
     INDEXER = "indexer"
@@ -141,7 +144,8 @@ class ConversationMemoryFactory:
             )
     
     async def initialize(self):
-        """Initialize all enabled services"""
+        """
+Initialize all enabled services"""
         if self._initialized:
             return
         
@@ -431,7 +435,8 @@ async def get_conversation_memory_factory() -> ConversationMemoryFactory:
 
 
 async def get_memory_manager() -> ConversationMemoryManager:
-    """Get conversation memory manager"""
+    """
+Get conversation memory manager"""
     factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.MEMORY_MANAGER, "memory_manager")
 
@@ -473,7 +478,8 @@ async def get_storage_services() -> Dict[str, Any]:
 
 
 async def get_indexing_services() -> Dict[str, Any]:
-    """Get all indexing services"""
+    """
+Get all indexing services"""
     factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.INDEXER)
 
@@ -485,7 +491,8 @@ async def store_conversation(
     content_type: ContentType = ContentType.GENERAL,
     **kwargs
 ) -> bool:
-    """Quick conversation storage"""
+    """
+Quick conversation storage"""
     manager = await get_memory_manager()
     return await manager.store_conversation(
         user_id=user_id,
@@ -502,7 +509,8 @@ async def search_conversations(
     limit: int = 10,
     **kwargs
 ) -> List[ConversationRecord]:
-    """Quick conversation search"""
+    """
+Quick conversation search"""
     retriever = await get_conversation_retriever()
     return await retriever.search_conversations(
         user_id=user_id,
@@ -514,7 +522,8 @@ async def search_conversations(
 
 
 async def get_user_insights(user_id: str) -> Dict[str, Any]:
-    """Quick user insights generation"""
+    """
+Quick user insights generation"""
     analytics = await get_conversation_analytics()
     insights = await analytics.generate_user_insights(user_id)
     return insights.to_dict()
@@ -522,13 +531,15 @@ async def get_user_insights(user_id: str) -> Dict[str, Any]:
 
 # Service health and monitoring
 async def check_system_health() -> Dict[str, Any]:
-    """Check overall system health"""
+    """
+Check overall system health"""
     factory = await get_conversation_memory_factory()
     return await factory.health_check()
 
 
 async def get_system_metrics() -> Dict[str, Any]:
-    """Get system performance metrics"""
+    """
+Get system performance metrics"""
     try:
         factory = await get_conversation_memory_factory()
         metrics_service = factory.get_service(ServiceType.ANALYTICS, "memory_metrics")

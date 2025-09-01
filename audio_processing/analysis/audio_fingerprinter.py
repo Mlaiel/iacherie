@@ -18,7 +18,7 @@ perceptual hashing and machine learning algorithms.
 - Live audio fingerprinting from microphone input
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 🛡️ TEAM SPECIALTIES:
 - Lead AI Developer & ML Engineer: Fahed Mlaiel
@@ -33,6 +33,7 @@ immediate legal action under German and international copyright law.
 
 Contact: mlaiel@live.de
 """
+
 import numpy as np
 import logging
 import hashlib
@@ -53,7 +54,9 @@ from collections import deque
 
 
 class FingerprintType(Enum):
-    """Types of audio fingerprints"""
+    """
+Types of audio fingerprints"""
+
     CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     SPECTRAL_HASH = "spectral_hash"
@@ -63,6 +66,7 @@ class FingerprintType(Enum):
 
 class SimilarityThreshold(Enum):
     """Similarity matching thresholds"""
+
     IDENTICAL = 0.95      # Nearly identical audio
     VERY_HIGH = 0.85      # Clear match with minor variations
     HIGH = 0.75           # Likely match with some modifications
@@ -72,7 +76,8 @@ class SimilarityThreshold(Enum):
 
 @dataclass
 class AudioFingerprint:
-    """Complete audio fingerprint data structure"""
+    """
+Complete audio fingerprint data structure"""
     fingerprint_id: str
     audio_id: Optional[str]
     fingerprint_type: FingerprintType
@@ -87,7 +92,8 @@ class AudioFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Audio similarity match result"""
+    """
+Audio similarity match result"""
     query_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
@@ -101,7 +107,8 @@ class SimilarityMatch:
 
 @dataclass
 class FingerprintExtractionResult:
-    """Fingerprint extraction result"""
+    """
+Fingerprint extraction result"""
     fingerprint: AudioFingerprint
     processing_time: float
     quality_score: float
@@ -304,7 +311,8 @@ class AudioFingerprinter:
             self.thread_executor, normalize)
     
     async def _extract_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract Chromaprint-style fingerprint"""
+        """
+Extract Chromaprint-style fingerprint"""
         def extract():
             try:
                 # Compute chroma features with high precision
@@ -767,13 +775,15 @@ class AudioFingerprinter:
         return float(similarity)
     
     def _compute_cross_type_similarity(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
-        """Compute similarity between different-type fingerprints"""
+        """
+Compute similarity between different-type fingerprints"""
         # For cross-type comparison, use a more conservative approach
         # This is a simplified implementation - could be enhanced with learned mappings
         return 0.0  # Conservative approach for different types
     
     def _detect_modifications(self, fp1: AudioFingerprint, fp2: AudioFingerprint, similarity: float) -> List[str]:
-        """Detect types of audio modifications based on fingerprint comparison"""
+        """
+Detect types of audio modifications based on fingerprint comparison"""
         modifications = []
         
         # Duration change detection
@@ -825,7 +835,8 @@ class AudioFingerprinter:
         return min(1.0, max(0.0, confidence))
     
     def _calculate_fingerprint_quality(self, audio_data: np.ndarray, fingerprint_data: Dict[str, Any]) -> float:
-        """Calculate quality score for extracted fingerprint"""
+        """
+Calculate quality score for extracted fingerprint"""
         quality_factors = []
         
         # Audio quality factors
@@ -851,7 +862,8 @@ class AudioFingerprinter:
         return float(np.mean(quality_factors)) if quality_factors else 0.0
     
     def _estimate_snr(self, audio_data: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio of audio"""
+        """
+Estimate signal-to-noise ratio of audio"""
         try:
             # Simple energy-based SNR estimation
             signal_power = np.mean(audio_data ** 2)
@@ -871,7 +883,8 @@ class AudioFingerprinter:
             return 20.0  # Default moderate SNR
     
     def _calculate_entropy(self, hash_sequence: List[int]) -> float:
-        """Calculate entropy of hash sequence"""
+        """
+Calculate entropy of hash sequence"""
         if not hash_sequence:
             return 0.0
         
@@ -888,7 +901,8 @@ class AudioFingerprinter:
         return float(entropy)
     
     def _generate_fingerprint_id(self, audio_data: np.ndarray, fingerprint_type: FingerprintType) -> str:
-        """Generate unique fingerprint ID"""
+        """
+Generate unique fingerprint ID"""
         # Create hash from audio data and parameters
         audio_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()[:16]
         type_hash = hashlib.md5(fingerprint_type.value.encode()).hexdigest()[:8]
@@ -934,7 +948,8 @@ class AudioFingerprinter:
         }
     
     def clear_cache(self):
-        """Clear fingerprint cache"""
+        """
+Clear fingerprint cache"""
         with self.cache_lock:
             self.fingerprint_cache.clear()
         self.logger.info("Fingerprint cache cleared")

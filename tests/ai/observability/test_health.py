@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for System Health Module
+"""
+Ultra-Industrial Test Suite for System Health Module
 
 Comprehensive testing for system health monitoring, diagnostics,
 component health checks, and health status assessment.
@@ -36,6 +38,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import pytest
@@ -65,10 +68,12 @@ from ai.observability.health import (
 
 
 class TestSystemHealthComprehensive:
-    """Ultra-comprehensive test suite for System Health"""
+    """
+Ultra-comprehensive test suite for System Health"""
     @pytest.fixture
     def health_config(self):
-        """Sample health monitoring configuration"""
+        """
+Sample health monitoring configuration"""
         return {
             'check_interval_seconds': 30,
             'timeout_seconds': 10,
@@ -110,14 +115,16 @@ class TestSystemHealthComprehensive:
 
     @pytest.fixture
     async def health_monitor(self, health_config):
-        """Create health monitor instance"""
+        """
+Create health monitor instance"""
         monitor = HealthMonitor(health_config)
         await monitor.initialize()
         yield monitor
         await monitor.shutdown()
 
     def test_health_status_enum_comprehensive(self):
-        """Test HealthStatus enum completeness and ordering"""
+        """
+Test HealthStatus enum completeness and ordering"""
         expected_statuses = {'HEALTHY', 'WARNING', 'CRITICAL', 'UNKNOWN', 'MAINTENANCE'}
         actual_statuses = {member.name for member in HealthStatus}
         assert actual_statuses == expected_statuses
@@ -138,7 +145,8 @@ class TestSystemHealthComprehensive:
         assert actual_types == expected_types
 
     def test_health_check_creation_and_validation(self):
-        """Test HealthCheck dataclass creation and validation"""
+        """
+Test HealthCheck dataclass creation and validation"""
         timestamp = datetime.now(timezone.utc)
         
         health_check = HealthCheck(
@@ -241,7 +249,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_system_health_check_comprehensive(self, health_monitor):
-        """Test comprehensive system health check"""
+        """
+Test comprehensive system health check"""
         monitor = health_monitor
         
         # Perform system health check
@@ -274,7 +283,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_database_health_check_detailed(self, health_monitor):
-        """Test detailed database health check"""
+        """
+Test detailed database health check"""
         monitor = health_monitor
         
         # Test with mock database connection
@@ -300,7 +310,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_cache_health_check_detailed(self, health_monitor):
-        """Test detailed cache (Redis) health check"""
+        """
+Test detailed cache (Redis) health check"""
         monitor = health_monitor
         
         # Test with mock Redis connection
@@ -327,7 +338,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_check_failure_scenarios(self, health_monitor):
-        """Test health check failure scenarios"""
+        """
+Test health check failure scenarios"""
         monitor = health_monitor
         
         # Test database connection failure
@@ -404,7 +416,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_history_tracking(self, health_monitor):
-        """Test health history tracking and trends"""
+        """
+Test health history tracking and trends"""
         monitor = health_monitor
         
         # Enable health history tracking
@@ -478,7 +491,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_dependency_health_checking(self, health_monitor):
-        """Test dependency health checking and cascade failures"""
+        """
+Test dependency health checking and cascade failures"""
         monitor = health_monitor
         
         # Define service dependencies
@@ -537,7 +551,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_diagnostics_engine_comprehensive(self, health_monitor):
-        """Test comprehensive diagnostics engine"""
+        """
+Test comprehensive diagnostics engine"""
         monitor = health_monitor
         
         # Initialize diagnostics engine
@@ -596,7 +611,8 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_reporting_comprehensive(self, health_monitor):
-        """Test comprehensive health reporting"""
+        """
+Test comprehensive health reporting"""
         monitor = health_monitor
         
         # Initialize health reporter
@@ -659,12 +675,14 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_custom_health_checks(self, health_monitor):
-        """Test custom health check implementations"""
+        """
+Test custom health check implementations"""
         monitor = health_monitor
         
         # Define custom health check for AI model service
         async def ai_model_health_check(component_config):
-            """Custom health check for AI model service"""
+            """
+Custom health check for AI model service"""
             try:
                 # Simulate AI model health check
                 model_status = {
@@ -849,7 +867,8 @@ class TestSystemHealthComprehensive:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_health_monitoring_performance_at_scale(self, health_monitor):
-        """Test health monitoring performance at scale"""
+        """
+Test health monitoring performance at scale"""
         monitor = health_monitor
         
         # Configure for high performance
@@ -1138,7 +1157,8 @@ class TestHealthMonitoringBenchmarks:
     """Performance benchmarks for system health monitoring"""
     
     def test_health_check_creation_benchmark(self, benchmark):
-        """Benchmark health check creation performance"""
+        """
+Benchmark health check creation performance"""
         def create_health_check():
             return HealthCheck(
                 component_name="benchmark_component",
@@ -1177,7 +1197,8 @@ class TestHealthMonitoringBenchmarks:
         assert isinstance(metrics['memory_percent'], (int, float))
     
     def test_health_status_evaluation_benchmark(self, benchmark):
-        """Benchmark health status evaluation performance"""
+        """
+Benchmark health status evaluation performance"""
         # Sample health checks for evaluation
         health_checks = [
             HealthCheck(

@@ -14,6 +14,7 @@ Business Logic Monitoring:
 - Cross-platform distribution success rates
 - Real-time threat detection and security metrics
 """
+
 import asyncio
 import json
 import time
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of metrics"""
+    """
+Types of metrics"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -48,6 +51,7 @@ class MetricType(str, Enum):
 
 class AlertLevel(str, Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -57,6 +61,7 @@ class AlertLevel(str, Enum):
 
 class BusinessMetricType(str, Enum):
     """Business-specific metric types"""
+
     CONTENT_PROCESSING = "content_processing"
     CREATOR_ENGAGEMENT = "creator_engagement"
     MONETIZATION = "monetization"
@@ -151,7 +156,8 @@ class PerformanceMonitor:
         self.business_metrics = defaultdict(MetricBuffer)
         
     async def collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect comprehensive system metrics"""
+        """
+Collect comprehensive system metrics"""
         metrics = {}
         
         try:
@@ -366,7 +372,8 @@ class AlertManager:
         self.alert_rules = []
         
     async def load_alert_rules(self) -> List[AlertRule]:
-        """Load alert rules from configuration"""
+        """
+Load alert rules from configuration"""
         # Default alert rules
         default_rules = [
             AlertRule(
@@ -474,7 +481,8 @@ class AlertManager:
         return value if isinstance(value, (int, float)) else None
     
     def evaluate_condition(self, value: Union[int, float], condition: str, threshold: float) -> bool:
-        """Evaluate alert condition"""
+        """
+Evaluate alert condition"""
         if condition == ">":
             return value > threshold
         elif condition == "<":
@@ -576,7 +584,8 @@ class MetricsCollector:
         self.cache = CacheManager()
         
     async def record_metric(self, metric: MetricData):
-        """Record a single metric"""
+        """
+Record a single metric"""
         try:
             # Create metric key
             metric_key = f"metrics:{metric.name}:{int(metric.timestamp.timestamp())}"
@@ -676,7 +685,8 @@ class MonitoringMiddleware:
         self.monitoring_enabled = True
         
     async def start_monitoring(self):
-        """Start continuous monitoring"""
+        """
+Start continuous monitoring"""
         if not self.monitoring_enabled:
             return
         
@@ -876,7 +886,8 @@ def get_monitoring_middleware() -> MonitoringMiddleware:
 
 # Decorator for automatic request monitoring
 def monitor_request(endpoint: str):
-    """Decorator for automatic request monitoring"""
+    """
+Decorator for automatic request monitoring"""
     def decorator(func):
         async def wrapper(*args, **kwargs):
             start_time = time.time()

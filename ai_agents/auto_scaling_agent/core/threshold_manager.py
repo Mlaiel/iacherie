@@ -5,8 +5,9 @@ and dynamic threshold optimization for the auto-scaling system.
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-© 2025 All Rights Reserved
+(c) 2025 All Rights Reserved
 """
+
 import asyncio
 import logging
 import time
@@ -37,7 +38,9 @@ from ...core.monitoring import get_metrics_client
 
 
 class ThresholdType(Enum):
-    """Types of thresholds"""
+    """
+Types of thresholds"""
+
     STATIC = "static"
     DYNAMIC = "dynamic"
     ADAPTIVE = "adaptive"
@@ -47,6 +50,7 @@ class ThresholdType(Enum):
 
 class ComparisonOperator(Enum):
     """Comparison operators for thresholds"""
+
     GREATER_THAN = "gt"
     LESS_THAN = "lt"
     GREATER_EQUAL = "ge"
@@ -59,6 +63,7 @@ class ComparisonOperator(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -85,7 +90,8 @@ class Threshold:
 
 @dataclass
 class DynamicThresholdConfig:
-    """Configuration for dynamic threshold calculation"""
+    """
+Configuration for dynamic threshold calculation"""
     metric_name: str
     calculation_method: str  # "percentile", "standard_deviation", "moving_average"
     lookback_period: int = 3600  # seconds
@@ -115,7 +121,8 @@ class ThresholdViolation:
 
 @dataclass
 class ThresholdGroup:
-    """Group of related thresholds"""
+    """
+Group of related thresholds"""
     group_id: str
     name: str
     description: str
@@ -645,7 +652,8 @@ class ThresholdManager(BaseAgent):
         return cooldown_periods.get(severity, 1800)
 
     async def _update_dynamic_thresholds(self):
-        """Update dynamic thresholds based on configuration"""
+        """
+Update dynamic thresholds based on configuration"""
         try:
             for metric_name, config in self.dynamic_configs.items():
                 try:

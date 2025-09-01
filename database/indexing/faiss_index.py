@@ -15,7 +15,7 @@ vector similarity search across multi-modal content embeddings.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -23,6 +23,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -42,7 +43,9 @@ from ..security.vector_security import VectorSecurityManager
 logger = logging.getLogger(__name__)
 
 class FAISSIndexType:
-    """FAISS index types for different use cases"""
+    """
+FAISS index types for different use cases"""
+
     FLAT_L2 = "IndexFlatL2"
     FLAT_IP = "IndexFlatIP"
     IVF_FLAT = "IndexIVFFlat"
@@ -54,6 +57,7 @@ class FAISSIndexType:
 
 class VectorType:
     """Vector types for different content modalities"""
+
     AUDIO_FEATURES = "audio_features"
     VISUAL_FEATURES = "visual_features"
     TEXT_EMBEDDINGS = "text_embeddings"
@@ -75,7 +79,8 @@ class FAISSIndexManager:
     """
     
     def __init__(self):
-        """Initialize FAISS index manager with enterprise-grade components"""
+        """
+Initialize FAISS index manager with enterprise-grade components"""
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = VectorSecurityManager()
@@ -958,6 +963,7 @@ class FAISSIndexManager:
 
 class ContentEmbeddingType:
     """Types of content embeddings"""
+
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_SEMANTIC = "audio_semantic"
     VIDEO_VISUAL = "video_visual"
@@ -983,7 +989,8 @@ class FAISSIndexManager:
     """
     
     def __init__(self):
-        """Initialize FAISS index manager"""
+        """
+Initialize FAISS index manager"""
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = VectorSecurityManager()
@@ -1089,7 +1096,8 @@ class FAISSIndexManager:
             return False
     
     async def initialize(self) -> bool:
-        """Initialize FAISS index manager"""
+        """
+Initialize FAISS index manager"""
         try:
             # Initialize Redis connection
             if not await self.redis_manager.initialize():
@@ -1249,7 +1257,8 @@ class FAISSIndexManager:
     
     async def add_vectors(self, index_name: str, vectors: np.ndarray, 
                          content_ids: List[str]) -> bool:
-        """Add vectors to FAISS index with content ID mapping"""
+        """
+Add vectors to FAISS index with content ID mapping"""
         try:
             if index_name not in self.indexes:
                 raise ValueError(f"Index {index_name} not found")
@@ -1396,7 +1405,8 @@ class FAISSIndexManager:
             return 1.0 / (1.0 + distance)
     
     async def _cache_vectors(self, index_name: str, content_ids: List[str], vectors: np.ndarray):
-        """Cache vectors in Redis for fast retrieval"""
+        """
+Cache vectors in Redis for fast retrieval"""
         try:
             redis_conn = await self.redis_manager.get_connection()
             
@@ -1522,7 +1532,8 @@ class FAISSIndexManager:
         )
     
     async def _cache_index_metadata(self, index_name: str):
-        """Cache index metadata in Redis"""
+        """
+Cache index metadata in Redis"""
         try:
             redis_conn = await self.redis_manager.get_connection()
             cache_key = f"faiss_metadata:{index_name}"
@@ -1543,7 +1554,8 @@ class FAISSIndexManager:
         pass
     
     async def get_index_stats(self, index_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive statistics for FAISS indexes"""
+        """
+Get comprehensive statistics for FAISS indexes"""
         if index_name:
             if index_name not in self.indexes:
                 return {'error': f'Index {index_name} not found'}
@@ -1577,7 +1589,8 @@ class FAISSIndexManager:
             return stats
     
     async def cleanup(self):
-        """Cleanup resources and save indexes"""
+        """
+Cleanup resources and save indexes"""
         try:
             # Save all indexes to disk
             save_tasks = [self._save_index_to_disk(name) for name in self.indexes]

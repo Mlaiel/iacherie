@@ -14,6 +14,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, Any, Optional, List, Union
 from pydantic import BaseSettings, Field, validator, HttpUrl
@@ -22,7 +23,9 @@ from dataclasses import dataclass
 
 
 class ServiceCategory(str, Enum):
-    """External service categories."""
+    """
+External service categories."""
+
     CLOUD_STORAGE = "cloud_storage"
     VECTOR_DATABASE = "vector_database"
     SEARCH_ENGINE = "search_engine"
@@ -106,7 +109,8 @@ class ServiceHealthConfig:
 
 @dataclass
 class ServiceLimits:
-    """Service usage limits configuration."""
+    """
+Service usage limits configuration."""
     max_requests_per_second: float = 10.0
     max_requests_per_hour: int = 3600
     max_payload_size: int = 10485760  # 10MB
@@ -114,7 +118,8 @@ class ServiceLimits:
 
 
 class ExternalServicesConfig(BaseSettings):
-    """External services configuration for third-party integrations."""
+    """
+External services configuration for third-party integrations."""
     
     # === CLOUD STORAGE SERVICES ===
     
@@ -323,7 +328,8 @@ class ExternalServiceManager:
         self._initialize_service_configs()
     
     def _initialize_service_configs(self):
-        """Initialize service configurations."""
+        """
+Initialize service configurations."""
         # Cloud Storage Services
         if self.config.aws_s3_enabled:
             self.service_configs[ServiceProvider.AWS_S3] = {
@@ -392,11 +398,13 @@ class ExternalServiceManager:
         return self.service_configs.get(provider)
     
     def is_service_enabled(self, provider: ServiceProvider) -> bool:
-        """Check if a service provider is enabled."""
+        """
+Check if a service provider is enabled."""
         return provider in self.service_configs
     
     def get_enabled_services(self, category: Optional[ServiceCategory] = None) -> List[ServiceProvider]:
-        """Get list of enabled services, optionally filtered by category."""
+        """
+Get list of enabled services, optionally filtered by category."""
         enabled_services = list(self.service_configs.keys())
         
         if category is None:
@@ -429,18 +437,21 @@ class ExternalServiceManager:
         return [service for service in enabled_services if service in category_services]
     
     async def check_service_health(self, provider: ServiceProvider) -> bool:
-        """Check health status of a specific service."""
+        """
+Check health status of a specific service."""
         # Implementation would include actual health checks
         # This is a placeholder that returns True for configured services
         return provider in self.service_configs
     
     def get_service_limits(self, provider: ServiceProvider) -> ServiceLimits:
-        """Get service limits for a specific provider."""
+        """
+Get service limits for a specific provider."""
         # Default limits - could be customized per provider
         return ServiceLimits()
     
     def get_health_config(self, provider: ServiceProvider) -> ServiceHealthConfig:
-        """Get health check configuration for a specific provider."""
+        """
+Get health check configuration for a specific provider."""
         return ServiceHealthConfig()
 
 

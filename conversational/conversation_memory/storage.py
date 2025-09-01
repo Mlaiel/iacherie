@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import pickle
@@ -46,26 +47,31 @@ logger = logging.getLogger(__name__)
 
 
 class StorageInterface(ABC):
-    """Abstract interface for storage systems"""
+    """
+Abstract interface for storage systems"""
     
     @abstractmethod
     async def store(self, data: Any) -> bool:
-        """Store data"""
+        """
+Store data"""
         pass
     
     @abstractmethod
     async def retrieve(self, key: str) -> Optional[Any]:
-        """Retrieve data by key"""
+        """
+Retrieve data by key"""
         pass
     
     @abstractmethod
     async def delete(self, key: str) -> bool:
-        """Delete data by key"""
+        """
+Delete data by key"""
         pass
     
     @abstractmethod
     async def search(self, query: Dict[str, Any]) -> List[Any]:
-        """Search data"""
+        """
+Search data"""
         pass
 
 
@@ -939,7 +945,8 @@ class VectorStore:
         pass
     
     async def save_index(self, file_path: str) -> bool:
-        """Save FAISS index to file"""
+        """
+Save FAISS index to file"""
         try:
             if self.index:
                 faiss.write_index(self.index, file_path)

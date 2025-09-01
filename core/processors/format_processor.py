@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import json
@@ -73,7 +74,8 @@ logger = logging.getLogger(__name__)
 
 
 class InputFormat(str, Enum):
-    """Supported input formats"""
+    """
+Supported input formats"""
     # Image formats
     JPEG = "jpeg"
     PNG = "png"
@@ -145,6 +147,7 @@ class OutputFormat(str, Enum):
 
 class QualityLevel(str, Enum):
     """Quality levels for conversion"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -154,6 +157,7 @@ class QualityLevel(str, Enum):
 
 class OptimizationTarget(str, Enum):
     """Optimization targets"""
+
     WEB = "web"
     MOBILE = "mobile"
     PRINT = "print"
@@ -212,7 +216,8 @@ class FormatProcessingConfig:
 
 @dataclass
 class ConversionJob:
-    """Format conversion job"""
+    """
+Format conversion job"""
     job_id: str
     input_format: InputFormat
     output_format: OutputFormat

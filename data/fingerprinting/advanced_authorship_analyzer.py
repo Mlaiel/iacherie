@@ -15,6 +15,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -75,6 +76,7 @@ logger = logging.getLogger(__name__)
 
 class AuthorshipFeatureCategory(Enum):
     """Categories of authorship features"""
+
     LEXICAL = "lexical"
     SYNTACTIC = "syntactic"
     SEMANTIC = "semantic"
@@ -86,6 +88,7 @@ class AuthorshipFeatureCategory(Enum):
 
 class AuthorshipConfidence(Enum):
     """Confidence levels for authorship attribution"""
+
     VERY_HIGH = "very_high"  # >90%
     HIGH = "high"           # 75-90%
     MEDIUM = "medium"       # 60-75%
@@ -94,6 +97,7 @@ class AuthorshipConfidence(Enum):
 
 class AnalysisComplexity(Enum):
     """Complexity levels for analysis"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -130,7 +134,8 @@ class AuthorshipProfile:
 
 @dataclass
 class AuthorshipAnalysisResult:
-    """Result of authorship analysis"""
+    """
+Result of authorship analysis"""
     query_text_id: str
     query_text: str
     
@@ -159,7 +164,8 @@ class AuthorshipAnalysisResult:
 
 @dataclass
 class StyleAnalysisConfig:
-    """Configuration for style analysis"""
+    """
+Configuration for style analysis"""
     # Feature extraction
     extract_lexical: bool = True
     extract_syntactic: bool = True
@@ -195,7 +201,8 @@ class AdvancedAuthorshipAnalyzer:
     def __init__(self, 
                  embeddings_engine: IndustrialEmbeddingsEngine,
                  config: Optional[StyleAnalysisConfig] = None):
-        """Initialize advanced authorship analyzer"""
+        """
+Initialize advanced authorship analyzer"""
         self.embeddings_engine = embeddings_engine
         self.config = config or StyleAnalysisConfig()
         
@@ -846,7 +853,8 @@ class AdvancedAuthorshipAnalyzer:
         return 'lexical'  # Default category
     
     def _aggregate_features(self, feature_list: List[Dict[str, float]]) -> Dict[str, float]:
-        """Aggregate features across multiple samples"""
+        """
+Aggregate features across multiple samples"""
         if not feature_list:
             return {}
         
@@ -1005,7 +1013,8 @@ class AdvancedAuthorshipAnalyzer:
     async def _ensemble_prediction(
         self, query_features: Dict[str, float], candidate_authors: List[str]
     ) -> Dict[str, Tuple[str, float]]:
-        """Perform ensemble prediction using multiple ML models"""
+        """
+Perform ensemble prediction using multiple ML models"""
         
         if not SKLEARN_AVAILABLE or not self.author_profiles:
             return {}
@@ -1091,7 +1100,8 @@ class AdvancedAuthorshipAnalyzer:
     def _rank_authors(
         self, similarity_results: Dict[str, Dict[str, float]], ensemble_results: Dict[str, Tuple[str, float]]
     ) -> List[Tuple[str, float]]:
-        """Rank authors based on similarity and ensemble results"""
+        """
+Rank authors based on similarity and ensemble results"""
         
         author_scores = {}
         
@@ -1121,7 +1131,8 @@ class AdvancedAuthorshipAnalyzer:
         return ranked_authors
     
     def _determine_confidence_level(self, confidence_score: float) -> AuthorshipConfidence:
-        """Determine confidence level based on score"""
+        """
+Determine confidence level based on score"""
         
         if confidence_score >= 0.90:
             return AuthorshipConfidence.VERY_HIGH
@@ -1137,7 +1148,8 @@ class AdvancedAuthorshipAnalyzer:
     def _identify_distinctive_features(
         self, query_features: Dict[str, float], author_id: str
     ) -> Dict[str, float]:
-        """Identify distinctive features for the predicted author"""
+        """
+Identify distinctive features for the predicted author"""
         
         if author_id not in self.author_profiles:
             return {}
@@ -1233,19 +1245,22 @@ class AdvancedAuthorshipAnalyzer:
         return complex_tags / len(pos_tags) * 10 if pos_tags else 0
     
     def _count_subordinate_clauses(self, text: str) -> int:
-        """Count subordinate clauses (simplified)"""
+        """
+Count subordinate clauses (simplified)"""
         subordinators = ['because', 'although', 'while', 'since', 'if', 'unless', 'when', 'where', 'which', 'that']
         return sum(text.lower().count(sub) for sub in subordinators)
     
     def _count_pattern(self, text: str, pattern: str) -> int:
-        """Count regex pattern occurrences"""
+        """
+Count regex pattern occurrences"""
         try:
             return len(re.findall(pattern, text, re.IGNORECASE))
         except:
             return 0
     
     def _calculate_readability_features(self, text: str) -> Dict[str, float]:
-        """Calculate readability-related features"""
+        """
+Calculate readability-related features"""
         features = {}
         
         try:
@@ -1293,7 +1308,8 @@ class AdvancedAuthorshipAnalyzer:
         return max(1, syllable_count)
     
     def _calculate_repetition_ratio(self, text: str) -> float:
-        """Calculate repetition ratio in text"""
+        """
+Calculate repetition ratio in text"""
         try:
             sentences = [s.strip().lower() for s in text.split('.') if s.strip()]
             if len(sentences) < 2:
@@ -1321,7 +1337,8 @@ class AdvancedAuthorshipAnalyzer:
             return 0.0
     
     def _calculate_pronoun_ratio(self, text: str) -> float:
-        """Calculate pronoun reference ratio"""
+        """
+Calculate pronoun reference ratio"""
         try:
             words = text.lower().split()
             pronouns = ['he', 'she', 'it', 'they', 'this', 'that', 'these', 'those']
@@ -1331,7 +1348,8 @@ class AdvancedAuthorshipAnalyzer:
             return 0.0
     
     def get_analysis_statistics(self) -> Dict[str, Any]:
-        """Get analysis performance statistics"""
+        """
+Get analysis performance statistics"""
         return {
             'total_analyses': self.analysis_stats['total_analyses'],
             'successful_predictions': self.analysis_stats['successful_predictions'],

@@ -5,7 +5,7 @@ Ultra-advanced semantic content parsers using AI for deep content understanding,
 entity extraction, sentiment analysis, and semantic fingerprinting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
@@ -22,6 +22,7 @@ Development Team Specialties:
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
 """
+
 import asyncio
 import hashlib
 import json
@@ -50,7 +51,8 @@ from .parser_config import ParserConfig
 
 @dataclass
 class SemanticAnalysis:
-    """Container for semantic analysis results"""
+    """
+Container for semantic analysis results"""
     sentiment_score: float = 0.0
     sentiment_label: str = "neutral"
     confidence: float = 0.0
@@ -89,7 +91,8 @@ class SemanticModelManager:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all AI models"""
+        """
+Initialize all AI models"""
         try:
             # Load SpaCy models
             await self._load_spacy_models()
@@ -196,7 +199,8 @@ class SemanticContentParser:
         self._cache = {}
     
     async def initialize(self) -> None:
-        """Initialize the semantic parser"""
+        """
+Initialize the semantic parser"""
         await self.model_manager.initialize()
     
     async def parse_semantic_content(
@@ -285,7 +289,8 @@ class SemanticContentParser:
         return analysis
     
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze sentiment with multiple models"""
+        """
+Analyze sentiment with multiple models"""
         try:
             if 'sentiment_pipeline' in self.model_manager.models:
                 result = self.model_manager.models['sentiment_pipeline'](text)[0]
@@ -480,7 +485,8 @@ class SemanticContentParser:
             return 'en'  # Default to English
     
     async def _generate_summary(self, text: str) -> str:
-        """Generate content summary"""
+        """
+Generate content summary"""
         try:
             if 'summarization_pipeline' in self.model_manager.models and len(text) > 100:
                 # Limit text length for summarization
@@ -549,7 +555,8 @@ class SemanticContentParser:
             return 'general'
     
     async def _analyze_intent(self, text: str) -> str:
-        """Analyze user intent"""
+        """
+Analyze user intent"""
         try:
             text_lower = text.lower()
             
@@ -570,7 +577,8 @@ class SemanticContentParser:
             return 'unknown'
     
     async def _calculate_quality_score(self, text: str) -> float:
-        """Calculate content quality score"""
+        """
+Calculate content quality score"""
         try:
             score = 0.0
             
@@ -607,7 +615,8 @@ class SemanticContentParser:
             return 0.5  # Default moderate quality
     
     async def _calculate_originality_score(self, text: str) -> float:
-        """Calculate content originality score"""
+        """
+Calculate content originality score"""
         try:
             # Simple originality heuristics
             score = 0.5  # Base score
@@ -636,7 +645,8 @@ class SemanticContentParser:
             return 0.5
     
     async def _predict_engagement(self, text: str) -> float:
-        """Predict content engagement potential"""
+        """
+Predict content engagement potential"""
         try:
             score = 0.0
             
@@ -667,7 +677,8 @@ class SemanticContentParser:
             return 0.5
     
     async def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score (simplified)"""
+        """
+Calculate readability score (simplified)"""
         try:
             words = text.split()
             sentences = text.split('.')
@@ -688,7 +699,8 @@ class SemanticContentParser:
             return 0.5
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
+        """
+Count syllables in a word (simplified)"""
         word = word.lower()
         vowels = 'aeiouy'
         syllable_count = 0
@@ -707,7 +719,8 @@ class SemanticContentParser:
         return max(1, syllable_count)
     
     async def _detect_toxicity(self, text: str) -> float:
-        """Detect content toxicity"""
+        """
+Detect content toxicity"""
         try:
             if 'toxicity_pipeline' in self.model_manager.models:
                 result = self.model_manager.models['toxicity_pipeline'](text)[0]

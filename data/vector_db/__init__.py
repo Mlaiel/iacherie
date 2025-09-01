@@ -5,7 +5,7 @@ Advanced vector database integration for similarity search and content matching.
 Supports multiple vector storage backends with optimized similarity algorithms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
@@ -26,6 +26,7 @@ TEAM SPECIALTIES:
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -81,7 +82,8 @@ class VectorSearchResult:
 
 @dataclass 
 class VectorIndex:
-    """Represents a vector index configuration."""
+    """
+Represents a vector index configuration."""
     name: str
     dimension: int
     metric: str
@@ -92,7 +94,8 @@ class VectorIndex:
 
 
 class VectorBackend(ABC):
-    """Abstract base class for vector database backends."""
+    """
+Abstract base class for vector database backends."""
     
     @abstractmethod
     async def create_index(self, name: str, dimension: int, metric: str = "cosine") -> bool:
@@ -102,23 +105,27 @@ class VectorBackend(ABC):
     @abstractmethod
     async def add_vectors(self, index_name: str, vectors: np.ndarray, 
                          ids: List[str], metadata: List[Dict]) -> bool:
-        """Add vectors to an index."""
+        """
+Add vectors to an index."""
         pass
     
     @abstractmethod
     async def search(self, index_name: str, query_vector: np.ndarray,
                     k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors."""
+        """
+Search for similar vectors."""
         pass
     
     @abstractmethod
     async def delete_vectors(self, index_name: str, ids: List[str]) -> bool:
-        """Delete vectors from an index."""
+        """
+Delete vectors from an index."""
         pass
 
 
 class FAISSBackend(VectorBackend):
-    """FAISS vector database backend."""
+    """
+FAISS vector database backend."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -891,7 +898,7 @@ __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel"
+__copyright__ = "(c) 2025 Fahed Mlaiel"
 
 # Initialize logging for the module
 logging.basicConfig(

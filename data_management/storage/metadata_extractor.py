@@ -8,7 +8,7 @@ Advanced metadata extraction for multi-format content analysis
 with AI-powered enhancement and professional-grade accuracy.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -27,6 +27,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 import asyncio
@@ -79,7 +80,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ContentCategory(Enum):
-    """Content categories for specialized processing"""
+    """
+Content categories for specialized processing"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -103,11 +106,13 @@ class MetadataExtractionResult:
     error_messages: List[str] = None
 
 class AudioMetadataExtractor:
-    """Specialized audio metadata extraction"""
+    """
+Specialized audio metadata extraction"""
     
     @staticmethod
     async def extract_audio_metadata(content_data: bytes, filename: str) -> Dict[str, Any]:
-        """Extract comprehensive audio metadata"""
+        """
+Extract comprehensive audio metadata"""
         if not AUDIO_LIBRARIES_AVAILABLE:
             return {"error": "Audio libraries not available"}
         
@@ -272,7 +277,8 @@ class ImageMetadataExtractor:
     
     @staticmethod
     async def extract_image_metadata(content_data: bytes, filename: str) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""
+        """
+Extract comprehensive image metadata"""
         if not IMAGE_LIBRARIES_AVAILABLE:
             return {"error": "Image libraries not available"}
         
@@ -410,11 +416,13 @@ class ImageMetadataExtractor:
         return metadata
 
 class VideoMetadataExtractor:
-    """Specialized video metadata extraction"""
+    """
+Specialized video metadata extraction"""
     
     @staticmethod
     async def extract_video_metadata(content_data: bytes, filename: str) -> Dict[str, Any]:
-        """Extract comprehensive video metadata"""
+        """
+Extract comprehensive video metadata"""
         if not VIDEO_LIBRARIES_AVAILABLE:
             return {"error": "Video libraries not available"}
         
@@ -547,7 +555,8 @@ class DocumentMetadataExtractor:
     
     @staticmethod
     async def extract_document_metadata(content_data: bytes, filename: str) -> Dict[str, Any]:
-        """Extract comprehensive document metadata"""
+        """
+Extract comprehensive document metadata"""
         if not DOCUMENT_LIBRARIES_AVAILABLE:
             return {"error": "Document libraries not available"}
         
@@ -703,7 +712,8 @@ class MetadataExtractor:
     """
     
     def __init__(self):
-        """Initialize metadata extractor"""
+        """
+Initialize metadata extractor"""
         self.audio_extractor = AudioMetadataExtractor()
         self.image_extractor = ImageMetadataExtractor()
         self.video_extractor = VideoMetadataExtractor()
@@ -821,7 +831,8 @@ class MetadataExtractor:
         filename: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract basic file metadata"""
+        """
+Extract basic file metadata"""
         
         file_path = Path(filename)
         
@@ -842,7 +853,8 @@ class MetadataExtractor:
         filename: str,
         category: ContentCategory
     ) -> Dict[str, Any]:
-        """Extract technical metadata based on content category"""
+        """
+Extract technical metadata based on content category"""
         
         technical_metadata = {}
         
@@ -878,7 +890,8 @@ class MetadataExtractor:
         filename: str,
         category: ContentCategory
     ) -> Dict[str, Any]:
-        """Extract content-specific metadata"""
+        """
+Extract content-specific metadata"""
         
         content_metadata = {
             'category': category.value,
@@ -904,7 +917,8 @@ class MetadataExtractor:
         category: ContentCategory,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform AI-powered content analysis"""
+        """
+Perform AI-powered content analysis"""
         
         ai_analysis = {
             'quality_assessment': self._assess_content_quality(content_data, category, content_metadata),
@@ -916,7 +930,8 @@ class MetadataExtractor:
         return ai_analysis
     
     def _calculate_entropy_analysis(self, content_data: bytes) -> Dict[str, Any]:
-        """Calculate entropy-based analysis"""
+        """
+Calculate entropy-based analysis"""
         
         if len(content_data) == 0:
             return {'entropy': 0.0, 'randomness': 'empty'}
@@ -953,7 +968,8 @@ class MetadataExtractor:
         }
     
     def _is_binary_content(self, content_data: bytes) -> bool:
-        """Determine if content is binary"""
+        """
+Determine if content is binary"""
         
         if len(content_data) == 0:
             return False
@@ -969,7 +985,8 @@ class MetadataExtractor:
         return (printable_count / len(sample)) < 0.7
     
     def _calculate_complexity_score(self, content_data: bytes) -> float:
-        """Calculate content complexity score"""
+        """
+Calculate content complexity score"""
         
         if len(content_data) == 0:
             return 0.0
@@ -989,7 +1006,8 @@ class MetadataExtractor:
         return round(complexity, 3)
     
     def _calculate_uniqueness_score(self, content_data: bytes) -> float:
-        """Calculate content uniqueness score"""
+        """
+Calculate content uniqueness score"""
         
         if len(content_data) == 0:
             return 0.0
@@ -1004,7 +1022,8 @@ class MetadataExtractor:
         return round(uniqueness, 3)
     
     async def _analyze_media_content(self, content_data: bytes, category: ContentCategory) -> Dict[str, Any]:
-        """Analyze media content (audio/video)"""
+        """
+Analyze media content (audio/video)"""
         
         analysis = {
             'estimated_duration': 'unknown',
@@ -1056,7 +1075,8 @@ class MetadataExtractor:
         return analysis
     
     async def _analyze_text_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze text content"""
+        """
+Analyze text content"""
         
         analysis = {
             'language_hints': [],
@@ -1100,7 +1120,8 @@ class MetadataExtractor:
         category: ContentCategory,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess content quality"""
+        """
+Assess content quality"""
         
         quality_score = 0.5  # Base score
         quality_factors = []
@@ -1153,7 +1174,8 @@ class MetadataExtractor:
         category: ContentCategory,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess business relevance for IA Influencer platform"""
+        """
+Assess business relevance for IA Influencer platform"""
         
         relevance_score = 0.5
         relevance_factors = []
@@ -1192,7 +1214,8 @@ class MetadataExtractor:
         }
     
     def _check_compliance_requirements(self, content_data: bytes, category: ContentCategory) -> Dict[str, Any]:
-        """Check compliance requirements"""
+        """
+Check compliance requirements"""
         
         compliance = {
             'copyright_safe': True,
@@ -1219,7 +1242,8 @@ class MetadataExtractor:
         return compliance
     
     def _generate_optimization_suggestions(self, content_data: bytes, category: ContentCategory) -> List[str]:
-        """Generate optimization suggestions"""
+        """
+Generate optimization suggestions"""
         
         suggestions = []
         size_mb = len(content_data) / (1024 * 1024)

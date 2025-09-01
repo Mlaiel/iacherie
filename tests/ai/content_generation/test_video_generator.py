@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Video Generator Tests
+"""
+Video Generator Tests
 
 Comprehensive tests for the VideoGenerator class that handles
 AI-powered video content creation and editing.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -54,13 +57,15 @@ class TestVideoGenerator:
     
     @pytest.fixture
     def generator(self):
-        """Create a video generator instance"""
+        """
+Create a video generator instance"""
         config = {'test': 'value'}  # Minimal config for testing
         return VideoContentGenerator(config)
     
     @pytest.fixture
     def sample_script(self):
-        """Create sample video script"""
+        """
+Create sample video script"""
         return {
             "title": "AI Technology Explained",
             "duration": 60,
@@ -112,7 +117,8 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_script_to_video_generation(self, generator, sample_script, video_config):
-        """Test generating video from script"""
+        """
+Test generating video from script"""
         with patch.object(generator, '_render_video') as mock_render:
             mock_render.return_value = {
                 "success": True,
@@ -596,7 +602,8 @@ class TestVideoConfig:
     """Test suite for VideoConfig model"""
     
     def test_video_config_creation(self):
-        """Test video configuration creation"""
+        """
+Test video configuration creation"""
         config = VideoConfig(
             resolution="1920x1080",
             fps=30,
@@ -631,7 +638,8 @@ class TestVideoEnums:
     """Test suite for video-related enums"""
     
     def test_video_format_enum(self):
-        """Test VideoFormat enum values"""
+        """
+Test VideoFormat enum values"""
         assert VideoFormat.MP4.value == "mp4"
         assert VideoFormat.AVI.value == "avi"
         assert VideoFormat.MOV.value == "mov"

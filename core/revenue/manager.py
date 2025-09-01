@@ -1,7 +1,7 @@
 """Revenue Management System - Strategic revenue portfolio and target management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -10,6 +10,7 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueGoalType(Enum):
-    """Revenue goal types"""
+    """
+Revenue goal types"""
+
     TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING = "monthly_recurring"
     QUARTERLY_TARGET = "quarterly_target"
@@ -49,6 +52,7 @@ class RevenueGoalType(Enum):
 
 class PortfolioStrategy(Enum):
     """Revenue portfolio strategies"""
+
     CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
@@ -61,6 +65,7 @@ class PortfolioStrategy(Enum):
 
 class RevenueCategory(Enum):
     """Revenue categorization"""
+
     PRIMARY = "primary"
     SECONDARY = "secondary"
     PASSIVE = "passive"
@@ -89,24 +94,28 @@ class RevenueTarget:
     
     @property
     def progress_percentage(self) -> float:
-        """Calculate progress percentage"""
+        """
+Calculate progress percentage"""
         if self.target_amount == 0:
             return 0.0
         return float((self.current_amount / self.target_amount) * 100)
     
     @property
     def remaining_amount(self) -> Decimal:
-        """Calculate remaining amount to reach target"""
+        """
+Calculate remaining amount to reach target"""
         return max(Decimal('0'), self.target_amount - self.current_amount)
     
     @property
     def days_remaining(self) -> int:
-        """Calculate days remaining to reach target"""
+        """
+Calculate days remaining to reach target"""
         return max(0, (self.end_date - datetime.utcnow()).days)
     
     @property
     def daily_required_rate(self) -> Decimal:
-        """Calculate daily revenue rate required to meet target"""
+        """
+Calculate daily revenue rate required to meet target"""
         if self.days_remaining == 0:
             return Decimal('0')
         return self.remaining_amount / self.days_remaining
@@ -114,7 +123,8 @@ class RevenueTarget:
 
 @dataclass
 class RevenuePortfolio:
-    """Revenue portfolio configuration"""
+    """
+Revenue portfolio configuration"""
     portfolio_id: str
     name: str
     strategy: PortfolioStrategy
@@ -128,25 +138,29 @@ class RevenuePortfolio:
     
     @property
     def overall_progress(self) -> float:
-        """Calculate overall portfolio progress"""
+        """
+Calculate overall portfolio progress"""
         if self.total_target == 0:
             return 0.0
         return float((self.total_current / self.total_target) * 100)
     
     @property
     def target_count(self) -> int:
-        """Get number of targets in portfolio"""
+        """
+Get number of targets in portfolio"""
         return len(self.targets)
     
     @property
     def achieved_targets(self) -> int:
-        """Get number of achieved targets"""
+        """
+Get number of achieved targets"""
         return len([t for t in self.targets if t.progress_percentage >= 100])
 
 
 @dataclass
 class PerformanceMetrics:
-    """Revenue performance metrics"""
+    """
+Revenue performance metrics"""
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -160,14 +174,16 @@ class PerformanceMetrics:
     
     @property
     def variance_percentage(self) -> float:
-        """Calculate variance as percentage"""
+        """
+Calculate variance as percentage"""
         if self.target_revenue == 0:
             return 0.0
         return float((self.variance / self.target_revenue) * 100)
 
 
 class RevenueManager:
-    """Comprehensive revenue management system"""
+    """
+Comprehensive revenue management system"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -178,7 +194,8 @@ class RevenueManager:
         self.performance_history = []
         
     async def initialize(self) -> None:
-        """Initialize revenue manager"""
+        """
+Initialize revenue manager"""
         try:
             # Load existing portfolios and targets
             await self._load_portfolios()
@@ -218,7 +235,8 @@ class RevenueManager:
         pass
     
     async def _setup_performance_tracking(self) -> None:
-        """Setup performance tracking system"""
+        """
+Setup performance tracking system"""
         self.performance_config = self.config.get('performance', {
             'tracking_frequency': 'daily',
             'benchmark_period': 30,
@@ -232,7 +250,8 @@ class RevenueManager:
         risk_tolerance: float,
         description: Optional[str] = None
     ) -> str:
-        """Create new revenue portfolio"""
+        """
+Create new revenue portfolio"""
         try:
             portfolio_id = str(uuid.uuid4())
             
@@ -660,7 +679,8 @@ class RevenueManager:
             return 'low'
     
     async def _compare_scenarios(self, scenarios: Dict[str, Any]) -> Dict[str, Any]:
-        """Compare scenario results"""
+        """
+Compare scenario results"""
         if not scenarios:
             return {}
         
@@ -687,7 +707,8 @@ class RevenueManager:
         }
     
     async def get_target_insights(self, target_id: str) -> Dict[str, Any]:
-        """Get detailed insights for specific target"""
+        """
+Get detailed insights for specific target"""
         try:
             if target_id not in self.targets:
                 raise RevenueManagementError(f"Target not found: {target_id}")

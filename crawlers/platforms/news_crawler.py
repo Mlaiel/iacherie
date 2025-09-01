@@ -19,6 +19,7 @@ Features:
 - Sentiment analysis of news coverage
 - Topic and trend tracking
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -43,7 +44,8 @@ settings = get_settings()
 
 @dataclass
 class NewsArticle:
-    """News article data structure."""
+    """
+News article data structure."""
     article_id: str
     platform: str
     title: str
@@ -73,7 +75,8 @@ class NewsArticle:
 
 @dataclass
 class NewsSource:
-    """News source data structure."""
+    """
+News source data structure."""
     source_id: str
     name: str
     domain: str
@@ -90,7 +93,8 @@ class NewsSource:
 
 @dataclass
 class NewsTopic:
-    """News topic/trend data structure."""
+    """
+News topic/trend data structure."""
     topic_id: str
     name: str
     description: str
@@ -115,7 +119,8 @@ class NewsCrawler:
     """
     
     def __init__(self):
-        """Initialize news crawler."""
+        """
+Initialize news crawler."""
         self.rate_limiter = NewsRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
@@ -223,7 +228,8 @@ class NewsCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -762,25 +768,30 @@ class NewsCrawler:
         return None
     
     async def _parse_ap_news_article(self, container) -> Optional[NewsArticle]:
-        """Parse AP News article data."""
+        """
+Parse AP News article data."""
         # Similar implementation to other parsers
         return None
     
     async def _parse_guardian_article(self, container) -> Optional[NewsArticle]:
-        """Parse Guardian article data."""
+        """
+Parse Guardian article data."""
         # Similar implementation to other parsers
         return None
     
     def _generate_article_id(self, url: str) -> str:
-        """Generate article ID from URL."""
+        """
+Generate article ID from URL."""
         return hashlib.md5(url.encode()).hexdigest()
     
     def _generate_topic_id(self, topic_name: str) -> str:
-        """Generate topic ID from name."""
+        """
+Generate topic ID from name."""
         return hashlib.md5(topic_name.encode()).hexdigest()
     
     def _is_breaking_news(self, article: NewsArticle, keywords: List[str] = None) -> bool:
-        """Determine if article is breaking news."""
+        """
+Determine if article is breaking news."""
         breaking_indicators = [
             'breaking', 'urgent', 'developing', 'live', 'alert',
             'just in', 'update', 'latest'
@@ -808,7 +819,8 @@ class NewsCrawler:
         return False
     
     def _deduplicate_articles(self, articles: List[NewsArticle]) -> List[NewsArticle]:
-        """Remove duplicate articles based on content fingerprint."""
+        """
+Remove duplicate articles based on content fingerprint."""
         seen_fingerprints = set()
         unique_articles = []
         
@@ -820,22 +832,26 @@ class NewsCrawler:
         return unique_articles
     
     def _calculate_avg_sentiment(self, articles: List[NewsArticle]) -> float:
-        """Calculate average sentiment score."""
+        """
+Calculate average sentiment score."""
         scores = [a.sentiment_score for a in articles if a.sentiment_score is not None]
         return sum(scores) / len(scores) if scores else 0.0
     
     def _calculate_avg_credibility(self, articles: List[NewsArticle]) -> float:
-        """Calculate average credibility score."""
+        """
+Calculate average credibility score."""
         scores = [a.credibility_score for a in articles if a.credibility_score is not None]
         return sum(scores) / len(scores) if scores else 0.0
     
     async def _get_recent_articles(self, platform: str, since: datetime) -> List[NewsArticle]:
-        """Get recent articles from platform since a specific time."""
+        """
+Get recent articles from platform since a specific time."""
         # Implementation would fetch RSS feeds or use platform APIs
         return []
     
     async def _analyze_sentiment_coverage(self, articles: List[NewsArticle]) -> Dict:
-        """Analyze sentiment distribution in news coverage."""
+        """
+Analyze sentiment distribution in news coverage."""
         return {
             'positive': 0.0,
             'negative': 0.0,
@@ -844,7 +860,8 @@ class NewsCrawler:
         }
     
     async def _analyze_temporal_trends(self, articles: List[NewsArticle]) -> Dict:
-        """Analyze temporal trends in news coverage."""
+        """
+Analyze temporal trends in news coverage."""
         return {
             'peak_coverage_time': None,
             'coverage_intensity': 0.0,
@@ -852,7 +869,8 @@ class NewsCrawler:
         }
     
     async def _analyze_geographic_coverage(self, articles: List[NewsArticle]) -> Dict:
-        """Analyze geographic distribution of news coverage."""
+        """
+Analyze geographic distribution of news coverage."""
         return {
             'countries_mentioned': [],
             'regional_focus': [],
@@ -860,11 +878,13 @@ class NewsCrawler:
         }
     
     async def _extract_key_narratives(self, articles: List[NewsArticle]) -> List[str]:
-        """Extract key narratives from news coverage."""
+        """
+Extract key narratives from news coverage."""
         return []
     
     async def _analyze_source_credibility(self, articles: List[NewsArticle]) -> Dict:
-        """Analyze source credibility of news coverage."""
+        """
+Analyze source credibility of news coverage."""
         return {
             'avg_credibility': 0.0,
             'high_credibility_sources': [],
@@ -872,7 +892,8 @@ class NewsCrawler:
         }
     
     async def _analyze_social_engagement(self, articles: List[NewsArticle]) -> Dict:
-        """Analyze social media engagement with news articles."""
+        """
+Analyze social media engagement with news articles."""
         return {
             'total_shares': 0,
             'avg_engagement': 0.0,
@@ -880,11 +901,13 @@ class NewsCrawler:
         }
     
     async def _extract_trending_topics(self, articles: List[NewsArticle], min_articles: int) -> List[Dict]:
-        """Extract trending topics from articles."""
+        """
+Extract trending topics from articles."""
         return []
     
     async def _calculate_mention_relevance(self, article: NewsArticle, keywords: List[str]) -> float:
-        """Calculate relevance score for content mentions."""
+        """
+Calculate relevance score for content mentions."""
         return 0.0
 
 # Example usage

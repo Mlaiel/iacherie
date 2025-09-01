@@ -13,6 +13,7 @@ This module provides centralized audio management and orchestration for the
 IA Influencer Agent platform, handling the complete audio processing pipeline
 from upload to protection to monetization.
 """
+
 import logging
 import asyncio
 import uuid
@@ -36,7 +37,9 @@ from .distribution import MultiPlatformDistributor, DistributionChannel, Distrib
 logger = logging.getLogger(__name__)
 
 class AudioProcessingStatus(Enum):
-    """Audio processing status states"""
+    """
+Audio processing status states"""
+
     PENDING = "pending"
     UPLOADING = "uploading"
     ANALYZING = "analyzing"
@@ -52,6 +55,7 @@ class AudioProcessingStatus(Enum):
 
 class ContentType(Enum):
     """Types of audio content"""
+
     MUSIC_TRACK = "music_track"
     PODCAST = "podcast"
     AUDIOBOOK = "audiobook"
@@ -81,7 +85,8 @@ class AudioUploadRequest:
 
 @dataclass
 class AudioProcessingResult:
-    """Complete audio processing result"""
+    """
+Complete audio processing result"""
     processing_id: str
     status: AudioProcessingStatus
     original_audio: AudioData
@@ -299,7 +304,8 @@ class AudioManager:
         audio_data: AudioData, 
         request: AudioUploadRequest
     ) -> MusicAnalysisResult:
-        """Analyze audio content"""
+        """
+Analyze audio content"""
         return await self.music_analyzer.analyze_complete(
             audio_data.samples,
             content_type=request.content_type
@@ -310,7 +316,8 @@ class AudioManager:
         audio_data: AudioData,
         request: AudioUploadRequest
     ) -> AudioFingerprint:
-        """Generate audio fingerprint"""
+        """
+Generate audio fingerprint"""
         return await self.fingerprinter.generate_comprehensive_fingerprint(
             audio_data.samples,
             audio_data.sample_rate,
@@ -327,7 +334,8 @@ class AudioManager:
         fingerprint: AudioFingerprint,
         request: AudioUploadRequest
     ) -> ProtectionResult:
-        """Protect audio content"""
+        """
+Protect audio content"""
         return await self.content_protector.protect_audio_content(
             audio_data,
             fingerprint,
@@ -341,7 +349,8 @@ class AudioManager:
         fingerprint: AudioFingerprint,
         request: AudioUploadRequest
     ) -> RightsResult:
-        """Manage audio rights"""
+        """
+Manage audio rights"""
         return await self.rights_manager.register_rights(
             fingerprint,
             user_id=request.user_id,
@@ -354,7 +363,8 @@ class AudioManager:
         audio_data: AudioData,
         request: AudioUploadRequest
     ) -> AudioData:
-        """Enhance audio quality"""
+        """
+Enhance audio quality"""
         enhancement_settings = EnhancementSettings(
             enhancement_type=EnhancementType.SPECTRAL_ENHANCE,
             quality_level=QualityLevel.HIGH,
@@ -378,7 +388,8 @@ class AudioManager:
         analysis_result: MusicAnalysisResult,
         request: AudioUploadRequest
     ) -> List[CollaborationMatch]:
-        """Find collaboration opportunities"""
+        """
+Find collaboration opportunities"""
         criteria = MatchingCriteria(
             genre=analysis_result.genre if analysis_result else None,
             key=analysis_result.key if analysis_result else None,
@@ -399,7 +410,8 @@ class AudioManager:
         audio_data: AudioData,
         request: AudioUploadRequest
     ) -> List[DistributionResult]:
-        """Distribute content to platforms"""
+        """
+Distribute content to platforms"""
         results = []
         
         for channel in request.distribution_channels:
@@ -417,7 +429,8 @@ class AudioManager:
         processing_result: AudioProcessingResult,
         request: AudioUploadRequest
     ) -> MonetizationResult:
-        """Setup monetization tracking"""
+        """
+Setup monetization tracking"""
         return await self.monetization_engine.setup_monetization(
             processing_result.fingerprint,
             user_id=request.user_id,
@@ -431,7 +444,8 @@ class AudioManager:
         status: AudioProcessingStatus,
         callback_url: Optional[str]
     ):
-        """Notify status change via webhook if configured"""
+        """
+Notify status change via webhook if configured"""
         if callback_url:
             try:
                 import aiohttp
@@ -493,7 +507,8 @@ class AudioManager:
         user_id: str,
         limit: int = 50
     ) -> List[AudioProcessingResult]:
-        """Get processing history for user"""
+        """
+Get processing history for user"""
         user_results = [
             result for result in self.active_processes.values()
             if result.original_audio.metadata.get('user_id') == user_id
@@ -506,7 +521,8 @@ class AudioManager:
         )[:limit]
     
     async def cancel_processing(self, processing_id: str) -> bool:
-        """Cancel active processing"""
+        """
+Cancel active processing"""
         if processing_id in self.active_processes:
             self.active_processes[processing_id].status = AudioProcessingStatus.CANCELLED
             self.logger.info(f"Processing cancelled: {processing_id}")

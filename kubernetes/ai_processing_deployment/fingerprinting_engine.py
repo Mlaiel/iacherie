@@ -23,6 +23,7 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import hashlib
 import logging
@@ -61,7 +62,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting."""
+    """
+Content types for fingerprinting."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -70,6 +73,7 @@ class ContentType(Enum):
 
 class FingerprintType(Enum):
     """Types of fingerprints generated."""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     SPECTRAL_HASH = "spectral_hash"
     VECTOR_EMBEDDING = "vector_embedding"
@@ -93,7 +97,8 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result."""
+    """
+Similarity match result."""
     original_id: str
     matched_id: str
     similarity_score: float
@@ -110,7 +115,8 @@ class AudioFingerprintEngine:
     """
     
     def __init__(self, sample_rate: int = 22050, feature_size: int = 512):
-        """Initialize audio fingerprinting engine."""
+        """
+Initialize audio fingerprinting engine."""
         self.sample_rate = sample_rate
         self.feature_size = feature_size
         self.windowing = es.Windowing(type='hann')
@@ -317,7 +323,8 @@ class VideoFingerprintEngine:
     """
     
     def __init__(self, frame_sample_rate: int = 1, feature_size: int = 1024):
-        """Initialize video fingerprinting engine."""
+        """
+Initialize video fingerprinting engine."""
         self.frame_sample_rate = frame_sample_rate  # Extract 1 frame per second
         self.feature_size = feature_size
         
@@ -644,7 +651,8 @@ class ImageFingerprintEngine:
     """
     
     def __init__(self):
-        """Initialize image fingerprinting engine."""
+        """
+Initialize image fingerprinting engine."""
         # Load CLIP model for semantic embeddings
         self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -873,7 +881,8 @@ class TextFingerprintEngine:
     """
     
     def __init__(self):
-        """Initialize text fingerprinting engine."""
+        """
+Initialize text fingerprinting engine."""
         # Load pre-trained models
         self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
         self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -1092,13 +1101,15 @@ class SimilaritySearchEngine:
     """
     
     def __init__(self, dimension: int = 512):
-        """Initialize similarity search engine."""
+        """
+Initialize similarity search engine."""
         self.dimension = dimension
         self.indices: Dict[str, faiss.IndexFlatIP] = {}
         self.fingerprint_store: Dict[str, List[FingerprintResult]] = {}
         
     async def add_fingerprints(self, fingerprints: List[FingerprintResult]):
-        """Add fingerprints to the search index."""
+        """
+Add fingerprints to the search index."""
         try:
             for fingerprint in fingerprints:
                 if fingerprint.vector_embedding is not None:
@@ -1195,7 +1206,8 @@ class MultiformatFingerprintEngine:
     """
     
     def __init__(self):
-        """Initialize multiformat fingerprinting engine."""
+        """
+Initialize multiformat fingerprinting engine."""
         self.audio_engine = AudioFingerprintEngine()
         self.video_engine = VideoFingerprintEngine()
         self.image_engine = ImageFingerprintEngine()

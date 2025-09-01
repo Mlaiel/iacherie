@@ -11,6 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -33,7 +34,9 @@ from ..core.exceptions import (
 
 
 class SessionPriority(Enum):
-    """Session priority levels for resource allocation."""
+    """
+Session priority levels for resource allocation."""
+
     LOW = 1
     NORMAL = 5
     HIGH = 8

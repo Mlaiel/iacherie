@@ -12,6 +12,7 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
+
 import hashlib
 import json
 import base64
@@ -34,7 +35,9 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class ContentType(Enum):
-    """Content types for protection analysis"""
+    """
+Content types for protection analysis"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -44,6 +47,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
@@ -53,6 +57,7 @@ class ProtectionLevel(Enum):
 
 class RiskLevel(Enum):
     """Copyright risk levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -61,6 +66,7 @@ class RiskLevel(Enum):
 
 class LegalStatus(Enum):
     """Legal status classifications"""
+
     ORIGINAL = "original"
     DERIVATIVE = "derivative"
     FAIR_USE = "fair_use"
@@ -88,7 +94,8 @@ class ContentFingerprint:
 
 @dataclass
 class CopyrightMatch:
-    """Copyright match result"""
+    """
+Copyright match result"""
     match_id: str
     confidence: float
     similarity_score: float
@@ -103,7 +110,8 @@ class CopyrightMatch:
 
 @dataclass
 class ProtectionAnalysis:
-    """Comprehensive protection analysis result"""
+    """
+Comprehensive protection analysis result"""
     content_id: str
     is_original: bool
     protection_level: ProtectionLevel
@@ -123,7 +131,8 @@ class ProtectionAnalysis:
 
 
 class UniversalFingerprintEngine(BaseAIModel):
-    """Universal content fingerprinting engine for all content types"""
+    """
+Universal content fingerprinting engine for all content types"""
     
     def __init__(self, config: ModelConfig):
         super().__init__(config)
@@ -134,7 +143,8 @@ class UniversalFingerprintEngine(BaseAIModel):
         ]
         
     async def process(self, content_data: Any, content_type: ContentType, **kwargs) -> ProcessingResult:
-        """Generate comprehensive fingerprint for any content type"""
+        """
+Generate comprehensive fingerprint for any content type"""
         try:
             start_time = datetime.now()
             
@@ -238,7 +248,8 @@ class UniversalFingerprintEngine(BaseAIModel):
         return hashlib.sha256(hash_string.encode()).hexdigest()[:32]
     
     async def _audio_structural_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate structural hash based on spectral features"""
+        """
+Generate structural hash based on spectral features"""
         # Extract MFCC features
         mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
         mfcc_mean = np.mean(mfccs, axis=1)
@@ -248,7 +259,8 @@ class UniversalFingerprintEngine(BaseAIModel):
         return hashlib.sha256(structural_data).hexdigest()[:32]
     
     async def _audio_semantic_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate semantic hash based on content meaning"""
+        """
+Generate semantic hash based on content meaning"""
         # Extract tempo and rhythm features
         tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
         
@@ -266,7 +278,8 @@ class UniversalFingerprintEngine(BaseAIModel):
         return hashlib.sha256(semantic_features.tobytes()).hexdigest()[:32]
     
     async def _audio_temporal_signature(self, y: np.ndarray, sr: int) -> str:
-        """Generate temporal signature for rhythm patterns"""
+        """
+Generate temporal signature for rhythm patterns"""
         # Extract beat tracking
         tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
         
@@ -374,7 +387,8 @@ class UniversalFingerprintEngine(BaseAIModel):
         return hashlib.sha256(hash_string.encode()).hexdigest()[:32]
     
     async def _video_structural_hash(self, frames: List[np.ndarray]) -> str:
-        """Generate structural hash based on edges and shapes"""
+        """
+Generate structural hash based on edges and shapes"""
         edge_features = []
         
         for frame in frames[:10]:  # Use first 10 frames
@@ -387,7 +401,8 @@ class UniversalFingerprintEngine(BaseAIModel):
         return hashlib.sha256(structural_data).hexdigest()[:32]
     
     async def _video_semantic_hash(self, frames: List[np.ndarray]) -> str:
-        """Generate semantic hash based on content"""
+        """
+Generate semantic hash based on content"""
         # Extract color histograms as semantic features
         color_features = []
         
@@ -405,7 +420,8 @@ class UniversalFingerprintEngine(BaseAIModel):
         return hashlib.sha256(semantic_data).hexdigest()[:32]
     
     async def _video_temporal_signature(self, frames: List[np.ndarray]) -> str:
-        """Generate temporal signature for motion patterns"""
+        """
+Generate temporal signature for motion patterns"""
         if len(frames) < 2:
             return "insufficient_frames"
         
@@ -641,7 +657,8 @@ class UniversalFingerprintEngine(BaseAIModel):
             return hashlib.md5(data_str.encode()).hexdigest()[:16]
     
     async def validate_connection(self) -> bool:
-        """Validate fingerprinting capabilities"""
+        """
+Validate fingerprinting capabilities"""
         try:
             test_text = "Test content for fingerprinting"
             result = await self.process(test_text, ContentType.TEXT)
@@ -786,17 +803,20 @@ class CopyrightDetector(BaseAIModel):
         return []
     
     async def _search_youtube_content_id(self, fingerprint: ContentFingerprint) -> List[CopyrightMatch]:
-        """Search YouTube Content ID database"""
+        """
+Search YouTube Content ID database"""
         # Placeholder for YouTube Content ID API integration
         return []
     
     async def _search_spotify_database(self, fingerprint: ContentFingerprint) -> List[CopyrightMatch]:
-        """Search Spotify recognition database"""
+        """
+Search Spotify recognition database"""
         # Placeholder for Spotify API integration
         return []
     
     async def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between two hashes"""
+        """
+Calculate similarity between two hashes"""
         if len(hash1) != len(hash2):
             return 0.0
         
@@ -808,7 +828,8 @@ class CopyrightDetector(BaseAIModel):
     
     async def _analyze_legal_implications(self, matches: List[CopyrightMatch], 
                                         fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Analyze legal implications of copyright matches"""
+        """
+Analyze legal implications of copyright matches"""
         
         legal_analysis = {
             "risk_assessment": RiskLevel.LOW,

@@ -4,6 +4,7 @@ High-performance caching with Redis, intelligent invalidation, and distributed l
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import json
 import pickle
 import hashlib
@@ -16,11 +17,13 @@ from ..config import settings
 
 
 class CacheKeyGenerator:
-    """Intelligent cache key generation and management"""
+    """
+Intelligent cache key generation and management"""
     
     @staticmethod
     def generate_key(prefix: str, *args, **kwargs) -> str:
-        """Generate consistent cache key from parameters"""
+        """
+Generate consistent cache key from parameters"""
         # Create deterministic hash from all parameters
         key_data = f"{prefix}:{':'.join(map(str, args))}:{':'.join(f'{k}={v}' for k, v in sorted(kwargs.items()))}"
         return hashlib.md5(key_data.encode()).hexdigest()
@@ -46,7 +49,8 @@ class CacheSerializer:
     
     @staticmethod
     def serialize(data: Any) -> bytes:
-        """Serialize data for caching"""
+        """
+Serialize data for caching"""
         if isinstance(data, (dict, list, tuple)):
             return json.dumps(data, default=str).encode()
         elif isinstance(data, (str, int, float, bool)):
@@ -56,7 +60,8 @@ class CacheSerializer:
     
     @staticmethod
     def deserialize(data: bytes) -> Any:
-        """Deserialize cached data"""
+        """
+Deserialize cached data"""
         try:
             # Try JSON first (faster)
             return json.loads(data.decode())
@@ -66,7 +71,8 @@ class CacheSerializer:
 
 
 class DistributedLock:
-    """Distributed locking mechanism using Redis"""
+    """
+Distributed locking mechanism using Redis"""
     
     def __init__(self, redis_client, lock_key: str, timeout: int = 10):
         self.redis_client = redis_client
@@ -125,7 +131,8 @@ class CacheManager:
         self.redis_client = redis_client
     
     async def get(self, key: str, default: Any = None) -> Any:
-        """Get value from cache with fallback hierarchy"""
+        """
+Get value from cache with fallback hierarchy"""
         try:
             # Try Redis first
             if self.redis_client:
@@ -279,7 +286,8 @@ class CacheManager:
         return computed_value
     
     async def get_multi(self, keys: List[str]) -> Dict[str, Any]:
-        """Get multiple values from cache"""
+        """
+Get multiple values from cache"""
         results = {}
         
         try:
@@ -343,7 +351,8 @@ class CacheManager:
         self.invalidation_patterns[event_type] = patterns
     
     async def invalidate_by_event(self, event_type: str, **kwargs):
-        """Invalidate cache based on event type and parameters"""
+        """
+Invalidate cache based on event type and parameters"""
         if event_type not in self.invalidation_patterns:
             return
         
@@ -352,11 +361,13 @@ class CacheManager:
             await self.delete_pattern(pattern)
     
     async def get_distributed_lock(self, lock_key: str, timeout: int = 10) -> DistributedLock:
-        """Get distributed lock for cache operations"""
+        """
+Get distributed lock for cache operations"""
         return DistributedLock(self.redis_client, lock_key, timeout)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""
+        """
+Get cache performance statistics"""
         total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
         hit_rate = (self.cache_stats["hits"] / total_requests * 100) if total_requests > 0 else 0
         

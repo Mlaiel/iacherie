@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import json
 
 
 class DashboardType(Enum):
-    """Grafana dashboard types"""
+    """
+Grafana dashboard types"""
+
     SYSTEM_OVERVIEW = "system_overview"
     AI_SERVICES = "ai_services"
     CONTENT_PROTECTION = "content_protection"
@@ -35,6 +38,7 @@ class DashboardType(Enum):
 
 class VisualizationType(Enum):
     """Grafana visualization types"""
+
     GRAPH = "graph"
     STAT = "stat"
     GAUGE = "gauge"
@@ -58,7 +62,8 @@ class GrafanaPanel:
 
 @dataclass
 class GrafanaDashboard:
-    """Grafana dashboard configuration"""
+    """
+Grafana dashboard configuration"""
     title: str
     tags: List[str]
     panels: List[GrafanaPanel]
@@ -506,7 +511,8 @@ class GrafanaConfig:
         ]
     
     def export_dashboard_json(self, dashboard: GrafanaDashboard) -> str:
-        """Export dashboard configuration as JSON"""
+        """
+Export dashboard configuration as JSON"""
         dashboard_json = {
             "dashboard": {
                 "id": None,

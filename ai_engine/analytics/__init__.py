@@ -27,6 +27,7 @@ User (Creator) → Upload Content → AI Protection → Analytics Processing →
 SEO Optimization → Performance Monitoring → Monetization Intelligence → 
 Collaboration Matching → Multi-platform Distribution Analytics
 """
+
 import logging
 from typing import Dict, Any, List, Optional
 
@@ -273,7 +274,8 @@ class AnalyticsManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Analytics Manager"""
+        """
+Initialize the Analytics Manager"""
         self.config = config or ANALYTICS_CONFIG
         self.logger = logging.getLogger(__name__)
         

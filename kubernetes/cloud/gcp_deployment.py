@@ -14,6 +14,7 @@ This module provides comprehensive GCP deployment and management capabilities
 for the IA Influencer Agent platform, including Compute Engine, Cloud Run,
 Cloud Functions, Cloud SQL, Cloud Storage, and other GCP services.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -34,7 +35,9 @@ import googleapiclient.discovery
 logger = logging.getLogger(__name__)
 
 class GCPRegion(Enum):
-    """GCP regions for global deployment"""
+    """
+GCP regions for global deployment"""
+
     EUROPE_WEST1 = "europe-west1"
     EUROPE_WEST3 = "europe-west3"
     US_CENTRAL1 = "us-central1"
@@ -44,6 +47,7 @@ class GCPRegion(Enum):
 
 class GCPServiceType(Enum):
     """GCP service types"""
+
     COMPUTE_ENGINE = "compute_engine"
     CLOUD_RUN = "cloud_run"
     CLOUD_FUNCTIONS = "cloud_functions"
@@ -86,7 +90,8 @@ class GCPDeploymentConfig:
 
 @dataclass
 class GCPResource:
-    """GCP resource representation"""
+    """
+GCP resource representation"""
     resource_id: str
     resource_type: GCPServiceType
     region: GCPRegion
@@ -100,10 +105,12 @@ class GCPResource:
     security_compliance: bool = True
 
 class GCPDeploymentManager:
-    """Enterprise GCP deployment and management system"""
+    """
+Enterprise GCP deployment and management system"""
     
     def __init__(self, credentials: GCPCredentials):
-        """Initialize GCP deployment manager"""
+        """
+Initialize GCP deployment manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.credentials = credentials
         
@@ -127,7 +134,8 @@ class GCPDeploymentManager:
         self.deployment_history: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize GCP connection and validate credentials"""
+        """
+Initialize GCP connection and validate credentials"""
         try:
             # Test connectivity by listing compute instances
             instances_request = compute_v1.ListInstancesRequest(
@@ -468,7 +476,8 @@ class GCPDeploymentManager:
         return services
     
     async def _deploy_cloud_run_service(self, service_config: Dict[str, Any], config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Cloud Run service"""
+        """
+Deploy Cloud Run service"""
         service_body = {
             "apiVersion": "serving.knative.dev/v1",
             "kind": "Service",

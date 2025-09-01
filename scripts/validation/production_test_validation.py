@@ -9,6 +9,7 @@ infrastructure is operational and provides quality validation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Demonstrate successful resolution of critical testing gap
 """
+
 import subprocess
 import sys
 import os
@@ -17,7 +18,8 @@ import time
 
 
 def run_core_tests():
-    """Run only the core working tests."""
+    """
+Run only the core working tests."""
     print("🧪 AINFLUE PLATFORM - PRODUCTION TEST VALIDATION")
     print("=" * 70)
     print("Validating core test suite for production quality assurance")

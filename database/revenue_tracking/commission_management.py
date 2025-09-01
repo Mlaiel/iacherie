@@ -12,6 +12,7 @@ Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
@@ -38,7 +39,9 @@ Base = declarative_base()
 
 
 class CommissionType(Enum):
-    """Types de commissions"""
+    """
+Types de commissions"""
+
     AFFILIATE_REFERRAL = "affiliate_referral"
     COLLABORATION_SPLIT = "collaboration_split"
     PLATFORM_COMMISSION = "platform_commission"
@@ -53,6 +56,7 @@ class CommissionType(Enum):
 
 class CommissionStatus(Enum):
     """Status des commissions"""
+
     PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
@@ -64,6 +68,7 @@ class CommissionStatus(Enum):
 
 class CommissionTier(Enum):
     """Niveaux de commission"""
+
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"

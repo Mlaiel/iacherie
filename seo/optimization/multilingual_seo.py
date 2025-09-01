@@ -7,6 +7,7 @@ and cultural adaptation for global content distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class Language(Enum):
-    """Supported languages for multilingual SEO"""
+    """
+Supported languages for multilingual SEO"""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -36,6 +39,7 @@ class Language(Enum):
 
 class Region(Enum):
     """Supported regions for localization"""
+
     UNITED_STATES = "US"
     UNITED_KINGDOM = "GB"
     CANADA = "CA"
@@ -58,6 +62,7 @@ class Region(Enum):
 
 class LocalizationLevel(Enum):
     """Levels of localization"""
+
     BASIC = "basic"  # Translation only
     INTERMEDIATE = "intermediate"  # Translation + cultural adaptation
     ADVANCED = "advanced"  # Full localization with regional specifics
@@ -79,7 +84,8 @@ class LocalizedContent:
 
 @dataclass
 class HreflangTag:
-    """Hreflang tag for international SEO"""
+    """
+Hreflang tag for international SEO"""
     language: str
     region: Optional[str]
     url: str
@@ -88,7 +94,8 @@ class HreflangTag:
 
 @dataclass
 class MultilingualSEOResult:
-    """Complete multilingual SEO optimization result"""
+    """
+Complete multilingual SEO optimization result"""
     original_language: Language
     localized_versions: Dict[str, LocalizedContent]  # Key: language-region code
     hreflang_tags: List[HreflangTag]
@@ -104,7 +111,8 @@ class MultilingualSEO:
     international keyword research, and technical implementation for global reach.
     """
     def __init__(self):
-        """Initialize the multilingual SEO system."""
+        """
+Initialize the multilingual SEO system."""
         self.language_mappings = self._initialize_language_mappings()
         self.cultural_data = self._initialize_cultural_data()
         self.search_engines = self._initialize_search_engines()
@@ -261,7 +269,8 @@ class MultilingualSEO:
         )
 
     def _translate_text(self, text: str, source_lang: Language, target_lang: Language) -> str:
-        """Translate text between languages (simplified implementation)"""
+        """
+Translate text between languages (simplified implementation)"""
         
         if source_lang == target_lang:
             return text
@@ -745,7 +754,8 @@ class MultilingualSEO:
         hreflang_tags: List[HreflangTag], 
         technical_recommendations: List[str]
     ) -> float:
-        """Calculate overall international SEO score"""
+        """
+Calculate overall international SEO score"""
         
         score = 0.0
         
@@ -772,7 +782,8 @@ class MultilingualSEO:
         return min(100.0, score)
 
     def _initialize_language_mappings(self) -> Dict[str, Dict[str, str]]:
-        """Initialize language mappings for translation"""
+        """
+Initialize language mappings for translation"""
         
         return {
             "common_terms": {

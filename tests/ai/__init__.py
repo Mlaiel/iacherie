@@ -4,7 +4,7 @@ Enterprise-grade comprehensive AI testing framework for multi-format content cre
 protection, processing and distribution platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is proprietary and confidential. Unauthorized use, modification, 
@@ -47,7 +47,7 @@ Test Modules Architecture:
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Core AI Testing Components
 from .core import (
@@ -316,7 +316,8 @@ def run_comprehensive_test_suite():
     return results
 
 def validate_business_logic():
-    """Validate complete business logic implementation.
+    """
+Validate complete business logic implementation.
     
     Returns:
         dict: Business logic validation results

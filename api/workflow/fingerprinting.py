@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -24,7 +25,9 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class FingerprintContentType(Enum):
-    """Supported content types for fingerprinting."""
+    """
+Supported content types for fingerprinting."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -35,6 +38,7 @@ class FingerprintContentType(Enum):
 
 class FingerprintingQuality(Enum):
     """Quality levels for fingerprinting processing."""
+
     FAST = "fast"
     BALANCED = "balanced"
     COMPREHENSIVE = "comprehensive"
@@ -61,7 +65,8 @@ class ContentFingerprintResult:
 
 
 class ContentFingerprintingWorkflow:
-    """Workflow integration for content fingerprinting operations."""
+    """
+Workflow integration for content fingerprinting operations."""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -655,7 +660,8 @@ class ContentFingerprintingWorkflow:
         return priorities.get(content_type, 5)
     
     def _get_quality_thresholds(self, quality: FingerprintingQuality) -> Dict[str, float]:
-        """Get quality thresholds for fingerprinting level."""
+        """
+Get quality thresholds for fingerprinting level."""
         thresholds = {
             FingerprintingQuality.FAST: {
                 "minimum_score": 0.6,
@@ -733,7 +739,8 @@ class ContentFingerprintingWorkflow:
         pass
     
     async def _send_notification(self, event_type: str, data: Dict[str, Any]):
-        """Send notification about workflow events."""
+        """
+Send notification about workflow events."""
         # Simplified notification implementation
         # await self.notification_service.send(event_type, data)
         pass

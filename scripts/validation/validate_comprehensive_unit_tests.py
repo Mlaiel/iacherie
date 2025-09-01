@@ -11,6 +11,7 @@ and validates that all modules have comprehensive testing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Final validation of unit test coverage requirement
 """
+
 import subprocess
 import sys
 import os
@@ -20,7 +21,8 @@ from datetime import datetime
 
 
 def validate_test_infrastructure():
-    """Validate the complete test infrastructure."""
+    """
+Validate the complete test infrastructure."""
     
     print("🚀 Starting comprehensive unit tests validation...")
     print(f"📅 Validation Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")

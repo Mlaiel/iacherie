@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track information"""
+    """
+SoundCloud track information"""
     id: str
     title: str
     artist: str
@@ -43,7 +44,8 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user/artist information"""
+    """
+SoundCloud user/artist information"""
     id: str
     username: str
     display_name: str
@@ -58,7 +60,8 @@ class SoundCloudUser:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist information"""
+    """
+SoundCloud playlist information"""
     id: str
     title: str
     user: str
@@ -71,7 +74,8 @@ class SoundCloudPlaylist:
 
 @dataclass
 class SoundCloudAnalytics:
-    """SoundCloud analytics data"""
+    """
+SoundCloud analytics data"""
     track_id: str
     plays_today: int
     plays_total: int
@@ -263,7 +267,8 @@ class SoundCloudIntelligentAgent:
         return tracks
     
     async def _scrape_search_tracks(self, query: str, limit: int) -> List[SoundCloudTrack]:
-        """Search tracks using intelligent scraping"""
+        """
+Search tracks using intelligent scraping"""
         search_url = f"{self.web_base_url}/search/sounds?q={query}"
         scraped_data = await self._intelligent_scrape(search_url)
         
@@ -296,7 +301,8 @@ class SoundCloudIntelligentAgent:
         )
     
     def _parse_scraped_tracks(self, hydration_data: List, limit: int) -> List[SoundCloudTrack]:
-        """Parse tracks from scraped hydration data"""
+        """
+Parse tracks from scraped hydration data"""
         tracks = []
         
         # Mock parsing for demonstration

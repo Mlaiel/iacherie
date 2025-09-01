@@ -10,7 +10,7 @@ Module: backend/business/surveillance/web_crawler.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -28,6 +28,7 @@ Target Configuration → Crawling Strategy Selection → Multi-Platform Crawling
 Content Extraction → AI Analysis → Fingerprint Matching → Threat Detection →
 Data Storage → Real-time Notifications → Performance Optimization
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -104,7 +105,8 @@ Base = declarative_base()
 
 
 class CrawlRecord(Base):
-    """Database model for crawl records"""
+    """
+Database model for crawl records"""
     __tablename__ = 'crawl_records'
     
     id = Column(String, primary_key=True)
@@ -124,7 +126,8 @@ class CrawlRecord(Base):
 
 @dataclass
 class CrawlerTarget:
-    """Configuration for crawler targets"""
+    """
+Configuration for crawler targets"""
     url: str
     platform: str
     content_type: str = "unknown"
@@ -159,7 +162,8 @@ class CrawlerResult:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
+        """
+Convert to dictionary for serialization"""
         result = asdict(self)
         result['timestamp'] = self.timestamp.isoformat()
         result['target'] = asdict(self.target)
@@ -168,7 +172,8 @@ class CrawlerResult:
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for web crawler"""
+    """
+Configuration for web crawler"""
     # Basic settings
     concurrent_requests: int = 10
     request_delay: float = 1.0
@@ -219,7 +224,8 @@ class CrawlerConfig:
 
 
 class PlatformCrawler:
-    """Base class for platform-specific crawlers"""
+    """
+Base class for platform-specific crawlers"""
     
     def __init__(self, platform: str, config: CrawlerConfig):
         self.platform = platform
@@ -230,7 +236,8 @@ class PlatformCrawler:
         self.context: Optional[BrowserContext] = None
         
     async def initialize(self):
-        """Initialize crawler resources"""
+        """
+Initialize crawler resources"""
         # Create HTTP session
         timeout = aiohttp.ClientTimeout(total=self.config.timeout)
         connector = aiohttp.TCPConnector(limit=self.config.concurrent_requests)
@@ -251,7 +258,8 @@ class PlatformCrawler:
             self.context = await self.browser.new_context()
     
     async def cleanup(self):
-        """Clean up crawler resources"""
+        """
+Clean up crawler resources"""
         if self.session:
             await self.session.close()
         
@@ -262,7 +270,8 @@ class PlatformCrawler:
             await self.browser.close()
     
     async def crawl(self, target: CrawlerTarget) -> CrawlerResult:
-        """Crawl target URL and extract content"""
+        """
+Crawl target URL and extract content"""
         start_time = time.time()
         
         try:
@@ -400,7 +409,8 @@ class PlatformCrawler:
             await page.close()
     
     async def _extract_data(self, content: str, target: CrawlerTarget) -> Dict[str, Any]:
-        """Extract structured data from content"""
+        """
+Extract structured data from content"""
         data = {}
         
         try:
@@ -439,7 +449,8 @@ class PlatformCrawler:
         return {}
     
     async def _extract_media_urls(self, content: str, base_url: str) -> List[str]:
-        """Extract media URLs from content"""
+        """
+Extract media URLs from content"""
         media_urls = []
         
         try:
@@ -535,7 +546,8 @@ class YoutubeCrawler(PlatformCrawler):
 
 
 class TiktokCrawler(PlatformCrawler):
-    """TikTok-specific crawler"""
+    """
+TikTok-specific crawler"""
     
     def __init__(self, config: CrawlerConfig):
         super().__init__("tiktok", config)
@@ -596,7 +608,8 @@ class WebCrawlerEngine:
     """
     
     def __init__(self, config: CrawlerConfig):
-        """Initialize web crawler engine"""
+        """
+Initialize web crawler engine"""
         self.config = config
         self.metrics = PrometheusMetrics() if (PrometheusMetrics and config.enable_metrics) else None
         self.redis_client: Optional[redis.Redis] = None
@@ -764,7 +777,8 @@ class WebCrawlerEngine:
             return self.crawlers.get('generic', self.crawlers['generic'])
     
     async def _analyze_content(self, result: CrawlerResult) -> CrawlerResult:
-        """Analyze crawled content with AI"""
+        """
+Analyze crawled content with AI"""
         try:
             if not result.content:
                 return result
@@ -1128,7 +1142,8 @@ async def create_web_crawler_engine(
     redis_url: Optional[str] = None,
     **config_kwargs
 ) -> WebCrawlerEngine:
-    """Create and initialize web crawler engine"""
+    """
+Create and initialize web crawler engine"""
     
     config = create_crawler_config(
         database_url=database_url,
@@ -1148,7 +1163,8 @@ async def create_web_crawler_engine(
 
 
 class PlatformCrawler:
-    """Base class for platform-specific crawlers"""
+    """
+Base class for platform-specific crawlers"""
     
     def __init__(self, platform: str, config: CrawlerConfig):
         self.platform = platform
@@ -1156,7 +1172,8 @@ class PlatformCrawler:
         self.session: Optional[aiohttp.ClientSession] = None
     
     async def initialize(self) -> None:
-        """Initialize crawler session"""
+        """
+Initialize crawler session"""
         timeout = aiohttp.ClientTimeout(total=self.config.request_timeout)
         self.session = aiohttp.ClientSession(
             timeout=timeout,
@@ -1169,7 +1186,8 @@ class PlatformCrawler:
         search_terms: List[str], 
         content_fingerprints: Dict[str, Any]
     ) -> CrawlerResult:
-        """Crawl platform for content matches"""
+        """
+Crawl platform for content matches"""
         # Default implementation for platforms without crawling support
         logging.warning(f"Web crawling not implemented for {self.__class__.__name__}")
         from datetime import datetime
@@ -1190,7 +1208,8 @@ class PlatformCrawler:
 
 
 class YouTubeCrawler(PlatformCrawler):
-    """YouTube-specific crawler"""
+    """
+YouTube-specific crawler"""
     
     def __init__(self, config: CrawlerConfig):
         super().__init__("youtube", config)
@@ -1302,7 +1321,8 @@ class YouTubeCrawler(PlatformCrawler):
 
 
 class TikTokCrawler(PlatformCrawler):
-    """TikTok-specific crawler"""
+    """
+TikTok-specific crawler"""
     
     def __init__(self, config: CrawlerConfig):
         super().__init__("tiktok", config)
@@ -1530,7 +1550,8 @@ class GenericWebCrawler(PlatformCrawler):
         return False
     
     def _detect_content_type(self, domain: str) -> str:
-        """Detect content type based on domain"""
+        """
+Detect content type based on domain"""
         if 'soundcloud' in domain:
             return 'audio'
         elif 'vimeo' in domain or 'dailymotion' in domain:
@@ -1554,7 +1575,8 @@ class WebCrawlerEngine:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all platform crawlers"""
+        """
+Initialize all platform crawlers"""
         try:
             # Initialize platform-specific crawlers
             self.crawlers["youtube"] = YouTubeCrawler(self.config)
@@ -1683,7 +1705,8 @@ class WebCrawlerEngine:
         return search_terms[:10]  # Limit search terms
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on crawler engine"""
+        """
+Perform health check on crawler engine"""
         health_status = {
             "engine": "healthy" if self.initialized else "unhealthy",
             "crawlers": {},

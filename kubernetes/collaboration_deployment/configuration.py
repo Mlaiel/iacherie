@@ -19,7 +19,7 @@ Features:
 - Configuration versioning and rollback
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -27,6 +27,7 @@ Any reproduction, modification, distribution or use without explicit
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
@@ -47,7 +48,9 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Deployment environments."""
+    """
+Deployment environments."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -57,6 +60,7 @@ class Environment(Enum):
 
 class ConfigScope(Enum):
     """Configuration scope levels."""
+
     GLOBAL = "global"
     SERVICE = "service"
     INSTANCE = "instance"
@@ -66,6 +70,7 @@ class ConfigScope(Enum):
 
 class SecretProvider(Enum):
     """Secret management providers."""
+
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
     AZURE_KEY_VAULT = "azure_key_vault"
     GOOGLE_SECRET_MANAGER = "google_secret_manager"
@@ -76,6 +81,7 @@ class SecretProvider(Enum):
 
 class ConfigFormat(Enum):
     """Configuration file formats."""
+
     JSON = "json"
     YAML = "yaml"
     TOML = "toml"
@@ -95,7 +101,8 @@ class ConfigValidationRule:
 
 @dataclass
 class ConfigurationProfile:
-    """Configuration profile for specific environment."""
+    """
+Configuration profile for specific environment."""
     name: str
     environment: Environment
     base_config: Dict[str, Any]
@@ -509,7 +516,8 @@ class CollaborationConfigurationManager:
         self._initialize_secret_providers()
 
     def _initialize_encryption(self) -> None:
-        """Initialize encryption for sensitive configuration data."""
+        """
+Initialize encryption for sensitive configuration data."""
         encryption_key = os.getenv("CONFIG_ENCRYPTION_KEY")
         if encryption_key:
             self.encryption_key = encryption_key.encode()
@@ -601,6 +609,7 @@ logger = logging.getLogger(__name__)
 
 class ConfigurationScope(Enum):
     """Configuration scopes."""
+
     GLOBAL = "global"
     ENVIRONMENT = "environment"
     SERVICE = "service"
@@ -609,6 +618,7 @@ class ConfigurationScope(Enum):
 
 class ConfigurationType(Enum):
     """Types of configurations."""
+
     DEPLOYMENT = "deployment"
     NETWORKING = "networking"
     SECURITY = "security"
@@ -671,7 +681,8 @@ class CollaborationConfigManager:
     """
     
     def __init__(self, deployment_config):
-        """Initialize configuration manager."""
+        """
+Initialize configuration manager."""
         self.deployment_config = deployment_config
         self.environment_configs: Dict[str, EnvironmentConfig] = {}
         self.cloud_credentials: Dict[str, CloudCredentials] = {}
@@ -1056,7 +1067,8 @@ class CollaborationConfigManager:
         return resolved_config
     
     async def generate_deployment_manifests(self, environment: str) -> Dict[str, Any]:
-        """Generate Kubernetes deployment manifests for all services."""
+        """
+Generate Kubernetes deployment manifests for all services."""
         logger.info(f"Generating deployment manifests for {environment}")
         
         manifests = {}
@@ -1119,11 +1131,13 @@ class CollaborationConfigManager:
         return self.environment_configs.get(environment)
     
     def get_global_config(self) -> Dict[str, Any]:
-        """Get global configuration."""
+        """
+Get global configuration."""
         return self.global_config.copy()
     
     def update_service_config(self, service_name: str, config_updates: Dict[str, Any]) -> None:
-        """Update configuration for a specific service."""
+        """
+Update configuration for a specific service."""
         if service_name in self.service_configs:
             self.service_configs[service_name].update(config_updates)
             logger.info(f"Updated configuration for service: {service_name}")

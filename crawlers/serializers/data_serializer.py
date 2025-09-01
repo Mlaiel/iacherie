@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -35,7 +36,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def basic_serialization_example():
-    """Basic serialization example using the index."""
+    """
+Basic serialization example using the index."""
     logger.info("=== Basic Serialization Example ===")
     
     # Get the serializer index

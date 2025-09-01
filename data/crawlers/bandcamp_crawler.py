@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -40,7 +41,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class BandcampTrack:
-    """Bandcamp track information"""
+    """
+Bandcamp track information"""
     track_id: str
     title: str
     artist_name: str
@@ -75,7 +77,8 @@ class BandcampTrack:
 
 @dataclass
 class BandcampAlbum:
-    """Bandcamp album information"""
+    """
+Bandcamp album information"""
     album_id: str
     title: str
     artist_name: str
@@ -110,7 +113,8 @@ class BandcampAlbum:
 
 @dataclass
 class BandcampArtist:
-    """Bandcamp artist information"""
+    """
+Bandcamp artist information"""
     artist_id: str
     name: str
     url: str
@@ -143,7 +147,8 @@ class BandcampArtist:
 
 @dataclass
 class BandcampLabel:
-    """Bandcamp label information"""
+    """
+Bandcamp label information"""
     label_id: str
     name: str
     url: str
@@ -166,7 +171,8 @@ class BandcampLabel:
 
 @dataclass
 class BandcampFan:
-    """Bandcamp fan information"""
+    """
+Bandcamp fan information"""
     fan_id: str
     username: str
     display_name: str
@@ -655,7 +661,8 @@ class BandcampCrawler(PlatformCrawler):
         return tracks
     
     async def _get_mock_albums(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock album data"""
+        """
+Generate mock album data"""
         albums = []
         
         for i in range(min(max_results, 25)):
@@ -761,7 +768,8 @@ class BandcampCrawler(PlatformCrawler):
         return content
     
     async def _get_genres(self) -> List[str]:
-        """Get available genres"""
+        """
+Get available genres"""
         return [
             'indie', 'experimental', 'electronic', 'ambient', 'rock', 'folk',
             'jazz', 'classical', 'hip-hop', 'punk', 'metal', 'pop', 'world',
@@ -770,7 +778,8 @@ class BandcampCrawler(PlatformCrawler):
         ]
     
     async def _get_genre_content(self, genre: str, max_results: int) -> List[Dict[str, Any]]:
-        """Get content for specific genre"""
+        """
+Get content for specific genre"""
         content = []
         
         for i in range(min(max_results, 10)):
@@ -786,7 +795,8 @@ class BandcampCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_track_data(self, track_data: Dict[str, Any]) -> Optional[BandcampTrack]:
-        """Parse track data"""
+        """
+Parse track data"""
         try:
             release_date = datetime.fromisoformat(track_data.get('release_date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             

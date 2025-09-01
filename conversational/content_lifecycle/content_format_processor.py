@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
+    """
+Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -52,6 +55,7 @@ class ContentFormat(Enum):
 
 class ProcessingStage(Enum):
     """Content processing stages"""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     FORMAT_DETECTION = "format_detection"
@@ -68,6 +72,7 @@ class ProcessingStage(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -92,7 +97,8 @@ class ContentFile:
 
 @dataclass
 class ProcessingResult:
-    """Content processing result"""
+    """
+Content processing result"""
     result_id: str
     content_id: str
     processing_stage: ProcessingStage
@@ -107,7 +113,8 @@ class ProcessingResult:
 
 @dataclass
 class EnhancementProfile:
-    """Content enhancement profile"""
+    """
+Content enhancement profile"""
     profile_id: str
     content_format: ContentFormat
     target_quality: float
@@ -138,7 +145,8 @@ class ContentFormatProcessor:
         self.quality_thresholds = self._initialize_quality_thresholds()
         
     def _initialize_quality_thresholds(self) -> Dict[ContentFormat, float]:
-        """Initialize quality thresholds for each content format"""
+        """
+Initialize quality thresholds for each content format"""
         return {
             ContentFormat.AUDIO: 0.85,
             ContentFormat.VIDEO: 0.80,
@@ -427,7 +435,8 @@ class ContentFormatProcessor:
         return extractors.get(content_format, self.text_processor)
     
     async def _analyze_content_quality(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Analyze content quality using AI-powered assessment"""
+        """
+Analyze content quality using AI-powered assessment"""
         try:
             quality_analyzer = self._get_metadata_extractor(content_file.content_format)
             quality_result = await quality_analyzer.analyze_quality(content_file.file_path)
@@ -660,7 +669,8 @@ class ContentFormatProcessor:
         pass
     
     def _get_default_enhancement_profile(self, content_format: ContentFormat) -> EnhancementProfile:
-        """Get default enhancement profile for content format"""
+        """
+Get default enhancement profile for content format"""
         return EnhancementProfile(
             profile_id="default",
             content_format=content_format,

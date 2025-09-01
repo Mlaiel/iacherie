@@ -14,6 +14,7 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 from typing import Dict, Any, List, Optional, Set, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,9 @@ from decimal import Decimal
 
 
 class LicenseType(str, Enum):
-    """Types of content licenses."""
+    """
+Types of content licenses."""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
@@ -35,6 +38,7 @@ class LicenseType(str, Enum):
 
 class UsageType(str, Enum):
     """Types of content usage."""
+
     COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     EDUCATIONAL = "educational"
@@ -49,6 +53,7 @@ class UsageType(str, Enum):
 
 class LicenseStatus(str, Enum):
     """Status of license agreements."""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -61,6 +66,7 @@ class LicenseStatus(str, Enum):
 
 class PricingModel(str, Enum):
     """Pricing models for licenses."""
+
     FLAT_FEE = "flat_fee"
     ROYALTY_PERCENTAGE = "royalty_percentage"
     REVENUE_SHARE = "revenue_share"
@@ -72,6 +78,7 @@ class PricingModel(str, Enum):
 
 class Territory(str, Enum):
     """Territorial coverage for licenses."""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -103,7 +110,8 @@ class LicenseTerms:
 
 @dataclass
 class PricingStructure:
-    """Pricing structure for licenses."""
+    """
+Pricing structure for licenses."""
     pricing_model: PricingModel
     base_price: Decimal = Decimal('0.00')
     currency: str = "USD"
@@ -239,7 +247,8 @@ class LicensingConfig:
         self._load_from_environment()
     
     def _initialize_license_templates(self) -> None:
-        """Initialize default license templates."""
+        """
+Initialize default license templates."""
         # Standard non-exclusive license
         self.license_templates["standard_non_exclusive"] = {
             "license_type": LicenseType.NON_EXCLUSIVE,

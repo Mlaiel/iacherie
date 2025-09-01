@@ -6,6 +6,7 @@ and use cases in the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from .manager import CacheConfig, CachePriority
 from .storage import StorageLevel, CompressionType
 

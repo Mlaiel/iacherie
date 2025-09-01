@@ -4,8 +4,9 @@ Advanced key detection engine for identifying musical key signatures,
 mode analysis, and tonal characteristics of audio signals.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, Optional
@@ -13,7 +14,8 @@ import librosa
 
 
 class KeyDetector:
-    """Professional musical key detection engine"""
+    """
+Professional musical key detection engine"""
     
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)

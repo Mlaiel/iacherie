@@ -4,10 +4,11 @@ Enterprise-grade business intelligence and KPI tracking for IA Influencer Agent 
 Tracks revenue, user engagement, creator success, and platform growth metrics.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Revenue generation sources"""
+    """
+Revenue generation sources"""
+
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_MATCHING = "collaboration_matching"
     PREMIUM_FEATURES = "premium_features"
@@ -46,6 +49,7 @@ class RevenueSource(Enum):
 
 class UserTier(Enum):
     """User subscription tiers"""
+
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -55,6 +59,7 @@ class UserTier(Enum):
 
 class EngagementType(Enum):
     """Types of user engagement"""
+
     CONTENT_UPLOAD = "content_upload"
     CONTENT_SHARE = "content_share"
     COLLABORATION_REQUEST = "collaboration_request"
@@ -84,7 +89,8 @@ class RevenueMetrics:
 
 @dataclass
 class UserEngagementMetrics:
-    """User engagement and activity metrics"""
+    """
+User engagement and activity metrics"""
     user_id: str
     engagement_type: EngagementType
     session_id: str
@@ -99,7 +105,8 @@ class UserEngagementMetrics:
 
 @dataclass
 class CreatorSuccessMetrics:
-    """Creator success and growth metrics"""
+    """
+Creator success and growth metrics"""
     user_id: str
     content_uploads: int
     successful_protections: int
@@ -117,7 +124,8 @@ class CreatorSuccessMetrics:
 
 @dataclass
 class PlatformGrowthMetrics:
-    """Platform growth and health metrics"""
+    """
+Platform growth and health metrics"""
     new_users: int
     active_users: int
     retained_users: int
@@ -712,7 +720,8 @@ class BusinessMetricsCollector:
         return min(score, 100.0)  # Cap at 100
         
     def _determine_creator_tier(self, metrics: CreatorSuccessMetrics) -> UserTier:
-        """Determine creator tier based on success metrics"""
+        """
+Determine creator tier based on success metrics"""
         if metrics.success_score >= 80 and metrics.total_revenue >= 1000:
             return UserTier.ENTERPRISE
         elif metrics.success_score >= 60 and metrics.total_revenue >= 500:
@@ -725,7 +734,8 @@ class BusinessMetricsCollector:
             return UserTier.FREE
             
     async def _update_creator_rankings(self) -> None:
-        """Update creator rankings based on success scores"""
+        """
+Update creator rankings based on success scores"""
         rankings = [
             (user_id, metrics.success_score)
             for user_id, metrics in self.creator_metrics.items()
@@ -741,7 +751,8 @@ class BusinessMetricsCollector:
         self.creator_rankings = rankings[:100]  # Keep top 100
         
     async def _calculate_platform_health_score(self) -> float:
-        """Calculate overall platform health score"""
+        """
+Calculate overall platform health score"""
         health_factors = []
         
         # Revenue growth (25% weight)
@@ -772,7 +783,8 @@ class BusinessMetricsCollector:
         return sum(health_factors) if health_factors else 0.0
         
     async def _calculate_revenue_analytics(self) -> Dict[str, Any]:
-        """Calculate comprehensive revenue analytics"""
+        """
+Calculate comprehensive revenue analytics"""
         total_revenue = sum(self.revenue_by_source.values())
         
         return {

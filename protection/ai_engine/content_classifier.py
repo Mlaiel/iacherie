@@ -10,8 +10,9 @@ Advanced multi-modal content classification using state-of-the-art AI models:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + ML Engineer + Audio Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import torch
 import numpy as np
@@ -415,63 +416,75 @@ class ContentClassifierEngine:
         pass
     
     async def _analyze_image_safety(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze image for safety concerns"""
+        """
+Analyze image for safety concerns"""
         # Implementation for image safety analysis
         return {'risk_level': 'low', 'confidence': 0.8}
     
     async def _assess_image_quality(self, image: Image.Image) -> Dict[str, Any]:
-        """Assess image quality metrics"""
+        """
+Assess image quality metrics"""
         # Implementation for image quality assessment
         return {'quality_level': 'high', 'confidence': 0.9}
     
     def _aggregate_frame_classifications(self, frame_classifications: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Aggregate classifications from multiple video frames"""
+        """
+Aggregate classifications from multiple video frames"""
         # Implementation for aggregating frame classifications
         return {}
     
     async def _extract_and_classify_audio(self, video_path: str) -> Dict[str, Any]:
-        """Extract audio from video and classify"""
+        """
+Extract audio from video and classify"""
         # Implementation for video audio extraction and classification
         return {'content_type': 'unknown', 'confidence': 0.0}
     
     def _calculate_visual_risk(self, classifications: Dict[str, Any]) -> str:
-        """Calculate visual risk level from classifications"""
+        """
+Calculate visual risk level from classifications"""
         # Implementation for visual risk calculation
         return 'low'
     
     async def _analyze_audio_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze audio features"""
+        """
+Analyze audio features"""
         # Implementation for audio feature analysis
         return {'classification_confidence': 0.8, 'quality_risk': 'low', 'copyright_risk': 'low', 'channels': 1}
     
     async def _classify_audio_type(self, audio: np.ndarray, sr: int) -> str:
-        """Classify audio as music, speech, etc."""
+        """
+Classify audio as music, speech, etc."""
         # Implementation for audio type classification
         return 'music'
     
     async def _analyze_sentiment(self, text: str) -> str:
-        """Analyze text sentiment"""
+        """
+Analyze text sentiment"""
         # Implementation for sentiment analysis
         return 'neutral'
     
     def _map_category_scores(self, scores: np.ndarray) -> str:
-        """Map category scores to category names"""
+        """
+Map category scores to category names"""
         # Implementation for category mapping
         return 'general'
     
     def _assess_content_risk(self, scores: np.ndarray) -> str:
-        """Assess content risk from category scores"""
+        """
+Assess content risk from category scores"""
         # Implementation for content risk assessment
         return 'low'
     
     def _calculate_text_risk(self, toxicity: float, category_scores: np.ndarray) -> str:
-        """Calculate overall text risk"""
+        """
+Calculate overall text risk"""
         if toxicity > 0.7:
             return 'high'
         return 'low'
     
     def _calculate_overall_risk(self, classification_result: Dict[str, Any]) -> str:
-        """Calculate overall risk assessment"""
+        """
+Calculate overall risk assessment"""
         risk_factors = classification_result.get('risk_factors', {})
         high_risks = sum(1 for risk in risk_factors.values() if risk == 'high')
         
@@ -483,7 +496,8 @@ class ContentClassifierEngine:
             return 'low'
     
     async def _classify_unknown(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle unknown content types"""
+        """
+Handle unknown content types"""
         return {
             'classifications': {'unknown_type': True},
             'confidence_scores': {'overall': 0.0},

@@ -17,7 +17,9 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+
+import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -29,6 +31,7 @@ logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
     """Types of collaboration"""
+
     MUSIC_PRODUCTION = "music_production"
     SONGWRITING = "songwriting"
     MIXING_MASTERING = "mixing_mastering"
@@ -43,6 +46,7 @@ class CollaborationType(Enum):
 
 class SkillLevel(Enum):
     """Skill levels for matching"""
+
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -52,6 +56,7 @@ class SkillLevel(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration project status"""
+
     IDEA = "idea"
     PLANNING = "planning"
     ACTIVE = "active"
@@ -63,6 +68,7 @@ class CollaborationStatus(Enum):
 
 class MatchingCriteria(Enum):
     """Criteria for collaborative matching"""
+
     MUSICAL_STYLE = "musical_style"
     SKILL_LEVEL = "skill_level"
     EXPERIENCE_LEVEL = "experience_level"
@@ -77,6 +83,7 @@ class MatchingCriteria(Enum):
 
 class CommunicationChannel(Enum):
     """Communication channels for collaboration"""
+
     IN_APP_CHAT = "in_app_chat"
     VIDEO_CALL = "video_call"
     VOICE_CALL = "voice_call"

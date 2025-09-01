@@ -7,6 +7,7 @@ and intelligent workflow management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ from .deployment_recorder import DeploymentRecorder
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
+    """
+Pipeline execution status"""
+
     PENDING = "pending"
     INITIALIZING = "initializing"
     RUNNING = "running"
@@ -44,6 +47,7 @@ class PipelineStatus(Enum):
 
 class StageStatus(Enum):
     """Pipeline stage status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -54,6 +58,7 @@ class StageStatus(Enum):
 
 class ExecutionMode(Enum):
     """Pipeline execution modes"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -62,6 +67,7 @@ class ExecutionMode(Enum):
 
 class StageType(Enum):
     """Types of pipeline stages"""
+
     PREPARATION = "preparation"
     PROVISIONING = "provisioning"
     CONFIGURATION = "configuration"
@@ -110,7 +116,8 @@ class PipelineStage:
 
 @dataclass
 class PipelineDefinition:
-    """Complete pipeline definition"""
+    """
+Complete pipeline definition"""
     pipeline_id: str
     pipeline_name: str
     version: str
@@ -230,7 +237,8 @@ class PipelineExecutor(BaseComponent):
         asyncio.create_task(self._approval_timeout_monitor())
 
     def _initialize_default_pipelines(self) -> None:
-        """Initialize default deployment pipelines for IA Influencer Agent"""
+        """
+Initialize default deployment pipelines for IA Influencer Agent"""
         
         # Standard Deployment Pipeline
         standard_pipeline = PipelineDefinition(
@@ -970,7 +978,8 @@ class PipelineExecutor(BaseComponent):
         execution: PipelineExecution,
         stages: Dict[str, PipelineStage]
     ) -> None:
-        """Execute stages in parallel where possible"""
+        """
+Execute stages in parallel where possible"""
         
         completed_stages = set()
         failed_stages = set()
@@ -1026,12 +1035,14 @@ class PipelineExecutor(BaseComponent):
                             return
 
     async def _execute_stage_parallel(self, stage: PipelineStage, execution: PipelineExecution) -> None:
-        """Execute a single stage (for parallel execution)"""
+        """
+Execute a single stage (for parallel execution)"""
         
         await self._execute_stage(stage, execution)
 
     async def _execute_stage(self, stage: PipelineStage, execution: PipelineExecution) -> bool:
-        """Execute a single pipeline stage"""
+        """
+Execute a single pipeline stage"""
         
         stage.status = StageStatus.RUNNING
         stage.started_at = datetime.utcnow()
@@ -1164,7 +1175,8 @@ class PipelineExecutor(BaseComponent):
         }
 
     async def _handle_provisioning_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle environment provisioning stage"""
+        """
+Handle environment provisioning stage"""
         
         execution = context['execution']
         stage = context['stage']
@@ -1179,7 +1191,8 @@ class PipelineExecutor(BaseComponent):
         return provisioning_result
 
     async def _handle_configuration_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle configuration management stage"""
+        """
+Handle configuration management stage"""
         
         execution = context['execution']
         stage = context['stage']
@@ -1194,7 +1207,8 @@ class PipelineExecutor(BaseComponent):
         return config_result
 
     async def _handle_deployment_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle service deployment stage"""
+        """
+Handle service deployment stage"""
         
         execution = context['execution']
         stage = context['stage']
@@ -1209,7 +1223,8 @@ class PipelineExecutor(BaseComponent):
         return deployment_result
 
     async def _handle_validation_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle health validation stage"""
+        """
+Handle health validation stage"""
         
         execution = context['execution']
         stage = context['stage']
@@ -1224,7 +1239,8 @@ class PipelineExecutor(BaseComponent):
         return validation_result
 
     async def _handle_notification_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle notification stage"""
+        """
+Handle notification stage"""
         
         execution = context['execution']
         stage = context['stage']
@@ -1263,7 +1279,8 @@ class PipelineExecutor(BaseComponent):
         return {'status': 'cleanup_completed', 'resources_cleaned': len(cleanup_tasks)}
 
     async def _handle_custom_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle custom stage with specific handler"""
+        """
+Handle custom stage with specific handler"""
         
         stage = context['stage']
         handler_name = stage.handler
@@ -1356,7 +1373,8 @@ class PipelineExecutor(BaseComponent):
         return False
 
     async def _evaluate_condition(self, condition: Dict[str, Any], execution: PipelineExecution) -> bool:
-        """Evaluate a condition"""
+        """
+Evaluate a condition"""
         
         condition_type = condition.get('type')
         
@@ -1373,7 +1391,8 @@ class PipelineExecutor(BaseComponent):
         return False
 
     def _build_execution_order(self, stages: Dict[str, PipelineStage]) -> List[str]:
-        """Build stage execution order based on dependencies"""
+        """
+Build stage execution order based on dependencies"""
         
         ordered_stages = []
         processed = set()
@@ -1399,7 +1418,8 @@ class PipelineExecutor(BaseComponent):
         return ordered_stages
 
     async def _handle_pipeline_failure(self, execution: PipelineExecution, error_message: str) -> None:
-        """Handle pipeline execution failure"""
+        """
+Handle pipeline execution failure"""
         
         execution.status = PipelineStatus.FAILED
         execution.error_message = error_message
@@ -1481,7 +1501,8 @@ class PipelineExecutor(BaseComponent):
             return DeploymentStrategy.ROLLING_UPDATE
 
     def _create_execution_summary(self, execution: PipelineExecution) -> Dict[str, Any]:
-        """Create execution summary for recording"""
+        """
+Create execution summary for recording"""
         
         return {
             'execution_id': execution.execution_id,
@@ -1496,7 +1517,8 @@ class PipelineExecutor(BaseComponent):
         }
 
     async def _pipeline_monitor(self) -> None:
-        """Monitor active pipeline executions"""
+        """
+Monitor active pipeline executions"""
         
         while True:
             try:
@@ -1641,7 +1663,8 @@ class PipelineExecutor(BaseComponent):
         }
 
     async def list_active_pipelines(self) -> List[Dict[str, Any]]:
-        """List all active pipeline executions"""
+        """
+List all active pipeline executions"""
         
         return [
             {
@@ -1656,7 +1679,8 @@ class PipelineExecutor(BaseComponent):
         ]
 
     async def get_pipeline_definitions(self) -> List[Dict[str, Any]]:
-        """Get all available pipeline definitions"""
+        """
+Get all available pipeline definitions"""
         
         return [
             {

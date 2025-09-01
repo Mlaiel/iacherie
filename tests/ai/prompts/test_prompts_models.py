@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Prompts Models Tests
+"""
+Advanced Prompts Models Tests
 Ultra-professional test suite for Prompts Models system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -23,6 +25,7 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 import pytest
 import sys
 import os
@@ -41,11 +44,13 @@ from ai.prompts.prompts_models import (
 
 
 class TestPromptsModels:
-    """Ultra-comprehensive test suite for Prompts Models"""
+    """
+Ultra-comprehensive test suite for Prompts Models"""
     
     @pytest.fixture
     def sample_prompt_context(self):
-        """Create sample prompt context for testing"""
+        """
+Create sample prompt context for testing"""
         return PromptContext(
             user_id="user_12345",
             creator_type="musician",
@@ -405,7 +410,8 @@ class TestPromptsModels:
         assert sample_generated_prompt.updated_at > original_updated_at
     
     def test_generated_prompt_partial_quality_update(self, sample_generated_prompt):
-        """Test updating quality scores with partial data"""
+        """
+Test updating quality scores with partial data"""
         partial_scores = {
             'overall': 88.5,
             'readability': 92.3
@@ -420,7 +426,8 @@ class TestPromptsModels:
         assert sample_generated_prompt.creativity_score == 0.0  # Should default to 0.0
     
     def test_generated_prompt_to_dict(self, sample_generated_prompt, sample_prompt_context):
-        """Test GeneratedPrompt to_dict conversion"""
+        """
+Test GeneratedPrompt to_dict conversion"""
         prompt_dict = sample_generated_prompt.to_dict()
         
         assert isinstance(prompt_dict, dict)

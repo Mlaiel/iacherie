@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 async def demonstrate_complete_observability_suite():
-    """Demonstrate complete observability suite capabilities"""
+    """
+Demonstrate complete observability suite capabilities"""
     
     print("🚀 IA Influencer Agent - Enterprise Observability Suite Demo")
     print("=" * 70)

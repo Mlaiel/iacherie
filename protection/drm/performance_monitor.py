@@ -5,7 +5,7 @@ Comprehensive performance monitoring, alerting, and optimization system for DRM
 with real-time metrics, predictive analytics, and automated performance tuning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -23,6 +23,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ import traceback
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Types of performance metrics."""
+    """
+Types of performance metrics."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -51,6 +54,7 @@ class MetricType(str, Enum):
 
 class AlertSeverity(str, Enum):
     """Alert severity levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -58,6 +62,7 @@ class AlertSeverity(str, Enum):
 
 class SystemComponent(str, Enum):
     """System components being monitored."""
+
     DRM_ENGINE = "drm_engine"
     LICENSE_ENGINE = "license_engine"
     ACCESS_CONTROL = "access_control"
@@ -82,7 +87,8 @@ class Metric:
 
 @dataclass
 class Alert:
-    """Performance alert."""
+    """
+Performance alert."""
     alert_id: str
     component: SystemComponent
     metric_name: str
@@ -98,7 +104,8 @@ class Alert:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance monitoring threshold."""
+    """
+Performance monitoring threshold."""
     metric_name: str
     component: SystemComponent
     min_value: Optional[Union[int, float]] = None
@@ -110,7 +117,8 @@ class PerformanceThreshold:
 
 @dataclass
 class SystemHealth:
-    """Overall system health status."""
+    """
+Overall system health status."""
     timestamp: datetime
     overall_status: str  # healthy, degraded, critical
     component_statuses: Dict[SystemComponent, str]
@@ -123,7 +131,8 @@ class SystemHealth:
     resource_utilization: Dict[str, float]
 
 class PerformanceCollector:
-    """Collects performance metrics from various sources."""
+    """
+Collects performance metrics from various sources."""
     
     def __init__(self):
         self.collection_interval = 30  # seconds
@@ -132,7 +141,8 @@ class PerformanceCollector:
         self._collector_thread: Optional[threading.Thread] = None
 
     async def start_collection(self, monitor: 'PerformanceMonitor') -> None:
-        """Start background metric collection."""
+        """
+Start background metric collection."""
         self.running = True
         self._stop_event.clear()
         self._collector_thread = threading.Thread(
@@ -191,12 +201,14 @@ class PerformanceCollector:
         pass
 
     def _collect_custom_metrics(self, monitor: 'PerformanceMonitor') -> None:
-        """Collect custom business metrics."""
+        """
+Collect custom business metrics."""
         # Placeholder for custom metric collection
         pass
 
     def stop(self) -> None:
-        """Stop metric collection."""
+        """
+Stop metric collection."""
         self.running = False
         self._stop_event.set()
         if self._collector_thread:
@@ -217,11 +229,13 @@ class AlertManager:
         self.cooldown_periods: Dict[str, datetime] = {}
 
     def add_notification_handler(self, handler: Callable[[Alert], None]) -> None:
-        """Add alert notification handler."""
+        """
+Add alert notification handler."""
         self.notification_handlers.append(handler)
 
     async def process_alert(self, alert: Alert) -> None:
-        """Process and potentially send an alert."""
+        """
+Process and potentially send an alert."""
         # Check suppression rules
         if self._is_suppressed(alert):
             logger.debug(f"Alert {alert.alert_id} suppressed")
@@ -259,7 +273,8 @@ class AlertManager:
             handler(alert)
 
     def _is_suppressed(self, alert: Alert) -> bool:
-        """Check if alert should be suppressed."""
+        """
+Check if alert should be suppressed."""
         suppression_key = f"{alert.component}_{alert.metric_name}"
         if suppression_key not in self.suppression_rules:
             return False
@@ -294,7 +309,8 @@ class AlertManager:
             return base_duration // 4
 
     async def acknowledge_alert(self, alert_id: str, user: str) -> bool:
-        """Acknowledge an alert."""
+        """
+Acknowledge an alert."""
         if alert_id not in self.active_alerts:
             return False
         
@@ -350,7 +366,8 @@ class PerformanceMonitor:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Performance Monitor."""
+        """
+Initialize the Performance Monitor."""
         self.config = config
         self._initialized = False
         
@@ -466,7 +483,8 @@ class PerformanceMonitor:
             self.alert_manager.add_notification_handler(self._send_webhook_notification)
 
     async def _start_monitoring_tasks(self) -> None:
-        """Start background monitoring tasks."""
+        """
+Start background monitoring tasks."""
         # Threshold evaluation task
         asyncio.create_task(self._threshold_evaluation_loop())
         
@@ -490,7 +508,8 @@ class PerformanceMonitor:
         labels: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record a performance metric."""
+        """
+Record a performance metric."""
         if not self._initialized:
             return
         
@@ -719,7 +738,8 @@ class PerformanceMonitor:
             del self.cached_reports[key]
 
     def add_threshold(self, threshold: PerformanceThreshold) -> None:
-        """Add a performance threshold."""
+        """
+Add a performance threshold."""
         threshold_key = f"{threshold.component}_{threshold.metric_name}"
         self.thresholds[threshold_key] = threshold
         logger.info(f"Added threshold for {threshold_key}")
@@ -883,13 +903,15 @@ class PerformanceMonitor:
         return 0.1  # 0.1% error rate
 
     async def _calculate_throughput(self) -> float:
-        """Calculate current throughput (requests/second)."""
+        """
+Calculate current throughput (requests/second)."""
         # Placeholder calculation
         # In production, this would calculate actual throughput
         return 1000.0  # 1000 requests/second
 
     async def _get_resource_utilization(self) -> Dict[str, float]:
-        """Get current resource utilization."""
+        """
+Get current resource utilization."""
         utilization = {}
         
         # CPU utilization

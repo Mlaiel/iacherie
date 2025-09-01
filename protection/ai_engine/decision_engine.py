@@ -10,8 +10,9 @@ Advanced AI decision-making system for content protection:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Security Engineer + Legal Tech
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import numpy as np
 from typing import Dict, Any, List, Optional, Tuple
@@ -24,7 +25,9 @@ import asyncio
 logger = logging.getLogger(__name__)
 
 class DecisionType(Enum):
-    """Types of decisions the engine can make"""
+    """
+Types of decisions the engine can make"""
+
     ALLOW = "allow"
     BLOCK = "block"
     MONITOR = "monitor"
@@ -36,6 +39,7 @@ class DecisionType(Enum):
 
 class DecisionConfidence(Enum):
     """Confidence levels for decisions"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -568,7 +572,8 @@ class DecisionEngine:
     
     def _calculate_business_impact_score(self, analysis_data: Dict[str, Any], 
                                        decision_context: DecisionContext) -> float:
-        """Calculate business impact score"""
+        """
+Calculate business impact score"""
         popularity_score = analysis_data.get('predictions', {}).get('content_popularity', {}).get('popularity_score', 0.0)
         revenue_impact = min(1.0, analysis_data.get('predictions', {}).get('revenue_impact', {}).get('impact_amount', 0.0) / 10000)
         
@@ -579,7 +584,8 @@ class DecisionEngine:
         return np.mean([popularity_score, revenue_impact, business_impact_weight])
     
     def _calculate_technical_confidence_score(self, analysis_data: Dict[str, Any]) -> float:
-        """Calculate technical confidence score"""
+        """
+Calculate technical confidence score"""
         classification_confidence = analysis_data.get('classification', {}).get('confidence_scores', {}).get('overall_confidence', 0.0)
         threat_confidence = np.mean([t.get('confidence', 0.0) for t in analysis_data.get('threats', [])]) if analysis_data.get('threats') else 0.5
         pattern_confidence = analysis_data.get('patterns', {}).get('confidence_scores', {}).get('overall_confidence', 0.0)
@@ -588,24 +594,28 @@ class DecisionEngine:
     
     def _calculate_user_reputation_score(self, analysis_data: Dict[str, Any], 
                                        decision_context: DecisionContext) -> float:
-        """Calculate user reputation score"""
+        """
+Calculate user reputation score"""
         return analysis_data.get('user_data', {}).get('reputation_score', 0.5)
     
     def _calculate_content_value_score(self, analysis_data: Dict[str, Any], 
                                      decision_context: DecisionContext) -> float:
-        """Calculate content value score"""
+        """
+Calculate content value score"""
         quality_score = analysis_data.get('content_data', {}).get('quality_score', 0.5)
         uniqueness_score = 1.0 - analysis_data.get('classification', {}).get('classifications', {}).get('copyright_risk', 0.0)
         
         return np.mean([quality_score, uniqueness_score])
     
     def _threat_severity_to_score(self, severity: str) -> float:
-        """Convert threat severity to numeric score"""
+        """
+Convert threat severity to numeric score"""
         mapping = {'low': 0.2, 'medium': 0.4, 'high': 0.7, 'critical': 1.0}
         return mapping.get(severity, 0.2)
     
     def _apply_policy_rules(self, current_action: DecisionType, analysis_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply policy rules to adjust decisions"""
+        """
+Apply policy rules to adjust decisions"""
         result = {
             'action_changed': False,
             'new_action': current_action,
@@ -653,7 +663,8 @@ class DecisionEngine:
             return False
     
     def _requires_human_review(self, decision_result: Dict[str, Any], analysis_data: Dict[str, Any]) -> bool:
-        """Determine if human review is required"""
+        """
+Determine if human review is required"""
         confidence = decision_result.get('confidence', 0.0)
         decision_action = decision_result.get('decision')
         
@@ -672,7 +683,8 @@ class DecisionEngine:
         return False
     
     def _requires_legal_consultation(self, decision_result: Dict[str, Any], analysis_data: Dict[str, Any]) -> bool:
-        """Determine if legal consultation is required"""
+        """
+Determine if legal consultation is required"""
         legal_risk = decision_result.get('decision_scores', {}).get('legal_risk', 0.0)
         decision_action = decision_result.get('decision')
         
@@ -688,7 +700,8 @@ class DecisionEngine:
     
     # Additional helper methods for audit, compliance, and updates
     def _generate_decision_id(self) -> str:
-        """Generate unique decision ID"""
+        """
+Generate unique decision ID"""
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         import uuid
         return f"DEC_{timestamp}_{str(uuid.uuid4())[:8]}"
@@ -703,7 +716,8 @@ class DecisionEngine:
         }
     
     async def _create_audit_entry(self, decision_result: Dict[str, Any], analysis_data: Dict[str, Any]):
-        """Create audit trail entry"""
+        """
+Create audit trail entry"""
         audit_entry = {
             'decision_id': decision_result['decision_id'],
             'timestamp': decision_result['timestamp'],
@@ -723,7 +737,8 @@ class DecisionEngine:
             self.audit_trail = self.audit_trail[-max_audit_entries:]
     
     async def _update_decision_history(self, decision_result: Dict[str, Any]):
-        """Update decision history for learning"""
+        """
+Update decision history for learning"""
         history_entry = {
             'timestamp': datetime.utcnow(),
             'decision_id': decision_result['decision_id'],
@@ -740,39 +755,46 @@ class DecisionEngine:
             self.decision_history = self.decision_history[-max_history:]
     
     def _hash_analysis_data(self, analysis_data: Dict[str, Any]) -> str:
-        """Create hash of analysis data for audit purposes"""
+        """
+Create hash of analysis data for audit purposes"""
         import hashlib
         data_str = json.dumps(analysis_data, sort_keys=True, default=str)
         return hashlib.sha256(data_str.encode()).hexdigest()[:16]
     
     # Compliance check methods
     def _check_gdpr_compliance(self, decision_result: Dict[str, Any], analysis_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check GDPR compliance"""
+        """
+Check GDPR compliance"""
         # Simplified GDPR compliance check
         return {'compliant': True, 'issues': []}
     
     def _check_dmca_compliance(self, decision_result: Dict[str, Any], analysis_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check DMCA compliance"""
+        """
+Check DMCA compliance"""
         # Simplified DMCA compliance check
         return {'compliant': True, 'issues': []}
     
     def _check_internal_policies(self, decision_result: Dict[str, Any], analysis_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check internal policy compliance"""
+        """
+Check internal policy compliance"""
         # Simplified internal policy check
         return {'compliant': True, 'violations': []}
     
     # Model update methods
     def _update_decision_weights(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update decision weights based on feedback"""
+        """
+Update decision weights based on feedback"""
         # Placeholder implementation
         return {'weights_updated': len(self.decision_weights)}
     
     def _update_decision_thresholds(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update decision thresholds based on feedback"""
+        """
+Update decision thresholds based on feedback"""
         # Placeholder implementation
         return {'thresholds_updated': len(self.decision_thresholds)}
     
     def _update_escalation_rules(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update escalation rules based on feedback"""
+        """
+Update escalation rules based on feedback"""
         # Placeholder implementation
         return {'rules_updated': len(self.escalation_rules)}

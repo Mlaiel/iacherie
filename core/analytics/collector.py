@@ -4,7 +4,7 @@ Enterprise-grade metrics collection framework for multi-format content creators
 with real-time monitoring, business intelligence, and performance analytics.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -23,6 +23,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Callable
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics that can be collected"""
+    """
+Types of metrics that can be collected"""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -54,6 +57,7 @@ class MetricType(Enum):
 
 class MetricScope(Enum):
     """Scope of metric collection"""
+
     USER = "user"
     CONTENT = "content"
     SYSTEM = "system"
@@ -64,6 +68,7 @@ class MetricScope(Enum):
 
 class AggregationMethod(Enum):
     """Aggregation methods for metrics"""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -86,7 +91,8 @@ class MetricPoint:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric point to dictionary"""
+        """
+Convert metric point to dictionary"""
         return {
             'name': self.name,
             'value': self.value,
@@ -100,7 +106,8 @@ class MetricPoint:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result"""
+    """
+Aggregated metric result"""
     name: str
     aggregation_method: AggregationMethod
     value: Union[int, float]
@@ -110,7 +117,8 @@ class AggregatedMetric:
     tags: Dict[str, str] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert aggregated metric to dictionary"""
+        """
+Convert aggregated metric to dictionary"""
         return {
             'name': self.name,
             'aggregation_method': self.aggregation_method.value,
@@ -156,7 +164,8 @@ class MetricsCollector:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def initialize(self) -> None:
-        """Initialize the metrics collector"""
+        """
+Initialize the metrics collector"""
         try:
             self.logger.info("Initializing MetricsCollector...")
             
@@ -430,7 +439,8 @@ class MetricsCollector:
         values: List[Union[int, float]],
         method: AggregationMethod
     ) -> Union[int, float]:
-        """Calculate aggregated value"""
+        """
+Calculate aggregated value"""
         if not values:
             return 0
         
@@ -691,16 +701,19 @@ class BusinessMetricsCollector(MetricsCollector):
         return {'total_revenue': 0, 'revenue_sources': {}}
     
     async def _get_engagement_summary(self) -> Dict[str, Any]:
-        """Get engagement metrics summary"""
+        """
+Get engagement metrics summary"""
         # Implementation for engagement summary
         return {'avg_engagement': 0, 'engagement_trends': {}}
     
     async def _get_content_summary(self) -> Dict[str, Any]:
-        """Get content metrics summary"""
+        """
+Get content metrics summary"""
         # Implementation for content summary
         return {'total_content': 0, 'performance_trends': {}}
     
     async def _get_platform_summary(self) -> Dict[str, Any]:
-        """Get platform metrics summary"""
+        """
+Get platform metrics summary"""
         # Implementation for platform summary
         return {'uptime': 0, 'active_users': 0}

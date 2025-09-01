@@ -6,6 +6,7 @@ pseudonymization, and privacy-preserving data processing for the IA Influencer A
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class DataClassification(Enum):
-    """Data classification levels for protection."""
+    """
+Data classification levels for protection."""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -35,6 +38,7 @@ class DataClassification(Enum):
 
 class ProtectionMethod(Enum):
     """Data protection methods available."""
+
     ENCRYPTION = "encryption"
     PSEUDONYMIZATION = "pseudonymization"
     ANONYMIZATION = "anonymization"
@@ -46,6 +50,7 @@ class ProtectionMethod(Enum):
 
 class ProcessingPurpose(Enum):
     """Lawful purposes for data processing."""
+
     CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
@@ -56,6 +61,7 @@ class ProcessingPurpose(Enum):
 
 class DataSubjectRight(Enum):
     """Data subject rights under GDPR."""
+
     ACCESS = "access"  # Article 15
     RECTIFICATION = "rectification"  # Article 16
     ERASURE = "erasure"  # Article 17
@@ -86,7 +92,8 @@ class DataProcessingRecord:
 
 @dataclass
 class ProtectionConfiguration:
-    """Configuration for data protection methods."""
+    """
+Configuration for data protection methods."""
     classification: DataClassification
     methods: List[ProtectionMethod]
     encryption_algorithm: str
@@ -99,7 +106,8 @@ class ProtectionConfiguration:
 
 @dataclass
 class DataInventoryItem:
-    """Item in data inventory for DPIA."""
+    """
+Item in data inventory for DPIA."""
     item_id: str
     data_type: str
     source: str
@@ -768,7 +776,8 @@ class DataProtectionManager:
         dataset: List[Dict[str, Any]], 
         quasi_identifiers: List[str]
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """Group dataset records by quasi-identifier combinations."""
+        """
+Group dataset records by quasi-identifier combinations."""
         groups = {}
         
         for record in dataset:
@@ -808,7 +817,8 @@ class DataProtectionManager:
         return generalized_records
     
     def _generalize_value(self, value: Any, field_name: str) -> str:
-        """Apply generalization to a specific value."""
+        """
+Apply generalization to a specific value."""
         # Simple generalization rules - would be more sophisticated in practice
         if isinstance(value, int):
             # Generalize numbers to ranges

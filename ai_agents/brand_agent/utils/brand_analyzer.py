@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -53,7 +54,9 @@ from ...utils.ml_models import BrandPredictionModel, TrendAnalyzer
 logger = logging.getLogger(__name__)
 
 class BrandMetricType(Enum):
-    """Types of brand metrics"""
+    """
+Types of brand metrics"""
+
     AWARENESS = "awareness"
     ENGAGEMENT = "engagement"
     SENTIMENT = "sentiment"
@@ -65,6 +68,7 @@ class BrandMetricType(Enum):
 
 class AnalysisTimeframe(Enum):
     """Analysis timeframe options"""
+
     HOURLY = "1h"
     DAILY = "1d" 
     WEEKLY = "1w"
@@ -74,6 +78,7 @@ class AnalysisTimeframe(Enum):
 
 class BrandMaturityLevel(Enum):
     """Brand maturity classification"""
+
     EMERGING = "emerging"
     DEVELOPING = "developing"
     ESTABLISHED = "established"
@@ -104,7 +109,8 @@ class BrandMetrics:
 
 @dataclass
 class CompetitiveAnalysis:
-    """Competitive landscape analysis"""
+    """
+Competitive landscape analysis"""
     brand_id: str
     competitor_landscape: List[Dict[str, Any]]
     market_position: int
@@ -117,7 +123,8 @@ class CompetitiveAnalysis:
 
 @dataclass
 class BrandValueAssessment:
-    """Comprehensive brand value assessment"""
+    """
+Comprehensive brand value assessment"""
     brand_id: str
     estimated_value: float
     value_components: Dict[str, float]
@@ -131,7 +138,8 @@ class BrandValueAssessment:
 
 @dataclass
 class BrandPerformanceReport:
-    """Comprehensive brand performance analysis report"""
+    """
+Comprehensive brand performance analysis report"""
     report_id: str
     brand_id: str
     executive_summary: Dict[str, Any]

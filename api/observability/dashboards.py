@@ -10,6 +10,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 import asyncio
 import json
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ import logging
 
 
 class DashboardType(Enum):
-    """Dashboard types for different observability views."""
+    """
+Dashboard types for different observability views."""
+
     METRICS = "metrics"
     HEALTH = "health"
     ALERTS = "alerts"
@@ -34,6 +37,7 @@ class DashboardType(Enum):
 
 class RefreshInterval(Enum):
     """Dashboard refresh intervals."""
+
     REAL_TIME = 1  # 1 second
     FAST = 5  # 5 seconds
     NORMAL = 30  # 30 seconds
@@ -42,7 +46,8 @@ class RefreshInterval(Enum):
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget definition."""
+    """
+Dashboard widget definition."""
     id: str
     title: str
     type: str  # chart, metric, table, status, etc.
@@ -54,7 +59,8 @@ class DashboardWidget:
     enabled: bool = True
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         data = asdict(self)
         data['refresh_interval'] = self.refresh_interval.value
         return data
@@ -62,7 +68,8 @@ class DashboardWidget:
 
 @dataclass
 class Dashboard:
-    """Dashboard configuration."""
+    """
+Dashboard configuration."""
     id: str
     name: str
     description: str
@@ -75,7 +82,8 @@ class Dashboard:
     public: bool = False
     
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         data = asdict(self)
         data['dashboard_type'] = self.dashboard_type.value
         data['widgets'] = [w.to_dict() for w in self.widgets]
@@ -85,7 +93,8 @@ class Dashboard:
 
 
 class MetricsDashboard:
-    """Real-time metrics dashboard for system and business metrics."""
+    """
+Real-time metrics dashboard for system and business metrics."""
     
     def __init__(self, metrics_collector, performance_monitor):
         self.metrics_collector = metrics_collector

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -73,7 +74,9 @@ settings = get_settings()
 
 
 class IdeationType(str, Enum):
-    """Types of creative ideas to generate"""
+    """
+Types of creative ideas to generate"""
+
     CONTENT_CONCEPT = "content_concept"
     STORY_IDEA = "story_idea"
     MARKETING_ANGLE = "marketing_angle"
@@ -90,6 +93,7 @@ class IdeationType(str, Enum):
 
 class CreativeMethod(str, Enum):
     """Creative thinking methods"""
+
     BRAINSTORMING = "brainstorming"
     MIND_MAPPING = "mind_mapping"
     SCAMPER = "scamper"  # Substitute, Combine, Adapt, Modify, Put to another use, Eliminate, Reverse
@@ -104,6 +108,7 @@ class CreativeMethod(str, Enum):
 
 class CreativeDirection(str, Enum):
     """Creative directions for idea development"""
+
     INNOVATIVE = "innovative"
     TRENDING = "trending"
     CONTROVERSIAL = "controversial"
@@ -137,7 +142,8 @@ class CreativePrompt:
 
 @dataclass
 class CreativeIdea:
-    """Structure for generated creative ideas"""
+    """
+Structure for generated creative ideas"""
     idea_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     description: str = ""
@@ -669,7 +675,8 @@ class CreativeAssistant:
         return self._parse_brainstorming_response(content, method)
 
     def _parse_scamper_response(self, content: str, technique: str) -> List[CreativeIdea]:
-        """Parse SCAMPER response into ideas"""
+        """
+Parse SCAMPER response into ideas"""
         ideas = []
         sections = content.split('\n\n')
         
@@ -719,7 +726,8 @@ class CreativeAssistant:
         return ideas
 
     def _parse_scenario_response(self, content: str, scenario: str) -> List[CreativeIdea]:
-        """Parse what-if scenario response"""
+        """
+Parse what-if scenario response"""
         ideas = self._parse_brainstorming_response(content, CreativeMethod.WHAT_IF_SCENARIOS)
         
         # Add scenario context
@@ -731,7 +739,8 @@ class CreativeAssistant:
         return ideas
 
     def _parse_trend_response(self, content: str, method: CreativeMethod) -> List[CreativeIdea]:
-        """Parse trend analysis response"""
+        """
+Parse trend analysis response"""
         ideas = self._parse_brainstorming_response(content, method)
         
         # Add trend context
@@ -742,7 +751,8 @@ class CreativeAssistant:
         return ideas
 
     async def _evaluate_and_rank_ideas(self, ideas: List[CreativeIdea], prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Evaluate and rank ideas based on multiple criteria"""
+        """
+Evaluate and rank ideas based on multiple criteria"""
         try:
             for idea in ideas:
                 # Calculate comprehensive score
@@ -859,7 +869,8 @@ class CreativeAssistant:
         return np.mean(feasibility_factors) if feasibility_factors else 0.6
 
     async def _assess_originality(self, description: str, all_ideas: List[CreativeIdea]) -> float:
-        """Assess originality by comparing with other ideas"""
+        """
+Assess originality by comparing with other ideas"""
         try:
             # Calculate similarity with other ideas
             descriptions = [idea.description for idea in all_ideas if idea.description != description]
@@ -910,13 +921,15 @@ class CreativeAssistant:
         return max(0.2, min(1.0, fit_score))
 
     async def _update_trends_if_needed(self):
-        """Update trend data if it's stale"""
+        """
+Update trend data if it's stale"""
         last_updated = self.trend_tracker.get('last_updated')
         if not last_updated or (datetime.now(timezone.utc) - last_updated).hours > 6:
             await self._fetch_current_trends()
 
     async def _fetch_current_trends(self):
-        """Fetch current trends from various sources"""
+        """
+Fetch current trends from various sources"""
         try:
             # Mock trend data - in production, this would fetch from real APIs
             mock_trends = {
@@ -1039,7 +1052,8 @@ class CreativeAssistant:
 
 
 class IdeaGenerator:
-    """Specialized idea generator for different content types"""
+    """
+Specialized idea generator for different content types"""
     
     def __init__(self):
         self.creative_assistant = CreativeAssistant()
@@ -1206,7 +1220,8 @@ class IdeaGenerator:
         return self._extract_titles_from_response(content)  # Similar extraction logic
 
     def _extract_hashtags_from_response(self, content: str) -> List[str]:
-        """Extract hashtags from AI response"""
+        """
+Extract hashtags from AI response"""
         hashtags = []
         
         # Extract hashtags with or without # symbol
@@ -1220,7 +1235,8 @@ class IdeaGenerator:
         return list(set(hashtags))  # Remove duplicates
 
     def _generate_fallback_titles(self, topic: str, quantity: int) -> List[str]:
-        """Generate fallback titles using templates"""
+        """
+Generate fallback titles using templates"""
         templates = self.content_templates[IdeationType.TITLE_SUGGESTION]["patterns"]
         titles = []
         

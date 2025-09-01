@@ -184,5 +184,5 @@ def get_ai_config_summary():
         },
         "total_configurations": 14,
         "production_ready": True,
-        "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+        "copyright": "(c) 2025 Fahed Mlaiel. All rights reserved.",
     }

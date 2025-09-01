@@ -13,8 +13,9 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
-All rights reserved © 2025 Fahed Mlaiel
+All rights reserved (c) 2025 Fahed Mlaiel
 """
+
 import asyncio
 import logging
 import smtplib
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types of notifications"""
+    """
+Types of notifications"""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -46,6 +49,7 @@ class NotificationType(Enum):
 
 class NotificationPriority(Enum):
     """Notification priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -55,6 +59,7 @@ class NotificationPriority(Enum):
 
 class NotificationStatus(Enum):
     """Notification delivery status"""
+
     PENDING = "pending"
     SENDING = "sending"
     SENT = "sent"
@@ -121,7 +126,8 @@ class NotificationManager:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize notification manager"""
+        """
+Initialize notification manager"""
         self.config = config or {}
         self.logger = logger
         
@@ -295,7 +301,7 @@ Details:
 This is an automated notification from the IA Influencer Agent Content Protection System.
 Contact: mlaiel@live.de for support.
 
-© 2025 Fahed Mlaiel - All Rights Reserved
+(c) 2025 Fahed Mlaiel - All Rights Reserved
             """.strip()
             
             return await self.send_direct_notification(
@@ -362,7 +368,7 @@ Please take immediate action to ensure compliance.
 This is an automated alert from the IA Influencer Agent Content Protection System.
 Contact: mlaiel@live.de for support.
 
-© 2025 Fahed Mlaiel - All Rights Reserved
+(c) 2025 Fahed Mlaiel - All Rights Reserved
             """.strip()
             
             return await self.send_direct_notification(
@@ -414,7 +420,7 @@ The enforcement process is progressing according to your selected policy.
 This is an automated update from the IA Influencer Agent Content Protection System.
 Contact: mlaiel@live.de for support.
 
-© 2025 Fahed Mlaiel - All Rights Reserved
+(c) 2025 Fahed Mlaiel - All Rights Reserved
             """.strip()
             
             return await self.send_direct_notification(
@@ -449,7 +455,8 @@ Contact: mlaiel@live.de for support.
         return None
     
     async def get_delivery_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive delivery analytics"""
+        """
+Get comprehensive delivery analytics"""
         total_messages = len(self.delivery_queue)
         
         if total_messages == 0:
@@ -494,7 +501,8 @@ Contact: mlaiel@live.de for support.
                                           variables: Dict[str, Any],
                                           priority: NotificationPriority,
                                           scheduled_at: Optional[datetime]) -> NotificationMessage:
-        """Render message from template"""
+        """
+Render message from template"""
         import uuid
         from string import Template
         
@@ -529,7 +537,8 @@ Contact: mlaiel@live.de for support.
         )
     
     async def _deliver_message(self, message: NotificationMessage) -> bool:
-        """Deliver notification message"""
+        """
+Deliver notification message"""
         try:
             message.status = NotificationStatus.SENDING
             

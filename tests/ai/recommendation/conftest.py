@@ -9,6 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import pytest
 import pytest_asyncio
 import asyncio
@@ -73,7 +74,8 @@ def temp_directory():
 
 @pytest_asyncio.fixture
 async def recommendation_engine():
-    """Recommendation engine instance"""
+    """
+Recommendation engine instance"""
     engine = RecommendationEngine()
     await engine.initialize()
     return engine
@@ -81,7 +83,8 @@ async def recommendation_engine():
 
 @pytest_asyncio.fixture
 async def content_analyzer():
-    """Content analyzer instance"""
+    """
+Content analyzer instance"""
     analyzer = ContentAnalyzer()
     await analyzer.initialize()
     return analyzer
@@ -89,7 +92,8 @@ async def content_analyzer():
 
 @pytest_asyncio.fixture
 async def collaboration_matcher():
-    """Collaboration matcher instance"""
+    """
+Collaboration matcher instance"""
     matcher = CollaborationMatcher()
     await matcher.initialize()
     return matcher
@@ -97,7 +101,8 @@ async def collaboration_matcher():
 
 @pytest_asyncio.fixture
 async def trend_analyzer():
-    """Trend analyzer instance"""
+    """
+Trend analyzer instance"""
     analyzer = TrendAnalyzer()
     await analyzer.initialize()
     return analyzer
@@ -105,7 +110,8 @@ async def trend_analyzer():
 
 @pytest_asyncio.fixture
 async def revenue_optimizer():
-    """Revenue optimizer instance"""
+    """
+Revenue optimizer instance"""
     optimizer = RevenueOptimizer()
     await optimizer.initialize()
     return optimizer
@@ -113,7 +119,8 @@ async def revenue_optimizer():
 
 @pytest_asyncio.fixture
 async def protection_integrator():
-    """Protection integrator instance"""
+    """
+Protection integrator instance"""
     integrator = ProtectionIntegrator()
     await integrator.initialize()
     return integrator
@@ -121,13 +128,15 @@ async def protection_integrator():
 
 @pytest.fixture
 def model_manager():
-    """Model manager instance"""
+    """
+Model manager instance"""
     return ModelManager()
 
 
 @pytest.fixture
 def health_checker():
-    """Health checker instance"""
+    """
+Health checker instance"""
     return HealthChecker()
 
 
@@ -135,7 +144,8 @@ def health_checker():
 
 @pytest.fixture
 def sample_video_content():
-    """Sample video content data"""
+    """
+Sample video content data"""
     return {
         "title": "Amazing Music Production Tutorial",
         "description": "Learn professional music production techniques in this comprehensive tutorial",
@@ -335,7 +345,8 @@ async def cleanup_after_test():
 
 @pytest.fixture
 def sample_audio_features():
-    """Sample audio feature vectors"""
+    """
+Sample audio feature vectors"""
     return {
         "mfcc": np.random.rand(13, 100).tolist(),
         "chroma": np.random.rand(12, 100).tolist(),
@@ -424,7 +435,8 @@ def mock_database():
 
 @pytest.fixture
 def performance_thresholds():
-    """Performance benchmark thresholds"""
+    """
+Performance benchmark thresholds"""
     return {
         "recommendation_generation": 0.2,  # 200ms
         "content_analysis": 0.5,           # 500ms
@@ -452,7 +464,8 @@ def assert_creator_profile_valid(profile: CreatorProfile):
 
 @pytest.fixture
 def load_test_data():
-    """Load test data from JSON files"""
+    """
+Load test data from JSON files"""
     def _load_data(filename: str):
         test_data_path = Path(__file__).parent / "fixtures" / filename
         if test_data_path.exists():
@@ -572,7 +585,8 @@ def compatibility_scorer():
 
 @pytest.fixture
 def partnership_analyzer():
-    """Sample partnership analyzer instance"""
+    """
+Sample partnership analyzer instance"""
     from ai.recommendation.collaboration_matcher import PartnershipAnalyzer
     config = {
         'analysis_depth': 'comprehensive',
@@ -588,7 +602,8 @@ def partnership_analyzer():
 
 @pytest.fixture 
 def collaboration_recommender():
-    """Sample collaboration recommender instance"""
+    """
+Sample collaboration recommender instance"""
     from ai.recommendation.collaboration_matcher import CollaborationRecommender
     config = {
         'recommendation_count': 10,

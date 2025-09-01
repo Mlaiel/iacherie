@@ -12,6 +12,7 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class KickStreamStatus(str, Enum):
-    """Kick stream status types"""
+    """
+Kick stream status types"""
+
     LIVE = "live"
     OFFLINE = "offline"
     RERUN = "rerun"
@@ -47,6 +50,7 @@ class KickStreamStatus(str, Enum):
 
 class KickContentType(str, Enum):
     """Kick content types"""
+
     STREAM = "stream"
     CLIP = "clip"
     VIDEO = "video"
@@ -56,6 +60,7 @@ class KickContentType(str, Enum):
 
 class KickStreamCategory(str, Enum):
     """Kick stream categories"""
+
     GAMING = "gaming"
     IRL = "irl"
     MUSIC = "music"
@@ -115,7 +120,8 @@ class KickUser(BaseModel):
 
 
 class KickStream(BaseModel):
-    """Kick stream data model"""
+    """
+Kick stream data model"""
     stream_id: str
     channel_id: str
     user: KickUser
@@ -195,7 +201,8 @@ class KickChatSession(BaseModel):
 
 
 class KickSearchResults(BaseModel):
-    """Kick search results data model"""
+    """
+Kick search results data model"""
     query: str
     total_results: int
     streams: List[KickStream] = Field(default_factory=list)
@@ -209,7 +216,8 @@ class KickSearchResults(BaseModel):
 
 
 class KickAnalytics(BaseModel):
-    """Kick analytics data model"""
+    """
+Kick analytics data model"""
     user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_streams: int
@@ -1129,7 +1137,8 @@ class KickCrawler(BaseCrawler):
         return 0.0
 
     async def _check_protection_status(self, stream: KickStream) -> str:
-        """Check protection status of stream"""
+        """
+Check protection status of stream"""
         if stream.stream_id in self.protected_content:
             return "protected"
         return "unprotected"
@@ -1153,7 +1162,8 @@ class KickCrawler(BaseCrawler):
         return []
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
-        """Handle rate limiting responses"""
+        """
+Handle rate limiting responses"""
         if response.status == 429:
             retry_after = int(response.headers.get('Retry-After', 60))
             logger.warning(f"Rate limited. Waiting {retry_after} seconds")

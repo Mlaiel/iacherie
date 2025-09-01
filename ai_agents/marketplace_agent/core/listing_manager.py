@@ -4,8 +4,9 @@ Handles creation, optimization, search, and management of marketplace listings
 with AI-powered optimization and intelligent categorization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -18,7 +19,9 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceListing, ContentTyp
 
 
 class ListingStatus(Enum):
-    """Listing status enumeration."""
+    """
+Listing status enumeration."""
+
     DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     ACTIVE = "active"
@@ -30,6 +33,7 @@ class ListingStatus(Enum):
 
 class ListingCategory(Enum):
     """Marketplace listing categories."""
+
     MUSIC_PRODUCTION = "music_production"
     AUDIO_EFFECTS = "audio_effects"
     VIDEO_CONTENT = "video_content"
@@ -57,7 +61,8 @@ class ListingOptimization:
 
 @dataclass
 class SearchFilters:
-    """Advanced search filters for marketplace listings."""
+    """
+Advanced search filters for marketplace listings."""
     content_type: Optional[ContentType] = None
     price_range: Optional[Tuple[float, float]] = None
     category: Optional[ListingCategory] = None
@@ -562,7 +567,8 @@ class ListingManager:
         limit: int,
         offset: int
     ) -> List[MarketplaceListing]:
-        """Perform semantic search on marketplace listings."""
+        """
+Perform semantic search on marketplace listings."""
         try:
             # Implementation would use Elasticsearch or similar for semantic search
             # For now, return mock results
@@ -618,7 +624,8 @@ class ListingManager:
         return random.randint(10000, 99999)
 
     async def _index_listing_for_search(self, listing: MarketplaceListing) -> None:
-        """Index listing for search engine."""
+        """
+Index listing for search engine."""
         try:
             # Implementation would index in Elasticsearch or similar
             self.logger.debug(f"Indexed listing {listing.id} for search")

@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import json
 
 
 class CDNProvider(Enum):
-    """CDN provider types"""
+    """
+CDN provider types"""
+
     CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
@@ -35,6 +38,7 @@ class CDNProvider(Enum):
 
 class CachePolicy(Enum):
     """CDN cache policies"""
+
     NO_CACHE = "no_cache"
     SHORT_CACHE = "short_cache"  # 5 minutes
     MEDIUM_CACHE = "medium_cache"  # 1 hour
@@ -60,7 +64,8 @@ class CacheRule:
 
 @dataclass
 class OriginConfig:
-    """CDN origin server configuration"""
+    """
+CDN origin server configuration"""
     domain_name: str
     origin_path: str = ""
     protocol: str = "HTTPS"
@@ -781,7 +786,8 @@ class CDNConfig:
         return str(int(time.time()))
     
     def generate_cache_purge_script(self) -> str:
-        """Generate cache purging script for different CDN providers"""
+        """
+Generate cache purging script for different CDN providers"""
         script = f"""#!/bin/bash
 # CDN Cache Purging Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>

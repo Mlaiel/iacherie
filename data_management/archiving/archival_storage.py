@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,8 @@ from ..exceptions import ArchivalError, StorageQuotaExceededError
 
 
 class ArchivalStorageBackend(ABC):
-    """Abstract base class for archival storage backends"""
+    """
+Abstract base class for archival storage backends"""
     
     @abstractmethod
     async def store_archive(
@@ -44,42 +46,50 @@ class ArchivalStorageBackend(ABC):
         tier: ArchivalTier,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store archive content and return storage path"""
+        """
+Store archive content and return storage path"""
         pass
     
     @abstractmethod
     async def retrieve_archive(self, archive_id: str) -> Optional[bytes]:
-        """Retrieve archive content by ID"""
+        """
+Retrieve archive content by ID"""
         pass
     
     @abstractmethod
     async def delete_archive(self, archive_id: str) -> bool:
-        """Delete archive from storage"""
+        """
+Delete archive from storage"""
         pass
     
     @abstractmethod
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
-        """Migrate archive to different storage tier"""
+        """
+Migrate archive to different storage tier"""
         pass
     
     @abstractmethod
     async def get_archive_metadata(self, archive_id: str) -> Optional[Dict[str, Any]]:
-        """Get archive metadata"""
+        """
+Get archive metadata"""
         pass
     
     @abstractmethod
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage usage statistics"""
+        """
+Get storage usage statistics"""
         pass
     
     @abstractmethod
     async def health_check(self) -> Dict[str, Any]:
-        """Perform storage backend health check"""
+        """
+Perform storage backend health check"""
         pass
 
 
 class LocalArchivalStorage(ArchivalStorageBackend):
-    """Local filesystem archival storage backend"""
+    """
+Local filesystem archival storage backend"""
     
     def __init__(self, base_path: str, enable_redundancy: bool = True):
         self.base_path = Path(base_path)
@@ -806,7 +816,8 @@ class HierarchicalStorageManager:
         return None
     
     async def find_archive_tier(self, archive_id: str) -> Optional[ArchivalTier]:
-        """Find which tier contains the archive"""
+        """
+Find which tier contains the archive"""
         
         for tier, backend in self.backends.items():
             metadata = await backend.get_archive_metadata(archive_id)
@@ -816,7 +827,8 @@ class HierarchicalStorageManager:
         return None
     
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
-        """Migrate archive between tiers/backends"""
+        """
+Migrate archive between tiers/backends"""
         
         # Find current tier
         current_tier = await self.find_archive_tier(archive_id)

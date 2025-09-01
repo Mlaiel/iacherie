@@ -15,6 +15,7 @@ redistribution without explicit written permission from Fahed Mlaiel is
 strictly prohibited and will result in legal action.
 ================================================================================
 """
+
 import logging
 import asyncio
 import json
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(str, Enum):
-    """Supported social media platforms"""
+    """
+Supported social media platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -55,6 +58,7 @@ class Platform(str, Enum):
 
 class ContentFormat(str, Enum):
     """Content formats for distribution"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -67,6 +71,7 @@ class ContentFormat(str, Enum):
 
 class DistributionStatus(str, Enum):
     """Content distribution status"""
+
     PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"
@@ -89,7 +94,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for distribution"""
+    """
+Content metadata for distribution"""
     title: str
     description: str
     tags: List[str]
@@ -113,7 +119,8 @@ class DistributionResult:
 
 @dataclass
 class PlatformAnalytics:
-    """Platform analytics data"""
+    """
+Platform analytics data"""
     platform: Platform
     content_id: str
     views: int
@@ -900,34 +907,40 @@ class PlatformIntegrationEngine:
         return await self.file_manager.get_file_size(file_path)
 
     async def _test_platform_connection(self, credentials: PlatformCredentials):
-        """Test platform connection"""
+        """
+Test platform connection"""
         # Implementation for testing platform connection
         pass
 
     async def _store_platform_credentials(self, user_id: str, credentials: PlatformCredentials):
-        """Store encrypted platform credentials"""
+        """
+Store encrypted platform credentials"""
         # Implementation depends on your database and encryption strategy
         pass
 
     async def _get_platform_credentials(self, user_id: str, platform: Platform) -> Optional[PlatformCredentials]:
-        """Get platform credentials for user"""
+        """
+Get platform credentials for user"""
         # Implementation depends on your database layer
         return None
 
     async def _refresh_token_if_needed(self, credentials: PlatformCredentials) -> PlatformCredentials:
-        """Refresh access token if expired"""
+        """
+Refresh access token if expired"""
         if credentials.token_expires_at and datetime.now() >= credentials.token_expires_at:
             # Implement token refresh logic
             pass
         return credentials
 
     async def _store_distribution_records(self, results: List[DistributionResult], user_id: str):
-        """Store distribution records in database"""
+        """
+Store distribution records in database"""
         # Implementation depends on your database layer
         pass
 
     async def _get_user_platforms(self, user_id: str) -> List[Platform]:
-        """Get user's connected platforms"""
+        """
+Get user's connected platforms"""
         # Implementation depends on your database layer
         return []
 
@@ -939,12 +952,14 @@ class PlatformIntegrationEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[PlatformAnalytics]:
-        """Fetch analytics from specific platform"""
+        """
+Fetch analytics from specific platform"""
         # Implementation for platform-specific analytics fetching
         return []
 
     async def _cache_analytics_results(self, cache_key: str, results: Dict[Platform, List[PlatformAnalytics]]):
-        """Cache analytics results"""
+        """
+Cache analytics results"""
         try:
             # Convert to JSON-serializable format
             serializable_results = {}

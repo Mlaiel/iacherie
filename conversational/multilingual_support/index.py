@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -100,7 +101,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MultilingualSystemConfiguration:
-    """Complete multilingual system configuration"""
+    """
+Complete multilingual system configuration"""
     # Database configuration
     database_url: str = "postgresql+asyncpg://user:pass@localhost/multilingual_db"
     
@@ -159,7 +161,8 @@ class MultilingualSystemBuilder:
         self._orchestrator: Optional[MultilingualOrchestrator] = None
     
     async def with_redis(self, redis_client: Optional[aioredis.Redis] = None) -> 'MultilingualSystemBuilder':
-        """Configure Redis client"""
+        """
+Configure Redis client"""
         if redis_client:
             self._redis_client = redis_client
         else:
@@ -224,7 +227,8 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_translation_engine(self, translation_engine: Optional[TranslationEngine] = None) -> 'MultilingualSystemBuilder':
-        """Configure translation engine"""
+        """
+Configure translation engine"""
         if translation_engine:
             self._translation_engine = translation_engine
         else:
@@ -296,7 +300,8 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_conversation_localizer(self, conversation_localizer: Optional[ConversationLocalizer] = None) -> 'MultilingualSystemBuilder':
-        """Configure conversation localizer"""
+        """
+Configure conversation localizer"""
         if conversation_localizer:
             self._conversation_localizer = conversation_localizer
         else:
@@ -337,7 +342,8 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_localization_processor(self, localization_processor: Optional[LocalizationProcessor] = None) -> 'MultilingualSystemBuilder':
-        """Configure localization processor"""
+        """
+Configure localization processor"""
         if localization_processor:
             self._localization_processor = localization_processor
         else:
@@ -373,7 +379,8 @@ class MultilingualSystemBuilder:
         return self
     
     async def build(self) -> MultilingualOrchestrator:
-        """Build complete multilingual orchestrator"""
+        """
+Build complete multilingual orchestrator"""
         # Ensure all components are configured
         if not self._language_manager:
             await self.with_language_manager()
@@ -405,7 +412,8 @@ class MultilingualSystemBuilder:
 
 
 class MultilingualSystemFactory:
-    """Factory for creating multilingual system with presets"""
+    """
+Factory for creating multilingual system with presets"""
     
     @staticmethod
     async def create_basic_system(

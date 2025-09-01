@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, Any, Optional
 from ..base import BaseAgent, AgentRequest, AgentResponse
@@ -10,7 +11,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionAgent(BaseAgent):
-    """AI-powered content protection agent"""
+    """
+AI-powered content protection agent"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_type="protection", config=config)

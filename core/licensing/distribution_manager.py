@@ -19,6 +19,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -44,7 +45,9 @@ from ..ai.distribution_optimizer import DistributionOptimizer
 
 
 class DistributionChannel(Enum):
-    """Comprehensive distribution channels"""
+    """
+Comprehensive distribution channels"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -71,6 +74,7 @@ class DistributionChannel(Enum):
 
 class PlatformType(Enum):
     """Platform categorization types"""
+
     STREAMING_MUSIC = "streaming_music"
     STREAMING_VIDEO = "streaming_video"
     SOCIAL_MEDIA = "social_media"
@@ -89,6 +93,7 @@ class PlatformType(Enum):
 
 class DeliveryMethod(Enum):
     """Content delivery methods"""
+
     API_UPLOAD = "api_upload"
     FTP_TRANSFER = "ftp_transfer"
     CDN_DISTRIBUTION = "cdn_distribution"
@@ -103,6 +108,7 @@ class DeliveryMethod(Enum):
 
 class DistributionStrategy(Enum):
     """Distribution strategies"""
+
     GLOBAL_SIMULTANEOUS = "global_simultaneous"
     REGIONAL_ROLLOUT = "regional_rollout"
     PLATFORM_EXCLUSIVE = "platform_exclusive"
@@ -119,6 +125,7 @@ class DistributionStrategy(Enum):
 
 class QualityRequirement(Enum):
     """Content quality requirements"""
+
     LOW_QUALITY = "low_quality"        # 128kbps, 480p
     STANDARD_QUALITY = "standard_quality"  # 256kbps, 720p
     HIGH_QUALITY = "high_quality"      # 320kbps, 1080p
@@ -826,6 +833,7 @@ class UltraAdvancedDistributionManager:
 
 class ContentFormat(Enum):
     """Content format specifications"""
+
     AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
@@ -839,6 +847,7 @@ class ContentFormat(Enum):
 
 class RevenueModel(Enum):
     """Revenue sharing models"""
+
     PERCENTAGE = "percentage"
     FIXED_FEE = "fixed_fee"
     SUBSCRIPTION = "subscription"
@@ -869,7 +878,8 @@ class Platform:
 
 @dataclass
 class DistributionPackage:
-    """Content distribution package"""
+    """
+Content distribution package"""
     package_id: str
     content_id: str
     license_id: str
@@ -889,7 +899,8 @@ class DistributionPackage:
 
 @dataclass
 class DistributionTask:
-    """Individual platform distribution task"""
+    """
+Individual platform distribution task"""
     task_id: str
     package_id: str
     platform_id: str
@@ -907,7 +918,8 @@ class DistributionTask:
 
 @dataclass
 class DistributionAnalytics:
-    """Distribution performance analytics"""
+    """
+Distribution performance analytics"""
     analytics_id: str
     package_id: str
     platform_id: str
@@ -926,7 +938,8 @@ class DistributionAnalytics:
 
 @dataclass
 class RevenueShare:
-    """Revenue sharing configuration"""
+    """
+Revenue sharing configuration"""
     share_id: str
     package_id: str
     platform_id: str
@@ -991,7 +1004,8 @@ class DistributionManager:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize distribution manager and platform integrations"""
+        """
+Initialize distribution manager and platform integrations"""
         try:
             self.logger.info("Initializing DistributionManager")
             
@@ -1540,7 +1554,8 @@ class DistributionManager:
         asyncio.create_task(self._analytics_collector())
     
     async def _validate_target_platforms(self, platform_ids: List[str]) -> None:
-        """Validate that target platforms exist and are active"""
+        """
+Validate that target platforms exist and are active"""
         for platform_id in platform_ids:
             platform = self.platforms.get(platform_id)
             if not platform:
@@ -1569,7 +1584,8 @@ class DistributionManager:
         return ['worldwide']
     
     async def _create_distribution_tasks(self, package_id: str) -> None:
-        """Create distribution tasks for each target platform"""
+        """
+Create distribution tasks for each target platform"""
         package = self.distribution_packages[package_id]
         
         for platform_id in package.target_platforms:
@@ -1599,7 +1615,8 @@ class DistributionManager:
         content_files: List[Dict[str, Any]],
         supported_formats: List[ContentFormat]
     ) -> ContentFormat:
-        """Select optimal content format for platform"""
+        """
+Select optimal content format for platform"""
         # Find first matching format
         for content_file in content_files:
             file_format = ContentFormat(content_file.get('format'))
@@ -1610,19 +1627,22 @@ class DistributionManager:
         return supported_formats[0] if supported_formats else ContentFormat.AUDIO_MP3
     
     async def _validate_distribution_licensing(self, package_id: str) -> None:
-        """Validate licensing requirements for distribution"""
+        """
+Validate licensing requirements for distribution"""
         # Implementation would check licensing compliance
         pass
     
     async def _get_package_tasks(self, package_id: str) -> List[DistributionTask]:
-        """Get all distribution tasks for a package"""
+        """
+Get all distribution tasks for a package"""
         return [
             task for task in self.distribution_tasks.values()
             if task.package_id == package_id
         ]
     
     async def _determine_overall_status(self, tasks: List[DistributionTask]) -> str:
-        """Determine overall distribution status from individual tasks"""
+        """
+Determine overall distribution status from individual tasks"""
         if not tasks:
             return 'no_tasks'
         
@@ -1644,7 +1664,8 @@ class DistributionManager:
             return 'mixed'
     
     async def _get_recent_analytics(self, package_id: str) -> Dict[str, Any]:
-        """Get recent analytics data for package"""
+        """
+Get recent analytics data for package"""
         analytics_list = self.analytics_data.get(package_id, [])
         if analytics_list:
             # Return most recent analytics
@@ -1664,7 +1685,8 @@ class DistributionManager:
         start_date: datetime,
         end_date: datetime
     ) -> Optional[DistributionAnalytics]:
-        """Collect analytics from specific platform"""
+        """
+Collect analytics from specific platform"""
         # Implementation would call platform APIs to collect analytics
         
         # Mock analytics data
@@ -1694,7 +1716,8 @@ class DistributionManager:
         self,
         analytics_data: List[DistributionAnalytics]
     ) -> Dict[str, Any]:
-        """Aggregate analytics data across platforms"""
+        """
+Aggregate analytics data across platforms"""
         if not analytics_data:
             return {}
         
@@ -1724,7 +1747,8 @@ class DistributionManager:
         package_id: str,
         analytics_data: List[DistributionAnalytics]
     ) -> List[str]:
-        """Generate performance improvement recommendations"""
+        """
+Generate performance improvement recommendations"""
         recommendations = []
         
         if analytics_data:
@@ -1754,7 +1778,8 @@ class DistributionManager:
         package_id: str,
         adjustments: Dict[str, Any]
     ) -> None:
-        """Apply pricing strategy adjustments"""
+        """
+Apply pricing strategy adjustments"""
         # Implementation would update pricing strategies
         pass
     
@@ -1763,7 +1788,8 @@ class DistributionManager:
         package_id: str,
         optimizations: Dict[str, Any]
     ) -> None:
-        """Apply metadata optimizations"""
+        """
+Apply metadata optimizations"""
         # Implementation would update content metadata
         pass
     
@@ -1772,7 +1798,8 @@ class DistributionManager:
         package_id: str,
         platform_id: Optional[str]
     ) -> List[DistributionTask]:
-        """Get tasks that need to be paused"""
+        """
+Get tasks that need to be paused"""
         tasks = await self._get_package_tasks(package_id)
         
         if platform_id:
@@ -1785,7 +1812,8 @@ class DistributionManager:
         package_id: str,
         platform_id: Optional[str]
     ) -> List[DistributionTask]:
-        """Get tasks that need to be resumed"""
+        """
+Get tasks that need to be resumed"""
         tasks = await self._get_package_tasks(package_id)
         
         if platform_id:
@@ -1794,17 +1822,20 @@ class DistributionManager:
         return [t for t in tasks if t.status == DistributionStatus.PAUSED]
     
     async def _pause_platform_distribution(self, task: DistributionTask) -> None:
-        """Pause distribution on specific platform"""
+        """
+Pause distribution on specific platform"""
         # Implementation would call platform API to pause content
         pass
     
     async def _resume_platform_distribution(self, task: DistributionTask) -> None:
-        """Resume distribution on specific platform"""
+        """
+Resume distribution on specific platform"""
         # Implementation would call platform API to resume content
         pass
     
     async def _distribution_processor(self) -> None:
-        """Background processor for distribution tasks"""
+        """
+Background processor for distribution tasks"""
         while True:
             try:
                 if self.pending_distributions:

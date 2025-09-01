@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive integration with major social media platforms
 for automated content distribution, engagement tracking, and analytics.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -20,7 +21,9 @@ from urllib.parse import urlencode
 logger = logging.getLogger(__name__)
 
 class PlatformStatus(Enum):
-    """Status of platform integration"""
+    """
+Status of platform integration"""
+
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     ERROR = "error"
@@ -30,6 +33,7 @@ class PlatformStatus(Enum):
 
 class PostStatus(Enum):
     """Status of posted content"""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
@@ -38,6 +42,7 @@ class PostStatus(Enum):
 
 class PlatformType(Enum):
     """Supported social platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -65,7 +70,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentPost:
-    """Content to be posted to platforms"""
+    """
+Content to be posted to platforms"""
     title: Optional[str] = None
     description: Optional[str] = None
     content: str = ""
@@ -89,7 +95,8 @@ class PostResult:
     engagement_metrics: Dict[str, int] = field(default_factory=dict)
 
 class BasePlatformConnector(ABC):
-    """Base class for platform connectors"""
+    """
+Base class for platform connectors"""
     
     def __init__(self, credentials: PlatformCredentials):
         self.credentials = credentials
@@ -105,21 +112,25 @@ class BasePlatformConnector(ABC):
     
     @abstractmethod
     async def post_content(self, content: ContentPost) -> PostResult:
-        """Post content to the platform"""
+        """
+Post content to the platform"""
         pass
     
     @abstractmethod
     async def get_analytics(self, post_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get analytics for posted content"""
+        """
+Get analytics for posted content"""
         pass
     
     @abstractmethod
     async def delete_post(self, post_id: str) -> bool:
-        """Delete a post from the platform"""
+        """
+Delete a post from the platform"""
         pass
     
     def check_rate_limit(self) -> bool:
-        """Check if rate limit allows posting"""
+        """
+Check if rate limit allows posting"""
         if not self.rate_limit_info:
             return True
         
@@ -131,7 +142,8 @@ class BasePlatformConnector(ABC):
         return True
     
     def update_rate_limit(self, headers: Dict[str, str]) -> None:
-        """Update rate limit information from response headers"""
+        """
+Update rate limit information from response headers"""
         # Common rate limit header patterns
         remaining = headers.get('x-rate-limit-remaining') or headers.get('x-ratelimit-remaining')
         reset = headers.get('x-rate-limit-reset') or headers.get('x-ratelimit-reset')
@@ -143,7 +155,9 @@ class BasePlatformConnector(ABC):
             self.rate_limit_info['reset_time'] = datetime.fromtimestamp(int(reset))
 
 class YouTubeConnector(BasePlatformConnector):
-    """YouTube platform connector"""
+    """
+YouTube platform connector"""
+
     
     BASE_URL = "https://www.googleapis.com/youtube/v3"
     
@@ -234,6 +248,7 @@ class YouTubeConnector(BasePlatformConnector):
 
 class InstagramConnector(BasePlatformConnector):
     """Instagram platform connector"""
+
     
     BASE_URL = "https://graph.instagram.com/v18.0"
     
@@ -318,6 +333,7 @@ class InstagramConnector(BasePlatformConnector):
 
 class TwitterConnector(BasePlatformConnector):
     """Twitter platform connector"""
+
     
     BASE_URL = "https://api.twitter.com/2"
     
@@ -402,6 +418,7 @@ class TwitterConnector(BasePlatformConnector):
 
 class LinkedInConnector(BasePlatformConnector):
     """LinkedIn platform connector"""
+
     
     BASE_URL = "https://api.linkedin.com/v2"
     
@@ -662,7 +679,8 @@ class SocialPlatformManager:
         return {platform: connector.status for platform, connector in self.connectors.items()}
     
     def get_posting_statistics(self) -> Dict[str, Any]:
-        """Get statistics about posting activity"""
+        """
+Get statistics about posting activity"""
         if not self.posting_history:
             return {"total_posts": 0, "success_rate": 0.0}
         

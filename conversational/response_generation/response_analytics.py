@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of response metrics"""
+    """
+Types of response metrics"""
+
     ENGAGEMENT = "engagement"
     SATISFACTION = "satisfaction"
     EFFECTIVENESS = "effectiveness"
@@ -59,6 +62,7 @@ class MetricType(Enum):
 
 class AnalyticsTimeframe(Enum):
     """Analytics timeframe options"""
+
     REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -71,6 +75,7 @@ class AnalyticsTimeframe(Enum):
 
 class UserSegment(Enum):
     """User segments for analytics"""
+
     NEW_USERS = "new_users"
     RETURNING_USERS = "returning_users"
     POWER_USERS = "power_users"
@@ -81,6 +86,7 @@ class UserSegment(Enum):
 
 class ExperimentStatus(Enum):
     """A/B test experiment status"""
+
     DRAFT = "draft"
     RUNNING = "running"
     PAUSED = "paused"
@@ -115,7 +121,8 @@ class ResponseMetrics:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight data structure"""
+    """
+Analytics insight data structure"""
     insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str
     description: str
@@ -162,7 +169,8 @@ class AnalyticsReport(BaseModel):
 
 
 class ResponseAnalytics:
-    """Core response analytics engine"""
+    """
+Core response analytics engine"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -185,7 +193,8 @@ class ResponseAnalytics:
         self.analytics_config = self._initialize_analytics_config()
     
     def _initialize_analytics_config(self) -> Dict[str, Any]:
-        """Initialize analytics configuration"""
+        """
+Initialize analytics configuration"""
         return {
             "default_metrics": [
                 MetricType.ENGAGEMENT,
@@ -566,14 +575,16 @@ class ResponseAnalytics:
 
 
 class EffectivenessTracker:
-    """Response effectiveness tracking and measurement"""
+    """
+Response effectiveness tracking and measurement"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.effectiveness_metrics = self._initialize_effectiveness_metrics()
     
     def _initialize_effectiveness_metrics(self) -> Dict[str, Any]:
-        """Initialize effectiveness measurement framework"""
+        """
+Initialize effectiveness measurement framework"""
         return {
             "primary_metrics": [
                 "task_completion_rate",
@@ -672,7 +683,8 @@ class ResponseMetricsCollector:
         self.collection_config = self._initialize_collection_config()
     
     def _initialize_collection_config(self) -> Dict[str, Any]:
-        """Initialize metrics collection configuration"""
+        """
+Initialize metrics collection configuration"""
         return {
             "buffer_size": 1000,
             "flush_interval": 60,  # seconds
@@ -746,7 +758,8 @@ class ABTestingFramework:
         self.experiment_config = self._initialize_experiment_config()
     
     def _initialize_experiment_config(self) -> Dict[str, Any]:
-        """Initialize A/B testing configuration"""
+        """
+Initialize A/B testing configuration"""
         return {
             "min_sample_size": 100,
             "confidence_level": 0.95,
@@ -843,7 +856,8 @@ class ResponseOptimizationEngine:
         self.optimization_strategies = self._initialize_optimization_strategies()
     
     def _initialize_optimization_strategies(self) -> Dict[str, Any]:
-        """Initialize response optimization strategies"""
+        """
+Initialize response optimization strategies"""
         return {
             "engagement_optimization": {
                 "strategies": [

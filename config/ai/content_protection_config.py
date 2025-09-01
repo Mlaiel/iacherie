@@ -28,6 +28,7 @@ import os
 class ProtectionLevel(str, Enum):
     """
 Content protection security levels."""
+
     
     BASIC = "basic"
     STANDARD = "standard"
@@ -38,6 +39,7 @@ Content protection security levels."""
 
 class MonitoringScope(str, Enum):
     """Monitoring scope for content protection."""
+
     
     PLATFORM_SPECIFIC = "platform_specific"
     CROSS_PLATFORM = "cross_platform"
@@ -48,6 +50,7 @@ class MonitoringScope(str, Enum):
 
 class ActionType(str, Enum):
     """Automated protection actions."""
+
     
     MONITOR_ONLY = "monitor_only"
     NOTIFY_OWNER = "notify_owner"
@@ -59,6 +62,7 @@ class ActionType(str, Enum):
 
 class PlatformType(str, Enum):
     """Supported platforms for content monitoring."""
+
     
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"

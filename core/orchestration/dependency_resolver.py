@@ -11,6 +11,7 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class DependencyType(Enum):
-    """Dependency relationship types."""
+    """
+Dependency relationship types."""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
@@ -36,6 +39,7 @@ class DependencyType(Enum):
 
 class DependencyStatus(Enum):
     """Dependency status enumeration."""
+
     PENDING = "pending"
     SATISFIED = "satisfied"
     FAILED = "failed"
@@ -45,6 +49,7 @@ class DependencyStatus(Enum):
 
 class ResolutionStrategy(Enum):
     """Dependency resolution strategies."""
+
     STRICT = "strict"
     BEST_EFFORT = "best_effort"
     FALLBACK = "fallback"
@@ -68,7 +73,8 @@ class DependencyRule:
 
 @dataclass
 class DependencyNode:
-    """Node in dependency graph."""
+    """
+Node in dependency graph."""
     node_id: str
     name: str
     node_type: str
@@ -99,7 +105,8 @@ class DependencyGraph:
 
 @dataclass
 class ResolutionPlan:
-    """Dependency resolution execution plan."""
+    """
+Dependency resolution execution plan."""
     plan_id: str
     graph_id: str
     execution_order: List[List[str]]  # List of parallel execution batches
@@ -113,7 +120,8 @@ class ResolutionPlan:
 
 @dataclass
 class ResolutionResult:
-    """Dependency resolution result."""
+    """
+Dependency resolution result."""
     resolution_id: str
     graph_id: str
     plan_id: str
@@ -473,7 +481,8 @@ class DependencyResolver:
         graph: DependencyGraph,
         result: ResolutionResult
     ) -> None:
-        """Execute individual node."""
+        """
+Execute individual node."""
         node = graph.nodes[node_id]
         
         try:
@@ -553,7 +562,8 @@ class DependencyResolver:
         graph: DependencyGraph,
         nx_graph: nx.DiGraph
     ) -> List[str]:
-        """Find critical path through dependency graph."""
+        """
+Find critical path through dependency graph."""
         # Simplified critical path calculation
         # In practice, this would consider node weights/durations
         
@@ -582,7 +592,8 @@ class DependencyResolver:
         graph: DependencyGraph,
         nx_graph: nx.DiGraph
     ) -> List[List[str]]:
-        """Identify nodes that can be executed in parallel."""
+        """
+Identify nodes that can be executed in parallel."""
         parallel_groups = []
         
         # Find nodes at the same dependency level
@@ -612,7 +623,8 @@ class DependencyResolver:
         graph: DependencyGraph,
         execution_order: List[List[str]]
     ) -> float:
-        """Estimate total execution duration."""
+        """
+Estimate total execution duration."""
         total_duration = 0.0
         
         for batch in execution_order:
@@ -635,7 +647,8 @@ class DependencyResolver:
         graph: DependencyGraph,
         nx_graph: nx.DiGraph
     ) -> List[str]:
-        """Analyze potential execution risks."""
+        """
+Analyze potential execution risks."""
         risks = []
         
         # Check for nodes with many dependencies
@@ -681,7 +694,8 @@ class DependencyResolver:
         graph: DependencyGraph,
         result: ResolutionResult
     ) -> bool:
-        """Check if node dependencies are satisfied."""
+        """
+Check if node dependencies are satisfied."""
         node = graph.nodes[node_id]
         
         for dep_id in node.dependencies:
@@ -691,7 +705,8 @@ class DependencyResolver:
         return True
     
     async def _build_networkx_graph(self, graph: DependencyGraph) -> nx.DiGraph:
-        """Build NetworkX graph from dependency graph."""
+        """
+Build NetworkX graph from dependency graph."""
         nx_graph = nx.DiGraph()
         
         # Add nodes
@@ -711,7 +726,8 @@ class DependencyResolver:
         return nx_graph
     
     async def _validate_graph(self, graph: DependencyGraph) -> bool:
-        """Validate dependency graph structure."""
+        """
+Validate dependency graph structure."""
         try:
             if not graph.graph_id or not graph.name:
                 return False
@@ -727,7 +743,8 @@ class DependencyResolver:
             return False
     
     async def _validate_dependency_rule(self, graph: DependencyGraph, rule: DependencyRule) -> bool:
-        """Validate dependency rule."""
+        """
+Validate dependency rule."""
         try:
             if not rule.rule_id or not rule.source_id or not rule.target_id:
                 return False
@@ -744,7 +761,8 @@ class DependencyResolver:
             return False
     
     def _update_performance_stats(self, result: ResolutionResult) -> None:
-        """Update performance statistics."""
+        """
+Update performance statistics."""
         # Update average resolution time
         if result.duration:
             current_avg = self.resolver_stats['average_resolution_time']
@@ -761,7 +779,8 @@ class DependencyResolver:
             self.resolver_stats['optimization_ratio'] = success_ratio
     
     async def get_graph_info(self, graph_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive graph information."""
+        """
+Get comprehensive graph information."""
         if graph_id not in self.dependency_graphs:
             return None
         
@@ -780,7 +799,8 @@ class DependencyResolver:
         }
     
     async def get_resolution_status(self, resolution_id: str) -> Optional[Dict[str, Any]]:
-        """Get resolution execution status."""
+        """
+Get resolution execution status."""
         if resolution_id in self.active_resolutions:
             result = self.active_resolutions[resolution_id]
         else:
@@ -802,7 +822,8 @@ class DependencyResolver:
         }
     
     async def get_resolver_stats(self) -> Dict[str, Any]:
-        """Get dependency resolver statistics."""
+        """
+Get dependency resolver statistics."""
         return {
             **self.resolver_stats,
             'active_graphs': len(self.dependency_graphs),

@@ -4,10 +4,11 @@ Enterprise-grade AI engine orchestration and lifecycle management for industrial
 Supports advanced AI workload management for multi-format content creators.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import threading
 import time
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """Supported AI model types"""
+    """
+Supported AI model types"""
+
     TRANSFORMER = "transformer"
     CNN = "cnn"
     RNN = "rnn"
@@ -67,6 +70,7 @@ class AIModelType(Enum):
 
 class ModelStatus(Enum):
     """AI model status states"""
+
     UNLOADED = "unloaded"
     LOADING = "loading"
     LOADED = "loaded"
@@ -78,6 +82,7 @@ class ModelStatus(Enum):
 
 class DeviceType(Enum):
     """Device types for model execution"""
+
     CPU = "cpu"
     CUDA = "cuda"
     MPS = "mps"  # Apple Metal
@@ -137,14 +142,16 @@ class ModelMetrics:
     cache_misses: int = 0
     
     def update_inference_stats(self, inference_time: float):
-        """Update inference statistics"""
+        """
+Update inference statistics"""
         self.inference_count += 1
         self.total_inference_time += inference_time
         self.average_inference_time = self.total_inference_time / self.inference_count
         self.last_used = datetime.utcnow()
         
     def update_cache_stats(self, hit: bool):
-        """Update cache statistics"""
+        """
+Update cache statistics"""
         if hit:
             self.cache_hits += 1
         else:
@@ -152,13 +159,15 @@ class ModelMetrics:
             
     @property
     def cache_hit_rate(self) -> float:
-        """Calculate cache hit rate"""
+        """
+Calculate cache hit rate"""
         total = self.cache_hits + self.cache_misses
         return self.cache_hits / total if total > 0 else 0.0
 
 
 class ModelCache:
-    """Advanced caching system for AI model results"""
+    """
+Advanced caching system for AI model results"""
     
     def __init__(self, max_size: int = 1000, ttl_seconds: int = 3600):
         self.max_size = max_size
@@ -167,7 +176,8 @@ class ModelCache:
         self._lock = threading.RLock()
         
     def _generate_key(self, input_data: Any, model_config: Dict[str, Any]) -> str:
-        """Generate cache key for input and configuration"""
+        """
+Generate cache key for input and configuration"""
         # Create deterministic hash from input and config
         content = json.dumps({
             "input": str(input_data),
@@ -220,7 +230,8 @@ class ModelCache:
             self.cache.clear()
             
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         with self._lock:
             total_access = sum(entry["access_count"] for entry in self.cache.values())
             return {
@@ -461,7 +472,8 @@ class AIModel:
         return self.pipeline(input_data, **kwargs)
         
     def _predict_with_transformer(self, input_data: str, **kwargs) -> Any:
-        """Predict using transformer model"""
+        """
+Predict using transformer model"""
         # Tokenize input
         inputs = self.tokenizer(
             input_data,
@@ -497,7 +509,8 @@ class AIModel:
         return idle_time > self.config.auto_unload_after_seconds
         
     def get_metrics(self) -> Dict[str, Any]:
-        """Get model performance metrics"""
+        """
+Get model performance metrics"""
         return {
             "model_name": self.config.name,
             "model_type": self.config.model_type.value,
@@ -554,7 +567,8 @@ class AIEngineManager:
             self._cleanup_thread.start()
             
     def _cleanup_loop(self):
-        """Background cleanup loop for idle models"""
+        """
+Background cleanup loop for idle models"""
         while not self._stop_cleanup.wait(self.auto_cleanup_interval):
             try:
                 self._cleanup_idle_models()
@@ -668,7 +682,8 @@ class AIEngineManager:
         use_cache: bool = True,
         max_workers: Optional[int] = None
     ) -> List[Any]:
-        """Batch prediction with parallel processing"""
+        """
+Batch prediction with parallel processing"""
         if model_name not in self.models:
             raise ModelConnectionError(f"Model '{model_name}' not registered")
             
@@ -699,7 +714,8 @@ class AIEngineManager:
         return self.models[model_name].get_metrics()
         
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive engine status"""
+        """
+Get comprehensive engine status"""
         with self._lock:
             model_statuses = {}
             total_inference_count = 0

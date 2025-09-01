@@ -13,6 +13,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -29,7 +30,9 @@ Base = declarative_base()
 
 
 class UserType(PyEnum):
-    """Types d'utilisateurs dans la plateforme."""
+    """
+Types d'utilisateurs dans la plateforme."""
+
     INDIVIDUAL = "individual"
     BUSINESS = "business"
     ENTERPRISE = "enterprise"
@@ -40,6 +43,7 @@ class UserType(PyEnum):
 
 class UserStatus(PyEnum):
     """Statuts possibles des utilisateurs."""
+
     PENDING = "pending"
     ACTIVE = "active"
     INACTIVE = "inactive"
@@ -50,6 +54,7 @@ class UserStatus(PyEnum):
 
 class OnboardingStep(PyEnum):
     """Étapes du processus d'onboarding."""
+
     REGISTRATION = "registration"
     EMAIL_VERIFICATION = "email_verification"
     PROFILE_SETUP = "profile_setup"
@@ -61,6 +66,7 @@ class OnboardingStep(PyEnum):
 
 class NotificationPreference(PyEnum):
     """Préférences de notification."""
+
     ALL = "all"
     IMPORTANT_ONLY = "important_only"
     MINIMAL = "minimal"
@@ -160,7 +166,8 @@ class User(Base):
     
     @property
     def avatar_hash(self) -> str:
-        """Génère un hash pour l'avatar par défaut."""
+        """
+Génère un hash pour l'avatar par défaut."""
         return hashlib.md5(self.email.encode()).hexdigest()
 
 
@@ -433,7 +440,8 @@ class UserRepository:
         self.db = db_session
     
     def create_user(self, user_data: Dict[str, Any]) -> User:
-        """Créer un nouvel utilisateur avec profil complet."""
+        """
+Créer un nouvel utilisateur avec profil complet."""
         try:
             # Vérifier l'unicité de l'email et du username
             existing_user = self.db.query(User).filter(
@@ -473,11 +481,13 @@ class UserRepository:
         return self.db.query(User).filter(User.email == email).first()
     
     def get_user_by_username(self, username: str) -> Optional[User]:
-        """Récupérer un utilisateur par nom d'utilisateur."""
+        """
+Récupérer un utilisateur par nom d'utilisateur."""
         return self.db.query(User).filter(User.username == username).first()
     
     def authenticate_user(self, identifier: str, password: str) -> Optional[User]:
-        """Authentifier un utilisateur par email/username et mot de passe."""
+        """
+Authentifier un utilisateur par email/username et mot de passe."""
         try:
             user = self.db.query(User).filter(
                 (User.email == identifier) | (User.username == identifier)
@@ -801,11 +811,13 @@ class UserRepository:
         return self.session.query(User).filter(User.id == user_id).first()
     
     def get_user_by_email(self, email: str) -> Optional[User]:
-        """Récupère un utilisateur par son email."""
+        """
+Récupère un utilisateur par son email."""
         return self.session.query(User).filter(User.email == email.lower()).first()
     
     def get_user_by_username(self, username: str) -> Optional[User]:
-        """Récupère un utilisateur par son nom d'utilisateur."""
+        """
+Récupère un utilisateur par son nom d'utilisateur."""
         return self.session.query(User).filter(User.username == username).first()
     
     def update_user_status(self, user_id: str, status: UserStatus) -> bool:
@@ -957,7 +969,8 @@ class UserRepository:
         }
     
     def _get_most_used_platform(self, activities: List[UserActivity]) -> str:
-        """Helper pour déterminer la plateforme la plus utilisée."""
+        """
+Helper pour déterminer la plateforme la plus utilisée."""
         platform_counts = {}
         for activity in activities:
             platform = activity.platform or 'unknown'

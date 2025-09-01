@@ -1,4 +1,5 @@
 """Enterprise webhook notification service with intelligent routing and retry mechanisms."""
+
 import os
 import json
 import aiohttp
@@ -20,7 +21,8 @@ from app.utils.metrics import MetricsCollector
 
 
 class WebhookEvent(str, Enum):
-    """Supported webhook event types for IA Influencer business logic."""
+    """
+Supported webhook event types for IA Influencer business logic."""
     # Content Protection Events
     CONTENT_UPLOADED = "content.uploaded"
     CONTENT_PROTECTED = "content.protected"
@@ -64,6 +66,7 @@ class WebhookEvent(str, Enum):
 
 class WebhookMethod(str, Enum):
     """Supported HTTP methods for webhooks."""
+
     POST = "POST"
     PUT = "PUT"
     PATCH = "PATCH"
@@ -71,6 +74,7 @@ class WebhookMethod(str, Enum):
 
 class RetryStrategy(str, Enum):
     """Webhook retry strategies."""
+
     LINEAR = "linear"
     EXPONENTIAL = "exponential"
     FIXED = "fixed"
@@ -114,7 +118,8 @@ class WebhookPayload:
 
 @dataclass
 class WebhookDeliveryResult:
-    """Webhook delivery tracking and analytics result."""
+    """
+Webhook delivery tracking and analytics result."""
     webhook_id: str
     endpoint_url: str
     event: WebhookEvent
@@ -133,7 +138,8 @@ class WebhookDeliveryResult:
 
 
 class WebhookNotifier:
-    """Enterprise webhook notification service with intelligent delivery and comprehensive analytics."""
+    """
+Enterprise webhook notification service with intelligent delivery and comprehensive analytics."""
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
@@ -268,7 +274,8 @@ class WebhookNotifier:
         return await self.send_webhook_batch(webhooks)
 
     async def get_endpoint_status(self, endpoint_id: str) -> Dict[str, Any]:
-        """Get comprehensive status information for an endpoint."""
+        """
+Get comprehensive status information for an endpoint."""
         if endpoint_id not in self.endpoints:
             raise ValueError(f"Webhook endpoint not found: {endpoint_id}")
         
@@ -424,7 +431,8 @@ class WebhookNotifier:
         return True
 
     async def _schedule_retry(self, endpoint: WebhookEndpoint, payload: WebhookPayload):
-        """Schedule webhook retry with appropriate delay."""
+        """
+Schedule webhook retry with appropriate delay."""
         delay_seconds = self.retry_delays[endpoint.retry_strategy][min(payload.retry_count, len(self.retry_delays[endpoint.retry_strategy]) - 1)]
         
         # Increment retry count

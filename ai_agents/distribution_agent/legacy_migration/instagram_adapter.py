@@ -14,6 +14,7 @@ immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
 """
+
 import asyncio
 import json
 import logging
@@ -43,7 +44,9 @@ from ...models.distribution import DistributionResult, PlatformConfig
 
 
 class InstagramContentType(Enum):
-    """Instagram content type enumeration"""
+    """
+Instagram content type enumeration"""
+
     PHOTO = "photo"
     VIDEO = "video"
     CAROUSEL = "carousel"
@@ -55,6 +58,7 @@ class InstagramContentType(Enum):
 
 class InstagramAspectRatio(Enum):
     """Instagram aspect ratio enumeration"""
+
     SQUARE = "1:1"
     PORTRAIT = "4:5"
     LANDSCAPE = "1.91:1"
@@ -64,6 +68,7 @@ class InstagramAspectRatio(Enum):
 
 class InstagramVisibility(Enum):
     """Instagram visibility settings enumeration"""
+
     PUBLIC = "public"
     FOLLOWERS = "followers"
     CLOSE_FRIENDS = "close_friends"
@@ -101,7 +106,8 @@ class InstagramMetadata:
 
 @dataclass
 class InstagramAnalytics:
-    """Instagram analytics data structure"""
+    """
+Instagram analytics data structure"""
     impressions: int = 0
     reach: int = 0
     likes: int = 0
@@ -537,13 +543,15 @@ class InstagramAdapter(BaseAgent):
         return content
     
     async def _optimize_video(self, content: ContentItem, metadata: InstagramMetadata) -> ContentItem:
-        """Optimize video for Instagram posting"""
+        """
+Optimize video for Instagram posting"""
         # Video optimization would be implemented here
         # For now, return original content
         return content
     
     async def _optimize_story(self, content: ContentItem, metadata: InstagramMetadata) -> ContentItem:
-        """Optimize content for Instagram Story"""
+        """
+Optimize content for Instagram Story"""
         # Story optimization would be implemented here
         return content
     
@@ -552,7 +560,8 @@ class InstagramAdapter(BaseAgent):
         metadata: InstagramMetadata,
         content: ContentItem
     ) -> InstagramMetadata:
-        """Enhance metadata with AI insights"""
+        """
+Enhance metadata with AI insights"""
         # AI-powered hashtag suggestions
         if not metadata.hashtags:
             metadata.hashtags = await self._generate_hashtags(content, metadata.caption)
@@ -571,7 +580,8 @@ class InstagramAdapter(BaseAgent):
         content: ContentItem,
         metadata: InstagramMetadata
     ) -> str:
-        """Upload media to Instagram"""
+        """
+Upload media to Instagram"""
         try:
             upload_data = {
                 "image_url" if metadata.content_type == InstagramContentType.PHOTO else "video_url": content.file_path,
@@ -635,12 +645,14 @@ class InstagramAdapter(BaseAgent):
             await self._configure_branded_content(post_id, metadata.branded_content_sponsor)
     
     async def _manage_story_highlights(self, story_id: str, metadata: InstagramMetadata) -> None:
-        """Manage story highlights"""
+        """
+Manage story highlights"""
         # Implementation would manage story highlights
         pass
     
     async def _collect_initial_analytics(self, post_id: str) -> InstagramAnalytics:
-        """Collect initial analytics for posted content"""
+        """
+Collect initial analytics for posted content"""
         # Return basic analytics structure
         return InstagramAnalytics()
     
@@ -650,7 +662,8 @@ class InstagramAdapter(BaseAgent):
         url: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """Make authenticated Instagram API request"""
+        """
+Make authenticated Instagram API request"""
         if not self.session:
             raise PlatformError("HTTP session not initialized")
         
@@ -684,12 +697,14 @@ class InstagramAdapter(BaseAgent):
         return size_map.get(aspect_ratio, (1080, 1080))
     
     def _enhance_image_quality(self, img: Image.Image) -> Image.Image:
-        """Enhance image quality for Instagram"""
+        """
+Enhance image quality for Instagram"""
         # Image enhancement implementation
         return img
     
     async def _generate_hashtags(self, content: ContentItem, caption: str) -> List[str]:
-        """Generate relevant hashtags using AI"""
+        """
+Generate relevant hashtags using AI"""
         # AI hashtag generation implementation
         return ["#ai", "#content", "#instagram"]
     
@@ -699,7 +714,8 @@ class InstagramAdapter(BaseAgent):
         return caption
     
     async def _generate_accessibility_text(self, content: ContentItem) -> str:
-        """Generate accessibility text for content"""
+        """
+Generate accessibility text for content"""
         # Accessibility text generation implementation
         return "AI-generated content"
     
@@ -709,7 +725,8 @@ class InstagramAdapter(BaseAgent):
         return True
     
     async def _fetch_media_insights(self, media_id: str) -> Dict[str, Any]:
-        """Fetch media-specific insights"""
+        """
+Fetch media-specific insights"""
         # Implementation would fetch insights data
         return {}
     
@@ -719,7 +736,8 @@ class InstagramAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch engagement metrics"""
+        """
+Fetch engagement metrics"""
         # Implementation would fetch engagement data
         return {}
     
@@ -728,7 +746,8 @@ class InstagramAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch audience insights"""
+        """
+Fetch audience insights"""
         # Implementation would fetch audience data
         return {}
     
@@ -738,27 +757,32 @@ class InstagramAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, int]:
-        """Analyze hashtag performance"""
+        """
+Analyze hashtag performance"""
         # Implementation would analyze hashtag performance
         return {}
     
     async def _add_user_tags(self, post_id: str, user_tags: List[Dict[str, Any]]) -> None:
-        """Add user tags to post"""
+        """
+Add user tags to post"""
         # Implementation would add user tags
         pass
     
     async def _add_shopping_tags(self, post_id: str, shopping_tags: List[Dict[str, Any]]) -> None:
-        """Add shopping tags to post"""
+        """
+Add shopping tags to post"""
         # Implementation would add shopping tags
         pass
     
     async def _configure_branded_content(self, post_id: str, sponsor_id: str) -> None:
-        """Configure branded content settings"""
+        """
+Configure branded content settings"""
         # Implementation would configure branded content
         pass
     
     async def cleanup(self) -> None:
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         if self.session:
             await self.session.close()
             self.session = None

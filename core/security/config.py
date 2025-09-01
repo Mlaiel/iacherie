@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
+
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -12,7 +13,9 @@ import os
 
 
 class SecurityLevel(Enum):
-    """Security levels for different environments"""
+    """
+Security levels for different environments"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -80,7 +83,8 @@ class FirewallConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance configuration"""
+    """
+Compliance configuration"""
     gdpr_enabled: bool = True
     ccpa_enabled: bool = True
     dmca_enabled: bool = True
@@ -93,7 +97,8 @@ class ComplianceConfig:
 
 @dataclass
 class ValidationConfig:
-    """Content validation configuration"""
+    """
+Content validation configuration"""
     malware_scanning_enabled: bool = True
     virus_scanning_enabled: bool = True
     content_analysis_enabled: bool = True
@@ -109,7 +114,8 @@ class ValidationConfig:
 
 @dataclass
 class SecurityConfig:
-    """Main security configuration"""
+    """
+Main security configuration"""
     security_level: SecurityLevel = SecurityLevel.PRODUCTION
     authentication: AuthenticationConfig = field(default_factory=AuthenticationConfig)
     encryption: EncryptionConfig = field(default_factory=EncryptionConfig)
@@ -119,11 +125,13 @@ class SecurityConfig:
     validation: ValidationConfig = field(default_factory=ValidationConfig)
     
     def __post_init__(self):
-        """Validate configuration after initialization"""
+        """
+Validate configuration after initialization"""
         self._validate_config()
     
     def _validate_config(self):
-        """Validate security configuration"""
+        """
+Validate security configuration"""
         # Validate required keys
         if not self.authentication.jwt_secret_key:
             if self.security_level in [SecurityLevel.PRODUCTION, SecurityLevel.ENTERPRISE]:

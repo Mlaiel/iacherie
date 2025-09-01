@@ -9,7 +9,7 @@ Module: backend/business/engagement/reward_calculator.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -26,6 +26,7 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Dynamic Reward Calculation → Distribution → Monetization → Analytics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class RewardType(str, Enum):
-    """Types of rewards available in the system."""
+    """
+Types of rewards available in the system."""
+
     EXPERIENCE_POINTS = "experience_points"
     VIRTUAL_CURRENCY = "virtual_currency"
     REAL_CURRENCY = "real_currency"
@@ -61,6 +64,7 @@ class RewardType(str, Enum):
 
 class RewardRarity(str, Enum):
     """Rarity levels for rewards."""
+
     COMMON = "common"
     UNCOMMON = "uncommon"
     RARE = "rare"
@@ -71,6 +75,7 @@ class RewardRarity(str, Enum):
 
 class RewardSource(str, Enum):
     """Sources that can trigger rewards."""
+
     CONTENT_UPLOAD = "content_upload"
     ACHIEVEMENT_UNLOCK = "achievement_unlock"
     CHALLENGE_COMPLETION = "challenge_completion"
@@ -89,6 +94,7 @@ class RewardSource(str, Enum):
 
 class RewardCalculationMethod(str, Enum):
     """Methods for calculating reward values."""
+
     FIXED = "fixed"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
@@ -124,7 +130,8 @@ class RewardCalculationContext:
 
 @dataclass
 class RewardRule:
-    """Defines rules for calculating rewards."""
+    """
+Defines rules for calculating rewards."""
     rule_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
@@ -175,7 +182,8 @@ class RewardRule:
 
 @dataclass
 class CalculatedReward:
-    """Represents a calculated reward."""
+    """
+Represents a calculated reward."""
     reward_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     reward_type: RewardType = RewardType.EXPERIENCE_POINTS
@@ -213,7 +221,8 @@ class CalculatedReward:
         return datetime.utcnow() > self.expires_at
     
     def get_display_value(self) -> str:
-        """Get formatted display value for the reward."""
+        """
+Get formatted display value for the reward."""
         if self.reward_type == RewardType.VIRTUAL_CURRENCY:
             return f"{int(self.value):,} coins"
         elif self.reward_type == RewardType.REAL_CURRENCY:
@@ -235,7 +244,8 @@ class RewardCalculator:
     """
     
     def __init__(self):
-        """Initialize the reward calculator."""
+        """
+Initialize the reward calculator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._rules: Dict[str, RewardRule] = {}
         self._user_reward_history: Dict[str, List[CalculatedReward]] = {}
@@ -493,7 +503,8 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> bool:
-        """Check if rule conditions are met."""
+        """
+Check if rule conditions are met."""
         try:
             for condition_key, condition_value in rule.conditions.items():
                 
@@ -1083,7 +1094,8 @@ async def calculate_content_upload_rewards(
     content_data: Dict[str, Any],
     user_profile: Dict[str, Any]
 ) -> List[CalculatedReward]:
-    """Calculate rewards for content upload (convenience function)."""
+    """
+Calculate rewards for content upload (convenience function)."""
     calculator = await get_reward_calculator()
     
     context = RewardCalculationContext(

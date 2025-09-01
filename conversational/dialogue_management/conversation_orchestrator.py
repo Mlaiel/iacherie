@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -39,7 +40,9 @@ from backend.services.content.processing_service import ContentProcessingService
 logger = logging.getLogger(__name__)
 
 class ConversationType(Enum):
-    """Types of conversations in the platform"""
+    """
+Types of conversations in the platform"""
+
     SINGLE_USER = "single_user"
     COLLABORATION = "collaboration"
     GROUP_PROJECT = "group_project"
@@ -50,6 +53,7 @@ class ConversationType(Enum):
 
 class ConversationPriority(Enum):
     """Conversation priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -58,6 +62,7 @@ class ConversationPriority(Enum):
 
 class OrchestrationEvent(Enum):
     """Events in conversation orchestration"""
+
     CONVERSATION_STARTED = "conversation_started"
     PARTICIPANT_JOINED = "participant_joined"
     PARTICIPANT_LEFT = "participant_left"
@@ -88,7 +93,8 @@ class ConversationParticipant:
 
 @dataclass
 class OrchestrationContext:
-    """Context for conversation orchestration"""
+    """
+Context for conversation orchestration"""
     orchestration_id: str
     conversation_type: ConversationType
     priority: ConversationPriority
@@ -118,7 +124,8 @@ class OrchestrationContext:
 
 @dataclass
 class OrchestrationRule:
-    """Rules for conversation orchestration"""
+    """
+Rules for conversation orchestration"""
     rule_id: str
     rule_type: str
     conditions: Dict[str, Any]
@@ -946,12 +953,14 @@ class ConversationOrchestrator:
         pass
 
     async def _get_creator_type(self, user: User) -> Optional[CreatorType]:
-        """Determine creator type from user profile"""
+        """
+Determine creator type from user profile"""
         # Implement creator type detection logic
         pass
 
     def _get_default_permissions(self, participant_type: str) -> Set[str]:
-        """Get default permissions for participant type"""
+        """
+Get default permissions for participant type"""
         permission_map = {
             "creator": {"send_messages", "view_analytics", "invite_participants", "upload_content"},
             "agent": {"send_messages", "view_analytics", "moderate_conversation"},
@@ -1104,7 +1113,8 @@ class ConversationOrchestrator:
         pass
 
     def get_orchestration_metrics(self) -> Dict[str, Any]:
-        """Get overall orchestration metrics"""
+        """
+Get overall orchestration metrics"""
         return {
             "current_metrics": self.metrics,
             "active_orchestrations": len(self.active_orchestrations),

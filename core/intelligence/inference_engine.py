@@ -15,6 +15,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
@@ -60,7 +61,9 @@ from ..storage.inference_storage import InferenceStorage
 
 
 class InferenceType(Enum):
-    """Inference algorithm types"""
+    """
+Inference algorithm types"""
+
     RULE_BASED = "rule_based"
     PROBABILISTIC = "probabilistic"
     FUZZY = "fuzzy"
@@ -73,6 +76,7 @@ class InferenceType(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for inferences"""
+
     VERY_LOW = 0.2
     LOW = 0.4
     MEDIUM = 0.6
@@ -82,7 +86,8 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class InferenceRule:
-    """Inference rule representation"""
+    """
+Inference rule representation"""
     rule_id: str
     condition: str
     conclusion: str
@@ -94,7 +99,8 @@ class InferenceRule:
 
 @dataclass
 class InferenceResult:
-    """Inference result"""
+    """
+Inference result"""
     inference_id: str
     predictions: Dict[str, Any]
     confidence_scores: Dict[str, float]
@@ -105,7 +111,8 @@ class InferenceResult:
 
 
 class RuleBasedInference:
-    """Rule-based inference engine"""
+    """
+Rule-based inference engine"""
     
     def __init__(self):
         self.rules = {}
@@ -113,7 +120,8 @@ class RuleBasedInference:
         self.inference_chain = []
         
     def add_rule(self, rule: InferenceRule) -> bool:
-        """Add inference rule"""
+        """
+Add inference rule"""
         try:
             self.rules[rule.rule_id] = rule
             return True
@@ -251,7 +259,8 @@ class ProbabilisticInference:
         parameters: Dict[str, Any],
         dependencies: Optional[List[str]] = None
     ) -> bool:
-        """Add probabilistic variable"""
+        """
+Add probabilistic variable"""
         try:
             self.variables[var_name] = {
                 'distribution': distribution,
@@ -330,7 +339,8 @@ class ProbabilisticInference:
         return max(0.0, min(1.0, base_prob))
     
     def _compute_normal_parameters(self, var: str, evidence: Dict[str, Any]) -> Tuple[float, float]:
-        """Compute mean and std for normal variable"""
+        """
+Compute mean and std for normal variable"""
         var_info = self.variables[var]
         base_mean = var_info['parameters'].get('mean', 0.0)
         base_std = var_info['parameters'].get('std', 1.0)
@@ -347,7 +357,8 @@ class ProbabilisticInference:
         return base_mean, max(0.1, base_std)
     
     def _compute_categorical_probabilities(self, var: str, evidence: Dict[str, Any]) -> Dict[str, float]:
-        """Compute probabilities for categorical variable"""
+        """
+Compute probabilities for categorical variable"""
         var_info = self.variables[var]
         base_probs = var_info['parameters'].get('probabilities', {})
         
@@ -372,7 +383,8 @@ class ProbabilisticInference:
 
 
 class FuzzyInference:
-    """Fuzzy logic inference system"""
+    """
+Fuzzy logic inference system"""
     
     def __init__(self):
         self.linguistic_variables = {}
@@ -385,7 +397,8 @@ class FuzzyInference:
         universe: np.ndarray,
         membership_functions: Dict[str, Any]
     ) -> bool:
-        """Add fuzzy linguistic variable"""
+        """
+Add fuzzy linguistic variable"""
         try:
             # Create fuzzy variable
             if var_name.endswith('_input'):
@@ -486,7 +499,8 @@ class NeuralInference:
         self.is_trained = False
         
     def _build_network(self) -> nn.Module:
-        """Build neural inference network"""
+        """
+Build neural inference network"""
         layers = []
         prev_dim = self.input_dim
         
@@ -503,7 +517,8 @@ class NeuralInference:
         return nn.Sequential(*layers)
     
     def train(self, training_data: List[Tuple[np.ndarray, np.ndarray]], epochs: int = 100) -> bool:
-        """Train neural inference model"""
+        """
+Train neural inference model"""
         try:
             if not training_data:
                 return False
@@ -761,7 +776,8 @@ class InferenceEngine:
         input_data: Dict[str, Any],
         inference_type: InferenceType
     ) -> InferenceResult:
-        """Queue inference for real-time processing"""
+        """
+Queue inference for real-time processing"""
         inference_id = f"inf_{int(datetime.now().timestamp())}"
         
         self.inference_queue.put({
@@ -803,7 +819,8 @@ class InferenceEngine:
         self.processing_thread.start()
     
     def _process_queue(self) -> None:
-        """Process inference queue"""
+        """
+Process inference queue"""
         while self.is_processing:
             try:
                 if not self.inference_queue.empty():
@@ -1063,7 +1080,8 @@ class InferenceEngine:
         return self.rule_engine.add_rule(rule)
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get inference engine performance metrics"""
+        """
+Get inference engine performance metrics"""
         metrics = self.performance_metrics.copy()
         
         # Calculate additional metrics
@@ -1088,6 +1106,7 @@ class InferenceEngine:
             self.processing_thread.join(timeout=5)
     
     def clear_cache(self) -> None:
-        """Clear results cache"""
+        """
+Clear results cache"""
         self.results_cache.clear()
         self.logger.info("Inference cache cleared")

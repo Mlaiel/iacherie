@@ -4,6 +4,7 @@ Tests for mobile apps, monetization, SEO, and enterprise security integration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ COPYRIGHT WARNING: Proprietary code - unauthorized use prohibited.
 """
+
 import asyncio
 import json
 from decimal import Decimal
@@ -32,7 +33,8 @@ class TestPriorityFeaturesIntegration:
     """Integration tests for the 4 priority features."""
     
     async def test_mobile_apps_deployment(self):
-        """Test mobile apps deployment functionality."""
+        """
+Test mobile apps deployment functionality."""
         try:
             mobile_service = CompleteMobileAppsService()
             

@@ -6,6 +6,7 @@ consistency, synchronization, and intelligent load distribution across nodes.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import json
@@ -22,7 +23,9 @@ import redis.asyncio as aioredis
 logger = logging.getLogger(__name__)
 
 class NodeStatus(Enum):
-    """Cache node status states"""
+    """
+Cache node status states"""
+
     ACTIVE = "active"
     STANDBY = "standby"
     MAINTENANCE = "maintenance"
@@ -32,6 +35,7 @@ class NodeStatus(Enum):
 
 class CoordinationEvent(Enum):
     """Types of coordination events"""
+
     NODE_JOIN = "node_join"
     NODE_LEAVE = "node_leave"
     CACHE_UPDATE = "cache_update"
@@ -58,13 +62,15 @@ class CacheNode:
 
 @dataclass
 class ConsistencyHash:
-    """Consistent hashing for key distribution"""
+    """
+Consistent hashing for key distribution"""
     ring: Dict[int, str] = field(default_factory=dict)
     nodes: Dict[str, CacheNode] = field(default_factory=dict)
     virtual_nodes: int = 150
     
     def add_node(self, node: CacheNode):
-        """Add node to consistent hash ring"""
+        """
+Add node to consistent hash ring"""
         self.nodes[node.node_id] = node
         
         for i in range(self.virtual_nodes):
@@ -89,7 +95,8 @@ class ConsistencyHash:
         del self.nodes[node_id]
     
     def get_node_for_key(self, key: str) -> Optional[str]:
-        """Get responsible node for cache key"""
+        """
+Get responsible node for cache key"""
         if not self.ring:
             return None
         
@@ -106,7 +113,8 @@ class ConsistencyHash:
         return self.ring[sorted_hashes[0]]
     
     def get_replica_nodes(self, key: str, replica_count: int = 2) -> List[str]:
-        """Get replica nodes for key"""
+        """
+Get replica nodes for key"""
         nodes = []
         key_hash = self._hash_key(key)
         sorted_hashes = sorted(self.ring.keys())
@@ -134,12 +142,14 @@ class ConsistencyHash:
         return nodes
     
     def _hash_key(self, key: str) -> int:
-        """Hash key to ring position"""
+        """
+Hash key to ring position"""
         return int(hashlib.md5(key.encode()).hexdigest(), 16)
 
 @dataclass
 class CoordinationMessage:
-    """Message for inter-node coordination"""
+    """
+Message for inter-node coordination"""
     message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: CoordinationEvent = CoordinationEvent.HEALTH_CHECK
     source_node: str = ""
@@ -268,7 +278,8 @@ class DistributedCacheCoordinator:
         value: Any,
         ttl: Optional[int] = None
     ):
-        """Notify cluster of cache update"""
+        """
+Notify cluster of cache update"""
         message = CoordinationMessage(
             event_type=CoordinationEvent.CACHE_UPDATE,
             source_node=self.node_id,
@@ -283,7 +294,8 @@ class DistributedCacheCoordinator:
         await self._broadcast_message(message)
     
     async def notify_cache_delete(self, key: str):
-        """Notify cluster of cache deletion"""
+        """
+Notify cluster of cache deletion"""
         message = CoordinationMessage(
             event_type=CoordinationEvent.CACHE_DELETE,
             source_node=self.node_id,
@@ -298,7 +310,8 @@ class DistributedCacheCoordinator:
         patterns: List[str] = None,
         tags: List[str] = None
     ):
-        """Notify cluster of cache invalidation"""
+        """
+Notify cluster of cache invalidation"""
         message = CoordinationMessage(
             event_type=CoordinationEvent.INVALIDATION,
             source_node=self.node_id,
@@ -316,7 +329,8 @@ class DistributedCacheCoordinator:
         key: str,
         replica_count: int = 2
     ) -> List[CacheNode]:
-        """Get nodes responsible for caching a key"""
+        """
+Get nodes responsible for caching a key"""
         node_ids = self.consistent_hash.get_replica_nodes(key, replica_count)
         
         nodes = []
@@ -327,12 +341,14 @@ class DistributedCacheCoordinator:
         return nodes
     
     async def is_local_key(self, key: str) -> bool:
-        """Check if key should be handled by local node"""
+        """
+Check if key should be handled by local node"""
         primary_node = self.consistent_hash.get_node_for_key(key)
         return primary_node == self.node_id
     
     async def get_cluster_status(self) -> Dict[str, Any]:
-        """Get comprehensive cluster status"""
+        """
+Get comprehensive cluster status"""
         return {
             'local_node_id': self.node_id,
             'is_coordinator': self.is_coordinator,
@@ -404,7 +420,8 @@ class DistributedCacheCoordinator:
         self.local_node.status = NodeStatus.ACTIVE
     
     async def _leave_cluster(self):
-        """Leave the cache cluster gracefully"""
+        """
+Leave the cache cluster gracefully"""
         # Broadcast leave message
         leave_message = CoordinationMessage(
             event_type=CoordinationEvent.NODE_LEAVE,
@@ -424,7 +441,8 @@ class DistributedCacheCoordinator:
         self.consistent_hash.remove_node(self.node_id)
     
     async def _register_node(self, node: CacheNode):
-        """Register node in Redis"""
+        """
+Register node in Redis"""
         node_key = f"cache_nodes:{node.node_id}"
         node_data = {
             'node_id': node.node_id,
@@ -510,7 +528,8 @@ class DistributedCacheCoordinator:
         )
     
     async def _heartbeat_loop(self):
-        """Send periodic heartbeats"""
+        """
+Send periodic heartbeats"""
         while True:
             try:
                 # Update last heartbeat
@@ -662,12 +681,14 @@ class DistributedCacheCoordinator:
             node.connection_count = payload.get('connection_count', 0)
     
     async def _handle_rebalance(self, data: Dict[str, Any]):
-        """Handle rebalance notification"""
+        """
+Handle rebalance notification"""
         if self.is_coordinator:
             await self._perform_rebalance()
     
     async def _health_monitor_loop(self):
-        """Monitor node health and detect failures"""
+        """
+Monitor node health and detect failures"""
         while True:
             try:
                 current_time = datetime.utcnow()

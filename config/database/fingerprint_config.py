@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import logging
 import hashlib
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class FingerprintType(Enum):
-    """Fingerprint algorithm types"""
+    """
+Fingerprint algorithm types"""
+
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     MFCC_FEATURES = "mfcc_features"
@@ -55,6 +58,7 @@ class FingerprintType(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
@@ -81,6 +85,7 @@ class ContentFormat(Enum):
 
 class MatchingAlgorithm(Enum):
     """Similarity matching algorithms"""
+
     COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
@@ -93,6 +98,7 @@ class MatchingAlgorithm(Enum):
 
 class ProcessingStatus(Enum):
     """Fingerprint processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -132,7 +138,8 @@ class FingerprintQuality:
 
 @dataclass
 class AudioFingerprintConfig:
-    """Audio fingerprinting configuration"""
+    """
+Audio fingerprinting configuration"""
     sample_rate: int = 44100
     hop_length: int = 512
     n_fft: int = 2048
@@ -180,7 +187,8 @@ class VideoFingerprintConfig:
 
 @dataclass
 class ImageFingerprintConfig:
-    """Image fingerprinting configuration"""
+    """
+Image fingerprinting configuration"""
     resize_dimensions: Tuple[int, int] = (256, 256)
     hash_size: int = 8
     
@@ -260,7 +268,8 @@ class ContentFingerprint(Base):
 
 
 class AudioFingerprint(Base):
-    """Audio-specific fingerprints"""
+    """
+Audio-specific fingerprints"""
     __tablename__ = 'audio_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -292,7 +301,8 @@ class AudioFingerprint(Base):
 
 
 class VideoFingerprint(Base):
-    """Video-specific fingerprints"""
+    """
+Video-specific fingerprints"""
     __tablename__ = 'video_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -329,7 +339,8 @@ class VideoFingerprint(Base):
 
 
 class ImageFingerprint(Base):
-    """Image-specific fingerprints"""
+    """
+Image-specific fingerprints"""
     __tablename__ = 'image_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -366,7 +377,8 @@ class ImageFingerprint(Base):
 
 
 class TextFingerprint(Base):
-    """Text-specific fingerprints"""
+    """
+Text-specific fingerprints"""
     __tablename__ = 'text_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -402,7 +414,8 @@ class TextFingerprint(Base):
 
 
 class SimilarityMatch(Base):
-    """Similarity matching results"""
+    """
+Similarity matching results"""
     __tablename__ = 'similarity_matches'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -436,7 +449,8 @@ class SimilarityMatch(Base):
 
 @dataclass
 class FingerprintConfig:
-    """Professional fingerprint configuration"""
+    """
+Professional fingerprint configuration"""
     
     # Database credentials
     credentials: FingerprintCredentials = field(default_factory=FingerprintCredentials)
@@ -469,7 +483,8 @@ class FingerprintConfig:
     match_history_retention_days: int = 365  # 1 year
     
     def get_content_config(self, content_type: str):
-        """Get configuration for specific content type"""
+        """
+Get configuration for specific content type"""
         config_map = {
             "audio": self.audio_config,
             "video": self.video_config,
@@ -490,7 +505,8 @@ class FingerprintManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize fingerprint database connections"""
+        """
+Initialize fingerprint database connections"""
         try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
@@ -675,7 +691,8 @@ class FingerprintManager:
                                     similarity: float,
                                     algorithm: MatchingAlgorithm,
                                     confidence: float) -> int:
-        """Record similarity match result"""
+        """
+Record similarity match result"""
         try:
             with self._session_factory() as session:
                 match = SimilarityMatch(
@@ -777,7 +794,8 @@ def create_fingerprint_config() -> FingerprintConfig:
 
 
 def create_fingerprint_manager(config: Optional[FingerprintConfig] = None) -> FingerprintManager:
-    """Create fingerprint manager with configuration"""
+    """
+Create fingerprint manager with configuration"""
     if config is None:
         config = create_fingerprint_config()
     return FingerprintManager(config)

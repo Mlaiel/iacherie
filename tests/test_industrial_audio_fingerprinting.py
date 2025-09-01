@@ -13,6 +13,7 @@ INDUSTRIAL REQUIREMENTS VALIDATION:
 ✅ Matching temps réel <50ms
 ✅ Précision >99.5% sur datasets industriels
 """
+
 import pytest
 import asyncio
 import numpy as np
@@ -37,18 +38,21 @@ from data_management.fingerprinting.industrial_audio_fingerprint import (
 )
 
 class TestDataGenerator:
-    """Generate test audio data for comprehensive testing"""
+    """
+Generate test audio data for comprehensive testing"""
     
     @staticmethod
     def create_sine_wave(frequency: float = 440.0, duration: float = 5.0, 
                         sample_rate: int = 22050, amplitude: float = 0.5) -> np.ndarray:
-        """Create a sine wave test signal"""
+        """
+Create a sine wave test signal"""
         t = np.linspace(0, duration, int(sample_rate * duration), False)
         return amplitude * np.sin(2 * np.pi * frequency * t)
     
     @staticmethod
     def create_complex_audio(duration: float = 10.0, sample_rate: int = 22050) -> np.ndarray:
-        """Create complex audio with multiple frequencies and harmonics"""
+        """
+Create complex audio with multiple frequencies and harmonics"""
         t = np.linspace(0, duration, int(sample_rate * duration), False)
         
         # Base frequencies
@@ -72,7 +76,8 @@ class TestDataGenerator:
     
     @staticmethod
     def add_pitch_shift(audio: np.ndarray, semitones: float) -> np.ndarray:
-        """Add pitch shift to audio (modification resistance test)"""
+        """
+Add pitch shift to audio (modification resistance test)"""
         try:
             return librosa.effects.pitch_shift(audio, sr=22050, n_steps=semitones)
         except:
@@ -89,7 +94,8 @@ class TestDataGenerator:
     
     @staticmethod
     def add_tempo_change(audio: np.ndarray, tempo_factor: float) -> np.ndarray:
-        """Add tempo change to audio (modification resistance test)"""
+        """
+Add tempo change to audio (modification resistance test)"""
         try:
             return librosa.effects.time_stretch(audio, rate=tempo_factor)
         except:
@@ -110,7 +116,8 @@ class TestDataGenerator:
     @staticmethod
     def add_eq_filter(audio: np.ndarray, sample_rate: int = 22050, 
                      low_gain: float = 1.0, mid_gain: float = 1.0, high_gain: float = 1.0) -> np.ndarray:
-        """Add EQ filtering (modification resistance test)"""
+        """
+Add EQ filtering (modification resistance test)"""
         try:
             # Apply simple frequency domain filtering
             stft_audio = librosa.stft(audio)
@@ -136,20 +143,23 @@ class TestDataGenerator:
     
     @staticmethod
     def add_noise(audio: np.ndarray, noise_level: float = 0.05) -> np.ndarray:
-        """Add noise to audio (modification resistance test)"""
+        """
+Add noise to audio (modification resistance test)"""
         noise = np.random.normal(0, noise_level, len(audio))
         return audio + noise
     
     @staticmethod
     def save_audio_to_temp_file(audio: np.ndarray, sample_rate: int = 22050) -> str:
-        """Save audio to temporary file and return path"""
+        """
+Save audio to temporary file and return path"""
         temp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
         sf.write(temp_file.name, audio, sample_rate)
         return temp_file.name
 
 @pytest.fixture
 def industrial_config():
-    """Create industrial audio configuration for testing"""
+    """
+Create industrial audio configuration for testing"""
     return IndustrialAudioConfig(
         max_processing_time_ms=50.0,
         target_precision=0.995,
@@ -164,22 +174,26 @@ def industrial_config():
 
 @pytest.fixture
 def test_audio_generator():
-    """Get test audio generator"""
+    """
+Get test audio generator"""
     return TestDataGenerator()
 
 @pytest.fixture
 async def industrial_engine(industrial_config):
-    """Create and initialize industrial audio fingerprinting engine"""
+    """
+Create and initialize industrial audio fingerprinting engine"""
     engine = IndustrialAudioFingerprintEngine(industrial_config)
     await engine.initialize()
     yield engine
     await engine.shutdown()
 
 class TestIndustrialAudioConfig:
-    """Test industrial audio configuration"""
+    """
+Test industrial audio configuration"""
     
     def test_config_creation(self):
-        """Test configuration creation with industrial requirements"""
+        """
+Test configuration creation with industrial requirements"""
         config = IndustrialAudioConfig()
         
         # Validate industrial requirements
@@ -198,7 +212,8 @@ class TestIndustrialAudioConfig:
         assert config.deep_features_enabled is True
     
     def test_config_customization(self):
-        """Test configuration customization"""
+        """
+Test configuration customization"""
         config = IndustrialAudioConfig(
             max_processing_time_ms=25.0,
             target_precision=0.998,
@@ -210,11 +225,13 @@ class TestIndustrialAudioConfig:
         assert config.chromaprint_duration == 60.0
 
 class TestIndustrialChromaprintProcessor:
-    """Test industrial Chromaprint processing"""
+    """
+Test industrial Chromaprint processing"""
     
     @pytest.mark.asyncio
     async def test_chromaprint_processing(self, industrial_config, test_audio_generator):
-        """Test Chromaprint fingerprint generation"""
+        """
+Test Chromaprint fingerprint generation"""
         try:
             processor = IndustrialChromaprintProcessor(industrial_config)
             
@@ -269,7 +286,8 @@ class TestIndustrialMLFeatureExtractor:
     
     @pytest.mark.asyncio
     async def test_ml_feature_extraction(self, industrial_config, test_audio_generator):
-        """Test comprehensive ML feature extraction"""
+        """
+Test comprehensive ML feature extraction"""
         extractor = IndustrialMLFeatureExtractor(industrial_config)
         
         # Generate test audio
@@ -302,7 +320,8 @@ class TestIndustrialMLFeatureExtractor:
     
     @pytest.mark.asyncio
     async def test_feature_resistance_properties(self, industrial_config, test_audio_generator):
-        """Test feature resistance to audio modifications"""
+        """
+Test feature resistance to audio modifications"""
         extractor = IndustrialMLFeatureExtractor(industrial_config)
         
         # Generate original audio
@@ -363,7 +382,8 @@ class TestIndustrialFAISSManager:
     
     @pytest.mark.asyncio
     async def test_faiss_initialization(self, industrial_config):
-        """Test FAISS manager initialization"""
+        """
+Test FAISS manager initialization"""
         manager = IndustrialFAISSManager(industrial_config)
         
         # Initialize index
@@ -381,7 +401,8 @@ class TestIndustrialFAISSManager:
     
     @pytest.mark.asyncio
     async def test_faiss_add_and_search(self, industrial_config, test_audio_generator):
-        """Test adding fingerprints and searching"""
+        """
+Test adding fingerprints and searching"""
         manager = IndustrialFAISSManager(industrial_config)
         await manager.initialize_index()
         
@@ -471,7 +492,8 @@ class TestIndustrialAudioFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, industrial_config):
-        """Test engine initialization"""
+        """
+Test engine initialization"""
         engine = IndustrialAudioFingerprintEngine(industrial_config)
         
         # Initialize engine
@@ -486,7 +508,8 @@ class TestIndustrialAudioFingerprintEngine:
     
     @pytest.mark.asyncio
     async def test_fingerprint_creation(self, industrial_engine, test_audio_generator):
-        """Test complete fingerprint creation process"""
+        """
+Test complete fingerprint creation process"""
         # Generate test audio file
         audio = test_audio_generator.create_complex_audio(duration=8.0)
         audio_file = test_audio_generator.save_audio_to_temp_file(audio)
@@ -739,7 +762,8 @@ class TestIndustrialIntegrationTests:
     
     @pytest.mark.asyncio
     async def test_end_to_end_workflow(self, industrial_engine, test_audio_generator):
-        """Test complete end-to-end industrial workflow"""
+        """
+Test complete end-to-end industrial workflow"""
         # 1. Create diverse audio content
         audio_content = [
             ("classical", test_audio_generator.create_sine_wave(440, 6.0)),

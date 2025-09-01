@@ -8,11 +8,12 @@ Business Logic:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → AI rights protection → Professional SEO → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class PersonalizationStrategy(str, Enum):
-    """Personalization strategy types"""
+    """
+Personalization strategy types"""
+
     BEHAVIORAL = "behavioral"
     COLLABORATIVE = "collaborative"
     CONTENT_BASED = "content_based"
@@ -48,6 +51,7 @@ class PersonalizationStrategy(str, Enum):
 
 class UserPersonality(str, Enum):
     """User personality types for personalization"""
+
     CREATIVE_EXPLORER = "creative_explorer"
     BUSINESS_FOCUSED = "business_focused"
     TRENDY_FOLLOWER = "trendy_follower"
@@ -58,6 +62,7 @@ class UserPersonality(str, Enum):
 
 class ContentPreference(str, Enum):
     """Content preference categories"""
+
     VISUAL_FOCUSED = "visual_focused"
     AUDIO_CENTRIC = "audio_centric"
     TEXT_BASED = "text_based"
@@ -68,6 +73,7 @@ class ContentPreference(str, Enum):
 
 class EngagementPattern(str, Enum):
     """User engagement behavior patterns"""
+
     HIGH_FREQUENCY = "high_frequency"
     DEEP_ENGAGEMENT = "deep_engagement"
     BROWSE_DISCOVER = "browse_discover"
@@ -94,7 +100,8 @@ class PersonalizationContext:
 
 @dataclass
 class PersonalizationRequest:
-    """Request for personalized content or experience"""
+    """
+Request for personalized content or experience"""
     context: PersonalizationContext
     request_type: str
     target_content: Optional[List[str]] = None
@@ -471,7 +478,8 @@ class PersonalizationManager(BaseService):
         current_behavior: Dict[str, Any],
         context: PersonalizationContext
     ) -> Dict[str, float]:
-        """Calculate personalization factor weights"""
+        """
+Calculate personalization factor weights"""
         factors = {
             "content_preference": 0.0,
             "behavioral_pattern": 0.0,
@@ -538,7 +546,8 @@ def create_personalization_manager(
 
 
 def validate_personalization_context(context: PersonalizationContext) -> bool:
-    """Validate personalization context"""
+    """
+Validate personalization context"""
     required_fields = ["user_id", "session_id", "platform", "device_type"]
     
     for field in required_fields:

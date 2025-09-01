@@ -5,7 +5,7 @@ Default configuration templates for the ultra-advanced vector database system.
 Provides optimized settings for different deployment scenarios.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
 =====================================
@@ -16,6 +16,7 @@ des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, Any
 from pathlib import Path
 

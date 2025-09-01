@@ -29,6 +29,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -70,7 +71,9 @@ from ...integrations.platform_apis import PlatformAPIManager
 logger = logging.getLogger(__name__)
 
 class SchedulingPriority(Enum):
-    """Scheduling priority levels"""
+    """
+Scheduling priority levels"""
+
     LOW = "low"
     NORMAL = "normal" 
     HIGH = "high"
@@ -79,6 +82,7 @@ class SchedulingPriority(Enum):
 
 class ScheduleStatus(Enum):
     """Schedule execution status"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     EXECUTING = "executing"
@@ -89,6 +93,7 @@ class ScheduleStatus(Enum):
 
 class ScheduleType(Enum):
     """Types of scheduling"""
+
     IMMEDIATE = "immediate"
     DELAYED = "delayed"
     RECURRING = "recurring"
@@ -121,7 +126,8 @@ class OptimalTimingAnalysis:
 
 @dataclass
 class ScheduleResult:
-    """Schedule execution result"""
+    """
+Schedule execution result"""
     schedule_id: str
     status: ScheduleStatus
     execution_time: Optional[datetime]
@@ -133,7 +139,8 @@ class ScheduleResult:
 Base = declarative_base()
 
 class ScheduledJob(Base):
-    """Database model for scheduled jobs"""
+    """
+Database model for scheduled jobs"""
     __tablename__ = 'scheduled_jobs'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -635,7 +642,8 @@ class SchedulingAgent(BaseAgent):
             )
     
     async def _schedule_recurring_job(self, schedule_id: str, request: SchedulingRequest):
-        """Schedule a recurring job"""
+        """
+Schedule a recurring job"""
         if not request.recurring_pattern:
             raise AgentError("Recurring pattern is required for recurring jobs")
         
@@ -783,7 +791,8 @@ class SchedulingAgent(BaseAgent):
         platforms: List[str],
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze platform-specific optimization factors"""
+        """
+Analyze platform-specific optimization factors"""
         platform_scores = {}
         
         current_time = datetime.utcnow()
@@ -852,7 +861,8 @@ class SchedulingAgent(BaseAgent):
         platform_analysis: Dict[str, Any],
         timezone: str
     ) -> datetime:
-        """Calculate optimal posting time using weighted scoring"""
+        """
+Calculate optimal posting time using weighted scoring"""
         
         # Get current time in target timezone
         tz = pytz.timezone(timezone)
@@ -896,7 +906,8 @@ class SchedulingAgent(BaseAgent):
         candidate_time: datetime,
         audience_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate audience activity score for a given time"""
+        """
+Calculate audience activity score for a given time"""
         hour = candidate_time.hour
         day_of_week = candidate_time.weekday()
         
@@ -922,7 +933,8 @@ class SchedulingAgent(BaseAgent):
         candidate_time: datetime,
         competition_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate competition level score for a given time"""
+        """
+Calculate competition level score for a given time"""
         hour = candidate_time.hour
         
         peak_hours = competition_analysis.get('peak_competition_hours', [])
@@ -940,7 +952,8 @@ class SchedulingAgent(BaseAgent):
         candidate_time: datetime,
         platform_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate platform optimization score for a given time"""
+        """
+Calculate platform optimization score for a given time"""
         return platform_analysis.get('overall_score', 0.5)
     
     def _calculate_confidence_score(
@@ -949,7 +962,8 @@ class SchedulingAgent(BaseAgent):
         competition_analysis: Dict[str, Any],
         platform_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate overall confidence in the timing recommendation"""
+        """
+Calculate overall confidence in the timing recommendation"""
         audience_confidence = audience_analysis.get('confidence', 0.0)
         competition_confidence = 0.7  # Mock confidence for competition analysis
         platform_confidence = 0.8     # Mock confidence for platform analysis
@@ -962,7 +976,8 @@ class SchedulingAgent(BaseAgent):
         competition_analysis: Dict[str, Any],
         platform_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate human-readable reasoning for the timing recommendation"""
+        """
+Generate human-readable reasoning for the timing recommendation"""
         reasoning = []
         
         # Audience-based reasoning
@@ -1012,7 +1027,8 @@ class SchedulingAgent(BaseAgent):
         platform: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Execute content distribution on a specific platform"""
+        """
+Execute content distribution on a specific platform"""
         # This would integrate with actual platform APIs
         # For now, return mock performance metrics
         
@@ -1027,7 +1043,8 @@ class SchedulingAgent(BaseAgent):
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         if self.scheduler:
             self.scheduler.shutdown()
         await super().cleanup()
@@ -1044,7 +1061,8 @@ class SchedulingAgentManager:
         self.lock = asyncio.Lock()
     
     async def get_agent(self, creator_id: str = None) -> SchedulingAgent:
-        """Get an available scheduling agent"""
+        """
+Get an available scheduling agent"""
         async with self.lock:
             if creator_id and creator_id in self.agents:
                 return self.agents[creator_id]

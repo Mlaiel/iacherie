@@ -1,6 +1,7 @@
 """Performance Analytics Engine for Copyright Enforcement
 Advanced analytics and reporting system for enforcement case tracking and optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""
+    """
+Types of metrics tracked"""
+
     DETECTION_RATE = "detection_rate"
     SUCCESS_RATE = "success_rate"
     RESPONSE_TIME = "response_time"
@@ -36,6 +39,7 @@ class MetricType(Enum):
 
 class ReportType(Enum):
     """Types of reports generated"""
+
     DAILY_SUMMARY = "daily_summary"
     WEEKLY_PERFORMANCE = "weekly_performance"
     MONTHLY_ANALYTICS = "monthly_analytics"
@@ -50,6 +54,7 @@ class ReportType(Enum):
 
 class AlertLevel(Enum):
     """Alert severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -68,7 +73,8 @@ class PerformanceMetric:
     tags: Set[str] = field(default_factory=set)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary"""
+        """
+Convert metric to dictionary"""
         return {
             'metric_type': self.metric_type.value,
             'value': self.value,
@@ -82,7 +88,8 @@ class PerformanceMetric:
 
 @dataclass
 class AnalyticsAlert:
-    """Analytics-based alert"""
+    """
+Analytics-based alert"""
     id: str
     alert_type: str
     level: AlertLevel
@@ -98,7 +105,8 @@ class AnalyticsAlert:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
+    """
+Trend analysis results"""
     metric_type: MetricType
     period: str
     trend_direction: str  # increasing, decreasing, stable
@@ -112,14 +120,16 @@ class TrendAnalysis:
 
 
 class CaseAnalyzer:
-    """Analyzer for enforcement case performance"""
+    """
+Analyzer for enforcement case performance"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.min_cases_for_analysis = self.config.get('min_cases_for_analysis', 10)
     
     def analyze_case_performance(self, cases: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze performance metrics from enforcement cases"""
+        """
+Analyze performance metrics from enforcement cases"""
         try:
             if len(cases) < self.min_cases_for_analysis:
                 logger.warning(f"Insufficient cases for analysis: {len(cases)} < {self.min_cases_for_analysis}")
@@ -373,7 +383,8 @@ class TrendAnalyzer:
         self.trend_periods = self.config.get('trend_periods', ['daily', 'weekly', 'monthly'])
     
     def analyze_trends(self, metrics: List[PerformanceMetric]) -> List[TrendAnalysis]:
-        """Analyze trends in performance metrics"""
+        """
+Analyze trends in performance metrics"""
         try:
             trends = []
             
@@ -488,7 +499,8 @@ class ReportGenerator:
         date_range: Tuple[datetime, datetime],
         custom_params: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate analytics report"""
+        """
+Generate analytics report"""
         try:
             logger.info(f"Generating {report_type.value} report for {date_range[0]} to {date_range[1]}")
             
@@ -746,7 +758,8 @@ class ReportGenerator:
         return dict(violation_counts)
     
     def _analyze_hourly_distribution(self, cases: List[Dict[str, Any]]) -> Dict[int, int]:
-        """Analyze hourly distribution of cases"""
+        """
+Analyze hourly distribution of cases"""
         hourly_counts = defaultdict(int)
         for case in cases:
             if case.get('created_at'):
@@ -755,7 +768,8 @@ class ReportGenerator:
         return dict(hourly_counts)
     
     def _calculate_avg_metric(self, cases: List[Dict[str, Any]], metric_name: str) -> float:
-        """Calculate average of a specific metric"""
+        """
+Calculate average of a specific metric"""
         try:
             values = []
             for case in cases:
@@ -779,7 +793,8 @@ class ReportGenerator:
         return (escalated_cases / len(cases) * 100) if cases else 0.0
     
     def _generate_daily_recommendations(self, summary: Dict[str, Any], metrics: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on daily analysis"""
+        """
+Generate recommendations based on daily analysis"""
         recommendations = []
         
         if summary['success_rate'] < 70:
@@ -1082,7 +1097,8 @@ class AnalyticsEngine:
         self.alert_callbacks.append(callback)
     
     async def resolve_alert(self, alert_id: str):
-        """Resolve an active alert"""
+        """
+Resolve an active alert"""
         try:
             for alert in self.active_alerts:
                 if alert.id == alert_id:
@@ -1102,7 +1118,8 @@ class AnalyticsEngine:
         return [alert for alert in self.active_alerts if not alert.resolved]
     
     async def get_analytics_summary(self) -> Dict[str, Any]:
-        """Get analytics summary"""
+        """
+Get analytics summary"""
         try:
             active_alerts = self.get_active_alerts()
             

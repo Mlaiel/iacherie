@@ -20,6 +20,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -85,6 +86,7 @@ from ..core.config import get_settings
 
 class StorageType(Enum):
     """Types of storage backends."""
+
     AWS_S3 = "aws_s3"
     MINIO = "minio"
     LOCAL_FILE = "local_file"
@@ -94,6 +96,7 @@ class StorageType(Enum):
 
 class FileType(Enum):
     """Types of files stored."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -107,6 +110,7 @@ class FileType(Enum):
 
 class StorageClass(Enum):
     """Storage classes for cost optimization."""
+
     STANDARD = "STANDARD"
     STANDARD_IA = "STANDARD_IA"
     ONEZONE_IA = "ONEZONE_IA"
@@ -166,7 +170,8 @@ class StoredFile:
     encryption_enabled: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "file_id": self.file_id,
             "original_filename": self.original_filename,
@@ -198,7 +203,8 @@ class FileIndex:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "index_id": self.index_id,
             "file_id": self.file_id,
@@ -452,7 +458,8 @@ class S3StorageProvider(StorageProvider):
         return self.session
         
     async def _get_client(self):
-        """Get S3 client."""
+        """
+Get S3 client."""
         session = await self._get_session()
         
         client_kwargs = {
@@ -481,7 +488,8 @@ class S3StorageProvider(StorageProvider):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Upload file to S3/MinIO."""
+        """
+Upload file to S3/MinIO."""
         try:
             async with await self._get_client() as s3_client:
                 # Prepare upload parameters
@@ -567,7 +575,8 @@ class S3StorageProvider(StorageProvider):
             return False
             
     async def get_file_metadata(self, key: str) -> Dict[str, Any]:
-        """Get file metadata from S3/MinIO."""
+        """
+Get file metadata from S3/MinIO."""
         try:
             async with await self._get_client() as s3_client:
                 response = await s3_client.head_object(
@@ -664,7 +673,8 @@ class LocalStorageProvider(StorageProvider):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Upload file to local storage."""
+        """
+Upload file to local storage."""
         try:
             file_path = self.base_path / key
             file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -733,7 +743,8 @@ class LocalStorageProvider(StorageProvider):
         return file_path.exists()
         
     async def get_file_metadata(self, key: str) -> Dict[str, Any]:
-        """Get file metadata from local storage."""
+        """
+Get file metadata from local storage."""
         try:
             file_path = self.base_path / key
             
@@ -804,7 +815,8 @@ class IndexManager:
         self.indices: Dict[str, FileIndex] = {}
         
     async def add_file_index(self, file_index: FileIndex):
-        """Add file to index."""
+        """
+Add file to index."""
         self.indices[file_index.file_id] = file_index
         self.logger.info(f"Added file index for {file_index.file_id}")
         
@@ -845,11 +857,13 @@ class IndexManager:
         return results
         
     async def get_file_index(self, file_id: str) -> Optional[FileIndex]:
-        """Get file index by ID."""
+        """
+Get file index by ID."""
         return self.indices.get(file_id)
         
     async def update_file_index(self, file_id: str, updates: Dict[str, Any]) -> bool:
-        """Update file index."""
+        """
+Update file index."""
         if file_id in self.indices:
             index = self.indices[file_id]
             for key, value in updates.items():
@@ -859,7 +873,8 @@ class IndexManager:
         return False
         
     async def get_index_statistics(self) -> Dict[str, Any]:
-        """Get index statistics."""
+        """
+Get index statistics."""
         stats = {
             "total_files": len(self.indices),
             "files_by_type": {},
@@ -891,7 +906,8 @@ class EnterpriseStorageService:
         self._initialize_processors()
         
     def _get_default_config(self) -> StorageConfig:
-        """Get default storage configuration."""
+        """
+Get default storage configuration."""
         settings = get_settings()
         
         # Determine storage type from settings
@@ -911,14 +927,16 @@ class EnterpriseStorageService:
         )
         
     def _create_provider(self) -> StorageProvider:
-        """Create storage provider based on configuration."""
+        """
+Create storage provider based on configuration."""
         if self.config.storage_type in [StorageType.AWS_S3, StorageType.MINIO]:
             return S3StorageProvider(self.config)
         else:
             return LocalStorageProvider(self.config)
             
     def _initialize_processors(self):
-        """Initialize file processors."""
+        """
+Initialize file processors."""
         self.processors = {
             FileType.IMAGE: self._process_image,
             FileType.VIDEO: self._process_video,
@@ -927,7 +945,8 @@ class EnterpriseStorageService:
         }
         
     def _detect_file_type(self, filename: str, content_type: str) -> FileType:
-        """Detect file type from filename and content type."""
+        """
+Detect file type from filename and content type."""
         extension = Path(filename).suffix.lower()
         
         # Audio files
@@ -954,7 +973,8 @@ class EnterpriseStorageService:
         return FileType.DOCUMENT
         
     async def _process_image(self, content: bytes, filename: str) -> Dict[str, Any]:
-        """Process image file to extract metadata and create thumbnails."""
+        """
+Process image file to extract metadata and create thumbnails."""
         metadata = {"type": "image"}
         
         if Image:

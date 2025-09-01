@@ -4,7 +4,7 @@ This index file provides quick access to all notification system components
 and serves as the main entry point for the notification infrastructure.
 
 Built by Fahed Mlaiel and the IA Influencer Agent Team.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """# Import all major components for easy access
 from .orchestrator import (
     NotificationOrchestrator,
@@ -33,7 +33,8 @@ from .in_app import InAppNotifier, InAppNotification, InAppNotificationType, Not
 
 # Quick setup function for common use cases
 def create_notification_system():
-    """Create a fully configured notification system for IA Influencer Agent."""
+    """
+Create a fully configured notification system for IA Influencer Agent."""
     orchestrator = NotificationOrchestrator()
     template_engine = NotificationTemplateEngine()
     
@@ -49,7 +50,8 @@ def create_notification_system():
 
 # Business-specific notification creators
 def create_content_protection_notification(user_id: str, content_title: str, protection_status: str):
-    """Create notification for content protection events."""
+    """
+Create notification for content protection events."""
     return UniversalNotification(
         user_id=user_id,
         title=f"Content Protection Update: {content_title}",

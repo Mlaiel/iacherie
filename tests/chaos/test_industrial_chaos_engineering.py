@@ -21,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChaosType(Enum):
-    """Types of chaos engineering tests."""
+    """
+Types of chaos engineering tests."""
+
     NETWORK_PARTITION = "network_partition"
     SERVICE_FAILURE = "service_failure"
     DATABASE_FAILURE = "database_failure"
@@ -35,6 +37,7 @@ class ChaosType(Enum):
 
 class RecoveryStrategy(Enum):
     """System recovery strategies."""
+
     AUTOMATIC_RESTART = "automatic_restart"
     FAILOVER = "failover"
     CIRCUIT_BREAKER = "circuit_breaker"
@@ -57,7 +60,8 @@ class ChaosExperiment:
 
 @dataclass
 class ChaosResult:
-    """Result from a chaos engineering experiment."""
+    """
+Result from a chaos engineering experiment."""
     experiment_name: str
     chaos_type: ChaosType
     success: bool
@@ -71,14 +75,16 @@ class ChaosResult:
 
 
 class SystemMonitor:
-    """Real system monitoring for chaos experiments."""
+    """
+Real system monitoring for chaos experiments."""
     
     def __init__(self):
         self.metrics_history: List[Dict[str, Any]] = []
         self.monitoring_active = False
     
     async def start_monitoring(self, interval_seconds: float = 1.0):
-        """Start continuous system monitoring."""
+        """
+Start continuous system monitoring."""
         self.monitoring_active = True
         
         while self.monitoring_active:
@@ -94,7 +100,8 @@ class SystemMonitor:
         self.monitoring_active = False
     
     async def _collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect real system metrics."""
+        """
+Collect real system metrics."""
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=0.1)
@@ -141,7 +148,8 @@ class RealServiceManager:
         self.managed_services: Dict[str, Dict[str, Any]] = {}
     
     async def discover_services(self) -> List[str]:
-        """Discover running services for chaos testing."""
+        """
+Discover running services for chaos testing."""
         services = []
         
         # Check for common service processes
@@ -234,13 +242,15 @@ class IndustrialChaosEngineer:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Cleanup chaos engineering environment."""
+        """
+Cleanup chaos engineering environment."""
         self.monitor.stop_monitoring()
         if self.session:
             await self.session.close()
     
     async def _check_system_health(self) -> Dict[str, Any]:
-        """Check overall system health."""
+        """
+Check overall system health."""
         health_status = {
             "api_responsive": False,
             "database_accessible": False,

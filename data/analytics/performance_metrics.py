@@ -5,12 +5,13 @@ Advanced performance metrics calculation and optimization for multi-platform con
 Provides real-time performance tracking, benchmark analysis, and optimization insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ from sklearn.metrics import mean_squared_error
 
 
 class PerformanceCategory(Enum):
-    """Performance category enumeration"""
+    """
+Performance category enumeration"""
+
     ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
@@ -44,6 +47,7 @@ class PerformanceCategory(Enum):
 
 class PlatformType(Enum):
     """Platform type enumeration"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -84,7 +88,8 @@ class PerformanceBenchmark:
 
 @dataclass
 class PerformanceOptimization:
-    """Performance optimization recommendation"""
+    """
+Performance optimization recommendation"""
     category: PerformanceCategory
     current_value: float
     target_value: float
@@ -563,7 +568,8 @@ class PerformanceMetrics:
         return ((revenue - cost) / cost * 100)
     
     async def _calculate_overall_performance(self, platforms: Dict) -> Dict[str, float]:
-        """Calculate overall performance metrics across all platforms."""
+        """
+Calculate overall performance metrics across all platforms."""
         try:
             if not platforms:
                 return {}

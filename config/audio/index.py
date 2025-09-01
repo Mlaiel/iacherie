@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationProfile(Enum):
-    """Predefined configuration profiles for different use cases"""
+    """
+Predefined configuration profiles for different use cases"""
+
     MUSIC_PRODUCER = "music_producer"
     PODCAST_CREATOR = "podcast_creator"
     LIVE_STREAMER = "live_streamer"
@@ -83,7 +86,8 @@ class MasterAudioConfiguration:
         return validate_all_configurations()
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get configuration summary"""
+        """
+Get configuration summary"""
         return {
             "profile": self.profile.value,
             "version": self.version,
@@ -333,7 +337,8 @@ For licensing, custom implementations, or enterprise solutions:
 Contact: mlaiel@live.de
 """
 def print_legal_notice():
-    """Print legal and copyright notice"""
+    """
+Print legal and copyright notice"""
     print(LEGAL_NOTICE)
 
 

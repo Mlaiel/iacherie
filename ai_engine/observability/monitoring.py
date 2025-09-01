@@ -6,6 +6,7 @@ AI models, and business operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import psutil
 import time
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring intensity levels"""
+    """
+Monitoring intensity levels"""
+
     MINIMAL = "minimal"      # Basic health checks
     STANDARD = "standard"    # Regular monitoring
     DETAILED = "detailed"    # Comprehensive monitoring
@@ -28,6 +31,7 @@ class MonitoringLevel(Enum):
 
 class MetricType(Enum):
     """Types of metrics"""
+
     COUNTER = "counter"      # Always increasing value
     GAUGE = "gauge"          # Current value that can go up/down
     HISTOGRAM = "histogram"  # Distribution of values
@@ -36,6 +40,7 @@ class MetricType(Enum):
 
 class HealthStatus(Enum):
     """Health status levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -92,7 +97,8 @@ class SystemMonitor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize system monitor"""
+        """
+Initialize system monitor"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -130,7 +136,8 @@ class SystemMonitor:
         self.alert_callbacks: List[Callable] = []
     
     async def start_monitoring(self) -> bool:
-        """Start the monitoring system"""
+        """
+Start the monitoring system"""
         try:
             self.logger.info("Starting system monitoring...")
             
@@ -274,7 +281,8 @@ class SystemMonitor:
         self.alert_callbacks.append(callback)
     
     async def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary and statistics"""
+        """
+Get performance summary and statistics"""
         try:
             current_metrics = self.current_metrics
             
@@ -571,7 +579,8 @@ class SystemMonitor:
                 self.metrics_history[metric_name] = self.metrics_history[metric_name][-max_history_size:]
     
     async def _assess_component_health(self, metrics: Dict[str, Metric]) -> Dict[str, HealthStatus]:
-        """Assess health of individual components"""
+        """
+Assess health of individual components"""
         component_health = {}
         
         # CPU health
@@ -630,7 +639,8 @@ class SystemMonitor:
         metrics: Dict[str, Metric],
         component_health: Dict[str, HealthStatus]
     ) -> List[str]:
-        """Identify current system issues"""
+        """
+Identify current system issues"""
         issues = []
         
         for component, health in component_health.items():
@@ -711,7 +721,8 @@ class SystemMonitor:
 
 
 class PerformanceMonitor:
-    """Monitor application performance metrics"""
+    """
+Monitor application performance metrics"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -721,7 +732,8 @@ class PerformanceMonitor:
         self.request_counts: Dict[str, int] = {}
     
     async def record_request(self, endpoint: str, response_time_ms: float, status_code: int):
-        """Record a request for performance tracking"""
+        """
+Record a request for performance tracking"""
         # Record response time
         self.response_times.append(response_time_ms)
         
@@ -741,7 +753,8 @@ class PerformanceMonitor:
             self.error_counts[endpoint] += 1
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""
+        """
+Get current performance metrics"""
         if not self.response_times:
             return {"error": "No performance data available"}
         
@@ -764,7 +777,8 @@ class ResourceMonitor:
         self.logger = logging.getLogger(__name__)
     
     async def get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage"""
+        """
+Get current resource usage"""
         try:
             return {
                 "cpu_count": psutil.cpu_count(),

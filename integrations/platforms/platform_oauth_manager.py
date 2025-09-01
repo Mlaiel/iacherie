@@ -7,6 +7,7 @@ Handles OAuth 2.0 flows for all supported platforms with secure token storage.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class OAuthConfig:
-    """OAuth configuration for a platform"""
+    """
+OAuth configuration for a platform"""
     platform: str
     client_id: str
     client_secret: str
@@ -38,7 +40,8 @@ class OAuthConfig:
 
 @dataclass
 class OAuthTokens:
-    """OAuth tokens for a platform"""
+    """
+OAuth tokens for a platform"""
     platform: str
     user_id: str
     access_token: str
@@ -161,7 +164,8 @@ class PlatformOAuthManager:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
             
@@ -173,7 +177,8 @@ class PlatformOAuthManager:
         redirect_uri: str,
         scopes: Optional[List[str]] = None
     ):
-        """Configure OAuth settings for a platform"""
+        """
+Configure OAuth settings for a platform"""
         if platform not in self.platform_configs:
             raise ValueError(f"Unsupported platform: {platform}")
             
@@ -543,7 +548,8 @@ class PlatformOAuthManager:
         return list(self.platform_configs.keys())
         
     def get_platform_scopes(self, platform: str) -> List[str]:
-        """Get default scopes for a platform"""
+        """
+Get default scopes for a platform"""
         if platform not in self.platform_configs:
             raise ValueError(f"Unsupported platform: {platform}")
             

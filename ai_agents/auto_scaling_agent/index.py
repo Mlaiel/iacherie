@@ -2,7 +2,7 @@
 """IA Influencer Agent - Auto Scaling Agent Index
 ============================================
 
-© 2025 Fahed Mlaiel - Tous Droits Réservés
+(c) 2025 Fahed Mlaiel - Tous Droits Réservés
 Propriétaire: Fahed Mlaiel (mlaiel@live.de)
 Projet: IA Influencer Agent - Auto Scaling System
 
@@ -20,6 +20,7 @@ Spécialisations Équipe Expert:
 - Administrateur BD: Gestion données haute performance
 - Ingénieur Sécurité: Cryptographie et protection
 """
+
 import asyncio
 import logging
 import signal
@@ -71,7 +72,7 @@ class AutoScalingAgentOrchestrator:
         
         logger.info("🚀 Initialisation Auto Scaling Agent Orchestrateur")
         logger.info(f"📧 Propriétaire: Fahed Mlaiel (mlaiel@live.de)")
-        logger.info(f"🔒 Copyright: © 2025 - Tous Droits Réservés")
+        logger.info(f"🔒 Copyright: (c) 2025 - Tous Droits Réservés")
     
     def _get_default_config(self) -> Dict[str, Any]:
         """
@@ -323,7 +324,7 @@ async def main():
         print("\n" + "="*80)
         print("🚀 IA INFLUENCER AGENT - AUTO SCALING SYSTEM")
         print("="*80)
-        print(f"© 2025 Fahed Mlaiel - Tous Droits Réservés")
+        print(f"(c) 2025 Fahed Mlaiel - Tous Droits Réservés")
         print(f"📧 Propriétaire: Fahed Mlaiel (mlaiel@live.de)")
         print(f"🔒 Propriété Intellectuelle Protégée")
         print("="*80 + "\n")

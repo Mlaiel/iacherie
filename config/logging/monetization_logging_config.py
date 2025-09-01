@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -30,7 +31,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class RevenueStreamType(str, Enum):
-    """Revenue stream types for monetization logging"""
+    """
+Revenue stream types for monetization logging"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -49,6 +52,7 @@ class RevenueStreamType(str, Enum):
 
 class PlatformType(str, Enum):
     """Platform types for revenue tracking"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -70,6 +74,7 @@ class PlatformType(str, Enum):
 
 class TransactionStatus(str, Enum):
     """Transaction status for payment tracking"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -121,14 +126,16 @@ class MonetizationLogConfig:
 
 
 class MonetizationLogger:
-    """Specialized logger for monetization operations"""
+    """
+Specialized logger for monetization operations"""
     
     def __init__(self, config: MonetizationLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for monetization"""
+        """
+Setup structured logger for monetization"""
         processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
@@ -424,7 +431,8 @@ class MonetizationLogger:
         return False  # Placeholder implementation
     
     def get_monetization_metrics(self) -> Dict[str, Any]:
-        """Get monetization system metrics"""
+        """
+Get monetization system metrics"""
         return {
             "revenue_tracking_enabled": self.config.enable_revenue_tracking,
             "payment_processing_enabled": self.config.enable_payment_processing,
@@ -446,12 +454,14 @@ class MonetizationLoggingConfig:
     
     @staticmethod
     def create_default_config() -> MonetizationLogConfig:
-        """Create default monetization logging configuration"""
+        """
+Create default monetization logging configuration"""
         return MonetizationLogConfig()
     
     @staticmethod
     def create_enterprise_config() -> MonetizationLogConfig:
-        """Create enterprise-grade monetization logging configuration"""
+        """
+Create enterprise-grade monetization logging configuration"""
         return MonetizationLogConfig(
             enable_revenue_tracking=True,
             enable_payment_processing=True,

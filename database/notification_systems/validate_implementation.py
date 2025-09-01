@@ -14,13 +14,14 @@ Ce script vérifie:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 import os
 import sys
 import inspect
@@ -413,7 +414,7 @@ if __name__ == "__main__":
     
     print("🚀 DÉMARRAGE VALIDATION NOTIFICATION SYSTEMS")
     print("Auteur: Fahed Mlaiel <mlaiel@live.de>")
-    print("Copyright © 2025 Fahed Mlaiel. Tous droits réservés.")
+    print("Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.")
     print()
     
     try:

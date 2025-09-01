@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Test: PostgreSQL Database Connections
+"""
+Integration Test: PostgreSQL Database Connections
 ================================================
 
 Tests PostgreSQL database connectivity, health checks, and connection pooling:
@@ -23,6 +25,7 @@ Tests PostgreSQL database connectivity, health checks, and connection pooling:
 
 Author: Integration Test Suite
 """
+
 import asyncio
 import pytest
 import sys
@@ -38,11 +41,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestPostgreSQLConnections:
-    """Integration tests for PostgreSQL database connections"""
+    """
+Integration tests for PostgreSQL database connections"""
     
     @pytest.fixture
     def mock_postgresql_config(self):
-        """Mock PostgreSQL configuration for testing"""
+        """
+Mock PostgreSQL configuration for testing"""
         return {
             "host": "localhost",
             "port": 5432,

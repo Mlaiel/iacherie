@@ -6,6 +6,7 @@ Handles communication, synchronization, and workflow orchestration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class TeamRole(Enum):
-    """Team role enumeration"""
+    """
+Team role enumeration"""
+
     PROJECT_LEAD = "project_lead"
     CREATIVE_DIRECTOR = "creative_director"
     CONTENT_CREATOR = "content_creator"
@@ -40,6 +43,7 @@ class TeamRole(Enum):
 
 class CommunicationChannel(Enum):
     """Communication channel enumeration"""
+
     PROJECT_CHAT = "project_chat"
     TASK_DISCUSSION = "task_discussion"
     DESIGN_REVIEW = "design_review"
@@ -49,6 +53,7 @@ class CommunicationChannel(Enum):
 
 class SynchronizationEvent(Enum):
     """Synchronization event types"""
+
     CONTENT_UPDATE = "content_update"
     TASK_STATUS_CHANGE = "task_status_change"
     MILESTONE_REACHED = "milestone_reached"
@@ -298,7 +303,8 @@ class RealTimeSession(Base):
 
 @dataclass
 class TeamInviteRequest:
-    """Data class for team invitation requests"""
+    """
+Data class for team invitation requests"""
     project_id: str
     invited_user_id: str
     invited_by: str
@@ -309,7 +315,8 @@ class TeamInviteRequest:
 
 @dataclass
 class CommunicationMessage:
-    """Data class for team communication messages"""
+    """
+Data class for team communication messages"""
     project_id: str
     sender_id: str
     channel: CommunicationChannel
@@ -856,7 +863,8 @@ class TeamCoordinationEngine:
         return permissions.get(role, permissions[TeamRole.COLLABORATOR])
     
     def _default_notification_preferences(self) -> Dict[str, Any]:
-        """Default notification preferences"""
+        """
+Default notification preferences"""
         return {
             'email_notifications': True,
             'push_notifications': True,
@@ -871,7 +879,8 @@ class TeamCoordinationEngine:
         }
     
     def _default_availability_schedule(self) -> Dict[str, Any]:
-        """Default availability schedule"""
+        """
+Default availability schedule"""
         return {
             'monday': ['09:00', '17:00'],
             'tuesday': ['09:00', '17:00'],
@@ -883,7 +892,8 @@ class TeamCoordinationEngine:
         }
     
     def _default_responsibility_areas(self, role: TeamRole) -> Dict[str, Any]:
-        """Default responsibility areas for role"""
+        """
+Default responsibility areas for role"""
         areas = {
             TeamRole.PROJECT_LEAD: ['project_oversight', 'team_management', 'stakeholder_communication'],
             TeamRole.CREATIVE_DIRECTOR: ['creative_direction', 'quality_assurance', 'design_approval'],
@@ -900,14 +910,16 @@ class TeamCoordinationEngine:
         }
     
     def _generate_search_vector(self, content: str) -> str:
-        """Generate search vector for full-text search"""
+        """
+Generate search vector for full-text search"""
         # This would typically use PostgreSQL's full-text search
         # For now, return a simplified version
         words = content.lower().split()
         return ' '.join(set(words))
     
     async def _deliver_message_realtime(self, communication: TeamCommunication):
-        """Deliver message via WebSocket to online team members"""
+        """
+Deliver message via WebSocket to online team members"""
         if not self.websocket_manager:
             return
         
@@ -928,7 +940,8 @@ class TeamCoordinationEngine:
         )
     
     async def _broadcast_team_update(self, project_id: str, update_type: str, data: Dict[str, Any]):
-        """Broadcast team updates to project members"""
+        """
+Broadcast team updates to project members"""
         if not self.websocket_manager:
             return
         
@@ -943,7 +956,8 @@ class TeamCoordinationEngine:
         await self.websocket_manager.broadcast_to_project(project_id, update_data)
     
     async def _broadcast_presence_update(self, project_id: str, user_id: str, action: str, data: Dict[str, Any]):
-        """Broadcast presence updates"""
+        """
+Broadcast presence updates"""
         if not self.websocket_manager:
             return
         
@@ -958,7 +972,8 @@ class TeamCoordinationEngine:
         await self.websocket_manager.broadcast_to_project(project_id, presence_data)
     
     async def _broadcast_workflow_update(self, project_id: str, workflow_data: Dict[str, Any]):
-        """Broadcast workflow state changes"""
+        """
+Broadcast workflow state changes"""
         if not self.websocket_manager:
             return
         

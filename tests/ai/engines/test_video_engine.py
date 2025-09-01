@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Video Engine Testing Module
+"""
+Video Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for all video processing engines.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -67,18 +70,21 @@ from .test_helpers import (
 )
 
 class TestVideoProcessingEngine:
-    """Comprehensive tests for VideoProcessingEngine"""
+    """
+Comprehensive tests for VideoProcessingEngine"""
     
     @pytest.fixture
     async def video_engine(self):
-        """Create and initialize video processing engine"""
+        """
+Create and initialize video processing engine"""
         engine = VideoProcessingEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def sample_video_data(self):
-        """Provide sample video data for testing"""
+        """
+Provide sample video data for testing"""
         return {
             'raw_video': "sample_video_raw_data_placeholder",
             'mp4_file': "sample_video.mp4",
@@ -113,7 +119,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, video_engine):
-        """Test video engine initialization"""
+        """
+Test video engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(video_engine)
@@ -178,7 +185,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_format_conversion(self, video_engine, sample_video_data):
-        """Test video format conversion capabilities"""
+        """
+Test video format conversion capabilities"""
         # Test conversion between different formats
         format_conversions = [
             (VideoFormat.MP4, VideoFormat.WEBM),
@@ -207,7 +215,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_resolution_scaling(self, video_engine, sample_video_data):
-        """Test video resolution scaling and optimization"""
+        """
+Test video resolution scaling and optimization"""
         resolution_tests = [
             (ResolutionStandard.HD, '1280x720'),
             (ResolutionStandard.FULL_HD, '1920x1080'),
@@ -236,7 +245,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_enhancement_features(self, video_engine, sample_video_data):
-        """Test video enhancement and filtering features"""
+        """
+Test video enhancement and filtering features"""
         enhancement_configs = [
             {
                 'enhancement_level': 'basic',
@@ -362,7 +372,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_protection(self, video_engine, sample_video_data):
-        """Test video content protection features"""
+        """
+Test video content protection features"""
         result = await video_engine.protect_content(sample_video_data['raw_video'])
         
         assert result['video_watermarked'] is True
@@ -374,18 +385,21 @@ class TestVideoProcessingEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestVideoGenerationEngine:
-    """Comprehensive tests for VideoGenerationEngine"""
+    """
+Comprehensive tests for VideoGenerationEngine"""
     
     @pytest.fixture
     async def video_generation_engine(self):
-        """Create and initialize video generation engine"""
+        """
+Create and initialize video generation engine"""
         engine = VideoGenerationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def video_generation_options(self):
-        """Provide video generation options"""
+        """
+Provide video generation options"""
         return {
             'content_id': 'video_gen_test_123',
             'style': 'realistic',
@@ -401,7 +415,8 @@ class TestVideoGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_video_generation_engine_initialization(self, video_generation_engine):
-        """Test video generation engine initialization"""
+        """
+Test video generation engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(video_generation_engine)
@@ -566,14 +581,16 @@ class TestAnimationEngine:
     
     @pytest.fixture
     async def animation_engine(self):
-        """Create and initialize animation engine"""
+        """
+Create and initialize animation engine"""
         engine = AnimationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def animation_options(self):
-        """Provide animation options"""
+        """
+Provide animation options"""
         return {
             'content_id': 'animation_test_123',
             'animation_type': '2D',
@@ -588,7 +605,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_animation_engine_initialization(self, animation_engine):
-        """Test animation engine initialization"""
+        """
+Test animation engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(animation_engine)
@@ -738,7 +756,8 @@ class TestVideoEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_video_production_pipeline(self, sample_content):
-        """Test complete video production pipeline"""
+        """
+Test complete video production pipeline"""
         # Initialize all video engines
         video_engine = VideoProcessingEngine()
         video_generation_engine = VideoGenerationEngine()

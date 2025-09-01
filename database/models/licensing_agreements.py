@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """License type enumeration"""
+    """
+License type enumeration"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC_LICENSE = "sync_license"
@@ -62,6 +65,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status enumeration"""
+
     DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -76,6 +80,7 @@ class LicenseStatus(Enum):
 
 class UsageRight(Enum):
     """Usage rights enumeration"""
+
     REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution"
     PUBLIC_PERFORMANCE = "public_performance"
@@ -101,6 +106,7 @@ class UsageRight(Enum):
 
 class RevenueModel(Enum):
     """Revenue model enumeration"""
+
     FLAT_FEE = "flat_fee"
     PERCENTAGE_ROYALTY = "percentage_royalty"
     PER_UNIT = "per_unit"
@@ -119,6 +125,7 @@ class RevenueModel(Enum):
 
 class TerritoryScope(Enum):
     """Territory scope enumeration"""
+
     WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
@@ -445,7 +452,8 @@ class LicensingAgreement(Base):
         return datetime.now(timezone.utc) >= self.expiration_date
     
     def is_effective(self) -> bool:
-        """Check if agreement is currently effective"""
+        """
+Check if agreement is currently effective"""
         now = datetime.now(timezone.utc)
         return (
             self.effective_date <= now and
@@ -454,7 +462,8 @@ class LicensingAgreement(Base):
         )
     
     def days_until_expiration(self) -> Optional[int]:
-        """Calculate days until expiration"""
+        """
+Calculate days until expiration"""
         if not self.expiration_date:
             return None
         
@@ -462,7 +471,8 @@ class LicensingAgreement(Base):
         return max(delta.days, 0)
     
     def calculate_revenue_share(self, gross_revenue: Decimal) -> Dict[str, Decimal]:
-        """Calculate revenue shares based on agreement terms"""
+        """
+Calculate revenue shares based on agreement terms"""
         if self.revenue_model == RevenueModel.PERCENTAGE_ROYALTY and self.royalty_percentage:
             royalty_amount = gross_revenue * Decimal(str(self.royalty_percentage / 100))
             return {
@@ -487,7 +497,8 @@ class LicensingAgreement(Base):
         return datetime.now(timezone.utc) >= self.next_review_due
     
     def is_compliant(self) -> bool:
-        """Check overall compliance status"""
+        """
+Check overall compliance status"""
         return (
             self.compliance_status == "compliant" and
             self.violation_count < 3 and

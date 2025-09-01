@@ -22,6 +22,7 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
+
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class CredentialType(Enum):
-    """Types de credentials supportés."""
+    """
+Types de credentials supportés."""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
@@ -54,6 +57,7 @@ class CredentialType(Enum):
 
 class CredentialStatus(Enum):
     """Statuts des credentials."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     EXPIRED = "expired"
@@ -64,6 +68,7 @@ class CredentialStatus(Enum):
 
 class PlatformType(Enum):
     """Types de plateformes supportées."""
+
     SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
@@ -237,23 +242,27 @@ class APICredential(BaseModel):
     
     @property
     def needs_rotation(self) -> bool:
-        """Vérifie si le credential nécessite une rotation."""
+        """
+Vérifie si le credential nécessite une rotation."""
         if not self.rotation_enabled or not self.next_rotation_at:
             return False
         return datetime.utcnow() > self.next_rotation_at
     
     @property
     def daily_quota_remaining(self) -> int:
-        """Calcule le quota journalier restant."""
+        """
+Calcule le quota journalier restant."""
         return max(0, self.daily_quota - self.current_daily_usage)
     
     @property
     def hourly_quota_remaining(self) -> int:
-        """Calcule le quota horaire restant."""
+        """
+Calcule le quota horaire restant."""
         return max(0, self.hourly_quota - self.current_hourly_usage)
     
     def encrypt_credential(self, value: str, field_name: str) -> str:
-        """Chiffre une valeur de credential."""
+        """
+Chiffre une valeur de credential."""
         if not value:
             return None
         
@@ -288,7 +297,8 @@ class APICredential(BaseModel):
         return self.decrypt_credential(self.encrypted_client_secret)
     
     def set_api_key(self, api_key: str):
-        """Définit la clé API de manière chiffrée."""
+        """
+Définit la clé API de manière chiffrée."""
         self.encrypted_api_key = self.encrypt_credential(api_key, "api_key")
     
     def get_api_key(self) -> str:
@@ -296,19 +306,22 @@ class APICredential(BaseModel):
         return self.decrypt_credential(self.encrypted_api_key)
     
     def increment_usage(self):
-        """Incrémente les compteurs d'utilisation."""
+        """
+Incrémente les compteurs d'utilisation."""
         self.usage_count += 1
         self.current_daily_usage += 1
         self.current_hourly_usage += 1
         self.last_used_at = datetime.utcnow()
     
     def reset_daily_quota(self):
-        """Remet à zéro le quota journalier."""
+        """
+Remet à zéro le quota journalier."""
         self.current_daily_usage = 0
         self.quota_reset_at = datetime.utcnow() + timedelta(days=1)
     
     def reset_hourly_quota(self):
-        """Remet à zéro le quota horaire."""
+        """
+Remet à zéro le quota horaire."""
         self.current_hourly_usage = 0
 
 
@@ -522,7 +535,8 @@ def generate_encryption_key() -> str:
 
 
 def hash_credential(credential_value: str) -> str:
-    """Génère un hash sécurisé d'un credential pour l'audit."""
+    """
+Génère un hash sécurisé d'un credential pour l'audit."""
     salt = secrets.token_hex(16)
     credential_hash = hashlib.pbkdf2_hmac(
         'sha256',
@@ -596,7 +610,8 @@ def hash_credential(credential_value: str) -> str:
         return fernet.encrypt(value.encode())
     
     def decrypt_value(self, encrypted_value: bytes) -> str:
-        """Déchiffre une valeur sensible."""
+        """
+Déchiffre une valeur sensible."""
         if not encrypted_value:
             return None
         
@@ -604,39 +619,47 @@ def hash_credential(credential_value: str) -> str:
         return fernet.decrypt(encrypted_value).decode()
     
     def set_client_secret(self, secret: str):
-        """Définit le client secret de manière chiffrée."""
+        """
+Définit le client secret de manière chiffrée."""
         self.client_secret = self.encrypt_value(secret)
     
     def get_client_secret(self) -> str:
-        """Récupère le client secret déchiffré."""
+        """
+Récupère le client secret déchiffré."""
         return self.decrypt_value(self.client_secret)
     
     def set_api_key(self, key: str):
-        """Définit la clé API de manière chiffrée."""
+        """
+Définit la clé API de manière chiffrée."""
         self.api_key = self.encrypt_value(key)
     
     def get_api_key(self) -> str:
-        """Récupère la clé API déchiffrée."""
+        """
+Récupère la clé API déchiffrée."""
         return self.decrypt_value(self.api_key)
     
     def set_api_secret(self, secret: str):
-        """Définit le secret API de manière chiffré."""
+        """
+Définit le secret API de manière chiffré."""
         self.api_secret = self.encrypt_value(secret)
     
     def get_api_secret(self) -> str:
-        """Récupère le secret API déchiffré."""
+        """
+Récupère le secret API déchiffré."""
         return self.decrypt_value(self.api_secret)
     
     @property
     def is_expired(self) -> bool:
-        """Vérifie si les credentials sont expirés."""
+        """
+Vérifie si les credentials sont expirés."""
         if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
     
     @property
     def needs_rotation(self) -> bool:
-        """Vérifie si les credentials ont besoin d'une rotation."""
+        """
+Vérifie si les credentials ont besoin d'une rotation."""
         if not self.last_rotated or not self.rotation_frequency_days:
             return False
         
@@ -644,13 +667,15 @@ def hash_credential(credential_value: str) -> str:
         return datetime.utcnow() > rotation_due
     
     def validate_credentials(self) -> bool:
-        """Valide les credentials avec une requête test à l'API."""
+        """
+Valide les credentials avec une requête test à l'API."""
         # Cette méthode sera implémentée par les services spécifiques
         # pour chaque plateforme
         pass
     
     def to_dict_safe(self) -> Dict[str, Any]:
-        """Retourne un dictionnaire sans les données sensibles."""
+        """
+Retourne un dictionnaire sans les données sensibles."""
         return {
             "id": str(self.id),
             "platform_name": self.platform_name,

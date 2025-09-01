@@ -4,8 +4,9 @@ Handles intelligent content processing, analysis, optimization, and transformati
 for multiple content types including audio, video, image, and text content.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 import mimetypes
@@ -36,7 +37,9 @@ from ...utils.text_utils import TextProcessor
 logger = get_logger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -46,6 +49,7 @@ class ContentType(Enum):
 
 class ProcessingStatus(Enum):
     """Processing status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -72,7 +76,8 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Content processing result"""
+    """
+Content processing result"""
     content_id: str
     original_path: str
     processed_paths: Dict[str, str]
@@ -456,7 +461,8 @@ class ContentProcessor:
         return ContentType.UNKNOWN
     
     async def _detect_content_type_from_path(self, file_path: str) -> ContentType:
-        """Detect content type from file path"""
+        """
+Detect content type from file path"""
         file_ext = Path(file_path).suffix.lower()
         
         for content_type, extensions in self.supported_formats.items():
@@ -466,7 +472,8 @@ class ContentProcessor:
         return ContentType.UNKNOWN
     
     async def _save_original_file(self, file: UploadFile, content_id: str, user_id: int) -> str:
-        """Save original uploaded file"""
+        """
+Save original uploaded file"""
         file_ext = Path(file.filename).suffix
         filename = f"{content_id}{file_ext}"
         file_path = f"uploads/user_{user_id}/originals/{filename}"
@@ -517,7 +524,8 @@ class ContentProcessor:
         file_path: str,
         content_type: ContentType
     ) -> ContentMetadata:
-        """Extract basic metadata from file path only"""
+        """
+Extract basic metadata from file path only"""
         file_size = Path(file_path).stat().st_size
         mime_type = mimetypes.guess_type(file_path)[0] or ''
         
@@ -532,7 +540,8 @@ class ContentProcessor:
         return metadata
     
     async def _extract_audio_metadata(self, file_path: str, metadata: ContentMetadata):
-        """Extract audio-specific metadata"""
+        """
+Extract audio-specific metadata"""
         try:
             y, sr = librosa.load(file_path, sr=None)
             metadata.duration = librosa.get_duration(y=y, sr=sr)
@@ -668,22 +677,26 @@ class ContentProcessor:
         return {'content_type': 'audio', 'duration': None}
     
     async def _extract_video_seo_metadata(self, content_path: str) -> Dict[str, Any]:
-        """Extract SEO metadata from video content"""
+        """
+Extract SEO metadata from video content"""
         # Implementation for video SEO metadata extraction
         return {'content_type': 'video', 'duration': None}
     
     async def _extract_image_seo_metadata(self, content_path: str) -> Dict[str, Any]:
-        """Extract SEO metadata from image content"""
+        """
+Extract SEO metadata from image content"""
         # Implementation for image SEO metadata extraction
         return {'content_type': 'image', 'alt_text': ''}
     
     async def _extract_text_seo_metadata(self, content_path: str) -> Dict[str, Any]:
-        """Extract SEO metadata from text content"""
+        """
+Extract SEO metadata from text content"""
         # Implementation for text SEO metadata extraction
         return {'content_type': 'text', 'word_count': 0}
     
     async def _generate_optimized_path(self, original_path: str, platform: str) -> str:
-        """Generate path for optimized content"""
+        """
+Generate path for optimized content"""
         path = Path(original_path)
         parent = path.parent
         stem = path.stem
@@ -710,7 +723,8 @@ class ContentProcessor:
         output_path: str,
         config: Dict[str, Any]
     ):
-        """Optimize audio for platform-specific requirements"""
+        """
+Optimize audio for platform-specific requirements"""
         # Implementation for audio optimization
         pass
     
@@ -720,6 +734,7 @@ class ContentProcessor:
         output_path: str,
         config: Dict[str, Any]
     ):
-        """Optimize image for platform-specific requirements"""
+        """
+Optimize image for platform-specific requirements"""
         # Implementation for image optimization
         pass

@@ -35,6 +35,7 @@ Enterprise Features:
 - GDPR/CCPA compliant data residency
 - Real-time content synchronization for collaboration
 """
+
 import asyncio
 import logging
 import time
@@ -55,7 +56,9 @@ import aiohttp
 
 
 class ConsistencyModel(Enum):
-    """Cache consistency models for different content types"""
+    """
+Cache consistency models for different content types"""
+
     EVENTUAL = "eventual"      # Analytics, non-critical metadata
     STRONG = "strong"          # Financial data, user authentication
     WEAK = "weak"             # Thumbnails, preview content
@@ -65,6 +68,7 @@ class ConsistencyModel(Enum):
 
 class ReplicationStrategy(Enum):
     """Data replication strategies optimized for content distribution"""
+
     MASTER_SLAVE = "master_slave"      # Critical data with read replicas
     MASTER_MASTER = "master_master"    # Collaborative content editing
     RING = "ring"                      # Geographic distribution
@@ -74,6 +78,7 @@ class ReplicationStrategy(Enum):
 
 class ShardingStrategy(Enum):
     """Intelligent sharding strategies for content distribution"""
+
     CONSISTENT_HASH = "consistent_hash"
     RANGE_BASED = "range_based"
     CONTENT_TYPE = "content_type"       # Shard by audio/video/image/text
@@ -84,6 +89,7 @@ class ShardingStrategy(Enum):
 
 class DataResidencyZone(Enum):
     """Data residency zones for compliance"""
+
     EU = "eu"                  # GDPR compliance
     US = "us"                  # CCPA compliance
     APAC = "apac"              # Regional data laws
@@ -123,7 +129,8 @@ class ContentDistributionRule:
 
 
 class GeographicManager:
-    """Geographic optimization for global content distribution"""
+    """
+Geographic optimization for global content distribution"""
     
     def __init__(self):
         self.geolocator = Nominatim(user_agent="ia_influencer_cache")
@@ -180,7 +187,8 @@ class GeographicManager:
 
 
 class ContentAwareRouter:
-    """Intelligent content routing based on type and usage patterns"""
+    """
+Intelligent content routing based on type and usage patterns"""
     
     def __init__(self):
         self.content_routing_rules: Dict[str, ContentDistributionRule] = {}
@@ -194,7 +202,8 @@ class ContentAwareRouter:
         creator_info: Dict,
         target_audience: List[str]
     ) -> Dict[str, Any]:
-        """Route content to optimal cache nodes"""
+        """
+Route content to optimal cache nodes"""
         
         routing_strategy = {
             "primary_nodes": [],
@@ -345,14 +354,16 @@ class ReplicationManager:
 
 
 class ConflictResolver:
-    """Conflict resolution for distributed cache consistency"""
+    """
+Conflict resolution for distributed cache consistency"""
     
     async def resolve_conflict(
         self,
         content_key: str,
         conflicting_versions: List[Dict]
     ) -> Dict:
-        """Resolve conflicts between cache versions"""
+        """
+Resolve conflicts between cache versions"""
         
         if not conflicting_versions:
             return {}
@@ -390,6 +401,7 @@ class DistributedCacheManager:
 
 class ShardingStrategy(Enum):
     """Data sharding strategies"""
+
     HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
@@ -399,6 +411,7 @@ class ShardingStrategy(Enum):
 
 class NodeStatus(Enum):
     """Cache node status"""
+
     ACTIVE = "active"
     STANDBY = "standby"
     FAILED = "failed"
@@ -426,7 +439,8 @@ class CacheNode:
 
 @dataclass
 class ReplicationGroup:
-    """Cache replication group"""
+    """
+Cache replication group"""
     group_id: str
     primary_node: str
     replica_nodes: List[str]
@@ -439,7 +453,8 @@ class ReplicationGroup:
 
 @dataclass
 class ShardMapping:
-    """Shard mapping configuration"""
+    """
+Shard mapping configuration"""
     shard_id: str
     key_range_start: str
     key_range_end: str
@@ -907,7 +922,8 @@ class DistributedCacheManager:
         self._nodes[node.node_id] = node
 
     async def _create_node_from_config(self, config: Dict[str, Any]) -> CacheNode:
-        """Create cache node from configuration"""
+        """
+Create cache node from configuration"""
         node = CacheNode(
             node_id=config.get("node_id", str(uuid.uuid4())),
             hostname=config["hostname"],
@@ -935,7 +951,8 @@ class DistributedCacheManager:
             await self._initialize_hash_based_sharding()
 
     async def _initialize_consistent_hashing(self) -> None:
-        """Initialize consistent hashing ring"""
+        """
+Initialize consistent hashing ring"""
         self._consistent_hash_ring = []
         
         for node_id in self._nodes.keys():
@@ -971,7 +988,8 @@ class DistributedCacheManager:
             return await self._get_nodes_hash_based(key)
 
     async def _get_nodes_consistent_hash(self, key: str) -> List[str]:
-        """Get nodes using consistent hashing"""
+        """
+Get nodes using consistent hashing"""
         if not self._consistent_hash_ring:
             return list(self._nodes.keys())[:1]
         
@@ -986,7 +1004,8 @@ class DistributedCacheManager:
         return [self._consistent_hash_ring[0][1]]
 
     async def _get_nodes_hash_based(self, key: str) -> List[str]:
-        """Get nodes using hash-based sharding"""
+        """
+Get nodes using hash-based sharding"""
         if not self._shard_mappings:
             return list(self._nodes.keys())[:1]
         
@@ -1006,7 +1025,8 @@ class DistributedCacheManager:
         self._maintenance_task = asyncio.create_task(self._maintenance_loop())
 
     async def _heartbeat_loop(self) -> None:
-        """Send periodic heartbeats to cluster"""
+        """
+Send periodic heartbeats to cluster"""
         while not self._shutdown_event.is_set():
             try:
                 await self._send_heartbeat()

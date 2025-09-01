@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationLevel(Enum):
-    """Configuration hierarchy levels"""
+    """
+Configuration hierarchy levels"""
+
     GLOBAL = "global"
     TENANT = "tenant"
     CREATOR_TYPE = "creator_type"
@@ -47,6 +50,7 @@ class ConfigurationLevel(Enum):
 
 class PersonalizationLevel(Enum):
     """Levels of personalization"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -55,6 +59,7 @@ class PersonalizationLevel(Enum):
 
 class QualityProfile(Enum):
     """Quality profiles for different use cases"""
+
     ECONOMY = "economy"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -106,7 +111,8 @@ class TranslationPreferences:
 
 @dataclass
 class ContentAdaptationPreferences:
-    """Content adaptation preferences"""
+    """
+Content adaptation preferences"""
     preserve_brand_voice: bool = True
     brand_voice_style: str = "professional"  # professional, casual, creative, authentic
     
@@ -155,7 +161,8 @@ class MonetizationPreferences:
 
 @dataclass
 class NotificationPreferences:
-    """Notification preferences"""
+    """
+Notification preferences"""
     enable_quality_alerts: bool = True
     enable_cost_alerts: bool = True
     enable_performance_alerts: bool = True
@@ -360,7 +367,8 @@ class ConfigurationManager:
         updates: Dict[str, Any],
         validate: bool = True
     ) -> MultilingualCreatorConfiguration:
-        """Update existing configuration"""
+        """
+Update existing configuration"""
         
         config = await self.get_configuration(configuration_id)
         if not config:
@@ -420,7 +428,8 @@ class ConfigurationManager:
         configuration_id: str,
         performance_data: Dict[str, Any]
     ) -> MultilingualCreatorConfiguration:
-        """Optimize configuration based on performance data"""
+        """
+Optimize configuration based on performance data"""
         
         config = await self.get_configuration(configuration_id)
         if not config:
@@ -589,7 +598,8 @@ class ConfigurationManager:
         base_config: Dict[str, Any],
         custom_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply custom preferences to base configuration"""
+        """
+Apply custom preferences to base configuration"""
         
         return self._merge_configurations(base_config, custom_preferences)
     
@@ -597,7 +607,8 @@ class ConfigurationManager:
         self,
         config: MultilingualCreatorConfiguration
     ) -> 'ValidationResult':
-        """Validate configuration against business rules"""
+        """
+Validate configuration against business rules"""
         
         errors = []
         warnings = []
@@ -697,7 +708,8 @@ class ConfigurationManager:
 
 @dataclass
 class ValidationResult:
-    """Configuration validation result"""
+    """
+Configuration validation result"""
     is_valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)

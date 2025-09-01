@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(str, Enum):
-    """Security levels for different system components."""
+    """
+Security levels for different system components."""
+
     PUBLIC = "public"
     BASIC = "basic"
     STANDARD = "standard"
@@ -28,6 +31,7 @@ class SecurityLevel(str, Enum):
 
 class ThreatLevel(str, Enum):
     """Threat assessment levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -37,6 +41,7 @@ class ThreatLevel(str, Enum):
 
 class EncryptionType(str, Enum):
     """Types of encryption methods used."""
+
     AES_128 = "aes_128"
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
@@ -47,6 +52,7 @@ class EncryptionType(str, Enum):
 
 class AuthenticationMethod(str, Enum):
     """Authentication methods."""
+
     PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     MULTI_FACTOR = "multi_factor"
@@ -58,6 +64,7 @@ class AuthenticationMethod(str, Enum):
 
 class ComplianceFramework(str, Enum):
     """Compliance frameworks."""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
@@ -112,7 +119,8 @@ class SecuritySeedsManager:
     """
     
     def __init__(self):
-        """Initialize security seeds manager with enterprise configurations."""
+        """
+Initialize security seeds manager with enterprise configurations."""
         self.security_policies = {}
         self.encryption_configurations = {}
         self.access_control_rules = {}
@@ -125,7 +133,8 @@ class SecuritySeedsManager:
         self.privacy_settings = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all security-related seed data with full enterprise support."""
+        """
+Initialize all security-related seed data with full enterprise support."""
         logger.info("Initializing comprehensive security seeds data...")
         start_time = datetime.now(timezone.utc)
         
@@ -354,7 +363,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_encryption_configurations(self) -> Dict[str, Any]:
-        """Initialize encryption configurations for different data types and scenarios."""
+        """
+Initialize encryption configurations for different data types and scenarios."""
         encryption_configs = {
             'data_at_rest_encryption': {
                 'database_encryption': {
@@ -470,7 +480,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_access_control_rules(self) -> Dict[str, Any]:
-        """Initialize access control rules and mechanisms."""
+        """
+Initialize access control rules and mechanisms."""
         access_control_rules = {
             'role_based_access_control': {
                 'admin_roles': {
@@ -632,7 +643,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_threat_detection(self) -> Dict[str, Any]:
-        """Initialize threat detection and prevention systems."""
+        """
+Initialize threat detection and prevention systems."""
         threat_detection = {
             'intrusion_detection_systems': {
                 'network_intrusion_detection': {
@@ -758,7 +770,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_security_monitoring(self) -> Dict[str, Any]:
-        """Initialize security monitoring and logging configurations."""
+        """
+Initialize security monitoring and logging configurations."""
         security_monitoring = {
             'security_information_event_management': {
                 'log_collection': {
@@ -869,7 +882,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_compliance_frameworks(self) -> Dict[str, Any]:
-        """Initialize compliance frameworks and regulatory requirements."""
+        """
+Initialize compliance frameworks and regulatory requirements."""
         compliance_frameworks = {
             'data_protection_regulations': {
                 'gdpr_compliance': {
@@ -1010,7 +1024,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_incident_response(self) -> Dict[str, Any]:
-        """Initialize incident response procedures and workflows."""
+        """
+Initialize incident response procedures and workflows."""
         incident_response = {
             'incident_classification': {
                 'severity_levels': {
@@ -1154,7 +1169,8 @@ class SecuritySeedsManager:
         }
     
     async def _initialize_security_audit(self) -> Dict[str, Any]:
-        """Initialize security audit configurations and procedures."""
+        """
+Initialize security audit configurations and procedures."""
         security_audit = {
             'audit_types': {
                 'internal_audits': {
@@ -1277,7 +1293,8 @@ class SecuritySeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all security seed data (use with caution)."""
+        """
+Reset all security seed data (use with caution)."""
         logger.warning("Resetting security seeds data...")
         
         self.security_policies.clear()

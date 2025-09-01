@@ -12,6 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Content fingerprint types"""
+    """
+Content fingerprint types"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_MFCC = "audio_mfcc"
     AUDIO_SPECTRAL = "audio_spectral"
@@ -60,6 +63,7 @@ class FingerprintType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -69,6 +73,7 @@ class ProtectionLevel(Enum):
 
 class MatchAccuracy(Enum):
     """Fingerprint matching accuracy levels"""
+
     EXACT = "exact"
     HIGH = "high"
     MEDIUM = "medium"
@@ -78,6 +83,7 @@ class MatchAccuracy(Enum):
 
 class ContentOwnership(Enum):
     """Content ownership types"""
+
     ORIGINAL = "original"
     LICENSED = "licensed"
     FAIR_USE = "fair_use"

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Protection Integration System
+"""
+Comprehensive Tests for Protection Integration System
 Testing content protection, copyright compliance, and security integration
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -34,6 +36,7 @@ Team Specialties:
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
 """
+
 import pytest
 import sys
 import os
@@ -57,11 +60,13 @@ from ai.recommendation.exceptions import ProtectionError, ValidationError
 
 
 class TestProtectionIntegrator:
-    """Comprehensive tests for the main protection integrator"""
+    """
+Comprehensive tests for the main protection integrator"""
     
     @pytest.mark.asyncio
     async def test_integrator_initialization(self):
-        """Test protection integrator initialization"""
+        """
+Test protection integrator initialization"""
         integrator = ProtectionIntegrator()
         
         # Test initial state
@@ -218,7 +223,8 @@ class TestProtectionIntegrator:
     
     @pytest.mark.asyncio
     async def test_content_originality_verification(self, protection_integrator, sample_text_content):
-        """Test content originality verification"""
+        """
+Test content originality verification"""
         text_data = sample_text_content
         
         originality_check = await protection_integrator.verify_content_originality(
@@ -251,7 +257,8 @@ class TestCopyrightAnalyzer:
     
     @pytest.mark.asyncio
     async def test_audio_copyright_detection(self, copyright_analyzer, sample_audio_content):
-        """Test audio copyright detection"""
+        """
+Test audio copyright detection"""
         audio_data = sample_audio_content
         
         detection_result = await copyright_analyzer.detect_audio_copyright(
@@ -355,7 +362,8 @@ class TestContentFingerprinter:
     
     @pytest.mark.asyncio
     async def test_generate_audio_fingerprint(self, content_fingerprinter, sample_audio_content):
-        """Test audio fingerprint generation"""
+        """
+Test audio fingerprint generation"""
         audio_data = sample_audio_content
         
         fingerprint = await content_fingerprinter.generate_audio_fingerprint(
@@ -464,7 +472,8 @@ class TestLegalComplianceChecker:
     
     @pytest.mark.asyncio
     async def test_check_platform_compliance(self, legal_compliance_checker, sample_video_content):
-        """Test platform-specific compliance checking"""
+        """
+Test platform-specific compliance checking"""
         video_data = sample_video_content
         
         compliance_results = await legal_compliance_checker.check_platform_compliance(
@@ -562,7 +571,8 @@ class TestBrandSafetyMonitor:
     
     @pytest.mark.asyncio
     async def test_analyze_content_safety(self, brand_safety_monitor, sample_text_content):
-        """Test content safety analysis"""
+        """
+Test content safety analysis"""
         text_data = sample_text_content
         
         safety_analysis = await brand_safety_monitor.analyze_content_safety(
@@ -660,7 +670,8 @@ class TestProtectionIntegrationPerformance:
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_protection_analysis_performance(self, benchmark, protection_integrator, sample_video_content):
-        """Benchmark protection analysis performance"""
+        """
+Benchmark protection analysis performance"""
         video_data = sample_video_content
         
         async def analyze_protection():
@@ -697,7 +708,8 @@ class TestProtectionIntegrationPerformance:
     
     @pytest.mark.asyncio
     async def test_concurrent_protection_checks(self, protection_integrator, sample_text_content):
-        """Test concurrent protection checks"""
+        """
+Test concurrent protection checks"""
         text_data = sample_text_content
         
         # Create multiple concurrent requests
@@ -729,7 +741,8 @@ class TestProtectionIntegrationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_protection_analysis_empty_content(self, protection_integrator):
-        """Test protection analysis with empty content"""
+        """
+Test protection analysis with empty content"""
         empty_content = {"content": "", "title": "", "description": ""}
         
         with pytest.raises(ValidationError):
@@ -799,7 +812,8 @@ class TestProtectionDataValidation:
     
     @pytest.mark.asyncio
     async def test_protection_score_consistency(self, protection_integrator, sample_video_content):
-        """Test consistency of protection scores"""
+        """
+Test consistency of protection scores"""
         video_data = sample_video_content
         
         # Analyze same content multiple times

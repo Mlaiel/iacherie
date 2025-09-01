@@ -34,6 +34,7 @@ Features:
 - Discovery workflow automation and scheduling
 - Enterprise-grade monitoring and logging
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -62,7 +63,9 @@ from .performance_tracker import PerformanceTracker, SearchPerformance, UserEnga
 logger = logging.getLogger(__name__)
 
 class SearchStrategy(Enum):
-    """Discovery search strategies"""
+    """
+Discovery search strategies"""
+
     COMPREHENSIVE = "comprehensive"
     FAST = "fast"
     DEEP = "deep"
@@ -75,6 +78,7 @@ class SearchStrategy(Enum):
 
 class DiscoveryMode(Enum):
     """Discovery operation modes"""
+
     SEARCH = "search"
     BROWSE = "browse"
     RECOMMEND = "recommend"
@@ -84,6 +88,7 @@ class DiscoveryMode(Enum):
 
 class QualityLevel(Enum):
     """Quality assurance levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -92,6 +97,7 @@ class QualityLevel(Enum):
 
 class PipelineStage(Enum):
     """Discovery pipeline stages"""
+
     PREPROCESSING = "preprocessing"
     SEARCH = "search"
     FILTERING = "filtering"
@@ -118,7 +124,8 @@ class DiscoveryConfig:
 
 @dataclass
 class DiscoverySession:
-    """Discovery session tracking"""
+    """
+Discovery session tracking"""
     session_id: str
     user_id: Optional[str]
     created_at: datetime
@@ -135,7 +142,8 @@ class DiscoverySession:
 
 @dataclass
 class ResultRanking:
-    """Result ranking configuration and metrics"""
+    """
+Result ranking configuration and metrics"""
     ranking_algorithm: str
     ranking_factors: Dict[str, float]
     personalization_weight: float = 0.3
@@ -148,7 +156,8 @@ class ResultRanking:
 
 @dataclass
 class QualityAssurance:
-    """Quality assurance metrics and thresholds"""
+    """
+Quality assurance metrics and thresholds"""
     min_relevance_score: float = 0.6
     min_quality_score: float = 0.7
     max_response_time_ms: float = 5000
@@ -164,7 +173,8 @@ class DiscoveryManager:
     """
     
     def __init__(self, config: Optional[DiscoveryConfig] = None):
-        """Initialize discovery manager"""
+        """
+Initialize discovery manager"""
         self.config = config or DiscoveryConfig()
         self.logger = logging.getLogger(__name__)
         
@@ -208,7 +218,8 @@ class DiscoveryManager:
         self._cleanup_task: Optional[asyncio.Task] = None
 
     async def initialize(self) -> bool:
-        """Initialize all discovery components"""
+        """
+Initialize all discovery components"""
         try:
             # Initialize individual discovery components
             await self._initialize_discovery_components()

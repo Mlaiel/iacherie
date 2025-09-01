@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, func, select,
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationLevel(Enum):
-    """Aggregation granularity levels"""
+    """
+Aggregation granularity levels"""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -59,6 +62,7 @@ class AggregationLevel(Enum):
 
 class AggregationScope(Enum):
     """Aggregation scope definitions"""
+
     USER_GLOBAL = "user_global"
     USER_PLATFORM = "user_platform"
     USER_CONTENT = "user_content"
@@ -72,6 +76,7 @@ class AggregationScope(Enum):
 
 class AggregationStatus(Enum):
     """Aggregation processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"

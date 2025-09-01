@@ -7,6 +7,7 @@ across multiple domains with high accuracy and contextual understanding.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
@@ -41,6 +42,7 @@ logger = logging.getLogger(__name__)
 
 class ContentCategory(Enum):
     """Main content categories"""
+
     MUSIC = "music"
     ENTERTAINMENT = "entertainment"
     TECHNOLOGY = "technology"
@@ -64,6 +66,7 @@ class ContentCategory(Enum):
 
 class ContentTone(Enum):
     """Content tone classification"""
+
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     FORMAL = "formal"
@@ -75,6 +78,7 @@ class ContentTone(Enum):
 
 class ContentIntent(Enum):
     """Content intent classification"""
+
     INFORM = "inform"
     ENTERTAIN = "entertain"
     PERSUADE = "persuade"
@@ -96,7 +100,8 @@ class CategoryScore:
 
 @dataclass
 class ClassificationResult:
-    """Complete content classification result"""
+    """
+Complete content classification result"""
     text: str
     primary_category: str
     confidence: float
@@ -119,7 +124,8 @@ class ContentClassifier:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Content Classifier"""
+        """
+Initialize Content Classifier"""
         self.config = config or default_config
         self.models = {}
         self.pipelines = {}
@@ -129,7 +135,8 @@ class ContentClassifier:
         self._initialize_models()
     
     def _load_category_keywords(self) -> Dict[str, Set[str]]:
-        """Load keyword sets for each category"""
+        """
+Load keyword sets for each category"""
         return {
             "music": {
                 "song", "album", "artist", "band", "concert", "tour", "music", "melody",
@@ -535,7 +542,8 @@ class ContentClassifier:
         return matched_keywords
     
     async def _extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract key terms from text"""
+        """
+Extract key terms from text"""
         try:
             # Simple keyword extraction based on frequency and importance
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
@@ -562,7 +570,8 @@ class ContentClassifier:
             return []
     
     async def _extract_topics(self, text: str) -> List[str]:
-        """Extract main topics from text"""
+        """
+Extract main topics from text"""
         # Simple topic extraction based on categories and keywords
         topics = []
         
@@ -575,7 +584,8 @@ class ContentClassifier:
         return topics[:5]  # Limit to top 5 topics
     
     async def _analyze_tone(self, text: str) -> Optional[str]:
-        """Analyze the tone of the content"""
+        """
+Analyze the tone of the content"""
         # Rule-based tone detection
         text_lower = text.lower()
         
@@ -653,7 +663,8 @@ class ContentClassifier:
         return min(quality_score, 1.0)
     
     async def _detect_audience_target(self, text: str) -> Optional[str]:
-        """Detect the target audience"""
+        """
+Detect the target audience"""
         text_lower = text.lower()
         
         audience_indicators = {
@@ -702,15 +713,18 @@ class ContentClassifier:
         return await self.classify(texts, categories, **kwargs)
     
     def get_available_categories(self) -> List[str]:
-        """Get list of available categories"""
+        """
+Get list of available categories"""
         return [cat.value for cat in ContentCategory]
     
     def get_category_keywords(self, category: str) -> List[str]:
-        """Get keywords for a specific category"""
+        """
+Get keywords for a specific category"""
         return list(self.category_keywords.get(category, []))
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
+        """
+Perform health check"""
         status = {
             "status": "healthy",
             "models_loaded": len(self.pipelines),

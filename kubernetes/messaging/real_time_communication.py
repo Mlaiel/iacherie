@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import json
 import logging
@@ -33,7 +34,8 @@ settings = get_settings()
 
 
 class WebSocketConnection(BaseModel):
-    """WebSocket connection information"""
+    """
+WebSocket connection information"""
     id: str = Field(..., description="Connection ID")
     user_id: str = Field(..., description="User ID")
     websocket: Any = Field(..., description="WebSocket instance")
@@ -45,6 +47,7 @@ class WebSocketConnection(BaseModel):
 
 class NotificationChannel(str, Enum):
     """Notification channel types"""
+
     CONTENT_ALERTS = "content.alerts"
     PROTECTION_VIOLATIONS = "protection.violations"
     AI_PROCESSING = "ai.processing"
@@ -119,7 +122,8 @@ class RealTimeCommunicationManager:
         
         @self.sio_server.event
         async def connect(sid: str, environ: Dict[str, Any], auth: Dict[str, Any]):
-            """Handle Socket.IO connection"""
+            """
+Handle Socket.IO connection"""
             try:
                 # Verify authentication
                 token = auth.get("token")

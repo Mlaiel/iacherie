@@ -14,6 +14,7 @@ Business Logic Security:
 - GDPR-compliant data processing and privacy protection
 - Enterprise-grade security for monetization workflows
 """
+
 import asyncio
 import json
 import time
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(str, Enum):
-    """Security threat levels"""
+    """
+Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,6 +58,7 @@ class ThreatLevel(str, Enum):
 
 class SecurityAction(str, Enum):
     """Security actions"""
+
     ALLOW = "allow"
     BLOCK = "block"
     QUARANTINE = "quarantine"
@@ -66,6 +70,7 @@ class SecurityAction(str, Enum):
 
 class AttackType(str, Enum):
     """Types of security attacks"""
+
     INJECTION = "injection"
     XSS = "xss"
     MALWARE = "malware"
@@ -82,6 +87,7 @@ class AttackType(str, Enum):
 
 class ComplianceStandard(str, Enum):
     """Compliance standards"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
@@ -416,7 +422,8 @@ class BehaviorAnalyzer:
         
     async def analyze_behavior(self, user_id: str, ip_addr: str, 
                              request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze user/IP behavior patterns"""
+        """
+Analyze user/IP behavior patterns"""
         analysis = {
             "is_suspicious": False,
             "anomaly_score": 0.0,
@@ -782,7 +789,8 @@ class SecurityMiddleware:
     
     async def generate_remediation_steps(self, threats: List[AttackType], 
                                        action: SecurityAction) -> List[str]:
-        """Generate specific remediation steps"""
+        """
+Generate specific remediation steps"""
         steps = []
         
         if action == SecurityAction.BLOCK:
@@ -877,7 +885,8 @@ def get_security_middleware() -> SecurityMiddleware:
 
 # Decorator for automatic security validation
 def require_security_validation():
-    """Decorator for automatic security validation"""
+    """
+Decorator for automatic security validation"""
     def decorator(func):
         async def wrapper(*args, **kwargs):
             # Extract security information from request

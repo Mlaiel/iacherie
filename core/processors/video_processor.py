@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -50,7 +51,9 @@ logger = logging.getLogger(__name__)
 
 
 class VideoFormat(str, Enum):
-    """Supported video formats"""
+    """
+Supported video formats"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -63,6 +66,7 @@ class VideoFormat(str, Enum):
 
 class VideoQuality(str, Enum):
     """Video quality levels"""
+
     LOW = "low"          # 480p
     MEDIUM = "medium"    # 720p
     HIGH = "high"        # 1080p
@@ -71,6 +75,7 @@ class VideoQuality(str, Enum):
 
 class VideoProcessingType(str, Enum):
     """Types of video processing"""
+
     ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
     CONVERSION = "conversion"
@@ -132,7 +137,8 @@ class VideoMetadata:
 
 @dataclass
 class VideoFeatures:
-    """Advanced video features extracted via AI"""
+    """
+Advanced video features extracted via AI"""
     scene_changes: List[float] = field(default_factory=list)
     dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
     brightness_levels: List[float] = field(default_factory=list)
@@ -150,7 +156,8 @@ class VideoFeatures:
 
 @dataclass
 class VideoAnalysisResult:
-    """Result of video analysis"""
+    """
+Result of video analysis"""
     success: bool
     metadata: Optional[VideoMetadata] = None
     features: Optional[VideoFeatures] = None

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 from typing import Optional, Dict, Any, List
 from enum import Enum
 import traceback
@@ -25,7 +26,9 @@ from datetime import datetime
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""
+    """
+Error severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -34,6 +37,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Error categories for classification"""
+
     PLATFORM_API = "platform_api"
     AUTHENTICATION = "authentication"
     CONTENT_PROCESSING = "content_processing"
@@ -78,7 +82,8 @@ class PlatformAgentBaseException(Exception):
         self.traceback = traceback.format_exc()
         
     def _generate_user_message(self) -> str:
-        """Generate user-friendly error message"""
+        """
+Generate user-friendly error message"""
         return f"An error occurred in {self.category.value}. Please try again."
     
     def to_dict(self) -> Dict[str, Any]:
@@ -324,7 +329,8 @@ class DatabaseException(PlatformAgentBaseException):
 
 
 class DatabaseConnectionException(DatabaseException):
-    """Database connection failed"""
+    """
+Database connection failed"""
     
     def __init__(self, **kwargs):
         super().__init__(
@@ -365,7 +371,8 @@ class SynchronizationException(PlatformAgentBaseException):
 
 
 class SyncConflictException(SynchronizationException):
-    """Synchronization conflict detected"""
+    """
+Synchronization conflict detected"""
     
     def __init__(self, conflict_type: str, conflicting_data: Dict[str, Any], **kwargs):
         self.conflict_type = conflict_type
@@ -439,7 +446,8 @@ class SecurityException(PlatformAgentBaseException):
 
 
 class AuthenticationException(SecurityException):
-    """Authentication failed"""
+    """
+Authentication failed"""
     
     def __init__(self, message: str = "Authentication failed", **kwargs):
         super().__init__(
@@ -596,7 +604,8 @@ class NetworkException(PlatformAgentBaseException):
 
 
 class NetworkTimeoutException(NetworkException):
-    """Network request timed out"""
+    """
+Network request timed out"""
     
     def __init__(self, timeout_seconds: int, **kwargs):
         super().__init__(

@@ -8,7 +8,7 @@ Responsibility: Advanced revenue tracking, calculations, and payment processing
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,6 +20,7 @@ REVENUE REPOSITORY ARCHITECTURE:
 Revenue Tracking → Platform Integration → Payment Processing → 
 Tax Calculations → Currency Exchange → Performance Analytics → Automated Payouts
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -32,7 +33,9 @@ from enum import Enum
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class RevenueType(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
@@ -46,6 +49,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -55,6 +59,7 @@ class PaymentStatus(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -92,7 +97,8 @@ class RevenueEntry:
 
 @dataclass
 class RevenueSummary:
-    """Revenue summary for analytics"""
+    """
+Revenue summary for analytics"""
     creator_id: str
     period_start: datetime
     period_end: datetime
@@ -109,7 +115,8 @@ class RevenueSummary:
 
 @dataclass
 class PaymentRequest:
-    """Payment request details"""
+    """
+Payment request details"""
     request_id: str
     creator_id: str
     amount: Decimal
@@ -246,14 +253,16 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
         return gross_amount * fee_rate
     
     def _calculate_service_fee(self, gross_amount: Decimal) -> Decimal:
-        """Calculate our service fee"""
+        """
+Calculate our service fee"""
         return gross_amount * self.service_fee_rate
     
     def _calculate_net_amounts(self, gross_amount: Decimal, 
                              platform: str, 
                              creator_id: str,
                              country_code: str = None) -> Tuple[Decimal, Decimal, Decimal, Decimal]:
-        """Calculate all fees and net amount"""
+        """
+Calculate all fees and net amount"""
         platform_fee = self._calculate_platform_fee(gross_amount, platform)
         service_fee = self._calculate_service_fee(gross_amount)
         tax_amount = self._calculate_tax_amount(gross_amount, creator_id, country_code)
@@ -264,7 +273,8 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
         return platform_fee, service_fee, tax_amount, payout_amount
     
     def _generate_revenue_id(self) -> str:
-        """Generate unique revenue ID"""
+        """
+Generate unique revenue ID"""
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
         return f"rev_{timestamp}_{hashlib.md5(timestamp.encode()).hexdigest()[:8]}"
     

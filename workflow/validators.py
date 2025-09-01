@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Set, Callable, Union
 from dataclasses import dataclass
 from enum import Enum
@@ -22,7 +23,9 @@ from .exceptions import (
 
 
 class ValidationLevel(Enum):
-    """Validation severity levels."""
+    """
+Validation severity levels."""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -31,6 +34,7 @@ class ValidationLevel(Enum):
 
 class ValidationType(Enum):
     """Types of validation checks."""
+
     STRUCTURE = "structure"
     DEPENDENCY = "dependency"
     CONFIGURATION = "configuration"
@@ -54,7 +58,8 @@ class ValidationResult:
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report."""
+    """
+Comprehensive validation report."""
     valid: bool
     results: List[ValidationResult]
     errors: List[ValidationResult]
@@ -68,15 +73,18 @@ class ValidationReport:
         self.info = [r for r in self.results if r.level == ValidationLevel.INFO]
     
     def has_errors(self) -> bool:
-        """Check if report contains errors."""
+        """
+Check if report contains errors."""
         return len(self.errors) > 0
     
     def has_critical_errors(self) -> bool:
-        """Check if report contains critical errors."""
+        """
+Check if report contains critical errors."""
         return any(r.level == ValidationLevel.CRITICAL for r in self.errors)
     
     def get_error_summary(self) -> str:
-        """Get summary of errors."""
+        """
+Get summary of errors."""
         if not self.errors:
             return "No errors found"
         
@@ -302,7 +310,8 @@ class WorkflowValidator:
         return self._create_report(results)
     
     def add_custom_validator(self, name: str, validator_func: Callable) -> None:
-        """Add custom validation function."""
+        """
+Add custom validation function."""
         self.custom_validators[name] = validator_func
         self.logger.debug(f"Added custom validator: {name}")
     
@@ -1002,7 +1011,8 @@ class WorkflowValidator:
         )
     
     def _get_required_fields(self, data_type: str) -> List[str]:
-        """Get required fields for data type."""
+        """
+Get required fields for data type."""
         field_requirements = {
             "workflow": ["name", "steps"],
             "pipeline": ["steps"],
@@ -1060,7 +1070,8 @@ class WorkflowValidator:
             return False
     
     def _find_circular_dependencies(self, step_deps: Dict[str, List[str]]) -> List[List[str]]:
-        """Find circular dependencies in step definitions."""
+        """
+Find circular dependencies in step definitions."""
         def dfs(node, path, visited):
             if node in path:
                 # Found cycle
@@ -1091,7 +1102,8 @@ class WorkflowValidator:
     
     # Default validation rule implementations
     def _check_pipeline_complexity(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check pipeline complexity metrics."""
+        """
+Check pipeline complexity metrics."""
         results = []
         
         if "steps" in pipeline_def:
@@ -1116,7 +1128,8 @@ class WorkflowValidator:
         return []  # Already handled in _validate_step_dependencies
     
     def _check_resource_usage(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check resource usage patterns."""
+        """
+Check resource usage patterns."""
         results = []
         
         # This would analyze resource requirements across pipeline steps
@@ -1125,15 +1138,18 @@ class WorkflowValidator:
         return results
     
     def _check_workflow_timeout(self, workflow_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check workflow timeout configuration."""
+        """
+Check workflow timeout configuration."""
         return []  # Already handled in _validate_workflow_settings
     
     def _check_parallel_limits(self, workflow_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check parallel execution limits."""
+        """
+Check parallel execution limits."""
         return []  # Already handled in _validate_workflow_settings
     
     def _check_trigger_conflicts(self, automation_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check for automation trigger conflicts."""
+        """
+Check for automation trigger conflicts."""
         results = []
         
         # This would check for conflicting automation triggers
@@ -1142,7 +1158,8 @@ class WorkflowValidator:
         return results
     
     def _check_action_permissions(self, automation_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check automation action permissions."""
+        """
+Check automation action permissions."""
         results = []
         
         # This would validate that automation actions have proper permissions

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""ML Demo Tests - Enterprise Grade Demo & Showcase Test Suite
+"""
+ML Demo Tests - Enterprise Grade Demo & Showcase Test Suite
 
 Comprehensive tests for ML demo functionality, showcase features, 
 interactive demonstrations, and proof-of-concept systems.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -58,10 +61,12 @@ from ai.ml.ml_demo import (
 
 
 class TestMLDemoOrchestrator:
-    """Tests for ML demo orchestration and management"""
+    """
+Tests for ML demo orchestration and management"""
     
     def test_init_demo_orchestrator(self):
-        """Test demo orchestrator initialization"""
+        """
+Test demo orchestrator initialization"""
         orchestrator = MLDemoOrchestrator(
             demo_types=["interactive", "showcase", "benchmark", "comparison"],
             supported_models=["classification", "regression", "clustering", "nlp"],
@@ -314,7 +319,8 @@ class TestInteractiveDemo:
     """Tests for interactive demo functionality"""
     
     def test_init_interactive_demo(self):
-        """Test interactive demo initialization"""
+        """
+Test interactive demo initialization"""
         demo = InteractiveDemo(
             demo_type="real_time_prediction",
             interaction_modes=["form_input", "file_upload", "api_call"],
@@ -570,7 +576,8 @@ class TestVisualizationEngine:
     """Tests for visualization and charting functionality"""
     
     def test_init_visualization_engine(self):
-        """Test visualization engine initialization"""
+        """
+Test visualization engine initialization"""
         viz_engine = VisualizationEngine(
             chart_libraries=["matplotlib", "plotly", "seaborn", "bokeh"],
             interactive_charts=True,
@@ -859,7 +866,8 @@ class TestDemoAnalytics:
     """Tests for demo analytics and user behavior tracking"""
     
     def test_init_demo_analytics(self):
-        """Test demo analytics initialization"""
+        """
+Test demo analytics initialization"""
         analytics = DemoAnalytics(
             track_user_behavior=True,
             performance_monitoring=True,
@@ -875,7 +883,8 @@ class TestDemoAnalytics:
         assert analytics.real_time_analytics
 
     def test_user_engagement_tracking(self, demo_session_events):
-        """Test user engagement and interaction tracking"""
+        """
+Test user engagement and interaction tracking"""
         analytics = DemoAnalytics(track_user_behavior=True)
         
         if not demo_session_events:
@@ -1109,7 +1118,8 @@ class TestMLDemoIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_demo_deployment(self, temp_dir):
-        """Test complete demo deployment pipeline"""
+        """
+Test complete demo deployment pipeline"""
         # Initialize components
         orchestrator = MLDemoOrchestrator(output_directory=str(temp_dir))
         interactive_demo = InteractiveDemo()

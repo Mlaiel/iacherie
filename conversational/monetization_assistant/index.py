@@ -17,6 +17,7 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any
@@ -48,7 +49,8 @@ class MonetizationAssistantManager:
     """
     
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the monetization assistant manager."""
+        """
+Initialize the monetization assistant manager."""
         self.config = config or MonetizationConfig()
         
         # Initialize all components
@@ -66,7 +68,8 @@ class MonetizationAssistantManager:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all monetization assistant components."""
+        """
+Initialize all monetization assistant components."""
         if self._initialized:
             return
         

@@ -13,6 +13,7 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union
 from dataclasses import dataclass
@@ -20,7 +21,9 @@ from datetime import datetime, timedelta
 
 
 class UserRole(str, Enum):
-    """User roles in the platform hierarchy."""
+    """
+User roles in the platform hierarchy."""
+
     PLATFORM_ADMIN = "platform_admin"
     TENANT_ADMIN = "tenant_admin"
     CONTENT_MANAGER = "content_manager"
@@ -94,6 +97,7 @@ class Permission(str, Enum):
 
 class ResourceType(str, Enum):
     """Resource types for permission scoping."""
+
     USER = "user"
     CONTENT = "content"
     TENANT = "tenant"
@@ -117,7 +121,8 @@ class PermissionScope:
 
 @dataclass
 class RoleDefinition:
-    """Complete role definition with permissions and constraints."""
+    """
+Complete role definition with permissions and constraints."""
     name: str
     description: str
     permissions: Set[Permission]
@@ -130,7 +135,8 @@ class RoleDefinition:
 
 
 class UserRolesConfig:
-    """Enterprise user roles and permissions configuration."""
+    """
+Enterprise user roles and permissions configuration."""
     # Role hierarchy and inheritance
     ROLE_HIERARCHY = {
         UserRole.PLATFORM_ADMIN: {
@@ -535,7 +541,8 @@ class UserRolesConfig:
 
     @classmethod
     def can_assign_role(cls, assigner_role: UserRole, target_role: UserRole) -> bool:
-        """Check if a role can assign another role."""
+        """
+Check if a role can assign another role."""
         hierarchy = cls.ROLE_HIERARCHY.get(assigner_role, {})
         assignable_roles = hierarchy.get("can_assign_roles", [])
         return target_role in assignable_roles
@@ -553,12 +560,14 @@ class UserRolesConfig:
 
     @classmethod
     def get_role_features(cls, role: UserRole) -> Dict[str, bool]:
-        """Get feature access for a role."""
+        """
+Get feature access for a role."""
         return cls.ROLE_FEATURES.get(role, {})
 
     @classmethod
     def validate_role_assignment(cls, assigner: UserRole, assignee: UserRole, tenant_context: bool = True) -> Dict[str, Union[bool, str]]:
-        """Validate if a role assignment is permitted."""
+        """
+Validate if a role assignment is permitted."""
         validation = {
             "valid": True,
             "reason": ""
@@ -585,5 +594,6 @@ class UserRolesConfig:
 
     @classmethod
     def get_permissions_in_group(cls, group_name: str) -> List[Permission]:
-        """Get permissions in a specific group."""
+        """
+Get permissions in a specific group."""
         return cls.PERMISSION_GROUPS.get(group_name, [])

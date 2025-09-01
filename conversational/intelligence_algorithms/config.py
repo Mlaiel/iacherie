@@ -14,6 +14,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration management"""
+    """
+Environment types for configuration management"""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -34,6 +37,7 @@ class EnvironmentType(Enum):
 
 class LogLevel(Enum):
     """Logging levels for system configuration"""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -220,7 +224,8 @@ class IntelligenceAlgorithmsConfig:
         self._setup_algorithm_defaults()
     
     def _validate_configuration(self):
-        """Validate configuration settings for consistency and security"""
+        """
+Validate configuration settings for consistency and security"""
         # Validate environment-specific requirements
         if self.environment == EnvironmentType.PRODUCTION:
             if not self.security.encryption_key:
@@ -278,7 +283,8 @@ class IntelligenceAlgorithmsConfig:
         return self.algorithm_settings.get(algorithm_name, {})
     
     def update_algorithm_config(self, algorithm_name: str, config: Dict[str, Any]):
-        """Update configuration for a specific algorithm"""
+        """
+Update configuration for a specific algorithm"""
         if algorithm_name not in self.algorithm_settings:
             self.algorithm_settings[algorithm_name] = {}
         self.algorithm_settings[algorithm_name].update(config)
@@ -295,18 +301,21 @@ class IntelligenceAlgorithmsConfig:
         return config_dict
     
     def to_json(self) -> str:
-        """Convert configuration to JSON string"""
+        """
+Convert configuration to JSON string"""
         return json.dumps(self.to_dict(), indent=2, default=str)
     
     @classmethod
     def from_json(cls, json_str: str) -> 'IntelligenceAlgorithmsConfig':
-        """Create configuration from JSON string"""
+        """
+Create configuration from JSON string"""
         config_data = json.loads(json_str)
         return cls(**config_data)
     
     @classmethod
     def from_file(cls, config_file_path: str) -> 'IntelligenceAlgorithmsConfig':
-        """Load configuration from file"""
+        """
+Load configuration from file"""
         with open(config_file_path, 'r') as f:
             if config_file_path.endswith('.json'):
                 config_data = json.load(f)
@@ -334,17 +343,20 @@ def get_config() -> IntelligenceAlgorithmsConfig:
     return config
 
 def create_config(environment: str = None, **kwargs) -> IntelligenceAlgorithmsConfig:
-    """Create a new configuration instance with custom settings"""
+    """
+Create a new configuration instance with custom settings"""
     if environment:
         kwargs['environment'] = EnvironmentType(environment)
     return IntelligenceAlgorithmsConfig(**kwargs)
 
 def load_config_from_environment() -> IntelligenceAlgorithmsConfig:
-    """Load configuration from environment variables"""
+    """
+Load configuration from environment variables"""
     return IntelligenceAlgorithmsConfig()
 
 def load_config_from_file(file_path: str) -> IntelligenceAlgorithmsConfig:
-    """Load configuration from file"""
+    """
+Load configuration from file"""
     return IntelligenceAlgorithmsConfig.from_file(file_path)
 
 # Export configuration components

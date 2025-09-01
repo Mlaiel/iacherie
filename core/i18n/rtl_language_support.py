@@ -8,7 +8,7 @@ Technologies: Python, Unicode BiDi Algorithm, CSS RTL, Layout Processing
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Text analysis → RTL detection → BiDi processing → Layout adaptation → 
 CSS generation → Direction handling → Mixed content support → UI transformation
 """
+
 import logging
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class TextDirection(Enum):
-    """Text direction types"""
+    """
+Text direction types"""
+
     LTR = "ltr"  # Left-to-Right
     RTL = "rtl"  # Right-to-Left
     AUTO = "auto"  # Automatic detection
@@ -37,6 +40,7 @@ class TextDirection(Enum):
 
 class RTLLanguage(Enum):
     """Supported RTL languages"""
+
     ARABIC = "ar"
     HEBREW = "he"
     PERSIAN = "fa"
@@ -56,6 +60,7 @@ class RTLLanguage(Enum):
 
 class BiDiType(Enum):
     """Unicode Bidirectional Character Types"""
+
     L = "L"      # Left-to-Right
     R = "R"      # Right-to-Left
     AL = "AL"    # Right-to-Left Arabic
@@ -74,6 +79,7 @@ class BiDiType(Enum):
 
 class LayoutComponent(Enum):
     """UI layout components that need RTL adaptation"""
+
     TEXT = "text"
     BUTTON = "button"
     INPUT = "input"
@@ -105,7 +111,8 @@ class BiDiAnalysis:
 
 @dataclass
 class RTLAdaptation:
-    """RTL adaptation instructions"""
+    """
+RTL adaptation instructions"""
     direction: TextDirection
     css_properties: Dict[str, str]
     layout_adjustments: Dict[str, Any]
@@ -120,7 +127,8 @@ class RTLAdaptation:
 
 @dataclass
 class RTLProcessor:
-    """RTL processing configuration"""
+    """
+RTL processing configuration"""
     language: RTLLanguage
     script_direction: TextDirection
     number_format: str
@@ -132,7 +140,8 @@ class RTLProcessor:
 
 
 class RTLLanguageSupport:
-    """Advanced RTL language support and processing engine"""
+    """
+Advanced RTL language support and processing engine"""
     
     def __init__(self):
         self.rtl_languages: Dict[str, RTLProcessor] = {}
@@ -334,7 +343,8 @@ class RTLLanguageSupport:
         }
     
     async def detect_text_direction(self, text: str) -> TextDirection:
-        """Detect overall text direction"""
+        """
+Detect overall text direction"""
         try:
             if not text.strip():
                 return TextDirection.LTR
@@ -381,7 +391,8 @@ class RTLLanguageSupport:
         return False
     
     async def analyze_bidi_text(self, text: str) -> BiDiAnalysis:
-        """Perform bidirectional text analysis"""
+        """
+Perform bidirectional text analysis"""
         try:
             # Check cache
             if text in self.bidi_cache:
@@ -469,7 +480,8 @@ class RTLLanguageSupport:
         return runs
     
     def _requires_bidi_processing(self, char_types: List[BiDiType], overall_direction: TextDirection) -> bool:
-        """Check if text requires bidirectional processing"""
+        """
+Check if text requires bidirectional processing"""
         if overall_direction == TextDirection.MIXED:
             return True
         
@@ -480,7 +492,8 @@ class RTLLanguageSupport:
         return has_ltr and has_rtl
     
     def _calculate_embedding_levels(self, char_types: List[BiDiType], overall_direction: TextDirection) -> List[int]:
-        """Calculate embedding levels for characters (simplified algorithm)"""
+        """
+Calculate embedding levels for characters (simplified algorithm)"""
         base_level = 1 if overall_direction == TextDirection.RTL else 0
         levels = []
         
@@ -502,7 +515,8 @@ class RTLLanguageSupport:
         return levels
     
     def _calculate_visual_order(self, text: str, embedding_levels: List[int]) -> Tuple[List[int], List[int]]:
-        """Calculate visual and logical order (simplified)"""
+        """
+Calculate visual and logical order (simplified)"""
         logical_order = list(range(len(text)))
         visual_order = list(range(len(text)))
         
@@ -533,7 +547,8 @@ class RTLLanguageSupport:
         content_type: LayoutComponent = LayoutComponent.TEXT,
         custom_requirements: Dict[str, Any] = None
     ) -> RTLAdaptation:
-        """Create RTL adaptation instructions"""
+        """
+Create RTL adaptation instructions"""
         try:
             # Get language processor
             processor = self.rtl_languages.get(language_code)

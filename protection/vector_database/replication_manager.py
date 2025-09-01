@@ -5,7 +5,7 @@ Advanced multi-region replication and synchronization for vector databases.
 Ensures high availability and data consistency across distributed deployments.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
 =====================================
@@ -16,6 +16,7 @@ des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReplicationMode(Enum):
-    """Replication modes supported"""
+    """
+Replication modes supported"""
+
     MASTER_SLAVE = "master_slave"
     MASTER_MASTER = "master_master"
     EVENTUAL_CONSISTENCY = "eventual_consistency"
@@ -43,6 +46,7 @@ class ReplicationMode(Enum):
 
 class NodeRole(Enum):
     """Node roles in replication cluster"""
+
     MASTER = "master"
     SLAVE = "slave"
     REPLICA = "replica"
@@ -51,6 +55,7 @@ class NodeRole(Enum):
 
 class ReplicationStatus(Enum):
     """Replication operation status"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -88,7 +93,8 @@ class ReplicationOperation:
 
 @dataclass
 class ConflictResolution:
-    """Conflict resolution result"""
+    """
+Conflict resolution result"""
     conflict_id: str
     resolution_strategy: str
     winning_version: Dict[str, Any]
@@ -98,11 +104,13 @@ class ConflictResolution:
 
 
 class VectorHashCalculator:
-    """Calculate consistent hashes for vector data"""
+    """
+Calculate consistent hashes for vector data"""
     
     @staticmethod
     def calculate_vector_hash(vector_id: str, embedding: np.ndarray, metadata: Dict[str, Any]) -> str:
-        """Calculate deterministic hash for vector data"""
+        """
+Calculate deterministic hash for vector data"""
         try:
             # Create consistent data representation
             data_components = [
@@ -138,7 +146,8 @@ class VectorHashCalculator:
 
 
 class ConflictResolver:
-    """Resolve conflicts in multi-master replication"""
+    """
+Resolve conflicts in multi-master replication"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -209,7 +218,8 @@ class ConflictResolver:
         return sorted_versions[0], sorted_versions[1:]
     
     async def _resolve_vector_version_priority(self, versions: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
-        """Prioritize by vector version number"""
+        """
+Prioritize by vector version number"""
         if not versions:
             return {}, []
         
@@ -223,7 +233,8 @@ class ConflictResolver:
         return sorted_versions[0], sorted_versions[1:]
     
     async def _resolve_metadata_merge(self, versions: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
-        """Merge metadata from all versions"""
+        """
+Merge metadata from all versions"""
         if not versions:
             return {}, []
         
@@ -243,7 +254,8 @@ class ConflictResolver:
         return merged_version, versions
     
     async def _resolve_custom_priority(self, versions: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
-        """Custom priority based on node priority"""
+        """
+Custom priority based on node priority"""
         if not versions:
             return {}, []
         
@@ -258,7 +270,8 @@ class ConflictResolver:
 
 
 class ReplicationManager:
-    """Main replication coordination manager"""
+    """
+Main replication coordination manager"""
     
     def __init__(self, vector_store, config: Dict[str, Any]):
         self.vector_store = vector_store

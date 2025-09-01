@@ -6,6 +6,7 @@ terms enforcement, and revenue tracking for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses."""
+    """
+Types of content licenses."""
+
     ROYALTY_FREE = "royalty_free"
     RIGHTS_MANAGED = "rights_managed"
     CREATIVE_COMMONS = "creative_commons"
@@ -33,6 +36,7 @@ class LicenseType(Enum):
 
 class LicenseStatus(Enum):
     """License status enumeration."""
+
     ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
@@ -43,6 +47,7 @@ class LicenseStatus(Enum):
 
 class UsageType(Enum):
     """Types of content usage."""
+
     COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     EDUCATIONAL = "educational"
@@ -55,6 +60,7 @@ class UsageType(Enum):
 
 class LicenseScope(Enum):
     """Geographic scope of license."""
+
     WORLDWIDE = "worldwide"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -81,7 +87,8 @@ class LicenseTerms:
 
 @dataclass
 class PricingModel:
-    """License pricing configuration."""
+    """
+License pricing configuration."""
     base_price: Decimal
     currency: str
     pricing_type: str  # fixed, tier, usage_based, revenue_share
@@ -93,7 +100,8 @@ class PricingModel:
 
 @dataclass
 class License:
-    """License record structure."""
+    """
+License record structure."""
     license_id: str
     content_id: str
     licensor_id: str
@@ -114,7 +122,8 @@ class License:
 
 @dataclass
 class LicenseUsage:
-    """License usage tracking."""
+    """
+License usage tracking."""
     usage_id: str
     license_id: str
     user_id: str
@@ -749,7 +758,8 @@ class LicensingEngine:
         return user_licenses
     
     def _is_license_valid(self, license_record: License) -> bool:
-        """Check if license is currently valid."""
+        """
+Check if license is currently valid."""
         # Check status
         if license_record.status != LicenseStatus.ACTIVE:
             return False
@@ -777,7 +787,8 @@ class LicensingEngine:
         usage_type: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Check if usage is permitted under available licenses."""
+        """
+Check if usage is permitted under available licenses."""
         usage_permitted = False
         restrictions = []
         
@@ -880,7 +891,8 @@ class LicensingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> List[LicenseUsage]:
-        """Filter usage records by criteria."""
+        """
+Filter usage records by criteria."""
         filtered = []
         
         for usage_record in self.usage_records.values():
@@ -903,7 +915,8 @@ class LicensingEngine:
         license_record: License, 
         licensee_id: str
     ) -> Dict[str, Any]:
-        """Process payment for license."""
+        """
+Process payment for license."""
         if license_record.pricing.base_price > 0:
             return {
                 "payment_required": True,

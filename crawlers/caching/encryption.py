@@ -9,6 +9,7 @@ key management, rotation, and multiple encryption algorithms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -38,7 +39,9 @@ from ...core.utils import generate_uuid
 logger = logging.getLogger(__name__)
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithm types."""
+    """
+Encryption algorithm types."""
+
     NONE = "none"
     FERNET = "fernet"
     AES_256_GCM = "aes_256_gcm"
@@ -47,6 +50,7 @@ class EncryptionAlgorithm(Enum):
 
 class KeyDerivationMethod(Enum):
     """Key derivation methods."""
+
     PBKDF2 = "pbkdf2"
     SCRYPT = "scrypt"
     ARGON2 = "argon2"
@@ -65,7 +69,8 @@ class EncryptionKey:
     max_usage: Optional[int] = None
     
     def is_expired(self) -> bool:
-        """Check if key is expired."""
+        """
+Check if key is expired."""
         if self.expires_at and datetime.now() > self.expires_at:
             return True
         if self.max_usage and self.usage_count >= self.max_usage:
@@ -73,13 +78,15 @@ class EncryptionKey:
         return False
     
     def should_rotate(self) -> bool:
-        """Check if key should be rotated."""
+        """
+Check if key should be rotated."""
         rotation_time = self.created_at + timedelta(seconds=self.rotation_interval)
         return datetime.now() > rotation_time
 
 @dataclass
 class EncryptionResult:
-    """Encryption operation result."""
+    """
+Encryption operation result."""
     encrypted_data: bytes
     key_id: str
     algorithm: EncryptionAlgorithm
@@ -146,7 +153,8 @@ class CacheEncryption:
     
     def _derive_key(self, algorithm: EncryptionAlgorithm, 
                    salt: bytes, key_length: int = 32) -> bytes:
-        """Derive encryption key from master key."""
+        """
+Derive encryption key from master key."""
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=key_length,
@@ -157,7 +165,8 @@ class CacheEncryption:
         return kdf.derive(self.master_key.encode())
     
     async def _initialize_current_key(self) -> None:
-        """Initialize current encryption key."""
+        """
+Initialize current encryption key."""
         try:
             current_key = await self._generate_key(self.algorithm)
             self.current_key_id = current_key.key_id
@@ -302,13 +311,15 @@ class CacheEncryption:
     
     async def _decrypt_fernet(self, encrypted_result: EncryptionResult,
                             encryption_key: EncryptionKey) -> bytes:
-        """Decrypt with Fernet algorithm."""
+        """
+Decrypt with Fernet algorithm."""
         fernet = Fernet(base64.urlsafe_b64encode(encryption_key.key_data))
         return fernet.decrypt(encrypted_result.encrypted_data)
     
     async def _encrypt_aes_gcm(self, plaintext: bytes,
                              encryption_key: EncryptionKey) -> EncryptionResult:
-        """Encrypt with AES-256-GCM."""
+        """
+Encrypt with AES-256-GCM."""
         nonce = secrets.token_bytes(12)  # 96-bit nonce for GCM
         
         cipher = Cipher(
@@ -330,7 +341,8 @@ class CacheEncryption:
     
     async def _decrypt_aes_gcm(self, encrypted_result: EncryptionResult,
                              encryption_key: EncryptionKey) -> bytes:
-        """Decrypt with AES-256-GCM."""
+        """
+Decrypt with AES-256-GCM."""
         cipher = Cipher(
             algorithms.AES(encryption_key.key_data),
             modes.GCM(encrypted_result.nonce, encrypted_result.tag),
@@ -342,7 +354,8 @@ class CacheEncryption:
     
     async def _encrypt_aes_cbc(self, plaintext: bytes,
                              encryption_key: EncryptionKey) -> EncryptionResult:
-        """Encrypt with AES-256-CBC."""
+        """
+Encrypt with AES-256-CBC."""
         # Pad plaintext to 16-byte boundary
         padding_length = 16 - (len(plaintext) % 16)
         padded_plaintext = plaintext + bytes([padding_length] * padding_length)
@@ -367,7 +380,8 @@ class CacheEncryption:
     
     async def _decrypt_aes_cbc(self, encrypted_result: EncryptionResult,
                              encryption_key: EncryptionKey) -> bytes:
-        """Decrypt with AES-256-CBC."""
+        """
+Decrypt with AES-256-CBC."""
         cipher = Cipher(
             algorithms.AES(encryption_key.key_data),
             modes.CBC(encrypted_result.nonce),
@@ -383,7 +397,8 @@ class CacheEncryption:
     
     async def _encrypt_chacha20(self, plaintext: bytes,
                               encryption_key: EncryptionKey) -> EncryptionResult:
-        """Encrypt with ChaCha20-Poly1305."""
+        """
+Encrypt with ChaCha20-Poly1305."""
         nonce = secrets.token_bytes(12)  # 96-bit nonce
         
         cipher = Cipher(
@@ -405,7 +420,8 @@ class CacheEncryption:
     
     async def _decrypt_chacha20(self, encrypted_result: EncryptionResult,
                               encryption_key: EncryptionKey) -> bytes:
-        """Decrypt with ChaCha20-Poly1305."""
+        """
+Decrypt with ChaCha20-Poly1305."""
         cipher = Cipher(
             algorithms.ChaCha20(encryption_key.key_data, encrypted_result.nonce),
             modes.GCM(b'', encrypted_result.tag),
@@ -416,7 +432,8 @@ class CacheEncryption:
         return decryptor.update(encrypted_result.encrypted_data) + decryptor.finalize()
     
     async def _get_current_key(self, algorithm: EncryptionAlgorithm) -> EncryptionKey:
-        """Get current encryption key for algorithm."""
+        """
+Get current encryption key for algorithm."""
         if self.current_key_id:
             current_key = self.encryption_keys.get(self.current_key_id)
             if current_key and current_key.algorithm == algorithm and not current_key.is_expired():
@@ -426,7 +443,8 @@ class CacheEncryption:
         return await self._generate_key(algorithm)
     
     async def _rotate_key(self) -> None:
-        """Rotate encryption key."""
+        """
+Rotate encryption key."""
         try:
             new_key = await self._generate_key(self.algorithm)
             old_key_id = self.current_key_id
@@ -487,7 +505,8 @@ class SecureCacheManager:
     """
     
     def __init__(self, cache_manager, encryption: Optional[CacheEncryption] = None):
-        """Initialize secure cache manager."""
+        """
+Initialize secure cache manager."""
         self.cache_manager = cache_manager
         self.encryption = encryption or CacheEncryption()
         self.logger = logging.getLogger(f"{__name__}.SecureCacheManager")
@@ -525,7 +544,8 @@ class SecureCacheManager:
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None,
                  encrypt: Optional[bool] = None) -> bool:
-        """Set value with optional encryption."""
+        """
+Set value with optional encryption."""
         try:
             should_encrypt = encrypt if encrypt is not None else self._should_encrypt(key, value)
             

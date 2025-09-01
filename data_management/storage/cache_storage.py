@@ -8,7 +8,7 @@ High-performance cache storage provider with Redis, Memcached, and in-memory
 caching for ultra-fast content retrieval and fingerprint matching.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT LÉGAL:
@@ -16,6 +16,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
 """
+
 from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator, Tuple
 import logging
 import asyncio
@@ -35,7 +36,9 @@ import base64
 logger = logging.getLogger(__name__)
 
 class CacheProvider(Enum):
-    """Supported cache providers"""
+    """
+Supported cache providers"""
+
     REDIS = "redis"
     MEMCACHED = "memcached"
     IN_MEMORY = "in_memory"
@@ -43,6 +46,7 @@ class CacheProvider(Enum):
 
 class CacheStrategy(Enum):
     """Cache eviction strategies"""
+
     LRU = "lru"          # Least Recently Used
     LFU = "lfu"          # Least Frequently Used
     TTL = "ttl"          # Time To Live
@@ -104,7 +108,8 @@ class CacheStorageManager:
     """
     
     def __init__(self, config: CacheConfig):
-        """Initialize cache storage manager"""
+        """
+Initialize cache storage manager"""
         self.config = config
         self.redis_client = None
         self.memcached_client = None
@@ -939,7 +944,8 @@ class CacheStorageManager:
                 self.metrics['avg_set_time'] = (current_avg * (total_writes - 1) + processing_time) / total_writes
     
     def _update_content_stats(self, content_type: str, operation: str, size: int) -> None:
-        """Update content-specific statistics"""
+        """
+Update content-specific statistics"""
         with self.lock:
             if content_type not in self.content_stats:
                 self.content_stats[content_type] = {
@@ -966,7 +972,8 @@ class CacheStorageManager:
                 stats['hit_ratio'] = stats['hits'] / total_ops
 
 class InMemoryCache:
-    """High-performance in-memory cache with LRU eviction"""
+    """
+High-performance in-memory cache with LRU eviction"""
     
     def __init__(self, max_size: int, eviction_strategy: CacheStrategy = CacheStrategy.LRU):
         self.max_size = max_size
@@ -976,7 +983,8 @@ class InMemoryCache:
         self.current_size = 0
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get item from cache"""
+        """
+Get item from cache"""
         with self.lock:
             if key in self.cache:
                 # Move to end (most recently used)
@@ -985,7 +993,8 @@ class InMemoryCache:
             return None
     
     async def set(self, key: str, value: Any) -> bool:
-        """Set item in cache"""
+        """
+Set item in cache"""
         with self.lock:
             # Calculate item size
             item_size = len(pickle.dumps(value))
@@ -1009,7 +1018,8 @@ class InMemoryCache:
             return True
     
     async def delete(self, key: str) -> bool:
-        """Delete item from cache"""
+        """
+Delete item from cache"""
         with self.lock:
             if key in self.cache:
                 item_size = len(pickle.dumps(self.cache[key]))
@@ -1019,7 +1029,8 @@ class InMemoryCache:
             return False
     
     async def clear(self, pattern: Optional[str] = None) -> int:
-        """Clear cache items"""
+        """
+Clear cache items"""
         with self.lock:
             if pattern:
                 import fnmatch
@@ -1034,7 +1045,8 @@ class InMemoryCache:
                 return count
     
     async def cleanup_expired(self) -> int:
-        """Clean up expired items"""
+        """
+Clean up expired items"""
         expired_count = 0
         current_time = datetime.now()
         
@@ -1055,7 +1067,8 @@ class InMemoryCache:
         return expired_count
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         with self.lock:
             return {
                 'item_count': len(self.cache),
@@ -1065,7 +1078,8 @@ class InMemoryCache:
             }
     
     def _evict_item(self) -> None:
-        """Evict an item based on eviction strategy"""
+        """
+Evict an item based on eviction strategy"""
         if not self.cache:
             return
         
@@ -1084,7 +1098,8 @@ class InMemoryCache:
         self.current_size -= item_size
 
 class AsyncCacheStorageManager:
-    """Async wrapper for high-performance concurrent cache operations"""
+    """
+Async wrapper for high-performance concurrent cache operations"""
     
     def __init__(self, config: CacheConfig):
         self.sync_manager = CacheStorageManager(config)
@@ -1094,7 +1109,8 @@ class AsyncCacheStorageManager:
         self,
         items: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Store multiple items concurrently"""
+        """
+Store multiple items concurrently"""
         
         async def store_single(item):
             async with self.semaphore:
@@ -1118,7 +1134,8 @@ class AsyncCacheStorageManager:
         self,
         keys: List[str]
     ) -> List[Dict[str, Any]]:
-        """Retrieve multiple items concurrently"""
+        """
+Retrieve multiple items concurrently"""
         
         async def retrieve_single(key):
             async with self.semaphore:

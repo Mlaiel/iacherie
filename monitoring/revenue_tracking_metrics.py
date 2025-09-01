@@ -7,6 +7,7 @@ Tracks all revenue streams, analyzes patterns, and provides predictive insights.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""
+    """
+Revenue source types"""
+
     LICENSING = "licensing"
     SUBSCRIPTION = "subscription"
     COMMISSION = "commission"
@@ -61,7 +64,8 @@ class RevenueTracker:
     """
     
     def __init__(self):
-        """Initialize revenue tracker"""
+        """
+Initialize revenue tracker"""
         
         # Use unique metric names to avoid registry conflicts
         metric_prefix = f"ainflue_revenue_{int(time.time())}"
@@ -421,7 +425,8 @@ class RevenueTracker:
         return float(total_revenue / len(user_ids)) if user_ids else 0
     
     async def _calculate_growth_rate(self, period_days: int) -> float:
-        """Calculate revenue growth rate"""
+        """
+Calculate revenue growth rate"""
         trends = await self._calculate_revenue_trends(period_days)
         return trends.get("growth_rate_percentage", 0)
     

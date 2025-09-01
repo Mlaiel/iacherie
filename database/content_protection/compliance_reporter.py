@@ -5,7 +5,7 @@ GDPR, CCPA, SOC2, and international compliance reporting capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
@@ -55,6 +58,7 @@ class ComplianceFramework(Enum):
 
 class ReportType(Enum):
     """Available report types"""
+
     DATA_PROCESSING = "data_processing"
     CONSENT_MANAGEMENT = "consent_management"
     BREACH_NOTIFICATION = "breach_notification"
@@ -497,17 +501,20 @@ class ComplianceReporter:
     async def _get_consent_management_metrics(
         self, start_date: datetime, end_date: datetime
     ) -> Dict[str, Any]:
-        """Get consent management metrics"""
+        """
+Get consent management metrics"""
         # Implementation for consent metrics calculation
         pass
     
     async def _calculate_gdpr_compliance_score(self) -> float:
-        """Calculate overall GDPR compliance score"""
+        """
+Calculate overall GDPR compliance score"""
         # Implementation for compliance score calculation
         return 0.95  # Placeholder
     
     async def _store_compliance_report(self, report_data: Dict[str, Any]) -> None:
-        """Store compliance report in database"""
+        """
+Store compliance report in database"""
         try:
             compliance_report = ComplianceReport(
                 id=uuid4(),

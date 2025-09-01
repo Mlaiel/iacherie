@@ -25,6 +25,7 @@ statistical models, and forecasting methodologies developed by Fahed Mlaiel.
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All predictive models and analytical frameworks are protected intellectual property.
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -60,7 +61,9 @@ from .storage import TimeSeriesStore
 
 
 class PredictionType(Enum):
-    """Types of predictions available in the system."""
+    """
+Types of predictions available in the system."""
+
     CONTENT_PERFORMANCE = "content_performance"
     USER_BEHAVIOR = "user_behavior"
     REVENUE_FORECAST = "revenue_forecast"
@@ -73,6 +76,7 @@ class PredictionType(Enum):
 
 class ModelType(Enum):
     """Machine learning model types for different predictions."""
+
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     XGBOOST = "xgboost"
@@ -98,7 +102,8 @@ class PredictionResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics and validation results."""
+    """
+Model performance metrics and validation results."""
     model_type: ModelType
     accuracy_score: float
     mae: float
@@ -464,7 +469,8 @@ class PredictiveAnalyticsEngine:
         user_id: str,
         behavior_history: Dict[str, Any]
     ) -> np.ndarray:
-        """Prepare user behavioral features for ML model input."""
+        """
+Prepare user behavioral features for ML model input."""
         features = []
         
         # Activity metrics
@@ -481,7 +487,8 @@ class PredictiveAnalyticsEngine:
         return np.array(features)
     
     def _prepare_timeseries_data(self, data: pd.DataFrame) -> pd.Series:
-        """Prepare time series data for ARIMA modeling."""
+        """
+Prepare time series data for ARIMA modeling."""
         if 'date' in data.columns:
             data['date'] = pd.to_datetime(data['date'])
             data.set_index('date', inplace=True)
@@ -497,7 +504,8 @@ class PredictiveAnalyticsEngine:
         prediction_type: PredictionType,
         model_type: ModelType
     ):
-        """Get existing model or train new one if needed."""
+        """
+Get existing model or train new one if needed."""
         model_key = f"{prediction_type.value}_{model_type.value}"
         
         if model_key not in self.models:
@@ -566,13 +574,15 @@ class PredictiveAnalyticsEngine:
         return 0.7  # Default confidence
     
     def _calculate_viral_probability(self, prediction_score: float) -> float:
-        """Calculate probability of content going viral."""
+        """
+Calculate probability of content going viral."""
         # Sigmoid function to map prediction to viral probability
         viral_threshold = 50  # Adjust based on platform metrics
         return 1 / (1 + np.exp(-(prediction_score - viral_threshold) / 10))
     
     def _categorize_churn_risk(self, churn_probability: float) -> str:
-        """Categorize churn risk level."""
+        """
+Categorize churn risk level."""
         if churn_probability < 0.2:
             return "low"
         elif churn_probability < 0.5:
@@ -630,7 +640,8 @@ class PredictionScheduler:
         self.scheduled_tasks = {}
         
     async def schedule_prediction_updates(self):
-        """Schedule regular prediction updates for all models."""
+        """
+Schedule regular prediction updates for all models."""
         # Content performance predictions - every 6 hours
         await self._schedule_task(
             "content_performance_update",
@@ -674,7 +685,8 @@ class PredictionScheduler:
         }
     
     async def _update_content_predictions(self):
-        """Update predictions for all active content."""
+        """
+Update predictions for all active content."""
         self.logger.info("Updating content performance predictions")
         # Implementation would fetch active content and update predictions
         

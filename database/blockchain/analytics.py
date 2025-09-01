@@ -26,6 +26,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -46,7 +47,9 @@ from sklearn.ensemble import IsolationForest
 logger = logging.getLogger(__name__)
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics tracked."""
+    """
+Types of analytics metrics tracked."""
+
     TRANSACTION_VOLUME = "transaction_volume"
     REVENUE_PERFORMANCE = "revenue_performance"
     PROTECTION_EFFECTIVENESS = "protection_effectiveness"
@@ -58,6 +61,7 @@ class AnalyticsMetric(Enum):
 
 class TimeFrame(Enum):
     """Time frames for analytics reporting."""
+
     REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
@@ -68,6 +72,7 @@ class TimeFrame(Enum):
 
 class AlertSeverity(Enum):
     """Severity levels for analytics alerts."""
+
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -86,7 +91,8 @@ class AnalyticsConfig:
 
 @dataclass
 class MetricDataPoint:
-    """Individual metric data point."""
+    """
+Individual metric data point."""
     metric_type: AnalyticsMetric
     timestamp: datetime
     value: Union[float, int, str]
@@ -95,7 +101,8 @@ class MetricDataPoint:
 
 @dataclass
 class AnalyticsAlert:
-    """Analytics alert notification."""
+    """
+Analytics alert notification."""
     alert_id: str
     metric_type: AnalyticsMetric
     severity: AlertSeverity
@@ -109,7 +116,8 @@ class AnalyticsAlert:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""
+    """
+Comprehensive analytics report."""
     report_id: str
     report_type: str
     time_period: Tuple[datetime, datetime]
@@ -141,7 +149,8 @@ class BlockchainAnalytics:
         self._initialize_ml_models()
     
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for analytics."""
+        """
+Initialize machine learning models for analytics."""
         if not self.config.ml_models_enabled:
             return
         
@@ -521,7 +530,8 @@ class BlockchainAnalytics:
         metric: AnalyticsMetric, 
         time_frame: TimeFrame = TimeFrame.DAILY
     ) -> Dict[str, Any]:
-        """Get summary statistics for a metric over a time frame."""
+        """
+Get summary statistics for a metric over a time frame."""
         try:
             # Calculate time range
             now = datetime.utcnow()
@@ -724,7 +734,8 @@ class BlockchainAnalytics:
         return alerts
     
     def get_fraud_analysis(self) -> Dict[str, Any]:
-        """Get specialized fraud analysis using ML models."""
+        """
+Get specialized fraud analysis using ML models."""
         if not self.config.fraud_detection_enabled:
             return {"error": "Fraud detection not enabled"}
         

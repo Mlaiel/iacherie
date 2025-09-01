@@ -1,6 +1,7 @@
 """Platform-Specific Enforcement Handlers
 Professional implementations for copyright enforcement across multiple platforms
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformStatus(Enum):
-    """Platform availability status"""
+    """
+Platform availability status"""
+
     ACTIVE = "active"
     MAINTENANCE = "maintenance"
     RATE_LIMITED = "rate_limited"
@@ -31,6 +34,7 @@ class PlatformStatus(Enum):
 
 class ActionStatus(Enum):
     """Status of enforcement actions"""
+
     SUBMITTED = "submitted"
     PROCESSING = "processing"
     APPROVED = "approved"
@@ -61,7 +65,8 @@ class PlatformActionResult:
 
 
 class BasePlatformHandler(ABC):
-    """Base class for platform-specific enforcement handlers"""
+    """
+Base class for platform-specific enforcement handlers"""
     
     def __init__(self, platform_name: str, config: Dict[str, Any]):
         self.platform_name = platform_name
@@ -96,27 +101,32 @@ class BasePlatformHandler(ABC):
     
     @abstractmethod
     async def submit_takedown(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
-        """Submit takedown request"""
+        """
+Submit takedown request"""
         pass
     
     @abstractmethod
     async def claim_monetization(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
-        """Submit monetization claim"""
+        """
+Submit monetization claim"""
         pass
     
     @abstractmethod
     async def block_content(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
-        """Block content on platform"""
+        """
+Block content on platform"""
         pass
     
     @abstractmethod
     async def check_action_status(self, platform_case_id: str) -> Dict[str, Any]:
-        """Check status of submitted action"""
+        """
+Check status of submitted action"""
         pass
     
     @abstractmethod
     def extract_content_id(self, url: str) -> Optional[str]:
-        """Extract content ID from platform URL"""
+        """
+Extract content ID from platform URL"""
         pass
     
     async def _make_api_request(
@@ -126,7 +136,8 @@ class BasePlatformHandler(ABC):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> Dict[str, Any]:
-        """Make rate-limited API request"""
+        """
+Make rate-limited API request"""
         try:
             # Rate limiting
             await self._apply_rate_limit()
@@ -195,7 +206,8 @@ class BasePlatformHandler(ABC):
         self.last_request_time = datetime.utcnow()
     
     def _get_auth_headers(self) -> Dict[str, str]:
-        """Get authentication headers for API requests"""
+        """
+Get authentication headers for API requests"""
         headers = {
             'User-Agent': f'IA-Influencer-Agent/2.0 ({self.platform_name} Enforcer)',
             'Accept': 'application/json',
@@ -210,7 +222,8 @@ class BasePlatformHandler(ABC):
         return headers
     
     def get_status(self) -> Dict[str, Any]:
-        """Get handler status information"""
+        """
+Get handler status information"""
         return {
             'platform': self.platform_name,
             'status': self.status.value,
@@ -223,7 +236,8 @@ class BasePlatformHandler(ABC):
 
 
 class YouTubeHandler(BasePlatformHandler):
-    """YouTube-specific enforcement handler"""
+    """
+YouTube-specific enforcement handler"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__("youtube", config)
@@ -984,7 +998,8 @@ class PlatformHandlerManager:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize all configured platform handlers"""
+        """
+Initialize all configured platform handlers"""
         try:
             logger.info("Initializing platform handlers...")
             
@@ -1028,7 +1043,8 @@ class PlatformHandlerManager:
         return self.handlers.get(platform.lower())
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""
+        """
+Get list of supported platforms"""
         return list(self.handlers.keys())
     
     async def submit_enforcement_action(
@@ -1038,7 +1054,8 @@ class PlatformHandlerManager:
         evidence_data: Dict[str, Any],
         case_id: str
     ) -> Optional[PlatformActionResult]:
-        """Submit enforcement action to specific platform"""
+        """
+Submit enforcement action to specific platform"""
         try:
             handler = self.get_handler(platform)
             if not handler:
@@ -1088,7 +1105,8 @@ class PlatformHandlerManager:
         }
     
     async def shutdown(self):
-        """Shutdown all platform handlers"""
+        """
+Shutdown all platform handlers"""
         try:
             for handler in self.handlers.values():
                 if hasattr(handler, 'shutdown'):

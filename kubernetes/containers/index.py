@@ -17,6 +17,7 @@ Central index and orchestration point for the Container Management Module.
 Provides unified interface for container operations, service discovery,
 and platform-wide container lifecycle management.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -696,7 +697,8 @@ async def get_platform_manager() -> ContainerPlatformManager:
 
 
 async def deploy_ia_influencer_platform() -> bool:
-    """Deploy the complete IA-Influencer platform."""
+    """
+Deploy the complete IA-Influencer platform."""
     try:
         platform = await get_platform_manager()
         return await platform.deploy_ia_influencer_stack()

@@ -5,8 +5,9 @@ Professional data access layer for licensing management operations.
 Handles CRUD operations, complex queries, and data validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import List, Optional, Dict, Any, Tuple
 from datetime import datetime, date
 from decimal import Decimal
@@ -41,7 +42,8 @@ class LicensingRepository:
     """
     
     def __init__(self, session: Session = None, cache_manager: CacheManager = None):
-        """Initialize repository with database session and cache"""
+        """
+Initialize repository with database session and cache"""
         self.session = session or get_db_session()
         self.cache_manager = cache_manager or CacheManager()
         self.security_manager = SecurityManager()
@@ -52,7 +54,8 @@ class LicensingRepository:
         agreement_data: Dict[str, Any],
         user_id: UUID
     ) -> LicenseAgreement:
-        """Create new license agreement with validation"""
+        """
+Create new license agreement with validation"""
         try:
             # Validate input data
             validated_data = await self._validate_license_agreement_data(agreement_data)

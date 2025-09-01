@@ -9,7 +9,7 @@ Module: backend/business/engagement/achievement_tracker.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -26,6 +26,7 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Achievement Tracking → Distribution → Monetization → Analytics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class AchievementCategory(str, Enum):
-    """Categories of achievements."""
+    """
+Categories of achievements."""
+
     CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     MONETIZATION = "monetization"
@@ -58,6 +61,7 @@ class AchievementCategory(str, Enum):
 
 class AchievementDifficulty(str, Enum):
     """Difficulty levels for achievements."""
+
     TRIVIAL = "trivial"        # Very easy, almost automatic
     EASY = "easy"              # Requires minimal effort
     MEDIUM = "medium"          # Requires some dedication
@@ -68,6 +72,7 @@ class AchievementDifficulty(str, Enum):
 
 class AchievementType(str, Enum):
     """Types of achievement tracking."""
+
     COUNTER = "counter"              # Track numeric progress (uploads, collaborations)
     THRESHOLD = "threshold"          # Reach a specific value
     STREAK = "streak"               # Maintain consecutive activity
@@ -80,6 +85,7 @@ class AchievementType(str, Enum):
 
 class AchievementStatus(str, Enum):
     """Status of user achievements."""
+
     LOCKED = "locked"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -203,7 +209,8 @@ class Achievement:
         return True
     
     def is_visible_to_user(self, user_profile: Dict[str, Any]) -> bool:
-        """Check if achievement should be visible to a user."""
+        """
+Check if achievement should be visible to a user."""
         if self.hidden:
             return False
         
@@ -269,11 +276,13 @@ class UserAchievementProgress:
         return self.status in [AchievementStatus.COMPLETED, AchievementStatus.CLAIMED]
     
     def can_be_claimed(self) -> bool:
-        """Check if achievement can be claimed."""
+        """
+Check if achievement can be claimed."""
         return self.status == AchievementStatus.COMPLETED
     
     def get_time_to_completion(self) -> Optional[timedelta]:
-        """Get time taken to complete achievement."""
+        """
+Get time taken to complete achievement."""
         if self.started_at and self.completed_at:
             return self.completed_at - self.started_at
         return None
@@ -288,7 +297,8 @@ class AchievementTracker:
     """
     
     def __init__(self):
-        """Initialize the achievement tracker."""
+        """
+Initialize the achievement tracker."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._achievements: Dict[str, Achievement] = {}
         self._user_progress: Dict[str, Dict[str, UserAchievementProgress]] = {}
@@ -1619,7 +1629,8 @@ class AchievementTracker:
         achievement_id: str,
         metadata: Dict[str, Any]
     ) -> None:
-        """Complete an achievement for a user."""
+        """
+Complete an achievement for a user."""
         try:
             progress = self._user_progress[user_id][achievement_id]
             achievement = self._achievements[achievement_id]
@@ -1897,7 +1908,8 @@ _achievement_tracker: Optional[AchievementTracker] = None
 
 
 async def get_achievement_tracker() -> AchievementTracker:
-    """Get the global achievement tracker instance."""
+    """
+Get the global achievement tracker instance."""
     global _achievement_tracker
     
     if _achievement_tracker is None:
@@ -1913,13 +1925,15 @@ async def track_metric(
     value: Union[int, float, str],
     metadata: Optional[Dict[str, Any]] = None
 ) -> List[str]:
-    """Track a metric update (convenience function)."""
+    """
+Track a metric update (convenience function)."""
     tracker = await get_achievement_tracker()
     return await tracker.track_user_metric(user_id, metric_key, value, metadata)
 
 
 async def get_user_achievement_summary(user_id: str) -> Dict[str, Any]:
-    """Get achievement summary for a user (convenience function)."""
+    """
+Get achievement summary for a user (convenience function)."""
     tracker = await get_achievement_tracker()
     achievements = await tracker.get_user_achievements(user_id)
     

@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerEventType(Enum):
-    """Types d'événements de surveillance/crawling"""
+    """
+Types d'événements de surveillance/crawling"""
+
     CONTENT_DETECTED = "content_detected"
     VIOLATION_FOUND = "violation_found"
     PLATFORM_SCAN_COMPLETED = "platform_scan_completed"
@@ -53,6 +56,7 @@ class CrawlerEventType(Enum):
 
 class PlatformType(Enum):
     """Plateformes supportées pour le crawling"""
+
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -68,6 +72,7 @@ class PlatformType(Enum):
 
 class ViolationSeverity(Enum):
     """Niveaux de sévérité des violations"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -452,7 +457,8 @@ class CrawlerSurveillanceManager:
         await self._notify_security_team(data, investigation_id)
 
     async def _get_default_channels(self, event_type: CrawlerEventType, severity: ViolationSeverity) -> List[str]:
-        """Retourne les canaux par défaut selon le type d'événement et la sévérité"""
+        """
+Retourne les canaux par défaut selon le type d'événement et la sévérité"""
         
         if severity == ViolationSeverity.CRITICAL:
             return ["email", "push", "websocket", "dashboard", "sms"]
@@ -683,7 +689,8 @@ class CrawlerSurveillanceManager:
         pass
 
     async def _analyze_mass_upload_pattern(self, data: CrawlerNotificationData) -> Dict[str, Any]:
-        """Analyse les patterns d'upload en masse"""
+        """
+Analyse les patterns d'upload en masse"""
         return {"bot_activity_confirmed": False}
 
     async def _escalate_to_legal_team(self, data: CrawlerNotificationData, reason: str):
@@ -695,7 +702,8 @@ class CrawlerSurveillanceManager:
         pass
 
     async def _create_investigation_case(self, data: CrawlerNotificationData) -> str:
-        """Crée un cas d'investigation"""
+        """
+Crée un cas d'investigation"""
         return f"INV_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
 
     async def _collect_extended_evidence(self, data: CrawlerNotificationData, investigation_id: str):
@@ -703,15 +711,18 @@ class CrawlerSurveillanceManager:
         pass
 
     async def _notify_security_team(self, data: CrawlerNotificationData, investigation_id: str):
-        """Notifie l'équipe de sécurité"""
+        """
+Notifie l'équipe de sécurité"""
         pass
 
     async def _handle_rate_limiting(self, data: CrawlerNotificationData):
-        """Gère la limitation de taux"""
+        """
+Gère la limitation de taux"""
         pass
 
     async def _analyze_content_detection(self, data: CrawlerNotificationData):
-        """Analyse la détection de contenu"""
+        """
+Analyse la détection de contenu"""
         pass
 
     # Méthodes de notification (stubs pour intégration)

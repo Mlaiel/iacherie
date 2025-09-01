@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 import os
@@ -69,7 +70,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize file system storage provider."""
+        """
+Initialize file system storage provider."""
         super().__init__(provider_id, StorageBackendType.FILE_SYSTEM, config)
         
         self.base_path = Path(config['base_path'])
@@ -262,7 +264,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
             return data
     
     def _decompress_data(self, compressed_data: bytes) -> bytes:
-        """Decompress data using configured compression."""
+        """
+Decompress data using configured compression."""
         if not self.enable_compression:
             return compressed_data
         
@@ -274,11 +277,13 @@ class FileSystemStorageProvider(BaseStorageProvider):
             return compressed_data
     
     def _calculate_checksum(self, data: bytes) -> str:
-        """Calculate SHA-256 checksum of data."""
+        """
+Calculate SHA-256 checksum of data."""
         return hashlib.sha256(data).hexdigest()
     
     async def _get_file_lock(self, record_id: str) -> asyncio.Lock:
-        """Get or create file lock for record."""
+        """
+Get or create file lock for record."""
         if record_id not in self.file_locks:
             self.file_locks[record_id] = asyncio.Lock()
         return self.file_locks[record_id]
@@ -573,7 +578,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         record_ids: List[str],
         include_metadata: bool = True
     ) -> Dict[str, Optional[Tuple[Any, Optional[StorageMetadata]]]]:
-        """Retrieve multiple records in batch."""
+        """
+Retrieve multiple records in batch."""
         results = {}
         
         # Process records in parallel (with reasonable concurrency limit)
@@ -597,7 +603,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         self,
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
-        """Query records using index database."""
+        """
+Query records using index database."""
         if not self.enable_indexing or not self.index_db:
             logger.warning("Indexing disabled, cannot perform efficient queries")
             return
@@ -694,7 +701,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         return await self.store_record(record_id, data, metadata)
     
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record from file system."""
+        """
+Delete a record from file system."""
         start_time = asyncio.get_event_loop().time()
         
         try:
@@ -770,12 +778,14 @@ class FileSystemStorageProvider(BaseStorageProvider):
         return results
     
     async def exists(self, record_id: str) -> bool:
-        """Check if record exists."""
+        """
+Check if record exists."""
         file_path = self._get_file_path(record_id)
         return file_path.exists()
     
     async def get_statistics(self) -> StorageStats:
-        """Get storage statistics."""
+        """
+Get storage statistics."""
         try:
             if self.enable_indexing and self.index_db:
                 # Get statistics from index database
@@ -945,10 +955,12 @@ class FileSystemStorageProvider(BaseStorageProvider):
         }
 
 class FileSystemTransaction(StorageTransaction):
-    """File system transaction implementation using temporary directory."""
+    """
+File system transaction implementation using temporary directory."""
     
     def __init__(self, transaction_id: str, storage_provider: FileSystemStorageProvider):
-        """Initialize file system transaction."""
+        """
+Initialize file system transaction."""
         super().__init__(transaction_id)
         self.storage_provider = storage_provider
         self.transaction_dir = storage_provider.temp_dir / f"transaction_{transaction_id}"

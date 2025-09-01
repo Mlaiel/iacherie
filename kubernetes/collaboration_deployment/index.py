@@ -23,7 +23,7 @@ Expert Team Specializations:
 - Business Intelligence: Revenue and performance analytics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
@@ -36,6 +36,7 @@ This module contains proprietary algorithms for creator collaboration
 optimization and revenue protection. Unauthorized access or reverse
 engineering is strictly forbidden.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -107,7 +108,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationDeploymentStatus(Enum):
-    """Overall collaboration deployment status."""
+    """
+Overall collaboration deployment status."""
+
     INITIALIZING = "initializing"
     READY = "ready"
     DEPLOYING = "deploying"
@@ -120,6 +123,7 @@ class CollaborationDeploymentStatus(Enum):
 
 class ModuleHealthStatus(Enum):
     """Health status of individual modules."""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -142,7 +146,8 @@ class CollaborationDeploymentConfig:
 
 @dataclass
 class ModuleHealth:
-    """Health status of a deployment module."""
+    """
+Health status of a deployment module."""
     module_name: str
     status: ModuleHealthStatus
     last_check: datetime
@@ -170,7 +175,8 @@ class CollaborationDeploymentCoordinator:
     for creator collaboration workflows.
     """
     def __init__(self, config: CollaborationDeploymentConfig):
-        """Initialize the collaboration deployment coordinator."""
+        """
+Initialize the collaboration deployment coordinator."""
         self.config = config
         self.status = CollaborationDeploymentStatus.INITIALIZING
         

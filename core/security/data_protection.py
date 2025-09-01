@@ -39,7 +39,9 @@ except ImportError:
 
 
 class DataProtectionLevel(Enum):
-    """Data protection levels"""
+    """
+Data protection levels"""
+
     STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
@@ -48,6 +50,7 @@ class DataProtectionLevel(Enum):
 
 class EncryptionStandard(Enum):
     """Encryption standards for data protection"""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -56,6 +59,7 @@ class EncryptionStandard(Enum):
 
 class TransportSecurity(Enum):
     """Transport security protocols"""
+
     TLS_1_3 = "tls_1_3"
     TLS_1_2 = "tls_1_2"
     DTLS_1_2 = "dtls_1_2"
@@ -76,7 +80,8 @@ class EncryptionResult:
 
 @dataclass
 class HSMKeyInfo:
-    """Hardware Security Module key information"""
+    """
+Hardware Security Module key information"""
     key_id: str
     key_type: str
     algorithm: str
@@ -89,7 +94,8 @@ class HSMKeyInfo:
 
 
 class RepositoryDataProtection:
-    """AES-256 encryption for repository data protection"""
+    """
+AES-256 encryption for repository data protection"""
     
     def __init__(self):
         self.master_key = self._initialize_master_key()
@@ -97,7 +103,8 @@ class RepositoryDataProtection:
         self.encryption_keys: Dict[str, bytes] = {}
         
     def _initialize_master_key(self) -> bytes:
-        """Initialize master encryption key"""
+        """
+Initialize master encryption key"""
         master_key_env = os.getenv("REPO_MASTER_KEY")
         if master_key_env:
             return base64.b64decode(master_key_env)
@@ -196,7 +203,8 @@ class TransitEncryption:
         self.tls_context = self._create_tls_context()
         
     def _create_tls_context(self) -> ssl.SSLContext:
-        """Create TLS 1.3 context for secure communications"""
+        """
+Create TLS 1.3 context for secure communications"""
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         
         # Force TLS 1.3
@@ -222,7 +230,8 @@ class TransitEncryption:
         return context
     
     def validate_tls_configuration(self) -> Dict[str, Any]:
-        """Validate TLS 1.3 configuration"""
+        """
+Validate TLS 1.3 configuration"""
         return {
             "minimum_version": "TLS 1.3",
             "maximum_version": "TLS 1.3",
@@ -264,7 +273,8 @@ class EndToEndEncryption:
         self.shared_secrets: Dict[str, bytes] = {}
         
     async def generate_key_pair(self, participant_id: str) -> Dict[str, Any]:
-        """Generate RSA key pair for participant"""
+        """
+Generate RSA key pair for participant"""
         try:
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
@@ -519,7 +529,8 @@ class DataProtectionManager:
         self.hsm_management = HSMKeyManagement()
         
     async def comprehensive_data_protection_test(self) -> Dict[str, Any]:
-        """Test all four data protection requirements"""
+        """
+Test all four data protection requirements"""
         results = {
             "aes_256_repos": {"status": "PENDING"},
             "tls_1_3_transit": {"status": "PENDING"},

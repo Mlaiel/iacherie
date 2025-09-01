@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Union, Any
 from enum import Enum
 from dataclasses import dataclass, field
@@ -36,7 +37,9 @@ import os
 
 
 class FilterType(Enum):
-    """Types of content filters available."""
+    """
+Types of content filters available."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -50,6 +53,7 @@ class FilterType(Enum):
 
 class QualityLevel(str, Enum):
     """Content quality levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -59,6 +63,7 @@ class QualityLevel(str, Enum):
 
 class SecurityLevel(str, Enum):
     """Security filtering levels."""
+
     BASIC = "basic"
     ENHANCED = "enhanced"
     STRICT = "strict"
@@ -96,7 +101,8 @@ class AudioFilterConfig:
 
 @dataclass
 class VideoFilterConfig:
-    """Video content filtering configuration."""
+    """
+Video content filtering configuration."""
     
     # Quality thresholds
     min_resolution: tuple = (480, 360)  # width, height
@@ -127,7 +133,8 @@ class VideoFilterConfig:
 
 @dataclass
 class ImageFilterConfig:
-    """Image content filtering configuration."""
+    """
+Image content filtering configuration."""
     
     # Quality thresholds
     min_resolution: tuple = (100, 100)  # width, height
@@ -193,7 +200,8 @@ class SecurityFilterConfig:
 
 @dataclass
 class PerformanceFilterConfig:
-    """Configuration for performance filters."""
+    """
+Configuration for performance filters."""
     max_cpu_usage: float = 80.0
     max_memory_usage: float = 85.0
     max_processing_time: float = 30.0
@@ -203,7 +211,8 @@ class PerformanceFilterConfig:
 
 @dataclass
 class PerformanceFilterConfig:
-    """Performance filtering configuration."""
+    """
+Performance filtering configuration."""
     
     # Processing limits
     max_file_size: int = 100 * 1024 * 1024  # 100MB
@@ -226,10 +235,12 @@ class PerformanceFilterConfig:
 
 
 class FilterConfigManager:
-    """Centralized filter configuration manager."""
+    """
+Centralized filter configuration manager."""
     
     def __init__(self):
-        """Initialize configuration manager."""
+        """
+Initialize configuration manager."""
         self.audio_config = AudioFilterConfig()
         self.video_config = VideoFilterConfig()
         self.image_config = ImageFilterConfig()
@@ -241,7 +252,8 @@ class FilterConfigManager:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
+        """
+Load configuration from environment variables."""
         # Audio config
         if os.getenv('FILTER_AUDIO_MIN_BITRATE'):
             self.audio_config.min_bitrate = int(os.getenv('FILTER_AUDIO_MIN_BITRATE'))
@@ -267,7 +279,8 @@ class FilterConfigManager:
             self.performance_config.max_file_size = int(os.getenv('FILTER_MAX_FILE_SIZE'))
     
     def get_config(self, filter_type: FilterType) -> Any:
-        """Get configuration for specific filter type."""
+        """
+Get configuration for specific filter type."""
         config_mapping = {
             FilterType.AUDIO: self.audio_config,
             FilterType.VIDEO: self.video_config,
@@ -280,7 +293,8 @@ class FilterConfigManager:
         return config_mapping.get(filter_type)
     
     def update_config(self, filter_type: FilterType, **kwargs) -> None:
-        """Update configuration for specific filter type."""
+        """
+Update configuration for specific filter type."""
         config = self.get_config(filter_type)
         if config:
             for key, value in kwargs.items():
@@ -288,7 +302,8 @@ class FilterConfigManager:
                     setattr(config, key, value)
     
     def validate_config(self) -> Dict[str, bool]:
-        """Validate all configurations."""
+        """
+Validate all configurations."""
         validation_results = {}
         
         # Validate audio config
@@ -333,7 +348,8 @@ class FilterConfigManager:
         return validation_results
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get configuration summary."""
+        """
+Get configuration summary."""
         return {
             'audio': {
                 'bitrate_range': f"{self.audio_config.min_bitrate}-{self.audio_config.max_bitrate} kbps",

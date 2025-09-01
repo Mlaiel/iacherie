@@ -33,7 +33,8 @@ from core.security.data_protection import (
 
 @pytest.mark.asyncio
 async def test_aes_256_repository_encryption():
-    """Test AES-256 encryption for repository data protection"""
+    """
+Test AES-256 encryption for repository data protection"""
     print("\n=== Testing AES-256 Repository Encryption ===")
     
     repo_protection = RepositoryDataProtection()

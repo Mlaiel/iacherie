@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class MessageType(Enum):
-    """Types of messages between agents"""
+    """
+Types of messages between agents"""
     # Task coordination
     TASK_REQUEST = "task_request"
     TASK_RESPONSE = "task_response"
@@ -64,6 +66,7 @@ class MessageType(Enum):
 
 class MessagePriority(Enum):
     """Message priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -72,7 +75,9 @@ class MessagePriority(Enum):
 
 
 class MessageStatus(Enum):
-    """Message delivery status"""
+    """
+Message delivery status"""
+
     PENDING = "pending"
     DELIVERED = "delivered"
     ACKNOWLEDGED = "acknowledged"
@@ -115,7 +120,8 @@ class AgentMessage:
         return datetime.utcnow() > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert message to dictionary"""
+        """
+Convert message to dictionary"""
         data = asdict(self)
         # Convert datetime objects to ISO format
         data["created_at"] = self.created_at.isoformat()
@@ -159,7 +165,8 @@ class MessageHandler:
 
 @dataclass
 class Conversation:
-    """Conversation thread between agents"""
+    """
+Conversation thread between agents"""
     conversation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     participants: Set[str] = field(default_factory=set)
     created_at: datetime = field(default_factory=datetime.utcnow)
@@ -460,7 +467,8 @@ class AgentCommunicationHub:
         return messages
     
     async def get_agent_statistics(self, agent_id: str) -> Dict[str, Any]:
-        """Get communication statistics for an agent"""
+        """
+Get communication statistics for an agent"""
         sent_count = len([m for m in self.messages.values() if m.sender_id == agent_id])
         received_count = len([m for m in self.messages.values() if m.recipient_id == agent_id])
         

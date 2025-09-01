@@ -3,6 +3,7 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Main entry point for the optimization module with unified API interface.
 """
+
 from typing import Dict, Any, List, Optional
 import asyncio
 import logging
@@ -31,7 +32,8 @@ class OptimizationOrchestrator:
         self._initialize_optimizers()
         
     def _initialize_optimizers(self):
-        """Initialize all optimization engines"""
+        """
+Initialize all optimization engines"""
         
         # Performance optimizers
         self.optimizers["model"] = ModelOptimizer(self.config.get("performance", {}))
@@ -440,11 +442,13 @@ class OptimizationOrchestrator:
         return self.optimizers.get(optimizer_type)
     
     def list_available_optimizers(self) -> List[str]:
-        """List all available optimizer types"""
+        """
+List all available optimizer types"""
         return list(self.optimizers.keys())
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all optimizers"""
+        """
+Perform health check on all optimizers"""
         health_status = {
             "overall_status": "healthy",
             "optimizer_status": {},

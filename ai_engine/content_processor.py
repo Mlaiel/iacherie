@@ -4,6 +4,7 @@ Multi-format content processing with AI enhancement and optimization.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import io
 import hashlib
@@ -41,7 +42,8 @@ from ..core.logging import logger
 
 
 class AudioProcessor:
-    """Advanced audio processing and enhancement"""
+    """
+Advanced audio processing and enhancement"""
     
     def __init__(self):
         self.supported_formats = settings.ai.supported_audio_formats
@@ -49,7 +51,8 @@ class AudioProcessor:
         self.max_duration = 600  # 10 minutes max
     
     async def process_audio(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Process audio file and extract features"""
+        """
+Process audio file and extract features"""
         try:
             # Load audio data
             audio_io = io.BytesIO(file_data)
@@ -166,7 +169,8 @@ class VideoProcessor:
         self.frame_sample_rate = 1  # Extract 1 frame per second
     
     async def process_video(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Process video file and extract features"""
+        """
+Process video file and extract features"""
         try:
             # Save temporary file for processing
             temp_path = f"/tmp/{hashlib.md5(file_data).hexdigest()}.mp4"
@@ -332,7 +336,8 @@ class ImageProcessor:
         self.max_size = 50 * 1024 * 1024  # 50MB max
     
     async def process_image(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Process image file and extract features"""
+        """
+Process image file and extract features"""
         try:
             # Load image
             image = Image.open(io.BytesIO(file_data))
@@ -594,7 +599,8 @@ class ContentProcessor:
     
     async def process_content(self, file_data: bytes, filename: str, 
                             content_type: Optional[str] = None) -> Dict[str, Any]:
-        """Process content based on file type"""
+        """
+Process content based on file type"""
         try:
             # Determine content type
             if not content_type:

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,9 +13,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Test Suite for Critical Performance and Quality Requirements
+"""
+Comprehensive Test Suite for Critical Performance and Quality Requirements
 Tests SLA monitoring, auto-scaling, and business metrics
 """
+
 import pytest
 import sys
 import os
@@ -31,11 +34,13 @@ sys.path.append('/home/runner/work/Ainflue/Ainflue')
 
 @pytest.mark.asyncio
 class TestSLAMonitoring:
-    """Test SLA monitoring system for performance requirements"""
+    """
+Test SLA monitoring system for performance requirements"""
     
     @pytest.fixture
     async def sla_tracker(self):
-        """Create SLA tracker for testing"""
+        """
+Create SLA tracker for testing"""
         # Dynamic import to handle missing dependencies
         try:
             from monitoring.sla_monitoring.sla_tracker import SLATracker
@@ -123,11 +128,13 @@ class TestSLAMonitoring:
 
 @pytest.mark.asyncio
 class TestAutoScaling:
-    """Test auto-scaling system for scalability requirements"""
+    """
+Test auto-scaling system for scalability requirements"""
     
     @pytest.fixture
     def auto_scaling_config(self):
-        """Create auto-scaling config for testing"""
+        """
+Create auto-scaling config for testing"""
         try:
             from kubernetes.ai_deployment.auto_scaling_manager import AutoScalingConfig
             return AutoScalingConfig()
@@ -158,7 +165,8 @@ class TestBusinessMetrics:
     
     @pytest.fixture
     def metrics_collector(self):
-        """Create business metrics collector for testing"""
+        """
+Create business metrics collector for testing"""
         try:
             from monitoring.metrics.business_metrics import BusinessMetricsCollector
             return BusinessMetricsCollector()
@@ -243,10 +251,12 @@ class TestBusinessMetrics:
 
 @pytest.mark.asyncio
 class TestSecurityCompliance:
-    """Test security compliance for zero critical/high vulnerabilities requirement"""
+    """
+Test security compliance for zero critical/high vulnerabilities requirement"""
     
     async def test_security_monitoring_configuration(self):
-        """Test security monitoring is properly configured"""
+        """
+Test security monitoring is properly configured"""
         # This would test security scanning integration
         # For now, we test that security metrics are being tracked
         try:
@@ -281,7 +291,8 @@ class TestAPIDocumentationCoverage:
     """Test API documentation coverage for 100% requirement"""
     
     async def test_api_documentation_metric_tracking(self):
-        """Test API documentation coverage is tracked"""
+        """
+Test API documentation coverage is tracked"""
         try:
             from monitoring.metrics.business_metrics import BusinessMetricsCollector
             collector = BusinessMetricsCollector()
@@ -300,7 +311,8 @@ class TestTestCoverage:
     """Test code coverage tracking for >85% requirement"""
     
     async def test_code_coverage_metric_tracking(self):
-        """Test code coverage is tracked and meets requirements"""
+        """
+Test code coverage is tracked and meets requirements"""
         try:
             from monitoring.metrics.business_metrics import BusinessMetricsCollector
             collector = BusinessMetricsCollector()
@@ -319,7 +331,8 @@ class TestIntegrationPerformance:
     """Integration tests for performance requirements"""
     
     def test_response_time_simulation(self):
-        """Simulate API response times to verify SLA compliance"""
+        """
+Simulate API response times to verify SLA compliance"""
         # Simulate 1000 API calls with realistic response times
         response_times = []
         

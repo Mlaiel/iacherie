@@ -20,6 +20,7 @@ Project: IA Influencer Agent + Content Protection Platform
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import time
@@ -56,7 +57,9 @@ from sentence_transformers import SentenceTransformer
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprints"""
+    """
+Types of content fingerprints"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
@@ -73,6 +76,7 @@ class FingerprintType(Enum):
 
 class FingerprintStatus(Enum):
     """Fingerprint processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -97,7 +101,8 @@ class FingerprintRequest:
 
 @dataclass
 class FingerprintResult:
-    """Fingerprint generation result"""
+    """
+Fingerprint generation result"""
     request_id: str
     content_id: str
     fingerprints: Dict[str, Any]  # fingerprint_type -> fingerprint_data
@@ -111,7 +116,8 @@ class FingerprintResult:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint match result"""
+    """
+Fingerprint match result"""
     query_id: str
     matched_content_id: str
     similarity_score: float
@@ -189,7 +195,8 @@ class FingerprintingClusterManager:
         self.k8s_autoscaling = client.AutoscalingV1Api()
     
     def _init_vector_databases(self):
-        """Initialize vector databases for fingerprint storage and search"""
+        """
+Initialize vector databases for fingerprint storage and search"""
         # FAISS indexes for different content types
         self.faiss_indexes = {
             'audio': faiss.IndexFlatIP(512),  # 512-dimensional audio features
@@ -202,7 +209,8 @@ class FingerprintingClusterManager:
         self._load_existing_indexes()
     
     def _load_existing_indexes(self):
-        """Load existing FAISS indexes from storage"""
+        """
+Load existing FAISS indexes from storage"""
         for content_type in ['audio', 'video', 'image', 'text']:
             try:
                 index_path = f"/data/indexes/{content_type}_index.faiss"
@@ -883,7 +891,8 @@ class FingerprintingClusterManager:
         return True
     
     async def _download_content(self, url: str) -> bytes:
-        """Download content from URL"""
+        """
+Download content from URL"""
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
@@ -985,7 +994,8 @@ class FingerprintingClusterManager:
         return search_vectors
     
     async def _get_content_metadata(self, index_position: int) -> Dict[str, Any]:
-        """Get content metadata by index position"""
+        """
+Get content metadata by index position"""
         # This would query the PostgreSQL database for content metadata
         # Return mock data for now
         return {
@@ -1054,17 +1064,21 @@ class FingerprintingClusterManager:
 
 # Individual server classes for specific content types
 class AudioFingerprintServer:
-    """Specialized server for audio fingerprinting"""
+    """
+Specialized server for audio fingerprinting"""
     pass
 
 class VideoFingerprintServer:
-    """Specialized server for video fingerprinting"""
+    """
+Specialized server for video fingerprinting"""
     pass
 
 class ImageFingerprintServer:
-    """Specialized server for image fingerprinting"""
+    """
+Specialized server for image fingerprinting"""
     pass
 
 class TextFingerprintServer:
-    """Specialized server for text fingerprinting"""
+    """
+Specialized server for text fingerprinting"""
     pass

@@ -16,6 +16,7 @@ Professional text processing engine for content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 import re
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextFeatures:
-    """Comprehensive text feature representation"""
+    """
+Comprehensive text feature representation"""
     linguistic_features: Dict[str, Any]
     semantic_features: Dict[str, np.ndarray]
     sentiment_features: Dict[str, float]
@@ -56,7 +58,8 @@ class TextFeatures:
 
 @dataclass
 class NamedEntity:
-    """Named entity representation"""
+    """
+Named entity representation"""
     text: str
     label: str
     start: int
@@ -65,7 +68,8 @@ class NamedEntity:
 
 @dataclass
 class SentimentResult:
-    """Sentiment analysis result"""
+    """
+Sentiment analysis result"""
     polarity: float
     subjectivity: float
     emotion_scores: Dict[str, float]
@@ -359,7 +363,8 @@ class TextProcessingEngine:
         return features
     
     def _extract_semantic_features(self, text: str, config: Dict[str, Any]) -> Dict[str, np.ndarray]:
-        """Extract semantic features using embeddings"""
+        """
+Extract semantic features using embeddings"""
         features = {}
         
         # BERT embeddings
@@ -377,7 +382,8 @@ class TextProcessingEngine:
         return features
     
     def _extract_sentiment_features(self, text: str) -> Dict[str, float]:
-        """Extract sentiment-related features"""
+        """
+Extract sentiment-related features"""
         features = {}
         
         # TextBlob sentiment
@@ -429,7 +435,8 @@ class TextProcessingEngine:
         return features
     
     def _extract_quality_metrics(self, text: str) -> Dict[str, float]:
-        """Extract text quality metrics"""
+        """
+Extract text quality metrics"""
         metrics = {}
         
         # Grammar and spelling (simplified)
@@ -456,7 +463,8 @@ class TextProcessingEngine:
         return metrics
     
     def _calculate_readability_metrics(self, text: str, words: List[str], sentences: List[str]) -> Dict[str, float]:
-        """Calculate readability metrics"""
+        """
+Calculate readability metrics"""
         metrics = {}
         
         if not words or not sentences:
@@ -500,7 +508,8 @@ class TextProcessingEngine:
         return metrics
     
     def _get_bert_embedding(self, text: str) -> np.ndarray:
-        """Get BERT embedding for text"""
+        """
+Get BERT embedding for text"""
         try:
             inputs = self.bert_tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=512)
             
@@ -614,7 +623,8 @@ class TextProcessingEngine:
         return embeddings
     
     def _analyze_text_quality(self, text: str) -> Dict[str, float]:
-        """Analyze overall text quality"""
+        """
+Analyze overall text quality"""
         quality_metrics = {}
         
         # Readability
@@ -652,7 +662,8 @@ class TextProcessingEngine:
         return quality_metrics
     
     def _calculate_coherence(self, sentences: List[str]) -> float:
-        """Calculate text coherence based on sentence similarity"""
+        """
+Calculate text coherence based on sentence similarity"""
         try:
             if len(sentences) < 2:
                 return 1.0

@@ -5,7 +5,7 @@ Industrial-grade content rights management system for multi-format content prote
 Handles licensing, ownership verification, and automated rights enforcement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
@@ -13,6 +13,7 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ from redis import Redis
 
 
 class RightsType(Enum):
-    """Content rights types"""
+    """
+Content rights types"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     DERIVATIVE = "derivative"
@@ -40,6 +43,7 @@ class RightsType(Enum):
 
 class LicenseStatus(Enum):
     """License status enumeration"""
+
     ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -49,6 +53,7 @@ class LicenseStatus(Enum):
 
 class RightsTransferType(Enum):
     """Rights transfer types"""
+
     PERMANENT = "permanent"
     TEMPORARY = "temporary"
     SUBLICENSE = "sublicense"
@@ -73,7 +78,8 @@ class RightsOwnership:
 
 @dataclass
 class LicenseAgreement:
-    """Content license agreement"""
+    """
+Content license agreement"""
     license_id: str
     content_id: str
     licensor_id: str
@@ -93,7 +99,8 @@ class LicenseAgreement:
 
 @dataclass
 class RightsVerification:
-    """Rights verification result"""
+    """
+Rights verification result"""
     verification_id: str
     content_id: str
     requester_id: str
@@ -489,12 +496,14 @@ class RightsManager:
         return 0.0  # Placeholder
     
     async def _store_ownership_record(self, ownership: RightsOwnership):
-        """Store ownership record in database"""
+        """
+Store ownership record in database"""
         # Implementation would store in database
         pass
     
     async def _generate_ownership_certificate(self, ownership: RightsOwnership) -> str:
-        """Generate cryptographic ownership certificate"""
+        """
+Generate cryptographic ownership certificate"""
         certificate_data = {
             'ownership_id': ownership.ownership_id,
             'content_id': ownership.content_id,
@@ -508,7 +517,8 @@ class RightsManager:
         return hashlib.sha256(certificate_string.encode()).hexdigest()
     
     async def _cache_ownership_data(self, content_id: str, owner_id: str, ownership: RightsOwnership):
-        """Cache ownership data in Redis"""
+        """
+Cache ownership data in Redis"""
         cache_key = f"ownership:{content_id}:{owner_id}"
         ownership_data = {
             'ownership_id': ownership.ownership_id,
@@ -552,12 +562,14 @@ class RightsManager:
         return {'has_license': False, 'scope': []}
     
     async def _check_derivative_rights(self, content_id: str, user_id: str) -> Dict[str, Any]:
-        """Check derivative work rights"""
+        """
+Check derivative work rights"""
         # Implementation would check for derivative rights
         return {'has_derivative': False, 'source_content': None}
     
     async def _calculate_rights_score(self, ownership: Dict, license: Dict, derivative: Dict) -> float:
-        """Calculate overall rights confidence score"""
+        """
+Calculate overall rights confidence score"""
         score = 0.0
         
         # Ownership carries highest weight
@@ -575,12 +587,14 @@ class RightsManager:
         return min(score, 1.0)
     
     async def _store_verification_result(self, verification: RightsVerification):
-        """Store verification result in database"""
+        """
+Store verification result in database"""
         # Implementation would store verification
         pass
     
     async def _cache_verification_result(self, verification: RightsVerification):
-        """Cache verification result"""
+        """
+Cache verification result"""
         cache_key = f"verification:{verification.content_id}:{verification.requester_id}"
         verification_data = {
             'result': verification.result,
@@ -600,7 +614,8 @@ class RightsManager:
         pass
     
     async def _generate_license_hash(self, agreement: LicenseAgreement) -> str:
-        """Generate license agreement hash"""
+        """
+Generate license agreement hash"""
         license_data = {
             'license_id': agreement.license_id,
             'content_id': agreement.content_id,
@@ -613,33 +628,39 @@ class RightsManager:
         return hashlib.sha256(license_string.encode()).hexdigest()
     
     async def _send_license_notifications(self, agreement: LicenseAgreement):
-        """Send license agreement notifications"""
+        """
+Send license agreement notifications"""
         # Implementation would send notifications
         pass
     
     async def _get_ownership_record(self, content_id: str, user_id: str) -> Optional[RightsOwnership]:
-        """Get ownership record from database"""
+        """
+Get ownership record from database"""
         # Implementation would query database
         return None
     
     async def _remove_ownership_record(self, ownership_id: str):
-        """Remove ownership record"""
+        """
+Remove ownership record"""
         # Implementation would remove from database
         pass
     
     async def _update_ownership_percentage(self, ownership_id: str, new_percentage: float):
-        """Update ownership percentage"""
+        """
+Update ownership percentage"""
         # Implementation would update database
         pass
     
     async def _record_rights_transfer(self, transfer_data: Dict, new_ownership_id: str) -> str:
-        """Record rights transfer transaction"""
+        """
+Record rights transfer transaction"""
         transfer_id = str(uuid.uuid4())
         # Implementation would record transfer
         return transfer_id
     
     async def _clear_ownership_cache(self, content_id: str):
-        """Clear ownership cache for content"""
+        """
+Clear ownership cache for content"""
         pattern = f"ownership:{content_id}:*"
         keys = await self.redis.keys(pattern)
         if keys:
@@ -651,27 +672,32 @@ class RightsManager:
         return []
     
     async def _get_ownership_history(self, content_id: str) -> List[Dict]:
-        """Get ownership transfer history"""
+        """
+Get ownership transfer history"""
         # Implementation would query transfer history
         return []
     
     async def _get_license_agreements(self, content_id: str) -> List[LicenseAgreement]:
-        """Get license agreements for content"""
+        """
+Get license agreements for content"""
         # Implementation would query license agreements
         return []
     
     async def _get_license_agreement(self, license_id: str) -> Optional[LicenseAgreement]:
-        """Get specific license agreement"""
+        """
+Get specific license agreement"""
         # Implementation would query specific license
         return None
     
     async def _update_license_status(self, license_id: str, status: LicenseStatus, reason: str):
-        """Update license status in database"""
+        """
+Update license status in database"""
         # Implementation would update license status
         pass
     
     async def _clear_license_cache(self, content_id: str, licensee_id: str):
-        """Clear license cache"""
+        """
+Clear license cache"""
         cache_key = f"license:{content_id}:{licensee_id}"
         await self.redis.delete(cache_key)
     

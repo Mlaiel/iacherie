@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -38,7 +39,9 @@ from .business_context_orchestrator import BusinessContextOrchestrator
 logger = logging.getLogger(__name__)
 
 class ConversationMode(Enum):
-    """Conversation interaction modes"""
+    """
+Conversation interaction modes"""
+
     ONBOARDING = "onboarding"
     CONSULTATION = "consultation"
     PROBLEM_SOLVING = "problem_solving"
@@ -50,6 +53,7 @@ class ConversationMode(Enum):
 
 class PersonalityType(Enum):
     """User personality types for adaptation"""
+
     ANALYTICAL = "analytical"
     CREATIVE = "creative"
     PRAGMATIC = "pragmatic"
@@ -61,6 +65,7 @@ class PersonalityType(Enum):
 
 class CommunicationStyle(Enum):
     """Communication style preferences"""
+
     FORMAL = "formal"
     CASUAL = "casual"
     TECHNICAL = "technical"
@@ -72,6 +77,7 @@ class CommunicationStyle(Enum):
 
 class EmotionalState(Enum):
     """User emotional states"""
+
     CONFIDENT = "confident"
     ANXIOUS = "anxious"
     EXCITED = "excited"
@@ -176,7 +182,8 @@ class ConversationalIntelligenceEngine:
         self.analytics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
 
     def _load_personality_classifier(self) -> AutoModelForSequenceClassification:
-        """Load personality classification model"""
+        """
+Load personality classification model"""
         try:
             model = AutoModelForSequenceClassification.from_pretrained(
                 "microsoft/DialoGPT-medium",
@@ -735,7 +742,8 @@ class ConversationalIntelligenceEngine:
         return 0.5
 
     async def _detect_urgency_indicators(self, message: str) -> str:
-        """Detect urgency indicators in message"""
+        """
+Detect urgency indicators in message"""
         # Implementation for urgency detection
         return "medium"
 

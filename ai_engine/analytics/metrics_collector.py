@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive metrics collection, aggregation, and storage
 capabilities for the IA Influencer Agent platform.
 """
+
 import logging
 import time
 import threading
@@ -20,7 +21,9 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class MetricCategory(Enum):
-    """Categories of metrics"""
+    """
+Categories of metrics"""
+
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     CONTENT = "content"
@@ -34,6 +37,7 @@ class MetricCategory(Enum):
 
 class MetricType(Enum):
     """Types of metrics"""
+
     COUNTER = "counter"  # Always increases
     GAUGE = "gauge"     # Current value
     HISTOGRAM = "histogram"  # Distribution of values
@@ -45,6 +49,7 @@ class MetricType(Enum):
 
 class AggregationMethod(Enum):
     """Methods for aggregating metrics"""
+
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -73,7 +78,8 @@ class MetricData:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result"""
+    """
+Aggregated metric result"""
     metric_name: str
     aggregation_method: AggregationMethod
     value: Union[int, float]
@@ -85,7 +91,8 @@ class AggregatedMetric:
 
 @dataclass
 class MetricAlert:
-    """Metric alert configuration"""
+    """
+Metric alert configuration"""
     alert_name: str
     metric_name: str
     condition: str  # e.g., "> 100", "< 0.5", "== 0"
@@ -108,7 +115,8 @@ class MetricBuffer:
         self.total_dropped = 0
     
     def add(self, metric: MetricData) -> bool:
-        """Add metric to buffer"""
+        """
+Add metric to buffer"""
         with self.lock:
             try:
                 if len(self.buffer) >= self.max_size:
@@ -131,18 +139,21 @@ class MetricBuffer:
             return metrics
     
     def get_recent(self, seconds: int = 60) -> List[MetricData]:
-        """Get metrics from last N seconds"""
+        """
+Get metrics from last N seconds"""
         cutoff = datetime.utcnow() - timedelta(seconds=seconds)
         with self.lock:
             return [m for m in self.buffer if m.timestamp >= cutoff]
     
     def size(self) -> int:
-        """Get current buffer size"""
+        """
+Get current buffer size"""
         with self.lock:
             return len(self.buffer)
 
 class MetricsCollector:
-    """Main metrics collection and aggregation engine"""
+    """
+Main metrics collection and aggregation engine"""
     
     def __init__(self, buffer_size: int = 50000, auto_flush_seconds: int = 60):
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -308,7 +319,8 @@ class MetricsCollector:
     
     def record_gauge(self, name: str, value: Union[int, float], 
                     tags: Optional[Dict[str, str]] = None) -> bool:
-        """Record a gauge metric"""
+        """
+Record a gauge metric"""
         return self.record_metric(
             name, value, tags, 
             MetricCategory.OPERATIONAL, MetricType.GAUGE
@@ -316,7 +328,8 @@ class MetricsCollector:
     
     def record_timer(self, name: str, duration_ms: float, 
                     tags: Optional[Dict[str, str]] = None) -> bool:
-        """Record a timer metric"""
+        """
+Record a timer metric"""
         return self.record_metric(
             name, duration_ms, tags, 
             MetricCategory.PERFORMANCE, MetricType.TIMER, unit="milliseconds"
@@ -327,7 +340,8 @@ class MetricsCollector:
         return TimerContext(self, name, tags)
     
     def _check_alerts(self, metric: MetricData):
-        """Check if metric triggers any alerts"""
+        """
+Check if metric triggers any alerts"""
         try:
             for alert_name, alert in self.alerts.items():
                 if not alert.enabled or alert.metric_name != metric.metric_name:

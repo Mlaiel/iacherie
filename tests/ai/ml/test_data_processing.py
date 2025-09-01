@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Data Processing Tests - Enterprise Grade Test Suite
+"""
+Data Processing Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for data processing, ETL pipelines, feature engineering,
 data validation, and quality assurance systems.
@@ -23,6 +25,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
+
 import pytest
 import sys
 import os
@@ -56,10 +59,12 @@ from ai.ml.data_processing import (
 
 
 class TestDataProcessor:
-    """Tests for basic data processing functionality"""
+    """
+Tests for basic data processing functionality"""
     
     def test_init_data_processor(self):
-        """Test data processor initialization"""
+        """
+Test data processor initialization"""
         processor = DataProcessor(
             supported_formats=["csv", "json", "parquet", "avro"],
             max_memory_usage="8GB",
@@ -150,7 +155,8 @@ class TestDataProcessor:
         assert len(results) == (len(large_sample_data) // 1000) + (1 if len(large_sample_data) % 1000 else 0)
 
     def test_parallel_processing(self, sample_dataframe):
-        """Test parallel data processing"""
+        """
+Test parallel data processing"""
         processor = DataProcessor(enable_parallel_processing=True, n_workers=4)
         
         def processing_function(df):
@@ -168,7 +174,8 @@ class TestDataProcessor:
             assert len(results) == 2
 
     def test_memory_efficient_processing(self, large_sample_data):
-        """Test memory-efficient processing"""
+        """
+Test memory-efficient processing"""
         processor = DataProcessor(max_memory_usage="1GB")
         
         with patch.object(processor, 'get_memory_usage') as mock_memory:
@@ -199,7 +206,8 @@ class TestETLPipeline:
     """Tests for ETL (Extract, Transform, Load) pipeline functionality"""
     
     def test_init_etl_pipeline(self):
-        """Test ETL pipeline initialization"""
+        """
+Test ETL pipeline initialization"""
         pipeline = ETLPipeline(
             source_configs=[
                 {"type": "database", "connection": "postgresql://localhost:5432/db"},
@@ -407,7 +415,8 @@ class TestFeatureEngineer:
     """Tests for feature engineering functionality"""
     
     def test_init_feature_engineer(self):
-        """Test feature engineer initialization"""
+        """
+Test feature engineer initialization"""
         engineer = FeatureEngineer(
             feature_types=["numerical", "categorical", "text", "datetime"],
             encoding_methods=["one_hot", "label", "target", "embedding"],
@@ -504,7 +513,8 @@ class TestFeatureEngineer:
             assert automated_features.shape[1] > mixed_feature_data.shape[1]
 
     def test_feature_selection(self, engineered_features, target_variable):
-        """Test feature selection methods"""
+        """
+Test feature selection methods"""
         engineer = FeatureEngineer()
         
         # Test univariate feature selection
@@ -579,7 +589,8 @@ class TestDataValidator:
     """Tests for data validation functionality"""
     
     def test_init_data_validator(self):
-        """Test data validator initialization"""
+        """
+Test data validator initialization"""
         validator = DataValidator(
             validation_rules={
                 "completeness": {"threshold": 0.95},
@@ -750,7 +761,8 @@ class TestDataQualityChecker:
     """Tests for data quality checking functionality"""
     
     def test_init_quality_checker(self):
-        """Test data quality checker initialization"""
+        """
+Test data quality checker initialization"""
         checker = DataQualityChecker(
             quality_dimensions=["completeness", "accuracy", "consistency", "validity", "timeliness"],
             thresholds={"completeness": 0.95, "accuracy": 0.9, "consistency": 0.85},
@@ -917,7 +929,8 @@ class TestDataProcessingIntegration:
     
     @pytest.mark.slow
     def test_end_to_end_data_pipeline(self, raw_data_source, temp_dir):
-        """Test complete data processing pipeline"""
+        """
+Test complete data processing pipeline"""
         # Initialize pipeline components
         processor = DataProcessor(chunk_size=1000)
         pipeline = ETLPipeline(transformation_steps=["clean", "normalize"])

@@ -8,6 +8,7 @@ et identifier ceux qui fonctionnent déjà.
 Author: GitHub Copilot
 Date: 2025-08-31
 """
+
 import os
 import sys
 from pathlib import Path
@@ -122,18 +123,21 @@ def test_simple_execution():
 def create_simple_test_example():
     """Crée un test d'exemple simple qui fonctionne"""
     
-    simple_test = '''"""Test d'exemple simple pour vérifier que pytest fonctionne
+    simple_test = '''"""
+Test d'exemple simple pour vérifier que pytest fonctionne
 ======================================================
 
 Ce test démontre que l'infrastructure de test est opérationnelle.
 """
+
 import pytest
 import sys
 import os
 from pathlib import Path
 
 def test_basic_setup():
-    """Test que l'environnement de base fonctionne"""
+    """
+Test que l'environnement de base fonctionne"""
     assert True, "Test de base réussi"
 
 def test_python_version():
@@ -155,12 +159,14 @@ def test_pytest_markers():
 
 @pytest.mark.unit
 def test_with_unit_marker():
-    """Test avec marqueur unit"""
+    """
+Test avec marqueur unit"""
     assert True
 
 @pytest.mark.fast
 def test_fast_execution():
-    """Test marqué comme rapide"""
+    """
+Test marqué comme rapide"""
     assert 1 + 1 == 2
 
 if __name__ == "__main__":

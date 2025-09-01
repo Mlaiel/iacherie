@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementType(Enum):
-    """Types of enhancement operations"""
+    """
+Types of enhancement operations"""
+
     UPSCALING = "upscaling"
     DENOISING = "denoising"
     SHARPENING = "sharpening"
@@ -60,6 +63,7 @@ class EnhancementType(Enum):
 
 class EnhancementQuality(Enum):
     """Enhancement quality levels"""
+
     MAXIMUM = "maximum"
     HIGH = "high"
     BALANCED = "balanced"
@@ -69,6 +73,7 @@ class EnhancementQuality(Enum):
 
 class ProcessingMode(Enum):
     """Processing mode for enhancement"""
+
     AI_POWERED = "ai_powered"
     TRADITIONAL = "traditional"
     HYBRID = "hybrid"
@@ -91,7 +96,8 @@ class EnhancementProfile:
 
 @dataclass
 class EnhancementJob:
-    """Enhancement job specification"""
+    """
+Enhancement job specification"""
     job_id: str
     input_path: str
     output_path: str
@@ -137,7 +143,8 @@ class MultimediaEnhancer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia enhancer"""
+        """
+Initialize multimedia enhancer"""
         self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
@@ -604,7 +611,8 @@ class MultimediaEnhancer:
         before_metrics: Dict[str, Any],
         after_metrics: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate quality improvement metrics"""
+        """
+Calculate quality improvement metrics"""
         improvement = {}
         
         for metric, before_value in before_metrics.items():
@@ -693,7 +701,8 @@ class MultimediaEnhancer:
         return None
     
     def cancel_job(self, job_id: str) -> bool:
-        """Cancel enhancement job"""
+        """
+Cancel enhancement job"""
         # Remove from queue
         for job in self.job_queue:
             if job.job_id == job_id:
@@ -703,7 +712,8 @@ class MultimediaEnhancer:
         return False
     
     def add_custom_profile(self, profile: EnhancementProfile):
-        """Add custom enhancement profile"""
+        """
+Add custom enhancement profile"""
         self.profiles[profile.name] = profile
         logger.info(f"Added custom enhancement profile: {profile.name}")
     
@@ -726,7 +736,8 @@ class MultimediaEnhancer:
         }
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get enhancement statistics"""
+        """
+Get enhancement statistics"""
         stats = self.stats.copy()
         stats.update({
             'active_jobs': len(self.active_jobs),
@@ -744,7 +755,8 @@ class MultimediaEnhancer:
         return stats
     
     def cleanup_completed_jobs(self, max_age_hours: int = 24):
-        """Clean up old completed jobs"""
+        """
+Clean up old completed jobs"""
         cutoff_time = datetime.now(timezone.utc).timestamp() - (max_age_hours * 3600)
         
         to_remove = []

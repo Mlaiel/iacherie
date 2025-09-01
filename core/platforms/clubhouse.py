@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -22,10 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class ClubhousePlatform(PlatformBase):
-    """Clubhouse platform integration"""
+    """
+Clubhouse platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Clubhouse platform"""
+        """
+Initialize Clubhouse platform"""
         super().__init__(config)
         # Note: Clubhouse doesn't have a public API yet
         # This is a placeholder implementation for future API
@@ -41,7 +44,8 @@ class ClubhousePlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Clubhouse (placeholder)"""
+        """
+Authenticate with Clubhouse (placeholder)"""
         try:
             # Clubhouse doesn't have public API yet
             logger.warning("Clubhouse doesn't have a public API available yet")
@@ -68,7 +72,8 @@ class ClubhousePlatform(PlatformBase):
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make request to Clubhouse API (placeholder)"""
+        """
+Make request to Clubhouse API (placeholder)"""
         try:
             logger.warning("Clubhouse API not available - returning placeholder data")
             

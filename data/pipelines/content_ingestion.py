@@ -12,12 +12,13 @@ Team Specialties:
 - Security Engineer: Content validation and threat detection
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 Unauthorized use, copying, or theft of this code is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import asyncio
 import logging
 import mimetypes
@@ -51,7 +52,8 @@ settings = get_settings()
 
 
 class ContentUploadRequest(BaseModel):
-    """Content upload request model"""
+    """
+Content upload request model"""
     user_id: int
     content_type: str  # audio, video, image, text
     filename: str

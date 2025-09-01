@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import json
@@ -86,7 +87,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideoMetadata:
-    """Comprehensive YouTube video metadata"""
+    """
+Comprehensive YouTube video metadata"""
     video_id: str
     title: str
     description: str
@@ -111,7 +113,8 @@ class YouTubeVideoMetadata:
 
 @dataclass
 class YouTubeChannelMetadata:
-    """YouTube channel metadata"""
+    """
+YouTube channel metadata"""
     channel_id: str
     channel_name: str
     subscriber_count: Optional[int] = None
@@ -127,7 +130,8 @@ class YouTubeChannelMetadata:
 
 @dataclass
 class YouTubeSearchConfig:
-    """YouTube search configuration"""
+    """
+YouTube search configuration"""
     query: str
     max_results: int = 50
     order: str = "relevance"  # relevance, date, rating, viewCount, title
@@ -153,7 +157,8 @@ class YouTubeAPIManager:
         self.logger = logging.getLogger(__name__)
     
     def get_service(self) -> Optional[Any]:
-        """Get YouTube API service with automatic key rotation"""
+        """
+Get YouTube API service with automatic key rotation"""
         if not YOUTUBE_API_AVAILABLE:
             return None
         
@@ -185,16 +190,19 @@ class YouTubeAPIManager:
         self.current_key_index = (self.current_key_index + 1) % len(self.api_keys)
     
     def record_quota_usage(self, cost: int = 1):
-        """Record API quota usage"""
+        """
+Record API quota usage"""
         current_key = self.api_keys[self.current_key_index]
         self.quota_usage[current_key] += cost
     
     def reset_daily_quota(self):
-        """Reset daily quota usage (call this daily)"""
+        """
+Reset daily quota usage (call this daily)"""
         self.quota_usage = {key: 0 for key in self.api_keys}
 
 class YouTubeContentAnalyzer:
-    """Advanced YouTube content analysis engine"""
+    """
+Advanced YouTube content analysis engine"""
     
     def __init__(self):
         self.video_fingerprinter = VideoFingerprinter()
@@ -204,7 +212,8 @@ class YouTubeContentAnalyzer:
     
     @performance_timer
     async def analyze_video_content(self, video_url: str) -> Dict[str, Any]:
-        """Comprehensive video content analysis"""
+        """
+Comprehensive video content analysis"""
         try:
             analysis_result = {
                 "video_fingerprint": None,

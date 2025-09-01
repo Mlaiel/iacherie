@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade audio AI processing configuration management system.
 ================================================================
 """
+
 from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
@@ -30,7 +31,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
+    """
+Supported audio formats"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -44,6 +47,7 @@ class AudioFormat(Enum):
 
 class AudioQuality(Enum):
     """Audio quality presets"""
+
     MOBILE = "mobile"
     STANDARD = "standard"
     HIGH = "high"
@@ -54,6 +58,7 @@ class AudioQuality(Enum):
 
 class ProcessingEngine(Enum):
     """Audio processing engines"""
+
     LIBROSA = "librosa"
     PYAUDIO = "pyaudio"
     SOUNDFILE = "soundfile"
@@ -66,6 +71,7 @@ class ProcessingEngine(Enum):
 
 class NoiseReductionAlgorithm(Enum):
     """Noise reduction algorithms"""
+
     SPECTRAL_SUBTRACTION = "spectral_subtraction"
     WIENER_FILTER = "wiener_filter"
     KALMAN_FILTER = "kalman_filter"
@@ -76,6 +82,7 @@ class NoiseReductionAlgorithm(Enum):
 
 class AudioEnhancement(Enum):
     """Audio enhancement algorithms"""
+
     DYNAMIC_RANGE_COMPRESSION = "dynamic_range_compression"
     MULTIBAND_COMPRESSION = "multiband_compression"
     EQ_OPTIMIZATION = "eq_optimization"
@@ -88,6 +95,7 @@ class AudioEnhancement(Enum):
 
 class StreamingProtocol(Enum):
     """Streaming protocols"""
+
     HTTP = "http"
     HTTPS = "https"
     RTMP = "rtmp"
@@ -357,7 +365,8 @@ class RealTimeConfig:
 
 @dataclass
 class AudioAIConfig:
-    """AI-specific audio configuration"""
+    """
+AI-specific audio configuration"""
     enabled: bool = True
     
     # AI models
@@ -457,7 +466,8 @@ class AudioAIConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize audio AI configuration manager"""
+        """
+Initialize audio AI configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -510,7 +520,8 @@ class AudioAIConfigManager:
         self.last_updated = datetime.now()
     
     def save_configuration(self, config_path: Optional[str] = None) -> bool:
-        """Save configuration to file"""
+        """
+Save configuration to file"""
         try:
             save_path = config_path or self.config_path
             
@@ -546,7 +557,8 @@ class AudioAIConfigManager:
         return result
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         try:
@@ -595,31 +607,38 @@ class AudioAIConfigManager:
         return self._config.processing_config
     
     def get_noise_reduction_config(self) -> NoiseReductionConfig:
-        """Get noise reduction configuration"""
+        """
+Get noise reduction configuration"""
         return self._config.noise_reduction_config
     
     def get_enhancement_config(self) -> AudioEnhancementConfig:
-        """Get audio enhancement configuration"""
+        """
+Get audio enhancement configuration"""
         return self._config.enhancement_config
     
     def get_streaming_config(self) -> StreamingConfig:
-        """Get streaming configuration"""
+        """
+Get streaming configuration"""
         return self._config.streaming_config
     
     def get_real_time_config(self) -> RealTimeConfig:
-        """Get real-time configuration"""
+        """
+Get real-time configuration"""
         return self._config.real_time_config
     
     def get_ai_config(self) -> AudioAIConfig:
-        """Get AI configuration"""
+        """
+Get AI configuration"""
         return self._config.ai_config
     
     def get_complete_config(self) -> AudioAIProcessingConfiguration:
-        """Get complete configuration"""
+        """
+Get complete configuration"""
         return self._config
     
     def update_processing_config(self, **kwargs) -> bool:
-        """Update processing configuration"""
+        """
+Update processing configuration"""
         try:
             for key, value in kwargs.items():
                 if hasattr(self._config.processing_config, key):

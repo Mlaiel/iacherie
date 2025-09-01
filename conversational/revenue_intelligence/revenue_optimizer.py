@@ -28,13 +28,14 @@ across all platforms in the creator economy.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary revenue optimization platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -71,7 +72,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     CONTENT_LICENSING = "content_licensing"
     SPONSORSHIP_DEALS = "sponsorship_deals"
@@ -88,6 +91,7 @@ class RevenueStream(Enum):
 
 class OptimizationStrategy(Enum):
     """Revenue optimization strategies"""
+
     MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
     MAXIMIZE_PROFIT_MARGIN = "maximize_profit_margin"
     DIVERSIFY_REVENUE_STREAMS = "diversify_revenue_streams"
@@ -100,6 +104,7 @@ class OptimizationStrategy(Enum):
 
 class PredictionHorizon(Enum):
     """Revenue prediction time horizons"""
+
     SHORT_TERM = "short_term"      # 1-7 days
     MEDIUM_TERM = "medium_term"    # 1-4 weeks
     LONG_TERM = "long_term"        # 1-12 months
@@ -154,7 +159,8 @@ class OptimizationReport:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence and competitive analysis"""
+    """
+Market intelligence and competitive analysis"""
     intelligence_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     market_segment: str = None
     average_revenue_metrics: Dict[str, float] = field(default_factory=dict)
@@ -806,7 +812,8 @@ class RevenueEnsembleModel:
         self.weights = {name: 1.0 / len(models) for name in models.keys()}
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """Make ensemble prediction"""
+        """
+Make ensemble prediction"""
         predictions = []
         
         for name, model in self.models.items():

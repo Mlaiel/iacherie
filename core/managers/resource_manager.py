@@ -6,6 +6,7 @@ Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable
 import logging
 import asyncio
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ResourceManagerConfig:
-    """Configuration du gestionnaire ResourceManager"""
+    """
+Configuration du gestionnaire ResourceManager"""
     pool_size: int = 10
     max_connections: int = 100
     timeout_seconds: int = 30

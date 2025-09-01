@@ -4,8 +4,9 @@ Defines interfaces for multi-platform connectivity, authentication,
 data synchronization, distribution and monetization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
@@ -13,7 +14,9 @@ from enum import Enum
 
 
 class PlatformType(Enum):
-    """Supported platform types for integration."""
+    """
+Supported platform types for integration."""
+
     MUSIC_STREAMING = "music_streaming"  # Spotify, Apple Music, etc.
     VIDEO_SHARING = "video_sharing"      # YouTube, TikTok, etc.
     SOCIAL_MEDIA = "social_media"        # Instagram, Twitter, etc.
@@ -24,6 +27,7 @@ class PlatformType(Enum):
 
 class AuthMethod(Enum):
     """Authentication methods for platform integration."""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -60,7 +64,8 @@ class PlatformConnectorInterface(ABC):
         platform_name: str,
         user_id: str
     ) -> bool:
-        """Disconnect user account from platform."""
+        """
+Disconnect user account from platform."""
         pass
     
     @abstractmethod
@@ -69,7 +74,8 @@ class PlatformConnectorInterface(ABC):
         platform_name: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Test platform connection health and permissions."""
+        """
+Test platform connection health and permissions."""
         pass
     
     @abstractmethod
@@ -77,7 +83,8 @@ class PlatformConnectorInterface(ABC):
         self,
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """Get list of user's connected platforms."""
+        """
+Get list of user's connected platforms."""
         pass
     
     @abstractmethod
@@ -86,12 +93,14 @@ class PlatformConnectorInterface(ABC):
         platform_name: str,
         user_id: str
     ) -> bool:
-        """Refresh expired authentication tokens."""
+        """
+Refresh expired authentication tokens."""
         pass
 
 
 class PlatformAuthInterface(ABC):
-    """Interface for platform authentication management."""
+    """
+Interface for platform authentication management."""
     
     @abstractmethod
     async def initiate_oauth_flow(
@@ -120,7 +129,8 @@ class PlatformAuthInterface(ABC):
         user_id: str,
         authorization_code: str
     ) -> Dict[str, Any]:
-        """Handle OAuth callback and exchange code for tokens."""
+        """
+Handle OAuth callback and exchange code for tokens."""
         pass
     
     @abstractmethod
@@ -131,7 +141,8 @@ class PlatformAuthInterface(ABC):
         credentials: Dict[str, Any],
         encryption_key: str
     ) -> bool:
-        """Securely store platform credentials."""
+        """
+Securely store platform credentials."""
         pass
     
     @abstractmethod
@@ -141,7 +152,8 @@ class PlatformAuthInterface(ABC):
         user_id: str,
         encryption_key: str
     ) -> Dict[str, Any]:
-        """Retrieve and decrypt platform credentials."""
+        """
+Retrieve and decrypt platform credentials."""
         pass
     
     @abstractmethod
@@ -151,12 +163,14 @@ class PlatformAuthInterface(ABC):
         user_id: str,
         required_scopes: List[str]
     ) -> Dict[str, bool]:
-        """Validate platform permissions and scopes."""
+        """
+Validate platform permissions and scopes."""
         pass
 
 
 class PlatformDataInterface(ABC):
-    """Interface for platform data synchronization."""
+    """
+Interface for platform data synchronization."""
     
     @abstractmethod
     async def sync_platform_data(
@@ -184,7 +198,8 @@ class PlatformDataInterface(ABC):
         platform_name: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Fetch user profile data from platform."""
+        """
+Fetch user profile data from platform."""
         pass
     
     @abstractmethod
@@ -195,7 +210,8 @@ class PlatformDataInterface(ABC):
         content_id: str,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Fetch content analytics from platform."""
+        """
+Fetch content analytics from platform."""
         pass
     
     @abstractmethod
@@ -205,7 +221,8 @@ class PlatformDataInterface(ABC):
         user_id: str,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Fetch audience insights and demographics."""
+        """
+Fetch audience insights and demographics."""
         pass
     
     @abstractmethod
@@ -215,12 +232,14 @@ class PlatformDataInterface(ABC):
         user_id: str,
         content_list: List[str]
     ) -> List[Dict[str, Any]]:
-        """Sync metadata for multiple content items."""
+        """
+Sync metadata for multiple content items."""
         pass
 
 
 class PlatformDistributionInterface(ABC):
-    """Interface for multi-platform content distribution."""
+    """
+Interface for multi-platform content distribution."""
     
     @abstractmethod
     async def distribute_content(
@@ -249,7 +268,8 @@ class PlatformDistributionInterface(ABC):
         platforms: List[str],
         schedule: Dict[str, datetime]
     ) -> str:
-        """Schedule content release across platforms."""
+        """
+Schedule content release across platforms."""
         pass
     
     @abstractmethod
@@ -259,7 +279,8 @@ class PlatformDistributionInterface(ABC):
         content_id: str,
         metadata: Dict[str, Any]
     ) -> bool:
-        """Update content metadata on specific platform."""
+        """
+Update content metadata on specific platform."""
         pass
     
     @abstractmethod
@@ -267,7 +288,8 @@ class PlatformDistributionInterface(ABC):
         self,
         distribution_id: str
     ) -> Dict[str, Any]:
-        """Monitor status of content distribution."""
+        """
+Monitor status of content distribution."""
         pass
     
     @abstractmethod
@@ -277,12 +299,14 @@ class PlatformDistributionInterface(ABC):
         content_type: str,
         target_audience: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize platform-specific settings for content."""
+        """
+Optimize platform-specific settings for content."""
         pass
 
 
 class PlatformMonetizationInterface(ABC):
-    """Interface for platform monetization management."""
+    """
+Interface for platform monetization management."""
     
     @abstractmethod
     async def fetch_revenue_data(
@@ -311,7 +335,8 @@ class PlatformMonetizationInterface(ABC):
         user_id: str,
         monetization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup monetization features on platform."""
+        """
+Setup monetization features on platform."""
         pass
     
     @abstractmethod
@@ -321,7 +346,8 @@ class PlatformMonetizationInterface(ABC):
         content_id: str,
         timeframe: str
     ) -> Dict[str, float]:
-        """Track earnings for specific content."""
+        """
+Track earnings for specific content."""
         pass
     
     @abstractmethod
@@ -331,7 +357,8 @@ class PlatformMonetizationInterface(ABC):
         user_id: str,
         performance_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate monetization optimization recommendations."""
+        """
+Generate monetization optimization recommendations."""
         pass
     
     @abstractmethod
@@ -341,7 +368,8 @@ class PlatformMonetizationInterface(ABC):
         user_id: str,
         investment_data: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate return on investment metrics."""
+        """
+Calculate return on investment metrics."""
         pass
     
     @abstractmethod
@@ -351,5 +379,6 @@ class PlatformMonetizationInterface(ABC):
         collaboration_id: str,
         sharing_terms: Dict[str, Any]
     ) -> str:
-        """Setup automated revenue sharing for collaborations."""
+        """
+Setup automated revenue sharing for collaborations."""
         pass

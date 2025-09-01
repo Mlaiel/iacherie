@@ -13,6 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 High-performance Redis cluster configuration for caching,
 session management, and real-time data processing.
 """
+
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import logging
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RedisClusterDockerConfig:
-    """Production Redis Cluster Configuration"""
+    """
+Production Redis Cluster Configuration"""
     
     # Redis Configuration
     redis_version: str = "7.2.3-alpine"
@@ -142,7 +144,8 @@ stream-node-max-entries 100
         return config.strip()
     
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate Redis Docker Compose service"""
+        """
+Generate Redis Docker Compose service"""
         service = {
             "image": f"redis:{self.redis_version}",
             "container_name": "ia-influencer-redis",
@@ -252,7 +255,8 @@ loglevel notice
 """
     
     def generate_dockerfile(self) -> str:
-        """Generate custom Redis Dockerfile with optimizations"""
+        """
+Generate custom Redis Dockerfile with optimizations"""
         return f"""# IA-Influencer Redis Cluster Dockerfile
 # High-performance Redis with custom optimizations
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -298,7 +302,8 @@ CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
 """
     
     def generate_healthcheck_script(self) -> str:
-        """Generate Redis health check script"""
+        """
+Generate Redis health check script"""
         return f"""#!/bin/sh
 # Redis Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -331,7 +336,8 @@ fi
 """
     
     def generate_redis_exporter_service(self) -> Dict[str, Any]:
-        """Generate Redis Exporter service for Prometheus monitoring"""
+        """
+Generate Redis Exporter service for Prometheus monitoring"""
         return {
             "image": "oliver006/redis_exporter:latest",
             "container_name": "ia-influencer-redis-exporter",

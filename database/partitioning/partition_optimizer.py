@@ -22,6 +22,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import logging
 import time
 import threading
@@ -42,7 +43,9 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class OptimizationStrategy(Enum):
-    """Optimization strategy types"""
+    """
+Optimization strategy types"""
+
     AGGRESSIVE = "aggressive"
     BALANCED = "balanced"
     CONSERVATIVE = "conservative"
@@ -52,6 +55,7 @@ class OptimizationStrategy(Enum):
 
 class OptimizationMetric(Enum):
     """Performance metrics to optimize"""
+
     QUERY_RESPONSE_TIME = "query_response_time"
     THROUGHPUT = "throughput"
     STORAGE_EFFICIENCY = "storage_efficiency"
@@ -62,6 +66,7 @@ class OptimizationMetric(Enum):
 
 class PerformanceThreshold(Enum):
     """Performance threshold levels"""
+
     CRITICAL = "critical"
     WARNING = "warning"
     OPTIMAL = "optimal"
@@ -69,6 +74,7 @@ class PerformanceThreshold(Enum):
 
 class IndexStrategy(Enum):
     """Index creation strategies"""
+
     MINIMAL = "minimal"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -77,6 +83,7 @@ class IndexStrategy(Enum):
 
 class VacuumStrategy(Enum):
     """Vacuum operation strategies"""
+
     FULL_VACUUM = "full_vacuum"
     INCREMENTAL = "incremental"
     ANALYZE_ONLY = "analyze_only"
@@ -110,7 +117,8 @@ class PartitionStatistics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation with detailed analysis"""
+    """
+Optimization recommendation with detailed analysis"""
     partition_name: str
     recommendation_type: str
     priority: str  # HIGH, MEDIUM, LOW
@@ -126,7 +134,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class QueryPerformanceMetrics:
-    """Query performance analysis metrics"""
+    """
+Query performance analysis metrics"""
     query_hash: str
     query_text: str
     execution_count: int
@@ -142,7 +151,8 @@ class QueryPerformanceMetrics:
     last_executed: datetime = field(default_factory=datetime.utcnow)
 
 class StatisticsCollector:
-    """Advanced statistics collection and analysis system"""
+    """
+Advanced statistics collection and analysis system"""
     
     def __init__(self, session_factory):
         self.session_factory = session_factory
@@ -152,7 +162,8 @@ class StatisticsCollector:
         self.max_history_points = 288  # 24 hours of 5-minute intervals
         
     def collect_partition_statistics(self, partition_name: str) -> PartitionStatistics:
-        """Collect comprehensive statistics for a partition"""
+        """
+Collect comprehensive statistics for a partition"""
         try:
             with self.session_factory() as session:
                 # Basic table statistics
@@ -289,7 +300,8 @@ class StatisticsCollector:
         return min(fragmentation * 100, 100.0)
     
     def _calculate_hotspot_score(self, stats: PartitionStatistics) -> float:
-        """Calculate partition hotspot score based on activity"""
+        """
+Calculate partition hotspot score based on activity"""
         # Normalize metrics to 0-1 scale
         normalized_qps = min(stats.queries_per_second / 1000, 1.0)  # Max 1000 QPS
         normalized_size = min(stats.total_size_bytes / (1024**3), 1.0)  # Max 1GB
@@ -463,7 +475,8 @@ class PartitionOptimizer:
         return status
 
     def _generate_recommendations(self, stats: PartitionStatistics) -> List[OptimizationRecommendation]:
-        """Generate intelligent optimization recommendations"""
+        """
+Generate intelligent optimization recommendations"""
         recommendations = []
         
         try:
@@ -1068,7 +1081,8 @@ class PartitionOptimizer:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
+        """
+Context manager exit"""
         self.shutdown()
     index_scan_ratio: float = 0.0
     sequential_scan_ratio: float = 0.0
@@ -1078,7 +1092,8 @@ class PartitionOptimizer:
 
 @dataclass
 class OptimizationTask:
-    """Optimization task definition"""
+    """
+Optimization task definition"""
     task_id: str
     partition_name: str
     operation_type: str
@@ -1103,7 +1118,8 @@ class PerformanceReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class StatisticsCollector:
-    """Collects and analyzes partition statistics"""
+    """
+Collects and analyzes partition statistics"""
     
     def __init__(self, session_factory):
         self.session_factory = session_factory
@@ -1112,7 +1128,8 @@ class StatisticsCollector:
         self.max_cache_age = 3600  # 1 hour
     
     def collect_partition_statistics(self, partition_name: str) -> PartitionStatistics:
-        """Collect comprehensive statistics for a partition"""
+        """
+Collect comprehensive statistics for a partition"""
         try:
             with self.session_factory() as session:
                 # Get basic table statistics
@@ -1222,7 +1239,8 @@ class StatisticsCollector:
         return None
     
     def collect_all_statistics(self, partition_names: List[str]) -> Dict[str, PartitionStatistics]:
-        """Collect statistics for multiple partitions in parallel"""
+        """
+Collect statistics for multiple partitions in parallel"""
         results = {}
         
         with ThreadPoolExecutor(max_workers=8) as executor:

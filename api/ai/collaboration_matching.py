@@ -9,8 +9,9 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result 
 in legal action.
 
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
 from datetime import datetime, timedelta
@@ -23,7 +24,9 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types of content creators"""
+    """
+Types of content creators"""
+
     MUSICIAN = "musician"
     VIDEO_CREATOR = "video_creator"
     PHOTOGRAPHER = "photographer"
@@ -37,6 +40,7 @@ class CreatorType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaborations available"""
+
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     SKILL_EXCHANGE = "skill_exchange"
@@ -48,6 +52,7 @@ class CollaborationType(Enum):
 
 class CompatibilityFactor(Enum):
     """Factors for collaboration compatibility"""
+
     CONTENT_STYLE = "content_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     SKILL_COMPLEMENTARITY = "skill_complementarity"
@@ -79,7 +84,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity details"""
+    """
+Collaboration opportunity details"""
     opportunity_id: str
     title: str
     description: str
@@ -97,7 +103,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class MatchResult:
-    """Result of collaboration matching"""
+    """
+Result of collaboration matching"""
     match_id: str
     creator1: CreatorProfile
     creator2: Optional[CreatorProfile]
@@ -111,7 +118,8 @@ class MatchResult:
     suggested_terms: Dict[str, Any]
 
 class CreatorAnalyzer:
-    """Advanced creator profile analysis and categorization"""
+    """
+Advanced creator profile analysis and categorization"""
     
     def __init__(self):
         self.skill_categories = {
@@ -145,7 +153,8 @@ class CreatorAnalyzer:
         creator_data: Dict[str, Any], 
         content_history: List[Dict[str, Any]]
     ) -> CreatorProfile:
-        """Analyze and create comprehensive creator profile"""
+        """
+Analyze and create comprehensive creator profile"""
         try:
             # Extract basic information
             creator_id = creator_data.get('id', '')
@@ -263,7 +272,8 @@ class CreatorAnalyzer:
         creator_data: Dict[str, Any], 
         content_history: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze audience demographics"""
+        """
+Analyze audience demographics"""
         # Extract from creator data if available
         existing_demographics = creator_data.get('audience_demographics', {})
         
@@ -290,7 +300,8 @@ class CreatorAnalyzer:
         return estimated_demographics
     
     async def _calculate_engagement_metrics(self, content_history: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate engagement metrics from content history"""
+        """
+Calculate engagement metrics from content history"""
         if not content_history:
             return {'average_engagement': 0.05, 'consistency_score': 0.5}
         
@@ -324,7 +335,8 @@ class CreatorAnalyzer:
         }
     
     async def _extract_collaboration_history(self, content_history: List[Dict[str, Any]]) -> List[str]:
-        """Extract collaboration history from content"""
+        """
+Extract collaboration history from content"""
         collaborations = []
         
         for content in content_history:
@@ -349,7 +361,8 @@ class CreatorAnalyzer:
         skill_analysis: Dict[str, Any], 
         collaboration_history: List[str]
     ) -> List[CollaborationType]:
-        """Determine preferred collaboration types"""
+        """
+Determine preferred collaboration types"""
         preferences = []
         
         # Base preferences by creator type
@@ -384,7 +397,8 @@ class CreatorAnalyzer:
         return list(set(preferences))
     
     async def _analyze_portfolio(self, content_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze creator portfolio quality and diversity"""
+        """
+Analyze creator portfolio quality and diversity"""
         if not content_history:
             return {'quality_score': 0.5, 'diversity_score': 0.5, 'consistency_score': 0.5}
         
@@ -423,7 +437,8 @@ class CreatorAnalyzer:
         creator_data: Dict[str, Any], 
         content_history: List[Dict[str, Any]]
     ) -> List[str]:
-        """Extract brand values from creator profile and content"""
+        """
+Extract brand values from creator profile and content"""
         brand_values = []
         
         # From explicit data
@@ -452,7 +467,8 @@ class CreatorAnalyzer:
         return list(set(brand_values))
 
 class CompatibilityCalculator:
-    """Advanced compatibility calculation for creator matching"""
+    """
+Advanced compatibility calculation for creator matching"""
     
     def __init__(self):
         self.factor_weights = {
@@ -472,7 +488,8 @@ class CompatibilityCalculator:
         creator2: CreatorProfile,
         collaboration_type: Optional[CollaborationType] = None
     ) -> Tuple[float, Dict[CompatibilityFactor, float]]:
-        """Calculate comprehensive compatibility score between creators"""
+        """
+Calculate comprehensive compatibility score between creators"""
         try:
             factor_scores = {}
             
@@ -552,7 +569,8 @@ class CompatibilityCalculator:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate audience overlap score"""
+        """
+Calculate audience overlap score"""
         demo1 = creator1.audience_demographics
         demo2 = creator2.audience_demographics
         
@@ -593,7 +611,8 @@ class CompatibilityCalculator:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate skill complementarity score"""
+        """
+Calculate skill complementarity score"""
         skills1 = set(creator1.skill_tags)
         skills2 = set(creator2.skill_tags)
         
@@ -630,7 +649,8 @@ class CompatibilityCalculator:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate availability compatibility"""
+        """
+Calculate availability compatibility"""
         avail1 = creator1.availability
         avail2 = creator2.availability
         
@@ -674,7 +694,8 @@ class CompatibilityCalculator:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate location compatibility"""
+        """
+Calculate location compatibility"""
         loc1 = creator1.location
         loc2 = creator2.location
         
@@ -703,7 +724,8 @@ class CompatibilityCalculator:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate experience level compatibility"""
+        """
+Calculate experience level compatibility"""
         # Use social metrics and portfolio analysis as experience indicators
         metrics1 = creator1.social_metrics
         metrics2 = creator2.social_metrics
@@ -731,7 +753,8 @@ class CompatibilityCalculator:
         social_metrics: Dict[str, int], 
         portfolio_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate single experience score"""
+        """
+Calculate single experience score"""
         followers = social_metrics.get('followers', 0)
         total_content = portfolio_analysis.get('total_content', 0)
         quality_score = portfolio_analysis.get('quality_score', 0)
@@ -747,7 +770,8 @@ class CompatibilityCalculator:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate brand alignment score"""
+        """
+Calculate brand alignment score"""
         values1 = set(creator1.brand_values)
         values2 = set(creator2.brand_values)
         
@@ -771,7 +795,8 @@ class CompatibilityCalculator:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate communication style compatibility"""
+        """
+Calculate communication style compatibility"""
         comm1 = creator1.communication_preferences
         comm2 = creator2.communication_preferences
         
@@ -799,7 +824,8 @@ class CompatibilityCalculator:
         self, 
         collaboration_type: Optional[CollaborationType]
     ) -> Dict[CompatibilityFactor, float]:
-        """Adjust factor weights based on collaboration type"""
+        """
+Adjust factor weights based on collaboration type"""
         weights = self.factor_weights.copy()
         
         if not collaboration_type:
@@ -824,7 +850,8 @@ class CompatibilityCalculator:
         return weights
 
 class CollaborationMatcher:
-    """Main collaboration matching engine"""
+    """
+Main collaboration matching engine"""
     
     def __init__(self):
         self.creator_analyzer = CreatorAnalyzer()
@@ -838,7 +865,8 @@ class CollaborationMatcher:
         collaboration_type: Optional[CollaborationType] = None,
         max_matches: int = 10
     ) -> List[MatchResult]:
-        """Find best collaboration matches for a creator"""
+        """
+Find best collaboration matches for a creator"""
         try:
             matches = []
             
@@ -1039,7 +1067,8 @@ class CollaborationMatcher:
         creator2: CreatorProfile, 
         breakdown: Dict[CompatibilityFactor, float]
     ) -> List[str]:
-        """Generate human-readable match reasons"""
+        """
+Generate human-readable match reasons"""
         reasons = []
         
         # High compatibility factors
@@ -1129,7 +1158,8 @@ class CollaborationMatcher:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate probability of successful collaboration"""
+        """
+Calculate probability of successful collaboration"""
         base_probability = compatibility_score
         
         # Boost for collaboration experience
@@ -1154,7 +1184,8 @@ class CollaborationMatcher:
         creator2: CreatorProfile, 
         collaboration_type: Optional[CollaborationType]
     ) -> Dict[str, Any]:
-        """Generate suggested collaboration terms"""
+        """
+Generate suggested collaboration terms"""
         terms = {
             'duration': '1-3 months',
             'deliverables': [],
@@ -1195,7 +1226,8 @@ class CollaborationMatcher:
         opportunity: CollaborationOpportunity,
         match_score: float
     ) -> List[str]:
-        """Generate reasons for opportunity match"""
+        """
+Generate reasons for opportunity match"""
         reasons = []
         
         # Skill alignment

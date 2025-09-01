@@ -4,7 +4,7 @@
 Real-time continuous monitoring for content piracy detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
 - 24/7 real-time monitoring across 500+ platforms
@@ -13,6 +13,7 @@ This module provides:
 - Performance tracking and analytics
 - Scalable monitoring infrastructure
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -24,7 +25,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MonitoringStatus(Enum):
-    """Monitoring session status."""
+    """
+Monitoring session status."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -32,6 +35,7 @@ class MonitoringStatus(Enum):
 
 class MonitoringPriority(Enum):
     """Monitoring priority levels."""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -312,7 +316,8 @@ class PiracyMonitoringService:
             }
     
     def _get_default_platforms(self) -> List[str]:
-        """Get default list of platforms to monitor."""
+        """
+Get default list of platforms to monitor."""
         return [
             'youtube', 'instagram', 'tiktok', 'twitter', 'facebook',
             'soundcloud', 'spotify', 'dailymotion', 'vimeo', 'twitch',
@@ -421,7 +426,8 @@ class PiracyMonitoringService:
             await self.alert_service.send_piracy_alert(alert_data)
     
     async def _trigger_auto_enforcement(self, session: MonitoringSession, violation: Any) -> None:
-        """Trigger automated enforcement for violation."""
+        """
+Trigger automated enforcement for violation."""
         try:
             from .enforcement import AutomatedEnforcement
             enforcement = AutomatedEnforcement(self.config.get('enforcement', {}))
@@ -458,7 +464,8 @@ class PiracyMonitoringService:
         pass
     
     async def _cleanup_completed_sessions(self) -> None:
-        """Clean up completed or error sessions."""
+        """
+Clean up completed or error sessions."""
         completed_sessions = []
         for session_id, session in self.active_sessions.items():
             if session.status in [MonitoringStatus.STOPPED, MonitoringStatus.ERROR]:
@@ -468,7 +475,8 @@ class PiracyMonitoringService:
             await self.stop_monitoring(session_id)
     
     async def _update_monitoring_statistics(self) -> None:
-        """Update monitoring performance statistics."""
+        """
+Update monitoring performance statistics."""
         self.monitoring_stats['active_sessions'] = len(self.active_sessions)
         
         # Calculate uptime percentage (simplified implementation)
@@ -480,7 +488,8 @@ class PiracyMonitoringService:
                 100.0 - (error_sessions / total_sessions * 100.0))
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown monitoring service."""
+        """
+Gracefully shutdown monitoring service."""
         logger.info("Shutting down Piracy Monitoring Service...")
         
         # Stop all active monitoring sessions

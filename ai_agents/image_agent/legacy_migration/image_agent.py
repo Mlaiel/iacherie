@@ -19,6 +19,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import hashlib
 import logging
@@ -75,7 +76,9 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Supported image formats for processing"""
+    """
+Supported image formats for processing"""
+
     JPEG = "jpeg"
     PNG = "png" 
     WEBP = "webp"
@@ -89,6 +92,7 @@ class ImageFormat(Enum):
 
 class ImageQuality(Enum):
     """Image quality assessment levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
@@ -98,6 +102,7 @@ class ImageQuality(Enum):
 
 class ProcessingOperation(Enum):
     """Available image processing operations"""
+
     ANALYZE = "analyze"
     ENHANCE = "enhance"
     PROTECT = "protect"
@@ -128,7 +133,8 @@ class ImageMetadata:
 
 @dataclass 
 class ImageAnalysisResult:
-    """Detailed image analysis results"""
+    """
+Detailed image analysis results"""
     quality_score: float  # 0.0 to 1.0
     quality_level: ImageQuality
     aesthetic_score: float
@@ -148,7 +154,8 @@ class ImageAnalysisResult:
 
 @dataclass
 class ImageProtectionResult:
-    """Image content protection analysis results"""
+    """
+Image content protection analysis results"""
     fingerprint: str
     perceptual_hash: str
     robust_hash: str
@@ -175,7 +182,8 @@ class ImageEnhancementResult:
 
 @dataclass
 class ImageOptimizationResult:
-    """Image optimization results"""
+    """
+Image optimization results"""
     original_format: ImageFormat
     optimized_format: ImageFormat
     original_size: int
@@ -696,7 +704,8 @@ class ImageAgent(BaseAgent):
         return min(1.0, harmony_score)
 
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[str]:
-        """Extract dominant colors using K-means clustering"""
+        """
+Extract dominant colors using K-means clustering"""
         try:
             # Reshape image to be a list of pixels
             data = image.reshape((-1, 3))
@@ -1154,7 +1163,8 @@ class ImageAgent(BaseAgent):
         tampering_detected: bool, 
         authenticity_score: float
     ) -> List[str]:
-        """Generate content protection recommendations"""
+        """
+Generate content protection recommendations"""
         recommendations = []
         
         if copyright_status == "unknown":
@@ -1268,7 +1278,8 @@ class ImageAgent(BaseAgent):
         image: Image.Image, 
         metadata: ImageMetadata
     ) -> Dict[str, Any]:
-        """Generate SEO-optimized alt text and keywords"""
+        """
+Generate SEO-optimized alt text and keywords"""
         try:
             # Use computer vision to analyze image content
             detected_objects = await self.cv_engine.detect_objects(image)
@@ -1540,7 +1551,8 @@ class ImageAgentManager:
         return results
 
     async def _get_available_agent(self) -> str:
-        """Get available agent or create new one"""
+        """
+Get available agent or create new one"""
         # Simple round-robin selection
         if not self.agents:
             agent_id = await self.create_agent({})
@@ -1549,7 +1561,8 @@ class ImageAgentManager:
         return next(iter(self.agents.keys()))
 
     async def shutdown(self):
-        """Shutdown all agents and cleanup resources"""
+        """
+Shutdown all agents and cleanup resources"""
         for agent in self.agents.values():
             await agent.shutdown()
         

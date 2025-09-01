@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Enterprise-grade security configuration and compliance management.
 ==================================================================
 """
+
 import logging
 import os
 import hashlib
@@ -26,7 +27,9 @@ from datetime import datetime, timedelta
 import json
 
 class SecurityLevel(Enum):
-    """Security configuration levels"""
+    """
+Security configuration levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -35,6 +38,7 @@ class SecurityLevel(Enum):
 
 class EncryptionType(Enum):
     """Encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     AES_256_CBC = "aes_256_cbc"
@@ -42,6 +46,7 @@ class EncryptionType(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication methods"""
+
     JWT = "jwt"
     OAUTH2 = "oauth2"
     SAML = "saml"
@@ -50,6 +55,7 @@ class AuthenticationMethod(Enum):
 
 class ComplianceFramework(Enum):
     """Compliance frameworks"""
+
     GDPR = "gdpr"
     SOC2 = "soc2"
     HIPAA = "hipaa"
@@ -82,7 +88,8 @@ class AuthenticationConfig:
 
 @dataclass
 class NetworkSecurityConfig:
-    """Network security configuration"""
+    """
+Network security configuration"""
     ssl_required: bool = True
     tls_version: str = "1.3"
     cipher_suites: List[str] = field(default_factory=list)
@@ -104,7 +111,8 @@ class DataProtectionConfig:
 
 @dataclass
 class AuditConfig:
-    """Audit and logging configuration"""
+    """
+Audit and logging configuration"""
     audit_enabled: bool = True
     log_level: str = "INFO"
     log_retention: int = 2592000  # 30 days
@@ -145,7 +153,8 @@ class SecurityConfigManager:
     """
     
     def __init__(self):
-        """Initialize security configuration manager"""
+        """
+Initialize security configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Security configurations by level
@@ -448,7 +457,8 @@ class SecurityConfigManager:
         return base64.b64encode(secrets.token_bytes(64)).decode('utf-8')
     
     async def _initialize_encryption_keys(self) -> None:
-        """Initialize encryption keys"""
+        """
+Initialize encryption keys"""
         for level, config in self.security_configs.items():
             key = secrets.token_bytes(config.encryption.key_size // 8)
             self.encryption_keys[level] = {

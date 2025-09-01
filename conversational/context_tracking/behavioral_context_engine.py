@@ -45,13 +45,14 @@ Lead Behavioral Engineer : Fahed Mlaiel <mlaiel@live.de>
 This behavioral intelligence system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic Flow:
 Creator Interactions → Multi-Format Behavioral Analysis → Engagement Profiling → 
 Psychological Assessment → Collaboration Matching → Revenue Optimization → 
 Cross-Platform Distribution → Performance Analytics → Behavioral Adaptation
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -77,7 +78,9 @@ from ...ai.recommendation.user_profiling import UserProfileAnalyzer
 
 
 class BehaviorType(Enum):
-    """Types of behavioral patterns tracked"""
+    """
+Types of behavioral patterns tracked"""
+
     ENGAGEMENT = "engagement"
     CONTENT_INTERACTION = "content_interaction"
     COLLABORATION_SEEKING = "collaboration_seeking"
@@ -92,6 +95,7 @@ class BehaviorType(Enum):
 
 class EngagementLevel(Enum):
     """User engagement intensity levels"""
+
     PASSIVE = "passive"
     CASUAL = "casual"
     ACTIVE = "active"
@@ -102,6 +106,7 @@ class EngagementLevel(Enum):
 
 class CreatorArchetype(Enum):
     """Content creator behavioral archetypes"""
+
     ARTIST_PURIST = "artist_purist"
     BUSINESS_FOCUSED = "business_focused"
     COMMUNITY_BUILDER = "community_builder"
@@ -128,7 +133,8 @@ class BehavioralPattern:
 
 @dataclass
 class EngagementMetrics:
-    """Comprehensive engagement metrics tracking"""
+    """
+Comprehensive engagement metrics tracking"""
     session_duration_avg: float
     interaction_frequency: float
     response_time_avg: float
@@ -142,7 +148,8 @@ class EngagementMetrics:
 
 @dataclass
 class BehavioralProfile:
-    """Comprehensive behavioral profile for users"""
+    """
+Comprehensive behavioral profile for users"""
     user_id: str
     archetype: CreatorArchetype
     engagement_level: EngagementLevel
@@ -560,7 +567,8 @@ class BehavioralContextEngine:
                                           user_id: str,
                                           historical_data: List[Dict[str, Any]],
                                           current_data: Dict[str, Any]) -> EngagementMetrics:
-        """Calculate comprehensive engagement metrics"""
+        """
+Calculate comprehensive engagement metrics"""
         # Calculate session duration average
         session_durations = [item.get('session_duration', 0) for item in historical_data]
         session_duration_avg = sum(session_durations) / len(session_durations) if session_durations else 0
@@ -611,7 +619,8 @@ class BehavioralContextEngine:
                                         user_id: str,
                                         patterns: List[BehavioralPattern],
                                         metrics: EngagementMetrics) -> CreatorArchetype:
-        """Classify user into creator archetype based on behavioral analysis"""
+        """
+Classify user into creator archetype based on behavioral analysis"""
         # Create feature vector for classification
         features = [
             metrics.content_engagement_rate,
@@ -649,7 +658,8 @@ class BehavioralContextEngine:
         return CreatorArchetype.ENTERTAINER
 
     async def _assess_engagement_level(self, metrics: EngagementMetrics) -> EngagementLevel:
-        """Assess user engagement level based on metrics"""
+        """
+Assess user engagement level based on metrics"""
         engagement_score = (
             metrics.session_duration_avg * 0.2 +
             metrics.interaction_frequency * 0.3 +
@@ -674,7 +684,8 @@ class BehavioralContextEngine:
     async def _generate_preference_vector(self, 
                                         patterns: List[BehavioralPattern],
                                         metrics: EngagementMetrics) -> np.ndarray:
-        """Generate user preference vector for ML algorithms"""
+        """
+Generate user preference vector for ML algorithms"""
         # Create preference vector based on behavioral patterns and metrics
         vector_components = [
             metrics.content_engagement_rate,
@@ -701,7 +712,8 @@ class BehavioralContextEngine:
                                                    archetype: CreatorArchetype,
                                                    preference_vector: np.ndarray,
                                                    metrics: EngagementMetrics) -> Dict[str, float]:
-        """Calculate collaboration compatibility scores with other archetypes"""
+        """
+Calculate collaboration compatibility scores with other archetypes"""
         compatibility_matrix = {
             CreatorArchetype.ARTIST_PURIST: {
                 CreatorArchetype.BUSINESS_FOCUSED: 0.6,
@@ -739,7 +751,8 @@ class BehavioralContextEngine:
                                            archetype: CreatorArchetype,
                                            metrics: EngagementMetrics,
                                            patterns: List[BehavioralPattern]) -> float:
-        """Assess user's monetization potential"""
+        """
+Assess user's monetization potential"""
         base_potential = {
             CreatorArchetype.BUSINESS_FOCUSED: 0.9,
             CreatorArchetype.INFLUENCER: 0.8,
@@ -770,7 +783,8 @@ class BehavioralContextEngine:
     async def _identify_risk_indicators(self, 
                                       patterns: List[BehavioralPattern],
                                       metrics: EngagementMetrics) -> List[str]:
-        """Identify potential risk indicators in user behavior"""
+        """
+Identify potential risk indicators in user behavior"""
         risk_indicators = []
         
         # Low engagement risk
@@ -1142,7 +1156,8 @@ class BehavioralContextEngine:
         return min(score, 100)
 
     def _classify_engagement_level(self, score: float) -> EngagementLevel:
-        """Classify engagement level based on score"""
+        """
+Classify engagement level based on score"""
         if score >= 90:
             return EngagementLevel.INFLUENCER
         elif score >= 75:
@@ -1157,7 +1172,8 @@ class BehavioralContextEngine:
             return EngagementLevel.PASSIVE
 
     def _assess_business_impact(self, engagement_level: EngagementLevel) -> str:
-        """Assess business impact of engagement level"""
+        """
+Assess business impact of engagement level"""
         impact_map = {
             EngagementLevel.INFLUENCER: "very_high",
             EngagementLevel.POWER_USER: "high",
@@ -1201,7 +1217,8 @@ class BehavioralContextEngine:
         return min(score, 100)
 
     def _assess_content_business_impact(self, strategy: str, metrics: Dict[str, Any]) -> str:
-        """Assess business impact of content strategy"""
+        """
+Assess business impact of content strategy"""
         high_impact_strategies = ["seo_focused_prolific", "protection_focused", "multi_platform_strategist"]
         
         if strategy in high_impact_strategies and metrics['audience_engagement'] > 0.7:
@@ -1220,7 +1237,8 @@ class BehavioralContextEngine:
         return (successful / requests * 100) if requests > 0 else 0
 
     def _calculate_network_influence(self, interaction_data: Dict[str, Any]) -> float:
-        """Calculate network influence score"""
+        """
+Calculate network influence score"""
         connections = len(interaction_data.get('connections', []))
         engagement = np.mean([c.get('engagement_rate', 0) for c in interaction_data.get('connection_analytics', [])])
         referrals = len(interaction_data.get('referrals_made', []))
@@ -1229,7 +1247,8 @@ class BehavioralContextEngine:
         return min(influence_score, 100)
 
     def _identify_collaboration_style(self, metrics: Dict[str, Any]) -> str:
-        """Identify collaboration style"""
+        """
+Identify collaboration style"""
         if metrics['network_influence_score'] > 75:
             return "influencer_collaborator"
         elif metrics['collaboration_success_rate'] > 80:
@@ -1263,7 +1282,8 @@ class BehavioralContextEngine:
         return min(score, 100)
 
     def _assess_collaboration_business_impact(self, style: str, metrics: Dict[str, Any]) -> str:
-        """Assess business impact of collaboration style"""
+        """
+Assess business impact of collaboration style"""
         high_impact_styles = ["influencer_collaborator", "strategic_collaborator"]
         
         if style in high_impact_styles and metrics['network_influence_score'] > 80:
@@ -1291,7 +1311,8 @@ class BehavioralContextEngine:
         return min(consistency, 100)
 
     def _assess_monetization_maturity(self, metrics: Dict[str, Any]) -> str:
-        """Assess monetization maturity level"""
+        """
+Assess monetization maturity level"""
         if (metrics['revenue_streams'] >= 5 and 
             metrics['business_analytics_usage'] > 20 and 
             metrics['revenue_consistency'] > 70):
@@ -1329,7 +1350,8 @@ class BehavioralContextEngine:
         return min(score, 100)
 
     def _assess_monetization_business_impact(self, maturity: str, metrics: Dict[str, Any]) -> str:
-        """Assess business impact of monetization maturity"""
+        """
+Assess business impact of monetization maturity"""
         if maturity == "enterprise_level":
             return "very_high"
         elif maturity == "professional" and metrics['revenue_consistency'] > 80:

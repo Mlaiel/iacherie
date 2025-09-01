@@ -8,6 +8,7 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class SubscriptionManagementStatus(Enum):
-    """Statuts du module Subscription Management"""
+    """
+Statuts du module Subscription Management"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -39,27 +42,32 @@ class SubscriptionManagementConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class ISubscriptionManagementService(ABC):
-    """Interface du service Subscription Management"""
+    """
+Interface du service Subscription Management"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
+        """
+Initialisation du service"""
         pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
+        """
+Traitement principal"""
         pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
+        """
+Validation des données"""
         pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class SubscriptionManagementManager:
-    """Gestionnaire principal Subscription Management"""
+    """
+Gestionnaire principal Subscription Management"""
     
     def __init__(self, config: SubscriptionManagementConfig):
         self.config = config
@@ -134,7 +142,8 @@ class SubscriptionManagementService(ISubscriptionManagementService):
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
+        """
+Exécution de la logique métier spécifique"""
         # Implement subscription management consolidated business logic
         subscription_data = data.get('subscription', {})
         user_id = subscription_data.get('user_id')
@@ -201,7 +210,8 @@ async def create_subscriptionmanagement_service(config: Optional[SubscriptionMan
     return service
 
 def get_subscriptionmanagement_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
+    """
+Récupération du statut du module"""
     return {
         "module": "Subscription Management",
         "version": "1.0.0",
@@ -219,7 +229,8 @@ class SubscriptionManagementAPI:
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
+        """
+Vérification de santé du module"""
         return {
             "status": "healthy",
             "module": "Subscription Management",

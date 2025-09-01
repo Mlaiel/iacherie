@@ -7,6 +7,7 @@ Version: 3.0.0
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
 """
+
 from typing import Dict, Any, List, Optional, Callable, Union
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class MessagePriority(Enum):
-    """Message priority levels"""
+    """
+Message priority levels"""
+
     CRITICAL = 0
     HIGH = 1
     NORMAL = 2
@@ -38,7 +41,9 @@ class MessagePriority(Enum):
 
 
 class MessageStatus(Enum):
-    """Message processing status"""
+    """
+Message processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -70,19 +75,22 @@ class QueueMessage:
             self.message_id = str(uuid4())
     
     def is_expired(self) -> bool:
-        """Check if message is expired"""
+        """
+Check if message is expired"""
         if self.expires_at:
             return datetime.now(timezone.utc) > self.expires_at
         return False
     
     def should_process_now(self) -> bool:
-        """Check if message should be processed now"""
+        """
+Check if message should be processed now"""
         if self.scheduled_at:
             return datetime.now(timezone.utc) >= self.scheduled_at
         return True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert message to dictionary for serialization"""
+        """
+Convert message to dictionary for serialization"""
         return {
             "message_id": self.message_id,
             "queue_name": self.queue_name,
@@ -124,42 +132,50 @@ class MessageQueue(ABC):
     
     @abstractmethod
     async def enqueue(self, message: QueueMessage) -> str:
-        """Add message to queue"""
+        """
+Add message to queue"""
         pass
     
     @abstractmethod
     async def dequeue(self, timeout: Optional[int] = None) -> Optional[QueueMessage]:
-        """Remove and return message from queue"""
+        """
+Remove and return message from queue"""
         pass
     
     @abstractmethod
     async def peek(self) -> Optional[QueueMessage]:
-        """Peek at next message without removing it"""
+        """
+Peek at next message without removing it"""
         pass
     
     @abstractmethod
     async def ack(self, message_id: str) -> bool:
-        """Acknowledge message processing"""
+        """
+Acknowledge message processing"""
         pass
     
     @abstractmethod
     async def nack(self, message_id: str, requeue: bool = True) -> bool:
-        """Negative acknowledge - message processing failed"""
+        """
+Negative acknowledge - message processing failed"""
         pass
     
     @abstractmethod
     async def size(self) -> int:
-        """Get queue size"""
+        """
+Get queue size"""
         pass
     
     @abstractmethod
     async def purge(self) -> int:
-        """Remove all messages from queue"""
+        """
+Remove all messages from queue"""
         pass
 
 
 class RedisMessageQueue(MessageQueue):
-    """Redis-based message queue implementation"""
+    """
+Redis-based message queue implementation"""
     
     def __init__(self, queue_name: str, redis_manager: RedisManager,
                  encryption_manager: EncryptionManager,
@@ -505,11 +521,13 @@ class QueueProcessor:
         self._shutdown_event = Event()
     
     def register_handler(self, message_type: str, handler: Callable):
-        """Register a message handler for specific message type"""
+        """
+Register a message handler for specific message type"""
         self._handlers[message_type] = handler
     
     async def start(self):
-        """Start processing messages"""
+        """
+Start processing messages"""
         if self._running:
             return
         
@@ -639,7 +657,8 @@ class QueueManager:
         self._processors: Dict[str, QueueProcessor] = {}
     
     def create_queue(self, queue_name: str) -> RedisMessageQueue:
-        """Create or get a message queue"""
+        """
+Create or get a message queue"""
         if queue_name not in self._queues:
             self._queues[queue_name] = RedisMessageQueue(
                 queue_name, self.redis, self.encryption, self.metrics
@@ -648,24 +667,28 @@ class QueueManager:
     
     def create_processor(self, queue_name: str, 
                         worker_count: int = 1) -> QueueProcessor:
-        """Create a processor for a queue"""
+        """
+Create a processor for a queue"""
         queue = self.create_queue(queue_name)
         processor = QueueProcessor(queue, worker_count)
         self._processors[queue_name] = processor
         return processor
     
     async def start_all_processors(self):
-        """Start all registered processors"""
+        """
+Start all registered processors"""
         for processor in self._processors.values():
             await processor.start()
     
     async def stop_all_processors(self):
-        """Stop all processors"""
+        """
+Stop all processors"""
         for processor in self._processors.values():
             await processor.stop()
     
     async def get_system_stats(self) -> Dict[str, Any]:
-        """Get statistics for all queues"""
+        """
+Get statistics for all queues"""
         stats = {
             "total_queues": len(self._queues),
             "queue_stats": {}

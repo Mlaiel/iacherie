@@ -4,8 +4,9 @@ Defines interfaces for multi-format content handling, protection,
 fingerprinting, validation and metadata management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
@@ -14,7 +15,9 @@ import numpy as np
 
 
 class ContentType(Enum):
-    """Supported content types for processing and protection."""
+    """
+Supported content types for processing and protection."""
+
     AUDIO = "audio"
     VIDEO = "video"  
     IMAGE = "image"
@@ -27,6 +30,7 @@ class ContentType(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection security levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -62,7 +66,8 @@ class ContentProcessorInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> np.ndarray:
-        """Extract feature vectors from content."""
+        """
+Extract feature vectors from content."""
         pass
     
     @abstractmethod
@@ -71,7 +76,8 @@ class ContentProcessorInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> bytes:
-        """Normalize content for consistent processing."""
+        """
+Normalize content for consistent processing."""
         pass
     
     @abstractmethod
@@ -80,12 +86,14 @@ class ContentProcessorInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> Dict[str, float]:
-        """Validate and score content quality metrics."""
+        """
+Validate and score content quality metrics."""
         pass
 
 
 class ContentProtectionInterface(ABC):
-    """Interface for content protection and rights management."""
+    """
+Interface for content protection and rights management."""
     
     @abstractmethod
     async def protect_content(
@@ -113,7 +121,8 @@ class ContentProtectionInterface(ABC):
         content_id: str,
         user_id: str
     ) -> Dict[str, bool]:
-        """Check user rights for content access and modification."""
+        """
+Check user rights for content access and modification."""
         pass
     
     @abstractmethod
@@ -122,7 +131,8 @@ class ContentProtectionInterface(ABC):
         content_id: str,
         protection_config: Dict[str, Any]
     ) -> str:
-        """Generate cryptographic protection certificate."""
+        """
+Generate cryptographic protection certificate."""
         pass
     
     @abstractmethod
@@ -131,7 +141,8 @@ class ContentProtectionInterface(ABC):
         content_id: str,
         current_hash: str
     ) -> bool:
-        """Verify content hasn't been tampered with."""
+        """
+Verify content hasn't been tampered with."""
         pass
     
     @abstractmethod
@@ -140,12 +151,14 @@ class ContentProtectionInterface(ABC):
         content_id: str,
         terms: Dict[str, Any]
     ) -> str:
-        """Create licensing terms for content usage."""
+        """
+Create licensing terms for content usage."""
         pass
 
 
 class ContentFingerprinterInterface(ABC):
-    """Interface for AI-powered content fingerprinting."""
+    """
+Interface for AI-powered content fingerprinting."""
     
     @abstractmethod
     async def generate_fingerprint(
@@ -171,7 +184,8 @@ class ContentFingerprinterInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> np.ndarray:
-        """Generate vector embedding for similarity matching."""
+        """
+Generate vector embedding for similarity matching."""
         pass
     
     @abstractmethod
@@ -180,7 +194,8 @@ class ContentFingerprinterInterface(ABC):
         fingerprint1: str,
         fingerprint2: str
     ) -> float:
-        """Compare two fingerprints and return similarity score."""
+        """
+Compare two fingerprints and return similarity score."""
         pass
     
     @abstractmethod
@@ -189,7 +204,8 @@ class ContentFingerprinterInterface(ABC):
         fingerprint: str,
         threshold: float = 0.9
     ) -> List[Dict[str, Any]]:
-        """Search for similar content using fingerprint matching."""
+        """
+Search for similar content using fingerprint matching."""
         pass
     
     @abstractmethod
@@ -197,12 +213,14 @@ class ContentFingerprinterInterface(ABC):
         self,
         content_batch: List[Tuple[bytes, ContentType]]
     ) -> List[str]:
-        """Generate fingerprints for multiple content items."""
+        """
+Generate fingerprints for multiple content items."""
         pass
 
 
 class ContentValidatorInterface(ABC):
-    """Interface for content validation and compliance."""
+    """
+Interface for content validation and compliance."""
     
     @abstractmethod
     async def validate_content_format(
@@ -210,7 +228,8 @@ class ContentValidatorInterface(ABC):
         content_data: bytes,
         expected_type: ContentType
     ) -> bool:
-        """Validate content matches expected format."""
+        """
+Validate content matches expected format."""
         pass
     
     @abstractmethod
@@ -218,7 +237,8 @@ class ContentValidatorInterface(ABC):
         self,
         content_data: bytes
     ) -> Dict[str, Any]:
-        """Scan content for malicious code or threats."""
+        """
+Scan content for malicious code or threats."""
         pass
     
     @abstractmethod
@@ -227,7 +247,8 @@ class ContentValidatorInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Check content for copyright violations."""
+        """
+Check content for copyright violations."""
         pass
     
     @abstractmethod
@@ -235,7 +256,8 @@ class ContentValidatorInterface(ABC):
         self,
         metadata: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Validate content metadata completeness and accuracy."""
+        """
+Validate content metadata completeness and accuracy."""
         pass
     
     @abstractmethod
@@ -244,12 +266,14 @@ class ContentValidatorInterface(ABC):
         content_data: bytes,
         platform: str
     ) -> Dict[str, Any]:
-        """Check content compliance with platform guidelines."""
+        """
+Check content compliance with platform guidelines."""
         pass
 
 
 class ContentMetadataInterface(ABC):
-    """Interface for content metadata management."""
+    """
+Interface for content metadata management."""
     
     @abstractmethod
     async def extract_metadata(
@@ -275,7 +299,8 @@ class ContentMetadataInterface(ABC):
         base_metadata: Dict[str, Any],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Enrich metadata with AI-generated insights."""
+        """
+Enrich metadata with AI-generated insights."""
         pass
     
     @abstractmethod
@@ -284,7 +309,8 @@ class ContentMetadataInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> List[str]:
-        """Generate relevant tags for content discovery."""
+        """
+Generate relevant tags for content discovery."""
         pass
     
     @abstractmethod
@@ -293,7 +319,8 @@ class ContentMetadataInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Extract technical specifications and quality metrics."""
+        """
+Extract technical specifications and quality metrics."""
         pass
     
     @abstractmethod
@@ -302,7 +329,8 @@ class ContentMetadataInterface(ABC):
         content_data: bytes,
         metadata: Dict[str, Any]
     ) -> str:
-        """Generate AI-powered content summary description."""
+        """
+Generate AI-powered content summary description."""
         pass
     
     @abstractmethod
@@ -311,5 +339,6 @@ class ContentMetadataInterface(ABC):
         content_data: bytes,
         content_type: ContentType
     ) -> Dict[str, float]:
-        """Classify content genre with confidence scores."""
+        """
+Classify content genre with confidence scores."""
         pass

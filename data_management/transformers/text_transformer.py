@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -22,6 +22,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import asyncio
 import logging
 import time
@@ -72,7 +73,9 @@ except:
     pass
 
 class TextFormat(Enum):
-    """Formats de texte supportés"""
+    """
+Formats de texte supportés"""
+
     PLAIN = "txt"
     MARKDOWN = "md"
     HTML = "html"
@@ -84,6 +87,7 @@ class TextFormat(Enum):
 
 class TextEnhancementType(Enum):
     """Types d'amélioration de texte"""
+
     GRAMMAR_CHECK = "grammar_check"
     STYLE_IMPROVEMENT = "style_improvement"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -97,6 +101,7 @@ class TextEnhancementType(Enum):
 
 class ContentType(Enum):
     """Types de contenu textuel"""
+
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
     PRODUCT_DESCRIPTION = "product_description"
@@ -136,7 +141,8 @@ class TextProcessingResult:
     processing_time: float
 
 class TextAnalyzer:
-    """Analyseur de texte avancé pour créateurs de contenu"""
+    """
+Analyseur de texte avancé pour créateurs de contenu"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -408,7 +414,8 @@ class TextAnalyzer:
         )
     
     def _classify_content(self, text: str) -> str:
-        """Classification automatique du contenu"""
+        """
+Classification automatique du contenu"""
         if not self.classifier:
             return "unknown"
         
@@ -834,7 +841,8 @@ class TextEnhancer:
         return text  # Simplification pour l'exemple
     
     def _improve_flow(self, text: str) -> str:
-        """Améliore la fluidité du texte"""
+        """
+Améliore la fluidité du texte"""
         # Ajout de connecteurs logiques
         sentences = sent_tokenize(text)
         improved_sentences = []
@@ -850,7 +858,8 @@ class TextEnhancer:
         return ' '.join(improved_sentences)
     
     def _naturally_insert_keyword(self, text: str, keyword: str) -> str:
-        """Insère naturellement un mot-clé dans le texte"""
+        """
+Insère naturellement un mot-clé dans le texte"""
         # Recherche d'un endroit approprié pour insérer le mot-clé
         sentences = sent_tokenize(text)
         
@@ -867,7 +876,8 @@ class TextEnhancer:
         return ' '.join(sentences)
     
     def _optimize_headers_for_seo(self, text: str, keywords: List[str]) -> str:
-        """Optimise les en-têtes pour SEO"""
+        """
+Optimise les en-têtes pour SEO"""
         lines = text.split('\n')
         optimized_lines = []
         
@@ -910,7 +920,8 @@ class TextEnhancer:
         return [part1, part2]
     
     def _simplify_vocabulary(self, text: str) -> str:
-        """Simplifie le vocabulaire"""
+        """
+Simplifie le vocabulaire"""
         # Dictionnaire de simplification (exemple basique)
         simplifications = {
             'utilize': 'use',
@@ -936,7 +947,8 @@ class TextEnhancer:
         return simplified_text
     
     def _make_formal(self, text: str) -> str:
-        """Rend le texte plus formel"""
+        """
+Rend le texte plus formel"""
         # Remplacement d'expressions informelles
         formal_replacements = {
             "can't": "cannot",
@@ -1009,7 +1021,8 @@ class TextEnhancer:
         return professional_text
     
     def _add_supporting_details(self, paragraph: str, config: TextTransformationConfig) -> str:
-        """Ajoute des détails de soutien à un paragraphe"""
+        """
+Ajoute des détails de soutien à un paragraphe"""
         # Exemple simple d'expansion
         supporting_phrases = [
             "This is particularly important because",
@@ -1069,7 +1082,8 @@ class TextTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de texte selon configuration"""
+        """
+Transformation de texte selon configuration"""
         
         start_time = time.time()
         operations = []
@@ -1214,7 +1228,8 @@ class TextTransformer:
         original: TextMetadata,
         processed: TextMetadata
     ) -> TextQualityMetrics:
-        """Calcule les métriques de qualité de la transformation"""
+        """
+Calcule les métriques de qualité de la transformation"""
         
         # Comparaison de lisibilité
         readability_improvement = processed.readability_score - original.readability_score
@@ -1249,7 +1264,8 @@ class TextTransformer:
         )
     
     def _calculate_keyword_density(self, metadata: TextMetadata) -> float:
-        """Calcule la densité des mots-clés"""
+        """
+Calcule la densité des mots-clés"""
         if not metadata.keywords or metadata.word_count == 0:
             return 0.0
         
@@ -1258,7 +1274,8 @@ class TextTransformer:
         return min(1.0, keyword_count / metadata.word_count * 100)
 
 class AsyncTextTransformer:
-    """Version asynchrone du transformateur de texte"""
+    """
+Version asynchrone du transformateur de texte"""
     
     def __init__(self):
         self.sync_transformer = TextTransformer()
@@ -1270,7 +1287,8 @@ class AsyncTextTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> TextProcessingResult:
-        """Transformation de texte asynchrone"""
+        """
+Transformation de texte asynchrone"""
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
@@ -1286,7 +1304,8 @@ class AsyncTextTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 4
     ) -> List[TextProcessingResult]:
-        """Transformation en lot asynchrone"""
+        """
+Transformation en lot asynchrone"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         

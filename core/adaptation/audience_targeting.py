@@ -27,6 +27,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -63,7 +64,9 @@ from .exceptions import TargetingError, InsufficientDataError, ModelTrainingErro
 
 
 class AudienceSegment(str, Enum):
-    """Comprehensive audience segments with AI-powered classification"""
+    """
+Comprehensive audience segments with AI-powered classification"""
+
     MUSIC_LOVERS = "music_lovers"
     CONTENT_CREATORS = "content_creators"
     YOUNG_ADULTS = "young_adults"
@@ -88,6 +91,7 @@ class AudienceSegment(str, Enum):
 
 class CreatorAudience(str, Enum):
     """Creator-specific audience categories"""
+
     MUSICIAN_FANS = "musician_fans"
     BLOG_READERS = "blog_readers"
     PHOTOGRAPHY_CLIENTS = "photography_clients"
@@ -102,6 +106,7 @@ class CreatorAudience(str, Enum):
 
 class DemographicAttribute(str, Enum):
     """Comprehensive demographic attributes for precision targeting"""
+
     AGE_GROUP = "age_group"
     GENDER = "gender"
     LOCATION = "location"
@@ -124,6 +129,7 @@ class DemographicAttribute(str, Enum):
 
 class EngagementType(str, Enum):
     """Advanced engagement classification"""
+
     PASSIVE_VIEWER = "passive_viewer"
     ACTIVE_ENGAGER = "active_engager"
     CONTENT_SHARER = "content_sharer"
@@ -153,7 +159,8 @@ class AudienceInsights:
 
 @dataclass
 class AudienceProfile:
-    """Comprehensive audience profile with AI-powered analytics"""
+    """
+Comprehensive audience profile with AI-powered analytics"""
     segment_id: str
     segment_name: str
     creator_type_alignment: Dict[str, float]
@@ -183,7 +190,8 @@ class AudienceProfile:
 
 @dataclass
 class TargetingStrategy:
-    """Advanced targeting strategy with AI optimization"""
+    """
+Advanced targeting strategy with AI optimization"""
     primary_segments: List[str]
     secondary_segments: List[str]
     messaging_strategy: Dict[str, str]
@@ -198,7 +206,8 @@ class TargetingStrategy:
 
 @dataclass
 class TargetingRequest:
-    """Enterprise-grade audience targeting request with comprehensive configuration"""
+    """
+Enterprise-grade audience targeting request with comprehensive configuration"""
     content_id: str
     creator_id: str
     creator_type: str
@@ -242,7 +251,8 @@ class PerformancePrediction:
 
 @dataclass
 class TargetingResult:
-    """Comprehensive result of audience targeting analysis with actionable insights"""
+    """
+Comprehensive result of audience targeting analysis with actionable insights"""
     targeting_id: str
     creator_id: str
     creator_type: str
@@ -625,7 +635,8 @@ class AudienceTargeting:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Load content characteristics for targeting analysis"""
+        """
+Load content characteristics for targeting analysis"""
         # Implementation would load from database
         return {
             'id': content_id,
@@ -646,7 +657,8 @@ class AudienceTargeting:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze existing audience for content creator"""
+        """
+Analyze existing audience for content creator"""
         # Implementation would analyze existing audience data
         return {
             'total_followers': 10000,
@@ -675,7 +687,8 @@ class AudienceTargeting:
         request: TargetingRequest,
         existing_audience: Dict[str, Any]
     ) -> List[AudienceProfile]:
-        """Perform intelligent audience segmentation"""
+        """
+Perform intelligent audience segmentation"""
         segments = []
         
         # Generate segments based on content category and existing audience
@@ -705,7 +718,8 @@ class AudienceTargeting:
         request: TargetingRequest,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive targeting strategy"""
+        """
+Generate comprehensive targeting strategy"""
         return {
             'primary_segments': [s.segment_id for s in segments[:3]],
             'secondary_segments': [s.segment_id for s in segments[3:]],
@@ -723,7 +737,8 @@ class AudienceTargeting:
         segments: List[AudienceProfile],
         platforms: List[str]
     ) -> Dict[str, int]:
-        """Calculate reach estimates for audience segments"""
+        """
+Calculate reach estimates for audience segments"""
         reach_estimates = {}
         
         for platform in platforms:
@@ -745,7 +760,8 @@ class AudienceTargeting:
         content_data: Dict[str, Any],
         platforms: List[str]
     ) -> Dict[str, float]:
-        """Predict engagement performance for audience segments"""
+        """
+Predict engagement performance for audience segments"""
         engagement_predictions = {}
         
         for platform in platforms:
@@ -776,7 +792,8 @@ class AudienceTargeting:
         reach_estimates: Dict[str, int],
         budget_constraints: Optional[Dict[str, float]]
     ) -> Dict[str, float]:
-        """Generate budget allocation recommendations"""
+        """
+Generate budget allocation recommendations"""
         if not budget_constraints or 'total_budget' not in budget_constraints:
             # Return estimated costs
             return {
@@ -814,7 +831,8 @@ class AudienceTargeting:
         segments: List[AudienceProfile],
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Suggest content adaptations for different audience segments"""
+        """
+Suggest content adaptations for different audience segments"""
         adaptations = {}
         
         for segment in segments:
@@ -833,7 +851,8 @@ class AudienceTargeting:
         return adaptations
     
     def _load_platform_demographics(self) -> Dict[str, Dict[str, Any]]:
-        """Load demographic data for different platforms"""
+        """
+Load demographic data for different platforms"""
         return {
             'instagram': {
                 'age_distribution': {'18-24': 0.31, '25-34': 0.33, '35-44': 0.20, '45+': 0.16},
@@ -862,7 +881,8 @@ class AudienceTargeting:
         content_data: Dict[str, Any],
         existing_audience: Dict[str, Any]
     ) -> AudienceProfile:
-        """Create music lover audience segment"""
+        """
+Create music lover audience segment"""
         return AudienceProfile(
             segment_id="music_lovers_001",
             segment_name="Music Enthusiasts",
@@ -1034,6 +1054,7 @@ class AudienceTargeting:
         audience: AudienceProfile,
         session: AsyncSession
     ) -> None:
-        """Store custom audience in database"""
+        """
+Store custom audience in database"""
         # Implementation would store in database
         pass

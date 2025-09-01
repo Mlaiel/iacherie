@@ -23,6 +23,7 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import yaml
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentStrategy(Enum):
-    """Kubernetes deployment strategies."""
+    """
+Kubernetes deployment strategies."""
+
     ROLLING_UPDATE = "RollingUpdate"
     RECREATE = "Recreate"
     BLUE_GREEN = "BlueGreen"
@@ -62,6 +65,7 @@ class DeploymentStrategy(Enum):
 
 class PodStatus(Enum):
     """Pod status enumeration."""
+
     PENDING = "Pending"
     RUNNING = "Running"
     SUCCEEDED = "Succeeded"
@@ -71,6 +75,7 @@ class PodStatus(Enum):
 
 class ScalingDirection(Enum):
     """Scaling direction."""
+
     UP = "up"
     DOWN = "down"
     STABLE = "stable"
@@ -103,7 +108,8 @@ class AutoScalingConfig:
 
 @dataclass
 class ServiceConfig:
-    """Kubernetes service configuration."""
+    """
+Kubernetes service configuration."""
     name: str
     type: str = "ClusterIP"  # ClusterIP, NodePort, LoadBalancer
     ports: List[Dict[str, Any]] = None
@@ -161,16 +167,19 @@ class KubernetesTemplateManager:
         self._ensure_template_directory()
     
     def _ensure_template_directory(self):
-        """Ensure template directory exists with default templates."""
+        """
+Ensure template directory exists with default templates."""
         self.template_dir.mkdir(parents=True, exist_ok=True)
         
         # Create default templates if they don't exist
         self._create_default_templates()
     
     def _create_default_templates(self):
-        """Create default Kubernetes manifest templates."""
+        """
+Create default Kubernetes manifest templates."""
         # Deployment template
-        deployment_template = """apiVersion: apps/v1
+        deployment_template = """
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ name }}
@@ -313,7 +322,8 @@ spec:
 """
         
         # Service template
-        service_template = """apiVersion: v1
+        service_template = """
+apiVersion: v1
 kind: Service
 metadata:
   name: {{ service.name }}
@@ -346,7 +356,8 @@ spec:
 """
         
         # HPA template
-        hpa_template = """apiVersion: autoscaling/v2
+        hpa_template = """
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ name }}-hpa
@@ -434,7 +445,8 @@ spec:
                 template_path.write_text(content.strip())
     
     def render_manifest(self, template_name: str, config: DeploymentConfig) -> str:
-        """Render Kubernetes manifest from template."""
+        """
+Render Kubernetes manifest from template."""
         try:
             template = self.template_env.get_template(template_name)
             
@@ -483,8 +495,10 @@ spec:
         return manifests
     
     def _render_ingress_manifest(self, config: DeploymentConfig) -> str:
-        """Render ingress manifest."""
-        ingress_template = """apiVersion: networking.k8s.io/v1
+        """
+Render ingress manifest."""
+        ingress_template = """
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ name }}-ingress
@@ -531,7 +545,8 @@ class KubernetesClient:
     """
     
     def __init__(self, kubeconfig_path: Optional[str] = None):
-        """Initialize Kubernetes client."""
+        """
+Initialize Kubernetes client."""
         self.kubeconfig_path = kubeconfig_path
         self._load_kube_config()
         
@@ -545,7 +560,8 @@ class KubernetesClient:
         self.template_manager = KubernetesTemplateManager()
         
     def _load_kube_config(self):
-        """Load Kubernetes configuration."""
+        """
+Load Kubernetes configuration."""
         try:
             if self.kubeconfig_path:
                 k8s_config.load_kube_config(config_file=self.kubeconfig_path)
@@ -1115,7 +1131,8 @@ class KubernetesDeploymentManager:
     """
     
     def __init__(self, config: ProcessingConfig):
-        """Initialize deployment manager."""
+        """
+Initialize deployment manager."""
         self.config = config
         self.k8s_client = KubernetesClient()
         self.active_deployments: Dict[str, DeploymentConfig] = {}
@@ -1124,7 +1141,8 @@ class KubernetesDeploymentManager:
     async def deploy_ai_processing_infrastructure(self, 
                                                 tenant_id: str,
                                                 deployment_config: Optional[DeploymentConfig] = None) -> bool:
-        """Deploy complete AI processing infrastructure for tenant."""
+        """
+Deploy complete AI processing infrastructure for tenant."""
         try:
             logger.info(f"Deploying AI processing infrastructure for tenant: {tenant_id}")
             

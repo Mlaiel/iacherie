@@ -5,8 +5,9 @@ supporting dynamic resource allocation, intelligent load balancing, and predicti
 
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
-© 2025 All Rights Reserved
+(c) 2025 All Rights Reserved
 """
+
 import asyncio
 import logging
 import time
@@ -42,7 +43,9 @@ from ...core.monitoring import get_metrics_client
 
 
 class ScalingAction(Enum):
-    """Scaling action types"""
+    """
+Scaling action types"""
+
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down" 
     NO_ACTION = "no_action"
@@ -50,6 +53,7 @@ class ScalingAction(Enum):
 
 class ResourceType(Enum):
     """Resource types for scaling"""
+
     CPU = "cpu"
     MEMORY = "memory"
     STORAGE = "storage"
@@ -73,7 +77,8 @@ class ScalingMetrics:
 
 @dataclass
 class ScalingThreshold:
-    """Scaling threshold configuration"""
+    """
+Scaling threshold configuration"""
     resource_type: ResourceType
     scale_up_threshold: float
     scale_down_threshold: float
@@ -85,7 +90,8 @@ class ScalingThreshold:
 
 @dataclass
 class ScalingInstance:
-    """Scaling instance information"""
+    """
+Scaling instance information"""
     instance_id: str
     resource_type: ResourceType
     current_instances: int
@@ -377,7 +383,8 @@ class AutoScalingManager(BaseAgent):
         return datetime.now() < cooldown_end
 
     async def _record_scaling_event(self, service_name: str, action: ScalingAction, instance: ScalingInstance):
-        """Record scaling event for audit and analysis"""
+        """
+Record scaling event for audit and analysis"""
         try:
             event = {
                 "timestamp": datetime.now().isoformat(),
@@ -444,44 +451,54 @@ class AutoScalingManager(BaseAgent):
 
     # Metric collection methods (would integrate with monitoring systems)
     async def _get_monitored_services(self) -> List[str]:
-        """Get list of services to monitor"""
+        """
+Get list of services to monitor"""
         return list(self.scaling_thresholds.keys())
 
     async def _get_cpu_utilization(self, service_name: str) -> float:
-        """Get CPU utilization for service"""
+        """
+Get CPU utilization for service"""
         # Integration with monitoring system (Prometheus, CloudWatch, etc.)
         return 50.0  # Placeholder
 
     async def _get_memory_utilization(self, service_name: str) -> float:
-        """Get memory utilization for service"""
+        """
+Get memory utilization for service"""
         return 45.0  # Placeholder
 
     async def _get_request_rate(self, service_name: str) -> float:
-        """Get request rate for service"""
+        """
+Get request rate for service"""
         return 100.0  # Placeholder
 
     async def _get_response_time(self, service_name: str) -> float:
-        """Get average response time for service"""
+        """
+Get average response time for service"""
         return 250.0  # Placeholder
 
     async def _get_error_rate(self, service_name: str) -> float:
-        """Get error rate for service"""
+        """
+Get error rate for service"""
         return 0.01  # Placeholder
 
     async def _get_queue_length(self, service_name: str) -> int:
-        """Get queue length for service"""
+        """
+Get queue length for service"""
         return 25  # Placeholder
 
     async def _get_active_connections(self, service_name: str) -> int:
-        """Get active connections for service"""
+        """
+Get active connections for service"""
         return 150  # Placeholder
 
     async def _get_current_instance_count(self, service_name: str) -> int:
-        """Get current instance count for service"""
+        """
+Get current instance count for service"""
         return 2  # Placeholder
 
     async def _update_monitoring_metrics(self):
-        """Update monitoring metrics"""
+        """
+Update monitoring metrics"""
         try:
             if self.metrics_client:
                 total_services = len(self.scaling_instances)

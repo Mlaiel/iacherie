@@ -11,6 +11,7 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
+
 import os
 import json
 import logging
@@ -46,7 +47,9 @@ settings = get_settings()
 
 
 class StreamingMode(Enum):
-    """Real-time streaming modes"""
+    """
+Real-time streaming modes"""
+
     LIVE_AUDIO = "live_audio"
     LIVE_VIDEO = "live_video"
     BATCH_UPLOAD = "batch_upload"
@@ -55,6 +58,7 @@ class StreamingMode(Enum):
 
 class StreamingPriority(Enum):
     """Streaming priority levels"""
+
     CRITICAL = "critical"  # < 100ms latency
     HIGH = "high"         # < 500ms latency
     MEDIUM = "medium"     # < 2s latency
@@ -79,7 +83,8 @@ class StreamingConfig:
 
 @dataclass
 class StreamChunk:
-    """Real-time stream chunk data"""
+    """
+Real-time stream chunk data"""
     chunk_id: str
     user_id: int
     content_type: str
@@ -93,7 +98,8 @@ class StreamChunk:
 
 @dataclass
 class LiveAlert:
-    """Real-time protection alert"""
+    """
+Real-time protection alert"""
     alert_id: str
     user_id: int
     content_type: str
@@ -121,7 +127,8 @@ class RealTimeVectorStreaming:
     """
     
     def __init__(self):
-        """Initialize real-time streaming system"""
+        """
+Initialize real-time streaming system"""
         self.config = {}
         self.active_streams: Dict[str, StreamingConfig] = {}
         self.stream_buffers: Dict[str, List[StreamChunk]] = {}

@@ -5,8 +5,9 @@ Universal connector management system for integrating with various
 data sources, APIs, databases, and external services.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
@@ -27,7 +28,9 @@ settings = get_settings()
 
 
 class ConnectorType(str, Enum):
-    """Connector type enumeration"""
+    """
+Connector type enumeration"""
+
     DATABASE = "database"
     API = "api"
     MESSAGE_QUEUE = "message_queue"
@@ -40,6 +43,7 @@ class ConnectorType(str, Enum):
 
 class ConnectionStatus(str, Enum):
     """Connection status enumeration"""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
@@ -49,6 +53,7 @@ class ConnectionStatus(str, Enum):
 
 class DataFormat(str, Enum):
     """Data format types"""
+
     JSON = "json"
     XML = "xml"
     CSV = "csv"
@@ -75,7 +80,8 @@ class ConnectorConfig:
 
 
 class ConnectionMetrics(BaseModel):
-    """Connection performance metrics"""
+    """
+Connection performance metrics"""
     total_requests: int = Field(default=0, description="Total requests made")
     successful_requests: int = Field(default=0, description="Successful requests")
     failed_requests: int = Field(default=0, description="Failed requests")
@@ -98,39 +104,47 @@ class BaseConnector(ABC):
         
     @abstractmethod
     async def connect(self) -> bool:
-        """Establish connection"""
+        """
+Establish connection"""
         pass
         
     @abstractmethod
     async def disconnect(self) -> bool:
-        """Close connection"""
+        """
+Close connection"""
         pass
         
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check connection health"""
+        """
+Check connection health"""
         pass
         
     @abstractmethod
     async def send_data(self, data: Any, **kwargs) -> bool:
-        """Send data through connector"""
+        """
+Send data through connector"""
         pass
         
     @abstractmethod
     async def receive_data(self, **kwargs) -> Optional[Any]:
-        """Receive data through connector"""
+        """
+Receive data through connector"""
         pass
         
     async def get_status(self) -> ConnectionStatus:
-        """Get connection status"""
+        """
+Get connection status"""
         return self.status
         
     async def get_metrics(self) -> ConnectionMetrics:
-        """Get performance metrics"""
+        """
+Get performance metrics"""
         return self.metrics
         
     def _update_metrics(self, success: bool, response_time: float = 0, data_size: int = 0):
-        """Update connection metrics"""
+        """
+Update connection metrics"""
         self.metrics.total_requests += 1
         
         if success:
@@ -158,7 +172,8 @@ class BaseConnector(ABC):
 
 
 class DatabaseConnector(BaseConnector):
-    """Database connector implementation"""
+    """
+Database connector implementation"""
     
     async def connect(self) -> bool:
         try:
@@ -466,7 +481,8 @@ class StreamConnector:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream connector manager"""
+        """
+Initialize stream connector manager"""
         try:
             # Start health check task
             asyncio.create_task(self._health_check_loop())
@@ -615,13 +631,15 @@ class StreamConnector:
         return None
         
     async def get_connector_metrics(self, connector_id: str) -> Optional[ConnectionMetrics]:
-        """Get connector performance metrics"""
+        """
+Get connector performance metrics"""
         if connector_id in self.connectors:
             return await self.connectors[connector_id].get_metrics()
         return None
         
     async def list_connectors(self) -> List[Dict[str, Any]]:
-        """List all registered connectors"""
+        """
+List all registered connectors"""
         connectors = []
         
         for connector_id, connector in self.connectors.items():

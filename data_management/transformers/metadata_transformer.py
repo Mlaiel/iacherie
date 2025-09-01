@@ -5,13 +5,14 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
 de ce code ou de cette technologie est strictement interdite et sera
 poursuivie selon les lois allemandes et internationales.
 """
+
 import asyncio
 import logging
 import time
@@ -46,7 +47,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class MetadataStandard(Enum):
-    """Standards de métadonnées supportés"""
+    """
+Standards de métadonnées supportés"""
+
     DUBLIN_CORE = "dublin_core"
     ID3V2 = "id3v2"
     EXIF = "exif"
@@ -99,6 +102,7 @@ class MetadataField(Enum):
 
 class EnrichmentType(Enum):
     """Types d'enrichissement de métadonnées"""
+
     AI_TAGGING = "ai_tagging"
     GEO_ENRICHMENT = "geo_enrichment"
     CONTENT_ANALYSIS = "content_analysis"
@@ -123,14 +127,16 @@ class MetadataProcessingResult:
     errors: List[str]
 
 class MetadataExtractor:
-    """Extracteur de métadonnées multi-format pour créateurs de contenu"""
+    """
+Extracteur de métadonnées multi-format pour créateurs de contenu"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
     
     def extract_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait toutes les métadonnées disponibles d'un fichier"""
+        """
+Extrait toutes les métadonnées disponibles d'un fichier"""
         
         try:
             file_path_obj = Path(file_path)
@@ -178,7 +184,8 @@ class MetadataExtractor:
         }
     
     def _extract_image_metadata(self, image_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées d'image (EXIF, IPTC, XMP)"""
+        """
+Extrait les métadonnées d'image (EXIF, IPTC, XMP)"""
         
         metadata = {}
         
@@ -236,7 +243,8 @@ class MetadataExtractor:
                 return None
             
             def convert_to_degrees(value):
-                """Convertit les coordonnées GPS en degrés décimaux"""
+                """
+Convertit les coordonnées GPS en degrés décimaux"""
                 d, m, s = value
                 return d + (m / 60.0) + (s / 3600.0)
             
@@ -263,7 +271,8 @@ class MetadataExtractor:
             return None
     
     def _extract_audio_metadata(self, audio_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées audio (ID3, Vorbis, etc.)"""
+        """
+Extrait les métadonnées audio (ID3, Vorbis, etc.)"""
         
         metadata = {}
         
@@ -323,7 +332,8 @@ class MetadataExtractor:
                     break
     
     def _extract_video_metadata(self, video_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées vidéo"""
+        """
+Extrait les métadonnées vidéo"""
         
         metadata = {}
         
@@ -463,7 +473,8 @@ class MetadataEnricher:
         metadata: Dict[str, Any],
         enrichment_types: List[EnrichmentType]
     ) -> Dict[str, Any]:
-        """Enrichit les métadonnées avec des analyses IA"""
+        """
+Enrichit les métadonnées avec des analyses IA"""
         
         enriched_metadata = metadata.copy()
         enrichment_results = []
@@ -698,7 +709,8 @@ class MetadataEnricher:
             return 'low'
     
     def _analyze_audio_content(self, audio_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse spécialisée audio"""
+        """
+Analyse spécialisée audio"""
         
         analysis = {}
         
@@ -1022,7 +1034,8 @@ class MetadataNormalizer:
         metadata: Dict[str, Any],
         target_standard: MetadataStandard
     ) -> Dict[str, Any]:
-        """Normalise les métadonnées vers un standard spécifique"""
+        """
+Normalise les métadonnées vers un standard spécifique"""
         
         try:
             if target_standard == MetadataStandard.DUBLIN_CORE:
@@ -1075,7 +1088,8 @@ class MetadataNormalizer:
         return dublin_core
     
     def _normalize_to_id3v2(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalise vers ID3v2 pour audio"""
+        """
+Normalise vers ID3v2 pour audio"""
         
         id3_mapping = {
             'TIT2': ['title', 'filename'],  # Title
@@ -1102,7 +1116,8 @@ class MetadataNormalizer:
         return id3_metadata
     
     def _normalize_to_exif(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalise vers EXIF pour images"""
+        """
+Normalise vers EXIF pour images"""
         
         exif_mapping = {
             'DateTime': ['date_created', 'creation_time'],
@@ -1125,7 +1140,8 @@ class MetadataNormalizer:
         return exif_metadata
 
 class MetadataTransformer:
-    """Transformateur de métadonnées principal pour créateurs de contenu"""
+    """
+Transformateur de métadonnées principal pour créateurs de contenu"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -1140,7 +1156,8 @@ class MetadataTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de métadonnées selon configuration"""
+        """
+Transformation de métadonnées selon configuration"""
         
         start_time = time.time()
         operations = []
@@ -1287,7 +1304,8 @@ class MetadataTransformer:
                 json.dump(metadata, f, indent=2, ensure_ascii=False, default=str)
     
     def _save_as_xml(self, metadata: Dict[str, Any], output_path: str) -> None:
-        """Sauvegarde en format XML"""
+        """
+Sauvegarde en format XML"""
         
         def dict_to_xml(tag, d):
             elem = ET.Element(tag)
@@ -1313,7 +1331,8 @@ class MetadataTransformer:
         tree.write(output_path, encoding='utf-8', xml_declaration=True)
     
     def _save_as_csv(self, metadata: Dict[str, Any], output_path: str) -> None:
-        """Sauvegarde en format CSV (aplati)"""
+        """
+Sauvegarde en format CSV (aplati)"""
         
         import csv
         
@@ -1362,7 +1381,8 @@ class AsyncMetadataTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de métadonnées asynchrone"""
+        """
+Transformation de métadonnées asynchrone"""
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
@@ -1378,7 +1398,8 @@ class AsyncMetadataTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 8  # Plus de concurrence pour métadonnées
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""
+        """
+Transformation en lot asynchrone"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         

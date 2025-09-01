@@ -21,6 +21,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -46,7 +47,9 @@ logger = get_logger(__name__)
 
 
 class RiskCategory(str, Enum):
-    """Comprehensive risk assessment categories with industry standards."""
+    """
+Comprehensive risk assessment categories with industry standards."""
+
     PIRACY = "piracy"
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
@@ -66,6 +69,7 @@ class RiskCategory(str, Enum):
 
 class ThreatSeverity(str, Enum):
     """Threat severity levels with quantified impact ranges."""
+
     INFORMATIONAL = "informational"    # 0-10% impact
     LOW = "low"                       # 11-25% impact
     MEDIUM = "medium"                 # 26-50% impact
@@ -75,6 +79,7 @@ class ThreatSeverity(str, Enum):
 
 class RiskTimeframe(str, Enum):
     """Risk materialization timeframes."""
+
     IMMEDIATE = "immediate"           # 0-24 hours
     SHORT_TERM = "short_term"        # 1-7 days
     MEDIUM_TERM = "medium_term"      # 1-4 weeks
@@ -84,6 +89,7 @@ class RiskTimeframe(str, Enum):
 
 class MarketSegment(str, Enum):
     """Market segments for risk analysis."""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_CONTENT = "video_content"
     SOCIAL_MEDIA = "social_media"
@@ -134,7 +140,8 @@ class RiskFactor:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data with source attribution."""
+    """
+Threat intelligence data with source attribution."""
     threat_id: str
     source: str
     reliability_score: float
@@ -150,7 +157,8 @@ class ThreatIntelligence:
 
 @dataclass
 class MarketRiskProfile:
-    """Market risk profile for content sector."""
+    """
+Market risk profile for content sector."""
     segment: MarketSegment
     volatility_score: float
     growth_trend: float
@@ -164,7 +172,8 @@ class MarketRiskProfile:
 
 @dataclass
 class RiskAssessment:
-    """Comprehensive enterprise-grade risk assessment result."""
+    """
+Comprehensive enterprise-grade risk assessment result."""
     content_id: str
     user_id: str
     assessment_id: str
@@ -205,7 +214,8 @@ class RiskAnalyzer:
     - Performance optimization and scalability features
     """
     def __init__(self):
-        """Initialize the Risk Analyzer with enterprise components."""
+        """
+Initialize the Risk Analyzer with enterprise components."""
         self.ai_models = AIModelManager()
         self.metrics_collector = MetricsCollector()
         
@@ -385,7 +395,8 @@ class RiskAnalyzer:
         content_metadata: Dict[str, Any],
         assessment_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute standard risk analysis optimized for speed and accuracy balance."""
+        """
+Execute standard risk analysis optimized for speed and accuracy balance."""
         
         analysis_tasks = [
             self._quick_vulnerability_scan(content_metadata),
@@ -408,7 +419,8 @@ class RiskAnalyzer:
         content_metadata: Dict[str, Any],
         assessment_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute basic risk analysis optimized for speed."""
+        """
+Execute basic risk analysis optimized for speed."""
         
         # Basic analysis for quick assessment
         basic_risk_score = await self._calculate_basic_risk_score(content_metadata)
@@ -419,7 +431,8 @@ class RiskAnalyzer:
         }
 
     async def _analyze_content_vulnerabilities(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content-specific vulnerabilities using AI models."""
+        """
+Analyze content-specific vulnerabilities using AI models."""
         try:
             vulnerabilities = {}
             
@@ -568,7 +581,8 @@ class RiskAnalyzer:
         }
 
     async def _perform_market_risk_analysis(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive market risk analysis."""
+        """
+Perform comprehensive market risk analysis."""
         return {
             'market_volatility': 0.4,
             'sector_stability': 0.8,
@@ -576,28 +590,34 @@ class RiskAnalyzer:
         }
 
     async def _gather_threat_intelligence(self, content_metadata: Dict[str, Any]) -> List[ThreatIntelligence]:
-        """Gather and process threat intelligence data."""
+        """
+Gather and process threat intelligence data."""
         return []
 
     # Quick analysis methods for standard/basic modes
     async def _quick_vulnerability_scan(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Quick vulnerability scan for standard analysis."""
+        """
+Quick vulnerability scan for standard analysis."""
         return {'vulnerability_score': 0.5, 'major_vulnerabilities': []}
 
     async def _basic_platform_risk_check(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Basic platform risk check for standard analysis."""
+        """
+Basic platform risk check for standard analysis."""
         return {'platform_risk_score': 0.4}
 
     async def _standard_financial_assessment(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Standard financial risk assessment."""
+        """
+Standard financial risk assessment."""
         return {'financial_risk_score': 0.3}
 
     async def _basic_anomaly_detection(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Basic anomaly detection for standard analysis."""
+        """
+Basic anomaly detection for standard analysis."""
         return {'anomaly_detected': False}
 
     async def _calculate_basic_risk_score(self, content_metadata: Dict[str, Any]) -> float:
-        """Calculate basic risk score for quick analysis."""
+        """
+Calculate basic risk score for quick analysis."""
         # Simplified risk calculation
         base_risk = 0.5
         
@@ -613,7 +633,8 @@ class RiskAnalyzer:
         return min(base_risk, 1.0)
 
     async def _identify_basic_risk_factors(self, content_metadata: Dict[str, Any]) -> List[str]:
-        """Identify basic risk factors for quick analysis."""
+        """
+Identify basic risk factors for quick analysis."""
         factors = []
         
         if content_metadata.get('public', True):
@@ -750,7 +771,8 @@ class RiskAnalyzer:
         analysis_results: Dict[str, Any], 
         content_metadata: Dict[str, Any]
     ) -> List[RiskFactor]:
-        """Compile identified risk factors from all analysis components."""
+        """
+Compile identified risk factors from all analysis components."""
         
         risk_factors = []
         
@@ -794,7 +816,8 @@ class RiskAnalyzer:
             return ThreatSeverity.CRITICAL
 
     async def _update_performance_metrics(self, processing_time: float, success: bool) -> None:
-        """Update internal performance metrics."""
+        """
+Update internal performance metrics."""
         try:
             self.performance_metrics['assessments_completed'] += 1
             
@@ -825,7 +848,8 @@ class RiskAnalyzer:
         }
 
     def _initialize_threat_sources(self) -> List[str]:
-        """Initialize threat intelligence sources."""
+        """
+Initialize threat intelligence sources."""
         return [
             "internal_monitoring",
             "platform_apis",
@@ -840,36 +864,44 @@ class RiskAnalyzer:
         return {'audio_fingerprint_risk': 0.4, 'remix_vulnerability': 0.6}
 
     async def _analyze_video_vulnerabilities(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video-specific vulnerabilities."""
+        """
+Analyze video-specific vulnerabilities."""
         return {'deepfake_risk': 0.3, 'clip_extraction_risk': 0.5}
 
     async def _analyze_image_vulnerabilities(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image-specific vulnerabilities."""
+        """
+Analyze image-specific vulnerabilities."""
         return {'reverse_search_risk': 0.5, 'manipulation_risk': 0.4}
 
     async def _analyze_text_vulnerabilities(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze text-specific vulnerabilities."""
+        """
+Analyze text-specific vulnerabilities."""
         return {'plagiarism_risk': 0.6, 'unauthorized_use_risk': 0.7}
 
     # Additional placeholder methods for comprehensive analysis
     async def _check_metadata_exposure(self, content_metadata: Dict[str, Any]) -> float:
-        """Check for metadata exposure risks."""
+        """
+Check for metadata exposure risks."""
         return 0.3
 
     async def _assess_copyright_clarity(self, content_metadata: Dict[str, Any]) -> float:
-        """Assess clarity of copyright information."""
+        """
+Assess clarity of copyright information."""
         return 0.8 if content_metadata.get('copyright_notice') else 0.3
 
     async def _check_attribution_completeness(self, content_metadata: Dict[str, Any]) -> float:
-        """Check completeness of attribution information."""
+        """
+Check completeness of attribution information."""
         return 0.7
 
     async def _identify_licensing_gaps(self, content_metadata: Dict[str, Any]) -> float:
-        """Identify gaps in licensing coverage."""
+        """
+Identify gaps in licensing coverage."""
         return 0.4
 
     async def _extract_anomaly_features(self, content_metadata: Dict[str, Any]) -> List[float]:
-        """Extract features for anomaly detection."""
+        """
+Extract features for anomaly detection."""
         return [
             content_metadata.get('view_count', 0) / 10000,
             content_metadata.get('engagement_rate', 0.0),
@@ -880,27 +912,32 @@ class RiskAnalyzer:
 
     # Additional placeholder methods...
     async def _assess_algorithm_risk(self, platform: str) -> float:
-        """Assess algorithm volatility risk for platform."""
+        """
+Assess algorithm volatility risk for platform."""
         return 0.5
 
     async def _assess_policy_stability(self, platform: str) -> float:
-        """Assess policy change risk for platform."""
+        """
+Assess policy change risk for platform."""
         return 0.3
 
     async def _assess_monetization_changes(self, platform: str) -> float:
-        """Assess monetization policy change risk."""
+        """
+Assess monetization policy change risk."""
         return 0.4
 
     # [Additional methods would continue here...]
 
 
 class RiskAnalysisError(Exception):
-    """Risk analysis specific error."""
+    """
+Risk analysis specific error."""
     pass
 
 
 def create_risk_analyzer() -> RiskAnalyzer:
-    """Factory function to create risk analyzer instance."""
+    """
+Factory function to create risk analyzer instance."""
     return RiskAnalyzer()
 
 

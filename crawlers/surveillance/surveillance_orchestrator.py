@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Central surveillance orchestrator for coordinating all surveillance activities.
 Provides unified management, coordination, and control of all surveillance modules.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union, Callable
@@ -35,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceStatus(Enum):
-    """Surveillance system status."""
+    """
+Surveillance system status."""
+
     STOPPED = "stopped"
     STARTING = "starting"
     RUNNING = "running"
@@ -46,6 +49,7 @@ class SurveillanceStatus(Enum):
 
 class ModuleStatus(Enum):
     """Individual module status."""
+
     INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
@@ -68,7 +72,8 @@ class SurveillanceTarget:
 
 @dataclass
 class SurveillancePolicy:
-    """Surveillance policy configuration."""
+    """
+Surveillance policy configuration."""
     policy_id: str
     name: str
     description: str
@@ -83,7 +88,8 @@ class SurveillancePolicy:
 
 @dataclass
 class SurveillanceMetrics:
-    """Overall surveillance system metrics."""
+    """
+Overall surveillance system metrics."""
     total_targets: int = 0
     active_targets: int = 0
     total_violations: int = 0
@@ -98,7 +104,8 @@ class SurveillanceMetrics:
 
 @dataclass
 class ModuleState:
-    """Module state tracking."""
+    """
+Module state tracking."""
     module_name: str
     status: ModuleStatus
     instance: Optional[Any] = None
@@ -124,7 +131,8 @@ class SurveillanceOrchestrator:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize surveillance orchestrator."""
+        """
+Initialize surveillance orchestrator."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -662,12 +670,14 @@ class SurveillanceOrchestrator:
             self.metrics.performance_score = 0.0
     
     def _update_module_metrics(self) -> None:
-        """Update module metrics."""
+        """
+Update module metrics."""
         self.metrics.modules_active = len([m for m in self.modules.values() if m.status == ModuleStatus.ACTIVE])
         self.metrics.modules_total = len(self.modules)
     
     async def _process_messages(self) -> None:
-        """Process inter-module messages."""
+        """
+Process inter-module messages."""
         try:
             while not self.message_queue.empty():
                 try:
@@ -901,11 +911,13 @@ class SurveillanceOrchestrator:
         self.violation_handlers.append(handler)
     
     def add_status_change_handler(self, handler: Callable) -> None:
-        """Add status change handler."""
+        """
+Add status change handler."""
         self.status_change_handlers.append(handler)
     
     def get_orchestrator_status(self) -> Dict[str, Any]:
-        """Get orchestrator status."""
+        """
+Get orchestrator status."""
         return {
             'status': self.status.value,
             'enabled': self.enabled,
@@ -941,7 +953,8 @@ class SurveillanceOrchestrator:
         }
     
     def get_module_status(self, module_name: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific module."""
+        """
+Get status of a specific module."""
         if module_name not in self.modules:
             return None
         
@@ -957,7 +970,8 @@ class SurveillanceOrchestrator:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the surveillance orchestrator."""
+        """
+Shutdown the surveillance orchestrator."""
         try:
             self._logger.info("Shutting down surveillance orchestrator...")
             

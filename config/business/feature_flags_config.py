@@ -13,6 +13,7 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
 from dataclasses import dataclass
@@ -21,7 +22,9 @@ import uuid
 
 
 class FeatureState(str, Enum):
-    """Feature flag states."""
+    """
+Feature flag states."""
+
     DISABLED = "disabled"
     ENABLED = "enabled"
     TESTING = "testing"
@@ -32,6 +35,7 @@ class FeatureState(str, Enum):
 
 class RolloutStrategy(str, Enum):
     """Rollout strategies for feature flags."""
+
     PERCENTAGE = "percentage"
     WHITELIST = "whitelist"
     TENANT_BASED = "tenant_based"
@@ -43,6 +47,7 @@ class RolloutStrategy(str, Enum):
 
 class FeatureCategory(str, Enum):
     """Categories for feature organization."""
+
     CORE_FUNCTIONALITY = "core_functionality"
     AI_FEATURES = "ai_features"
     CONTENT_PROTECTION = "content_protection"
@@ -58,6 +63,7 @@ class FeatureCategory(str, Enum):
 
 class FeatureEnvironment(str, Enum):
     """Environment types for feature flags."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -103,7 +109,8 @@ class ABTestConfig:
 
 
 class FeatureFlagsConfig:
-    """Enterprise feature flags management configuration."""
+    """
+Enterprise feature flags management configuration."""
     # Core feature flags
     CORE_FEATURES = {
         "ai_fingerprinting": FeatureFlag(
@@ -461,7 +468,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def is_feature_enabled(cls, feature_key: str, user_context: Dict[str, Any]) -> bool:
-        """Check if a feature is enabled for a specific user context."""
+        """
+Check if a feature is enabled for a specific user context."""
         all_features = cls.get_all_features()
         feature = all_features.get(feature_key)
         
@@ -492,7 +500,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def _evaluate_rollout_strategy(cls, feature: FeatureFlag, user_context: Dict[str, Any]) -> bool:
-        """Evaluate if feature should be enabled based on rollout strategy."""
+        """
+Evaluate if feature should be enabled based on rollout strategy."""
         if feature.rollout_strategy == RolloutStrategy.PERCENTAGE:
             # Simple percentage-based rollout (would use consistent hashing in real implementation)
             user_id = user_context.get("user_id", "")
@@ -531,7 +540,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def get_active_features(cls, user_context: Dict[str, Any]) -> List[str]:
-        """Get list of active feature keys for a user."""
+        """
+Get list of active feature keys for a user."""
         all_features = cls.get_all_features()
         active_features = []
         
@@ -543,7 +553,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def get_ab_test_config(cls, test_id: str) -> Optional[ABTestConfig]:
-        """Get A/B test configuration by test ID."""
+        """
+Get A/B test configuration by test ID."""
         for test_key, test_config in cls.AB_TESTS.items():
             if test_config.test_id == test_id:
                 return test_config
@@ -551,7 +562,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def validate_feature_rollout(cls, feature: FeatureFlag) -> Tuple[bool, List[str]]:
-        """Validate feature configuration before rollout."""
+        """
+Validate feature configuration before rollout."""
         errors = []
         
         # Validate rollout percentage
@@ -611,7 +623,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def _log_emergency_action(cls, feature_key: str, reason: str, actor: str) -> None:
-        """Log emergency feature actions for audit purposes."""
+        """
+Log emergency feature actions for audit purposes."""
         # This would integrate with logging/audit system
         log_entry = {
             "timestamp": datetime.utcnow().isoformat(),

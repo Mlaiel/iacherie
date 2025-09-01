@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -26,7 +27,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class CrisisType(Enum):
-    """Types of crisis situations"""
+    """
+Types of crisis situations"""
+
     REPUTATION_DAMAGE = "reputation_damage"
     CONTENT_CONTROVERSY = "content_controversy"
     PLATFORM_VIOLATION = "platform_violation"
@@ -38,6 +41,7 @@ class CrisisType(Enum):
 
 class CrisisSeverity(Enum):
     """Crisis severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -46,6 +50,7 @@ class CrisisSeverity(Enum):
 
 class ResponseStrategy(Enum):
     """Crisis response strategies"""
+
     ACKNOWLEDGE_APOLOGIZE = "acknowledge_apologize"
     CLARIFY_EDUCATE = "clarify_educate"
     REDIRECT_FOCUS = "redirect_focus"
@@ -72,7 +77,8 @@ class CrisisEvent:
 
 @dataclass
 class CrisisResponse:
-    """Crisis response plan"""
+    """
+Crisis response plan"""
     crisis_id: str
     strategy: ResponseStrategy
     immediate_actions: List[str]
@@ -84,7 +90,8 @@ class CrisisResponse:
     
 @dataclass
 class ResponseAction:
-    """Individual response action"""
+    """
+Individual response action"""
     action_id: str
     action_type: str
     description: str
@@ -94,7 +101,8 @@ class ResponseAction:
     result: Optional[str] = None
 
 class CrisisManagerAgent(BaseAIAgent):
-    """AI agent for crisis management and reputation protection"""
+    """
+AI agent for crisis management and reputation protection"""
     
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
@@ -255,7 +263,8 @@ class CrisisManagerAgent(BaseAIAgent):
             return ResponseStrategy.COMMUNITY_ENGAGEMENT
     
     async def _generate_immediate_actions(self, crisis: CrisisEvent, strategy: ResponseStrategy) -> List[str]:
-        """Generate list of immediate actions to take"""
+        """
+Generate list of immediate actions to take"""
         actions = []
         
         if strategy == ResponseStrategy.ACKNOWLEDGE_APOLOGIZE:

@@ -5,7 +5,7 @@ This module provides deployment infrastructure for comprehensive revenue
 tracking, analytics, and automated payment processing systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This code is the exclusive property of Fahed Mlaiel.
@@ -13,6 +13,7 @@ Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueTrackingPlatform(Enum):
-    """Supported revenue tracking platforms"""
+    """
+Supported revenue tracking platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -47,6 +50,7 @@ class RevenueTrackingPlatform(Enum):
 
 class PaymentProvider(Enum):
     """Payment processing providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -58,6 +62,7 @@ class PaymentProvider(Enum):
 
 class RevenueCalculationMethod(Enum):
     """Revenue calculation methods"""
+
     VIEWS_BASED = "views_based"
     ENGAGEMENT_BASED = "engagement_based"
     LICENSING_FLAT = "licensing_flat"
@@ -69,6 +74,7 @@ class RevenueCalculationMethod(Enum):
 
 class CurrencyType(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"

@@ -4,6 +4,7 @@ Handles all payment processing, validation, and gateway integrations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods."""
+    """
+Supported payment methods."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
@@ -35,6 +38,7 @@ class PaymentMethod(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     AUTHORIZED = "authorized"
@@ -49,6 +53,7 @@ class PaymentStatus(Enum):
 
 class GatewayType(Enum):
     """Payment gateway types."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     SQUARE = "square"
@@ -131,27 +136,32 @@ class PaymentGateway(ABC):
     
     @abstractmethod
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Process a payment request."""
+        """
+Process a payment request."""
         pass
     
     @abstractmethod
     async def verify_payment(self, transaction_id: str) -> PaymentResponse:
-        """Verify payment status."""
+        """
+Verify payment status."""
         pass
     
     @abstractmethod
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentResponse:
-        """Process payment refund."""
+        """
+Process payment refund."""
         pass
     
     @abstractmethod
     async def validate_webhook(self, payload: str, signature: str) -> bool:
-        """Validate webhook signature."""
+        """
+Validate webhook signature."""
         pass
 
 
 class StripeGateway(PaymentGateway):
-    """Stripe payment gateway implementation."""
+    """
+Stripe payment gateway implementation."""
     
     def __init__(self, api_key: str, webhook_secret: str):
         self.api_key = api_key
@@ -491,7 +501,8 @@ class PaymentGatewayManager:
         return next(iter(self.gateways.values())) if self.gateways else None
     
     async def _detect_fraud(self, request: PaymentRequest) -> float:
-        """Simple fraud detection algorithm."""
+        """
+Simple fraud detection algorithm."""
         fraud_score = 0.0
         
         # Check amount threshold

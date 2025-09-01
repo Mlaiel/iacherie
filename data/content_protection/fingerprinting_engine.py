@@ -5,7 +5,7 @@ Industrial-grade multi-format content fingerprinting system for audio, video, im
 Provides AI-powered similarity detection and vector-based matching capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
@@ -13,6 +13,7 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 import asyncio
 import logging
 import hashlib
@@ -59,7 +60,9 @@ from redis import Redis
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
+    """
+Content type enumeration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -69,6 +72,7 @@ class ContentType(Enum):
 
 class FingerprintMethod(Enum):
     """Fingerprinting method enumeration"""
+
     SPECTRAL_HASH = "spectral_hash"
     CHROMAPRINT = "chromaprint"
     MFCC_FEATURES = "mfcc_features"
@@ -96,7 +100,8 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Content similarity match result"""
+    """
+Content similarity match result"""
     match_id: str
     query_fingerprint_id: str
     matched_fingerprint_id: str
@@ -110,7 +115,8 @@ class SimilarityMatch:
 
 @dataclass
 class FingerprintConfig:
-    """Fingerprinting configuration"""
+    """
+Fingerprinting configuration"""
     content_type: ContentType
     methods: List[FingerprintMethod]
     quality_threshold: float
@@ -170,7 +176,8 @@ class FingerprintingEngine:
         self.text_embedding_dim = 768
     
     def _initialize_models(self):
-        """Initialize ML models for fingerprinting"""
+        """
+Initialize ML models for fingerprinting"""
         try:
             # Initialize text models
             self.text_tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -766,7 +773,8 @@ class FingerprintingEngine:
         )
     
     async def _store_fingerprint(self, fingerprint: FingerprintResult):
-        """Store fingerprint in database"""
+        """
+Store fingerprint in database"""
         try:
             # Implementation would store in database
             pass

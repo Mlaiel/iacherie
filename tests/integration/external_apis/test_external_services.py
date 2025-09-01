@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""External APIs Integration Tests
+"""
+External APIs Integration Tests
 
 Tests for external service integrations including payment processors,
 platform APIs, AI services, and notification systems.
@@ -20,6 +22,7 @@ platform APIs, AI services, and notification systems.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -48,13 +51,15 @@ class MockExternalService:
         self.last_request = None
     
     def reset_mock(self):
-        """Reset mock state."""
+        """
+Reset mock state."""
         self.call_count = 0
         self.last_request = None
 
 
 class MockStripeAPI(MockExternalService):
-    """Mock Stripe API for payment processing tests."""
+    """
+Mock Stripe API for payment processing tests."""
     
     def __init__(self):
         super().__init__("stripe")
@@ -257,12 +262,14 @@ def reset_mocks():
 
 
 class TestPaymentProcessorIntegration:
-    """Test payment processor integrations (Stripe, PayPal)."""
+    """
+Test payment processor integrations (Stripe, PayPal)."""
     
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_stripe_payment_intent_creation(self):
-        """Test Stripe payment intent creation."""
+        """
+Test Stripe payment intent creation."""
         # Mock payment data
         payment_data = {
             "amount": 99.99,
@@ -337,7 +344,8 @@ class TestPlatformAPIIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_spotify_authentication(self):
-        """Test Spotify API authentication."""
+        """
+Test Spotify API authentication."""
         auth_result = await mock_spotify.authenticate()
         
         assert "access_token" in auth_result
@@ -458,7 +466,8 @@ class TestAIServiceIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_openai_text_embedding(self):
-        """Test OpenAI text embedding generation."""
+        """
+Test OpenAI text embedding generation."""
         test_text = "This is a test song with beautiful melody and rhythm"
         
         embedding_result = await mock_openai.create_embedding(test_text)
@@ -533,7 +542,8 @@ class TestNotificationServiceIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_email_notification_service(self):
-        """Test email notification service integration."""
+        """
+Test email notification service integration."""
         # Mock email service
         class MockEmailService:
             def __init__(self):
@@ -612,7 +622,8 @@ class TestCrossServiceIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_detection_workflow(self):
-        """Test complete content detection workflow across services."""
+        """
+Test complete content detection workflow across services."""
         # 1. Search for content on multiple platforms
         search_query = "test artist original song"
         
@@ -687,7 +698,8 @@ class TestServiceErrorHandling:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_service_timeout_handling(self):
-        """Test handling of service timeouts."""
+        """
+Test handling of service timeouts."""
         # Mock timeout scenario
         async def timeout_operation():
             await asyncio.sleep(0.1)  # Simulate delay

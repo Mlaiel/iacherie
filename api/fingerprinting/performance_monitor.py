@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Advanced performance monitoring and metrics collection for fingerprinting system
 """
+
 import time
 import asyncio
 import logging
@@ -24,14 +25,16 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point"""
+    """
+Individual metric data point"""
     timestamp: datetime
     value: float
     labels: Dict[str, str] = field(default_factory=dict)
 
 @dataclass
 class PerformanceStats:
-    """Performance statistics container"""
+    """
+Performance statistics container"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -48,7 +51,8 @@ class MetricsCollector:
     """
     
     def __init__(self, max_history: int = 10000):
-        """Initialize metrics collector"""
+        """
+Initialize metrics collector"""
         self.max_history = max_history
         self.metrics = defaultdict(lambda: deque(maxlen=max_history))
         self.counters = defaultdict(int)
@@ -77,7 +81,8 @@ class MetricsCollector:
             self.metrics[name].append(metric_point)
     
     def record_gauge(self, name: str, value: float, labels: Optional[Dict[str, str]] = None):
-        """Record gauge metric"""
+        """
+Record gauge metric"""
         with self.lock:
             self.gauges[name] = value
             
@@ -89,7 +94,8 @@ class MetricsCollector:
             self.metrics[name].append(metric_point)
     
     def record_histogram(self, name: str, value: float, labels: Optional[Dict[str, str]] = None):
-        """Record histogram metric"""
+        """
+Record histogram metric"""
         with self.lock:
             self.histograms[name].append(value)
             
@@ -101,7 +107,8 @@ class MetricsCollector:
             self.metrics[name].append(metric_point)
     
     def start_timer(self, name: str) -> str:
-        """Start a named timer"""
+        """
+Start a named timer"""
         timer_id = f"{name}_{int(time.time() * 1000000)}"
         self.timers[timer_id] = time.time()
         return timer_id
@@ -119,7 +126,8 @@ class MetricsCollector:
         return 0.0
     
     def record_request(self, duration: float, success: bool = True):
-        """Record request performance metrics"""
+        """
+Record request performance metrics"""
         with self.lock:
             current_time = datetime.now(timezone.utc)
             
@@ -157,17 +165,20 @@ class MetricsCollector:
                 )
     
     def get_counter(self, name: str) -> int:
-        """Get counter value"""
+        """
+Get counter value"""
         with self.lock:
             return self.counters.get(name, 0)
     
     def get_gauge(self, name: str) -> float:
-        """Get gauge value"""
+        """
+Get gauge value"""
         with self.lock:
             return self.gauges.get(name, 0.0)
     
     def get_histogram_stats(self, name: str) -> Dict[str, float]:
-        """Get histogram statistics"""
+        """
+Get histogram statistics"""
         with self.lock:
             values = self.histograms.get(name, [])
             if not values:
@@ -187,12 +198,14 @@ class MetricsCollector:
             }
     
     def get_performance_stats(self) -> PerformanceStats:
-        """Get current performance statistics"""
+        """
+Get current performance statistics"""
         with self.lock:
             return self.performance_stats
     
     def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all collected metrics"""
+        """
+Get all collected metrics"""
         with self.lock:
             return {
                 'counters': dict(self.counters),
@@ -203,7 +216,8 @@ class MetricsCollector:
             }
     
     def reset_metrics(self):
-        """Reset all metrics"""
+        """
+Reset all metrics"""
         with self.lock:
             self.metrics.clear()
             self.counters.clear()
@@ -223,7 +237,8 @@ class PerformanceMonitor:
     """
     
     def __init__(self, metrics_collector: Optional[MetricsCollector] = None):
-        """Initialize performance monitor"""
+        """
+Initialize performance monitor"""
         self.metrics = metrics_collector or MetricsCollector()
         self.monitoring_active = False
         self.monitoring_task = None
@@ -244,7 +259,8 @@ class PerformanceMonitor:
         self.alert_callbacks.append(callback)
     
     async def start_monitoring(self, interval: int = 30):
-        """Start continuous performance monitoring"""
+        """
+Start continuous performance monitoring"""
         if self.monitoring_active:
             return
         
@@ -446,14 +462,16 @@ def get_global_metrics() -> MetricsCollector:
     return _global_metrics
 
 def get_global_monitor() -> PerformanceMonitor:
-    """Get global performance monitor instance"""
+    """
+Get global performance monitor instance"""
     global _global_monitor
     if _global_monitor is None:
         _global_monitor = PerformanceMonitor(get_global_metrics())
     return _global_monitor
 
 def performance_timer(metric_name: str, labels: Optional[Dict[str, str]] = None):
-    """Decorator for timing function execution"""
+    """
+Decorator for timing function execution"""
     def decorator(func):
         if asyncio.iscoroutinefunction(func):
             async def async_wrapper(*args, **kwargs):

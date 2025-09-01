@@ -7,6 +7,7 @@ analysis, and feature extraction capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import re
 import string
 import logging
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextStatistics:
-    """Text statistics and metrics"""
+    """
+Text statistics and metrics"""
     character_count: int = 0
     word_count: int = 0
     sentence_count: int = 0
@@ -59,7 +61,8 @@ class TextStatistics:
 
 @dataclass
 class TextFeatures:
-    """Extracted text features"""
+    """
+Extracted text features"""
     tokens: List[str] = field(default_factory=list)
     sentences: List[str] = field(default_factory=list)
     words: List[str] = field(default_factory=list)
@@ -75,7 +78,8 @@ class TextFeatures:
 
 @dataclass
 class TextAnalysisResult:
-    """Complete text analysis result"""
+    """
+Complete text analysis result"""
     text: str
     cleaned_text: str
     language: Optional[str] = None
@@ -92,7 +96,8 @@ class TextAnalyzer:
     """
     
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Text Analyzer"""
+        """
+Initialize Text Analyzer"""
         self.config = config or default_config
         self.executor = ThreadPoolExecutor(max_workers=self.config.performance.max_workers)
         self._nlp_models = {}
@@ -102,7 +107,8 @@ class TextAnalyzer:
         self._compile_patterns()
     
     def _initialize_models(self):
-        """Initialize NLP models"""
+        """
+Initialize NLP models"""
         try:
             # Initialize spaCy model for advanced features
             spacy_models = ["en_core_web_sm", "en_core_web_md"]
@@ -447,7 +453,8 @@ class TextAnalyzer:
         return Counter(filtered_words).most_common(top_n)
     
     def generate_wordcloud(self, text: str, **kwargs) -> WordCloud:
-        """Generate word cloud from text"""
+        """
+Generate word cloud from text"""
         cleaned_text = self.clean_text(
             text,
             lowercase=True,
@@ -487,7 +494,8 @@ def calculate_similarity(text1: str, text2: str) -> float:
     return SequenceMatcher(None, text1.lower(), text2.lower()).ratio()
 
 def extract_social_media_metrics(text: str) -> Dict[str, int]:
-    """Extract social media specific metrics"""
+    """
+Extract social media specific metrics"""
     patterns = {
         "hashtags": re.compile(r'#\w+'),
         "mentions": re.compile(r'@\w+'),

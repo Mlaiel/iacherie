@@ -7,6 +7,7 @@ fingerprinting accuracy, and intellectual property security on the Ainflue platf
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionType(Enum):
-    """Types of content protection"""
+    """
+Types of content protection"""
+
     COPYRIGHT_DETECTION = "copyright_detection"
     FINGERPRINT_MATCHING = "fingerprint_matching"
     WATERMARK_DETECTION = "watermark_detection"
@@ -36,6 +39,7 @@ class ProtectionType(Enum):
 
 class ThreatLevel(Enum):
     """Threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -44,6 +48,7 @@ class ThreatLevel(Enum):
 
 class DetectionMethod(Enum):
     """Detection method types"""
+
     VISUAL_FINGERPRINTING = "visual_fingerprinting"
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
     HASH_MATCHING = "hash_matching"
@@ -71,7 +76,8 @@ class ProtectionEvent:
 
 @dataclass
 class ProtectionStats:
-    """Protection system statistics"""
+    """
+Protection system statistics"""
     total_scans: int
     true_positives: int
     false_positives: int
@@ -98,7 +104,8 @@ class ContentProtectionTracker:
     """
     
     def __init__(self):
-        """Initialize content protection tracker"""
+        """
+Initialize content protection tracker"""
         
         # Prometheus metrics
         self.protection_scans_total = Counter(

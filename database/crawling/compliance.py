@@ -13,6 +13,7 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -34,7 +35,9 @@ from ..core.exceptions import (
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""
+    """
+Supported compliance frameworks."""
+
     GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act
     COPPA = "coppa"                  # Children's Online Privacy Protection Act
@@ -49,6 +52,7 @@ class ComplianceFramework(Enum):
 
 class ComplianceStatus(Enum):
     """Compliance status levels."""
+
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
@@ -58,6 +62,7 @@ class ComplianceStatus(Enum):
 
 class ViolationSeverity(Enum):
     """Compliance violation severity levels."""
+
     CRITICAL = "critical"           # Immediate action required
     HIGH = "high"                   # Action within 24 hours
     MEDIUM = "medium"               # Action within 7 days
@@ -67,6 +72,7 @@ class ViolationSeverity(Enum):
 
 class DataCategory(Enum):
     """Categories of data for compliance tracking."""
+
     PERSONAL_IDENTIFIABLE = "personal_identifiable"
     SENSITIVE_PERSONAL = "sensitive_personal"
     BIOMETRIC = "biometric"
@@ -93,7 +99,8 @@ class CrawlerComplianceManager(DatabaseManager):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize compliance manager."""
+        """
+Initialize compliance manager."""
         super().__init__(db_session)
         self.compliance_rules = {}
         self.active_audits = {}
@@ -663,6 +670,7 @@ class CrawlerComplianceManager(DatabaseManager):
         return 0.95  # 95% compliant
     
     def _initialize_compliance_system(self) -> None:
-        """Initialize compliance management system."""
+        """
+Initialize compliance management system."""
         self.compliance_rules = {}
         self.active_audits = {}

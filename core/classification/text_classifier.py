@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,6 +16,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
+
 import re
 import hashlib
 import numpy as np
@@ -64,7 +65,8 @@ class TextContentClassifier:
     """
     
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize text classifier with NLP models."""
+        """
+Initialize text classifier with NLP models."""
         self.settings = get_settings()
         self.ml_engine = MLEngine()
         self.text_processor = TextProcessor()
@@ -83,7 +85,8 @@ class TextContentClassifier:
         }
 
     def _load_models(self, model_path: Optional[str]):
-        """Load and initialize NLP models."""
+        """
+Load and initialize NLP models."""
         try:
             # BERT for general text understanding
             self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -774,7 +777,8 @@ class TextContentClassifier:
         return any(keyword in text for keyword in music_keywords)
 
     def _calculate_sentiment_strength(self, roberta_result: Dict, vader_result: Dict) -> float:
-        """Calculate combined sentiment strength."""
+        """
+Calculate combined sentiment strength."""
         try:
             roberta_strength = roberta_result.get('confidence', 0)
             vader_strength = abs(vader_result.get('compound', 0)) if vader_result else 0
@@ -787,7 +791,8 @@ class TextContentClassifier:
             return 0.5
 
     def _calculate_length_score(self, text: str) -> float:
-        """Calculate score based on text length."""
+        """
+Calculate score based on text length."""
         word_count = len(text.split())
         
         # Optimal length ranges
@@ -801,7 +806,8 @@ class TextContentClassifier:
             return 0.3
 
     def _calculate_vocabulary_richness(self, text: str) -> float:
-        """Calculate vocabulary richness (TTR - Type-Token Ratio)."""
+        """
+Calculate vocabulary richness (TTR - Type-Token Ratio)."""
         words = text.lower().split()
         if not words:
             return 0.0
@@ -817,7 +823,8 @@ class TextContentClassifier:
         return float(normalized_ttr)
 
     def _estimate_grammar_quality(self, text: str) -> float:
-        """Estimate grammar quality based on heuristics."""
+        """
+Estimate grammar quality based on heuristics."""
         try:
             # Simple grammar checks
             score = 1.0
@@ -845,7 +852,8 @@ class TextContentClassifier:
             return 0.7
 
     def _estimate_coherence(self, text: str) -> float:
-        """Estimate text coherence based on semantic similarity between sentences."""
+        """
+Estimate text coherence based on semantic similarity between sentences."""
         try:
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             
@@ -868,7 +876,8 @@ class TextContentClassifier:
             return 0.6
 
     def _estimate_spelling_quality(self, text: str) -> float:
-        """Estimate spelling quality based on word patterns."""
+        """
+Estimate spelling quality based on word patterns."""
         try:
             words = re.findall(r'\b[a-zA-Z]+\b', text)
             if not words:
@@ -895,7 +904,8 @@ class TextContentClassifier:
             return 0.8
 
     def _get_quality_grade(self, score: float) -> str:
-        """Convert quality score to letter grade."""
+        """
+Convert quality score to letter grade."""
         if score >= 0.9:
             return 'A+'
         elif score >= 0.8:
@@ -912,7 +922,8 @@ class TextContentClassifier:
             return 'D'
 
     def _analyze_text_complexity(self, text: str) -> Dict[str, Any]:
-        """Analyze text complexity."""
+        """
+Analyze text complexity."""
         try:
             words = text.split()
             sentences = text.split('.')
@@ -936,7 +947,8 @@ class TextContentClassifier:
             return {}
 
     def _analyze_writing_style(self, text: str) -> Dict[str, Any]:
-        """Analyze writing style characteristics."""
+        """
+Analyze writing style characteristics."""
         try:
             # Style indicators
             exclamation_count = text.count('!')
@@ -961,7 +973,8 @@ class TextContentClassifier:
             return {}
 
     def _classify_writing_style(self, exclamations: int, questions: int, sentences: List[str]) -> str:
-        """Classify writing style based on patterns."""
+        """
+Classify writing style based on patterns."""
         total_sentences = len(sentences)
         
         if not total_sentences:
@@ -980,11 +993,12 @@ class TextContentClassifier:
             return 'formal'
 
     def _assess_copyright_risk(self, text: str) -> Dict[str, Any]:
-        """Assess potential copyright infringement risk."""
+        """
+Assess potential copyright infringement risk."""
         try:
             # Look for indicators of copyrighted content
             copyright_indicators = [
-                'copyright', '©', 'all rights reserved', 'lyrics by',
+                'copyright', '(c)', 'all rights reserved', 'lyrics by',
                 'written by', 'composed by', 'published by'
             ]
             
@@ -1021,7 +1035,8 @@ class TextContentClassifier:
             return {'copyright_risk_score': 0.0, 'risk_level': 'unknown'}
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
+        """
+Get current timestamp."""
         from datetime import datetime
         return datetime.now().isoformat()
 
@@ -1097,7 +1112,8 @@ class TextContentClassifier:
             return 'low_similarity'
 
     def get_classification_summary(self, results: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of classification results."""
+        """
+Generate a human-readable summary of classification results."""
         try:
             summary_parts = []
             

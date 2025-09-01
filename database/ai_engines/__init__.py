@@ -25,6 +25,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple
 import logging
 import asyncio
@@ -209,7 +210,8 @@ class AIEnginesManager:
     """
     
     def __init__(self):
-        """Initialize the AI Engines Manager."""
+        """
+Initialize the AI Engines Manager."""
         self.model_registry = AIModelRegistry()
         self.inference_manager = InferenceEngineManager()
         self.training_orchestrator = TrainingPipelineOrchestrator()
@@ -447,7 +449,8 @@ async def _get_total_models() -> int:
         return 0
 
 async def _get_active_endpoints() -> int:
-    """Get number of active inference endpoints."""
+    """
+Get number of active inference endpoints."""
     try:
         manager = get_ai_engines_manager()
         return await manager.inference_manager.get_active_endpoints_count()
@@ -455,7 +458,8 @@ async def _get_active_endpoints() -> int:
         return 0
 
 async def _get_running_jobs() -> int:
-    """Get number of running training jobs."""
+    """
+Get number of running training jobs."""
     try:
         manager = get_ai_engines_manager()
         return await manager.training_orchestrator.get_running_jobs_count()
@@ -463,7 +467,8 @@ async def _get_running_jobs() -> int:
         return 0
 
 async def _get_vector_store_size() -> int:
-    """Get vector store size."""
+    """
+Get vector store size."""
     try:
         manager = get_ai_engines_manager()
         return await manager.vector_manager.get_total_vectors_count()
@@ -471,7 +476,8 @@ async def _get_vector_store_size() -> int:
         return 0
 
 async def _get_resource_utilization() -> Dict[str, Any]:
-    """Get resource utilization metrics."""
+    """
+Get resource utilization metrics."""
     try:
         manager = get_ai_engines_manager()
         return await manager.performance_tracker.get_resource_utilization()

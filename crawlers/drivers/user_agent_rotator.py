@@ -20,6 +20,7 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
 """
+
 import json
 import logging
 import random
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class BrowserFamily(Enum):
-    """Supported browser families"""
+    """
+Supported browser families"""
+
     CHROME = "chrome"
     FIREFOX = "firefox"
     SAFARI = "safari"
@@ -52,6 +55,7 @@ class BrowserFamily(Enum):
 
 class PlatformType(Enum):
     """Supported platform types"""
+
     WINDOWS = "windows"
     MACOS = "macos"
     LINUX = "linux"
@@ -62,6 +66,7 @@ class PlatformType(Enum):
 
 class DeviceType(Enum):
     """Supported device types"""
+
     DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
@@ -71,6 +76,7 @@ class DeviceType(Enum):
 
 class RotationStrategy(Enum):
     """User agent rotation strategies"""
+
     RANDOM = "random"
     WEIGHTED = "weighted"
     SEQUENTIAL = "sequential"
@@ -310,7 +316,8 @@ class UserAgentDatabase:
                        platform: Optional[PlatformType] = None,
                        device_type: Optional[DeviceType] = None,
                        mobile_only: Optional[bool] = None) -> List[UserAgentData]:
-        """Get filtered user agents based on criteria"""
+        """
+Get filtered user agents based on criteria"""
         
         filtered_agents = self.user_agents.copy()
         
@@ -333,7 +340,8 @@ class UserAgentDatabase:
         return filtered_agents
     
     def add_user_agent(self, agent_data: UserAgentData) -> None:
-        """Add custom user agent to database"""
+        """
+Add custom user agent to database"""
         self.user_agents.append(agent_data)
         self._organize_by_categories()
         logger.info(f"Added custom user agent: {agent_data.browser_family.value}")
@@ -355,13 +363,15 @@ class UserAgentDatabase:
 
 
 class HeaderGenerator:
-    """Generate consistent browser headers for user agents"""
+    """
+Generate consistent browser headers for user agents"""
     
     def __init__(self):
         self.header_templates = self._load_header_templates()
     
     def _load_header_templates(self) -> Dict[BrowserFamily, Dict[str, str]]:
-        """Load browser-specific header templates"""
+        """
+Load browser-specific header templates"""
         return {
             BrowserFamily.CHROME: {
                 "sec-ch-ua": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
@@ -520,7 +530,8 @@ class UserAgentRotator:
         return self.header_generator.generate_headers(agent_data, target_url)
     
     def _select_agent(self, agents: List[UserAgentData]) -> UserAgentData:
-        """Select agent based on rotation strategy"""
+        """
+Select agent based on rotation strategy"""
         
         if self.strategy == RotationStrategy.RANDOM:
             return random.choice(agents)
@@ -540,7 +551,8 @@ class UserAgentRotator:
         return agents[0]  # Fallback
     
     def _weighted_selection(self, agents: List[UserAgentData]) -> UserAgentData:
-        """Select agent based on popularity score and success rate"""
+        """
+Select agent based on popularity score and success rate"""
         
         weights = []
         for agent in agents:
@@ -568,7 +580,8 @@ class UserAgentRotator:
         return agents[-1]  # Fallback
     
     def _sequential_selection(self, agents: List[UserAgentData]) -> UserAgentData:
-        """Sequential round-robin selection"""
+        """
+Sequential round-robin selection"""
         if self.current_index >= len(agents):
             self.current_index = 0
         
@@ -577,7 +590,8 @@ class UserAgentRotator:
         return selected
     
     def _time_based_selection(self, agents: List[UserAgentData]) -> UserAgentData:
-        """Select agent based on time patterns (simulate real usage)"""
+        """
+Select agent based on time patterns (simulate real usage)"""
         current_hour = time.localtime().tm_hour
         
         # Different browsers popular at different times
@@ -605,7 +619,8 @@ class UserAgentRotator:
         return random.choice(weighted_agents) if weighted_agents else random.choice(agents)
     
     def report_result(self, user_agent: str, success: bool) -> None:
-        """Report usage result for user agent"""
+        """
+Report usage result for user agent"""
         self.database.update_usage_stats(user_agent, success)
         
         if success:
@@ -614,11 +629,13 @@ class UserAgentRotator:
             self.stats['failed_requests'] += 1
     
     def clear_session(self, session_id: str) -> None:
-        """Clear session-specific user agent"""
+        """
+Clear session-specific user agent"""
         self.session_agents.pop(session_id, None)
     
     def get_popular_agents(self, count: int = 10) -> List[UserAgentData]:
-        """Get most popular user agents"""
+        """
+Get most popular user agents"""
         return sorted(
             self.database.user_agents,
             key=lambda a: a.popularity_score,
@@ -626,7 +643,8 @@ class UserAgentRotator:
         )[:count]
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive usage statistics"""
+        """
+Get comprehensive usage statistics"""
         total_requests = self.stats['successful_requests'] + self.stats['failed_requests']
         success_rate = (
             self.stats['successful_requests'] / total_requests
@@ -656,7 +674,8 @@ class UserAgentRotator:
         }
     
     def export_agents(self, file_path: str) -> None:
-        """Export user agent database to file"""
+        """
+Export user agent database to file"""
         try:
             data = {
                 'agents': [
@@ -730,27 +749,31 @@ def create_desktop_rotator() -> UserAgentRotator:
 
 
 def create_mobile_rotator() -> UserAgentRotator:
-    """Create rotator optimized for mobile browsing"""
+    """
+Create rotator optimized for mobile browsing"""
     rotator = UserAgentRotator(RotationStrategy.RANDOM)
     return rotator
 
 
 def create_stealth_rotator() -> UserAgentRotator:
-    """Create rotator optimized for stealth operations"""
+    """
+Create rotator optimized for stealth operations"""
     rotator = UserAgentRotator(RotationStrategy.TIME_BASED)
     return rotator
 
 
 # Utility functions
 def get_random_user_agent(browser_family: Optional[BrowserFamily] = None) -> str:
-    """Get random user agent string"""
+    """
+Get random user agent string"""
     rotator = UserAgentRotator(RotationStrategy.RANDOM)
     agent = rotator.get_user_agent(browser_family=browser_family)
     return agent.user_agent
 
 
 def get_chrome_user_agent(platform: PlatformType = PlatformType.WINDOWS) -> str:
-    """Get Chrome user agent for specific platform"""
+    """
+Get Chrome user agent for specific platform"""
     rotator = UserAgentRotator()
     agent = rotator.get_user_agent(
         browser_family=BrowserFamily.CHROME,

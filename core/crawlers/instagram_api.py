@@ -6,13 +6,14 @@ Combines Instagram Graph API, Basic Display API with advanced scraping
 for comprehensive content surveillance and rights protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 import re
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramMediaData:
-    """Comprehensive Instagram media metadata structure."""
+    """
+Comprehensive Instagram media metadata structure."""
     
     media_id: str
     media_url: str
@@ -72,7 +74,8 @@ class InstagramMediaData:
 
 @dataclass
 class InstagramUserData:
-    """Instagram user profile comprehensive information."""
+    """
+Instagram user profile comprehensive information."""
     
     user_id: str
     username: str
@@ -89,7 +92,8 @@ class InstagramUserData:
     contact_info: Optional[Dict[str, Any]]
 
 class InstagramAPIManager:
-    """Professional Instagram API management with Graph API integration."""
+    """
+Professional Instagram API management with Graph API integration."""
     
     def __init__(
         self,
@@ -97,7 +101,8 @@ class InstagramAPIManager:
         app_secret: str,
         access_token: Optional[str] = None
     ):
-        """Initialize Instagram API service with Graph API credentials."""
+        """
+Initialize Instagram API service with Graph API credentials."""
         self.app_id = app_id
         self.app_secret = app_secret
         self.access_token = access_token
@@ -229,14 +234,16 @@ class InstagramWebScraper:
     """Advanced Instagram web scraping with anti-detection measures."""
     
     def __init__(self, proxy_manager: Optional[ProxyManager] = None):
-        """Initialize Instagram web scraper with proxy support."""
+        """
+Initialize Instagram web scraper with proxy support."""
         self.proxy_manager = proxy_manager
         self.session = None
         self.driver = None
         self._setup_selenium_driver()
     
     def _setup_selenium_driver(self):
-        """Configure Selenium WebDriver with anti-detection measures."""
+        """
+Configure Selenium WebDriver with anti-detection measures."""
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
@@ -520,10 +527,12 @@ class InstagramWebScraper:
             self.driver.quit()
 
 class InstagramCrawler(BaseCrawler):
-    """Professional Instagram crawler with comprehensive monitoring capabilities."""
+    """
+Professional Instagram crawler with comprehensive monitoring capabilities."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Instagram crawler with configuration."""
+        """
+Initialize Instagram crawler with configuration."""
         super().__init__(config)
         self.api_manager = None
         
@@ -541,7 +550,8 @@ class InstagramCrawler(BaseCrawler):
         self.platform = 'instagram'
     
     async def crawl_post(self, post_url: str) -> Optional[CrawlResult]:
-        """Crawl comprehensive data for a specific Instagram post."""
+        """
+Crawl comprehensive data for a specific Instagram post."""
         try:
             # Scrape post data
             post_data = await self.web_scraper.scrape_post_data(post_url)

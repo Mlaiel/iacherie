@@ -18,12 +18,13 @@ Features:
 - Real-time authentication monitoring
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import json
@@ -45,7 +46,9 @@ import urllib.parse
 logger = logging.getLogger(__name__)
 
 class AuthenticationStatus(str, Enum):
-    """Authentication status enumeration."""
+    """
+Authentication status enumeration."""
+
     AUTHENTICATED = "authenticated"
     UNAUTHENTICATED = "unauthenticated"
     EXPIRED = "expired"
@@ -56,6 +59,7 @@ class AuthenticationStatus(str, Enum):
 
 class TokenType(str, Enum):
     """Token type enumeration."""
+
     ACCESS_TOKEN = "access_token"
     REFRESH_TOKEN = "refresh_token"
     API_KEY = "api_key"
@@ -82,7 +86,8 @@ class AuthenticationConfig:
 
 @dataclass
 class AuthenticationResult:
-    """Authentication result structure."""
+    """
+Authentication result structure."""
     status: AuthenticationStatus
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -99,7 +104,8 @@ class SecureCredentialStore:
     """Secure credential storage with encryption."""
     
     def __init__(self, storage_path: str, master_password: str):
-        """Initialize secure credential store."""
+        """
+Initialize secure credential store."""
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(exist_ok=True)
         
@@ -193,26 +199,32 @@ class PlatformAuthenticator:
         self.current_result: Optional[AuthenticationResult] = None
         
     async def authenticate(self, **kwargs) -> AuthenticationResult:
-        """Perform authentication (to be implemented by subclasses)."""
+        """
+Perform authentication (to be implemented by subclasses)."""
         pass
     
     async def refresh_token(self, refresh_token: str) -> AuthenticationResult:
-        """Refresh access token (to be implemented by subclasses)."""
+        """
+Refresh access token (to be implemented by subclasses)."""
         pass
     
     async def validate_token(self, access_token: str) -> bool:
-        """Validate access token (to be implemented by subclasses)."""
+        """
+Validate access token (to be implemented by subclasses)."""
         pass
     
     async def revoke_token(self, token: str) -> bool:
-        """Revoke access token (to be implemented by subclasses)."""
+        """
+Revoke access token (to be implemented by subclasses)."""
         pass
 
 class YouTubeAuthenticator(PlatformAuthenticator):
-    """YouTube API authenticator."""
+    """
+YouTube API authenticator."""
     
     async def authenticate(self, api_key: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with YouTube API."""
+        """
+Authenticate with YouTube API."""
         if api_key:
             # API Key authentication
             if await self.validate_token(api_key):
@@ -251,7 +263,8 @@ class InstagramAuthenticator(PlatformAuthenticator):
     """Instagram Graph API authenticator."""
     
     async def authenticate(self, access_token: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with Instagram API."""
+        """
+Authenticate with Instagram API."""
         if access_token:
             if await self.validate_token(access_token):
                 # Get token info to determine expiry
@@ -307,7 +320,8 @@ class TwitterAuthenticator(PlatformAuthenticator):
     """Twitter API v2 authenticator."""
     
     async def authenticate(self, bearer_token: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with Twitter API."""
+        """
+Authenticate with Twitter API."""
         if bearer_token:
             if await self.validate_token(bearer_token):
                 return AuthenticationResult(
@@ -343,7 +357,8 @@ class TikTokAuthenticator(PlatformAuthenticator):
     """TikTok Open API authenticator."""
     
     async def authenticate(self, access_token: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with TikTok API."""
+        """
+Authenticate with TikTok API."""
         if access_token:
             if await self.validate_token(access_token):
                 return AuthenticationResult(
@@ -388,7 +403,8 @@ class EnterpriseAuthenticationManager:
     """
     
     def __init__(self, storage_path: str, master_password: str):
-        """Initialize authentication manager."""
+        """
+Initialize authentication manager."""
         self.credential_store = SecureCredentialStore(storage_path, master_password)
         self.session: Optional[aiohttp.ClientSession] = None
         self.authenticators: Dict[str, PlatformAuthenticator] = {}
@@ -535,7 +551,8 @@ class EnterpriseAuthenticationManager:
         return None
     
     async def _refresh_platform_token(self, platform: str, refresh_token: str) -> AuthenticationResult:
-        """Refresh platform access token."""
+        """
+Refresh platform access token."""
         if platform not in self.authenticators:
             return AuthenticationResult(
                 status=AuthenticationStatus.ERROR,
@@ -577,12 +594,14 @@ class EnterpriseAuthenticationManager:
             asyncio.create_task(self._delayed_refresh(platform, result.refresh_token, delay))
     
     async def _delayed_refresh(self, platform: str, refresh_token: str, delay: float):
-        """Perform delayed token refresh."""
+        """
+Perform delayed token refresh."""
         await asyncio.sleep(delay)
         await self._refresh_platform_token(platform, refresh_token)
     
     async def validate_all_tokens(self) -> Dict[str, bool]:
-        """Validate all cached tokens."""
+        """
+Validate all cached tokens."""
         results = {}
         
         for platform, result in self.auth_cache.items():
@@ -626,7 +645,8 @@ class EnterpriseAuthenticationManager:
         self.refresh_callbacks.append(callback)
     
     async def get_authentication_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get comprehensive authentication status."""
+        """
+Get comprehensive authentication status."""
         status = {}
         
         for platform in self.platform_configs.keys():

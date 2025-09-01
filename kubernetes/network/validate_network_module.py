@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import sys
 import importlib
@@ -23,7 +24,8 @@ validation_results: List[Tuple[str, bool, str]] = []
 
 
 def validate_import(module_name: str, description: str) -> bool:
-    """Validate that a module can be imported"""
+    """
+Validate that a module can be imported"""
     try:
         importlib.import_module(module_name)
         validation_results.append((description, True, f"✅ Module '{module_name}' imported successfully"))

@@ -6,7 +6,7 @@ distribution, platform optimization, and AI-powered routing decisions based
 on content analysis, user preferences, and market intelligence.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Any unauthorized copying, distribution,
@@ -23,6 +23,7 @@ PROJECT TEAM SPECIALTIES:
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
 """
+
 import asyncio
 import logging
 import json
@@ -50,7 +51,9 @@ from ...ml.models.engagement_predictor import EngagementPredictor
 
 
 class RoutingStrategy(Enum):
-    """Content routing strategies"""
+    """
+Content routing strategies"""
+
     AUTOMATIC = "automatic"
     AUDIENCE_BASED = "audience_based"
     ENGAGEMENT_OPTIMIZED = "engagement_optimized"
@@ -64,6 +67,7 @@ class RoutingStrategy(Enum):
 
 class RoutingPriority(Enum):
     """Routing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -73,6 +77,7 @@ class RoutingPriority(Enum):
 
 class PlatformType(Enum):
     """Supported platform types"""
+
     SOCIAL_MEDIA = "social_media"
     STREAMING = "streaming"
     MARKETPLACE = "marketplace"
@@ -84,6 +89,7 @@ class PlatformType(Enum):
 
 class ContentCategory(Enum):
     """Content categories for routing"""
+
     MUSIC = "music"
     PODCAST = "podcast"
     VIDEO = "video"
@@ -120,7 +126,8 @@ class Platform:
 
 @dataclass
 class RoutingRule:
-    """Content routing rule"""
+    """
+Content routing rule"""
     rule_id: str
     name: str
     description: str
@@ -153,7 +160,8 @@ class RoutingDecision:
 
 @dataclass
 class RoutingPlan:
-    """Complete content routing plan"""
+    """
+Complete content routing plan"""
     plan_id: str
     content_id: str
     user_id: str
@@ -234,7 +242,8 @@ class IntelligentContentRouter:
         asyncio.create_task(self._initialize_default_configuration())
     
     async def _initialize_default_configuration(self):
-        """Initialize default platforms and routing rules"""
+        """
+Initialize default platforms and routing rules"""
         try:
             # Load platform configurations
             await self._load_platform_configurations()
@@ -971,37 +980,43 @@ class IntelligentContentRouter:
     
     async def _generate_engagement_optimized_routing(self, content_analysis: Dict[str, Any],
                                                    user_preferences: Dict[str, Any]) -> List[RoutingDecision]:
-        """Generate engagement-optimized routing decisions"""
+        """
+Generate engagement-optimized routing decisions"""
         # Implementation for engagement-optimized routing
         return await self._generate_automatic_routing(content_analysis, user_preferences, RoutingPriority.HIGH)
     
     async def _generate_revenue_maximized_routing(self, content_analysis: Dict[str, Any],
                                                 user_preferences: Dict[str, Any]) -> List[RoutingDecision]:
-        """Generate revenue-maximized routing decisions"""
+        """
+Generate revenue-maximized routing decisions"""
         # Implementation for revenue-maximized routing
         return await self._generate_automatic_routing(content_analysis, user_preferences, RoutingPriority.HIGH)
     
     async def _generate_cross_platform_routing(self, content_analysis: Dict[str, Any],
                                              user_preferences: Dict[str, Any]) -> List[RoutingDecision]:
-        """Generate cross-platform routing decisions"""
+        """
+Generate cross-platform routing decisions"""
         # Implementation for cross-platform routing
         return await self._generate_automatic_routing(content_analysis, user_preferences, RoutingPriority.NORMAL)
     
     # Additional helper methods (placeholder implementations)
     async def _get_user_routing_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user routing preferences"""
+        """
+Get user routing preferences"""
         return {'preferred_platforms': [], 'avoid_platforms': []}
     
     async def _filter_and_rank_decisions(self, decisions: List[RoutingDecision],
                                        content_analysis: Dict[str, Any],
                                        user_preferences: Dict[str, Any],
                                        priority: RoutingPriority) -> List[RoutingDecision]:
-        """Filter and rank routing decisions"""
+        """
+Filter and rank routing decisions"""
         return decisions[:self.max_platforms_per_content]
     
     async def _create_execution_timeline(self, decisions: List[RoutingDecision],
                                        priority: RoutingPriority) -> Dict[str, datetime]:
-        """Create execution timeline"""
+        """
+Create execution timeline"""
         timeline = {}
         for i, decision in enumerate(decisions):
             timeline[decision.platform.platform_id] = decision.optimal_timing
@@ -1009,11 +1024,13 @@ class IntelligentContentRouter:
     
     async def _generate_fallback_options(self, content_analysis: Dict[str, Any],
                                        primary_decisions: List[RoutingDecision]) -> List[RoutingDecision]:
-        """Generate fallback routing options"""
+        """
+Generate fallback routing options"""
         return primary_decisions[-2:] if len(primary_decisions) > 2 else []
     
     async def _calculate_estimated_metrics(self, decisions: List[RoutingDecision]) -> Tuple[Dict[str, float], float]:
-        """Calculate total estimated metrics"""
+        """
+Calculate total estimated metrics"""
         total_engagement = {'views': 0, 'likes': 0, 'shares': 0}
         total_revenue = 0.0
         
@@ -1028,7 +1045,8 @@ class IntelligentContentRouter:
     async def _define_success_criteria(self, content_analysis: Dict[str, Any],
                                      decisions: List[RoutingDecision],
                                      strategy: RoutingStrategy) -> Dict[str, float]:
-        """Define success criteria for routing plan"""
+        """
+Define success criteria for routing plan"""
         return {
             'min_engagement_rate': 0.02,
             'min_reach': 1000,
@@ -1037,11 +1055,13 @@ class IntelligentContentRouter:
         }
     
     async def _store_routing_plan(self, plan: RoutingPlan):
-        """Store routing plan in database"""
+        """
+Store routing plan in database"""
         pass
     
     async def _cache_routing_plan(self, plan: RoutingPlan):
-        """Cache routing plan in Redis"""
+        """
+Cache routing plan in Redis"""
         try:
             cache_key = f"routing_plan:{plan.plan_id}"
             cache_data = {
@@ -1062,11 +1082,13 @@ class IntelligentContentRouter:
         return title  # Placeholder
     
     async def _adapt_description_for_platform(self, description: str, platform: Platform) -> str:
-        """Adapt description for specific platform"""
+        """
+Adapt description for specific platform"""
         return description  # Placeholder
     
     async def _adapt_tags_for_platform(self, tags: List[str], platform: Platform) -> List[str]:
-        """Adapt tags for specific platform"""
+        """
+Adapt tags for specific platform"""
         return tags  # Placeholder
 
 

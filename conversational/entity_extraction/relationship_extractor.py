@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -39,7 +40,8 @@ from .entity_extractor import ExtractedEntity, EntityCategory
 
 
 class RelationType(Enum):
-    """Types of relationships in creative industry context"""
+    """
+Types of relationships in creative industry context"""
     # Collaboration relationships
     COLLABORATION = "collaboration"
     FEATURING = "featuring"
@@ -94,6 +96,7 @@ class RelationType(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for relationship extraction"""
+
     VERY_HIGH = 0.95
     HIGH = 0.85
     MEDIUM = 0.70
@@ -103,7 +106,8 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class ExtractedRelationship:
-    """Extracted relationship with metadata"""
+    """
+Extracted relationship with metadata"""
     source_entity: ExtractedEntity
     target_entity: ExtractedEntity
     relation_type: RelationType
@@ -125,7 +129,8 @@ class ExtractedRelationship:
 
 @dataclass
 class RelationshipPattern:
-    """Pattern for relationship extraction"""
+    """
+Pattern for relationship extraction"""
     pattern_id: str
     relation_type: RelationType
     pattern_text: str
@@ -746,7 +751,8 @@ class RelationshipExtractor(BaseService):
         return None
     
     def _add_dependency_patterns(self):
-        """Add dependency patterns for grammatical relationship extraction"""
+        """
+Add dependency patterns for grammatical relationship extraction"""
         if not self.dependency_matcher:
             return
             
@@ -1089,7 +1095,8 @@ class RelationshipExtractor(BaseService):
         start_pos: int,
         end_pos: int
     ) -> Optional[ExtractedEntity]:
-        """Find entity by position overlap"""
+        """
+Find entity by position overlap"""
         for entity in entities:
             # Check for position overlap
             if (start_pos < entity.end_pos and end_pos > entity.start_pos):
@@ -1102,7 +1109,8 @@ class RelationshipExtractor(BaseService):
         entity2: ExtractedEntity,
         pattern: RelationshipPattern
     ) -> bool:
-        """Validate that entities match pattern constraints"""
+        """
+Validate that entities match pattern constraints"""
         constraints = pattern.entity_type_constraints
         
         if "ENTITY1" in constraints:
@@ -1154,13 +1162,15 @@ class RelationshipExtractor(BaseService):
         return entity_pair in combinations or (entity_pair[1], entity_pair[0]) in combinations
     
     def _extract_relationship_context(self, text: str, start_pos: int, end_pos: int, context_size: int = 30) -> str:
-        """Extract context around relationship mention"""
+        """
+Extract context around relationship mention"""
         context_start = max(0, start_pos - context_size)
         context_end = min(len(text), end_pos + context_size)
         return text[context_start:context_end].strip()
     
     def _calculate_proximity_confidence(self, distance: int, indicator: str, between_text: str) -> float:
-        """Calculate confidence for proximity-based relationships"""
+        """
+Calculate confidence for proximity-based relationships"""
         base_confidence = 0.5
         
         # Closer entities get higher confidence
@@ -1185,7 +1195,8 @@ class RelationshipExtractor(BaseService):
         return min(final_confidence, 1.0)
     
     def _map_dependency_to_relation_type(self, dependency_label: str) -> Optional[RelationType]:
-        """Map dependency parsing label to relation type"""
+        """
+Map dependency parsing label to relation type"""
         mapping = {
             'CREATED_BY': RelationType.CREATED_BY,
             'FEATURING': RelationType.FEATURING,
@@ -1194,7 +1205,8 @@ class RelationshipExtractor(BaseService):
         return mapping.get(dependency_label)
     
     def _map_classifier_label_to_relation_type(self, classifier_label: str) -> Optional[RelationType]:
-        """Map ML classifier label to relation type"""
+        """
+Map ML classifier label to relation type"""
         # This would depend on the specific classifier being used
         # For now, return a default mapping
         label_mapping = {
@@ -1211,7 +1223,8 @@ class RelationshipExtractor(BaseService):
         self,
         relationships: List[ExtractedRelationship]
     ) -> List[ExtractedRelationship]:
-        """Filter and deduplicate extracted relationships"""
+        """
+Filter and deduplicate extracted relationships"""
         if not relationships:
             return []
         
@@ -1399,7 +1412,8 @@ class RelationshipExtractor(BaseService):
         graph: nx.DiGraph,
         relationships: List[ExtractedRelationship]
     ) -> List[ExtractedRelationship]:
-        """Infer symmetric relationships (A -> B implies B -> A)"""
+        """
+Infer symmetric relationships (A -> B implies B -> A)"""
         inferred = []
         
         # Define symmetric relation types

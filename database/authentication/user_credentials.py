@@ -4,7 +4,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Type: Production-Ready Credential Management System
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -12,6 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Business Logic: User Registration → Credential Encryption → Security Policy Enforcement → 
 Password History → Account Protection → Audit Logging
 """
+
 import asyncio
 import hashlib
 import secrets
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CredentialType(Enum):
-    """Credential type classifications"""
+    """
+Credential type classifications"""
+
     PASSWORD = "password"
     PIN = "pin"
     BIOMETRIC = "biometric"
@@ -49,6 +52,7 @@ class CredentialType(Enum):
 
 class SecurityLevel(Enum):
     """Security level classifications"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -56,6 +60,7 @@ class SecurityLevel(Enum):
 
 class AccountStatus(Enum):
     """Account status states"""
+
     ACTIVE = "active"
     LOCKED = "locked"
     SUSPENDED = "suspended"
@@ -82,7 +87,8 @@ class PasswordPolicy:
 
 @dataclass
 class SecurityQuestion:
-    """Security question structure"""
+    """
+Security question structure"""
     question_id: str
     question_text: str
     answer_hash: str
@@ -92,7 +98,8 @@ class SecurityQuestion:
 
 @dataclass
 class CredentialMetadata:
-    """Credential metadata"""
+    """
+Credential metadata"""
     created_by: str = ""
     created_from_ip: str = ""
     created_from_device: str = ""
@@ -148,7 +155,8 @@ class PasswordHistory(Base):
     )
 
 class SecurityQuestions(Base):
-    """Database model for security questions"""
+    """
+Database model for security questions"""
     __tablename__ = 'security_questions'
     
     question_id = Column(String, primary_key=True)
@@ -167,7 +175,8 @@ class SecurityQuestions(Base):
     )
 
 class AccountSecurity(Base):
-    """Database model for account security settings"""
+    """
+Database model for account security settings"""
     __tablename__ = 'account_security'
     
     security_id = Column(String, primary_key=True)
@@ -609,7 +618,8 @@ class UserCredentialsRepository:
             return SecurityLevel.LOW
     
     async def _check_account_status(self, user_id: str) -> Dict[str, Any]:
-        """Check if account can authenticate"""
+        """
+Check if account can authenticate"""
         try:
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)

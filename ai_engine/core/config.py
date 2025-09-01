@@ -5,11 +5,12 @@ Enterprise-grade configuration with environment-specific settings, security poli
 and performance optimization parameters.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This configuration system contains sensitive business logic and security parameters.
 """
+
 import os
 import json
 from typing import Dict, Any, Optional, List, Union, Callable
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Deployment environments"""
+    """
+Deployment environments"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -31,6 +34,7 @@ class Environment(Enum):
 
 class SecurityLevel(Enum):
     """Security configuration levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -116,7 +120,8 @@ class PerformanceConfig:
     response_time_critical: float = 5.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "monitoring_interval": self.monitoring_interval,
             "history_size": self.history_size,
@@ -298,7 +303,8 @@ class ConfigManager:
         self._watchers: List[Callable] = []
         
     def load_config(self, config_path: Optional[str] = None) -> CoreConfig:
-        """Load configuration from file or environment"""
+        """
+Load configuration from file or environment"""
         config_path = config_path or self.config_path
         
         # Start with default configuration
@@ -407,7 +413,8 @@ class ConfigManager:
         return self._config
         
     def save_config(self, config_path: Optional[str] = None) -> bool:
-        """Save current configuration to file"""
+        """
+Save current configuration to file"""
         if self._config is None:
             logger.error("No configuration loaded to save")
             return False
@@ -438,11 +445,13 @@ class ConfigManager:
         self._watchers.append(callback)
         
     def reload_config(self) -> CoreConfig:
-        """Reload configuration from source"""
+        """
+Reload configuration from source"""
         return self.load_config()
         
     def update_config(self, updates: Dict[str, Any]) -> bool:
-        """Update configuration with new values"""
+        """
+Update configuration with new values"""
         if self._config is None:
             self.load_config()
             
@@ -482,17 +491,21 @@ def get_config() -> CoreConfig:
     return config_manager.get_config()
 
 def load_config(config_path: Optional[str] = None) -> CoreConfig:
-    """Load AI core configuration"""
+    """
+Load AI core configuration"""
     return config_manager.load_config(config_path)
 
 def save_config(config_path: Optional[str] = None) -> bool:
-    """Save current AI core configuration"""
+    """
+Save current AI core configuration"""
     return config_manager.save_config(config_path)
 
 def update_config(updates: Dict[str, Any]) -> bool:
-    """Update AI core configuration"""
+    """
+Update AI core configuration"""
     return config_manager.update_config(updates)
 
 def add_config_watcher(callback: Callable[[CoreConfig], None]):
-    """Add configuration change watcher"""
+    """
+Add configuration change watcher"""
     config_manager.add_config_watcher(callback)

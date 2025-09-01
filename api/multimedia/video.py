@@ -11,6 +11,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Union, Any, Tuple, AsyncGenerator
 import cv2
 import numpy as np
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class VideoFormat(Enum):
-    """Supported professional video formats"""
+    """
+Supported professional video formats"""
+
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -45,6 +48,7 @@ class VideoFormat(Enum):
 
 class VideoCodec(Enum):
     """Professional video codecs"""
+
     H264 = "libx264"
     H265 = "libx265"
     VP9 = "libvpx-vp9"
@@ -55,6 +59,7 @@ class VideoCodec(Enum):
 
 class VideoQuality(Enum):
     """Professional video quality presets"""
+
     ECONOMY = "economy"      # 480p, low bitrate
     STANDARD = "standard"    # 720p, medium bitrate
     HIGH = "high"           # 1080p, high bitrate
@@ -65,6 +70,7 @@ class VideoQuality(Enum):
 
 class VideoProcessingType(Enum):
     """Video processing operation types"""
+
     COLOR_CORRECTION = "color_correction"
     STABILIZATION = "stabilization"
     NOISE_REDUCTION = "noise_reduction"
@@ -124,7 +130,8 @@ class VideoProcessingConfig:
 
 @dataclass
 class VideoAnalysisResult:
-    """Comprehensive video analysis results"""
+    """
+Comprehensive video analysis results"""
     metadata: VideoMetadata
     quality_assessment: Dict[str, float]
     content_classification: Dict[str, float]
@@ -141,7 +148,8 @@ class VideoAnalysisResult:
 
 
 class VideoProcessor:
-    """Professional video processing engine with advanced capabilities"""
+    """
+Professional video processing engine with advanced capabilities"""
     
     def __init__(self, config: Optional[VideoProcessingConfig] = None):
         self.config = config or VideoProcessingConfig()
@@ -151,7 +159,8 @@ class VideoProcessor:
         self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for video processing"""
+        """
+Initialize AI models for video processing"""
         try:
             # MediaPipe for face detection
             self.mp_face_detection = mp.solutions.face_detection
@@ -295,7 +304,8 @@ class VideoProcessor:
         return int(bitrate)
     
     async def _detect_codec(self, video_path: Path) -> str:
-        """Detect video codec using ffprobe"""
+        """
+Detect video codec using ffprobe"""
         try:
             result = subprocess.run([
                 'ffprobe', '-v', 'quiet', '-show_entries', 
@@ -312,7 +322,8 @@ class VideoProcessor:
         return 'unknown'
     
     async def _calculate_quality_score(self, cap: cv2.VideoCapture, frame_count: int) -> float:
-        """Calculate overall video quality score"""
+        """
+Calculate overall video quality score"""
         try:
             quality_metrics = []
             sample_frames = min(10, max(1, frame_count // 100))
@@ -365,7 +376,8 @@ class VideoProcessor:
             return 0.0
     
     async def _analyze_basic_metrics(self, cap: cv2.VideoCapture, frame_count: int) -> Tuple[int, float, float, float]:
-        """Analyze basic video metrics"""
+        """
+Analyze basic video metrics"""
         try:
             scene_changes = 0
             motion_values = []
@@ -441,7 +453,8 @@ class VideoProcessor:
         return []
     
     async def _generate_video_fingerprint(self, video_path: Path) -> str:
-        """Generate video fingerprint for copyright detection"""
+        """
+Generate video fingerprint for copyright detection"""
         try:
             cap = cv2.VideoCapture(str(video_path))
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -809,7 +822,8 @@ class VideoProcessor:
         return []
     
     async def _generate_thumbnail_timestamps(self, video_path: Path) -> List[float]:
-        """Generate optimal timestamps for thumbnails"""
+        """
+Generate optimal timestamps for thumbnails"""
         try:
             cap = cv2.VideoCapture(str(video_path))
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -878,7 +892,8 @@ class VideoProcessor:
     async def _generate_recommendations(self, technical_issues: List[str],
                                       quality_assessment: Dict[str, float],
                                       content_classification: Dict[str, float]) -> List[str]:
-        """Generate improvement recommendations"""
+        """
+Generate improvement recommendations"""
         recommendations = []
         
         # Technical issue recommendations
@@ -1020,9 +1035,10 @@ class VideoContentProtector:
     
     async def protect_video(self, video_path: Union[str, Path],
                           watermark_text: Optional[str] = None) -> Dict[str, Any]:
-        """Apply comprehensive video protection"""
+        """
+Apply comprehensive video protection"""
         video_path = Path(video_path)
-        watermark_text = watermark_text or f"© 2025 Fahed Mlaiel - {datetime.now().strftime('%Y%m%d')}"
+        watermark_text = watermark_text or f"(c) 2025 Fahed Mlaiel - {datetime.now().strftime('%Y%m%d')}"
         
         try:
             # Generate fingerprint
@@ -1120,7 +1136,8 @@ class VideoMonetizationEngine:
         self.licensing_tiers = self._initialize_licensing()
     
     def _initialize_platforms(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform specifications"""
+        """
+Initialize platform specifications"""
         return {
             "youtube": {
                 "max_duration": 12 * 3600,  # 12 hours

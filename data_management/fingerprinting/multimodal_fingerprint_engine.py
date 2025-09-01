@@ -8,7 +8,7 @@ Responsibility: Protection avancée multi-format avec IA et détection similitud
 ====================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -23,6 +23,7 @@ TECHNOLOGIES IA INTÉGRÉES:
 📸 Images: CLIP, ImageHash, Perceptual Hashing (>92% précision)
 📝 Texte: BERT, RoBERTa, Vector Similarity (>88% précision)
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from enum import Enum
@@ -59,6 +60,7 @@ logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
     """Types de contenu supportés"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -102,7 +104,8 @@ class FingerprintFeatures:
 
 @dataclass
 class SimilarityResult:
-    """Résultat de comparaison de similarité"""
+    """
+Résultat de comparaison de similarité"""
     original_id: str
     candidate_id: str
     similarity_score: float
@@ -834,7 +837,8 @@ class MultiModalFingerprintEngine:
         return type_counts
     
     def _group_by_algorithm(self, fingerprints: List[FingerprintModel]) -> Dict[str, int]:
-        """Groupe les fingerprints par algorithme"""
+        """
+Groupe les fingerprints par algorithme"""
         algo_counts = {}
         for fp in fingerprints:
             for algo in fp.fingerprint_algorithms:
@@ -844,7 +848,8 @@ class MultiModalFingerprintEngine:
     def _generate_protection_recommendations(self, fingerprints: List[FingerprintModel],
                                            violations: List[Dict[str, Any]],
                                            metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Génère des recommandations pour améliorer la protection"""
+        """
+Génère des recommandations pour améliorer la protection"""
         recommendations = []
         
         # Recommandation basée sur le score de protection

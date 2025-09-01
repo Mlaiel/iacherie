@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import importlib
 import inspect
@@ -27,7 +28,8 @@ import logging
 
 @dataclass
 class ValidationResult:
-    """Validation result structure"""
+    """
+Validation result structure"""
     module_name: str
     is_valid: bool
     issues: List[str]
@@ -37,7 +39,9 @@ class ValidationResult:
 
 
 class ValidationLevel(Enum):
-    """Validation levels"""
+    """
+Validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"

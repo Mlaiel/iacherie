@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Performance & Monitoring Test Suite
+"""
+Comprehensive Performance & Monitoring Test Suite
 ================================================
 
 Integration test demonstrating all performance and monitoring enhancements:
@@ -23,6 +25,7 @@ Integration test demonstrating all performance and monitoring enhancements:
 
 Author: Performance Optimization Team
 """
+
 import asyncio
 import time
 import json
@@ -43,7 +46,8 @@ from kubernetes.monitoring.critical_business_monitoring import CriticalBusinessM
 
 
 class PerformanceIntegrationTester:
-    """Integration tester for all performance enhancements"""
+    """
+Integration tester for all performance enhancements"""
     
     def __init__(self):
         self.api_tester = CriticalAPILoadTester()
@@ -51,7 +55,8 @@ class PerformanceIntegrationTester:
         self.monitoring_config = CriticalBusinessMonitoring()
         
     def test_critical_apis_performance(self) -> Dict[str, Any]:
-        """Test critical API performance"""
+        """
+Test critical API performance"""
         results = {}
         
         # Simulate API testing results
@@ -316,7 +321,8 @@ class TestPerformanceIntegration:
     
     @pytest.mark.performance
     def test_comprehensive_performance_optimization(self):
-        """Test comprehensive performance optimization across all components"""
+        """
+Test comprehensive performance optimization across all components"""
         tester = PerformanceIntegrationTester()
         
         print("\\n" + "="*80)

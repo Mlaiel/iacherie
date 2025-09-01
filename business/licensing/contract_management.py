@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -32,7 +33,9 @@ from ..integrations.esignature import ESignatureService
 
 
 class ContractType(Enum):
-    """Types of contracts managed by the system"""
+    """
+Types of contracts managed by the system"""
+
     LICENSING_AGREEMENT = "licensing_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
@@ -47,6 +50,7 @@ class ContractType(Enum):
 
 class ContractStatus(Enum):
     """Contract lifecycle status"""
+
     DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     IN_NEGOTIATION = "in_negotiation"
@@ -61,6 +65,7 @@ class ContractStatus(Enum):
 
 class NegotiationStatus(Enum):
     """Contract negotiation status"""
+
     INITIATED = "initiated"
     COUNTEROFFFER_PENDING = "counteroffer_pending"
     REVISION_REQUESTED = "revision_requested"
@@ -82,7 +87,8 @@ class ContractMetrics:
 
 
 class ContractCreationRequest(BaseModel):
-    """Contract creation request structure"""
+    """
+Contract creation request structure"""
     contract_type: ContractType = Field(..., description="Type of contract to create")
     template_id: Optional[str] = Field(None, description="Template to base contract on")
     parties: List[Dict[str, Any]] = Field(..., description="Contract parties information")
@@ -537,17 +543,20 @@ class ContractManagementService:
         pass
     
     async def _get_contract_template(self, template_id: str) -> Optional[ContractTemplate]:
-        """Retrieve contract template by ID"""
+        """
+Retrieve contract template by ID"""
         # Implementation for template retrieval
         pass
     
     async def _perform_legal_risk_assessment(self, contract_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive legal risk assessment"""
+        """
+Perform comprehensive legal risk assessment"""
         # Implementation for risk assessment
         pass
     
     async def _setup_contract_monitoring(self, contract_id: str) -> None:
-        """Setup automated contract monitoring systems"""
+        """
+Setup automated contract monitoring systems"""
         # Implementation for monitoring setup
         pass
     
@@ -556,6 +565,7 @@ class ContractManagementService:
         contract: Contract, 
         performance_data: Dict[str, Any]
     ) -> ContractMetrics:
-        """Calculate comprehensive contract metrics"""
+        """
+Calculate comprehensive contract metrics"""
         # Implementation for metrics calculation
         pass

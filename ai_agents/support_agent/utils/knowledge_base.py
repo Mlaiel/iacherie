@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -44,7 +45,9 @@ from sqlalchemy import select, update, delete, func
 logger = logging.getLogger(__name__)
 
 class KnowledgeCategory(Enum):
-    """Knowledge base categories"""
+    """
+Knowledge base categories"""
+
     TECHNICAL_SUPPORT = "technical_support"
     USER_GUIDES = "user_guides"
     API_DOCUMENTATION = "api_documentation"
@@ -60,6 +63,7 @@ class KnowledgeCategory(Enum):
 
 class ContentType(Enum):
     """Types of knowledge content"""
+
     ARTICLE = "article"
     FAQ = "faq"
     TUTORIAL = "tutorial"
@@ -71,6 +75,7 @@ class ContentType(Enum):
 
 class ContentStatus(Enum):
     """Content status"""
+
     DRAFT = "draft"
     PUBLISHED = "published"
     ARCHIVED = "archived"
@@ -1038,7 +1043,8 @@ class KnowledgeBaseManager:
         results: List[SearchResult],
         query: SearchQuery
     ) -> List[SearchResult]:
-        """Add related articles to search results"""
+        """
+Add related articles to search results"""
         if not results:
             return results
         
@@ -1113,7 +1119,8 @@ class KnowledgeBaseManager:
         return keywords
     
     async def _process_article_content(self, article: KnowledgeArticle):
-        """Process article content to extract metadata"""
+        """
+Process article content to extract metadata"""
         # Extract keywords using NLP
         doc = self.nlp(article.content)
         
@@ -1233,7 +1240,8 @@ class KnowledgeBaseManager:
                 article.related_articles = related[:5]  # Limit to 5 related articles
     
     async def _cache_article(self, article: KnowledgeArticle):
-        """Cache article in Redis"""
+        """
+Cache article in Redis"""
         try:
             article_data = {
                 "id": article.id,
@@ -1341,7 +1349,8 @@ class KnowledgeBaseManager:
         helpful: bool,
         user_feedback: Optional[str] = None
     ):
-        """Update article feedback and usefulness score"""
+        """
+Update article feedback and usefulness score"""
         if article_id not in self.knowledge_articles:
             return
         

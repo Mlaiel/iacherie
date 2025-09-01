@@ -16,6 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 import asyncio
 import logging
 import hashlib
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Security threat levels"""
+    """
+Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -47,6 +50,7 @@ class ThreatLevel(Enum):
 
 class SecurityEventType(Enum):
     """Types of security events"""
+
     AUTHENTICATION_FAILURE = "authentication_failure"
     AUTHORIZATION_VIOLATION = "authorization_violation"
     RATE_LIMIT_EXCEEDED = "rate_limit_exceeded"
@@ -78,7 +82,8 @@ class SecurityEvent:
 
 @dataclass
 class ThreatPattern:
-    """Threat pattern definition"""
+    """
+Threat pattern definition"""
     name: str
     pattern_type: str
     indicators: List[str]
@@ -90,7 +95,8 @@ class ThreatPattern:
 
 @dataclass
 class SecurityMetrics:
-    """Security monitoring metrics"""
+    """
+Security monitoring metrics"""
     total_events: int
     events_by_type: Dict[SecurityEventType, int]
     events_by_threat_level: Dict[ThreatLevel, int]
@@ -355,7 +361,8 @@ class SecurityMonitor:
         return base_level
         
     async def _immediate_response(self, event: SecurityEvent):
-        """Implement immediate response to high-threat events"""
+        """
+Implement immediate response to high-threat events"""
         
         try:
             # Block IP if auto-block is enabled
@@ -729,7 +736,8 @@ class SecurityMonitor:
         return count > rate_limits.get(limit_type, 1000)
         
     async def _collect_security_metrics(self):
-        """Collect security monitoring metrics"""
+        """
+Collect security monitoring metrics"""
         
         try:
             current_time = datetime.utcnow()
@@ -898,7 +906,8 @@ class SecurityMonitor:
         pass
         
     async def get_status(self) -> Dict[str, Any]:
-        """Get security monitoring status"""
+        """
+Get security monitoring status"""
         
         latest_metrics = self._security_metrics[-1] if self._security_metrics else None
         
@@ -917,7 +926,8 @@ class SecurityMonitor:
         }
         
     async def get_recent_events(self, hours: int = 24, threat_level: Optional[ThreatLevel] = None) -> List[SecurityEvent]:
-        """Get recent security events"""
+        """
+Get recent security events"""
         
         events = []
         
@@ -967,7 +977,8 @@ class SecurityMonitor:
         ]
         
     async def is_ip_blocked(self, ip_address: str) -> bool:
-        """Check if IP address is blocked"""
+        """
+Check if IP address is blocked"""
         
         if ip_address in self._blocked_ips:
             return True

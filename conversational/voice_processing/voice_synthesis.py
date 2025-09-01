@@ -39,6 +39,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -90,7 +91,9 @@ from .models import VoiceSynthesisRequest, EmotionCategory, VoiceGender, Languag
 logger = logging.getLogger(__name__)
 
 class SynthesisQuality(Enum):
-    """Voice synthesis quality levels."""
+    """
+Voice synthesis quality levels."""
+
     DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
@@ -99,6 +102,7 @@ class SynthesisQuality(Enum):
 
 class VoiceStyle(Enum):
     """Voice style presets."""
+
     CONVERSATIONAL = "conversational"
     FORMAL = "formal"
     CASUAL = "casual"
@@ -124,7 +128,8 @@ class VoiceProfile:
 
 @dataclass
 class SynthesisResult:
-    """Voice synthesis result."""
+    """
+Voice synthesis result."""
     audio_data: np.ndarray
     sample_rate: int
     duration: float
@@ -144,7 +149,8 @@ class NeuralVoiceSynthesizer:
     """
     
     def __init__(self, config: NeuralVoiceSynthesisConfig):
-        """Initialize the voice synthesizer."""
+        """
+Initialize the voice synthesizer."""
         self.config = config
         self.engines = {}
         self.voice_profiles: Dict[str, VoiceProfile] = {}
@@ -872,7 +878,8 @@ class NeuralVoiceSynthesizer:
         return [s.strip() for s in sentences if s.strip()]
     
     def _number_to_words(self, num: int) -> str:
-        """Convert number to words (simplified)."""
+        """
+Convert number to words (simplified)."""
         if num == 0:
             return "zero"
         elif num < 20:

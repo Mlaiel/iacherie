@@ -4,7 +4,7 @@ Enterprise-grade AI-powered content protection system with advanced fingerprinti
 copyright detection, and automated rights enforcement.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This cutting-edge content protection system is protected intellectual property.
@@ -12,6 +12,7 @@ Any unauthorized copying, distribution, or use will result in immediate legal ac
 
 Business Logic: Content Upload → Fingerprint Generation → Protection Registration → Violation Detection → Automated Enforcement
 """
+
 import asyncio
 import hashlib
 import json
@@ -58,7 +59,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -68,6 +71,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of content violations"""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -82,6 +86,7 @@ class ViolationType(Enum):
 
 class EnforcementAction(Enum):
     """Automated enforcement actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     PLATFORM_REPORT = "platform_report"
@@ -95,6 +100,7 @@ class EnforcementAction(Enum):
 
 class FingerprintType(Enum):
     """Types of content fingerprints"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     VISUAL_FEATURES = "visual_features"
@@ -647,7 +653,8 @@ class ContentProtectionEngine:
         self._initialize_protection_systems()
     
     def _initialize_protection_systems(self):
-        """Initialize protection subsystems"""
+        """
+Initialize protection subsystems"""
         logger.info("Content protection engine initialized")
     
     async def protect_content(self, 

@@ -5,12 +5,13 @@ Advanced content integration system for managing multi-format content (audio, vi
 image, text) with AI processing, format conversion, and optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, BinaryIO
 from enum import Enum
@@ -32,7 +33,9 @@ from backend.utils.cloud_storage import CloudStorageManager
 
 
 class ContentType(str, Enum):
-    """Supported content types"""
+    """
+Supported content types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -77,6 +80,7 @@ class ContentFormat(str, Enum):
 
 class ProcessingStatus(str, Enum):
     """Content processing status"""
+
     UPLOADED = "uploaded"
     PROCESSING = "processing"
     ANALYZED = "analyzed"
@@ -105,7 +109,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentProcessingResult:
-    """Content processing result"""
+    """
+Content processing result"""
     content_id: str
     status: ProcessingStatus
     processed_formats: List[ContentFormat]
@@ -119,7 +124,8 @@ class ContentProcessingResult:
 
 @dataclass
 class ContentIntegrationConfig:
-    """Content integration configuration"""
+    """
+Content integration configuration"""
     auto_optimization: bool = True
     auto_protection: bool = True
     generate_previews: bool = True
@@ -733,7 +739,8 @@ class ContentIntegration:
         content_type: ContentType, 
         content_format: ContentFormat
     ) -> Dict[str, Any]:
-        """Validate uploaded content"""
+        """
+Validate uploaded content"""
         return {"valid": True, "errors": []}
     
     async def _extract_content_metadata(

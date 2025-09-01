@@ -4,6 +4,7 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 Advanced optimization for collaboration matching, partnership algorithms,
 recommendation systems, and audience targeting.
 """
+
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,7 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class MatchType(Enum):
-    """Type of matching optimization"""
+    """
+Type of matching optimization"""
+
     COLLABORATION = "collaboration"
     PARTNERSHIP = "partnership"
     AUDIENCE = "audience"
@@ -44,7 +47,8 @@ class MatchScore:
 
 @dataclass
 class MatchRecommendation:
-    """Match recommendation with details"""
+    """
+Match recommendation with details"""
     match_id: str
     match_type: MatchType
     target_entity: Dict[str, Any]
@@ -58,7 +62,8 @@ class MatchRecommendation:
 
 
 class CollaborationOptimizer(BaseEngine):
-    """Advanced collaboration matching and optimization"""
+    """
+Advanced collaboration matching and optimization"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)

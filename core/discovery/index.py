@@ -35,6 +35,7 @@ Features:
 - Real-time analytics and metrics collection
 - Fault tolerance and automatic failover
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -59,7 +60,9 @@ from .performance_tracker import PerformanceTracker, SearchPerformance, UserEnga
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """Discovery service status enumeration"""
+    """
+Discovery service status enumeration"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -68,6 +71,7 @@ class ServiceStatus(Enum):
 
 class QueryType(Enum):
     """Discovery query type enumeration"""
+
     CONTENT_SEARCH = "content_search"
     CREATOR_SEARCH = "creator_search"
     OPPORTUNITY_SCAN = "opportunity_scan"
@@ -95,7 +99,8 @@ class ServiceInfo:
 
 @dataclass
 class DiscoveryRequest:
-    """Unified discovery request"""
+    """
+Unified discovery request"""
     request_id: str
     query_type: QueryType
     query_text: str
@@ -111,7 +116,8 @@ class DiscoveryRequest:
 
 @dataclass
 class DiscoveryResponse:
-    """Unified discovery response"""
+    """
+Unified discovery response"""
     request_id: str
     query_type: QueryType
     status: str
@@ -142,7 +148,8 @@ class DiscoveryIndex:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize discovery index with configuration"""
+        """
+Initialize discovery index with configuration"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -187,7 +194,8 @@ class DiscoveryIndex:
         self._analytics_task: Optional[asyncio.Task] = None
 
     async def initialize(self) -> bool:
-        """Initialize all discovery services and components"""
+        """
+Initialize all discovery services and components"""
         try:
             self.logger.info("Initializing DiscoveryIndex...")
             
@@ -780,7 +788,8 @@ async def get_discovery_index() -> DiscoveryIndex:
     return _discovery_index
 
 async def initialize_discovery_services(config: Optional[Dict[str, Any]] = None) -> bool:
-    """Initialize global discovery services"""
+    """
+Initialize global discovery services"""
     global _discovery_index
     
     try:

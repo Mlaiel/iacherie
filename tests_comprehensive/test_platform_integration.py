@@ -11,6 +11,7 @@ Tests the complete system integration including:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import asyncio
 import json
@@ -38,7 +39,8 @@ class AinfluePlatformTests:
         self.setup_complete = False
     
     async def setup_test_environment(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         try:
             # Initialize test client
             from api.main import app

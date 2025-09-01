@@ -12,6 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import random
 import json
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 async def run_complete_ia_influencer_demo():
-    """Complete demonstration specific to IA Influencer Agent platform"""
+    """
+Complete demonstration specific to IA Influencer Agent platform"""
     logger.info("🎯 IA INFLUENCER AGENT - COMPLETE OBSERVABILITY DEMONSTRATION")
     logger.info("=" * 80)
     

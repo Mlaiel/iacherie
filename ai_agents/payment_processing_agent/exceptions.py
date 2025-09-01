@@ -8,30 +8,36 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 
 class PaymentProcessingError(Exception):
-    """Base exception for payment processing errors."""
+    """
+Base exception for payment processing errors."""
     pass
 
 
 class InvalidPaymentMethodError(PaymentProcessingError):
-    """Exception for invalid payment method errors."""
+    """
+Exception for invalid payment method errors."""
     pass
 
 
 class BankingDirectError(PaymentProcessingError):
-    """Base exception for Banking Direct errors."""
+    """
+Base exception for Banking Direct errors."""
     pass
 
 
 class PlaidError(BankingDirectError):
-    """Exception for Plaid-specific errors."""
+    """
+Exception for Plaid-specific errors."""
     pass
 
 
 class OpenBankingError(BankingDirectError):
-    """Exception for Open Banking-specific errors."""
+    """
+Exception for Open Banking-specific errors."""
     pass
 
 
 class ACHDirectError(BankingDirectError):
-    """Exception for ACH Direct-specific errors."""
+    """
+Exception for ACH Direct-specific errors."""
     pass

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Industrial Test Suite for Quality Module
+"""
+Ultra-Industrial Test Suite for Quality Module
 
 This module provides comprehensive testing for data quality validation,
 metrics quality checking, and compliance validation.
@@ -48,6 +50,7 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import numpy as np
@@ -81,11 +84,13 @@ from ai.observability.quality import (
 
 
 class TestDataQualityValidator:
-    """Ultra-industrial tests for DataQualityValidator class"""
+    """
+Ultra-industrial tests for DataQualityValidator class"""
     
     @pytest.fixture
     def data_quality_validator(self):
-        """Create DataQualityValidator instance for testing"""
+        """
+Create DataQualityValidator instance for testing"""
         config = {
             "quality_dimensions": [
                 "completeness", "accuracy", "consistency", "validity", 
@@ -471,7 +476,8 @@ class TestMetricsQualityChecker:
     
     @pytest.fixture
     def metrics_quality_checker(self):
-        """Create MetricsQualityChecker instance for testing"""
+        """
+Create MetricsQualityChecker instance for testing"""
         config = {
             "metric_validation_rules": {
                 "value_range_checks": True,
@@ -553,7 +559,8 @@ class TestMetricsQualityChecker:
         assert hasattr(metrics_quality_checker, 'correlation_analyzer')
     
     def test_metric_value_validation(self, metrics_quality_checker, sample_metrics):
-        """Test metric value validation"""
+        """
+Test metric value validation"""
         # Define value constraints for different metrics
         value_constraints = {
             "cpu_usage": {"min": 0, "max": 100, "unit": "percentage"},
@@ -723,7 +730,8 @@ class TestLogQualityValidator:
     
     @pytest.fixture
     def log_quality_validator(self):
-        """Create LogQualityValidator instance for testing"""
+        """
+Create LogQualityValidator instance for testing"""
         config = {
             "log_format_validation": True,
             "log_level_validation": True,
@@ -803,7 +811,8 @@ class TestLogQualityValidator:
         assert hasattr(log_quality_validator, 'structure_validator')
     
     def test_log_format_validation(self, log_quality_validator, sample_logs):
-        """Test log format validation"""
+        """
+Test log format validation"""
         # Define expected log format
         expected_format = {
             "required_fields": ["timestamp", "level", "service", "message", "request_id"],
@@ -969,7 +978,8 @@ class TestComplianceValidator:
     
     @pytest.fixture
     def compliance_validator(self):
-        """Create ComplianceValidator instance for testing"""
+        """
+Create ComplianceValidator instance for testing"""
         config = {
             "compliance_standards": ["GDPR", "HIPAA", "SOX", "PCI_DSS", "ISO_27001"],
             "audit_trail_enabled": True,

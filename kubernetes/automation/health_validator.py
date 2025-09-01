@@ -7,6 +7,7 @@ all system components during deployment and runtime.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ..queue.message_queue_manager import MessageQueueManager
 
 
 class HealthStatus(Enum):
-    """Health status types"""
+    """
+Health status types"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -38,6 +41,7 @@ class HealthStatus(Enum):
 
 class ComponentType(Enum):
     """Component types for health checking"""
+
     POD = "pod"
     SERVICE = "service"
     ENDPOINT = "endpoint"
@@ -67,7 +71,8 @@ class HealthCheck:
 
 @dataclass
 class HealthResult:
-    """Health check result"""
+    """
+Health check result"""
     name: str
     status: HealthStatus
     message: str
@@ -124,7 +129,8 @@ class HealthValidator(BaseComponent):
         self._initialize_health_checks()
 
     def _initialize_health_checks(self):
-        """Initialize built-in health checks"""
+        """
+Initialize built-in health checks"""
         
         # Pod health checks
         self.register_health_check(HealthCheck(
@@ -1047,7 +1053,8 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_postgresql_replicas(self) -> Dict[str, Any]:
-        """Check PostgreSQL replica health"""
+        """
+Check PostgreSQL replica health"""
         try:
             replica_info = await self.db_manager.check_replica_connections()
             healthy_replicas = [r for r in replica_info if r['connected']]
@@ -1078,7 +1085,8 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_redis_primary(self) -> Dict[str, Any]:
-        """Check Redis primary health"""
+        """
+Check Redis primary health"""
         try:
             redis_info = await self.redis_manager.check_primary_health()
             if redis_info['healthy']:
@@ -1101,7 +1109,8 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_redis_cluster(self) -> Dict[str, Any]:
-        """Check Redis cluster health"""
+        """
+Check Redis cluster health"""
         try:
             cluster_info = await self.redis_manager.check_cluster_health()
             healthy_nodes = cluster_info.get('healthy_nodes', 0)
@@ -1133,7 +1142,8 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_celery_broker(self) -> Dict[str, Any]:
-        """Check Celery broker health"""
+        """
+Check Celery broker health"""
         try:
             broker_info = await self.queue_manager.check_broker_health()
             if broker_info['healthy']:
@@ -1156,7 +1166,8 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_celery_workers(self) -> Dict[str, Any]:
-        """Check Celery workers health"""
+        """
+Check Celery workers health"""
         try:
             worker_info = await self.queue_manager.check_workers_health()
             active_workers = worker_info.get('active_workers', 0)
@@ -1188,7 +1199,8 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_text_generation_model(self) -> Dict[str, Any]:
-        """Check text generation AI model health"""
+        """
+Check text generation AI model health"""
         try:
             # Test model with a simple prompt
             test_prompt = "Generate a brief test response:"
@@ -1369,7 +1381,8 @@ class HealthValidator(BaseComponent):
         service: str, 
         metrics: Dict[str, float]
     ) -> List[str]:
-        """Check performance metrics against thresholds"""
+        """
+Check performance metrics against thresholds"""
         
         violations = []
         
@@ -1438,7 +1451,8 @@ class HealthValidator(BaseComponent):
         }
 
     async def get_health_summary(self) -> Dict[str, Any]:
-        """Get overall health summary"""
+        """
+Get overall health summary"""
         summary = {
             'timestamp': datetime.utcnow(),
             'total_checks': len(self.health_checks),
@@ -1465,6 +1479,7 @@ class HealthValidator(BaseComponent):
         return summary
 
     async def cleanup(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         await self.http_session.close()
         self.executor.shutdown(wait=True)

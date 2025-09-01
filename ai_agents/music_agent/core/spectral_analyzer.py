@@ -7,6 +7,7 @@ feature extraction, and intelligent music understanding capabilities.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpectralFeatures:
-    """Container for extracted spectral features"""
+    """
+Container for extracted spectral features"""
     mfcc: List[float]
     spectral_centroid: List[float]
     spectral_bandwidth: List[float]
@@ -39,7 +41,8 @@ class SpectralFeatures:
 
 @dataclass
 class RealTimeAnalysisResult:
-    """Result of real-time spectral analysis"""
+    """
+Result of real-time spectral analysis"""
     analysis_id: str
     features: SpectralFeatures
     genre_prediction: Optional[str] = None
@@ -70,7 +73,8 @@ class SpectralAnalyzer:
         self._initialize_components()
         
     def _initialize_components(self):
-        """Initialize audio processing components"""
+        """
+Initialize audio processing components"""
         if not HAS_AUDIO_LIBS:
             logger.warning("Audio processing libraries not available. Using basic analysis.")
             self._use_basic_analysis = True
@@ -331,7 +335,8 @@ class SpectralAnalyzer:
         self, 
         audio_files: List[Dict[str, Any]]
     ) -> List[RealTimeAnalysisResult]:
-        """Perform batch analysis on multiple audio files"""
+        """
+Perform batch analysis on multiple audio files"""
         results = []
         
         for audio_file in audio_files:

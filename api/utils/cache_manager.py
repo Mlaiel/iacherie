@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import redis
 import json
 import pickle
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class CacheStrategy(Enum):
-    """Cache strategy enumeration"""
+    """
+Cache strategy enumeration"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
@@ -39,6 +42,7 @@ class CacheStrategy(Enum):
 
 class CacheLevel(Enum):
     """Cache level enumeration"""
+
     L1_MEMORY = "l1_memory"  # In-memory cache
     L2_REDIS = "l2_redis"    # Redis cache
     L3_DATABASE = "l3_database"  # Database cache
@@ -56,14 +60,16 @@ class CacheStats:
     
     @property
     def hit_ratio(self) -> float:
-        """Calculate cache hit ratio"""
+        """
+Calculate cache hit ratio"""
         total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
 
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""
+    """
+Cache entry with metadata"""
     key: str
     value: Any
     created_at: datetime = field(default_factory=datetime.utcnow)
@@ -74,14 +80,16 @@ class CacheEntry:
     
     @property
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""
+        """
+Check if cache entry is expired"""
         if self.ttl is None:
             return False
         return (datetime.utcnow() - self.created_at).seconds > self.ttl
 
 
 class MemoryOptimizer:
-    """Advanced memory optimization and monitoring"""
+    """
+Advanced memory optimization and monitoring"""
     
     def __init__(self, max_memory_percent: float = 80.0):
         self.max_memory_percent = max_memory_percent
@@ -89,7 +97,8 @@ class MemoryOptimizer:
         self.optimization_history = []
         
     def monitor_memory_usage(self) -> Dict[str, Any]:
-        """Monitor current memory usage"""
+        """
+Monitor current memory usage"""
         memory = psutil.virtual_memory()
         process = psutil.Process()
         
@@ -108,7 +117,8 @@ class MemoryOptimizer:
         return memory_info
     
     def _trigger_memory_optimization(self):
-        """Trigger memory optimization procedures"""
+        """
+Trigger memory optimization procedures"""
         logger.warning(f"Memory usage exceeded {self.max_memory_percent}%, triggering optimization")
         
         optimization_result = {
@@ -135,7 +145,8 @@ class MemoryOptimizer:
         pass
     
     def optimize_data_structures(self, data: Any) -> Any:
-        """Optimize data structures for memory efficiency"""
+        """
+Optimize data structures for memory efficiency"""
         if isinstance(data, dict):
             # Convert to more memory-efficient structure if large
             if len(data) > 1000:
@@ -147,7 +158,8 @@ class MemoryOptimizer:
         return data
     
     def _optimize_large_dict(self, data: dict) -> dict:
-        """Optimize large dictionary structures"""
+        """
+Optimize large dictionary structures"""
         # Remove None values and empty collections
         optimized = {
             k: v for k, v in data.items() 
@@ -156,7 +168,8 @@ class MemoryOptimizer:
         return optimized
     
     def _optimize_large_list(self, data: list) -> list:
-        """Optimize large list structures"""
+        """
+Optimize large list structures"""
         # Remove None values and duplicates while preserving order
         seen = set()
         optimized = []
@@ -168,7 +181,8 @@ class MemoryOptimizer:
 
 
 class RedisHandler:
-    """Advanced Redis cache handler with clustering support"""
+    """
+Advanced Redis cache handler with clustering support"""
     
     def __init__(self, 
                  host: str = 'localhost', 
@@ -186,7 +200,8 @@ class RedisHandler:
         self._connect()
         
     def _connect(self):
-        """Establish Redis connection"""
+        """
+Establish Redis connection"""
         try:
             if self.cluster_mode:
                 # Redis Cluster configuration
@@ -394,7 +409,8 @@ class CacheManager:
                   value: Any, 
                   ttl: Optional[int] = None,
                   strategy: CacheStrategy = CacheStrategy.LRU) -> bool:
-        """Set value in multi-level cache"""
+        """
+Set value in multi-level cache"""
         if ttl is None:
             ttl = self.default_ttl
         
@@ -433,7 +449,8 @@ class CacheManager:
         self.stats[CacheLevel.L1_MEMORY].memory_usage += entry.size
     
     async def delete(self, key: str) -> bool:
-        """Delete key from all cache levels"""
+        """
+Delete key from all cache levels"""
         deleted = False
         
         # Delete from L1
@@ -450,7 +467,8 @@ class CacheManager:
         return deleted
     
     async def clear(self, pattern: Optional[str] = None):
-        """Clear cache entries matching pattern"""
+        """
+Clear cache entries matching pattern"""
         if pattern is None:
             # Clear all
             self.l1_cache.clear()
@@ -462,7 +480,8 @@ class CacheManager:
                 await self.delete(key)
     
     async def _evict_entries(self, count: int):
-        """Evict entries using configured strategy"""
+        """
+Evict entries using configured strategy"""
         evicted = 0
         
         while evicted < count and self.l1_cache:
@@ -473,21 +492,25 @@ class CacheManager:
             evicted += 1
     
     def _lru_eviction(self) -> str:
-        """LRU eviction strategy"""
+        """
+LRU eviction strategy"""
         return next(iter(self.l1_cache))
     
     def _lfu_eviction(self) -> str:
-        """LFU eviction strategy"""
+        """
+LFU eviction strategy"""
         return min(self.l1_cache.keys(), 
                   key=lambda k: self.l1_cache[k].access_count)
     
     def _fifo_eviction(self) -> str:
-        """FIFO eviction strategy"""
+        """
+FIFO eviction strategy"""
         return min(self.l1_cache.keys(), 
                   key=lambda k: self.l1_cache[k].created_at)
     
     def _cleanup_expired_entries(self):
-        """Remove expired entries from L1 cache"""
+        """
+Remove expired entries from L1 cache"""
         expired_keys = [
             key for key, entry in self.l1_cache.items() 
             if entry.is_expired
@@ -499,7 +522,8 @@ class CacheManager:
             self.stats[CacheLevel.L1_MEMORY].evictions += 1
     
     def _update_memory_stats(self):
-        """Update memory usage statistics"""
+        """
+Update memory usage statistics"""
         total_size = sum(entry.size for entry in self.l1_cache.values())
         self.stats[CacheLevel.L1_MEMORY].memory_usage = total_size
         
@@ -508,7 +532,8 @@ class CacheManager:
             stats.last_updated = datetime.utcnow()
     
     def _calculate_size(self, obj: Any) -> int:
-        """Calculate approximate size of object in bytes"""
+        """
+Calculate approximate size of object in bytes"""
         try:
             return len(pickle.dumps(obj))
         except Exception:
@@ -526,7 +551,8 @@ class CacheManager:
                 return 64  # Default estimate
     
     def get_stats(self) -> Dict[str, Dict[str, Any]]:
-        """Get comprehensive cache statistics"""
+        """
+Get comprehensive cache statistics"""
         stats_dict = {}
         
         for level, stats in self.stats.items():
@@ -556,7 +582,8 @@ class CacheManager:
 
 
 class PerformanceMonitor:
-    """Performance monitoring and optimization for cache operations"""
+    """
+Performance monitoring and optimization for cache operations"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache_manager = cache_manager
@@ -568,7 +595,8 @@ class PerformanceMonitor:
         }
     
     def monitor_performance(self) -> Dict[str, Any]:
-        """Monitor cache performance and generate alerts"""
+        """
+Monitor cache performance and generate alerts"""
         stats = self.cache_manager.get_stats()
         alerts = []
         recommendations = []

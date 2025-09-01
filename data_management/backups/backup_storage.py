@@ -8,10 +8,11 @@ Responsibility: Stockage multi-cloud sécurisé avec redondance et optimisation
 ===============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class StorageConfig:
-    """Configuration pour les différents providers de stockage"""
+    """
+Configuration pour les différents providers de stockage"""
     provider: str
     region: str
     bucket_name: str
@@ -71,14 +73,16 @@ class UploadProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Calcule le pourcentage de progression"""
+        """
+Calcule le pourcentage de progression"""
         if self.total_size == 0:
             return 0.0
         return (self.uploaded_size / self.total_size) * 100
 
 
 class StorageProvider(ABC):
-    """Interface abstraite pour les providers de stockage"""
+    """
+Interface abstraite pour les providers de stockage"""
     
     @abstractmethod
     async def upload_file(
@@ -87,7 +91,8 @@ class StorageProvider(ABC):
         remote_path: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> StorageLocation:
-        """Upload un fichier vers le storage"""
+        """
+Upload un fichier vers le storage"""
         pass
     
     @abstractmethod
@@ -96,12 +101,14 @@ class StorageProvider(ABC):
         remote_path: str,
         local_path: Path
     ) -> bool:
-        """Download un fichier depuis le storage"""
+        """
+Download un fichier depuis le storage"""
         pass
     
     @abstractmethod
     async def delete_file(self, remote_path: str) -> bool:
-        """Supprime un fichier du storage"""
+        """
+Supprime un fichier du storage"""
         pass
     
     @abstractmethod
@@ -115,7 +122,8 @@ class StorageProvider(ABC):
     
     @abstractmethod
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Récupère les métadonnées d'un fichier"""
+        """
+Récupère les métadonnées d'un fichier"""
         pass
 
 
@@ -257,7 +265,8 @@ class S3StorageProvider(StorageProvider):
             )
     
     async def _multipart_upload(self, local_path: Path, remote_path: str, extra_args: Dict[str, Any]):
-        """Upload multipart pour gros fichiers avec progression"""
+        """
+Upload multipart pour gros fichiers avec progression"""
         part_size = 100 * 1024 * 1024  # 100MB par partie
         file_size = local_path.stat().st_size
         

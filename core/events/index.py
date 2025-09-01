@@ -5,7 +5,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
 Contact autorisations : mlaiel@live.de
@@ -15,6 +15,7 @@ Description:
     IA-Influencer-Agent. Facilite l'initialisation et la configuration de tous
     les composants d'événements.
 """
+
 from typing import Any, Dict, List, Optional, Union
 import asyncio
 import logging
@@ -452,7 +453,8 @@ async def publish_content_event(
     tenant_id: str,
     **kwargs
 ) -> bool:
-    """Publie un événement de contenu"""
+    """
+Publie un événement de contenu"""
     if not event_system_manager.event_bus:
         raise RuntimeError("Event system not initialized")
     

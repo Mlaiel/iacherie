@@ -8,6 +8,7 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
 """
+
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class ContentOptimizationStatus(Enum):
-    """Statuts du module Content Optimization"""
+    """
+Statuts du module Content Optimization"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
@@ -38,27 +41,32 @@ class ContentOptimizationConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class IContentOptimizationService(ABC):
-    """Interface du service Content Optimization"""
+    """
+Interface du service Content Optimization"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
+        """
+Initialisation du service"""
         pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
+        """
+Traitement principal"""
         pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
+        """
+Validation des données"""
         pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class ContentOptimizationManager:
-    """Gestionnaire principal Content Optimization"""
+    """
+Gestionnaire principal Content Optimization"""
     
     def __init__(self, config: ContentOptimizationConfig):
         self.config = config
@@ -133,7 +141,8 @@ class ContentOptimizationService(IContentOptimizationService):
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
+        """
+Exécution de la logique métier spécifique"""
         # Implement consolidated business logic for content optimization
         logger.info("Executing content optimization business logic")
         
@@ -208,7 +217,8 @@ async def create_contentoptimization_service(config: Optional[ContentOptimizatio
     return service
 
 def get_contentoptimization_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
+    """
+Récupération du statut du module"""
     return {
         "module": "Content Optimization",
         "version": "1.0.0",
@@ -226,7 +236,8 @@ class ContentOptimizationAPI:
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
+        """
+Vérification de santé du module"""
         return {
             "status": "healthy",
             "module": "Content Optimization",

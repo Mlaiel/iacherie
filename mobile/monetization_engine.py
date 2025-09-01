@@ -12,6 +12,7 @@ without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import uuid
@@ -48,6 +49,7 @@ logger = get_logger(__name__)
 
 class MonetizationType(Enum):
     """Mobile monetization types."""
+
     SUBSCRIPTION = "subscription"
     ONE_TIME_PURCHASE = "one_time_purchase"
     PAY_PER_VIEW = "pay_per_view"
@@ -60,6 +62,7 @@ class MonetizationType(Enum):
 
 class PaymentProvider(Enum):
     """Supported mobile payment providers."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     APPLE_PAY = "apple_pay"
@@ -71,6 +74,7 @@ class PaymentProvider(Enum):
 
 class Currency(Enum):
     """Supported currencies."""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -140,7 +144,8 @@ class MobileMonetizationEngine:
         self._initialize_processors()
     
     def _initialize_processors(self):
-        """Initialize payment and revenue processors."""
+        """
+Initialize payment and revenue processors."""
         try:
             self.payment_processor = PaymentProcessor()
             self.revenue_calculator = RevenueCalculator()
@@ -582,7 +587,8 @@ class MobileMonetizationEngine:
         revenue: MobileRevenue,
         transaction_data: Dict[str, Any]
     ):
-        """Process and validate revenue entry."""
+        """
+Process and validate revenue entry."""
         # Revenue processing logic would go here
         revenue.status = "confirmed"
         
@@ -628,7 +634,8 @@ class MobileMonetizationEngine:
         return next_payout.isoformat()
     
     async def _get_pending_payout_amount(self, user_id: str) -> float:
-        """Get pending payout amount."""
+        """
+Get pending payout amount."""
         user_revenues = self.revenue_cache.get(user_id, [])
         pending = sum(
             r.net_revenue for r in user_revenues

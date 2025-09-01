@@ -3,7 +3,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -13,6 +13,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Automated YouTube surveillance system for content protection and monitoring.
 Provides real-time monitoring of YouTube channels, videos, and content violations.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeMonitorTarget:
-    """YouTube monitoring target definition."""
+    """
+YouTube monitoring target definition."""
     target_id: str
     target_type: str  # channel, video, keyword, playlist
     identifier: str  # channel_id, video_id, search_term, playlist_id
@@ -41,7 +43,8 @@ class YouTubeMonitorTarget:
 
 @dataclass
 class YouTubeViolation:
-    """YouTube content violation detection result."""
+    """
+YouTube content violation detection result."""
     violation_id: str
     target_id: str
     video_id: str
@@ -83,7 +86,8 @@ class YouTubeMonitor:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize YouTube monitor."""
+        """
+Initialize YouTube monitor."""
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
@@ -359,7 +363,8 @@ class YouTubeMonitor:
             await self._check_target(target)
     
     async def _check_target(self, target: YouTubeMonitorTarget) -> None:
-        """Check a monitoring target for violations."""
+        """
+Check a monitoring target for violations."""
         try:
             self._logger.debug(f"Checking target: {target.target_id} ({target.target_type})")
             
@@ -591,7 +596,8 @@ class YouTubeMonitor:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring status."""
+        """
+Get current monitoring status."""
         return {
             'monitoring_active': self._monitoring_active,
             'targets_count': len(self.targets),
@@ -610,7 +616,8 @@ class YouTubeMonitor:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
+        """
+Get recent violations."""
         recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
@@ -636,7 +643,8 @@ class YouTubeMonitor:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the YouTube monitor."""
+        """
+Shutdown the YouTube monitor."""
         try:
             self._logger.info("Shutting down YouTube monitor...")
             

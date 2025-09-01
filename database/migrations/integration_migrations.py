@@ -8,7 +8,7 @@ Responsibility: Database schema evolution for multi-platform content distributio
 ================================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -24,6 +24,7 @@ Supported Platforms:
 - Stock: Shutterstock, Getty Images, Adobe Stock, Unsplash
 - NFT: OpenSea, Foundation, SuperRare, Async Art
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform categorization by content type"""
+    """
+Platform categorization by content type"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_HOSTING = "video_hosting"
     SOCIAL_MEDIA = "social_media"
@@ -101,6 +104,7 @@ class PlatformName(Enum):
 
 class IntegrationStatus(Enum):
     """Integration connection status"""
+
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"

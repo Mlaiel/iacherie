@@ -13,11 +13,12 @@ This code is proprietary and confidential. Any unauthorized copying, modificatio
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
-All rights reserved © 2025 Fahed Mlaiel
+All rights reserved (c) 2025 Fahed Mlaiel
 
 Team Expertise:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -381,7 +382,8 @@ class DMCAAutomationSuite:
                                            delivery_success_rate: float,
                                            tracking_id: Optional[str],
                                            enforcement_id: Optional[str]) -> List[str]:
-        """Determine next steps for workflow"""
+        """
+Determine next steps for workflow"""
         next_steps = []
         
         if delivery_success_rate < 1.0:
@@ -431,7 +433,8 @@ class DMCAAutomationSuite:
         }
     
     async def _check_platform_responses(self, workflow_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check for responses from platforms"""
+        """
+Check for responses from platforms"""
         # This would check for actual responses in production
         return {
             'responses_received': 0,
@@ -443,7 +446,8 @@ class DMCAAutomationSuite:
                                         compliance_status: Optional[Dict[str, Any]],
                                         enforcement_progress: Optional[Dict[str, Any]],
                                         platform_responses: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall workflow progress"""
+        """
+Calculate overall workflow progress"""
         progress_percentage = 0.0
         
         # Base progress from delivery
@@ -472,7 +476,8 @@ class DMCAAutomationSuite:
     def _determine_current_stage(self, 
                                compliance_status: Optional[Dict[str, Any]],
                                enforcement_progress: Optional[Dict[str, Any]]) -> str:
-        """Determine current stage of workflow"""
+        """
+Determine current stage of workflow"""
         if compliance_status:
             if compliance_status.get('status') == 'complied':
                 return 'completed'

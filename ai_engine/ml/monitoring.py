@@ -5,6 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module provides comprehensive monitoring capabilities for ML models including
 performance tracking, data drift detection, model degradation monitoring.
 """
+
 import logging
 import time
 import numpy as np
@@ -20,7 +21,9 @@ import threading
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of metrics that can be monitored"""
+    """
+Types of metrics that can be monitored"""
+
     ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
@@ -34,6 +37,7 @@ class MetricType(Enum):
 
 class AlertSeverity(Enum):
     """Severity levels for monitoring alerts"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -41,6 +45,7 @@ class AlertSeverity(Enum):
 
 class DriftType(Enum):
     """Types of data drift"""
+
     DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     FEATURE_DRIFT = "feature_drift"
@@ -56,7 +61,8 @@ class MetricPoint:
 
 @dataclass
 class Alert:
-    """Monitoring alert"""
+    """
+Monitoring alert"""
     alert_id: str
     severity: AlertSeverity
     message: str
@@ -68,7 +74,8 @@ class Alert:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for model monitoring"""
+    """
+Configuration for model monitoring"""
     model_name: str
     collection_interval: int = 60  # seconds
     retention_days: int = 30
@@ -77,7 +84,8 @@ class MonitoringConfig:
     alert_thresholds: Dict[MetricType, Tuple[float, float]] = None  # (min, max)
 
 class ModelMonitor:
-    """Main model monitoring system"""
+    """
+Main model monitoring system"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -268,7 +276,8 @@ class ModelMonitor:
         self.alert_callbacks.append(callback)
     
     def get_metrics(self, metric_type: MetricType, hours: int = 24) -> List[MetricPoint]:
-        """Get historical metrics for a specific type"""
+        """
+Get historical metrics for a specific type"""
         try:
             if metric_type not in self.metrics_storage:
                 return []
@@ -356,7 +365,8 @@ class PerformanceTracker:
         return degradation if degradation else None
     
     def get_performance_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get performance summary for the specified time period"""
+        """
+Get performance summary for the specified time period"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_str = cutoff_time.isoformat()

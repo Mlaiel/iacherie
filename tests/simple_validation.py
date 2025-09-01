@@ -3,6 +3,7 @@
 
 Basic validation without external dependencies
 """
+
 import sys
 import os
 from unittest.mock import Mock
@@ -12,7 +13,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def test_licensing_repositories():
-    """Test that licensing repositories initialize correctly"""
+    """
+Test that licensing repositories initialize correctly"""
     print("Testing licensing repositories...")
     try:
         from monetization.licensing_manager import LicenseRepository, ContentRepository

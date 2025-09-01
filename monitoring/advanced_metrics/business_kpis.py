@@ -12,6 +12,7 @@ CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited
 Business Logic Integration:
 User Upload → IA Protection → SEO Optimization → Collaboration → Distribution → Revenue
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class KPICategory(Enum):
-    """Categories of business KPIs for organization"""
+    """
+Categories of business KPIs for organization"""
+
     REVENUE = "revenue"
     USER_ACQUISITION = "user_acquisition"
     CONTENT_CREATION = "content_creation"
@@ -43,6 +46,7 @@ class KPICategory(Enum):
 
 class KPIAggregationType(Enum):
     """Types of KPI aggregation methods"""
+
     SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
@@ -55,6 +59,7 @@ class KPIAggregationType(Enum):
 
 class RevenueSource(Enum):
     """Revenue stream sources"""
+
     SUBSCRIPTION_PREMIUM = "subscription_premium"
     LICENSING_FEES = "licensing_fees"
     COMMISSION_COLLABORATIONS = "commission_collaborations"
@@ -83,7 +88,8 @@ class KPIMetric:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue-specific KPI metrics"""
+    """
+Revenue-specific KPI metrics"""
     total_revenue: Decimal
     revenue_by_source: Dict[RevenueSource, Decimal]
     monthly_recurring_revenue: Decimal
@@ -116,7 +122,8 @@ class UserAcquisitionMetrics:
 
 @dataclass
 class ContentCreationMetrics:
-    """Content creation and engagement KPI metrics"""
+    """
+Content creation and engagement KPI metrics"""
     total_content_uploads: int
     content_by_type: Dict[str, int]
     content_by_platform: Dict[str, int]
@@ -132,7 +139,8 @@ class ContentCreationMetrics:
 
 @dataclass
 class PlatformGrowthMetrics:
-    """Platform growth and ecosystem KPI metrics"""
+    """
+Platform growth and ecosystem KPI metrics"""
     total_active_platforms: int
     platform_integration_success_rate: float
     cross_platform_content_distribution: int
@@ -503,7 +511,8 @@ class BusinessKPIAnalyzer:
         self.models = {}
     
     async def initialize(self) -> None:
-        """Initialize the KPI analyzer"""
+        """
+Initialize the KPI analyzer"""
         try:
             self.logger.info("Initializing Business KPI Analyzer...")
             
@@ -549,7 +558,8 @@ class BusinessKPIAnalyzer:
         return quality_score
     
     async def _analyze_trends(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze trends in business metrics"""
+        """
+Analyze trends in business metrics"""
         return {
             "revenue_trend": "increasing",
             "user_growth_trend": "accelerating",

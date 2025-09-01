@@ -8,7 +8,7 @@ Responsibility: Amélioration qualité contenu multimédia avec IA et ML avancé
 ===========================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER QUALITY ENHANCEMENT:
 Content Analysis → Quality Assessment → Enhancement Processing → AI Upscaling → 
 Noise Reduction → Color Correction → Audio Enhancement → Format Optimization
 """
+
 import json
 import logging
 import asyncio
@@ -42,7 +43,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class QualityEnhancementProcessor(BaseProcessor):
-    """Processeur amélioration qualité contenu - Production Enterprise"""
+    """
+Processeur amélioration qualité contenu - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -141,7 +143,8 @@ class QualityEnhancementProcessor(BaseProcessor):
         }
         
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite l'amélioration de qualité du contenu"""
+        """
+Traite l'amélioration de qualité du contenu"""
         content_type = input_data.get('content_type', 'image')
         file_path = input_data.get('file_path')
         enhancement_level = input_data.get('enhancement_level', 'medium')
@@ -218,7 +221,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return False
     
     def _analyze_content_quality(self, file_path: str, content_type: str) -> Dict[str, Any]:
-        """Analyse la qualité du contenu"""
+        """
+Analyse la qualité du contenu"""
         quality_analysis = {
             'metrics': {},
             'quality_score': 0,
@@ -316,7 +320,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 0.0
     
     def _analyze_image_colors(self, image: np.ndarray) -> Dict[str, float]:
-        """Analyse les couleurs de l'image"""
+        """
+Analyse les couleurs de l'image"""
         try:
             # Convert to RGB
             rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -339,7 +344,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return {'richness': 0.0, 'balance': 0.0}
     
     def _calculate_image_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calcule le score de qualité global de l'image"""
+        """
+Calcule le score de qualité global de l'image"""
         try:
             score = 0
             
@@ -403,7 +409,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 50.0
     
     def _determine_quality_level(self, score: float, content_type: str) -> str:
-        """Détermine le niveau de qualité basé sur le score"""
+        """
+Détermine le niveau de qualité basé sur le score"""
         if score >= 80:
             return 'excellent'
         elif score >= 65:
@@ -414,7 +421,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 'poor'
     
     def _detect_image_issues(self, metrics: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Détecte les problèmes et génère des recommandations"""
+        """
+Détecte les problèmes et génère des recommandations"""
         issues = []
         recommendations = []
         
@@ -593,7 +601,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 0.0
     
     def _calculate_video_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calcule le score de qualité vidéo"""
+        """
+Calcule le score de qualité vidéo"""
         try:
             score = 0
             
@@ -657,7 +666,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 50.0
     
     def _detect_video_issues(self, metrics: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Détecte les problèmes vidéo"""
+        """
+Détecte les problèmes vidéo"""
         issues = []
         recommendations = []
         
@@ -825,7 +835,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 50.0
     
     def _detect_audio_issues(self, metrics: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Détecte les problèmes audio"""
+        """
+Détecte les problèmes audio"""
         issues = []
         recommendations = []
         
@@ -881,7 +892,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 0.0
     
     def _determine_enhancement_strategy(self, quality_analysis: Dict, enhancement_level: str, specific_enhancements: List[str]) -> Dict[str, Any]:
-        """Détermine la stratégie d'amélioration"""
+        """
+Détermine la stratégie d'amélioration"""
         strategy = {
             'priority_enhancements': [],
             'optional_enhancements': [],
@@ -1051,7 +1063,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return cv2.GaussianBlur(image, (5, 5), 0)
     
     def _apply_upscaling(self, image: np.ndarray, scale_factor: int = 2) -> np.ndarray:
-        """Applique l'upscaling"""
+        """
+Applique l'upscaling"""
         try:
             height, width = image.shape[:2]
             new_width = width * scale_factor
@@ -1061,7 +1074,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_ai_super_resolution(self, image: np.ndarray) -> np.ndarray:
-        """Applique la super-résolution IA (simulé)"""
+        """
+Applique la super-résolution IA (simulé)"""
         try:
             # In real implementation, would use trained models like ESRGAN
             # For now, use advanced interpolation
@@ -1071,7 +1085,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_sharpening(self, image: np.ndarray) -> np.ndarray:
-        """Applique le sharpening"""
+        """
+Applique le sharpening"""
         try:
             kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
             sharpened = cv2.filter2D(image, -1, kernel)
@@ -1081,7 +1096,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_color_correction(self, image: np.ndarray) -> np.ndarray:
-        """Applique la correction couleur"""
+        """
+Applique la correction couleur"""
         try:
             # Convert to LAB color space for better color manipulation
             lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
@@ -1098,7 +1114,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_brightness_correction(self, image: np.ndarray) -> np.ndarray:
-        """Applique la correction de luminosité"""
+        """
+Applique la correction de luminosité"""
         try:
             # Calculate current brightness
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -1115,7 +1132,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_contrast_enhancement(self, image: np.ndarray) -> np.ndarray:
-        """Applique l'amélioration du contraste"""
+        """
+Applique l'amélioration du contraste"""
         try:
             # Convert to YUV
             yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
@@ -1132,7 +1150,8 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _get_image_size(self, image: np.ndarray) -> str:
-        """Récupère la taille de l'image"""
+        """
+Récupère la taille de l'image"""
         try:
             height, width = image.shape[:2]
             return f"{width}x{height}"
@@ -1208,7 +1227,8 @@ class QualityEnhancementProcessor(BaseProcessor):
 
 
 class AsyncQualityEnhancementProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur quality enhancement"""
+    """
+Version asynchrone du processeur quality enhancement"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -1216,7 +1236,8 @@ class AsyncQualityEnhancementProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone du quality enhancement"""
+        """
+Traitement asynchrone du quality enhancement"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -1225,5 +1246,6 @@ class AsyncQualityEnhancementProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
+        """
+Validation asynchrone"""
         return self.sync_processor.validate_input(input_data)

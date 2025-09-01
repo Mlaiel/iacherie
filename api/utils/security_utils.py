@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import hashlib
 import hmac
 import secrets
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(str):
-    """Security level enumeration"""
+    """
+Security level enumeration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -50,6 +53,7 @@ class SecurityLevel(str):
 
 class ThreatType(str):
     """Threat type enumeration"""
+
     BRUTE_FORCE = "brute_force"
     SQL_INJECTION = "sql_injection"
     XSS = "xss"
@@ -63,6 +67,7 @@ class ThreatType(str):
 
 class AccessLevel(str):
     """Access level enumeration"""
+
     PUBLIC = "public"
     AUTHENTICATED = "authenticated"
     PREMIUM = "premium"
@@ -108,7 +113,8 @@ class SecurityEvent:
 
 @dataclass
 class AccessAttempt:
-    """Access attempt record"""
+    """
+Access attempt record"""
     attempt_id: str
     user_id: Optional[str]
     ip_address: str
@@ -120,7 +126,8 @@ class AccessAttempt:
     geolocation: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             'attempt_id': self.attempt_id,
             'user_id': self.user_id,
@@ -136,7 +143,8 @@ class AccessAttempt:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
+    """
+Security configuration"""
     max_login_attempts: int = 5
     lockout_duration_minutes: int = 30
     password_min_length: int = 8
@@ -153,20 +161,23 @@ class SecurityConfig:
 
 
 class PasswordManager:
-    """Advanced password management and validation"""
+    """
+Advanced password management and validation"""
     
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.common_passwords = self._load_common_passwords()
         
     def hash_password(self, password: str) -> str:
-        """Hash password using bcrypt"""
+        """
+Hash password using bcrypt"""
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed.decode('utf-8')
     
     def verify_password(self, password: str, hashed_password: str) -> bool:
-        """Verify password against hash"""
+        """
+Verify password against hash"""
         return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
     
     def validate_password_strength(self, password: str, username: str = "") -> Dict[str, Any]:
@@ -285,7 +296,8 @@ class PasswordManager:
         }
     
     def _has_repetitive_patterns(self, password: str) -> bool:
-        """Check for repetitive patterns"""
+        """
+Check for repetitive patterns"""
         # Check for repeated characters
         for i in range(len(password) - 2):
             if password[i] == password[i + 1] == password[i + 2]:
@@ -300,7 +312,8 @@ class PasswordManager:
         return False
     
     def _contains_dictionary_words(self, password: str) -> bool:
-        """Check for common dictionary words"""
+        """
+Check for common dictionary words"""
         common_words = {
             'password', 'admin', 'user', 'login', 'welcome',
             'hello', 'world', 'test', 'demo', 'sample'
@@ -310,7 +323,8 @@ class PasswordManager:
         return any(word in password_lower for word in common_words)
     
     def _get_password_suggestions(self, password: str, issues: List[str]) -> List[str]:
-        """Get suggestions for improving password"""
+        """
+Get suggestions for improving password"""
         suggestions = []
         
         if any("length" in issue for issue in issues):
@@ -372,7 +386,8 @@ class TwoFactorAuth:
         return totp.verify(token, valid_window=window)
     
     def generate_backup_codes(self, count: int = None) -> List[str]:
-        """Generate backup codes"""
+        """
+Generate backup codes"""
         if count is None:
             count = self.backup_codes_count
         
@@ -385,17 +400,20 @@ class TwoFactorAuth:
         return codes
     
     def hash_backup_codes(self, codes: List[str]) -> List[str]:
-        """Hash backup codes for storage"""
+        """
+Hash backup codes for storage"""
         return [hashlib.sha256(code.encode()).hexdigest() for code in codes]
     
     def verify_backup_code(self, code: str, hashed_codes: List[str]) -> bool:
-        """Verify backup code"""
+        """
+Verify backup code"""
         code_hash = hashlib.sha256(code.encode()).hexdigest()
         return code_hash in hashed_codes
 
 
 class IPSecurityManager:
-    """IP-based security management"""
+    """
+IP-based security management"""
     
     def __init__(self, config: SecurityConfig, geoip_db_path: Optional[str] = None):
         self.config = config
@@ -444,7 +462,8 @@ class IPSecurityManager:
             return True
     
     def is_ip_trusted(self, ip_address: str) -> bool:
-        """Check if IP address is trusted"""
+        """
+Check if IP address is trusted"""
         try:
             ip = ipaddress.ip_address(ip_address)
             
@@ -458,7 +477,8 @@ class IPSecurityManager:
             return False
     
     def block_ip(self, ip_address: str, duration_hours: Optional[int] = None):
-        """Block IP address"""
+        """
+Block IP address"""
         try:
             ip = ipaddress.ip_address(ip_address)
             self.blocked_ips.add(ip)
@@ -511,7 +531,8 @@ class RateLimiter:
     
     def is_rate_limited(self, identifier: str, 
                        custom_limit: Optional[int] = None) -> Tuple[bool, Dict[str, Any]]:
-        """Check if identifier is rate limited"""
+        """
+Check if identifier is rate limited"""
         with self._lock:
             limit = custom_limit or self.config.rate_limit_requests_per_minute
             now = datetime.utcnow()
@@ -547,14 +568,16 @@ class RateLimiter:
             }
     
     def clear_rate_limit(self, identifier: str):
-        """Clear rate limit for identifier"""
+        """
+Clear rate limit for identifier"""
         with self._lock:
             if identifier in self.request_counts:
                 del self.request_counts[identifier]
 
 
 class ThreatDetector:
-    """Advanced threat detection system"""
+    """
+Advanced threat detection system"""
     
     def __init__(self, config: SecurityConfig):
         self.config = config
@@ -563,7 +586,8 @@ class ThreatDetector:
         self._lock = threading.Lock()
     
     def detect_threats(self, request_data: Dict[str, Any]) -> List[SecurityEvent]:
-        """Detect threats in request data"""
+        """
+Detect threats in request data"""
         threats = []
         
         # SQL Injection detection
@@ -589,7 +613,8 @@ class ThreatDetector:
         return threats
     
     def _detect_sql_injection(self, request_data: Dict[str, Any]) -> Optional[SecurityEvent]:
-        """Detect SQL injection attempts"""
+        """
+Detect SQL injection attempts"""
         sql_patterns = [
             r"union\s+select", r"drop\s+table", r"delete\s+from",
             r"insert\s+into", r"update\s+set", r"'.*or.*'.*=.*'",
@@ -724,7 +749,8 @@ class ThreatDetector:
 
 
 class AuditLogger:
-    """Security audit logging system"""
+    """
+Security audit logging system"""
     
     def __init__(self, database_path: str = "security_audit.db"):
         self.database_path = database_path
@@ -780,7 +806,8 @@ class AuditLogger:
             ''')
     
     def log_security_event(self, event: SecurityEvent) -> bool:
-        """Log security event"""
+        """
+Log security event"""
         try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
@@ -979,7 +1006,8 @@ class SecurityManager:
     
     def authenticate_user(self, username: str, password: str, 
                          ip_address: str, user_agent: str) -> Dict[str, Any]:
-        """Authenticate user with comprehensive security checks"""
+        """
+Authenticate user with comprehensive security checks"""
         attempt_id = str(uuid.uuid4())
         
         # Check if IP is blocked
@@ -1076,7 +1104,8 @@ class SecurityManager:
         return session_id
     
     def validate_session(self, session_id: str, ip_address: str) -> Optional[Dict[str, Any]]:
-        """Validate session"""
+        """
+Validate session"""
         with self._session_lock:
             session = self.active_sessions.get(session_id)
             
@@ -1114,7 +1143,8 @@ class SecurityManager:
                 del self.active_sessions[session_id]
     
     def cleanup_expired_sessions(self):
-        """Clean up expired sessions"""
+        """
+Clean up expired sessions"""
         now = datetime.utcnow()
         
         with self._session_lock:
@@ -1127,7 +1157,8 @@ class SecurityManager:
                 del self.active_sessions[session_id]
     
     def get_security_dashboard(self) -> Dict[str, Any]:
-        """Get security dashboard data"""
+        """
+Get security dashboard data"""
         stats = self.audit_logger.get_security_statistics(hours=24)
         recent_events = self.audit_logger.get_security_events(hours=1)
         
@@ -1141,7 +1172,8 @@ class SecurityManager:
 
 
 def require_permission(required_level: AccessLevel):
-    """Decorator to require specific permission level"""
+    """
+Decorator to require specific permission level"""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def wrapper(*args, **kwargs):

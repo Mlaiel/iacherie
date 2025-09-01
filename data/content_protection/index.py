@@ -5,7 +5,7 @@ Professional unified interface for IA Influencer Agent content protection system
 Provides comprehensive protection orchestration and service coordination.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
@@ -13,6 +13,7 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -64,7 +65,8 @@ from .revenue_tracker import (
 
 @dataclass
 class ServiceConfig:
-    """Unified service configuration"""
+    """
+Unified service configuration"""
     db_session: AsyncSession
     redis_client: Redis
     api_keys: Dict[str, str]
@@ -77,7 +79,8 @@ class ServiceConfig:
 
 @dataclass
 class ProtectionSummary:
-    """Comprehensive protection status summary"""
+    """
+Comprehensive protection status summary"""
     user_id: str
     total_content_protected: int
     active_violations: int
@@ -547,24 +550,28 @@ class ContentProtectionService:
         )
     
     def _batch_content(self, content_list: List[str], batch_size: int) -> List[List[str]]:
-        """Batch content list into smaller chunks"""
+        """
+Batch content list into smaller chunks"""
         for i in range(0, len(content_list), batch_size):
             yield content_list[i:i + batch_size]
     
     async def _handle_realtime_violations(self, content_id: str, violations: List[ViolationAlert]):
-        """Handle violations detected in real-time"""
+        """
+Handle violations detected in real-time"""
         for violation in violations:
             if violation.severity in [ViolationSeverity.CRITICAL, ViolationSeverity.HIGH]:
                 # Immediate response for critical violations
                 await self.scan_and_respond(content_id)
     
     async def _get_protected_content_count(self, user_id: str) -> int:
-        """Get count of protected content for user"""
+        """
+Get count of protected content for user"""
         # Implementation would query database
         return 15  # Placeholder
     
     async def _get_user_violation_statistics(self, user_id: str) -> Dict[str, Any]:
-        """Get violation statistics for user"""
+        """
+Get violation statistics for user"""
         # Implementation would query database
         return {
             'active_violations': 3,
@@ -573,12 +580,14 @@ class ContentProtectionService:
         }
     
     async def _get_user_takedown_statistics(self, user_id: str) -> Dict[str, Any]:
-        """Get takedown statistics for user"""
+        """
+Get takedown statistics for user"""
         # Implementation would query database
         return {'pending_takedowns': 2}
     
     async def _get_next_scan_schedule(self, user_id: str) -> Dict[str, datetime]:
-        """Get next scan schedule for user"""
+        """
+Get next scan schedule for user"""
         # Implementation would query scheduled scans
         return {
             'last_scan': datetime.utcnow() - timedelta(hours=2),
@@ -587,7 +596,8 @@ class ContentProtectionService:
     
     async def _generate_recommendations(self, user_id: str, analytics_report: Any, 
                                       revenue_analytics: RevenueAnalytics) -> List[Dict[str, str]]:
-        """Generate protection recommendations"""
+        """
+Generate protection recommendations"""
         recommendations = []
         
         # Analyze protection effectiveness
@@ -620,12 +630,14 @@ class ContentProtectionService:
         return recommendations
     
     async def _get_all_protected_content(self) -> List[str]:
-        """Get all protected content IDs"""
+        """
+Get all protected content IDs"""
         # Implementation would query database
         return ['content_1', 'content_2', 'content_3']
     
     async def _get_active_users(self) -> List[str]:
-        """Get active user IDs"""
+        """
+Get active user IDs"""
         # Implementation would query database
         return ['user_1', 'user_2', 'user_3']
 

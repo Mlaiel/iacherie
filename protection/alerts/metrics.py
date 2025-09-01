@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Comprehensive metrics collection, monitoring, and alerting system with
 real-time analytics, performance tracking, and business intelligence.
 """
+
 import asyncio
 import logging
 import time
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of metrics collected."""
+    """
+Types of metrics collected."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -46,6 +49,7 @@ class MetricType(str, Enum):
 
 class MetricScope(str, Enum):
     """Scope of metric collection."""
+
     SYSTEM = "system"
     APPLICATION = "application"
     BUSINESS = "business"
@@ -69,7 +73,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertMetric:
-    """Container for alert-related metrics."""
+    """
+Container for alert-related metrics."""
     timestamp: datetime
     alert_id: str
     metric_name: str
@@ -79,7 +84,8 @@ class AlertMetric:
 
 
 class BusinessMetrics(BaseModel):
-    """Business intelligence metrics."""
+    """
+Business intelligence metrics."""
     
     # Volume metrics
     total_alerts_created: int = 0
@@ -109,7 +115,8 @@ class BusinessMetrics(BaseModel):
 
 
 class SystemPerformanceMetrics(BaseModel):
-    """System performance metrics."""
+    """
+System performance metrics."""
     
     # Processing metrics
     alert_processing_latency_ms: float = 0.0
@@ -139,7 +146,8 @@ class SystemPerformanceMetrics(BaseModel):
 
 
 class SecurityMetrics(BaseModel):
-    """Security-related metrics."""
+    """
+Security-related metrics."""
     
     # Threat detection
     suspicious_activities_detected: int = 0
@@ -229,7 +237,8 @@ class AlertMetricsCollector:
             await self.record_timing(operation_name, duration)
 
     async def record_alert_created(self, alert: ContentProtectionAlert):
-        """Record metrics for alert creation."""
+        """
+Record metrics for alert creation."""
         try:
             # Basic counters
             await self._increment_prometheus_counter("alerts_created_total", {
@@ -643,7 +652,8 @@ class AlertMetricsCollector:
                 self._prometheus_metrics[metric_name].inc()
 
     async def _record_prometheus_histogram(self, metric_name: str, value: float, labels: Dict[str, str] = None):
-        """Record value in Prometheus histogram."""
+        """
+Record value in Prometheus histogram."""
         if metric_name in self._prometheus_metrics:
             if labels:
                 self._prometheus_metrics[metric_name].labels(**labels).observe(value)
@@ -651,14 +661,16 @@ class AlertMetricsCollector:
                 self._prometheus_metrics[metric_name].observe(value)
 
     async def _update_real_time_metrics(self, metric_name: str, value: Union[int, float]):
-        """Update real-time metrics."""
+        """
+Update real-time metrics."""
         if metric_name not in self._real_time_metrics:
             self._real_time_metrics[metric_name] = 0
         
         self._real_time_metrics[metric_name] += value
 
     async def _get_counter_value(self, metric_name: str, labels: Dict[str, str] = None) -> float:
-        """Get current value of a Prometheus counter."""
+        """
+Get current value of a Prometheus counter."""
         try:
             if metric_name in self._prometheus_metrics:
                 if labels:
@@ -670,7 +682,8 @@ class AlertMetricsCollector:
             return 0.0
 
     async def _load_historical_metrics(self):
-        """Load historical metrics from storage."""
+        """
+Load historical metrics from storage."""
         try:
             # Load from Redis
             keys = await self.redis_client.keys("alert_metrics:*")
@@ -964,12 +977,14 @@ class AlertMetricsCollector:
         return 0
 
     async def _get_system_cpu_usage(self) -> float:
-        """Get current system CPU usage."""
+        """
+Get current system CPU usage."""
         # Implementation would use system monitoring tools
         return 0.0
 
     async def _get_system_memory_usage(self) -> float:
-        """Get current system memory usage."""
+        """
+Get current system memory usage."""
         # Implementation would use system monitoring tools
         return 0.0
 

@@ -19,7 +19,7 @@ professional audio improvement guidance for the IA Influencer Agent platform.
 - Professional studio-grade enhancement workflows
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 🛡️ TEAM SPECIALTIES:
 - Lead Audio Enhancement Expert & DSP Engineer: Fahed Mlaiel
@@ -34,6 +34,7 @@ is strictly prohibited under international copyright law.
 
 Contact: mlaiel@live.de
 """
+
 import numpy as np
 import logging
 import asyncio
@@ -54,7 +55,9 @@ from collections import defaultdict
 
 
 class EnhancementType(Enum):
-    """Types of audio enhancement"""
+    """
+Types of audio enhancement"""
+
     NOISE_REDUCTION = "noise_reduction"
     DYNAMIC_RANGE = "dynamic_range"
     FREQUENCY_BALANCE = "frequency_balance"
@@ -71,6 +74,7 @@ class EnhancementType(Enum):
 
 class QualityIssue(Enum):
     """Audio quality issues"""
+
     NOISE_FLOOR_HIGH = "noise_floor_high"
     DYNAMIC_RANGE_LOW = "dynamic_range_low"
     FREQUENCY_IMBALANCE = "frequency_imbalance"
@@ -87,6 +91,7 @@ class QualityIssue(Enum):
 
 class EnhancementPriority(Enum):
     """Enhancement priority levels"""
+
     CRITICAL = "critical"      # Must fix for professional use
     HIGH = "high"             # Important for quality
     MEDIUM = "medium"         # Noticeable improvement
@@ -96,6 +101,7 @@ class EnhancementPriority(Enum):
 
 class ProcessingComplexity(Enum):
     """Processing complexity levels"""
+
     SIMPLE = "simple"         # Basic processing
     MODERATE = "moderate"     # Standard processing
     ADVANCED = "advanced"     # Professional processing
@@ -143,7 +149,8 @@ class QualityAssessment:
 
 @dataclass
 class EnhancementRecommendation:
-    """Audio enhancement recommendation"""
+    """
+Audio enhancement recommendation"""
     enhancement_type: EnhancementType
     priority: EnhancementPriority
     complexity: ProcessingComplexity
@@ -175,7 +182,8 @@ class EnhancementRecommendation:
 
 @dataclass
 class EnhancementPlan:
-    """Comprehensive audio enhancement plan"""
+    """
+Comprehensive audio enhancement plan"""
     audio_id: str
     current_quality: QualityAssessment
     target_quality_score: float
@@ -207,7 +215,8 @@ class EnhancementPlan:
 
 @dataclass
 class EnhancementResult:
-    """Audio enhancement analysis result"""
+    """
+Audio enhancement analysis result"""
     original_audio_id: str
     enhanced_audio_id: Optional[str]
     
@@ -1000,24 +1009,29 @@ class AudioEnhancerAnalyzer:
         return None  # Placeholder
     
     def _create_stereo_enhancement_recommendation(self, quality_assessment: QualityAssessment) -> Optional[EnhancementRecommendation]:
-        """Create stereo enhancement recommendation"""
+        """
+Create stereo enhancement recommendation"""
         return None  # Placeholder
     
     def _create_harmonic_enhancement_recommendation(self) -> Optional[EnhancementRecommendation]:
-        """Create harmonic enhancement recommendation"""
+        """
+Create harmonic enhancement recommendation"""
         return None  # Placeholder
     
     def _create_vintage_emulation_recommendation(self) -> Optional[EnhancementRecommendation]:
-        """Create vintage emulation recommendation"""
+        """
+Create vintage emulation recommendation"""
         return None  # Placeholder
     
     def _create_spatial_enhancement_recommendation(self, quality_assessment: QualityAssessment) -> Optional[EnhancementRecommendation]:
-        """Create spatial enhancement recommendation"""
+        """
+Create spatial enhancement recommendation"""
         return None  # Placeholder
     
     # Helper calculation methods
     def _calculate_overall_quality_score(self, *analysis_results) -> float:
-        """Calculate overall quality score from analysis results"""
+        """
+Calculate overall quality score from analysis results"""
         try:
             signal_analysis, frequency_analysis, dynamic_analysis, stereo_analysis = analysis_results
             
@@ -1077,11 +1091,13 @@ class AudioEnhancerAnalyzer:
             return 0.0
     
     def _estimate_processing_time(self, recommendations: List[EnhancementRecommendation]) -> float:
-        """Estimate total processing time"""
+        """
+Estimate total processing time"""
         return float(sum(rec.estimated_processing_time for rec in recommendations))
     
     def _determine_overall_complexity(self, recommendations: List[EnhancementRecommendation]) -> ProcessingComplexity:
-        """Determine overall processing complexity"""
+        """
+Determine overall processing complexity"""
         if not recommendations:
             return ProcessingComplexity.SIMPLE
         
@@ -1102,7 +1118,8 @@ class AudioEnhancerAnalyzer:
     
     # Workflow and planning methods
     def _generate_processing_workflow(self, recommendations: List[EnhancementRecommendation]) -> List[str]:
-        """Generate processing workflow steps"""
+        """
+Generate processing workflow steps"""
         if not recommendations:
             return []
         
@@ -1148,7 +1165,8 @@ class AudioEnhancerAnalyzer:
         return list(all_tools)
     
     def _determine_skill_level(self, complexity: ProcessingComplexity) -> str:
-        """Determine required skill level"""
+        """
+Determine required skill level"""
         skill_mapping = {
             ProcessingComplexity.SIMPLE: "Beginner",
             ProcessingComplexity.MODERATE: "Intermediate", 
@@ -1173,7 +1191,8 @@ class AudioEnhancerAnalyzer:
     
     def _calculate_plan_confidence(self, quality_assessment: QualityAssessment, 
                                  recommendations: List[EnhancementRecommendation]) -> float:
-        """Calculate confidence in the enhancement plan"""
+        """
+Calculate confidence in the enhancement plan"""
         try:
             confidence_factors = []
             
@@ -1201,7 +1220,8 @@ class AudioEnhancerAnalyzer:
             return 0.8
     
     def _calculate_assessment_confidence(self, analysis_results: List) -> float:
-        """Calculate confidence in quality assessment"""
+        """
+Calculate confidence in quality assessment"""
         try:
             # Count successful analyses
             successful_analyses = sum(1 for result in analysis_results if not isinstance(result, Exception))
@@ -1217,28 +1237,33 @@ class AudioEnhancerAnalyzer:
     
     # Caching methods
     def _get_cached_quality(self, audio_id: str) -> Optional[QualityAssessment]:
-        """Get cached quality assessment"""
+        """
+Get cached quality assessment"""
         with self.cache_lock:
             return self.quality_cache.get(audio_id)
     
     def _cache_quality_assessment(self, audio_id: str, assessment: QualityAssessment):
-        """Cache quality assessment"""
+        """
+Cache quality assessment"""
         with self.cache_lock:
             self.quality_cache[audio_id] = assessment
     
     def _get_cached_enhancement_plan(self, audio_id: str) -> Optional[EnhancementPlan]:
-        """Get cached enhancement plan"""
+        """
+Get cached enhancement plan"""
         with self.cache_lock:
             return self.enhancement_cache.get(audio_id)
     
     def _cache_enhancement_plan(self, audio_id: str, plan: EnhancementPlan):
-        """Cache enhancement plan"""
+        """
+Cache enhancement plan"""
         with self.cache_lock:
             self.enhancement_cache[audio_id] = plan
     
     # Public utility methods
     def get_enhancement_statistics(self) -> Dict[str, Any]:
-        """Get enhancement engine statistics"""
+        """
+Get enhancement engine statistics"""
         with self.cache_lock:
             cached_assessments = len(self.quality_cache)
             cached_plans = len(self.enhancement_cache)
@@ -1252,7 +1277,8 @@ class AudioEnhancerAnalyzer:
         }
     
     def clear_caches(self):
-        """Clear all caches"""
+        """
+Clear all caches"""
         with self.cache_lock:
             self.quality_cache.clear()
             self.enhancement_cache.clear()

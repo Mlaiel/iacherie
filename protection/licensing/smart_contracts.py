@@ -10,8 +10,9 @@ Professional blockchain smart contract management system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Blockchain Engineer + Smart Contract Developer + Legal Tech Specialist
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
@@ -26,7 +27,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
+    """
+Supported blockchain networks"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BSC = "bsc"
@@ -36,6 +39,7 @@ class BlockchainNetwork(Enum):
 
 class ContractStatus(Enum):
     """Smart contract status"""
+
     DEPLOYED = "deployed"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -44,6 +48,7 @@ class ContractStatus(Enum):
 
 class TransactionType(Enum):
     """Blockchain transaction types"""
+
     DEPLOYMENT = "deployment"
     LICENSE_CREATION = "license_creation"
     REVENUE_DISTRIBUTION = "revenue_distribution"
@@ -66,7 +71,8 @@ class SmartContractInfo:
 
 @dataclass
 class BlockchainTransaction:
-    """Blockchain transaction record"""
+    """
+Blockchain transaction record"""
     transaction_id: str
     contract_address: str
     transaction_type: TransactionType
@@ -88,7 +94,8 @@ class SmartContractManager:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize smart contract manager with configuration."""
+        """
+Initialize smart contract manager with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -393,7 +400,8 @@ class SmartContractManager:
         return base_params
     
     def _convert_duration_to_seconds(self, duration_string: str) -> int:
-        """Convert duration string to seconds."""
+        """
+Convert duration string to seconds."""
         duration_lower = duration_string.lower()
         
         if 'year' in duration_lower:
@@ -409,7 +417,8 @@ class SmartContractManager:
             return 5 * 365 * 24 * 3600  # Default 5 years
     
     def _convert_to_wei(self, amount: float, network: str) -> int:
-        """Convert amount to smallest unit for blockchain network."""
+        """
+Convert amount to smallest unit for blockchain network."""
         if network in ['ethereum', 'polygon']:
             return int(amount * 10**18)  # Wei
         elif network == 'solana':
@@ -420,7 +429,8 @@ class SmartContractManager:
             return int(amount * 10**18)  # Default to 18 decimals
     
     async def _store_metadata_on_ipfs(self, license_data: Dict[str, Any]) -> str:
-        """Store license metadata on IPFS and return URI."""
+        """
+Store license metadata on IPFS and return URI."""
         try:
             # This would integrate with IPFS client
             # For now, return a mock IPFS URI
@@ -566,7 +576,8 @@ class SmartContractManager:
             return parameters
     
     def _get_contract_method_name(self, action: str) -> str:
-        """Get contract method name for action."""
+        """
+Get contract method name for action."""
         method_mapping = {
             'renew': 'renewLicense',
             'modify': 'modifyTerms',
@@ -576,7 +587,8 @@ class SmartContractManager:
         return method_mapping.get(action, 'updateContract')
     
     def _get_transaction_type(self, action: str) -> TransactionType:
-        """Get transaction type for action."""
+        """
+Get transaction type for action."""
         type_mapping = {
             'renew': TransactionType.CONTRACT_UPDATE,
             'modify': TransactionType.CONTRACT_UPDATE,
@@ -718,7 +730,8 @@ class SmartContractManager:
         transaction_type: Optional[TransactionType] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get blockchain transaction history."""
+        """
+Get blockchain transaction history."""
         transactions = self.transaction_history
         
         # Filter by contract address
@@ -738,7 +751,8 @@ class SmartContractManager:
         return [asdict(tx) for tx in transactions]
     
     def get_smart_contract_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive smart contract metrics."""
+        """
+Get comprehensive smart contract metrics."""
         return {
             **self.metrics,
             'deployed_contracts': len(self.deployed_contracts),

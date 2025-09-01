@@ -7,6 +7,7 @@ Validates critical production requirements are met.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import subprocess
 import sys
 import time
@@ -18,7 +19,8 @@ from datetime import datetime
 
 
 class TestRunner:
-    """Comprehensive test execution and reporting."""
+    """
+Comprehensive test execution and reporting."""
     
     def __init__(self, project_root: str = None):
         self.project_root = Path(project_root or os.getcwd())
@@ -27,7 +29,8 @@ class TestRunner:
         self.end_time = None
         
     def run_all_tests(self) -> Dict[str, Any]:
-        """Run all test suites and generate comprehensive report."""
+        """
+Run all test suites and generate comprehensive report."""
         print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
         print("=" * 60)
         
@@ -319,7 +322,8 @@ class TestRunner:
             return 0
     
     def _extract_performance_metrics(self, output: str) -> Dict[str, Any]:
-        """Extract performance metrics from test output."""
+        """
+Extract performance metrics from test output."""
         try:
             # Look for JSON performance data in output
             import re
@@ -343,7 +347,8 @@ class TestRunner:
             return 85.0
     
     def _read_coverage_report(self) -> Dict[str, Any]:
-        """Read coverage report if available."""
+        """
+Read coverage report if available."""
         try:
             coverage_file = self.project_root / "coverage.json"
             if coverage_file.exists():

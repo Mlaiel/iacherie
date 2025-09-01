@@ -5,6 +5,7 @@
 
 Quick verification that all monitoring components work correctly.
 """
+
 import asyncio
 import sys
 import os
@@ -15,7 +16,8 @@ from decimal import Decimal
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 async def test_basic_functionality():
-    """Test basic functionality of all monitoring components"""
+    """
+Test basic functionality of all monitoring components"""
     print("🔄 Starting monitoring system test...")
     
     try:

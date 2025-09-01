@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementType(Enum):
-    """Types of image enhancement"""
+    """
+Types of image enhancement"""
+
     SUPER_RESOLUTION = "super_resolution"
     NOISE_REDUCTION = "noise_reduction"
     SHARPENING = "sharpening"
@@ -71,6 +74,7 @@ class EnhancementType(Enum):
 
 class QualityLevel(Enum):
     """Enhancement quality levels"""
+
     FAST = "fast"
     BALANCED = "balanced"
     QUALITY = "quality"
@@ -80,6 +84,7 @@ class QualityLevel(Enum):
 
 class EnhancementModel(Enum):
     """Available enhancement models"""
+
     ESRGAN = "esrgan"
     REAL_ESRGAN = "real_esrgan"
     SRCNN = "srcnn"
@@ -109,7 +114,8 @@ class EnhancementParams:
 
 @dataclass
 class EnhancementResult:
-    """Enhancement operation result"""
+    """
+Enhancement operation result"""
     success: bool
     processing_time: float
     enhanced_image: Optional[Image.Image] = None
@@ -881,12 +887,14 @@ class ImageEnhancer:
         return await self._apply_noise_reduction(image, params)
 
     async def _apply_blur_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Remove motion blur and defocus"""
+        """
+Remove motion blur and defocus"""
         # Advanced deblurring would require specialized algorithms
         return await self._apply_sharpening(image, params)
 
     async def _apply_scratch_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Remove scratches and defects from old photos"""
+        """
+Remove scratches and defects from old photos"""
         try:
             img_array = np.array(image)
             
@@ -970,7 +978,8 @@ class QualityUpscaler:
     """
     
     def __init__(self, enable_gpu: bool = True):
-        """Initialize Quality Upscaler"""
+        """
+Initialize Quality Upscaler"""
         self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.enable_gpu else "cpu")
         
@@ -1017,7 +1026,8 @@ class QualityUpscaler:
         return await self._lanczos_upscale(image, scale_factor, True)
 
     async def _lanczos_upscale(self, image: Image.Image, scale_factor: float, preserve_details: bool) -> Image.Image:
-        """High-quality Lanczos upscaling with detail preservation"""
+        """
+High-quality Lanczos upscaling with detail preservation"""
         new_size = (int(image.size[0] * scale_factor), int(image.size[1] * scale_factor))
         upscaled = image.resize(new_size, Image.Resampling.LANCZOS)
         
@@ -1028,6 +1038,7 @@ class QualityUpscaler:
         return upscaled
 
     async def _bicubic_upscale(self, image: Image.Image, scale_factor: float) -> Image.Image:
-        """Bicubic upscaling"""
+        """
+Bicubic upscaling"""
         new_size = (int(image.size[0] * scale_factor), int(image.size[1] * scale_factor))
         return image.resize(new_size, Image.Resampling.BICUBIC)

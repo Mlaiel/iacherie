@@ -11,6 +11,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -63,7 +64,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingResult:
-    """Result of content processing operation"""
+    """
+Result of content processing operation"""
     success: bool
     processed_content: Optional[Union[bytes, str, Dict[str, Any]]]
     metadata: Dict[str, Any]
@@ -75,7 +77,8 @@ class ProcessingResult:
 
 @dataclass  
 class ContentMetadata:
-    """Comprehensive content metadata structure"""
+    """
+Comprehensive content metadata structure"""
     file_type: str
     format: str
     size: int
@@ -93,7 +96,8 @@ class ContentMetadata:
 
 
 class BaseProcessor(ABC):
-    """Abstract base class for all content processors"""
+    """
+Abstract base class for all content processors"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -107,21 +111,25 @@ class BaseProcessor(ABC):
         
     @abstractmethod
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported formats for this processor"""
+        """
+Get list of supported formats for this processor"""
         pass
         
     def _calculate_checksum(self, data: bytes) -> str:
-        """Calculate SHA-256 checksum of content"""
+        """
+Calculate SHA-256 checksum of content"""
         return hashlib.sha256(data).hexdigest()
         
     def _get_mime_type(self, file_path: str) -> str:
-        """Get MIME type from file path"""
+        """
+Get MIME type from file path"""
         mime_type, _ = mimetypes.guess_type(file_path)
         return mime_type or 'application/octet-stream'
 
 
 class AudioProcessor(BaseProcessor):
-    """Industrial-grade audio content processor"""
+    """
+Industrial-grade audio content processor"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -220,7 +228,8 @@ class AudioProcessor(BaseProcessor):
         )
     
     async def _analyze_audio_quality(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Analyze audio quality metrics"""
+        """
+Analyze audio quality metrics"""
         try:
             # RMS Energy
             rms_energy = float(np.sqrt(np.mean(y**2)))
@@ -282,7 +291,8 @@ class AudioProcessor(BaseProcessor):
         return self._array_to_audio_bytes(processed_y, sr, options.get('output_format', 'wav'))
     
     def _reduce_noise(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Simple noise reduction using spectral gating"""
+        """
+Simple noise reduction using spectral gating"""
         # This is a simplified noise reduction - in production use more sophisticated algorithms
         stft = librosa.stft(y)
         magnitude = np.abs(stft)
@@ -298,7 +308,8 @@ class AudioProcessor(BaseProcessor):
     
     def _compress_dynamic_range(self, y: np.ndarray, ratio: float = 4.0, 
                                threshold: float = -20.0) -> np.ndarray:
-        """Apply dynamic range compression"""
+        """
+Apply dynamic range compression"""
         # Convert to dB
         y_db = librosa.amplitude_to_db(np.abs(y))
         
@@ -314,7 +325,8 @@ class AudioProcessor(BaseProcessor):
         return compressed_linear * np.sign(y)
     
     def _apply_eq(self, y: np.ndarray, sr: int, eq_settings: Dict[str, float]) -> np.ndarray:
-        """Apply EQ adjustments"""
+        """
+Apply EQ adjustments"""
         # This is a simplified EQ - in production use more sophisticated filtering
         processed = y.copy()
         
@@ -331,7 +343,8 @@ class AudioProcessor(BaseProcessor):
         return processed
     
     def _array_to_audio_bytes(self, y: np.ndarray, sr: int, format: str) -> bytes:
-        """Convert numpy array to audio bytes in specified format"""
+        """
+Convert numpy array to audio bytes in specified format"""
         import io
         import tempfile
         
@@ -341,12 +354,14 @@ class AudioProcessor(BaseProcessor):
             return temp_file.read()
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported audio formats"""
+        """
+Get supported audio formats"""
         return self.supported_formats
 
 
 class VideoProcessor(BaseProcessor):
-    """Industrial-grade video content processor"""
+    """
+Industrial-grade video content processor"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -450,7 +465,8 @@ class VideoProcessor(BaseProcessor):
         )
     
     async def _analyze_video_quality(self, cap: cv2.VideoCapture) -> Dict[str, float]:
-        """Analyze video quality metrics"""
+        """
+Analyze video quality metrics"""
         try:
             # Sample frames for quality analysis
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -566,12 +582,14 @@ class VideoProcessor(BaseProcessor):
         return clip.fl_image(color_correct)
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported video formats"""
+        """
+Get supported video formats"""
         return self.supported_formats
 
 
 class ImageProcessor(BaseProcessor):
-    """Industrial-grade image content processor"""
+    """
+Industrial-grade image content processor"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -772,7 +790,8 @@ class ImageProcessor(BaseProcessor):
         return processed
     
     def _auto_enhance_image(self, image: Image.Image) -> Image.Image:
-        """Apply automatic image enhancements"""
+        """
+Apply automatic image enhancements"""
         enhanced = image
         
         # Auto-contrast
@@ -795,7 +814,8 @@ class ImageProcessor(BaseProcessor):
         return enhanced
     
     def _apply_image_filter(self, image: Image.Image, filter_type: str) -> Image.Image:
-        """Apply specific image filter"""
+        """
+Apply specific image filter"""
         filter_map = {
             'blur': ImageFilter.BLUR,
             'detail': ImageFilter.DETAIL,
@@ -815,12 +835,14 @@ class ImageProcessor(BaseProcessor):
         return image
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported image formats"""
+        """
+Get supported image formats"""
         return self.supported_formats
 
 
 class TextProcessor(BaseProcessor):
-    """Industrial-grade text content processor"""
+    """
+Industrial-grade text content processor"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
@@ -954,7 +976,8 @@ class TextProcessor(BaseProcessor):
         )
     
     async def _analyze_text_quality(self, text_data: str) -> Dict[str, float]:
-        """Analyze text quality and characteristics"""
+        """
+Analyze text quality and characteristics"""
         try:
             # Basic metrics
             word_count = len(text_data.split())
@@ -1164,7 +1187,8 @@ class TextProcessor(BaseProcessor):
 
 
 class MetadataExtractor:
-    """Comprehensive metadata extraction utility"""
+    """
+Comprehensive metadata extraction utility"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MetadataExtractor")
@@ -1209,7 +1233,8 @@ class MetadataExtractor:
         return None
     
     async def _extract_generic_metadata(self, content: Union[bytes, str, BinaryIO]) -> Dict[str, Any]:
-        """Extract generic metadata for unknown content types"""
+        """
+Extract generic metadata for unknown content types"""
         try:
             if isinstance(content, str):
                 if Path(content).exists():

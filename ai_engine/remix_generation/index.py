@@ -10,13 +10,14 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
 MISSION: Index central et orchestrateur du système de génération de remix IA
 LOGIQUE MÉTIER: Coordination des modèles IA, gestion des workflows, orchestration des processus
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -30,7 +31,9 @@ from . import MODULE_INFO, __version__, __author__, __email__
 logger = logging.getLogger(__name__)
 
 class RemixGenerationStatus(Enum):
-    """Status enumeration for remix generation processes"""
+    """
+Status enumeration for remix generation processes"""
+
     INITIALIZED = "initialized"
     ANALYZING = "analyzing"
     GENERATING = "generating"
@@ -70,7 +73,8 @@ class RemixGenerationIndex:
     """
     
     def __init__(self):
-        """Initialize the remix generation index"""
+        """
+Initialize the remix generation index"""
         self.logger = logger
         self.sessions: Dict[str, RemixGenerationSession] = {}
         self.active_models: Dict[str, Any] = {}

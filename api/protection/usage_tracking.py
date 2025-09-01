@@ -25,6 +25,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -46,7 +47,9 @@ from ..core.exceptions import UsageException, MonitoringException
 
 
 class UsageStatus(Enum):
-    """Content usage status."""
+    """
+Content usage status."""
+
     AUTHORIZED = "authorized"
     UNAUTHORIZED = "unauthorized"
     PENDING_VERIFICATION = "pending_verification"
@@ -57,6 +60,7 @@ class UsageStatus(Enum):
 
 class DetectionMethod(Enum):
     """Usage detection methods."""
+
     FINGERPRINTING = "fingerprinting"
     WATERMARK = "watermark"
     METADATA_ANALYSIS = "metadata_analysis"
@@ -68,6 +72,7 @@ class DetectionMethod(Enum):
 
 class UsageContext(Enum):
     """Context of content usage."""
+
     COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     EDUCATIONAL = "educational"
@@ -80,6 +85,7 @@ class UsageContext(Enum):
 
 class PlatformType(Enum):
     """Types of platforms for usage monitoring."""
+
     STREAMING_SERVICE = "streaming_service"
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
@@ -117,7 +123,8 @@ class UsageDetection:
 
 @dataclass
 class UsageVerification:
-    """Usage verification record."""
+    """
+Usage verification record."""
     verification_id: str
     detection_id: str
     verified_by: str
@@ -151,7 +158,8 @@ class PlatformMonitor:
 
 @dataclass
 class UsageMetrics:
-    """Usage tracking metrics."""
+    """
+Usage tracking metrics."""
     metrics_id: str
     content_id: str
     period_start: datetime

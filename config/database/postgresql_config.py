@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class PostgreSQLEnvironment(Enum):
-    """PostgreSQL environment configurations"""
+    """
+PostgreSQL environment configurations"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -38,6 +41,7 @@ class PostgreSQLEnvironment(Enum):
 
 class ConnectionPoolStrategy(Enum):
     """Connection pool strategies for different workloads"""
+
     HIGH_PERFORMANCE = "high_performance"
     BALANCED = "balanced"
     MEMORY_OPTIMIZED = "memory_optimized"
@@ -133,7 +137,8 @@ class PostgreSQLConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup PostgreSQL-specific logging"""
+        """
+Setup PostgreSQL-specific logging"""
         self.logger = logging.getLogger(f"postgresql.{self.environment.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
@@ -178,7 +183,8 @@ class PostgreSQLConfig:
         return pool_configs.get(self.environment, PostgreSQLPoolConfig())
 
     def _get_performance_config(self) -> PostgreSQLPerformanceConfig:
-        """Get performance configuration based on environment"""
+        """
+Get performance configuration based on environment"""
         if self.environment == PostgreSQLEnvironment.PRODUCTION:
             return PostgreSQLPerformanceConfig(
                 work_mem="8MB",

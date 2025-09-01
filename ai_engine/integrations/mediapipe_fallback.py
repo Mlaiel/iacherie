@@ -6,6 +6,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Fallback implementation for MediaPipe functionality when the library is not available.
 Provides basic content detection capabilities using alternative methods.
 """
+
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -23,14 +24,16 @@ class MediaPipeFallback:
     """
     
     def __init__(self):
-        """Initialize the MediaPipe fallback system."""
+        """
+Initialize the MediaPipe fallback system."""
         self.initialized = True
         self.face_cascade = None
         self.body_cascade = None
         self._load_cascades()
         
     def _load_cascades(self):
-        """Load OpenCV Haar cascades for basic detection."""
+        """
+Load OpenCV Haar cascades for basic detection."""
         try:
             # Load pre-trained classifiers
             self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -184,7 +187,8 @@ class MediaPipeFallback:
         return landmarks
         
     def _estimate_pose_landmarks(self, x: int, y: int, w: int, h: int) -> List[Tuple[int, int]]:
-        """Estimate basic pose landmarks from bounding box."""
+        """
+Estimate basic pose landmarks from bounding box."""
         landmarks = []
         # Estimate basic body landmark positions
         landmarks.append((x + w//2, y + h//6))      # Head/neck

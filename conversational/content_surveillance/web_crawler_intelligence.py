@@ -28,13 +28,14 @@ content detection, and automated protection enforcement for multi-format content
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary web surveillance platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -81,7 +82,9 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platforms for content surveillance"""
+    """
+Supported platforms for content surveillance"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -102,6 +105,7 @@ class PlatformType(Enum):
 
 class CrawlerMode(Enum):
     """Crawler operation modes"""
+
     REALTIME_MONITORING = "realtime_monitoring"
     SCHEDULED_SWEEP = "scheduled_sweep"
     DEEP_INVESTIGATION = "deep_investigation"
@@ -113,6 +117,7 @@ class CrawlerMode(Enum):
 
 class MatchConfidence(Enum):
     """Content matching confidence levels"""
+
     EXACT_MATCH = "exact_match"          # 95-100%
     HIGH_SIMILARITY = "high_similarity"   # 85-94%
     MEDIUM_SIMILARITY = "medium_similarity" # 70-84%
@@ -144,7 +149,8 @@ class CrawlRequest:
 
 @dataclass
 class ContentMatch:
-    """Detected content match"""
+    """
+Detected content match"""
     match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     original_fingerprint: str = None
     detected_url: str = None
@@ -599,7 +605,8 @@ class WebCrawlerIntelligence:
             return MatchConfidence.NO_MATCH
     
     async def _generate_surveillance_analytics(self, report: SurveillanceReport):
-        """Generate comprehensive analytics for surveillance report"""
+        """
+Generate comprehensive analytics for surveillance report"""
         try:
             # Count high confidence matches
             report.high_confidence_matches = sum(

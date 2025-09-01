@@ -15,6 +15,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -36,7 +37,9 @@ from ...models.analytics import UserEvent, UserSegment
 
 
 class BehaviorCategory(Enum):
-    """User behavior analysis categories."""
+    """
+User behavior analysis categories."""
+
     NAVIGATION = "navigation"
     CONTENT_CONSUMPTION = "content_consumption"
     CREATION_PATTERNS = "creation_patterns"
@@ -47,6 +50,7 @@ class BehaviorCategory(Enum):
 
 class UserSegment(Enum):
     """User segmentation categories."""
+
     POWER_CREATOR = "power_creator"
     CASUAL_CREATOR = "casual_creator"
     CONTENT_CONSUMER = "content_consumer"
@@ -69,7 +73,8 @@ class BehaviorMetric:
 
 @dataclass
 class UserProfile:
-    """Comprehensive user behavioral profile."""
+    """
+Comprehensive user behavioral profile."""
     user_id: str
     segment: UserSegment
     engagement_score: float
@@ -240,7 +245,8 @@ class UserBehaviorCollector:
         return sum(durations) / len(durations) if durations else 0.0
         
     def _calculate_bounce_rate(self, events: List[UserEvent]) -> float:
-        """Calculate bounce rate from navigation events."""
+        """
+Calculate bounce rate from navigation events."""
         sessions = defaultdict(int)
         for event in events:
             sessions[event.session_id] += 1
@@ -256,7 +262,8 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect content consumption behavior patterns."""
+        """
+Collect content consumption behavior patterns."""
         
         async with get_database_session() as session:
             # Content views query
@@ -353,7 +360,8 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect content creation behavior patterns."""
+        """
+Collect content creation behavior patterns."""
         
         async with get_database_session() as session:
             # Content creation query
@@ -528,7 +536,8 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect monetization and revenue behavior patterns."""
+        """
+Collect monetization and revenue behavior patterns."""
         
         async with get_database_session() as session:
             # Revenue generation query
@@ -694,7 +703,8 @@ class UserBehaviorCollector:
         user_id: str,
         metrics: List[BehaviorMetric]
     ) -> float:
-        """Predict user churn probability using behavioral patterns."""
+        """
+Predict user churn probability using behavioral patterns."""
         
         # Simple churn prediction based on engagement trends
         # In production, this would use ML models

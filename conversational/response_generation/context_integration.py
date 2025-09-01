@@ -6,6 +6,7 @@ with multi-layered context awareness and business logic integration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,7 +29,9 @@ from ...core.database import DatabaseManager
 
 
 class ContextType(Enum):
-    """Context type enumeration"""
+    """
+Context type enumeration"""
+
     USER_PROFILE = "user_profile"
     CONVERSATION_HISTORY = "conversation_history"
     BUSINESS_CONTEXT = "business_context"
@@ -43,6 +46,7 @@ class ContextType(Enum):
 
 class ContextPriority(Enum):
     """Context priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -52,6 +56,7 @@ class ContextPriority(Enum):
 
 class ContextScope(Enum):
     """Context scope enumeration"""
+
     SESSION = "session"
     CONVERSATION = "conversation"
     USER = "user"
@@ -126,7 +131,8 @@ class ContextualMemory(BaseModel):
     tags: List[str] = Field(default_factory=list)
     
     def calculate_memory_strength(self) -> float:
-        """Calculate overall memory strength"""
+        """
+Calculate overall memory strength"""
         weights = {
             "importance": 0.4,
             "recency": 0.3,
@@ -1071,7 +1077,8 @@ class ResponseContextManager:
         conversation_id: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive response context for generation"""
+        """
+Get comprehensive response context for generation"""
         return await self.context_engine.generate_context_aware_response(
             user_input, user_id, session_id, conversation_id, additional_context
         )
@@ -1082,7 +1089,8 @@ class ResponseContextManager:
         response_effectiveness: float,
         user_satisfaction: Optional[float] = None
     ):
-        """Update context with response feedback"""
+        """
+Update context with response feedback"""
         try:
             # Load current context
             cache_key = f"context:{conversation_id}"
@@ -1116,7 +1124,8 @@ class ContextualIntelligence:
         user_id: str,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """Analyze user context patterns over time"""
+        """
+Analyze user context patterns over time"""
         try:
             # This would analyze patterns from stored contexts
             # Placeholder implementation

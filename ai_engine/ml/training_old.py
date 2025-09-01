@@ -11,6 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import torch
@@ -74,7 +75,9 @@ logger = logging.getLogger(__name__)
 
 
 class TrainingMode(Enum):
-    """Training mode types"""
+    """
+Training mode types"""
+
     SUPERVISED = "supervised"
     UNSUPERVISED = "unsupervised"
     SEMI_SUPERVISED = "semi_supervised"
@@ -89,6 +92,7 @@ class TrainingMode(Enum):
 
 class OptimizationAlgorithm(Enum):
     """Optimization algorithms"""
+
     SGD = "sgd"
     ADAM = "adam"
     ADAMW = "adamw"
@@ -101,6 +105,7 @@ class OptimizationAlgorithm(Enum):
 
 class LearningRateScheduler(Enum):
     """Learning rate schedulers"""
+
     CONSTANT = "constant"
     LINEAR = "linear"
     COSINE = "cosine"
@@ -197,7 +202,8 @@ class TrainingResult:
 
 
 class ModelTrainer:
-    """Advanced ML model trainer with enterprise features"""
+    """
+Advanced ML model trainer with enterprise features"""
     
     def __init__(self, config: TrainingConfig):
         self.config = config
@@ -260,7 +266,8 @@ class ModelTrainer:
             torch.cuda.set_device(self.config.gpu_id)
     
     def _create_optimizer(self, model: nn.Module) -> optim.Optimizer:
-        """Create optimizer based on configuration"""
+        """
+Create optimizer based on configuration"""
         optimizer_map = {
             OptimizationAlgorithm.SGD: optim.SGD,
             OptimizationAlgorithm.ADAM: optim.Adam,
@@ -279,7 +286,8 @@ class ModelTrainer:
         )
     
     def _create_scheduler(self, optimizer: optim.Optimizer, num_training_steps: int):
-        """Create learning rate scheduler"""
+        """
+Create learning rate scheduler"""
         if self.config.lr_scheduler == LearningRateScheduler.WARMUP_COSINE:
             return get_scheduler(
                 "cosine",
@@ -315,7 +323,8 @@ class ModelTrainer:
         return model
     
     def _train_epoch(self, epoch: int) -> Dict[str, float]:
-        """Train for one epoch"""
+        """
+Train for one epoch"""
         self.model.train()
         total_loss = 0.0
         total_samples = 0
@@ -472,7 +481,8 @@ class ModelTrainer:
         return metrics
     
     def _should_early_stop(self, val_metrics: Dict[str, float]) -> bool:
-        """Check if training should stop early"""
+        """
+Check if training should stop early"""
         if not self.training_history['val_loss']:
             return False
         
@@ -487,7 +497,8 @@ class ModelTrainer:
         return self.early_stopping_counter >= self.config.early_stopping_patience
     
     def _save_checkpoint(self, epoch: int, metrics: Dict[str, float], is_best: bool = False):
-        """Save model checkpoint"""
+        """
+Save model checkpoint"""
         checkpoint_dir = Path(self.config.output_dir) / "checkpoints"
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
         
@@ -709,7 +720,8 @@ class ModelTrainer:
 
 
 class HyperparameterOptimizer:
-    """Hyperparameter optimization using Optuna"""
+    """
+Hyperparameter optimization using Optuna"""
     
     def __init__(self, base_config: TrainingConfig):
         self.base_config = base_config
@@ -758,7 +770,8 @@ class HyperparameterOptimizer:
 
 
 class DistributedTrainingManager:
-    """Manager for distributed training across multiple GPUs/nodes"""
+    """
+Manager for distributed training across multiple GPUs/nodes"""
     
     def __init__(self, config: TrainingConfig):
         self.config = config

@@ -7,8 +7,9 @@ This module processes AI enhancement events following the business logic:
 AI Analysis → Enhancement → Optimization → Protection → SEO → Collaboration → Distribution
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple
@@ -40,7 +41,9 @@ from ...ai.optimization.performance_optimizer import PerformanceOptimizer
 logger = logging.getLogger(__name__)
 
 class EnhancementType(Enum):
-    """AI enhancement types for different content formats"""
+    """
+AI enhancement types for different content formats"""
+
     AUDIO_ENHANCEMENT = "audio_enhancement"
     VIDEO_ENHANCEMENT = "video_enhancement" 
     IMAGE_ENHANCEMENT = "image_enhancement"
@@ -51,6 +54,7 @@ class EnhancementType(Enum):
 
 class EnhancementLevel(Enum):
     """Enhancement processing levels"""
+
     BASIC = "basic"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -68,7 +72,8 @@ class EnhancementConfiguration:
     model_preferences: Dict[str, str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
+        """
+Convert configuration to dictionary"""
         return {
             'enhancement_type': self.enhancement_type.value,
             'enhancement_level': self.enhancement_level.value,
@@ -81,7 +86,8 @@ class EnhancementConfiguration:
 
 @dataclass
 class EnhancementMetrics:
-    """Metrics for AI enhancement processing"""
+    """
+Metrics for AI enhancement processing"""
     processing_time: float
     quality_improvement: float
     model_confidence: float
@@ -91,7 +97,8 @@ class EnhancementMetrics:
     timestamp: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
+        """
+Convert metrics to dictionary"""
         return {
             'processing_time': self.processing_time,
             'quality_improvement': self.quality_improvement,
@@ -104,7 +111,8 @@ class EnhancementMetrics:
 
 @dataclass
 class EnhancementResult:
-    """Comprehensive AI enhancement results"""
+    """
+Comprehensive AI enhancement results"""
     content_id: str
     enhancement_type: EnhancementType
     enhancement_level: EnhancementLevel
@@ -117,7 +125,8 @@ class EnhancementResult:
     next_recommendations: List[str]
     
     def calculate_roi(self) -> float:
-        """Calculate return on investment for enhancement"""
+        """
+Calculate return on investment for enhancement"""
         quality_gain = self.enhanced_quality - self.original_quality
         processing_cost = self.enhancement_metrics.processing_time * 0.1  # Cost per second
         
@@ -127,7 +136,8 @@ class EnhancementResult:
         return 0.0
     
     def get_business_insights(self) -> Dict[str, Any]:
-        """Extract business insights from enhancement results"""
+        """
+Extract business insights from enhancement results"""
         return {
             'monetization_boost': self._calculate_monetization_boost(),
             'engagement_improvement': self._calculate_engagement_improvement(),
@@ -137,20 +147,23 @@ class EnhancementResult:
         }
     
     def _calculate_monetization_boost(self) -> float:
-        """Calculate expected monetization boost from enhancement"""
+        """
+Calculate expected monetization boost from enhancement"""
         quality_multiplier = self.enhanced_quality / max(self.original_quality, 0.1)
         enhancement_factor = self.enhancement_metrics.enhancement_score
         return min(2.0, quality_multiplier * enhancement_factor)
     
     def _calculate_engagement_improvement(self) -> float:
-        """Calculate expected engagement improvement"""
+        """
+Calculate expected engagement improvement"""
         visual_improvement = self.enhanced_features.get('visual_quality_gain', 0.2)
         audio_improvement = self.enhanced_features.get('audio_quality_gain', 0.2)
         overall_improvement = (visual_improvement + audio_improvement) / 2
         return min(1.0, overall_improvement * 1.5)
     
     def _assess_distribution_readiness(self) -> Dict[str, float]:
-        """Assess readiness for different distribution platforms"""
+        """
+Assess readiness for different distribution platforms"""
         base_quality = self.enhanced_quality
         
         return {
@@ -162,14 +175,16 @@ class EnhancementResult:
         }
     
     def _assess_collaboration_appeal(self) -> float:
-        """Assess appeal for brand collaborations"""
+        """
+Assess appeal for brand collaborations"""
         quality_factor = self.enhanced_quality * 0.4
         professional_score = self.enhanced_features.get('professional_quality', 0.5) * 0.3
         brand_safety = self.enhanced_features.get('brand_safety_score', 0.8) * 0.3
         return quality_factor + professional_score + brand_safety
     
     def _calculate_seo_gain(self) -> float:
-        """Calculate SEO optimization gain from enhancement"""
+        """
+Calculate SEO optimization gain from enhancement"""
         metadata_improvement = self.enhanced_features.get('metadata_quality_gain', 0.2)
         content_quality_gain = (self.enhanced_quality - self.original_quality) * 0.5
         return metadata_improvement + content_quality_gain
@@ -216,7 +231,8 @@ class AIEnhancementHandler(BaseEventHandler):
         }
     
     def _initialize_enhancement_models(self):
-        """Initialize AI models for content enhancement"""
+        """
+Initialize AI models for content enhancement"""
         try:
             # Text enhancement models
             self.text_enhancer = pipeline(
@@ -398,7 +414,8 @@ class AIEnhancementHandler(BaseEventHandler):
         )
     
     async def _assess_original_quality(self, content_path: str, content_type: str) -> float:
-        """Assess original content quality using AI analysis"""
+        """
+Assess original content quality using AI analysis"""
         try:
             if content_type == 'audio':
                 return await self._assess_audio_quality(content_path)
@@ -653,7 +670,8 @@ class AIEnhancementHandler(BaseEventHandler):
         content_type: str, 
         strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply comprehensive AI enhancement pipeline"""
+        """
+Apply comprehensive AI enhancement pipeline"""
         
         enhancement_result = {
             'enhanced_quality': 0.0,
@@ -855,27 +873,32 @@ class AIEnhancementHandler(BaseEventHandler):
             return 20  # Default reasonable SNR
     
     async def _apply_audio_enhancement(self, content_path: str, event_data: Dict[str, Any]) -> EnhancementResult:
-        """Apply comprehensive audio enhancement"""
+        """
+Apply comprehensive audio enhancement"""
         # Implementation for audio-specific enhancement
         pass
     
     async def _apply_video_enhancement(self, content_path: str, event_data: Dict[str, Any]) -> EnhancementResult:
-        """Apply comprehensive video enhancement"""
+        """
+Apply comprehensive video enhancement"""
         # Implementation for video-specific enhancement
         pass
     
     async def _apply_image_enhancement(self, content_path: str, event_data: Dict[str, Any]) -> EnhancementResult:
-        """Apply comprehensive image enhancement"""
+        """
+Apply comprehensive image enhancement"""
         # Implementation for image-specific enhancement
         pass
     
     async def _apply_text_enhancement(self, content_path: str, event_data: Dict[str, Any]) -> EnhancementResult:
-        """Apply comprehensive text enhancement"""
+        """
+Apply comprehensive text enhancement"""
         # Implementation for text-specific enhancement
         pass
     
     async def _apply_general_enhancement(self, content_path: str, event_data: Dict[str, Any]) -> EnhancementResult:
-        """Apply general content enhancement"""
+        """
+Apply general content enhancement"""
         # Implementation for general enhancement
         pass
     
@@ -885,7 +908,8 @@ class AIEnhancementHandler(BaseEventHandler):
         enhancement_result: Dict[str, Any], 
         content_type: str
     ) -> Dict[str, Any]:
-        """Calculate business impact of enhancement"""
+        """
+Calculate business impact of enhancement"""
         
         quality_improvement = enhancement_result.get('quality_improvement', 0.0)
         
@@ -899,7 +923,8 @@ class AIEnhancementHandler(BaseEventHandler):
         }
     
     def _generate_next_recommendations(self, enhancement_result: Dict[str, Any]) -> List[str]:
-        """Generate recommendations for next processing steps"""
+        """
+Generate recommendations for next processing steps"""
         recommendations = []
         
         enhanced_quality = enhancement_result.get('enhanced_quality', 0.0)
@@ -935,7 +960,8 @@ class AIEnhancementHandler(BaseEventHandler):
         }
     
     async def _generate_optimization_insights(self, performance_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate insights from optimization analysis"""
+        """
+Generate insights from optimization analysis"""
         return {
             'optimization_success': performance_analysis.get('performance_gain', 0) > 0.1,
             'efficiency_rating': 'high' if performance_analysis.get('efficiency_score', 0) > 0.8 else 'medium',
@@ -944,7 +970,8 @@ class AIEnhancementHandler(BaseEventHandler):
         }
     
     def _generate_optimization_recommendations(self, optimization_insights: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on optimization insights"""
+        """
+Generate recommendations based on optimization insights"""
         recommendations = []
         
         if optimization_insights.get('optimization_success', False):

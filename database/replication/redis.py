@@ -13,6 +13,7 @@ Handles:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import redis.asyncio as redis
@@ -26,7 +27,9 @@ import json
 
 
 class RedisReplicationMode(Enum):
-    """Redis replication modes"""
+    """
+Redis replication modes"""
+
     MASTER_SLAVE = "master_slave"
     SENTINEL = "sentinel"
     CLUSTER = "cluster"
@@ -34,6 +37,7 @@ class RedisReplicationMode(Enum):
 
 class RedisNodeRole(Enum):
     """Redis node roles"""
+
     MASTER = "master"
     SLAVE = "slave"
     SENTINEL = "sentinel"
@@ -80,7 +84,8 @@ class RedisReplicationHandler:
     """
     
     def __init__(self, config: Dict[str, Any], global_config: Any):
-        """Initialize Redis replication handler"""
+        """
+Initialize Redis replication handler"""
         self.config = config
         self.global_config = global_config
         self.logger = logging.getLogger(f"{__name__}.RedisReplicationHandler")

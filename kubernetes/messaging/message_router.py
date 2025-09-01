@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import json
 import logging
@@ -34,7 +35,9 @@ settings = get_settings()
 
 
 class MessagePriority(str, Enum):
-    """Message priority levels"""
+    """
+Message priority levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -43,6 +46,7 @@ class MessagePriority(str, Enum):
 
 class MessageType(str, Enum):
     """Message types for routing"""
+
     CONTENT_UPLOAD = "content.upload"
     FINGERPRINT_GENERATION = "fingerprint.generation"
     AI_ANALYSIS = "ai.analysis"
@@ -56,6 +60,7 @@ class MessageType(str, Enum):
 
 class RoutingStrategy(str, Enum):
     """Message routing strategies"""
+
     ROUND_ROBIN = "round_robin"
     PRIORITY_BASED = "priority_based"
     LOAD_BALANCED = "load_balanced"
@@ -65,6 +70,7 @@ class RoutingStrategy(str, Enum):
 
 class MessageProtocol(str, Enum):
     """Supported messaging protocols"""
+
     KAFKA = "kafka"
     RABBITMQ = "rabbitmq"
     CELERY = "celery"
@@ -105,38 +111,46 @@ class MessageHandler(ABC):
     
     @abstractmethod
     async def handle(self, message: Message) -> bool:
-        """Handle message processing"""
+        """
+Handle message processing"""
         pass
     
     @abstractmethod
     async def can_handle(self, message: Message) -> bool:
-        """Check if handler can process the message"""
+        """
+Check if handler can process the message"""
         pass
 
 
 class MessageTransformer(ABC):
-    """Abstract base class for message transformers"""
+    """
+Abstract base class for message transformers"""
     
     @abstractmethod
     async def transform(self, message: Message) -> Message:
-        """Transform message before routing"""
+        """
+Transform message before routing"""
         pass
 
 
 class MessageFilter(ABC):
-    """Abstract base class for message filters"""
+    """
+Abstract base class for message filters"""
     
     @abstractmethod
     async def filter(self, message: Message) -> bool:
-        """Filter messages based on criteria"""
+        """
+Filter messages based on criteria"""
         pass
 
 
 class ContentUploadTransformer(MessageTransformer):
-    """Transformer for content upload messages"""
+    """
+Transformer for content upload messages"""
     
     async def transform(self, message: Message) -> Message:
-        """Add content processing metadata"""
+        """
+Add content processing metadata"""
         message.metadata.update({
             "processing_stage": "upload",
             "content_type": message.payload.get("file_type", "unknown"),
@@ -170,7 +184,8 @@ class PriorityFilter(MessageFilter):
         self.min_priority = min_priority
         
     async def filter(self, message: Message) -> bool:
-        """Filter based on minimum priority"""
+        """
+Filter based on minimum priority"""
         priority_levels = {
             MessagePriority.LOW: 0,
             MessagePriority.MEDIUM: 1,
@@ -199,7 +214,8 @@ class MessageRouter:
         self._setup_default_components()
 
     def _setup_default_components(self) -> None:
-        """Setup default transformers and filters"""
+        """
+Setup default transformers and filters"""
         self.transformers["content_upload"] = ContentUploadTransformer()
         self.filters["high_priority"] = PriorityFilter(MessagePriority.HIGH)
         self.filters["critical_only"] = PriorityFilter(MessagePriority.CRITICAL)
@@ -497,7 +513,8 @@ class MessageRouter:
         return priority_map.get(priority, 3)
 
     async def _send_to_dead_letter(self, message: Message, reason: str) -> None:
-        """Send message to dead letter queue"""
+        """
+Send message to dead letter queue"""
         try:
             message.metadata["dead_letter_reason"] = reason
             message.metadata["dead_letter_timestamp"] = time.time()
@@ -617,7 +634,8 @@ class MessageRouter:
         return [msg.dict() for msg in self.dead_letter_messages[-limit:]]
 
     async def reprocess_dead_letter_messages(self, message_ids: Optional[List[str]] = None) -> Dict[str, int]:
-        """Reprocess dead letter messages"""
+        """
+Reprocess dead letter messages"""
         try:
             reprocessed = 0
             failed = 0

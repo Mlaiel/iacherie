@@ -2,7 +2,7 @@
 Enterprise-Grade Pipeline Configuration System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive pipeline configuration management for the IA Influencer Agent
 platform, supporting multiple environments, pipeline types, and deployment strategies.
@@ -17,6 +17,7 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 import yaml
 import json
 import logging
@@ -30,12 +31,14 @@ from datetime import datetime
 from . import Environment, PipelineType, PipelineConfig
 
 class ConfigurationError(Exception):
-    """Configuration-related error"""
+    """
+Configuration-related error"""
     pass
 
 @dataclass
 class EnvironmentConfig:
-    """Environment-specific configuration settings"""
+    """
+Environment-specific configuration settings"""
     name: str
     description: str
     cluster_config: Dict[str, Any]
@@ -47,7 +50,8 @@ class EnvironmentConfig:
     
 @dataclass
 class PipelineTemplate:
-    """Pipeline template definition"""
+    """
+Pipeline template definition"""
     name: str
     description: str
     pipeline_type: PipelineType
@@ -103,7 +107,8 @@ class PipelineConfigManager:
         self._generate_default_configs()
         
     def _load_environment_configs(self):
-        """Load environment configuration files"""
+        """
+Load environment configuration files"""
         for env_file in self.environments_dir.glob("*.yaml"):
             try:
                 with open(env_file, 'r') as f:
@@ -413,11 +418,13 @@ class PipelineConfigManager:
         return list(self.pipeline_templates.keys())
         
     def list_environments(self) -> List[str]:
-        """List all configured environments"""
+        """
+List all configured environments"""
         return list(self.environment_configs.keys())
         
     def get_template_info(self, template_name: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about pipeline template"""
+        """
+Get detailed information about pipeline template"""
         if template_name not in self.pipeline_templates:
             return None
             
@@ -433,7 +440,8 @@ class PipelineConfigManager:
         }
         
     def get_environment_info(self, environment: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about environment configuration"""
+        """
+Get detailed information about environment configuration"""
         if environment not in self.environment_configs:
             return None
             

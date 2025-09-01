@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class MonitoringPlatform(Enum):
-    """Monitored content platforms"""
+    """
+Monitored content platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -62,6 +65,7 @@ class MonitoringPlatform(Enum):
 
 class MonitoringStatus(Enum):
     """Monitoring job status"""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -73,6 +77,7 @@ class MonitoringStatus(Enum):
 
 class DetectionMethod(Enum):
     """Content detection methods"""
+
     FINGERPRINT_MATCHING = "fingerprint_matching"
     VISUAL_RECOGNITION = "visual_recognition"
     AUDIO_ANALYSIS = "audio_analysis"
@@ -86,6 +91,7 @@ class DetectionMethod(Enum):
 
 class ResponseAction(Enum):
     """Automated response actions"""
+
     NOTIFY_OWNER = "notify_owner"
     SEND_TAKEDOWN_REQUEST = "send_takedown_request"
     FILE_DMCA_COMPLAINT = "file_dmca_complaint"

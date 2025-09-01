@@ -19,6 +19,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class StreamingPlatform(Enum):
-    """Supported streaming and content platforms"""
+    """
+Supported streaming and content platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -52,6 +55,7 @@ class StreamingPlatform(Enum):
 
 class ContentType(Enum):
     """Content type optimization"""
+
     MUSIC_TRACK = "music_track"
     PODCAST_EPISODE = "podcast_episode"
     AUDIOBOOK_CHAPTER = "audiobook_chapter"
@@ -66,6 +70,7 @@ class ContentType(Enum):
 
 class LoudnessStandard(Enum):
     """International loudness standards"""
+
     EBU_R128 = "ebu_r128"          # -23 LUFS (Europe)
     ATSC_A85 = "atsc_a85"          # -24 LUFS (North America)
     ARIB_TR_B32 = "arib_tr_b32"    # -24 LUFS (Japan)
@@ -167,7 +172,8 @@ class PlatformOptimizationConfig:
         self.custom_profiles = {}
         
     def _initialize_platform_profiles(self) -> Dict[str, PlatformAudioProfile]:
-        """Initialize default platform audio profiles"""
+        """
+Initialize default platform audio profiles"""
         profiles = {}
         
         # Spotify Profile
@@ -368,7 +374,8 @@ class PlatformOptimizationConfig:
         return adapted_profile
     
     def _get_default_profile(self) -> PlatformAudioProfile:
-        """Get default fallback audio profile"""
+        """
+Get default fallback audio profile"""
         return PlatformAudioProfile(
             platform=StreamingPlatform.SPOTIFY,  # Use Spotify as default
             content_type=ContentType.MUSIC_TRACK,
@@ -387,7 +394,8 @@ class PlatformOptimizationConfig:
     
     def create_custom_profile(self, profile_name: str, base_platform: StreamingPlatform, 
                             modifications: Dict[str, Any]) -> PlatformAudioProfile:
-        """Create custom platform profile based on existing profile"""
+        """
+Create custom platform profile based on existing profile"""
         base_profile = self.get_platform_profile(base_platform)
         
         # Create modified profile
@@ -428,7 +436,8 @@ class PlatformOptimizationConfig:
         return max(set(sample_rates), key=sample_rates.count)
     
     def _find_optimal_format(self, profiles: List[PlatformAudioProfile]) -> str:
-        """Find optimal master format for multi-platform distribution"""
+        """
+Find optimal master format for multi-platform distribution"""
         formats = [profile.preferred_format for profile in profiles]
         format_counts = {fmt: formats.count(fmt) for fmt in set(formats)}
         
@@ -446,7 +455,8 @@ class PlatformOptimizationConfig:
         return (min(lufs_values), max(lufs_values))
     
     def _optimize_processing_order(self, platforms: List[StreamingPlatform]) -> List[str]:
-        """Optimize processing order based on platform requirements"""
+        """
+Optimize processing order based on platform requirements"""
         # Sort by quality requirements (highest first)
         platform_priority = {
             StreamingPlatform.TIDAL: 1,
@@ -465,7 +475,8 @@ class PlatformOptimizationConfig:
         return [platform.value for platform in sorted_platforms]
     
     def _get_quality_checks(self, profiles: List[PlatformAudioProfile]) -> Dict[str, Any]:
-        """Get quality validation checks for multi-platform distribution"""
+        """
+Get quality validation checks for multi-platform distribution"""
         return {
             "peak_levels": [profile.max_peak_dbfs for profile in profiles],
             "lufs_targets": [profile.target_lufs for profile in profiles],
@@ -539,10 +550,12 @@ def get_platform_profile(platform: Union[StreamingPlatform, str]) -> PlatformAud
     return platform_optimization_config.get_platform_profile(platform)
 
 def get_multi_platform_strategy(platforms: List[StreamingPlatform]) -> Dict[str, Any]:
-    """Get optimized strategy for multi-platform distribution"""
+    """
+Get optimized strategy for multi-platform distribution"""
     return platform_optimization_config.get_multi_platform_strategy(platforms)
 
 def validate_content_for_platform(audio_metadata: Dict[str, Any], 
                                 platform: StreamingPlatform) -> Dict[str, Any]:
-    """Validate audio content against platform requirements"""
+    """
+Validate audio content against platform requirements"""
     return platform_optimization_config.validate_content_for_platform(audio_metadata, platform)

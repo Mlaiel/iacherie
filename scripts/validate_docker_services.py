@@ -8,6 +8,7 @@ Addresses the requirement: "Docker Compose - tester démarrage services"
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import subprocess
 import time
 import sys
@@ -29,7 +30,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DockerServicesValidator:
-    """Validates Docker Compose services startup and health"""
+    """
+Validates Docker Compose services startup and health"""
     
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
@@ -41,7 +43,8 @@ class DockerServicesValidator:
         self.validation_results = {}
         
     def validate_compose_file_syntax(self, compose_file: str) -> Tuple[bool, str]:
-        """Validate Docker Compose file syntax"""
+        """
+Validate Docker Compose file syntax"""
         try:
             cmd = ['docker', 'compose', '-f', compose_file, 'config']
             result = subprocess.run(cmd, capture_output=True, text=True, cwd=self.project_root)
@@ -102,7 +105,8 @@ class DockerServicesValidator:
                 
     def create_basic_nginx_config(self, path: Path) -> None:
         """Create a basic nginx configuration"""
-        nginx_config = """events {
+        nginx_config = """
+events {
     worker_connections 1024;
 }
 
@@ -134,7 +138,8 @@ http {
     
     def create_basic_prometheus_config(self, path: Path) -> None:
         """Create a basic prometheus configuration"""
-        prometheus_config = """global:
+        prometheus_config = """
+global:
   scrape_interval: 15s
 
 scrape_configs:
@@ -267,7 +272,8 @@ else
 fi
 """
         
-        script_content += """echo "📊 Service status:"
+        script_content += """
+echo "📊 Service status:"
 docker compose -f """ + compose_file + """ ps
 
 echo "🎉 Startup test completed!"
@@ -276,7 +282,8 @@ echo "🎉 Startup test completed!"
         return script_content
     
     def run_validation(self) -> Dict[str, Dict]:
-        """Run complete validation for all compose files"""
+        """
+Run complete validation for all compose files"""
         logger.info("🚀 Starting Docker Compose services validation")
         
         for env_name, compose_file in self.compose_files.items():
@@ -356,7 +363,8 @@ echo "🎉 Startup test completed!"
     
     def generate_report(self) -> str:
         """Generate a comprehensive validation report"""
-        report = """Docker Compose Services Validation Report
+        report = """
+Docker Compose Services Validation Report
 ==========================================
 
 """

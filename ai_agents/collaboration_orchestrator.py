@@ -56,6 +56,7 @@ logger = logging.getLogger(__name__)
 # Collaboration Types
 class CollaborationType(Enum):
     """Types of collaboration supported"""
+
     CONTENT_CREATION = "content_creation"
     REMIX_COLLABORATION = "remix_collaboration"
     CROSS_PROMOTION = "cross_promotion"
@@ -95,7 +96,8 @@ class CreatorProfile:
 
 # 1. Collaboration Matching Agent
 class CollaborationMatchingAgent:
-    """IA matching avancé - Advanced AI matching for collaborations"""
+    """
+IA matching avancé - Advanced AI matching for collaborations"""
     
     def __init__(self):
         self.agent_type = "collaboration_matching"
@@ -442,22 +444,26 @@ class QualityAssuranceAgent:
         return 85.5
     
     async def _assess_content_quality(self, content_data: Dict[str, Any]) -> float:
-        """Assess content quality metrics"""
+        """
+Assess content quality metrics"""
         # Simulate content quality assessment
         return 88.2
     
     async def _check_compliance(self, content_data: Dict[str, Any]) -> float:
-        """Check compliance with standards"""
+        """
+Check compliance with standards"""
         # Simulate compliance checking
         return 92.0
     
     async def _measure_performance(self, content_data: Dict[str, Any]) -> float:
-        """Measure performance metrics"""
+        """
+Measure performance metrics"""
         # Simulate performance measurement
         return 79.3
     
     async def _generate_recommendations(self, metrics: Dict[str, float]) -> List[str]:
-        """Generate improvement recommendations"""
+        """
+Generate improvement recommendations"""
         recommendations = []
         
         if metrics["technical_quality"] < 80:
@@ -932,7 +938,8 @@ def create_collaboration_orchestrator() -> CollaborationOrchestrator:
 
 # Main execution example
 async def main():
-    """Example usage of the collaboration system"""
+    """
+Example usage of the collaboration system"""
     orchestrator = create_collaboration_orchestrator()
     
     # Example collaboration request

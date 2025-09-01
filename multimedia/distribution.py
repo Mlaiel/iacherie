@@ -15,6 +15,7 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -43,7 +44,9 @@ settings = get_settings()
 
 
 class PlatformType(Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -58,6 +61,7 @@ class PlatformType(Enum):
 
 class ContentType(Enum):
     """Content types for distribution"""
+
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -70,6 +74,7 @@ class ContentType(Enum):
 
 class MonetizationModel(Enum):
     """Revenue generation models"""
+
     ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription" 
     SPONSORSHIP = "sponsorship"
@@ -95,7 +100,8 @@ class PlatformCredentials:
 
 @dataclass
 class DistributionConfig:
-    """Content distribution configuration"""
+    """
+Content distribution configuration"""
     platforms: List[PlatformType]
     schedule_time: Optional[datetime] = None
     auto_optimize: bool = True
@@ -109,7 +115,8 @@ class DistributionConfig:
 
 @dataclass
 class MonetizationConfig:
-    """Monetization configuration"""
+    """
+Monetization configuration"""
     models: List[MonetizationModel]
     revenue_split: Dict[str, Decimal] = field(default_factory=dict)
     minimum_payout: Decimal = Decimal("50.00")
@@ -144,7 +151,8 @@ class DistributionResult:
 
 @dataclass
 class RevenueData:
-    """Revenue tracking data"""
+    """
+Revenue tracking data"""
     platform: PlatformType
     content_id: str
     monetization_model: MonetizationModel
@@ -178,7 +186,8 @@ class BasePlatformIntegration(ABC):
         
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""
+        """
+Authenticate with the platform"""
         pass
         
     @abstractmethod
@@ -188,7 +197,8 @@ class BasePlatformIntegration(ABC):
         content_type: ContentType,
         metadata: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload content to platform"""
+        """
+Upload content to platform"""
         pass
         
     @abstractmethod
@@ -198,7 +208,8 @@ class BasePlatformIntegration(ABC):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get content analytics"""
+        """
+Get content analytics"""
         pass
         
     @abstractmethod
@@ -207,11 +218,13 @@ class BasePlatformIntegration(ABC):
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get revenue data"""
+        """
+Get revenue data"""
         pass
     
     async def _init_session(self):
-        """Initialize HTTP session with proper configuration"""
+        """
+Initialize HTTP session with proper configuration"""
         if not self.session:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(
@@ -230,7 +243,9 @@ class BasePlatformIntegration(ABC):
 
 
 class YouTubeIntegration(BasePlatformIntegration):
-    """YouTube API integration for content distribution"""
+    """
+YouTube API integration for content distribution"""
+
     
     API_BASE_URL = "https://www.googleapis.com/youtube/v3"
     UPLOAD_URL = "https://www.googleapis.com/upload/youtube/v3/videos"
@@ -472,6 +487,7 @@ class YouTubeIntegration(BasePlatformIntegration):
 
 class InstagramIntegration(BasePlatformIntegration):
     """Instagram Graph API integration"""
+
     
     API_BASE_URL = "https://graph.facebook.com/v18.0"
     
@@ -637,7 +653,8 @@ class InstagramIntegration(BasePlatformIntegration):
 
 
 class ContentDistributor:
-    """Main content distribution orchestrator"""
+    """
+Main content distribution orchestrator"""
     
     def __init__(self):
         self.platform_integrations: Dict[PlatformType, BasePlatformIntegration] = {}
@@ -648,7 +665,8 @@ class ContentDistributor:
         platform: PlatformType, 
         credentials: PlatformCredentials
     ) -> bool:
-        """Register a platform integration"""
+        """
+Register a platform integration"""
         try:
             if platform == PlatformType.YOUTUBE:
                 integration = YouTubeIntegration(credentials)
@@ -886,7 +904,8 @@ class MonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Track revenue across all platforms"""
+        """
+Track revenue across all platforms"""
         try:
             revenue_summary = {
                 "total_gross_revenue": Decimal("0.00"),
@@ -1103,7 +1122,8 @@ class MonetizationEngine:
         amount: Decimal, 
         config: Dict[str, Any]
     ) -> bool:
-        """Execute the actual payout through payment processor"""
+        """
+Execute the actual payout through payment processor"""
         # This would integrate with Stripe, Wise, PayPal, etc.
         logger.info(f"Processing payout of {amount} {config['currency']} for user {user_id}")
         return True  # Placeholder for successful payout

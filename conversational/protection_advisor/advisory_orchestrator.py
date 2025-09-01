@@ -6,6 +6,7 @@ intelligent advisory services for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -31,7 +32,9 @@ logger = get_logger(__name__)
 
 
 class AdvisorySessionType(str, Enum):
-    """Types of advisory sessions."""
+    """
+Types of advisory sessions."""
+
     COMPREHENSIVE = "comprehensive"
     QUICK_SCAN = "quick_scan"
     THREAT_RESPONSE = "threat_response"
@@ -42,6 +45,7 @@ class AdvisorySessionType(str, Enum):
 
 class SessionStatus(str, Enum):
     """Advisory session status."""
+
     INITIATED = "initiated"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -51,6 +55,7 @@ class SessionStatus(str, Enum):
 
 class Priority(str, Enum):
     """Advisory request priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -74,7 +79,8 @@ class AdvisoryRequest:
 
 @dataclass
 class AdvisorySession:
-    """Complete advisory session."""
+    """
+Complete advisory session."""
     session_id: str
     request: AdvisoryRequest
     status: SessionStatus
@@ -91,7 +97,8 @@ class AdvisorySession:
 
 @dataclass
 class AdvisoryResponse:
-    """Advisory service response."""
+    """
+Advisory service response."""
     session: AdvisorySession
     summary: str
     key_findings: List[str]
@@ -662,7 +669,8 @@ class AdvisoryOrchestrator:
         return base_time + deadline_map.get(priority, timedelta(hours=24))
     
     async def _validate_advisory_request(self, request: AdvisoryRequest) -> Dict[str, Any]:
-        """Validate advisory request."""
+        """
+Validate advisory request."""
         if not request.user_id:
             return {"valid": False, "error": "User ID required"}
         
@@ -678,13 +686,15 @@ class AdvisoryOrchestrator:
                 len(self.session_queue) == 0)
     
     async def _queue_advisory_session(self, session: AdvisorySession):
-        """Add session to execution queue."""
+        """
+Add session to execution queue."""
         self.session_queue.append(session)
         # Sort queue by priority
         self.session_queue.sort(key=lambda s: self._priority_score(s.request.priority), reverse=True)
     
     def _priority_score(self, priority: Priority) -> int:
-        """Convert priority to numeric score."""
+        """
+Convert priority to numeric score."""
         scores = {
             Priority.CRITICAL: 5,
             Priority.URGENT: 4,

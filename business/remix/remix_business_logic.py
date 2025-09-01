@@ -10,7 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -20,6 +20,7 @@ Matching collaboration + gamifications → Distribution multi-plateformes → Re
 
 ARCHITECTURE: Enterprise-grade business logic pour remix IA industriel avec optimisation revenus
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -35,7 +36,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class CreatorTier(Enum):
-    """Creator subscription tiers."""
+    """
+Creator subscription tiers."""
+
     FREE = "free"
     CREATOR = "creator"
     PRO = "pro"
@@ -43,6 +46,7 @@ class CreatorTier(Enum):
 
 class RemixBusinessPriority(Enum):
     """Business priority levels for remix operations."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -51,6 +55,7 @@ class RemixBusinessPriority(Enum):
 
 class RevenueStreamType(Enum):
     """Types of revenue streams for creators."""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     COLLABORATION = "collaboration"
@@ -76,7 +81,8 @@ class CreatorProfile:
     created_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
+        """
+Convert to dictionary representation."""
         return {
             "creator_id": self.creator_id,
             "creator_type": self.creator_type,
@@ -107,7 +113,8 @@ class RemixBusinessMetrics:
     calculated_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""
+        """
+Convert to dictionary representation."""
         return {
             "request_id": self.request_id,
             "creator_id": self.creator_id,
@@ -691,28 +698,32 @@ class RemixWorkflowManager:
         self.workflows = {}
 
 class RemixCreatorJourneyOrchestrator:
-    """Orchestrates creator journey through business processes."""
+    """
+Orchestrates creator journey through business processes."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.journeys = {}
 
 class RemixCollaborationManager:
-    """Manages collaboration business logic and matching."""
+    """
+Manages collaboration business logic and matching."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.collaborations = {}
 
 class RemixMonetizationEngine:
-    """Handles monetization strategies and revenue optimization."""
+    """
+Handles monetization strategies and revenue optimization."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.strategies = {}
 
 class RemixAnalyticsProcessor:
-    """Processes business analytics and generates insights."""
+    """
+Processes business analytics and generates insights."""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config

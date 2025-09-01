@@ -17,6 +17,7 @@ Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional, List, Set
 from dataclasses import dataclass, field
 from enum import Enum
@@ -25,7 +26,9 @@ import os
 
 
 class RevenueTrackingMode(str, Enum):
-    """Revenue tracking operational modes."""
+    """
+Revenue tracking operational modes."""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     HYBRID = "hybrid"
@@ -34,6 +37,7 @@ class RevenueTrackingMode(str, Enum):
 
 class PlatformType(str, Enum):
     """Supported platforms for revenue tracking."""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -50,6 +54,7 @@ class PlatformType(str, Enum):
 
 class RevenueStreamType(str, Enum):
     """Types of revenue streams to track."""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -64,6 +69,7 @@ class RevenueStreamType(str, Enum):
 
 class CurrencyType(str, Enum):
     """Supported currencies for revenue tracking."""
+
     USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
@@ -78,6 +84,7 @@ class CurrencyType(str, Enum):
 
 class PaymentProcessor(str, Enum):
     """Supported payment processors."""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -264,7 +271,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for revenue tracking."""
+    """
+Security configuration for revenue tracking."""
     # Authentication
     require_authentication: bool = True
     token_expiry_hours: int = 24
@@ -334,7 +342,8 @@ class RevenueTrackingConfig:
     enable_watermark_integration: bool = True
     
     def validate_config(self) -> bool:
-        """Validate the revenue tracking configuration."""
+        """
+Validate the revenue tracking configuration."""
         try:
             # Validate basic settings
             if not self.supported_platforms:
@@ -397,7 +406,8 @@ class RevenueTrackingConfig:
         return config
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary format."""
+        """
+Convert configuration to dictionary format."""
         return {
             'tracking_mode': self.tracking_mode.value,
             'supported_platforms': [platform.value for platform in self.supported_platforms],
@@ -424,7 +434,8 @@ class RevenueTrackingConfig:
 # Factory functions for common configurations
 
 def create_production_config() -> RevenueTrackingConfig:
-    """Create production-ready revenue tracking configuration."""
+    """
+Create production-ready revenue tracking configuration."""
     config = RevenueTrackingConfig()
     
     # Production security settings
@@ -451,7 +462,8 @@ def create_production_config() -> RevenueTrackingConfig:
 
 
 def create_development_config() -> RevenueTrackingConfig:
-    """Create development-friendly revenue tracking configuration."""
+    """
+Create development-friendly revenue tracking configuration."""
     config = RevenueTrackingConfig()
     
     # Development settings
@@ -465,7 +477,8 @@ def create_development_config() -> RevenueTrackingConfig:
 
 
 def create_testing_config() -> RevenueTrackingConfig:
-    """Create testing configuration for revenue tracking."""
+    """
+Create testing configuration for revenue tracking."""
     config = RevenueTrackingConfig()
     
     # Testing settings

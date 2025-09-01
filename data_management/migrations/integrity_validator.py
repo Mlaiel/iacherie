@@ -10,12 +10,13 @@ Ultra-advanced data integrity validation system for IA Influencer Agent:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This data validation engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Data validation levels"""
+    """
+Data validation levels"""
+
     BASIC = "basic"          # Essential constraints only
     STANDARD = "standard"    # Standard business rules
     ADVANCED = "advanced"    # Advanced consistency checks
@@ -46,6 +49,7 @@ class ValidationLevel(Enum):
 
 class ValidationCategory(Enum):
     """Validation rule categories"""
+
     SCHEMA = "schema"                    # Database schema validation
     CONSTRAINT = "constraint"           # Data constraint validation
     BUSINESS_RULE = "business_rule"     # Business logic validation
@@ -59,6 +63,7 @@ class ValidationCategory(Enum):
 
 class ValidationSeverity(Enum):
     """Validation error severity levels"""
+
     INFO = "info"            # Informational
     WARNING = "warning"      # Warning - may need attention
     ERROR = "error"          # Error - requires correction
@@ -84,7 +89,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationError:
-    """Validation error details"""
+    """
+Validation error details"""
     rule_id: str
     severity: ValidationSeverity
     table_name: str
@@ -98,7 +104,8 @@ class ValidationError:
 
 @dataclass
 class ValidationResult:
-    """Validation execution result"""
+    """
+Validation execution result"""
     validation_id: str
     level: ValidationLevel
     total_rules: int
@@ -138,7 +145,8 @@ class IntegrityValidator:
         self._register_builtin_validators()
         
     def register_validation_rule(self, rule: ValidationRule) -> None:
-        """Register data validation rule"""
+        """
+Register data validation rule"""
         self.validation_rules[rule.rule_id] = rule
         logger.info(f"Registered validation rule: {rule.rule_id}")
         
@@ -637,7 +645,8 @@ class IntegrityValidator:
         ]
         
     async def _attempt_auto_fix(self, rule: ValidationRule, errors: List[ValidationError]) -> None:
-        """Attempt automatic fixing of validation errors"""
+        """
+Attempt automatic fixing of validation errors"""
         # Implementation for auto-fix functionality
         logger.info(f"Auto-fix not implemented for rule: {rule.rule_id}")
         
@@ -752,5 +761,6 @@ class IntegrityValidator:
         pass
         
     async def _get_session(self) -> Session:
-        """Get database session"""
+        """
+Get database session"""
         return self.session_maker()

@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,7 +44,9 @@ from ...utils.text_processor import TextProcessor
 logger = logging.getLogger(__name__)
 
 class ResponseType(Enum):
-    """Types of automated responses"""
+    """
+Types of automated responses"""
+
     APPRECIATION = "appreciation"
     QUESTION_ANSWER = "question_answer"
     COLLABORATION = "collaboration"
@@ -57,6 +60,7 @@ class ResponseType(Enum):
 
 class ConversationContext(Enum):
     """Conversation context types"""
+
     FIRST_TIME_INTERACTION = "first_time"
     RETURNING_USER = "returning"
     VIP_MEMBER = "vip"
@@ -69,6 +73,7 @@ class ConversationContext(Enum):
 
 class ResponsePersonality(Enum):
     """Response personality styles"""
+
     PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     CASUAL = "casual"
@@ -93,7 +98,8 @@ class ConversationHistory:
 
 @dataclass
 class ResponseTemplate:
-    """Response template configuration"""
+    """
+Response template configuration"""
     template_id: str
     response_type: ResponseType
     template_text: str
@@ -107,7 +113,8 @@ class ResponseTemplate:
 
 @dataclass
 class ResponseContext:
-    """Context information for response generation"""
+    """
+Context information for response generation"""
     original_message: str
     user_id: str
     platform: str

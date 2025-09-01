@@ -7,6 +7,7 @@ Date: 2025-07-31 06:28:26
 Monitoring et observabilité complète avec métriques temps réel.
 ==================================================================
 """
+
 import asyncio
 import logging
 import time
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonitoringConfig:
-    """Configuration du monitoring"""
+    """
+Configuration du monitoring"""
     metrics_enabled: bool = True
     health_check_interval: int = 30
     performance_tracking: bool = True
@@ -50,7 +52,8 @@ class SystemMetrics:
         self.response_times = []
     
     def get_system_stats(self) -> Dict[str, Any]:
-        """Statistiques système en temps réel"""
+        """
+Statistiques système en temps réel"""
         return {
             "timestamp": datetime.now().isoformat(),
             "uptime_seconds": time.time() - self.start_time,
@@ -95,7 +98,8 @@ class HealthChecker:
         self.last_check_results = {}
     
     def register_check(self, name: str, check_func: Callable) -> None:
-        """Enregistrer une vérification de santé"""
+        """
+Enregistrer une vérification de santé"""
         self.checks[name] = check_func
         logger.info(f"✅ Health check enregistré: {name}")
     
@@ -207,7 +211,8 @@ class HealthChecksManager:
         self.monitoring_task = None
     
     async def start(self) -> bool:
-        """Démarrage du monitoring"""
+        """
+Démarrage du monitoring"""
         try:
             self.running = True
             

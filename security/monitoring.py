@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class IncidentSeverity(Enum):
-    """Security incident severity levels"""
+    """
+Security incident severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -32,6 +35,7 @@ class IncidentSeverity(Enum):
 
 class IncidentStatus(Enum):
     """Security incident status"""
+
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
@@ -91,7 +95,8 @@ class SecurityMonitoringDashboard:
         self.cache_expiry = {}
         
     async def get_security_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive security dashboard data"""
+        """
+Get comprehensive security dashboard data"""
         
         dashboard_data = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -139,7 +144,8 @@ class SecurityMonitoringDashboard:
         return await self.vulnerability_scanner.get_compliance_status()
     
     async def _get_audit_summary(self) -> Dict[str, Any]:
-        """Get audit trail summary"""
+        """
+Get audit trail summary"""
         
         # Get events from last 7 days
         end_time = datetime.now(timezone.utc)
@@ -380,7 +386,8 @@ class SecurityMonitoringDashboard:
         return round(total_time / len(resolved_incidents), 2)
     
     async def _assess_threat_level(self, threat_count: int, threat_types: Dict[str, int]) -> str:
-        """Assess current threat level"""
+        """
+Assess current threat level"""
         
         if threat_count == 0:
             return "LOW"
@@ -638,7 +645,8 @@ async def create_security_incident(
     severity: str,
     affected_systems: Optional[List[str]] = None
 ) -> str:
-    """Create a security incident"""
+    """
+Create a security incident"""
     severity_enum = IncidentSeverity(severity.lower())
     return await security_dashboard.create_incident(
         title=title,

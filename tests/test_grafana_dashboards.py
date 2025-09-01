@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -13,8 +14,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""Test suite for Grafana dashboards and visualization setup
 """
+Test suite for Grafana dashboards and visualization setup
+"""
+
 import pytest
 import sys
 import os
@@ -25,7 +28,8 @@ from pathlib import Path
 from typing import Dict, Any, List
 
 class TestGrafanaDashboards:
-    """Test suite for Grafana dashboard configurations"""
+    """
+Test suite for Grafana dashboard configurations"""
     
     @pytest.fixture
     def project_root(self):

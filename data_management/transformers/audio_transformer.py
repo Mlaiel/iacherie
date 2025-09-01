@@ -5,13 +5,14 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
 de ce code ou de cette technologie est strictement interdite et sera
 poursuivie selon les lois allemandes et internationales.
 """
+
 import asyncio
 import logging
 import time
@@ -46,7 +47,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
-    """Formats audio supportés"""
+    """
+Formats audio supportés"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -57,6 +60,7 @@ class AudioFormat(Enum):
 
 class AudioQuality(Enum):
     """Niveaux de qualité audio"""
+
     ULTRA = "ultra"      # 24-bit, 96kHz+
     HIGH = "high"        # 16-bit, 44.1kHz
     STANDARD = "standard" # Compressed, optimized
@@ -64,6 +68,7 @@ class AudioQuality(Enum):
 
 class NormalizationType(Enum):
     """Types de normalisation audio"""
+
     PEAK = "peak"           # Peak normalization
     LUFS = "lufs"          # Loudness normalization
     RMS = "rms"            # RMS normalization
@@ -84,7 +89,8 @@ class AudioProcessingResult:
     errors: List[str]
 
 class AudioAnalyzer:
-    """Analyseur audio professionnel pour créateurs musicaux"""
+    """
+Analyseur audio professionnel pour créateurs musicaux"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -116,7 +122,8 @@ class AudioAnalyzer:
         }
     
     def analyze_audio_file(self, audio_path: str) -> AudioMetadata:
-        """Analyse complète d'un fichier audio"""
+        """
+Analyse complète d'un fichier audio"""
         try:
             # Chargement audio avec librosa pour analyse
             y, sr = librosa.load(audio_path, sr=None)
@@ -210,12 +217,14 @@ class AudioAnalyzer:
         return 0.0
     
     def _key_number_to_name(self, key_number: int) -> str:
-        """Convertit un numéro de tonalité en nom"""
+        """
+Convertit un numéro de tonalité en nom"""
         keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         return keys[key_number % 12]
 
 class AudioEnhancer:
-    """Améliorateur audio IA pour créateurs musicaux"""
+    """
+Améliorateur audio IA pour créateurs musicaux"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -264,7 +273,8 @@ class AudioEnhancer:
         return enhanced + percussive * 0.8
     
     def _enhance_instrumental(self, audio: np.ndarray, sr: int, intensity: float) -> np.ndarray:
-        """Améliore les instruments dans l'audio"""
+        """
+Améliore les instruments dans l'audio"""
         # Séparation harmonique/percussive
         harmonic, percussive = librosa.effects.hpss(audio)
         
@@ -280,7 +290,8 @@ class AudioEnhancer:
         return enhanced
     
     def _master_audio(self, audio: np.ndarray, sr: int, intensity: float) -> np.ndarray:
-        """Mastering audio professionnel"""
+        """
+Mastering audio professionnel"""
         enhanced = audio.copy()
         
         # 1. Compression douce
@@ -298,7 +309,8 @@ class AudioEnhancer:
         return enhanced
     
     def _reduce_noise(self, audio: np.ndarray, sr: int, intensity: float) -> np.ndarray:
-        """Réduction de bruit avancée"""
+        """
+Réduction de bruit avancée"""
         try:
             # Utilisation de noisereduce
             reduced = nr.reduce_noise(
@@ -313,7 +325,8 @@ class AudioEnhancer:
             return self._spectral_gating(audio, sr, intensity)
     
     def _balanced_enhancement(self, audio: np.ndarray, sr: int, intensity: float) -> np.ndarray:
-        """Amélioration équilibrée pour tous types de contenu"""
+        """
+Amélioration équilibrée pour tous types de contenu"""
         enhanced = audio.copy()
         
         # EQ douce globale
@@ -334,7 +347,8 @@ class AudioEnhancer:
         bandwidth: float,
         gain: float
     ) -> np.ndarray:
-        """Applique un boost EQ à une fréquence spécifique"""
+        """
+Applique un boost EQ à une fréquence spécifique"""
         # Conversion en dB
         gain_linear = 10 ** (gain / 20)
         
@@ -370,7 +384,8 @@ class AudioEnhancer:
         attack: float = 0.003,
         release: float = 0.1
     ) -> np.ndarray:
-        """Applique une compression dynamique"""
+        """
+Applique une compression dynamique"""
         # Conversion en PyDub pour compression
         try:
             # Normalisation pour PyDub
@@ -400,7 +415,8 @@ class AudioEnhancer:
             return np.tanh(audio * ratio) / ratio
     
     def _apply_mastering_eq(self, audio: np.ndarray, sr: int, intensity: float) -> np.ndarray:
-        """EQ de mastering professionnel"""
+        """
+EQ de mastering professionnel"""
         enhanced = audio.copy()
         
         # Courbe de mastering typique
@@ -419,7 +435,8 @@ class AudioEnhancer:
         return enhanced
     
     def _apply_harmonic_excitation(self, audio: np.ndarray, intensity: float) -> np.ndarray:
-        """Ajoute de l'excitation harmonique"""
+        """
+Ajoute de l'excitation harmonique"""
         # Saturation douce pour harmoniques
         drive = 1 + intensity * 2
         excited = np.tanh(audio * drive) / drive
@@ -429,7 +446,8 @@ class AudioEnhancer:
         return audio * (1 - mix) + excited * mix
     
     def _apply_limiter(self, audio: np.ndarray, ceiling: float = 0.95) -> np.ndarray:
-        """Applique une limitation finale"""
+        """
+Applique une limitation finale"""
         # Limitation douce
         limited = np.where(
             np.abs(audio) > ceiling,
@@ -439,7 +457,8 @@ class AudioEnhancer:
         return limited
     
     def _spectral_gating(self, audio: np.ndarray, sr: int, intensity: float) -> np.ndarray:
-        """Réduction de bruit par gating spectral"""
+        """
+Réduction de bruit par gating spectral"""
         # STFT
         D = librosa.stft(audio)
         magnitude = np.abs(D)
@@ -461,7 +480,8 @@ class AudioEnhancer:
         return librosa.istft(D_gated)
 
 class AudioTransformer:
-    """Transformateur audio principal pour créateurs de contenu"""
+    """
+Transformateur audio principal pour créateurs de contenu"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -497,7 +517,8 @@ class AudioTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation audio selon configuration"""
+        """
+Transformation audio selon configuration"""
         
         start_time = time.time()
         operations = []
@@ -624,7 +645,8 @@ class AudioTransformer:
         params: Dict[str, Any],
         output_path: str
     ) -> np.ndarray:
-        """Convertit le format audio"""
+        """
+Convertit le format audio"""
         
         target_format = params.get('format', 'mp3')
         bitrate = params.get('bitrate', 192)
@@ -643,7 +665,8 @@ class AudioTransformer:
         return audio_data
     
     def _compress_audio(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
-        """Applique une compression dynamique"""
+        """
+Applique une compression dynamique"""
         
         ratio = params.get('ratio', 2.0)
         threshold = params.get('threshold', 0.7)
@@ -660,7 +683,8 @@ class AudioTransformer:
         sample_rate: int,
         params: Dict[str, Any]
     ) -> np.ndarray:
-        """Améliore la qualité audio"""
+        """
+Améliore la qualité audio"""
         
         enhancement_type = params.get('type', 'balanced')
         intensity = params.get('intensity', 0.5)
@@ -676,7 +700,8 @@ class AudioTransformer:
         output_path: str,
         config: 'TransformationConfig'
     ) -> None:
-        """Sauvegarde l'audio traité"""
+        """
+Sauvegarde l'audio traité"""
         
         output_format = config.output_format or Path(output_path).suffix.lstrip('.')
         params = config.parameters
@@ -704,7 +729,8 @@ class AudioTransformer:
         output_path: str,
         params: Dict[str, Any]
     ) -> None:
-        """Sauvegarde spécialisée MP3"""
+        """
+Sauvegarde spécialisée MP3"""
         
         bitrate = params.get('bitrate', 192)
         
@@ -725,7 +751,8 @@ class AudioTransformer:
         )
     
     def _generate_output_path(self, input_path: str, config: 'TransformationConfig') -> str:
-        """Génère le chemin de sortie automatiquement"""
+        """
+Génère le chemin de sortie automatiquement"""
         
         input_path_obj = Path(input_path)
         output_format = config.output_format or input_path_obj.suffix.lstrip('.')
@@ -770,7 +797,8 @@ class AudioTransformer:
         )
 
 class AsyncAudioTransformer:
-    """Version asynchrone du transformateur audio"""
+    """
+Version asynchrone du transformateur audio"""
     
     def __init__(self):
         self.sync_transformer = AudioTransformer()
@@ -782,7 +810,8 @@ class AsyncAudioTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation audio asynchrone"""
+        """
+Transformation audio asynchrone"""
         
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
@@ -798,7 +827,8 @@ class AsyncAudioTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 4
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""
+        """
+Transformation en lot asynchrone"""
         
         semaphore = asyncio.Semaphore(max_concurrent)
         

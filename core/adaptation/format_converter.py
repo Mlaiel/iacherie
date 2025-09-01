@@ -26,6 +26,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
+
 import asyncio
 import logging
 import tempfile
@@ -64,7 +65,9 @@ from .exceptions import ConversionError, UnsupportedFormatError, QualityValidati
 
 
 class ConversionQuality(str, Enum):
-    """Advanced conversion quality presets with AI enhancement"""
+    """
+Advanced conversion quality presets with AI enhancement"""
+
     LOSSLESS = "lossless"              # Perfect quality preservation
     ULTRA_HIGH = "ultra_high"          # Professional broadcast quality
     HIGH = "high"                      # Social media premium
@@ -80,6 +83,7 @@ class ConversionQuality(str, Enum):
 
 class ConversionProfile(str, Enum):
     """Creator-specific conversion profiles"""
+
     MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
@@ -94,6 +98,7 @@ class ConversionProfile(str, Enum):
 
 class PlatformOptimization(str, Enum):
     """Platform-specific optimization presets"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -110,6 +115,7 @@ class PlatformOptimization(str, Enum):
 
 class ProcessingMode(str, Enum):
     """Processing mode configurations"""
+
     REAL_TIME = "real_time"
     BATCH = "batch"
     PRIORITY = "priority"
@@ -143,14 +149,16 @@ class ConversionParams:
     
     @property
     def cache_key(self) -> str:
-        """Generate cache key for conversion parameters"""
+        """
+Generate cache key for conversion parameters"""
         params_str = json.dumps(self.__dict__, sort_keys=True, default=str)
         return hashlib.md5(params_str.encode()).hexdigest()
 
 
 @dataclass
 class QualityAnalysis:
-    """Comprehensive quality analysis metrics"""
+    """
+Comprehensive quality analysis metrics"""
     technical_score: float
     visual_quality: float
     audio_quality: float
@@ -165,7 +173,8 @@ class QualityAnalysis:
 
 @dataclass
 class ConversionResult:
-    """Comprehensive result of format conversion process with analytics"""
+    """
+Comprehensive result of format conversion process with analytics"""
     conversion_id: str
     success: bool
     output_path: str
@@ -688,7 +697,8 @@ class FormatConverter:
         original_path: str,
         converted_path: str
     ) -> float:
-        """Analyze audio quality preservation"""
+        """
+Analyze audio quality preservation"""
         try:
             # Load both audio files
             original = AudioSegment.from_file(original_path)

@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import pytest
 import asyncio
 from unittest.mock import Mock, AsyncMock, patch
@@ -19,16 +20,19 @@ from kubernetes.infrastructure.resource_scaling import (
 
 
 class TestProductionScaling:
-    """Test production scaling configurations"""
+    """
+Test production scaling configurations"""
     
     @pytest.fixture
     def scaling_manager(self):
-        """Create ResourceScalingManager instance for testing"""
+        """
+Create ResourceScalingManager instance for testing"""
         return ResourceScalingManager()
     
     @pytest.fixture
     def production_hpa_spec(self):
-        """Production HPA specification with CPU 70%, Memory 80%"""
+        """
+Production HPA specification with CPU 70%, Memory 80%"""
         return HPASpec(
             name="ainflue-backend-hpa",
             namespace="ainflue",
@@ -118,7 +122,8 @@ class TestProductionScaling:
     
     @pytest.mark.asyncio 
     async def test_production_hpa_with_custom_metrics(self, scaling_manager):
-        """Test production HPA with custom metrics support"""
+        """
+Test production HPA with custom metrics support"""
         result = await scaling_manager.create_production_hpa_with_custom_metrics(
             name="ainflue-backend-hpa",
             namespace="ainflue",
@@ -146,7 +151,8 @@ class TestProductionScaling:
     
     @pytest.mark.asyncio
     async def test_cluster_autoscaler_spot_instances(self, scaling_manager):
-        """Test cluster autoscaler with spot instances cost optimization"""
+        """
+Test cluster autoscaler with spot instances cost optimization"""
         ca_spec = ClusterAutoscalerSpec(
             name="cluster-autoscaler-spot",
             namespace="kube-system",

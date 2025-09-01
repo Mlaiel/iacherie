@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -23,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 class AppleMusicPlatform(PlatformBase):
-    """Apple Music platform integration"""
+    """
+Apple Music platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize Apple Music platform"""
+        """
+Initialize Apple Music platform"""
         super().__init__(config)
         self.api_base = "https://api.music.apple.com/v1"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -40,7 +43,8 @@ class AppleMusicPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Apple Music using JWT"""
+        """
+Authenticate with Apple Music using JWT"""
         try:
             # Generate JWT token for Apple Music API
             token = self._generate_jwt_token()
@@ -93,7 +97,8 @@ class AppleMusicPlatform(PlatformBase):
         return await self.authenticate()  # JWT tokens are regenerated
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Apple Music API"""
+        """
+Make authenticated request to Apple Music API"""
         if not self.is_authenticated or self._token_expired():
             if not await self.authenticate():
                 return None
@@ -140,7 +145,8 @@ class AppleMusicPlatform(PlatformBase):
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Apple Music (not supported via public API)"""
+        """
+Upload content to Apple Music (not supported via public API)"""
         # Apple Music doesn't support direct content uploads via public API
         # Content must be distributed through Apple Music for Artists or music distributors
         return UploadResult(

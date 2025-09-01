@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types de collaborations possibles"""
+    """
+Types de collaborations possibles"""
+
     MUSIC_FEATURE = "music_feature"
     REMIX_COLLABORATION = "remix_collaboration"
     JOINT_RELEASE = "joint_release"
@@ -61,6 +64,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """États des collaborations"""
+
     SUGGESTED = "suggested"
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -73,6 +77,7 @@ class CollaborationStatus(Enum):
 
 class MatchQuality(IntEnum):
     """Qualité du matching de collaboration"""
+
     POOR = 1        # <40% compatibilité
     FAIR = 2        # 40-60% compatibilité
     GOOD = 3        # 60-80% compatibilité
@@ -81,7 +86,9 @@ class MatchQuality(IntEnum):
 
 
 class Genre(Enum):
-    """Genres musicaux pour matching"""
+    """
+Genres musicaux pour matching"""
+
     ELECTRONIC = "electronic"
     HIP_HOP = "hip_hop"
     POP = "pop"
@@ -178,7 +185,8 @@ class CollaborationNotificationManager:
         self.matching_weights = self._load_matching_weights()
         
     def _init_ml_models(self) -> Dict[str, Any]:
-        """Initialise les modèles ML pour le matching"""
+        """
+Initialise les modèles ML pour le matching"""
         return {
             "tfidf_vectorizer": TfidfVectorizer(max_features=1000, stop_words='english'),
             "genre_similarity_matrix": self._build_genre_similarity_matrix(),
@@ -320,7 +328,8 @@ class CollaborationNotificationManager:
         return templates
 
     def _load_matching_weights(self) -> Dict[str, float]:
-        """Charge les poids pour l'algorithme de matching"""
+        """
+Charge les poids pour l'algorithme de matching"""
         return {
             "genre_compatibility": 0.25,
             "skill_complementarity": 0.20,

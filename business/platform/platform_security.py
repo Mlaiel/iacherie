@@ -4,8 +4,9 @@ Comprehensive security layer for platform operations including threat detection,
 access control, data protection, and compliance monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -31,7 +32,9 @@ from ...utils.ip_utils import get_client_ip, is_suspicious_ip
 logger = get_logger(__name__)
 
 class SecurityEventType(Enum):
-    """Security event types"""
+    """
+Security event types"""
+
     SUSPICIOUS_LOGIN = "suspicious_login"
     RATE_LIMIT_EXCEEDED = "rate_limit_exceeded"
     UNAUTHORIZED_ACCESS = "unauthorized_access"
@@ -43,6 +46,7 @@ class SecurityEventType(Enum):
 
 class SecurityAction(Enum):
     """Security action types"""
+
     BLOCK_IP = "block_ip"
     SUSPEND_USER = "suspend_user"
     REQUIRE_2FA = "require_2fa"
@@ -487,12 +491,14 @@ class PlatformSecurity:
         user_id: Optional[int], 
         resource_type: str
     ) -> Dict[str, Any]:
-        """Check rate limits"""
+        """
+Check rate limits"""
         # Implementation for rate limiting logic
         return {'allowed': True, 'remaining': 1000}
     
     async def _analyze_user_agent(self, user_agent: str) -> Dict[str, Any]:
-        """Analyze user agent for suspicious patterns"""
+        """
+Analyze user agent for suspicious patterns"""
         suspicious_patterns = [
             'bot', 'crawler', 'spider', 'scraper', 'automated',
             'curl', 'wget', 'python-requests'
@@ -512,7 +518,8 @@ class PlatformSecurity:
         ip: str, 
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze geographic anomalies"""
+        """
+Analyze geographic anomalies"""
         # Implementation for geographic analysis
         return {'anomalous': False, 'country': 'unknown'}
     
@@ -523,7 +530,8 @@ class PlatformSecurity:
         security_result: Dict[str, Any], 
         session: AsyncSession
     ):
-        """Log access attempt"""
+        """
+Log access attempt"""
         access_log = AccessLog(
             user_id=user_id,
             ip_address=get_client_ip(request),
@@ -544,17 +552,20 @@ class PlatformSecurity:
         return {'inappropriate': False, 'confidence': 0.0}
     
     async def _scan_audio_content(self, content_path: str) -> Dict[str, Any]:
-        """Scan audio content for copyright violations"""
+        """
+Scan audio content for copyright violations"""
         # Implementation for audio content scanning
         return {'copyright_violation': False, 'confidence': 0.0}
     
     async def _scan_text_content(self, content_path: str) -> Dict[str, Any]:
-        """Scan text content for malicious content"""
+        """
+Scan text content for malicious content"""
         # Implementation for text content scanning
         return {'malicious': False, 'threats': []}
     
     async def _quarantine_content(self, content_path: str, user_id: int, reason: str):
-        """Quarantine malicious content"""
+        """
+Quarantine malicious content"""
         # Implementation for content quarantine
         logger.warning(f"Content quarantined: {content_path} - Reason: {reason}")
     
@@ -577,7 +588,8 @@ class PlatformSecurity:
         description: str, 
         session: AsyncSession
     ):
-        """Log security event"""
+        """
+Log security event"""
         security_event = SecurityEvent(
             event_type=event_type.value,
             user_id=user_id,
@@ -591,7 +603,8 @@ class PlatformSecurity:
         await session.commit()
     
     async def _monitor_security_events(self):
-        """Monitor security events in background"""
+        """
+Monitor security events in background"""
         while True:
             try:
                 # Implementation for security event monitoring

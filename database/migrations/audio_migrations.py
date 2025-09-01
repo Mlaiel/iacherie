@@ -8,7 +8,7 @@ Responsibility: Database schema evolution for audio content processing, fingerpr
 ===============================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -24,6 +24,7 @@ Audio Content Types Supported:
 - Voice Recordings: Speeches, announcements, voice-overs
 - Live Recordings: Concerts, performances, events
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats with quality levels"""
+    """
+Supported audio formats with quality levels"""
+
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -59,6 +62,7 @@ class AudioFormat(Enum):
 
 class AudioQuality(Enum):
     """Audio quality classifications"""
+
     LOSSY_LOW = "lossy_low"      # <128 kbps
     LOSSY_STANDARD = "lossy_standard"  # 128-192 kbps
     LOSSY_HIGH = "lossy_high"    # 192-320 kbps
@@ -68,6 +72,7 @@ class AudioQuality(Enum):
 
 class AudioContentType(Enum):
     """Audio content categorization"""
+
     MUSIC_TRACK = "music_track"
     PODCAST_EPISODE = "podcast_episode"
     AUDIOBOOK_CHAPTER = "audiobook_chapter"

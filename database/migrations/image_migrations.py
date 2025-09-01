@@ -8,7 +8,7 @@ Responsibility: Database schema evolution for image content processing, fingerpr
 ============================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -24,6 +24,7 @@ Image Content Types Supported:
 - Brand Assets: Logos, banners, promotional materials
 - NFT Artwork: Digital collectibles, crypto art
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Supported image formats with quality levels"""
+    """
+Supported image formats with quality levels"""
+
     JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
@@ -60,6 +63,7 @@ class ImageFormat(Enum):
 
 class ImageQuality(Enum):
     """Image quality classifications"""
+
     LOW_RESOLUTION = "low_resolution"    # <1MP
     STANDARD_RESOLUTION = "standard_resolution"  # 1-5MP
     HIGH_RESOLUTION = "high_resolution"  # 5-20MP
@@ -69,6 +73,7 @@ class ImageQuality(Enum):
 
 class ImageContentType(Enum):
     """Image content categorization"""
+
     PHOTOGRAPHY = "photography"
     DIGITAL_ART = "digital_art"
     STOCK_IMAGE = "stock_image"

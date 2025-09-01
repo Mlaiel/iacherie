@@ -7,6 +7,7 @@ Handles copyright protection, violation detection, and takedown management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DMCARequest:
-    """DMCA takedown request information"""
+    """
+DMCA takedown request information"""
     request_id: str
     content_url: str
     infringing_url: str
@@ -96,7 +98,8 @@ class DMCAServicesAPI:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
@@ -109,7 +112,8 @@ class DMCAServicesAPI:
         data: Optional[Dict[str, Any]] = None,
         service: str = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
+        """
+Make authenticated API request with rate limiting"""
         
         service = service or self.default_service
         service_config = self.services.get(service)

@@ -7,6 +7,7 @@ Implements Instagram Basic Display API and Graph API integration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramPost:
-    """Instagram post data structure."""
+    """
+Instagram post data structure."""
     post_id: str
     shortcode: str
     post_type: str  # photo, video, carousel
@@ -46,7 +48,8 @@ class InstagramPost:
 
 @dataclass
 class InstagramUser:
-    """Instagram user data structure."""
+    """
+Instagram user data structure."""
     user_id: str
     username: str
     full_name: str
@@ -62,7 +65,8 @@ class InstagramUser:
 
 @dataclass
 class InstagramStory:
-    """Instagram story data structure."""
+    """
+Instagram story data structure."""
     story_id: str
     user_id: str
     username: str
@@ -91,7 +95,8 @@ class InstagramCrawler:
     """
     
     def __init__(self):
-        """Initialize Instagram crawler."""
+        """
+Initialize Instagram crawler."""
         self.access_token = settings.INSTAGRAM_ACCESS_TOKEN
         self.app_id = settings.INSTAGRAM_APP_ID
         self.app_secret = settings.INSTAGRAM_APP_SECRET
@@ -120,7 +125,8 @@ class InstagramCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -747,7 +753,8 @@ class InstagramCrawler:
         return similarity
     
     def _get_match_factors(self, post1: InstagramPost, post2: InstagramPost) -> List[str]:
-        """Get factors that contribute to post similarity."""
+        """
+Get factors that contribute to post similarity."""
         factors = []
         
         if post1.username == post2.username:

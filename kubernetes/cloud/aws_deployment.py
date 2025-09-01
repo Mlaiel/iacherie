@@ -14,6 +14,7 @@ This module provides comprehensive AWS deployment and management capabilities
 for the IA Influencer Agent platform, including EC2, ECS, Lambda, RDS, S3,
 CloudFront, and other AWS services.
 """
+
 import logging
 import asyncio
 import boto3
@@ -28,7 +29,9 @@ import aioboto3
 logger = logging.getLogger(__name__)
 
 class AWSRegion(Enum):
-    """AWS regions for global deployment"""
+    """
+AWS regions for global deployment"""
+
     US_EAST_1 = "us-east-1"
     US_WEST_2 = "us-west-2"
     EU_WEST_1 = "eu-west-1"
@@ -38,6 +41,7 @@ class AWSRegion(Enum):
 
 class AWSServiceType(Enum):
     """AWS service types"""
+
     EC2 = "ec2"
     ECS = "ecs"
     LAMBDA = "lambda"
@@ -79,7 +83,8 @@ class AWSDeploymentConfig:
 
 @dataclass
 class AWSResource:
-    """AWS resource representation"""
+    """
+AWS resource representation"""
     resource_id: str
     resource_type: AWSServiceType
     region: AWSRegion
@@ -91,10 +96,12 @@ class AWSResource:
     security_compliance: bool = True
 
 class AWSDeploymentManager:
-    """Enterprise AWS deployment and management system"""
+    """
+Enterprise AWS deployment and management system"""
     
     def __init__(self, credentials: AWSCredentials):
-        """Initialize AWS deployment manager"""
+        """
+Initialize AWS deployment manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.credentials = credentials
         self.session = aioboto3.Session(
@@ -107,7 +114,8 @@ class AWSDeploymentManager:
         self.deployment_history: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize AWS connection and validate credentials"""
+        """
+Initialize AWS connection and validate credentials"""
         try:
             async with self.session.client('sts') as sts:
                 caller_identity = await sts.get_caller_identity()
@@ -325,7 +333,8 @@ class AWSDeploymentManager:
         return security_groups
     
     async def _deploy_database_infrastructure(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy RDS database infrastructure"""
+        """
+Deploy RDS database infrastructure"""
         db_config = config.database_config
         
         async with self.session.client('rds', region_name=config.region.value) as rds:
@@ -386,7 +395,8 @@ class AWSDeploymentManager:
         return services
     
     async def _deploy_ecs_service(self, service_config: Dict[str, Any], config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy ECS service"""
+        """
+Deploy ECS service"""
         async with self.session.client('ecs', region_name=config.region.value) as ecs:
             # Create ECS cluster if not exists
             cluster_name = f"ia-influencer-cluster-{config.environment}"

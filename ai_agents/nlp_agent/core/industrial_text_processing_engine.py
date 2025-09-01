@@ -11,6 +11,7 @@ Complete integration of industrial-grade text processing components:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -49,7 +50,9 @@ from conversational.multilingual_support.enhanced_644_language_support import (
 logger = logging.getLogger(__name__)
 
 class ProcessingMode(Enum):
-    """Processing modes for different use cases"""
+    """
+Processing modes for different use cases"""
+
     FAST_ANALYSIS = "fast_analysis"
     STANDARD_ANALYSIS = "standard_analysis"  
     COMPREHENSIVE_ANALYSIS = "comprehensive_analysis"
@@ -57,6 +60,7 @@ class ProcessingMode(Enum):
 
 class AnalysisType(Enum):
     """Types of analysis available"""
+
     SEMANTIC_ANALYSIS = "semantic_analysis"
     PLAGIARISM_DETECTION = "plagiarism_detection"
     AUTHORSHIP_ANALYSIS = "authorship_analysis"
@@ -99,7 +103,8 @@ class IndustrialProcessingConfig:
 
 @dataclass
 class ComprehensiveAnalysisResult:
-    """Comprehensive analysis result combining all components"""
+    """
+Comprehensive analysis result combining all components"""
     text_id: str
     original_text: str
     
@@ -135,7 +140,8 @@ class IndustrialTextProcessingEngine:
     """
     
     def __init__(self, config: Optional[IndustrialProcessingConfig] = None):
-        """Initialize industrial text processing engine"""
+        """
+Initialize industrial text processing engine"""
         self.config = config or IndustrialProcessingConfig()
         
         # Initialize component engines
@@ -475,7 +481,8 @@ class IndustrialTextProcessingEngine:
         return strategy_map.get(processing_mode, DetectionStrategy.COMPREHENSIVE)
     
     def _get_analysis_complexity(self, processing_mode: ProcessingMode):
-        """Get authorship analysis complexity based on processing mode"""
+        """
+Get authorship analysis complexity based on processing mode"""
         from data.fingerprinting.advanced_authorship_analyzer import AnalysisComplexity
         
         complexity_map = {
@@ -488,7 +495,8 @@ class IndustrialTextProcessingEngine:
         return complexity_map.get(processing_mode, AnalysisComplexity.STANDARD)
     
     def _calculate_text_quality_score(self, result: ComprehensiveAnalysisResult) -> float:
-        """Calculate overall text quality score"""
+        """
+Calculate overall text quality score"""
         
         quality_factors = []
         
@@ -520,7 +528,8 @@ class IndustrialTextProcessingEngine:
         return np.mean(quality_factors) if quality_factors else 0.5
     
     def _generate_processing_summary(self, result: ComprehensiveAnalysisResult) -> Dict[str, Any]:
-        """Generate processing summary"""
+        """
+Generate processing summary"""
         
         summary = {
             'text_length': len(result.original_text),
@@ -613,7 +622,8 @@ class IndustrialTextProcessingEngine:
         return metrics
     
     def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate"""
+        """
+Calculate cache hit rate"""
         total_requests = self.processing_stats.get('total_processed', 0)
         if total_requests == 0:
             return 0.0
@@ -623,7 +633,8 @@ class IndustrialTextProcessingEngine:
         return cache_hits / total_requests
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export current configuration"""
+        """
+Export current configuration"""
         return {
             'engine_config': {
                 'processing_mode': self.config.processing_mode.value,
@@ -643,7 +654,8 @@ class IndustrialTextProcessingEngine:
         }
     
     def cleanup(self):
-        """Cleanup resources and connections"""
+        """
+Cleanup resources and connections"""
         try:
             if self.embeddings_engine:
                 self.embeddings_engine.cleanup()
@@ -673,7 +685,8 @@ def create_fast_processing_engine() -> IndustrialTextProcessingEngine:
     return IndustrialTextProcessingEngine(config)
 
 def create_comprehensive_processing_engine() -> IndustrialTextProcessingEngine:
-    """Create engine for comprehensive analysis"""
+    """
+Create engine for comprehensive analysis"""
     config = IndustrialProcessingConfig(
         processing_mode=ProcessingMode.COMPREHENSIVE_ANALYSIS,
         enabled_analyses=[
@@ -690,7 +703,8 @@ def create_comprehensive_processing_engine() -> IndustrialTextProcessingEngine:
     return IndustrialTextProcessingEngine(config)
 
 def create_industrial_scale_engine() -> IndustrialTextProcessingEngine:
-    """Create engine optimized for industrial scale processing"""
+    """
+Create engine optimized for industrial scale processing"""
     config = IndustrialProcessingConfig(
         processing_mode=ProcessingMode.INDUSTRIAL_SCALE,
         batch_size=128,

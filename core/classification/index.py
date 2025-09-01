@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,6 +16,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of German and international copyright law.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Union, Any
 import logging
@@ -58,7 +59,8 @@ class ClassificationOrchestrator:
     """
     
     def __init__(self):
-        """Initialize classification orchestrator."""
+        """
+Initialize classification orchestrator."""
         self.settings = get_settings()
         
         # Initialize core components
@@ -238,7 +240,8 @@ class ClassificationOrchestrator:
         return await loop.run_in_executor(self.executor, func, *args)
     
     def _determine_content_type(self, content_path: str) -> str:
-        """Determine content type from file path."""
+        """
+Determine content type from file path."""
         try:
             # Get file extension
             file_path = Path(content_path)
@@ -480,24 +483,28 @@ def get_orchestrator() -> ClassificationOrchestrator:
 
 # Convenience functions for direct access
 async def classify_content(content_path: str, content_id: str, owner_id: str) -> Dict[str, Any]:
-    """Convenience function for content classification."""
+    """
+Convenience function for content classification."""
     orchestrator = get_orchestrator()
     return await orchestrator.classify_content_comprehensive(content_path, content_id, owner_id)
 
 
 async def batch_classify(content_list: List[Dict[str, str]]) -> List[Dict[str, Any]]:
-    """Convenience function for batch classification."""
+    """
+Convenience function for batch classification."""
     orchestrator = get_orchestrator()
     return await orchestrator.batch_classify_content(content_list)
 
 
 def get_health_status() -> Dict[str, Any]:
-    """Convenience function for health check."""
+    """
+Convenience function for health check."""
     orchestrator = get_orchestrator()
     return orchestrator.health_check()
 
 
 def get_metrics() -> Dict[str, Any]:
-    """Convenience function for performance metrics."""
+    """
+Convenience function for performance metrics."""
     orchestrator = get_orchestrator()
     return orchestrator.get_performance_metrics()

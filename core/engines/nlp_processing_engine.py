@@ -6,6 +6,7 @@ Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
 """
+
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union, Tuple
 import logging
@@ -18,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 class NlpProcessingEngineStatus(Enum):
     """États du moteur NlpProcessingEngine"""
+
     IDLE = "idle"
     PROCESSING = "processing"
     ERROR = "error"

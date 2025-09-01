@@ -5,8 +5,9 @@ Machine Learning-powered alert classification and enhancement system.
 Uses advanced ML models for automatic categorization, priority scoring, and risk assessment.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import pickle
@@ -36,7 +37,9 @@ from ...core.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class ModelType(str, Enum):
-    """ML model types."""
+    """
+ML model types."""
+
     SEVERITY_CLASSIFIER = "severity_classifier"
     RISK_ASSESSOR = "risk_assessor"
     PRIORITY_SCORER = "priority_scorer"
@@ -45,6 +48,7 @@ class ModelType(str, Enum):
 
 class FeatureType(str, Enum):
     """Feature extraction types."""
+
     TEXT_FEATURES = "text_features"
     METADATA_FEATURES = "metadata_features"
     TEMPORAL_FEATURES = "temporal_features"
@@ -76,7 +80,8 @@ class ModelMetrics:
     model_version: str
 
 class FeatureExtractor:
-    """Extracts features from alerts for ML processing."""
+    """
+Extracts features from alerts for ML processing."""
     
     def __init__(self):
         self.text_vectorizer = TfidfVectorizer(
@@ -89,7 +94,8 @@ class FeatureExtractor:
         self._is_fitted = False
     
     def extract_features(self, alert: Alert, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract comprehensive features from alert."""
+        """
+Extract comprehensive features from alert."""
         features = {}
         
         # Text features
@@ -110,7 +116,8 @@ class FeatureExtractor:
         return features
     
     def _extract_text_features(self, alert: Alert) -> Dict[str, Any]:
-        """Extract text-based features."""
+        """
+Extract text-based features."""
         text_content = f"{alert.title} {alert.description}"
         
         features = {
@@ -241,7 +248,8 @@ class FeatureExtractor:
         return min(avg_word_length / 10.0, 1.0)  # Normalize to 0-1
     
     def _encode_categorical(self, value: str, category: str) -> int:
-        """Encode categorical values."""
+        """
+Encode categorical values."""
         if category not in self.label_encoders:
             self.label_encoders[category] = LabelEncoder()
         
@@ -262,7 +270,8 @@ class FeatureExtractor:
             return 0
 
 class SeverityClassifier:
-    """Classifies alert severity using ML."""
+    """
+Classifies alert severity using ML."""
     
     def __init__(self):
         self.model = RandomForestClassifier(
@@ -378,6 +387,7 @@ class SeverityClassifier:
     
     def _prepare_training_data(self, training_data: List[Dict[str, Any]]) -> Tuple[np.ndarray, np.ndarray]:
         """Prepare training data for model."""
+
         X = []
         y = []
         
@@ -715,7 +725,8 @@ class AlertMLClassifier:
         return self.metrics.copy()
 
     async def _get_user_context(self, user_id: str) -> Dict[str, Any]:
-        """Get user context for classification."""
+        """
+Get user context for classification."""
         try:
             # Check cache first
             cache_key = f"user_context:{user_id}"

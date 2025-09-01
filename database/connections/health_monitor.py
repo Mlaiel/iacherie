@@ -11,6 +11,7 @@ Monitors health and performance of all database connections:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Callable, Set
@@ -24,7 +25,9 @@ from ..monitoring.metrics import MetricsCollector
 
 
 class HealthStatus(Enum):
-    """Database health status levels"""
+    """
+Database health status levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -46,7 +49,8 @@ class HealthThresholds:
 
 @dataclass
 class HealthCheckResult:
-    """Health check result for a single database"""
+    """
+Health check result for a single database"""
     database_type: str
     status: HealthStatus
     response_time: float
@@ -97,7 +101,8 @@ class DatabaseHealthMonitor:
         self.health_callbacks: List[Callable[[Dict[str, HealthCheckResult]], None]] = []
     
     async def initialize(self, handlers: Dict[str, Any]) -> None:
-        """Initialize health monitoring with database handlers"""
+        """
+Initialize health monitoring with database handlers"""
         self.handlers = handlers
         self.logger.info("Database health monitor initialized")
         
@@ -439,7 +444,8 @@ class DatabaseHealthMonitor:
         await self._notify_callbacks(results)
     
     async def _send_alerts(self, results: Dict[str, HealthCheckResult]) -> None:
-        """Send alerts for health issues"""
+        """
+Send alerts for health issues"""
         for db_type, result in results.items():
             if result.status == HealthStatus.CRITICAL:
                 await self.alert_manager.send_alert(
@@ -500,13 +506,15 @@ class DatabaseHealthMonitor:
         self.health_callbacks.append(callback)
     
     def get_current_health_status(self) -> Dict[str, HealthStatus]:
-        """Get current health status for all databases"""
+        """
+Get current health status for all databases"""
         return self.current_status.copy()
     
     def get_health_history(self, 
                           database_type: Optional[str] = None,
                           hours: int = 1) -> Dict[str, List[HealthCheckResult]]:
-        """Get health history for specified time period"""
+        """
+Get health history for specified time period"""
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         if database_type:
@@ -528,7 +536,8 @@ class DatabaseHealthMonitor:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive health monitoring metrics"""
+        """
+Get comprehensive health monitoring metrics"""
         current_health = {
             db_type: status.value 
             for db_type, status in self.current_status.items()

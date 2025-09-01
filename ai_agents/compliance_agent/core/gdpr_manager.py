@@ -11,6 +11,7 @@ This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import time
@@ -58,7 +59,9 @@ from ...security.audit_logger import AuditLogger
 logger = logging.getLogger(__name__)
 
 class ConsentType(Enum):
-    """Types of GDPR consent"""
+    """
+Types of GDPR consent"""
+
     DATA_PROCESSING = "data_processing"
     MARKETING = "marketing"
     ANALYTICS = "analytics"
@@ -70,6 +73,7 @@ class ConsentType(Enum):
 
 class DataSubjectRight(Enum):
     """GDPR Data Subject Rights"""
+
     ACCESS = "access"  # Article 15
     RECTIFICATION = "rectification"  # Article 16
     ERASURE = "erasure"  # Article 17 (Right to be forgotten)
@@ -80,6 +84,7 @@ class DataSubjectRight(Enum):
 
 class ProcessingLawfulBasis(Enum):
     """GDPR Lawful Basis for Processing"""
+
     CONSENT = "consent"  # Article 6(1)(a)
     CONTRACT = "contract"  # Article 6(1)(b)
     LEGAL_OBLIGATION = "legal_obligation"  # Article 6(1)(c)
@@ -89,6 +94,7 @@ class ProcessingLawfulBasis(Enum):
 
 class DataCategory(Enum):
     """Categories of personal data"""
+
     BASIC_IDENTITY = "basic_identity"
     CONTACT_INFO = "contact_info"
     DEMOGRAPHIC = "demographic"
@@ -153,7 +159,8 @@ class DataProcessingActivity:
 
 @dataclass
 class DataBreachIncident:
-    """Data Protection Breach Incident Record"""
+    """
+Data Protection Breach Incident Record"""
     id: str
     incident_date: datetime
     discovery_date: datetime
@@ -179,7 +186,8 @@ class GDPRManager:
     """
     
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize GDPR manager with advanced privacy controls"""
+        """
+Initialize GDPR manager with advanced privacy controls"""
         self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
@@ -712,7 +720,8 @@ class GDPRManager:
         }
     
     async def _get_user_content_data(self, user_id: str) -> Dict[str, Any]:
-        """Get user content data"""
+        """
+Get user content data"""
         # Placeholder - would integrate with content management system
         return {
             'total_uploads': 0,
@@ -722,7 +731,8 @@ class GDPRManager:
         }
     
     async def _get_user_behavioral_data(self, user_id: str) -> Dict[str, Any]:
-        """Get user behavioral/analytics data"""
+        """
+Get user behavioral/analytics data"""
         # Placeholder - would integrate with analytics systems
         return {
             'session_count': 0,
@@ -732,7 +742,8 @@ class GDPRManager:
         }
     
     async def _get_user_technical_data(self, user_id: str) -> Dict[str, Any]:
-        """Get user technical data (logs, IPs, etc.)"""
+        """
+Get user technical data (logs, IPs, etc.)"""
         # Placeholder - would integrate with logging systems
         return {
             'ip_addresses': [],
@@ -742,7 +753,8 @@ class GDPRManager:
         }
     
     async def _format_access_response(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Format data for Article 15 access response"""
+        """
+Format data for Article 15 access response"""
         return {
             'data_subject_information': user_data.get('user_profile', {}),
             'processing_purposes': [
@@ -778,7 +790,8 @@ class GDPRManager:
         }
     
     async def _format_portability_response(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Format data for Article 20 portability response"""
+        """
+Format data for Article 20 portability response"""
         portable_data = {
             'user_profile': user_data.get('user_profile', {}),
             'content_metadata': user_data.get('content_data', {}),
@@ -798,7 +811,8 @@ class GDPRManager:
         }
     
     async def _check_erasure_restrictions(self, user_id: str) -> Tuple[bool, List[str]]:
-        """Check if data erasure is legally possible"""
+        """
+Check if data erasure is legally possible"""
         restrictions = []
         
         # Check for legal obligations (Article 17(3))
@@ -820,7 +834,8 @@ class GDPRManager:
         return len(restrictions) == 0, restrictions
     
     async def _execute_data_erasure(self, user_id: str) -> Dict[str, Any]:
-        """Execute data erasure across all systems"""
+        """
+Execute data erasure across all systems"""
         try:
             erasure_results = {
                 'systems': [],
@@ -954,7 +969,8 @@ class GDPRManager:
     async def _assess_notification_requirements(self, risk_level: str,
                                               data_categories: List[DataCategory],
                                               affected_count: int) -> bool:
-        """Assess whether breach notification is required"""
+        """
+Assess whether breach notification is required"""
         # Article 33 - Notification requirements
         if risk_level == 'high':
             return True
@@ -972,7 +988,8 @@ class GDPRManager:
         return False
     
     async def _handle_breach_notifications(self, incident: DataBreachIncident):
-        """Handle breach notification requirements"""
+        """
+Handle breach notification requirements"""
         try:
             # Article 33 - Notification to supervisory authority (72 hours)
             if incident.notification_required and not incident.authority_notified:
@@ -1129,7 +1146,8 @@ class DataProtectionOfficer:
         self.compliance_metrics = {}
         
     async def generate_compliance_dashboard(self) -> Dict[str, Any]:
-        """Generate comprehensive GDPR compliance dashboard"""
+        """
+Generate comprehensive GDPR compliance dashboard"""
         try:
             # Get current metrics
             total_users = len(self.gdpr_manager.consent_by_user)

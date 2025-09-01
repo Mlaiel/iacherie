@@ -6,6 +6,7 @@ intelligent cache strategies, and automatic cache invalidation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 import asyncio
 import json
 import hashlib
@@ -27,7 +28,9 @@ logger = get_logger(__name__)
 
 
 class CacheStrategy(Enum):
-    """Cache strategy types"""
+    """
+Cache strategy types"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     TTL = "ttl"  # Time To Live
@@ -38,6 +41,7 @@ class CacheStrategy(Enum):
 
 class CacheLevel(Enum):
     """Cache levels for multi-tier caching"""
+
     L1_MEMORY = "l1_memory"
     L2_REDIS = "l2_redis"
     L3_DATABASE = "l3_database"
@@ -83,18 +87,21 @@ class CacheMetrics:
     
     @property
     def hit_ratio(self) -> float:
-        """Calculate cache hit ratio"""
+        """
+Calculate cache hit ratio"""
         total_requests = self.hit_count + self.miss_count
         return self.hit_count / total_requests if total_requests > 0 else 0.0
     
     @property
     def miss_ratio(self) -> float:
-        """Calculate cache miss ratio"""
+        """
+Calculate cache miss ratio"""
         return 1.0 - self.hit_ratio
 
 
 class CacheEntry:
-    """Cache entry with metadata"""
+    """
+Cache entry with metadata"""
     
     def __init__(self, key: str, value: Any, ttl: Optional[int] = None):
         self.key = key
@@ -107,26 +114,30 @@ class CacheEntry:
         self.size = self._calculate_size()
     
     def _calculate_size(self) -> int:
-        """Calculate entry size in bytes"""
+        """
+Calculate entry size in bytes"""
         try:
             return len(json.dumps(self.value).encode('utf-8'))
         except (TypeError, ValueError):
             return len(str(self.value).encode('utf-8'))
     
     def is_expired(self) -> bool:
-        """Check if entry has expired"""
+        """
+Check if entry has expired"""
         if self.expires_at is None:
             return False
         return datetime.now() > self.expires_at
     
     def access(self) -> None:
-        """Mark entry as accessed"""
+        """
+Mark entry as accessed"""
         self.last_accessed = datetime.now()
         self.access_count += 1
 
 
 class MemoryCache:
-    """In-memory cache with LRU/LFU eviction"""
+    """
+In-memory cache with LRU/LFU eviction"""
     
     def __init__(self, config: CacheConfig):
         self.config = config
@@ -135,7 +146,8 @@ class MemoryCache:
         self._lock = asyncio.Lock()
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from memory cache"""
+        """
+Get value from memory cache"""
         async with self._lock:
             if key not in self._cache:
                 return None
@@ -153,7 +165,8 @@ class MemoryCache:
             return entry.value
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> None:
-        """Set value in memory cache"""
+        """
+Set value in memory cache"""
         async with self._lock:
             entry = CacheEntry(key, value, ttl or self.config.ttl_seconds)
             
@@ -166,12 +179,14 @@ class MemoryCache:
                 self._access_order.append(key)
     
     async def delete(self, key: str) -> bool:
-        """Delete key from memory cache"""
+        """
+Delete key from memory cache"""
         async with self._lock:
             return await self._remove(key)
     
     async def _remove(self, key: str) -> bool:
-        """Remove key from cache"""
+        """
+Remove key from cache"""
         if key in self._cache:
             del self._cache[key]
             if key in self._access_order:
@@ -180,7 +195,8 @@ class MemoryCache:
         return False
     
     async def _evict(self) -> None:
-        """Evict entries based on strategy"""
+        """
+Evict entries based on strategy"""
         if not self._cache:
             return
         
@@ -200,16 +216,19 @@ class MemoryCache:
             await self._remove(key_to_evict)
     
     def get_size(self) -> int:
-        """Get current cache size"""
+        """
+Get current cache size"""
         return len(self._cache)
     
     def get_memory_usage(self) -> int:
-        """Get memory usage in bytes"""
+        """
+Get memory usage in bytes"""
         return sum(entry.size for entry in self._cache.values())
 
 
 class CacheManager:
-    """Advanced multi-layer cache manager"""
+    """
+Advanced multi-layer cache manager"""
     
     def __init__(self, config: CacheConfig):
         self.config = config
@@ -224,7 +243,8 @@ class CacheManager:
         asyncio.create_task(self._initialize_redis())
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection"""
+        """
+Initialize Redis connection"""
         try:
             self.redis_client = redis.Redis(
                 host=self.config.redis_host,
@@ -361,7 +381,8 @@ class CacheManager:
         self._warm_up_tasks.append(task)
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""
+        """
+Get comprehensive cache statistics"""
         stats = {
             "hit_ratio": self.metrics.hit_ratio,
             "miss_ratio": self.metrics.miss_ratio,
@@ -458,7 +479,8 @@ class CacheManager:
         return fnmatch.fnmatch(key, pattern)
     
     async def close(self) -> None:
-        """Close cache connections"""
+        """
+Close cache connections"""
         if self.redis_client:
             await self.redis_client.close()
             logger.info("Redis connection closed")

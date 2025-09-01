@@ -12,6 +12,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
+    """
+Supported compliance frameworks"""
+
     GDPR = "gdpr"
     CCPA = "ccpa" 
     SOC2 = "soc2"
@@ -56,6 +59,7 @@ class ComplianceFramework(Enum):
 
 class SecurityThreatLevel(Enum):
     """Security threat severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,6 +68,7 @@ class SecurityThreatLevel(Enum):
 
 class SecurityScanType(Enum):
     """Types of security scans"""
+
     VULNERABILITY_SCAN = "vulnerability"
     PENETRATION_TEST = "penetration"
     COMPLIANCE_AUDIT = "compliance"
@@ -89,7 +94,8 @@ class SecurityThreat:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation detection"""
+    """
+Compliance violation detection"""
     violation_id: str
     framework: ComplianceFramework
     violation_type: str
@@ -103,7 +109,8 @@ class ComplianceViolation:
 
 @dataclass
 class SecurityPolicy:
-    """Network security policy definition"""
+    """
+Network security policy definition"""
     policy_id: str
     name: str
     description: str
@@ -556,7 +563,8 @@ class NetworkSecurityComplianceManager:
         return results
     
     async def _check_gdpr_compliance(self, resource_data: Dict[str, Any]) -> List[ComplianceViolation]:
-        """Check GDPR compliance violations"""
+        """
+Check GDPR compliance violations"""
         violations = []
         
         # Check for data retention policy compliance

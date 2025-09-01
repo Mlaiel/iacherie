@@ -16,6 +16,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -68,7 +69,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalysisType(Enum):
-    """Content analysis types"""
+    """
+Content analysis types"""
+
     BASIC = "basic"
     DETAILED = "detailed" 
     COMPREHENSIVE = "comprehensive"
@@ -399,7 +402,8 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Perform basic content classification and metadata extraction"""
+        """
+Perform basic content classification and metadata extraction"""
         try:
             # Content classification
             if self.classification_model:
@@ -602,7 +606,8 @@ class ContentAnalyzer:
         return None
     
     async def _extract_video_transcription(self, video_content: bytes) -> Optional[str]:
-        """Extract transcription from video content"""
+        """
+Extract transcription from video content"""
         # Implementation would extract audio and transcribe
         # Placeholder for now
         return None
@@ -612,7 +617,8 @@ class ContentAnalyzer:
         content: Any,
         content_type: str
     ) -> Dict[str, float]:
-        """Assess copyright infringement risk"""
+        """
+Assess copyright infringement risk"""
         # Placeholder implementation
         return {
             'risk_score': 0.1,  # Low risk by default
@@ -625,12 +631,14 @@ class ContentAnalyzer:
         content: Any,
         content_type: str
     ) -> float:
-        """Calculate content originality score"""
+        """
+Calculate content originality score"""
         # Placeholder implementation
         return 0.9  # High originality by default
     
     def get_analysis_stats(self) -> Dict[str, Any]:
-        """Get analyzer performance statistics"""
+        """
+Get analyzer performance statistics"""
         return {
             'total_analyzed': self.total_analyzed,
             'successful_analyses': self.successful_analyses,
@@ -727,7 +735,8 @@ class QualityAnalyzer:
         }
     
     async def _analyze_video_quality(self, video_content: bytes) -> Dict[str, Any]:
-        """Analyze video quality metrics"""
+        """
+Analyze video quality metrics"""
         return {
             'overall_score': 0.75,  # Placeholder
             'metrics': {
@@ -742,7 +751,8 @@ class QualityAnalyzer:
         }
     
     async def _analyze_image_quality(self, image_content: bytes) -> Dict[str, Any]:
-        """Analyze image quality metrics"""
+        """
+Analyze image quality metrics"""
         return {
             'overall_score': 0.85,  # Placeholder
             'metrics': {
@@ -757,7 +767,8 @@ class QualityAnalyzer:
         }
     
     async def _analyze_text_quality(self, text_content: str) -> Dict[str, Any]:
-        """Analyze text quality metrics"""
+        """
+Analyze text quality metrics"""
         try:
             word_count = len(text_content.split())
             
@@ -796,7 +807,8 @@ class QualityAnalyzer:
             }
     
     def _get_text_recommendations(self, readability: float, word_count: int) -> List[str]:
-        """Generate text improvement recommendations"""
+        """
+Generate text improvement recommendations"""
         recommendations = []
         
         if readability < 30:
@@ -945,7 +957,8 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Predict engagement metrics"""
+        """
+Predict engagement metrics"""
         base_engagement = {
             'likes': 100,
             'comments': 20,
@@ -974,7 +987,8 @@ class TrendAnalyzer:
         content: Any,
         content_type: str
     ) -> List[str]:
-        """Identify relevant trend categories"""
+        """
+Identify relevant trend categories"""
         # Placeholder trend categories
         all_categories = [
             'entertainment', 'educational', 'lifestyle', 'technology',
@@ -991,7 +1005,8 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> Optional[str]:
-        """Predict optimal posting time"""
+        """
+Predict optimal posting time"""
         # Placeholder optimal times based on content type
         optimal_times = {
             'video': '19:00',  # Evening prime time
@@ -1008,7 +1023,8 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate how well content matches target audience"""
+        """
+Calculate how well content matches target audience"""
         # Placeholder calculation
         # In reality, this would analyze audience demographics,
         # interests, and behavior patterns
@@ -1028,7 +1044,8 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze platform-specific optimization recommendations"""
+        """
+Analyze platform-specific optimization recommendations"""
         platforms = ['instagram', 'tiktok', 'youtube', 'twitter', 'linkedin']
         
         optimization = {}
@@ -1045,7 +1062,8 @@ class TrendAnalyzer:
         return optimization
     
     def _get_platform_duration(self, platform: str, content_type: str) -> Optional[str]:
-        """Get recommended content duration for platform"""
+        """
+Get recommended content duration for platform"""
         durations = {
             ('instagram', 'video'): '15-30 seconds',
             ('tiktok', 'video'): '15-60 seconds',
@@ -1056,7 +1074,8 @@ class TrendAnalyzer:
         return durations.get((platform, content_type))
     
     def _get_platform_hashtags(self, platform: str) -> List[str]:
-        """Get platform-specific hashtag recommendations"""
+        """
+Get platform-specific hashtag recommendations"""
         hashtags = {
             'instagram': ['#content', '#creator', '#viral', '#trending'],
             'tiktok': ['#fyp', '#trending', '#viral', '#content'],
@@ -1068,7 +1087,8 @@ class TrendAnalyzer:
         return hashtags.get(platform, ['#content'])
     
     def _get_posting_frequency(self, platform: str) -> str:
-        """Get recommended posting frequency for platform"""
+        """
+Get recommended posting frequency for platform"""
         frequencies = {
             'instagram': '1-2 times daily',
             'tiktok': '1-3 times daily',
@@ -1183,7 +1203,8 @@ class SentimentAnalyzer:
         return None
     
     def _analyze_basic_sentiment(self, text: str) -> Dict[str, float]:
-        """Perform basic sentiment analysis using VADER"""
+        """
+Perform basic sentiment analysis using VADER"""
         scores = self.vader_analyzer.polarity_scores(text)
         return {
             'positive': scores['pos'],
@@ -1193,7 +1214,8 @@ class SentimentAnalyzer:
         }
     
     async def _analyze_emotional_dimensions(self, text: str) -> Dict[str, float]:
-        """Analyze emotional dimensions beyond basic sentiment"""
+        """
+Analyze emotional dimensions beyond basic sentiment"""
         # Placeholder for advanced emotional analysis
         # In reality, this would use specialized emotion models
         
@@ -1229,7 +1251,8 @@ class SentimentAnalyzer:
         text: str,
         sentiment_scores: Dict[str, float]
     ) -> Dict[str, float]:
-        """Predict likely audience reactions"""
+        """
+Predict likely audience reactions"""
         compound = sentiment_scores.get('compound', 0)
         
         # Base reaction predictions
@@ -1256,7 +1279,8 @@ class SentimentAnalyzer:
         return reactions
     
     async def _analyze_emotional_trajectory(self, text: str) -> List[Dict[str, Any]]:
-        """Analyze emotional changes throughout the content"""
+        """
+Analyze emotional changes throughout the content"""
         # Split text into chunks for trajectory analysis
         words = text.split()
         chunk_size = max(50, len(words) // 10)  # Analyze in chunks

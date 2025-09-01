@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -266,7 +267,8 @@ class AIAgentsSystem:
         asyncio.create_task(self._error_monitor())
     
     async def _health_monitor(self) -> None:
-        """Monitor system health"""
+        """
+Monitor system health"""
         while True:
             try:
                 await asyncio.sleep(60)  # Check every minute
@@ -433,12 +435,14 @@ async def initialize_system(config: Dict[str, Any] = None) -> AIAgentsSystem:
 
 
 def get_system() -> Optional[AIAgentsSystem]:
-    """Get the global system instance"""
+    """
+Get the global system instance"""
     return _system_instance
 
 
 async def shutdown_system() -> None:
-    """Shutdown the global system"""
+    """
+Shutdown the global system"""
     global _system_instance
     
     if _system_instance:

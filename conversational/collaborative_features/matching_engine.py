@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class MatchingCriteria(Enum):
-    """Professional matching criteria for collaborations"""
+    """
+Professional matching criteria for collaborations"""
+
     SKILL_COMPATIBILITY = "skill_compatibility"
     CREATIVE_STYLE = "creative_style"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -51,6 +54,7 @@ class MatchingCriteria(Enum):
 
 class OpportunityType(Enum):
     """Types of collaboration opportunities"""
+
     PROJECT_COLLABORATION = "project_collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
     SKILL_EXCHANGE = "skill_exchange"
@@ -65,6 +69,7 @@ class OpportunityType(Enum):
 
 class MatchQuality(Enum):
     """Match quality ratings"""
+
     PERFECT = "perfect"      # 90-100%
     EXCELLENT = "excellent"  # 80-89%
     GOOD = "good"           # 70-79%
@@ -100,7 +105,8 @@ class CollaborationProfile:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert profile to dictionary representation"""
+        """
+Convert profile to dictionary representation"""
         return {
             "user_id": self.user_id,
             "username": self.username,
@@ -151,7 +157,8 @@ class MatchResult:
     generated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert match result to dictionary"""
+        """
+Convert match result to dictionary"""
         return {
             "match_id": self.match_id,
             "requester_id": self.requester_id,
@@ -193,7 +200,8 @@ class CollaborationMatcher:
         filters: Dict[str, Any],
         max_results: int = 20
     ) -> List[MatchResult]:
-        """Find optimal collaboration matches using AI algorithms"""
+        """
+Find optimal collaboration matches using AI algorithms"""
         try:
             # Get requester profile
             requester_profile = await self._get_collaboration_profile(user_id)
@@ -880,7 +888,8 @@ class CollaborationMatcher:
         candidate: CollaborationProfile,
         opportunity_type: OpportunityType
     ) -> float:
-        """Estimate potential value of collaboration"""
+        """
+Estimate potential value of collaboration"""
         try:
             # Base value from content types and audience sizes
             base_value = 1000.0  # Base collaboration value
@@ -1131,7 +1140,8 @@ class CollaborationMatcher:
         return True
     
     async def _analyze_user_content(self, user_id: str) -> Dict[str, Any]:
-        """Analyze user's content to extract skills and expertise"""
+        """
+Analyze user's content to extract skills and expertise"""
         # Placeholder implementation
         return {
             "content_types": ["video", "music", "social_media"],
@@ -1146,7 +1156,8 @@ class CollaborationMatcher:
         return []
     
     async def _calculate_success_metrics(self, user_id: str) -> Dict[str, float]:
-        """Calculate user's success metrics"""
+        """
+Calculate user's success metrics"""
         # Placeholder implementation
         return {
             "completion_rate": 0.92,
@@ -1162,7 +1173,8 @@ class CollaborationMatcher:
 
 
 class SkillBasedMatcher:
-    """Specialized skill-based matching for technical collaborations"""
+    """
+Specialized skill-based matching for technical collaborations"""
     
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
@@ -1174,7 +1186,8 @@ class SkillBasedMatcher:
         experience_level: str,
         max_results: int = 10
     ) -> List[Dict[str, Any]]:
-        """Find users with specific skill requirements"""
+        """
+Find users with specific skill requirements"""
         try:
             # Implementation would search for users with matching skills
             skill_matches = []
@@ -1210,7 +1223,8 @@ class ProjectCompatibilityAnalyzer:
         user_id: str,
         project_requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze how well a user fits a project"""
+        """
+Analyze how well a user fits a project"""
         try:
             user_profile = await self.cache.get(f"collab_profile:{user_id}")
             if not user_profile:
@@ -1269,7 +1283,8 @@ class ProjectCompatibilityAnalyzer:
         user_availability: Dict[str, Any],
         project_timeline: Dict[str, Any]
     ) -> float:
-        """Analyze availability compatibility"""
+        """
+Analyze availability compatibility"""
         # Simplified availability analysis
         return 0.8  # Placeholder
     
@@ -1278,7 +1293,8 @@ class ProjectCompatibilityAnalyzer:
         user_budget: Dict[str, float],
         project_budget: Dict[str, float]
     ) -> float:
-        """Analyze budget compatibility"""
+        """
+Analyze budget compatibility"""
         if not project_budget or not user_budget:
             return 0.7
         
@@ -1358,7 +1374,8 @@ class InfluencerNetworkEngine:
         target_audience: Dict[str, Any],
         campaign_goals: List[str]
     ) -> Dict[str, Any]:
-        """Analyze influencer network potential for campaigns"""
+        """
+Analyze influencer network potential for campaigns"""
         try:
             # Get user's network
             user_network = await self._get_user_network(user_id)
@@ -1400,7 +1417,8 @@ class InfluencerNetworkEngine:
         self,
         network: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze network metrics"""
+        """
+Analyze network metrics"""
         return {
             "total_reach": 0,
             "average_engagement": 0.0,
@@ -1423,7 +1441,8 @@ class InfluencerNetworkEngine:
         influencers: List[Dict[str, Any]],
         target_audience: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate campaign potential metrics"""
+        """
+Calculate campaign potential metrics"""
         return {
             "estimated_reach": 0,
             "estimated_engagement": 0.0,
@@ -1458,7 +1477,8 @@ class OpportunityDetector:
         opportunity_types: List[OpportunityType],
         scanning_period_days: int = 7
     ) -> List[Dict[str, Any]]:
-        """Detect new collaboration opportunities"""
+        """
+Detect new collaboration opportunities"""
         try:
             # Get user profile
             user_profile = await self.cache.get(f"collab_profile:{user_id}")
@@ -1526,7 +1546,8 @@ class OpportunityDetector:
         self,
         user_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan for project collaboration opportunities"""
+        """
+Scan for project collaboration opportunities"""
         # Placeholder implementation
         return []
     
@@ -1534,7 +1555,8 @@ class OpportunityDetector:
         self,
         user_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan for skill exchange opportunities"""
+        """
+Scan for skill exchange opportunities"""
         # Placeholder implementation
         return []
     
@@ -1542,6 +1564,7 @@ class OpportunityDetector:
         self,
         user_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan for content co-creation opportunities"""
+        """
+Scan for content co-creation opportunities"""
         # Placeholder implementation
         return []

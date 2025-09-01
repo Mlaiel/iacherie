@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
@@ -36,7 +37,9 @@ from .turn_manager import TurnManager
 logger = logging.getLogger(__name__)
 
 class FlowType(Enum):
-    """Types of dialogue flows"""
+    """
+Types of dialogue flows"""
+
     LINEAR = "linear"  # Sequential steps
     BRANCHING = "branching"  # Multiple paths based on conditions
     PARALLEL = "parallel"  # Multiple flows simultaneously
@@ -48,6 +51,7 @@ class FlowType(Enum):
 
 class FlowPriority(Enum):
     """Priority levels for flow execution"""
+
     BACKGROUND = 1
     LOW = 2
     NORMAL = 3
@@ -56,7 +60,9 @@ class FlowPriority(Enum):
     CRITICAL = 6
 
 class FlowStatus(Enum):
-    """Status of dialogue flows"""
+    """
+Status of dialogue flows"""
+
     INACTIVE = "inactive"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -67,6 +73,7 @@ class FlowStatus(Enum):
 
 class InterruptionType(Enum):
     """Types of flow interruptions"""
+
     USER_INTERRUPT = "user_interrupt"
     SYSTEM_INTERRUPT = "system_interrupt"
     PRIORITY_OVERRIDE = "priority_override"
@@ -200,7 +207,8 @@ class FlowExecution:
 
 @dataclass
 class FlowInterruption:
-    """Interruption in flow execution"""
+    """
+Interruption in flow execution"""
     interrupt_id: str
     execution_id: str
     interrupt_type: InterruptionType
@@ -987,7 +995,8 @@ class FlowController:
         return True
 
     async def _evaluate_flow_condition(self, execution: FlowExecution, condition: str) -> bool:
-        """Evaluate flow condition"""
+        """
+Evaluate flow condition"""
         
         flow_data = execution.flow_data
         
@@ -1264,7 +1273,8 @@ class FlowController:
         return min(score, 1.0)
 
     async def _handle_node_failure(self, execution: FlowExecution, node: FlowNode, result: Dict[str, Any]):
-        """Handle node execution failure"""
+        """
+Handle node execution failure"""
         
         execution.retry_count += 1
         execution.error_log.append({
@@ -1551,7 +1561,8 @@ class FlowExecutionStatus:
 
 @dataclass
 class FlowInterruption:
-    """Flow interruption details"""
+    """
+Flow interruption details"""
     interruption_id: str
     execution_id: str
     interruption_type: InterruptionType
@@ -1573,7 +1584,8 @@ class FlowInterruption:
 
 @dataclass
 class FlowResumption:
-    """Flow resumption configuration"""
+    """
+Flow resumption configuration"""
     resumption_id: str
     interruption_id: str
     execution_id: str
@@ -1595,7 +1607,8 @@ class FlowResumption:
 
 @dataclass
 class ConditionalFlow:
-    """Conditional flow execution based on business rules"""
+    """
+Conditional flow execution based on business rules"""
     condition_id: str
     flow_id: str
     condition_expression: str
@@ -1671,7 +1684,8 @@ class FlowValidation:
 
 @dataclass
 class FlowOptimization:
-    """Flow optimization analysis and recommendations"""
+    """
+Flow optimization analysis and recommendations"""
     optimization_id: str
     flow_id: str
     optimization_type: str  # performance, cost, user_experience, business_value

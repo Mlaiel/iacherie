@@ -14,6 +14,7 @@ This module coordinates:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
@@ -33,7 +34,9 @@ from .utils import ReplicationUtils
 
 
 class ReplicationMode(Enum):
-    """Replication operational modes"""
+    """
+Replication operational modes"""
+
     MASTER_SLAVE = "master_slave"
     MASTER_MASTER = "master_master"
     CLUSTER = "cluster"
@@ -42,6 +45,7 @@ class ReplicationMode(Enum):
 
 class ReplicationStatus(Enum):
     """Replication system status"""
+
     INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
@@ -71,7 +75,8 @@ class ReplicationMaster:
     """
     
     def __init__(self, config: ReplicationConfig):
-        """Initialize replication master with comprehensive configuration"""
+        """
+Initialize replication master with comprehensive configuration"""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationMaster")
         

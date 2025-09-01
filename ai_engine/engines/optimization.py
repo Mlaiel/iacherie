@@ -15,7 +15,7 @@ for the IA-Influencer platform AI content processing engines.
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -31,6 +31,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import time
 import hashlib
@@ -53,7 +54,9 @@ from pathlib import Path
 
 
 class CacheStrategy(Enum):
-    """Cache eviction strategies"""
+    """
+Cache eviction strategies"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
@@ -63,6 +66,7 @@ class CacheStrategy(Enum):
 
 class OptimizationLevel(Enum):
     """Performance optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
@@ -71,6 +75,7 @@ class OptimizationLevel(Enum):
 
 class ResourceType(Enum):
     """Types of system resources"""
+
     CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
@@ -94,7 +99,8 @@ class CacheEntry:
 
 @dataclass
 class PerformanceProfile:
-    """Performance optimization profile"""
+    """
+Performance optimization profile"""
     name: str
     cache_size_mb: int
     max_concurrent_workers: int
@@ -183,7 +189,8 @@ class AdvancedCache:
         priority: int = 1,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Put value in cache"""
+        """
+Put value in cache"""
         with self.lock:
             # Calculate value size
             size_bytes = self._calculate_size(value)
@@ -230,7 +237,8 @@ class AdvancedCache:
             return False
             
     def clear(self):
-        """Clear all cache entries"""
+        """
+Clear all cache entries"""
         with self.lock:
             self.cache.clear()
             self.access_order.clear()
@@ -238,7 +246,8 @@ class AdvancedCache:
             self.current_size_bytes = 0
             
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
+        """
+Get cache statistics"""
         with self.lock:
             total_requests = self.hits + self.misses
             hit_rate = (self.hits / total_requests * 100) if total_requests > 0 else 0
@@ -262,7 +271,8 @@ class AdvancedCache:
         return (datetime.now() - entry.created_at).total_seconds() > entry.ttl
         
     def _calculate_size(self, value: Any) -> int:
-        """Calculate approximate size of value in bytes"""
+        """
+Calculate approximate size of value in bytes"""
         try:
             return len(pickle.dumps(value))
         except:
@@ -279,12 +289,14 @@ class AdvancedCache:
                 return 1024  # Default estimate
                 
     def _ensure_space(self, required_bytes: int):
-        """Ensure enough space in cache for new entry"""
+        """
+Ensure enough space in cache for new entry"""
         while (self.current_size_bytes + required_bytes) > self.max_size_bytes and self.cache:
             self._evict_entry()
             
     def _evict_entry(self):
-        """Evict entry based on strategy"""
+        """
+Evict entry based on strategy"""
         if not self.cache:
             return
             
@@ -319,7 +331,8 @@ class AdvancedCache:
         self.evictions += 1
         
     def _adaptive_eviction(self):
-        """Adaptive eviction based on access patterns"""
+        """
+Adaptive eviction based on access patterns"""
         # Score entries based on multiple factors
         scores = {}
         now = datetime.now()
@@ -343,7 +356,8 @@ class AdvancedCache:
         self._remove_entry(victim_key)
         
     def _remove_entry(self, key: str):
-        """Remove entry from cache and update tracking"""
+        """
+Remove entry from cache and update tracking"""
         if key in self.cache:
             entry = self.cache[key]
             self.current_size_bytes -= entry.size_bytes
@@ -356,7 +370,8 @@ class AdvancedCache:
             del self.access_frequency[key]
             
     def _start_maintenance_thread(self):
-        """Start background maintenance thread"""
+        """
+Start background maintenance thread"""
         def maintenance_worker():
             while True:
                 try:
@@ -378,7 +393,8 @@ class AdvancedCache:
                 self._remove_entry(key)
                 
     def _persist_cache(self):
-        """Persist cache to disk"""
+        """
+Persist cache to disk"""
         try:
             with open(self.persistence_file, 'wb') as f:
                 pickle.dump({
@@ -430,7 +446,8 @@ class ResourceMonitor:
         self._start_monitoring()
         
     def get_current_usage(self) -> Dict[ResourceType, float]:
-        """Get current resource usage"""
+        """
+Get current resource usage"""
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -591,7 +608,8 @@ class PerformanceOptimizer:
             self._start_auto_tuning()
             
     def _get_default_profile(self) -> PerformanceProfile:
-        """Get default performance profile"""
+        """
+Get default performance profile"""
         return PerformanceProfile(
             name="default",
             cache_size_mb=512,
@@ -701,7 +719,8 @@ class PerformanceOptimizer:
         return False
         
     def _compress_content(self, content: Any) -> bytes:
-        """Compress content for processing"""
+        """
+Compress content for processing"""
         try:
             if isinstance(content, str):
                 content_bytes = content.encode('utf-8')
@@ -763,7 +782,8 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> Any:
-        """Execute processing in standard mode"""
+        """
+Execute processing in standard mode"""
         loop = asyncio.get_event_loop()
         
         if asyncio.iscoroutinefunction(processing_function):
@@ -782,7 +802,8 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> Any:
-        """Execute processing in parallel mode"""
+        """
+Execute processing in parallel mode"""
         
         # Split content for parallel processing
         content_chunks = self._split_content(content)
@@ -808,7 +829,8 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> Any:
-        """Execute processing with GPU acceleration"""
+        """
+Execute processing with GPU acceleration"""
         # For now, fall back to standard execution
         # In a real implementation, this would use GPU libraries
         options["use_gpu"] = True
@@ -837,7 +859,8 @@ class PerformanceOptimizer:
         return [content]
         
     def _combine_results(self, results: List[Any], original_content: Any) -> Any:
-        """Combine parallel processing results"""
+        """
+Combine parallel processing results"""
         # Filter out exceptions
         valid_results = [r for r in results if not isinstance(r, Exception)]
         
@@ -1055,17 +1078,20 @@ async def optimize_processing(
 
 
 def get_performance_report() -> Dict[str, Any]:
-    """Get performance report from global optimizer"""
+    """
+Get performance report from global optimizer"""
     return performance_optimizer.get_performance_report()
 
 
 def get_cache_stats() -> Dict[str, Any]:
-    """Get cache statistics"""
+    """
+Get cache statistics"""
     return performance_optimizer.cache.get_stats()
 
 
 def get_resource_usage() -> Dict[ResourceType, float]:
-    """Get current resource usage"""
+    """
+Get current resource usage"""
     return performance_optimizer.resource_monitor.get_current_usage()
 
 

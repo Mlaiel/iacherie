@@ -29,6 +29,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -64,7 +65,9 @@ logger = logging.getLogger(__name__)
 
 
 class PartnershipType(Enum):
-    """Types of content creator partnerships"""
+    """
+Types of content creator partnerships"""
+
     COLLABORATION = "collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_CONTENT = "joint_content"
@@ -79,6 +82,7 @@ class PartnershipType(Enum):
 
 class CollaborationLevel(Enum):
     """Levels of collaboration intensity"""
+
     CASUAL = "casual"
     REGULAR = "regular"
     STRATEGIC = "strategic"
@@ -88,6 +92,7 @@ class CollaborationLevel(Enum):
 
 class SynergyScore(Enum):
     """Synergy score categories"""
+
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -113,7 +118,8 @@ class PartnershipMetrics:
 
 @dataclass
 class CollaborationProfile:
-    """Detailed collaboration profile for creators"""
+    """
+Detailed collaboration profile for creators"""
     creator_id: str
     creator_type: str
     content_formats: List[str]
@@ -129,7 +135,8 @@ class CollaborationProfile:
 
 @dataclass
 class PartnershipOpportunity:
-    """Partnership opportunity identification"""
+    """
+Partnership opportunity identification"""
     opportunity_id: str
     partner_creator_id: str
     partnership_type: PartnershipType

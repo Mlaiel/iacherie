@@ -4,6 +4,7 @@ Central integration point for all compliance systems and external regulatory ser
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -34,7 +35,9 @@ logger = get_logger(__name__)
 
 
 class IntegrationType(str, Enum):
-    """Types of compliance integrations"""
+    """
+Types of compliance integrations"""
+
     REGULATORY_API = "regulatory_api"
     VERIFICATION_SERVICE = "verification_service"
     REPORTING_PLATFORM = "reporting_platform"
@@ -47,6 +50,7 @@ class IntegrationType(str, Enum):
 
 class IntegrationStatus(str, Enum):
     """Integration connection status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -77,7 +81,8 @@ class ExternalServiceConfig:
 
 @dataclass
 class ComplianceWorkflow:
-    """Automated compliance workflow definition"""
+    """
+Automated compliance workflow definition"""
     workflow_id: str
     name: str
     description: str
@@ -93,7 +98,8 @@ class ComplianceWorkflow:
 
 @dataclass
 class ComplianceMetrics:
-    """Comprehensive compliance metrics"""
+    """
+Comprehensive compliance metrics"""
     period_start: datetime
     period_end: datetime
     overall_compliance_score: float
@@ -109,7 +115,8 @@ class ComplianceMetrics:
 
 
 class ComplianceIntegrationHub:
-    """Central hub for all compliance system integrations"""
+    """
+Central hub for all compliance system integrations"""
     
     def __init__(self):
         self.logger = logger
@@ -140,7 +147,8 @@ class ComplianceIntegrationHub:
         asyncio.create_task(self._initialize_external_services())
     
     async def initialize_compliance_ecosystem(self) -> Dict[str, Any]:
-        """Initialize complete compliance ecosystem"""
+        """
+Initialize complete compliance ecosystem"""
         try:
             initialization_results = {
                 "timestamp": datetime.utcnow().isoformat(),

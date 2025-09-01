@@ -9,7 +9,7 @@ Technologies: Python Entry Points, Component Discovery, Quick Start Examples
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -17,6 +17,7 @@ LOGIQUE MÉTIER:
 Quick start → Component discovery → System initialization → 
 Example workflows → Performance monitoring → Shutdown
 """
+
 import asyncio
 import logging
 import sys
@@ -517,7 +518,7 @@ async def main():
         print("=" * 60)
         print("🧠 Industrial-Grade Distributed Task Processing")
         print("👤 Author: Fahed Mlaiel (mlaiel@live.de)")
-        print("⚖️ © 2025 Fahed Mlaiel. All rights reserved.")
+        print("⚖️ (c) 2025 Fahed Mlaiel. All rights reserved.")
         print("=" * 60)
         
         # Run quick start demo

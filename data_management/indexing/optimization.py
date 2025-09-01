@@ -13,6 +13,7 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Optimization strategy types"""
+    """
+Optimization strategy types"""
+
     PERFORMANCE = "performance"
     MEMORY = "memory"
     THROUGHPUT = "throughput"
@@ -46,6 +49,7 @@ class OptimizationStrategy(Enum):
 
 class CacheStrategy(Enum):
     """Cache strategy types"""
+
     LRU = "lru"
     LFU = "lfu"
     TTL = "ttl"
@@ -70,7 +74,8 @@ class OptimizationConfig:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics tracking"""
+    """
+Performance metrics tracking"""
     cpu_usage: float
     memory_usage: float
     gpu_usage: float
@@ -84,7 +89,8 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization operation"""
+    """
+Result of optimization operation"""
     strategy_applied: str
     performance_improvement: float
     resource_savings: Dict[str, float]
@@ -94,7 +100,8 @@ class OptimizationResult:
 
 
 class IntelligentCache:
-    """Advanced caching system with multiple strategies"""
+    """
+Advanced caching system with multiple strategies"""
     
     def __init__(self, config: OptimizationConfig, redis_client: Redis):
         self.config = config
@@ -267,7 +274,8 @@ class IntelligentCache:
         return False
     
     def _should_store_local(self, key: str, data_size: int, priority: int) -> bool:
-        """Determine if data should be stored in local cache"""
+        """
+Determine if data should be stored in local cache"""
         # Don't store large objects locally
         if data_size > 1024 * 1024:  # 1MB
             return False
@@ -284,7 +292,8 @@ class IntelligentCache:
         return False
     
     async def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""
+        """
+Get cache performance statistics"""
         total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
         hit_rate = self.cache_stats["hits"] / total_requests if total_requests > 0 else 0
         
@@ -310,7 +319,8 @@ class IntelligentCache:
 
 
 class WorkloadBalancer:
-    """Intelligent workload balancing and auto-scaling"""
+    """
+Intelligent workload balancing and auto-scaling"""
     
     def __init__(self, config: OptimizationConfig):
         self.config = config
@@ -324,7 +334,8 @@ class WorkloadBalancer:
         self.last_scale_action = 0
         
     async def initialize(self):
-        """Initialize workload balancer"""
+        """
+Initialize workload balancer"""
         try:
             self.worker_pool = ThreadPoolExecutor(max_workers=self.config.max_workers)
             logger.info(f"WorkloadBalancer initialized with {self.config.max_workers} workers")
@@ -521,7 +532,8 @@ class BatchProcessor:
         item: Any, 
         callback: Callable = None
     ):
-        """Add item to batch with intelligent batching"""
+        """
+Add item to batch with intelligent batching"""
         try:
             self.pending_batches[batch_type].append({
                 "item": item,
@@ -694,7 +706,8 @@ class OptimizationEngine:
         self.optimization_history = deque(maxlen=100)
         
     async def initialize(self):
-        """Initialize optimization engine"""
+        """
+Initialize optimization engine"""
         try:
             # Initialize Redis client
             self.redis_client = Redis.from_url(redis_url)

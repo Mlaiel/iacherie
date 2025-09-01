@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class BlockchainNetwork(UUIDSchema, TimestampSchema):
-    """Blockchain network configuration schema."""
+    """
+Blockchain network configuration schema."""
     
     network_name: str = Field(description="Blockchain network name")
     network_type: str = Field(description="Type of blockchain network")

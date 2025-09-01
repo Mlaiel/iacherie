@@ -5,13 +5,14 @@ Specialized parsers for extracting monetization and revenue data from various pl
 Handles YouTube Partner Program, Spotify royalties, Patreon, merchandise sales, and more.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import json
 import re
@@ -29,7 +30,8 @@ from .parser_config import ParserConfig
 
 
 class BaseRevenueParser(ABC):
-    """Abstract base class for revenue parsers"""
+    """
+Abstract base class for revenue parsers"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -37,27 +39,32 @@ class BaseRevenueParser(ABC):
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_revenue(self, **kwargs) -> Dict[str, Any]:
-        """Parse revenue data from platform"""
+        """
+Parse revenue data from platform"""
         pass
     
     @abstractmethod
     def get_platform_name(self) -> str:
-        """Get the platform name for this revenue parser"""
+        """
+Get the platform name for this revenue parser"""
         pass
     
     def _calculate_date_range(self, days: Optional[int] = None) -> tuple:
-        """Calculate date range for revenue queries"""
+        """
+Calculate date range for revenue queries"""
         if days is None:
             days = self.revenue_config.date_range_days
         
@@ -271,7 +278,8 @@ class YouTubeRevenueParser(BaseRevenueParser):
 
 
 class SpotifyRoyaltiesParser(BaseRevenueParser):
-    """Parser for Spotify artist royalties"""
+    """
+Parser for Spotify artist royalties"""
     
     def get_platform_name(self) -> str:
         return "spotify_royalties"
@@ -318,7 +326,8 @@ class SpotifyRoyaltiesParser(BaseRevenueParser):
         }
     
     async def _get_spotify_streams_data(self, artist_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Spotify streams data"""
+        """
+Get Spotify streams data"""
         # This would use Spotify Web API for public metrics
         return {
             'tracks': [],
@@ -326,7 +335,8 @@ class SpotifyRoyaltiesParser(BaseRevenueParser):
         }
     
     async def _parse_spotify_royalties(self, royalties_data: Dict[str, Any], streams_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify royalties data"""
+        """
+Parse Spotify royalties data"""
         total_streams = royalties_data.get('total_streams', 0)
         total_royalties = royalties_data.get('total_royalties', 0.0)
         
@@ -350,7 +360,8 @@ class SpotifyRoyaltiesParser(BaseRevenueParser):
 
 
 class PatreonRevenueParser(BaseRevenueParser):
-    """Parser for Patreon subscription revenue"""
+    """
+Parser for Patreon subscription revenue"""
     
     def get_platform_name(self) -> str:
         return "patreon"
@@ -491,7 +502,8 @@ class TwitchRevenueParser(BaseRevenueParser):
         }
     
     async def _get_twitch_analytics_data(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Twitch analytics data"""
+        """
+Get Twitch analytics data"""
         url = "https://api.twitch.tv/helix/analytics/games"
         
         headers = {
@@ -534,7 +546,8 @@ class TwitchRevenueParser(BaseRevenueParser):
 
 
 class PayPalRevenueParser(BaseRevenueParser):
-    """Parser for PayPal transaction revenue"""
+    """
+Parser for PayPal transaction revenue"""
     
     def get_platform_name(self) -> str:
         return "paypal"
@@ -629,7 +642,8 @@ class PayPalRevenueParser(BaseRevenueParser):
 
 
 class StripeRevenueParser(BaseRevenueParser):
-    """Parser for Stripe payment revenue"""
+    """
+Parser for Stripe payment revenue"""
     
     def get_platform_name(self) -> str:
         return "stripe"

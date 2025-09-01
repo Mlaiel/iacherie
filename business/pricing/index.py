@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -43,6 +43,7 @@ System Architecture:
 └─────────────────────────────────────────────────────────┘
 ==============================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type
@@ -367,7 +368,8 @@ class MockPricingPredictor:
 
 
 class MockTierOptimizer:
-    """Mock tier optimizer for testing/development"""
+    """
+Mock tier optimizer for testing/development"""
     
     async def optimize_tier_recommendation(
         self,
@@ -382,7 +384,8 @@ class MockTierOptimizer:
 
 
 class MockMetricsCollector:
-    """Advanced AI-powered metrics collector for pricing analytics and business intelligence"""
+    """
+Advanced AI-powered metrics collector for pricing analytics and business intelligence"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MockMetricsCollector")
@@ -773,7 +776,8 @@ class MockMetricsCollector:
         pass
     
     async def _trigger_incident_response(self, error_event: Dict[str, Any]) -> None:
-        """Trigger automated incident response for high-severity errors."""
+        """
+Trigger automated incident response for high-severity errors."""
         self.logger.critical(f"High-severity incident detected: {error_event['operation']} - {error_event['error_message']}")
         # Implement automated incident response logic
 
@@ -787,11 +791,13 @@ async def initialize_pricing_module(*args, **kwargs) -> bool:
     return await pricing_module_manager.initialize(*args, **kwargs)
 
 async def shutdown_pricing_module():
-    """Shutdown the pricing module"""
+    """
+Shutdown the pricing module"""
     await pricing_module_manager.shutdown()
 
 def get_pricing_service() -> Optional[PricingService]:
-    """Get the initialized pricing service"""
+    """
+Get the initialized pricing service"""
     return pricing_module_manager.get_component("pricing_service")
 
 def get_pricing_engine() -> Optional[PricingEngine]:
@@ -807,7 +813,8 @@ async def pricing_health_check() -> Dict[str, Any]:
     return await pricing_module_manager.health_check()
 
 def pricing_module_info() -> Dict[str, Any]:
-    """Get pricing module information"""
+    """
+Get pricing module information"""
     return pricing_module_manager.get_module_info()
 
 # Export module manager for advanced usage

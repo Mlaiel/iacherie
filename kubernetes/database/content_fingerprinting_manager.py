@@ -103,6 +103,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Backup strategy optimization
 - Data retention policies
 """
+
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
@@ -130,7 +131,9 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting"""
+    """
+Content types for fingerprinting"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -168,6 +171,7 @@ class FingerprintAlgorithm(Enum):
 
 class SimilarityMetric(Enum):
     """Similarity metrics for matching"""
+
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -194,7 +198,8 @@ class FingerprintMetadata:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result"""
+    """
+Similarity match result"""
     fingerprint_id: str
     target_fingerprint_id: str
     similarity_score: float

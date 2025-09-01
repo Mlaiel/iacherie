@@ -4,6 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 import asyncio
 from typing import Dict, List, Optional, Callable, Any, Set
 from enum import Enum
@@ -21,7 +22,9 @@ from ..utils.caching import CacheManager
 
 
 class PipelineStage(Enum):
-    """Enhanced pipeline stages for content processing."""
+    """
+Enhanced pipeline stages for content processing."""
+
     VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
@@ -39,6 +42,7 @@ class PipelineStage(Enum):
 
 class PipelineStatus(Enum):
     """Pipeline execution status."""
+
     INITIALIZED = "initialized"
     QUEUED = "queued"
     RUNNING = "running"
@@ -51,6 +55,7 @@ class PipelineStatus(Enum):
 
 class PipelinePriority(Enum):
     """Pipeline execution priority levels."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -59,7 +64,8 @@ class PipelinePriority(Enum):
 
 
 class StageResult:
-    """Result object for pipeline stage execution."""
+    """
+Result object for pipeline stage execution."""
     
     def __init__(self, stage: PipelineStage, success: bool, data: Dict = None, 
                  errors: List[str] = None, duration: float = 0.0):
@@ -72,7 +78,8 @@ class StageResult:
         self.retry_count = 0
     
     def to_dict(self) -> Dict:
-        """Convert stage result to dictionary."""
+        """
+Convert stage result to dictionary."""
         return {
             "stage": self.stage.value,
             "success": self.success,
@@ -185,13 +192,15 @@ class PipelineStageProcessor:
 
 
 class ContentValidationProcessor(PipelineStageProcessor):
-    """Validate content format, size, and basic requirements."""
+    """
+Validate content format, size, and basic requirements."""
     
     def __init__(self):
         super().__init__(PipelineStage.VALIDATION)
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Validate content item."""
+        """
+Validate content item."""
         validation_results = {
             "format_valid": False,
             "size_valid": False,
@@ -260,13 +269,15 @@ class ContentValidationProcessor(PipelineStageProcessor):
 
 
 class ContentPreprocessingProcessor(PipelineStageProcessor):
-    """Preprocess content for analysis and optimization."""
+    """
+Preprocess content for analysis and optimization."""
     
     def __init__(self):
         super().__init__(PipelineStage.PREPROCESSING)
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Preprocess content item."""
+        """
+Preprocess content item."""
         preprocessing_results = {
             "normalized": False,
             "optimized": False,
@@ -302,7 +313,8 @@ class ContentPreprocessingProcessor(PipelineStageProcessor):
         return content_item
     
     async def _generate_thumbnails(self, content_item: ContentItem) -> List[Dict]:
-        """Generate thumbnails or preview images."""
+        """
+Generate thumbnails or preview images."""
         thumbnails = []
         
         if content_item.content_type in ["video", "image"]:
@@ -367,7 +379,8 @@ class FeatureExtractionProcessor(PipelineStageProcessor):
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Extract features from content."""
+        """
+Extract features from content."""
         feature_results = {
             "visual_features": {},
             "audio_features": {},
@@ -474,7 +487,8 @@ class AIAnalysisProcessor(PipelineStageProcessor):
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
-        """Perform comprehensive AI analysis."""
+        """
+Perform comprehensive AI analysis."""
         analysis_results = {
             "content_understanding": {},
             "audience_analysis": {},

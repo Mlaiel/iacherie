@@ -17,6 +17,7 @@ Business Logic Integration:
 User (musician/blogger/photographer/influencer/comedian) → Multi-format Upload → 
 AI Rights Protection → Professional SEO → Collaboration Matching → Multi-platform Distribution
 """
+
 import logging
 import warnings
 from typing import Dict, List, Optional, Union, Any
@@ -755,19 +756,23 @@ def get_available_models() -> dict:
     return AVAILABLE_MODELS.copy()
 
 def get_model_categories() -> dict:
-    """Get model categories for organization"""
+    """
+Get model categories for organization"""
     return MODEL_CATEGORIES.copy()
 
 def get_default_config(model_type: str) -> dict:
-    """Get default configuration for a model type"""
+    """
+Get default configuration for a model type"""
     return DEFAULT_MODEL_CONFIGS.get(model_type, {})
 
 def get_training_config(model_architecture: str) -> dict:
-    """Get training configuration for a model architecture"""
+    """
+Get training configuration for a model architecture"""
     return TRAINING_CONFIGS.get(model_architecture, {})
 
 def create_model(model_type: str, config: dict = None):
-    """Factory function to create a model instance"""
+    """
+Factory function to create a model instance"""
     if model_type not in AVAILABLE_MODELS:
         raise ValueError(f"Unknown model type: {model_type}")
     

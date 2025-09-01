@@ -5,9 +5,10 @@ Advanced performance validation system for content optimization, processing metr
 and system performance assessment in the creator workflow ecosystem.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import time
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics."""
+    """
+Types of performance metrics."""
+
     PROCESSING_TIME = "processing_time"
     MEMORY_USAGE = "memory_usage"
     CPU_UTILIZATION = "cpu_utilization"
@@ -41,6 +44,7 @@ class PerformanceMetricType(Enum):
 
 class PerformanceLevel(Enum):
     """Performance assessment levels."""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -50,6 +54,7 @@ class PerformanceLevel(Enum):
 
 class BenchmarkType(Enum):
     """Types of performance benchmarks."""
+
     AUDIO_PROCESSING = "audio_processing"
     VIDEO_PROCESSING = "video_processing"
     IMAGE_PROCESSING = "image_processing"
@@ -85,7 +90,8 @@ class PerformanceMetrics:
 
 @dataclass
 class PerformanceResult:
-    """Performance validation result."""
+    """
+Performance validation result."""
     is_acceptable: bool
     performance_level: PerformanceLevel
     overall_score: float
@@ -1053,7 +1059,8 @@ class OptimizationValidator:
             return 5000000  # 5 Mbps default
     
     def _init_optimization_rules(self) -> Dict[str, Any]:
-        """Initialize optimization rules."""
+        """
+Initialize optimization rules."""
         return {
             "audio": {
                 "max_bitrate": 320000,
@@ -1225,7 +1232,8 @@ class PerformanceValidator:
         operation_type: str,
         data: Any
     ) -> List[PerformanceMetrics]:
-        """Collect relevant performance metrics."""
+        """
+Collect relevant performance metrics."""
         metrics = []
         
         try:
@@ -1332,7 +1340,8 @@ class PerformanceValidator:
         metric: PerformanceMetrics,
         expected_metrics: Optional[Dict[str, float]]
     ) -> float:
-        """Calculate score for individual metric."""
+        """
+Calculate score for individual metric."""
         try:
             # Use expected value if provided
             if expected_metrics and metric.metric_type.value in expected_metrics:
@@ -1363,7 +1372,8 @@ class PerformanceValidator:
         metrics: List[PerformanceMetrics],
         benchmark_results: Dict[str, Any]
     ) -> float:
-        """Calculate overall performance score."""
+        """
+Calculate overall performance score."""
         try:
             scores = []
             
@@ -1387,7 +1397,8 @@ class PerformanceValidator:
         initial: Dict[str, Any],
         final: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate system metrics difference."""
+        """
+Calculate system metrics difference."""
         try:
             return {
                 "cpu_delta": final.get("cpu", {}).get("usage_percent", 0) - initial.get("cpu", {}).get("usage_percent", 0),

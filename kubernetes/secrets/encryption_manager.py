@@ -4,6 +4,7 @@ Advanced encryption/decryption operations with HSM support
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import os
 import logging
 import hashlib
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""
+    """
+Supported encryption algorithms."""
+
     AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -43,6 +46,7 @@ class EncryptionAlgorithm(Enum):
 
 class KeyDerivationFunction(Enum):
     """Supported key derivation functions."""
+
     PBKDF2 = "pbkdf2"
     SCRYPT = "scrypt"
     ARGON2 = "argon2"
@@ -63,7 +67,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionResult:
-    """Encryption operation result."""
+    """
+Encryption operation result."""
     success: bool
     encrypted_data: Optional[bytes] = None
     key_id: Optional[str] = None
@@ -589,7 +594,8 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """Encrypt using AES-256-GCM."""
+        """
+Encrypt using AES-256-GCM."""
         try:
             aesgcm = AESGCM(key.key_data)
             iv = secrets.token_bytes(12)  # GCM recommends 96-bit IV
@@ -620,7 +626,8 @@ class EncryptionManager:
         tag: bytes,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using AES-256-GCM."""
+        """
+Decrypt using AES-256-GCM."""
         try:
             aesgcm = AESGCM(key.key_data)
             
@@ -669,7 +676,8 @@ class EncryptionManager:
         iv: bytes,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using AES-256-CBC."""
+        """
+Decrypt using AES-256-CBC."""
         try:
             cipher = Cipher(algorithms.AES(key.key_data), modes.CBC(iv))
             decryptor = cipher.decryptor()
@@ -720,7 +728,8 @@ class EncryptionManager:
         iv: bytes,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using ChaCha20-Poly1305."""
+        """
+Decrypt using ChaCha20-Poly1305."""
         try:
             chacha = ChaCha20Poly1305(key.key_data)
             
@@ -760,7 +769,8 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using Fernet."""
+        """
+Decrypt using Fernet."""
         try:
             fernet_key = base64.urlsafe_b64encode(key.key_data)
             fernet = Fernet(fernet_key)
@@ -838,7 +848,8 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using RSA."""
+        """
+Decrypt using RSA."""
         try:
             private_key = serialization.load_der_private_key(key.key_data, password=None)
             
@@ -884,7 +895,8 @@ class EncryptionManager:
         return iv + encrypted
     
     def _decrypt_aes_gcm_direct(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Direct AES-GCM decryption."""
+        """
+Direct AES-GCM decryption."""
         aesgcm = AESGCM(key)
         iv = encrypted_data[:12]
         ciphertext = encrypted_data[12:]
@@ -897,7 +909,8 @@ class EncryptionManager:
         kdf: KeyDerivationFunction,
         key_length: int
     ) -> bytes:
-        """Derive key from password using specified KDF."""
+        """
+Derive key from password using specified KDF."""
         password_bytes = password.encode('utf-8')
         
         if kdf == KeyDerivationFunction.PBKDF2:
@@ -955,7 +968,8 @@ class EncryptionManager:
         return self.encryption_keys[key_id]
     
     def _get_key_size_bytes(self, algorithm: EncryptionAlgorithm, key_size: int = None) -> int:
-        """Get key size in bytes for algorithm."""
+        """
+Get key size in bytes for algorithm."""
         if key_size:
             return key_size // 8
         
@@ -969,7 +983,8 @@ class EncryptionManager:
             return 32  # Default
     
     def _generate_key_id(self) -> str:
-        """Generate unique key ID."""
+        """
+Generate unique key ID."""
         return f"key_{secrets.token_hex(16)}_{int(datetime.utcnow().timestamp())}"
     
     def _initialize_master_key(self) -> None:
@@ -1076,7 +1091,8 @@ class EncryptionManager:
             pass
     
     def _format_as_pem(self, data: bytes, label: str) -> bytes:
-        """Format data as PEM."""
+        """
+Format data as PEM."""
         encoded = base64.b64encode(data).decode()
         lines = [encoded[i:i+64] for i in range(0, len(encoded), 64)]
         

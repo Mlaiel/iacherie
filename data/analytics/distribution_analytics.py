@@ -9,13 +9,14 @@ Team Specialties:
 - Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class DistributionPlatform(Enum):
-    """Distribution platforms"""
+    """
+Distribution platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -56,6 +59,7 @@ class DistributionPlatform(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status types"""
+
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -66,6 +70,7 @@ class DistributionStatus(Enum):
 
 class ContentFormat(Enum):
     """Content format types"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -78,6 +83,7 @@ class ContentFormat(Enum):
 
 class PerformanceMetric(Enum):
     """Distribution performance metrics"""
+
     REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
@@ -114,7 +120,8 @@ class PlatformMetrics:
 
 @dataclass
 class DistributionSchedule:
-    """Content distribution schedule"""
+    """
+Content distribution schedule"""
     content_id: str
     platform_schedule: Dict[DistributionPlatform, datetime]
     optimal_timing: Dict[DistributionPlatform, datetime]
@@ -126,7 +133,8 @@ class DistributionSchedule:
 
 @dataclass
 class CrossPlatformAnalysis:
-    """Cross-platform performance analysis"""
+    """
+Cross-platform performance analysis"""
     content_id: str
     total_reach: int
     total_engagement: float
@@ -140,7 +148,8 @@ class CrossPlatformAnalysis:
 
 @dataclass
 class DistributionOptimization:
-    """Distribution optimization recommendations"""
+    """
+Distribution optimization recommendations"""
     content_id: str
     recommended_platforms: List[DistributionPlatform]
     optimal_schedule: DistributionSchedule
@@ -153,7 +162,8 @@ class DistributionOptimization:
 
 @dataclass
 class DistributionReport:
-    """Comprehensive distribution analytics report"""
+    """
+Comprehensive distribution analytics report"""
     user_id: str
     analysis_period: Dict[str, datetime]
     total_content_distributed: int
@@ -547,27 +557,32 @@ class DistributionAnalytics:
     
     async def _calculate_audience_overlap(self, content_id: str, 
                                         platform_metrics: Dict) -> Dict[Tuple[DistributionPlatform, DistributionPlatform], float]:
-        """Calculate audience overlap between platforms"""
+        """
+Calculate audience overlap between platforms"""
         # Audience overlap calculation
         return {}
     
     async def _identify_underperforming_platforms(self, platform_metrics: Dict) -> List[DistributionPlatform]:
-        """Identify underperforming platforms"""
+        """
+Identify underperforming platforms"""
         # Performance analysis logic
         return []
     
     async def _calculate_cross_platform_synergy(self, platform_metrics: Dict) -> float:
-        """Calculate cross-platform synergy score"""
+        """
+Calculate cross-platform synergy score"""
         # Synergy calculation logic
         return 0.75
     
     async def _calculate_distribution_effectiveness(self, platform_metrics: Dict) -> float:
-        """Calculate distribution effectiveness score"""
+        """
+Calculate distribution effectiveness score"""
         # Effectiveness calculation logic
         return 0.80
     
     async def _fetch_content_data(self, content_id: str) -> Dict:
-        """Fetch content data from database"""
+        """
+Fetch content data from database"""
         try:
             query = select(ContentModel).where(ContentModel.id == content_id)
             result = await self.db_session.execute(query)
@@ -595,13 +610,15 @@ class DistributionAnalytics:
     async def _recommend_optimal_platforms(self, content_data: Dict, 
                                          current_analysis: CrossPlatformAnalysis,
                                          historical_patterns: Dict) -> List[DistributionPlatform]:
-        """Recommend optimal distribution platforms"""
+        """
+Recommend optimal distribution platforms"""
         # Platform recommendation logic
         return [DistributionPlatform.SPOTIFY, DistributionPlatform.YOUTUBE]
     
     async def _generate_optimal_schedule(self, content_id: str, 
                                        platforms: List[DistributionPlatform]) -> DistributionSchedule:
-        """Generate optimal distribution schedule"""
+        """
+Generate optimal distribution schedule"""
         # Schedule optimization logic
         return DistributionSchedule(
             content_id=content_id,
@@ -615,38 +632,44 @@ class DistributionAnalytics:
     
     async def _generate_content_adaptations(self, content_data: Dict, 
                                           platforms: List[DistributionPlatform]) -> Dict[DistributionPlatform, List[str]]:
-        """Generate content adaptations for each platform"""
+        """
+Generate content adaptations for each platform"""
         # Content adaptation logic
         return {}
     
     async def _calculate_audience_targeting(self, content_data: Dict, 
                                           platforms: List[DistributionPlatform]) -> Dict[DistributionPlatform, Dict[str, Any]]:
-        """Calculate audience targeting strategies"""
+        """
+Calculate audience targeting strategies"""
         # Audience targeting logic
         return {}
     
     async def _calculate_budget_allocation(self, platforms: List[DistributionPlatform], 
                                          target_metrics: Dict = None) -> Dict[DistributionPlatform, float]:
-        """Calculate optimal budget allocation"""
+        """
+Calculate optimal budget allocation"""
         # Budget allocation logic
         return {}
     
     async def _calculate_expected_roi(self, content_data: Dict, 
                                     platforms: List[DistributionPlatform],
                                     budget_allocation: Dict) -> Dict[DistributionPlatform, float]:
-        """Calculate expected ROI for each platform"""
+        """
+Calculate expected ROI for each platform"""
         # ROI calculation logic
         return {}
     
     async def _assess_distribution_risks(self, content_data: Dict, 
                                        platforms: List[DistributionPlatform]) -> Dict[DistributionPlatform, List[str]]:
-        """Assess distribution risks for each platform"""
+        """
+Assess distribution risks for each platform"""
         # Risk assessment logic
         return {}
     
     async def _get_user_content_in_period(self, user_id: str, start_date: datetime, 
                                         end_date: datetime) -> List[str]:
-        """Get user content IDs in specified period"""
+        """
+Get user content IDs in specified period"""
         try:
             query = select(ContentModel.id).where(
                 ContentModel.user_id == user_id,
@@ -667,42 +690,49 @@ class DistributionAnalytics:
     
     async def _analyze_distribution_trends(self, user_id: str, start_date: datetime, 
                                          end_date: datetime) -> Dict[str, Any]:
-        """Analyze distribution trends"""
+        """
+Analyze distribution trends"""
         # Trend analysis logic
         return {}
     
     async def _calculate_distribution_roi(self, user_id: str, start_date: datetime, 
                                         end_date: datetime) -> Dict[str, float]:
-        """Calculate distribution ROI"""
+        """
+Calculate distribution ROI"""
         # ROI calculation logic
         return {}
     
     async def _generate_distribution_recommendations(self, platform_performance: Dict,
                                                    trends: Dict,
                                                    opportunities: List[DistributionOptimization]) -> List[str]:
-        """Generate distribution recommendations"""
+        """
+Generate distribution recommendations"""
         # Recommendation generation logic
         return []
     
     async def _find_similar_content(self, content_data: Dict) -> List[Dict]:
-        """Find similar content for prediction"""
+        """
+Find similar content for prediction"""
         # Similar content finding logic
         return []
     
     async def _extract_platform_features(self, content_data: Dict, 
                                        platform: DistributionPlatform) -> Dict:
-        """Extract platform-specific features"""
+        """
+Extract platform-specific features"""
         # Feature extraction logic
         return {}
     
     async def _apply_performance_prediction_model(self, features: Dict, similar_content: List[Dict], 
                                                 platform: DistributionPlatform) -> Dict[str, float]:
-        """Apply ML model for performance prediction"""
+        """
+Apply ML model for performance prediction"""
         # ML prediction logic
         return {}
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from Redis cache"""
+        """
+Get data from Redis cache"""
         try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
@@ -710,7 +740,8 @@ class DistributionAnalytics:
             return None
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
-        """Cache data in Redis"""
+        """
+Cache data in Redis"""
         try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

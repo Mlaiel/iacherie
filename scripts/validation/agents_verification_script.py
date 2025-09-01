@@ -9,6 +9,7 @@ et vérifier l'état des 5 agents critiques demandés.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import sys
 import ast
@@ -25,7 +26,8 @@ sys.path.insert(0, '.')
 
 @dataclass
 class AgentInfo:
-    """Information about an agent implementation."""
+    """
+Information about an agent implementation."""
     print("🤖 AGENTS IA - VÉRIFICATION D'IMPLÉMENTATION")
     print("=" * 50)
     

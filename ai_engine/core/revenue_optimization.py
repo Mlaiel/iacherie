@@ -4,7 +4,7 @@ Advanced AI-driven revenue optimization system for content creators platform.
 Maximizes monetization opportunities across multiple revenue streams and platforms.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This proprietary revenue optimization AI system is protected intellectual property.
@@ -12,6 +12,7 @@ Any unauthorized copying, distribution, or use will result in immediate legal ac
 
 Business Logic: Content Analysis → Revenue Stream Identification → Optimization → Performance Tracking → ROI Maximization
 """
+
 import asyncio
 import json
 import uuid
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
+    """
+Revenue stream types"""
+
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE_MARKETING = "affiliate_marketing"
@@ -70,6 +73,7 @@ class RevenueStream(Enum):
 
 class PlatformType(Enum):
     """Monetization platforms"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -94,6 +98,7 @@ class PlatformType(Enum):
 
 class OptimizationStrategy(Enum):
     """Revenue optimization strategies"""
+
     MAXIMIZE_CPM = "maximize_cpm"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     DIVERSIFY_STREAMS = "diversify_streams"
@@ -127,7 +132,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueStreamData:
-    """Individual revenue stream data"""
+    """
+Individual revenue stream data"""
     stream_id: str
     stream_type: RevenueStream
     platform: PlatformType
@@ -173,7 +179,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueOptimizationPlan:
-    """Comprehensive revenue optimization plan"""
+    """
+Comprehensive revenue optimization plan"""
     plan_id: str
     creator_id: str
     current_revenue: Decimal
@@ -194,7 +201,8 @@ class RevenueOptimizationPlan:
 
 
 class RevenuePredictor:
-    """AI-powered revenue prediction and forecasting"""
+    """
+AI-powered revenue prediction and forecasting"""
     
     def __init__(self):
         self.models = {}
@@ -202,7 +210,8 @@ class RevenuePredictor:
         self._initialize_prediction_models()
     
     def _initialize_prediction_models(self):
-        """Initialize ML models for revenue prediction"""
+        """
+Initialize ML models for revenue prediction"""
         if ML_AVAILABLE:
             try:
                 # Initialize different models for different prediction tasks
@@ -542,7 +551,8 @@ class RevenuePredictor:
         return min(1.0, max(0.0, base_fit))
     
     def _assess_platform_competition(self, platform: PlatformType) -> str:
-        """Assess competition level on platform"""
+        """
+Assess competition level on platform"""
         competition_levels = {
             PlatformType.YOUTUBE: "high",
             PlatformType.INSTAGRAM: "high",
@@ -698,7 +708,8 @@ class MonetizationOpportunityIdentifier:
     async def identify_opportunities(self, 
                                    creator_data: Dict[str, Any],
                                    current_streams: List[RevenueStreamData]) -> List[MonetizationOpportunity]:
-        """Identify new monetization opportunities"""
+        """
+Identify new monetization opportunities"""
         try:
             opportunities = []
             current_stream_types = set(stream.stream_type for stream in current_streams)
@@ -807,7 +818,8 @@ class MonetizationOpportunityIdentifier:
         return platform_recommendations.get(stream_type, PlatformType.INSTAGRAM)
     
     def _calculate_audience_fit(self, stream_type: RevenueStream, creator_data: Dict[str, Any]) -> float:
-        """Calculate how well revenue stream fits creator's audience"""
+        """
+Calculate how well revenue stream fits creator's audience"""
         # Simplified fit calculation
         base_fit = 0.5
         
@@ -833,7 +845,8 @@ class MonetizationOpportunityIdentifier:
         return min(1.0, base_fit)
     
     def _analyze_competition(self, stream_type: RevenueStream, platform: PlatformType) -> Dict[str, Any]:
-        """Analyze competition for revenue stream on platform"""
+        """
+Analyze competition for revenue stream on platform"""
         return {
             "competition_level": "medium",
             "market_saturation": 0.6,
@@ -930,7 +943,8 @@ class MonetizationOpportunityIdentifier:
         return optimization_scores.get(stream_type, 0.6)
     
     def _analyze_seasonal_factors(self, stream_type: RevenueStream) -> Dict[str, float]:
-        """Analyze seasonal impact on revenue stream"""
+        """
+Analyze seasonal impact on revenue stream"""
         # Seasonal multipliers by month (1.0 = baseline)
         seasonal_patterns = {
             RevenueStream.MERCHANDISE: {
@@ -983,7 +997,8 @@ class RevenueOptimizationEngine:
                                      current_streams: List[RevenueStreamData],
                                      target_revenue: Optional[Decimal] = None,
                                      timeframe_months: int = 6) -> RevenueOptimizationPlan:
-        """Create comprehensive revenue optimization plan"""
+        """
+Create comprehensive revenue optimization plan"""
         try:
             # Current revenue analysis
             current_revenue = sum(stream.revenue_amount for stream in current_streams)
@@ -1128,7 +1143,8 @@ class RevenueOptimizationEngine:
     def _generate_platform_recommendations(self, 
                                          creator_data: Dict[str, Any],
                                          opportunities: List[MonetizationOpportunity]) -> Dict[str, Dict[str, Any]]:
-        """Generate platform-specific recommendations"""
+        """
+Generate platform-specific recommendations"""
         recommendations = {}
         
         # Analyze recommended platforms from opportunities

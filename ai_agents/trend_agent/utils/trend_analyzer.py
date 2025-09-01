@@ -23,6 +23,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Scalable distributed systems and deployment
 - AI Prompt Engineer & Content Protection: Intelligent content optimization and rights protection
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -72,7 +73,9 @@ from ...security.data_protection import TrendDataProtector
 logger = logging.getLogger(__name__)
 
 class TrendSignal(Enum):
-    """Advanced trend signals with market psychology indicators"""
+    """
+Advanced trend signals with market psychology indicators"""
+
     EMERGING_VIRAL = "emerging_viral"
     EXPONENTIAL_GROWTH = "exponential_growth"
     PEAK_MOMENTUM = "peak_momentum"
@@ -86,6 +89,7 @@ class TrendSignal(Enum):
 
 class PlatformSyncPattern(Enum):
     """Cross-platform synchronization patterns"""
+
     SIMULTANEOUS_SPREAD = "simultaneous_spread"
     CASCADING_ADOPTION = "cascading_adoption"
     PLATFORM_EXCLUSIVE = "platform_exclusive"
@@ -117,7 +121,8 @@ class AdvancedTrendPattern:
 
 @dataclass  
 class TrendCorrelationMatrix:
-    """Cross-trend correlation analysis results"""
+    """
+Cross-trend correlation analysis results"""
     correlation_data: np.ndarray
     trend_names: List[str]
     correlation_strength: Dict[str, float]
@@ -126,7 +131,8 @@ class TrendCorrelationMatrix:
     cluster_assignments: Dict[str, int]
 
 class NeuralTrendPredictor(nn.Module):
-    """Advanced neural network for trend prediction"""
+    """
+Advanced neural network for trend prediction"""
     
     def __init__(self, input_size: int, hidden_sizes: List[int], dropout_rate: float = 0.3):
         super(NeuralTrendPredictor, self).__init__()
@@ -462,7 +468,8 @@ class TrendAnalyzer:
         return df
 
     async def _extract_comprehensive_features(self, df: pd.DataFrame) -> np.ndarray:
-        """Extract comprehensive feature set for ML analysis"""
+        """
+Extract comprehensive feature set for ML analysis"""
         try:
             # Numeric features
             numeric_features = [
@@ -678,7 +685,8 @@ class TrendPredictor:
         forecast_horizon: int = 30,
         business_metrics: List[str] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive business-oriented forecast"""
+        """
+Generate comprehensive business-oriented forecast"""
         try:
             with self.performance_monitor.time_operation("business_forecast"):
                 # Comprehensive analysis
@@ -751,6 +759,7 @@ logger = logging.getLogger(__name__)
 
 class TrendAnalysisMode(Enum):
     """Trend analysis operation modes"""
+
     REAL_TIME = "real_time"
     HISTORICAL = "historical"
     PREDICTIVE = "predictive"
@@ -758,6 +767,7 @@ class TrendAnalysisMode(Enum):
 
 class TrendPattern(Enum):
     """Identified trend patterns"""
+
     VIRAL_SPIKE = "viral_spike"
     GRADUAL_GROWTH = "gradual_growth"
     SEASONAL_CYCLE = "seasonal_cycle"
@@ -779,7 +789,8 @@ class TrendAnalysisConfig:
 
 @dataclass
 class TrendMetrics:
-    """Comprehensive trend metrics"""
+    """
+Comprehensive trend metrics"""
     growth_rate: float
     acceleration: float
     engagement_velocity: float
@@ -1102,7 +1113,8 @@ class TrendAnalyzer(BaseMLModel):
         data: pd.DataFrame,
         config: TrendAnalysisConfig
     ) -> np.ndarray:
-        """Extract features for trend analysis"""
+        """
+Extract features for trend analysis"""
         features = []
         
         # Time-based features
@@ -1138,7 +1150,8 @@ class TrendAnalyzer(BaseMLModel):
         features: np.ndarray,
         config: TrendAnalysisConfig
     ) -> List[TrendPattern]:
-        """Identify trend patterns using ML classification"""
+        """
+Identify trend patterns using ML classification"""
         if features.size == 0 or not self._trend_classifier:
             return []
         
@@ -1203,7 +1216,8 @@ class TrendAnalyzer(BaseMLModel):
         return metrics
 
     async def _load_or_train_models(self):
-        """Load existing models or train new ones"""
+        """
+Load existing models or train new ones"""
         model_path = settings.MODEL_STORAGE_PATH / "trend_analyzer"
         
         try:
@@ -1300,7 +1314,8 @@ class TrendPredictor:
         self.is_loaded = False
 
     async def load_model(self):
-        """Load prediction models"""
+        """
+Load prediction models"""
         try:
             model_path = settings.MODEL_STORAGE_PATH / "trend_predictor"
             

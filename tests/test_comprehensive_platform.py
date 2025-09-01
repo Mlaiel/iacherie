@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Testing Framework for Ainflue Platform
+"""
+Comprehensive Testing Framework for Ainflue Platform
 
 Integration tests, unit tests, and end-to-end testing for all platform components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import sys
 import os
@@ -47,11 +50,13 @@ from implementation.content_surveillance_implementation import (
 
 
 class TestAITaskProcessor:
-    """Test suite for AI Task Processor"""
+    """
+Test suite for AI Task Processor"""
     
     @pytest.fixture
     async def task_processor(self):
-        """Create AI task processor fixture"""
+        """
+Create AI task processor fixture"""
         config = {
             "max_concurrent_tasks": 5,
             "default_timeout": 30
@@ -181,12 +186,14 @@ class TestPlatformIntegrationManager:
     
     @pytest.fixture
     def integration_manager(self):
-        """Create platform integration manager fixture"""
+        """
+Create platform integration manager fixture"""
         return PlatformIntegrationManager()
     
     @pytest.fixture
     def mock_credentials(self):
-        """Mock API credentials"""
+        """
+Mock API credentials"""
         return {
             "youtube": APICredentials(
                 platform_id="youtube",
@@ -288,7 +295,8 @@ class TestContentSurveillance:
     
     @pytest.fixture
     async def surveillance_engine(self):
-        """Create content surveillance engine fixture"""
+        """
+Create content surveillance engine fixture"""
         config = {
             "youtube_api_key": "test_key",
             "soundcloud_client_id": "test_id"
@@ -371,7 +379,8 @@ class TestIntegrationWorkflows:
     
     @pytest.fixture
     async def full_system(self):
-        """Create full system fixture with all components"""
+        """
+Create full system fixture with all components"""
         task_processor = AITaskProcessor()
         integration_manager = PlatformIntegrationManager()
         

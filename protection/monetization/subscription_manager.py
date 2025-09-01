@@ -4,6 +4,7 @@ Handles all subscription lifecycle management, billing, and customer management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -18,7 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class SubscriptionTier(Enum):
-    """Subscription tier levels."""
+    """
+Subscription tier levels."""
+
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -28,6 +31,7 @@ class SubscriptionTier(Enum):
 
 class SubscriptionStatus(Enum):
     """Subscription status states."""
+
     ACTIVE = "active"
     PENDING = "pending"
     CANCELLED = "cancelled"
@@ -40,6 +44,7 @@ class SubscriptionStatus(Enum):
 
 class BillingCycle(Enum):
     """Billing cycle intervals."""
+
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -49,6 +54,7 @@ class BillingCycle(Enum):
 
 class SubscriptionFeature(Enum):
     """Available subscription features."""
+
     CONTENT_UPLOAD = "content_upload"
     AI_PROTECTION = "ai_protection"
     ANALYTICS = "analytics"
@@ -111,7 +117,8 @@ class Subscription:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert subscription to dictionary."""
+        """
+Convert subscription to dictionary."""
         return {
             "subscription_id": self.subscription_id,
             "user_id": self.user_id,
@@ -133,13 +140,15 @@ class Subscription:
         return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
     
     def is_trial(self) -> bool:
-        """Check if subscription is in trial period."""
+        """
+Check if subscription is in trial period."""
         return (self.status == SubscriptionStatus.TRIAL and 
                 self.trial_end and 
                 datetime.utcnow() < self.trial_end)
     
     def days_until_renewal(self) -> int:
-        """Calculate days until next renewal."""
+        """
+Calculate days until next renewal."""
         if not self.is_active():
             return 0
         
@@ -147,7 +156,8 @@ class Subscription:
         return max(0, delta.days)
     
     def calculate_prorated_amount(self, new_plan_price: Decimal) -> Decimal:
-        """Calculate prorated amount for plan changes."""
+        """
+Calculate prorated amount for plan changes."""
         days_remaining = self.days_until_renewal()
         days_in_period = (self.current_period_end - self.current_period_start).days
         
@@ -160,7 +170,8 @@ class Subscription:
 
 @dataclass
 class BillingHistory:
-    """Billing history record."""
+    """
+Billing history record."""
     invoice_id: str
     subscription_id: str
     amount: Decimal
@@ -189,7 +200,8 @@ class SubscriptionManager:
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize subscription manager."""
+        """
+Initialize subscription manager."""
         try:
             # Create default plans
             for plan in self.default_plans:
@@ -534,7 +546,8 @@ class SubscriptionManager:
         ]
     
     async def get_subscription_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Get subscription analytics."""
+        """
+Get subscription analytics."""
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         # Filter recent subscriptions
@@ -577,18 +590,21 @@ class SubscriptionManager:
         return self.plans.get(plan_id)
     
     def get_subscription(self, subscription_id: str) -> Optional[Subscription]:
-        """Get subscription by ID."""
+        """
+Get subscription by ID."""
         return self.subscriptions.get(subscription_id)
     
     def list_plans(self, active_only: bool = True) -> List[SubscriptionPlan]:
-        """List all available plans."""
+        """
+List all available plans."""
         plans = list(self.plans.values())
         if active_only:
             plans = [p for p in plans if p.is_active]
         return plans
     
     async def _create_invoice(self, subscription: Subscription, amount: Decimal) -> BillingHistory:
-        """Create billing invoice."""
+        """
+Create billing invoice."""
         invoice = BillingHistory(
             invoice_id=str(uuid.uuid4()),
             subscription_id=subscription.subscription_id,
@@ -640,7 +656,8 @@ class SubscriptionManager:
         return len(cancelled_period) / len(active_start)
     
     def _calculate_customer_ltv(self) -> float:
-        """Calculate average customer lifetime value."""
+        """
+Calculate average customer lifetime value."""
         active_subs = [s for s in self.subscriptions.values() if s.is_active()]
         
         if not active_subs:

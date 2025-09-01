@@ -6,7 +6,7 @@ multi-currency transactions, compliance checks, and payment orchestration
 across multiple payment methods and processors.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -17,6 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Automated Payouts
 ===========================================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class PayoutStatus(Enum):
-    """Payout processing status"""
+    """
+Payout processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -48,6 +51,7 @@ class PayoutStatus(Enum):
 
 class PayoutFrequency(Enum):
     """Payout frequency options"""
+
     IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -106,7 +110,8 @@ class PayoutProcessor:
         self._compliance_rules = {}
         
     async def initialize(self):
-        """Initialize payout processor"""
+        """
+Initialize payout processor"""
         try:
             # Initialize payment orchestrator
             await self.payment_orchestrator.initialize()

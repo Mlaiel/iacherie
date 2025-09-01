@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -516,17 +517,20 @@ def create_certificate_manager(**kwargs) -> CertificateManager:
 
 
 def create_access_control(**kwargs) -> DeploymentAccessControl:
-    """Create access control system with default settings"""
+    """
+Create access control system with default settings"""
     return DeploymentAccessControl(**kwargs)
 
 
 def create_vulnerability_scanner() -> SecurityAssessment:
-    """Create vulnerability scanner with default settings"""
+    """
+Create vulnerability scanner with default settings"""
     return SecurityAssessment()
 
 
 def create_compliance_checker(**kwargs) -> ComplianceChecker:
-    """Create compliance checker with default settings"""
+    """
+Create compliance checker with default settings"""
     audit_logger = SecurityAuditLogger(**kwargs)
     return ComplianceChecker(audit_logger)
 

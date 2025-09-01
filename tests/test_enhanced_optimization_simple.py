@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,10 +13,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Test Enhanced Performance Optimization
+"""
+Test Enhanced Performance Optimization
 
 Simple test for the enhanced performance optimization features
 """
+
 import pytest
 import sys
 import os
@@ -33,10 +36,12 @@ from core.enhanced_performance_optimization import (
 
 
 class TestEnhancedPerformanceOptimization:
-    """Test enhanced performance optimization features"""
+    """
+Test enhanced performance optimization features"""
     
     def test_performance_profiler_initialization(self):
-        """Test performance profiler initialization"""
+        """
+Test performance profiler initialization"""
         config = {
             "max_history_size": 500,
             "analysis_window": 600,
@@ -108,7 +113,8 @@ class TestEnhancedPerformanceOptimization:
         assert latest_metrics.execution_time == 8.0
     
     def test_bottleneck_detection(self):
-        """Test bottleneck detection"""
+        """
+Test bottleneck detection"""
         config = {
             "cpu_threshold": 80.0,
             "memory_threshold": 85.0,
@@ -239,7 +245,8 @@ class TestAdvancedCacheStrategy:
     """Test advanced cache strategy"""
     
     def test_cache_strategy_initialization(self):
-        """Test cache strategy initialization"""
+        """
+Test cache strategy initialization"""
         config = {"advanced_features": True}
         cache_strategy = AdvancedCacheStrategy(config)
         
@@ -305,7 +312,8 @@ class TestDatabaseIndexingOptimizer:
     """Test database indexing optimizer"""
     
     def test_indexing_optimizer_initialization(self):
-        """Test indexing optimizer initialization"""
+        """
+Test indexing optimizer initialization"""
         config = {"auto_optimization": True}
         optimizer = DatabaseIndexingOptimizer(config)
         
@@ -406,7 +414,8 @@ class TestIntegrationScenarios:
     """Test integration scenarios combining multiple optimization features"""
     
     def test_comprehensive_performance_optimization_workflow(self):
-        """Test complete performance optimization workflow"""
+        """
+Test complete performance optimization workflow"""
         # Step 1: Initialize profiler
         profiler = EnhancedPerformanceProfiler({
             "max_history_size": 100,

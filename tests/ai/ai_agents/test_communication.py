@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for Communication Module
+"""
+Comprehensive Tests for Communication Module
 
 Industrial-grade testing for agent communication protocols, message routing,
 inter-agent coordination, and communication infrastructure.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -49,10 +52,12 @@ logger = logging.getLogger(__name__)
 
 
 class TestAgentMessage:
-    """Test agent message creation and serialization"""
+    """
+Test agent message creation and serialization"""
     
     def test_message_creation(self):
-        """Test creating agent messages"""
+        """
+Test creating agent messages"""
         message = AgentMessage(
             sender_id="test_sender",
             recipient_id="test_recipient",
@@ -161,7 +166,8 @@ class TestMessageRouter:
     
     @pytest.fixture
     async def message_router(self) -> MessageRouter:
-        """Create message router for testing"""
+        """
+Create message router for testing"""
         config = CommunicationConfig(
             max_queue_size=1000,
             default_timeout=30,
@@ -176,7 +182,8 @@ class TestMessageRouter:
         await router.shutdown()
     
     async def test_router_initialization(self):
-        """Test message router initialization"""
+        """
+Test message router initialization"""
         config = CommunicationConfig()
         router = MessageRouter(config)
         
@@ -189,7 +196,8 @@ class TestMessageRouter:
         assert not router.initialized
     
     async def test_agent_registration(self, message_router):
-        """Test agent registration with router"""
+        """
+Test agent registration with router"""
         agent_id = "test_agent_001"
         
         # Register agent
@@ -405,7 +413,8 @@ class TestCommunicationBus:
     
     @pytest.fixture
     async def communication_bus(self) -> CommunicationBus:
-        """Create communication bus for testing"""
+        """
+Create communication bus for testing"""
         config = CommunicationConfig(
             enable_event_streaming=True,
             enable_message_persistence=True,
@@ -419,7 +428,8 @@ class TestCommunicationBus:
         await bus.shutdown()
     
     async def test_bus_initialization(self):
-        """Test communication bus initialization"""
+        """
+Test communication bus initialization"""
         config = CommunicationConfig()
         bus = CommunicationBus(config)
         
@@ -431,7 +441,8 @@ class TestCommunicationBus:
         await bus.shutdown()
     
     async def test_event_subscription(self, communication_bus):
-        """Test event subscription and notification"""
+        """
+Test event subscription and notification"""
         events_received = []
         
         async def event_handler(event_type: str, event_data: Dict[str, Any]):
@@ -533,7 +544,8 @@ class TestAgentCommunicationProtocol:
     
     @pytest.fixture
     async def communication_protocol(self) -> AgentCommunicationProtocol:
-        """Create communication protocol for testing"""
+        """
+Create communication protocol for testing"""
         config = CommunicationConfig(
             protocol_version="1.0",
             enable_compression=True,
@@ -561,7 +573,8 @@ class TestAgentCommunicationProtocol:
         await protocol.shutdown()
     
     async def test_handshake_process(self, communication_protocol):
-        """Test agent handshake process"""
+        """
+Test agent handshake process"""
         agent_info = {
             "agent_id": "handshake_agent",
             "agent_type": "test_agent",
@@ -684,7 +697,8 @@ class TestCommunicationIntegration:
     
     @pytest.fixture
     async def communication_system(self):
-        """Create complete communication system for integration testing"""
+        """
+Create complete communication system for integration testing"""
         config = CommunicationConfig(
             enable_persistence=True,
             enable_event_streaming=True,

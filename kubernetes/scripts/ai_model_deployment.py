@@ -27,6 +27,7 @@ and international copyright laws.
 
 Specialization: AI/ML Systems Architecture & Enterprise Model Deployment
 """
+
 import asyncio
 import logging
 import json
@@ -60,7 +61,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """AI model types supported by the IA Influencer Agent platform."""
+    """
+AI model types supported by the IA Influencer Agent platform."""
     # Core Content Protection Models
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
     VIDEO_FINGERPRINTING = "video_fingerprinting"
@@ -132,6 +134,7 @@ class ModelType(Enum):
 
 class DeploymentStrategy(Enum):
     """Model deployment strategies."""
+
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING_UPDATE = "rolling_update"
@@ -141,6 +144,7 @@ class DeploymentStrategy(Enum):
 
 class ModelFramework(Enum):
     """Supported ML frameworks."""
+
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     HUGGINGFACE = "huggingface"
@@ -168,7 +172,8 @@ class ModelConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Configuration for model deployment."""
+    """
+Configuration for model deployment."""
     deployment_name: str
     strategy: DeploymentStrategy
     replicas: int = 3
@@ -193,7 +198,8 @@ class AIModelDeploymentManager:
     - Resource optimization and cost management
     """
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the AI model deployment manager."""
+        """
+Initialize the AI model deployment manager."""
         self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
@@ -426,7 +432,8 @@ CMD ["python", "inference.py"]
         return dockerfile
 
     def _generate_inference_script(self, model_config: ModelConfig) -> str:
-        """Generate inference script for the model."""
+        """
+Generate inference script for the model."""
         return f"""#!/usr/bin/env python3
 import os
 import json
@@ -527,7 +534,8 @@ if __name__ == "__main__":
         image_name: str,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy model to Kubernetes."""
+        """
+Deploy model to Kubernetes."""
         if not self.k8s_client:
             logger.warning("Kubernetes not available, skipping deployment")
             return {}
@@ -861,7 +869,8 @@ if __name__ == "__main__":
         new_model_config: ModelConfig,
         strategy: DeploymentStrategy = DeploymentStrategy.ROLLING_UPDATE
     ) -> str:
-        """Update an existing model deployment."""
+        """
+Update an existing model deployment."""
         try:
             logger.info(f"Updating deployment: {deployment_id}")
             
@@ -903,7 +912,8 @@ if __name__ == "__main__":
             await self._rolling_update(old_deployment_id, new_deployment_id)
 
     async def _switch_traffic(self, old_deployment_id: str, new_deployment_id: str) -> None:
-        """Switch traffic from old to new deployment."""
+        """
+Switch traffic from old to new deployment."""
         # Implementation for traffic switching
         logger.info(f"Switching traffic from {old_deployment_id} to {new_deployment_id}")
 
@@ -926,7 +936,8 @@ if __name__ == "__main__":
 
 # Factory functions for common model deployments
 def create_audio_fingerprinting_deployment() -> ModelConfig:
-    """Create configuration for audio fingerprinting model."""
+    """
+Create configuration for audio fingerprinting model."""
     return ModelConfig(
         model_name="audio-fingerprint-model",
         model_type=ModelType.AUDIO_FINGERPRINTING,

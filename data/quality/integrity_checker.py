@@ -5,8 +5,9 @@ Enterprise-grade data integrity checking system for multi-format content.
 Provides comprehensive integrity validation, corruption detection, and consistency verification.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
@@ -20,7 +21,9 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class IntegrityCheckType(Enum):
-    """Types of integrity checks"""
+    """
+Types of integrity checks"""
+
     CHECKSUM = "checksum"
     STRUCTURE = "structure"
     REFERENCE = "reference"
@@ -30,6 +33,7 @@ class IntegrityCheckType(Enum):
 
 class ChecksumAlgorithm(Enum):
     """Supported checksum algorithms"""
+
     MD5 = "md5"
     SHA1 = "sha1"
     SHA256 = "sha256"
@@ -46,7 +50,8 @@ class IntegrityResult:
         self.issues: List[Dict[str, Any]] = []
         self.details: Dict[str, Any] = {}
         self.recommendations: List[str] = []
-"""Integrity Checker - Data Integrity and Consistency Validation
+"""
+Integrity Checker - Data Integrity and Consistency Validation
 =============================================================
 
 Enterprise-grade data integrity checking system for multi-format content.
@@ -62,8 +67,9 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
                 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple, Set, Callable
 import asyncio
 import logging
@@ -91,7 +97,9 @@ from collections import defaultdict, deque
 logger = logging.getLogger(__name__)
 
 class IntegrityCheckType(Enum):
-    """Types of integrity checks"""
+    """
+Types of integrity checks"""
+
     CHECKSUM = "checksum"                # Hash-based integrity
     STRUCTURE = "structure"              # File structure validation
     REFERENCE = "reference"              # Referential integrity
@@ -105,6 +113,7 @@ class IntegrityCheckType(Enum):
 
 class ChecksumAlgorithm(Enum):
     """Supported checksum algorithms"""
+
     MD5 = "md5"
     SHA1 = "sha1"
     SHA256 = "sha256"
@@ -115,6 +124,7 @@ class ChecksumAlgorithm(Enum):
 
 class IntegritySeverity(Enum):
     """Integrity issue severity levels"""
+
     CRITICAL = "critical"               # Data corruption or loss
     HIGH = "high"                      # Significant integrity issues
     MEDIUM = "medium"                  # Moderate integrity concerns
@@ -123,6 +133,7 @@ class IntegritySeverity(Enum):
 
 class ContentIntegrityStandard(Enum):
     """Content integrity standards"""
+
     STRICT = "strict"                  # Highest integrity requirements
     STANDARD = "standard"              # Normal integrity requirements
     RELAXED = "relaxed"               # Lower integrity requirements
@@ -156,7 +167,8 @@ class IntegrityIssue:
 
 @dataclass
 class IntegrityResult:
-    """Comprehensive integrity check result"""
+    """
+Comprehensive integrity check result"""
     passed: bool = True
     overall_score: float = 100.0
     check_types_performed: List[IntegrityCheckType] = field(default_factory=list)
@@ -168,13 +180,15 @@ class IntegrityResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def add_issue(self, issue: IntegrityIssue):
-        """Add an integrity issue"""
+        """
+Add an integrity issue"""
         self.issues.append(issue)
         if issue.severity in [IntegritySeverity.CRITICAL, IntegritySeverity.HIGH]:
             self.passed = False
     
     def calculate_score(self) -> float:
-        """Calculate overall integrity score"""
+        """
+Calculate overall integrity score"""
         if not self.issues:
             return 100.0
         
@@ -209,7 +223,8 @@ class IntegrityResult:
         }
 
 class IntegrityProfile:
-    """Integrity checking profile configuration"""
+    """
+Integrity checking profile configuration"""
     
     def __init__(
         self,
@@ -470,7 +485,8 @@ class IntegrityChecker:
         result: IntegrityResult,
         expected_checksums: Optional[Dict[str, str]]
     ):
-        """Perform checksum validation"""
+        """
+Perform checksum validation"""
         
         try:
             # Calculate checksums
@@ -810,7 +826,8 @@ class IntegrityChecker:
         return entropy
     
     async def _check_corruption(self, content_bytes: bytes, content_type: str, result: IntegrityResult):
-        """Check for content corruption indicators"""
+        """
+Check for content corruption indicators"""
         
         try:
             # Check for repeating patterns (possible corruption)
@@ -1099,7 +1116,8 @@ class IntegrityChecker:
                 return None
     
     def store_known_checksum(self, content_id: str, checksums: Dict[str, str]):
-        """Store known good checksums for future validation"""
+        """
+Store known good checksums for future validation"""
         self.known_checksums[content_id] = checksums
         self.logger.info(f"Stored checksums for content: {content_id}")
     
@@ -1108,7 +1126,8 @@ class IntegrityChecker:
         return self.known_checksums.get(content_id)
     
     def create_integrity_profile(self, profile: IntegrityProfile):
-        """Add custom integrity profile"""
+        """
+Add custom integrity profile"""
         self.profiles[profile.name] = profile
         self.logger.info(f"Added integrity profile: {profile.name}")
     
@@ -1117,7 +1136,8 @@ class IntegrityChecker:
         return list(self.profiles.keys())
     
     def get_integrity_statistics(self) -> Dict[str, Any]:
-        """Get integrity checking statistics"""
+        """
+Get integrity checking statistics"""
         
         if not self.check_history:
             return {'message': 'No integrity checks performed yet'}
@@ -1395,7 +1415,8 @@ class IntegrityChecker:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Validate content structure"""
+        """
+Validate content structure"""
         
         try:
             # Content type specific structure validation
@@ -1425,7 +1446,8 @@ class IntegrityChecker:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Check reference integrity (external dependencies)"""
+        """
+Check reference integrity (external dependencies)"""
         
         try:
             result = {
@@ -1491,7 +1513,8 @@ class IntegrityChecker:
         content_data: Any,
         content_type: str
     ) -> Dict[str, Any]:
-        """Detect content corruption"""
+        """
+Detect content corruption"""
         
         try:
             result = {
@@ -1563,7 +1586,8 @@ class IntegrityChecker:
         content_data: Any,
         algorithm: ChecksumAlgorithm = None
     ) -> str:
-        """Calculate checksum for content"""
+        """
+Calculate checksum for content"""
         
         if algorithm is None:
             algorithm = self.default_algorithm
@@ -1598,7 +1622,8 @@ class IntegrityChecker:
         return True
     
     def _analyze_binary_patterns(self, data: bytes) -> float:
-        """Analyze binary patterns for corruption indicators"""
+        """
+Analyze binary patterns for corruption indicators"""
         
         if len(data) < 100:
             return 50.0  # Too small to analyze properly
@@ -1627,68 +1652,81 @@ class IntegrityChecker:
     
     # Content-specific integrity checkers
     async def _check_audio_integrity(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Check audio-specific integrity"""
+        """
+Check audio-specific integrity"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     async def _check_video_integrity(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Check video-specific integrity"""
+        """
+Check video-specific integrity"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     async def _check_image_integrity(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Check image-specific integrity"""
+        """
+Check image-specific integrity"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     async def _check_text_integrity(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Check text-specific integrity"""
+        """
+Check text-specific integrity"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     # Structure validation methods
     async def _validate_audio_structure(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate audio file structure"""
+        """
+Validate audio file structure"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     async def _validate_video_structure(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate video file structure"""
+        """
+Validate video file structure"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     async def _validate_image_structure(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate image file structure"""
+        """
+Validate image file structure"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     async def _validate_text_structure(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate text file structure"""
+        """
+Validate text file structure"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     async def _validate_generic_structure(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Validate generic file structure"""
+        """
+Validate generic file structure"""
         # Placeholder implementation
         return {'passed': True, 'score': 100.0, 'issues': [], 'recommendations': []}
     
     # Corruption detection methods
     async def _check_audio_corruption(self, content_data: Any) -> float:
-        """Check for audio-specific corruption"""
+        """
+Check for audio-specific corruption"""
         # Placeholder implementation
         return 100.0
     
     async def _check_video_corruption(self, content_data: Any) -> float:
-        """Check for video-specific corruption"""
+        """
+Check for video-specific corruption"""
         # Placeholder implementation
         return 100.0
     
     async def _check_image_corruption(self, content_data: Any) -> float:
-        """Check for image-specific corruption"""
+        """
+Check for image-specific corruption"""
         # Placeholder implementation
         return 100.0
     
     async def _check_text_corruption(self, content_data: Any) -> float:
-        """Check for text-specific corruption"""
+        """
+Check for text-specific corruption"""
         # Placeholder implementation
         return 100.0

@@ -24,6 +24,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,7 +46,9 @@ from ..core.exceptions import MonetizationException, CalculationException
 
 
 class RevenueCalculationMethod(Enum):
-    """Revenue calculation methodologies."""
+    """
+Revenue calculation methodologies."""
+
     REAL_TIME = "real_time"
     PREDICTIVE = "predictive"
     HISTORICAL_AVERAGE = "historical_average"
@@ -56,6 +59,7 @@ class RevenueCalculationMethod(Enum):
 
 class PlatformMetric(Enum):
     """Platform-specific revenue metrics."""
+
     SPOTIFY_STREAMS = "spotify_streams"
     YOUTUBE_VIEWS = "youtube_views"
     INSTAGRAM_ENGAGEMENT = "instagram_engagement"
@@ -83,7 +87,8 @@ class PlatformRevenueData:
 
 @dataclass
 class RevenueProjection:
-    """Revenue forecast and projection data."""
+    """
+Revenue forecast and projection data."""
     creator_id: str
     projection_period: Tuple[datetime, datetime]
     conservative_estimate: Decimal
@@ -100,7 +105,8 @@ class RevenueProjection:
 
 @dataclass
 class CreatorPerformanceMetrics:
-    """Comprehensive creator performance analytics."""
+    """
+Comprehensive creator performance analytics."""
     creator_id: str
     total_followers: int
     engagement_rate: float
@@ -577,7 +583,8 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         features: np.ndarray
     ) -> GradientBoostingRegressor:
-        """Get cached or train new projection model."""
+        """
+Get cached or train new projection model."""
         model_key = f"projection_{creator_id}"
         
         if model_key in self.model_cache:
@@ -644,7 +651,8 @@ class AdvancedRevenueCalculator:
         model: GradientBoostingRegressor,
         features: np.ndarray
     ) -> Decimal:
-        """Calculate conservative revenue projection (5th percentile)."""
+        """
+Calculate conservative revenue projection (5th percentile)."""
         try:
             model_key = f"projection_model"
             scaler = self.scaler_cache.get(model_key, StandardScaler().fit(features))
@@ -1236,7 +1244,8 @@ class AdvancedRevenueCalculator:
         return round(performance_score * 100, 2)  # Convert to 0-100 scale
     
     async def _identify_strengths(self, creator_id: str, stats: Dict[str, Any]) -> List[str]:
-        """Identify creator strengths."""
+        """
+Identify creator strengths."""
         strengths = []
         
         if stats.get("avg_engagement", 0) > 0.05:
@@ -1341,5 +1350,6 @@ class AdvancedRevenueCalculator:
 
 # Factory function for easy instantiation
 def create_revenue_calculator(config: Optional[Dict[str, Any]] = None) -> AdvancedRevenueCalculator:
-    """Create and return configured revenue calculator instance."""
+    """
+Create and return configured revenue calculator instance."""
     return AdvancedRevenueCalculator(config)

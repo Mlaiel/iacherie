@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class PlatformType(Enum):
-    """Supported distribution platforms."""
+    """
+Supported distribution platforms."""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -47,6 +50,7 @@ class PlatformType(Enum):
 
 class DistributionStrategy(Enum):
     """Content distribution strategies."""
+
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     STAGGERED = "staggered"
@@ -58,6 +62,7 @@ class DistributionStrategy(Enum):
 
 class ContentOptimizationType(Enum):
     """Content optimization types for platforms."""
+
     FORMAT_CONVERSION = "format_conversion"
     RESOLUTION_ADJUSTMENT = "resolution_adjustment"
     ASPECT_RATIO_OPTIMIZATION = "aspect_ratio_optimization"
@@ -70,6 +75,7 @@ class ContentOptimizationType(Enum):
 
 class PublishingStatus(Enum):
     """Publishing status for distributed content."""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
@@ -95,7 +101,8 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionResult:
-    """Result of content distribution to a platform."""
+    """
+Result of content distribution to a platform."""
     platform: PlatformType
     content_id: str
     platform_content_id: Optional[str]
@@ -110,7 +117,8 @@ class DistributionResult:
 
 @dataclass
 class DistributionCampaign:
-    """Comprehensive distribution campaign configuration."""
+    """
+Comprehensive distribution campaign configuration."""
     campaign_id: str
     content_items: List[str]
     target_platforms: List[PlatformType]
@@ -123,7 +131,8 @@ class DistributionCampaign:
 
 
 class DistributionPublishingWorkflow:
-    """Advanced distribution and publishing workflow system."""
+    """
+Advanced distribution and publishing workflow system."""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -969,7 +978,8 @@ class DistributionPublishingWorkflow:
         audience_analysis: Dict[str, Any],
         optimization_result: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate platform-specific audience targeting."""
+        """
+Generate platform-specific audience targeting."""
         platform_targeting = {}
         
         # Generate targeting for each platform
@@ -1141,7 +1151,8 @@ class DistributionPublishingWorkflow:
         tracking_metrics: List[str],
         tracking_frequency: str
     ) -> Dict[str, Any]:
-        """Setup performance tracking for content."""
+        """
+Setup performance tracking for content."""
         content_id = verification.get("content_id")
         
         # Setup tracking with performance tracker

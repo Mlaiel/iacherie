@@ -17,6 +17,7 @@ Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, Any, Optional, List, Set, Type, Union
 import os
 from datetime import datetime
@@ -129,13 +130,15 @@ class ContentProtectionConfigIndex:
     """
     
     def __init__(self):
-        """Initialize the configuration index."""
+        """
+Initialize the configuration index."""
         self._config_registry = {}
         self._factory_registry = {}
         self._initialize_registries()
     
     def _initialize_registries(self):
-        """Initialize configuration and factory registries."""
+        """
+Initialize configuration and factory registries."""
         # Configuration class registry
         self._config_registry = {
             'fingerprint_engine': FingerprintEngineConfig,
@@ -217,7 +220,8 @@ class ContentProtectionConfigIndex:
         }
     
     def get_config_class(self, config_type: str) -> Optional[Type]:
-        """Get configuration class by type name."""
+        """
+Get configuration class by type name."""
         return self._config_registry.get(config_type)
     
     def create_config(self, config_type: str, environment: str = 'production') -> Any:
@@ -282,11 +286,13 @@ class ContentProtectionConfigIndex:
         return validation_results
     
     def get_supported_environments(self) -> List[str]:
-        """Get list of supported environments."""
+        """
+Get list of supported environments."""
         return ['production', 'development', 'testing']
     
     def get_available_config_types(self) -> List[str]:
-        """Get list of available configuration types."""
+        """
+Get list of available configuration types."""
         return list(self._config_registry.keys())
     
     def export_config_summary(self, configs: Dict[str, Any]) -> Dict[str, Any]:
@@ -323,7 +329,8 @@ class ContentProtectionConfigIndex:
 # Factory functions for different deployment scenarios
 
 def create_enterprise_production_config() -> Dict[str, Any]:
-    """Create enterprise production configuration set."""
+    """
+Create enterprise production configuration set."""
     index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('production')
     
@@ -337,7 +344,8 @@ def create_enterprise_production_config() -> Dict[str, Any]:
 
 
 def create_startup_config() -> Dict[str, Any]:
-    """Create cost-optimized configuration for startups."""
+    """
+Create cost-optimized configuration for startups."""
     index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('development')
     
@@ -350,7 +358,8 @@ def create_startup_config() -> Dict[str, Any]:
 
 
 def create_compliance_focused_config() -> Dict[str, Any]:
-    """Create compliance-heavy configuration for regulated industries."""
+    """
+Create compliance-heavy configuration for regulated industries."""
     index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('production')
     
@@ -365,7 +374,8 @@ def create_compliance_focused_config() -> Dict[str, Any]:
 
 
 def create_development_environment_config() -> Dict[str, Any]:
-    """Create development-friendly configuration."""
+    """
+Create development-friendly configuration."""
     index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('development')
     
@@ -380,7 +390,8 @@ def create_development_environment_config() -> Dict[str, Any]:
 
 
 def create_testing_environment_config() -> Dict[str, Any]:
-    """Create testing configuration with minimal resource usage."""
+    """
+Create testing configuration with minimal resource usage."""
     index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('testing')
     
@@ -409,4 +420,4 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."

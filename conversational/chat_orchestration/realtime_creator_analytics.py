@@ -20,12 +20,13 @@ Technologies:
 - ML/AI: TensorFlow, PyTorch, Scikit-learn, Prophet
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import uuid
@@ -53,7 +54,9 @@ from backend.conversational.chat_orchestration.enterprise_monitoring_engine impo
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""
+    """
+Types of analytics metrics"""
+
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
@@ -66,6 +69,7 @@ class AnalyticsMetricType(Enum):
 
 class AggregationPeriod(Enum):
     """Time periods for metric aggregation"""
+
     REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
@@ -78,6 +82,7 @@ class AggregationPeriod(Enum):
 
 class CreatorCategory(Enum):
     """Creator categories for analytics"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -90,6 +95,7 @@ class CreatorCategory(Enum):
 
 class PlatformType(Enum):
     """Platform types for analytics"""
+
     SOCIAL_MEDIA = "social_media"
     STREAMING = "streaming"
     MARKETPLACE = "marketplace"
@@ -115,7 +121,8 @@ class AnalyticsDataPoint:
 
 @dataclass
 class EngagementMetrics:
-    """Engagement metrics for content/creator"""
+    """
+Engagement metrics for content/creator"""
     views: int = 0
     likes: int = 0
     comments: int = 0
@@ -130,7 +137,8 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceMetrics:
-    """Audience analytics metrics"""
+    """
+Audience analytics metrics"""
     total_followers: int = 0
     new_followers: int = 0
     lost_followers: int = 0
@@ -144,7 +152,8 @@ class AudienceMetrics:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue analytics metrics"""
+    """
+Revenue analytics metrics"""
     total_revenue: float = 0.0
     revenue_per_view: float = 0.0
     revenue_per_follower: float = 0.0
@@ -157,7 +166,8 @@ class RevenueMetrics:
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics"""
+    """
+Content performance metrics"""
     total_content_pieces: int = 0
     avg_performance_score: float = 0.0
     top_performing_content: List[str] = field(default_factory=list)
@@ -169,7 +179,8 @@ class ContentMetrics:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis data"""
+    """
+Competitor analysis data"""
     competitor_id: str
     competitor_name: str
     follower_count: int
@@ -184,7 +195,8 @@ class CompetitorAnalysis:
 
 @dataclass
 class CreatorInsights:
-    """Comprehensive creator insights"""
+    """
+Comprehensive creator insights"""
     creator_id: str
     category: CreatorCategory
     analytics_period: Tuple[datetime, datetime]
@@ -204,7 +216,8 @@ class CreatorInsights:
 
 @dataclass
 class RealTimeAlert:
-    """Real-time analytics alert"""
+    """
+Real-time analytics alert"""
     alert_id: str
     creator_id: str
     alert_type: str
@@ -1161,7 +1174,8 @@ class RealTimeCreatorAnalytics:
         return ((current - previous) / previous) * 100
     
     def _calculate_trend(self, data_points: List[AnalyticsDataPoint]) -> str:
-        """Calculate trend direction from data points"""
+        """
+Calculate trend direction from data points"""
         if len(data_points) < 2:
             return "stable"
         
@@ -1187,17 +1201,20 @@ class RealTimeCreatorAnalytics:
         pass
     
     async def _store_creator_insights(self, insights: CreatorInsights) -> None:
-        """Store creator insights in database"""
+        """
+Store creator insights in database"""
         # Implementation would insert into database
         pass
     
     async def _store_alert_rule(self, alert_rule: Dict[str, Any]) -> None:
-        """Store alert rule in database"""
+        """
+Store alert rule in database"""
         # Implementation would insert into database
         pass
     
     async def _store_real_time_alert(self, alert: RealTimeAlert) -> None:
-        """Store real-time alert in database"""
+        """
+Store real-time alert in database"""
         # Implementation would insert into database
         pass
     
@@ -1209,17 +1226,20 @@ class RealTimeCreatorAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> List[AnalyticsDataPoint]:
-        """Get analytics data for period"""
+        """
+Get analytics data for period"""
         # Implementation would query database
         return []
     
     async def _get_recent_alerts(self, creator_id: str, hours: int) -> List[RealTimeAlert]:
-        """Get recent alerts for creator"""
+        """
+Get recent alerts for creator"""
         # Implementation would query database
         return []
     
     async def _get_quick_recommendations(self, creator_id: str) -> List[str]:
-        """Get quick recommendations for creator"""
+        """
+Get quick recommendations for creator"""
         return [
             "Post during peak hours (7-9 PM) for 30% higher engagement",
             "Video content performs 25% better than images",
@@ -1232,11 +1252,13 @@ class RealTimeCreatorAnalytics:
         return self.analytics_metrics.copy()
     
     def get_active_streams_count(self) -> int:
-        """Get count of active tracking streams"""
+        """
+Get count of active tracking streams"""
         return len(self.active_streams)
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""
+        """
+Get list of supported platforms"""
         return ["youtube", "instagram", "tiktok", "twitter", "facebook", "linkedin", "spotify", "twitch"]
     
     async def stop_real_time_tracking(self, creator_id: str) -> bool:

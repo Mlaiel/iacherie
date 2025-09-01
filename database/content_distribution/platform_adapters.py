@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Security Specialist + Microservices Architect + Platform Integration Expert + API Engineer
 """
+
 import asyncio
 import json
 import uuid
@@ -43,7 +44,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class PlatformType(str, Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -62,6 +65,7 @@ class PlatformType(str, Enum):
 
 class AdapterStatus(str, Enum):
     """Platform adapter operational status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -72,6 +76,7 @@ class AdapterStatus(str, Enum):
 
 class IntegrationLevel(str, Enum):
     """Platform integration capability levels"""
+
     BASIC = "basic"              # Read-only access
     STANDARD = "standard"        # Read/Write content
     ADVANCED = "advanced"        # Full API access
@@ -80,6 +85,7 @@ class IntegrationLevel(str, Enum):
 
 class AuthenticationMethod(str, Enum):
     """Platform authentication methods"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -106,7 +112,8 @@ class PlatformCapabilities:
 
 @dataclass
 class ContentRequirements:
-    """Platform-specific content requirements"""
+    """
+Platform-specific content requirements"""
     min_duration: Optional[int] = None
     max_duration: Optional[int] = None
     aspect_ratios: List[str] = field(default_factory=list)
@@ -121,7 +128,8 @@ class ContentRequirements:
     hashtags_max_count: int = 30
 
 class PlatformAdapter(Base):
-    """Platform adapter database model"""
+    """
+Platform adapter database model"""
     __tablename__ = "platform_adapters"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -337,7 +345,8 @@ class PlatformAdapterRequest(BaseModel):
     configuration: Optional[Dict[str, Any]] = None
 
 class CredentialRequest(BaseModel):
-    """Request model for platform credentials"""
+    """
+Request model for platform credentials"""
     platform_id: str
     credential_name: str
     access_token: Optional[str] = None
@@ -348,7 +357,8 @@ class CredentialRequest(BaseModel):
     granted_permissions: Optional[List[str]] = None
 
 class PlatformOperationRequest(BaseModel):
-    """Request model for platform operations"""
+    """
+Request model for platform operations"""
     platform_id: str
     content_id: Optional[str] = None
     operation_type: str
@@ -356,7 +366,8 @@ class PlatformOperationRequest(BaseModel):
     correlation_id: Optional[str] = None
 
 class PlatformAdapterManager:
-    """Enterprise platform adapter management system"""
+    """
+Enterprise platform adapter management system"""
     
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
@@ -368,7 +379,8 @@ class PlatformAdapterManager:
         self,
         adapter_request: PlatformAdapterRequest
     ) -> PlatformAdapter:
-        """Register new platform adapter"""
+        """
+Register new platform adapter"""
         try:
             # Validate platform requirements
             await self._validate_platform_configuration(adapter_request)

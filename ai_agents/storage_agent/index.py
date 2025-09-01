@@ -20,6 +20,7 @@ Spécialités de l'Équipe:
 - Architecte Microservices & Ingénieur DevOps: Fahed Mlaiel
 - Ingénieur Prompt IA & Spécialiste Protection Contenu: Fahed Mlaiel
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -53,7 +54,8 @@ class StorageAgentIndex:
         self._setup_logging()
         
     def _initialize_components(self):
-        """Initialise tous les composants du Storage Agent"""
+        """
+Initialise tous les composants du Storage Agent"""
         logger.info("🚀 Initialisation des composants Storage Agent...")
         
         # Orchestrateur principal
@@ -350,7 +352,8 @@ class StorageAgentIndex:
         }
         
     async def _get_processing_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de traitement"""
+        """
+Récupère les statistiques de traitement"""
         return {
             'files_processed': getattr(self.file_processor, 'files_processed', 0),
             'processing_time_avg': getattr(self.file_processor, 'avg_processing_time', 0),
@@ -359,7 +362,8 @@ class StorageAgentIndex:
         }
         
     async def _get_optimization_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques d'optimisation"""
+        """
+Récupère les statistiques d'optimisation"""
         return {
             'optimizations_performed': getattr(self.content_optimizer, 'optimizations_count', 0),
             'avg_size_reduction': getattr(self.content_optimizer, 'avg_size_reduction', 0),
@@ -368,7 +372,8 @@ class StorageAgentIndex:
         }
         
     async def _get_backup_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de sauvegarde"""
+        """
+Récupère les statistiques de sauvegarde"""
         return {
             'total_backups': getattr(self.backup_manager, 'total_backups', 0),
             'backup_size': getattr(self.backup_manager, 'total_backup_size', 0),
@@ -377,7 +382,8 @@ class StorageAgentIndex:
         }
         
     async def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques de performance système"""
+        """
+Récupère les métriques de performance système"""
         return {
             'response_time': getattr(self, 'avg_response_time', 0),
             'throughput': getattr(self, 'throughput', 0),

@@ -6,6 +6,7 @@ control and monitoring capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,7 +19,9 @@ from .core.advertising_engine import AdvertisingEngine
 logger = logging.getLogger(__name__)
 
 class AdvertisingSystemStatus(Enum):
-    """System status for advertising management"""
+    """
+System status for advertising management"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -62,7 +65,8 @@ class AdvertisingManager:
         )
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the advertising management system"""
+        """
+Initialize the advertising management system"""
         try:
             logger.info("Initializing Advertising Manager...")
             

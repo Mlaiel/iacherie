@@ -11,6 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
+
 import asyncio
 import logging
 import time
@@ -29,10 +30,12 @@ from .index import (
 
 
 class FilterSystemDemo:
-    """Demonstration and validation of the filtering system."""
+    """
+Demonstration and validation of the filtering system."""
     
     def __init__(self):
-        """Initialize demo system."""
+        """
+Initialize demo system."""
         self.logger = logging.getLogger(__name__)
         self.engine = get_filter_engine()
         
@@ -42,7 +45,8 @@ class FilterSystemDemo:
         )
     
     async def run_comprehensive_demo(self):
-        """Run comprehensive demonstration of all filter capabilities."""
+        """
+Run comprehensive demonstration of all filter capabilities."""
         self.logger.info("🚀 Starting IA Influencer Agent Filters Demo")
         self.logger.info("=" * 60)
         

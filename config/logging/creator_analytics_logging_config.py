@@ -17,6 +17,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
+
 import logging
 import json
 from datetime import datetime
@@ -30,7 +31,9 @@ from pythonjsonlogger import jsonlogger
 
 
 class AnalyticsCategory(str, Enum):
-    """Analytics categories for creators"""
+    """
+Analytics categories for creators"""
+
     AUDIENCE_INSIGHTS = "audience_insights"
     CONTENT_PERFORMANCE = "content_performance"
     ENGAGEMENT_METRICS = "engagement_metrics"
@@ -47,6 +50,7 @@ class AnalyticsCategory(str, Enum):
 
 class MetricType(str, Enum):
     """Types of metrics tracked"""
+
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -66,6 +70,7 @@ class MetricType(str, Enum):
 
 class ReportType(str, Enum):
     """Analytics report types"""
+
     DAILY_REPORT = "daily_report"
     WEEKLY_REPORT = "weekly_report"
     MONTHLY_REPORT = "monthly_report"
@@ -117,14 +122,16 @@ class CreatorAnalyticsLogConfig:
 
 
 class CreatorAnalyticsLogger:
-    """Specialized logger for creator analytics"""
+    """
+Specialized logger for creator analytics"""
     
     def __init__(self, config: CreatorAnalyticsLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for creator analytics"""
+        """
+Setup structured logger for creator analytics"""
         processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
@@ -466,7 +473,8 @@ class CreatorAnalyticsLogger:
         return total_engagement > 10000  # Example threshold
     
     def _check_growth_milestones(self, audience_metrics: Dict, growth_indicators: Dict) -> bool:
-        """Check for growth milestone achievements"""
+        """
+Check for growth milestone achievements"""
         follower_count = audience_metrics.get("total_followers", 0)
         growth_rate = growth_indicators.get("follower_growth_rate", 0)
         
@@ -495,12 +503,14 @@ class CreatorAnalyticsLoggingConfig:
     
     @staticmethod
     def create_default_config() -> CreatorAnalyticsLogConfig:
-        """Create default creator analytics logging configuration"""
+        """
+Create default creator analytics logging configuration"""
         return CreatorAnalyticsLogConfig()
     
     @staticmethod
     def create_enterprise_config() -> CreatorAnalyticsLogConfig:
-        """Create enterprise creator analytics logging configuration"""
+        """
+Create enterprise creator analytics logging configuration"""
         return CreatorAnalyticsLogConfig(
             enable_audience_analytics=True,
             enable_content_analytics=True,

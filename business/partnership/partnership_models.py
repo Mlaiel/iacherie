@@ -19,6 +19,7 @@ Development Team Specialties:
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -29,7 +30,9 @@ import uuid
 
 
 class PartnershipType(Enum):
-    """Types of strategic partnerships"""
+    """
+Types of strategic partnerships"""
+
     STRATEGIC_ALLIANCE = "strategic_alliance"
     BRAND_AMBASSADOR = "brand_ambassador"
     CONTENT_LICENSING = "content_licensing"
@@ -44,6 +47,7 @@ class PartnershipType(Enum):
 
 class PartnershipStatus(Enum):
     """Partnership lifecycle status"""
+
     PROSPECTING = "prospecting"
     NEGOTIATING = "negotiating"
     UNDER_REVIEW = "under_review"
@@ -56,6 +60,7 @@ class PartnershipStatus(Enum):
 
 class ContractType(Enum):
     """Contract types for partnerships"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     REVENUE_SHARE = "revenue_share"
@@ -66,6 +71,7 @@ class ContractType(Enum):
 
 class NegotiationStage(Enum):
     """Negotiation process stages"""
+
     INITIAL_CONTACT = "initial_contact"
     PROPOSAL_SENT = "proposal_sent"
     COUNTER_OFFER = "counter_offer"
@@ -78,6 +84,7 @@ class NegotiationStage(Enum):
 
 class RevenueModel(Enum):
     """Revenue sharing models"""
+
     PERCENTAGE_SPLIT = "percentage_split"
     TIERED_COMMISSION = "tiered_commission"
     FLAT_RATE = "flat_rate"
@@ -104,7 +111,8 @@ class PartnershipMetrics:
 
 @dataclass
 class ContractTerm:
-    """Individual contract terms and conditions"""
+    """
+Individual contract terms and conditions"""
     term_id: str
     term_name: str
     term_value: Any
@@ -116,7 +124,8 @@ class ContractTerm:
 
 
 class Partnership(BaseModel):
-    """Core partnership business entity"""
+    """
+Core partnership business entity"""
     partnership_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str
     partner_id: str
@@ -245,7 +254,8 @@ class PartnershipOpportunity:
 
 
 class NegotiationRecord(BaseModel):
-    """Negotiation process tracking"""
+    """
+Negotiation process tracking"""
     negotiation_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     partnership_id: str
     stage: NegotiationStage = NegotiationStage.INITIAL_CONTACT

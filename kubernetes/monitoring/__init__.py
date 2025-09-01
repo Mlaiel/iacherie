@@ -39,6 +39,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
+
 from .metrics_collector import (
     MetricsCollector, 
     MetricPoint, 

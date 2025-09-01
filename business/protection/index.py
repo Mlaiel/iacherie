@@ -19,6 +19,7 @@ Business Flow:
 User Upload → AI Analysis → Rights Protection → SEO Optimization → 
 Collaboration Matching → Multi-Platform Distribution
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -79,7 +80,9 @@ logger = logging.getLogger(__name__)
 # =============== SYSTEM STATUS & CONFIGURATION ===============
 
 class ProtectionSystemStatus(Enum):
-    """Overall protection system status"""
+    """
+Overall protection system status"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     MONITORING = "monitoring"
@@ -90,6 +93,7 @@ class ProtectionSystemStatus(Enum):
 
 class ContentCreatorType(Enum):
     """Types of content creators supported"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -480,7 +484,8 @@ class ContentProtectionSystem:
         return self.protection_results.get(request_id)
     
     async def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""
+        """
+Get comprehensive system statistics"""
         return {
             'system_status': self.status.value,
             'system_version': __version__,
@@ -505,7 +510,8 @@ class ContentProtectionSystem:
         }
     
     async def shutdown(self):
-        """Gracefully shutdown the protection system"""
+        """
+Gracefully shutdown the protection system"""
         try:
             logger.info("🔄 Shutting down Content Protection System...")
             self.status = ProtectionSystemStatus.SHUTTING_DOWN
@@ -582,11 +588,13 @@ async def protect_content_simple(
     return result
 
 def get_supported_creator_types() -> List[ContentCreatorType]:
-    """Get list of supported content creator types"""
+    """
+Get list of supported content creator types"""
     return list(ContentCreatorType)
 
 def get_supported_platforms() -> List[PlatformType]:
-    """Get list of supported platforms for monitoring"""
+    """
+Get list of supported platforms for monitoring"""
     return [
         PlatformType.YOUTUBE,
         PlatformType.INSTAGRAM,

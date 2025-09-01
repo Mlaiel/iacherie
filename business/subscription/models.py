@@ -4,10 +4,11 @@ Data models for subscription management system supporting multi-tier plans,
 billing cycles, payment methods, and feature access control.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
+
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -22,7 +23,9 @@ Base = declarative_base()
 
 
 class SubscriptionStatus(Enum):
-    """Subscription status enumeration."""
+    """
+Subscription status enumeration."""
+
     ACTIVE = "active"
     INACTIVE = "inactive" 
     CANCELLED = "cancelled"
@@ -34,6 +37,7 @@ class SubscriptionStatus(Enum):
 
 class BillingCycleType(Enum):
     """Billing cycle enumeration."""
+
     MONTHLY = "monthly"
     YEARLY = "yearly"
     QUARTERLY = "quarterly"
@@ -42,6 +46,7 @@ class BillingCycleType(Enum):
 
 class PaymentStatus(Enum):
     """Payment status enumeration."""
+
     PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -51,6 +56,7 @@ class PaymentStatus(Enum):
 
 class FeatureType(Enum):
     """Feature type enumeration."""
+
     BOOLEAN = "boolean"  # On/off feature
     QUOTA = "quota"      # Usage-based limit
     UNLIMITED = "unlimited"  # No limits
@@ -367,7 +373,8 @@ class SubscriptionPlanConfig:
 
 @dataclass 
 class UsageQuota:
-    """Usage quota configuration for features."""
+    """
+Usage quota configuration for features."""
     feature_name: str
     current_usage: int
     quota_limit: Optional[int]
@@ -377,14 +384,16 @@ class UsageQuota:
     
     @property
     def usage_percentage(self) -> float:
-        """Calculate usage percentage."""
+        """
+Calculate usage percentage."""
         if self.is_unlimited or not self.quota_limit:
             return 0.0
         return (self.current_usage / self.quota_limit) * 100
     
     @property
     def is_quota_exceeded(self) -> bool:
-        """Check if quota is exceeded."""
+        """
+Check if quota is exceeded."""
         if self.is_unlimited or not self.quota_limit:
             return False
         return self.current_usage >= self.quota_limit
@@ -392,7 +401,8 @@ class UsageQuota:
 
 @dataclass
 class BillingSummary:
-    """Billing summary for subscription analytics."""
+    """
+Billing summary for subscription analytics."""
     subscription_id: int
     current_period_start: datetime
     current_period_end: datetime

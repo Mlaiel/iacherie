@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -51,7 +52,9 @@ from .timezone_manager import TimezoneManager
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
+    """
+Types of collaboration"""
+
     SYNCHRONIZED_POST = "synchronized_post"
     SEQUENTIAL_CAMPAIGN = "sequential_campaign"
     CROSS_PROMOTION = "cross_promotion"
@@ -62,6 +65,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status"""
+
     PROPOSED = "proposed"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -73,6 +77,7 @@ class CollaborationStatus(Enum):
 
 class SynchronizationMode(Enum):
     """Content synchronization modes"""
+
     EXACT_TIME = "exact_time"
     TIMEZONE_ADJUSTED = "timezone_adjusted"
     SEQUENTIAL_WAVE = "sequential_wave"
@@ -112,7 +117,8 @@ class SynchronizationWindow:
 
 @dataclass
 class CollaborationMetrics:
-    """Metrics for collaboration performance"""
+    """
+Metrics for collaboration performance"""
     total_reach: int = 0
     total_engagement: int = 0
     cross_pollination_rate: float = 0.0
@@ -368,7 +374,8 @@ class CollaborationScheduler:
         target_date: Optional[datetime],
         constraints: Dict[str, Any]
     ) -> bool:
-        """Check if a specific creator is available for collaboration"""
+        """
+Check if a specific creator is available for collaboration"""
         try:
             if not target_date:
                 return True
@@ -550,7 +557,8 @@ class CollaborationScheduler:
         return windows
     
     async def _get_creator_timezone(self, creator_id: str) -> str:
-        """Get creator's primary timezone"""
+        """
+Get creator's primary timezone"""
         try:
             # This would query the creator's profile or settings
             # For now, return a default
@@ -563,7 +571,8 @@ class CollaborationScheduler:
         creator_id: str,
         target_date: datetime.date
     ) -> List[int]:
-        """Get optimal posting hours for a creator on a specific date"""
+        """
+Get optimal posting hours for a creator on a specific date"""
         try:
             # This would analyze the creator's historical performance
             # and return optimal hours based on audience engagement
@@ -578,7 +587,8 @@ class CollaborationScheduler:
         compatibility: Dict[str, Any],
         sync_windows: List[SynchronizationWindow]
     ) -> str:
-        """Store collaboration in database"""
+        """
+Store collaboration in database"""
         try:
             collaboration_id = request.id
             
@@ -613,7 +623,8 @@ class CollaborationScheduler:
                     )
     
     async def _notify_collaborators(self, request: CollaborationRequest):
-        """Send notifications to all collaborators"""
+        """
+Send notifications to all collaborators"""
         for collaborator_id in request.collaborators:
             logger.info(f"Notifying collaborator {collaborator_id} about collaboration {request.id}")
             # Implementation would send actual notifications
@@ -647,7 +658,8 @@ class CollaborationScheduler:
         collaboration: CollaborationRequest,
         sync_analysis: Dict[str, Any]
     ) -> List[datetime]:
-        """Create synchronized schedule for a specific creator"""
+        """
+Create synchronized schedule for a specific creator"""
         schedule = []
         
         # Generate platform-specific posting times
@@ -666,7 +678,8 @@ class CollaborationScheduler:
         self,
         schedules: Dict[str, List[datetime]]
     ) -> Dict[str, Any]:
-        """Validate that all schedules can be synchronized properly"""
+        """
+Validate that all schedules can be synchronized properly"""
         validation = {
             'is_valid': True,
             'conflicts': [],
@@ -698,7 +711,8 @@ class CollaborationScheduler:
         schedules: Dict[str, List[datetime]],
         conflicts: List[Dict[str, Any]]
     ) -> Dict[str, List[datetime]]:
-        """Automatically resolve synchronization conflicts"""
+        """
+Automatically resolve synchronization conflicts"""
         resolved_schedules = schedules.copy()
         
         for conflict in conflicts:
@@ -730,7 +744,8 @@ class CollaborationScheduler:
         collaboration_id: str,
         schedules: Dict[str, List[datetime]]
     ):
-        """Store synchronized schedules in database"""
+        """
+Store synchronized schedules in database"""
         logger.info(f"Storing synchronized schedules for collaboration {collaboration_id}")
         # Implementation would store in database
     
@@ -762,7 +777,8 @@ class CollaborationScheduler:
         self,
         collaboration_id: str
     ) -> Dict[str, Any]:
-        """Monitor how accurately posts are synchronized"""
+        """
+Monitor how accurately posts are synchronized"""
         return {
             'average_sync_deviation_minutes': 2.5,
             'sync_success_rate': 0.95,
@@ -777,7 +793,8 @@ class CollaborationScheduler:
         self,
         collaboration_id: str
     ) -> CollaborationMetrics:
-        """Collect performance metrics for collaboration"""
+        """
+Collect performance metrics for collaboration"""
         return CollaborationMetrics(
             total_reach=50000,
             total_engagement=2500,
@@ -792,7 +809,8 @@ class CollaborationScheduler:
         self,
         monitoring_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify issues in collaboration execution"""
+        """
+Identify issues in collaboration execution"""
         issues = []
         
         # Check synchronization accuracy
@@ -813,7 +831,8 @@ class CollaborationScheduler:
         collaboration_id: str,
         issues: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations to address collaboration issues"""
+        """
+Generate recommendations to address collaboration issues"""
         recommendations = []
         
         for issue in issues:
@@ -833,7 +852,8 @@ class CollaborationScheduler:
 
 # Factory function
 def create_collaboration_scheduler() -> CollaborationScheduler:
-    """Create and initialize collaboration scheduler"""
+    """
+Create and initialize collaboration scheduler"""
     return CollaborationScheduler()
 
 # Export main classes

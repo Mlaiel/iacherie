@@ -7,6 +7,7 @@ for comprehensive system and application monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import time
 import psutil
 import asyncio
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point"""
+    """
+Individual metric data point"""
     name: str
     value: float
     timestamp: datetime
@@ -95,7 +97,8 @@ class MetricsCollector:
         self._buffer_lock = threading.Lock()
         
     def start_collection(self, prometheus_port: int = 8000):
-        """Start metrics collection with Prometheus server"""
+        """
+Start metrics collection with Prometheus server"""
         if self._collecting:
             logger.warning("Metrics collection already running")
             return
@@ -278,7 +281,8 @@ class MetricsCollector:
         self._add_metric_point(metric_point)
         
     def _add_metric_point(self, metric: MetricPoint):
-        """Add a metric point to the buffer"""
+        """
+Add a metric point to the buffer"""
         with self._buffer_lock:
             self._metrics_buffer.append(metric)
             
@@ -287,7 +291,8 @@ class MetricsCollector:
                 self._metrics_buffer = self._metrics_buffer[-5000:]
                 
     def _process_metrics_buffer(self):
-        """Process metrics buffer"""
+        """
+Process metrics buffer"""
         if not self._metrics_buffer:
             return
             

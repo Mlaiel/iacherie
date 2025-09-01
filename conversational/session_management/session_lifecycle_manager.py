@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use prohibited. Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ logger = get_logger(__name__)
 
 
 class SessionTransition(Enum):
-    """Session state transition types"""
+    """
+Session state transition types"""
+
     CREATED = "created"
     ACTIVATED = "activated"
     SUSPENDED = "suspended"
@@ -62,7 +65,8 @@ class SessionConfig:
 
 
 class SessionMetadata(BaseModel):
-    """Session metadata structure"""
+    """
+Session metadata structure"""
     user_id: str
     session_type: SessionType
     platform: str
@@ -95,7 +99,8 @@ class SessionCreationHandler:
         metadata: SessionMetadata,
         config: Optional[SessionConfig] = None
     ) -> str:
-        """Create new conversation session with full lifecycle setup"""
+        """
+Create new conversation session with full lifecycle setup"""
         
         config = config or SessionConfig()
         session_id = str(uuid4())
@@ -442,7 +447,8 @@ class SessionTerminationHandler:
             await session.commit()
     
     async def _cleanup_session_data(self, session_id: str):
-        """Clean up session cache and temporary data"""
+        """
+Clean up session cache and temporary data"""
         
         try:
             # Remove session cache entries
@@ -515,7 +521,8 @@ class SessionStateTransitionManager:
         target_state: SessionState,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Execute session state transition with validation"""
+        """
+Execute session state transition with validation"""
         
         try:
             # Get current session state
@@ -591,7 +598,8 @@ class SessionStateTransitionManager:
         target_state: SessionState,
         metadata: Optional[Dict[str, Any]]
     ):
-        """Execute the actual state transition"""
+        """
+Execute the actual state transition"""
         
         transition_data = {
             "state": target_state,
@@ -637,12 +645,14 @@ class SessionLifecycleManager:
         metadata: SessionMetadata,
         config: Optional[SessionConfig] = None
     ) -> str:
-        """Create new session with full lifecycle management"""
+        """
+Create new session with full lifecycle management"""
         
         return await self.creation_handler.create_session(metadata, config)
     
     async def activate_session(self, session_id: str) -> bool:
-        """Activate created session"""
+        """
+Activate created session"""
         
         return await self.transition_manager.transition_session(
             session_id,
@@ -683,7 +693,8 @@ class SessionLifecycleManager:
         )
     
     async def get_session_status(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive session status"""
+        """
+Get comprehensive session status"""
         
         try:
             current_state = await self.transition_manager._get_current_state(session_id)

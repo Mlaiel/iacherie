@@ -7,6 +7,7 @@ and microservices with intelligent rollout strategies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ from ..security.security_scanner import SecurityScanner
 
 
 class ServiceType(Enum):
-    """Service types in the IA Influencer Agent platform"""
+    """
+Service types in the IA Influencer Agent platform"""
+
     AI_AGENT = "ai_agent"
     CONTENT_PROTECTION = "content_protection"
     FINGERPRINTING = "fingerprinting"
@@ -43,6 +46,7 @@ class ServiceType(Enum):
 
 class DeploymentStatus(Enum):
     """Deployment status types"""
+
     PENDING = "pending"
     BUILDING = "building"
     DEPLOYING = "deploying"
@@ -133,7 +137,8 @@ class ServiceDeployer(BaseComponent):
         }
 
     def _load_service_templates(self) -> Dict[str, ServiceSpec]:
-        """Load service deployment templates"""
+        """
+Load service deployment templates"""
         templates = {}
         
         # AI Agent Service Template
@@ -917,7 +922,8 @@ class ServiceDeployer(BaseComponent):
         services: List[str],
         context: DeploymentContext
     ) -> Dict[str, Any]:
-        """Execute blue-green deployment strategy"""
+        """
+Execute blue-green deployment strategy"""
         
         results = {}
         green_namespace = f"{context.namespace}-green"
@@ -1083,7 +1089,8 @@ class ServiceDeployer(BaseComponent):
         context: DeploymentContext,
         namespace: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Validate deployment health across all services"""
+        """
+Validate deployment health across all services"""
         
         target_namespace = namespace or context.namespace
         health_results = {
@@ -1134,7 +1141,8 @@ class ServiceDeployer(BaseComponent):
         return health_results
 
     async def _execute_pre_deployment_hooks(self, context: DeploymentContext) -> None:
-        """Execute pre-deployment hooks"""
+        """
+Execute pre-deployment hooks"""
         
         for hook in context.pre_deployment_hooks:
             try:
@@ -1179,7 +1187,8 @@ class ServiceDeployer(BaseComponent):
         }
 
     async def _analyze_canary_performance(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze canary deployment performance"""
+        """
+Analyze canary deployment performance"""
         
         analysis = {
             'successful': True,
@@ -1253,7 +1262,8 @@ class ServiceDeployer(BaseComponent):
         canary_percentage: int,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deploy canary versions of services"""
+        """
+Deploy canary versions of services"""
         
         context['canary_percentage'] = canary_percentage
         context['strategy'] = 'canary'
@@ -1266,7 +1276,8 @@ class ServiceDeployer(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Promote canary deployment to full deployment"""
+        """
+Promote canary deployment to full deployment"""
         
         results = {}
         
@@ -1309,7 +1320,8 @@ class ServiceDeployer(BaseComponent):
         return self.active_deployments.get(deployment_id)
 
     async def list_active_deployments(self) -> List[Dict[str, Any]]:
-        """List all active deployments"""
+        """
+List all active deployments"""
         return [
             {
                 'deployment_id': deployment_id,
@@ -1322,7 +1334,8 @@ class ServiceDeployer(BaseComponent):
         ]
 
     async def cleanup_completed_deployments(self, max_age_hours: int = 24) -> int:
-        """Cleanup old completed deployment states"""
+        """
+Cleanup old completed deployment states"""
         cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         cleaned_count = 0
         

@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -34,7 +35,9 @@ import torch
 logger = logging.getLogger(__name__)
 
 class ConversationState(Enum):
-    """Conversation flow states"""
+    """
+Conversation flow states"""
+
     IDLE = "idle"
     GREETING = "greeting"
     PROBLEM_GATHERING = "problem_gathering"
@@ -47,6 +50,7 @@ class ConversationState(Enum):
 
 class FlowDirection(Enum):
     """Flow direction types"""
+
     FORWARD = "forward"
     BACKWARD = "backward"
     BRANCH = "branch"
@@ -55,6 +59,7 @@ class FlowDirection(Enum):
 
 class ConversationIntent(Enum):
     """Conversation intent categories"""
+
     TECHNICAL_SUPPORT = "technical_support"
     ACCOUNT_HELP = "account_help"
     BILLING_INQUIRY = "billing_inquiry"
@@ -99,7 +104,8 @@ class ConversationContext:
 
 @dataclass
 class FlowTransition:
-    """Flow transition definition"""
+    """
+Flow transition definition"""
     from_state: ConversationState
     to_state: ConversationState
     trigger: str
@@ -109,7 +115,8 @@ class FlowTransition:
 
 @dataclass
 class FlowNode:
-    """Conversation flow node"""
+    """
+Conversation flow node"""
     state: ConversationState
     name: str
     description: str
@@ -128,7 +135,8 @@ class FlowNode:
     fallback_state: Optional[ConversationState] = None
 
 class ConversationFlowManager:
-    """Ultra-advanced conversation flow management system"""
+    """
+Ultra-advanced conversation flow management system"""
     
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
@@ -289,7 +297,8 @@ class ConversationFlowManager:
         session_id: str,
         initial_message: Optional[str] = None
     ) -> ConversationContext:
-        """Create new conversation context"""
+        """
+Create new conversation context"""
         conversation_id = str(uuid.uuid4())
         
         context = ConversationContext(

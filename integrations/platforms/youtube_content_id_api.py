@@ -7,6 +7,7 @@ Handles content uploads, claims, analytics, and rights management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import aiohttp
 import json
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideo:
-    """YouTube video information"""
+    """
+YouTube video information"""
     video_id: str
     title: str
     description: str
@@ -94,7 +96,8 @@ class YouTubeContentIDAPI:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
@@ -109,7 +112,8 @@ class YouTubeContentIDAPI:
         files: Optional[Dict[str, Any]] = None,
         base_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
+        """
+Make authenticated API request with rate limiting"""
         
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("youtube", endpoint)

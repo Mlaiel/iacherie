@@ -24,7 +24,7 @@ Advanced Features:
 - Real-Time Error Analytics
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -43,6 +43,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 from typing import Any, Dict, Optional, List, Union, Callable
 from enum import Enum
 from datetime import datetime
@@ -54,7 +55,8 @@ import logging
 
 
 class PersonalizationErrorType(Enum):
-    """Advanced classification of personalization errors"""
+    """
+Advanced classification of personalization errors"""
     
     # Core Business Logic Errors
     PROFILE_ERROR = "profile_error"
@@ -104,6 +106,7 @@ class PersonalizationErrorType(Enum):
 
 class ErrorSeverity(Enum):
     """Error severity levels for monitoring and alerting"""
+
     CRITICAL = "critical"      # System down, immediate attention required
     HIGH = "high"             # Major functionality affected
     MEDIUM = "medium"         # Minor functionality affected
@@ -113,6 +116,7 @@ class ErrorSeverity(Enum):
 
 class RecoveryStrategy(Enum):
     """Automated recovery strategies for different error types"""
+
     RETRY = "retry"                    # Retry the operation
     FALLBACK = "fallback"             # Use fallback mechanism
     DEGRADE = "degrade"               # Graceful degradation
@@ -597,7 +601,8 @@ class AnalyticsError(PersonalizationError):
 
 
 class ProfileNotFoundError(PersonalizationError):
-    """Profile not found error"""
+    """
+Profile not found error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -608,7 +613,8 @@ class ProfileNotFoundError(PersonalizationError):
 
 
 class InsufficientDataError(PersonalizationError):
-    """Insufficient data error"""
+    """
+Insufficient data error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -619,7 +625,8 @@ class InsufficientDataError(PersonalizationError):
 
 
 class RecommendationError(PersonalizationError):
-    """Recommendation error"""
+    """
+Recommendation error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -630,7 +637,8 @@ class RecommendationError(PersonalizationError):
 
 
 class ContentFilteringError(PersonalizationError):
-    """Content filtering error"""
+    """
+Content filtering error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -641,7 +649,8 @@ class ContentFilteringError(PersonalizationError):
 
 
 class ModelTrainingError(PersonalizationError):
-    """Model training error"""
+    """
+Model training error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -652,7 +661,8 @@ class ModelTrainingError(PersonalizationError):
 
 
 class ModelNotLoadedError(PersonalizationError):
-    """Model not loaded error"""
+    """
+Model not loaded error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(
@@ -663,7 +673,8 @@ class ModelNotLoadedError(PersonalizationError):
 
 
 class ValidationError(PersonalizationError):
-    """Validation error"""
+    """
+Validation error"""
     
     def __init__(self, message: str, **kwargs):
         super().__init__(

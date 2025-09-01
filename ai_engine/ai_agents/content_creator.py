@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentCreationRequest:
-    """Request for content creation"""
+    """
+Request for content creation"""
     content_type: ContentType
     format: ContentFormat
     quality: ContentQuality
@@ -111,7 +113,8 @@ class ContentCreatorAgent(BaseAIAgent):
         self.style_cache: Dict[str, Any] = {}
     
     async def _custom_initialize(self) -> None:
-        """Initialize content creation engines"""
+        """
+Initialize content creation engines"""
         try:
             # Initialize content generation engines
             self.content_generator = ContentGenerator()
@@ -495,7 +498,8 @@ class ContentCreatorAgent(BaseAIAgent):
             return 0.5  # Default neutral score
     
     async def _assess_text_quality(self, file_path: str, request: ContentCreationRequest) -> float:
-        """Assess text content quality"""
+        """
+Assess text content quality"""
         with open(file_path, 'r', encoding='utf-8') as f:
             text = f.read()
         
@@ -521,7 +525,8 @@ class ContentCreatorAgent(BaseAIAgent):
         return sum(scores) / len(scores)
     
     async def _generate_seo_metadata(self, result: ContentCreationResult, request: ContentCreationRequest) -> Dict[str, Any]:
-        """Generate SEO metadata for content"""
+        """
+Generate SEO metadata for content"""
         return {
             "title": await self._generate_seo_title(result, request),
             "description": await self._generate_seo_description(result, request),

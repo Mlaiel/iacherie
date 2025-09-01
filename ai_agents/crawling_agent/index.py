@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlingServiceConfig:
-    """Comprehensive configuration for crawling services"""
+    """
+Comprehensive configuration for crawling services"""
     max_concurrent_agents: int = 10
     default_crawl_depth: int = 3
     default_timeout: int = 30
@@ -77,7 +79,8 @@ class CrawlingServiceInterface:
         }
     
     async def initialize(self) -> None:
-        """Initialize all crawling service components"""
+        """
+Initialize all crawling service components"""
         if self.initialized:
             return
         
@@ -567,7 +570,8 @@ class CrawlingServiceInterface:
         return health_status
 
     def _ensure_initialized(self) -> None:
-        """Ensure service is properly initialized"""
+        """
+Ensure service is properly initialized"""
         if not self.initialized:
             raise RuntimeError("Crawling Service Interface not initialized. Call initialize() first.")
 

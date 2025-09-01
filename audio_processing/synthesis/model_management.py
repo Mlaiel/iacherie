@@ -4,10 +4,11 @@ This module provides comprehensive model management capabilities for synthesis
 models including versioning, optimization, and distributed inference.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
+
 import torch
 import torch.nn as nn
 import numpy as np
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelStatus(Enum):
-    """Model status enumeration."""
+    """
+Model status enumeration."""
+
     UNLOADED = "unloaded"
     LOADING = "loading"
     LOADED = "loaded"
@@ -43,6 +46,7 @@ class ModelStatus(Enum):
 
 class OptimizationType(Enum):
     """Model optimization types."""
+
     QUANTIZATION = "quantization"
     PRUNING = "pruning"
     DISTILLATION = "distillation"
@@ -119,7 +123,8 @@ class SynthesisModelManager:
             self._preload_models()
             
     def _initialize_directories(self) -> None:
-        """Initialize model and cache directories."""
+        """
+Initialize model and cache directories."""
         self.config.model_dir.mkdir(parents=True, exist_ok=True)
         self.config.cache_dir.mkdir(parents=True, exist_ok=True)
         logger.info(f"Initialized model directories: {self.config.model_dir}, {self.config.cache_dir}")
@@ -282,7 +287,8 @@ class SynthesisModelManager:
         
     def optimize_model(self, model_name: str, 
                       optimization_types: List[OptimizationType] = None) -> None:
-        """Optimize model with specified techniques."""
+        """
+Optimize model with specified techniques."""
         if optimization_types is None:
             optimization_types = self.config.optimization_types
             
@@ -342,7 +348,8 @@ class SynthesisModelManager:
         return outputs
         
     async def async_inference(self, model_name: str, input_tensor: torch.Tensor) -> torch.Tensor:
-        """Asynchronous model inference."""
+        """
+Asynchronous model inference."""
         loop = asyncio.get_event_loop()
         
         def sync_inference():
@@ -358,7 +365,8 @@ class SynthesisModelManager:
         return await loop.run_in_executor(self.executor, sync_inference)
         
     def _add_to_cache(self, model_name: str, model: nn.Module, metadata: ModelMetadata) -> None:
-        """Add model to cache with LRU eviction."""
+        """
+Add model to cache with LRU eviction."""
         # Check cache size limit
         while len(self.model_cache) >= self.config.max_cache_size:
             # Remove least recently used model
@@ -428,13 +436,15 @@ class SynthesisModelManager:
         return DummyModel()
         
     def _calculate_model_checksum(self, state_dict: Dict) -> str:
-        """Calculate checksum of model state dict."""
+        """
+Calculate checksum of model state dict."""
         # Convert state dict to bytes and calculate SHA256
         serialized = pickle.dumps(state_dict)
         return hashlib.sha256(serialized).hexdigest()
         
     def _schedule_optimization(self, model_name: str) -> None:
-        """Schedule model optimization in background."""
+        """
+Schedule model optimization in background."""
         def optimize():
             try:
                 self.optimize_model(model_name)
@@ -487,7 +497,8 @@ class ModelVersionController:
         self._discover_versions()
         
     def _discover_versions(self) -> None:
-        """Discover existing model versions."""
+        """
+Discover existing model versions."""
         for model_path in self.model_dir.glob("*"):
             if model_path.is_dir():
                 version_file = model_path / "version.txt"
@@ -529,12 +540,14 @@ class ModelVersionController:
         return sorted(self.versions.get(model_name, []))
         
     def get_latest_version(self, model_name: str) -> Optional[str]:
-        """Get latest version of a model."""
+        """
+Get latest version of a model."""
         versions = self.get_versions(model_name)
         return versions[-1] if versions else None
         
     def load_version(self, model_name: str, version: str) -> Dict[str, Any]:
-        """Load specific version of model."""
+        """
+Load specific version of model."""
         version_dir = self.model_dir / model_name / f"v{version}"
         version_info_path = version_dir / "version.json"
         
@@ -578,13 +591,15 @@ class ModelVersionController:
 
 
 class ModelOptimizer:
-    """Advanced model optimization techniques."""
+    """
+Advanced model optimization techniques."""
     
     def __init__(self, config: ModelConfig):
         self.config = config
         
     def optimize_for_inference(self, model: nn.Module, input_shape: Tuple[int, ...]) -> nn.Module:
-        """Optimize model specifically for inference."""
+        """
+Optimize model specifically for inference."""
         optimized_model = model
         
         # Set to evaluation mode
@@ -604,7 +619,8 @@ class ModelOptimizer:
         return optimized_model
         
     def _jit_optimize(self, model: nn.Module, input_shape: Tuple[int, ...]) -> torch.jit.ScriptModule:
-        """Apply JIT compilation optimization."""
+        """
+Apply JIT compilation optimization."""
         try:
             example_input = torch.randn(*input_shape)
             traced_model = torch.jit.trace(model, example_input)
@@ -680,7 +696,8 @@ class DistributedInference:
         self.model_shards: Dict[str, List[nn.Module]] = {}
         
     def _get_available_devices(self) -> List[torch.device]:
-        """Get list of available devices."""
+        """
+Get list of available devices."""
         devices = [torch.device('cpu')]
         
         if torch.cuda.is_available():
@@ -691,7 +708,8 @@ class DistributedInference:
         
     def shard_model(self, model: nn.Module, model_name: str, 
                    num_shards: int = None) -> None:
-        """Shard model across available devices."""
+        """
+Shard model across available devices."""
         if num_shards is None:
             num_shards = min(len(self.devices), 4)  # Reasonable default
             
@@ -762,7 +780,8 @@ class ModelCache:
         return None
         
     def put(self, key: str, model: nn.Module) -> None:
-        """Put model in cache."""
+        """
+Put model in cache."""
         if key in self.cache:
             # Update existing entry
             self.cache[key] = model
@@ -792,7 +811,8 @@ class ModelCache:
             torch.cuda.empty_cache()
             
     def get_statistics(self) -> Dict[str, Any]:
-        """Get cache statistics."""
+        """
+Get cache statistics."""
         return {
             'size': len(self.cache),
             'max_size': self.max_size,
@@ -802,14 +822,16 @@ class ModelCache:
         }
         
     def _calculate_hit_rate(self) -> float:
-        """Calculate cache hit rate."""
+        """
+Calculate cache hit rate."""
         total_accesses = sum(self.access_counts.values())
         cache_hits = len([k for k in self.access_counts.keys() if k in self.cache])
         
         return cache_hits / total_accesses if total_accesses > 0 else 0.0
         
     def _estimate_memory_usage(self) -> int:
-        """Estimate memory usage of cached models."""
+        """
+Estimate memory usage of cached models."""
         total_size = 0
         
         for model in self.cache.values():
@@ -820,7 +842,8 @@ class ModelCache:
 
 
 class PreloadManager:
-    """Manager for preloading models based on usage patterns."""
+    """
+Manager for preloading models based on usage patterns."""
     
     def __init__(self, model_manager: SynthesisModelManager):
         self.model_manager = model_manager
@@ -828,7 +851,8 @@ class PreloadManager:
         self.preload_threshold = 0.7  # Confidence threshold for preloading
         
     def record_usage(self, model_name: str) -> None:
-        """Record model usage for pattern learning."""
+        """
+Record model usage for pattern learning."""
         current_time = time.time()
         self.usage_history[model_name].append(current_time)
         
@@ -839,7 +863,8 @@ class PreloadManager:
         ]
         
     def predict_next_models(self, top_k: int = 3) -> List[str]:
-        """Predict next models likely to be used."""
+        """
+Predict next models likely to be used."""
         current_time = time.time()
         model_scores = {}
         
@@ -863,7 +888,8 @@ class PreloadManager:
         return [name for name, score in sorted_models[:top_k] if score > self.preload_threshold]
         
     def auto_preload(self) -> None:
-        """Automatically preload predicted models."""
+        """
+Automatically preload predicted models."""
         predicted_models = self.predict_next_models()
         
         for model_name in predicted_models:
@@ -882,7 +908,8 @@ class ModelPerformanceMonitor:
         self.metrics: Dict[str, Dict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
         
     def record_inference(self, model_name: str, inference_time: float, batch_size: int) -> None:
-        """Record inference performance."""
+        """
+Record inference performance."""
         self.metrics[model_name]['inference_times'].append(inference_time)
         self.metrics[model_name]['batch_sizes'].append(batch_size)
         
@@ -891,7 +918,8 @@ class ModelPerformanceMonitor:
         self.metrics[model_name]['throughputs'].append(throughput)
         
     def get_model_metrics(self, model_name: str) -> Dict[str, Any]:
-        """Get performance metrics for model."""
+        """
+Get performance metrics for model."""
         if model_name not in self.metrics:
             return {}
             
@@ -904,12 +932,14 @@ class ModelPerformanceMonitor:
         }
         
     def get_all_metrics(self) -> Dict[str, Dict[str, Any]]:
-        """Get all performance metrics."""
+        """
+Get all performance metrics."""
         return {model_name: self.get_model_metrics(model_name) for model_name in self.metrics.keys()}
 
 
 class ModelResourceMonitor:
-    """Monitor system resources used by models."""
+    """
+Monitor system resources used by models."""
     
     def __init__(self):
         self.monitoring = False
@@ -917,7 +947,8 @@ class ModelResourceMonitor:
         self.resource_history = defaultdict(list)
         
     def start_monitoring(self) -> None:
-        """Start resource monitoring."""
+        """
+Start resource monitoring."""
         if self.monitoring:
             return
             
@@ -926,13 +957,15 @@ class ModelResourceMonitor:
         self.monitor_thread.start()
         
     def stop_monitoring(self) -> None:
-        """Stop resource monitoring."""
+        """
+Stop resource monitoring."""
         self.monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=1.0)
             
     def _monitor_loop(self) -> None:
-        """Resource monitoring loop."""
+        """
+Resource monitoring loop."""
         while self.monitoring:
             try:
                 # CPU usage
@@ -971,7 +1004,8 @@ class ModelResourceMonitor:
 
 
 class ModelMonitor:
-    """High-level model monitoring orchestrator."""
+    """
+High-level model monitoring orchestrator."""
     
     def __init__(self, model_manager: SynthesisModelManager):
         self.model_manager = model_manager
@@ -983,7 +1017,8 @@ class ModelMonitor:
         self.resource_monitor.start_monitoring()
         
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
+        """
+Get comprehensive system status."""
         return {
             'models': {
                 'total_registered': len(self.model_manager.model_metadata),
@@ -996,6 +1031,7 @@ class ModelMonitor:
         }
         
     def shutdown(self) -> None:
-        """Shutdown monitoring systems."""
+        """
+Shutdown monitoring systems."""
         self.resource_monitor.stop_monitoring()
         logger.info("Model monitoring shutdown complete")

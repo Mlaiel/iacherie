@@ -4,8 +4,9 @@
 Central index file providing the main distribution system interface and factory functions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -23,7 +24,9 @@ from .monitor import DistributionMonitor
 
 
 class DistributionStatus(Enum):
-    """Distribution system status enumeration."""
+    """
+Distribution system status enumeration."""
+
     INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
@@ -54,7 +57,8 @@ class DistributionSystem:
     """
     
     def __init__(self, config: Optional[DistributionSystemConfig] = None):
-        """Initialize distribution system with configuration."""
+        """
+Initialize distribution system with configuration."""
         self.config = config or DistributionSystemConfig()
         self.system_id = uuid4()
         self.status = DistributionStatus.INACTIVE

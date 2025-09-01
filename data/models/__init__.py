@@ -6,7 +6,7 @@ Complete enterprise-level data models for content management, user analytics,
 fingerprinting, revenue tracking, content protection, and licensing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -83,7 +83,7 @@ if UTILITIES_AVAILABLE:
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
 # Model metadata for introspection
 MODEL_REGISTRY = {
@@ -117,9 +117,11 @@ def get_model_by_table_name(table_name: str):
     return MODEL_REGISTRY.get(table_name)
 
 def get_all_models():
-    """Get all registered models"""
+    """
+Get all registered models"""
     return list(MODEL_REGISTRY.values())
 
 def get_model_relationships():
-    """Get model relationship information"""
+    """
+Get model relationship information"""
     return RELATIONSHIP_MAPPINGS

@@ -2,6 +2,7 @@
 """Backup Management System
 Comprehensive backup and restore operations for the IA Influencer Agent platform
 """
+
 import os
 import sys
 import time
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Backup type enumeration"""
+    """
+Backup type enumeration"""
+
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -37,6 +40,7 @@ class BackupType(Enum):
 
 class BackupStatus(Enum):
     """Backup status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -46,6 +50,7 @@ class BackupStatus(Enum):
 
 class StorageProvider(Enum):
     """Storage provider enumeration"""
+
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
@@ -69,7 +74,8 @@ class BackupConfig:
 
 @dataclass
 class BackupJob:
-    """Backup job data class"""
+    """
+Backup job data class"""
     id: str
     config: BackupConfig
     status: BackupStatus
@@ -88,7 +94,8 @@ class BackupManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize backup manager"""
+        """
+Initialize backup manager"""
         self.config_path = config_path or "/etc/backup/config.json"
         self.active_jobs: Dict[str, BackupJob] = {}
         self.completed_jobs: List[BackupJob] = []

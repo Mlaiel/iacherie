@@ -7,6 +7,7 @@ and specialized creator content workflows supporting the complete monetization p
 
 Creator Workflow: Upload → AI Protection → SEO Optimization → Platform Distribution → Monetization Tracking
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Set
@@ -38,7 +39,9 @@ from ..utils.state_manager import StateManager
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status."""
+    """
+Workflow execution status."""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
@@ -51,6 +54,7 @@ class WorkflowStatus(Enum):
 
 class TaskStatus(Enum):
     """Individual task status."""
+
     WAITING = "waiting"
     READY = "ready"
     RUNNING = "running"
@@ -62,6 +66,7 @@ class TaskStatus(Enum):
 
 class DependencyType(Enum):
     """Dependency relationship types."""
+
     SEQUENTIAL = "sequential"  # Must complete before next starts
     PARALLEL = "parallel"     # Can run concurrently
     CONDITIONAL = "conditional"  # Depends on condition/result
@@ -70,6 +75,7 @@ class DependencyType(Enum):
 
 class CreatorWorkflowType(Enum):
     """Creator-specific workflow types."""
+
     CONTENT_UPLOAD = "content_upload"
     PROTECTION_PIPELINE = "protection_pipeline"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -486,7 +492,8 @@ class WorkflowOrchestrator:
         task_states: Dict[str, TaskStatus],
         remaining_tasks: Set[str]
     ) -> List[Task]:
-        """Find tasks that are ready to execute."""
+        """
+Find tasks that are ready to execute."""
         
         ready_tasks = []
         
@@ -511,7 +518,8 @@ class WorkflowOrchestrator:
     
     @retry_on_failure(max_retries=3)
     async def _execute_task(self, task: Task, execution_context: Dict[str, Any]) -> Any:
-        """Execute individual task with monitoring and error handling."""
+        """
+Execute individual task with monitoring and error handling."""
         
         task.started_at = datetime.utcnow()
         execution_context['task_states'][task.task_id] = TaskStatus.RUNNING
@@ -590,7 +598,8 @@ class WorkflowOrchestrator:
         execution_context: Dict[str, Any],
         running_tasks: Set[str]
     ) -> List[str]:
-        """Wait for task completions and return completed task IDs."""
+        """
+Wait for task completions and return completed task IDs."""
         
         completed_tasks = []
         futures = []
@@ -697,7 +706,8 @@ class TaskScheduler:
         return True
     
     def _get_next_task(self) -> Optional[tuple]:
-        """Get next task from priority queues."""
+        """
+Get next task from priority queues."""
         
         # Check queues from highest to lowest priority
         for priority in sorted(self.priority_queues.keys(), reverse=True):
@@ -712,7 +722,8 @@ class TaskScheduler:
         return None
     
     def _schedule_task_execution(self, task: Task):
-        """Schedule task for execution."""
+        """
+Schedule task for execution."""
         
         worker_id = f"worker_{task.task_id}"
         
@@ -765,7 +776,8 @@ class TaskScheduler:
             self._update_resource_usage(task, 'end')
     
     def _handle_task_completion(self, worker_id: str, future):
-        """Handle task completion and cleanup."""
+        """
+Handle task completion and cleanup."""
         
         if worker_id in self.active_workers:
             worker_info = self.active_workers[worker_id]
@@ -802,7 +814,8 @@ class TaskScheduler:
                     self.resource_usage[resource] = max(0, self.resource_usage[resource] - amount)
     
     async def submit_task(self, task: Task) -> str:
-        """Submit task for scheduling."""
+        """
+Submit task for scheduling."""
         
         priority = task.priority
         timestamp = datetime.utcnow().timestamp()
@@ -956,7 +969,8 @@ class ExecutionPlanner:
         return execution_plan
     
     async def _analyze_workflow_complexity(self, workflow: Workflow) -> Dict[str, Any]:
-        """Analyze workflow complexity metrics."""
+        """
+Analyze workflow complexity metrics."""
         
         task_count = len(workflow.tasks)
         dependency_count = sum(len(task.dependencies) for task in workflow.tasks)
@@ -978,7 +992,8 @@ class ExecutionPlanner:
         }
     
     def _classify_complexity(self, score: float) -> str:
-        """Classify workflow complexity level."""
+        """
+Classify workflow complexity level."""
         
         if score < 10:
             return 'simple'
@@ -990,7 +1005,8 @@ class ExecutionPlanner:
             return 'very_complex'
     
     async def _estimate_resource_requirements(self, workflow: Workflow) -> Dict[str, Any]:
-        """Estimate resource requirements for workflow execution."""
+        """
+Estimate resource requirements for workflow execution."""
         
         total_cpu = sum(
             task.resource_requirements.get('cpu', 1.0) 
@@ -1025,7 +1041,8 @@ class ExecutionPlanner:
         }
     
     def _estimate_execution_cost(self, cpu_hours: float, memory_mb: float) -> float:
-        """Estimate execution cost based on resource usage."""
+        """
+Estimate execution cost based on resource usage."""
         
         # Simple cost estimation (adjust based on actual cloud pricing)
         cpu_cost_per_hour = 0.05

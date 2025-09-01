@@ -5,7 +5,7 @@ Industrial-grade revenue tracking and monetization system for content protection
 Monitors revenue loss from unauthorized usage and calculates compensation claims.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
@@ -13,6 +13,7 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -40,7 +41,9 @@ from redis import Redis
 
 
 class RevenueType(Enum):
-    """Revenue type enumeration"""
+    """
+Revenue type enumeration"""
+
     STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -53,6 +56,7 @@ class RevenueType(Enum):
 
 class PlatformRevenue(Enum):
     """Supported platforms for revenue tracking"""
+
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -65,6 +69,7 @@ class PlatformRevenue(Enum):
 
 class CompensationMethod(Enum):
     """Compensation calculation methods"""
+
     LOST_REVENUE = "lost_revenue"
     MARKET_RATE = "market_rate"
     STATUTORY_DAMAGES = "statutory_damages"
@@ -91,7 +96,8 @@ class RevenueRecord:
 
 @dataclass
 class ViolationImpact:
-    """Revenue impact from content violation"""
+    """
+Revenue impact from content violation"""
     impact_id: str
     violation_id: str
     content_id: str
@@ -105,7 +111,8 @@ class ViolationImpact:
 
 @dataclass
 class CompensationClaim:
-    """Compensation claim for unauthorized usage"""
+    """
+Compensation claim for unauthorized usage"""
     claim_id: str
     violation_id: str
     claimant_id: str
@@ -122,7 +129,8 @@ class CompensationClaim:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics summary"""
+    """
+Revenue analytics summary"""
     user_id: str
     period_start: datetime
     period_end: datetime
@@ -731,7 +739,8 @@ class RevenueTracker:
     
     async def _calculate_impact_confidence(self, historical_revenue: List[Decimal],
                                          metrics: Dict[str, Any], estimated_loss: Decimal) -> float:
-        """Calculate confidence score for impact estimate"""
+        """
+Calculate confidence score for impact estimate"""
         try:
             if not historical_revenue:
                 return 0.5
@@ -774,12 +783,14 @@ class RevenueTracker:
         return PlatformRevenue.YOUTUBE
     
     async def _get_content_type(self, content_id: str) -> RevenueType:
-        """Get content type"""
+        """
+Get content type"""
         # Implementation would query database
         return RevenueType.ADVERTISING
     
     async def _gather_claim_evidence(self, violation_impact: ViolationImpact) -> List[str]:
-        """Gather supporting evidence for claim"""
+        """
+Gather supporting evidence for claim"""
         evidence = [
             "Original content ownership certificate",
             "Revenue tracking records",
@@ -810,13 +821,15 @@ class RevenueTracker:
     
     async def _get_period_revenue(self, user_id: str, start_date: datetime, 
                                 end_date: datetime) -> Decimal:
-        """Get total revenue for period"""
+        """
+Get total revenue for period"""
         # Implementation would query database
         return Decimal('450.75')
     
     async def _calculate_projected_revenue(self, user_id: str, current_revenue: Decimal, 
                                          growth_rate: float) -> Decimal:
-        """Calculate projected revenue"""
+        """
+Calculate projected revenue"""
         try:
             # Simple projection based on growth rate
             projection_multiplier = 1 + growth_rate
@@ -827,13 +840,15 @@ class RevenueTracker:
     
     async def _get_violation_losses(self, user_id: str, start_date: datetime, 
                                   end_date: datetime) -> Decimal:
-        """Get total losses from violations in period"""
+        """
+Get total losses from violations in period"""
         # Implementation would query violation impacts
         return Decimal('125.50')
     
     async def _calculate_protection_roi(self, user_id: str, total_revenue: Decimal, 
                                       violation_losses: Decimal) -> float:
-        """Calculate protection system ROI"""
+        """
+Calculate protection system ROI"""
         try:
             if total_revenue > 0:
                 protection_value = violation_losses

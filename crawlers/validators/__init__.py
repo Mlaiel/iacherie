@@ -8,7 +8,7 @@ and performance monitoring for the crawler subsystem supporting creators, musici
 photographers, influencers, and performers.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 LEGAL WARNING: This intellectual property is protected under German and international
@@ -38,6 +38,7 @@ Enterprise Features:
 - Platform compliance validation for Spotify, YouTube, Instagram, TikTok
 - Revenue optimization recommendations and monetization eligibility assessment
 """
+
 from .content_validator import (
     ContentValidator,
     ContentType,
@@ -242,7 +243,7 @@ from .integration_test_validator import (
 # Version information
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
 # Export all main classes and functions
 __all__ = [

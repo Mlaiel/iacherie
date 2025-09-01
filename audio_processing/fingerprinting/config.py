@@ -9,6 +9,7 @@ WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
 """
+
 import os
 import json
 import logging
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Environment types."""
+    """
+Environment types."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -31,6 +34,7 @@ class Environment(Enum):
 
 class ProtectionLevel(Enum):
     """Content protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -58,7 +62,8 @@ class AudioProcessingConfig:
 
 @dataclass
 class FingerprintingConfig:
-    """Configuration for fingerprinting algorithms."""
+    """
+Configuration for fingerprinting algorithms."""
     
     hash_size: int = 64
     chromaprint_algorithm: int = 1  # ALGORITHM_DEFAULT
@@ -76,7 +81,8 @@ class FingerprintingConfig:
 
 @dataclass
 class MatchingConfig:
-    """Configuration for fingerprint matching."""
+    """
+Configuration for fingerprint matching."""
     
     max_candidates_per_query: int = 10000
     max_results_per_query: int = 100
@@ -92,7 +98,8 @@ class MatchingConfig:
 
 @dataclass
 class DatabaseConfig:
-    """Configuration for database connections."""
+    """
+Configuration for database connections."""
     
     url: str = "postgresql://user:pass@localhost/fingerprints"
     pool_size: int = 20
@@ -125,7 +132,8 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance optimization."""
+    """
+Configuration for performance optimization."""
     
     enable_caching: bool = True
     cache_size_limit: int = 1000
@@ -140,7 +148,8 @@ class PerformanceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for monitoring and metrics."""
+    """
+Configuration for monitoring and metrics."""
     
     enable_metrics_collection: bool = True
     metrics_interval_seconds: int = 60
@@ -160,7 +169,8 @@ class FingerprintingConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None, environment: Optional[str] = None):
-        """Initialize the configuration manager."""
+        """
+Initialize the configuration manager."""
         self.config_path = config_path
         self.environment = Environment(environment or os.getenv('ENVIRONMENT', 'development'))
         
@@ -199,7 +209,8 @@ class FingerprintingConfigManager:
         self._validate_configuration()
     
     def _load_from_environment(self):
-        """Load configuration from environment variables."""
+        """
+Load configuration from environment variables."""
         # Audio processing settings
         if os.getenv('AUDIO_SAMPLE_RATE'):
             self.audio_processing.sample_rate = int(os.getenv('AUDIO_SAMPLE_RATE'))
@@ -388,7 +399,8 @@ class FingerprintingConfigManager:
         }
     
     def update_runtime_setting(self, section: str, key: str, value: Any):
-        """Update a runtime configuration setting."""
+        """
+Update a runtime configuration setting."""
         try:
             config_section = getattr(self, section)
             if hasattr(config_section, key):
@@ -432,7 +444,8 @@ class FingerprintingConfigManager:
         return base_config
     
     def export_config(self, output_path: str, format: str = 'yaml'):
-        """Export current configuration to file."""
+        """
+Export current configuration to file."""
         try:
             config_dict = self.get_config_dict()
             output_file = Path(output_path)
@@ -453,7 +466,8 @@ class FingerprintingConfigManager:
         return self._runtime_overrides.copy()
     
     def reset_to_defaults(self):
-        """Reset configuration to default values."""
+        """
+Reset configuration to default values."""
         self.audio_processing = AudioProcessingConfig()
         self.fingerprinting = FingerprintingConfig()
         self.matching = MatchingConfig()
@@ -481,35 +495,42 @@ def get_config() -> FingerprintingConfigManager:
 
 
 def get_audio_config() -> AudioProcessingConfig:
-    """Get audio processing configuration."""
+    """
+Get audio processing configuration."""
     return config_manager.audio_processing
 
 
 def get_fingerprinting_config() -> FingerprintingConfig:
-    """Get fingerprinting configuration."""
+    """
+Get fingerprinting configuration."""
     return config_manager.fingerprinting
 
 
 def get_matching_config() -> MatchingConfig:
-    """Get matching configuration."""
+    """
+Get matching configuration."""
     return config_manager.matching
 
 
 def get_database_config() -> DatabaseConfig:
-    """Get database configuration."""
+    """
+Get database configuration."""
     return config_manager.database
 
 
 def get_security_config() -> SecurityConfig:
-    """Get security configuration."""
+    """
+Get security configuration."""
     return config_manager.security
 
 
 def get_performance_config() -> PerformanceConfig:
-    """Get performance configuration."""
+    """
+Get performance configuration."""
     return config_manager.performance
 
 
 def get_monitoring_config() -> MonitoringConfig:
-    """Get monitoring configuration."""
+    """
+Get monitoring configuration."""
     return config_manager.monitoring

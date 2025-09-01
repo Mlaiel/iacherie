@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -37,7 +38,9 @@ Base = declarative_base()
 
 
 class CollaborationType(Enum):
-    """Collaboration type enumeration"""
+    """
+Collaboration type enumeration"""
+
     REMIX = "remix"
     COVER = "cover"
     FEATURE = "feature"
@@ -62,6 +65,7 @@ class CollaborationType(Enum):
 
 class RequestStatus(Enum):
     """Request status enumeration"""
+
     PENDING = "pending"
     SENT = "sent"
     RECEIVED = "received"
@@ -81,6 +85,7 @@ class RequestStatus(Enum):
 
 class Priority(Enum):
     """Request priority levels"""
+
     URGENT = "urgent"
     HIGH = "high"
     MEDIUM = "medium"
@@ -89,6 +94,7 @@ class Priority(Enum):
 
 class CollaborationScope(Enum):
     """Scope of collaboration"""
+
     SINGLE_TRACK = "single_track"
     EP = "ep"
     ALBUM = "album"
@@ -103,6 +109,7 @@ class CollaborationScope(Enum):
 
 class RevenueShareType(Enum):
     """Revenue sharing types"""
+
     EQUAL_SPLIT = "equal_split"
     PROPORTIONAL = "proportional"
     WEIGHTED = "weighted"
@@ -464,7 +471,8 @@ class CollaborationRequest(Base):
         return datetime.now(timezone.utc) >= self.expires_at
     
     def is_pending_response(self) -> bool:
-        """Check if request is waiting for response"""
+        """
+Check if request is waiting for response"""
         return (
             self.request_status in [RequestStatus.SENT, RequestStatus.RECEIVED] and
             not self.is_expired() and
@@ -472,7 +480,8 @@ class CollaborationRequest(Base):
         )
     
     def days_until_deadline(self) -> Optional[int]:
-        """Calculate days until deadline"""
+        """
+Calculate days until deadline"""
         if not self.deadline:
             return None
         
@@ -480,13 +489,15 @@ class CollaborationRequest(Base):
         return max(delta.days, 0)
     
     def is_overdue(self) -> bool:
-        """Check if request is overdue"""
+        """
+Check if request is overdue"""
         if not self.deadline:
             return False
         return datetime.now(timezone.utc) > self.deadline
     
     def calculate_compatibility_score(self, target_user_data: Dict[str, Any]) -> float:
-        """Calculate compatibility score with target user"""
+        """
+Calculate compatibility score with target user"""
         score = 0.0
         factors = 0
         
@@ -527,7 +538,8 @@ class CollaborationRequest(Base):
         return score / max(factors, 1) if factors > 0 else 0.0
     
     def get_next_milestone(self) -> Optional[Dict[str, Any]]:
-        """Get the next upcoming milestone"""
+        """
+Get the next upcoming milestone"""
         if not self.milestone_dates:
             return None
         
@@ -543,7 +555,8 @@ class CollaborationRequest(Base):
         return min(upcoming_milestones, key=lambda m: datetime.fromisoformat(m.get('date', '')))
     
     def can_accept(self, user_id: str) -> bool:
-        """Check if user can accept this request"""
+        """
+Check if user can accept this request"""
         return (
             str(self.target_user_id) == user_id and
             self.request_status in [RequestStatus.SENT, RequestStatus.RECEIVED] and
@@ -552,7 +565,8 @@ class CollaborationRequest(Base):
         )
     
     def can_modify(self, user_id: str) -> bool:
-        """Check if user can modify this request"""
+        """
+Check if user can modify this request"""
         return (
             str(self.requester_user_id) == user_id and
             self.request_status in [RequestStatus.DRAFT, RequestStatus.PENDING, RequestStatus.NEGOTIATING] and
@@ -561,7 +575,8 @@ class CollaborationRequest(Base):
     
     @classmethod
     def create_request(cls, request_data: Dict[str, Any], requester_user_id: str) -> 'CollaborationRequest':
-        """Create CollaborationRequest from request data"""
+        """
+Create CollaborationRequest from request data"""
         # Generate unique request number
         request_number = f"COLLAB-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:8].upper()}"
         

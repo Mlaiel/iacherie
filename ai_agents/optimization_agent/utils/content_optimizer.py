@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import time
@@ -62,7 +63,9 @@ from ...utils.metrics import MetricsCollector
 logger = get_logger(__name__)
 
 class ContentFormat(Enum):
-    """Supported content formats for optimization."""
+    """
+Supported content formats for optimization."""
+
     TEXT = "text"
     IMAGE = "image"  
     VIDEO = "video"
@@ -73,6 +76,7 @@ class ContentFormat(Enum):
 
 class OptimizationLevel(Enum):
     """Content optimization levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -80,6 +84,7 @@ class OptimizationLevel(Enum):
 
 class CompressionAlgorithm(Enum):
     """Available compression algorithms."""
+
     LOSSLESS = "lossless"
     LOSSY = "lossy"
     ADAPTIVE = "adaptive"
@@ -99,7 +104,8 @@ class ContentAnalysis:
 
 @dataclass
 class OptimizationSettings:
-    """Content optimization settings."""
+    """
+Content optimization settings."""
     level: OptimizationLevel
     algorithm: CompressionAlgorithm
     target_quality: float = 0.85
@@ -110,7 +116,8 @@ class OptimizationSettings:
 
 @dataclass
 class ContentOptimizationResult:
-    """Optimization operation result."""
+    """
+Optimization operation result."""
     original_size: int
     optimized_size: int
     compression_ratio: float
@@ -129,7 +136,8 @@ class ContentOptimizer:
     """
     
     def __init__(self):
-        """Initialize the content optimizer with advanced configurations."""
+        """
+Initialize the content optimizer with advanced configurations."""
         self.logger = logger
         self.metrics = MetricsCollector()
         self.db_path = "/tmp/content_optimizer.db"
@@ -385,7 +393,8 @@ class ContentOptimizer:
         format_type: ContentFormat,
         content_data: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """Perform format-specific content analysis."""
+        """
+Perform format-specific content analysis."""
         
         if format_type == ContentFormat.IMAGE:
             return await self._analyze_image(content_path)
@@ -401,7 +410,8 @@ class ContentOptimizer:
             return {'metrics': {}, 'compression_potential': 0.2}
     
     async def _analyze_image(self, image_path: str) -> Dict[str, Any]:
-        """Analyze image content for optimization opportunities."""
+        """
+Analyze image content for optimization opportunities."""
         try:
             # Load image
             img = Image.open(image_path)
@@ -899,7 +909,8 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Optimize image content."""
+        """
+Optimize image content."""
         try:
             # Load original image
             img = Image.open(image_path)
@@ -1532,7 +1543,8 @@ class ContentOptimizer:
         }
     
     def _get_memory_usage(self) -> Dict[str, int]:
-        """Get current memory usage statistics."""
+        """
+Get current memory usage statistics."""
         try:
             import psutil
             process = psutil.Process()
@@ -1621,7 +1633,8 @@ class ContentMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Content optimization outcome"""
+    """
+Content optimization outcome"""
     original_metrics: ContentMetrics
     optimized_metrics: ContentMetrics
     improvement_percentage: float
@@ -2115,7 +2128,8 @@ class ContentOptimizer:
         metrics: ContentMetrics,
         custom_settings: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Select optimal optimization strategy based on content analysis"""
+        """
+Select optimal optimization strategy based on content analysis"""
         
         base_strategy = self.quality_presets.get(optimization_level.value, self.quality_presets['standard'])
         
@@ -2151,7 +2165,8 @@ class ContentOptimizer:
         strategy: Dict[str, Any],
         target_format: Optional[CompressionFormat]
     ) -> str:
-        """Execute the selected optimization strategy"""
+        """
+Execute the selected optimization strategy"""
         
         techniques = strategy['techniques']
         
@@ -2207,7 +2222,8 @@ class ContentOptimizer:
         optimized_metrics: ContentMetrics,
         processing_time: float
     ):
-        """Update processing statistics"""
+        """
+Update processing statistics"""
         
         self.processing_stats['total_files_processed'] += 1
         self.processing_stats['total_bytes_saved'] += (

@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Content Preparation → Platform Adaptation → Distribution Scheduling → Delivery Execution → Performance Monitoring → Optimization
 """
+
 import asyncio
 import logging
 import time
@@ -22,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStage(Enum):
-    """Distribution pipeline stages"""
+    """
+Distribution pipeline stages"""
+
     CONTENT_PREPARATION = "content_preparation"
     PLATFORM_ADAPTATION = "platform_adaptation"
     METADATA_OPTIMIZATION = "metadata_optimization"
@@ -37,6 +40,7 @@ class DistributionStage(Enum):
 
 class PlatformCategory(Enum):
     """Platform categories"""
+
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
@@ -47,6 +51,7 @@ class PlatformCategory(Enum):
 
 class DistributionStatus(Enum):
     """Distribution status"""
+
     PENDING = "pending"
     PREPARING = "preparing"
     SCHEDULED = "scheduled"
@@ -317,7 +322,8 @@ class DistributionOptimizer:
         return min(base_score + category_bonus, 1.0)
     
     async def _calculate_optimal_times(self, target: DistributionTarget, performance_goals: Dict[str, Any]) -> List[str]:
-        """Calculate optimal posting times"""
+        """
+Calculate optimal posting times"""
         # Simulate AI time optimization
         optimal_times = ["18:00", "20:00", "12:00", "14:00"]
         return optimal_times[:2]
@@ -503,7 +509,8 @@ class PerformanceTracker:
         return self.active_tracking.get(tracking_id)
     
     def stop_tracking(self, tracking_id: str) -> bool:
-        """Stop performance tracking"""
+        """
+Stop performance tracking"""
         if tracking_id in self.active_tracking:
             self.active_tracking[tracking_id]["status"] = "stopped"
             self.active_tracking[tracking_id]["stopped_at"] = datetime.now()
@@ -577,7 +584,8 @@ class PlatformDistributor:
         return self.platform_connections[platform_name]
     
     async def _establish_platform_connection(self, platform_config: PlatformConfig) -> Dict[str, Any]:
-        """Establish connection to platform"""
+        """
+Establish connection to platform"""
         # Simulate platform connection
         await asyncio.sleep(0.1)
         
@@ -973,7 +981,8 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process performance monitoring stage"""
+        """
+Process performance monitoring stage"""
         self.logger.info("Processing performance monitoring")
         
         if not self.config["performance_tracking"]["real_time_tracking"]:
@@ -1076,11 +1085,13 @@ class DistributionPipeline:
         return self.active_distributions.get(distribution_id) or self.completed_distributions.get(distribution_id)
     
     def get_active_distributions(self) -> Dict[str, DistributionResult]:
-        """Get all active distributions"""
+        """
+Get all active distributions"""
         return self.active_distributions.copy()
     
     def get_distribution_metrics(self) -> Dict[str, Any]:
-        """Get distribution metrics"""
+        """
+Get distribution metrics"""
         completed_distributions = list(self.completed_distributions.values())
         
         return {

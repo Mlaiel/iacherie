@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Main entry point for deployment configuration module.
 ================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -63,7 +64,8 @@ class ConfigurationIndex:
     """
     
     def __init__(self):
-        """Initialize configuration index"""
+        """
+Initialize configuration index"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Core managers
@@ -441,17 +443,20 @@ async def initialize_configuration_system(environment: str = "production") -> bo
 
 # Health check function
 async def perform_system_health_check() -> Dict[str, Any]:
-    """Perform system-wide health check"""
+    """
+Perform system-wide health check"""
     return await configuration_index.perform_health_check()
 
 # Performance metrics function
 async def get_system_performance_metrics() -> Dict[str, Any]:
-    """Get system-wide performance metrics"""
+    """
+Get system-wide performance metrics"""
     return await configuration_index.get_performance_metrics()
 
 # Convenience functions for common operations
 async def get_complete_configuration() -> Dict[str, Any]:
-    """Get complete system configuration"""
+    """
+Get complete system configuration"""
     try:
         complete_config = {
             "timestamp": datetime.now(),

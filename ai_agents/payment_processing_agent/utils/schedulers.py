@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulerStatus(str, Enum):
-    """Scheduler operational status"""
+    """
+Scheduler operational status"""
+
     RUNNING = "running"
     STOPPED = "stopped"
     PAUSED = "paused"
@@ -80,7 +83,8 @@ class PayoutScheduler:
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None
     ):
-        """Initialize payout scheduler"""
+        """
+Initialize payout scheduler"""
         self.config = config or PaymentConfig()
         self.db_session = db_session
         self.scheduler = AsyncIOScheduler(timezone=timezone.utc)
@@ -389,7 +393,8 @@ class PayoutScheduler:
             await self._schedule_strategy_job(strategy)
 
     async def remove_strategy(self, strategy_name: str):
-        """Remove payout strategy"""
+        """
+Remove payout strategy"""
         if strategy_name in self.strategies:
             del self.strategies[strategy_name]
             
@@ -461,12 +466,14 @@ class PayoutScheduler:
             self.callbacks[event].append(callback)
 
     def remove_callback(self, event: str, callback: Callable):
-        """Remove event callback"""
+        """
+Remove event callback"""
         if event in self.callbacks and callback in self.callbacks[event]:
             self.callbacks[event].remove(callback)
 
     async def get_scheduler_status(self) -> Dict[str, Any]:
-        """Get comprehensive scheduler status"""
+        """
+Get comprehensive scheduler status"""
         running_jobs = len(self.scheduler.get_jobs())
         
         return {
@@ -485,7 +492,8 @@ class PayoutScheduler:
                 await self._schedule_strategy_job(strategy)
 
     async def _schedule_strategy_job(self, strategy: PayoutStrategy):
-        """Schedule job for specific payout strategy"""
+        """
+Schedule job for specific payout strategy"""
         job_id = f"strategy_{strategy.name}"
         
         # Remove existing job

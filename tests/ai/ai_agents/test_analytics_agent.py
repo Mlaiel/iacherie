@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for AnalyticsAgent
+"""
+Comprehensive Tests for AnalyticsAgent
 
 Industrial-grade testing for analytics capabilities including performance analysis,
 predictive insights, trend detection, audience segmentation, and real-time monitoring.
@@ -24,6 +26,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -64,7 +67,8 @@ class AnalyticsAgent(BaseAIAgent):
         self.metrics_history = []
         
     async def _custom_initialize(self) -> None:
-        """Custom initialization for analytics agent"""
+        """
+Custom initialization for analytics agent"""
         self.analytics_data = {"initialized": True}
         
     async def _execute_task_impl(self, task) -> Any:
@@ -101,7 +105,8 @@ class TestAnalyticsAgent:
     
     @pytest.fixture
     def analytics_config(self) -> AgentConfiguration:
-        """Analytics agent configuration"""
+        """
+Analytics agent configuration"""
         return AgentConfiguration(
             agent_id="analytics_test",
             agent_name="Test Analytics Agent",
@@ -137,7 +142,8 @@ class TestAnalyticsAgent:
     
     @pytest.mark.asyncio
     async def test_agent_initialization(self, analytics_config):
-        """Test analytics agent initialization"""
+        """
+Test analytics agent initialization"""
         agent = AnalyticsAgent(analytics_config)
         
         # Before initialization

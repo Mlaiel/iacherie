@@ -5,8 +5,9 @@ Real-time alert system for notifying creators of copyright infringements,
 content violations, and surveillance updates.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import smtplib
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
+    """
+Alert severity levels"""
+
     INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
@@ -37,6 +40,7 @@ class AlertSeverity(Enum):
 
 class AlertType(Enum):
     """Types of alerts"""
+
     INFRINGEMENT_DETECTED = "infringement_detected"
     TAKEDOWN_SUCCESS = "takedown_success"
     TAKEDOWN_FAILED = "takedown_failed"
@@ -53,6 +57,7 @@ class AlertType(Enum):
 
 class NotificationChannel(Enum):
     """Available notification channels"""
+
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -80,7 +85,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert structure"""
+    """
+Alert structure"""
     alert_id: str
     alert_type: AlertType
     severity: AlertSeverity
@@ -113,7 +119,8 @@ class Alert:
 
 @dataclass
 class NotificationConfig:
-    """Notification configuration for a creator"""
+    """
+Notification configuration for a creator"""
     creator_id: str
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -248,7 +255,8 @@ class EmailNotificationChannel(NotificationChannel):
         return html
     
     def _create_data_section(self, alert: Alert) -> str:
-        """Create HTML section for alert data"""
+        """
+Create HTML section for alert data"""
         if not alert.data:
             return ""
         
@@ -311,7 +319,8 @@ class SlackNotificationChannel(NotificationChannel):
         super().__init__(NotificationChannel.SLACK, config)
     
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
-        """Send Slack notification"""
+        """
+Send Slack notification"""
         if not recipient_config.slack_webhook:
             logger.warning(f"No Slack webhook configured for creator {recipient_config.creator_id}")
             return False
@@ -435,7 +444,8 @@ class AlertSystem:
         self.processing_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> None:
-        """Initialize alert system"""
+        """
+Initialize alert system"""
         try:
             # Initialize notification channels
             await self._initialize_channels()
@@ -626,7 +636,8 @@ class AlertSystem:
         return matching_rules
     
     async def _check_rule_conditions(self, rule: AlertRule, alert: Alert) -> bool:
-        """Check if alert meets rule conditions"""
+        """
+Check if alert meets rule conditions"""
         for condition_key, condition_value in rule.conditions.items():
             alert_value = alert.data.get(condition_key)
             

@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MerchandiseJob:
-    """Job configuration for merchandise operations"""
+    """
+Job configuration for merchandise operations"""
     job_id: str
     operation: str
     data: Dict[str, Any]
@@ -26,7 +28,8 @@ class MerchandiseJob:
 
 @dataclass 
 class MerchandiseResult:
-    """Result of merchandise operations"""
+    """
+Result of merchandise operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
@@ -52,7 +55,8 @@ class MerchandiseEngine:
         self.active_jobs = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the merchandise engine"""
+        """
+Initialize the merchandise engine"""
         try:
             logger.info("Initializing Merchandise Engine...")
             
@@ -150,7 +154,8 @@ class MerchandiseEngine:
             del self.active_jobs[job_id]
     
     async def _process_job(self, job: MerchandiseJob) -> Dict[str, Any]:
-        """Process a specific job"""
+        """
+Process a specific job"""
         # Implementation specific to merchandise operations
         return {
             "operation": job.operation,

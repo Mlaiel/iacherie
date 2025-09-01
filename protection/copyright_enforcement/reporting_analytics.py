@@ -26,6 +26,7 @@ ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
 """
+
 import asyncio
 import logging
 import pandas as pd
@@ -60,7 +61,9 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports available"""
+    """
+Types of reports available"""
+
     EXECUTIVE_SUMMARY = "executive_summary"
     VIOLATION_ANALYTICS = "violation_analytics"
     REVENUE_TRACKING = "revenue_tracking"
@@ -75,6 +78,7 @@ class ReportType(Enum):
 
 class TimeFrame(Enum):
     """Time frame options for reports"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -85,6 +89,7 @@ class TimeFrame(Enum):
 
 class MetricType(Enum):
     """Available metric types"""
+
     COUNT = "count"
     PERCENTAGE = "percentage"
     CURRENCY = "currency"
@@ -134,7 +139,8 @@ class AnalyticsInsight:
 
 
 class AdvancedAnalyticsEngine:
-    """Ultra-advanced analytics engine for copyright enforcement"""
+    """
+Ultra-advanced analytics engine for copyright enforcement"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -151,7 +157,8 @@ class AdvancedAnalyticsEngine:
         self, 
         config: ReportConfig
     ) -> Dict[str, Any]:
-        """Generate comprehensive executive summary report"""
+        """
+Generate comprehensive executive summary report"""
         try:
             # Collect key metrics
             kpis = await self._calculate_executive_kpis(config)
@@ -755,7 +762,8 @@ class ReportScheduler:
         self.email_service = EmailService()
     
     async def run_scheduled_reports(self) -> None:
-        """Run all scheduled reports"""
+        """
+Run all scheduled reports"""
         try:
             # This would be called by a scheduled job
             # Implementation depends on job scheduler used

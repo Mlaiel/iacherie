@@ -10,6 +10,7 @@ ATTENTION: Ce code fait partie de la propriété intellectuelle de Fahed Mlaiel.
 Toute reproduction, distribution, ou utilisation non autorisée est strictement interdite.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import hashlib
 import json
@@ -30,7 +31,8 @@ from .exceptions import CacheSerializationError, CacheCompressionError
 
 @dataclass
 class CacheKey:
-    """Structured cache key with metadata."""
+    """
+Structured cache key with metadata."""
     
     namespace: str
     identifier: str
@@ -39,7 +41,8 @@ class CacheKey:
     content_type: Optional[str] = None
     
     def __post_init__(self):
-        """Validate key components."""
+        """
+Validate key components."""
         if not self.namespace:
             raise ValueError("Namespace cannot be empty")
         if not self.identifier:
@@ -64,7 +67,8 @@ class CacheKey:
     
     @classmethod
     def from_string(cls, key_string: str) -> 'CacheKey':
-        """Parse cache key from string representation."""
+        """
+Parse cache key from string representation."""
         parts = key_string.split(':')
         if len(parts) < 2:
             raise ValueError("Invalid key string format")
@@ -96,6 +100,7 @@ class CacheKey:
 
 class SerializationManager:
     """Handles serialization and deserialization of cache data."""
+
     
     SUPPORTED_FORMATS = {
         'json': {'serialize': json.dumps, 'deserialize': json.loads},
@@ -249,32 +254,38 @@ class CompressionManager:
 
 
 class TimingUtilities:
-    """Utilities for time-based operations."""
+    """
+Utilities for time-based operations."""
     
     @staticmethod
     def get_current_timestamp() -> float:
-        """Get current timestamp in seconds."""
+        """
+Get current timestamp in seconds."""
         return time.time()
     
     @staticmethod
     def get_ttl_expiry(ttl_seconds: int) -> float:
-        """Get expiry timestamp from TTL."""
+        """
+Get expiry timestamp from TTL."""
         return time.time() + ttl_seconds
     
     @staticmethod
     def is_expired(expiry_timestamp: float) -> bool:
-        """Check if timestamp is expired."""
+        """
+Check if timestamp is expired."""
         return time.time() > expiry_timestamp
     
     @staticmethod
     def get_remaining_ttl(expiry_timestamp: float) -> int:
-        """Get remaining TTL in seconds."""
+        """
+Get remaining TTL in seconds."""
         remaining = expiry_timestamp - time.time()
         return max(0, int(remaining))
     
     @staticmethod
     def format_duration(seconds: float) -> str:
-        """Format duration in human-readable format."""
+        """
+Format duration in human-readable format."""
         if seconds < 60:
             return f"{seconds:.1f}s"
         elif seconds < 3600:
@@ -293,7 +304,8 @@ class SizeUtilities:
     
     @staticmethod
     def format_bytes(size_bytes: int) -> str:
-        """Format byte size in human-readable format."""
+        """
+Format byte size in human-readable format."""
         if size_bytes == 0:
             return "0B"
         
@@ -379,11 +391,13 @@ class HashUtilities:
 
 
 class ValidationUtilities:
-    """Utilities for data validation."""
+    """
+Utilities for data validation."""
     
     @staticmethod
     def validate_key(key: str) -> bool:
-        """Validate cache key format."""
+        """
+Validate cache key format."""
         if not key or not isinstance(key, str):
             return False
         
@@ -401,21 +415,25 @@ class ValidationUtilities:
     
     @staticmethod
     def validate_ttl(ttl: int) -> bool:
-        """Validate TTL value."""
+        """
+Validate TTL value."""
         return isinstance(ttl, int) and ttl >= 0
     
     @staticmethod
     def validate_size(size: int, max_size: int) -> bool:
-        """Validate data size."""
+        """
+Validate data size."""
         return isinstance(size, int) and 0 <= size <= max_size
 
 
 class AsyncUtilities:
-    """Utilities for async operations."""
+    """
+Utilities for async operations."""
     
     @staticmethod
     async def run_with_timeout(coroutine, timeout_seconds: float):
-        """Run coroutine with timeout."""
+        """
+Run coroutine with timeout."""
         try:
             return await asyncio.wait_for(coroutine, timeout=timeout_seconds)
         except asyncio.TimeoutError:
@@ -435,48 +453,56 @@ class AsyncUtilities:
 
 
 class ThreadUtilities:
-    """Utilities for thread operations."""
+    """
+Utilities for thread operations."""
     
     _thread_pool = ThreadPoolExecutor(max_workers=4)
     _lock = threading.RLock()
     
     @classmethod
     def run_in_thread(cls, func, *args, **kwargs):
-        """Run function in thread pool."""
+        """
+Run function in thread pool."""
         return cls._thread_pool.submit(func, *args, **kwargs)
     
     @classmethod
     def get_thread_safe_counter(cls):
-        """Get thread-safe counter."""
+        """
+Get thread-safe counter."""
         return ThreadSafeCounter()
 
 
 class ThreadSafeCounter:
-    """Thread-safe counter implementation."""
+    """
+Thread-safe counter implementation."""
     
     def __init__(self, initial_value: int = 0):
         self._value = initial_value
         self._lock = threading.RLock()
     
     def increment(self, amount: int = 1) -> int:
-        """Increment counter and return new value."""
+        """
+Increment counter and return new value."""
         with self._lock:
             self._value += amount
             return self._value
     
     def decrement(self, amount: int = 1) -> int:
-        """Decrement counter and return new value."""
+        """
+Decrement counter and return new value."""
         with self._lock:
             self._value -= amount
             return self._value
     
     def get_value(self) -> int:
-        """Get current counter value."""
+        """
+Get current counter value."""
         with self._lock:
             return self._value
     
     def reset(self, value: int = 0) -> int:
-        """Reset counter to specified value."""
+        """
+Reset counter to specified value."""
         with self._lock:
             old_value = self._value
             self._value = value
@@ -484,7 +510,8 @@ class ThreadSafeCounter:
 
 
 class PerformanceTimer:
-    """Context manager for performance timing."""
+    """
+Context manager for performance timing."""
     
     def __init__(self, operation_name: str = "Operation"):
         self.operation_name = operation_name
@@ -505,12 +532,14 @@ class PerformanceTimer:
         return self.duration * 1000 if self.duration else 0
     
     def get_duration_seconds(self) -> float:
-        """Get duration in seconds."""
+        """
+Get duration in seconds."""
         return self.duration if self.duration else 0
 
 
 class ConfigurationValidator:
-    """Validates cache configuration parameters."""
+    """
+Validates cache configuration parameters."""
     
     @staticmethod
     def validate_cache_config(config: Dict[str, Any]) -> Tuple[bool, List[str]]:

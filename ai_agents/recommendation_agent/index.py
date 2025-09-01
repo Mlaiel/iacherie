@@ -18,6 +18,7 @@ Core Capabilities:
 - Cross-platform content discovery and creator collaboration
 - Advanced monetization intelligence and trend analysis
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
@@ -558,7 +559,8 @@ class RecommendationSystemOrchestrator:
         )
     
     def _format_api_response(self, response: AgentResponse, processing_time: float) -> Dict[str, Any]:
-        """Format agent response for API consumption"""
+        """
+Format agent response for API consumption"""
         return {
             'success': response.success,
             'data': response.data if response.success else {},
@@ -572,7 +574,8 @@ class RecommendationSystemOrchestrator:
         }
     
     async def _periodic_health_check(self):
-        """Periodic health check for all system components"""
+        """
+Periodic health check for all system components"""
         while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes

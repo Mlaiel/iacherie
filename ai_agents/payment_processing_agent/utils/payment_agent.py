@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -68,7 +69,8 @@ class PaymentProcessingAgent(BaseAgent):
         db_session: Optional[Session] = None,
         **kwargs
     ):
-        """Initialize payment processing agent with enterprise configuration."""
+        """
+Initialize payment processing agent with enterprise configuration."""
         super().__init__(
             name="payment_processing_agent",
             version="1.0.0",
@@ -537,7 +539,8 @@ class PaymentProcessingAgent(BaseAgent):
         return max(calculated_fee, min_fee)
 
     async def _get_creator_balance(self, creator_id: str, currency: str) -> Decimal:
-        """Get creator's available balance for payout."""
+        """
+Get creator's available balance for payout."""
         if not self.db_session:
             return Decimal("0.00")
             
@@ -582,7 +585,8 @@ class PaymentProcessingAgent(BaseAgent):
         ).first()
 
     async def _get_transaction(self, transaction_id: str) -> Optional[PaymentTransaction]:
-        """Get transaction by ID."""
+        """
+Get transaction by ID."""
         if not self.db_session:
             return None
             
@@ -591,7 +595,8 @@ class PaymentProcessingAgent(BaseAgent):
         ).first()
 
     async def _check_payout_eligibility(self, creator_id: str):
-        """Check if creator is eligible for automatic payout."""
+        """
+Check if creator is eligible for automatic payout."""
         balance = await self._get_creator_balance(creator_id, self.config.default_currency)
         
         if balance >= self.config.auto_payout_threshold:
@@ -602,7 +607,8 @@ class PaymentProcessingAgent(BaseAgent):
             )
 
     async def _execute_payout(self, payout: PayoutSchedule):
-        """Execute scheduled payout through payment processor."""
+        """
+Execute scheduled payout through payment processor."""
         try:
             # Get appropriate processor
             processor_name = payout.payment_method.split('_')[0]  # e.g., 'stripe' from 'stripe_bank_transfer'

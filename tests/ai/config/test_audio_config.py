@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for AudioConfig module ensuring 100% audio quality,
 processing reliability, and professional mastering for musicians and content creators.
 """
+
 import pytest
 import sys
 import os
@@ -71,7 +72,8 @@ class TestAudioConfig:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.config = AudioConfig()
         self.test_env = test_environment
         self.sample_audio_data = self._generate_sample_audio_data()
@@ -687,7 +689,8 @@ class TestAudioProcessor:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.audio_processor = AudioProcessor()
     
     @pytest_marks["unit"]
@@ -726,7 +729,8 @@ class TestQualityAnalyzer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.quality_analyzer = QualityAnalyzer()
     
     @pytest_marks["unit"]

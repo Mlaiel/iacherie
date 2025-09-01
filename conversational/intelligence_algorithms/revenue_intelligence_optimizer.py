@@ -29,6 +29,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -63,7 +64,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Types of revenue streams for content creators"""
+    """
+Types of revenue streams for content creators"""
+
     STREAMING = "streaming"
     DOWNLOADS = "downloads"
     SUBSCRIPTIONS = "subscriptions"
@@ -80,6 +83,7 @@ class RevenueType(Enum):
 
 class MonetizationStrategy(Enum):
     """Monetization strategies for content creators"""
+
     FREEMIUM = "freemium"
     PREMIUM = "premium"
     HYBRID = "hybrid"
@@ -92,6 +96,7 @@ class MonetizationStrategy(Enum):
 
 class PricingModel(Enum):
     """Pricing models for content monetization"""
+
     FIXED = "fixed"
     DYNAMIC = "dynamic"
     TIERED = "tiered"
@@ -121,7 +126,8 @@ class FinancialMetrics:
 
 @dataclass
 class RevenueStreamAnalysis:
-    """Detailed revenue stream analysis data"""
+    """
+Detailed revenue stream analysis data"""
     stream_id: str
     revenue_type: RevenueType
     platform: str
@@ -137,7 +143,8 @@ class RevenueStreamAnalysis:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity identification"""
+    """
+Monetization opportunity identification"""
     opportunity_id: str
     opportunity_type: RevenueType
     platform: str
@@ -301,7 +308,8 @@ class MonetizationConversationAnalyzer:
         self._initialize_conversation_templates()
     
     def _initialize_conversation_templates(self):
-        """Initialize monetization conversation templates"""
+        """
+Initialize monetization conversation templates"""
         self.conversation_templates = {
             "revenue_analysis": {
                 "greeting": "Let's analyze your revenue performance and identify optimization opportunities.",

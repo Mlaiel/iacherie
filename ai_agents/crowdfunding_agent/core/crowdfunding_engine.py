@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrowdfundingJob:
-    """Job configuration for crowdfunding operations"""
+    """
+Job configuration for crowdfunding operations"""
     job_id: str
     operation: str
     data: Dict[str, Any]
@@ -26,7 +28,8 @@ class CrowdfundingJob:
 
 @dataclass 
 class CrowdfundingResult:
-    """Result of crowdfunding operations"""
+    """
+Result of crowdfunding operations"""
     job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
@@ -52,7 +55,8 @@ class CrowdfundingEngine:
         self.active_jobs = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the crowdfunding engine"""
+        """
+Initialize the crowdfunding engine"""
         try:
             logger.info("Initializing Crowdfunding Engine...")
             
@@ -150,7 +154,8 @@ class CrowdfundingEngine:
             del self.active_jobs[job_id]
     
     async def _process_job(self, job: CrowdfundingJob) -> Dict[str, Any]:
-        """Process a specific job"""
+        """
+Process a specific job"""
         # Implementation specific to crowdfunding operations
         return {
             "operation": job.operation,

@@ -17,6 +17,7 @@ Features:
 - Consent management
 - Data subject rights automation
 """
+
 import asyncio
 import hashlib
 import json
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class PIIType(Enum):
-    """Types of Personally Identifiable Information"""
+    """
+Types of Personally Identifiable Information"""
+
     EMAIL = "email"
     PHONE = "phone"
     SSN = "ssn"
@@ -54,6 +57,7 @@ class PIIType(Enum):
 
 class AnonymizationTechnique(Enum):
     """Data anonymization techniques"""
+
     MASKING = "masking"
     PSEUDONYMIZATION = "pseudonymization"
     GENERALIZATION = "generalization"
@@ -67,6 +71,7 @@ class AnonymizationTechnique(Enum):
 
 class DataSubjectRight(Enum):
     """Data subject rights under GDPR/CCPA"""
+
     ACCESS = "access"
     RECTIFICATION = "rectification"
     ERASURE = "erasure"
@@ -105,7 +110,8 @@ class AnonymizationResult:
 
 @dataclass
 class PrivacyPolicy:
-    """Privacy policy configuration"""
+    """
+Privacy policy configuration"""
     policy_id: str
     name: str
     data_types: List[PIIType]
@@ -120,7 +126,8 @@ class PrivacyPolicy:
 
 @dataclass
 class ConsentRecord:
-    """User consent record"""
+    """
+User consent record"""
     consent_id: str
     user_id: str
     data_types: List[PIIType]
@@ -141,7 +148,8 @@ class PIIDetector:
         self.ml_detector = None  # Placeholder for ML model
         
     def _initialize_patterns(self) -> Dict[PIIType, List[str]]:
-        """Initialize regex patterns for PII detection"""
+        """
+Initialize regex patterns for PII detection"""
         return {
             PIIType.EMAIL: [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -180,7 +188,8 @@ class PIIDetector:
         text: str,
         field_name: Optional[str] = None
     ) -> List[PIIDetectionResult]:
-        """Detect PII in text using multiple methods"""
+        """
+Detect PII in text using multiple methods"""
         results = []
         
         # Regex-based detection
@@ -204,7 +213,8 @@ class PIIDetector:
         text: str,
         field_name: Optional[str]
     ) -> List[PIIDetectionResult]:
-        """Detect PII using regex patterns"""
+        """
+Detect PII using regex patterns"""
         results = []
         
         for pii_type, patterns in self.patterns.items():
@@ -247,7 +257,8 @@ class PIIDetector:
         text: str,
         field_name: Optional[str]
     ) -> List[PIIDetectionResult]:
-        """Detect PII using contextual analysis"""
+        """
+Detect PII using contextual analysis"""
         results = []
         
         # Field name-based detection
@@ -332,7 +343,8 @@ class PIIDetector:
         return min(1.0, max(0.0, base_confidence))
     
     def _luhn_check(self, card_number: str) -> bool:
-        """Validate credit card using Luhn algorithm"""
+        """
+Validate credit card using Luhn algorithm"""
         def luhn_digit(n):
             return sum(divmod(int(n) * 2, 10))
         
@@ -343,13 +355,15 @@ class PIIDetector:
         return checksum % 10 == 0
     
     def _extract_context(self, text: str, start: int, end: int, window: int = 50) -> str:
-        """Extract context around detected PII"""
+        """
+Extract context around detected PII"""
         context_start = max(0, start - window)
         context_end = min(len(text), end + window)
         return text[context_start:context_end]
     
     def _assess_risk_level(self, pii_type: PIIType, confidence: float) -> str:
-        """Assess risk level based on PII type and confidence"""
+        """
+Assess risk level based on PII type and confidence"""
         high_risk_types = {PIIType.SSN, PIIType.CREDIT_CARD, PIIType.PASSPORT, PIIType.BIOMETRIC}
         medium_risk_types = {PIIType.EMAIL, PIIType.PHONE, PIIType.DRIVER_LICENSE}
         
@@ -387,14 +401,16 @@ class PIIDetector:
 
 
 class DataAnonymizer:
-    """Advanced data anonymization system"""
+    """
+Advanced data anonymization system"""
     
     def __init__(self):
         self.pseudonym_mapping: Dict[str, str] = {}
         self.encryption_key = self._generate_encryption_key()
     
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for pseudonymization"""
+        """
+Generate encryption key for pseudonymization"""
         return secrets.token_bytes(32)
     
     async def anonymize_data(
@@ -403,7 +419,8 @@ class DataAnonymizer:
         pii_detections: List[PIIDetectionResult],
         technique: AnonymizationTechnique = AnonymizationTechnique.MASKING
     ) -> Tuple[Any, List[AnonymizationResult]]:
-        """Anonymize data based on PII detections"""
+        """
+Anonymize data based on PII detections"""
         anonymization_results = []
         
         if isinstance(data, str):
@@ -438,7 +455,8 @@ class DataAnonymizer:
         detections: List[PIIDetectionResult],
         technique: AnonymizationTechnique
     ) -> Tuple[str, List[AnonymizationResult]]:
-        """Anonymize text based on detections"""
+        """
+Anonymize text based on detections"""
         if not detections:
             return text, []
         
@@ -579,7 +597,8 @@ class PrivacyComplianceManager:
         anonymization_technique: AnonymizationTechnique = AnonymizationTechnique.MASKING,
         **kwargs
     ) -> PrivacyPolicy:
-        """Create a new privacy policy"""
+        """
+Create a new privacy policy"""
         policy_id = str(uuid.uuid4())
         policy = PrivacyPolicy(
             policy_id=policy_id,
@@ -625,7 +644,8 @@ class PrivacyComplianceManager:
         return consent_record
     
     def check_data_retention_compliance(self) -> List[Dict[str, Any]]:
-        """Check for data that should be deleted based on retention policies"""
+        """
+Check for data that should be deleted based on retention policies"""
         current_time = datetime.now(timezone.utc)
         compliance_issues = []
         
@@ -867,7 +887,8 @@ class EnterprisePrivacyManager:
         user_id: Optional[str] = None,
         retention_days: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Process data with comprehensive privacy controls"""
+        """
+Process data with comprehensive privacy controls"""
         processing_id = str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
@@ -982,7 +1003,8 @@ class EnterprisePrivacyManager:
         return None
     
     async def get_privacy_metrics(self) -> Dict[str, Any]:
-        """Get privacy management metrics"""
+        """
+Get privacy management metrics"""
         total_processing = len(self.processing_logs)
         pii_processing = len([log for log in self.processing_logs if log.get("pii_types")])
         consent_valid_processing = len([log for log in self.processing_logs if log.get("consent_valid")])

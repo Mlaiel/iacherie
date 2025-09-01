@@ -25,6 +25,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Scalable distributed systems and deployment
 - AI Prompt Engineer & Content Protection: Intelligent content optimization and rights protection
 """
+
 import asyncio
 import json
 import logging
@@ -65,7 +66,9 @@ from ...data_management.trend_storage import TrendDataManager
 logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
-    """Trend categorization for content optimization"""
+    """
+Trend categorization for content optimization"""
+
     VIRAL_CONTENT = "viral_content"
     EMERGING_HASHTAGS = "emerging_hashtags"
     MUSIC_TRENDS = "music_trends"
@@ -79,6 +82,7 @@ class TrendCategory(Enum):
 
 class TrendSource(Enum):
     """External trend data sources"""
+
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
@@ -485,7 +489,8 @@ class TrendAgent(BaseAgent):
         trending_data: Dict[str, Any],
         content_type: ContentType
     ) -> List[Dict[str, Any]]:
-        """Generate hashtag suggestions based on trending data"""
+        """
+Generate hashtag suggestions based on trending data"""
         hashtags = trending_data.get("hashtags", [])
         
         # Rank hashtags by relevance and trending score
@@ -639,7 +644,8 @@ class TrendAgentManager:
         self._lock = asyncio.Lock()
 
     async def get_agent(self, user_id: str) -> TrendAgent:
-        """Get or create an available TrendAgent instance"""
+        """
+Get or create an available TrendAgent instance"""
         async with self._lock:
             # Find least loaded agent
             if self.agents:
@@ -663,13 +669,15 @@ class TrendAgentManager:
             return self.agents[agent_id]
 
     async def release_agent(self, agent: TrendAgent):
-        """Release agent back to pool"""
+        """
+Release agent back to pool"""
         async with self._lock:
             if agent.agent_id in self.agent_loads:
                 self.agent_loads[agent.agent_id] = max(0, self.agent_loads[agent.agent_id] - 1)
 
     async def shutdown_all(self):
-        """Shutdown all agent instances"""
+        """
+Shutdown all agent instances"""
         tasks = []
         for agent in self.agents.values():
             tasks.append(agent.cleanup())

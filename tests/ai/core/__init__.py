@@ -4,7 +4,7 @@ Enterprise-grade testing framework for AI content processing platform.
 Comprehensive test coverage for all core components and business logic.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 
@@ -26,6 +26,7 @@ Creator Types Support:
 - Influencers (multi-format content)
 - Comedians (entertainment content)
 """
+
 import sys
 import os
 from pathlib import Path
@@ -47,7 +48,7 @@ if str(backend_path) not in sys.path:
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Test configuration
 TEST_CONFIG = {
@@ -110,20 +111,24 @@ def get_test_config():
     return TEST_CONFIG.copy()
 
 def get_test_data_config():
-    """Get test data configuration"""
+    """
+Get test data configuration"""
     return TEST_DATA_CONFIG.copy()
 
 def get_mock_creator(creator_type: str):
-    """Get mock creator data"""
+    """
+Get mock creator data"""
     return MOCK_CREATORS.get(creator_type, {})
 
 def get_all_mock_creators():
-    """Get all mock creator data"""
+    """
+Get all mock creator data"""
     return MOCK_CREATORS.copy()
 
 # Test result tracking
 class TestResults:
-    """Track test results across test runs"""
+    """
+Track test results across test runs"""
     
     def __init__(self):
         self.passed = 0
@@ -132,20 +137,24 @@ class TestResults:
         self.errors = []
         
     def add_pass(self):
-        """Add a passed test"""
+        """
+Add a passed test"""
         self.passed += 1
         
     def add_fail(self, error_msg: str):
-        """Add a failed test"""
+        """
+Add a failed test"""
         self.failed += 1
         self.errors.append(error_msg)
         
     def add_skip(self):
-        """Add a skipped test"""
+        """
+Add a skipped test"""
         self.skipped += 1
         
     def get_summary(self):
-        """Get test results summary"""
+        """
+Get test results summary"""
         total = self.passed + self.failed + self.skipped
         return {
             "total": total,
@@ -168,7 +177,8 @@ class AIEngineTestSuite:
         self.test_config = TEST_CONFIG
         
     async def setup_test_environment(self) -> Dict[str, Any]:
-        """Setup comprehensive test environment."""
+        """
+Setup comprehensive test environment."""
         return {
             "environment": "test",
             "config": self.test_config,
@@ -181,7 +191,8 @@ class AIEngineTestSuite:
         return True  # Mock validation
     
     def run_performance_tests(self) -> Dict[str, Any]:
-        """Run performance benchmarks."""
+        """
+Run performance benchmarks."""
         return {
             "latency": 50,  # ms
             "throughput": 1000,  # requests/sec
@@ -200,25 +211,30 @@ class ContentProcessorTests:
         return True
         
     def test_video_processing(self) -> bool:
-        """Test video content processing."""
+        """
+Test video content processing."""
         return True
         
     def test_image_processing(self) -> bool:
-        """Test image content processing."""
+        """
+Test image content processing."""
         return True
         
     def test_text_processing(self) -> bool:
-        """Test text content processing."""
+        """
+Test text content processing."""
         return True
 
 class MetricsTestFramework:
-    """Metrics collection and validation test framework."""
+    """
+Metrics collection and validation test framework."""
     
     def __init__(self):
         self.metrics = {}
         
     def collect_metrics(self, test_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect test metrics."""
+        """
+Collect test metrics."""
         self.metrics[test_name] = {
             "timestamp": datetime.now().isoformat(),
             "data": data,
@@ -237,33 +253,40 @@ class PerformanceTestSuite:
         self.benchmarks = {}
         
     def run_latency_test(self, component: str) -> float:
-        """Run latency benchmark test."""
+        """
+Run latency benchmark test."""
         return 25.5  # Mock latency in ms
         
     def run_throughput_test(self, component: str) -> int:
-        """Run throughput benchmark test."""
+        """
+Run throughput benchmark test."""
         return 2000  # Mock throughput
         
     def run_memory_test(self, component: str) -> int:
-        """Run memory usage test."""
+        """
+Run memory usage test."""
         return 150  # Mock memory usage in MB
 
 class ValidationTestSuite:
-    """Validation and compliance test suite."""
+    """
+Validation and compliance test suite."""
     
     def __init__(self):
         self.validation_rules = {}
         
     def validate_business_logic(self, component: Any) -> bool:
-        """Validate business logic compliance."""
+        """
+Validate business logic compliance."""
         return True
         
     def validate_security(self, component: Any) -> bool:
-        """Validate security compliance."""
+        """
+Validate security compliance."""
         return True
         
     def validate_performance(self, component: Any) -> bool:
-        """Validate performance requirements."""
+        """
+Validate performance requirements."""
         return True
 
 # Global test results tracker

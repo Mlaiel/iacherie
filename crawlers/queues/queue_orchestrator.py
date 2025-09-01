@@ -8,7 +8,7 @@ Technologies: Async Orchestration, Multi-Queue Coordination, Load Balancing
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Request reception → Queue routing → Priority analysis → Worker assignment → 
 Load balancing → Execution monitoring → Result processing → Performance optimization
 """
+
 from typing import Any, Dict, List, Optional, Set, Callable, Tuple
 import logging
 import asyncio
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class OrchestrationStatus(Enum):
-    """Orchestrator status levels"""
+    """
+Orchestrator status levels"""
+
     INITIALIZING = "initializing"
     ACTIVE = "active"
     OVERLOADED = "overloaded"
@@ -83,7 +86,8 @@ class OrchestrationMetrics:
 
 @dataclass
 class OrchestrationConfig:
-    """Orchestrator configuration"""
+    """
+Orchestrator configuration"""
     max_concurrent_requests: int = 1000
     max_queue_size: int = 50000
     max_workers: int = 100
@@ -161,7 +165,8 @@ class CrawlerQueueOrchestrator:
         self, 
         core_queue_manager: Optional[IntelligentQueueManager] = None
     ) -> bool:
-        """Initialize orchestrator and all components"""
+        """
+Initialize orchestrator and all components"""
         try:
             logger.info("🎼 Initializing Crawler Queue Orchestrator...")
             
@@ -475,15 +480,18 @@ class CrawlerQueueOrchestrator:
         self._status_callbacks.append(callback)
     
     async def register_metrics_callback(self, callback: Callable):
-        """Register callback for metrics updates"""
+        """
+Register callback for metrics updates"""
         self._metrics_callbacks.append(callback)
     
     async def add_webhook_url(self, webhook_url: str):
-        """Add webhook URL for notifications"""
+        """
+Add webhook URL for notifications"""
         self._webhook_urls.append(webhook_url)
     
     async def shutdown(self):
-        """Gracefully shutdown orchestrator"""
+        """
+Gracefully shutdown orchestrator"""
         try:
             logger.info("🛑 Starting Crawler Queue Orchestrator shutdown...")
             
@@ -525,7 +533,8 @@ class CrawlerQueueOrchestrator:
         return True
     
     async def _create_default_priority_factors(self, task: CrawlerTask) -> PriorityFactors:
-        """Create default priority factors for task"""
+        """
+Create default priority factors for task"""
         # Would integrate with user management and content analysis
         from .priority_manager import PriorityFactors, BusinessImpact, UrgencyLevel
         
@@ -541,13 +550,15 @@ class CrawlerQueueOrchestrator:
         return task.task_type.value
     
     async def _assign_optimal_worker(self, task: CrawlerTask, priority_score) -> Optional[str]:
-        """Assign optimal worker for task"""
+        """
+Assign optimal worker for task"""
         if self.workers_manager:
             return await self.workers_manager.assign_task_to_worker(task)
         return None
     
     async def _estimate_completion_time(self, task: Optional[CrawlerTask], priority_score) -> str:
-        """Estimate task completion time"""
+        """
+Estimate task completion time"""
         # Implement ML-based time estimation
         base_time = 300  # 5 minutes default
         
@@ -561,12 +572,14 @@ class CrawlerQueueOrchestrator:
         return estimated_completion.isoformat()
     
     async def _get_queue_position(self, task: CrawlerTask) -> int:
-        """Get approximate queue position"""
+        """
+Get approximate queue position"""
         # Implement queue position calculation
         return 1  # Placeholder
     
     async def _update_submission_metrics(self, processing_time_ms: float, success: bool):
-        """Update metrics after request submission"""
+        """
+Update metrics after request submission"""
         self.metrics.total_requests_received += 1
         
         if success:
@@ -715,32 +728,38 @@ class CrawlerQueueOrchestrator:
         pass
     
     async def _process_completed_requests(self):
-        """Process and cleanup completed requests"""
+        """
+Process and cleanup completed requests"""
         # Implementation for processing completed requests
         pass
     
     async def _update_load_balancing(self):
-        """Update load balancing metrics"""
+        """
+Update load balancing metrics"""
         # Implementation for load balancing updates
         pass
     
     async def _balance_system_load(self):
-        """Balance load across system components"""
+        """
+Balance load across system components"""
         # Implementation for system load balancing
         pass
     
     async def _check_component_health(self):
-        """Check health of all components"""
+        """
+Check health of all components"""
         # Implementation for component health checks
         pass
     
     async def _perform_auto_scaling(self):
-        """Perform auto-scaling operations"""
+        """
+Perform auto-scaling operations"""
         # Implementation for auto-scaling
         pass
     
     async def _optimize_load_balancing(self) -> Dict[str, Any]:
-        """Optimize load balancing algorithms"""
+        """
+Optimize load balancing algorithms"""
         return {"optimized": True}
     
     async def _optimize_worker_allocation(self) -> Dict[str, Any]:

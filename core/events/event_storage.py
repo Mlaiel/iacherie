@@ -4,7 +4,7 @@ Architecture: Enterprise Event Persistence & Archival
 Auteur: Équipe Backend Senior + ML Engineer + Sécurité + Microservices + DBA + DevOps + IA Prompt Engineer
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
-© 2025 Équipe d'Experts. Tous droits réservés.
+(c) 2025 Équipe d'Experts. Tous droits réservés.
 
 SPÉCIALITÉS DE L'ÉQUIPE:
 🔹 Lead Dev IA: Architecture & prompt engineering
@@ -20,6 +20,7 @@ Description:
     Système de stockage d'événements avec support multi-backend, archivage,
     compression, chiffrement et optimisations de performance.
 """
+
 from typing import Any, Dict, List, Optional, Union, AsyncIterator, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -48,7 +49,9 @@ logger = logging.getLogger(__name__)
 
 
 class StorageBackend(Enum):
-    """Types de backend de stockage"""
+    """
+Types de backend de stockage"""
+
     POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
@@ -60,6 +63,7 @@ class StorageBackend(Enum):
 
 class CompressionType(Enum):
     """Types de compression"""
+
     NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
@@ -68,6 +72,7 @@ class CompressionType(Enum):
 
 class StoragePolicy(Enum):
     """Politiques de stockage"""
+
     HOT = "hot"          # Accès fréquent, performance maximale
     WARM = "warm"        # Accès occasionnel, équilibre perf/coût
     COLD = "cold"        # Accès rare, optimisation coût
@@ -91,7 +96,8 @@ class StorageConfiguration:
 
 @dataclass
 class StorageMetrics:
-    """Métriques de stockage"""
+    """
+Métriques de stockage"""
     total_events: int = 0
     storage_size_bytes: int = 0
     compression_ratio: float = 0.0
@@ -104,7 +110,8 @@ class StorageMetrics:
 
 @dataclass
 class EventQuery:
-    """Requête d'événements"""
+    """
+Requête d'événements"""
     event_types: Optional[List[EventType]] = None
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
@@ -131,46 +138,55 @@ class ArchivalRequest:
 
 
 class EventStorageInterface(ABC):
-    """Interface pour le stockage d'événements"""
+    """
+Interface pour le stockage d'événements"""
     
     @abstractmethod
     async def store_event(self, event: Event) -> str:
-        """Stocker un événement"""
+        """
+Stocker un événement"""
         pass
     
     @abstractmethod
     async def store_events_batch(self, events: List[Event]) -> List[str]:
-        """Stocker un lot d'événements"""
+        """
+Stocker un lot d'événements"""
         pass
     
     @abstractmethod
     async def get_event(self, event_id: str) -> Optional[Event]:
-        """Récupérer un événement par ID"""
+        """
+Récupérer un événement par ID"""
         pass
     
     @abstractmethod
     async def query_events(self, query: EventQuery) -> List[Event]:
-        """Requête d'événements"""
+        """
+Requête d'événements"""
         pass
     
     @abstractmethod
     async def count_events(self, query: EventQuery) -> int:
-        """Compter les événements"""
+        """
+Compter les événements"""
         pass
     
     @abstractmethod
     async def delete_event(self, event_id: str) -> bool:
-        """Supprimer un événement"""
+        """
+Supprimer un événement"""
         pass
     
     @abstractmethod
     async def get_storage_metrics(self) -> StorageMetrics:
-        """Récupérer les métriques de stockage"""
+        """
+Récupérer les métriques de stockage"""
         pass
 
 
 class PostgreSQLEventStorage(EventStorageInterface):
-    """Stockage PostgreSQL pour événements"""
+    """
+Stockage PostgreSQL pour événements"""
     
     def __init__(self, config: StorageConfiguration):
         self.config = config
@@ -179,7 +195,8 @@ class PostgreSQLEventStorage(EventStorageInterface):
         self.compression_handler = self._get_compression_handler()
         
     async def initialize(self):
-        """Initialiser la connexion PostgreSQL"""
+        """
+Initialiser la connexion PostgreSQL"""
         try:
             self.engine = create_async_engine(
                 self.config.connection_string,
@@ -398,7 +415,8 @@ class PostgreSQLEventStorage(EventStorageInterface):
         })
     
     def _deserialize_event(self, row: Tuple) -> Event:
-        """Désérialiser un événement depuis une ligne de base"""
+        """
+Désérialiser un événement depuis une ligne de base"""
         data = self._decompress_data(row[2])
         event_dict = json.loads(data)
         
@@ -419,7 +437,8 @@ class PostgreSQLEventStorage(EventStorageInterface):
         )
     
     def _compress_data(self, data: str) -> bytes:
-        """Compresser les données"""
+        """
+Compresser les données"""
         if self.config.compression == CompressionType.NONE:
             return data.encode('utf-8')
         elif self.config.compression == CompressionType.GZIP:
@@ -432,7 +451,8 @@ class PostgreSQLEventStorage(EventStorageInterface):
             return data.encode('utf-8')
     
     def _decompress_data(self, data: bytes) -> str:
-        """Décompresser les données"""
+        """
+Décompresser les données"""
         if self.config.compression == CompressionType.NONE:
             return data.decode('utf-8')
         elif self.config.compression == CompressionType.GZIP:
@@ -445,7 +465,8 @@ class PostgreSQLEventStorage(EventStorageInterface):
             return data.decode('utf-8')
     
     def _get_compression_handler(self):
-        """Récupérer le gestionnaire de compression"""
+        """
+Récupérer le gestionnaire de compression"""
         return {
             CompressionType.GZIP: (gzip.compress, gzip.decompress),
             CompressionType.BZIP2: (bz2.compress, bz2.decompress),
@@ -453,12 +474,14 @@ class PostgreSQLEventStorage(EventStorageInterface):
         }.get(self.config.compression)
     
     def _calculate_compression_ratio(self) -> float:
-        """Calculer le ratio de compression"""
+        """
+Calculer le ratio de compression"""
         # À implémenter avec des statistiques réelles
         return 0.75
     
     def _build_query(self, query: EventQuery) -> Tuple[text, Dict[str, Any]]:
-        """Construire une requête SQL"""
+        """
+Construire une requête SQL"""
         conditions = []
         params = {}
         
@@ -575,7 +598,8 @@ class RedisEventStorage(EventStorageInterface):
         self.redis = None
         
     async def initialize(self):
-        """Initialiser la connexion Redis"""
+        """
+Initialiser la connexion Redis"""
         try:
             self.redis = aioredis.from_url(
                 self.config.connection_string,
@@ -758,7 +782,8 @@ class RedisEventStorage(EventStorageInterface):
         })
     
     def _deserialize_event(self, data: Union[str, bytes]) -> Event:
-        """Désérialiser un événement"""
+        """
+Désérialiser un événement"""
         if isinstance(data, bytes):
             data = data.decode('utf-8')
         
@@ -782,19 +807,22 @@ class RedisEventStorage(EventStorageInterface):
 
 
 class HybridEventStorage(EventStorageInterface):
-    """Stockage hybride combinant plusieurs backends"""
+    """
+Stockage hybride combinant plusieurs backends"""
     
     def __init__(self, primary_config: StorageConfiguration, cache_config: StorageConfiguration):
         self.primary_storage = self._create_storage(primary_config)
         self.cache_storage = self._create_storage(cache_config)
         
     async def initialize(self):
-        """Initialiser les stockages"""
+        """
+Initialiser les stockages"""
         await self.primary_storage.initialize()
         await self.cache_storage.initialize()
     
     async def store_event(self, event: Event) -> str:
-        """Stocker dans primary et cache"""
+        """
+Stocker dans primary et cache"""
         # Stockage primaire
         event_id = await self.primary_storage.store_event(event)
         
@@ -829,15 +857,18 @@ class HybridEventStorage(EventStorageInterface):
         return await self.primary_storage.store_events_batch(events)
     
     async def query_events(self, query: EventQuery) -> List[Event]:
-        """Déléguer au stockage primaire"""
+        """
+Déléguer au stockage primaire"""
         return await self.primary_storage.query_events(query)
     
     async def count_events(self, query: EventQuery) -> int:
-        """Déléguer au stockage primaire"""
+        """
+Déléguer au stockage primaire"""
         return await self.primary_storage.count_events(query)
     
     async def delete_event(self, event_id: str) -> bool:
-        """Supprimer des deux stockages"""
+        """
+Supprimer des deux stockages"""
         primary_deleted = await self.primary_storage.delete_event(event_id)
         
         try:
@@ -863,7 +894,8 @@ class HybridEventStorage(EventStorageInterface):
         )
     
     def _create_storage(self, config: StorageConfiguration) -> EventStorageInterface:
-        """Factory pour créer un stockage"""
+        """
+Factory pour créer un stockage"""
         if config.backend == StorageBackend.POSTGRESQL:
             return PostgreSQLEventStorage(config)
         elif config.backend == StorageBackend.REDIS:
@@ -879,7 +911,8 @@ class EventArchiver:
         self.source_storage = source_storage
         
     async def archive_events(self, request: ArchivalRequest) -> bool:
-        """Archiver des événements"""
+        """
+Archiver des événements"""
         try:
             # Récupération des événements à archiver
             events = await self.source_storage.query_events(request.query)

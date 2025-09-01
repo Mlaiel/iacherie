@@ -11,7 +11,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
 Any unauthorized use, reproduction, distribution or appropriation of this code, ideas or 
@@ -20,6 +20,7 @@ strictly prohibited and will result in immediate legal action.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -62,7 +63,8 @@ from ...utils.metrics import performance_monitor
 logger = get_structured_logger(__name__)
 
 class CommissionManagerConfig(BaseModel):
-    """Configuration for Commission Manager"""
+    """
+Configuration for Commission Manager"""
     
     # Core Settings
     enable_debug_mode: bool = False
@@ -123,7 +125,8 @@ class CommissionManager:
     """
     
     def __init__(self, config: Optional[CommissionManagerConfig] = None):
-        """Initialize Commission Manager with comprehensive configuration"""
+        """
+Initialize Commission Manager with comprehensive configuration"""
         self.config = config or CommissionManagerConfig()
         self.state = CommissionManagerState()
         
@@ -679,7 +682,7 @@ class CommissionManager:
             logger.error(f"Commission Manager shutdown error: {e}", exc_info=True)
 
 """Professional Commission Management System
-© 2025 Fahed Mlaiel - Enterprise-Grade Solution
+(c) 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This manager provides comprehensive commission calculation, distribution and 
 management capabilities for multi-format creators on the IA Influencer Agent platform.

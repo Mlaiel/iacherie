@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import aiohttp
 import logging
@@ -76,7 +77,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
+    """
+Types of collaboration"""
+
     DUET = "duet"
     FEATURE = "feature"
     REMIX = "remix"
@@ -89,6 +92,7 @@ class CollaborationType(Enum):
 
 class MatchingCriteria(Enum):
     """Creator matching criteria"""
+
     GENRE_SIMILARITY = "genre_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
@@ -100,6 +104,7 @@ class MatchingCriteria(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration request status"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -135,7 +140,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match result"""
+    """
+Collaboration match result"""
     
     match_id: str
     primary_creator: str
@@ -153,7 +159,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal"""
+    """
+Collaboration proposal"""
     
     proposal_id: str
     initiator_id: str
@@ -169,7 +176,8 @@ class CollaborationProposal:
 
 @dataclass
 class CollaborationMetrics:
-    """Collaboration performance metrics"""
+    """
+Collaboration performance metrics"""
     
     collaboration_id: str
     participants: List[str]
@@ -184,7 +192,8 @@ class CollaborationMetrics:
 
 
 class BaseCollaborationExtractor(BaseExtractor):
-    """Base class for collaboration extractors"""
+    """
+Base class for collaboration extractors"""
     
     def __init__(self, name: str):
         super().__init__(name)
@@ -200,18 +209,21 @@ class BaseCollaborationExtractor(BaseExtractor):
     
     @abstractmethod
     async def extract_creator_profile(self, creator_id: str, platform: str) -> CreatorProfile:
-        """Extract creator profile for collaboration matching"""
+        """
+Extract creator profile for collaboration matching"""
         pass
     
     @abstractmethod
     async def find_collaboration_matches(self, creator_profile: CreatorProfile, 
                                        criteria: List[MatchingCriteria]) -> List[CollaborationMatch]:
-        """Find potential collaboration matches"""
+        """
+Find potential collaboration matches"""
         pass
 
 
 class CreatorProfileExtractor(BaseCollaborationExtractor):
-    """Extract and analyze creator profiles"""
+    """
+Extract and analyze creator profiles"""
     
     def __init__(self):
         super().__init__("CreatorProfileExtractor")
@@ -221,7 +233,8 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
         return request.metadata and request.metadata.get('extract_type') == 'creator_profile'
     
     async def extract_creator_profile(self, creator_id: str, platform: str) -> CreatorProfile:
-        """Extract comprehensive creator profile"""
+        """
+Extract comprehensive creator profile"""
         try:
             # This would integrate with platform-specific extractors
             # For now, we'll create a comprehensive profile structure
@@ -294,7 +307,8 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
         }
     
     async def _analyze_follower_metrics(self, profile_data: Dict[str, Any]) -> Dict[str, int]:
-        """Analyze follower metrics across platforms"""
+        """
+Analyze follower metrics across platforms"""
         return {
             'total': profile_data.get('follower_count', 0),
             'active': int(profile_data.get('follower_count', 0) * 0.8),  # Estimated active followers
@@ -302,7 +316,8 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
         }
     
     async def _calculate_engagement_rates(self, profile_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate engagement rates"""
+        """
+Calculate engagement rates"""
         # Mock calculation based on available data
         follower_count = profile_data.get('follower_count', 1)
         post_count = profile_data.get('post_count', 1)
@@ -319,7 +334,8 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
         }
     
     async def _analyze_content_genres(self, profile_data: Dict[str, Any]) -> List[str]:
-        """Analyze content genres from creator's content"""
+        """
+Analyze content genres from creator's content"""
         bio = profile_data.get('bio', '').lower()
         
         # Simple keyword-based genre detection
@@ -344,13 +360,15 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
         return detected_genres if detected_genres else ['general']
     
     async def _analyze_content_types(self, profile_data: Dict[str, Any]) -> List[str]:
-        """Analyze content types creator produces"""
+        """
+Analyze content types creator produces"""
         # This would analyze actual content
         # For now, return common types
         return ['video', 'image', 'audio', 'text']
     
     async def _extract_collaboration_preferences(self, profile_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract collaboration preferences from profile"""
+        """
+Extract collaboration preferences from profile"""
         return {
             'open_to_collaborations': True,
             'preferred_collaboration_types': ['duet', 'feature', 'cross_promotion'],
@@ -360,7 +378,8 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
         }
     
     async def _calculate_reputation_score(self, profile_data: Dict[str, Any]) -> float:
-        """Calculate creator reputation score"""
+        """
+Calculate creator reputation score"""
         factors = {
             'verified_status': 0.2 if profile_data.get('verified') else 0.0,
             'follower_count': min(profile_data.get('follower_count', 0) / 100000, 0.3),
@@ -373,7 +392,8 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
 
 
 class CollaborationMatcher(BaseCollaborationExtractor):
-    """Advanced creator matching algorithm"""
+    """
+Advanced creator matching algorithm"""
     
     def __init__(self):
         super().__init__("CollaborationMatcher")
@@ -389,7 +409,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
     async def find_collaboration_matches(self, creator_profile: CreatorProfile, 
                                        criteria: List[MatchingCriteria],
                                        candidate_pool: List[CreatorProfile] = None) -> List[CollaborationMatch]:
-        """Find potential collaboration matches"""
+        """
+Find potential collaboration matches"""
         if not HAS_ML_LIBS:
             return []
         
@@ -443,7 +464,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
     async def _calculate_criterion_score(self, creator1: CreatorProfile, 
                                        creator2: CreatorProfile,
                                        criterion: MatchingCriteria) -> float:
-        """Calculate score for specific matching criterion"""
+        """
+Calculate score for specific matching criterion"""
         
         if criterion == MatchingCriteria.GENRE_SIMILARITY:
             return self._calculate_genre_similarity(creator1, creator2)
@@ -469,7 +491,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
         return 0.0
     
     def _calculate_genre_similarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate genre similarity between creators"""
+        """
+Calculate genre similarity between creators"""
         genres1 = set(creator1.genres)
         genres2 = set(creator2.genres)
         
@@ -482,7 +505,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
         return intersection / union if union > 0 else 0.0
     
     def _calculate_audience_overlap(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate potential audience overlap"""
+        """
+Calculate potential audience overlap"""
         # This would require actual audience data analysis
         # For now, use geographic and language similarity as proxy
         
@@ -495,7 +519,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
         return (geo_similarity + lang_similarity) / 2
     
     def _calculate_engagement_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate engagement rate compatibility"""
+        """
+Calculate engagement rate compatibility"""
         rate1 = creator1.engagement_rates.get('overall', 0)
         rate2 = creator2.engagement_rates.get('overall', 0)
         
@@ -509,7 +534,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
         return min_rate / max_rate
     
     def _calculate_follower_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate follower count compatibility"""
+        """
+Calculate follower count compatibility"""
         count1 = creator1.follower_count.get('total', 0)
         count2 = creator2.follower_count.get('total', 0)
         
@@ -529,7 +555,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
             return 0.2
     
     async def _calculate_content_similarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate content style similarity"""
+        """
+Calculate content style similarity"""
         # This would analyze actual content using NLP/ML
         # For now, use content types as proxy
         
@@ -545,7 +572,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
         return intersection / union if union > 0 else 0.0
     
     def _calculate_geographic_proximity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate geographic proximity score"""
+        """
+Calculate geographic proximity score"""
         if not creator1.geographic_location or not creator2.geographic_location:
             return 0.5  # Neutral score for unknown locations
         
@@ -557,7 +585,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
         return 0.7 if creator1.geographic_location.split(',')[0] == creator2.geographic_location.split(',')[0] else 0.3
     
     async def _calculate_collaboration_history_score(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate collaboration history compatibility"""
+        """
+Calculate collaboration history compatibility"""
         # This would analyze past collaboration success rates
         # For now, use reputation scores as proxy
         
@@ -569,7 +598,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
     
     async def _create_collaboration_match(self, creator1: CreatorProfile, creator2: CreatorProfile,
                                         overall_score: float, criterion_scores: Dict[MatchingCriteria, float]) -> CollaborationMatch:
-        """Create collaboration match object"""
+        """
+Create collaboration match object"""
         
         match_id = hashlib.md5(f"{creator1.creator_id}_{creator2.creator_id}_{datetime.now().isoformat()}".encode()).hexdigest()
         
@@ -631,7 +661,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
         return list(set(suggestions))  # Remove duplicates
     
     def _identify_mutual_benefits(self, creator1: CreatorProfile, creator2: CreatorProfile) -> List[str]:
-        """Identify mutual benefits of collaboration"""
+        """
+Identify mutual benefits of collaboration"""
         benefits = []
         
         # Audience expansion
@@ -714,7 +745,8 @@ class CollaborationMatcher(BaseCollaborationExtractor):
     
     def _calculate_confidence_level(self, overall_score: float, 
                                   criterion_scores: Dict[MatchingCriteria, float]) -> float:
-        """Calculate confidence level in match"""
+        """
+Calculate confidence level in match"""
         # High confidence requires high overall score and balanced criteria
         score_variance = np.var(list(criterion_scores.values())) if criterion_scores else 1.0
         
@@ -727,13 +759,15 @@ class CollaborationMatcher(BaseCollaborationExtractor):
 
 
 class CollaborationAnalyzer:
-    """Analyze collaboration performance and ROI"""
+    """
+Analyze collaboration performance and ROI"""
     
     def __init__(self):
         self.performance_cache = {}
     
     async def analyze_collaboration_performance(self, collaboration_metrics: CollaborationMetrics) -> Dict[str, Any]:
-        """Analyze collaboration performance"""
+        """
+Analyze collaboration performance"""
         try:
             analysis = {
                 'collaboration_id': collaboration_metrics.collaboration_id,
@@ -839,7 +873,8 @@ class CollaborationExtractorFactory:
     
     @staticmethod
     def create_extractor(extractor_type: str) -> BaseCollaborationExtractor:
-        """Create appropriate collaboration extractor"""
+        """
+Create appropriate collaboration extractor"""
         extractors = {
             'profile': CreatorProfileExtractor,
             'matcher': CollaborationMatcher

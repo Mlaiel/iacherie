@@ -4,10 +4,11 @@ Central integration point for all monitoring components in the IA Influencer Age
 Provides unified API and orchestration for comprehensive system observability.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import json
 from typing import Dict, Any, List, Optional, Union, Callable
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringServiceStatus(Enum):
-    """Status of monitoring services"""
+    """
+Status of monitoring services"""
+
     STARTING = "starting"
     RUNNING = "running"
     STOPPING = "stopping"
@@ -42,6 +45,7 @@ class MonitoringServiceStatus(Enum):
 
 class MonitoringLevel(Enum):
     """Monitoring detail levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -81,7 +85,8 @@ class MonitoringConfig:
 
 @dataclass
 class ServiceHealth:
-    """Health status of a monitoring service"""
+    """
+Health status of a monitoring service"""
     service_name: str
     status: MonitoringServiceStatus
     last_update: datetime
@@ -94,7 +99,8 @@ class ServiceHealth:
 
 @dataclass
 class MonitoringSnapshot:
-    """Complete monitoring system snapshot"""
+    """
+Complete monitoring system snapshot"""
     timestamp: datetime
     overall_status: MonitoringServiceStatus
     services: Dict[str, ServiceHealth]

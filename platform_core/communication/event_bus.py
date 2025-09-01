@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ===========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 BUS D'ÉVÉNEMENTS DISTRIBUÉ
@@ -15,6 +15,7 @@ Système de communication événementielle enterprise
 - Dead letter handling et retry intelligent
 - Monitoring temps réel et analytics avancées
 """
+
 import asyncio
 import json
 import logging
@@ -33,7 +34,9 @@ import aioredis
 logger = logging.getLogger(__name__)
 
 class EventPriority(Enum):
-    """Priorités des événements"""
+    """
+Priorités des événements"""
+
     LOW = 1
     NORMAL = 3
     HIGH = 5
@@ -41,6 +44,7 @@ class EventPriority(Enum):
 
 class EventStatus(Enum):
     """États des événements"""
+
     PENDING = "pending"
     PUBLISHED = "published"
     DELIVERED = "delivered"
@@ -80,7 +84,8 @@ class Event:
         
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Event':
-        """Crée un événement depuis un dictionnaire"""
+        """
+Crée un événement depuis un dictionnaire"""
         # Convertir les dates
         for date_field in ['created_at', 'scheduled_at', 'expires_at']:
             if data.get(date_field):
@@ -96,7 +101,8 @@ class Event:
 
 @dataclass
 class EventSubscription:
-    """Abonnement à des événements"""
+    """
+Abonnement à des événements"""
     subscription_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     subscriber_id: str = ""
     event_patterns: List[str] = field(default_factory=list)  # Patterns d'événements
@@ -163,7 +169,8 @@ class EventHandler:
         self.is_async = asyncio.iscoroutinefunction(handler_func)
         
     async def handle(self, event: Event) -> bool:
-        """Exécute le handler pour un événement"""
+        """
+Exécute le handler pour un événement"""
         try:
             if self.is_async:
                 result = await self.handler_func(event)

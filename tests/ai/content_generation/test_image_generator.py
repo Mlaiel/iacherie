@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Image Generator Tests
+"""
+Image Generator Tests
 
 Comprehensive tests for the ImageGenerator class that handles
 AI-powered image creation and optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -54,13 +57,15 @@ class TestImageGenerator:
     
     @pytest.fixture
     def generator(self):
-        """Create an image generator instance"""
+        """
+Create an image generator instance"""
         config = {'test': 'value'}  # Minimal config for testing
         return ImageContentGenerator(config)
     
     @pytest.fixture
     def sample_prompt(self):
-        """Create sample image generation prompt"""
+        """
+Create sample image generation prompt"""
         return "A futuristic cityscape with flying cars, neon lights, and holographic advertisements, cyberpunk style, high detail, 4k resolution"
     
     @pytest.fixture
@@ -77,7 +82,8 @@ class TestImageGenerator:
         )
     
     def test_generator_initialization(self, generator):
-        """Test image generator initialization"""
+        """
+Test image generator initialization"""
         assert generator is not None
         assert hasattr(generator, 'image_models')
         assert hasattr(generator, 'supported_formats')
@@ -86,7 +92,8 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_basic_image_generation(self, generator, sample_prompt, image_config):
-        """Test basic AI image generation"""
+        """
+Test basic AI image generation"""
         with patch.object(generator, '_generate_with_ai') as mock_generation:
             mock_generation.return_value = {
                 "success": True,
@@ -498,7 +505,7 @@ class TestImageGenerator:
         
         metadata = {
             "creator": "Fahed Mlaiel",
-            "copyright": "© 2025 Fahed Mlaiel",
+            "copyright": "(c) 2025 Fahed Mlaiel",
             "description": "AI-generated technology illustration",
             "keywords": ["AI", "technology", "illustration"],
             "creation_date": datetime.now().isoformat()
@@ -610,7 +617,8 @@ class TestImageConfig:
     """Test suite for ImageConfig model"""
     
     def test_image_config_creation(self):
-        """Test image configuration creation"""
+        """
+Test image configuration creation"""
         config = ImageConfig(
             width=1024,
             height=768,
@@ -629,7 +637,8 @@ class TestImageConfig:
         assert config.seed == 123
     
     def test_image_config_validation(self):
-        """Test image configuration validation"""
+        """
+Test image configuration validation"""
         # Test invalid dimensions
         with pytest.raises(Exception):  # Adjust based on actual validation
             ImageConfig(
@@ -641,10 +650,12 @@ class TestImageConfig:
 
 
 class TestImageEnums:
-    """Test suite for image-related enums"""
+    """
+Test suite for image-related enums"""
     
     def test_image_format_enum(self):
-        """Test ImageFormat enum values"""
+        """
+Test ImageFormat enum values"""
         assert ImageFormat.PNG.value == "png"
         assert ImageFormat.JPEG.value == "jpeg"
         assert ImageFormat.WEBP.value == "webp"

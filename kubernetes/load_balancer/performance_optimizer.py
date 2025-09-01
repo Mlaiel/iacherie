@@ -11,6 +11,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import asyncio
 import logging
 import time
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Performance optimization types"""
+    """
+Performance optimization types"""
+
     THROUGHPUT = "throughput"
     LATENCY = "latency"
     RESOURCE_EFFICIENCY = "resource_efficiency"
@@ -43,6 +46,7 @@ class OptimizationType(Enum):
 
 class ScalingDirection(Enum):
     """Scaling direction"""
+
     UP = "up"
     DOWN = "down"
     STABLE = "stable"
@@ -66,7 +70,8 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation"""
+    """
+Performance optimization recommendation"""
     component: str
     optimization_type: OptimizationType
     current_value: Any
@@ -80,7 +85,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ScalingRecommendation:
-    """Service scaling recommendation"""
+    """
+Service scaling recommendation"""
     service_name: str
     current_instances: int
     recommended_instances: int
@@ -389,7 +395,8 @@ class PerformanceOptimizer:
         return 50.0
     
     def _estimate_response_time(self) -> float:
-        """Estimate current average response time"""
+        """
+Estimate current average response time"""
         # This would integrate with actual monitoring system
         if len(self.metrics_history) > 0:
             latest = self.metrics_history[-1]
@@ -400,7 +407,8 @@ class PerformanceOptimizer:
         return 1.0
     
     def _estimate_error_rate(self) -> float:
-        """Estimate current error rate"""
+        """
+Estimate current error rate"""
         # This would integrate with actual monitoring system
         if len(self.metrics_history) > 0:
             latest = self.metrics_history[-1]
@@ -412,7 +420,8 @@ class PerformanceOptimizer:
         return 0.01
     
     def _estimate_active_connections(self) -> int:
-        """Estimate current active connections"""
+        """
+Estimate current active connections"""
         try:
             # Get network connections
             connections = psutil.net_connections(kind='inet')
@@ -422,7 +431,8 @@ class PerformanceOptimizer:
             return 100  # Default estimate
     
     def _estimate_queue_length(self) -> int:
-        """Estimate current queue length"""
+        """
+Estimate current queue length"""
         # This would integrate with actual load balancer metrics
         if len(self.metrics_history) > 0:
             latest = self.metrics_history[-1]
@@ -431,7 +441,8 @@ class PerformanceOptimizer:
         return 0
     
     async def _generate_recommendations(self) -> None:
-        """Generate optimization recommendations"""
+        """
+Generate optimization recommendations"""
         try:
             recommendations = []
             
@@ -719,7 +730,8 @@ class PerformanceOptimizer:
         return change * instance_cost
     
     async def _train_models(self) -> None:
-        """Train machine learning models with available data"""
+        """
+Train machine learning models with available data"""
         try:
             if len(self.metrics_history) < self.min_data_points:
                 return

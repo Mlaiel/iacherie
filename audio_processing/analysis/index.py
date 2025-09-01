@@ -19,7 +19,7 @@ orchestration of all audio analysis capabilities for the IA Influencer Agent pla
 - Enterprise-grade configuration management
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 🛡️ TEAM SPECIALTIES:
 - Lead Audio Analysis Architect & System Designer: Fahed Mlaiel
@@ -34,6 +34,7 @@ commercial exploitation is strictly prohibited under international copyright law
 
 Contact: mlaiel@live.de
 """
+
 import numpy as np
 import logging
 import asyncio
@@ -76,7 +77,9 @@ from .audio_enhancer_analyzer import AudioEnhancerAnalyzer
 
 
 class ComponentType(Enum):
-    """Audio analysis component types"""
+    """
+Audio analysis component types"""
+
     SPECTRAL_ANALYZER = "spectral_analyzer"
     MELODY_EXTRACTOR = "melody_extractor"
     RHYTHM_ANALYZER = "rhythm_analyzer"
@@ -99,6 +102,7 @@ class ComponentType(Enum):
 
 class AnalysisComplexity(Enum):
     """Analysis complexity levels"""
+
     BASIC = "basic"           # Fast, essential analysis
     STANDARD = "standard"     # Balanced analysis
     ADVANCED = "advanced"     # Comprehensive analysis
@@ -108,6 +112,7 @@ class AnalysisComplexity(Enum):
 
 class AnalysisMode(Enum):
     """Analysis execution modes"""
+
     REAL_TIME = "real_time"       # Real-time processing
     BATCH = "batch"               # Batch processing
     STREAMING = "streaming"       # Streaming analysis
@@ -116,6 +121,7 @@ class AnalysisMode(Enum):
 
 class ComponentStatus(Enum):
     """Component status indicators"""
+
     AVAILABLE = "available"       # Ready for use
     BUSY = "busy"                # Currently processing
     ERROR = "error"              # Error state
@@ -194,7 +200,8 @@ class AnalysisRequest:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result"""
+    """
+Comprehensive analysis result"""
     request_id: str
     success: bool
     
@@ -223,7 +230,8 @@ class AnalysisResult:
 
 @dataclass
 class SystemHealth:
-    """System health and performance metrics"""
+    """
+System health and performance metrics"""
     overall_health_score: float  # 0-100
     
     # Component health
@@ -265,7 +273,8 @@ class AudioAnalysisRegistry:
     _lock = threading.Lock()
     
     def __new__(cls):
-        """Singleton implementation"""
+        """
+Singleton implementation"""
         if cls._instance is None:
             with cls._lock:
                 if cls._instance is None:
@@ -273,7 +282,8 @@ class AudioAnalysisRegistry:
         return cls._instance
     
     def __init__(self):
-        """Initialize the audio analysis registry"""
+        """
+Initialize the audio analysis registry"""
         if hasattr(self, '_initialized'):
             return
         
@@ -857,7 +867,8 @@ class AudioAnalysisRegistry:
         return requested_components
     
     def _is_component_available(self, component_type: ComponentType) -> bool:
-        """Check if component is available for use"""
+        """
+Check if component is available for use"""
         if component_type not in self._components:
             return False
         
@@ -865,7 +876,8 @@ class AudioAnalysisRegistry:
         return component_info.status in [ComponentStatus.AVAILABLE, ComponentStatus.BUSY]
     
     def _calculate_overall_confidence(self, result: AnalysisResult) -> float:
-        """Calculate overall confidence score"""
+        """
+Calculate overall confidence score"""
         try:
             if not result.component_results:
                 return 0.0
@@ -878,7 +890,8 @@ class AudioAnalysisRegistry:
             return 0.5
     
     def _update_performance_metrics(self, request: AnalysisRequest, result: AnalysisResult):
-        """Update system performance metrics"""
+        """
+Update system performance metrics"""
         try:
             # Update basic metrics
             if 'total_requests' not in self._performance_metrics:
@@ -906,12 +919,14 @@ class AudioAnalysisRegistry:
             ]
     
     def get_component_info(self, component_type: ComponentType) -> Optional[ComponentInfo]:
-        """Get detailed component information"""
+        """
+Get detailed component information"""
         with self._registry_lock:
             return self._components.get(component_type)
     
     def get_system_health(self) -> SystemHealth:
-        """Get comprehensive system health report"""
+        """
+Get comprehensive system health report"""
         try:
             with self._registry_lock:
                 # Component health
@@ -1078,7 +1093,8 @@ _registry_lock = threading.Lock()
 
 
 def get_audio_analysis_registry() -> AudioAnalysisRegistry:
-    """Get the global audio analysis registry instance"""
+    """
+Get the global audio analysis registry instance"""
     global _audio_analysis_registry
     
     if _audio_analysis_registry is None:
@@ -1093,7 +1109,8 @@ def get_audio_analysis_registry() -> AudioAnalysisRegistry:
 async def analyze_audio_quick(audio_data: np.ndarray, 
                             sample_rate: int,
                             components: Optional[List[str]] = None) -> AnalysisResult:
-    """Quick audio analysis with simplified interface"""
+    """
+Quick audio analysis with simplified interface"""
     registry = get_audio_analysis_registry()
     
     # Convert string component names to enums if provided
@@ -1123,7 +1140,8 @@ def get_available_analyzers() -> List[str]:
 
 
 def get_system_status() -> Dict[str, Any]:
-    """Get simplified system status"""
+    """
+Get simplified system status"""
     registry = get_audio_analysis_registry()
     health = registry.get_system_health()
     

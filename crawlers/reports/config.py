@@ -38,6 +38,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import os
 import json
 import yaml
@@ -89,6 +90,7 @@ logger = logging.getLogger(__name__)
 
 class Environment(str, Enum):
     """Environment enumeration."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -98,6 +100,7 @@ class Environment(str, Enum):
 
 class LogLevel(str, Enum):
     """Log level enumeration."""
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -107,6 +110,7 @@ class LogLevel(str, Enum):
 
 class DatabaseType(str, Enum):
     """Database type enumeration."""
+
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     SQLITE = "sqlite"
@@ -116,6 +120,7 @@ class DatabaseType(str, Enum):
 
 class CacheType(str, Enum):
     """Cache type enumeration."""
+
     MEMORY = "memory"
     REDIS = "redis"
     MEMCACHED = "memcached"
@@ -124,6 +129,7 @@ class CacheType(str, Enum):
 
 class ExportFormat(str, Enum):
     """Export format enumeration."""
+
     PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
@@ -135,6 +141,7 @@ class ExportFormat(str, Enum):
 
 class CloudProvider(str, Enum):
     """Cloud provider enumeration."""
+
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -642,7 +649,8 @@ class ReportsConfiguration:
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     def _setup_config_watching(self) -> None:
-        """Setup configuration file watching for auto-reload."""
+        """
+Setup configuration file watching for auto-reload."""
         try:
             class ConfigFileHandler(FileSystemEventHandler):
                 def __init__(self, config_instance):
@@ -743,7 +751,8 @@ class ReportsConfiguration:
         return yaml.dump(config_dict, default_flow_style=False, sort_keys=True)
     
     def save_to_file(self, file_path: Optional[str] = None, include_secrets: bool = False) -> None:
-        """Save configuration to file."""
+        """
+Save configuration to file."""
         try:
             target_path = Path(file_path) if file_path else self.config_path
             target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -762,23 +771,28 @@ class ReportsConfiguration:
         return self.database.url
     
     def get_redis_url(self) -> str:
-        """Get formatted Redis URL."""
+        """
+Get formatted Redis URL."""
         return self.redis.url
     
     def is_development(self) -> bool:
-        """Check if running in development environment."""
+        """
+Check if running in development environment."""
         return self.environment in [Environment.DEVELOPMENT, Environment.LOCAL]
     
     def is_production(self) -> bool:
-        """Check if running in production environment."""
+        """
+Check if running in production environment."""
         return self.environment == Environment.PRODUCTION
     
     def is_testing(self) -> bool:
-        """Check if running in testing environment."""
+        """
+Check if running in testing environment."""
         return self.environment == Environment.TESTING
     
     def cleanup(self) -> None:
-        """Cleanup watchers and resources."""
+        """
+Cleanup watchers and resources."""
         try:
             for watcher in self._watchers:
                 watcher.stop()
@@ -816,7 +830,8 @@ def get_config(
 
 
 def reload_config() -> None:
-    """Reload global configuration."""
+    """
+Reload global configuration."""
     global _config_instance
     if _config_instance:
         _config_instance.reload()
@@ -828,7 +843,8 @@ def config_context(
     config_path: Optional[str] = None,
     auto_reload: bool = False
 ):
-    """Context manager for temporary configuration."""
+    """
+Context manager for temporary configuration."""
     original_config = _config_instance
     
     try:
@@ -874,7 +890,8 @@ API_SCHEMA = {
 
 
 def validate_configuration(config: ReportsConfiguration) -> List[str]:
-    """Validate configuration using schemas."""
+    """
+Validate configuration using schemas."""
     if not VALIDATION_AVAILABLE:
         return []
     

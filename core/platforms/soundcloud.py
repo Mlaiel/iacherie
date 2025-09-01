@@ -6,6 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import asyncio
 import aiohttp
 import aiofiles
@@ -24,10 +25,12 @@ logger = logging.getLogger(__name__)
 
 
 class SoundCloudPlatform(PlatformBase):
-    """SoundCloud platform integration"""
+    """
+SoundCloud platform integration"""
     
     def __init__(self, config: PlatformConfig):
-        """Initialize SoundCloud platform"""
+        """
+Initialize SoundCloud platform"""
         super().__init__(config)
         self.api_base = "https://api.soundcloud.com"
         self.session: Optional[aiohttp.ClientSession] = None
@@ -41,7 +44,8 @@ class SoundCloudPlatform(PlatformBase):
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with SoundCloud using OAuth2"""
+        """
+Authenticate with SoundCloud using OAuth2"""
         try:
             if self.config.credentials.access_token:
                 if await self._validate_token():

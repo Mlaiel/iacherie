@@ -19,6 +19,7 @@ Components:
 - AdapterCache: Caching strategy for optimal performance
 - AdapterError: Comprehensive error handling framework
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -42,7 +43,9 @@ AdapterResponse = TypeVar('AdapterResponse')
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Enumeration of supported platform types."""
+    """
+Enumeration of supported platform types."""
+
     SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
@@ -60,6 +63,7 @@ class PlatformType(Enum):
 
 class AdapterStatus(Enum):
     """Adapter operational status."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -69,6 +73,7 @@ class AdapterStatus(Enum):
 
 class AuthenticationType(Enum):
     """Authentication method types."""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
@@ -91,13 +96,15 @@ class AdapterCredentials:
     base_url: Optional[str] = None
     
     def is_token_expired(self) -> bool:
-        """Check if the access token is expired."""
+        """
+Check if the access token is expired."""
         if not self.token_expires_at:
             return False
         return datetime.now() >= self.token_expires_at
     
     def to_headers(self) -> Dict[str, str]:
-        """Convert credentials to HTTP headers."""
+        """
+Convert credentials to HTTP headers."""
         headers = self.custom_headers.copy()
         
         if self.auth_type == AuthenticationType.API_KEY and self.api_key:
@@ -120,7 +127,8 @@ class RateLimitConfig:
     max_retries: int = 3
     
 class AdapterMetrics:
-    """Performance metrics tracking for adapters."""
+    """
+Performance metrics tracking for adapters."""
     
     def __init__(self, adapter_name: str, redis_client: Optional[redis.Redis] = None):
         self.adapter_name = adapter_name
@@ -139,7 +147,8 @@ class AdapterMetrics:
         }
     
     def record_request(self, endpoint: str, response_time: float, success: bool, error: Optional[str] = None):
-        """Record request metrics."""
+        """
+Record request metrics."""
         self.metrics['total_requests'] += 1
         self.metrics['total_response_time'] += response_time
         self.metrics['average_response_time'] = self.metrics['total_response_time'] / self.metrics['total_requests']
@@ -168,17 +177,20 @@ class AdapterMetrics:
             self._store_metrics_in_redis()
     
     def record_rate_limit(self):
-        """Record rate limiting event."""
+        """
+Record rate limiting event."""
         self.metrics['rate_limited_requests'] += 1
     
     def get_success_rate(self) -> float:
-        """Calculate success rate percentage."""
+        """
+Calculate success rate percentage."""
         if self.metrics['total_requests'] == 0:
             return 0.0
         return (self.metrics['successful_requests'] / self.metrics['total_requests']) * 100
     
     def _store_metrics_in_redis(self):
-        """Store metrics in Redis for persistence."""
+        """
+Store metrics in Redis for persistence."""
         try:
             key = f"adapter_metrics:{self.adapter_name}"
             self.redis_client.hset(key, mapping={
@@ -199,7 +211,8 @@ class AdapterRateLimit:
         self.request_times = []
     
     async def acquire(self, endpoint: str) -> bool:
-        """Acquire permission to make a request."""
+        """
+Acquire permission to make a request."""
         current_time = time.time()
         
         # Refill tokens based on time passed
@@ -217,7 +230,8 @@ class AdapterRateLimit:
         return False
     
     async def wait_if_needed(self, endpoint: str) -> float:
-        """Wait if rate limiting is needed, return wait time."""
+        """
+Wait if rate limiting is needed, return wait time."""
         if await self.acquire(endpoint):
             return 0.0
         
@@ -227,20 +241,23 @@ class AdapterRateLimit:
         return wait_time
     
     def _record_request_time(self, request_time: float):
-        """Record request time for monitoring."""
+        """
+Record request time for monitoring."""
         self.request_times.append(request_time)
         # Keep only last hour of data
         cutoff_time = request_time - 3600
         self.request_times = [t for t in self.request_times if t > cutoff_time]
     
     def get_current_rate(self) -> float:
-        """Get current request rate per second."""
+        """
+Get current request rate per second."""
         current_time = time.time()
         recent_requests = [t for t in self.request_times if t > current_time - 60]
         return len(recent_requests) / 60.0
 
 class AdapterCache:
-    """Intelligent caching system for adapter responses."""
+    """
+Intelligent caching system for adapter responses."""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None, default_ttl: int = 300):
         self.redis_client = redis_client
@@ -248,7 +265,8 @@ class AdapterCache:
         self.local_cache = {}
     
     def _generate_cache_key(self, adapter_name: str, endpoint: str, params: Dict[str, Any]) -> str:
-        """Generate cache key from adapter name, endpoint, and parameters."""
+        """
+Generate cache key from adapter name, endpoint, and parameters."""
         params_str = json.dumps(params, sort_keys=True, default=str)
         params_hash = hashlib.md5(params_str.encode()).hexdigest()
         return f"adapter_cache:{adapter_name}:{endpoint}:{params_hash}"
@@ -339,11 +357,13 @@ class BasePlatformAdapter(ABC):
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         await self.disconnect()
     
     async def connect(self) -> bool:
-        """Initialize connection to the platform."""
+        """
+Initialize connection to the platform."""
         try:
             # Create HTTP session
             timeout = aiohttp.ClientTimeout(total=30, connect=10)
@@ -382,7 +402,8 @@ class BasePlatformAdapter(ABC):
         pass
     
     async def refresh_token(self) -> bool:
-        """Refresh authentication token if supported."""
+        """
+Refresh authentication token if supported."""
         logger.warning(f"Token refresh not implemented for {self.platform_name}")
         return False
     
@@ -537,11 +558,13 @@ class BasePlatformAdapter(ABC):
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Perform health check on the platform connection."""
+        """
+Perform health check on the platform connection."""
         pass
 
 class AdapterError(Exception):
-    """Base exception for adapter-related errors."""
+    """
+Base exception for adapter-related errors."""
     
     def __init__(self, message: str, platform: Optional[str] = None, error_code: Optional[str] = None):
         super().__init__(message)
@@ -551,19 +574,23 @@ class AdapterError(Exception):
         self.timestamp = datetime.now()
 
 class AuthenticationError(AdapterError):
-    """Authentication-related adapter error."""
+    """
+Authentication-related adapter error."""
     pass
 
 class RateLimitError(AdapterError):
-    """Rate limiting-related adapter error."""
+    """
+Rate limiting-related adapter error."""
     pass
 
 class ConfigurationError(AdapterError):
-    """Configuration-related adapter error."""
+    """
+Configuration-related adapter error."""
     pass
 
 class NetworkError(AdapterError):
-    """Network-related adapter error."""
+    """
+Network-related adapter error."""
     pass
 
 # Export all classes and types

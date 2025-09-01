@@ -6,6 +6,7 @@ Handles project lifecycle, task management, milestones, and team coordination.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
+
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class TaskStatus(Enum):
-    """Task status enumeration"""
+    """
+Task status enumeration"""
+
     NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress"
     ON_HOLD = "on_hold"
@@ -39,6 +42,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority enumeration"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -47,6 +51,7 @@ class TaskPriority(Enum):
 
 class MilestoneType(Enum):
     """Milestone type enumeration"""
+
     PROJECT_START = "project_start"
     DESIGN_COMPLETE = "design_complete"
     CONTENT_DRAFT = "content_draft"
@@ -59,6 +64,7 @@ class MilestoneType(Enum):
 
 class ResourceType(Enum):
     """Resource type enumeration"""
+
     HUMAN = "human"
     EQUIPMENT = "equipment"
     SOFTWARE = "software"
@@ -365,7 +371,8 @@ class WorkLog(Base):
 
 @dataclass
 class TaskCreationRequest:
-    """Data class for task creation requests"""
+    """
+Data class for task creation requests"""
     title: str
     project_id: str
     created_by: str
@@ -382,7 +389,8 @@ class TaskCreationRequest:
 
 @dataclass
 class MilestoneCreationRequest:
-    """Data class for milestone creation requests"""
+    """
+Data class for milestone creation requests"""
     title: str
     project_id: str
     milestone_type: MilestoneType
@@ -865,7 +873,8 @@ class ProjectManagementEngine:
         return insights
     
     def _estimate_task_complexity(self, request: TaskCreationRequest) -> float:
-        """Estimate task complexity based on various factors"""
+        """
+Estimate task complexity based on various factors"""
         complexity = 1.0  # Base complexity
         
         # Adjust based on description length
@@ -886,7 +895,8 @@ class ProjectManagementEngine:
         return min(5.0, complexity)  # Cap at 5.0
     
     def _calculate_task_duration(self, task: ProjectTask) -> int:
-        """Calculate task duration in days"""
+        """
+Calculate task duration in days"""
         if task.planned_start_date and task.planned_end_date:
             return (task.planned_end_date - task.planned_start_date).days
         elif task.estimated_hours:
@@ -894,7 +904,8 @@ class ProjectManagementEngine:
         return 1
     
     def _calculate_date_difference(self, start_date: str, end_date: str) -> int:
-        """Calculate difference between two date strings"""
+        """
+Calculate difference between two date strings"""
         if not start_date or not end_date:
             return 0
         
@@ -904,7 +915,8 @@ class ProjectManagementEngine:
         return (end - start).days
     
     async def _cache_task(self, task: ProjectTask):
-        """Cache task data in Redis"""
+        """
+Cache task data in Redis"""
         try:
             task_data = {
                 'id': str(task.id),

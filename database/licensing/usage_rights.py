@@ -11,6 +11,7 @@ ANY unauthorized use, copying, or theft without explicit written authorization i
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
 """
+
 from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
 from datetime import datetime, timedelta, timezone
 from enum import Enum, IntEnum
@@ -60,7 +61,8 @@ rights_processing_time = Histogram('rights_processing_seconds', 'Rights processi
 logger = logging.getLogger(__name__)
 
 class UsageType(Enum):
-    """Comprehensive usage types with detailed classifications"""
+    """
+Comprehensive usage types with detailed classifications"""
     # Digital distribution
     STREAMING = "streaming"
     DOWNLOAD = "download"
@@ -128,6 +130,7 @@ class UsageType(Enum):
 
 class RightsScope(Enum):
     """Rights scope definitions"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SOLE = "sole"
@@ -135,6 +138,7 @@ class RightsScope(Enum):
 
 class PermissionLevel(IntEnum):
     """Permission levels with hierarchy"""
+
     DENIED = 0
     RESTRICTED = 1
     LIMITED = 2
@@ -143,7 +147,9 @@ class PermissionLevel(IntEnum):
     FULL = 5
 
 class RestrictionType(Enum):
-    """Types of usage restrictions"""
+    """
+Types of usage restrictions"""
+
     TERRITORIAL = "territorial"
     TEMPORAL = "temporal"
     PLATFORM = "platform"
@@ -157,6 +163,7 @@ class RestrictionType(Enum):
 
 class ValidationResult(Enum):
     """Rights validation results"""
+
     GRANTED = "granted"
     DENIED = "denied"
     CONDITIONAL = "conditional"
@@ -217,11 +224,13 @@ class RightsPackage:
     neighboring_rights: Dict[str, bool] = field(default_factory=dict)
     
     def has_right(self, right_name: str) -> bool:
-        """Check if specific right is included"""
+        """
+Check if specific right is included"""
         return getattr(self, right_name, False)
     
     def get_granted_rights(self) -> List[str]:
-        """Get list of all granted rights"""
+        """
+Get list of all granted rights"""
         granted = []
         for attr_name in dir(self):
             if not attr_name.startswith('_') and hasattr(self, attr_name):
@@ -373,7 +382,8 @@ class UsageGrant(BaseModel, TimestampMixin, AuditMixin):
         return usage_type in (self.usage_types or [])
     
     def is_territory_permitted(self, territory: str) -> bool:
-        """Check if territory is permitted"""
+        """
+Check if territory is permitted"""
         if self.excluded_territories and territory in self.excluded_territories:
             return False
         if self.granted_territories:
@@ -389,7 +399,8 @@ class UsageGrant(BaseModel, TimestampMixin, AuditMixin):
         return True
     
     def can_be_used(self, usage_context: UsageContext) -> Tuple[bool, str]:
-        """Comprehensive usage validation"""
+        """
+Comprehensive usage validation"""
         # Check if grant is active
         if not self.is_active:
             return False, f"Grant is not active (status: {self.status})"
@@ -643,7 +654,8 @@ class UsageRightsService:
                  rights_analyzer: RightsAnalyzer = None,
                  legal_service: RightsLegalService = None,
                  protection_service: ContentProtectionService = None):
-        """Initialize the usage rights service with dependencies"""
+        """
+Initialize the usage rights service with dependencies"""
         self.session = session or get_database_session()
         self.cache = cache_manager or CacheManager()
         self.rights_analyzer = rights_analyzer or RightsAnalyzer()
@@ -1053,7 +1065,8 @@ class UsageRightsService:
         }
     
     async def _consolidate_validation_results(self, results: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Consolidate multiple validation results into final decision"""
+        """
+Consolidate multiple validation results into final decision"""
         # Find best grant (highest permission level that allows usage)
         best_grant = None
         for result in results:
@@ -1082,7 +1095,8 @@ class UsageRightsService:
             }
     
     async def _check_potential_violations(self, usage_context: UsageContext, grants: List[UsageGrant]) -> List[Dict[str, Any]]:
-        """Check for potential violations using AI analysis"""
+        """
+Check for potential violations using AI analysis"""
         if not self.rights_analyzer:
             return []
         
@@ -1324,7 +1338,8 @@ class UsageRightsService:
         return 'standard'
     
     def _get_alert_thresholds(self, grant: UsageGrant) -> Dict[str, Any]:
-        """Get alert thresholds based on grant characteristics"""
+        """
+Get alert thresholds based on grant characteristics"""
         thresholds = {
             'usage_percentage': 80,  # Alert at 80% of usage limit
             'time_percentage': 90,   # Alert at 90% of time limit
@@ -1342,7 +1357,8 @@ class UsageRightsService:
         return thresholds
     
     async def _schedule_limit_checks(self, grant: UsageGrant):
-        """Schedule periodic limit checking tasks"""
+        """
+Schedule periodic limit checking tasks"""
         # This would typically integrate with Celery or similar task queue
         logger = logging.getLogger(__name__)
         logger.info(f"Scheduled limit checks for grant {grant.id}")
@@ -1615,22 +1631,26 @@ class UsageRightsService:
         pass
     
     async def _send_warning_notice(self, violation: RightsViolation):
-        """Send warning notice for violation"""
+        """
+Send warning notice for violation"""
         # This would integrate with notification system
         pass
     
     async def _notify_administrators(self, violation: RightsViolation):
-        """Notify administrators of violation"""
+        """
+Notify administrators of violation"""
         # This would integrate with notification system
         pass
     
     async def _notify_supervisors(self, violation: RightsViolation):
-        """Notify supervisors of violation"""
+        """
+Notify supervisors of violation"""
         # This would integrate with notification system
         pass
     
     async def _increase_monitoring(self, grant_id: int):
-        """Increase monitoring level for a grant"""
+        """
+Increase monitoring level for a grant"""
         cache_manager = CacheManager()
         monitoring_key = f"grant_monitor:{grant_id}"
         monitoring_config = await cache_manager.get(monitoring_key)
@@ -1736,6 +1756,7 @@ async def create_standard_grant(content_id: str,
 
 class PermissionLevel(Enum):
     """Niveaux de permission"""
+
     FULL_RIGHTS = "full_rights"
     LIMITED_RIGHTS = "limited_rights"
     CONDITIONAL_RIGHTS = "conditional_rights"
@@ -1745,6 +1766,7 @@ class PermissionLevel(Enum):
 
 class TerritorialScope(Enum):
     """Portée territoriale"""
+
     WORLDWIDE = "worldwide"
     CONTINENTAL = "continental"
     NATIONAL = "national"
@@ -1754,6 +1776,7 @@ class TerritorialScope(Enum):
 
 class ChannelType(Enum):
     """Types de canaux de distribution"""
+
     DIGITAL_STREAMING = "digital_streaming"
     RADIO = "radio"
     TELEVISION = "television"
@@ -1768,6 +1791,7 @@ class ChannelType(Enum):
 
 class RightsStatus(Enum):
     """Statut des droits"""
+
     ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -1882,7 +1906,8 @@ class UsageRights(BaseModel):
         )
 
     def can_use_for_purpose(self, usage_type: UsageType, channel: str = None) -> Tuple[bool, str]:
-        """Vérifie si l'usage est autorisé pour un type donné"""
+        """
+Vérifie si l'usage est autorisé pour un type donné"""
         
         if not self.is_valid():
             return False, "Droits non valides ou expirés"
@@ -1986,7 +2011,8 @@ class UsageRights(BaseModel):
         return True
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit les droits en dictionnaire"""
+        """
+Convertit les droits en dictionnaire"""
         return {
             "id": self.id,
             "rights_id": self.rights_id,
@@ -2133,7 +2159,8 @@ class UsageRightsManager:
         duration_days: Optional[int] = None,
         conditions: Optional[Dict] = None
     ) -> UsageRights:
-        """Accorde des droits d'usage"""
+        """
+Accorde des droits d'usage"""
         
         try:
             # Vérification des droits du concédant
@@ -2335,7 +2362,8 @@ class UsageRightsManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Génère un rapport d'usage pour un contenu"""
+        """
+Génère un rapport d'usage pour un contenu"""
         
         # Récupération des logs d'usage
         usage_logs = self.db.query(UsageLog).filter(
@@ -2411,7 +2439,8 @@ class UsageRightsManager:
         ).all()
 
     def auto_renew_rights(self) -> List[str]:
-        """Renouvelle automatiquement les droits éligibles"""
+        """
+Renouvelle automatiquement les droits éligibles"""
         
         renewed_rights = []
         expiring_rights = self.check_expiring_rights(7)  # 7 jours avant expiration
@@ -2471,7 +2500,8 @@ class UsageRightsManager:
             return False
     
     def _check_licensing_rights(self, grantor_id: int, content_id: int) -> bool:
-        """Vérifier si le concédant a des droits de licence délégués"""
+        """
+Vérifier si le concédant a des droits de licence délégués"""
         # En production, ceci vérifierait les droits de licence dans la base de données
         try:
             # Simulation: vérification des droits de licence
@@ -2481,7 +2511,8 @@ class UsageRightsManager:
             return False
     
     def _check_admin_restrictions(self, grantor_id: int, content_id: int) -> Optional[str]:
-        """Vérifier s'il y a des restrictions administratives"""
+        """
+Vérifier s'il y a des restrictions administratives"""
         try:
             # Vérifier les restrictions de contenu
             if content_id in [999, 1000]:  # Simulation de contenu restreint

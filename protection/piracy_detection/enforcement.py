@@ -4,7 +4,7 @@
 Automated enforcement and takedown processing for piracy violations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
 - Automated DMCA takedown generation and submission
@@ -13,6 +13,7 @@ This module provides:
 - Escalation management
 - Success tracking and reporting
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,7 +25,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class EnforcementAction(Enum):
-    """Types of enforcement actions."""
+    """
+Types of enforcement actions."""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
@@ -34,6 +37,7 @@ class EnforcementAction(Enum):
 
 class EnforcementStatus(Enum):
     """Enforcement request status."""
+
     PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -43,6 +47,7 @@ class EnforcementStatus(Enum):
 
 class EscalationLevel(Enum):
     """Escalation levels for enforcement."""
+
     AUTOMATIC = "automatic"
     REVIEW_REQUIRED = "review_required"
     LEGAL_REQUIRED = "legal_required"
@@ -513,7 +518,8 @@ class AutomatedEnforcement:
             return ['DMCA Section 512', 'US Copyright Act']
     
     async def _enforcement_processor(self) -> None:
-        """Background processor for enforcement requests."""
+        """
+Background processor for enforcement requests."""
         while True:
             try:
                 if self.pending_queue:
@@ -623,7 +629,8 @@ class AutomatedEnforcement:
         """
     
     def _generate_digital_signature(self) -> str:
-        """Generate digital signature for enforcement documents."""
+        """
+Generate digital signature for enforcement documents."""
         return f"Digitally signed by Fahed Mlaiel on {datetime.utcnow().isoformat()}"
     
     def _summarize_evidence(self, evidence: Dict[str, Any]) -> str:
@@ -637,7 +644,8 @@ class AutomatedEnforcement:
         """
     
     def _get_requested_action(self, action_type: EnforcementAction) -> str:
-        """Get requested action text."""
+        """
+Get requested action text."""
         actions = {
             EnforcementAction.DMCA_TAKEDOWN: "Immediate removal of infringing content",
             EnforcementAction.PLATFORM_REPORT: "Investigation and appropriate action",
@@ -710,7 +718,8 @@ class AutomatedEnforcement:
                         await self._process_platform_response(request, response)
     
     async def _check_platform_response(self, request: EnforcementRequest) -> Optional[Dict[str, Any]]:
-        """Check for platform response to enforcement request."""
+        """
+Check for platform response to enforcement request."""
         # Simulate checking for platform response
         # In production, this would query platform APIs or check emails
         
@@ -726,7 +735,8 @@ class AutomatedEnforcement:
     
     async def _process_platform_response(self, request: EnforcementRequest, 
                                        response: Dict[str, Any]) -> None:
-        """Process platform response to enforcement request."""
+        """
+Process platform response to enforcement request."""
         request.platform_response = response
         
         if response.get('status') == 'completed':
@@ -742,7 +752,8 @@ class AutomatedEnforcement:
         await self._send_enforcement_notification(request)
     
     async def _send_enforcement_notification(self, request: EnforcementRequest) -> None:
-        """Send notification about enforcement status."""
+        """
+Send notification about enforcement status."""
         if self.notification_service:
             notification_data = {
                 'request_id': request.request_id,
@@ -833,11 +844,13 @@ class AutomatedEnforcement:
             }
     
     async def get_enforcement_stats(self) -> Dict[str, Any]:
-        """Get enforcement performance statistics."""
+        """
+Get enforcement performance statistics."""
         return self.enforcement_stats.copy()
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown enforcement system."""
+        """
+Gracefully shutdown enforcement system."""
         logger.info("Shutting down Automated Enforcement system...")
         
         # Complete pending requests where possible

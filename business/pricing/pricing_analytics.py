@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -32,6 +32,7 @@ Email: mlaiel@live.de
 All usage must be pre-approved in writing.
 =======================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -54,7 +55,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Supported analytics timeframes"""
+    """
+Supported analytics timeframes"""
+
     HOUR = "1h"
     DAY = "1d"
     WEEK = "7d"
@@ -80,7 +83,8 @@ class PricingPerformanceMetrics:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data"""
+    """
+Revenue analytics data"""
     total_revenue: Decimal
     revenue_growth_rate: float
     average_revenue_per_creator: Decimal
@@ -119,7 +123,8 @@ class PricingAnalytics:
         creator_id: Optional[str] = None,
         platform: Optional[str] = None
     ) -> PricingPerformanceMetrics:
-        """Get comprehensive pricing performance metrics"""
+        """
+Get comprehensive pricing performance metrics"""
         
         try:
             # Calculate date range
@@ -439,7 +444,8 @@ class PricingAnalytics:
         return end_date - delta
         
     async def _analyze_strategy_performance(self, calculations: List[Any]) -> List[Dict[str, Any]]:
-        """Analyze performance of different pricing strategies"""
+        """
+Analyze performance of different pricing strategies"""
         
         strategy_stats = {}
         
@@ -476,7 +482,8 @@ class PricingAnalytics:
         return sorted(performance_list, key=lambda x: x['score'], reverse=True)
         
     async def _analyze_platform_performance(self, calculations: List[Any]) -> Dict[str, Any]:
-        """Analyze performance by platform"""
+        """
+Analyze performance by platform"""
         
         platform_stats = {}
         
@@ -508,7 +515,8 @@ class PricingAnalytics:
         return platform_stats
         
     async def _analyze_geographic_performance(self, calculations: List[Any]) -> Dict[str, Any]:
-        """Analyze performance by geographic market"""
+        """
+Analyze performance by geographic market"""
         
         geo_stats = {}
         
@@ -537,7 +545,8 @@ class PricingAnalytics:
         return geo_stats
         
     async def _analyze_content_performance(self, calculations: List[Any]) -> Dict[str, Any]:
-        """Analyze performance by content type"""
+        """
+Analyze performance by content type"""
         
         content_stats = {}
         
@@ -564,7 +573,8 @@ class PricingAnalytics:
         return content_stats
         
     async def _calculate_revenue_by_tier(self, billing_events: List[Any], session) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by tier"""
+        """
+Calculate revenue breakdown by tier"""
         
         revenue_by_tier = {}
         
@@ -583,7 +593,8 @@ class PricingAnalytics:
         return revenue_by_tier
         
     async def _calculate_revenue_by_platform(self, billing_events: List[Any]) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by platform (mock implementation)"""
+        """
+Calculate revenue breakdown by platform (mock implementation)"""
         
         # This would require additional data linking billing to platforms
         return {
@@ -600,7 +611,8 @@ class PricingAnalytics:
         creator_id: Optional[str],
         session
     ) -> Decimal:
-        """Get revenue for previous period for growth calculation"""
+        """
+Get revenue for previous period for growth calculation"""
         
         query = session.query(BillingEvent).filter(
             BillingEvent.created_at >= start_date,
@@ -621,7 +633,8 @@ class PricingAnalytics:
         creator_id: Optional[str],
         session
     ) -> List[Dict[str, Any]]:
-        """Generate revenue trends over time"""
+        """
+Generate revenue trends over time"""
         
         # Generate daily revenue data points
         trends = []
@@ -653,7 +666,8 @@ class PricingAnalytics:
         return trends
         
     async def _project_future_revenue(self, revenue_trends: List[Dict[str, Any]]) -> Decimal:
-        """Project future revenue based on trends"""
+        """
+Project future revenue based on trends"""
         
         if len(revenue_trends) < 7:
             return Decimal('0')

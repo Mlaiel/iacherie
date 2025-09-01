@@ -14,6 +14,7 @@ Business Logic Validation:
 - Monetization data accuracy checks
 - Cross-platform compliance validation
 """
+
 import re
 import json
 import time
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(str, Enum):
-    """Validation levels"""
+    """
+Validation levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -51,6 +54,7 @@ class ValidationLevel(str, Enum):
 
 class DataType(str, Enum):
     """Supported data types"""
+
     TEXT = "text"
     EMAIL = "email"
     URL = "url"
@@ -78,6 +82,7 @@ class DataType(str, Enum):
 
 class SanitizationLevel(str, Enum):
     """Sanitization levels"""
+
     NONE = "none"
     BASIC = "basic"
     MODERATE = "moderate"
@@ -87,6 +92,7 @@ class SanitizationLevel(str, Enum):
 
 class ContentQuality(str, Enum):
     """Content quality levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -152,7 +158,8 @@ class SchemaValidator:
         self._initialize_builtin_validators()
     
     def _initialize_builtin_validators(self):
-        """Initialize built-in validation patterns and rules"""
+        """
+Initialize built-in validation patterns and rules"""
         self.patterns = {
             DataType.EMAIL: r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
             DataType.URL: r'^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$',
@@ -174,16 +181,19 @@ class SchemaValidator:
         })
     
     def register_validation_rule(self, rule: ValidationRule):
-        """Register validation rule for specific content type or field"""
+        """
+Register validation rule for specific content type or field"""
         self.validation_rules[rule.field_name] = rule
     
     def register_custom_validator(self, name: str, validator_func: Callable):
-        """Register custom validator function"""
+        """
+Register custom validator function"""
         self.custom_validators[name] = validator_func
     
     async def validate_field(self, field_name: str, value: Any, 
                            rule: ValidationRule) -> ValidationResult:
-        """Validate single field according to rule"""
+        """
+Validate single field according to rule"""
         start_time = time.time()
         result = ValidationResult(
             is_valid=True,
@@ -522,7 +532,8 @@ class DataQualityAnalyzer:
         self.cache = CacheManager()
     
     async def calculate_quality_score(self, validation_results: Dict[str, ValidationResult]) -> float:
-        """Calculate overall data quality score"""
+        """
+Calculate overall data quality score"""
         if not validation_results:
             return 0.0
         
@@ -543,7 +554,8 @@ class DataQualityAnalyzer:
     
     async def analyze_data_completeness(self, data: Dict[str, Any], 
                                       required_fields: List[str]) -> Dict[str, Any]:
-        """Analyze data completeness"""
+        """
+Analyze data completeness"""
         completeness_analysis = {
             "total_fields": len(required_fields),
             "present_fields": 0,
@@ -628,7 +640,8 @@ class ValidationMiddleware:
         self._load_default_schemas()
     
     def _load_default_schemas(self):
-        """Load default validation schemas for common content types"""
+        """
+Load default validation schemas for common content types"""
         # User profile validation schema
         user_rules = [
             ValidationRule(
@@ -757,13 +770,15 @@ class ValidationMiddleware:
         return content_result
     
     async def get_schema_rules(self, schema_name: str) -> List[ValidationRule]:
-        """Get validation rules for specific schema"""
+        """
+Get validation rules for specific schema"""
         # This would typically load from database or configuration
         # For now, return all rules (simplified)
         return list(self.schema_validator.validation_rules.values())
     
     async def store_validation_result(self, result: ContentValidationResult):
-        """Store validation result for analytics and monitoring"""
+        """
+Store validation result for analytics and monitoring"""
         try:
             # Store in Redis with expiration
             result_key = f"validation_results:{result.content_id}"
@@ -878,13 +893,15 @@ def get_validation_middleware() -> ValidationMiddleware:
 # Convenience functions
 async def validate_data(content_id: str, data: Dict[str, Any],
                        validation_level: ValidationLevel = ValidationLevel.STANDARD) -> ContentValidationResult:
-    """Convenience function for data validation"""
+    """
+Convenience function for data validation"""
     middleware = get_validation_middleware()
     return await middleware.validate_content(content_id, data, validation_level)
 
 
 async def register_validation_schema(schema_name: str, rules: List[ValidationRule]):
-    """Convenience function for registering validation schema"""
+    """
+Convenience function for registering validation schema"""
     middleware = get_validation_middleware()
     for rule in rules:
         middleware.schema_validator.register_validation_rule(rule)

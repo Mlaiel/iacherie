@@ -19,6 +19,7 @@ Expert Team Specializations:
 - Forecasting Engineer
 - Data Science Architect
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -51,7 +52,9 @@ from ...database.models import PredictionRecord, TrendAnalysis
 
 
 class PredictionType(Enum):
-    """Types of predictions the engine can make."""
+    """
+Types of predictions the engine can make."""
+
     CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_GROWTH = "audience_growth"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -66,6 +69,7 @@ class PredictionType(Enum):
 
 class TimeHorizon(Enum):
     """Time horizons for predictions."""
+
     SHORT_TERM = "short_term"  # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"  # 1-12 months
@@ -74,6 +78,7 @@ class TimeHorizon(Enum):
 
 class PredictionConfidence(Enum):
     """Confidence levels for predictions."""
+
     LOW = "low"  # < 60%
     MEDIUM = "medium"  # 60-80%
     HIGH = "high"  # 80-95%
@@ -97,7 +102,8 @@ class PredictionRequest:
 
 @dataclass
 class PredictionResult:
-    """Result of a prediction operation."""
+    """
+Result of a prediction operation."""
     prediction_id: str
     request: PredictionRequest
     predicted_values: Dict[str, Union[float, List[float]]]
@@ -144,7 +150,8 @@ class PredictionEngine:
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Prediction Engine with advanced forecasting capabilities."""
+        """
+Initialize the Prediction Engine with advanced forecasting capabilities."""
         self.config = config or {}
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -242,7 +249,8 @@ class PredictionEngine:
         }
     
     def _start_prediction_services(self):
-        """Start background prediction services."""
+        """
+Start background prediction services."""
         # Start model validation service
         self.active_services['model_validator'] = asyncio.create_task(
             self._validate_models_continuously()
@@ -391,7 +399,8 @@ class PredictionEngine:
         end_date: datetime, 
         request: PredictionRequest
     ) -> pd.DataFrame:
-        """Generate synthetic content performance historical data."""
+        """
+Generate synthetic content performance historical data."""
         dates = pd.date_range(start=start_date, end=end_date, freq='H')
         np.random.seed(42)
         
@@ -429,7 +438,8 @@ class PredictionEngine:
         end_date: datetime, 
         request: PredictionRequest
     ) -> pd.DataFrame:
-        """Generate synthetic audience growth historical data."""
+        """
+Generate synthetic audience growth historical data."""
         dates = pd.date_range(start=start_date, end=end_date, freq='D')
         np.random.seed(42)
         
@@ -466,7 +476,8 @@ class PredictionEngine:
         end_date: datetime, 
         request: PredictionRequest
     ) -> pd.DataFrame:
-        """Generate synthetic revenue historical data."""
+        """
+Generate synthetic revenue historical data."""
         dates = pd.date_range(start=start_date, end=end_date, freq='D')
         np.random.seed(42)
         
@@ -502,7 +513,8 @@ class PredictionEngine:
         end_date: datetime, 
         request: PredictionRequest
     ) -> pd.DataFrame:
-        """Generate generic time series data."""
+        """
+Generate generic time series data."""
         dates = pd.date_range(start=start_date, end=end_date, freq='D')
         np.random.seed(42)
         
@@ -524,7 +536,8 @@ class PredictionEngine:
         historical_data: pd.DataFrame, 
         request: PredictionRequest
     ) -> pd.DataFrame:
-        """Engineer features for prediction models."""
+        """
+Engineer features for prediction models."""
         features = historical_data.copy()
         
         # Time-based features
@@ -579,7 +592,8 @@ class PredictionEngine:
         historical_data: pd.DataFrame, 
         target_metrics: List[str]
     ) -> Dict[str, Any]:
-        """Perform seasonal decomposition for target metrics."""
+        """
+Perform seasonal decomposition for target metrics."""
         seasonal_components = {}
         
         for metric in target_metrics:
@@ -759,7 +773,8 @@ class PredictionEngine:
         confidence_intervals: Dict[str, Tuple[float, float]], 
         request: PredictionRequest
     ) -> PredictionConfidence:
-        """Determine overall prediction confidence level."""
+        """
+Determine overall prediction confidence level."""
         # Calculate confidence score based on interval width and data quality
         confidence_scores = []
         
@@ -793,7 +808,8 @@ class PredictionEngine:
         historical_data: pd.DataFrame, 
         target_metrics: List[str]
     ) -> Dict[str, Any]:
-        """Analyze trends in historical data."""
+        """
+Analyze trends in historical data."""
         trend_analysis = {}
         
         for metric in target_metrics:
@@ -868,7 +884,8 @@ class PredictionEngine:
         features: pd.DataFrame, 
         request: PredictionRequest
     ) -> Dict[str, float]:
-        """Calculate feature importance for predictions."""
+        """
+Calculate feature importance for predictions."""
         feature_importance = {}
         
         # Use a simple approach based on correlation with target metrics
@@ -1002,7 +1019,8 @@ class PredictionEngine:
         return accuracy_estimates.get(prediction_type, 0.75)  # Default 75% accuracy
     
     def _get_prediction_validity_period(self, time_horizon: TimeHorizon) -> timedelta:
-        """Get validity period for predictions based on time horizon."""
+        """
+Get validity period for predictions based on time horizon."""
         validity_periods = {
             TimeHorizon.SHORT_TERM: timedelta(hours=6),
             TimeHorizon.MEDIUM_TERM: timedelta(days=1),
@@ -1013,7 +1031,8 @@ class PredictionEngine:
         return validity_periods.get(time_horizon, timedelta(days=1))
     
     async def _check_prediction_cache(self, request: PredictionRequest) -> Optional[PredictionResult]:
-        """Check if a similar recent prediction exists in cache."""
+        """
+Check if a similar recent prediction exists in cache."""
         # Simple cache check based on request similarity
         for cached_result in self.prediction_cache.values():
             if (cached_result.request.prediction_type == request.prediction_type and
@@ -1027,7 +1046,8 @@ class PredictionEngine:
         return None
     
     async def _validate_models_continuously(self):
-        """Continuously validate and update model performance."""
+        """
+Continuously validate and update model performance."""
         while True:
             try:
                 # Validate models every 6 hours

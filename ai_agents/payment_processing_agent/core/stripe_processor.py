@@ -11,6 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import hashlib
 import hmac
@@ -95,7 +96,8 @@ class StripeProcessor(BaseProcessor):
         data: Optional[Dict[str, Any]] = None,
         params: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to Stripe API."""
+        """
+Make authenticated request to Stripe API."""
         session = await self._get_session()
         url = f"{self.base_url}/{endpoint}"
         

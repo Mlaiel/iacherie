@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ from ...models.gdpr_models import DataPrivacyRecord, DataCategory, ProcessingAct
 logger = get_logger(__name__)
 
 class DataSensitivity(Enum):
-    """Data sensitivity levels for privacy management"""
+    """
+Data sensitivity levels for privacy management"""
+
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -47,6 +50,7 @@ class DataSensitivity(Enum):
 
 class PrivacyTechnique(Enum):
     """Privacy enhancement techniques"""
+
     ENCRYPTION = "encryption"
     PSEUDONYMIZATION = "pseudonymization"
     ANONYMIZATION = "anonymization"
@@ -66,7 +70,8 @@ class DataField:
 
 @dataclass
 class PrivacyProfile:
-    """User privacy profile and preferences"""
+    """
+User privacy profile and preferences"""
     user_id: str
     privacy_level: str
     allowed_processing: List[str]
@@ -577,7 +582,8 @@ class DataPrivacyHandler:
         return base_periods.get(sensitivity, 365)
     
     def _define_access_controls(self, sensitivity: DataSensitivity) -> List[str]:
-        """Define access controls based on sensitivity"""
+        """
+Define access controls based on sensitivity"""
         controls = ["authentication_required"]
         
         if sensitivity in [DataSensitivity.HIGHLY_SENSITIVE, DataSensitivity.RESTRICTED]:
@@ -682,7 +688,8 @@ class DataPrivacyHandler:
         return data_owner_id == requester_id
     
     async def _decrypt_data(self, encrypted_data: str, field_name: str, user_id: str) -> str:
-        """Decrypt encrypted data"""
+        """
+Decrypt encrypted data"""
         try:
             encryption_key = await self.encryption_manager.get_field_key(user_id, field_name)
             decrypted_data = await self.encryption_manager.decrypt_data(encrypted_data, encryption_key)
@@ -719,7 +726,8 @@ class DataPrivacyHandler:
         accessed_fields: List[str], 
         access_reason: str
     ) -> None:
-        """Log data access for audit purposes"""
+        """
+Log data access for audit purposes"""
         logger.info(f"Data access: User {authorized_user_id} accessed {len(accessed_fields)} fields for user {user_id}")
     
     async def _analyze_data_sensitivity(self, data_categories: List[str]) -> Dict[str, Any]:

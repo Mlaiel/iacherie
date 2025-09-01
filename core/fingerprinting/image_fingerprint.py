@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
+
 import asyncio
 import hashlib
 import logging
@@ -588,7 +589,8 @@ class ImageFingerprintEngine:
             return 0.0
     
     def _compare_histogram(self, data1: Dict, data2: Dict) -> float:
-        """Compare histogram features"""
+        """
+Compare histogram features"""
         try:
             # Compare BGR histograms
             bgr_hists1 = data1.get('bgr_histograms', [])
@@ -624,7 +626,8 @@ class ImageFingerprintEngine:
             return 0.0
     
     def _compare_sift_features(self, data1: Dict, data2: Dict) -> float:
-        """Compare SIFT features"""
+        """
+Compare SIFT features"""
         try:
             stats1 = data1.get('descriptor_stats', {})
             stats2 = data2.get('descriptor_stats', {})
@@ -652,7 +655,8 @@ class ImageFingerprintEngine:
             return 0.0
     
     def _compare_texture_analysis(self, data1: Dict, data2: Dict) -> float:
-        """Compare texture analysis features"""
+        """
+Compare texture analysis features"""
         try:
             # Compare LBP histograms
             lbp1 = np.array(data1.get('lbp_histogram', []))

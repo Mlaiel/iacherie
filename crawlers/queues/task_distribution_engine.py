@@ -8,7 +8,7 @@ Technologies: ML-based distribution, Predictive analytics, Resource optimization
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER:
 Task analysis → Resource prediction → Agent selection → Load balancing → 
 Performance monitoring → Optimization → Analytics → Predictive scaling
 """
+
 from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStrategy(Enum):
-    """Task distribution strategies"""
+    """
+Task distribution strategies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_LOADED = "least_loaded"
     RESOURCE_OPTIMIZED = "resource_optimized"
@@ -53,6 +56,7 @@ class DistributionStrategy(Enum):
 
 class TaskComplexity(Enum):
     """Task complexity classification"""
+
     MINIMAL = "minimal"          # Simple URL checks
     STANDARD = "standard"        # Regular crawling
     COMPLEX = "complex"          # Deep analysis
@@ -62,6 +66,7 @@ class TaskComplexity(Enum):
 
 class ResourceType(Enum):
     """Resource types for distribution"""
+
     CPU_INTENSIVE = "cpu_intensive"
     MEMORY_INTENSIVE = "memory_intensive"
     NETWORK_INTENSIVE = "network_intensive"
@@ -105,7 +110,8 @@ class TaskResource:
 
 @dataclass
 class DistributionResult:
-    """Distribution decision result"""
+    """
+Distribution decision result"""
     task_id: str
     assigned_agent_id: Optional[str]
     distribution_strategy: DistributionStrategy
@@ -119,7 +125,8 @@ class DistributionResult:
 
 @dataclass
 class LoadBalancingMetrics:
-    """Load balancing performance metrics"""
+    """
+Load balancing performance metrics"""
     total_distributions: int = 0
     successful_distributions: int = 0
     failed_distributions: int = 0
@@ -132,7 +139,8 @@ class LoadBalancingMetrics:
 
 
 class MLDistributionPredictor:
-    """Machine learning-based distribution predictor"""
+    """
+Machine learning-based distribution predictor"""
     
     def __init__(self):
         self.historical_data: List[Dict] = []
@@ -148,7 +156,8 @@ class MLDistributionPredictor:
     async def predict_best_agent(self, 
                                 task: TaskResource, 
                                 available_agents: List[AgentCapability]) -> Tuple[str, float]:
-        """Predict best agent using ML algorithms"""
+        """
+Predict best agent using ML algorithms"""
         
         if not available_agents:
             return None, 0.0
@@ -172,7 +181,8 @@ class MLDistributionPredictor:
     async def _calculate_agent_score(self, 
                                    task: TaskResource, 
                                    agent: AgentCapability) -> float:
-        """Calculate agent suitability score"""
+        """
+Calculate agent suitability score"""
         
         score = 0.0
         
@@ -204,7 +214,8 @@ class MLDistributionPredictor:
     async def _calculate_resource_match(self, 
                                       task: TaskResource, 
                                       agent: AgentCapability) -> float:
-        """Calculate resource compatibility score"""
+        """
+Calculate resource compatibility score"""
         
         # Check CPU capacity
         cpu_match = 1.0 if agent.cpu_capacity >= task.estimated_cpu_usage else 0.5
@@ -228,7 +239,8 @@ class MLDistributionPredictor:
     async def _calculate_geographic_match(self, 
                                         task: TaskResource, 
                                         agent: AgentCapability) -> float:
-        """Calculate geographic proximity score"""
+        """
+Calculate geographic proximity score"""
         
         if not task.geographic_preference:
             return 1.0
@@ -266,7 +278,8 @@ class MLDistributionPredictor:
     async def update_prediction_accuracy(self, 
                                        task_id: str, 
                                        actual_performance: Dict):
-        """Update prediction model with actual performance"""
+        """
+Update prediction model with actual performance"""
         
         # Find prediction
         prediction = None
@@ -289,7 +302,8 @@ class MLDistributionPredictor:
     async def _adjust_feature_weights(self, 
                                     prediction: Dict, 
                                     actual_performance: Dict):
-        """Adjust feature weights based on prediction accuracy"""
+        """
+Adjust feature weights based on prediction accuracy"""
         
         # Simple adjustment mechanism
         if actual_performance.get('success', False):
@@ -311,7 +325,8 @@ class MLDistributionPredictor:
 
 
 class TaskDistributionEngine:
-    """Advanced task distribution engine with ML capabilities"""
+    """
+Advanced task distribution engine with ML capabilities"""
     
     def __init__(self, 
                  default_strategy: DistributionStrategy = DistributionStrategy.ML_PREDICTED,
@@ -747,7 +762,8 @@ class TaskDistributionEngine:
                                agent: AgentCapability, 
                                task: TaskResource, 
                                increment: bool = True):
-        """Update agent load based on task assignment"""
+        """
+Update agent load based on task assignment"""
         
         load_change = task.estimated_cpu_usage / agent.cpu_capacity
         
@@ -762,7 +778,8 @@ class TaskDistributionEngine:
                                  result: DistributionResult, 
                                  start_time: float, 
                                  success: bool):
-        """Record distribution result for metrics"""
+        """
+Record distribution result for metrics"""
         
         distribution_time = (time.time() - start_time) * 1000  # Convert to milliseconds
         
@@ -797,7 +814,8 @@ class TaskDistributionEngine:
                            task_id: str, 
                            agent_id: str, 
                            performance_data: Dict):
-        """Handle task completion and update agent metrics"""
+        """
+Handle task completion and update agent metrics"""
         
         if agent_id in self.registered_agents:
             agent = self.registered_agents[agent_id]
@@ -856,7 +874,8 @@ class TaskDistributionEngine:
         return self.metrics
     
     async def get_agent_status(self) -> Dict[str, Dict]:
-        """Get status of all registered agents"""
+        """
+Get status of all registered agents"""
         
         agent_status = {}
         for agent_id, agent in self.registered_agents.items():
@@ -875,7 +894,8 @@ class TaskDistributionEngine:
         return agent_status
     
     async def optimize_distribution_strategy(self) -> Dict[str, Any]:
-        """Analyze performance and suggest optimization strategies"""
+        """
+Analyze performance and suggest optimization strategies"""
         
         optimization_report = {
             'timestamp': datetime.utcnow().isoformat(),

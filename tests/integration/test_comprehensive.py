@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,8 +13,10 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Simple functional test for the FastAPI application
 """
+Simple functional test for the FastAPI application
+"""
+
 import asyncio
 import subprocess
 import time
@@ -25,7 +28,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 def test_dependencies():
-    """Test that all required dependencies are available"""
+    """
+Test that all required dependencies are available"""
     print("🔍 Testing dependencies...")
     
     try:

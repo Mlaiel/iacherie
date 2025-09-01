@@ -51,8 +51,9 @@ payment_result = await blockchain.process_crypto_payment(
 ```
 
 Author: Expert Blockchain Development Team
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -159,7 +160,8 @@ class BlockchainPlatform:
         self.initialized = False
         
     async def initialize(self):
-        """Initialize all blockchain components"""
+        """
+Initialize all blockchain components"""
         try:
             logger.info("Initializing blockchain platform...")
             
@@ -214,7 +216,8 @@ class BlockchainPlatform:
         content_hash: str,
         claimed_owner: str
     ) -> Dict[str, Any]:
-        """Verify content ownership on blockchain"""
+        """
+Verify content ownership on blockchain"""
         self._check_initialized()
         return await self.blockchain_manager.verify_content_ownership(
             content_hash, claimed_owner
@@ -229,7 +232,8 @@ class BlockchainPlatform:
         price: Decimal,
         royalty_percentage: Optional[Decimal] = None
     ) -> Dict[str, Any]:
-        """Create NFT-based content license"""
+        """
+Create NFT-based content license"""
         self._check_initialized()
         return await self.blockchain_manager.create_nft_license(
             user_id, content_id, license_terms, price, royalty_percentage
@@ -241,7 +245,8 @@ class BlockchainPlatform:
         nft_token_id: int,
         payment_currency: str
     ) -> Dict[str, Any]:
-        """Purchase NFT license"""
+        """
+Purchase NFT license"""
         self._check_initialized()
         return await self.nft_system.purchase_license(
             buyer_id, nft_token_id, payment_currency
@@ -256,7 +261,8 @@ class BlockchainPlatform:
         recipient_address: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process cryptocurrency payment"""
+        """
+Process cryptocurrency payment"""
         self._check_initialized()
         return await self.blockchain_manager.process_crypto_payment(
             user_id, amount, currency, recipient_address, metadata
@@ -267,7 +273,8 @@ class BlockchainPlatform:
         user_id: str,
         currency: str
     ) -> Dict[str, Any]:
-        """Get user wallet balance"""
+        """
+Get user wallet balance"""
         self._check_initialized()
         return await self.crypto_payments.get_wallet_balance(user_id, currency)
     
@@ -277,7 +284,8 @@ class BlockchainPlatform:
         to_currency: str,
         amount: Decimal
     ) -> Dict[str, Any]:
-        """Convert between cryptocurrencies"""
+        """
+Convert between cryptocurrencies"""
         self._check_initialized()
         return await self.crypto_payments.convert_currency(
             from_currency, to_currency, amount
@@ -291,7 +299,8 @@ class BlockchainPlatform:
         currency: str,
         distribution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Distribute royalties to content creators"""
+        """
+Distribute royalties to content creators"""
         self._check_initialized()
         return await self.blockchain_manager.distribute_royalties(
             content_id, total_amount, currency, distribution_data
@@ -308,7 +317,8 @@ class BlockchainPlatform:
         values: List[int] = None,
         calldatas: List[str] = None
     ) -> Dict[str, Any]:
-        """Create governance proposal"""
+        """
+Create governance proposal"""
         self._check_initialized()
         return await self.governance_system.create_proposal(
             proposer, title, description, proposal_type, targets, values, calldatas
@@ -321,7 +331,8 @@ class BlockchainPlatform:
         vote_type: VoteType,
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Vote on governance proposal"""
+        """
+Vote on governance proposal"""
         self._check_initialized()
         return await self.governance_system.vote_on_proposal(
             voter, proposal_id, vote_type, reason
@@ -332,7 +343,8 @@ class BlockchainPlatform:
         user_address: str,
         block_number: Optional[int] = None
     ) -> VotingPower:
-        """Get user voting power"""
+        """
+Get user voting power"""
         self._check_initialized()
         return await self.governance_system.get_voting_power(user_address, block_number)
     
@@ -342,7 +354,8 @@ class BlockchainPlatform:
         user_id: str,
         stake_amount: Decimal
     ) -> Dict[str, Any]:
-        """Register as validator"""
+        """
+Register as validator"""
         self._check_initialized()
         return await self.consensus_engine.register_validator(user_id, stake_amount)
     
@@ -352,13 +365,15 @@ class BlockchainPlatform:
         validator: str,
         amount: Decimal
     ) -> Dict[str, Any]:
-        """Delegate stake to validator"""
+        """
+Delegate stake to validator"""
         self._check_initialized()
         return await self.consensus_engine.delegate_stake(delegator, validator, amount)
     
     # Analytics and Monitoring
     async def get_blockchain_metrics(self) -> Dict[str, Any]:
-        """Get blockchain performance metrics"""
+        """
+Get blockchain performance metrics"""
         self._check_initialized()
         
         try:
@@ -447,32 +462,38 @@ class BlockchainPlatform:
         return []
     
     async def _get_user_nft_licenses(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's NFT licenses"""
+        """
+Get user's NFT licenses"""
         # Implementation would query NFT system
         return []
     
     async def _get_user_wallet_balances(self, user_id: str) -> Dict[str, str]:
-        """Get user's wallet balances"""
+        """
+Get user's wallet balances"""
         # Implementation would query crypto payment system
         return {}
     
     async def _get_user_voting_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get user's voting power and history"""
+        """
+Get user's voting power and history"""
         # Implementation would query governance system
         return {}
     
     async def _get_user_validator_status(self, user_id: str) -> Dict[str, Any]:
-        """Get user's validator status"""
+        """
+Get user's validator status"""
         # Implementation would query consensus engine
         return {}
     
     async def _get_user_royalty_earnings(self, user_id: str) -> Dict[str, Any]:
-        """Get user's royalty earnings"""
+        """
+Get user's royalty earnings"""
         # Implementation would query royalty system
         return {}
     
     async def _check_component_health(self, component_name: str) -> bool:
-        """Check health of specific component"""
+        """
+Check health of specific component"""
         try:
             component = getattr(self, component_name)
             if hasattr(component, 'health_check'):
@@ -487,11 +508,13 @@ blockchain_platform = BlockchainPlatform()
 
 # Convenience functions for direct access
 async def initialize_blockchain() -> None:
-    """Initialize blockchain platform"""
+    """
+Initialize blockchain platform"""
     await blockchain_platform.initialize()
 
 async def get_blockchain_platform() -> BlockchainPlatform:
-    """Get initialized blockchain platform"""
+    """
+Get initialized blockchain platform"""
     if not blockchain_platform.initialized:
         await blockchain_platform.initialize()
     return blockchain_platform
@@ -503,7 +526,8 @@ async def register_content_on_blockchain(
     content_hash: str,
     metadata: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Quick function to register content rights"""
+    """
+Quick function to register content rights"""
     platform = await get_blockchain_platform()
     return await platform.register_content_rights(user_id, content_id, content_hash, metadata)
 
@@ -514,7 +538,8 @@ async def create_content_nft_license(
     price: Decimal,
     royalty_percentage: Optional[Decimal] = None
 ) -> Dict[str, Any]:
-    """Quick function to create NFT license"""
+    """
+Quick function to create NFT license"""
     platform = await get_blockchain_platform()
     return await platform.create_nft_license(
         user_id, content_id, license_terms, price, royalty_percentage
@@ -527,7 +552,8 @@ async def process_crypto_content_payment(
     recipient_address: str,
     metadata: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Quick function to process crypto payment"""
+    """
+Quick function to process crypto payment"""
     platform = await get_blockchain_platform()
     return await platform.process_crypto_payment(
         user_id, amount, currency, recipient_address, metadata
@@ -539,7 +565,8 @@ async def distribute_content_royalties(
     currency: str,
     distribution_data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Quick function to distribute royalties"""
+    """
+Quick function to distribute royalties"""
     platform = await get_blockchain_platform()
     return await platform.distribute_royalties(
         content_id, total_amount, currency, distribution_data

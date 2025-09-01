@@ -4,7 +4,7 @@
 Advanced AI-powered revenue loss calculation and financial impact assessment.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
@@ -31,6 +31,7 @@ This module provides:
 - Market penetration and audience overlap analysis
 - Competitive intelligence and pricing optimization
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -54,7 +55,9 @@ import asyncpg
 logger = logging.getLogger(__name__)
 
 class RevenueMetric(Enum):
-    """Revenue calculation metrics."""
+    """
+Revenue calculation metrics."""
+
     STREAMING_REVENUE = "streaming_revenue"
     ADVERTISING_REVENUE = "advertising_revenue"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -66,6 +69,7 @@ class RevenueMetric(Enum):
 
 class ImpactSeverity(Enum):
     """Revenue impact severity levels."""
+
     MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
@@ -75,6 +79,7 @@ class ImpactSeverity(Enum):
 
 class MarketSegment(Enum):
     """Target market segments."""
+
     MAINSTREAM_POP = "mainstream_pop"
     INDIE_ALTERNATIVE = "indie_alternative"
     ELECTRONIC_DANCE = "electronic_dance"
@@ -107,7 +112,8 @@ class RevenueAnalysisResult:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence data."""
+    """
+Market intelligence data."""
     segment: MarketSegment
     average_stream_value: Decimal
     audience_demographics: Dict[str, Any]
@@ -126,7 +132,8 @@ class RevenueImpactAnalyzer:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the revenue impact analyzer."""
+        """
+Initialize the revenue impact analyzer."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -156,7 +163,8 @@ class RevenueImpactAnalyzer:
         self.initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize the revenue impact analyzer."""
+        """
+Initialize the revenue impact analyzer."""
         try:
             self.logger.info("Initializing Revenue Impact Analyzer...")
             
@@ -483,7 +491,8 @@ class RevenueImpactAnalyzer:
     async def _get_youtube_performance(
         self, content_id: str, start_date: datetime, end_date: datetime
     ) -> Dict[str, Any]:
-        """Get YouTube performance data."""
+        """
+Get YouTube performance data."""
         # Implementation for YouTube API integration
         return {
             'views': 250000,
@@ -494,7 +503,8 @@ class RevenueImpactAnalyzer:
     async def _get_instagram_performance(
         self, content_id: str, start_date: datetime, end_date: datetime
     ) -> Dict[str, Any]:
-        """Get Instagram performance data."""
+        """
+Get Instagram performance data."""
         # Implementation for Instagram API integration
         return {
             'views': 180000,
@@ -505,7 +515,8 @@ class RevenueImpactAnalyzer:
     async def _analyze_violation_impact(
         self, violation_data: Dict[str, Any], performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze the impact of the violation on performance."""
+        """
+Analyze the impact of the violation on performance."""
         try:
             # Extract violation metrics
             violation_views = violation_data.get('estimated_views', 0)

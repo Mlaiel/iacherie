@@ -15,6 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import os
 from typing import Dict, List, Optional, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,9 @@ import json
 from pathlib import Path
 
 class PlatformType(Enum):
-    """Supported platform types for content surveillance."""
+    """
+Supported platform types for content surveillance."""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -41,6 +44,7 @@ class PlatformType(Enum):
 
 class ContentType(Enum):
     """Content types for surveillance and protection."""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -49,6 +53,7 @@ class ContentType(Enum):
 
 class AuthMethod(Enum):
     """Authentication methods for platform APIs."""
+
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
@@ -59,6 +64,7 @@ class AuthMethod(Enum):
 
 class ScrapeMethod(Enum):
     """Scraping methods for content extraction."""
+
     API_OFFICIAL = "api_official"
     SELENIUM = "selenium"
     PLAYWRIGHT = "playwright"
@@ -81,7 +87,8 @@ class RateLimitConfig:
 
 @dataclass
 class ProxyConfig:
-    """Proxy configuration for crawler anonymity."""
+    """
+Proxy configuration for crawler anonymity."""
     enabled: bool = True
     rotation_enabled: bool = True
     proxy_list: List[str] = field(default_factory=list)
@@ -149,7 +156,8 @@ class PlatformScrapingConfig:
 
 @dataclass
 class ViolationDetectionConfig:
-    """Violation detection configuration."""
+    """
+Violation detection configuration."""
     enabled: bool = True
     similarity_threshold: float = 0.85
     fingerprint_matching: bool = True
@@ -197,10 +205,12 @@ class PlatformConfig:
     backup_enabled: bool = True
 
 class PlatformConfigManager:
-    """Manager for platform configurations."""
+    """
+Manager for platform configurations."""
     
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize platform config manager."""
+        """
+Initialize platform config manager."""
         self.config_dir = Path(config_dir or os.getenv("CRAWLER_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self._configs: Dict[PlatformType, PlatformConfig] = {}
@@ -345,7 +355,8 @@ class PlatformConfigManager:
         return self._configs.get(platform)
     
     def get_enabled_configs(self) -> Dict[PlatformType, PlatformConfig]:
-        """Get all enabled platform configurations."""
+        """
+Get all enabled platform configurations."""
         return {
             platform: config 
             for platform, config in self._configs.items() 
@@ -353,12 +364,14 @@ class PlatformConfigManager:
         }
     
     def update_config(self, platform: PlatformType, config: PlatformConfig) -> None:
-        """Update platform configuration."""
+        """
+Update platform configuration."""
         self._configs[platform] = config
         self.save_config(platform)
     
     def save_config(self, platform: PlatformType) -> None:
-        """Save platform configuration to file."""
+        """
+Save platform configuration to file."""
         config = self._configs.get(platform)
         if config:
             config_file = self.config_dir / f"{platform.value}_config.json"
@@ -383,7 +396,8 @@ class PlatformConfigManager:
         pass
     
     def validate_config(self, config: PlatformConfig) -> List[str]:
-        """Validate platform configuration."""
+        """
+Validate platform configuration."""
         errors = []
         
         if not config.platform:
@@ -415,7 +429,8 @@ class PlatformConfigManager:
             json.dump(export_data, f, indent=2, default=str)
     
     def import_configs(self, file_path: str) -> None:
-        """Import configurations from file."""
+        """
+Import configurations from file."""
         with open(file_path, 'r') as f:
             data = json.load(f)
             for platform_name, config_data in data.items():

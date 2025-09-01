@@ -4,8 +4,9 @@ Manages automated content distribution across multiple platforms including
 YouTube, Instagram, TikTok, Spotify, and other social media platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -33,7 +34,9 @@ from ...utils.retry_utils import retry_with_backoff
 logger = get_logger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""
+    """
+Supported platform types"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -45,6 +48,7 @@ class PlatformType(Enum):
 
 class DistributionPriority(Enum):
     """Distribution priority levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -52,7 +56,8 @@ class DistributionPriority(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""
+    """
+Platform-specific configuration"""
     platform: PlatformType
     api_service: Any
     max_file_size: int
@@ -64,7 +69,8 @@ class PlatformConfig:
 
 @dataclass
 class DistributionRequest:
-    """Distribution request structure"""
+    """
+Distribution request structure"""
     user_id: int
     content_id: int
     platforms: List[PlatformType]
@@ -77,7 +83,8 @@ class DistributionRequest:
 
 @dataclass
 class DistributionResult:
-    """Distribution result for single platform"""
+    """
+Distribution result for single platform"""
     platform: PlatformType
     success: bool
     platform_id: Optional[str] = None
@@ -650,7 +657,8 @@ class DistributionManager:
         request: DistributionRequest,
         results: List[DistributionResult]
     ):
-        """Send distribution completion notification"""
+        """
+Send distribution completion notification"""
         successful_platforms = [r.platform.value for r in results if r.success]
         failed_platforms = [r.platform.value for r in results if not r.success]
         
@@ -662,7 +670,8 @@ class DistributionManager:
         )
     
     async def _handle_distribution_error(self, request: DistributionRequest, error: str):
-        """Handle distribution error"""
+        """
+Handle distribution error"""
         logger.error(f"Distribution error for user {request.user_id}: {error}")
         
         # Send error notification
@@ -682,7 +691,8 @@ class DistributionManager:
         pass
     
     async def _check_scheduled_distributions(self):
-        """Check and execute scheduled distributions"""
+        """
+Check and execute scheduled distributions"""
         while True:
             try:
                 # Check for due scheduled distributions

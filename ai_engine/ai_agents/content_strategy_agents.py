@@ -3,11 +3,12 @@
 Specialized agents for content strategy, planning, and optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains AI agents specialized in content strategy development,
 performance analysis, and strategic recommendations for content creators.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -23,7 +24,8 @@ from ..neural_networks.recommendation_networks import CollaborationRecommendatio
 
 @dataclass
 class ContentAnalysis:
-    """Content analysis results"""
+    """
+Content analysis results"""
     engagement_score: float
     viral_potential: float
     audience_match: float
@@ -36,7 +38,8 @@ class ContentAnalysis:
 
 @dataclass
 class StrategyRecommendation:
-    """Strategic recommendation structure"""
+    """
+Strategic recommendation structure"""
     priority: str  # high, medium, low
     category: str  # content, timing, audience, platform
     title: str

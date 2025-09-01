@@ -9,6 +9,7 @@ Any unauthorized use, reproduction, or distribution without explicit
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import json
 import logging
@@ -28,7 +29,9 @@ from .log_aggregator import LogEntry, LogLevel
 
 
 class FluentdInputType(str, Enum):
-    """Fluentd input plugin types"""
+    """
+Fluentd input plugin types"""
+
     FORWARD = "forward"
     HTTP = "http"
     TCP = "tcp"
@@ -40,6 +43,7 @@ class FluentdInputType(str, Enum):
 
 class FluentdOutputType(str, Enum):
     """Fluentd output plugin types"""
+
     ELASTICSEARCH = "elasticsearch"
     S3 = "s3"
     KAFKA = "kafka"
@@ -52,6 +56,7 @@ class FluentdOutputType(str, Enum):
 
 class FluentdFilterType(str, Enum):
     """Fluentd filter plugin types"""
+
     RECORD_TRANSFORMER = "record_transformer"
     GREP = "grep"
     PARSER = "parser"
@@ -114,12 +119,14 @@ class FluentdSourceConfig:
         return self
     
     def build(self) -> Dict[str, Any]:
-        """Build source configuration"""
+        """
+Build source configuration"""
         return self.config
 
 
 class FluentdMatchConfig:
-    """Fluentd match configuration builder"""
+    """
+Fluentd match configuration builder"""
     
     def __init__(self, pattern: str, output_type: FluentdOutputType):
         self.pattern = pattern
@@ -197,7 +204,8 @@ class FluentdMatchConfig:
         return self
     
     def build(self) -> Dict[str, Any]:
-        """Build match configuration"""
+        """
+Build match configuration"""
         config = {"@type": self.output_type.value}
         config.update(self.config)
         
@@ -268,12 +276,14 @@ class FluentdFilterConfig:
         return self
     
     def build(self) -> Dict[str, Any]:
-        """Build filter configuration"""
+        """
+Build filter configuration"""
         return self.config
 
 
 class FluentdConfigBuilder:
-    """Complete Fluentd configuration builder"""
+    """
+Complete Fluentd configuration builder"""
     
     def __init__(self):
         self.sources = []
@@ -283,12 +293,14 @@ class FluentdConfigBuilder:
         self.system_config = {}
     
     def add_source(self, source_config: FluentdSourceConfig):
-        """Add source configuration"""
+        """
+Add source configuration"""
         self.sources.append(source_config.build())
         return self
     
     def add_filter(self, pattern: str, filter_config: FluentdFilterConfig):
-        """Add filter configuration"""
+        """
+Add filter configuration"""
         config = filter_config.build()
         self.filters.append({
             "pattern": pattern,
@@ -374,12 +386,14 @@ class FluentdClient:
         self.session = aiohttp.ClientSession()
     
     async def disconnect(self):
-        """Close HTTP session"""
+        """
+Close HTTP session"""
         if self.session:
             await self.session.close()
     
     async def send_log(self, tag: str, record: Dict[str, Any], timestamp: Optional[int] = None) -> bool:
-        """Send single log record to Fluentd"""
+        """
+Send single log record to Fluentd"""
         if not self.session:
             await self.connect()
         
@@ -439,7 +453,8 @@ class FluentdManager:
         self._setup_default_configuration()
     
     def _setup_default_configuration(self):
-        """Setup default Fluentd configuration for IA Influencer Agent"""
+        """
+Setup default Fluentd configuration for IA Influencer Agent"""
         
         # System configuration
         self.config_builder.set_system_config(
@@ -623,7 +638,8 @@ class FluentdManager:
         return self.config_builder.build_yaml()
     
     async def save_configuration(self, file_path: str):
-        """Save Fluentd configuration to file"""
+        """
+Save Fluentd configuration to file"""
         config_yaml = self.get_configuration()
         
         async with aiofiles.open(file_path, 'w') as f:
@@ -636,15 +652,18 @@ class FluentdManager:
         self.config_builder.add_source(source_config)
     
     def add_custom_filter(self, pattern: str, filter_config: FluentdFilterConfig):
-        """Add custom filter configuration"""
+        """
+Add custom filter configuration"""
         self.config_builder.add_filter(pattern, filter_config)
     
     def add_custom_match(self, pattern: str, match_config: FluentdMatchConfig):
-        """Add custom match configuration"""
+        """
+Add custom match configuration"""
         self.config_builder.add_match(pattern, match_config)
     
     async def validate_configuration(self) -> Dict[str, Any]:
-        """Validate Fluentd configuration"""
+        """
+Validate Fluentd configuration"""
         try:
             config_yaml = self.get_configuration()
             

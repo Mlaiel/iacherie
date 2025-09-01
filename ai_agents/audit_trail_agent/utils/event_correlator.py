@@ -10,6 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
+
 import asyncio
 import logging
 import time
@@ -62,7 +63,9 @@ from ...utils.graph_analyzer import GraphAnalyzer
 logger = logging.getLogger(__name__)
 
 class CorrelationType(Enum):
-    """Event correlation type classification"""
+    """
+Event correlation type classification"""
+
     TEMPORAL = "temporal"
     CAUSAL = "causal"
     STATISTICAL = "statistical"
@@ -73,6 +76,7 @@ class CorrelationType(Enum):
 
 class EventPattern(Enum):
     """Detected event pattern types"""
+
     SEQUENCE = "sequence"
     CLUSTER = "cluster"
     BURST = "burst"
@@ -84,6 +88,7 @@ class EventPattern(Enum):
 
 class CorrelationConfidence(IntEnum):
     """Correlation confidence levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -92,7 +97,8 @@ class CorrelationConfidence(IntEnum):
 
 @dataclass
 class CorrelationConfiguration:
-    """Advanced event correlation configuration"""
+    """
+Advanced event correlation configuration"""
     enable_real_time_correlation: bool = True
     enable_pattern_learning: bool = True
     enable_anomaly_detection: bool = True
@@ -106,7 +112,8 @@ class CorrelationConfiguration:
 
 @dataclass
 class CorrelationMetrics:
-    """Comprehensive correlation analysis metrics"""
+    """
+Comprehensive correlation analysis metrics"""
     total_correlations_found: int = 0
     patterns_detected: int = 0
     anomalies_identified: int = 0
@@ -652,7 +659,8 @@ class EventCorrelator:
         event2: Dict[str, Any],
         time_diff: timedelta
     ) -> float:
-        """Calculate temporal correlation score between two events"""
+        """
+Calculate temporal correlation score between two events"""
         score = 0.0
         
         # Time proximity score

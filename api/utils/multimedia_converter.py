@@ -6,6 +6,7 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
+
 import ffmpeg
 from PIL import Image, ImageOps, ImageEnhance
 import librosa
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ConversionParams:
-    """Conversion parameters configuration"""
+    """
+Conversion parameters configuration"""
     format: str
     quality: Optional[Union[int, str]] = None
     resolution: Optional[Tuple[int, int]] = None
@@ -49,7 +51,8 @@ class ConversionParams:
 
 @dataclass
 class ConversionResult:
-    """Conversion operation result"""
+    """
+Conversion operation result"""
     success: bool
     input_file: str
     output_file: Optional[str] = None
@@ -62,7 +65,8 @@ class ConversionResult:
     warnings: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""
+        """
+Convert result to dictionary"""
         return {
             'success': self.success,
             'input_file': self.input_file,
@@ -79,7 +83,8 @@ class ConversionResult:
 
 @dataclass
 class MediaInfo:
-    """Media file information"""
+    """
+Media file information"""
     file_path: str
     media_type: str  # audio, video, image
     format: str
@@ -95,7 +100,8 @@ class MediaInfo:
 
 
 class AudioConverter:
-    """Advanced audio format conversion and processing"""
+    """
+Advanced audio format conversion and processing"""
     
     def __init__(self, quality_preset: str = "high"):
         self.quality_preset = quality_preset
@@ -208,7 +214,8 @@ class AudioConverter:
         return options
     
     async def _execute_ffmpeg(self, stream) -> None:
-        """Execute ffmpeg command asynchronously"""
+        """
+Execute ffmpeg command asynchronously"""
         def run_ffmpeg():
             try:
                 ffmpeg.run(stream, overwrite_output=True, quiet=True)
@@ -288,7 +295,8 @@ class AudioConverter:
 
 
 class VideoConverter:
-    """Advanced video format conversion and processing"""
+    """
+Advanced video format conversion and processing"""
     
     def __init__(self, hardware_acceleration: bool = True):
         self.hardware_acceleration = hardware_acceleration
@@ -327,7 +335,8 @@ class VideoConverter:
     
     async def convert_video(self, input_file: str, output_file: str,
                           params: ConversionParams) -> ConversionResult:
-        """Convert video file with specified parameters"""
+        """
+Convert video file with specified parameters"""
         start_time = time.time()
         result = ConversionResult(
             success=False,
@@ -547,7 +556,8 @@ class ImageConverter:
     
     async def convert_image(self, input_file: str, output_file: str,
                           params: ConversionParams) -> ConversionResult:
-        """Convert image file with specified parameters"""
+        """
+Convert image file with specified parameters"""
         start_time = time.time()
         result = ConversionResult(
             success=False,
@@ -689,7 +699,8 @@ class ImageConverter:
 
 
 class MultimediaConverter:
-    """Main multimedia converter combining all format converters"""
+    """
+Main multimedia converter combining all format converters"""
     
     def __init__(self, temp_dir: Optional[str] = None,
                  cleanup_temp: bool = True):
@@ -706,7 +717,8 @@ class MultimediaConverter:
     
     async def convert_file(self, input_file: str, output_file: str,
                           params: ConversionParams) -> ConversionResult:
-        """Convert file based on detected media type"""
+        """
+Convert file based on detected media type"""
         media_type = self._detect_media_type(input_file)
         
         if media_type == 'audio':
@@ -751,7 +763,8 @@ class MultimediaConverter:
             return 'unknown'
     
     async def get_media_info(self, file_path: str) -> MediaInfo:
-        """Get comprehensive media file information"""
+        """
+Get comprehensive media file information"""
         media_type = self._detect_media_type(file_path)
         file_path_obj = Path(file_path)
         
@@ -890,7 +903,8 @@ class MultimediaConverter:
         }
     
     def cleanup_temp_files(self):
-        """Clean up temporary files"""
+        """
+Clean up temporary files"""
         if self.cleanup_temp:
             temp_path = Path(self.temp_dir)
             for file in temp_path.glob('*'):
@@ -951,7 +965,8 @@ class StreamingOptimizer:
     
     async def optimize_for_streaming(self, input_file: str, output_dir: str,
                                    quality: str = 'medium') -> List[ConversionResult]:
-        """Optimize file for streaming with multiple quality levels"""
+        """
+Optimize file for streaming with multiple quality levels"""
         media_type = self.converter._detect_media_type(input_file)
         
         if media_type not in self.streaming_presets:
@@ -1030,5 +1045,6 @@ class StreamingOptimizer:
 
 
 class ConversionError(Exception):
-    """Custom exception for conversion errors"""
+    """
+Custom exception for conversion errors"""
     pass

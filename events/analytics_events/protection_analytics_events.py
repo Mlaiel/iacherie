@@ -12,6 +12,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import json
 import numpy as np
@@ -44,7 +45,9 @@ logger = get_logger(__name__)
 
 
 class ProtectionEventType(Enum):
-    """Types of content protection events"""
+    """
+Types of content protection events"""
+
     FINGERPRINT_CREATED = "fingerprint_created"
     VIOLATION_DETECTED = "violation_detected"
     TAKEDOWN_REQUESTED = "takedown_requested"
@@ -60,6 +63,7 @@ class ProtectionEventType(Enum):
 
 class ContentType(Enum):
     """Types of content for protection"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -74,6 +78,7 @@ class ContentType(Enum):
 
 class ViolationSeverity(Enum):
     """Severity levels for content violations"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -83,6 +88,7 @@ class ViolationSeverity(Enum):
 
 class ProtectionStatus(Enum):
     """Status of content protection"""
+
     PROTECTED = "protected"
     UNPROTECTED = "unprotected"
     PARTIALLY_PROTECTED = "partially_protected"
@@ -111,7 +117,8 @@ class ProtectionAnalyticsEvent(BaseEvent):
     legal_context: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert protection event to dictionary"""
+        """
+Convert protection event to dictionary"""
         return {
             **asdict(self),
             'content_type': self.content_type.value,
@@ -124,7 +131,8 @@ class ProtectionAnalyticsEvent(BaseEvent):
 
 @dataclass
 class FingerprintPerformanceMetrics:
-    """Performance metrics for fingerprinting systems"""
+    """
+Performance metrics for fingerprinting systems"""
     content_type: ContentType
     total_fingerprints: int
     successful_matches: int
@@ -142,7 +150,8 @@ class FingerprintPerformanceMetrics:
 
 @dataclass
 class ViolationReport:
-    """Comprehensive violation report"""
+    """
+Comprehensive violation report"""
     violation_id: str
     creator_id: str
     content_id: str
@@ -159,7 +168,8 @@ class ViolationReport:
 
 
 class ProtectionAnalyticsEventHandler(BaseEventHandler):
-    """Handles content protection analytics events with ML-powered insights"""
+    """
+Handles content protection analytics events with ML-powered insights"""
     
     def __init__(self):
         super().__init__()
@@ -171,7 +181,8 @@ class ProtectionAnalyticsEventHandler(BaseEventHandler):
         self.legal_analytics = LegalAnalytics()
         
     async def handle(self, event: ProtectionAnalyticsEvent) -> Dict[str, Any]:
-        """Process protection analytics event with comprehensive analysis"""
+        """
+Process protection analytics event with comprehensive analysis"""
         try:
             # Validate event data
             await self._validate_event(event)
@@ -259,7 +270,8 @@ class ProtectionAnalyticsEventHandler(BaseEventHandler):
             )
     
     async def _calculate_protection_effectiveness(self, event: ProtectionAnalyticsEvent) -> float:
-        """Calculate overall protection effectiveness score"""
+        """
+Calculate overall protection effectiveness score"""
         # Get protection metrics for the creator
         metrics = await self._get_protection_metrics(event.creator_id)
         
@@ -288,7 +300,8 @@ class ProtectionAnalyticsEventHandler(BaseEventHandler):
         return min(effectiveness_score * 100, 100.0)  # Cap at 100%
     
     async def _generate_protection_recommendations(self, event: ProtectionAnalyticsEvent) -> List[Dict[str, Any]]:
-        """Generate actionable protection recommendations"""
+        """
+Generate actionable protection recommendations"""
         recommendations = []
         
         # Analyze fingerprint performance
@@ -349,7 +362,8 @@ class ProtectionAnalyticsEventHandler(BaseEventHandler):
     
     async def _check_protection_alerts(self, event: ProtectionAnalyticsEvent, 
                                      analysis: Dict[str, Any]) -> None:
-        """Check if protection alerts should be triggered"""
+        """
+Check if protection alerts should be triggered"""
         # High-value content violation
         if (event.protection_event_type == ProtectionEventType.VIOLATION_DETECTED and
             event.severity in [ViolationSeverity.HIGH, ViolationSeverity.CRITICAL]):
@@ -372,7 +386,8 @@ class ProtectionAnalyticsEventHandler(BaseEventHandler):
 
 
 class FingerprintPerformanceTracker:
-    """Tracks and analyzes fingerprinting system performance"""
+    """
+Tracks and analyzes fingerprinting system performance"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -383,7 +398,8 @@ class FingerprintPerformanceTracker:
         self.text_engine = TextFingerprintEngine()
     
     async def track_performance(self, event: ProtectionAnalyticsEvent) -> FingerprintPerformanceMetrics:
-        """Track comprehensive fingerprinting performance metrics"""
+        """
+Track comprehensive fingerprinting performance metrics"""
         # Get performance data for content type
         performance_data = await self._get_performance_data(event.content_type, event.creator_id)
         
@@ -416,7 +432,8 @@ class FingerprintPerformanceTracker:
         )
     
     async def _calculate_accuracy_metrics(self, data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate accuracy, precision, recall, and F1 score"""
+        """
+Calculate accuracy, precision, recall, and F1 score"""
         true_positives = data.get('successful_matches', 0)
         false_positives = data.get('false_positives', 0)
         false_negatives = data.get('false_negatives', 0)
@@ -440,7 +457,8 @@ class FingerprintPerformanceTracker:
         }
     
     async def _calculate_processing_metrics(self, data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate processing time and latency metrics"""
+        """
+Calculate processing time and latency metrics"""
         processing_times = data.get('processing_times', [])
         detection_latencies = data.get('detection_latencies', [])
         
@@ -456,7 +474,8 @@ class FingerprintPerformanceTracker:
 
 
 class ViolationAnalyzer:
-    """Analyzes content violation patterns and trends"""
+    """
+Analyzes content violation patterns and trends"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -464,7 +483,8 @@ class ViolationAnalyzer:
         self.content_analyzer = ContentAnalyzer()
     
     async def analyze_violations(self, event: ProtectionAnalyticsEvent) -> Dict[str, Any]:
-        """Analyze violation patterns and generate insights"""
+        """
+Analyze violation patterns and generate insights"""
         # Get recent violations for pattern analysis
         recent_violations = await self._get_recent_violations(event.creator_id)
         
@@ -498,7 +518,8 @@ class ViolationAnalyzer:
         }
     
     async def _analyze_violation_trends(self, violations: List[Dict]) -> Dict[str, Any]:
-        """Analyze trends in violation patterns"""
+        """
+Analyze trends in violation patterns"""
         if not violations:
             return {'trend': 'stable', 'change_rate': 0.0, 'confidence': 0.0}
         
@@ -541,7 +562,8 @@ class ViolationAnalyzer:
 
 
 class ProtectionOptimizer:
-    """Optimizes content protection strategies using ML"""
+    """
+Optimizes content protection strategies using ML"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -554,7 +576,8 @@ class ProtectionOptimizer:
         )
     
     async def optimize_protection(self, event: ProtectionAnalyticsEvent) -> Dict[str, Any]:
-        """Generate ML-powered protection optimization insights"""
+        """
+Generate ML-powered protection optimization insights"""
         # Gather protection performance data
         performance_data = await self._gather_performance_data(event.creator_id)
         
@@ -584,7 +607,8 @@ class ProtectionOptimizer:
 
 
 class LegalAnalytics:
-    """Analyzes legal implications and compliance for content protection"""
+    """
+Analyzes legal implications and compliance for content protection"""
     
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -623,7 +647,8 @@ class LegalAnalytics:
         }
     
     async def _assess_legal_risk(self, event: ProtectionAnalyticsEvent) -> float:
-        """Assess legal risk score for the protection event"""
+        """
+Assess legal risk score for the protection event"""
         risk_factors = []
         
         # Similarity score factor
@@ -660,7 +685,8 @@ class LegalAnalytics:
         return min(legal_risk_score, 10.0)  # Cap at 10
     
     async def _estimate_recovery_amount(self, event: ProtectionAnalyticsEvent) -> float:
-        """Estimate potential monetary recovery amount"""
+        """
+Estimate potential monetary recovery amount"""
         # Get content value estimation
         content_value = await self._estimate_content_value(event.content_id)
         

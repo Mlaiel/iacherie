@@ -12,6 +12,7 @@ Features:
 - Scalable architecture for millions of fingerprints
 - Real-time matching with <100ms response time
 """
+
 import numpy as np
 import faiss
 import pickle
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VectorMatchConfig:
-    """Configuration for vector matching operations."""
+    """
+Configuration for vector matching operations."""
     index_type: str = "flat"  # flat, ivf, hnsw, pq
     vector_dimension: int = 512
     similarity_threshold: float = 0.85
@@ -64,7 +66,8 @@ class MatchResult:
 
 
 class IndexManager:
-    """Manages FAISS indices for different content types."""
+    """
+Manages FAISS indices for different content types."""
     
     def __init__(self, config: VectorMatchConfig):
         self.config = config
@@ -77,7 +80,8 @@ class IndexManager:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     def create_index(self, content_type: str) -> faiss.Index:
-        """Create optimized FAISS index for specific content type."""
+        """
+Create optimized FAISS index for specific content type."""
         try:
             if self.config.index_type == "flat":
                 # Flat index for exact search (best quality)
@@ -141,7 +145,8 @@ class IndexManager:
         vector: np.ndarray, 
         metadata: Dict[str, Any]
     ) -> None:
-        """Add vector to appropriate index with thread safety."""
+        """
+Add vector to appropriate index with thread safety."""
         try:
             index = self.get_or_create_index(content_type)
             
@@ -316,7 +321,8 @@ class AdvancedVectorMatcher:
         fingerprint_hash: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Add content fingerprint to the matching system."""
+        """
+Add content fingerprint to the matching system."""
         try:
             full_metadata = {
                 'fingerprint_hash': fingerprint_hash,
@@ -427,7 +433,8 @@ class AdvancedVectorMatcher:
         self.query_cache[key] = matches
     
     def _update_stats(self, matches_found: int, search_time: float) -> None:
-        """Update performance statistics."""
+        """
+Update performance statistics."""
         self.match_stats['total_searches'] += 1
         self.match_stats['total_matches_found'] += matches_found
         
@@ -439,7 +446,8 @@ class AdvancedVectorMatcher:
         self.match_stats['average_search_time'] = new_avg
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get performance statistics for the matching system."""
+        """
+Get performance statistics for the matching system."""
         return {
             **self.match_stats,
             'cache_size': len(self.query_cache),
@@ -450,7 +458,8 @@ class AdvancedVectorMatcher:
         }
     
     def get_all_index_stats(self) -> Dict[str, Any]:
-        """Get statistics for all indices."""
+        """
+Get statistics for all indices."""
         stats = {}
         for content_type in self.index_manager.indices.keys():
             stats[content_type] = self.index_manager.get_index_stats(content_type)
@@ -458,7 +467,8 @@ class AdvancedVectorMatcher:
         return stats
     
     async def save_all_indices(self, base_path: str) -> None:
-        """Save all indices to disk."""
+        """
+Save all indices to disk."""
         try:
             base_dir = Path(base_path)
             base_dir.mkdir(parents=True, exist_ok=True)

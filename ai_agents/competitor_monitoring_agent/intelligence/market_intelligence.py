@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,7 +31,8 @@ from ...ml.prediction_engine import PredictionEngine
 
 @dataclass
 class MarketTrend:
-    """Market trend data structure."""
+    """
+Market trend data structure."""
     trend_id: str
     name: str
     category: str
@@ -46,7 +48,8 @@ class MarketTrend:
 
 @dataclass
 class CompetitiveLandscape:
-    """Competitive landscape analysis."""
+    """
+Competitive landscape analysis."""
     landscape_id: str
     market_segment: str
     total_competitors: int
@@ -62,7 +65,8 @@ class CompetitiveLandscape:
 
 @dataclass
 class OpportunityMatrix:
-    """Market opportunity analysis matrix."""
+    """
+Market opportunity analysis matrix."""
     matrix_id: str
     segment: str
     opportunities: List[Dict[str, Any]]
@@ -85,7 +89,8 @@ class MarketIntelligenceEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the market intelligence engine."""
+        """
+Initialize the market intelligence engine."""
         self.config = config
         self.logger = logging.getLogger(__name__)
         

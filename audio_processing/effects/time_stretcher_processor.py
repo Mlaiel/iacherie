@@ -4,8 +4,9 @@ Professional time stretching with pitch preservation, WSOLA algorithms,
 phase vocoder processing, and high-quality temporal modification.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Optional, Tuple
@@ -15,7 +16,9 @@ import scipy.fft
 
 
 class TimeStretchAlgorithm(Enum):
-    """Time stretching algorithm types"""
+    """
+Time stretching algorithm types"""
+
     PHASE_VOCODER = "phase_vocoder"
     WSOLA = "wsola"  # Waveform Similarity Overlap-Add
     GRANULAR = "granular"
@@ -70,7 +73,8 @@ class TimeStretcherProcessor:
         self.grain_overlap = 0.75
     
     def _normalize_synthesis_window(self) -> np.ndarray:
-        """Normalize synthesis window for perfect reconstruction"""
+        """
+Normalize synthesis window for perfect reconstruction"""
         window = np.hanning(self.frame_size)
         
         # Calculate normalization factor
@@ -86,7 +90,8 @@ class TimeStretcherProcessor:
         return window / normalization
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply time stretching processing"""
+        """
+Apply time stretching processing"""
         try:
             if abs(self.time_stretch_factor - 1.0) < 1e-6:
                 return audio_data  # No processing needed
@@ -180,7 +185,8 @@ class TimeStretcherProcessor:
     
     def _preserve_pitch_content(self, spectrum: np.ndarray, 
                                magnitude: np.ndarray) -> np.ndarray:
-        """Preserve pitch content during time stretching"""
+        """
+Preserve pitch content during time stretching"""
         # Simple spectral envelope preservation
         # This maintains the harmonic structure while allowing time modification
         
@@ -197,7 +203,8 @@ class TimeStretcherProcessor:
         return preserved_spectrum
     
     def _wsola_stretch(self, audio_data: np.ndarray) -> np.ndarray:
-        """WSOLA (Waveform Similarity Overlap-Add) time stretching"""
+        """
+WSOLA (Waveform Similarity Overlap-Add) time stretching"""
         synthesis_hop = int(self.hop_size * self.time_stretch_factor)
         
         # Initialize output
@@ -263,7 +270,8 @@ class TimeStretcherProcessor:
     
     def _find_best_match(self, audio_data: np.ndarray, template: np.ndarray,
                         search_start: int, search_end: int) -> int:
-        """Find best waveform match for WSOLA"""
+        """
+Find best waveform match for WSOLA"""
         best_correlation = -1
         best_position = search_start
         
@@ -283,7 +291,8 @@ class TimeStretcherProcessor:
         return best_position
     
     def _granular_stretch(self, audio_data: np.ndarray) -> np.ndarray:
-        """Granular synthesis based time stretching"""
+        """
+Granular synthesis based time stretching"""
         grain_hop_input = int(self.grain_size * (1 - self.grain_overlap))
         grain_hop_output = int(grain_hop_input * self.time_stretch_factor)
         
@@ -319,7 +328,8 @@ class TimeStretcherProcessor:
         return processed_audio
     
     def _spectral_stretch(self, audio_data: np.ndarray) -> np.ndarray:
-        """Spectral domain time stretching"""
+        """
+Spectral domain time stretching"""
         # Simple spectral interpolation approach
         spectrum = scipy.fft.rfft(audio_data)
         
@@ -344,7 +354,8 @@ class TimeStretcherProcessor:
         return processed_audio
     
     def set_time_stretch_factor(self, factor: float):
-        """Set time stretch factor (0.25 to 4.0)"""
+        """
+Set time stretch factor (0.25 to 4.0)"""
         self.time_stretch_factor = np.clip(factor, 0.25, 4.0)
         self.logger.debug(f"Time stretch factor set to {factor}")
     

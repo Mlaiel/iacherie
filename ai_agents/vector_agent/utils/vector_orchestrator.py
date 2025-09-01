@@ -12,6 +12,7 @@ Unauthorized use, copying, distribution, or commercialization is strictly prohib
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
 """
+
 import asyncio
 import logging
 import time
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VectorProcessingTask:
-    """Task for vector processing operations"""
+    """
+Task for vector processing operations"""
     task_id: str
     content_id: str
     content_type: str
@@ -71,7 +73,8 @@ class VectorOrchestrator(BaseAgent):
     """
     
     def __init__(self, config: Optional[VectorConfig] = None):
-        """Initialize Vector Orchestrator with enterprise configuration"""
+        """
+Initialize Vector Orchestrator with enterprise configuration"""
         super().__init__(
             agent_id="vector_orchestrator",
             agent_type="vector_management",
@@ -518,35 +521,40 @@ class VectorOrchestrator(BaseAgent):
         )
     
     async def _process_video_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process video-specific vector operations"""
+        """
+Process video-specific vector operations"""
         # Video-specific processing logic
         return await self.similarity_engine.process_video_similarity(
             task.vector_data, task.metadata
         )
     
     async def _process_image_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process image-specific vector operations"""
+        """
+Process image-specific vector operations"""
         # Image-specific processing logic
         return await self.similarity_engine.process_image_similarity(
             task.vector_data, task.metadata
         )
     
     async def _process_text_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process text-specific vector operations"""
+        """
+Process text-specific vector operations"""
         # Text-specific processing logic
         return await self.similarity_engine.process_text_similarity(
             task.vector_data, task.metadata
         )
     
     async def _process_generic_vector(self, task: VectorProcessingTask) -> Dict[str, Any]:
-        """Process generic vector operations"""
+        """
+Process generic vector operations"""
         # Generic processing logic
         return await self.similarity_engine.process_generic_similarity(
             task.vector_data, task.metadata
         )
     
     async def _get_detailed_metrics(self) -> Dict[str, Any]:
-        """Get detailed performance metrics"""
+        """
+Get detailed performance metrics"""
         return {
             "active_tasks_count": len(self.active_tasks),
             "queue_size": self.priority_queue.qsize(),

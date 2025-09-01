@@ -2,6 +2,7 @@
 """Database Migration Manager
 Handles database schema migrations, data migrations, and version control
 """
+
 import os
 import sys
 import time
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationType(Enum):
-    """Migration type enumeration"""
+    """
+Migration type enumeration"""
+
     SCHEMA = "schema"
     DATA = "data"
     INDEX = "index"
@@ -38,6 +41,7 @@ class MigrationType(Enum):
 
 class MigrationStatus(Enum):
     """Migration status enumeration"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -69,7 +73,8 @@ class DatabaseMigrationManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize migration manager"""
+        """
+Initialize migration manager"""
         self.config_path = config_path or "/etc/migration/config.json"
         self.migrations_dir = "/opt/ia-influencer/migrations"
         self.connection = None
@@ -512,7 +517,8 @@ class DatabaseMigrationManager:
         return filtered
     
     def _compare_versions(self, version1: str, version2: str) -> int:
-        """Compare two version strings"""
+        """
+Compare two version strings"""
         try:
             v1_parts = [int(x) for x in version1.split('.')]
             v2_parts = [int(x) for x in version2.split('.')]
@@ -535,7 +541,8 @@ class DatabaseMigrationManager:
             return -1 if version1 < version2 else (1 if version1 > version2 else 0)
     
     def _create_pre_migration_backup(self) -> bool:
-        """Create backup before migration"""
+        """
+Create backup before migration"""
         try:
             logger.info("Creating pre-migration backup")
             

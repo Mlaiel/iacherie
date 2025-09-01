@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade multi-platform distribution configuration management system.
 =========================================================================
 """
+
 from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
@@ -30,7 +31,9 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Supported content distribution platforms"""
+    """
+Supported content distribution platforms"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -54,6 +57,7 @@ class Platform(Enum):
 
 class ContentType(Enum):
     """Content types for distribution"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -69,6 +73,7 @@ class ContentType(Enum):
 
 class DistributionStrategy(Enum):
     """Distribution strategies"""
+
     SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     SCHEDULED = "scheduled"
@@ -79,6 +84,7 @@ class DistributionStrategy(Enum):
 
 class OptimizationLevel(Enum):
     """Content optimization levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -87,6 +93,7 @@ class OptimizationLevel(Enum):
 
 class PublicationStatus(Enum):
     """Publication status"""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
@@ -221,7 +228,8 @@ class ContentOptimizationConfig:
 
 @dataclass
 class SchedulingConfig:
-    """Content scheduling configuration"""
+    """
+Content scheduling configuration"""
     enabled: bool = True
     
     # Scheduling algorithms
@@ -328,7 +336,8 @@ class AnalyticsConfig:
 
 @dataclass
 class CrossPlatformSyncConfig:
-    """Cross-platform synchronization configuration"""
+    """
+Cross-platform synchronization configuration"""
     enabled: bool = True
     
     # Sync strategies
@@ -428,7 +437,8 @@ class MultiPlatformDistributionConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize multi-platform distribution configuration manager"""
+        """
+Initialize multi-platform distribution configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
@@ -470,7 +480,8 @@ class MultiPlatformDistributionConfigManager:
             )
     
     def _get_default_content_types(self, platform: Platform) -> List[ContentType]:
-        """Get default content types for platform"""
+        """
+Get default content types for platform"""
         content_type_mapping = {
             Platform.SPOTIFY: [ContentType.AUDIO, ContentType.PODCAST],
             Platform.YOUTUBE: [ContentType.VIDEO, ContentType.AUDIO, ContentType.LIVE_STREAM],
@@ -484,7 +495,8 @@ class MultiPlatformDistributionConfigManager:
         return content_type_mapping.get(platform, [])
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""
+        """
+Load configuration from file"""
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
@@ -514,7 +526,8 @@ class MultiPlatformDistributionConfigManager:
         self.last_updated = datetime.now()
     
     def add_platform(self, platform: Platform, config: PlatformConfiguration) -> bool:
-        """Add platform configuration"""
+        """
+Add platform configuration"""
         try:
             self._config.platform_configs[platform] = config
             self._config.updated_at = datetime.now()
@@ -566,21 +579,24 @@ class MultiPlatformDistributionConfigManager:
         return self._config.platform_configs.get(platform)
     
     def get_enabled_platforms(self) -> List[Platform]:
-        """Get list of enabled platforms"""
+        """
+Get list of enabled platforms"""
         return [
             platform for platform, config in self._config.platform_configs.items()
             if config.enabled
         ]
     
     def get_platforms_for_content_type(self, content_type: ContentType) -> List[Platform]:
-        """Get platforms that support specific content type"""
+        """
+Get platforms that support specific content type"""
         return [
             platform for platform, config in self._config.platform_configs.items()
             if config.enabled and content_type in config.supported_content_types
         ]
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
+        """
+Validate configuration and return list of errors"""
         errors = []
         
         try:

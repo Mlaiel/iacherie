@@ -9,11 +9,12 @@ Business Logic:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → AI rights protection → Professional SEO → Collaboration matching → Multi-platform distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProfileDimension(str, Enum):
-    """User profile dimensions"""
+    """
+User profile dimensions"""
+
     CREATIVE_STYLE = "creative_style"
     CONTENT_PREFERENCES = "content_preferences"
     ENGAGEMENT_PATTERNS = "engagement_patterns"
@@ -51,6 +54,7 @@ class ProfileDimension(str, Enum):
 
 class UserPersona(str, Enum):
     """User persona types"""
+
     CREATIVE_EXPLORER = "creative_explorer"
     BUSINESS_FOCUSED_CREATOR = "business_focused_creator"
     COMMUNITY_BUILDER = "community_builder"
@@ -63,6 +67,7 @@ class UserPersona(str, Enum):
 
 class PreferenceCategory(str, Enum):
     """Categories of user preferences"""
+
     CONTENT_TYPE = "content_type"
     GENRE_MUSIC = "genre_music"
     VISUAL_STYLE = "visual_style"
@@ -88,7 +93,8 @@ class UserPreference:
 
 @dataclass
 class UserProfile:
-    """Comprehensive user profile"""
+    """
+Comprehensive user profile"""
     user_id: str
     persona: UserPersona
     profile_dimensions: Dict[ProfileDimension, Dict[str, Any]]
@@ -111,7 +117,8 @@ class UserProfile:
 
 @dataclass
 class ProfileUpdateRequest:
-    """Request to update user profile"""
+    """
+Request to update user profile"""
     user_id: str
     update_type: str  # explicit, implicit, batch
     updates: Dict[str, Any]
@@ -713,7 +720,8 @@ def create_user_profiler(
 
 
 def validate_profile_update_request(request: ProfileUpdateRequest) -> bool:
-    """Validate profile update request"""
+    """
+Validate profile update request"""
     if not request.user_id or not isinstance(request.user_id, str):
         return False
     

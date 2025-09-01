@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -36,7 +37,9 @@ from ..integrations.platform_apis import PlatformAPIManager
 logger = logging.getLogger(__name__)
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options."""
+    """
+Analytics timeframe options."""
+
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -46,6 +49,7 @@ class AnalyticsTimeframe(Enum):
 
 class AnalyticsMetricType(Enum):
     """Types of analytics metrics."""
+
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     REVENUE = "revenue"
@@ -467,7 +471,8 @@ class AnalyticsService:
         return performance_data
     
     async def _analyze_engagement_metrics(self, contents: List[Content], timeframe: AnalyticsTimeframe, db: Session) -> Dict[str, Any]:
-        """Analyze engagement patterns and metrics."""
+        """
+Analyze engagement patterns and metrics."""
         if not contents:
             return {"error": "No content available for analysis"}
         

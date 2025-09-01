@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,19 +13,21 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Advanced Reporting Tests - Industrial Grade
+"""
+Advanced Reporting Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for monitoring reporting system.
 Tests report generation, data visualization, analytics, and business intelligence.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
+
 import pytest
 import sys
 import os
@@ -66,11 +69,13 @@ from .fixtures import (
 
 
 class TestReportingCore:
-    """Core functionality tests for reporting system."""
+    """
+Core functionality tests for reporting system."""
     
     @pytest.fixture
     async def reporting_system(self):
-        """Create and initialize reporting system."""
+        """
+Create and initialize reporting system."""
         system = Reporting(
             config={
                 "report_generation_enabled": True,
@@ -172,7 +177,8 @@ class TestReportingCore:
         assert reporting_engine.scheduler is not None
     
     async def test_data_aggregation_and_collection(self, reporting_engine, report_test_config):
-        """Test data aggregation from multiple sources."""
+        """
+Test data aggregation from multiple sources."""
         # Configure data sources
         await reporting_engine.configure_data_sources(report_test_config["data_sources"])
         

@@ -11,6 +11,7 @@ Manages vector database connections for content similarity and AI operations:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -27,7 +28,8 @@ import hnswlib
 
 @dataclass
 class VectorStoreConfig:
-    """Vector store connection configuration"""
+    """
+Vector store connection configuration"""
     provider: str = "faiss"  # faiss, pinecone, hnswlib
     dimension: int = 512
     # FAISS specific
@@ -84,7 +86,8 @@ class VectorStoreConnectionHandler:
         self.index_metadata: Dict[str, Dict[str, Any]] = {}
     
     async def initialize(self) -> None:
-        """Initialize vector store connections"""
+        """
+Initialize vector store connections"""
         try:
             self.logger.info(f"Initializing {self.config.provider} vector store...")
             
@@ -230,7 +233,8 @@ class VectorStoreConnectionHandler:
                          ids: Optional[List[str]] = None,
                          metadata: Optional[List[Dict[str, Any]]] = None,
                          tenant_id: Optional[str] = None) -> bool:
-        """Add vectors to index"""
+        """
+Add vectors to index"""
         try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             

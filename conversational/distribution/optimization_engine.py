@@ -6,6 +6,7 @@ Uses machine learning to continuously improve distribution effectiveness.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationGoal(str, Enum):
-    """Optimization objectives"""
+    """
+Optimization objectives"""
+
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
@@ -47,6 +50,7 @@ class OptimizationGoal(str, Enum):
 
 class OptimizationScope(str, Enum):
     """Scope of optimization"""
+
     SINGLE_POST = "single_post"
     CONTENT_SERIES = "content_series"
     PLATFORM_STRATEGY = "platform_strategy"
@@ -64,7 +68,8 @@ class OptimizationFeature:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result with recommendations"""
+    """
+Optimization result with recommendations"""
     goal: OptimizationGoal
     predicted_improvement: float
     confidence_score: float
@@ -75,7 +80,8 @@ class OptimizationResult:
 
 
 class OptimizationRequest(BaseModel):
-    """Optimization request model"""
+    """
+Optimization request model"""
     user_id: int
     content_id: Optional[int] = None
     goal: OptimizationGoal
@@ -98,7 +104,8 @@ class DistributionOptimizer:
         self.optimization_strategies = self._initialize_optimization_strategies()
         
     def _initialize_models(self) -> Dict[str, Any]:
-        """Initialize ML models for optimization"""
+        """
+Initialize ML models for optimization"""
         models = {}
         
         try:
@@ -236,7 +243,8 @@ class DistributionOptimizer:
     async def _extract_content_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract content-related features"""
+        """
+Extract content-related features"""
         features = []
         
         if request.content_id:
@@ -391,7 +399,8 @@ class DistributionOptimizer:
             return 0.1  # Late night/early morning
     
     def _calculate_day_score(self, weekday: int) -> float:
-        """Calculate optimization score for day of week"""
+        """
+Calculate optimization score for day of week"""
         # Tuesday-Thursday are typically best, weekends vary by platform
         scores = {
             0: 0.7,  # Monday
@@ -405,7 +414,8 @@ class DistributionOptimizer:
         return scores.get(weekday, 0.5)
     
     def _calculate_month_score(self, month: int) -> float:
-        """Calculate optimization score for month (seasonality)"""
+        """
+Calculate optimization score for month (seasonality)"""
         # Higher engagement typically in fall/winter
         scores = {
             1: 0.9,  # January
@@ -426,7 +436,8 @@ class DistributionOptimizer:
     async def _extract_platform_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract platform-related features"""
+        """
+Extract platform-related features"""
         features = []
         
         if request.platforms:
@@ -495,7 +506,8 @@ class DistributionOptimizer:
     async def _extract_audience_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract audience-related features"""
+        """
+Extract audience-related features"""
         features = []
         
         # Get user's historical audience data
@@ -655,7 +667,8 @@ class DistributionOptimizer:
     async def _update_models(
         self, historical_data: List[DistributionAnalyticsModel]
     ) -> None:
-        """Update ML models with recent data"""
+        """
+Update ML models with recent data"""
         try:
             # Prepare training data
             X, y_reach, y_engagement, y_revenue = self._prepare_training_data(historical_data)
@@ -701,6 +714,7 @@ class DistributionOptimizer:
         self, historical_data: List[DistributionAnalyticsModel]
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """Prepare training data from historical analytics"""
+
         X = []
         y_reach = []
         y_engagement = []
@@ -1210,7 +1224,8 @@ class DistributionOptimizer:
     async def _generate_ab_test_suggestions(
         self, request: OptimizationRequest, optimization_result: OptimizationResult
     ) -> List[Dict[str, Any]]:
-        """Generate A/B test suggestions based on optimization results"""
+        """
+Generate A/B test suggestions based on optimization results"""
         suggestions = []
         
         # Test different posting times

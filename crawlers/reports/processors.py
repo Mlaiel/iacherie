@@ -49,6 +49,7 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
+
 import logging
 import warnings
 import json
@@ -236,6 +237,7 @@ class ProcessingMethod(Enum):
 
 class DataQuality(Enum):
     """Data quality assessment levels."""
+
     EXCELLENT = "excellent"      # >99% quality score
     GOOD = "good"               # 95-99% quality score
     ACCEPTABLE = "acceptable"    # 90-95% quality score
@@ -245,6 +247,7 @@ class DataQuality(Enum):
 
 class ProcessingPriority(Enum):
     """Processing priority levels."""
+
     REAL_TIME = "real_time"      # <100ms processing time
     HIGH = "high"               # <1s processing time
     MEDIUM = "medium"           # <10s processing time
@@ -258,6 +261,7 @@ class ProcessingPriority(Enum):
 
 class DataQuality(Enum):
     """Data quality levels."""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -267,6 +271,7 @@ class DataQuality(Enum):
 
 class InsightType(Enum):
     """Types of insights that can be generated."""
+
     TREND = "trend"
     PATTERN = "pattern"
     ANOMALY = "anomaly"
@@ -278,6 +283,7 @@ class InsightType(Enum):
 
 class ProcessingMode(Enum):
     """Processing execution modes."""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     BATCH = "batch"
@@ -376,7 +382,8 @@ class ReportProcessor(ABC):
         pass
     
     async def validate_input(self, data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate input data quality and structure."""
+        """
+Validate input data quality and structure."""
         try:
             issues = []
             
@@ -415,7 +422,8 @@ class ReportProcessor(ABC):
         return []  # Override in subclasses
     
     def _validate_data_types(self, data: Dict[str, Any]) -> List[str]:
-        """Validate data types in the input data."""
+        """
+Validate data types in the input data."""
         issues = []
         
         try:
@@ -507,7 +515,8 @@ class ReportProcessor(ABC):
         return count
     
     def _count_missing_fields(self, data: Dict[str, Any]) -> int:
-        """Count missing or null fields in nested data structure."""
+        """
+Count missing or null fields in nested data structure."""
         count = 0
         
         def count_missing_recursive(obj):
@@ -649,7 +658,8 @@ class ReportProcessor(ABC):
         return normalize_recursive(data)
     
     def _clean_numeric_fields(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Clean and validate numeric fields."""
+        """
+Clean and validate numeric fields."""
         def clean_numeric_recursive(obj):
             if isinstance(obj, dict):
                 return {k: clean_numeric_recursive(v) for k, v in obj.items()}
@@ -675,7 +685,8 @@ class ReportProcessor(ABC):
         return clean_numeric_recursive(data)
     
     def _standardize_dates(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Standardize date formats."""
+        """
+Standardize date formats."""
         def standardize_dates_recursive(obj):
             if isinstance(obj, dict):
                 result = {}
@@ -700,7 +711,8 @@ class ReportProcessor(ABC):
         return standardize_dates_recursive(data)
     
     async def calculate_quality_score(self, data: Dict[str, Any], issues: List[str]) -> Tuple[float, DataQuality]:
-        """Calculate data quality score and level."""
+        """
+Calculate data quality score and level."""
         try:
             # Base score
             score = 100.0
@@ -763,7 +775,8 @@ class DataProcessor(ReportProcessor):
         return []  # Data processor is flexible with input structure
     
     async def process(self, data: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process raw data through cleaning and transformation pipeline."""
+        """
+Process raw data through cleaning and transformation pipeline."""
         result = ProcessingResult(
             processor_id=self.config.processor_id,
             processing_stage=ProcessingStage.RAW
@@ -887,7 +900,8 @@ class DataProcessor(ReportProcessor):
         return max_depth > 3  # Flatten if more than 3 levels deep
     
     def _flatten_data(self, data: Dict[str, Any], parent_key: str = '', sep: str = '_') -> Dict[str, Any]:
-        """Flatten nested dictionary structure."""
+        """
+Flatten nested dictionary structure."""
         items = []
         
         for key, value in data.items():
@@ -964,7 +978,8 @@ class DataProcessor(ReportProcessor):
             return False
     
     async def _aggregate_data(self, data: Dict[str, Any], aggregation_rules: Dict[str, str]) -> Dict[str, Any]:
-        """Aggregate data according to specified rules."""
+        """
+Aggregate data according to specified rules."""
         try:
             aggregated_data = data.copy()
             
@@ -1176,7 +1191,8 @@ class DataProcessor(ReportProcessor):
             return 1
     
     def _analyze_data_structure(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze the structure of the processed data."""
+        """
+Analyze the structure of the processed data."""
         try:
             structure = {
                 'total_fields': len(data),
@@ -1269,7 +1285,8 @@ class MetricsProcessor(ReportProcessor):
         return ['metrics', 'data']  # Basic structure expected
     
     def _initialize_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize standard metric definitions."""
+        """
+Initialize standard metric definitions."""
         return {
             'revenue_metrics': {
                 'total_revenue': {'formula': 'sum', 'fields': ['revenue'], 'format': 'currency'},
@@ -1294,7 +1311,8 @@ class MetricsProcessor(ReportProcessor):
         }
     
     async def process(self, data: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process data to calculate comprehensive metrics."""
+        """
+Process data to calculate comprehensive metrics."""
         result = ProcessingResult(
             processor_id=self.config.processor_id,
             processing_stage=ProcessingStage.RAW
@@ -1592,7 +1610,8 @@ class MetricsProcessor(ReportProcessor):
             return None
     
     def _safe_divide(self, numerator: Optional[float], denominator: Optional[float]) -> Optional[float]:
-        """Safely divide two numbers, handling None and zero values."""
+        """
+Safely divide two numbers, handling None and zero values."""
         try:
             if numerator is None or denominator is None or denominator == 0:
                 return None
@@ -1601,7 +1620,8 @@ class MetricsProcessor(ReportProcessor):
             return None
     
     def _calculate_conversion_efficiency(self, conversion_rate: float) -> float:
-        """Calculate conversion efficiency rating."""
+        """
+Calculate conversion efficiency rating."""
         try:
             # Convert rate to efficiency score (0-100)
             if conversion_rate >= 10:
@@ -1619,7 +1639,8 @@ class MetricsProcessor(ReportProcessor):
             return 0
     
     async def _calculate_performance_score(self, core_metrics: Dict[str, Any]) -> Optional[float]:
-        """Calculate overall performance score."""
+        """
+Calculate overall performance score."""
         try:
             scores = []
             
@@ -1714,7 +1735,8 @@ class MetricsProcessor(ReportProcessor):
             return 'unknown'
     
     async def _analyze_seasonal_patterns(self, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze seasonal patterns in historical data."""
+        """
+Analyze seasonal patterns in historical data."""
         try:
             if len(historical_data) < 12:  # Need at least 12 data points
                 return {}
@@ -1960,12 +1982,14 @@ class MetricsProcessor(ReportProcessor):
 
 # Factory functions and initialization
 async def create_data_processor(config: Optional[ProcessingConfig] = None) -> DataProcessor:
-    """Create a data processor instance."""
+    """
+Create a data processor instance."""
     return DataProcessor(config)
 
 
 async def create_metrics_processor(config: Optional[ProcessingConfig] = None) -> MetricsProcessor:
-    """Create a metrics processor instance."""
+    """
+Create a metrics processor instance."""
     return MetricsProcessor(config)
 
 

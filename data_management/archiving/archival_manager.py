@@ -13,6 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import logging
 import json
@@ -34,7 +35,9 @@ from .monitoring import ArchivalMonitoring
 
 
 class ArchivalStatus(Enum):
-    """Archival status enumeration"""
+    """
+Archival status enumeration"""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     ARCHIVED = "archived"
@@ -48,6 +51,7 @@ class ArchivalStatus(Enum):
 
 class ArchivalTier(Enum):
     """Storage tier enumeration for archival"""
+
     HOT = "hot"          # Immediate access, high cost
     WARM = "warm"        # Quick access, medium cost
     COLD = "cold"        # Slow access, low cost
@@ -57,6 +61,7 @@ class ArchivalTier(Enum):
 
 class CompressionStrategy(Enum):
     """Compression strategy for archival"""
+
     NONE = "none"
     MINIMAL = "minimal"    # Fast compression, basic space saving
     BALANCED = "balanced"  # Good compression ratio, moderate speed
@@ -322,7 +327,8 @@ class ArchivalManager:
         content_category: str = None,
         file_size: int = None
     ) -> Optional[ArchivalPolicy]:
-        """Find the most applicable archival policy for content"""
+        """
+Find the most applicable archival policy for content"""
         
         matching_policies = []
         
@@ -365,7 +371,8 @@ class ArchivalManager:
         metadata: Optional[Dict[str, Any]] = None,
         policy_id: Optional[str] = None
     ) -> ArchivalResult:
-        """Archive content with intelligent policy application"""
+        """
+Archive content with intelligent policy application"""
         
         start_time = datetime.utcnow()
         archive_id = str(uuid.uuid4())

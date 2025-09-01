@@ -12,6 +12,7 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
+
 import time
 import asyncio
 import logging
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class CircuitState(Enum):
-    """Circuit breaker states"""
+    """
+Circuit breaker states"""
+
     CLOSED = "closed"       # Normal operation
     OPEN = "open"          # Circuit is open, blocking requests
     HALF_OPEN = "half_open" # Testing if service is recovered
@@ -35,6 +38,7 @@ class CircuitState(Enum):
 
 class FailureType(Enum):
     """Types of failures that can trigger circuit breaker"""
+
     TIMEOUT = "timeout"
     CONNECTION_ERROR = "connection_error"
     HTTP_ERROR = "http_error"
@@ -60,7 +64,8 @@ class CircuitBreakerConfig:
 
 @dataclass
 class CircuitBreakerRequest:
-    """Circuit breaker request tracking"""
+    """
+Circuit breaker request tracking"""
     timestamp: datetime
     duration: float
     success: bool
@@ -70,7 +75,8 @@ class CircuitBreakerRequest:
 
 @dataclass
 class CircuitBreakerMetrics:
-    """Circuit breaker metrics"""
+    """
+Circuit breaker metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -84,7 +90,8 @@ class CircuitBreakerMetrics:
 
 
 class CircuitBreakerInstance:
-    """Individual circuit breaker instance"""
+    """
+Individual circuit breaker instance"""
     
     def __init__(self, config: CircuitBreakerConfig):
         self.config = config
@@ -101,11 +108,13 @@ class CircuitBreakerInstance:
         self.state_change_callbacks: List[Callable] = []
     
     def add_state_change_callback(self, callback: Callable[[str, CircuitState, CircuitState], None]) -> None:
-        """Add callback for state changes"""
+        """
+Add callback for state changes"""
         self.state_change_callbacks.append(callback)
     
     def _notify_state_change(self, old_state: CircuitState, new_state: CircuitState) -> None:
-        """Notify all callbacks of state change"""
+        """
+Notify all callbacks of state change"""
         for callback in self.state_change_callbacks:
             try:
                 callback(self.config.name, old_state, new_state)
@@ -147,7 +156,8 @@ class CircuitBreakerInstance:
         return failure_threshold_exceeded or slow_call_threshold_exceeded
     
     def _can_attempt_reset(self) -> bool:
-        """Check if circuit can attempt reset to half-open"""
+        """
+Check if circuit can attempt reset to half-open"""
         if self.state != CircuitState.OPEN:
             return False
         
@@ -158,7 +168,8 @@ class CircuitBreakerInstance:
         return time_since_last_failure >= self.config.recovery_timeout
     
     def call(self, func: Callable, *args, **kwargs) -> Any:
-        """Execute function call through circuit breaker"""
+        """
+Execute function call through circuit breaker"""
         with self.lock:
             # Check if request should be blocked
             if self.state == CircuitState.OPEN:
@@ -310,7 +321,8 @@ class CircuitBreakerInstance:
             self.failure_count = 0
     
     def _handle_failure(self, request: CircuitBreakerRequest) -> None:
-        """Handle failed request"""
+        """
+Handle failed request"""
         # Add to history
         self.request_history.append(request)
         
@@ -340,20 +352,23 @@ class CircuitBreakerInstance:
                 self._change_state(CircuitState.OPEN)
     
     def force_open(self) -> None:
-        """Force circuit breaker to open state"""
+        """
+Force circuit breaker to open state"""
         with self.lock:
             self._change_state(CircuitState.OPEN)
             self.last_failure_time = datetime.now()
     
     def force_close(self) -> None:
-        """Force circuit breaker to closed state"""
+        """
+Force circuit breaker to closed state"""
         with self.lock:
             self._change_state(CircuitState.CLOSED)
             self.failure_count = 0
             self.success_count = 0
     
     def reset(self) -> None:
-        """Reset circuit breaker to initial state"""
+        """
+Reset circuit breaker to initial state"""
         with self.lock:
             self._change_state(CircuitState.CLOSED)
             self.failure_count = 0
@@ -363,7 +378,8 @@ class CircuitBreakerInstance:
             self.metrics = CircuitBreakerMetrics()
     
     def get_status(self) -> Dict[str, Any]:
-        """Get current circuit breaker status"""
+        """
+Get current circuit breaker status"""
         with self.lock:
             return {
                 "name": self.config.name,
@@ -402,7 +418,8 @@ class CircuitBreakerOpenException(Exception):
 
 
 class CircuitBreaker:
-    """Enterprise Circuit Breaker Manager for Load Balancer"""
+    """
+Enterprise Circuit Breaker Manager for Load Balancer"""
     
     def __init__(self):
         self.circuit_breakers: Dict[str, CircuitBreakerInstance] = {}
@@ -411,7 +428,8 @@ class CircuitBreaker:
         self.stats = defaultdict(int)
     
     def create_circuit_breaker(self, config: CircuitBreakerConfig) -> bool:
-        """Create a new circuit breaker"""
+        """
+Create a new circuit breaker"""
         try:
             if not config.enabled:
                 logger.info(f"Circuit breaker {config.name} is disabled")
@@ -455,7 +473,8 @@ class CircuitBreaker:
             return self.circuit_breakers.get(name)
     
     def add_global_state_change_callback(self, callback: Callable[[str, CircuitState, CircuitState], None]) -> None:
-        """Add global state change callback"""
+        """
+Add global state change callback"""
         self.global_callbacks.append(callback)
         
         # Add to existing circuit breakers
@@ -464,7 +483,8 @@ class CircuitBreaker:
                 cb.add_state_change_callback(callback)
     
     def call_with_circuit_breaker(self, name: str, func: Callable, *args, **kwargs) -> Any:
-        """Execute function call with circuit breaker protection"""
+        """
+Execute function call with circuit breaker protection"""
         circuit_breaker = self.get_circuit_breaker(name)
         if not circuit_breaker:
             raise ValueError(f"Circuit breaker {name} not found")
@@ -486,19 +506,22 @@ class CircuitBreaker:
                 cb.force_open()
     
     def force_close_all(self) -> None:
-        """Force all circuit breakers to closed state"""
+        """
+Force all circuit breakers to closed state"""
         with self.lock:
             for cb in self.circuit_breakers.values():
                 cb.force_close()
     
     def reset_all(self) -> None:
-        """Reset all circuit breakers"""
+        """
+Reset all circuit breakers"""
         with self.lock:
             for cb in self.circuit_breakers.values():
                 cb.reset()
     
     def configure_platform_circuit_breakers(self) -> bool:
-        """Configure circuit breakers for platform services"""
+        """
+Configure circuit breakers for platform services"""
         try:
             circuit_breaker_configs = [
                 # Fingerprinting service circuit breakers

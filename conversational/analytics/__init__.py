@@ -202,7 +202,7 @@ __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel"
+__copyright__ = "(c) 2025 Fahed Mlaiel"
 
 # Performance and capability metrics
 PERFORMANCE_METRICS = {

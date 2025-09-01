@@ -28,13 +28,14 @@ orchestration for the global creator economy ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
 This revolutionary collaboration platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
+
 import asyncio
 import json
 import logging
@@ -62,7 +63,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Creator specialization types"""
+    """
+Creator specialization types"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -82,6 +85,7 @@ class CreatorType(Enum):
 
 class CollaborationType(Enum):
     """Types of collaboration"""
+
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PERFORMANCE = "joint_performance"
@@ -98,6 +102,7 @@ class CollaborationType(Enum):
 
 class CompatibilityDimension(Enum):
     """Dimensions for compatibility assessment"""
+
     CONTENT_STYLE = "content_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     BRAND_ALIGNMENT = "brand_alignment"
@@ -191,7 +196,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal"""
+    """
+Collaboration proposal"""
     proposal_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     match_id: str = None
     initiator_id: str = None

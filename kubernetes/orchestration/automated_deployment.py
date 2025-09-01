@@ -11,6 +11,7 @@ Features:
 - Multi-environment deployment coordination
 - Integration with version control and artifact repositories
 """
+
 import asyncio
 import logging
 import json
@@ -29,9 +30,11 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
+    """
+Mock metrics collector."""
     def __init__(self):
-        """Initialize automated deployment metrics collector"""
+        """
+Initialize automated deployment metrics collector"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.deployment_metrics = ['deployment_duration', 'success_rate', 'rollback_frequency']
         self.pipeline_metrics = ['build_time', 'test_duration', 'deployment_frequency']
@@ -47,6 +50,7 @@ from .load_balancer import LoadBalancerManager
 
 class DeploymentPipelineStatus(Enum):
     """Deployment pipeline status."""
+
     PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
@@ -57,6 +61,7 @@ class DeploymentPipelineStatus(Enum):
 
 class DeploymentStrategy(Enum):
     """Deployment strategies."""
+
     ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
@@ -66,6 +71,7 @@ class DeploymentStrategy(Enum):
 
 class PipelineStage(Enum):
     """Pipeline stages."""
+
     BUILD = "build"
     TEST = "test"
     SECURITY_SCAN = "security_scan"
@@ -80,6 +86,7 @@ class PipelineStage(Enum):
 
 class Environment(Enum):
     """Deployment environments."""
+
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -115,7 +122,8 @@ class PipelineStep:
 
 @dataclass
 class DeploymentPipelineConfig:
-    """Deployment pipeline configuration."""
+    """
+Deployment pipeline configuration."""
     name: str
     version: str
     repository_url: str
@@ -131,7 +139,8 @@ class DeploymentPipelineConfig:
 
 @dataclass
 class DeploymentExecution:
-    """Deployment execution information."""
+    """
+Deployment execution information."""
     id: str
     pipeline_name: str
     version: str
@@ -192,7 +201,8 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         )
 
     def _get_platform_services(self) -> Dict[str, Dict[str, Any]]:
-        """Get IA Influencer Agent platform services configuration."""
+        """
+Get IA Influencer Agent platform services configuration."""
         return {
             "api-gateway": {
                 "image": "ia-influencer/api-gateway",

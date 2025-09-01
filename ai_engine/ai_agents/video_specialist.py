@@ -11,6 +11,7 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -26,7 +27,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class VideoFormat(Enum):
-    """Video format types"""
+    """
+Video format types"""
+
     SHORT_FORM = "short_form"  # TikTok, YouTube Shorts, Instagram Reels
     LONG_FORM = "long_form"    # YouTube videos, IGTV
     STORY = "story"            # Instagram Stories, Snapchat
@@ -35,6 +38,7 @@ class VideoFormat(Enum):
 
 class VideoStyle(Enum):
     """Video style categories"""
+
     EDUCATIONAL = "educational"
     ENTERTAINMENT = "entertainment"
     LIFESTYLE = "lifestyle"
@@ -47,6 +51,7 @@ class VideoStyle(Enum):
 
 class ProcessingTask(Enum):
     """Video processing tasks"""
+
     EDITING = "editing"
     COLOR_CORRECTION = "color_correction"
     AUDIO_SYNC = "audio_sync"
@@ -84,7 +89,8 @@ class VideoAsset:
 
 @dataclass
 class EditingRequest:
-    """Video editing request"""
+    """
+Video editing request"""
     request_id: str
     project_id: str
     editing_type: str
@@ -317,7 +323,8 @@ class VideoSpecialistAgent(BaseAIAgent):
         return tasks
     
     async def _analyze_technical_quality(self, video_path: str) -> Dict[str, Any]:
-        """Analyze technical quality of video"""
+        """
+Analyze technical quality of video"""
         # Simulate technical analysis
         import random
         return {

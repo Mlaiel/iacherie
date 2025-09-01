@@ -4,10 +4,11 @@ Enterprise-grade ML-based anomaly detection for IA Influencer Agent platform.
 Uses statistical analysis and machine learning to detect performance and business anomalies.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
+
 import asyncio
 import numpy as np
 import pandas as pd
@@ -32,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class AnomalyType(Enum):
-    """Types of anomalies that can be detected"""
+    """
+Types of anomalies that can be detected"""
+
     STATISTICAL = "statistical"
     TREND = "trend"
     SEASONAL = "seasonal"
@@ -47,6 +50,7 @@ class AnomalyType(Enum):
 
 class AnomalySeverity(Enum):
     """Severity levels for detected anomalies"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,6 +59,7 @@ class AnomalySeverity(Enum):
 
 class DetectionMethod(Enum):
     """Anomaly detection methods"""
+
     Z_SCORE = "z_score"
     IQR = "iqr"
     ISOLATION_FOREST = "isolation_forest"
@@ -100,7 +105,8 @@ class AnomalyPattern:
 
 @dataclass
 class DetectionModel:
-    """Configuration for an anomaly detection model"""
+    """
+Configuration for an anomaly detection model"""
     model_id: str
     metric_name: str
     detection_method: DetectionMethod
@@ -158,7 +164,8 @@ class AnomalyDetection:
         self._initialize_default_models()
         
     async def start_detection(self) -> None:
-        """Start anomaly detection monitoring"""
+        """
+Start anomaly detection monitoring"""
         if self.is_detecting:
             logger.warning("Anomaly detection is already running")
             return
@@ -294,7 +301,8 @@ class AnomalyDetection:
         self,
         time_window: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Get summary of detected anomalies"""
+        """
+Get summary of detected anomalies"""
         cutoff_time = datetime.utcnow() - time_window
         
         recent_anomalies = [
@@ -409,7 +417,8 @@ class AnomalyDetection:
         self.anomaly_callbacks.append(callback)
         
     def _initialize_default_models(self) -> None:
-        """Initialize default detection models for common metrics"""
+        """
+Initialize default detection models for common metrics"""
         default_models = [
             # AI Performance Anomalies
             DetectionModel(
@@ -497,7 +506,8 @@ class AnomalyDetection:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[AnomalyPoint]:
-        """Detect anomalies using Z-score method"""
+        """
+Detect anomalies using Z-score method"""
         if len(values) < 10:
             return []
             
@@ -773,7 +783,8 @@ class AnomalyDetection:
             return AnomalySeverity.LOW
             
     def _calculate_severity_iqr(self, deviation: float, iqr: float) -> AnomalySeverity:
-        """Calculate anomaly severity based on IQR deviation"""
+        """
+Calculate anomaly severity based on IQR deviation"""
         if deviation > iqr * 3:
             return AnomalySeverity.CRITICAL
         elif deviation > iqr * 2:
@@ -784,7 +795,8 @@ class AnomalyDetection:
             return AnomalySeverity.LOW
             
     def _calculate_severity_isolation(self, score: float) -> AnomalySeverity:
-        """Calculate anomaly severity based on isolation forest score"""
+        """
+Calculate anomaly severity based on isolation forest score"""
         abs_score = abs(score)
         if abs_score > 0.7:
             return AnomalySeverity.CRITICAL
@@ -796,7 +808,8 @@ class AnomalyDetection:
             return AnomalySeverity.LOW
             
     def _deduplicate_anomalies(self, anomalies: List[AnomalyPoint]) -> List[AnomalyPoint]:
-        """Remove duplicate anomalies from different detection methods"""
+        """
+Remove duplicate anomalies from different detection methods"""
         if not anomalies:
             return []
             
@@ -819,7 +832,8 @@ class AnomalyDetection:
         metric_name: str,
         anomalies: List[AnomalyPoint]
     ) -> List[AnomalyPattern]:
-        """Detect temporal patterns in anomalies for a specific metric"""
+        """
+Detect temporal patterns in anomalies for a specific metric"""
         if len(anomalies) < 3:
             return []
             

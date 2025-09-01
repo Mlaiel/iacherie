@@ -31,7 +31,7 @@ Technical Excellence Architecture:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL BLOCKCHAIN IP PROTECTION - FEDERAL CRIME WARNING ⚠️
 ================================================================
@@ -51,6 +51,7 @@ UNAUTHORIZED ACCESS CONSTITUTES FEDERAL CYBER CRIME:
 Contact mlaiel@live.de for MANDATORY blockchain access authorization.
 All blockchain transactions are permanently recorded and legally traceable.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -86,7 +87,9 @@ logger = logging.getLogger(__name__)
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks for content protection"""
+    """
+Supported blockchain networks for content protection"""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
@@ -99,6 +102,7 @@ class BlockchainNetwork(Enum):
 
 class CertificationType(Enum):
     """Types de certification blockchain"""
+
     COPYRIGHT_REGISTRATION = "copyright_registration"
     CONTENT_AUTHENTICITY = "content_authenticity"
     OWNERSHIP_PROOF = "ownership_proof"
@@ -110,6 +114,7 @@ class CertificationType(Enum):
 
 class TransactionStatus(Enum):
     """Statuts des transactions blockchain"""
+
     PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -194,7 +199,8 @@ class BlockchainCertificate(BaseModel):
 
 
 class SmartContractInterface:
-    """Interface pour les contrats intelligents"""
+    """
+Interface pour les contrats intelligents"""
     
     def __init__(self, network: BlockchainNetwork, config: Dict[str, Any]):
         self.network = network
@@ -204,7 +210,8 @@ class SmartContractInterface:
         self.contract_address = None
     
     async def initialize(self) -> bool:
-        """Initialise la connexion au contrat intelligent"""
+        """
+Initialise la connexion au contrat intelligent"""
         try:
             # Configuration selon le réseau
             if self.network == BlockchainNetwork.ETHEREUM:
@@ -482,7 +489,8 @@ class IPFSInterface:
         self.gateway_url = config.get('gateway_url', 'https://ipfs.io/ipfs/')
     
     async def initialize(self) -> bool:
-        """Initialise la connexion IPFS"""
+        """
+Initialise la connexion IPFS"""
         try:
             # Initialize IPFS client
             try:
@@ -625,7 +633,8 @@ class BlockchainService:
         }
     
     async def initialize(self) -> bool:
-        """Initialise le service blockchain"""
+        """
+Initialise le service blockchain"""
         try:
             logger.info("Initialisation du service blockchain...")
             

@@ -7,6 +7,7 @@ Implements JWT validation, API key management, and multi-factor authentication.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import json
 import time
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationRequest(BaseModel):
-    """Authentication request model"""
+    """
+Authentication request model"""
     token: Optional[str] = Field(None, description="JWT token")
     api_key: Optional[str] = Field(None, description="API key")
     user_id: Optional[str] = Field(None, description="User identifier")
@@ -145,7 +147,8 @@ class APIKeyManager:
         self.cache = CacheManager()
         
     async def validate_api_key(self, api_key: str) -> Dict[str, Any]:
-        """Validate API key with rate limiting and permissions"""
+        """
+Validate API key with rate limiting and permissions"""
         try:
             # Check API key format
             if not self.is_valid_api_key_format(api_key):
@@ -241,7 +244,8 @@ class MultiFactorAuthenticator:
         self.redis_client = redis.from_url(settings.REDIS_URL)
         
     async def verify_mfa_token(self, user_id: str, mfa_token: str) -> bool:
-        """Verify multi-factor authentication token"""
+        """
+Verify multi-factor authentication token"""
         try:
             # Get stored MFA secret for user
             mfa_secret = await self.get_user_mfa_secret(user_id)
@@ -341,7 +345,8 @@ class MultiFactorAuthenticator:
         return totp.verify(token, valid_window=1)
     
     async def send_sms_mfa_code(self, user_id: str, phone_number: str) -> bool:
-        """Send SMS MFA code to user's phone"""
+        """
+Send SMS MFA code to user's phone"""
         try:
             # Generate 6-digit code
             mfa_code = f"{secrets.randbelow(900000) + 100000:06d}"
@@ -459,7 +464,8 @@ class AuthenticationMiddleware:
         self.redis_client = redis.from_url(settings.REDIS_URL)
         
     async def authenticate(self, request: AuthenticationRequest) -> AuthenticationResult:
-        """Main authentication method"""
+        """
+Main authentication method"""
         try:
             start_time = time.time()
             
@@ -600,7 +606,8 @@ class BiometricAuthenticator:
         
     async def validate_biometric_signature(self, user_id: str, 
                                          signature_data: Dict[str, Any]) -> bool:
-        """Validate biometric signatures (typing patterns, mouse movement, etc.)"""
+        """
+Validate biometric signatures (typing patterns, mouse movement, etc.)"""
         try:
             # Retrieve stored biometric profile
             profile_key = f"biometric_profile:{user_id}"
@@ -663,7 +670,8 @@ class BiometricAuthenticator:
     
     async def _update_biometric_profile(self, old_profile: Dict, 
                                       new_data: Dict) -> Dict:
-        """Update biometric profile with weighted average"""
+        """
+Update biometric profile with weighted average"""
         weight_old = 0.7
         weight_new = 0.3
         
@@ -686,7 +694,8 @@ class BiometricAuthenticator:
 
 
 class BehavioralAnalyzer:
-    """Behavioral analysis for anomaly detection"""
+    """
+Behavioral analysis for anomaly detection"""
     
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
@@ -694,7 +703,8 @@ class BehavioralAnalyzer:
         
     async def analyze_user_behavior(self, user_id: str, 
                                   request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze user behavior patterns for anomaly detection"""
+        """
+Analyze user behavior patterns for anomaly detection"""
         behavior_key = f"behavior:{user_id}"
         
         # Get recent behavior history
@@ -778,7 +788,8 @@ class GeolocationValidator:
         self.blocked_countries = settings.BLOCKED_COUNTRIES or []
         
     async def validate_geolocation(self, ip_address: str, user_id: str) -> Dict[str, Any]:
-        """Validate user geolocation"""
+        """
+Validate user geolocation"""
         try:
             # Get geolocation data (simplified - would use real GeoIP service)
             geo_data = await self._get_geolocation_data(ip_address)
@@ -893,41 +904,48 @@ def get_authentication_middleware() -> AuthenticationMiddleware:
 
 
 def get_biometric_authenticator() -> BiometricAuthenticator:
-    """Get biometric authenticator instance"""
+    """
+Get biometric authenticator instance"""
     return BiometricAuthenticator()
 
 
 def get_behavioral_analyzer() -> BehavioralAnalyzer:
-    """Get behavioral analyzer instance"""
+    """
+Get behavioral analyzer instance"""
     return BehavioralAnalyzer()
 
 
 def get_geolocation_validator() -> GeolocationValidator:
-    """Get geolocation validator instance"""
+    """
+Get geolocation validator instance"""
     return GeolocationValidator()
 
 
 # Utility functions
 async def require_auth(request: AuthenticationRequest) -> AuthenticationResult:
-    """Convenience function for authentication requirement"""
+    """
+Convenience function for authentication requirement"""
     middleware = get_authentication_middleware()
     return await middleware.authenticate(request)
 
 
 async def require_api_key(api_key: str) -> bool:
-    """Convenience function for API key validation"""
+    """
+Convenience function for API key validation"""
     middleware = get_authentication_middleware()
     api_manager = APIKeyManager()
     return await api_manager.validate_api_key(api_key)
 
 
 async def require_mfa(user_id: str, mfa_code: str) -> bool:
-    """Convenience function for MFA validation"""
+    """
+Convenience function for MFA validation"""
     mfa_auth = MultiFactorAuthenticator()
     return await mfa_auth.validate_mfa_code(user_id, mfa_code)
 
 
 async def require_permissions(user_id: str, permissions: List[str]) -> bool:
-    """Convenience function for permission checking"""
+    """
+Convenience function for permission checking"""
     middleware = get_authentication_middleware()
     return await middleware.validate_permissions(user_id, permissions)

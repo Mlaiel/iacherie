@@ -15,8 +15,9 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
                 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
+
 from typing import Dict, Any, List, Optional, Union, Tuple, Callable
 import asyncio
 import logging
@@ -41,7 +42,9 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class AnalysisType(Enum):
-    """Types of quality analysis"""
+    """
+Types of quality analysis"""
+
     DESCRIPTIVE = "descriptive"           # What happened
     DIAGNOSTIC = "diagnostic"             # Why it happened  
     PREDICTIVE = "predictive"            # What will happen
@@ -49,6 +52,7 @@ class AnalysisType(Enum):
 
 class InsightLevel(Enum):
     """Business insight severity levels"""
+
     STRATEGIC = "strategic"              # Business strategy impact
     TACTICAL = "tactical"                # Operational impact
     OPERATIONAL = "operational"          # Day-to-day operations
@@ -56,6 +60,7 @@ class InsightLevel(Enum):
 
 class PredictionConfidence(Enum):
     """Prediction confidence levels"""
+
     HIGH = "high"                        # >90% confidence
     MEDIUM = "medium"                    # 70-90% confidence
     LOW = "low"                          # 50-70% confidence
@@ -79,7 +84,8 @@ class QualityInsight:
 
 @dataclass
 class QualityPrediction:
-    """Quality prediction container"""
+    """
+Quality prediction container"""
     metric_name: str
     predicted_value: float
     confidence_interval: Tuple[float, float]
@@ -92,7 +98,8 @@ class QualityPrediction:
 
 @dataclass
 class QualityAnomaly:
-    """Quality anomaly detection result"""
+    """
+Quality anomaly detection result"""
     timestamp: datetime
     metric_name: str
     actual_value: float
@@ -560,7 +567,8 @@ class QualityBusinessIntelligence:
         metric_name: str,
         full_data: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Analyze correlations with other metrics"""
+        """
+Analyze correlations with other metrics"""
         
         correlations = {}
         
@@ -586,7 +594,8 @@ class QualityBusinessIntelligence:
         values: List[float],
         timestamps: List[datetime]
     ) -> Dict[str, Any]:
-        """Detect seasonal patterns in the data"""
+        """
+Detect seasonal patterns in the data"""
         
         if len(values) < 14:  # Need at least 2 weeks of data
             return {"pattern_detected": False, "reason": "insufficient_data"}

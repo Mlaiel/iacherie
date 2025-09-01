@@ -19,6 +19,7 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncGenerator
@@ -51,7 +52,9 @@ logger = logging.getLogger(__name__)
 
 
 class NFTStandard(Enum):
-    """NFT standards supported"""
+    """
+NFT standards supported"""
+
     ERC721 = "erc721"
     ERC1155 = "erc1155"
     ERC998 = "erc998"  # Composable NFTs
@@ -60,6 +63,7 @@ class NFTStandard(Enum):
 
 class NFTMarketplace(Enum):
     """Supported NFT marketplaces"""
+
     OPENSEA = "opensea"
     RARIBLE = "rarible"
     FOUNDATION = "foundation"
@@ -71,6 +75,7 @@ class NFTMarketplace(Enum):
 
 class ContentType(Enum):
     """Types of content that can be minted as NFTs"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -81,6 +86,7 @@ class ContentType(Enum):
 
 class RoyaltyType(Enum):
     """Types of royalty mechanisms"""
+
     PERCENTAGE = "percentage"  # Percentage of sale price
     FIXED_AMOUNT = "fixed_amount"  # Fixed amount per sale
     TIERED = "tiered"  # Different rates based on sale price
@@ -183,7 +189,8 @@ class RoyaltyInfo:
     splits: List[Dict[str, Any]] = field(default_factory=list)  # Multiple recipients
     
     def calculate_royalty(self, sale_price_wei: int, sale_date: datetime) -> int:
-        """Calculate royalty amount for a sale"""
+        """
+Calculate royalty amount for a sale"""
         if self.royalty_type == RoyaltyType.PERCENTAGE:
             return int(sale_price_wei * float(self.rate_percentage) / 100)
         
@@ -199,7 +206,8 @@ class RoyaltyInfo:
         return 0
     
     def _calculate_tiered_royalty(self, sale_price_wei: int) -> int:
-        """Calculate tiered royalty based on sale price"""
+        """
+Calculate tiered royalty based on sale price"""
         sale_price_eth = sale_price_wei / 10**18
         
         for tier in sorted(self.tiers, key=lambda x: x['threshold'], reverse=True):
@@ -209,7 +217,8 @@ class RoyaltyInfo:
         return 0
     
     def _calculate_declining_royalty(self, sale_price_wei: int, sale_date: datetime) -> int:
-        """Calculate declining royalty based on time since minting"""
+        """
+Calculate declining royalty based on time since minting"""
         # Simplified - would track actual minting date
         years_elapsed = Decimal('0')  # Calculate based on actual dates
         
@@ -223,7 +232,8 @@ class RoyaltyInfo:
 
 @dataclass
 class NFTContract:
-    """NFT smart contract representation"""
+    """
+NFT smart contract representation"""
     contract_address: str
     standard: NFTStandard
     name: str
@@ -277,7 +287,8 @@ class NFTMinter:
         royalty_recipient: Optional[str] = None,
         royalty_percentage: Decimal = Decimal('10')
     ) -> NFTContract:
-        """Deploy a new NFT contract"""
+        """
+Deploy a new NFT contract"""
         try:
             # Get contract bytecode and ABI based on standard
             bytecode, abi = self._get_contract_artifacts(standard)
@@ -478,7 +489,8 @@ class NFTMinter:
         token_id: int,
         royalty_info: RoyaltyInfo
     ) -> str:
-        """Set royalties for an NFT (ERC2981 standard)"""
+        """
+Set royalties for an NFT (ERC2981 standard)"""
         try:
             contract = self.contracts.get(contract_address)
             if not contract:
@@ -574,7 +586,8 @@ class MarketplaceIntegration:
         self._initialize_marketplace_configs()
     
     def _initialize_marketplace_configs(self):
-        """Initialize marketplace API configurations"""
+        """
+Initialize marketplace API configurations"""
         self.marketplace_apis = {
             NFTMarketplace.OPENSEA: {
                 'api_url': 'https://api.opensea.io/api/v1',
@@ -596,7 +609,8 @@ class MarketplaceIntegration:
         price_eth: Decimal,
         duration_days: int = 7
     ) -> bool:
-        """List NFT for sale on marketplace"""
+        """
+List NFT for sale on marketplace"""
         try:
             if marketplace == NFTMarketplace.OPENSEA:
                 return await self._list_on_opensea(contract_address, token_id, price_eth, duration_days)

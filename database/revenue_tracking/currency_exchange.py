@@ -12,6 +12,7 @@ Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
@@ -39,7 +40,9 @@ Base = declarative_base()
 
 
 class CurrencyCode(Enum):
-    """Codes des devises supportées"""
+    """
+Codes des devises supportées"""
+
     EUR = "EUR"  # Euro
     USD = "USD"  # Dollar américain
     GBP = "GBP"  # Livre sterling
@@ -68,6 +71,7 @@ class CurrencyCode(Enum):
 
 class ConversionType(Enum):
     """Types de conversion de devises"""
+
     SPOT = "spot"
     FORWARD = "forward"
     HEDGED = "hedged"
@@ -76,6 +80,7 @@ class ConversionType(Enum):
 
 class HedgingStrategy(Enum):
     """Stratégies de couverture"""
+
     NONE = "none"
     BASIC = "basic"
     ADVANCED = "advanced"

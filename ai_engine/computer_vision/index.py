@@ -132,15 +132,18 @@ from .streaming import (
 
 # Quick access factory functions
 def create_vision_processor(config=None):
-    """Create a configured VisionProcessor instance"""
+    """
+Create a configured VisionProcessor instance"""
     return VisionProcessor(config)
 
 def create_live_streamer(streaming_config=None):
-    """Create a configured LiveStreamProcessor instance"""
+    """
+Create a configured LiveStreamProcessor instance"""
     return LiveStreamProcessor(streaming_config or StreamingConfig())
 
 def create_realtime_analyzer(config=None):
-    """Create a configured RealTimeAnalyzer instance"""
+    """
+Create a configured RealTimeAnalyzer instance"""
     return RealTimeAnalyzer(config or StreamingConfig())
 
 def create_object_detector(model_name="yolov8x"):
@@ -148,15 +151,18 @@ def create_object_detector(model_name="yolov8x"):
     return ObjectDetector(model_name=model_name)
 
 def create_image_enhancer(settings=None):
-    """Create a configured ImageEnhancer instance"""
+    """
+Create a configured ImageEnhancer instance"""
     return ImageEnhancer(settings)
 
 def create_content_protector(config=None):
-    """Create a configured ContentProtector instance"""
+    """
+Create a configured ContentProtector instance"""
     return ContentProtector(config)
 
 def create_seo_optimizer(settings=None):
-    """Create a configured SEOOptimizer instance"""
+    """
+Create a configured SEOOptimizer instance"""
     return SEOOptimizer(settings)
 
 # Module information
@@ -242,7 +248,8 @@ def get_module_overview():
     return MODULE_INFO
 
 def list_available_models():
-    """List all available AI models in the module"""
+    """
+List all available AI models in the module"""
     return MODULE_INFO["ai_models"]
 
 def get_performance_specs():

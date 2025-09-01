@@ -14,6 +14,7 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class PerformanceMetric(Enum):
-    """Types of performance metrics tracked"""
+    """
+Types of performance metrics tracked"""
+
     VIEWS = "views"
     ENGAGEMENT_RATE = "engagement_rate"
     SHARES = "shares"
@@ -44,6 +47,7 @@ class PerformanceMetric(Enum):
 
 class TimeFrame(Enum):
     """Performance tracking time frames"""
+
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -53,6 +57,7 @@ class TimeFrame(Enum):
 
 class TrendDirection(Enum):
     """Trend directions"""
+
     INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
@@ -70,7 +75,8 @@ class PerformanceDataPoint:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance report"""
+    """
+Comprehensive performance report"""
     report_id: str
     creator_id: str
     time_frame: TimeFrame
@@ -124,7 +130,8 @@ class PerformanceTracker:
         self.anomaly_threshold = 2.0  # standard deviations
     
     async def get_creator_performance(self, creator_id: str, time_frame: TimeFrame = TimeFrame.MONTHLY) -> PerformanceReport:
-        """Get comprehensive performance report for creator"""
+        """
+Get comprehensive performance report for creator"""
         try:
             # Determine time range
             end_date = datetime.utcnow()
@@ -202,7 +209,8 @@ class PerformanceTracker:
             return end_date - timedelta(days=30)  # Default to monthly
     
     async def _collect_performance_data(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[PerformanceDataPoint]:
-        """Collect performance data for the specified period"""
+        """
+Collect performance data for the specified period"""
         # This would typically query databases and external APIs
         # For now, generating realistic sample data
         
@@ -249,7 +257,8 @@ class PerformanceTracker:
         return max(base_value * (1 + variation), 0)
     
     async def _calculate_metrics_summary(self, performance_data: List[PerformanceDataPoint]) -> Dict[PerformanceMetric, Dict[str, float]]:
-        """Calculate summary statistics for each metric"""
+        """
+Calculate summary statistics for each metric"""
         metrics_summary = {}
         
         for metric in PerformanceMetric:
@@ -276,7 +285,8 @@ class PerformanceTracker:
         return metrics_summary
     
     async def _analyze_trends(self, performance_data: List[PerformanceDataPoint], time_frame: TimeFrame) -> Dict[PerformanceMetric, TrendDirection]:
-        """Analyze trends for each metric"""
+        """
+Analyze trends for each metric"""
         trend_analysis = {}
         
         for metric in PerformanceMetric:
@@ -295,7 +305,8 @@ class PerformanceTracker:
         return trend_analysis
     
     def _calculate_trend_direction(self, values: List[float]) -> TrendDirection:
-        """Calculate trend direction from a series of values"""
+        """
+Calculate trend direction from a series of values"""
         if len(values) < 3:
             return TrendDirection.STABLE
         
@@ -320,7 +331,8 @@ class PerformanceTracker:
             return TrendDirection.STABLE
     
     async def _generate_platform_breakdown(self, performance_data: List[PerformanceDataPoint]) -> Dict[str, Dict[PerformanceMetric, float]]:
-        """Generate performance breakdown by platform"""
+        """
+Generate performance breakdown by platform"""
         platform_breakdown = {}
         
         platforms = set(dp.platform for dp in performance_data)
@@ -346,7 +358,8 @@ class PerformanceTracker:
         return platform_breakdown
     
     async def _identify_top_content(self, creator_id: str, performance_data: List[PerformanceDataPoint]) -> List[Dict[str, Any]]:
-        """Identify top performing content"""
+        """
+Identify top performing content"""
         # Group by content_id and calculate performance scores
         content_performance = {}
         
@@ -385,7 +398,8 @@ class PerformanceTracker:
         return scored_content[:10]
     
     async def _generate_performance_insights(self, metrics_summary: Dict[PerformanceMetric, Dict[str, float]], trend_analysis: Dict[PerformanceMetric, TrendDirection]) -> List[str]:
-        """Generate performance insights"""
+        """
+Generate performance insights"""
         insights = []
         
         # Engagement insights
@@ -518,7 +532,8 @@ class PerformanceTracker:
         return growth_rates
     
     async def _detect_anomalies(self, performance_data: List[PerformanceDataPoint]) -> List[Dict[str, Any]]:
-        """Detect performance anomalies"""
+        """
+Detect performance anomalies"""
         anomalies = []
         
         for metric in PerformanceMetric:
@@ -564,7 +579,8 @@ class PerformanceTracker:
         return real_time_metrics
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for performance tracker"""
+        """
+Health check for performance tracker"""
         return {
             "status": "healthy",
             "tracked_metrics": len(PerformanceMetric),

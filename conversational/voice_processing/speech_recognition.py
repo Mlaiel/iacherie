@@ -40,6 +40,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -75,7 +76,9 @@ from .models import AudioMetadata, ProcessingStatus
 logger = logging.getLogger(__name__)
 
 class RecognitionEngine(Enum):
-    """Speech recognition engine types."""
+    """
+Speech recognition engine types."""
+
     WHISPER_OPENAI = "whisper_openai"
     WHISPER_LOCAL = "whisper_local"
     GOOGLE_CLOUD = "google_cloud"
@@ -85,6 +88,7 @@ class RecognitionEngine(Enum):
 
 class AudioPreprocessingMode(Enum):
     """Audio preprocessing modes."""
+
     NONE = "none"
     BASIC = "basic"
     ENHANCED = "enhanced"
@@ -101,7 +105,8 @@ class WordAlignment:
 
 @dataclass
 class SpeakerSegment:
-    """Speaker diarization segment."""
+    """
+Speaker diarization segment."""
     speaker_id: str
     start_time: float
     end_time: float
@@ -110,7 +115,8 @@ class SpeakerSegment:
 
 @dataclass
 class RecognitionResult:
-    """Comprehensive speech recognition result."""
+    """
+Comprehensive speech recognition result."""
     text: str
     confidence: float
     language: str
@@ -166,7 +172,8 @@ class AdvancedSpeechRecognizer:
     """
     
     def __init__(self, config: AdvancedSpeechRecognitionConfig):
-        """Initialize the speech recognizer with configuration."""
+        """
+Initialize the speech recognizer with configuration."""
         self.config = config
         self.engines = {}
         self.thread_pool = ThreadPoolExecutor(max_workers=4)
@@ -476,7 +483,8 @@ class AdvancedSpeechRecognizer:
     async def _preprocess_audio(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> np.ndarray:
-        """Preprocess audio for optimal recognition."""
+        """
+Preprocess audio for optimal recognition."""
         processed_audio = audio_data.copy()
         
         try:

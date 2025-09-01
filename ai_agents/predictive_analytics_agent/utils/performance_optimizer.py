@@ -12,6 +12,7 @@ This performance optimization system and its algorithms are the exclusive intell
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -40,7 +41,9 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization"""
+    """
+Types of optimization"""
+
     CONTENT_PERFORMANCE = "content_performance"
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"
     POSTING_SCHEDULE = "posting_schedule"
@@ -54,6 +57,7 @@ class OptimizationType(Enum):
 
 class OptimizationPriority(Enum):
     """Optimization priority levels"""
+
     IMMEDIATE = "immediate"      # Implement within 24 hours
     HIGH = "high"               # Implement within 1 week
     MEDIUM = "medium"           # Implement within 1 month
@@ -62,6 +66,7 @@ class OptimizationPriority(Enum):
 
 class MetricImpactLevel(Enum):
     """Expected impact levels on metrics"""
+
     DRAMATIC = "dramatic"        # 50%+ improvement
     SIGNIFICANT = "significant"  # 20-50% improvement
     MODERATE = "moderate"        # 10-20% improvement
@@ -167,7 +172,8 @@ class PerformanceOptimizer:
     """
     
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the performance optimizer"""
+        """
+Initialize the performance optimizer"""
         self.cache_manager = cache_manager or CacheManager("performance_optimizer")
         
         # Optimization configuration
@@ -637,7 +643,8 @@ class PerformanceOptimizer:
         return min(max(overall_score, 0.0), 1.0)
 
     async def _analyze_performance_trends(self, creator_data: Dict[str, Any], period_days: int) -> Dict[str, List[float]]:
-        """Analyze performance trends over time"""
+        """
+Analyze performance trends over time"""
         
         historical_metrics = creator_data.get('historical_metrics', {})
         trends = {}
@@ -672,7 +679,8 @@ class PerformanceOptimizer:
     async def _generate_content_optimization_recommendations(self, 
                                                            analysis: PerformanceAnalysis,
                                                            creator_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate content-specific optimization recommendations"""
+        """
+Generate content-specific optimization recommendations"""
         
         recommendations = []
         
@@ -817,13 +825,15 @@ class PerformanceOptimizer:
 
 
 class ContentPerformanceAnalyzer:
-    """Specialized content performance analyzer"""
+    """
+Specialized content performance analyzer"""
     
     def __init__(self, performance_optimizer: PerformanceOptimizer):
         self.optimizer = performance_optimizer
     
     async def analyze_viral_content_patterns(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in viral content"""
+        """
+Analyze patterns in viral content"""
         return {
             'viral_triggers': ['trending_hashtag', 'emotional_hook', 'timing'],
             'common_elements': ['strong_opening', 'clear_cta', 'shareable_format'],
@@ -832,13 +842,15 @@ class ContentPerformanceAnalyzer:
         }
 
 class EngagementOptimizationEngine:
-    """Specialized engagement optimization engine"""
+    """
+Specialized engagement optimization engine"""
     
     def __init__(self, performance_optimizer: PerformanceOptimizer):
         self.optimizer = performance_optimizer
     
     async def optimize_community_engagement(self, community_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize community engagement strategies"""
+        """
+Optimize community engagement strategies"""
         return {
             'response_time_optimization': 'within_2_hours',
             'community_events': ['weekly_qa', 'monthly_live_stream'],
@@ -847,13 +859,15 @@ class EngagementOptimizationEngine:
         }
 
 class ConversionOptimizationSpecialist:
-    """Specialized conversion optimization specialist"""
+    """
+Specialized conversion optimization specialist"""
     
     def __init__(self, performance_optimizer: PerformanceOptimizer):
         self.optimizer = performance_optimizer
     
     async def optimize_conversion_funnel(self, funnel_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize conversion funnel performance"""
+        """
+Optimize conversion funnel performance"""
         return {
             'awareness_stage': {
                 'optimization': 'improve_hook_quality',

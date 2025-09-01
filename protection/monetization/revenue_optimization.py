@@ -20,6 +20,7 @@ Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution,
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Revenue optimization strategies."""
+    """
+Revenue optimization strategies."""
+
     MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_REACH = "maximize_reach" 
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
@@ -48,6 +51,7 @@ class OptimizationStrategy(Enum):
 
 class MarketCondition(Enum):
     """Market condition indicators."""
+
     BULL_MARKET = "bull_market"
     BEAR_MARKET = "bear_market"
     STABLE_MARKET = "stable_market"
@@ -58,6 +62,7 @@ class MarketCondition(Enum):
 
 class RevenueChannel(Enum):
     """Revenue generation channels."""
+
     STREAMING_ROYALTIES = "streaming_royalties"
     ADVERTISING_REVENUE = "advertising_revenue"
     SUBSCRIPTION_FEES = "subscription_fees"
@@ -84,7 +89,8 @@ class MarketAnalysis:
 
 @dataclass
 class RevenueOptimizationResult:
-    """Revenue optimization recommendation result."""
+    """
+Revenue optimization recommendation result."""
     strategy: OptimizationStrategy
     channel_allocations: Dict[RevenueChannel, Decimal]  # Percentage allocation
     pricing_recommendations: Dict[str, Decimal]
@@ -99,7 +105,8 @@ class RevenueOptimizationResult:
 
 @dataclass
 class PerformanceMetrics:
-    """Revenue optimization performance tracking."""
+    """
+Revenue optimization performance tracking."""
     optimization_id: str
     baseline_revenue: Decimal
     optimized_revenue: Decimal
@@ -113,14 +120,16 @@ class PerformanceMetrics:
     
     @property
     def roi(self) -> Decimal:
-        """Calculate return on investment."""
+        """
+Calculate return on investment."""
         if self.baseline_revenue > 0:
             return ((self.optimized_revenue - self.baseline_revenue) / self.baseline_revenue) * 100
         return Decimal('0')
 
 
 class MLRevenuePredictor:
-    """Machine learning revenue prediction engine."""
+    """
+Machine learning revenue prediction engine."""
     
     def __init__(self):
         self.models: Dict[str, Any] = {}
@@ -129,7 +138,8 @@ class MLRevenuePredictor:
         self.model_performance: Dict[str, float] = {}
     
     async def train_revenue_model(self, historical_data: List[Dict[str, Any]]) -> bool:
-        """Train ML models for revenue prediction."""
+        """
+Train ML models for revenue prediction."""
         try:
             self.training_data = historical_data
             
@@ -334,7 +344,8 @@ class MLRevenuePredictor:
         return feature_vector
     
     async def _analyze_feature_impact(self, features: np.ndarray, model: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze impact of different features on prediction."""
+        """
+Analyze impact of different features on prediction."""
         try:
             coefficients = model['coefficients']
             feature_names = ['day_of_week', 'hour', 'month', 'genre', 'audience_size', 'previous_revenue', 'market_condition']
@@ -366,7 +377,8 @@ class MarketAnalyzer:
         self.trend_indicators: Dict[str, float] = {}
     
     async def analyze_market_conditions(self, content_type: str, genre: str, target_audience: Dict[str, Any]) -> MarketAnalysis:
-        """Analyze current market conditions for content optimization."""
+        """
+Analyze current market conditions for content optimization."""
         try:
             cache_key = f"{content_type}_{genre}_{hash(str(target_audience))}"
             
@@ -485,7 +497,8 @@ class MarketAnalyzer:
         return elasticity
     
     async def _assess_competition(self, content_type: str, genre: str) -> Dict[str, float]:
-        """Assess competition levels by channel."""
+        """
+Assess competition levels by channel."""
         base_competition = {
             RevenueChannel.STREAMING_ROYALTIES.value: 0.8,  # High competition
             RevenueChannel.ADVERTISING_REVENUE.value: 0.7,  # High competition
@@ -498,7 +511,8 @@ class MarketAnalyzer:
         return base_competition
     
     async def _analyze_seasonal_patterns(self, content_type: str, genre: str) -> Dict[str, float]:
-        """Analyze seasonal patterns for content type/genre."""
+        """
+Analyze seasonal patterns for content type/genre."""
         # Base seasonal factors (1.0 = average, >1.0 = above average, <1.0 = below average)
         seasonal_factors = {
             '1': 0.8,   # January (post-holiday low)
@@ -518,7 +532,8 @@ class MarketAnalyzer:
         return seasonal_factors
     
     async def _identify_trending_genres(self, content_type: str) -> List[str]:
-        """Identify trending genres for content type."""
+        """
+Identify trending genres for content type."""
         trending_genres = {
             'music': ['pop', 'hip-hop', 'electronic', 'indie', 'lo-fi'],
             'video': ['entertainment', 'education', 'gaming', 'lifestyle', 'tech'],
@@ -528,7 +543,8 @@ class MarketAnalyzer:
         return trending_genres.get(content_type, [])
     
     async def _analyze_audience_behavior(self, target_audience: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze target audience behavior patterns."""
+        """
+Analyze target audience behavior patterns."""
         behavior = {
             'engagement_peak_hours': [18, 19, 20, 21],  # Evening hours
             'platform_preferences': ['youtube', 'instagram', 'tiktok'],
@@ -551,7 +567,8 @@ class MarketAnalyzer:
         return behavior
     
     async def _calculate_market_volatility(self, content_type: str, genre: str) -> float:
-        """Calculate market volatility score."""
+        """
+Calculate market volatility score."""
         # Base volatility by content type
         volatility_base = {
             'music': 0.6,
@@ -569,7 +586,8 @@ class MarketAnalyzer:
 
 
 class RevenueOptimizationEngine:
-    """Main revenue optimization engine combining ML and market analysis."""
+    """
+Main revenue optimization engine combining ML and market analysis."""
     
     def __init__(self):
         self.ml_predictor = MLRevenuePredictor()
@@ -578,7 +596,8 @@ class RevenueOptimizationEngine:
         self.performance_tracker: Dict[str, PerformanceMetrics] = {}
     
     async def initialize(self, historical_data: List[Dict[str, Any]]) -> bool:
-        """Initialize the optimization engine with historical data."""
+        """
+Initialize the optimization engine with historical data."""
         try:
             # Train ML models
             success = await self.ml_predictor.train_revenue_model(historical_data)
@@ -700,7 +719,8 @@ class RevenueOptimizationEngine:
         revenue_predictions: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> Dict[RevenueChannel, Decimal]:
-        """Optimize allocation across revenue channels."""
+        """
+Optimize allocation across revenue channels."""
         try:
             # Base allocation
             allocations = {}
@@ -871,7 +891,8 @@ class RevenueOptimizationEngine:
         content_data: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> List[Dict[str, Any]]:
-        """Generate content optimization suggestions."""
+        """
+Generate content optimization suggestions."""
         suggestions = []
         
         # Genre trending suggestions

@@ -2,6 +2,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
+
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -17,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(str, Enum):
-    """Types of AI/ML models used on the platform."""
+    """
+Types of AI/ML models used on the platform."""
+
     COMPUTER_VISION = "computer_vision"
     NATURAL_LANGUAGE_PROCESSING = "natural_language_processing"
     AUDIO_PROCESSING = "audio_processing"
@@ -32,6 +35,7 @@ class ModelType(str, Enum):
 
 class ModelFramework(str, Enum):
     """Supported ML frameworks and libraries."""
+
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     SCIKIT_LEARN = "scikit_learn"
@@ -48,6 +52,7 @@ class ModelFramework(str, Enum):
 
 class ModelPurpose(str, Enum):
     """Purpose/application of the AI model."""
+
     CONTENT_ANALYSIS = "content_analysis"
     FRAUD_DETECTION = "fraud_detection"
     RECOMMENDATION_ENGINE = "recommendation_engine"
@@ -64,6 +69,7 @@ class ModelPurpose(str, Enum):
 
 class ModelStatus(str, Enum):
     """Model deployment status."""
+
     DEVELOPMENT = "development"
     TRAINING = "training"
     TESTING = "testing"
@@ -75,6 +81,7 @@ class ModelStatus(str, Enum):
 
 class ModelArchitecture(str, Enum):
     """Model architecture types."""
+
     CNN = "cnn"
     RNN = "rnn"
     LSTM = "lstm"
@@ -142,7 +149,8 @@ class AIModelsSeedsManager:
     """
     
     def __init__(self):
-        """Initialize AI models seeds manager with enterprise configurations."""
+        """
+Initialize AI models seeds manager with enterprise configurations."""
         self.model_configurations = {}
         self.training_datasets = {}
         self.deployment_configurations = {}
@@ -155,7 +163,8 @@ class AIModelsSeedsManager:
         self.security_configurations = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all AI/ML model-related seed data with full enterprise support."""
+        """
+Initialize all AI/ML model-related seed data with full enterprise support."""
         logger.info("Initializing comprehensive AI models seeds data...")
         start_time = datetime.now(timezone.utc)
         
@@ -694,7 +703,8 @@ class AIModelsSeedsManager:
         }
     
     async def _initialize_training_datasets(self) -> Dict[str, Any]:
-        """Initialize training dataset configurations and specifications."""
+        """
+Initialize training dataset configurations and specifications."""
         datasets = {
             'content_fingerprinting_dataset': {
                 'name': 'Multi-Modal Content Fingerprinting Dataset',
@@ -879,7 +889,8 @@ class AIModelsSeedsManager:
         }
     
     async def _initialize_deployment_configurations(self) -> Dict[str, Any]:
-        """Initialize model deployment configurations for different environments."""
+        """
+Initialize model deployment configurations for different environments."""
         deployment_configs = {
             'kubernetes_deployment': {
                 'platform': 'kubernetes',
@@ -1019,7 +1030,8 @@ class AIModelsSeedsManager:
         }
     
     async def _initialize_monitoring_configurations(self) -> Dict[str, Any]:
-        """Initialize model monitoring and observability configurations."""
+        """
+Initialize model monitoring and observability configurations."""
         monitoring_configs = {
             'model_performance_monitoring': {
                 'metrics_tracked': [
@@ -1122,7 +1134,8 @@ class AIModelsSeedsManager:
         }
     
     async def _initialize_model_versioning(self) -> Dict[str, Any]:
-        """Initialize model versioning and lifecycle management configurations."""
+        """
+Initialize model versioning and lifecycle management configurations."""
         versioning_configs = {
             'version_control_system': {
                 'repository_type': 'git_based',
@@ -1206,7 +1219,8 @@ class AIModelsSeedsManager:
         }
     
     async def _initialize_automl_configurations(self) -> Dict[str, Any]:
-        """Initialize AutoML configurations for automated model development."""
+        """
+Initialize AutoML configurations for automated model development."""
         automl_configs = {
             'hyperparameter_optimization': {
                 'optimization_algorithms': [
@@ -1303,7 +1317,8 @@ class AIModelsSeedsManager:
         }
     
     async def _initialize_performance_benchmarks(self) -> Dict[str, Any]:
-        """Initialize performance benchmarks for different model types."""
+        """
+Initialize performance benchmarks for different model types."""
         benchmarks = {
             'computer_vision_benchmarks': {
                 'image_classification': {
@@ -1399,7 +1414,8 @@ class AIModelsSeedsManager:
         }
     
     async def _initialize_feature_engineering(self) -> Dict[str, Any]:
-        """Initialize feature engineering configurations and pipelines."""
+        """
+Initialize feature engineering configurations and pipelines."""
         feature_engineering = {
             'audio_features': {
                 'time_domain_features': [
@@ -1575,7 +1591,8 @@ class AIModelsSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all AI models seed data (use with caution)."""
+        """
+Reset all AI models seed data (use with caution)."""
         logger.warning("Resetting AI models seeds data...")
         
         self.model_configurations.clear()

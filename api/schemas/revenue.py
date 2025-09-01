@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class RevenueCreate(BaseSchema):
-    """Revenue creation/tracking request schema."""
+    """
+Revenue creation/tracking request schema."""
     
     creator_id: UUID = Field(description="Creator receiving revenue")
     content_id: Optional[UUID] = Field(None, description="Associated content")
@@ -104,7 +106,8 @@ class RevenueOut(UUIDSchema, TimestampSchema):
 
 
 class RevenueStream(UUIDSchema, TimestampSchema):
-    """Revenue stream configuration schema."""
+    """
+Revenue stream configuration schema."""
     
     creator_id: UUID
     stream_name: str = Field(description="Revenue stream name")

@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -43,7 +44,9 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class GDPROperationType(Enum):
-    """Types of GDPR operations"""
+    """
+Types of GDPR operations"""
+
     DATA_PROCESSING = "data_processing"
     CONSENT_COLLECTION = "consent_collection"
     RIGHTS_REQUEST = "rights_request"
@@ -55,6 +58,7 @@ class GDPROperationType(Enum):
 
 class SystemStatus(Enum):
     """System operational status"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
@@ -119,7 +123,8 @@ class GDPRComplianceIndex:
     """
     
     def __init__(self, config: GDPRComplianceConfig = None):
-        """Initialize GDPR Compliance Index with configuration"""
+        """
+Initialize GDPR Compliance Index with configuration"""
         self.config = config or GDPRComplianceConfig()
         self.system_status = SystemStatus.INITIALIZING
         self.metrics = SystemMetrics()
@@ -780,7 +785,8 @@ async def process_gdpr_request(
     user_id: str = None,
     gdpr_system: GDPRComplianceIndex = None
 ) -> Dict[str, Any]:
-    """Process GDPR request with default system"""
+    """
+Process GDPR request with default system"""
     if gdpr_system is None:
         gdpr_system = await initialize_gdpr_system()
     

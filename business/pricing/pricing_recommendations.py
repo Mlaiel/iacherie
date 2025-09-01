@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -32,6 +32,7 @@ Email: mlaiel@live.de
 All usage must be pre-approved in writing.
 ============================================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -56,7 +57,9 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of pricing recommendations"""
+    """
+Types of pricing recommendations"""
+
     IMMEDIATE_PRICE_ADJUSTMENT = "immediate_price_adjustment"
     TIER_UPGRADE_SUGGESTION = "tier_upgrade_suggestion"
     PLATFORM_OPTIMIZATION = "platform_optimization"
@@ -69,6 +72,7 @@ class RecommendationType(Enum):
 
 class RecommendationPriority(Enum):
     """Recommendation priority levels"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -97,7 +101,8 @@ class PricingRecommendation:
 
 @dataclass
 class RecommendationSuite:
-    """Complete set of recommendations for a creator"""
+    """
+Complete set of recommendations for a creator"""
     creator_id: str
     generated_at: datetime
     recommendations: List[PricingRecommendation]
@@ -140,7 +145,8 @@ class PricingRecommendationEngine:
         content_type: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> RecommendationSuite:
-        """Generate comprehensive pricing recommendations"""
+        """
+Generate comprehensive pricing recommendations"""
         
         try:
             # Get creator's current pricing data
@@ -403,7 +409,8 @@ class PricingRecommendationEngine:
         creator_id: str,
         platform: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Gather comprehensive market intelligence"""
+        """
+Gather comprehensive market intelligence"""
         
         # Mock implementation - replace with real market data collection
         return {
@@ -436,7 +443,8 @@ class PricingRecommendationEngine:
         market_data: Dict[str, Any],
         performance_data: Any
     ) -> List[PricingRecommendation]:
-        """Generate price adjustment recommendations"""
+        """
+Generate price adjustment recommendations"""
         
         recommendations = []
         
@@ -764,7 +772,8 @@ class PricingRecommendationEngine:
         suggested_price: Decimal,
         market_factors: Dict[str, Any]
     ) -> Decimal:
-        """Estimate revenue impact of price change"""
+        """
+Estimate revenue impact of price change"""
         
         price_change_percent = ((suggested_price - base_price) / base_price) * 100
         
@@ -779,7 +788,8 @@ class PricingRecommendationEngine:
         return revenue_impact
         
     async def _identify_market_gaps(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Identify market gaps and opportunities"""
+        """
+Identify market gaps and opportunities"""
         
         # Mock implementation
         return [
@@ -795,7 +805,8 @@ class PricingRecommendationEngine:
         ]
         
     async def _find_underpriced_content(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Find underpriced content opportunities"""
+        """
+Find underpriced content opportunities"""
         
         # Mock implementation
         return [
@@ -809,7 +820,8 @@ class PricingRecommendationEngine:
         ]
         
     async def _identify_growth_platforms(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Identify platforms with growth potential"""
+        """
+Identify platforms with growth potential"""
         
         # Mock implementation
         return [

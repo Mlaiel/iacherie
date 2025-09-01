@@ -5,7 +5,7 @@ Comprehensive utility functions for the vector database system including
 validation, optimization, data processing, and system maintenance helpers.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ COPYRIGHT WARNING ⚠️
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
@@ -23,6 +23,7 @@ TEAM SPECIALTIES:
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
 """
+
 import os
 import json
 import hashlib
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SystemResourceInfo:
-    """System resource information."""
+    """
+System resource information."""
     cpu_usage_percent: float
     memory_usage_percent: float
     memory_available_gb: float
@@ -60,7 +62,8 @@ class SystemResourceInfo:
 
 @dataclass
 class DataProcessingStats:
-    """Statistics for data processing operations."""
+    """
+Statistics for data processing operations."""
     total_items: int
     processed_items: int
     failed_items: int
@@ -71,7 +74,8 @@ class DataProcessingStats:
 
 @dataclass
 class ValidationResult:
-    """Result of data validation operations."""
+    """
+Result of data validation operations."""
     is_valid: bool
     errors: List[str]
     warnings: List[str]
@@ -86,7 +90,8 @@ class ContentHashGenerator:
     
     @staticmethod
     def hash_text(text: str, algorithm: str = 'sha256') -> str:
-        """Generate hash for text content."""
+        """
+Generate hash for text content."""
         if not text:
             return ""
         
@@ -176,7 +181,8 @@ class DataValidator:
     
     @staticmethod
     def validate_text_content(text: str, max_length: Optional[int] = None) -> ValidationResult:
-        """Validate text content."""
+        """
+Validate text content."""
         errors = []
         warnings = []
         
@@ -357,7 +363,8 @@ class PerformanceProfiler:
         self.active_operations = {}
     
     def start_operation(self, operation_name: str) -> str:
-        """Start timing an operation."""
+        """
+Start timing an operation."""
         operation_id = f"{operation_name}_{time.time()}"
         self.active_operations[operation_id] = {
             'name': operation_name,
@@ -395,7 +402,8 @@ class PerformanceProfiler:
         return metrics
     
     def get_operation_stats(self, operation_name: str) -> Dict[str, Any]:
-        """Get statistics for a specific operation."""
+        """
+Get statistics for a specific operation."""
         if operation_name not in self.operation_times:
             return {}
         
@@ -414,7 +422,8 @@ class PerformanceProfiler:
         }
     
     def get_all_stats(self) -> Dict[str, Any]:
-        """Get statistics for all operations."""
+        """
+Get statistics for all operations."""
         return {
             operation_name: self.get_operation_stats(operation_name)
             for operation_name in self.operation_times.keys()
@@ -428,7 +437,8 @@ class FileSystemUtils:
     
     @staticmethod
     def ensure_directory(path: Union[str, Path]) -> bool:
-        """Ensure a directory exists, creating it if necessary."""
+        """
+Ensure a directory exists, creating it if necessary."""
         try:
             Path(path).mkdir(parents=True, exist_ok=True)
             return True
@@ -508,7 +518,8 @@ class DataSerialization:
     
     @staticmethod
     def serialize_with_compression(data: Any, compression_level: int = 6) -> bytes:
-        """Serialize data with gzip compression."""
+        """
+Serialize data with gzip compression."""
         try:
             # Pickle the data
             pickled_data = pickle.dumps(data)
@@ -560,7 +571,8 @@ class DataSerialization:
     
     @staticmethod
     def deserialize_from_json(json_str: str) -> Any:
-        """Deserialize JSON with custom handling for numpy arrays."""
+        """
+Deserialize JSON with custom handling for numpy arrays."""
         def json_deserializer(obj):
             if isinstance(obj, dict) and obj.get('__numpy_array__', False):
                 return np.array(obj['data'], dtype=obj['dtype']).reshape(obj['shape'])
@@ -590,7 +602,8 @@ class SystemResourceMonitor:
     
     @staticmethod
     def get_system_info() -> SystemResourceInfo:
-        """Get current system resource information."""
+        """
+Get current system resource information."""
         # CPU usage
         cpu_usage = psutil.cpu_percent(interval=1)
         
@@ -628,7 +641,8 @@ class SystemResourceMonitor:
     
     @staticmethod
     def check_resource_constraints(min_memory_gb: float = 1.0, max_cpu_percent: float = 90.0) -> Tuple[bool, List[str]]:
-        """Check if system meets resource constraints."""
+        """
+Check if system meets resource constraints."""
         info = SystemResourceMonitor.get_system_info()
         issues = []
         
@@ -694,7 +708,8 @@ def normalize_similarity_score(score: float, method: str = 'minmax') -> float:
 
 
 def calculate_content_diversity(embeddings: List[np.ndarray]) -> float:
-    """Calculate diversity score for a collection of embeddings."""
+    """
+Calculate diversity score for a collection of embeddings."""
     if len(embeddings) < 2:
         return 0.0
     
@@ -714,7 +729,8 @@ def calculate_content_diversity(embeddings: List[np.ndarray]) -> float:
 
 
 def estimate_storage_requirements(vector_count: int, dimension: int, metadata_size_kb: float = 1.0) -> Dict[str, float]:
-    """Estimate storage requirements for vector database."""
+    """
+Estimate storage requirements for vector database."""
     # Vector storage (float32)
     vector_size_mb = (vector_count * dimension * 4) / (1024 * 1024)
     
@@ -736,7 +752,8 @@ def estimate_storage_requirements(vector_count: int, dimension: int, metadata_si
 
 
 def format_bytes(bytes_value: int) -> str:
-    """Format bytes into human readable string."""
+    """
+Format bytes into human readable string."""
     for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
         if bytes_value < 1024.0:
             return f"{bytes_value:.1f} {unit}"

@@ -36,6 +36,7 @@ Cache Architecture:
 - Health Monitor: AI-powered health monitoring
 - Invalidation Strategy: Intelligent cache lifecycle management
 """
+
 from .configuration import (
     CacheConfiguration,
     ContentTypeCache,
@@ -138,7 +139,8 @@ class IAInfluencerCacheOrchestrator:
         )
     
     async def initialize(self):
-        """Initialize all cache components"""
+        """
+Initialize all cache components"""
         await self.config_manager.initialize()
         await self.content_manager.initialize()
         await self.distributed_cache.initialize()
@@ -218,23 +220,28 @@ class IAInfluencerCacheOrchestrator:
         )
     
     async def get_cache_health(self) -> dict:
-        """Get comprehensive cache health status"""
+        """
+Get comprehensive cache health status"""
         return await self.health_monitor.get_comprehensive_health_status()
     
     async def get_performance_metrics(self) -> dict:
-        """Get cache performance metrics"""
+        """
+Get cache performance metrics"""
         return await self.metrics_collector.get_comprehensive_metrics()
     
     async def optimize_cache_performance(self) -> dict:
-        """Trigger cache performance optimization"""
+        """
+Trigger cache performance optimization"""
         return await self.performance_optimizer.optimize_cache_performance()
     
     async def warm_cache_for_creator(self, creator_id: str) -> dict:
-        """Warm cache for a specific creator"""
+        """
+Warm cache for a specific creator"""
         return await self.cache_warmer.warm_creator_content(creator_id)
     
     async def shutdown(self):
-        """Gracefully shutdown all cache components"""
+        """
+Gracefully shutdown all cache components"""
         await self.health_monitor.shutdown()
         await self.cache_warmer.shutdown()
         await self.metrics_collector.shutdown()

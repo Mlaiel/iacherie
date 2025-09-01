@@ -12,6 +12,7 @@ Email: mlaiel@live.de
 This module provides comprehensive digital rights management including
 licensing, royalty tracking, and automated rights enforcement.
 """
+
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -29,7 +30,9 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 class RightsLevel(Enum):
-    """Rights management levels"""
+    """
+Rights management levels"""
+
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -37,6 +40,7 @@ class RightsLevel(Enum):
 
 class LicenseType(Enum):
     """Types of content licenses"""
+
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -50,6 +54,7 @@ class LicenseType(Enum):
 
 class UsageType(Enum):
     """Types of content usage"""
+
     STREAMING = "streaming"
     DOWNLOAD = "download"
     BROADCAST = "broadcast"
@@ -63,6 +68,7 @@ class UsageType(Enum):
 
 class RoyaltyType(Enum):
     """Types of royalties"""
+
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -72,6 +78,7 @@ class RoyaltyType(Enum):
 
 class RightsStatus(Enum):
     """Status of rights"""
+
     ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -644,7 +651,8 @@ class RightsManager:
         return self.rights_registrations.get(registration_id)
     
     def get_user_registrations(self, user_id: str) -> List[RightsRegistration]:
-        """Get all rights registrations for user"""
+        """
+Get all rights registrations for user"""
         return [
             reg for reg in self.rights_registrations.values()
             if any(holder.holder_id == user_id for holder in reg.rights_holders)
@@ -656,7 +664,8 @@ class RightsManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[RoyaltyPayment]:
-        """Get royalty payments for registration"""
+        """
+Get royalty payments for registration"""
         payments = self.royalty_payments.get(registration_id, [])
         
         if start_date or end_date:
@@ -675,7 +684,8 @@ class RightsManager:
         self,
         registration_id: str
     ) -> List[LicenseTerms]:
-        """Get all license agreements for registration"""
+        """
+Get all license agreements for registration"""
         return [
             license_terms for license_terms in self.license_agreements.values()
             if license_terms.custom_terms.get('registration_id') == registration_id
@@ -687,7 +697,8 @@ class RightsManager:
         usage_type: UsageType,
         user_id: str
     ) -> RightsResult:
-        """Verify if user has rights for specific usage"""
+        """
+Verify if user has rights for specific usage"""
         operation_id = str(uuid.uuid4())
         
         try:

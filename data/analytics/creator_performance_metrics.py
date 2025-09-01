@@ -9,9 +9,10 @@ Créateur Multi-Format → Upload Contenu → Analytics Performance → Optimisa
 Recommandations Croissance → Matching Collaboration → Monétisation Optimisée
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
+
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types de créateurs supportés dans IA-Influencer-Agent."""
+    """
+Types de créateurs supportés dans IA-Influencer-Agent."""
+
     MUSICIAN = "musician"           # 🎵 Musicien (Spotify, SoundCloud)
     INFLUENCER = "influencer"       # 📱 Influenceur (Instagram, TikTok, YouTube)
     PHOTOGRAPHER = "photographer"   # 📸 Photographe (Instagram, portfolios)
@@ -37,6 +40,7 @@ class CreatorType(Enum):
 
 class PlatformType(Enum):
     """Plateformes intégrées pour analytics performance."""
+
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
     YOUTUBE = "youtube"
@@ -51,6 +55,7 @@ class PlatformType(Enum):
 
 class MetricCategory(Enum):
     """Catégories de métriques performance."""
+
     ENGAGEMENT = "engagement"           # Engagement audience
     REACH = "reach"                    # Portée et visibilité
     GROWTH = "growth"                  # Croissance followers/abonnés
@@ -63,6 +68,7 @@ class MetricCategory(Enum):
 
 class PerformanceLevel(Enum):
     """Niveaux de performance créateur."""
+
     BEGINNER = "beginner"      # 0-1K followers
     EMERGING = "emerging"      # 1K-10K followers  
     GROWING = "growing"        # 10K-100K followers
@@ -97,7 +103,8 @@ class CreatorProfile:
 
 @dataclass
 class PerformanceMetric:
-    """Métrique de performance individuelle."""
+    """
+Métrique de performance individuelle."""
     metric_id: str
     creator_id: str
     platform: PlatformType
@@ -120,7 +127,8 @@ class PerformanceMetric:
 
 @dataclass
 class PlatformPerformance:
-    """Performance complète sur une plateforme."""
+    """
+Performance complète sur une plateforme."""
     platform: PlatformType
     creator_id: str
     total_followers: int
@@ -141,7 +149,8 @@ class PlatformPerformance:
 
 @dataclass
 class CreatorBenchmark:
-    """Benchmarks performance pour segment créateur."""
+    """
+Benchmarks performance pour segment créateur."""
     creator_type: CreatorType
     performance_level: PerformanceLevel
     follower_range: tuple
@@ -157,7 +166,8 @@ class CreatorBenchmark:
 
 @dataclass
 class GrowthPrediction:
-    """Prédiction croissance créateur basée sur IA."""
+    """
+Prédiction croissance créateur basée sur IA."""
     creator_id: str
     prediction_type: str        # 'followers', 'engagement', 'revenue'
     current_value: float
@@ -451,7 +461,8 @@ class CreatorPerformanceMetrics:
         }
     
     def _calculate_engagement_rate(self, platform_data: Dict[str, Any]) -> float:
-        """Calcule taux d'engagement."""
+        """
+Calcule taux d'engagement."""
         followers = platform_data.get('followers', 1)
         total_engagement = (
             platform_data.get('total_likes', 0) +
@@ -461,31 +472,36 @@ class CreatorPerformanceMetrics:
         return min((total_engagement / followers) * 100, 100.0)
     
     def _calculate_reach_rate(self, platform_data: Dict[str, Any]) -> float:
-        """Calcule taux de portée."""
+        """
+Calcule taux de portée."""
         followers = platform_data.get('followers', 1)
         total_views = platform_data.get('total_views', 0)
         return min((total_views / followers) * 100, 1000.0)  # Cap à 1000%
     
     def _calculate_growth_rate(self, platform_data: Dict[str, Any]) -> float:
-        """Calcule taux de croissance mensuel."""
+        """
+Calcule taux de croissance mensuel."""
         # Simulation - à remplacer par calcul réel basé sur historique
         return np.random.uniform(-5.0, 25.0)  # -5% à +25% par mois
     
     async def _calculate_content_quality_score(self, platform_data: Dict[str, Any]) -> float:
-        """Calcule score qualité contenu avec IA."""
+        """
+Calcule score qualité contenu avec IA."""
         # Simulation score qualité IA - à remplacer par modèle ML réel
         engagement_factor = min(platform_data.get('total_likes', 0) / 1000, 100)
         consistency_factor = min(platform_data.get('content_count', 0) / 10, 100)
         return min((engagement_factor + consistency_factor) / 2, 100.0)
     
     def _calculate_monetization_performance(self, platform_data: Dict[str, Any]) -> float:
-        """Calcule performance monétisation."""
+        """
+Calcule performance monétisation."""
         revenue = platform_data.get('revenue', 0)
         followers = platform_data.get('followers', 1)
         return (revenue / followers) * 1000  # Revenue per 1K followers
     
     def _identify_top_performing_content(self, platform_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identifie contenu le plus performant."""
+        """
+Identifie contenu le plus performant."""
         posts = platform_data.get('recent_posts', [])
         # Tri par engagement total
         sorted_posts = sorted(
@@ -496,7 +512,8 @@ class CreatorPerformanceMetrics:
         return sorted_posts[:5]  # Top 5
     
     def _analyze_audience_demographics(self, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse demographics audience."""
+        """
+Analyse demographics audience."""
         # Mock demographics - à remplacer par données API réelles
         return {
             'age_groups': {
@@ -520,12 +537,14 @@ class CreatorPerformanceMetrics:
         }
     
     def _calculate_optimal_posting_times(self, platform_data: Dict[str, Any]) -> List[str]:
-        """Calcule heures optimales de publication."""
+        """
+Calcule heures optimales de publication."""
         # Analyse basée sur engagement par heure
         return ['09:00', '12:00', '17:00', '20:00']
     
     def _analyze_hashtag_performance(self, platform_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyse performance hashtags."""
+        """
+Analyse performance hashtags."""
         # Mock hashtag performance
         return {
             '#music': 8.5,
@@ -536,7 +555,8 @@ class CreatorPerformanceMetrics:
         }
     
     async def _compare_with_competitors(self, creator_id: str, platform: PlatformType) -> Dict[str, float]:
-        """Compare avec concurrents du même segment."""
+        """
+Compare avec concurrents du même segment."""
         # Mock competitor comparison
         return {
             'engagement_vs_avg': 1.2,      # 20% au-dessus moyenne
@@ -552,7 +572,8 @@ class CreatorPerformanceMetrics:
         growth_rate: float,
         quality_score: float
     ) -> List[str]:
-        """Génère recommandations spécifiques plateforme."""
+        """
+Génère recommandations spécifiques plateforme."""
         recommendations = []
         
         if engagement_rate < 3.0:
@@ -615,7 +636,8 @@ class CreatorPerformanceMetrics:
         avg_engagement: float,
         avg_growth: float
     ) -> str:
-        """Détermine tier de performance créateur."""
+        """
+Détermine tier de performance créateur."""
         if total_followers >= 1000000 and avg_engagement >= 5.0 and avg_growth >= 10.0:
             return 'elite'
         elif total_followers >= 100000 and avg_engagement >= 3.0 and avg_growth >= 5.0:
@@ -630,7 +652,8 @@ class CreatorPerformanceMetrics:
         creator_profile: CreatorProfile,
         period_days: int
     ) -> Dict[str, Any]:
-        """Analyse tendances croissance."""
+        """
+Analyse tendances croissance."""
         # Mock growth analysis - à remplacer par analyse réelle
         return {
             'follower_growth_trend': 'increasing',
@@ -651,7 +674,8 @@ class CreatorPerformanceMetrics:
         creator_id: str,
         analysis_start: datetime
     ) -> Dict[str, Any]:
-        """Analyse performance contenu."""
+        """
+Analyse performance contenu."""
         return {
             'best_performing_formats': ['video', 'carousel', 'reels'],
             'optimal_content_length': {
@@ -674,7 +698,8 @@ class CreatorPerformanceMetrics:
         creator_profile: CreatorProfile,
         platform_performances: Dict[str, PlatformPerformance]
     ) -> Dict[str, Any]:
-        """Analyse insights audience cross-platform."""
+        """
+Analyse insights audience cross-platform."""
         return {
             'audience_overlap_platforms': 65.0,  # % audience commune
             'audience_loyalty_score': 73.2,
@@ -693,7 +718,8 @@ class CreatorPerformanceMetrics:
         creator_id: str,
         analysis_start: datetime
     ) -> Dict[str, Any]:
-        """Analyse performance monétisation."""
+        """
+Analyse performance monétisation."""
         return {
             'revenue_streams': {
                 'brand_partnerships': 4500.0,
@@ -717,7 +743,8 @@ class CreatorPerformanceMetrics:
         creator_profile: CreatorProfile,
         overall_metrics: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Trouve opportunités collaboration basées sur IA."""
+        """
+Trouve opportunités collaboration basées sur IA."""
         # Mock collaboration matching - à remplacer par algorithme ML
         opportunities = [
             {
@@ -745,7 +772,8 @@ class CreatorPerformanceMetrics:
         creator_profile: CreatorProfile,
         overall_metrics: Dict[str, Any]
     ) -> Dict[str, GrowthPrediction]:
-        """Génère prédictions performance avec IA."""
+        """
+Génère prédictions performance avec IA."""
         predictions = {}
         
         # Prédiction followers
@@ -803,7 +831,8 @@ class CreatorPerformanceMetrics:
         creator_profile: CreatorProfile,
         overall_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Compare avec benchmarks segment."""
+        """
+Compare avec benchmarks segment."""
         # Mock benchmarking - à remplacer par données réelles
         return {
             'segment_benchmark': {
@@ -840,7 +869,8 @@ class CreatorPerformanceMetrics:
         creator_profile: CreatorProfile,
         analysis_results: Dict[str, Any]
     ) -> List[str]:
-        """Génère recommandations intelligentes personnalisées."""
+        """
+Génère recommandations intelligentes personnalisées."""
         recommendations = []
         
         overall_metrics = analysis_results['overall_metrics']

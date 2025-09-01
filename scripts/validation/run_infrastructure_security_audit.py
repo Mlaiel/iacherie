@@ -11,6 +11,7 @@ infrastructure including configuration, dependencies, and runtime security.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import os
 import sys
 import json
@@ -24,7 +25,8 @@ from typing import Dict, List, Any, Tuple
 
 
 class InfrastructureSecurityAuditor:
-    """Comprehensive infrastructure security auditor."""
+    """
+Comprehensive infrastructure security auditor."""
     try:
         auditor = InfrastructureSecurityAuditor()
         report = auditor.run_complete_audit()

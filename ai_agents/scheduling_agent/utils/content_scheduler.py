@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -56,7 +57,9 @@ from .schedule_optimizer import ScheduleOptimizer, OptimizationConfig, Optimizat
 logger = logging.getLogger(__name__)
 
 class ScheduleTemplate(Enum):
-    """Predefined schedule templates"""
+    """
+Predefined schedule templates"""
+
     DAILY_CONSISTENT = "daily_consistent"
     WEEKLY_BALANCED = "weekly_balanced"
     PEAK_TIMES_ONLY = "peak_times_only"
@@ -67,6 +70,7 @@ class ScheduleTemplate(Enum):
 
 class BulkOperationType(Enum):
     """Types of bulk operations"""
+
     BATCH_SCHEDULE = "batch_schedule"
     RESCHEDULE_ALL = "reschedule_all"
     CANCEL_BATCH = "cancel_batch"
@@ -75,6 +79,7 @@ class BulkOperationType(Enum):
 
 class AutomationRule(Enum):
     """Automation rules for content scheduling"""
+
     OPTIMAL_TIME_ALWAYS = "optimal_time_always"
     AVOID_CONFLICTS = "avoid_conflicts"
     PLATFORM_SPECIFIC_TIMING = "platform_specific_timing"
@@ -96,7 +101,8 @@ class SchedulingTemplate:
 
 @dataclass
 class BulkScheduleRequest:
-    """Bulk scheduling request"""
+    """
+Bulk scheduling request"""
     content_ids: List[str]
     operation_type: BulkOperationType
     template: Optional[SchedulingTemplate] = None
@@ -107,7 +113,8 @@ class BulkScheduleRequest:
 
 @dataclass
 class AutomationConfig:
-    """Configuration for automated scheduling"""
+    """
+Configuration for automated scheduling"""
     rules: List[AutomationRule]
     triggers: Dict[str, Any] = field(default_factory=dict)
     constraints: Dict[str, Any] = field(default_factory=dict)
@@ -115,7 +122,8 @@ class AutomationConfig:
 
 @dataclass
 class SchedulingWorkflow:
-    """Workflow definition for complex scheduling"""
+    """
+Workflow definition for complex scheduling"""
     workflow_id: str
     name: str
     steps: List[Dict[str, Any]]
@@ -126,7 +134,8 @@ class SchedulingWorkflow:
 Base = declarative_base()
 
 class SchedulingTemplate_DB(Base):
-    """Database model for scheduling templates"""
+    """
+Database model for scheduling templates"""
     __tablename__ = 'scheduling_templates'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -762,7 +771,8 @@ class ContentScheduler:
         content_id: str,
         request: BulkScheduleRequest
     ) -> Dict[str, Any]:
-        """Schedule a single item in bulk operation"""
+        """
+Schedule a single item in bulk operation"""
         try:
             # Determine schedule time
             if request.schedule_times and len(request.schedule_times) > 0:
@@ -910,7 +920,8 @@ class ContentScheduler:
         processed: int,
         failed: int
     ):
-        """Update bulk operation progress"""
+        """
+Update bulk operation progress"""
         try:
             with get_db_session() as db:
                 operation = db.query(BulkOperation).filter(
@@ -1305,7 +1316,8 @@ class AutoScheduler:
         rule: Dict[str, Any],
         event_data: Dict[str, Any]
     ):
-        """Execute automation rule actions"""
+        """
+Execute automation rule actions"""
         actions = rule['actions']
         action_type = actions.get('type')
         
@@ -1331,7 +1343,8 @@ class AutoScheduler:
         actions: Dict[str, Any],
         event_data: Dict[str, Any]
     ):
-        """Auto-schedule content based on rule"""
+        """
+Auto-schedule content based on rule"""
         content_id = event_data.get('content_id')
         if not content_id:
             return

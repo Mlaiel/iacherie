@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -21,6 +21,7 @@ This module implements enterprise-grade threat intelligence for content protecti
 providing advanced threat actor profiling, campaign tracking, and predictive
 threat analysis for creator content protection.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Tuple, Union
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatCategory(Enum):
-    """Threat categorization for systematic analysis."""
+    """
+Threat categorization for systematic analysis."""
+
     CONTENT_THEFT = "content_theft"
     BRAND_IMPERSONATION = "brand_impersonation"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -54,6 +57,7 @@ class ThreatCategory(Enum):
 
 class ThreatSeverity(Enum):
     """Threat severity levels for prioritization."""
+
     INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
@@ -64,6 +68,7 @@ class ThreatSeverity(Enum):
 
 class ThreatActorType(Enum):
     """Classification of threat actor types."""
+
     INDIVIDUAL_OPPORTUNIST = "individual_opportunist"
     ORGANIZED_GROUP = "organized_group"
     COMMERCIAL_PIRACY = "commercial_piracy"
@@ -76,6 +81,7 @@ class ThreatActorType(Enum):
 
 class AttackVector(Enum):
     """Attack vectors for threat classification."""
+
     DIRECT_UPLOAD = "direct_upload"
     AUTOMATED_SCRAPING = "automated_scraping"
     API_EXPLOITATION = "api_exploitation"
@@ -104,7 +110,8 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatActor:
-    """Comprehensive threat actor profile."""
+    """
+Comprehensive threat actor profile."""
     actor_id: str
     actor_type: ThreatActorType
     aliases: Set[str] = field(default_factory=set)
@@ -166,7 +173,8 @@ class ThreatAssessment:
 
 @dataclass
 class IntelligenceReport:
-    """Threat intelligence report with actionable insights."""
+    """
+Threat intelligence report with actionable insights."""
     report_id: str
     report_type: str
     threat_landscape: Dict[str, Any] = field(default_factory=dict)
@@ -730,7 +738,8 @@ class ThreatIntelligenceSystem:
             return None
     
     def _generate_indicator_id(self, indicator_type: str, value: str) -> str:
-        """Generate unique indicator ID."""
+        """
+Generate unique indicator ID."""
         combined = f"{indicator_type}:{value}"
         return hashlib.sha256(combined.encode()).hexdigest()[:16]
     
@@ -747,7 +756,8 @@ class ThreatIntelligenceSystem:
             return ThreatCategory.UNAUTHORIZED_DISTRIBUTION
     
     async def _calculate_indicator_confidence(self, indicator_data: Dict[str, Any]) -> float:
-        """Calculate confidence score for indicator."""
+        """
+Calculate confidence score for indicator."""
         base_confidence = 0.5
         
         # Adjust based on indicator type
@@ -763,7 +773,8 @@ class ThreatIntelligenceSystem:
         return min(1.0, base_confidence * multiplier)
     
     async def _identify_threat_actor(self, indicator: ThreatIndicator) -> str:
-        """Identify threat actor from indicator."""
+        """
+Identify threat actor from indicator."""
         # Simplified actor identification
         if indicator.indicator_type == 'account':
             return f"actor_account_{indicator.value}"
@@ -783,7 +794,8 @@ class ThreatIntelligenceSystem:
             return ThreatActorType.UNKNOWN
     
     async def _determine_attack_vector(self, indicator: ThreatIndicator) -> Optional[AttackVector]:
-        """Determine attack vector from indicator."""
+        """
+Determine attack vector from indicator."""
         if indicator.indicator_type == 'content_hash':
             return AttackVector.DIRECT_UPLOAD
         elif indicator.indicator_type == 'volume_pattern':
@@ -793,7 +805,8 @@ class ThreatIntelligenceSystem:
         return None
     
     async def _update_actor_behavioral_patterns(self, actor: ThreatActor, indicator: ThreatIndicator) -> None:
-        """Update actor behavioral patterns."""
+        """
+Update actor behavioral patterns."""
         # Update timing patterns
         hour = indicator.last_seen.hour
         if 'timing_patterns' not in actor.behavioral_patterns:
@@ -832,7 +845,8 @@ class ThreatIntelligenceSystem:
         return min(1.0, score)
     
     async def _calculate_campaign_correlation(self, indicator: ThreatIndicator, campaign: ThreatCampaign) -> float:
-        """Calculate correlation score between indicator and campaign."""
+        """
+Calculate correlation score between indicator and campaign."""
         score = 0.0
         
         # Category match
@@ -855,7 +869,8 @@ class ThreatIntelligenceSystem:
         return score
     
     async def _get_recent_indicators(self, hours: int = 24) -> List[ThreatIndicator]:
-        """Get indicators from recent time window."""
+        """
+Get indicators from recent time window."""
         cutoff_time = datetime.now() - timedelta(hours=hours)
         return [
             indicator for indicator in self.threat_indicators.values()
@@ -863,7 +878,8 @@ class ThreatIntelligenceSystem:
         ]
     
     async def _cluster_indicators(self, indicators: List[ThreatIndicator]) -> List[Dict[str, Any]]:
-        """Cluster indicators for pattern detection."""
+        """
+Cluster indicators for pattern detection."""
         if len(indicators) < 3:
             return []
         
@@ -887,32 +903,39 @@ class ThreatIntelligenceSystem:
     
     # Storage methods (simplified - would use proper storage backend)
     async def _store_threat_indicator(self, indicator: ThreatIndicator) -> None:
-        """Store threat indicator."""
+        """
+Store threat indicator."""
         pass
     
     async def _store_threat_actor(self, actor: ThreatActor) -> None:
-        """Store threat actor."""
+        """
+Store threat actor."""
         pass
     
     async def _store_threat_campaign(self, campaign: ThreatCampaign) -> None:
-        """Store threat campaign."""
+        """
+Store threat campaign."""
         pass
     
     async def _store_threat_assessment(self, assessment: ThreatAssessment) -> None:
-        """Store threat assessment."""
+        """
+Store threat assessment."""
         pass
     
     async def _store_intelligence_report(self, report: IntelligenceReport) -> None:
-        """Store intelligence report."""
+        """
+Store intelligence report."""
         pass
     
     async def _load_historical_intelligence(self) -> None:
-        """Load historical intelligence data."""
+        """
+Load historical intelligence data."""
         pass
     
     # Background task methods
     async def _start_background_intelligence_tasks(self) -> None:
-        """Start background intelligence tasks."""
+        """
+Start background intelligence tasks."""
         if self._background_started:
             return
         
@@ -976,15 +999,18 @@ class ThreatIntelligenceSystem:
         return []
     
     async def _identify_potential_threats(self, target_id: str, target_type: str) -> List[str]:
-        """Identify potential threats for target."""
+        """
+Identify potential threats for target."""
         return []
     
     async def _calculate_risk_score(self, target_id: str, active_threats: List[str], potential_threats: List[str]) -> float:
-        """Calculate risk score for target."""
+        """
+Calculate risk score for target."""
         return 0.5
     
     async def _determine_threat_level(self, risk_score: float) -> ThreatSeverity:
-        """Determine threat level from risk score."""
+        """
+Determine threat level from risk score."""
         if risk_score >= 0.8:
             return ThreatSeverity.CRITICAL
         elif risk_score >= 0.6:
@@ -998,11 +1024,13 @@ class ThreatIntelligenceSystem:
     
     # Additional analysis methods (simplified implementations)
     async def _analyze_vulnerabilities(self, target_id: str, target_type: str) -> Dict[str, Any]:
-        """Analyze vulnerabilities for target."""
+        """
+Analyze vulnerabilities for target."""
         return {}
     
     async def _generate_threat_recommendations(self, target_id: str, active_threats: List[str], potential_threats: List[str], vulnerabilities: Dict[str, Any]) -> List[str]:
-        """Generate threat-specific recommendations."""
+        """
+Generate threat-specific recommendations."""
         return ["Increase monitoring frequency", "Review access controls", "Update protection measures"]
     
     async def _generate_mitigation_strategies(self, target_id: str, threat_level: ThreatSeverity, active_threats: List[str]) -> List[str]:
@@ -1026,28 +1054,32 @@ class ThreatIntelligenceSystem:
         return sorted(indicators, key=lambda x: x.last_seen, reverse=True)
     
     def get_threat_actors(self, actor_type: Optional[ThreatActorType] = None) -> List[ThreatActor]:
-        """Get threat actors with optional filtering."""
+        """
+Get threat actors with optional filtering."""
         actors = list(self.threat_actors.values())
         if actor_type:
             actors = [a for a in actors if a.actor_type == actor_type]
         return sorted(actors, key=lambda x: x.threat_score, reverse=True)
     
     def get_threat_campaigns(self, category: Optional[ThreatCategory] = None) -> List[ThreatCampaign]:
-        """Get threat campaigns with optional filtering."""
+        """
+Get threat campaigns with optional filtering."""
         campaigns = list(self.threat_campaigns.values())
         if category:
             campaigns = [c for c in campaigns if c.category == category]
         return sorted(campaigns, key=lambda x: x.last_updated, reverse=True)
     
     def get_threat_assessment(self, target_id: str) -> Optional[ThreatAssessment]:
-        """Get latest threat assessment for target."""
+        """
+Get latest threat assessment for target."""
         assessments = [a for a in self.threat_assessments.values() if a.target_id == target_id]
         if assessments:
             return max(assessments, key=lambda x: x.assessed_at)
         return None
     
     async def shutdown(self) -> None:
-        """Shutdown threat intelligence system gracefully."""
+        """
+Shutdown threat intelligence system gracefully."""
         self._logger.info("Shutting down Threat Intelligence System...")
         
         # Cancel background tasks
@@ -1067,47 +1099,58 @@ class IndicatorCorrelationEngine:
     """Engine for correlating threat indicators."""
     
     async def initialize(self) -> None:
-        """Initialize correlation engine."""
+        """
+Initialize correlation engine."""
         pass
     
     async def run_correlation_analysis(self) -> None:
-        """Run correlation analysis on indicators."""
+        """
+Run correlation analysis on indicators."""
         pass
 
 
 class ThreatActorProfiler:
-    """Engine for profiling threat actors."""
+    """
+Engine for profiling threat actors."""
     
     async def initialize(self) -> None:
-        """Initialize profiler."""
+        """
+Initialize profiler."""
         pass
     
     async def update_actor_profiles(self) -> None:
-        """Update actor profiles."""
+        """
+Update actor profiles."""
         pass
 
 
 class CampaignTracker:
-    """Engine for tracking threat campaigns."""
+    """
+Engine for tracking threat campaigns."""
     
     async def initialize(self) -> None:
-        """Initialize tracker."""
+        """
+Initialize tracker."""
         pass
     
     async def update_campaign_status(self) -> None:
-        """Update campaign status."""
+        """
+Update campaign status."""
         pass
 
 
 class PredictiveThreatAnalyzer:
-    """Engine for predictive threat analysis."""
+    """
+Engine for predictive threat analysis."""
     
     async def initialize(self) -> None:
-        """Initialize analyzer."""
+        """
+Initialize analyzer."""
         pass
     
     async def predict_threats(self) -> None:
-        """Predict future threats."""
+        """
+Predict future threats."""
         pass
 
 

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Marketing Templates Tests
+"""
+Marketing Templates Tests
 
 Comprehensive tests for marketing template system that handles
 campaign templates, promotional content, and conversion optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -50,12 +53,14 @@ class TestMarketingTemplates:
     
     @pytest.fixture
     def marketing_templates(self):
-        """Create a marketing templates instance"""
+        """
+Create a marketing templates instance"""
         return MarketingTemplates()
     
     @pytest.fixture
     def campaign_data(self):
-        """Create sample campaign data"""
+        """
+Create sample campaign data"""
         return {
             "campaign_name": "AI Content Creation Course Launch",
             "product_name": "Master AI Content Creation",
@@ -117,7 +122,8 @@ class TestMarketingTemplates:
     
     @pytest.mark.asyncio
     async def test_generate_email_campaign(self, marketing_templates, campaign_data, email_campaign_data):
-        """Test email campaign generation"""
+        """
+Test email campaign generation"""
         with patch.object(marketing_templates, '_generate_email_sequence') as mock_email:
             mock_email.return_value = {
                 "success": True,
@@ -707,7 +713,8 @@ class TestCampaignTemplate:
     """Test suite for CampaignTemplate"""
     
     def test_campaign_template_creation(self):
-        """Test campaign template creation"""
+        """
+Test campaign template creation"""
         template = CampaignTemplate(
             template_id="campaign_001",
             name="Product Launch Campaign",

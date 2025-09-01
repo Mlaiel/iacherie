@@ -1,6 +1,7 @@
 """Task Management and Scheduling for Copyright Enforcement
 Professional task orchestration, job queuing, and workflow management
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Union, Set, Tuple
@@ -21,7 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaskStatus(Enum):
-    """Task status enumeration"""
+    """
+Task status enumeration"""
+
     PENDING = "pending"
     QUEUED = "queued"
     RUNNING = "running"
@@ -34,6 +37,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels"""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -42,7 +46,9 @@ class TaskPriority(Enum):
 
 
 class TaskType(Enum):
-    """Types of enforcement tasks"""
+    """
+Types of enforcement tasks"""
+
     CONTENT_ANALYSIS = "content_analysis"
     PLATFORM_MONITORING = "platform_monitoring"
     EVIDENCE_COLLECTION = "evidence_collection"
@@ -61,6 +67,7 @@ class TaskType(Enum):
 
 class WorkflowStatus(Enum):
     """Workflow execution status"""
+
     CREATED = "created"
     STARTED = "started"
     RUNNING = "running"
@@ -85,7 +92,8 @@ class TaskResult:
 
 @dataclass
 class TaskConfig:
-    """Task configuration"""
+    """
+Task configuration"""
     max_retries: int = 3
     retry_delay: float = 5.0
     timeout: Optional[float] = None
@@ -109,7 +117,8 @@ class TaskConfig:
 
 
 class Task:
-    """Individual task in the enforcement system"""
+    """
+Individual task in the enforcement system"""
     
     def __init__(
         self,
@@ -167,19 +176,23 @@ class Task:
         return self.created_at < other.created_at
     
     def can_execute(self, completed_tasks: Set[str]) -> bool:
-        """Check if task can be executed based on dependencies"""
+        """
+Check if task can be executed based on dependencies"""
         return self.dependencies.issubset(completed_tasks)
     
     def add_dependency(self, task_id: str):
-        """Add task dependency"""
+        """
+Add task dependency"""
         self.dependencies.add(task_id)
     
     def add_dependent(self, task_id: str):
-        """Add dependent task"""
+        """
+Add dependent task"""
         self.dependents.add(task_id)
     
     def add_tag(self, tag: str):
-        """Add tag to task"""
+        """
+Add tag to task"""
         self.tags.add(tag)
     
     def update_progress(self, percentage: float, message: str = ""):
@@ -188,7 +201,8 @@ class Task:
         self.progress_message = message
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert task to dictionary"""
+        """
+Convert task to dictionary"""
         return {
             'id': self.id,
             'type': self.type.value,
@@ -210,7 +224,8 @@ class Task:
 
 
 class TaskQueue:
-    """Priority-based task queue"""
+    """
+Priority-based task queue"""
     
     def __init__(self, name: str = "default"):
         self.name = name
@@ -247,7 +262,8 @@ class TaskQueue:
             return None
     
     async def remove(self, task_id: str) -> bool:
-        """Remove task from queue"""
+        """
+Remove task from queue"""
         async with self._lock:
             task = self._task_map.get(task_id)
             if not task:
@@ -267,16 +283,19 @@ class TaskQueue:
             return self._task_map.get(task_id)
     
     async def size(self) -> int:
-        """Get queue size"""
+        """
+Get queue size"""
         async with self._lock:
             return len(self._task_map)
     
     async def is_empty(self) -> bool:
-        """Check if queue is empty"""
+        """
+Check if queue is empty"""
         return await self.size() == 0
     
     async def clear(self):
-        """Clear all tasks from queue"""
+        """
+Clear all tasks from queue"""
         async with self._lock:
             self._queue.clear()
             self._task_map.clear()
@@ -316,7 +335,8 @@ class WorkflowStep:
         self.completed_at: Optional[datetime] = None
     
     def should_execute(self, workflow_context: Dict[str, Any]) -> bool:
-        """Check if step should be executed based on condition"""
+        """
+Check if step should be executed based on condition"""
         if not self.condition:
             return True
         
@@ -362,7 +382,8 @@ class Workflow:
             self.step_dependencies[step.id].add(dependency)
     
     def get_executable_steps(self, completed_steps: Set[str]) -> List[WorkflowStep]:
-        """Get steps that can be executed now"""
+        """
+Get steps that can be executed now"""
         executable = []
         
         for step_id, step in self.steps.items():
@@ -374,12 +395,14 @@ class Workflow:
         return executable
     
     def is_complete(self) -> bool:
-        """Check if workflow is complete"""
+        """
+Check if workflow is complete"""
         pending_steps = [s for s in self.steps.values() if s.status == TaskStatus.PENDING]
         return len(pending_steps) == 0
     
     def calculate_success_rate(self) -> float:
-        """Calculate workflow success rate"""
+        """
+Calculate workflow success rate"""
         if not self.steps:
             return 1.0
         
@@ -387,7 +410,8 @@ class Workflow:
         return len(completed_steps) / len(self.steps)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert workflow to dictionary"""
+        """
+Convert workflow to dictionary"""
         return {
             'id': self.id,
             'name': self.name,
@@ -412,7 +436,8 @@ class Workflow:
 
 
 class TaskExecutor:
-    """Task execution engine"""
+    """
+Task execution engine"""
     
     def __init__(self, max_workers: int = 10):
         self.max_workers = max_workers
@@ -422,7 +447,8 @@ class TaskExecutor:
         self._shutdown = False
         
     async def execute_task(self, task: Task) -> TaskResult:
-        """Execute a single task"""
+        """
+Execute a single task"""
         task_result = TaskResult(
             task_id=task.id,
             status=TaskStatus.RUNNING
@@ -537,7 +563,8 @@ class WorkflowEngine:
         self.workflow_results: Dict[str, Dict[str, Any]] = {}
     
     async def execute_workflow(self, workflow: Workflow) -> Dict[str, Any]:
-        """Execute a complete workflow"""
+        """
+Execute a complete workflow"""
         try:
             workflow.status = WorkflowStatus.STARTED
             workflow.started_at = datetime.utcnow()
@@ -893,7 +920,8 @@ class TaskScheduler:
         return None
     
     async def get_queue_status(self, queue_name: str = None) -> Dict[str, Any]:
-        """Get queue status"""
+        """
+Get queue status"""
         if queue_name:
             queue = self.queues.get(queue_name)
             if not queue:
@@ -929,12 +957,14 @@ workflow_engine = WorkflowEngine(task_executor)
 
 
 async def get_task_scheduler() -> TaskScheduler:
-    """Get the global task scheduler instance"""
+    """
+Get the global task scheduler instance"""
     return task_scheduler
 
 
 async def get_workflow_engine() -> WorkflowEngine:
-    """Get the global workflow engine instance"""
+    """
+Get the global workflow engine instance"""
     return workflow_engine
 
 

@@ -95,6 +95,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Encryption verification
 - Privacy compliance checks
 """
+
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
@@ -118,7 +119,9 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
+    """
+Validation issue severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -127,6 +130,7 @@ class ValidationSeverity(Enum):
 
 class ValidationCategory(Enum):
     """Categories of validation"""
+
     SCHEMA = "schema"
     CONSTRAINTS = "constraints"
     FOREIGN_KEYS = "foreign_keys"
@@ -138,6 +142,7 @@ class ValidationCategory(Enum):
 
 class IntegrityStatus(Enum):
     """Data integrity status"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     DEGRADED = "degraded"
@@ -162,7 +167,8 @@ class ValidationIssue:
 
 @dataclass
 class QualityMetrics:
-    """Data quality metrics"""
+    """
+Data quality metrics"""
     completeness_score: float  # 0-1
     accuracy_score: float      # 0-1
     consistency_score: float   # 0-1
@@ -1096,7 +1102,8 @@ class DataIntegrityManager:
             return IntegrityStatus.HEALTHY.value
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
+        """
+Perform health check"""
         try:
             health = {
                 'status': 'healthy',

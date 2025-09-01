@@ -31,6 +31,7 @@ Features:
 - Monetization strategy suggestions
 - Real-time adaptive learning
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -60,7 +61,9 @@ from scipy.spatial.distance import pdist, squareform
 logger = logging.getLogger(__name__)
 
 class RecommendationType(Enum):
-    """Recommendation type enumeration"""
+    """
+Recommendation type enumeration"""
+
     CONTENT_DISCOVERY = "content_discovery"
     CREATOR_COLLABORATION = "creator_collaboration"
     AUDIENCE_EXPANSION = "audience_expansion"
@@ -74,6 +77,7 @@ class RecommendationType(Enum):
 
 class RecommendationPriority(Enum):
     """Recommendation priority levels"""
+
     CRITICAL = "critical"       # Act within 24 hours
     HIGH = "high"              # Act within 3 days
     MEDIUM = "medium"          # Act within 1 week
@@ -82,6 +86,7 @@ class RecommendationPriority(Enum):
 
 class RecommendationCategory(Enum):
     """Recommendation category classification"""
+
     IMMEDIATE_ACTION = "immediate_action"
     STRATEGIC_PLANNING = "strategic_planning"
     SKILL_BUILDING = "skill_building"
@@ -93,6 +98,7 @@ class RecommendationCategory(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence level in recommendations"""
+
     VERY_HIGH = "very_high"    # >90% confidence
     HIGH = "high"              # 75-90% confidence
     MEDIUM = "medium"          # 50-75% confidence
@@ -125,7 +131,8 @@ class RecommendationScore:
 
 @dataclass
 class Recommendation:
-    """Base recommendation structure"""
+    """
+Base recommendation structure"""
     recommendation_id: str
     recommendation_type: RecommendationType
     category: RecommendationCategory
@@ -182,7 +189,8 @@ class ContentRecommendation(Recommendation):
 
 @dataclass
 class CreatorRecommendation(Recommendation):
-    """Creator collaboration recommendation"""
+    """
+Creator collaboration recommendation"""
     recommended_creator_id: str
     collaboration_type: str
     synergy_score: float
@@ -192,7 +200,8 @@ class CreatorRecommendation(Recommendation):
 
 @dataclass
 class OpportunityRecommendation(Recommendation):
-    """Business opportunity recommendation"""
+    """
+Business opportunity recommendation"""
     opportunity_type: str
     market_size: float
     competition_level: float
@@ -206,7 +215,8 @@ class RecommendationEngine:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize recommendation engine"""
+        """
+Initialize recommendation engine"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -737,7 +747,8 @@ class RecommendationEngine:
         self,
         creator_profile: Dict[str, Any]
     ) -> List[RecommendationType]:
-        """Determine optimal recommendation types for creator"""
+        """
+Determine optimal recommendation types for creator"""
         types = []
         
         # Base recommendations for all creators
@@ -767,7 +778,8 @@ class RecommendationEngine:
         rec_type: RecommendationType,
         include_experimental: bool
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations for specific type"""
+        """
+Generate recommendations for specific type"""
         recommendations = []
         
         if rec_type == RecommendationType.CONTENT_DISCOVERY:
@@ -795,7 +807,8 @@ class RecommendationEngine:
         creator_id: str,
         creator_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate content discovery recommendations"""
+        """
+Generate content discovery recommendations"""
         recommendations = []
         
         # Mock content recommendations
@@ -952,7 +965,8 @@ class RecommendationEngine:
         recommendations: List[Dict[str, Any]],
         creator_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Apply personalization to recommendations"""
+        """
+Apply personalization to recommendations"""
         # Adjust recommendations based on creator preferences
         creator_goals = creator_profile.get('goals', '')
         creator_preferences = creator_profile.get('preferences', {})
@@ -979,7 +993,8 @@ class RecommendationEngine:
         creator_id: str,
         recommendations: List[Recommendation]
     ):
-        """Cache recommendations for creator"""
+        """
+Cache recommendations for creator"""
         cache_key = f"rec_{creator_id}"
         self._recommendation_cache[cache_key] = {
             'recommendations': recommendations,
@@ -1009,7 +1024,8 @@ class RecommendationEngine:
     # Additional helper methods for specific recommendation types...
 
     async def _analyze_creator_content_history(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze creator's content history"""
+        """
+Analyze creator's content history"""
         history = self._interaction_history.get(creator_id, {})
         
         return {
@@ -1023,7 +1039,8 @@ class RecommendationEngine:
         }
 
     async def _get_trending_content_patterns(self) -> Dict[str, Any]:
-        """Get current trending content patterns"""
+        """
+Get current trending content patterns"""
         return {
             'trending_topics': ['AI music', 'collaborative content', 'short videos'],
             'trending_formats': ['reels', 'shorts', 'live streams'],
@@ -1043,7 +1060,8 @@ class RecommendationEngine:
         history: Dict[str, Any],
         trends: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate content ideas based on multiple factors"""
+        """
+Generate content ideas based on multiple factors"""
         ideas = []
         
         # Generate ideas based on trending topics
@@ -1115,7 +1133,8 @@ class RecommendationEngine:
         return sorted(ideas, key=lambda x: x['score'].overall_score, reverse=True)
 
     def _determine_content_priority(self, content_idea: Dict[str, Any]) -> RecommendationPriority:
-        """Determine priority for content recommendation"""
+        """
+Determine priority for content recommendation"""
         score = content_idea['score'].overall_score
         
         if score > 0.9:
@@ -1128,7 +1147,8 @@ class RecommendationEngine:
             return RecommendationPriority.LOW
 
     def _determine_collaboration_priority(self, collaboration: Dict[str, Any]) -> RecommendationPriority:
-        """Determine priority for collaboration recommendation"""
+        """
+Determine priority for collaboration recommendation"""
         synergy = collaboration.get('synergy', 0.5)
         
         if synergy > 0.9:
@@ -1139,7 +1159,8 @@ class RecommendationEngine:
             return RecommendationPriority.LOW
 
     def _determine_opportunity_priority(self, opportunity: Dict[str, Any]) -> RecommendationPriority:
-        """Determine priority for opportunity recommendation"""
+        """
+Determine priority for opportunity recommendation"""
         revenue_potential = opportunity.get('revenue', 0)
         
         if revenue_potential > 10000:
@@ -1155,7 +1176,8 @@ class RecommendationEngine:
         creator_profile: Dict[str, Any],
         max_distance: int
     ) -> List[Dict[str, Any]]:
-        """Find potential collaborators using network analysis"""
+        """
+Find potential collaborators using network analysis"""
         collaborators = []
         
         if creator_id in self._creator_network:
@@ -1328,7 +1350,8 @@ class RecommendationEngine:
         creator_id: str,
         feedback_data: Dict[str, Any]
     ):
-        """Update user preference model based on feedback"""
+        """
+Update user preference model based on feedback"""
         if creator_id not in self._preference_models:
             self._preference_models[creator_id] = {
                 'positive_feedback': [],
@@ -1345,7 +1368,8 @@ class RecommendationEngine:
             self._preference_models[creator_id]['negative_feedback'].append(feedback_data)
 
     async def _adapt_algorithms(self, feedback_data: Dict[str, Any]):
-        """Adapt recommendation algorithms based on feedback"""
+        """
+Adapt recommendation algorithms based on feedback"""
         # Mock algorithm adaptation
         feedback_score = feedback_data['feedback'].get('score', 0)
         
@@ -1357,7 +1381,8 @@ class RecommendationEngine:
             pass
 
     async def _update_feedback_metrics(self, feedback_data: Dict[str, Any]):
-        """Update metrics based on user feedback"""
+        """
+Update metrics based on user feedback"""
         feedback_score = feedback_data['feedback'].get('score', 0)
         
         # Update satisfaction metrics
@@ -1380,7 +1405,8 @@ class RecommendationEngine:
                 )
 
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get recommendation engine metrics"""
+        """
+Get recommendation engine metrics"""
         return {
             'engine_metrics': self.metrics,
             'model_status': {
@@ -1410,7 +1436,8 @@ class RecommendationEngine:
         }
 
     async def shutdown(self):
-        """Cleanup and shutdown recommendation engine"""
+        """
+Cleanup and shutdown recommendation engine"""
         try:
             # Cancel processing tasks
             for task in self._processing_tasks:

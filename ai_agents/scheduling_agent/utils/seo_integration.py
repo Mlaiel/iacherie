@@ -21,6 +21,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -49,7 +50,9 @@ from .scheduling_agent import ScheduledJob, SchedulingPriority
 logger = logging.getLogger(__name__)
 
 class SEOTimingStrategy(Enum):
-    """SEO-focused timing strategies"""
+    """
+SEO-focused timing strategies"""
+
     PEAK_SEARCH_VOLUME = "peak_search_volume"
     LOW_COMPETITION = "low_competition"
     TRENDING_KEYWORDS = "trending_keywords"
@@ -60,6 +63,7 @@ class SEOTimingStrategy(Enum):
 
 class ContentSEOType(Enum):
     """Content types for SEO optimization"""
+
     BLOG_POST = "blog_post"
     VIDEO_CONTENT = "video_content"
     PODCAST_EPISODE = "podcast_episode"
@@ -99,7 +103,8 @@ class SEOTimingRecommendation:
 
 @dataclass
 class SEOPerformanceMetrics:
-    """SEO performance metrics for scheduled content"""
+    """
+SEO performance metrics for scheduled content"""
     search_impressions: int = 0
     search_clicks: int = 0
     average_position: float = 0.0
@@ -420,7 +425,8 @@ class SEOIntegrationScheduler:
         keywords: List[str],
         content_type: ContentSEOType
     ) -> Dict[str, Any]:
-        """Analyze competitor posting timing patterns"""
+        """
+Analyze competitor posting timing patterns"""
         try:
             competition_analysis = {
                 'competition_score': 0.0,
@@ -588,7 +594,8 @@ class SEOIntegrationScheduler:
         backlink_opportunities: Dict[str, Any],
         seo_config: SEOOptimizationConfig
     ) -> Dict[str, Any]:
-        """Calculate the optimal timing for SEO performance"""
+        """
+Calculate the optimal timing for SEO performance"""
         try:
             # Weight different factors based on strategy
             strategy_weights = {
@@ -700,7 +707,8 @@ class SEOIntegrationScheduler:
         hour: int,
         competition_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate competition score for specific hour (lower competition = higher score)"""
+        """
+Calculate competition score for specific hour (lower competition = higher score)"""
         low_competition_windows = competition_analysis.get('low_competition_windows', [])
         
         for window in low_competition_windows:
@@ -714,7 +722,8 @@ class SEOIntegrationScheduler:
         hour: int,
         backlink_opportunities: Dict[str, Any]
     ) -> float:
-        """Calculate backlink opportunity score for specific hour"""
+        """
+Calculate backlink opportunity score for specific hour"""
         opportunity_score = backlink_opportunities.get('opportunity_score', 0.5)
         
         # Industry influencers are typically more active during business hours
@@ -730,7 +739,8 @@ class SEOIntegrationScheduler:
         hour: int,
         keyword_analysis: Dict[str, Any]
     ) -> int:
-        """Estimate search volume for specific hour"""
+        """
+Estimate search volume for specific hour"""
         base_volume = 1000  # Base search volume
         
         peak_hours = keyword_analysis.get('peak_search_hours', [])
@@ -742,7 +752,8 @@ class SEOIntegrationScheduler:
             return base_volume
     
     def _calculate_viral_potential(self, hour: int) -> float:
-        """Calculate viral potential score for specific hour"""
+        """
+Calculate viral potential score for specific hour"""
         # Higher viral potential during peak social media hours
         if hour in [12, 13, 18, 19, 20, 21]:
             return 0.8
@@ -757,7 +768,8 @@ class SEOIntegrationScheduler:
         content_metadata: Dict[str, Any],
         seo_config: SEOOptimizationConfig
     ) -> List[datetime]:
-        """Calculate optimal social media amplification windows"""
+        """
+Calculate optimal social media amplification windows"""
         primary_time = optimal_timing['primary_time']
         amplification_windows = []
         
@@ -790,7 +802,8 @@ class SEOIntegrationScheduler:
         return amplification_windows
     
     async def _check_seo_agent_status(self, content_id: str) -> Dict[str, Any]:
-        """Check SEO agent availability and status"""
+        """
+Check SEO agent availability and status"""
         # This would integrate with the seo_agent module
         return {
             'is_available': True,
@@ -805,7 +818,8 @@ class SEOIntegrationScheduler:
         scheduled_time: datetime,
         seo_config: SEOOptimizationConfig
     ) -> List[Dict[str, Any]]:
-        """Schedule SEO optimization tasks before publication"""
+        """
+Schedule SEO optimization tasks before publication"""
         tasks = [
             {
                 'task_type': 'keyword_optimization',
@@ -841,7 +855,8 @@ class SEOIntegrationScheduler:
         scheduled_time: datetime,
         seo_config: SEOOptimizationConfig
     ) -> List[Dict[str, Any]]:
-        """Set up post-publication amplification plan"""
+        """
+Set up post-publication amplification plan"""
         amplification_plan = [
             {
                 'action': 'social_media_sharing',
@@ -870,7 +885,8 @@ class SEOIntegrationScheduler:
         content_id: str,
         keywords: List[str]
     ) -> Dict[str, Any]:
-        """Set up SEO monitoring for published content"""
+        """
+Set up SEO monitoring for published content"""
         monitoring_config = {
             'tracking_keywords': keywords,
             'monitoring_frequency': 'hourly_first_24h_then_daily',
@@ -891,7 +907,8 @@ class SEOIntegrationScheduler:
         scheduled_time: datetime,
         seo_config: SEOOptimizationConfig
     ) -> Dict[str, Any]:
-        """Estimate expected SEO impact"""
+        """
+Estimate expected SEO impact"""
         impact_estimate = {
             'expected_ranking_improvement': 5,  # positions
             'estimated_organic_traffic_increase': 150,  # percentage
@@ -904,7 +921,8 @@ class SEOIntegrationScheduler:
         return impact_estimate
     
     async def _get_target_influencers(self, keywords: List[str]) -> List[str]:
-        """Get target influencers for keyword topics"""
+        """
+Get target influencers for keyword topics"""
         # This would query influencer databases
         return [f"influencer_{i}" for i in range(1, 6)]
     
@@ -938,7 +956,8 @@ class SEOIntegrationScheduler:
         self,
         competitor_patterns: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify time windows with low competition"""
+        """
+Identify time windows with low competition"""
         # Analyze competitor posting patterns to find gaps
         busy_hours = set()
         
@@ -963,7 +982,8 @@ class SEOIntegrationScheduler:
 
 # Factory function
 def create_seo_integration_scheduler() -> SEOIntegrationScheduler:
-    """Create and initialize SEO integration scheduler"""
+    """
+Create and initialize SEO integration scheduler"""
     return SEOIntegrationScheduler()
 
 # Export main classes

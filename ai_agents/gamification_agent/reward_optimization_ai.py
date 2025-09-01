@@ -11,6 +11,7 @@ This reward optimization AI and algorithms are the exclusive intellectual proper
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -23,7 +24,9 @@ import math
 logger = logging.getLogger(__name__)
 
 class RewardType(Enum):
-    """Types of rewards available"""
+    """
+Types of rewards available"""
+
     EXPERIENCE_POINTS = "experience_points"
     VIRTUAL_CURRENCY = "virtual_currency"
     BADGE = "badge"
@@ -35,6 +38,7 @@ class RewardType(Enum):
 
 class RewardTier(Enum):
     """Reward tier levels"""
+
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -56,7 +60,8 @@ class RewardConfig:
 
 @dataclass
 class OptimizedReward:
-    """Optimized reward instance"""
+    """
+Optimized reward instance"""
     reward_id: str
     user_id: str
     reward_type: RewardType
@@ -205,7 +210,8 @@ class RewardOptimizer:
         return self.user_reward_profiles[user_id]
     
     async def _analyze_activity_for_rewards(self, activity_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze activity data for reward optimization"""
+        """
+Analyze activity data for reward optimization"""
         analysis = {
             'activity_type': activity_data.get('activity_type', 'unknown'),
             'quality_score': activity_data.get('quality_score', 0.5),
@@ -235,7 +241,8 @@ class RewardOptimizer:
         reward_type: RewardType, 
         activity_analysis: Dict[str, Any]
     ) -> bool:
-        """Determine if a reward type should be applied"""
+        """
+Determine if a reward type should be applied"""
         activity_type = activity_analysis['activity_type']
         
         # Experience points - always applicable
@@ -271,7 +278,8 @@ class RewardOptimizer:
         activity_analysis: Dict[str, Any],
         user_profile: Dict[str, Any]
     ) -> Optional[OptimizedReward]:
-        """Optimize a specific reward for the user"""
+        """
+Optimize a specific reward for the user"""
         try:
             # Get base reward amount
             base_amount = self._get_base_reward_amount(reward_type, activity_analysis)
@@ -357,7 +365,8 @@ class RewardOptimizer:
         activity_analysis: Dict[str, Any],
         user_profile: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Optimize rewards based on engagement patterns"""
+        """
+Optimize rewards based on engagement patterns"""
         engagement_score = activity_analysis['engagement_score']
         
         # Higher rewards for higher engagement
@@ -379,7 +388,8 @@ class RewardOptimizer:
         activity_analysis: Dict[str, Any],
         user_profile: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Optimize rewards based on performance metrics"""
+        """
+Optimize rewards based on performance metrics"""
         overall_performance = activity_analysis['overall_performance']
         
         # Performance-based multiplier
@@ -398,7 +408,8 @@ class RewardOptimizer:
         activity_analysis: Dict[str, Any],
         user_profile: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Optimize rewards based on user behavior patterns"""
+        """
+Optimize rewards based on user behavior patterns"""
         consistency_factor = activity_analysis['consistency_factor']
         innovation_factor = activity_analysis['innovation_factor']
         
@@ -414,7 +425,8 @@ class RewardOptimizer:
         activity_analysis: Dict[str, Any],
         user_profile: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Optimize rewards based on timing factors"""
+        """
+Optimize rewards based on timing factors"""
         # Check if this is a streak activity
         if self.config.streak_bonus_enabled:
             streak_multiplier = user_profile.get('streak_multipliers', 1.0)
@@ -430,7 +442,8 @@ class RewardOptimizer:
         activity_analysis: Dict[str, Any],
         user_profile: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Optimize rewards based on social impact"""
+        """
+Optimize rewards based on social impact"""
         social_impact = activity_analysis['social_impact']
         
         if social_impact >= 0.7:
@@ -446,7 +459,8 @@ class RewardOptimizer:
         return {'multiplier': multiplier, 'bonus': bonus}
     
     def _determine_reward_tier(self, optimized_amount: float, base_amount: float) -> RewardTier:
-        """Determine reward tier based on optimization level"""
+        """
+Determine reward tier based on optimization level"""
         optimization_ratio = optimized_amount / base_amount if base_amount > 0 else 1.0
         
         if optimization_ratio >= 2.0:
@@ -467,7 +481,8 @@ class RewardOptimizer:
         multipliers: Dict[str, float],
         bonuses: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Generate AI insights for reward optimization"""
+        """
+Generate AI insights for reward optimization"""
         insights = {
             'optimization_factors': [],
             'performance_highlights': [],
@@ -535,7 +550,8 @@ class RewardOptimizer:
         optimized_rewards: List[OptimizedReward],
         activity_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimization insights"""
+        """
+Generate optimization insights"""
         if not optimized_rewards:
             return {}
         
@@ -557,7 +573,8 @@ class RewardOptimizer:
         }
     
     def _get_top_optimization_factors(self, optimized_rewards: List[OptimizedReward]) -> List[str]:
-        """Get top optimization factors across all rewards"""
+        """
+Get top optimization factors across all rewards"""
         factor_impacts = {}
         
         for reward in optimized_rewards:
@@ -582,7 +599,8 @@ class RewardOptimizer:
         user_profile: Dict[str, Any],
         activity_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate personalized reward recommendations"""
+        """
+Generate personalized reward recommendations"""
         recommendations = []
         
         if activity_analysis['quality_score'] < 0.7:
@@ -615,7 +633,8 @@ class RewardOptimizer:
         }
     
     def get_system_performance_metrics(self) -> Dict[str, Any]:
-        """Get system-wide reward optimization metrics"""
+        """
+Get system-wide reward optimization metrics"""
         total_users = len(self.user_reward_profiles)
         total_rewards = sum(
             profile.get('total_rewards_earned', 0)

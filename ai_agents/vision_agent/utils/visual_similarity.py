@@ -12,6 +12,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import cv2
@@ -49,7 +50,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class SimilarityMethod:
-    """Visual similarity detection methods"""
+    """
+Visual similarity detection methods"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     DEEP_FEATURES = "deep_features"
     HISTOGRAM = "histogram"
@@ -246,7 +249,8 @@ class VisualSimilarity(BaseAgent):
         return hashlib.sha256(stats_string.encode()).hexdigest()[:16]
 
     async def _generate_perceptual_hashes(self, image: np.ndarray) -> Dict[str, str]:
-        """Generate multiple perceptual hashes"""
+        """
+Generate multiple perceptual hashes"""
         try:
             # Convert to PIL Image
             if len(image.shape) == 3:
@@ -601,7 +605,8 @@ class VisualSimilarity(BaseAgent):
         return similarities
 
     async def _calculate_overall_similarity(self, similarity_scores: Dict[str, Any]) -> float:
-        """Calculate weighted overall similarity score"""
+        """
+Calculate weighted overall similarity score"""
         try:
             total_weight = 0.0
             weighted_sum = 0.0

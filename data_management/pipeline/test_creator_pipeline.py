@@ -10,6 +10,7 @@ droit d'auteur. Contact: mlaiel@live.de
 
 Tests complets pour valider le fonctionnement de la pipeline créateur
 """
+
 import pytest
 import asyncio
 from unittest.mock import Mock, AsyncMock, patch
@@ -23,7 +24,8 @@ from ..config import (
 
 @pytest.fixture
 def sample_creator_data():
-    """Données de test pour un créateur"""
+    """
+Données de test pour un créateur"""
     return {
         'creator_id': 'test_musician_001',
         'creator_type': 'musician',
@@ -38,7 +40,8 @@ def sample_creator_data():
 
 @pytest.fixture
 def sample_content_data():
-    """Données de test pour du contenu"""
+    """
+Données de test pour du contenu"""
     return {
         'content_id': 'test_track_001',
         'title': 'Test Track',
@@ -49,11 +52,13 @@ def sample_content_data():
     }
 
 class TestCreatorWorkflowOrchestrator:
-    """Tests pour l'orchestrateur de workflows créateur"""
+    """
+Tests pour l'orchestrateur de workflows créateur"""
     
     @pytest.mark.asyncio
     async def test_workflow_orchestrator_import(self):
-        """Test que l'orchestrateur peut être importé"""
+        """
+Test que l'orchestrateur peut être importé"""
         try:
             from ..creator_workflows import CreatorWorkflowOrchestrator
             orchestrator = CreatorWorkflowOrchestrator()
@@ -95,7 +100,8 @@ class TestPlatformIntegrations:
     
     @pytest.mark.asyncio
     async def test_platform_manager_import(self):
-        """Test que le gestionnaire de plateformes peut être importé"""
+        """
+Test que le gestionnaire de plateformes peut être importé"""
         try:
             from ..platform_integrations import CreatorPlatformManager
             manager = CreatorPlatformManager()
@@ -135,7 +141,8 @@ class TestMonetizationAnalytics:
     
     @pytest.mark.asyncio
     async def test_monetization_analyzer_import(self):
-        """Test que l'analyseur de monétisation peut être importé"""
+        """
+Test que l'analyseur de monétisation peut être importé"""
         try:
             from ..monetization_analytics import CreatorMonetizationAnalyzer
             analyzer = CreatorMonetizationAnalyzer()
@@ -180,7 +187,8 @@ class TestContentProcessors:
     
     @pytest.mark.asyncio
     async def test_creator_content_processor_import(self):
-        """Test que le processeur de contenu créateur peut être importé"""
+        """
+Test que le processeur de contenu créateur peut être importé"""
         try:
             from ..processors import CreatorContentProcessor
             processor = CreatorContentProcessor()
@@ -220,7 +228,8 @@ class TestContentTransformers:
     
     @pytest.mark.asyncio
     async def test_creator_content_transformer_import(self):
-        """Test que le transformateur de contenu créateur peut être importé"""
+        """
+Test que le transformateur de contenu créateur peut être importé"""
         try:
             from ..transformers import CreatorContentTransformer
             transformer = CreatorContentTransformer()
@@ -266,7 +275,8 @@ class TestConfiguration:
     """Tests pour la configuration"""
     
     def test_creator_types_enum(self):
-        """Test que les types de créateurs sont définis"""
+        """
+Test que les types de créateurs sont définis"""
         assert CreatorType.MUSICIAN.value == 'musician'
         assert CreatorType.BLOGGER.value == 'blogger'
         assert CreatorType.PHOTOGRAPHER.value == 'photographer'
@@ -274,29 +284,34 @@ class TestConfiguration:
         assert CreatorType.COMEDIAN.value == 'comedian'
     
     def test_platform_enum(self):
-        """Test que les plateformes sont définies"""
+        """
+Test que les plateformes sont définies"""
         assert Platform.SPOTIFY.value == 'spotify'
         assert Platform.YOUTUBE.value == 'youtube'
         assert Platform.INSTAGRAM.value == 'instagram'
     
     def test_default_config_values(self):
-        """Test que la configuration par défaut est valide"""
+        """
+Test que la configuration par défaut est valide"""
         assert DEFAULT_CONFIG.max_concurrent_tasks > 0
         assert DEFAULT_CONFIG.timeout_seconds > 0
         assert DEFAULT_CONFIG.retry_attempts >= 1
     
     def test_creator_config_structure(self):
-        """Test que la configuration créateur est bien structurée"""
+        """
+Test que la configuration créateur est bien structurée"""
         assert 'musician' in DEFAULT_CREATOR_CONFIG.__dict__
         assert 'blogger' in DEFAULT_CREATOR_CONFIG.__dict__
         assert 'photographer' in DEFAULT_CREATOR_CONFIG.__dict__
 
 class TestIntegrationWorkflow:
-    """Tests d'intégration complète"""
+    """
+Tests d'intégration complète"""
     
     @pytest.mark.asyncio
     async def test_complete_musician_pipeline(self, sample_creator_data, sample_content_data):
-        """Test de la pipeline complète pour un musicien"""
+        """
+Test de la pipeline complète pour un musicien"""
         try:
             from ..creator_workflows import CreatorWorkflowOrchestrator
             from ..platform_integrations import CreatorPlatformManager
@@ -344,7 +359,8 @@ class TestPerformance:
     
     @pytest.mark.asyncio
     async def test_content_processing_performance(self, sample_content_data):
-        """Test que le traitement de contenu est dans les temps"""
+        """
+Test que le traitement de contenu est dans les temps"""
         import time
         
         try:

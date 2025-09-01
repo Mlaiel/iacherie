@@ -6,6 +6,7 @@ for content protection, compliance, and business rules.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -23,7 +24,9 @@ logger = get_logger(__name__)
 
 
 class PolicyType(str, Enum):
-    """Types of policies."""
+    """
+Types of policies."""
+
     CONTENT_PROTECTION = "content_protection"
     ACCESS_CONTROL = "access_control"
     USAGE_RESTRICTION = "usage_restriction"
@@ -36,6 +39,7 @@ class PolicyType(str, Enum):
 
 class PolicyScope(str, Enum):
     """Policy application scope."""
+
     GLOBAL = "global"
     USER = "user"
     CONTENT = "content"
@@ -46,6 +50,7 @@ class PolicyScope(str, Enum):
 
 class PolicyStatus(str, Enum):
     """Policy status states."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     DRAFT = "draft"
@@ -55,6 +60,7 @@ class PolicyStatus(str, Enum):
 
 class PolicyEffect(str, Enum):
     """Policy enforcement effects."""
+
     ALLOW = "allow"
     DENY = "deny"
     REQUIRE = "require"
@@ -65,6 +71,7 @@ class PolicyEffect(str, Enum):
 
 class ConditionOperator(str, Enum):
     """Condition operators for policy rules."""
+
     EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     CONTAINS = "contains"
@@ -89,7 +96,8 @@ class PolicyCondition:
 
 @dataclass
 class PolicyRule:
-    """Individual policy rule."""
+    """
+Individual policy rule."""
     rule_id: str
     name: str
     description: str
@@ -123,7 +131,8 @@ class Policy:
 
 @dataclass
 class PolicyEvaluationContext:
-    """Context for policy evaluation."""
+    """
+Context for policy evaluation."""
     user_id: Optional[str]
     content_id: Optional[str]
     platform: Optional[str]
@@ -136,7 +145,8 @@ class PolicyEvaluationContext:
 
 @dataclass
 class PolicyEvaluationResult:
-    """Result of policy evaluation."""
+    """
+Result of policy evaluation."""
     policy_id: str
     rule_id: Optional[str]
     effect: PolicyEffect
@@ -149,7 +159,8 @@ class PolicyEvaluationResult:
 
 @dataclass
 class PolicyDecision:
-    """Final policy decision."""
+    """
+Final policy decision."""
     decision: PolicyEffect
     applicable_policies: List[str]
     evaluation_results: List[PolicyEvaluationResult]
@@ -981,7 +992,8 @@ class PolicyEngine:
         return []
     
     async def _detect_policy_conflict(self, policy1: Policy, policy2: Policy) -> Optional[Dict[str, Any]]:
-        """Detect conflict between two policies."""
+        """
+Detect conflict between two policies."""
         # Simplified conflict detection
         if (policy1.scope == policy2.scope and 
             policy1.policy_type == policy2.policy_type and
@@ -1084,7 +1096,8 @@ class PolicyEngine:
         evaluation_results: List[PolicyEvaluationResult],
         final_decision: PolicyEffect
     ) -> str:
-        """Generate primary reason for decision."""
+        """
+Generate primary reason for decision."""
         matched_results = [r for r in evaluation_results if r.matched]
         
         if not matched_results:

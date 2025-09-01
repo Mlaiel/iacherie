@@ -5,7 +5,7 @@ Ultra-advanced parsers for content protection, copyright monitoring,
 and digital rights surveillance across platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
@@ -22,6 +22,7 @@ Development Team Specialties:
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
 """
+
 import asyncio
 import hashlib
 import json
@@ -50,7 +51,9 @@ from .parser_config import ParserConfig
 
 
 class ViolationType(Enum):
-    """Types of content violations"""
+    """
+Types of content violations"""
+
     EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
@@ -65,6 +68,7 @@ class ViolationType(Enum):
 
 class ThreatLevel(Enum):
     """Threat level classification"""
+
     CRITICAL = "critical"  # Exact match, commercial use
     HIGH = "high"         # Close match, potential revenue impact
     MEDIUM = "medium"     # Partial match, limited impact
@@ -91,7 +95,8 @@ class ContentMatch:
 
 @dataclass
 class SurveillanceResult:
-    """Complete surveillance analysis result"""
+    """
+Complete surveillance analysis result"""
     content_matches: List[ContentMatch] = field(default_factory=list)
     total_violations: int = 0
     critical_threats: int = 0
@@ -102,14 +107,16 @@ class SurveillanceResult:
 
 
 class ContentFingerprintGenerator:
-    """Advanced content fingerprinting for surveillance"""
+    """
+Advanced content fingerprinting for surveillance"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def generate_audio_fingerprint(self, audio_path: str) -> Dict[str, Any]:
-        """Generate audio fingerprint using multiple algorithms"""
+        """
+Generate audio fingerprint using multiple algorithms"""
         try:
             # This would integrate with audio fingerprinting libraries
             # like Chromaprint, pyAudioAnalysis, or custom implementations
@@ -257,7 +264,8 @@ class YouTubeSurveillanceParser:
         search_terms: List[str], 
         original_fingerprint: Dict[str, Any]
     ) -> List[ContentMatch]:
-        """Search YouTube for potential content matches"""
+        """
+Search YouTube for potential content matches"""
         matches = []
         
         try:
@@ -439,7 +447,8 @@ class YouTubeSurveillanceParser:
             return ViolationType.PARTIAL_COPY
     
     def _assess_threat_level(self, similarity_score: float, video_result: Dict[str, Any]) -> ThreatLevel:
-        """Assess threat level based on similarity and engagement"""
+        """
+Assess threat level based on similarity and engagement"""
         view_count = video_result.get('view_count', 0)
         
         if similarity_score > 0.9 and view_count > 100000:
@@ -454,7 +463,8 @@ class YouTubeSurveillanceParser:
             return ThreatLevel.INFORMATIONAL
     
     async def _get_channel_info(self, channel_id: str) -> Dict[str, Any]:
-        """Get channel information"""
+        """
+Get channel information"""
         # Placeholder - would use YouTube API
         return {
             'channel_id': channel_id,
@@ -466,7 +476,8 @@ class YouTubeSurveillanceParser:
         }
     
     async def _get_engagement_metrics(self, video_id: str) -> Dict[str, Any]:
-        """Get video engagement metrics"""
+        """
+Get video engagement metrics"""
         # Placeholder - would use YouTube API
         return {
             'view_count': 10000,
@@ -478,7 +489,8 @@ class YouTubeSurveillanceParser:
         }
     
     def _estimate_revenue_impact(self, engagement_metrics: Dict[str, Any], threat_level: ThreatLevel) -> float:
-        """Estimate potential revenue impact"""
+        """
+Estimate potential revenue impact"""
         base_impact = engagement_metrics.get('view_count', 0) * 0.001  # $1 per 1000 views estimate
         
         threat_multipliers = {
@@ -493,7 +505,8 @@ class YouTubeSurveillanceParser:
 
 
 class ContentProtectionSurveillanceEngine:
-    """Ultra-advanced content protection surveillance engine"""
+    """
+Ultra-advanced content protection surveillance engine"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
@@ -503,7 +516,8 @@ class ContentProtectionSurveillanceEngine:
         # Would include parsers for other platforms: Instagram, TikTok, etc.
     
     async def initialize(self) -> None:
-        """Initialize surveillance engine"""
+        """
+Initialize surveillance engine"""
         await self.youtube_parser.initialize_selenium()
     
     async def perform_comprehensive_surveillance(
@@ -511,7 +525,8 @@ class ContentProtectionSurveillanceEngine:
         original_content: Dict[str, Any],
         platforms: List[str] = None
     ) -> SurveillanceResult:
-        """Perform comprehensive content surveillance across platforms"""
+        """
+Perform comprehensive content surveillance across platforms"""
         try:
             if platforms is None:
                 platforms = ['youtube', 'instagram', 'tiktok', 'twitter']
@@ -638,7 +653,8 @@ class ContentProtectionSurveillanceEngine:
         return result
     
     def _generate_action_recommendations(self, matches: List[ContentMatch]) -> List[str]:
-        """Generate action recommendations based on matches"""
+        """
+Generate action recommendations based on matches"""
         recommendations = []
         
         critical_matches = [m for m in matches if m.threat_level == ThreatLevel.CRITICAL]

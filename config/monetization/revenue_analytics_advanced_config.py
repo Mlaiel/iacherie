@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -24,7 +25,9 @@ from datetime import timedelta
 
 
 class AnalyticsMetric(str, Enum):
-    """Revenue analytics metrics."""
+    """
+Revenue analytics metrics."""
+
     TOTAL_REVENUE = "total_revenue"
     REVENUE_GROWTH = "revenue_growth"
     PLATFORM_DISTRIBUTION = "platform_distribution"
@@ -41,6 +44,7 @@ class AnalyticsMetric(str, Enum):
 
 class TimeGranularity(str, Enum):
     """Time granularity for analytics."""
+
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -52,6 +56,7 @@ class TimeGranularity(str, Enum):
 
 class PredictionModel(str, Enum):
     """ML prediction model types."""
+
     LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     ARIMA = "arima"
@@ -63,6 +68,7 @@ class PredictionModel(str, Enum):
 
 class AlertCondition(str, Enum):
     """Alert condition types."""
+
     THRESHOLD_ABOVE = "threshold_above"
     THRESHOLD_BELOW = "threshold_below"
     PERCENTAGE_CHANGE = "percentage_change"
@@ -151,7 +157,8 @@ class RevenueAnalyticsAdvancedConfig:
     """
     
     def __init__(self):
-        """Initialize advanced analytics configuration."""
+        """
+Initialize advanced analytics configuration."""
         
         # Database Configuration
         self.ANALYTICS_DB_URL = os.getenv(
@@ -460,49 +467,59 @@ class RevenueAnalyticsAdvancedConfig:
         return self.METRICS_CONFIG.get(metric)
     
     def get_enabled_metrics(self) -> List[AnalyticsMetric]:
-        """Get all enabled metrics."""
+        """
+Get all enabled metrics."""
         return [
             metric for metric, config in self.METRICS_CONFIG.items() 
             if config.enabled
         ]
     
     def get_real_time_metrics(self) -> List[AnalyticsMetric]:
-        """Get metrics enabled for real-time processing."""
+        """
+Get metrics enabled for real-time processing."""
         return [
             metric for metric, config in self.METRICS_CONFIG.items()
             if config.enabled and config.real_time_enabled
         ]
     
     def get_prediction_model(self, model_name: str) -> Optional[PredictionConfiguration]:
-        """Get configuration for a specific prediction model."""
+        """
+Get configuration for a specific prediction model."""
         return self.PREDICTION_MODELS.get(model_name)
     
     def get_active_alerts(self) -> List[AlertConfiguration]:
-        """Get all active alert configurations."""
+        """
+Get all active alert configurations."""
         return [alert for alert in self.ALERTS_CONFIG if alert.enabled]
     
     def get_dashboard_config(self, dashboard_name: str) -> Optional[DashboardConfiguration]:
-        """Get configuration for a specific dashboard."""
+        """
+Get configuration for a specific dashboard."""
         return self.DASHBOARDS_CONFIG.get(dashboard_name)
     
     def get_report_config(self, report_name: str) -> Optional[ReportConfiguration]:
-        """Get configuration for a specific report."""
+        """
+Get configuration for a specific report."""
         return self.REPORTS_CONFIG.get(report_name)
     
     def add_custom_metric(self, metric_config: MetricConfiguration):
-        """Add a custom metric configuration."""
+        """
+Add a custom metric configuration."""
         self.METRICS_CONFIG[metric_config.metric] = metric_config
     
     def add_custom_alert(self, alert_config: AlertConfiguration):
-        """Add a custom alert configuration."""
+        """
+Add a custom alert configuration."""
         self.ALERTS_CONFIG.append(alert_config)
     
     def update_dashboard(self, dashboard_name: str, dashboard_config: DashboardConfiguration):
-        """Update dashboard configuration."""
+        """
+Update dashboard configuration."""
         self.DASHBOARDS_CONFIG[dashboard_name] = dashboard_config
     
     def get_system_health_config(self) -> Dict[str, Any]:
-        """Get system health monitoring configuration."""
+        """
+Get system health monitoring configuration."""
         return {
             "health_check_enabled": True,
             "health_check_interval_seconds": 30,

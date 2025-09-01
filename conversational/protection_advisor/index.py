@@ -17,6 +17,7 @@ Team Specialization:
 - DevOps Engineer: Production deployment & monitoring systems
 - AI Prompt Engineer: Intelligent content analysis & classification
 """
+
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -47,7 +48,9 @@ logger = get_logger(__name__)
 
 
 class ServiceStatus(str, Enum):
-    """Service status enumeration."""
+    """
+Service status enumeration."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -57,6 +60,7 @@ class ServiceStatus(str, Enum):
 
 class RequestPriority(str, Enum):
     """Request priority levels."""
+
     CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
@@ -82,7 +86,8 @@ class ServiceHealth:
 
 @dataclass
 class ProtectionRequest:
-    """Unified protection request."""
+    """
+Unified protection request."""
     request_id: str
     user_id: str
     content_id: Optional[str]
@@ -101,7 +106,8 @@ class ProtectionRequest:
 
 @dataclass
 class ProtectionResponse:
-    """Unified protection response."""
+    """
+Unified protection response."""
     request_id: str
     success: bool
     data: Optional[Dict[str, Any]]
@@ -651,7 +657,8 @@ class ProtectionAdvisorIndex:
         return priority_values.get(priority, 2)
     
     async def _calculate_progress_percentage(self, request: ProtectionRequest) -> float:
-        """Calculate request progress percentage."""
+        """
+Calculate request progress percentage."""
         try:
             if request.status == "completed":
                 return 100.0
@@ -969,7 +976,8 @@ class LoadBalancer:
         self.service_loads = {}
     
     async def get_least_loaded_service(self, services: List[str]) -> str:
-        """Get the least loaded service from the list."""
+        """
+Get the least loaded service from the list."""
         if not services:
             return ""
         

@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 import uuid
 import json
 import asyncio
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaboration for creators"""
+    """
+Types of collaboration for creators"""
+
     MUSIC_PRODUCTION = "music_production"
     CONTENT_CREATION = "content_creation"
     PHOTO_EDITING = "photo_editing"
@@ -59,6 +62,7 @@ class CollaborationType(Enum):
 
 class RoomStatus(Enum):
     """Collaboration room status"""
+
     CREATING = "creating"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -69,6 +73,7 @@ class RoomStatus(Enum):
 
 class ParticipantRole(Enum):
     """Participant roles in collaboration"""
+
     OWNER = "owner"
     MODERATOR = "moderator"
     COLLABORATOR = "collaborator"
@@ -78,6 +83,7 @@ class ParticipantRole(Enum):
 
 class ParticipantStatus(Enum):
     """Participant connection status"""
+
     ONLINE = "online"
     OFFLINE = "offline"
     AWAY = "away"
@@ -87,6 +93,7 @@ class ParticipantStatus(Enum):
 
 class ActivityType(Enum):
     """Collaboration activity types"""
+
     JOIN = "join"
     LEAVE = "leave"
     MESSAGE = "message"
@@ -103,6 +110,7 @@ class ActivityType(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats for collaboration"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -127,7 +135,8 @@ class CollaborationPermissions:
 
 @dataclass
 class RoomSettings:
-    """Collaboration room settings"""
+    """
+Collaboration room settings"""
     max_participants: int = 50
     is_public: bool = False
     requires_approval: bool = True
@@ -141,7 +150,8 @@ class RoomSettings:
 
 
 class CollaborationRoom(Base):
-    """Collaboration room model"""
+    """
+Collaboration room model"""
     __tablename__ = "collaboration_rooms"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -437,7 +447,8 @@ class LiveCollaboration:
         self.worker_tasks: List[asyncio.Task] = []
     
     async def initialize(self):
-        """Initialize collaboration system"""
+        """
+Initialize collaboration system"""
         try:
             # Load active rooms
             await self._load_active_rooms()
@@ -948,7 +959,8 @@ class LiveCollaboration:
         ])
     
     async def _initialize_room_redis(self, room_id: str):
-        """Initialize Redis structures for room"""
+        """
+Initialize Redis structures for room"""
         await self.redis.delete(f"room:{room_id}:participants")
         await self.redis.delete(f"room:{room_id}:messages")
         await self.redis.setex(f"room:{room_id}:created", 86400, datetime.now(timezone.utc).isoformat())
@@ -998,7 +1010,8 @@ class LiveCollaboration:
         self.db.commit()
     
     def _get_default_permissions(self, role: ParticipantRole) -> CollaborationPermissions:
-        """Get default permissions for role"""
+        """
+Get default permissions for role"""
         if role == ParticipantRole.OWNER:
             return CollaborationPermissions(
                 can_edit=True, can_comment=True, can_share=True,
@@ -1026,7 +1039,8 @@ class LiveCollaboration:
             )
     
     async def _close_room(self, room_id: str):
-        """Close and cleanup room"""
+        """
+Close and cleanup room"""
         # Update room status
         room = self.db.query(CollaborationRoom).filter(
             CollaborationRoom.room_id == room_id

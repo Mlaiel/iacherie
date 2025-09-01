@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Advanced content protection service orchestrating fingerprinting and monitoring
 """
+
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -31,7 +32,8 @@ class ContentProtectionService:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content protection service"""
+        """
+Initialize content protection service"""
         self.config = config or self._get_default_config()
         
         # Initialize processors
@@ -52,7 +54,8 @@ class ContentProtectionService:
         }
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
+        """
+Get default configuration"""
         return {
             'similarity_threshold': 0.85,
             'batch_size': 50,
@@ -67,7 +70,8 @@ class ContentProtectionService:
         }
     
     async def initialize(self):
-        """Initialize the content protection service"""
+        """
+Initialize the content protection service"""
         try:
             await self.db_manager.initialize()
             logger.info("Content protection service initialized successfully")
@@ -338,7 +342,8 @@ class ContentProtectionService:
             return 'flagged_as_duplicate'
     
     async def get_protection_status(self, fingerprint_id: int) -> Dict[str, Any]:
-        """Get protection status for a specific fingerprint"""
+        """
+Get protection status for a specific fingerprint"""
         try:
             fingerprint = await self.db_manager.get_fingerprint(fingerprint_id)
             if not fingerprint:
@@ -371,7 +376,8 @@ class ContentProtectionService:
             return 'high_risk'
     
     async def get_service_statistics(self) -> Dict[str, Any]:
-        """Get service statistics"""
+        """
+Get service statistics"""
         try:
             db_stats = await self.db_manager.get_statistics()
             
@@ -426,5 +432,6 @@ class ContentProtectionService:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         await self.close()

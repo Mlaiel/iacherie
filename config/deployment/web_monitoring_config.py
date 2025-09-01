@@ -21,6 +21,7 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
+
 import os
 import json
 import yaml
@@ -33,7 +34,9 @@ from datetime import datetime, timedelta
 
 
 class PlatformType(Enum):
-    """Supported platform types for monitoring"""
+    """
+Supported platform types for monitoring"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -50,6 +53,7 @@ class PlatformType(Enum):
 
 class CrawlerMethod(Enum):
     """Crawling methods"""
+
     API = "api"
     SELENIUM = "selenium"
     SCRAPY = "scrapy"
@@ -59,6 +63,7 @@ class CrawlerMethod(Enum):
 
 class DetectionMode(Enum):
     """Content detection modes"""
+
     FINGERPRINT = "fingerprint"
     VISUAL = "visual"
     AUDIO = "audio"
@@ -86,7 +91,8 @@ class PlatformConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert configuration for detected content"""
+    """
+Alert configuration for detected content"""
     similarity_threshold: float = 0.85
     immediate_alert_threshold: float = 0.95
     notification_channels: List[str] = field(default_factory=lambda: ["email", "slack", "webhook"])
@@ -313,7 +319,8 @@ class WebMonitoringConfig:
         return self.platforms.get(platform)
     
     def enable_platform(self, platform: PlatformType, enabled: bool = True) -> None:
-        """Enable or disable platform monitoring"""
+        """
+Enable or disable platform monitoring"""
         if platform in self.platforms:
             self.platforms[platform].enabled = enabled
             self.logger.info(f"Platform {platform.value} {'enabled' if enabled else 'disabled'}")
@@ -333,7 +340,8 @@ class WebMonitoringConfig:
         return [platform for platform, config in self.platforms.items() if config.enabled]
     
     def generate_youtube_crawler_config(self) -> Dict[str, Any]:
-        """Generate YouTube-specific crawler configuration"""
+        """
+Generate YouTube-specific crawler configuration"""
         config = self.get_platform_config(PlatformType.YOUTUBE)
         if not config:
             return {}

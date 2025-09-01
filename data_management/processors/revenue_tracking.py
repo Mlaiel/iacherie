@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import json
 import logging
@@ -30,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Revenue type enumeration"""
+    """
+Revenue type enumeration"""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     SYNC = "synchronization"
@@ -49,6 +52,7 @@ class RevenueType(Enum):
 
 class PaymentStatus(Enum):
     """Payment status enumeration"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -81,7 +85,8 @@ class RevenueRecord:
 
 
 class RevenueTrackingProcessor:
-    """Advanced revenue tracking and analytics processor"""
+    """
+Advanced revenue tracking and analytics processor"""
     
     def __init__(self):
         self.db = get_database()
@@ -116,7 +121,8 @@ class RevenueTrackingProcessor:
         platform: str,
         user_id: str
     ) -> List[RevenueRecord]:
-        """Process raw revenue data from various platforms"""
+        """
+Process raw revenue data from various platforms"""
         try:
             logger.info(f"Processing revenue data for user {user_id} from {platform}")
             
@@ -197,7 +203,8 @@ class RevenueTrackingProcessor:
         platform: str,
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """Parse platform-specific data format"""
+        """
+Parse platform-specific data format"""
         try:
             if platform == 'spotify':
                 return await self._parse_spotify_data(raw_data, user_id)
@@ -246,7 +253,8 @@ class RevenueTrackingProcessor:
         return records
 
     async def _parse_apple_music_data(self, data: Dict, user_id: str) -> List[Dict]:
-        """Parse Apple Music data"""
+        """
+Parse Apple Music data"""
         records = []
         
         if 'data' in data:
@@ -273,7 +281,8 @@ class RevenueTrackingProcessor:
         return records
 
     async def _parse_youtube_data(self, data: Dict, user_id: str) -> List[Dict]:
-        """Parse YouTube analytics data"""
+        """
+Parse YouTube analytics data"""
         records = []
         
         if 'rows' in data:
@@ -300,7 +309,8 @@ class RevenueTrackingProcessor:
         return records
 
     async def _parse_soundcloud_data(self, data: Dict, user_id: str) -> List[Dict]:
-        """Parse SoundCloud data"""
+        """
+Parse SoundCloud data"""
         records = []
         
         if 'tracks' in data:
@@ -325,7 +335,8 @@ class RevenueTrackingProcessor:
         return records
 
     async def _parse_bandcamp_data(self, data: Dict, user_id: str) -> List[Dict]:
-        """Parse Bandcamp sales data"""
+        """
+Parse Bandcamp sales data"""
         records = []
         
         if 'sales' in data:
@@ -351,7 +362,8 @@ class RevenueTrackingProcessor:
         return records
 
     async def _parse_generic_data(self, data: Dict, user_id: str) -> List[Dict]:
-        """Parse generic revenue data format"""
+        """
+Parse generic revenue data format"""
         records = []
         
         # Handle both single record and array of records
@@ -373,7 +385,8 @@ class RevenueTrackingProcessor:
         return records
 
     def _determine_bandcamp_revenue_type(self, item_type: str) -> RevenueType:
-        """Determine revenue type based on Bandcamp item type"""
+        """
+Determine revenue type based on Bandcamp item type"""
         if item_type in ['track', 'album']:
             return RevenueType.DIGITAL_SALES
         elif item_type in ['vinyl', 'cd', 'cassette']:
@@ -384,7 +397,8 @@ class RevenueTrackingProcessor:
             return RevenueType.OTHER
 
     def _parse_date(self, date_str: Union[str, datetime, None]) -> datetime:
-        """Parse date from various formats"""
+        """
+Parse date from various formats"""
         if not date_str:
             return datetime.now(timezone.utc)
         
@@ -491,7 +505,8 @@ class RevenueTrackingProcessor:
         to_currency: str,
         date: datetime
     ) -> Decimal:
-        """Get exchange rate for currency conversion"""
+        """
+Get exchange rate for currency conversion"""
         if from_currency == to_currency:
             return Decimal('1.0')
         
@@ -527,7 +542,8 @@ class RevenueTrackingProcessor:
         return Decimal('1.0')
 
     async def _get_cached_exchange_rate(self, cache_key: str) -> Optional[Decimal]:
-        """Get cached exchange rate if available and not expired"""
+        """
+Get cached exchange rate if available and not expired"""
         try:
             import json
             
@@ -595,18 +611,21 @@ class RevenueTrackingProcessor:
         return (amount * platform_commission).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
     async def _calculate_service_fee(self, amount: Decimal) -> Decimal:
-        """Calculate our service fee"""
+        """
+Calculate our service fee"""
         service_rate = Decimal('0.05')  # 5% service fee
         return (amount * service_rate).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
     async def _calculate_tax(self, amount: Decimal, country: Optional[str]) -> Decimal:
-        """Calculate tax amount based on jurisdiction"""
+        """
+Calculate tax amount based on jurisdiction"""
         # This would implement tax calculation based on user location
         # For now, return 0 as taxes are typically handled separately
         return Decimal('0.00')
 
     async def _store_revenue_records(self, records: List[RevenueRecord]) -> None:
-        """Store revenue records in database"""
+        """
+Store revenue records in database"""
         try:
             query = """
             INSERT INTO revenue_records (
@@ -712,7 +731,8 @@ class RevenueTrackingProcessor:
         date: datetime.date,
         data: Dict[str, Any]
     ) -> None:
-        """Upsert daily aggregation record"""
+        """
+Upsert daily aggregation record"""
         query = """
         INSERT INTO revenue_daily_aggregations (
             user_id, date, gross_revenue, net_revenue,
@@ -743,7 +763,8 @@ class RevenueTrackingProcessor:
         records: List[RevenueRecord],
         user_id: str
     ) -> None:
-        """Check if revenue notifications should be sent"""
+        """
+Check if revenue notifications should be sent"""
         try:
             # Calculate total revenue from this batch
             total_revenue = sum(record.net_amount for record in records)
@@ -885,7 +906,8 @@ class RevenueTrackingProcessor:
             return obj
 
     async def cleanup_old_records(self, days_old: int = 2555) -> int:
-        """Clean up old revenue records"""
+        """
+Clean up old revenue records"""
         try:
             query = """
             DELETE FROM revenue_records

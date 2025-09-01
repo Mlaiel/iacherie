@@ -20,6 +20,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Callable, AsyncGenerator
 import json
 import logging
@@ -40,7 +41,9 @@ import tensorflow as tf
 logger = logging.getLogger(__name__)
 
 class InferenceMode(str, Enum):
-    """Inference mode enumeration."""
+    """
+Inference mode enumeration."""
+
     REALTIME = "realtime"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -48,6 +51,7 @@ class InferenceMode(str, Enum):
 
 class InferenceStatus(str, Enum):
     """Inference job status enumeration."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -56,6 +60,7 @@ class InferenceStatus(str, Enum):
 
 class ModelFramework(str, Enum):
     """Supported inference frameworks."""
+
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     ONNX = "onnx"
@@ -76,7 +81,8 @@ class InferenceRequest:
 
 @dataclass
 class InferenceResult:
-    """Inference result structure."""
+    """
+Inference result structure."""
     request_id: str
     model_id: str
     output_data: Any
@@ -88,7 +94,8 @@ class InferenceResult:
     metadata: Dict[str, Any]
 
 class InferenceEndpoint(BaseModel):
-    """Inference endpoint configuration."""
+    """
+Inference endpoint configuration."""
     endpoint_id: str = Field(..., min_length=1)
     model_id: str = Field(..., min_length=1)
     url: str = Field(..., min_length=1)
@@ -102,7 +109,8 @@ class InferenceEndpoint(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class BatchInferenceJob(BaseModel):
-    """Batch inference job configuration."""
+    """
+Batch inference job configuration."""
     job_id: str = Field(..., min_length=1)
     model_id: str = Field(..., min_length=1)
     input_source: str = Field(..., min_length=1)
@@ -122,7 +130,8 @@ class InferenceEngineManager:
     """
     
     def __init__(self):
-        """Initialize the inference engine manager."""
+        """
+Initialize the inference engine manager."""
         self.endpoints = {}
         self.active_jobs = {}
         self.performance_metrics = {}
@@ -677,7 +686,8 @@ class ModelServingInfrastructure:
     """
     
     def __init__(self):
-        """Initialize the serving infrastructure."""
+        """
+Initialize the serving infrastructure."""
         self.serving_pools = {}
         self.load_balancer = LoadBalancer()
         self.auto_scaler = AutoScaler()
@@ -738,12 +748,14 @@ class InferenceEndpointRegistry:
     """
     
     def __init__(self):
-        """Initialize the endpoint registry."""
+        """
+Initialize the endpoint registry."""
         self.endpoints_registry = {}
         self.health_monitor = HealthMonitor()
         
     async def register_endpoint(self, endpoint_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Register a new inference endpoint."""
+        """
+Register a new inference endpoint."""
         endpoint_id = endpoint_config["endpoint_id"]
         self.endpoints_registry[endpoint_id] = {
             **endpoint_config,
@@ -769,7 +781,8 @@ class RealTimeInferenceEngine:
     """
     
     def __init__(self):
-        """Initialize the real-time inference engine."""
+        """
+Initialize the real-time inference engine."""
         self.model_cache = {}
         self.request_cache = {}
         self.warmup_scheduler = WarmupScheduler()
@@ -849,7 +862,8 @@ class BatchInferenceEngine:
     """
     
     def __init__(self):
-        """Initialize the batch inference engine."""
+        """
+Initialize the batch inference engine."""
         self.job_queue = asyncio.Queue()
         self.worker_pool = []
         self.active_jobs = {}
@@ -896,7 +910,8 @@ class LoadBalancer:
         self.pools = {}
     
     async def add_pool(self, pool_id: str, pool_config: Dict[str, Any]):
-        """Add a serving pool to load balancer."""
+        """
+Add a serving pool to load balancer."""
         self.pools[pool_id] = pool_config
         logger.info(f"Added pool {pool_id} to load balancer")
 
@@ -907,7 +922,8 @@ class AutoScaler:
         self.monitored_pools = {}
     
     async def monitor_pool(self, pool_id: str):
-        """Start monitoring a pool for auto-scaling."""
+        """
+Start monitoring a pool for auto-scaling."""
         self.monitored_pools[pool_id] = {"monitoring": True}
         logger.info(f"Started auto-scaling monitoring for pool {pool_id}")
 
@@ -918,7 +934,8 @@ class HealthMonitor:
         self.monitored_endpoints = {}
     
     async def start_monitoring(self, endpoint_id: str, config: Dict[str, Any]):
-        """Start monitoring an endpoint."""
+        """
+Start monitoring an endpoint."""
         self.monitored_endpoints[endpoint_id] = config
         logger.info(f"Started health monitoring for endpoint {endpoint_id}")
 
@@ -929,6 +946,7 @@ class WarmupScheduler:
         self.warmup_schedule = {}
     
     async def schedule_warmup(self, model_id: str, warmup_time: datetime):
-        """Schedule model warmup."""
+        """
+Schedule model warmup."""
         self.warmup_schedule[model_id] = warmup_time
         logger.info(f"Scheduled warmup for model {model_id}")

@@ -25,6 +25,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -43,7 +44,9 @@ from cryptography.hazmat.primitives import serialization
 logger = logging.getLogger(__name__)
 
 class ValidationStatus(Enum):
-    """Status of content validation."""
+    """
+Status of content validation."""
+
     PENDING = "pending"
     AUTHENTIC = "authentic"
     SUSPICIOUS = "suspicious"
@@ -52,6 +55,7 @@ class ValidationStatus(Enum):
 
 class ValidationType(Enum):
     """Types of validation performed."""
+
     OWNERSHIP_PROOF = "ownership_proof"
     CREATION_TIMESTAMP = "creation_timestamp"
     INTEGRITY_CHECK = "integrity_check"
@@ -61,6 +65,7 @@ class ValidationType(Enum):
 
 class TrustLevel(Enum):
     """Trust levels for validation results."""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -81,7 +86,8 @@ class ValidationCriteria:
 
 @dataclass
 class ValidationEvidence:
-    """Evidence collected during validation."""
+    """
+Evidence collected during validation."""
     evidence_type: ValidationType
     result: bool
     confidence_score: float
@@ -91,7 +97,8 @@ class ValidationEvidence:
 
 @dataclass
 class ValidationResult:
-    """Result of content validation process."""
+    """
+Result of content validation process."""
     validation_id: str
     content_hash: str
     status: ValidationStatus
@@ -105,10 +112,12 @@ class ValidationResult:
     metadata: Dict[str, Any]
 
 class TimestampValidator:
-    """Validator for creation timestamp authenticity."""
+    """
+Validator for creation timestamp authenticity."""
     
     def __init__(self):
-        """Initialize timestamp validator."""
+        """
+Initialize timestamp validator."""
         self.trusted_sources = [
             "blockchain",
             "trusted_timestamping_authority",
@@ -202,7 +211,8 @@ class OwnershipValidator:
     """Validator for content ownership claims."""
     
     def __init__(self):
-        """Initialize ownership validator."""
+        """
+Initialize ownership validator."""
         self.verification_methods = [
             "digital_signature",
             "blockchain_registration",
@@ -348,7 +358,8 @@ class FingerprintValidator:
     """Validator for content fingerprint matching."""
     
     def __init__(self):
-        """Initialize fingerprint validator."""
+        """
+Initialize fingerprint validator."""
         self.similarity_threshold = 0.9
         
     async def validate_fingerprint(
@@ -662,7 +673,8 @@ class ContentValidator:
         criteria: ValidationCriteria,
         overall_confidence: float
     ) -> ValidationStatus:
-        """Determine overall validation status."""
+        """
+Determine overall validation status."""
         if overall_confidence >= 0.9:
             return ValidationStatus.AUTHENTIC
         elif overall_confidence >= 0.7:
@@ -679,7 +691,8 @@ class ContentValidator:
         overall_confidence: float,
         evidence: List[ValidationEvidence]
     ) -> TrustLevel:
-        """Calculate trust level based on confidence and evidence quality."""
+        """
+Calculate trust level based on confidence and evidence quality."""
         if overall_confidence >= 0.95:
             return TrustLevel.VERY_HIGH
         elif overall_confidence >= 0.8:
@@ -697,7 +710,8 @@ class ContentValidator:
         status: ValidationStatus,
         trust_level: TrustLevel
     ) -> Tuple[List[str], List[str]]:
-        """Generate recommendations and warnings based on validation results."""
+        """
+Generate recommendations and warnings based on validation results."""
         recommendations = []
         warnings = []
         
@@ -726,7 +740,8 @@ class ContentValidator:
         return self.validation_history.get(validation_id)
 
     def list_validations_by_content(self, content_hash: str) -> List[ValidationResult]:
-        """List all validations for a specific content hash."""
+        """
+List all validations for a specific content hash."""
         return [
             result for result in self.validation_history.values()
             if result.content_hash == content_hash

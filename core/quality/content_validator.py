@@ -9,8 +9,9 @@ User (creator) → Upload multi-format content → Quality validation →
 Protection readiness → SEO optimization → Monetization scoring
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import time
@@ -45,7 +46,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for validation"""
+    """
+Supported content types for validation"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -57,6 +60,7 @@ class ContentType(Enum):
 
 class QualityLevel(Enum):
     """Content quality assessment levels"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -66,6 +70,7 @@ class QualityLevel(Enum):
 
 class ValidationSeverity(Enum):
     """Validation issue severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -86,7 +91,8 @@ class QualityIssue:
 
 @dataclass
 class QualityScore:
-    """Comprehensive quality scoring"""
+    """
+Comprehensive quality scoring"""
     overall: float  # 0-100
     technical: float  # Technical quality metrics
     content: float  # Content quality metrics
@@ -109,7 +115,8 @@ class QualityScore:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive content validation result"""
+    """
+Comprehensive content validation result"""
     content_id: str
     content_type: ContentType
     quality_score: QualityScore
@@ -121,7 +128,8 @@ class ValidationResult:
     
     def add_issue(self, severity: ValidationSeverity, category: str, 
                   message: str, code: str, suggestions: List[str] = None):
-        """Add a quality issue to the result"""
+        """
+Add a quality issue to the result"""
         issue = QualityIssue(
             severity=severity,
             category=category,
@@ -132,17 +140,20 @@ class ValidationResult:
         self.issues.append(issue)
     
     def get_critical_issues(self) -> List[QualityIssue]:
-        """Get all critical issues"""
+        """
+Get all critical issues"""
         return [issue for issue in self.issues if issue.severity == ValidationSeverity.CRITICAL]
     
     def has_blocking_issues(self) -> bool:
-        """Check if there are any blocking issues"""
+        """
+Check if there are any blocking issues"""
         return any(issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR] 
                   for issue in self.issues)
 
 
 class AudioQualityAnalyzer:
-    """Advanced audio content quality analysis"""
+    """
+Advanced audio content quality analysis"""
     
     def __init__(self):
         self.min_duration = 10.0  # seconds
@@ -151,7 +162,8 @@ class AudioQualityAnalyzer:
         self.preferred_sample_rate = 44100
         
     def analyze_audio_quality(self, file_path: Path, result: ValidationResult):
-        """Analyze audio quality metrics"""
+        """
+Analyze audio quality metrics"""
         if not MULTIMEDIA_AVAILABLE:
             result.add_issue(
                 ValidationSeverity.WARNING,
@@ -254,7 +266,8 @@ class ImageQualityAnalyzer:
         self.max_file_size = 10 * 1024 * 1024  # 10MB
         
     def analyze_image_quality(self, file_path: Path, result: ValidationResult):
-        """Analyze image quality metrics"""
+        """
+Analyze image quality metrics"""
         try:
             with Image.open(file_path) as img:
                 width, height = img.size
@@ -349,7 +362,8 @@ class TextQualityAnalyzer:
         self.min_words = 10
         
     def analyze_text_quality(self, content: str, result: ValidationResult):
-        """Analyze text quality metrics"""
+        """
+Analyze text quality metrics"""
         try:
             # Basic length validation
             content_length = len(content.strip())
@@ -444,7 +458,8 @@ class ContentQualityValidator:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ValidationResult:
-        """Validate content quality comprehensively"""
+        """
+Validate content quality comprehensively"""
         start_time = time.time()
         
         # Generate content ID
@@ -561,7 +576,8 @@ class ContentQualityValidator:
         )
     
     def _generate_recommendations(self, result: ValidationResult):
-        """Generate quality improvement recommendations"""
+        """
+Generate quality improvement recommendations"""
         recommendations = []
         
         # Score-based recommendations
@@ -604,7 +620,8 @@ class ContentQualityValidator:
         contents: List[Tuple[Union[str, Path], ContentType]],
         metadata_list: Optional[List[Dict[str, Any]]] = None
     ) -> List[ValidationResult]:
-        """Validate multiple contents in batch"""
+        """
+Validate multiple contents in batch"""
         results = []
         metadata_list = metadata_list or [None] * len(contents)
         

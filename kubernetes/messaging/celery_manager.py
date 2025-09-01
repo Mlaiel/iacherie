@@ -13,6 +13,7 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
+
 import asyncio
 import logging
 import subprocess
@@ -35,7 +36,8 @@ settings = get_settings()
 
 
 class CeleryWorkerConfig(BaseModel):
-    """Configuration for Celery worker deployment"""
+    """
+Configuration for Celery worker deployment"""
     name: str = Field(..., description="Worker name identifier")
     concurrency: int = Field(default=4, description="Number of concurrent processes")
     queues: List[str] = Field(default=["default"], description="Queues to process")
@@ -71,7 +73,8 @@ class CeleryManager:
         self.monitoring_tasks: List[asyncio.Task] = []
         
     def _get_default_config(self) -> CeleryClusterConfig:
-        """Get default Celery cluster configuration"""
+        """
+Get default Celery cluster configuration"""
         return CeleryClusterConfig(
             broker_url=settings.CELERY_BROKER_URL,
             result_backend=settings.CELERY_RESULT_BACKEND,

@@ -6,6 +6,7 @@ withdrawal processing, and compliance verification for the IA Influencer Agent p
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ConsentType(Enum):
-    """Types of consent that can be managed."""
+    """
+Types of consent that can be managed."""
+
     ESSENTIAL = "essential"  # Required for basic functionality
     FUNCTIONAL = "functional"  # For enhanced functionality
     ANALYTICS = "analytics"  # For analytics and performance
@@ -34,6 +37,7 @@ class ConsentType(Enum):
 
 class ConsentStatus(Enum):
     """Consent status values."""
+
     GRANTED = "granted"
     DENIED = "denied"
     WITHDRAWN = "withdrawn"
@@ -44,6 +48,7 @@ class ConsentStatus(Enum):
 
 class ConsentMethod(Enum):
     """Method by which consent was obtained."""
+
     EXPLICIT = "explicit"  # Clear affirmative action
     IMPLIED = "implied"  # Implied from behavior
     OPT_IN = "opt_in"  # Active opt-in
@@ -55,6 +60,7 @@ class ConsentMethod(Enum):
 
 class DataCategory(Enum):
     """Categories of data for consent management."""
+
     PERSONAL_IDENTIFIERS = "personal_identifiers"
     CONTACT_INFORMATION = "contact_information"
     DEMOGRAPHIC_DATA = "demographic_data"
@@ -84,7 +90,8 @@ class ConsentPurpose:
 
 @dataclass
 class ConsentRecord:
-    """Individual consent record."""
+    """
+Individual consent record."""
     consent_id: str
     user_id: str
     consent_type: ConsentType
@@ -103,7 +110,8 @@ class ConsentRecord:
 
 @dataclass
 class ConsentWithdrawal:
-    """Consent withdrawal request."""
+    """
+Consent withdrawal request."""
     withdrawal_id: str
     consent_id: str
     user_id: str
@@ -721,7 +729,8 @@ class ConsentManager:
         return conflicts
     
     def _requires_data_deletion(self, consent: ConsentRecord) -> bool:
-        """Determine if consent withdrawal requires data deletion."""
+        """
+Determine if consent withdrawal requires data deletion."""
         # Required if consent was the only legal basis for processing
         return consent.purpose.legal_basis == "consent"
     
@@ -742,7 +751,8 @@ class ConsentManager:
         return datetime.utcnow() > consent.expires_at
     
     def _get_required_purposes(self) -> List[Dict[str, str]]:
-        """Get list of required consent purposes."""
+        """
+Get list of required consent purposes."""
         return [
             {
                 "purpose_id": purpose.purpose_id,
@@ -773,7 +783,8 @@ class ConsentManager:
         return min(1.0, score)
     
     def _generate_consent_statistics(self, consents: List[ConsentRecord]) -> Dict[str, Any]:
-        """Generate statistical analysis of consents."""
+        """
+Generate statistical analysis of consents."""
         if not consents:
             return {
                 "active_count": 0,

@@ -4,8 +4,9 @@ Handles dynamic pricing, revenue sharing, commission calculation,
 and AI-powered monetization optimization for marketplace content.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -18,7 +19,9 @@ from .marketplace_agent import MarketplaceConfig
 
 
 class RevenueModel(Enum):
-    """Available revenue models."""
+    """
+Available revenue models."""
+
     FIXED_PRICE = "fixed_price"
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
@@ -30,6 +33,7 @@ class RevenueModel(Enum):
 
 class CommissionType(Enum):
     """Commission calculation types."""
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED_PERCENTAGE = "tiered_percentage"
@@ -574,7 +578,8 @@ class MonetizationEngine:
         return random.randint(10000, 99999)
 
     async def _store_revenue_stream(self, revenue_stream: RevenueStream) -> RevenueStream:
-        """Store revenue stream in database."""
+        """
+Store revenue stream in database."""
         try:
             # Implementation would store in actual database
             return revenue_stream

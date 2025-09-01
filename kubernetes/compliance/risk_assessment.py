@@ -4,6 +4,7 @@ Comprehensive compliance and operational risk assessment system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
+
 import asyncio
 import json
 import logging
@@ -28,7 +29,9 @@ logger = get_logger(__name__)
 
 
 class RiskCategory(str, Enum):
-    """Risk assessment categories"""
+    """
+Risk assessment categories"""
+
     OPERATIONAL = "operational"
     COMPLIANCE = "compliance"
     SECURITY = "security"
@@ -41,6 +44,7 @@ class RiskCategory(str, Enum):
 
 class RiskLevel(str, Enum):
     """Risk severity levels"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
@@ -51,6 +55,7 @@ class RiskLevel(str, Enum):
 
 class RiskStatus(str, Enum):
     """Risk status states"""
+
     IDENTIFIED = "identified"
     ASSESSED = "assessed"
     MITIGATED = "mitigated"
@@ -63,6 +68,7 @@ class RiskStatus(str, Enum):
 
 class MitigationStrategy(str, Enum):
     """Risk mitigation strategies"""
+
     AVOID = "avoid"
     MITIGATE = "mitigate"
     TRANSFER = "transfer"
@@ -88,7 +94,8 @@ class RiskFactor:
 
 @dataclass
 class RiskScenario:
-    """Risk scenario modeling"""
+    """
+Risk scenario modeling"""
     scenario_id: str
     name: str
     description: str
@@ -103,7 +110,8 @@ class RiskScenario:
 
 @dataclass
 class ComprehensiveRiskAssessment:
-    """Complete risk assessment result"""
+    """
+Complete risk assessment result"""
     assessment_id: str
     assessment_date: datetime
     scope: str
@@ -124,7 +132,8 @@ class ComprehensiveRiskAssessment:
 
 @dataclass
 class RiskMitigationPlan:
-    """Risk mitigation action plan"""
+    """
+Risk mitigation action plan"""
     plan_id: str
     risk_id: str
     strategy: MitigationStrategy
@@ -139,7 +148,8 @@ class RiskMitigationPlan:
 
 
 class RiskAssessmentEngine:
-    """Comprehensive risk assessment and management system"""
+    """
+Comprehensive risk assessment and management system"""
     
     def __init__(self):
         self.logger = logger

@@ -26,6 +26,7 @@ ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
+
 import asyncio
 import logging
 import sys
@@ -527,11 +528,13 @@ async def initialize_intelligence_system(config: Optional[Dict] = None) -> Dict:
     return await intelligence_algorithms_index.initialize_system()
 
 async def get_system_status() -> Dict:
-    """Get current system status and health information"""
+    """
+Get current system status and health information"""
     return await intelligence_algorithms_index.get_system_status()
 
 def is_system_ready() -> bool:
-    """Check if the intelligence system is ready for use"""
+    """
+Check if the intelligence system is ready for use"""
     return intelligence_algorithms_index.initialized
 
 # Export key components

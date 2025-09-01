@@ -5,6 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 """
+
 import asyncio
 import hashlib
 import json
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuditTrailLevel(Enum):
-    """Security audit trail severity levels"""
+    """
+Security audit trail severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     SECURITY = "security"
@@ -87,7 +90,8 @@ class SecurityAuditTrail:
         details: Optional[Dict[str, Any]] = None,
         compliance_flags: Optional[List[str]] = None
     ) -> str:
-        """Log a security audit event"""
+        """
+Log a security audit event"""
         
         event = SecurityAuditEvent(
             level=level,
@@ -197,7 +201,8 @@ class SecurityAuditTrail:
         return mapping.get(level, AuditLevel.INFO)
     
     def _map_to_audit_category(self, action: str) -> AuditCategory:
-        """Map action to audit category"""
+        """
+Map action to audit category"""
         action_lower = action.lower()
         
         if "auth" in action_lower or "login" in action_lower:
@@ -341,7 +346,8 @@ async def log_authentication_event(
     ip_address: Optional[str] = None,
     details: Optional[Dict[str, Any]] = None
 ) -> str:
-    """Log authentication events"""
+    """
+Log authentication events"""
     return await log_security_audit(
         action="authentication",
         resource=f"user:{user_id}",

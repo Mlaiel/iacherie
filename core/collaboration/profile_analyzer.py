@@ -34,6 +34,7 @@ Features:
 - Performance Benchmarking against Industry Standards
 - Creator Lifecycle Stage Identification & Guidance
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -75,7 +76,9 @@ import re
 logger = logging.getLogger(__name__)
 
 class CreatorTier(Enum):
-    """Comprehensive creator tier classification"""
+    """
+Comprehensive creator tier classification"""
+
     NEWCOMER = "newcomer"           # 0-1K followers
     EMERGING = "emerging"           # 1K-10K followers
     RISING = "rising"               # 10K-50K followers
@@ -88,6 +91,7 @@ class CreatorTier(Enum):
 
 class ContentQuality(Enum):
     """Content quality enumeration"""
+
     POOR = "poor"           # 0-2 stars
     BELOW_AVERAGE = "below_average"  # 2-3 stars
     AVERAGE = "average"     # 3-4 stars
@@ -96,6 +100,7 @@ class ContentQuality(Enum):
 
 class EngagementLevel(Enum):
     """Engagement level enumeration"""
+
     VERY_LOW = "very_low"    # <1%
     LOW = "low"              # 1-3%
     MODERATE = "moderate"    # 3-6%
@@ -104,6 +109,7 @@ class EngagementLevel(Enum):
 
 class RiskLevel(Enum):
     """Risk level enumeration"""
+
     VERY_LOW = "very_low"
     LOW = "low"
     MODERATE = "moderate"
@@ -112,6 +118,7 @@ class RiskLevel(Enum):
 
 class GrowthStage(Enum):
     """Growth stage enumeration"""
+
     DECLINING = "declining"
     STAGNANT = "stagnant"
     SLOW_GROWTH = "slow_growth"
@@ -121,6 +128,7 @@ class GrowthStage(Enum):
 
 class PersonalityType(Enum):
     """Creator personality type"""
+
     EXTRAVERTED = "extraverted"
     INTROVERTED = "introverted"
     ANALYTICAL = "analytical"
@@ -145,7 +153,8 @@ class SkillAssessment:
     
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content analysis"""
+    """
+Comprehensive content analysis"""
     content_type: str
     quality_score: float
     engagement_metrics: Dict[str, float] = field(default_factory=dict)
@@ -159,7 +168,8 @@ class ContentAnalysis:
     
 @dataclass
 class AudienceProfile:
-    """Detailed audience profile"""
+    """
+Detailed audience profile"""
     total_followers: int
     demographics: Dict[str, Any] = field(default_factory=dict)
     psychographics: Dict[str, Any] = field(default_factory=dict)
@@ -172,7 +182,8 @@ class AudienceProfile:
     
 @dataclass
 class CollaborationHistory:
-    """Collaboration history analysis"""
+    """
+Collaboration history analysis"""
     total_collaborations: int
     success_rate: float
     average_project_value: float
@@ -185,7 +196,8 @@ class CollaborationHistory:
     
 @dataclass
 class RiskAssessment:
-    """Comprehensive risk assessment"""
+    """
+Comprehensive risk assessment"""
     overall_risk_level: RiskLevel
     risk_factors: Dict[str, float] = field(default_factory=dict)
     brand_safety_issues: List[str] = field(default_factory=list)
@@ -197,7 +209,8 @@ class RiskAssessment:
     
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""
+    """
+Comprehensive creator profile"""
     creator_id: str
     basic_info: Dict[str, Any] = field(default_factory=dict)
     creator_tier: CreatorTier = CreatorTier.NEWCOMER
@@ -566,43 +579,53 @@ class ProfileAnalyzer:
         return {}  # Placeholder
         
     async def _analyze_creator_skills(self, creator_id: str, deep_analysis: bool) -> List[SkillAssessment]:
-        """Analyze creator skills"""
+        """
+Analyze creator skills"""
         return []  # Placeholder
         
     async def _analyze_creator_content(self, creator_id: str, deep_analysis: bool) -> List[ContentAnalysis]:
-        """Analyze creator content"""
+        """
+Analyze creator content"""
         return []  # Placeholder
         
     async def _analyze_creator_audience(self, creator_id: str) -> AudienceProfile:
-        """Analyze creator audience"""
+        """
+Analyze creator audience"""
         return AudienceProfile(total_followers=1000)  # Placeholder
         
     async def _analyze_collaboration_history(self, creator_id: str) -> CollaborationHistory:
-        """Analyze collaboration history"""
+        """
+Analyze collaboration history"""
         return CollaborationHistory(total_collaborations=5, success_rate=0.8, average_project_value=1000.0)  # Placeholder
         
     async def _assess_creator_risks(self, creator_id: str, content_analysis: List[ContentAnalysis]) -> RiskAssessment:
-        """Assess creator risks"""
+        """
+Assess creator risks"""
         return RiskAssessment(overall_risk_level=RiskLevel.LOW)  # Placeholder
         
     async def _calculate_overall_score(self, skills: List[SkillAssessment], content_analysis: List[ContentAnalysis], audience_profile: AudienceProfile, collaboration_history: CollaborationHistory) -> float:
-        """Calculate overall creator score"""
+        """
+Calculate overall creator score"""
         return 0.85  # Placeholder
         
     async def _determine_engagement_level(self, audience_profile: AudienceProfile) -> EngagementLevel:
-        """Determine engagement level"""
+        """
+Determine engagement level"""
         return EngagementLevel.HIGH  # Placeholder
         
     async def _determine_growth_stage(self, audience_profile: AudienceProfile) -> GrowthStage:
-        """Determine growth stage"""
+        """
+Determine growth stage"""
         return GrowthStage.MODERATE_GROWTH  # Placeholder
         
     async def _analyze_personality_type(self, creator_id: str, content_analysis: List[ContentAnalysis]) -> PersonalityType:
-        """Analyze personality type"""
+        """
+Analyze personality type"""
         return PersonalityType.CREATIVE  # Placeholder
         
     async def _determine_creator_tier(self, audience_profile: AudienceProfile) -> CreatorTier:
-        """Determine creator tier"""
+        """
+Determine creator tier"""
         if audience_profile.total_followers < 1000:
             return CreatorTier.NEWCOMER
         elif audience_profile.total_followers < 10000:
@@ -619,43 +642,53 @@ class ProfileAnalyzer:
             return CreatorTier.MEGA_INFLUENCER
             
     async def _calculate_market_value(self, creator_tier: CreatorTier, engagement_level: EngagementLevel, skills: List[SkillAssessment], audience_profile: AudienceProfile) -> float:
-        """Calculate market value"""
+        """
+Calculate market value"""
         return 5000.0  # Placeholder
         
     async def _calculate_trending_score(self, creator_id: str, content_analysis: List[ContentAnalysis]) -> float:
-        """Calculate trending score"""
+        """
+Calculate trending score"""
         return 0.7  # Placeholder
         
     async def _analyze_brand_alignments(self, creator_id: str, content_analysis: List[ContentAnalysis]) -> Dict[str, float]:
-        """Analyze brand alignments"""
+        """
+Analyze brand alignments"""
         return {}  # Placeholder
         
     async def _calculate_analysis_confidence(self, skills: List[SkillAssessment], content_analysis: List[ContentAnalysis], audience_profile: AudienceProfile) -> float:
-        """Calculate analysis confidence level"""
+        """
+Calculate analysis confidence level"""
         return 0.9  # Placeholder
         
     async def _store_profile_analysis(self, profile: CreatorProfile) -> None:
-        """Store profile analysis in database"""
+        """
+Store profile analysis in database"""
         pass  # Placeholder
         
     async def _extract_dimension_value(self, profile: CreatorProfile, dimension: str) -> float:
-        """Extract dimension value from profile"""
+        """
+Extract dimension value from profile"""
         return 0.5  # Placeholder
         
     async def _calculate_creator_similarities(self, profiles: List[CreatorProfile]) -> Dict[str, Dict[str, float]]:
-        """Calculate similarity matrix between creators"""
+        """
+Calculate similarity matrix between creators"""
         return {}  # Placeholder
         
     async def _identify_strengths_weaknesses(self, profiles: List[CreatorProfile]) -> Dict[str, Dict[str, List[str]]]:
-        """Identify strengths and weaknesses"""
+        """
+Identify strengths and weaknesses"""
         return {}  # Placeholder
         
     async def _generate_comparison_insights(self, profiles: List[CreatorProfile], comparison_data: Dict[str, Any], similarity_matrix: Dict[str, Dict[str, float]]) -> List[str]:
-        """Generate comparison insights"""
+        """
+Generate comparison insights"""
         return []  # Placeholder
         
     async def _identify_top_performer(self, profiles: List[CreatorProfile]) -> str:
-        """Identify top performer"""
+        """
+Identify top performer"""
         return profiles[0].creator_id if profiles else ""  # Placeholder
         
     async def _find_best_collaboration_pairs(self, profiles: List[CreatorProfile]) -> List[Tuple[str, str, float]]:
@@ -663,89 +696,112 @@ class ProfileAnalyzer:
         return []  # Placeholder
         
     async def _calculate_skill_compatibility(self, skills1: List[SkillAssessment], skills2: List[SkillAssessment], requirements: Dict[str, Any]) -> float:
-        """Calculate skill compatibility"""
+        """
+Calculate skill compatibility"""
         return 0.8  # Placeholder
         
     async def _calculate_audience_synergy(self, audience1: AudienceProfile, audience2: AudienceProfile) -> float:
-        """Calculate audience synergy"""
+        """
+Calculate audience synergy"""
         return 0.7  # Placeholder
         
     async def _calculate_style_compatibility(self, content1: List[ContentAnalysis], content2: List[ContentAnalysis]) -> float:
-        """Calculate style compatibility"""
+        """
+Calculate style compatibility"""
         return 0.75  # Placeholder
         
     async def _calculate_performance_match(self, profile1: CreatorProfile, profile2: CreatorProfile) -> float:
-        """Calculate performance match"""
+        """
+Calculate performance match"""
         return 0.85  # Placeholder
         
     async def _identify_collaboration_risks(self, risk1: RiskAssessment, risk2: RiskAssessment) -> List[str]:
-        """Identify collaboration risks"""
+        """
+Identify collaboration risks"""
         return []  # Placeholder
         
     async def _analyze_historical_success_patterns(self, history1: CollaborationHistory, history2: CollaborationHistory, project_type: str) -> float:
-        """Analyze historical success patterns"""
+        """
+Analyze historical success patterns"""
         return 0.8  # Placeholder
         
     async def _get_project_type_weights(self, project_type: str) -> Dict[str, float]:
-        """Get weights for project type"""
+        """
+Get weights for project type"""
         return {'skill_compatibility': 0.3, 'audience_synergy': 0.2, 'style_compatibility': 0.2, 'performance_match': 0.2, 'historical_success': 0.1}
         
     async def _calculate_risk_adjustment(self, risk_factors: List[str]) -> float:
-        """Calculate risk adjustment"""
+        """
+Calculate risk adjustment"""
         return len(risk_factors) * 0.05  # Placeholder
         
     async def _generate_collaboration_recommendations(self, profile1: CreatorProfile, profile2: CreatorProfile, success_factors: Dict[str, float], risk_factors: List[str]) -> List[str]:
-        """Generate collaboration recommendations"""
+        """
+Generate collaboration recommendations"""
         return []  # Placeholder
         
     async def _calculate_prediction_confidence(self, profile1: CreatorProfile, profile2: CreatorProfile, success_factors: Dict[str, float]) -> float:
-        """Calculate prediction confidence"""
+        """
+Calculate prediction confidence"""
         return 0.85  # Placeholder
         
     async def _predict_collaboration_outcomes(self, profile1: CreatorProfile, profile2: CreatorProfile, success_probability: float) -> Dict[str, Any]:
-        """Predict collaboration outcomes"""
+        """
+Predict collaboration outcomes"""
         return {}  # Placeholder
         
     async def _generate_performance_insights(self, profile: CreatorProfile) -> List[str]:
-        """Generate performance insights"""
+        """
+Generate performance insights"""
         return []  # Placeholder
         
     async def _generate_content_insights(self, profile: CreatorProfile) -> List[str]:
-        """Generate content insights"""
+        """
+Generate content insights"""
         return []  # Placeholder
         
     async def _generate_audience_insights(self, profile: CreatorProfile) -> List[str]:
-        """Generate audience insights"""
+        """
+Generate audience insights"""
         return []  # Placeholder
         
     async def _generate_growth_insights(self, profile: CreatorProfile) -> List[str]:
-        """Generate growth insights"""
+        """
+Generate growth insights"""
         return []  # Placeholder
         
     async def _generate_monetization_insights(self, profile: CreatorProfile) -> List[str]:
-        """Generate monetization insights"""
+        """
+Generate monetization insights"""
         return []  # Placeholder
         
     async def _generate_collaboration_insights(self, profile: CreatorProfile) -> List[str]:
-        """Generate collaboration insights"""
+        """
+Generate collaboration insights"""
         return []  # Placeholder
         
     async def _generate_action_items(self, profile: CreatorProfile, insights: Dict[str, Any]) -> List[str]:
-        """Generate action items"""
+        """
+Generate action items"""
         return []  # Placeholder
         
     async def _calculate_improvement_potential(self, profile: CreatorProfile) -> Dict[str, float]:
-        """Calculate improvement potential"""
+        """
+Calculate improvement potential"""
         return {}  # Placeholder
         
     async def _generate_benchmarks(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """Generate benchmarks"""
+        """
+Generate benchmarks"""
         return {}  # Placeholder
         
     async def _identify_priority_improvement_areas(self, profile: CreatorProfile) -> List[str]:
-        """Identify priority improvement areas"""
+        """
+Identify priority improvement areas"""
         return []  # Placeholder
-    """Content quality assessment"""
+    """
+Content quality assessment"""
+
     BASIC = "basic"
     GOOD = "good"
     HIGH = "high"
@@ -754,6 +810,7 @@ class ProfileAnalyzer:
 
 class RiskLevel(Enum):
     """Risk level assessment"""
+
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -785,7 +842,8 @@ class CreatorProfile:
     
 @dataclass 
 class SkillCompatibility:
-    """Skill compatibility analysis result"""
+    """
+Skill compatibility analysis result"""
     compatibility_score: float
     complementary_skills: List[Tuple[str, str]]
     skill_gaps: List[str]
@@ -795,7 +853,8 @@ class SkillCompatibility:
     unique_combinations: List[str]
 
 class ProfileAnalyzer:
-    """AI-powered creator profile analyzer"""
+    """
+AI-powered creator profile analyzer"""
     
     def __init__(self, db_session, ml_models, social_apis, content_analyzer):
         self.db_session = db_session
@@ -809,7 +868,8 @@ class ProfileAnalyzer:
         creator_id: str,
         force_refresh: bool = False
     ) -> CreatorProfile:
-        """Comprehensive creator profile analysis"""
+        """
+Comprehensive creator profile analysis"""
         try:
             logger.info(f"Analyzing creator profile: {creator_id}")
             
@@ -972,7 +1032,8 @@ class ProfileAnalyzer:
         return dict(row) if row else None
         
     async def _get_cached_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Get cached profile analysis"""
+        """
+Get cached profile analysis"""
         query = """
         SELECT * FROM creator_profile_analysis 
         WHERE creator_id = %s 
@@ -988,13 +1049,15 @@ class ProfileAnalyzer:
         return None
         
     def _is_analysis_recent(self, last_analyzed: Optional[datetime]) -> bool:
-        """Check if analysis is recent enough"""
+        """
+Check if analysis is recent enough"""
         if not last_analyzed:
             return False
         return datetime.utcnow() - last_analyzed < timedelta(hours=24)
         
     async def _analyze_skills(self, creator_id: str) -> List[str]:
-        """Analyze creator skills from various sources"""
+        """
+Analyze creator skills from various sources"""
         try:
             skills = []
             
@@ -1326,7 +1389,8 @@ class ProfileAnalyzer:
         return growth_rate
         
     def _determine_growth_trend(self, follower_growth: float, engagement_growth: float) -> str:
-        """Determine overall growth trend"""
+        """
+Determine overall growth trend"""
         if follower_growth > 0.1 and engagement_growth > 0.05:
             return 'strong_growth'
         elif follower_growth > 0.05 and engagement_growth > 0:
@@ -1343,7 +1407,8 @@ class ProfileAnalyzer:
         creator_id: str, 
         analysis_results: List[Any]
     ) -> CreatorTier:
-        """Determine creator tier based on analysis"""
+        """
+Determine creator tier based on analysis"""
         try:
             # Extract metrics from analysis results
             audience_data = analysis_results[2] if len(analysis_results) > 2 and not isinstance(analysis_results[2], Exception) else {}
@@ -1413,17 +1478,20 @@ class ProfileAnalyzer:
         return []
         
     async def _identify_skill_gaps(self, profile1: CreatorProfile, profile2: CreatorProfile) -> List[str]:
-        """Identify skill gaps that could be filled through collaboration"""
+        """
+Identify skill gaps that could be filled through collaboration"""
         # Implementation would analyze missing skills
         return []
         
     async def _calculate_synergy_potential(self, profile1: CreatorProfile, profile2: CreatorProfile, complementary_skills: List[Tuple[str, str]]) -> float:
-        """Calculate synergy potential between creators"""
+        """
+Calculate synergy potential between creators"""
         # Implementation would calculate potential synergy
         return 0.7
         
     def _calculate_skill_compatibility_score(self, overlap: float, complementary_count: int, synergy: float, gaps_count: int) -> float:
-        """Calculate overall skill compatibility score"""
+        """
+Calculate overall skill compatibility score"""
         # Weighted calculation of compatibility
         overlap_weight = 0.2
         complementary_weight = 0.4
@@ -1446,11 +1514,13 @@ class ProfileAnalyzer:
         return min(1.0, max(0.0, total_score))
         
     async def _save_profile_analysis(self, profile: CreatorProfile) -> None:
-        """Save profile analysis to database"""
+        """
+Save profile analysis to database"""
         # Implementation would save to database
         pass
         
     async def _row_to_profile(self, row: Dict[str, Any]) -> CreatorProfile:
-        """Convert database row to CreatorProfile"""
+        """
+Convert database row to CreatorProfile"""
         # Implementation would convert row to profile object
         pass

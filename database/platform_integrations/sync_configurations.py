@@ -22,6 +22,7 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
+
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class SyncDirection(Enum):
-    """Directions de synchronisation."""
+    """
+Directions de synchronisation."""
+
     INBOUND = "inbound"  # De la plateforme vers notre système
     OUTBOUND = "outbound"  # De notre système vers la plateforme
     BIDIRECTIONAL = "bidirectional"  # Dans les deux sens
@@ -48,6 +51,7 @@ class SyncDirection(Enum):
 
 class SyncStrategy(Enum):
     """Stratégies de synchronisation."""
+
     FULL = "full"  # Synchronisation complète
     INCREMENTAL = "incremental"  # Synchronisation incrémentale
     DELTA = "delta"  # Synchronisation des changements uniquement
@@ -59,6 +63,7 @@ class SyncStrategy(Enum):
 
 class SyncStatus(Enum):
     """Statuts de synchronisation."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -71,6 +76,7 @@ class SyncStatus(Enum):
 
 class DataType(Enum):
     """Types de données synchronisées."""
+
     CONTENT = "content"
     METADATA = "metadata"
     ANALYTICS = "analytics"
@@ -87,6 +93,7 @@ class DataType(Enum):
 
 class ConflictResolution(Enum):
     """Stratégies de résolution de conflits."""
+
     SOURCE_WINS = "source_wins"  # La source a toujours raison
     TARGET_WINS = "target_wins"  # La cible a toujours raison
     LATEST_WINS = "latest_wins"  # La dernière modification gagne
@@ -220,7 +227,8 @@ class SyncConfiguration(BaseModel):
         return max(0.0, min(100.0, health_score))
     
     def update_performance_metrics(self, duration_seconds: int, records_count: int, success: bool):
-        """Met à jour les métriques de performance."""
+        """
+Met à jour les métriques de performance."""
         self.total_syncs_executed += 1
         
         if success:
@@ -310,7 +318,8 @@ class SyncExecution(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès de cette exécution."""
+        """
+Calcule le taux de succès de cette exécution."""
         if self.records_processed == 0:
             return 100.0
         
@@ -318,7 +327,8 @@ class SyncExecution(BaseModel):
     
     @property
     def throughput_per_second(self) -> float:
-        """Calcule le débit en enregistrements par seconde."""
+        """
+Calcule le débit en enregistrements par seconde."""
         duration = self.duration_seconds
         if duration == 0:
             return 0.0
@@ -637,6 +647,7 @@ logger = logging.getLogger(__name__)
 
 class SyncDirection(str, Enum):
     """Directions de synchronisation."""
+
     IMPORT = "import"  # Depuis la plateforme vers notre système
     EXPORT = "export"  # Depuis notre système vers la plateforme
     BIDIRECTIONAL = "bidirectional"  # Dans les deux sens
@@ -644,6 +655,7 @@ class SyncDirection(str, Enum):
 
 class SyncStrategy(str, Enum):
     """Stratégies de synchronisation."""
+
     FULL = "full"  # Synchronisation complète
     INCREMENTAL = "incremental"  # Synchronisation incrémentale
     DELTA = "delta"  # Synchronisation des changements uniquement
@@ -652,6 +664,7 @@ class SyncStrategy(str, Enum):
 
 class SyncStatus(str, Enum):
     """Statuts de synchronisation."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -740,7 +753,8 @@ class SyncConfiguration(BaseModel):
         return (self.successful_syncs / self.total_syncs) * 100
     
     def should_run_now(self) -> bool:
-        """Vérifie si la synchronisation doit être exécutée maintenant."""
+        """
+Vérifie si la synchronisation doit être exécutée maintenant."""
         if not self.is_active:
             return False
         
@@ -842,7 +856,8 @@ class SyncExecution(BaseModel):
         return (self.records_successful / self.records_processed) * 100
     
     def add_error(self, error_type: str, error_message: str, record_id: str = None):
-        """Ajoute une erreur à l'exécution."""
+        """
+Ajoute une erreur à l'exécution."""
         if not self.error_details:
             self.error_details = []
         

@@ -5,7 +5,7 @@ with AI-powered risk assessment, dynamic trust scoring, and automated whitelist 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -16,6 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
+
 import asyncio
 import json
 import logging
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class WhitelistType(Enum):
-    """Types of whitelist entries"""
+    """
+Types of whitelist entries"""
+
     USER = "user"
     CONTENT = "content"
     DOMAIN = "domain"
@@ -59,6 +62,7 @@ class WhitelistType(Enum):
 
 class WhitelistStatus(Enum):
     """Whitelist entry status"""
+
     PENDING = "pending"
     APPROVED = "approved"
     ACTIVE = "active"
@@ -70,6 +74,7 @@ class WhitelistStatus(Enum):
 
 class TrustLevel(Enum):
     """Trust levels for whitelist entries"""
+
     UNKNOWN = "unknown"
     LOW = "low"
     MODERATE = "moderate"
@@ -81,6 +86,7 @@ class TrustLevel(Enum):
 
 class ApprovalType(Enum):
     """Types of whitelist approvals"""
+
     MANUAL = "manual"
     AUTOMATIC = "automatic"
     AI_ASSISTED = "ai_assisted"
@@ -91,6 +97,7 @@ class ApprovalType(Enum):
 
 class RiskCategory(Enum):
     """Risk categories for assessment"""
+
     CONTENT_VIOLATION = "content_violation"
     IMPERSONATION = "impersonation"
     FRAUD = "fraud"
@@ -802,7 +809,8 @@ class WhitelistManager:
         entity_identifier: str,
         entity_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform comprehensive AI-powered risk assessment"""
+        """
+Perform comprehensive AI-powered risk assessment"""
         try:
             if not self.ai_risk_assessment_enabled:
                 return {
@@ -905,7 +913,8 @@ class WhitelistManager:
         entry: WhitelistEntry,
         risk_assessment: Dict[str, Any]
     ) -> None:
-        """Automatically approve low-risk, high-trust entries"""
+        """
+Automatically approve low-risk, high-trust entries"""
         entry.status = WhitelistStatus.APPROVED.value
         entry.approved_at = datetime.now(timezone.utc)
         entry.approved_by = "system_auto_approval"
@@ -941,7 +950,8 @@ class WhitelistManager:
         approver_id: str,
         entry: WhitelistEntry
     ) -> None:
-        """Validate approver has permissions to approve entry"""
+        """
+Validate approver has permissions to approve entry"""
         # Implementation would check user permissions
         # For now, assume all approvers are valid
         pass
@@ -950,7 +960,8 @@ class WhitelistManager:
         self,
         entry: WhitelistEntry
     ) -> Dict[str, Any]:
-        """Perform final risk check before approval"""
+        """
+Perform final risk check before approval"""
         try:
             # Get latest risk data
             entity_metadata = json.loads(
@@ -1015,7 +1026,8 @@ class WhitelistManager:
         entry: WhitelistEntry,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform real-time risk check with current context"""
+        """
+Perform real-time risk check with current context"""
         try:
             # Combine entry data with current context
             entity_metadata = json.loads(

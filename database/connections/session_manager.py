@@ -11,6 +11,7 @@ Manages database sessions and connection state:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import uuid
@@ -22,7 +23,9 @@ from contextlib import asynccontextmanager
 
 
 class SessionState(Enum):
-    """Database session states"""
+    """
+Database session states"""
+
     IDLE = "idle"
     ACTIVE = "active"
     TRANSACTION = "transaction"
@@ -45,11 +48,13 @@ class DatabaseSession:
     operation_count: int = 0
     
     def is_expired(self) -> bool:
-        """Check if session has expired"""
+        """
+Check if session has expired"""
         return datetime.utcnow() - self.last_activity > self.timeout
     
     def update_activity(self) -> None:
-        """Update last activity timestamp"""
+        """
+Update last activity timestamp"""
         self.last_activity = datetime.utcnow()
 
 
@@ -126,7 +131,8 @@ class SessionManager:
                            database_type: str,
                            tenant_id: Optional[str] = None,
                            timeout: Optional[timedelta] = None) -> DatabaseSession:
-        """Create a new database session"""
+        """
+Create a new database session"""
         
         if database_type not in self.handlers:
             raise ValueError(f"Database type {database_type} not available")
@@ -208,7 +214,8 @@ class SessionManager:
         return session
     
     async def close_session(self, session_id: str) -> bool:
-        """Close a database session"""
+        """
+Close a database session"""
         if session_id not in self.sessions:
             return False
         
@@ -338,7 +345,8 @@ class SessionManager:
     async def close_tenant_sessions(self, 
                                   database_type: str,
                                   tenant_id: str) -> int:
-        """Close all sessions for a specific tenant"""
+        """
+Close all sessions for a specific tenant"""
         sessions = await self.get_tenant_sessions(database_type, tenant_id)
         closed_count = 0
         

@@ -38,6 +38,7 @@ Enterprise Features:
 - Customer lifetime value and retention analytics
 - Executive dashboards with strategic reporting
 """
+
 import asyncio
 import logging
 import uuid
@@ -60,7 +61,9 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessIntelligenceType(Enum):
-    """Business intelligence analysis types for strategic insights."""
+    """
+Business intelligence analysis types for strategic insights."""
+
     MARKET_ANALYSIS = "market_analysis"
     COMPETITIVE_INTELLIGENCE = "competitive_intelligence"
     REVENUE_OPTIMIZATION = "revenue_optimization"
@@ -75,6 +78,7 @@ class BusinessIntelligenceType(Enum):
 
 class AnalysisPriority(Enum):
     """Priority levels for business intelligence analysis."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -83,6 +87,7 @@ class AnalysisPriority(Enum):
 
 class MarketSegment(Enum):
     """Market segments for business intelligence analysis."""
+
     MUSICIANS = "musicians"
     VIDEO_CREATORS = "video_creators"
     BLOGGERS = "bloggers"
@@ -131,7 +136,8 @@ class BusinessIntelligenceMetric:
 
 @dataclass
 class MarketIntelligence:
-    """Comprehensive market intelligence report."""
+    """
+Comprehensive market intelligence report."""
     intelligence_id: str
     market_segment: MarketSegment
     analysis_date: datetime
@@ -166,7 +172,8 @@ class MarketIntelligence:
 
 @dataclass
 class StrategicInsight:
-    """Strategic business insight with actionable recommendations."""
+    """
+Strategic business insight with actionable recommendations."""
     insight_id: str
     insight_type: str
     title: str
@@ -255,7 +262,8 @@ class EnterpriseBusinessIntelligence:
         self.market_benchmarks = {}
     
     async def initialize_business_intelligence(self):
-        """Initialize enterprise business intelligence engine."""
+        """
+Initialize enterprise business intelligence engine."""
         try:
             self.logger.info("Initializing enterprise business intelligence engine")
             

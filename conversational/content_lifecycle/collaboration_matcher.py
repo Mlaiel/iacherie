@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -36,7 +37,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     CROSS_PROMOTION = "cross_promotion"
     CONTENT_REMIX = "content_remix"
     JOINT_CREATION = "joint_creation"
@@ -49,6 +52,7 @@ class CollaborationType(Enum):
 
 class MatchingCriteria(Enum):
     """Matching criteria for collaborations"""
+
     CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     COMPLEMENTARY_SKILLS = "complementary_skills"
@@ -61,6 +65,7 @@ class MatchingCriteria(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status types"""
+
     SUGGESTED = "suggested"
     PENDING_INVITATION = "pending_invitation"
     ACCEPTED = "accepted"
@@ -73,6 +78,7 @@ class CollaborationStatus(Enum):
 
 class MatchingConfidence(Enum):
     """Matching confidence levels"""
+
     LOW = "low"          # 0.3-0.5
     MEDIUM = "medium"    # 0.5-0.7
     HIGH = "high"        # 0.7-0.85
@@ -103,7 +109,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity structure"""
+    """
+Collaboration opportunity structure"""
     opportunity_id: str
     creator_id: str  # Primary creator
     content_id: str
@@ -124,7 +131,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match result"""
+    """
+Collaboration match result"""
     match_id: str
     opportunity_id: str
     matched_creator_id: str
@@ -144,7 +152,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal structure"""
+    """
+Collaboration proposal structure"""
     proposal_id: str
     match_id: str
     proposer_id: str
@@ -181,7 +190,8 @@ class CollaborationMatcher:
         self.matching_weights = self._initialize_matching_weights()
         
     def _initialize_matching_weights(self) -> Dict[MatchingCriteria, float]:
-        """Initialize weights for different matching criteria"""
+        """
+Initialize weights for different matching criteria"""
         return {
             MatchingCriteria.CONTENT_SIMILARITY: 0.25,
             MatchingCriteria.AUDIENCE_OVERLAP: 0.20,
@@ -652,7 +662,8 @@ class CollaborationMatcher:
         creator_profile: CreatorProfile,
         content_analysis: Dict[str, Any]
     ) -> List[CollaborationMatch]:
-        """Rank collaboration matches by relevance and potential"""
+        """
+Rank collaboration matches by relevance and potential"""
         try:
             # Sort by match score and success probability
             ranked_matches = sorted(

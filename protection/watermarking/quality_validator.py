@@ -11,6 +11,7 @@ intellectual property of Fahed Mlaiel. Any unauthorized use, copying, modificati
 distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
 strictly prohibited and will result in legal action.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -38,7 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Quality assessment metrics"""
+    """
+Quality assessment metrics"""
+
     SNR = "signal_to_noise_ratio"
     PSNR = "peak_signal_to_noise_ratio"
     SSIM = "structural_similarity_index"
@@ -55,6 +58,7 @@ class QualityMetric(Enum):
 
 class QualityThreshold(Enum):
     """Quality threshold levels"""
+
     EXCELLENT = "excellent"      # >95% quality retention
     GOOD = "good"               # 85-95% quality retention  
     ACCEPTABLE = "acceptable"   # 70-85% quality retention
@@ -64,6 +68,7 @@ class QualityThreshold(Enum):
 
 class ValidationStatus(Enum):
     """Validation status codes"""
+
     PASSED = "passed"
     WARNING = "warning"
     FAILED = "failed"
@@ -96,7 +101,8 @@ class QualityScore:
 
 @dataclass
 class QualityAssessmentResult:
-    """Complete quality assessment result"""
+    """
+Complete quality assessment result"""
     content_type: str
     assessment_timestamp: datetime
     overall_score: float
@@ -117,19 +123,22 @@ class QualityAssessmentResult:
         }
     
     def get_metric_score(self, metric: QualityMetric) -> Optional[QualityScore]:
-        """Get score for specific metric"""
+        """
+Get score for specific metric"""
         for score in self.individual_scores:
             if score.metric == metric:
                 return score
         return None
     
     def get_failed_metrics(self) -> List[QualityScore]:
-        """Get metrics that failed validation"""
+        """
+Get metrics that failed validation"""
         return [score for score in self.individual_scores if score.status == ValidationStatus.FAILED]
 
 
 class AudioQualityAssessor:
-    """Professional audio quality assessment"""
+    """
+Professional audio quality assessment"""
     
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
@@ -144,7 +153,8 @@ class AudioQualityAssessor:
     async def assess_audio_quality(self, 
                                  original_audio: np.ndarray,
                                  watermarked_audio: np.ndarray) -> QualityAssessmentResult:
-        """Comprehensive audio quality assessment"""
+        """
+Comprehensive audio quality assessment"""
         start_time = datetime.now()
         
         try:
@@ -493,7 +503,8 @@ class AudioQualityAssessor:
             return ValidationStatus.PASSED
     
     def _generate_audio_recommendations(self, scores: List[QualityScore]) -> List[str]:
-        """Generate recommendations based on scores"""
+        """
+Generate recommendations based on scores"""
         recommendations = []
         
         for score in scores:
@@ -532,7 +543,8 @@ class ImageQualityAssessor:
     async def assess_image_quality(self, 
                                  original_image: np.ndarray,
                                  watermarked_image: np.ndarray) -> QualityAssessmentResult:
-        """Comprehensive image quality assessment"""
+        """
+Comprehensive image quality assessment"""
         start_time = datetime.now()
         
         try:
@@ -834,7 +846,8 @@ class ImageQualityAssessor:
             return ValidationStatus.PASSED
     
     def _generate_image_recommendations(self, scores: List[QualityScore]) -> List[str]:
-        """Generate recommendations based on scores"""
+        """
+Generate recommendations based on scores"""
         recommendations = []
         
         for score in scores:

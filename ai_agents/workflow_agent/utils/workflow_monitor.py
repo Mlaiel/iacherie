@@ -21,6 +21,7 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -44,7 +45,9 @@ from ..base import BaseAgent
 
 
 class AlertSeverity(Enum):
-    """Alert severity enumeration."""
+    """
+Alert severity enumeration."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -54,6 +57,7 @@ class AlertSeverity(Enum):
 
 class MetricType(Enum):
     """Metric type enumeration."""
+
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
@@ -63,6 +67,7 @@ class MetricType(Enum):
 
 class HealthStatus(Enum):
     """Health status enumeration."""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -83,7 +88,8 @@ class WorkflowMetric:
 
 @dataclass
 class Alert:
-    """Workflow alert."""
+    """
+Workflow alert."""
     id: str
     workflow_id: str
     title: str
@@ -111,7 +117,8 @@ class HealthCheck:
 
 @dataclass
 class PerformanceReport:
-    """Workflow performance report."""
+    """
+Workflow performance report."""
     workflow_id: str
     period_start: datetime
     period_end: datetime
@@ -136,7 +143,8 @@ class WorkflowMonitor(BaseAgent):
     alerting, health checks, and performance analytics.
     """
     def __init__(self, retention_days: int = 30):
-        """Initialize the workflow monitor."""
+        """
+Initialize the workflow monitor."""
         super().__init__()
         self.logger = logging.getLogger(__name__)
         
@@ -172,7 +180,8 @@ class WorkflowMonitor(BaseAgent):
         self.monitoring_active = False
 
     async def start_monitoring(self):
-        """Start the workflow monitoring system."""
+        """
+Start the workflow monitoring system."""
         try:
             if self.monitoring_active:
                 self.logger.warning("Monitoring is already active")
@@ -699,7 +708,8 @@ class WorkflowMonitor(BaseAgent):
         workflow_id: str,
         minutes: int = 15
     ) -> Dict[str, List[WorkflowMetric]]:
-        """Get recent metrics for a workflow."""
+        """
+Get recent metrics for a workflow."""
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=minutes)
             recent_metrics = {}
@@ -1078,7 +1088,8 @@ class WorkflowMonitor(BaseAgent):
         self.notification_channels[name] = notification_func
 
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert."""
+        """
+Acknowledge an alert."""
         try:
             if alert_id in self.alerts:
                 alert = self.alerts[alert_id]

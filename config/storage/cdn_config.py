@@ -14,13 +14,16 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from enum import Enum
 
 class CDNProvider(Enum):
-    """Supported CDN providers."""
+    """
+Supported CDN providers."""
+
     CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
@@ -44,7 +47,8 @@ class CDNEndpointConfig:
 
 @dataclass
 class CloudflareCDNConfig:
-    """Cloudflare CDN specific configuration."""
+    """
+Cloudflare CDN specific configuration."""
     
     zone_id: str = os.getenv('CLOUDFLARE_ZONE_ID', '')
     api_token: str = os.getenv('CLOUDFLARE_API_TOKEN', '')
@@ -71,7 +75,8 @@ class CloudflareCDNConfig:
 
 @dataclass
 class AWSCloudFrontConfig:
-    """AWS CloudFront CDN specific configuration."""
+    """
+AWS CloudFront CDN specific configuration."""
     
     access_key_id: str = os.getenv('AWS_ACCESS_KEY_ID', '')
     secret_access_key: str = os.getenv('AWS_SECRET_ACCESS_KEY', '')
@@ -147,7 +152,8 @@ class CDNConfig:
     enable_real_user_monitoring: bool = True
     
     def __post_init__(self):
-        """Initialize configurations if not provided."""
+        """
+Initialize configurations if not provided."""
         if self.endpoints is None:
             self.endpoints = self._get_default_endpoints()
         
@@ -158,7 +164,8 @@ class CDNConfig:
             self.aws_cloudfront_config = AWSCloudFrontConfig()
     
     def _get_default_endpoints(self) -> Dict[str, CDNEndpointConfig]:
-        """Default CDN endpoint configuration for different content types."""
+        """
+Default CDN endpoint configuration for different content types."""
         env = os.getenv('ENVIRONMENT', 'development')
         base_domain = os.getenv('CDN_BASE_DOMAIN', 'cdn.ia-influencer.com')
         origin_domain = os.getenv('ORIGIN_DOMAIN', 'api.ia-influencer.com')
@@ -298,7 +305,8 @@ class CDNConfig:
         return list(self.endpoints.keys())
     
     def validate_configuration(self) -> bool:
-        """Validate CDN configuration."""
+        """
+Validate CDN configuration."""
         try:
             # Validate primary provider configuration
             if self.primary_provider == CDNProvider.CLOUDFLARE:
@@ -353,7 +361,8 @@ class CDNConfig:
         return urls
     
     def get_provider_specific_config(self, provider: CDNProvider) -> Dict[str, Any]:
-        """Get provider-specific configuration."""
+        """
+Get provider-specific configuration."""
         if provider == CDNProvider.CLOUDFLARE:
             return {
                 'zone_id': self.cloudflare_config.zone_id,
@@ -374,7 +383,8 @@ class CDNConfig:
         return {}
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export CDN configuration to JSON-serializable format."""
+        """
+Export CDN configuration to JSON-serializable format."""
         return {
             'primary_provider': self.primary_provider.value,
             'fallback_provider': self.fallback_provider.value if self.fallback_provider else None,

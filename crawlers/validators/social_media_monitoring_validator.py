@@ -6,7 +6,7 @@ real-time monitoring, trend analysis, and engagement validation across multiple
 social media platforms for content creators and influencers.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use, reproduction, or distribution strictly prohibited
 
 LEGAL WARNING: This intellectual property is protected under German and
@@ -22,6 +22,7 @@ Features:
 - Brand mention monitoring and reputation management
 - Content performance prediction and optimization
 """
+
 import re
 import json
 import hashlib
@@ -81,7 +82,8 @@ class MockSocialClient:
         self.platform_name = platform.value
     
     def get_user_info(self, user_id: str) -> Dict[str, Any]:
-        """Mock user info retrieval"""
+        """
+Mock user info retrieval"""
         return {
             "id": user_id,
             "username": f"user_{user_id}",
@@ -121,6 +123,7 @@ class MockSocialClient:
 
 class SocialPlatform(Enum):
     """Supported social media platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -135,6 +138,7 @@ class SocialPlatform(Enum):
 
 class ContentCategory(Enum):
     """Content categories for monitoring"""
+
     MUSIC = "music"
     LIFESTYLE = "lifestyle"
     GAMING = "gaming"
@@ -151,6 +155,7 @@ class ContentCategory(Enum):
 
 class MonitoringType(Enum):
     """Types of monitoring activities"""
+
     ENGAGEMENT_TRACKING = "engagement_tracking"
     TREND_ANALYSIS = "trend_analysis"
     COMPETITOR_MONITORING = "competitor_monitoring"
@@ -163,6 +168,7 @@ class MonitoringType(Enum):
 
 class EngagementMetric(Enum):
     """Engagement metrics to track"""
+
     LIKES = "likes"
     COMMENTS = "comments"
     SHARES = "shares"
@@ -177,6 +183,7 @@ class EngagementMetric(Enum):
 
 class TrendStrength(Enum):
     """Trend strength levels"""
+
     WEAK = "weak"
     MODERATE = "moderate"
     STRONG = "strong"
@@ -1050,7 +1057,8 @@ class SocialMediaMonitoringValidator:
         creator_id: str,
         platforms: List[SocialPlatform]
     ) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities"""
+        """
+Identify potential collaboration opportunities"""
         opportunities = []
         
         try:
@@ -1285,7 +1293,8 @@ class SocialMediaMonitoringValidator:
         creator_id: str,
         platforms: List[SocialPlatform]
     ) -> str:
-        """Analyze engagement trend direction"""
+        """
+Analyze engagement trend direction"""
         # Simplified trend analysis
         recent_posts = []
         for platform in platforms:
@@ -1417,7 +1426,8 @@ class SocialMediaMonitoringValidator:
         return 0.03  # Default prediction
     
     def _identify_engagement_risks(self, result: EngagementValidationResult) -> List[str]:
-        """Identify engagement risks"""
+        """
+Identify engagement risks"""
         risks = []
         
         if result.performance_score < 0.5:
@@ -1863,5 +1873,6 @@ def monitor_creator_social_media_comprehensive(
 
 # Custom exceptions
 class MonitoringException(ValidationException):
-    """Social media monitoring specific exception"""
+    """
+Social media monitoring specific exception"""
     pass

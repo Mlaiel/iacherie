@@ -12,6 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
@@ -56,7 +57,8 @@ settings = get_settings()
 
 @dataclass
 class InstagramPostData:
-    """Instagram post data structure"""
+    """
+Instagram post data structure"""
     post_id: str
     shortcode: str
     url: str
@@ -82,7 +84,8 @@ class InstagramPostData:
 
 @dataclass
 class InstagramProfileData:
-    """Instagram profile data structure"""
+    """
+Instagram profile data structure"""
     user_id: str
     username: str
     full_name: str
@@ -110,7 +113,8 @@ class InstagramProfileData:
 
 @dataclass
 class InstagramStoryData:
-    """Instagram story data structure"""
+    """
+Instagram story data structure"""
     story_id: str
     user_id: str
     username: str
@@ -142,7 +146,8 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     """
     
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize Instagram crawler engine"""
+        """
+Initialize Instagram crawler engine"""
         super().__init__(config)
         self.session = None
         self.loader = None
@@ -161,7 +166,8 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         self._setup_instaloader()
     
     def _setup_session(self) -> None:
-        """Setup HTTP session with headers and cookies"""
+        """
+Setup HTTP session with headers and cookies"""
         self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -619,7 +625,8 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             return 0
     
     async def _calculate_engagement_rate(self, profile) -> float:
-        """Calculate engagement rate for a profile"""
+        """
+Calculate engagement rate for a profile"""
         try:
             total_engagement = 0
             post_count = 0
@@ -645,7 +652,8 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         original: Dict, 
         candidate: Dict
     ) -> float:
-        """Calculate similarity between original and candidate content"""
+        """
+Calculate similarity between original and candidate content"""
         try:
             # Caption similarity
             original_caption = original.get('caption', '').lower()

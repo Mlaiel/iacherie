@@ -13,13 +13,14 @@ Fonctionnalités:
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
+Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 AVERTISSEMENT LÉGAL STRICT:
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, date
@@ -49,7 +50,9 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetric(Enum):
-    """Métriques de performance trackées"""
+    """
+Métriques de performance trackées"""
+
     PLAYS = "plays"
     DOWNLOADS = "downloads"
     LIKES = "likes"
@@ -69,6 +72,7 @@ class PerformanceMetric(Enum):
 
 class Platform(Enum):
     """Plateformes surveillées pour analytics"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     SOUNDCLOUD = "soundcloud"
@@ -85,6 +89,7 @@ class Platform(Enum):
 
 class InsightType(Enum):
     """Types d'insights générés par IA"""
+
     PERFORMANCE_TREND = "performance_trend"
     AUDIENCE_BEHAVIOR = "audience_behavior"
     OPTIMAL_TIMING = "optimal_timing"
@@ -97,6 +102,7 @@ class InsightType(Enum):
 
 class AlertSeverity(IntEnum):
     """Niveaux de gravité des alertes performance"""
+
     INFO = 1
     WARNING = 2
     CRITICAL = 3
@@ -105,7 +111,8 @@ class AlertSeverity(IntEnum):
 
 @dataclass
 class PerformanceDataPoint:
-    """Point de données de performance"""
+    """
+Point de données de performance"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     content_id: str = None
@@ -118,7 +125,8 @@ class PerformanceDataPoint:
 
 @dataclass
 class PerformanceInsight:
-    """Insight IA générée à partir des données"""
+    """
+Insight IA générée à partir des données"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     insight_type: InsightType = InsightType.PERFORMANCE_TREND
@@ -153,7 +161,8 @@ class PerformanceGoal:
 
 @dataclass
 class CompetitiveAnalysis:
-    """Analyse concurrentielle"""
+    """
+Analyse concurrentielle"""
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     competitor_ids: List[str] = field(default_factory=list)
@@ -185,7 +194,8 @@ class PerformanceAnalyticsManager:
         self.platform_apis = self._init_platform_apis()
         
     def _init_ml_models(self) -> Dict[str, Any]:
-        """Initialise les modèles ML pour analytics"""
+        """
+Initialise les modèles ML pour analytics"""
         return {
             "trend_predictor": RandomForestRegressor(n_estimators=100),
             "anomaly_detector": None,  # IsolationForest à charger
@@ -311,7 +321,8 @@ class PerformanceAnalyticsManager:
         return templates
 
     def _init_platform_apis(self) -> Dict[str, Any]:
-        """Initialise les APIs des plateformes"""
+        """
+Initialise les APIs des plateformes"""
         return {
             "spotify": {
                 "client_id": "spotify_client_id",

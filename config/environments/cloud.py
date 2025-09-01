@@ -14,6 +14,7 @@ Contact: mlaiel@live.de
 Configuration environnement cloud multi-provider (AWS, GCP, Azure).
 ==================================================================
 """
+
 import os
 from typing import Dict, Any, List, Optional, Union
 from enum import Enum
@@ -31,7 +32,9 @@ from .base import (
 
 
 class CloudProvider(str, Enum):
-    """Providers cloud supportés"""
+    """
+Providers cloud supportés"""
+
     AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
@@ -81,7 +84,8 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             self._configure_multi_cloud()
             
     def _configure_aws(self) -> None:
-        """Configuration AWS spécifique"""
+        """
+Configuration AWS spécifique"""
         
         # RDS PostgreSQL
         self.database_config = DatabaseConfig(
@@ -453,7 +457,8 @@ def create_cloud_config(provider: CloudProvider = CloudProvider.AWS) -> CloudCon
 
 
 def auto_detect_cloud_provider() -> CloudProvider:
-    """Détecte automatiquement le provider cloud"""
+    """
+Détecte automatiquement le provider cloud"""
     # Détection AWS
     if os.getenv("AWS_REGION") or os.getenv("AWS_EXECUTION_ENV"):
         return CloudProvider.AWS

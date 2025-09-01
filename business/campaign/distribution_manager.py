@@ -5,12 +5,13 @@ Advanced content distribution system for automated multi-platform publishing,
 scheduling, optimization, and performance tracking across social media platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
 from enum import Enum
@@ -29,7 +30,9 @@ from backend.utils.content_formatter import ContentFormatter
 
 
 class Platform(str, Enum):
-    """Supported distribution platforms"""
+    """
+Supported distribution platforms"""
+
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -46,6 +49,7 @@ class Platform(str, Enum):
 
 class DistributionStatus(str, Enum):
     """Distribution status states"""
+
     PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
@@ -57,6 +61,7 @@ class DistributionStatus(str, Enum):
 
 class ContentAdaptation(str, Enum):
     """Content adaptation types"""
+
     RESIZE_VIDEO = "resize_video"
     CROP_IMAGE = "crop_image"
     TRUNCATE_TEXT = "truncate_text"
@@ -82,7 +87,8 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionSchedule:
-    """Content distribution schedule"""
+    """
+Content distribution schedule"""
     content_id: str
     platform_schedules: Dict[Platform, datetime]
     timezone: str
@@ -93,7 +99,8 @@ class DistributionSchedule:
 
 @dataclass
 class DistributionResult:
-    """Distribution execution result"""
+    """
+Distribution execution result"""
     distribution_id: str
     content_id: str
     platform: Platform
@@ -107,7 +114,8 @@ class DistributionResult:
 
 @dataclass
 class DistributionMetrics:
-    """Distribution performance metrics"""
+    """
+Distribution performance metrics"""
     total_distributions: int
     successful_distributions: int
     failed_distributions: int
@@ -663,7 +671,8 @@ class DistributionManager:
         platform: Platform,
         config: PlatformConfiguration
     ) -> Dict[str, Any]:
-        """Generate platform-specific metadata"""
+        """
+Generate platform-specific metadata"""
         metadata = {}
         
         # Generate hashtags

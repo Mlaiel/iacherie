@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatIntelligenceSource(Enum):
-    """Threat intelligence sources"""
+    """
+Threat intelligence sources"""
+
     VIRUSTOTAL = "virustotal"
     ALIENVAULT_OTX = "alienvault_otx"
     MISP = "misp"
@@ -47,6 +50,7 @@ class ThreatIntelligenceSource(Enum):
 
 class IndicatorType(Enum):
     """Types of threat indicators"""
+
     IP_ADDRESS = "ip_address"
     DOMAIN = "domain"
     URL = "url"
@@ -61,6 +65,7 @@ class IndicatorType(Enum):
 
 class ThreatType(Enum):
     """Types of threats"""
+
     MALWARE = "malware"
     PHISHING = "phishing"
     C2_SERVER = "c2_server"
@@ -75,6 +80,7 @@ class ThreatType(Enum):
 
 class ConfidenceLevel(Enum):
     """Confidence levels for threat intelligence"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -101,7 +107,8 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatCampaign:
-    """Threat campaign information"""
+    """
+Threat campaign information"""
     campaign_id: str
     name: str
     description: str
@@ -118,7 +125,8 @@ class ThreatCampaign:
 
 @dataclass
 class ThreatActor:
-    """Threat actor profile"""
+    """
+Threat actor profile"""
     actor_id: str
     name: str
     aliases: List[str]

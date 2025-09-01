@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProjectStatus(Enum):
-    """Professional project status tracking"""
+    """
+Professional project status tracking"""
+
     PLANNING = "planning"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
@@ -47,6 +50,7 @@ class ProjectStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels for efficient workflow management"""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -56,6 +60,7 @@ class TaskPriority(Enum):
 
 class TaskStatus(Enum):
     """Comprehensive task status tracking"""
+
     TODO = "todo"
     IN_PROGRESS = "in_progress"
     BLOCKED = "blocked"
@@ -66,6 +71,7 @@ class TaskStatus(Enum):
 
 class ContentType(Enum):
     """Multi-format content types for project classification"""
+
     MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
@@ -105,7 +111,8 @@ class ProjectTask:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert task to dictionary representation"""
+        """
+Convert task to dictionary representation"""
         return {
             "task_id": self.task_id,
             "project_id": self.project_id,
@@ -155,7 +162,8 @@ class ProjectMilestone:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation tracking for team members"""
+    """
+Resource allocation tracking for team members"""
     allocation_id: str
     project_id: str
     team_member_id: str
@@ -174,7 +182,8 @@ class ResourceAllocation:
 
 
 class ProjectCoordinator:
-    """Advanced project coordination for collaborative content creation"""
+    """
+Advanced project coordination for collaborative content creation"""
     
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
@@ -195,7 +204,8 @@ class ProjectCoordinator:
         created_by: str,
         client_info: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create comprehensive collaborative project"""
+        """
+Create comprehensive collaborative project"""
         try:
             project_id = str(uuid.uuid4())
             start_date = datetime.utcnow()
@@ -496,7 +506,8 @@ class ProjectCoordinator:
         return []
     
     async def _get_team_performance_metrics(self, project_id: str) -> Dict[str, Any]:
-        """Get team performance metrics for project"""
+        """
+Get team performance metrics for project"""
         return {
             "total_team_members": 5,
             "active_contributors": 4,
@@ -665,7 +676,8 @@ class TaskDistributionEngine:
         tags: List[str] = None,
         required_skills: List[str] = None
     ) -> Dict[str, Any]:
-        """Create new project task with intelligent assignment suggestions"""
+        """
+Create new project task with intelligent assignment suggestions"""
         try:
             task_id = str(uuid.uuid4())
             
@@ -940,7 +952,8 @@ class TaskDistributionEngine:
         member_id: str,
         estimated_hours: float
     ) -> float:
-        """Calculate availability score for team member"""
+        """
+Calculate availability score for team member"""
         availability_data = await self.cache.get(f"availability:{member_id}")
         if not availability_data:
             return 0.7  # Default availability
@@ -1236,7 +1249,8 @@ class MilestoneTracker:
         budget_allocation: float,
         created_by: str
     ) -> Dict[str, Any]:
-        """Create project milestone with comprehensive tracking"""
+        """
+Create project milestone with comprehensive tracking"""
         try:
             milestone_id = str(uuid.uuid4())
             
@@ -1412,7 +1426,8 @@ class ResourceAllocationManager:
         hourly_rate: float,
         allocated_by: str
     ) -> Dict[str, Any]:
-        """Allocate team member resources to project"""
+        """
+Allocate team member resources to project"""
         try:
             allocation_id = str(uuid.uuid4())
             
@@ -1500,7 +1515,8 @@ class ProjectTimelineManager:
         constraints: Dict[str, Any],
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """Optimize project timeline using AI algorithms"""
+        """
+Optimize project timeline using AI algorithms"""
         try:
             project_data = await self.cache.get(f"project:{project_id}")
             if not project_data:

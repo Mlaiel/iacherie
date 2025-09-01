@@ -8,7 +8,7 @@ Technologies: Python, Regional Analytics, Platform APIs, Cultural Data
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Region detection → Platform popularity analysis → Cultural preferences → 
 Content format optimization → Engagement patterns → Regional recommendations
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class Region(Enum):
-    """Supported regions"""
+    """
+Supported regions"""
+
     MENA = "mena"  # Middle East & North Africa
     NA = "na"      # North Africa (Maghreb)
     GCC = "gcc"    # Gulf Cooperation Council
@@ -38,6 +41,7 @@ class Region(Enum):
 
 class Platform(Enum):
     """Supported platforms"""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -50,6 +54,7 @@ class Platform(Enum):
 
 class ContentType(Enum):
     """Content types"""
+
     VIDEO = "video"
     IMAGE = "image"
     STORY = "story"
@@ -80,7 +85,8 @@ class PlatformMetrics:
 
 @dataclass
 class RegionalPreference:
-    """Regional platform preference configuration"""
+    """
+Regional platform preference configuration"""
     region: Region
     primary_platforms: List[Platform]
     secondary_platforms: List[Platform]
@@ -95,7 +101,8 @@ class RegionalPreference:
 
 @dataclass
 class PlatformRecommendation:
-    """Platform recommendation for specific region and content"""
+    """
+Platform recommendation for specific region and content"""
     recommended_platforms: List[Platform]
     content_strategy: Dict[Platform, str]
     posting_schedule: Dict[Platform, List[time]]
@@ -109,7 +116,8 @@ class PlatformRecommendation:
 
 
 class RegionalPlatformPreferences:
-    """Regional platform preferences management engine"""
+    """
+Regional platform preferences management engine"""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -125,7 +133,8 @@ class RegionalPlatformPreferences:
         self.platform_characteristics = self._initialize_platform_characteristics()
     
     def _initialize_regional_data(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize regional platform data"""
+        """
+Initialize regional platform data"""
         
         return {
             "MENA": {

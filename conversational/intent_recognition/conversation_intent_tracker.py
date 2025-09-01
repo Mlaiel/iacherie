@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -29,7 +30,8 @@ from .exceptions import ValidationError
 
 @dataclass
 class ConversationTurn:
-    """Single turn in a conversation"""
+    """
+Single turn in a conversation"""
     turn_id: str
     user_input: str
     intent_result: ClassificationResult
@@ -40,7 +42,8 @@ class ConversationTurn:
 
 @dataclass
 class ConversationContext:
-    """Complete conversation context and state"""
+    """
+Complete conversation context and state"""
     session_id: str
     user_id: str
     conversation_stage: str = "initial"
@@ -66,7 +69,8 @@ class ConversationContext:
         return [turn.intent_result.primary_intent for turn in recent_turns]
     
     def get_context_summary(self) -> Dict[str, Any]:
-        """Get condensed context summary"""
+        """
+Get condensed context summary"""
         return {
             'session_id': self.session_id,
             'user_id': self.user_id,
@@ -103,11 +107,13 @@ class IntentSessionManager:
         self._start_cleanup_task()
     
     def _start_cleanup_task(self) -> None:
-        """Start background task for session cleanup"""
+        """
+Start background task for session cleanup"""
         asyncio.create_task(self._cleanup_expired_sessions())
     
     async def _cleanup_expired_sessions(self) -> None:
-        """Clean up expired sessions"""
+        """
+Clean up expired sessions"""
         while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
@@ -165,7 +171,8 @@ class IntentSessionManager:
         session_id: str,
         updates: Dict[str, Any]
     ) -> Optional[ConversationContext]:
-        """Update session context"""
+        """
+Update session context"""
         context = await self.get_session(session_id)
         
         if context:
@@ -180,7 +187,8 @@ class IntentSessionManager:
         return context
     
     async def close_session(self, session_id: str) -> bool:
-        """Close and clean up session"""
+        """
+Close and clean up session"""
         if session_id in self.active_sessions:
             context = self.active_sessions[session_id]
             
@@ -220,7 +228,8 @@ class IntentSessionManager:
         return len(self.active_sessions)
     
     def get_user_sessions(self, user_id: str) -> List[ConversationContext]:
-        """Get all active sessions for a user"""
+        """
+Get all active sessions for a user"""
         return [
             context for context in self.active_sessions.values()
             if context.user_id == user_id
@@ -254,7 +263,8 @@ class ConversationIntentTracker(BaseService):
         self.conversation_analyzer = ConversationFlowAnalyzer()
     
     def _load_intent_flow_patterns(self) -> Dict[str, Any]:
-        """Load common intent flow patterns"""
+        """
+Load common intent flow patterns"""
         return {
             'content_creation_flow': [
                 IntentCategory.CONTENT_UPLOAD,
@@ -391,7 +401,8 @@ class ConversationIntentTracker(BaseService):
         context: ConversationContext,
         intent_result: ClassificationResult
     ) -> None:
-        """Update conversation stage based on current intent"""
+        """
+Update conversation stage based on current intent"""
         try:
             current_intent = intent_result.primary_intent
             
@@ -461,7 +472,8 @@ class ConversationIntentTracker(BaseService):
         return found_platforms
     
     def _extract_content_types(self, text: str) -> List[str]:
-        """Extract content type mentions from text"""
+        """
+Extract content type mentions from text"""
         import re
         content_types = ['song', 'track', 'album', 'playlist', 'video', 'photo', 'post', 'story']
         found_types = []
@@ -477,7 +489,8 @@ class ConversationIntentTracker(BaseService):
         context: ConversationContext,
         intent_result: ClassificationResult
     ) -> None:
-        """Update user preferences based on conversation patterns"""
+        """
+Update user preferences based on conversation patterns"""
         try:
             intent = intent_result.primary_intent
             
@@ -694,7 +707,8 @@ class ConversationIntentTracker(BaseService):
         return total_confidence / len(context.conversation_history)
     
     def _calculate_completion_rate(self, context: ConversationContext) -> float:
-        """Calculate conversation completion rate"""
+        """
+Calculate conversation completion rate"""
         # Simple heuristic: longer conversations with flow completion = higher rate
         base_rate = min(context.conversation_length / 10, 0.8)  # Max 80% for length
         
@@ -706,7 +720,8 @@ class ConversationIntentTracker(BaseService):
 
 
 class ConversationFlowAnalyzer:
-    """Analyzes conversation flows and patterns"""
+    """
+Analyzes conversation flows and patterns"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -716,7 +731,8 @@ class ConversationFlowAnalyzer:
         self,
         conversations: List[ConversationContext]
     ) -> Dict[str, Any]:
-        """Analyze patterns across multiple conversations"""
+        """
+Analyze patterns across multiple conversations"""
         # Implementation for analyzing conversation patterns
         # This would be used for improving intent flow predictions
         pass

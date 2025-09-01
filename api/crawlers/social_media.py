@@ -23,6 +23,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -69,7 +70,9 @@ from ..utils.rate_limiter import RateLimiter
 
 
 class SocialMediaPlatform(Enum):
-    """Social media platform identifiers."""
+    """
+Social media platform identifiers."""
+
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -86,6 +89,7 @@ class SocialMediaPlatform(Enum):
 
 class ContentDiscoveryMode(Enum):
     """Content discovery modes."""
+
     HASHTAG_SEARCH = "hashtag_search"
     USER_PROFILE = "user_profile"
     TRENDING_CONTENT = "trending_content"
@@ -530,7 +534,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _discover_youtube_hashtag(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Discover YouTube videos by hashtag using YouTube Data API."""
+        """
+Discover YouTube videos by hashtag using YouTube Data API."""
         posts = []
         
         if not hasattr(self, 'youtube_api_key') or not self.youtube_api_key:
@@ -798,7 +803,8 @@ class SocialMediaCrawler(WebCrawler):
         return [tag.lower() for tag in hashtags]
     
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text."""
+        """
+Extract mentions from text."""
         if not text:
             return []
         
@@ -809,7 +815,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _analyze_content_similarities(
         self, posts: List[SocialMediaPost]
     ) -> List[SocialMediaPost]:
-        """Analyze content similarities for copyright infringement detection."""
+        """
+Analyze content similarities for copyright infringement detection."""
         try:
             self.logger.info(f"Analyzing content similarities for {len(posts)} posts")
             
@@ -870,7 +877,8 @@ class SocialMediaCrawler(WebCrawler):
         return intersection / max(union, 1)
     
     async def _analyze_image_similarities(self, posts: List[SocialMediaPost]):
-        """Analyze image content similarities using perceptual hashing."""
+        """
+Analyze image content similarities using perceptual hashing."""
         try:
             # Download and analyze images
             image_hashes = {}
@@ -1074,7 +1082,8 @@ class SocialMediaCrawler(WebCrawler):
         }
     
     def _analyze_hashtag_strategies(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze hashtag usage strategies."""
+        """
+Analyze hashtag usage strategies."""
         all_hashtags = []
         hashtag_counts = {}
         
@@ -1097,7 +1106,8 @@ class SocialMediaCrawler(WebCrawler):
         }
     
     def _analyze_engagement_patterns(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze engagement patterns and performance."""
+        """
+Analyze engagement patterns and performance."""
         if not posts:
             return {}
         
@@ -1126,7 +1136,8 @@ class SocialMediaCrawler(WebCrawler):
         }
     
     async def _get_browser_instance(self):
-        """Get browser instance from pool or create new one."""
+        """
+Get browser instance from pool or create new one."""
         try:
             if self.browser_pool:
                 return self.browser_pool.pop()

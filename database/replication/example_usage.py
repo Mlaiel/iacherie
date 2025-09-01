@@ -16,6 +16,7 @@ is strictly prohibited and may be subject to legal action.
 Usage:
     python example_usage.py
 """
+
 import asyncio
 import logging
 import os
@@ -70,7 +71,8 @@ class ReplicationExampleApp:
         self.running = False
         
     async def initialize(self):
-        """Initialize the replication system"""
+        """
+Initialize the replication system"""
         try:
             logger.info("Initializing replication system for content creator platform")
             
@@ -348,7 +350,8 @@ async def main():
     app = ReplicationExampleApp()
     
     def signal_handler(signum, frame):
-        """Handle shutdown signals"""
+        """
+Handle shutdown signals"""
         logger.info(f"Received signal {signum}, initiating shutdown")
         asyncio.create_task(app.cleanup())
     

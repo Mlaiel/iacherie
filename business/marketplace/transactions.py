@@ -9,6 +9,7 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from ...integrations.payment_gateways import PaymentGatewayManager
 
 
 class TransactionType(Enum):
-    """Transaction type enumeration."""
+    """
+Transaction type enumeration."""
+
     COLLABORATION_PAYMENT = "collaboration_payment"
     REVENUE_SHARE = "revenue_share"
     SUBSCRIPTION_FEE = "subscription_fee"
@@ -39,6 +42,7 @@ class TransactionType(Enum):
 
 class TransactionStatus(Enum):
     """Transaction status enumeration."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -49,6 +53,7 @@ class TransactionStatus(Enum):
 
 class PaymentMethod(Enum):
     """Payment method enumeration."""
+
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
@@ -74,7 +79,8 @@ class TransactionRequest:
 
 @dataclass
 class RevenueShareConfig:
-    """Revenue sharing configuration."""
+    """
+Revenue sharing configuration."""
     collaboration_id: str
     participants: List[Dict[str, Any]]
     share_percentages: Dict[str, float]
@@ -372,7 +378,8 @@ class PaymentProcessor:
         request: TransactionRequest,
         payment_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create transaction record in database."""
+        """
+Create transaction record in database."""
         transaction_record = {
             'transaction_id': transaction_id,
             'transaction_type': request.transaction_type.value,

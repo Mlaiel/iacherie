@@ -9,6 +9,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -250,7 +251,8 @@ class EnterpriseMonetizationService:
         asset: ContentAsset,
         analytics: Any
     ) -> Dict[str, float]:
-        """Calculate expected revenue by platform"""
+        """
+Calculate expected revenue by platform"""
         platform_revenue = {}
         
         # Get platform data from asset metadata
@@ -284,7 +286,8 @@ class EnterpriseMonetizationService:
         analytics: Any,
         months: int
     ) -> Dict[str, float]:
-        """Calculate revenue growth projections using trend analysis"""
+        """
+Calculate revenue growth projections using trend analysis"""
         
         # Get historical performance data (would query actual data)
         current_monthly_revenue = sum((await self._calculate_platform_revenue(asset, analytics)).values())
@@ -315,7 +318,8 @@ class EnterpriseMonetizationService:
         }
 
     def _determine_quality_factor(self, asset: ContentAsset) -> float:
-        """Determine quality factor based on asset characteristics"""
+        """
+Determine quality factor based on asset characteristics"""
         factors = []
         
         # File size factor (larger files often indicate higher quality)
@@ -348,7 +352,8 @@ class EnterpriseMonetizationService:
         analytics: Any,
         platform_breakdown: Dict[str, float]
     ) -> List[str]:
-        """Generate AI-powered monetization recommendations"""
+        """
+Generate AI-powered monetization recommendations"""
         recommendations = []
         
         # Platform optimization recommendations

@@ -19,6 +19,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 import json
 import logging
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ModelStatus(str, Enum):
-    """Model lifecycle status enumeration."""
+    """
+Model lifecycle status enumeration."""
+
     DRAFT = "draft"
     TRAINING = "training"
     VALIDATION = "validation"
@@ -52,6 +55,7 @@ class ModelStatus(str, Enum):
 
 class ModelType(str, Enum):
     """Model type enumeration."""
+
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
@@ -63,6 +67,7 @@ class ModelType(str, Enum):
 
 class MLFramework(str, Enum):
     """ML framework enumeration."""
+
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     SCIKIT_LEARN = "scikit_learn"
@@ -91,7 +96,8 @@ class ModelMetadata:
     hardware_requirements: Dict[str, Any]
 
 class ModelRegistrySchema(Base):
-    """Database schema for model registry."""
+    """
+Database schema for model registry."""
     __tablename__ = "ai_model_registry"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -159,7 +165,8 @@ class AIModelRegistry:
     """
     
     def __init__(self, db_connection: Optional[asyncpg.Connection] = None):
-        """Initialize the AI Model Registry."""
+        """
+Initialize the AI Model Registry."""
         self.db_connection = db_connection
         self.models_cache = {}
         self.initialized = False
@@ -512,7 +519,8 @@ class AIModelRegistry:
         return model_id in self.models_cache
     
     async def _calculate_artifact_info(self, artifact_path: str) -> Tuple[str, int]:
-        """Calculate checksum and file size for artifact."""
+        """
+Calculate checksum and file size for artifact."""
         try:
             path = Path(artifact_path)
             if not path.exists():
@@ -557,7 +565,8 @@ class AIModelRegistry:
         return None
     
     async def _update_model_metadata(self, metadata: ModelMetadata):
-        """Update model metadata in database."""
+        """
+Update model metadata in database."""
         logger.info(f"Updating model metadata for {metadata.model_id}")
     
     async def _delete_model_hard(self, model_id: str):
@@ -572,7 +581,8 @@ class ModelVersionManager:
     """
     
     def __init__(self, model_registry: AIModelRegistry):
-        """Initialize the version manager."""
+        """
+Initialize the version manager."""
         self.model_registry = model_registry
         self.version_cache = {}
         
@@ -682,7 +692,8 @@ class ModelMetadataStore:
     """
     
     def __init__(self):
-        """Initialize the metadata store."""
+        """
+Initialize the metadata store."""
         self.metadata_index = {}
         self.search_index = {}
         

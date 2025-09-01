@@ -13,6 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import os
 import ssl
 import asyncio
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CertificateInfo:
-    """Certificate information container"""
+    """
+Certificate information container"""
     common_name: str
     subject_alt_names: List[str]
     issuer: str
@@ -51,7 +53,8 @@ class CertificateInfo:
 
 @dataclass
 class TLSConfiguration:
-    """TLS configuration container"""
+    """
+TLS configuration container"""
     min_version: str
     max_version: str
     cipher_suites: List[str]

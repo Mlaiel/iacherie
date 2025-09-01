@@ -17,7 +17,7 @@ Project Team Specialists:
 - IA Prompt Engineer: AI prompt optimization and natural language processing
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
 
@@ -32,6 +32,7 @@ Email: mlaiel@live.de
 All usage must be pre-approved in writing.
 ==============================================================
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -55,7 +56,9 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationSeverity(Enum):
-    """Validation result severity levels"""
+    """
+Validation result severity levels"""
+
     ERROR = "error"
     WARNING = "warning"
     INFO = "info"
@@ -64,6 +67,7 @@ class ValidationSeverity(Enum):
 
 class ValidationType(Enum):
     """Types of validation checks"""
+
     DATA_INTEGRITY = "data_integrity"
     BUSINESS_RULES = "business_rules"
     MARKET_REASONABLENESS = "market_reasonableness"
@@ -89,7 +93,8 @@ class ValidationResult:
 
 @dataclass
 class ValidationReport:
-    """Complete validation report"""
+    """
+Complete validation report"""
     request_id: str
     creator_id: str
     validation_timestamp: datetime
@@ -137,7 +142,8 @@ class PricingValidator:
         pricing_factors: Dict[str, Any],
         context: Optional[Dict[str, Any]] = None
     ) -> ValidationReport:
-        """Validate a complete pricing request"""
+        """
+Validate a complete pricing request"""
         
         request_id = str(uuid.uuid4())
         validation_results = []
@@ -1069,7 +1075,8 @@ class PricingValidator:
         }
         
     async def _get_tier_limits(self, tier_name: str) -> Dict[str, Any]:
-        """Get limits for a specific tier"""
+        """
+Get limits for a specific tier"""
         
         return self.validation_rules.get('tier_limits', {}).get(tier_name.lower(), {
             'max_base_price': Decimal('99.99'),
@@ -1082,7 +1089,8 @@ class PricingValidator:
         platform: str,
         content_type: str
     ) -> Dict[str, Decimal]:
-        """Get market price ranges for validation (mock implementation)"""
+        """
+Get market price ranges for validation (mock implementation)"""
         
         # Mock market data - replace with real market intelligence
         base_ranges = {
@@ -1100,7 +1108,8 @@ class PricingValidator:
         })
         
     async def _get_recent_calculation_count(self, creator_id: str) -> int:
-        """Get recent calculation count for rate limiting"""
+        """
+Get recent calculation count for rate limiting"""
         
         try:
             cache_key = f"calculation_count:{creator_id}:{datetime.utcnow().hour}"
@@ -1125,7 +1134,8 @@ class PricingValidator:
         self,
         validation_results: List[ValidationResult]
     ) -> Dict[str, Any]:
-        """Generate validation summary"""
+        """
+Generate validation summary"""
         
         return {
             'validation_types': {
@@ -1149,7 +1159,8 @@ class PricingValidator:
         self,
         validation_results: List[ValidationResult]
     ) -> str:
-        """Get overall validation recommendation"""
+        """
+Get overall validation recommendation"""
         
         errors = [r for r in validation_results if r.severity == ValidationSeverity.ERROR]
         warnings = [r for r in validation_results if r.severity == ValidationSeverity.WARNING]

@@ -10,8 +10,9 @@ Professional license template management and generation system:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Template Specialist + Content Manager + Localization Expert
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
@@ -26,7 +27,9 @@ from jinja2 import Environment, FileSystemLoader, Template
 logger = logging.getLogger(__name__)
 
 class TemplateCategory(Enum):
-    """License template categories"""
+    """
+License template categories"""
+
     MUSIC_LICENSING = "music_licensing"
     SYNC_LICENSING = "sync_licensing"
     DISTRIBUTION = "distribution"
@@ -38,6 +41,7 @@ class TemplateCategory(Enum):
 
 class ClauseType(Enum):
     """Legal clause types"""
+
     GRANT_OF_RIGHTS = "grant_of_rights"
     TERRITORY = "territory"
     DURATION = "duration"
@@ -51,6 +55,7 @@ class ClauseType(Enum):
 
 class LanguageCode(Enum):
     """Supported languages"""
+
     ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
@@ -77,7 +82,8 @@ class ClauseTemplate:
 
 @dataclass
 class LicenseTemplate:
-    """Complete license template"""
+    """
+Complete license template"""
     template_id: str
     category: TemplateCategory
     name: str
@@ -101,7 +107,8 @@ class LicenseTemplateEngine:
     """
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize license template engine with configuration."""
+        """
+Initialize license template engine with configuration."""
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -436,7 +443,8 @@ class LicenseTemplateEngine:
         self.jinja_env.filters['translate'] = self._translate_filter
     
     def _currency_format_filter(self, amount: float, currency: str = 'USD') -> str:
-        """Format currency amounts for legal documents."""
+        """
+Format currency amounts for legal documents."""
         if currency == 'USD':
             return f"${amount:,.2f}"
         elif currency == 'EUR':
@@ -463,7 +471,8 @@ class LicenseTemplateEngine:
         return ' '.join(formatted_sentences)
     
     def _translate_filter(self, key: str, language: LanguageCode) -> str:
-        """Translate terms to specified language."""
+        """
+Translate terms to specified language."""
         language_dict = self.translations.get(language, self.translations[LanguageCode.ENGLISH])
         return language_dict.get(key, key)
     
@@ -597,7 +606,8 @@ class LicenseTemplateEngine:
         jurisdiction: str,
         language: LanguageCode
     ) -> Optional[ClauseTemplate]:
-        """Get the best clause template for the given context."""
+        """
+Get the best clause template for the given context."""
         # Find all clauses of the specified type
         matching_clauses = [
             clause for clause in self.clause_templates.values()
@@ -633,7 +643,8 @@ class LicenseTemplateEngine:
         clause_type: ClauseType,
         compliance_requirements: Dict[str, Any]
     ) -> bool:
-        """Check if a clause is recommended based on compliance requirements."""
+        """
+Check if a clause is recommended based on compliance requirements."""
         recommended_clauses = compliance_requirements.get('recommended_clauses', [])
         
         clause_recommendations = {
@@ -655,7 +666,8 @@ class LicenseTemplateEngine:
         selected_clauses: List[ClauseTemplate],
         language: LanguageCode
     ) -> Dict[str, Any]:
-        """Build the complete template structure."""
+        """
+Build the complete template structure."""
         structure = base_template.template_structure.copy()
         
         # Add clause mapping
@@ -681,7 +693,8 @@ class LicenseTemplateEngine:
         return structure
     
     def _map_clause_to_section(self, clause_type: ClauseType) -> str:
-        """Map clause types to document sections."""
+        """
+Map clause types to document sections."""
         section_mapping = {
             ClauseType.GRANT_OF_RIGHTS: 'grant_of_rights',
             ClauseType.TERRITORY: 'territory_and_duration',
@@ -702,7 +715,8 @@ class LicenseTemplateEngine:
         selected_clauses: List[ClauseTemplate],
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Generate template variable definitions."""
+        """
+Generate template variable definitions."""
         # Collect all required variables from clauses
         required_variables = set()
         optional_variables = set()
@@ -764,7 +778,8 @@ class LicenseTemplateEngine:
         template_variables: Dict[str, Any],
         language: LanguageCode
     ) -> Dict[str, Any]:
-        """Generate usage instructions for the template."""
+        """
+Generate usage instructions for the template."""
         instructions = {
             'overview': self._get_template_overview(language),
             'variable_instructions': self._get_variable_instructions(template_variables, language),
@@ -776,7 +791,8 @@ class LicenseTemplateEngine:
         return instructions
     
     def _get_template_overview(self, language: LanguageCode) -> str:
-        """Get template overview in specified language."""
+        """
+Get template overview in specified language."""
         overviews = {
             LanguageCode.ENGLISH: "This template provides a legally compliant license agreement framework. Fill in the required variables and customize clauses as needed for your specific use case.",
             LanguageCode.GERMAN: "Diese Vorlage bietet einen rechtlich konformen Rahmen für Lizenzvereinbarungen. Füllen Sie die erforderlichen Variablen aus und passen Sie die Klauseln nach Bedarf an.",
@@ -877,7 +893,8 @@ class LicenseTemplateEngine:
         ]
     
     def get_template_metrics(self) -> Dict[str, Any]:
-        """Get template engine performance metrics."""
+        """
+Get template engine performance metrics."""
         return {
             **self.metrics,
             'available_templates': len(self.license_templates),

@@ -24,6 +24,7 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
+
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -73,7 +74,9 @@ from ..utils.rate_limiter import RateLimiter
 
 
 class ProtectionCrawlerType(Enum):
-    """Types of protection crawlers."""
+    """
+Types of protection crawlers."""
+
     PIRACY_DETECTION = "piracy_detection"
     COPYRIGHT_MONITORING = "copyright_monitoring"
     BRAND_PROTECTION = "brand_protection"
@@ -88,6 +91,7 @@ class ProtectionCrawlerType(Enum):
 
 class InfringementSeverity(Enum):
     """Severity levels for copyright infringement."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -97,6 +101,7 @@ class InfringementSeverity(Enum):
 
 class ProtectionStatus(Enum):
     """Protection monitoring status."""
+
     ACTIVE = "active"
     PENDING = "pending"
     RESOLVED = "resolved"
@@ -140,7 +145,8 @@ class InfringementDetection:
 
 @dataclass
 class ProtectionTarget:
-    """Content protection target configuration."""
+    """
+Content protection target configuration."""
     target_id: str
     content_owner: str
     protected_content: Dict[str, Any]
@@ -990,7 +996,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _calculate_content_similarity(
         self, search_result: Dict[str, str], fingerprints: List[ContentFingerprint]
     ) -> float:
-        """Calculate similarity between search result and protected content."""
+        """
+Calculate similarity between search result and protected content."""
         max_similarity = 0.0
         
         try:
@@ -1044,7 +1051,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _scan_file_sharing_sites(
         self, target: ProtectionTarget
     ) -> List[InfringementDetection]:
-        """Scan file sharing sites for potential infringements."""
+        """
+Scan file sharing sites for potential infringements."""
         detections = []
         
         # Popular file sharing sites to monitor
@@ -1219,7 +1227,8 @@ class ContentProtectionCrawler(WebCrawler):
         self, detection: InfringementDetection, target: ProtectionTarget
     ) -> str:
         """Generate DMCA notice template."""
-        template = f"""DMCA TAKEDOWN NOTICE
+        template = f"""
+DMCA TAKEDOWN NOTICE
 
 To: Copyright Agent
 Date: {datetime.utcnow().strftime('%Y-%m-%d')}

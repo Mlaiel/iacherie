@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 GESTIONNAIRE WEBSOCKET REAL-TIME
@@ -15,6 +15,7 @@ Gestion des connexions WebSocket pour communication temps réel
 - Reconnexion automatique et heartbeat
 - Gestion d'état avancée par session
 """
+
 import asyncio
 import json
 import logging
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 class ConnectionState(Enum):
     """États des connexions WebSocket"""
+
     CONNECTING = "connecting"
     CONNECTED = "connected"
     DISCONNECTING = "disconnecting"
@@ -46,6 +48,7 @@ class ConnectionState(Enum):
 
 class MessageType(Enum):
     """Types de messages WebSocket"""
+
     HEARTBEAT = "heartbeat"
     AUTH = "auth"
     SUBSCRIBE = "subscribe"
@@ -70,7 +73,8 @@ class WebSocketMessage:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le message en dictionnaire"""
+        """
+Convertit le message en dictionnaire"""
         return {
             "message_id": self.message_id,
             "type": self.type.value,
@@ -97,7 +101,8 @@ class ConnectionInfo:
     message_queue: List[WebSocketMessage] = field(default_factory=list)
     
 class ConnectionManager:
-    """Gestionnaire de connexions WebSocket"""
+    """
+Gestionnaire de connexions WebSocket"""
     
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.connections: Dict[str, ConnectionInfo] = {}
@@ -109,7 +114,8 @@ class ConnectionManager:
         self._cleanup_task: Optional[asyncio.Task] = None
         
     async def start(self):
-        """Démarre le gestionnaire de connexions"""
+        """
+Démarre le gestionnaire de connexions"""
         logger.info("Démarrage du gestionnaire de connexions WebSocket")
         self._cleanup_task = asyncio.create_task(self._cleanup_loop())
         
@@ -255,7 +261,8 @@ class ConnectionManager:
         
     async def send_to_channel(self, channel: str, message: WebSocketMessage, 
                             exclude_connection: Optional[str] = None) -> int:
-        """Diffuse un message sur un canal"""
+        """
+Diffuse un message sur un canal"""
         sent_count = 0
         subscribers = self.channel_subscribers.get(channel, set())
         
@@ -268,7 +275,8 @@ class ConnectionManager:
         
     async def broadcast(self, message: WebSocketMessage, 
                        exclude_connection: Optional[str] = None) -> int:
-        """Diffuse un message à toutes les connexions"""
+        """
+Diffuse un message à toutes les connexions"""
         sent_count = 0
         
         for connection_id in list(self.connections.keys()):
@@ -279,11 +287,13 @@ class ConnectionManager:
         return sent_count
         
     async def send_direct(self, connection_id: str, message: WebSocketMessage) -> bool:
-        """Envoie un message direct à une connexion spécifique"""
+        """
+Envoie un message direct à une connexion spécifique"""
         return await self._send_to_connection(connection_id, message)
         
     async def _send_to_connection(self, connection_id: str, message: WebSocketMessage) -> bool:
-        """Envoie un message à une connexion spécifique"""
+        """
+Envoie un message à une connexion spécifique"""
         if connection_id not in self.connections:
             logger.warning(f"Tentative d'envoi vers connexion inexistante: {connection_id}")
             return False
@@ -380,7 +390,8 @@ class WebSocketManager:
             self.connection_manager.redis_client = self.redis_client
             
     async def start(self):
-        """Démarre le gestionnaire WebSocket"""
+        """
+Démarre le gestionnaire WebSocket"""
         await self.connection_manager.start()
         logger.info("WebSocketManager démarré")
         
@@ -481,11 +492,13 @@ class WebSocketManager:
         self.message_handlers[message_type].append(handler)
         
     def add_middleware(self, middleware: Callable):
-        """Ajoute un middleware de traitement des messages"""
+        """
+Ajoute un middleware de traitement des messages"""
         self.middleware.append(middleware)
         
     async def notify_user(self, user_id: str, notification_type: str, data: Dict[str, Any]):
-        """Envoie une notification à un utilisateur"""
+        """
+Envoie une notification à un utilisateur"""
         message = WebSocketMessage(
             type=MessageType.NOTIFICATION,
             data={

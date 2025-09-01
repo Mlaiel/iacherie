@@ -15,6 +15,7 @@ This is the main entry point for the cloud deployment module, providing
 command-line interface and programmatic access to all cloud deployment
 functionalities for the IA Influencer Agent platform.
 """
+
 import asyncio
 import argparse
 import logging
@@ -50,15 +51,18 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class CloudDeploymentCLI:
-    """Command-line interface for cloud deployment operations"""
+    """
+Command-line interface for cloud deployment operations"""
     
     def __init__(self):
-        """Initialize the CLI"""
+        """
+Initialize the CLI"""
         self.orchestrator = None
         self.config = {}
         
     async def initialize(self, config_path: Optional[str] = None):
-        """Initialize the cloud deployment system"""
+        """
+Initialize the cloud deployment system"""
         try:
             # Load configuration
             if config_path:
@@ -112,7 +116,8 @@ class CloudDeploymentCLI:
         }
 
     async def deploy_infrastructure(self, environment: str, service_config: Dict[str, Any]):
-        """Deploy infrastructure to cloud"""
+        """
+Deploy infrastructure to cloud"""
         try:
             if not self.orchestrator:
                 raise RuntimeError("Cloud deployment system not initialized")
@@ -230,7 +235,8 @@ def create_parser():
     parser = argparse.ArgumentParser(
         description='IA Influencer Agent Cloud Deployment CLI',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""Examples:
+        epilog="""
+Examples:
   python -m backend.deployment.cloud deploy --environment production --config config.yml
   python -m backend.deployment.cloud monitor
   python -m backend.deployment.cloud backup --config backup_config.json
@@ -283,7 +289,8 @@ def create_parser():
     return parser
 
 async def main():
-    """Main entry point"""
+    """
+Main entry point"""
     parser = create_parser()
     args = parser.parse_args()
     
@@ -363,20 +370,23 @@ class CloudDeploymentAPI:
     """Programmatic API for cloud deployment operations"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the API"""
+        """
+Initialize the API"""
         self.config = config or {}
         self.orchestrator = None
         self._initialized = False
     
     async def initialize(self):
-        """Initialize the API"""
+        """
+Initialize the API"""
         if not self._initialized:
             self.orchestrator = MultiCloudOrchestrator()
             await self.orchestrator.initialize()
             self._initialized = True
     
     async def deploy(self, environment: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy infrastructure"""
+        """
+Deploy infrastructure"""
         await self.initialize()
         return await self.orchestrator.deploy_infrastructure({
             'environment': environment,
@@ -385,20 +395,23 @@ class CloudDeploymentAPI:
         })
     
     async def monitor(self):
-        """Start monitoring"""
+        """
+Start monitoring"""
         await self.initialize()
         monitoring = CloudMonitoringService()
         await monitoring.initialize()
         return await monitoring.start_monitoring()
     
     async def backup(self, config: Dict[str, Any]) -> str:
-        """Create backup"""
+        """
+Create backup"""
         backup_manager = CloudBackupManager()
         await backup_manager.initialize_providers()
         return await backup_manager.create_backup_job(config)
     
     async def compliance_check(self, framework: str) -> Dict[str, Any]:
-        """Run compliance check"""
+        """
+Run compliance check"""
         compliance_manager = CloudComplianceManager()
         from .cloud_compliance import ComplianceFramework
         framework_enum = ComplianceFramework(framework.lower())

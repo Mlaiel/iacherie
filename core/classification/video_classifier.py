@@ -4,8 +4,9 @@ Advanced AI-powered video classification for content protection and analysis.
 Provides scene detection, object recognition, quality assessment, and similarity matching.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import cv2
 import numpy as np
 import torch
@@ -43,7 +44,8 @@ class VideoContentClassifier:
     """
     
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize video classifier with ML models."""
+        """
+Initialize video classifier with ML models."""
         self.settings = get_settings()
         self.ml_engine = MLEngine()
         self.video_processor = VideoProcessor()
@@ -67,7 +69,8 @@ class VideoContentClassifier:
         self._setup_feature_extractors()
         
     def _initialize_models(self, model_path: Optional[str] = None) -> None:
-        """Load pre-trained classification models."""
+        """
+Load pre-trained classification models."""
         try:
             # Load CLIP model for multimodal analysis
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -665,14 +668,16 @@ class VideoContentClassifier:
         return hist
     
     def _calculate_edge_density(self, frame: np.ndarray) -> float:
-        """Calculate edge density in frame."""
+        """
+Calculate edge density in frame."""
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         edges = cv2.Canny(gray, **self.edge_params)
         edge_density = np.sum(edges > 0) / edges.size
         return float(edge_density)
     
     def _extract_texture_features(self, frame: np.ndarray) -> Dict[str, float]:
-        """Extract texture features using Local Binary Pattern."""
+        """
+Extract texture features using Local Binary Pattern."""
         try:
             from skimage import feature
             
@@ -701,7 +706,8 @@ class VideoContentClassifier:
             }
     
     def _extract_dominant_colors(self, frame: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Extract dominant colors using K-means clustering."""
+        """
+Extract dominant colors using K-means clustering."""
         try:
             from sklearn.cluster import KMeans
             
@@ -723,7 +729,8 @@ class VideoContentClassifier:
             return [mean_color.tolist()]
     
     def _calculate_frame_complexity(self, frame: np.ndarray) -> float:
-        """Calculate frame complexity using entropy."""
+        """
+Calculate frame complexity using entropy."""
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Calculate histogram
@@ -739,7 +746,8 @@ class VideoContentClassifier:
         return float(entropy)
     
     def _classify_scene_type(self, scene_frames: List[np.ndarray]) -> str:
-        """Classify the type of scene based on visual characteristics."""
+        """
+Classify the type of scene based on visual characteristics."""
         if not scene_frames:
             return "unknown"
         
@@ -817,7 +825,8 @@ class VideoContentClassifier:
         return float(np.clip(score, 0, 100))
     
     def _grade_video_quality(self, score: float) -> str:
-        """Convert quality score to letter grade."""
+        """
+Convert quality score to letter grade."""
         if score >= 90:
             return "A"
         elif score >= 80:
@@ -884,7 +893,8 @@ class VideoContentClassifier:
         return fingerprint_hash
     
     def _compute_temporal_hash(self, frames: List[np.ndarray]) -> str:
-        """Compute hash based on temporal characteristics."""
+        """
+Compute hash based on temporal characteristics."""
         if len(frames) < 2:
             return "00000000"
         
@@ -1034,11 +1044,13 @@ class VideoContentClassifier:
         return similarity
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported video formats."""
+        """
+Get list of supported video formats."""
         return ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv', 'm4v']
     
     def get_classification_categories(self) -> Dict[str, List[str]]:
-        """Get available classification categories."""
+        """
+Get available classification categories."""
         return {
             'content_types': ['music_video', 'vlog', 'tutorial', 'performance', 'interview', 'gameplay', 'animation'],
             'scene_types': ['dark_scene', 'bright_scene', 'complex_scene', 'simple_scene', 'normal_scene'],

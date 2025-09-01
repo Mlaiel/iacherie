@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProxyInfo:
-    """Proxy information structure."""
+    """
+Proxy information structure."""
     host: str
     port: int
     username: Optional[str] = None
@@ -38,7 +40,8 @@ class ProxyInfo:
 
 @dataclass
 class ProxyMetrics:
-    """Proxy performance metrics."""
+    """
+Proxy performance metrics."""
     success_rate: float = 1.0
     average_response_time: float = 0.0
     total_requests: int = 0
@@ -66,7 +69,8 @@ class ProxyManager:
     """
     
     def __init__(self):
-        """Initialize proxy manager."""
+        """
+Initialize proxy manager."""
         self.proxies: List[ProxyInfo] = []
         self.proxy_metrics: Dict[str, ProxyMetrics] = {}
         self.current_proxy_index = 0
@@ -189,7 +193,8 @@ class ProxyManager:
         return proxy
     
     def _get_best_performing_proxy(self, available_proxies: List[ProxyInfo]) -> ProxyInfo:
-        """Get proxy with best performance metrics."""
+        """
+Get proxy with best performance metrics."""
         best_proxy = None
         best_score = -1
         
@@ -210,7 +215,8 @@ class ProxyManager:
         return best_proxy
     
     def _calculate_performance_score(self, metrics: ProxyMetrics) -> float:
-        """Calculate performance score for proxy."""
+        """
+Calculate performance score for proxy."""
         if metrics.total_requests == 0:
             return 1.0
         
@@ -242,7 +248,8 @@ class ProxyManager:
         response_time: float,
         error_type: Optional[str] = None
     ) -> None:
-        """Record proxy usage metrics."""
+        """
+Record proxy usage metrics."""
         proxy_key = self._get_proxy_key(proxy)
         metrics = self.proxy_metrics.get(proxy_key)
         
@@ -281,7 +288,8 @@ class ProxyManager:
         metrics.success_rate = metrics.successful_requests / metrics.total_requests
     
     async def _ban_proxy(self, proxy: ProxyInfo, error_type: Optional[str] = None) -> None:
-        """Ban a proxy temporarily."""
+        """
+Ban a proxy temporarily."""
         proxy_key = self._get_proxy_key(proxy)
         metrics = self.proxy_metrics.get(proxy_key)
         
@@ -398,7 +406,8 @@ class ProxyManager:
         return stats
     
     def set_rotation_strategy(self, strategy: str) -> None:
-        """Set proxy rotation strategy."""
+        """
+Set proxy rotation strategy."""
         valid_strategies = ['round_robin', 'random', 'performance_based']
         if strategy in valid_strategies:
             self.rotation_strategy = strategy

@@ -22,6 +22,7 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
+
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -37,7 +38,9 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class MonitoringStrategy(Enum):
-    """Monitoring strategy types."""
+    """
+Monitoring strategy types."""
+
     REACTIVE = "reactive"
     PROACTIVE = "proactive"
     PREDICTIVE = "predictive"
@@ -46,6 +49,7 @@ class MonitoringStrategy(Enum):
 
 class MonitoringMode(Enum):
     """Monitoring operation modes."""
+
     CONTINUOUS = "continuous"
     PERIODIC = "periodic"
     TRIGGER_BASED = "trigger_based"
@@ -54,6 +58,7 @@ class MonitoringMode(Enum):
 
 class EngineStatus(Enum):
     """Engine status enumeration."""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -79,7 +84,8 @@ class MonitoringMetrics:
 
 @dataclass
 class MonitoringConfiguration:
-    """Monitoring configuration settings."""
+    """
+Monitoring configuration settings."""
     strategy: MonitoringStrategy = MonitoringStrategy.PROACTIVE
     mode: MonitoringMode = MonitoringMode.CONTINUOUS
     interval: int = 60  # seconds
@@ -112,31 +118,37 @@ class MonitorEngine(ABC):
         
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize the monitoring engine."""
+        """
+Initialize the monitoring engine."""
         pass
     
     @abstractmethod
     async def start_monitoring(self, targets: List[Any]) -> bool:
-        """Start monitoring operations."""
+        """
+Start monitoring operations."""
         pass
     
     @abstractmethod
     async def stop_monitoring(self) -> bool:
-        """Stop monitoring operations."""
+        """
+Stop monitoring operations."""
         pass
     
     @abstractmethod
     async def collect_metrics(self) -> MonitoringMetrics:
-        """Collect current monitoring metrics."""
+        """
+Collect current monitoring metrics."""
         pass
     
     @abstractmethod
     async def process_events(self, events: List[Any]) -> None:
-        """Process monitoring events."""
+        """
+Process monitoring events."""
         pass
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get current engine status and metrics."""
+        """
+Get current engine status and metrics."""
         return {
             "engine_id": self.engine_id,
             "status": self.status.value,
@@ -167,13 +179,15 @@ class MonitorEngine(ABC):
         return 0.0
     
     async def register_event_handler(self, event_type: str, handler: Callable) -> None:
-        """Register an event handler for specific event types."""
+        """
+Register an event handler for specific event types."""
         if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         self.event_handlers[event_type].append(handler)
     
     async def trigger_alert(self, alert_type: str, data: Dict[str, Any]) -> None:
-        """Trigger an alert with specified data."""
+        """
+Trigger an alert with specified data."""
         alert = {
             "id": str(uuid.uuid4()),
             "timestamp": datetime.utcnow(),
@@ -237,7 +251,8 @@ class MonitorEngine(ABC):
             self.monitoring_tasks.append(task)
     
     async def _periodic_monitoring_loop(self) -> None:
-        """Periodic monitoring loop."""
+        """
+Periodic monitoring loop."""
         while self.status == EngineStatus.RUNNING:
             try:
                 await self.update_metrics()
@@ -277,7 +292,8 @@ class IntelligentMonitorEngine(MonitorEngine):
         self.adaptive_thresholds: Dict[str, float] = {}
         
     async def initialize(self) -> bool:
-        """Initialize intelligent monitoring engine."""
+        """
+Initialize intelligent monitoring engine."""
         try:
             self.status = EngineStatus.INITIALIZING
             
@@ -304,12 +320,14 @@ class IntelligentMonitorEngine(MonitorEngine):
         pass
     
     async def _setup_adaptive_thresholds(self) -> None:
-        """Setup adaptive thresholds based on historical data."""
+        """
+Setup adaptive thresholds based on historical data."""
         # Implementation for adaptive threshold setup
         pass
     
     async def predict_anomalies(self, metrics: MonitoringMetrics) -> List[Dict[str, Any]]:
-        """Predict potential anomalies using ML models."""
+        """
+Predict potential anomalies using ML models."""
         predictions = []
         
         try:

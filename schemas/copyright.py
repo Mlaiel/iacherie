@@ -7,6 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
@@ -18,7 +19,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class CopyrightCreate(BaseSchema):
-    """Copyright registration request schema."""
+    """
+Copyright registration request schema."""
     
     content_id: UUID = Field(description="Content to register for copyright")
     copyright_holder_id: UUID = Field(description="Primary copyright holder")
@@ -305,7 +307,8 @@ class LicenseUsage(UUIDSchema, TimestampSchema):
 
 
 class RightsManagement(UUIDSchema, TimestampSchema):
-    """Comprehensive rights management schema."""
+    """
+Comprehensive rights management schema."""
     
     content_id: UUID
     rights_holder_id: UUID

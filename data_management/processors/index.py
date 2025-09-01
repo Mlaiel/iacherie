@@ -8,7 +8,7 @@ Responsibility: Point d'entrée principal pour tous les processeurs de données
 =====================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
 Contact obligatoire: mlaiel@live.de
@@ -17,6 +17,7 @@ ARCHITECTURE PROCESSORS:
 Base Processors → Specialized Processors → Async Versions → Factory Pattern → 
 Manager Registry → Configuration Hub → Performance Monitoring → Error Handling
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Type
@@ -41,7 +42,8 @@ from .distribution_processor import DistributionProcessor, AsyncDistributionProc
 
 
 class ProcessorRegistry:
-    """Registre central des processeurs"""
+    """
+Registre central des processeurs"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -99,7 +101,8 @@ class ProcessorRegistry:
         }
         
     def get_processor(self, processor_type: str, config: Dict[str, Any] = None, async_mode: bool = False) -> Union[BaseProcessor, AsyncBaseProcessor]:
-        """Récupère ou crée une instance de processeur"""
+        """
+Récupère ou crée une instance de processeur"""
         try:
             if async_mode:
                 processor_class = self.async_processors.get(processor_type)
@@ -133,7 +136,8 @@ class ProcessorRegistry:
         }
     
     def get_processor_info(self, processor_type: str) -> Dict[str, Any]:
-        """Récupère les informations d'un processeur"""
+        """
+Récupère les informations d'un processeur"""
         try:
             if processor_type not in self.sync_processors:
                 raise ValueError(f"Unknown processor type: {processor_type}")
@@ -182,7 +186,8 @@ class ProcessorRegistry:
         }
     
     def cleanup_inactive_processors(self):
-        """Nettoie les processeurs inactifs"""
+        """
+Nettoie les processeurs inactifs"""
         try:
             # Implémenter la logique de nettoyage si nécessaire
             self.logger.info("Processor cleanup completed")
@@ -198,15 +203,18 @@ class ProcessorFactory:
         self.logger = logging.getLogger(__name__)
     
     def create_processor(self, processor_type: str, config: Dict[str, Any] = None, async_mode: bool = False) -> Union[BaseProcessor, AsyncBaseProcessor]:
-        """Crée un processeur avec la configuration spécifiée"""
+        """
+Crée un processeur avec la configuration spécifiée"""
         return self.registry.get_processor(processor_type, config, async_mode)
     
     def create_processing_pipeline(self, pipeline_config: List[Dict[str, Any]]) -> 'ProcessingPipeline':
-        """Crée un pipeline de processeurs"""
+        """
+Crée un pipeline de processeurs"""
         return ProcessingPipeline(pipeline_config, self.registry)
     
     def batch_create_processors(self, processor_configs: Dict[str, Dict[str, Any]]) -> Dict[str, BaseProcessor]:
-        """Crée plusieurs processeurs en lot"""
+        """
+Crée plusieurs processeurs en lot"""
         processors = {}
         
         for processor_type, config in processor_configs.items():
@@ -230,7 +238,8 @@ class ProcessingPipeline:
         self._build_pipeline()
     
     def _build_pipeline(self):
-        """Construit le pipeline de processeurs"""
+        """
+Construit le pipeline de processeurs"""
         try:
             for step_config in self.pipeline_config:
                 processor_type = step_config.get('processor_type')
@@ -363,11 +372,13 @@ class ProcessorManager:
         return self.registry.get_processor(processor_type, config, async_mode)
     
     def create_pipeline(self, pipeline_config: List[Dict[str, Any]]) -> ProcessingPipeline:
-        """Crée un pipeline de traitement"""
+        """
+Crée un pipeline de traitement"""
         return self.factory.create_processing_pipeline(pipeline_config)
     
     def process_single(self, processor_type: str, input_data: Any, config: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Traite des données avec un seul processeur"""
+        """
+Traite des données avec un seul processeur"""
         try:
             processor = self.get_processor(processor_type, config)
             result = processor.process(input_data)
@@ -428,7 +439,8 @@ class ProcessorManager:
         return results
     
     async def process_batch_async(self, processor_type: str, input_batch: List[Any], config: Dict[str, Any] = None, max_concurrent: int = 5) -> List[Dict[str, Any]]:
-        """Traite un lot de données asynchrone avec concurrence limitée"""
+        """
+Traite un lot de données asynchrone avec concurrence limitée"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def process_item(index: int, input_data: Any):
@@ -451,7 +463,8 @@ class ProcessorManager:
         return [r if not isinstance(r, Exception) else {'error': str(r)} for r in results]
     
     def _track_processing_metrics(self, processor_type: str, result: Dict[str, Any]):
-        """Suit les métriques de traitement"""
+        """
+Suit les métriques de traitement"""
         try:
             if processor_type not in self.performance_tracker:
                 self.performance_tracker[processor_type] = {
@@ -486,7 +499,8 @@ class ProcessorManager:
         }
     
     def shutdown(self):
-        """Arrêt propre du manager"""
+        """
+Arrêt propre du manager"""
         try:
             self.registry.cleanup_inactive_processors()
             self.logger.info("ProcessorManager shutdown completed")
@@ -505,23 +519,28 @@ def get_processor(processor_type: str, config: Dict[str, Any] = None, async_mode
     return _global_manager.get_processor(processor_type, config, async_mode)
 
 def process_data(processor_type: str, input_data: Any, config: Dict[str, Any] = None) -> Dict[str, Any]:
-    """Fonction de convenance pour traiter des données"""
+    """
+Fonction de convenance pour traiter des données"""
     return _global_manager.process_single(processor_type, input_data, config)
 
 async def process_data_async(processor_type: str, input_data: Any, config: Dict[str, Any] = None) -> Dict[str, Any]:
-    """Fonction de convenance pour traiter des données asynchrone"""
+    """
+Fonction de convenance pour traiter des données asynchrone"""
     return await _global_manager.process_single_async(processor_type, input_data, config)
 
 def create_pipeline(pipeline_config: List[Dict[str, Any]]) -> ProcessingPipeline:
-    """Fonction de convenance pour créer un pipeline"""
+    """
+Fonction de convenance pour créer un pipeline"""
     return _global_manager.create_pipeline(pipeline_config)
 
 def get_available_processors() -> Dict[str, List[str]]:
-    """Fonction de convenance pour lister les processeurs"""
+    """
+Fonction de convenance pour lister les processeurs"""
     return _global_registry.list_available_processors()
 
 def get_system_status() -> Dict[str, Any]:
-    """Fonction de convenance pour le statut système"""
+    """
+Fonction de convenance pour le statut système"""
     return _global_manager.get_system_status()
 
 

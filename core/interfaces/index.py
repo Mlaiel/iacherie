@@ -4,8 +4,9 @@ This module provides utilities for interface discovery, validation,
 and registration within the IA Influencer Agent system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-© 2025 - All rights reserved. Unauthorized use prohibited.
+(c) 2025 - All rights reserved. Unauthorized use prohibited.
 """
+
 import inspect
 from typing import Dict, List, Type, Any, Optional
 from abc import ABC
@@ -27,7 +28,8 @@ from . import (
 
 
 class InterfaceRegistry:
-    """Registry for managing and discovering system interfaces."""
+    """
+Registry for managing and discovering system interfaces."""
     
     def __init__(self):
         self._interfaces: Dict[str, Type[ABC]] = {}
@@ -36,7 +38,8 @@ class InterfaceRegistry:
         self._register_all_interfaces()
     
     def _register_all_interfaces(self) -> None:
-        """Register all available interfaces from the module."""
+        """
+Register all available interfaces from the module."""
         interface_modules = [
             ("content", content_interfaces),
             ("ai", ai_interfaces),
@@ -68,20 +71,24 @@ class InterfaceRegistry:
                 self._implementation_registry[name] = []
     
     def get_interface(self, interface_name: str) -> Optional[Type[ABC]]:
-        """Get interface class by name."""
+        """
+Get interface class by name."""
         return self._interfaces.get(interface_name)
     
     def get_interfaces_by_category(self, category: str) -> List[Type[ABC]]:
-        """Get all interfaces in a specific category."""
+        """
+Get all interfaces in a specific category."""
         interface_names = self._interface_categories.get(category, [])
         return [self._interfaces[name] for name in interface_names]
     
     def get_all_interfaces(self) -> Dict[str, Type[ABC]]:
-        """Get all registered interfaces."""
+        """
+Get all registered interfaces."""
         return self._interfaces.copy()
     
     def get_categories(self) -> List[str]:
-        """Get all available interface categories."""
+        """
+Get all available interface categories."""
         return list(self._interface_categories.keys())
     
     def register_implementation(
@@ -89,7 +96,8 @@ class InterfaceRegistry:
         interface_name: str, 
         implementation_class: Type
     ) -> bool:
-        """Register an implementation for a specific interface."""
+        """
+Register an implementation for a specific interface."""
         if interface_name not in self._interfaces:
             return False
         
@@ -103,7 +111,8 @@ class InterfaceRegistry:
         return True
     
     def get_implementations(self, interface_name: str) -> List[Type]:
-        """Get all registered implementations for an interface."""
+        """
+Get all registered implementations for an interface."""
         return self._implementation_registry.get(interface_name, []).copy()
     
     def validate_implementation(
@@ -111,7 +120,8 @@ class InterfaceRegistry:
         interface_name: str, 
         implementation_class: Type
     ) -> Dict[str, Any]:
-        """Validate that a class properly implements an interface."""
+        """
+Validate that a class properly implements an interface."""
         if interface_name not in self._interfaces:
             return {
                 "valid": False,
@@ -208,27 +218,32 @@ def get_interface(interface_name: str) -> Optional[Type[ABC]]:
 
 
 def get_interfaces_by_category(category: str) -> List[Type[ABC]]:
-    """Get all interfaces in a specific category."""
+    """
+Get all interfaces in a specific category."""
     return interface_registry.get_interfaces_by_category(category)
 
 
 def validate_implementation(interface_name: str, implementation_class: Type) -> Dict[str, Any]:
-    """Validate that a class properly implements an interface."""
+    """
+Validate that a class properly implements an interface."""
     return interface_registry.validate_implementation(interface_name, implementation_class)
 
 
 def register_implementation(interface_name: str, implementation_class: Type) -> bool:
-    """Register an implementation for a specific interface."""
+    """
+Register an implementation for a specific interface."""
     return interface_registry.register_implementation(interface_name, implementation_class)
 
 
 def list_all_interfaces() -> Dict[str, Type[ABC]]:
-    """List all available interfaces."""
+    """
+List all available interfaces."""
     return interface_registry.get_all_interfaces()
 
 
 def get_interface_summary() -> Dict[str, Any]:
-    """Get comprehensive summary of all interfaces."""
+    """
+Get comprehensive summary of all interfaces."""
     return interface_registry.generate_interface_summary()
 
 

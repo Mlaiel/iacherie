@@ -15,6 +15,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -44,7 +45,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content that can be localized"""
+    """
+Types of content that can be localized"""
+
     DATETIME = "datetime"
     DATE = "date"
     TIME = "time"
@@ -67,6 +70,7 @@ class ContentType(Enum):
 
 class LocalizationFormat(Enum):
     """Localization format preferences"""
+
     SHORT = "short"
     MEDIUM = "medium"
     LONG = "long"
@@ -89,7 +93,8 @@ class LocalizationRequest:
 
 @dataclass
 class LocalizationResult:
-    """Result of content localization"""
+    """
+Result of content localization"""
     original_content: Any
     localized_content: str
     content_type: ContentType
@@ -102,13 +107,15 @@ class LocalizationResult:
 
 
 class DateTimeLocalizer:
-    """Specialized datetime localization"""
+    """
+Specialized datetime localization"""
     
     def __init__(self):
         self.format_patterns = self._initialize_format_patterns()
         
     def _initialize_format_patterns(self) -> Dict[str, Dict[str, str]]:
-        """Initialize cultural datetime format patterns"""
+        """
+Initialize cultural datetime format patterns"""
         return {
             "en_US": {
                 "short_date": "%m/%d/%Y",
@@ -367,7 +374,8 @@ class CurrencyLocalizer:
         self.currency_info = self._initialize_currency_info()
     
     def _initialize_currency_symbols(self) -> Dict[str, str]:
-        """Initialize currency symbol mappings"""
+        """
+Initialize currency symbol mappings"""
         return {
             "USD": "$",
             "EUR": "€",
@@ -491,7 +499,8 @@ class NumberLocalizer:
         cultural_context: Optional[CulturalContext] = None,
         format_preference: LocalizationFormat = LocalizationFormat.MEDIUM
     ) -> LocalizationResult:
-        """Localize number with cultural formatting"""
+        """
+Localize number with cultural formatting"""
         try:
             locale_str = self._get_locale_string(target_language, cultural_context)
             
@@ -606,7 +615,8 @@ class ContentLocalizer:
         self.unit_conversions = self._initialize_unit_conversions()
         
     def _initialize_unit_conversions(self) -> Dict[str, Dict[str, float]]:
-        """Initialize unit conversion factors"""
+        """
+Initialize unit conversion factors"""
         return {
             "temperature": {
                 "celsius_to_fahrenheit": lambda c: (c * 9/5) + 32,
@@ -836,7 +846,8 @@ class ContentLocalizer:
         return address
     
     def _adapt_french_address(self, address: str) -> str:
-        """Adapt address to French format"""
+        """
+Adapt address to French format"""
         # French format: Number rue/avenue Street, PLZ City
         import re
         
@@ -912,7 +923,8 @@ class FormatLocalizer:
         self,
         request: LocalizationRequest
     ) -> LocalizationResult:
-        """Localize content based on type"""
+        """
+Localize content based on type"""
         try:
             # Route to appropriate localizer
             if request.content_type == ContentType.DATETIME:
@@ -1060,7 +1072,8 @@ class LocalizationProcessor:
         self,
         request: LocalizationRequest
     ) -> LocalizationResult:
-        """Process single localization request"""
+        """
+Process single localization request"""
         try:
             self.processing_stats["requests_processed"] += 1
             result = await self.format_localizer.localize_content(request)

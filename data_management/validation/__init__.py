@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 MODULE VALIDATION DONNÉES COMPLÈTE
@@ -17,6 +17,7 @@ Système de validation enterprise multi-format et multi-créateur
 - IA fingerprinting et qualité avancée
 - Workflow orchestration complète
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 from pathlib import Path
@@ -94,7 +95,9 @@ from .workflow_validator import (
 )
 
 class ValidationLevel(Enum):
-    """Niveaux de validation"""
+    """
+Niveaux de validation"""
+
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -110,7 +113,8 @@ class ValidationResult:
     metadata: Dict[str, Any]
     
 class ValidationConfig:
-    """Configuration du système de validation"""
+    """
+Configuration du système de validation"""
     
     # Tailles maximales par type de créateur (en MB)
     MAX_FILE_SIZES = {
@@ -205,7 +209,8 @@ class ValidationConfig:
     }
 
 class ValidationManager:
-    """Gestionnaire principal du système de validation"""
+    """
+Gestionnaire principal du système de validation"""
     
     def __init__(self, config: Optional[ValidationConfig] = None):
         self.config = config or ValidationConfig()
@@ -227,7 +232,8 @@ class ValidationManager:
         content_type: str,
         level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationResult:
-        """Valide un fichier selon le type de créateur et niveau requis"""
+        """
+Valide un fichier selon le type de créateur et niveau requis"""
         
         # Vérification du cache
         cache_key = self._generate_cache_key(file_path, creator_type, content_type, level)
@@ -315,7 +321,8 @@ class ValidationManager:
         return results
     
     def get_validation_summary(self, results: Dict[str, ValidationResult]) -> Dict[str, Any]:
-        """Génère un résumé des validations"""
+        """
+Génère un résumé des validations"""
         total_files = len(results)
         valid_files = sum(1 for r in results.values() if r.is_valid)
         total_errors = sum(len(r.errors) for r in results.values())

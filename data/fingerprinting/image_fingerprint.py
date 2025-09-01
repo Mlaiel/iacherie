@@ -9,7 +9,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL WARNING ⚠️
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
@@ -22,6 +22,7 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
+
 import asyncio
 import cv2
 import numpy as np
@@ -65,6 +66,7 @@ except ImportError:
 
 class ImageFingerprintType(Enum):
     """Types of image fingerprints"""
+
     PERCEPTUAL_HASH = "perceptual_hash"
     FEATURE_DESCRIPTOR = "feature_descriptor"
     COLOR_HISTOGRAM = "color_histogram"
@@ -152,7 +154,8 @@ class ImageFingerprinter:
             self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for feature extraction"""
+        """
+Initialize AI models for feature extraction"""
         try:
             if TORCH_AVAILABLE:
                 # Load ResNet for feature extraction
@@ -960,7 +963,8 @@ class ImageFingerprinter:
         }
     
     async def close(self):
-        """Cleanup resources"""
+        """
+Cleanup resources"""
         try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)

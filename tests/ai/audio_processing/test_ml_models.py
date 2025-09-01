@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -23,8 +24,9 @@ Comprehensive testing for ML models and neural networks including:
 - Performance benchmarking
 
 Created by Expert Team: ML Engineer + AI Architect + Backend Senior
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -74,7 +76,8 @@ class TestMLModelManager:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
+        """
+Setup test environment before each test"""
         setup_test_environment()
         
         # Create temporary model directory
@@ -90,7 +93,8 @@ class TestMLModelManager:
             shutil.rmtree(self.temp_model_dir)
     
     def test_initialization(self):
-        """Test MLModelManager initialization"""
+        """
+Test MLModelManager initialization"""
         manager = MLModelManager(model_dir=self.temp_model_dir)
         assert manager is not None
         assert hasattr(manager, 'model_dir')
@@ -99,7 +103,8 @@ class TestMLModelManager:
         assert os.path.exists(self.temp_model_dir)
     
     def test_register_model(self):
-        """Test model registration"""
+        """
+Test model registration"""
         # Create simple test model
         test_model = AudioCNN1D(
             input_channels=1,
@@ -234,11 +239,13 @@ class TestAudioCNN1D:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_initialization(self):
-        """Test AudioCNN1D initialization"""
+        """
+Test AudioCNN1D initialization"""
         model = AudioCNN1D(
             input_channels=1,
             num_classes=10,
@@ -252,7 +259,8 @@ class TestAudioCNN1D:
         assert model.input_channels == 1
     
     def test_forward_pass(self):
-        """Test forward pass with various input sizes"""
+        """
+Test forward pass with various input sizes"""
         model = AudioCNN1D(input_channels=1, num_classes=5, sequence_length=1024)
         
         # Test different batch sizes
@@ -265,7 +273,8 @@ class TestAudioCNN1D:
             assert not torch.isinf(output).any()
     
     def test_different_input_channels(self):
-        """Test model with different input channels"""
+        """
+Test model with different input channels"""
         # Mono audio
         mono_model = AudioCNN1D(input_channels=1, num_classes=3)
         mono_input = torch.randn(2, 1, 1024)
@@ -279,7 +288,8 @@ class TestAudioCNN1D:
         assert stereo_output.shape == (2, 3)
     
     def test_gradient_flow(self):
-        """Test gradient computation"""
+        """
+Test gradient computation"""
         model = AudioCNN1D(input_channels=1, num_classes=3)
         input_tensor = torch.randn(4, 1, 1024, requires_grad=True)
         target = torch.randint(0, 3, (4,))
@@ -297,7 +307,8 @@ class TestAudioCNN1D:
             assert not torch.isnan(param.grad).any()
     
     def test_model_training_mode(self):
-        """Test training vs evaluation mode"""
+        """
+Test training vs evaluation mode"""
         model = AudioCNN1D(input_channels=1, num_classes=5)
         input_tensor = torch.randn(2, 1, 1024)
         
@@ -314,7 +325,8 @@ class TestAudioCNN1D:
         # Note: With dropout, outputs may differ between train/eval modes
     
     def test_parameter_count(self):
-        """Test parameter count is reasonable"""
+        """
+Test parameter count is reasonable"""
         model = AudioCNN1D(input_channels=1, num_classes=10)
         
         total_params = sum(p.numel() for p in model.parameters())
@@ -338,11 +350,13 @@ class TestAudioCNN2D:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_initialization(self):
-        """Test AudioCNN2D initialization"""
+        """
+Test AudioCNN2D initialization"""
         model = AudioCNN2D(
             input_channels=1,
             num_classes=8,
@@ -357,7 +371,8 @@ class TestAudioCNN2D:
         assert model.input_channels == 1
     
     def test_forward_pass_2d(self):
-        """Test forward pass with 2D inputs (spectrograms)"""
+        """
+Test forward pass with 2D inputs (spectrograms)"""
         model = AudioCNN2D(
             input_channels=1, 
             num_classes=6,
@@ -375,7 +390,8 @@ class TestAudioCNN2D:
         assert not torch.isinf(output).any()
     
     def test_variable_input_sizes(self):
-        """Test model with variable input sizes"""
+        """
+Test model with variable input sizes"""
         model = AudioCNN2D(input_channels=1, num_classes=4)
         
         # Test different spectrogram sizes
@@ -387,7 +403,8 @@ class TestAudioCNN2D:
             assert output.shape == (2, 4)
     
     def test_multi_channel_input(self):
-        """Test with multi-channel spectrograms"""
+        """
+Test with multi-channel spectrograms"""
         # Multi-channel model (e.g., for mel-spectrograms with different scales)
         model = AudioCNN2D(input_channels=3, num_classes=5)
         
@@ -398,7 +415,8 @@ class TestAudioCNN2D:
         assert not torch.isnan(output).any()
     
     def test_spatial_pooling(self):
-        """Test spatial pooling layers"""
+        """
+Test spatial pooling layers"""
         model = AudioCNN2D(input_channels=1, num_classes=3)
         
         # Large input to test pooling
@@ -422,11 +440,13 @@ class TestAudioLSTM:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_initialization(self):
-        """Test AudioLSTM initialization"""
+        """
+Test AudioLSTM initialization"""
         model = AudioLSTM(
             input_size=128,
             hidden_size=64,
@@ -443,7 +463,8 @@ class TestAudioLSTM:
         assert model.bidirectional is True
     
     def test_forward_pass_lstm(self):
-        """Test LSTM forward pass"""
+        """
+Test LSTM forward pass"""
         model = AudioLSTM(
             input_size=128,
             hidden_size=64,
@@ -461,7 +482,8 @@ class TestAudioLSTM:
         assert not torch.isinf(output).any()
     
     def test_bidirectional_lstm(self):
-        """Test bidirectional LSTM"""
+        """
+Test bidirectional LSTM"""
         # Unidirectional
         uni_model = AudioLSTM(
             input_size=64, hidden_size=32, num_classes=3, bidirectional=False
@@ -486,7 +508,8 @@ class TestAudioLSTM:
         assert bi_params > uni_params
     
     def test_variable_sequence_lengths(self):
-        """Test LSTM with variable sequence lengths"""
+        """
+Test LSTM with variable sequence lengths"""
         model = AudioLSTM(input_size=64, hidden_size=32, num_classes=4)
         
         # Test different sequence lengths
@@ -496,7 +519,8 @@ class TestAudioLSTM:
             assert output.shape == (2, 4)
     
     def test_lstm_hidden_state(self):
-        """Test LSTM hidden state handling"""
+        """
+Test LSTM hidden state handling"""
         model = AudioLSTM(input_size=32, hidden_size=16, num_classes=2)
         
         # Test with and without initial hidden state
@@ -514,7 +538,8 @@ class TestAudioLSTM:
         assert output1.shape == output2.shape == (3, 2)
     
     def test_lstm_gradient_flow(self):
-        """Test LSTM gradient flow"""
+        """
+Test LSTM gradient flow"""
         model = AudioLSTM(input_size=32, hidden_size=16, num_classes=3)
         input_tensor = torch.randn(2, 25, 32, requires_grad=True)
         target = torch.randint(0, 3, (2,))
@@ -544,11 +569,13 @@ class TestAudioTransformer:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
     
     def test_initialization(self):
-        """Test AudioTransformer initialization"""
+        """
+Test AudioTransformer initialization"""
         model = AudioTransformer(
             input_dim=128,
             model_dim=256,
@@ -566,7 +593,8 @@ class TestAudioTransformer:
         assert model.num_layers == 6
     
     def test_forward_pass_transformer(self):
-        """Test Transformer forward pass"""
+        """
+Test Transformer forward pass"""
         model = AudioTransformer(
             input_dim=64,
             model_dim=128,
@@ -586,7 +614,8 @@ class TestAudioTransformer:
         assert not torch.isinf(output).any()
     
     def test_attention_mechanisms(self):
-        """Test attention mechanisms"""
+        """
+Test attention mechanisms"""
         model = AudioTransformer(
             input_dim=32,
             model_dim=64,
@@ -607,7 +636,8 @@ class TestAudioTransformer:
             assert attention_weights is not None
     
     def test_positional_encoding(self):
-        """Test positional encoding"""
+        """
+Test positional encoding"""
         model = AudioTransformer(
             input_dim=64,
             model_dim=128,
@@ -623,7 +653,8 @@ class TestAudioTransformer:
             assert output.shape == (1, 4)
     
     def test_transformer_scalability(self):
-        """Test Transformer scalability"""
+        """
+Test Transformer scalability"""
         # Small model
         small_model = AudioTransformer(
             input_dim=32, model_dim=64, num_heads=2, num_layers=1, num_classes=3
@@ -646,10 +677,12 @@ class TestAudioTransformer:
 
 
 class TestModelConfig:
-    """Test ModelConfig data structure"""
+    """
+Test ModelConfig data structure"""
     
     def test_config_creation(self):
-        """Test ModelConfig creation"""
+        """
+Test ModelConfig creation"""
         config = ModelConfig(
             architecture=ModelArchitecture.CNN1D,
             input_dim=128,
@@ -665,7 +698,8 @@ class TestModelConfig:
         assert config.batch_size == 32
     
     def test_config_validation(self):
-        """Test config validation"""
+        """
+Test config validation"""
         # Valid config
         valid_config = ModelConfig(
             architecture=ModelArchitecture.LSTM,
@@ -686,10 +720,12 @@ class TestModelConfig:
 
 
 class TestPredictionResult:
-    """Test PredictionResult data structure"""
+    """
+Test PredictionResult data structure"""
     
     def test_prediction_result_creation(self):
-        """Test PredictionResult creation"""
+        """
+Test PredictionResult creation"""
         predictions = torch.softmax(torch.randn(1, 5), dim=1)
         
         result = PredictionResult(
@@ -705,7 +741,8 @@ class TestPredictionResult:
         assert len(result.class_probabilities) == 5
     
     def test_prediction_result_methods(self):
-        """Test PredictionResult utility methods"""
+        """
+Test PredictionResult utility methods"""
         predictions = torch.tensor([[0.1, 0.2, 0.6, 0.05, 0.05]])
         
         result = PredictionResult(
@@ -729,7 +766,8 @@ class TestMLIntegration:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
+        """
+Setup test environment"""
         setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         
@@ -743,7 +781,8 @@ class TestMLIntegration:
             shutil.rmtree(self.temp_model_dir)
     
     def test_complete_ml_workflow(self):
-        """Test complete ML workflow"""
+        """
+Test complete ML workflow"""
         # Initialize components
         processor = AudioProcessor()
         manager = MLModelManager(model_dir=self.temp_model_dir)

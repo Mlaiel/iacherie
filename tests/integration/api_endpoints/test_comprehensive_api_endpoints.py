@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive integration tests for API endpoints.
+"""
+Comprehensive integration tests for API endpoints.
 
 Tests all critical API endpoints with mocked responses to validate
 endpoint structure, authentication, validation, and error handling.
@@ -20,6 +22,7 @@ endpoint structure, authentication, validation, and error handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -51,21 +54,25 @@ class MockAPIClient:
         self.user_id: str = MOCK_USER_ID
         
     async def __aenter__(self):
-        """Async context manager entry."""
+        """
+Async context manager entry."""
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         pass
     
     async def authenticate(self, email: str = TEST_USER_EMAIL, password: str = TEST_USER_PASSWORD):
-        """Mock authentication and store auth token."""
+        """
+Mock authentication and store auth token."""
         # Simulate successful authentication
         self.auth_token = MOCK_AUTH_TOKEN
         return True
     
     async def register_user(self, email: str, password: str, **kwargs):
-        """Mock user registration."""
+        """
+Mock user registration."""
         return {
             "user_id": self.user_id,
             "email": email,
@@ -90,7 +97,8 @@ class MockAPIClient:
         return response
     
     async def get(self, endpoint: str, **kwargs):
-        """Mock authenticated GET request."""
+        """
+Mock authenticated GET request."""
         return self._handle_mock_request("GET", endpoint, **kwargs)
     
     async def post(self, endpoint: str, data: Any = None, **kwargs):
@@ -277,12 +285,14 @@ async def api_client():
 
 
 class TestAuthenticationEndpoints:
-    """Test authentication and user management endpoints."""
+    """
+Test authentication and user management endpoints."""
     
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_user_registration(self):
-        """Test user registration endpoint."""
+        """
+Test user registration endpoint."""
         async with MockAPIClient() as client:
             user_data = {
                 "email": f"newuser_{datetime.now().timestamp()}@example.com",
@@ -364,7 +374,8 @@ class TestContentManagementEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_upload(self):
-        """Test content upload endpoint."""
+        """
+Test content upload endpoint."""
         async with MockAPIClient() as client:
             await client.authenticate()
             
@@ -443,7 +454,8 @@ class TestFingerprintingEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_create_fingerprint(self, api_client):
-        """Test fingerprint creation endpoint."""
+        """
+Test fingerprint creation endpoint."""
         fingerprint_data = {
             "content_id": "test_content_123",
             "content_type": "audio",
@@ -494,7 +506,8 @@ class TestProtectionEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_enable_monitoring(self, api_client):
-        """Test content monitoring activation."""
+        """
+Test content monitoring activation."""
         monitoring_data = {
             "content_id": "test_content_123",
             "platforms": ["youtube", "soundcloud", "instagram", "tiktok"],
@@ -545,7 +558,8 @@ class TestAnalyticsEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_analytics(self, api_client):
-        """Test content analytics endpoint."""
+        """
+Test content analytics endpoint."""
         content_id = "test_content_123"
         response = await api_client.get(f"/analytics/content/{content_id}")
         
@@ -585,7 +599,8 @@ class TestCollaborationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_find_collaborators(self, api_client):
-        """Test collaborator matching endpoint."""
+        """
+Test collaborator matching endpoint."""
         search_criteria = {
             "creator_types": ["musician", "video_creator"],
             "genres": ["electronic", "pop"],
@@ -640,7 +655,8 @@ class TestMonetizationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_licensing_options(self, api_client):
-        """Test content licensing options."""
+        """
+Test content licensing options."""
         content_id = "test_content_123"
         response = await api_client.get(f"/monetization/licensing/{content_id}")
         
@@ -684,7 +700,8 @@ class TestErrorHandlingAndValidation:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_invalid_authentication(self):
-        """Test behavior with invalid authentication."""
+        """
+Test behavior with invalid authentication."""
         async with MockAPIClient() as client:
             # Don't authenticate - should fail for protected endpoints
             client.auth_token = None
@@ -741,7 +758,8 @@ class TestAPIPerformanceIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_concurrent_requests(self, api_client):
-        """Test handling of concurrent requests."""
+        """
+Test handling of concurrent requests."""
         import time
         
         async def make_request():
@@ -819,7 +837,8 @@ class TestFingerprintingEndpoints:
     
     @pytest.mark.asyncio
     async def test_upload_content_for_fingerprinting(self, api_client):
-        """Test uploading content for fingerprinting."""
+        """
+Test uploading content for fingerprinting."""
         # Create a temporary test file
         with tempfile.NamedTemporaryFile(suffix='.txt', delete=False) as f:
             f.write(b"This is test content for fingerprinting analysis.")
@@ -901,7 +920,8 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_create_payment_intent(self, api_client):
-        """Test creating a payment intent."""
+        """
+Test creating a payment intent."""
         payment_data = {
             "amount": 99.99,
             "currency": "USD",
@@ -981,7 +1001,8 @@ class TestCrawlerEndpoints:
     
     @pytest.mark.asyncio
     async def test_start_platform_monitoring(self, api_client):
-        """Test starting platform monitoring."""
+        """
+Test starting platform monitoring."""
         monitoring_data = {
             "platforms": ["spotify", "youtube", "instagram"],
             "search_terms": ["test artist", "test song"],
@@ -1031,7 +1052,8 @@ class TestAnalyticsEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_content_analytics(self, api_client):
-        """Test retrieving content analytics."""
+        """
+Test retrieving content analytics."""
         content_id = "content_analytics_test"
         
         response = await api_client.get(f"/analytics/content/{content_id}")
@@ -1081,7 +1103,8 @@ class TestCollaborationEndpoints:
     
     @pytest.mark.asyncio
     async def test_create_collaboration_request(self, api_client):
-        """Test creating a collaboration request."""
+        """
+Test creating a collaboration request."""
         collaboration_data = {
             "target_user_id": "creator_456",
             "collaboration_type": "music_collaboration",
@@ -1122,7 +1145,8 @@ class TestAPIDocumentationEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_api_documentation(self):
-        """Test retrieving API documentation."""
+        """
+Test retrieving API documentation."""
         client = MockAPIClient()
         response = await client.get("/docs/")
         
@@ -1146,7 +1170,8 @@ class TestErrorHandlingAndValidation:
     
     @pytest.mark.asyncio
     async def test_invalid_json_request(self, api_client):
-        """Test handling of invalid JSON requests."""
+        """
+Test handling of invalid JSON requests."""
         response = await api_client.post(
             "/fingerprinting/upload",
             data="invalid json"
@@ -1199,7 +1224,8 @@ class TestPerformanceAndLoad:
     
     @pytest.mark.asyncio
     async def test_concurrent_requests(self, api_client):
-        """Test handling concurrent requests."""
+        """
+Test handling concurrent requests."""
         async def make_request():
             response = await api_client.get("/user/profile")
             return response.status

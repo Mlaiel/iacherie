@@ -10,12 +10,13 @@ Ultra-advanced database version control for IA Influencer Agent platform:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This version control system is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class VersionStrategy(Enum):
-    """Database version control strategies"""
+    """
+Database version control strategies"""
+
     SEMANTIC = "semantic"        # Semantic versioning (x.y.z)
     TIMESTAMP = "timestamp"      # Timestamp-based versioning
     SEQUENTIAL = "sequential"    # Sequential numbering
@@ -47,6 +50,7 @@ class VersionStrategy(Enum):
 
 class VersionType(Enum):
     """Types of version changes"""
+
     MAJOR = "major"              # Breaking changes
     MINOR = "minor"              # Feature additions
     PATCH = "patch"              # Bug fixes
@@ -57,6 +61,7 @@ class VersionType(Enum):
 
 class VersionStatus(Enum):
     """Version status tracking"""
+
     DRAFT = "draft"              # In development
     PENDING = "pending"          # Ready for deployment
     ACTIVE = "active"            # Currently deployed
@@ -82,7 +87,8 @@ class VersionInfo:
 
 @dataclass
 class VersionBranch:
-    """Version branch information"""
+    """
+Version branch information"""
     branch_id: str
     branch_name: str
     parent_version: str
@@ -96,7 +102,8 @@ class VersionBranch:
 
 @dataclass
 class VersionConflict:
-    """Version conflict detection"""
+    """
+Version conflict detection"""
     conflict_id: str
     version_a: str
     version_b: str
@@ -108,7 +115,8 @@ class VersionConflict:
 
 @dataclass
 class VersionChangeSet:
-    """Set of changes in a version"""
+    """
+Set of changes in a version"""
     changeset_id: str
     version_id: str
     change_type: str  # schema, data, index, constraint
@@ -591,7 +599,8 @@ class VersionController:
         return None
         
     async def _store_version_info(self, version: VersionInfo) -> None:
-        """Store version information in database"""
+        """
+Store version information in database"""
         async with self._get_session() as session:
             try:
                 insert_query = text("""
@@ -629,7 +638,8 @@ class VersionController:
         return None
         
     def _calculate_changeset_checksum(self, changeset: VersionChangeSet) -> str:
-        """Calculate checksum for changeset"""
+        """
+Calculate checksum for changeset"""
         content = f"{changeset.sql_forward}{changeset.sql_backward}{changeset.target_object}"
         return hashlib.sha256(content.encode()).hexdigest()
         
@@ -662,57 +672,71 @@ class VersionController:
         
     # Placeholder methods for additional functionality
     async def _get_version_changesets(self, version_id: str) -> List[VersionChangeSet]:
-        """Get changesets for version"""
+        """
+Get changesets for version"""
         return []
         
     async def _detect_conflicts(self, changesets: List[VersionChangeSet]) -> List[VersionConflict]:
-        """Detect conflicts in changesets"""
+        """
+Detect conflicts in changesets"""
         return []
         
     async def _apply_changeset(self, session: Session, changeset: VersionChangeSet) -> None:
-        """Apply changeset to database"""
+        """
+Apply changeset to database"""
         pass
         
     async def _rollback_changeset(self, session: Session, changeset: VersionChangeSet) -> None:
-        """Rollback changeset from database"""
+        """
+Rollback changeset from database"""
         pass
         
     async def _update_version_status(self, version: VersionInfo) -> None:
-        """Update version status"""
+        """
+Update version status"""
         pass
         
     async def _record_version_application(self, version: VersionInfo) -> None:
-        """Record version application"""
+        """
+Record version application"""
         pass
         
     async def _rollback_to_version(self, version_number: str) -> None:
-        """Rollback to specific version"""
+        """
+Rollback to specific version"""
         pass
         
     async def _get_versions_between(self, start: str, end: str) -> List[VersionInfo]:
-        """Get versions between two version numbers"""
+        """
+Get versions between two version numbers"""
         return []
         
     async def _store_branch_info(self, branch: VersionBranch) -> None:
-        """Store branch information"""
+        """
+Store branch information"""
         pass
         
     async def _get_branch_info(self, branch_name: str) -> Optional[VersionBranch]:
-        """Get branch information"""
+        """
+Get branch information"""
         return None
         
     async def _detect_branch_conflicts(self, source: str, target: str) -> List[VersionConflict]:
-        """Detect conflicts between branches"""
+        """
+Detect conflicts between branches"""
         return []
         
     async def _get_branch_changesets(self, branch_name: str) -> List[VersionChangeSet]:
-        """Get changesets from branch"""
+        """
+Get changesets from branch"""
         return []
         
     async def _apply_changeset_to_branch(self, changeset: VersionChangeSet, branch: str) -> None:
-        """Apply changeset to branch"""
+        """
+Apply changeset to branch"""
         pass
         
     async def _update_branch_info(self, branch: VersionBranch) -> None:
-        """Update branch information"""
+        """
+Update branch information"""
         pass

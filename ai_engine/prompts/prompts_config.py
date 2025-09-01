@@ -10,12 +10,15 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
+
 from dataclasses import dataclass
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class PromptQualityLevel(Enum):
-    """Quality levels for prompt generation"""
+    """
+Quality levels for prompt generation"""
+
     BASIC = "basic"
     ADVANCED = "advanced" 
     PROFESSIONAL = "professional"
@@ -23,6 +26,7 @@ class PromptQualityLevel(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -31,6 +35,7 @@ class ContentFormat(Enum):
 
 class Platform(Enum):
     """Supported platforms"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"

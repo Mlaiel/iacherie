@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,9 @@ from pydantic import BaseModel, validator
 
 
 class DistributionStrategy(str, Enum):
-    """Distributed cache distribution strategies"""
+    """
+Distributed cache distribution strategies"""
+
     CONSISTENT_HASHING = "consistent_hashing"
     ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -38,6 +41,7 @@ class DistributionStrategy(str, Enum):
 
 class ReplicationMode(str, Enum):
     """Cache replication modes"""
+
     NONE = "none"  # No replication
     ASYNC = "async"  # Asynchronous replication
     SYNC = "sync"  # Synchronous replication
@@ -47,6 +51,7 @@ class ReplicationMode(str, Enum):
 
 class ConsistencyLevel(str, Enum):
     """Distributed cache consistency levels"""
+
     EVENTUAL = "eventual"  # Eventual consistency
     STRONG = "strong"  # Strong consistency
     CAUSAL = "causal"  # Causal consistency
@@ -56,6 +61,7 @@ class ConsistencyLevel(str, Enum):
 
 class FailoverPolicy(str, Enum):
     """Failover policies for distributed cache"""
+
     FAIL_FAST = "fail_fast"  # Return error immediately
     FAIL_SILENT = "fail_silent"  # Return None/empty
     RETRY = "retry"  # Retry on other nodes
@@ -105,7 +111,8 @@ class CacheNode:
 
 @dataclass
 class RegionConfig:
-    """Configuration for a cache region"""
+    """
+Configuration for a cache region"""
     name: str
     primary_nodes: List[str] = field(default_factory=list)
     replica_nodes: List[str] = field(default_factory=list)
@@ -232,7 +239,8 @@ class DistributedCacheConfig(BaseModel):
         self.nodes[node.id] = node
     
     def remove_node(self, node_id: str) -> bool:
-        """Remove node from cluster"""
+        """
+Remove node from cluster"""
         if node_id in self.nodes:
             del self.nodes[node_id]
             
@@ -247,15 +255,18 @@ class DistributedCacheConfig(BaseModel):
         return False
     
     def get_healthy_nodes(self) -> List[CacheNode]:
-        """Get list of healthy nodes"""
+        """
+Get list of healthy nodes"""
         return [node for node in self.nodes.values() if node.is_healthy]
     
     def get_nodes_by_region(self, region_name: str) -> List[CacheNode]:
-        """Get nodes in specific region"""
+        """
+Get nodes in specific region"""
         return [node for node in self.nodes.values() if node.region == region_name]
     
     def calculate_consistent_hash(self, key: str) -> List[CacheNode]:
-        """Calculate consistent hash ring for key distribution"""
+        """
+Calculate consistent hash ring for key distribution"""
         if self.distribution_strategy != DistributionStrategy.CONSISTENT_HASHING:
             return list(self.get_healthy_nodes())
         
@@ -317,7 +328,8 @@ class DistributedCacheConfig(BaseModel):
         return candidate_nodes[:self.read_quorum]
     
     def get_write_nodes(self, key: str, region: Optional[str] = None) -> List[CacheNode]:
-        """Get nodes for write operation"""
+        """
+Get nodes for write operation"""
         if region and region in self.regions:
             region_config = self.regions[region]
             nodes = region_config.get_write_nodes(self.nodes)
@@ -329,7 +341,8 @@ class DistributedCacheConfig(BaseModel):
         return candidate_nodes[:self.write_quorum]
     
     def select_nodes_by_load(self, candidate_nodes: List[CacheNode], count: int) -> List[CacheNode]:
-        """Select nodes based on load balancing"""
+        """
+Select nodes based on load balancing"""
         if not self.load_balancing_enabled or not candidate_nodes:
             return candidate_nodes[:count]
         
@@ -338,7 +351,8 @@ class DistributedCacheConfig(BaseModel):
         return sorted_nodes[:count]
     
     def _hash_key(self, key: str) -> int:
-        """Hash key using configured hash function"""
+        """
+Hash key using configured hash function"""
         if self.hash_function == "md5":
             return int(hashlib.md5(key.encode()).hexdigest(), 16)
         elif self.hash_function == "sha1":
@@ -391,12 +405,14 @@ class DistributedCacheManager:
         self.health_check_task = None
     
     async def start(self):
-        """Start distributed cache manager"""
+        """
+Start distributed cache manager"""
         if self.config.health_check_enabled:
             self.health_check_task = asyncio.create_task(self._health_check_loop())
     
     async def stop(self):
-        """Stop distributed cache manager"""
+        """
+Stop distributed cache manager"""
         if self.health_check_task:
             self.health_check_task.cancel()
             try:
@@ -405,7 +421,8 @@ class DistributedCacheManager:
                 pass
     
     async def get_distributed(self, key: str, region: Optional[str] = None) -> Optional[Any]:
-        """Get value from distributed cache"""
+        """
+Get value from distributed cache"""
         read_nodes = self.config.get_read_nodes(key, region)
         
         if not read_nodes:
@@ -429,7 +446,8 @@ class DistributedCacheManager:
     
     async def set_distributed(self, key: str, value: Any, ttl: Optional[int] = None, 
                             region: Optional[str] = None) -> bool:
-        """Set value in distributed cache"""
+        """
+Set value in distributed cache"""
         write_nodes = self.config.get_write_nodes(key, region)
         
         if not write_nodes:
@@ -443,7 +461,8 @@ class DistributedCacheManager:
             return await self._set_async(write_nodes, key, value, ttl)
     
     async def delete_distributed(self, key: str, region: Optional[str] = None) -> bool:
-        """Delete value from distributed cache"""
+        """
+Delete value from distributed cache"""
         nodes = self.config.get_write_nodes(key, region)
         
         if not nodes:
@@ -466,7 +485,8 @@ class DistributedCacheManager:
         return success_count > 0
     
     async def _set_sync(self, nodes: List[CacheNode], key: str, value: Any, ttl: Optional[int]) -> bool:
-        """Synchronous distributed set operation"""
+        """
+Synchronous distributed set operation"""
         tasks = []
         
         for node in nodes:
@@ -551,19 +571,22 @@ class DistributedCacheManager:
         return None
     
     async def _set_to_node(self, node: CacheNode, key: str, value: Any, ttl: Optional[int]) -> bool:
-        """Set value to specific node"""
+        """
+Set value to specific node"""
         # This would be implemented with actual cache client
         # Placeholder implementation
         return True
     
     async def _delete_from_node(self, node: CacheNode, key: str) -> bool:
-        """Delete value from specific node"""
+        """
+Delete value from specific node"""
         # This would be implemented with actual cache client
         # Placeholder implementation
         return True
     
     def _is_node_available(self, node: CacheNode) -> bool:
-        """Check if node is available for operations"""
+        """
+Check if node is available for operations"""
         if not node.is_healthy:
             return False
         
@@ -626,7 +649,8 @@ class DistributedCacheManager:
                 await asyncio.sleep(self.config.health_check_interval)
     
     async def _perform_health_checks(self):
-        """Perform health checks on all nodes"""
+        """
+Perform health checks on all nodes"""
         tasks = []
         
         for node in self.config.nodes.values():
@@ -644,13 +668,15 @@ class DistributedCacheManager:
                 self._update_node_health(node, False)
     
     async def _check_node_health(self, node: CacheNode) -> bool:
-        """Check health of specific node"""
+        """
+Check health of specific node"""
         # This would be implemented with actual health check logic
         # Placeholder implementation
         return True
     
     def _update_node_health(self, node: CacheNode, is_healthy: bool):
-        """Update node health status"""
+        """
+Update node health status"""
         node.last_health_check = time.time()
         
         if is_healthy and not node.is_healthy:

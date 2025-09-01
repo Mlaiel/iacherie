@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Integration Test: Multilingual Interface Switching
+"""
+Integration Test: Multilingual Interface Switching
 =================================================
 
 Tests the complete multilingual interface switching system including:
@@ -24,6 +26,7 @@ Tests the complete multilingual interface switching system including:
 
 Author: Integration Test Suite
 """
+
 import asyncio
 import pytest
 import sys
@@ -41,11 +44,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestMultilingualInterfaceSwitching:
-    """Integration tests for multilingual interface switching"""
+    """
+Integration tests for multilingual interface switching"""
     
     @pytest.fixture
     def supported_languages(self):
-        """List of supported languages for testing"""
+        """
+List of supported languages for testing"""
         return [
             {"code": "en", "name": "English", "native_name": "English", "region": "US"},
             {"code": "fr", "name": "French", "native_name": "Français", "region": "FR"},

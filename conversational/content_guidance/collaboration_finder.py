@@ -9,6 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -39,7 +40,9 @@ settings = get_settings()
 
 
 class CollaborationType(Enum):
-    """Types of creator collaborations."""
+    """
+Types of creator collaborations."""
+
     DUET = "duet"                    # TikTok duets, Instagram collaborations
     GUEST_APPEARANCE = "guest_appearance"  # Podcast/video guests
     JOINT_CONTENT = "joint_content"   # Shared content creation
@@ -54,6 +57,7 @@ class CollaborationType(Enum):
 
 class MatchingCriteria(Enum):
     """Criteria for creator matching."""
+
     AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_SIMILARITY = "content_similarity"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
@@ -66,6 +70,7 @@ class MatchingCriteria(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration opportunities."""
+
     POTENTIAL = "potential"
     RECOMMENDED = "recommended"
     CONTACTED = "contacted"
@@ -97,7 +102,8 @@ class CreatorProfile:
 
 @dataclass
 class MatchingScore:
-    """Detailed matching score between creators."""
+    """
+Detailed matching score between creators."""
     overall_score: float
     criteria_scores: Dict[MatchingCriteria, float]
     confidence_level: str
@@ -109,7 +115,8 @@ class MatchingScore:
 
 @dataclass
 class CollaborationOpportunity:
-    """Detailed collaboration opportunity."""
+    """
+Detailed collaboration opportunity."""
     opportunity_id: str
     creator_a: CreatorProfile
     creator_b: CreatorProfile
@@ -129,7 +136,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationCampaign:
-    """Multi-creator collaboration campaign."""
+    """
+Multi-creator collaboration campaign."""
     campaign_id: str
     campaign_name: str
     campaign_type: str
@@ -150,7 +158,8 @@ class InfluencerMatchingEngine:
     """
     
     def __init__(self):
-        """Initialize the influencer matching engine."""
+        """
+Initialize the influencer matching engine."""
         self.analytics_service = CreatorAnalyticsService()
         self.prediction_engine = CollaborationPredictionEngine()
         self.social_graph = SocialGraphAnalyzer()
@@ -249,7 +258,8 @@ class InfluencerMatchingEngine:
         }
     
     def _initialize_platform_preferences(self) -> Dict[str, Dict[CollaborationType, float]]:
-        """Initialize platform-specific collaboration preferences."""
+        """
+Initialize platform-specific collaboration preferences."""
         
         return {
             'tiktok': {
@@ -290,7 +300,8 @@ class InfluencerMatchingEngine:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models for creator matching."""
+        """
+Load historical data and train ML models for creator matching."""
         try:
             # Generate synthetic training data for creator matching
             n_samples = 15000
@@ -540,7 +551,8 @@ class InfluencerMatchingEngine:
     def _calculate_distribution_overlap(
         self, dist_a: Dict[str, float], dist_b: Dict[str, float]
     ) -> float:
-        """Calculate overlap between two probability distributions."""
+        """
+Calculate overlap between two probability distributions."""
         
         if not dist_a or not dist_b:
             return 0
@@ -560,7 +572,8 @@ class InfluencerMatchingEngine:
     def _calculate_content_similarity(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate content similarity between two creators."""
+        """
+Calculate content similarity between two creators."""
         
         # Content category similarity
         categories_a = set(creator_a.content_categories)
@@ -621,7 +634,8 @@ class InfluencerMatchingEngine:
     def _calculate_engagement_compatibility(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate engagement rate compatibility between creators."""
+        """
+Calculate engagement rate compatibility between creators."""
         
         # Get engagement rates for common platforms
         common_platforms = set(creator_a.platforms) & set(creator_b.platforms)
@@ -648,7 +662,8 @@ class InfluencerMatchingEngine:
     def _calculate_brand_alignment(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate brand alignment between creators."""
+        """
+Calculate brand alignment between creators."""
         
         # Check for common brand partnerships
         brands_a = set(creator_a.brand_partnerships)
@@ -683,7 +698,8 @@ class InfluencerMatchingEngine:
     def _calculate_geographic_proximity(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate geographic proximity score."""
+        """
+Calculate geographic proximity score."""
         
         location_a = creator_a.location
         location_b = creator_b.location
@@ -712,7 +728,8 @@ class InfluencerMatchingEngine:
     def _calculate_complementary_skills(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate complementary skills score."""
+        """
+Calculate complementary skills score."""
         
         # Analyze content categories for complementarity
         categories_a = set(creator_a.content_categories)
@@ -752,7 +769,8 @@ class InfluencerMatchingEngine:
     def _calculate_mutual_benefit(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate mutual benefit potential."""
+        """
+Calculate mutual benefit potential."""
         
         # Analyze potential benefits for each creator
         benefit_a = self._calculate_individual_benefit(creator_a, creator_b)
@@ -765,7 +783,8 @@ class InfluencerMatchingEngine:
     def _calculate_individual_benefit(
         self, beneficiary: CreatorProfile, partner: CreatorProfile
     ) -> float:
-        """Calculate benefit for individual creator from collaboration."""
+        """
+Calculate benefit for individual creator from collaboration."""
         
         benefits = []
         
@@ -801,7 +820,8 @@ class InfluencerMatchingEngine:
     def _generate_matching_explanations(
         self, criteria_scores: Dict[MatchingCriteria, float], overall_score: float
     ) -> List[str]:
-        """Generate human-readable explanations for matching scores."""
+        """
+Generate human-readable explanations for matching scores."""
         
         explanations = []
         
@@ -890,7 +910,8 @@ class InfluencerMatchingEngine:
         candidate: CreatorProfile,
         preferred_types: List[CollaborationType] = None
     ) -> List[CollaborationType]:
-        """Determine best collaboration types for a creator pair."""
+        """
+Determine best collaboration types for a creator pair."""
         
         # Get recommended types
         recommended = self._recommend_collaboration_types(target_creator, candidate, {})
@@ -908,7 +929,8 @@ class InfluencerMatchingEngine:
         collaboration_type: CollaborationType,
         matching_score: MatchingScore
     ) -> CollaborationOpportunity:
-        """Generate detailed collaboration opportunity."""
+        """
+Generate detailed collaboration opportunity."""
         
         # Calculate estimated reach
         reach_a = sum(creator_a.audience_size.values())
@@ -1177,7 +1199,8 @@ class CollaborationFinder:
     """
     
     def __init__(self):
-        """Initialize the collaboration finder."""
+        """
+Initialize the collaboration finder."""
         self.matching_engine = InfluencerMatchingEngine()
         self.analytics_service = CreatorAnalyticsService()
         

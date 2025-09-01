@@ -8,6 +8,7 @@ Addresses the requirement: "Base de données - schémas et migrations"
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import os
 import sys
 import subprocess
@@ -29,7 +30,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DatabaseValidator:
-    """Validates database schemas and migration configurations"""
+    """
+Validates database schemas and migration configurations"""
     
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
@@ -345,7 +347,8 @@ echo "🎉 Database migration test completed!"
         return script_content
     
     def check_required_packages(self) -> Tuple[bool, List[str]]:
-        """Check if required database packages are available"""
+        """
+Check if required database packages are available"""
         issues = []
         
         required_packages = [
@@ -375,9 +378,11 @@ echo "🎉 Database migration test completed!"
         if self.schema_file.exists():
             return
         
-        basic_schema = '''"""Basic Database Schema for Ainflue Platform
+        basic_schema = '''"""
+Basic Database Schema for Ainflue Platform
 Generated automatically for testing purposes
 """
+
 from sqlalchemy import text
 import asyncio
 import logging
@@ -385,7 +390,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 async def create_tables():
-    """Create basic database tables"""
+    """
+Create basic database tables"""
     try:
         # This is a placeholder - implement actual database connection
         logger.info("Creating database tables...")

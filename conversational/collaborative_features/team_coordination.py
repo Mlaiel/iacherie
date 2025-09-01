@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class TeamRole(Enum):
-    """Professional team roles for content creation"""
+    """
+Professional team roles for content creation"""
+
     TEAM_LEAD = "team_lead"
     CONTENT_CREATOR = "content_creator"
     EDITOR = "editor"
@@ -52,6 +55,7 @@ class TeamRole(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration invitation and participation status"""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -80,7 +84,8 @@ class TeamMember:
     collaboration_rating: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert team member to dictionary representation"""
+        """
+Convert team member to dictionary representation"""
         return {
             "user_id": self.user_id,
             "username": self.username,
@@ -117,12 +122,14 @@ class CollaborationInvite:
     expires_at: datetime
     
     def is_expired(self) -> bool:
-        """Check if invitation has expired"""
+        """
+Check if invitation has expired"""
         return datetime.utcnow() > self.expires_at
 
 
 class TeamManager:
-    """Advanced team management for collaborative content creation"""
+    """
+Advanced team management for collaborative content creation"""
     
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
@@ -140,7 +147,8 @@ class TeamManager:
         required_skills: List[str],
         max_members: int = 10
     ) -> Dict[str, Any]:
-        """Create new collaborative team for content project"""
+        """
+Create new collaborative team for content project"""
         try:
             team_id = str(uuid.uuid4())
             
@@ -333,7 +341,8 @@ class CollaboratorInviteService:
         compensation_details: Dict[str, Any],
         deadline: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Send professional collaboration invitation"""
+        """
+Send professional collaboration invitation"""
         try:
             invite_id = str(uuid.uuid4())
             expires_at = deadline or (datetime.utcnow() + timedelta(days=7))
@@ -504,7 +513,8 @@ class RolePermissionManager:
         new_role: TeamRole,
         assigned_by: str
     ) -> Dict[str, Any]:
-        """Assign new role to team member with permission validation"""
+        """
+Assign new role to team member with permission validation"""
         try:
             # Validate assignor permissions
             if not await self._can_assign_roles(team_id, assigned_by):
@@ -559,7 +569,8 @@ class RolePermissionManager:
 
 
 class TeamWorkflowOrchestrator:
-    """Advanced workflow orchestration for collaborative teams"""
+    """
+Advanced workflow orchestration for collaborative teams"""
     
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
@@ -573,7 +584,8 @@ class TeamWorkflowOrchestrator:
         dependencies: Dict[str, List[str]],
         created_by: str
     ) -> Dict[str, Any]:
-        """Create collaborative workflow for team projects"""
+        """
+Create collaborative workflow for team projects"""
         try:
             workflow_id = str(uuid.uuid4())
             
@@ -667,7 +679,8 @@ class CollaborationHub:
         self, 
         user_id: str
     ) -> Dict[str, Any]:
-        """Get comprehensive collaboration dashboard for user"""
+        """
+Get comprehensive collaboration dashboard for user"""
         try:
             # Get user's teams
             user_teams = await self._get_user_teams(user_id)

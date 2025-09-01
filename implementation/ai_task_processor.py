@@ -5,6 +5,7 @@ for the Ainflue platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 import json
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class TaskType(Enum):
-    """Available AI task types"""
+    """
+Available AI task types"""
+
     CONTENT_ANALYSIS = "content_analysis"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     SIMILARITY_DETECTION = "similarity_detection"
@@ -36,6 +39,7 @@ class TaskType(Enum):
 
 class TaskStatus(Enum):
     """Task execution status"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -45,6 +49,7 @@ class TaskStatus(Enum):
 
 class TaskPriority(Enum):
     """Task priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -65,7 +70,8 @@ class TaskContext:
 
 @dataclass
 class TaskResult:
-    """Task execution result"""
+    """
+Task execution result"""
     task_id: str
     task_type: TaskType
     status: TaskStatus
@@ -79,7 +85,8 @@ class TaskResult:
 
 @dataclass
 class AITask:
-    """AI task definition"""
+    """
+AI task definition"""
     task_id: str
     task_type: TaskType
     context: TaskContext
@@ -259,7 +266,8 @@ class AITaskProcessor:
             asyncio.create_task(self._execute_task(task))
     
     async def _execute_task(self, task: AITask):
-        """Execute individual task"""
+        """
+Execute individual task"""
         start_time = datetime.utcnow()
         
         try:

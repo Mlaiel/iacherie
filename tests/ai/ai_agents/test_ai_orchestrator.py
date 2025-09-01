@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Ultra-Professional AI Orchestrator Testing Suite
+"""
+Ultra-Professional AI Orchestrator Testing Suite
 Advanced Testing for AI Agent Orchestration, Coordination & Management
 
 This module provides comprehensive testing for AI-specific orchestration
@@ -20,7 +22,7 @@ including intelligent agent coordination, ML model orchestration,
 neural network ensemble management, and AI workflow optimization.
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -32,6 +34,7 @@ AI Agent Orchestration → Intelligent Coordination → ML Model Management
 → Neural Network Ensemble → Performance Optimization → Resource Allocation
 → Real-time Decision Making → Autonomous System Management
 """
+
 import pytest
 import sys
 import os
@@ -100,7 +103,9 @@ logger = logging.getLogger(__name__)
 
 # AI Orchestration Test Data Classes
 class AIAgentType(Enum):
-    """Types of AI agents."""
+    """
+Types of AI agents."""
+
     CONTENT_GENERATION = "content_generation"
     COMPUTER_VISION = "computer_vision"
     NATURAL_LANGUAGE = "natural_language"
@@ -112,6 +117,7 @@ class AIAgentType(Enum):
 
 class ModelType(Enum):
     """Types of ML models."""
+
     TRANSFORMER = "transformer"
     CNN = "cnn"
     RNN = "rnn"
@@ -123,6 +129,7 @@ class ModelType(Enum):
 
 class ResourceType(Enum):
     """Types of computational resources."""
+
     CPU = "cpu"
     GPU = "gpu"
     TPU = "tpu"
@@ -148,7 +155,8 @@ class AIAgentConfig:
 
 @dataclass
 class OrchestrationMetrics:
-    """Metrics for orchestration performance."""
+    """
+Metrics for orchestration performance."""
     total_agents: int = 0
     active_agents: int = 0
     resource_utilization: Dict[ResourceType, float] = field(default_factory=dict)
@@ -169,7 +177,8 @@ class TestAIOrchestrator:
     
     @pytest.fixture
     async def ai_config(self) -> AIConfig:
-        """Create AI configuration for testing."""
+        """
+Create AI configuration for testing."""
         return AIConfig(
             max_agents=50,
             gpu_memory_limit=16000,  # 16GB
@@ -185,7 +194,8 @@ class TestAIOrchestrator:
     
     @pytest.fixture
     async def ai_orchestrator(self, ai_config: AIConfig) -> AIOrchestrator:
-        """Create AI orchestrator for testing."""
+        """
+Create AI orchestrator for testing."""
         orchestrator = AIOrchestrator(ai_config)
         await orchestrator.initialize()
         yield orchestrator
@@ -193,7 +203,8 @@ class TestAIOrchestrator:
     
     @pytest.fixture
     def sample_ai_agents(self) -> List[AIAgentConfig]:
-        """Create sample AI agent configurations."""
+        """
+Create sample AI agent configurations."""
         return [
             AIAgentConfig(
                 agent_id="content_gen_001",
@@ -263,7 +274,8 @@ class TestAIAgentCoordination:
     
     @pytest.mark.asyncio
     async def test_intelligent_agent_registration(self, ai_orchestrator: AIOrchestrator, sample_ai_agents: List[AIAgentConfig]):
-        """Test intelligent AI agent registration with resource optimization."""
+        """
+Test intelligent AI agent registration with resource optimization."""
         coordinator = ai_orchestrator.get_coordinator()
         
         # Test registration of multiple AI agents
@@ -461,7 +473,8 @@ class TestAIResourceManagement:
     
     @pytest.mark.asyncio
     async def test_intelligent_resource_allocation(self, ai_orchestrator: AIOrchestrator):
-        """Test intelligent resource allocation with AI optimization."""
+        """
+Test intelligent resource allocation with AI optimization."""
         resource_manager = ai_orchestrator.get_resource_manager()
         
         # Test GPU memory allocation optimization
@@ -569,7 +582,8 @@ class TestAIPerformanceMonitoring:
     
     @pytest.mark.asyncio
     async def test_real_time_performance_monitoring(self, ai_orchestrator: AIOrchestrator):
-        """Test real-time performance monitoring with AI analytics."""
+        """
+Test real-time performance monitoring with AI analytics."""
         performance_monitor = ai_orchestrator.get_performance_monitor()
         
         # Start performance monitoring
@@ -679,7 +693,8 @@ class TestAIDecisionEngine:
     
     @pytest.mark.asyncio
     async def test_intelligent_decision_making(self, ai_orchestrator: AIOrchestrator):
-        """Test intelligent decision making with AI-driven optimization."""
+        """
+Test intelligent decision making with AI-driven optimization."""
         decision_engine = ai_orchestrator.get_decision_engine()
         
         # Test complex decision scenario
@@ -848,7 +863,8 @@ class TestAIOrchestrationIntegration:
     
     @pytest.mark.asyncio
     async def test_end_to_end_orchestration(self, ai_orchestrator: AIOrchestrator, sample_ai_agents: List[AIAgentConfig]):
-        """Test complete end-to-end AI orchestration scenario."""
+        """
+Test complete end-to-end AI orchestration scenario."""
         # Initialize complete orchestration system
         assert await ai_orchestrator.initialize_complete_system()
         
@@ -996,7 +1012,8 @@ def generate_test_metrics() -> OrchestrationMetrics:
     )
 
 def assert_orchestration_quality(result: Any, expected_quality: Dict[str, Any]) -> None:
-    """Assert orchestration result meets quality requirements."""
+    """
+Assert orchestration result meets quality requirements."""
     if "min_accuracy" in expected_quality:
         assert result.accuracy >= expected_quality["min_accuracy"]
     if "max_latency" in expected_quality:

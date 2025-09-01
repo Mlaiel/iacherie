@@ -13,6 +13,7 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -43,7 +44,9 @@ DetectorFactory.seed = 0
 logger = logging.getLogger(__name__)
 
 class TextFormat(Enum):
-    """Supported text formats with processing capabilities"""
+    """
+Supported text formats with processing capabilities"""
+
     TXT = {"ext": ".txt", "structured": False, "encoding": "utf-8", "metadata": False}
     MD = {"ext": ".md", "structured": True, "encoding": "utf-8", "metadata": True}
     PDF = {"ext": ".pdf", "structured": True, "encoding": "utf-8", "metadata": True}
@@ -55,6 +58,7 @@ class TextFormat(Enum):
 
 class TextContentType(Enum):
     """Text content classification types"""
+
     ARTICLE = "article"
     BLOG_POST = "blog_post"
     NEWS = "news"
@@ -76,6 +80,7 @@ class TextContentType(Enum):
 
 class TextGenre(Enum):
     """Text genre classifications"""
+
     INFORMATIVE = "informative"
     PERSUASIVE = "persuasive"
     NARRATIVE = "narrative"
@@ -161,7 +166,8 @@ class TextMetadata:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint for content identification and protection"""
+    """
+Text fingerprint for content identification and protection"""
     content_id: str
     primary_hash: str
     semantic_hash: str

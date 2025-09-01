@@ -18,6 +18,7 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection security levels"""
+    """
+Content protection security levels"""
+
     PUBLIC = "public"                    # Basic protection
     STANDARD = "standard"                # Standard copyright protection
     PREMIUM = "premium"                  # Enhanced protection with monitoring
@@ -39,6 +42,7 @@ class ProtectionLevel(Enum):
 
 class FingerprintType(Enum):
     """Types of content fingerprinting"""
+
     AUDIO_SPECTRAL = "audio_spectral"              # Spectral analysis fingerprinting
     AUDIO_PERCEPTUAL = "audio_perceptual"          # Perceptual hash fingerprinting
     AUDIO_CHROMAPRINT = "audio_chromaprint"        # Chromaprint algorithm
@@ -49,6 +53,7 @@ class FingerprintType(Enum):
 
 class DetectionMethod(Enum):
     """Content detection methods"""
+
     REAL_TIME_MONITORING = "real_time_monitoring"
     BATCH_SCANNING = "batch_scanning"
     CROWD_SOURCED_REPORTING = "crowd_sourced_reporting"
@@ -60,6 +65,7 @@ class DetectionMethod(Enum):
 
 class EnforcementAction(Enum):
     """Copyright enforcement actions"""
+
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     CONTENT_CLAIMING = "content_claiming"
@@ -72,6 +78,7 @@ class EnforcementAction(Enum):
 
 class WatermarkType(Enum):
     """Digital watermarking types"""
+
     INAUDIBLE_WATERMARK = "inaudible_watermark"
     SPECTRAL_WATERMARK = "spectral_watermark"
     STEGANOGRAPHIC = "steganographic"
@@ -330,7 +337,8 @@ class ContentProtectionConfig:
         self.audit_logging_enabled = True
     
     def _initialize_protection_profiles(self) -> Dict[str, ProtectionProfile]:
-        """Initialize predefined protection profiles"""
+        """
+Initialize predefined protection profiles"""
         profiles = {}
         
         # Public/Basic Protection Profile
@@ -602,7 +610,8 @@ class ContentProtectionConfig:
         return self.platform_specific_configs.get(platform_key, {})
     
     def validate_protection_setup(self, profile_name: str, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate protection setup for content"""
+        """
+Validate protection setup for content"""
         profile = self.get_protection_profile(profile_name)
         
         validation_results = {
@@ -748,9 +757,11 @@ def get_protection_profile(profile_name: str) -> ProtectionProfile:
     return content_protection_config.get_protection_profile(profile_name)
 
 def validate_protection_setup(profile_name: str, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate protection setup for content"""
+    """
+Validate protection setup for content"""
     return content_protection_config.validate_protection_setup(profile_name, content_metadata)
 
 def get_protection_recommendations(content_type: str, creator_tier: str, budget_level: str) -> Dict[str, Any]:
-    """Get personalized protection recommendations"""
+    """
+Get personalized protection recommendations"""
     return content_protection_config.get_protection_recommendations(content_type, creator_tier, budget_level)

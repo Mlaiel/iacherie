@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -41,7 +42,9 @@ logger = logging.getLogger(__name__)
 
 
 class TranscodingQuality(Enum):
-    """Transcoding quality levels"""
+    """
+Transcoding quality levels"""
+
     ULTRA_HIGH = "ultra_high"
     HIGH = "high"
     MEDIUM = "medium"
@@ -78,6 +81,7 @@ class OutputFormat(Enum):
 
 class TranscodingPreset(Enum):
     """Predefined transcoding presets"""
+
     WEB_OPTIMIZED = "web_optimized"
     MOBILE_FRIENDLY = "mobile_friendly"
     STREAMING_4K = "streaming_4k"
@@ -108,7 +112,8 @@ class TranscodingProfile:
 
 @dataclass
 class TranscodingJob:
-    """Transcoding job configuration"""
+    """
+Transcoding job configuration"""
     job_id: str
     input_path: str
     output_path: str
@@ -152,7 +157,8 @@ class MultimediaTranscoder:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia transcoder"""
+        """
+Initialize multimedia transcoder"""
         self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
@@ -529,7 +535,8 @@ class MultimediaTranscoder:
         job.progress = 100.0
     
     async def _calculate_quality_metrics(self, job: TranscodingJob) -> Dict[str, Any]:
-        """Calculate quality metrics for transcoded content"""
+        """
+Calculate quality metrics for transcoded content"""
         # This would implement actual quality measurement algorithms
         # For now, return simulated metrics
         
@@ -617,7 +624,8 @@ class MultimediaTranscoder:
         return None
     
     def cancel_job(self, job_id: str) -> bool:
-        """Cancel transcoding job"""
+        """
+Cancel transcoding job"""
         # Remove from queue
         for job in self.job_queue:
             if job.job_id == job_id:
@@ -628,7 +636,8 @@ class MultimediaTranscoder:
         return False
     
     def add_custom_profile(self, profile: TranscodingProfile):
-        """Add custom transcoding profile"""
+        """
+Add custom transcoding profile"""
         self.profiles[profile.name] = profile
         logger.info(f"Added custom transcoding profile: {profile.name}")
     
@@ -640,7 +649,8 @@ class MultimediaTranscoder:
         }
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get transcoding statistics"""
+        """
+Get transcoding statistics"""
         stats = self.stats.copy()
         stats.update({
             'active_jobs': len(self.active_jobs),
@@ -650,7 +660,8 @@ class MultimediaTranscoder:
         return stats
     
     def cleanup_completed_jobs(self, max_age_hours: int = 24):
-        """Clean up old completed jobs"""
+        """
+Clean up old completed jobs"""
         cutoff_time = datetime.now(timezone.utc).timestamp() - (max_age_hours * 3600)
         
         to_remove = []

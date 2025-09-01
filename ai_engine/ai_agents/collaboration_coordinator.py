@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import logging
@@ -28,7 +29,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
+    """
+Types of collaboration"""
+
     CROSS_PROMOTION = "cross_promotion"
     CONTENT_CREATION = "content_creation"
     MUSIC_COLLABORATION = "music_collaboration"
@@ -43,6 +46,7 @@ class CollaborationType(Enum):
 
 class ProjectStatus(Enum):
     """Project status states"""
+
     MATCHING = "matching"
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
@@ -94,7 +98,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProject:
-    """Active collaboration project"""
+    """
+Active collaboration project"""
     project_id: str
     project_name: str
     collaboration_type: CollaborationType
@@ -115,7 +120,8 @@ class CollaborationProject:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal"""
+    """
+Collaboration proposal"""
     proposal_id: str
     proposer_id: str
     proposed_to_ids: List[str]
@@ -631,7 +637,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         creator_id: str, 
         collaboration_type: Optional[CollaborationType]
     ) -> Dict[str, CreatorProfile]:
-        """Get potential collaborators for a creator"""
+        """
+Get potential collaborators for a creator"""
         all_creators = await self.creator_analyzer.get_all_active_creators()
         potential_collaborators = {}
         
@@ -650,7 +657,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate compatibility score between two creators"""
+        """
+Calculate compatibility score between two creators"""
         try:
             scores = {}
             
@@ -710,7 +718,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return (platform_overlap + demographic_score) / 2
 
     def _calculate_range_overlap(self, range1: List[int], range2: List[int]) -> float:
-        """Calculate overlap between two ranges"""
+        """
+Calculate overlap between two ranges"""
         if len(range1) != 2 or len(range2) != 2:
             return 0.5
         
@@ -729,7 +738,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return overlap_size / total_range if total_range > 0 else 0.0
 
     async def _calculate_style_similarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate content style similarity"""
+        """
+Calculate content style similarity"""
         styles1 = set(creator1.content_style)
         styles2 = set(creator2.content_style)
         
@@ -742,7 +752,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return intersection / union if union > 0 else 0.0
 
     async def _calculate_engagement_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate engagement rate compatibility"""
+        """
+Calculate engagement rate compatibility"""
         # Get average engagement rates
         avg_engagement1 = np.mean(list(creator1.engagement_rates.values())) if creator1.engagement_rates else 0.05
         avg_engagement2 = np.mean(list(creator2.engagement_rates.values())) if creator2.engagement_rates else 0.05
@@ -752,7 +763,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return ratio
 
     async def _calculate_collaboration_history_score(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate score based on collaboration history"""
+        """
+Calculate score based on collaboration history"""
         # Check if they've collaborated before
         if creator2.user_id in creator1.collaboration_history:
             return 0.9  # High score for proven compatibility
@@ -766,7 +778,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return min(len(mutual_collaborators) * 0.1, 0.8)
 
     async def _calculate_brand_alignment(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate brand alignment score"""
+        """
+Calculate brand alignment score"""
         # Use brand safety scores
         safety_alignment = 1.0 - abs(creator1.brand_safety_score - creator2.brand_safety_score)
         
@@ -776,7 +789,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return (safety_alignment + type_compatibility) / 2
 
     async def _calculate_skill_complementarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate skill complementarity score"""
+        """
+Calculate skill complementarity score"""
         skills1 = set(creator1.skills)
         skills2 = set(creator2.skills)
         
@@ -791,7 +805,8 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
         return complementarity
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle collaboration task"""
+        """
+Check if agent can handle collaboration task"""
         supported_tasks = [
             "find_collaboration_matches",
             "create_collaboration_proposal",

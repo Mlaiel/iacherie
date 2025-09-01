@@ -25,6 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
+
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -42,7 +43,9 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class AuditEventType(Enum):
-    """Audit event type classifications"""
+    """
+Audit event type classifications"""
+
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
@@ -60,6 +63,7 @@ class AuditEventType(Enum):
 
 class AuditEventSeverity(Enum):
     """Audit event severity levels"""
+
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -68,6 +72,7 @@ class AuditEventSeverity(Enum):
 
 class AuditStatus(Enum):
     """Audit record status"""
+
     ACTIVE = "active"
     ARCHIVED = "archived"
     UNDER_INVESTIGATION = "under_investigation"
@@ -76,6 +81,7 @@ class AuditStatus(Enum):
 
 class AuditEventSource(Enum):
     """Source of audit events"""
+
     WEB_APPLICATION = "web_application"
     MOBILE_APPLICATION = "mobile_application"
     API_GATEWAY = "api_gateway"
@@ -200,7 +206,8 @@ class AuditEvent(Base):
     )
 
 class AuditSummary(Base):
-    """Daily audit event summaries for reporting"""
+    """
+Daily audit event summaries for reporting"""
     __tablename__ = 'audit_summaries'
     
     # Primary identification
@@ -277,7 +284,8 @@ class AuditSummary(Base):
     )
 
 class DataRetentionPolicy(Base):
-    """Data retention policies for audit logs"""
+    """
+Data retention policies for audit logs"""
     __tablename__ = 'data_retention_policies'
     
     # Primary identification
@@ -348,7 +356,8 @@ class DataRetentionPolicy(Base):
     )
 
 class AuditQuery(Base):
-    """Audit query history and compliance requests"""
+    """
+Audit query history and compliance requests"""
     __tablename__ = 'audit_queries'
     
     # Primary identification
@@ -438,7 +447,8 @@ class AuditQuery(Base):
 
 @dataclass
 class AuditMetrics:
-    """Audit metrics data structure"""
+    """
+Audit metrics data structure"""
     total_events: int
     events_by_type: Dict[str, int]
     events_by_severity: Dict[str, int]
@@ -450,7 +460,8 @@ class AuditMetrics:
     retention_compliance: float
 
 class ForensicInvestigation(Base):
-    """Forensic investigation case management"""
+    """
+Forensic investigation case management"""
     __tablename__ = 'forensic_investigations'
     
     # Primary identification
@@ -546,7 +557,8 @@ class ForensicInvestigation(Base):
     )
 
 class AuditAlert(Base):
-    """Audit-based alerts and notifications"""
+    """
+Audit-based alerts and notifications"""
     __tablename__ = 'audit_alerts'
     
     # Primary identification

@@ -8,7 +8,7 @@ Technologies: Python, Encryption, Access Control, Compliance, Audit
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Content upload → Security classification → Encryption → Access control → 
 Audit logging → Compliance verification → Threat detection → Incident response
 """
+
 import logging
 import asyncio
 import hashlib
@@ -52,7 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security classification levels"""
+    """
+Security classification levels"""
+
     PUBLIC = "public"  # No encryption required
     INTERNAL = "internal"  # Basic encryption
     CONFIDENTIAL = "confidential"  # Strong encryption
@@ -62,6 +65,7 @@ class SecurityLevel(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Supported encryption algorithms"""
+
     AES_256_GCM = "aes-256-gcm"
     AES_256_CBC = "aes-256-cbc"
     CHACHA20_POLY1305 = "chacha20-poly1305"
@@ -71,6 +75,7 @@ class EncryptionAlgorithm(Enum):
 
 class AccessPermission(Enum):
     """Access permission types"""
+
     READ = "read"
     WRITE = "write"
     DELETE = "delete"
@@ -80,6 +85,7 @@ class AccessPermission(Enum):
 
 class ComplianceStandard(Enum):
     """Compliance standards"""
+
     GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
@@ -90,6 +96,7 @@ class ComplianceStandard(Enum):
 
 class ThreatLevel(Enum):
     """Security threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -124,7 +131,8 @@ class SecurityPolicy:
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata"""
+    """
+Encryption key metadata"""
     key_id: str
     algorithm: EncryptionAlgorithm
     key_data: bytes
@@ -162,13 +170,15 @@ class AccessToken:
     last_used: Optional[datetime] = None
     
     def is_valid(self) -> bool:
-        """Check if token is still valid"""
+        """
+Check if token is still valid"""
         return datetime.now() < self.expires_at and self.usage_count < 1000
 
 
 @dataclass
 class SecurityAuditEvent:
-    """Security audit event"""
+    """
+Security audit event"""
     event_id: str
     event_type: str
     user_id: Optional[str]
@@ -193,7 +203,8 @@ class SecurityAuditEvent:
 
 @dataclass
 class SecurityMetrics:
-    """Security metrics and statistics"""
+    """
+Security metrics and statistics"""
     total_encrypted_files: int = 0
     total_access_attempts: int = 0
     successful_authentications: int = 0
@@ -513,14 +524,16 @@ class StorageSecurityManager:
         return ciphertext, nonce, encryptor.tag
     
     def _decrypt_aes_gcm(self, ciphertext: bytes, key: bytes, nonce: bytes, tag: bytes) -> bytes:
-        """Decrypt data using AES-256-GCM"""
+        """
+Decrypt data using AES-256-GCM"""
         cipher = Cipher(algorithms.AES(key), modes.GCM(nonce, tag))
         decryptor = cipher.decryptor()
         
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_chacha20_poly1305(self, data: bytes, key: bytes) -> Tuple[bytes, bytes]:
-        """Encrypt data using ChaCha20-Poly1305"""
+        """
+Encrypt data using ChaCha20-Poly1305"""
         nonce = secrets.token_bytes(12)
         cipher = Cipher(algorithms.ChaCha20(key, nonce), modes=None)
         encryptor = cipher.encryptor()
@@ -529,7 +542,8 @@ class StorageSecurityManager:
         return ciphertext, nonce
     
     def _decrypt_chacha20_poly1305(self, ciphertext: bytes, key: bytes, nonce: bytes) -> bytes:
-        """Decrypt data using ChaCha20-Poly1305"""
+        """
+Decrypt data using ChaCha20-Poly1305"""
         cipher = Cipher(algorithms.ChaCha20(key, nonce), modes=None)
         decryptor = cipher.decryptor()
         
@@ -537,7 +551,8 @@ class StorageSecurityManager:
     
     async def _get_encryption_key(self, security_level: SecurityLevel, 
                                  algorithm: EncryptionAlgorithm) -> EncryptionKey:
-        """Get or generate encryption key for given security level and algorithm"""
+        """
+Get or generate encryption key for given security level and algorithm"""
         try:
             # Look for existing active key
             key_id = f"{security_level.value}_{algorithm.value}_v1"
@@ -1225,7 +1240,8 @@ def create_security_manager(custom_policy: Optional[SecurityPolicy] = None) -> S
 
 
 def create_high_security_policy() -> SecurityPolicy:
-    """Create high-security policy for sensitive data"""
+    """
+Create high-security policy for sensitive data"""
     return SecurityPolicy(
         policy_name="high_security_ia_influencer",
         security_level=SecurityLevel.RESTRICTED,

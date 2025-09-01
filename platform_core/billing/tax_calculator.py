@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 CALCULATEUR DE TAXES INTERNATIONALES
@@ -15,6 +15,7 @@ Système de calcul automatique des taxes selon les juridictions
 - Intégration APIs officielles (Avalara, TaxJar)
 - Exemptions et cas spéciaux automatiques
 """
+
 import asyncio
 import json
 import logging
@@ -28,7 +29,9 @@ from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger(__name__)
 
 class TaxType(Enum):
-    """Types de taxes"""
+    """
+Types de taxes"""
+
     VAT = "vat"  # TVA (Europe)
     GST = "gst"  # TPS (Canada, Australie)
     HST = "hst"  # TVH (Canada)
@@ -39,6 +42,7 @@ class TaxType(Enum):
 
 class TaxStatus(Enum):
     """Statuts fiscaux"""
+
     TAXABLE = "taxable"
     EXEMPT = "exempt"
     ZERO_RATED = "zero_rated"
@@ -109,7 +113,8 @@ class TaxRule:
 
 @dataclass
 class TaxCalculationResult:
-    """Résultat du calcul de taxes"""
+    """
+Résultat du calcul de taxes"""
     subtotal: Decimal
     total_tax: Decimal
     total_amount: Decimal
@@ -162,7 +167,8 @@ class TaxableItem:
 
 @dataclass
 class CustomerTaxInfo:
-    """Informations fiscales client"""
+    """
+Informations fiscales client"""
     customer_id: str
     
     # Type de client
@@ -197,7 +203,8 @@ class TaxCalculator:
         self._load_default_rules()
         
     def _load_default_rules(self):
-        """Charge les règles de taxation par défaut"""
+        """
+Charge les règles de taxation par défaut"""
         
         # Canada - TPS/TVQ
         self.add_tax_rule(TaxRule(
@@ -410,7 +417,8 @@ class TaxCalculator:
         return applicable_rules
         
     async def validate_vat_number(self, vat_number: str, country: str) -> Dict[str, Any]:
-        """Valide un numéro de TVA"""
+        """
+Valide un numéro de TVA"""
         # Simulation de validation - dans un vrai système, on utiliserait
         # l'API VIES pour l'Europe ou d'autres services officiels
         

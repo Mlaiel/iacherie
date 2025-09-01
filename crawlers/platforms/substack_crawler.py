@@ -11,6 +11,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -40,7 +41,8 @@ settings = get_settings()
 
 @dataclass
 class SubstackPost:
-    """Substack post data structure."""
+    """
+Substack post data structure."""
     post_id: str
     title: str
     subtitle: str
@@ -74,7 +76,8 @@ class SubstackPost:
 
 @dataclass
 class SubstackPublication:
-    """Substack publication data structure."""
+    """
+Substack publication data structure."""
     publication_id: str
     name: str
     subdomain: str
@@ -101,7 +104,8 @@ class SubstackPublication:
 
 @dataclass
 class SubstackAuthor:
-    """Substack author data structure."""
+    """
+Substack author data structure."""
     author_id: str
     name: str
     bio: str
@@ -134,7 +138,8 @@ class SubstackCrawler:
     """
     
     def __init__(self):
-        """Initialize Substack crawler."""
+        """
+Initialize Substack crawler."""
         self.rate_limiter = SubstackRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
@@ -172,7 +177,8 @@ class SubstackCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
+        """
+Async context manager exit."""
         if self.session:
             await self.session.close()
     
@@ -922,7 +928,8 @@ class SubstackCrawler:
             return []
     
     def _calculate_content_similarity(self, post1: SubstackPost, post2: SubstackPost) -> float:
-        """Calculate similarity score between two posts."""
+        """
+Calculate similarity score between two posts."""
         try:
             # Title similarity
             title1_words = set(post1.title.lower().split())

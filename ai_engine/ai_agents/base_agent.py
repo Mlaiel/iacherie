@@ -10,6 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
+
 import asyncio
 import json
 import uuid
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class AgentCapability(Enum):
-    """Standardized agent capabilities"""
+    """
+Standardized agent capabilities"""
     # Content Creation
     TEXT_GENERATION = "text_generation"
     IMAGE_GENERATION = "image_generation"
@@ -76,6 +78,7 @@ class AgentCapability(Enum):
 
 class AgentStatus(Enum):
     """Agent lifecycle status"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     BUSY = "busy"
@@ -89,6 +92,7 @@ class AgentStatus(Enum):
 
 class AgentPriority(Enum):
     """Task priority levels"""
+
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -98,7 +102,8 @@ class AgentPriority(Enum):
 
 @dataclass
 class AgentMetrics:
-    """Performance metrics for agents"""
+    """
+Performance metrics for agents"""
     total_tasks: int = 0
     successful_tasks: int = 0
     failed_tasks: int = 0
@@ -112,7 +117,8 @@ class AgentMetrics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate percentage"""
+        """
+Calculate success rate percentage"""
         if self.total_tasks == 0:
             return 0.0
         return (self.successful_tasks / self.total_tasks) * 100
@@ -120,7 +126,8 @@ class AgentMetrics:
 
 @dataclass
 class AgentTask:
-    """Task definition for agents"""
+    """
+Task definition for agents"""
     task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     task_type: str = ""
     priority: AgentPriority = AgentPriority.MEDIUM
@@ -143,7 +150,8 @@ class AgentTask:
     
     @property
     def is_expired(self) -> bool:
-        """Check if task has expired"""
+        """
+Check if task has expired"""
         if not self.timeout_seconds:
             return False
         if not self.started_at:
@@ -153,7 +161,8 @@ class AgentTask:
 
 @dataclass
 class AgentConfiguration:
-    """Agent configuration settings"""
+    """
+Agent configuration settings"""
     agent_id: str
     agent_name: str
     capabilities: Set[AgentCapability]
@@ -584,7 +593,8 @@ class BaseAIAgent(ABC):
         return True
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get agent health and status information"""
+        """
+Get agent health and status information"""
         uptime = datetime.now(timezone.utc) - self._startup_time
         
         return {
@@ -668,7 +678,8 @@ class BaseAIAgent(ABC):
             await asyncio.sleep(30)  # Heartbeat every 30 seconds
     
     async def _metrics_collector(self) -> None:
-        """Background metrics collection"""
+        """
+Background metrics collection"""
         while not self.shutdown_event.is_set():
             try:
                 # Update throughput
@@ -810,18 +821,21 @@ class AgentRegistry:
         return [self.agents[agent_id] for agent_id in agent_ids if agent_id in self.agents]
     
     def get_available_agents(self) -> List[BaseAIAgent]:
-        """Get all agents that are ready to handle tasks"""
+        """
+Get all agents that are ready to handle tasks"""
         return [
             agent for agent in self.agents.values() 
             if agent.status in [AgentStatus.READY, AgentStatus.BUSY]
         ]
     
     def get_agent_by_id(self, agent_id: str) -> Optional[BaseAIAgent]:
-        """Get agent by ID"""
+        """
+Get agent by ID"""
         return self.agents.get(agent_id)
     
     def get_agent_by_name(self, agent_name: str) -> Optional[BaseAIAgent]:
-        """Get agent by name"""
+        """
+Get agent by name"""
         for agent in self.agents.values():
             if agent.agent_name == agent_name:
                 return agent
@@ -830,7 +844,8 @@ class AgentRegistry:
     async def find_best_agent(self, 
                              capability: AgentCapability, 
                              task_context: Dict[str, Any] = None) -> Optional[BaseAIAgent]:
-        """Find the best agent for a specific capability and task"""
+        """
+Find the best agent for a specific capability and task"""
         candidates = self.get_agents_by_capability(capability)
         
         if not candidates:
@@ -870,7 +885,8 @@ class AgentRegistry:
         return best_agent
     
     def _calculate_agent_score(self, agent: BaseAIAgent) -> float:
-        """Calculate agent performance score"""
+        """
+Calculate agent performance score"""
         # Factors: success rate, response time, current load
         success_rate = agent.metrics.success_rate / 100.0  # 0-1
         
@@ -886,7 +902,8 @@ class AgentRegistry:
         return score
     
     async def get_registry_status(self) -> Dict[str, Any]:
-        """Get comprehensive registry status"""
+        """
+Get comprehensive registry status"""
         total_agents = len(self.agents)
         available_agents = len(self.get_available_agents())
         
@@ -944,7 +961,8 @@ class AgentFactory:
     
     @classmethod
     def register_agent_class(cls, agent_type: str, agent_class: type) -> None:
-        """Register an agent class with the factory"""
+        """
+Register an agent class with the factory"""
         if not issubclass(agent_class, BaseAIAgent):
             raise ValueError(f"Agent class must inherit from BaseAIAgent")
         
@@ -972,7 +990,8 @@ async def create_agent_config(
     capabilities: List[AgentCapability],
     **kwargs
 ) -> AgentConfiguration:
-    """Create agent configuration with validation"""
+    """
+Create agent configuration with validation"""
     if not agent_id or not agent_name:
         raise ValueError("agent_id and agent_name are required")
     

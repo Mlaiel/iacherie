@@ -10,6 +10,7 @@ Manages PostgreSQL connections for primary relational data including:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, AsyncContextManager, Union
@@ -26,7 +27,8 @@ from ..encryption import DatabaseEncryption
 
 @dataclass
 class PostgreSQLConfig:
-    """PostgreSQL connection configuration"""
+    """
+PostgreSQL connection configuration"""
     host: str
     port: int = 5432
     database: str = "ia_influencer"
@@ -70,7 +72,8 @@ class PostgreSQLConnectionHandler:
         self.tenant_pools: Dict[str, Pool] = {}
     
     async def initialize(self) -> None:
-        """Initialize PostgreSQL connection pool"""
+        """
+Initialize PostgreSQL connection pool"""
         try:
             self.logger.info("Initializing PostgreSQL connection pool...")
             
@@ -138,7 +141,8 @@ class PostgreSQLConnectionHandler:
     
     @asynccontextmanager
     async def connection(self) -> AsyncContextManager[PoolConnectionProxy]:
-        """Context manager for database connections"""
+        """
+Context manager for database connections"""
         conn = await self.get_connection()
         try:
             yield conn
@@ -147,7 +151,8 @@ class PostgreSQLConnectionHandler:
     
     @asynccontextmanager
     async def transaction(self) -> AsyncContextManager[PoolConnectionProxy]:
-        """Context manager for database transactions"""
+        """
+Context manager for database transactions"""
         async with self.connection() as conn:
             async with conn.transaction():
                 yield conn
@@ -156,7 +161,8 @@ class PostgreSQLConnectionHandler:
                      query: str, 
                      *args, 
                      connection: Optional[PoolConnectionProxy] = None) -> Any:
-        """Execute a query"""
+        """
+Execute a query"""
         try:
             if connection:
                 result = await connection.execute(query, *args)
@@ -261,7 +267,8 @@ class PostgreSQLConnectionHandler:
         self.tenant_pools[tenant_id] = pool
     
     async def _init_tenant_connection(self, connection: Connection, tenant_id: str) -> None:
-        """Initialize tenant-specific connection"""
+        """
+Initialize tenant-specific connection"""
         await self._init_connection(connection)
         
         # Create tenant schema if not exists

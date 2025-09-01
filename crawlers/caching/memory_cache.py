@@ -10,13 +10,14 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
 ⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 BUSINESS LOGIC:
 Ultra-fast memory access → Intelligent eviction → Adaptive sizing →
 Performance optimization → Sub-millisecond response → Memory efficiency
 """
+
 import asyncio
 import logging
 import threading
@@ -39,7 +40,9 @@ from contextlib import contextmanager
 logger = logging.getLogger(__name__)
 
 class EvictionPolicy(Enum):
-    """Advanced eviction policies for memory cache optimization."""
+    """
+Advanced eviction policies for memory cache optimization."""
+
     LRU = "lru"                    # Least Recently Used
     LFU = "lfu"                    # Least Frequently Used
     FIFO = "fifo"                  # First In, First Out
@@ -51,6 +54,7 @@ class EvictionPolicy(Enum):
 
 class CacheMode(Enum):
     """Cache operation modes for different use cases."""
+
     PERFORMANCE = "performance"    # Maximum speed
     MEMORY_EFFICIENT = "memory_efficient"  # Minimize memory usage
     BALANCED = "balanced"          # Balance between speed and memory
@@ -59,6 +63,7 @@ class CacheMode(Enum):
 
 class CompressionLevel(Enum):
     """Memory compression levels for space optimization."""
+
     NONE = 0
     LOW = 1
     MEDIUM = 2
@@ -67,7 +72,8 @@ class CompressionLevel(Enum):
 
 @dataclass
 class MemoryCacheEntry:
-    """Advanced memory cache entry with comprehensive metadata."""
+    """
+Advanced memory cache entry with comprehensive metadata."""
     value: Any
     created_at: datetime
     expires_at: Optional[datetime] = None
@@ -84,7 +90,8 @@ class MemoryCacheEntry:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def update_access(self):
-        """Update access statistics."""
+        """
+Update access statistics."""
         now = datetime.now()
         self.last_accessed = now
         self.access_count += 1
@@ -100,7 +107,8 @@ class MemoryCacheEntry:
         self.access_frequency = self.access_count / hours_alive
     
     def calculate_eviction_score(self, policy: EvictionPolicy) -> float:
-        """Calculate eviction score based on policy."""
+        """
+Calculate eviction score based on policy."""
         now = datetime.now()
         
         if policy == EvictionPolicy.LRU:
@@ -122,7 +130,8 @@ class MemoryCacheEntry:
 
 @dataclass
 class MemoryCacheConfig:
-    """Industrial memory cache configuration."""
+    """
+Industrial memory cache configuration."""
     # Size limits
     max_size_mb: int = 512
     max_entries: int = 50000
@@ -190,13 +199,15 @@ class MemoryCacheStats:
     
     @property
     def hit_ratio(self) -> float:
-        """Calculate cache hit ratio."""
+        """
+Calculate cache hit ratio."""
         total = self.cache_hits + self.cache_misses
         return self.cache_hits / total if total > 0 else 0.0
     
     @property
     def utilization_ratio(self) -> float:
-        """Calculate memory utilization ratio."""
+        """
+Calculate memory utilization ratio."""
         return self.current_size_bytes / self.max_size_bytes if self.max_size_bytes > 0 else 0.0
 
 class IndustrialMemoryCache:
@@ -215,7 +226,8 @@ class IndustrialMemoryCache:
     """
     
     def __init__(self, config: Optional[MemoryCacheConfig] = None):
-        """Initialize industrial memory cache with advanced configuration."""
+        """
+Initialize industrial memory cache with advanced configuration."""
         self.config = config or MemoryCacheConfig()
         self.logger = logging.getLogger(f"{__name__}.IndustrialMemoryCache")
         
@@ -514,7 +526,8 @@ class IndustrialMemoryCache:
             yield
 
     def _calculate_size(self, value: Any) -> int:
-        """Calculate memory size of value with high accuracy."""
+        """
+Calculate memory size of value with high accuracy."""
         try:
             if hasattr(value, '__sizeof__'):
                 return value.__sizeof__()
@@ -523,13 +536,15 @@ class IndustrialMemoryCache:
             return len(str(value).encode('utf-8'))
 
     def _is_expired(self, entry: MemoryCacheEntry) -> bool:
-        """Check if cache entry is expired."""
+        """
+Check if cache entry is expired."""
         if entry.expires_at is None:
             return False
         return datetime.now() > entry.expires_at
 
     def _remove_entry(self, key: str) -> None:
-        """Remove entry and update size tracking."""
+        """
+Remove entry and update size tracking."""
         if key in self._data:
             entry = self._data[key]
             self._size_tracker -= entry.size_bytes
@@ -538,7 +553,8 @@ class IndustrialMemoryCache:
             self.stats.current_size_bytes = self._size_tracker
 
     async def _ensure_space(self, space_needed: int) -> None:
-        """Ensure sufficient space by evicting entries if necessary."""
+        """
+Ensure sufficient space by evicting entries if necessary."""
         max_size = self.stats.max_size_bytes
         current_size = self._size_tracker
         
@@ -557,7 +573,8 @@ class IndustrialMemoryCache:
                 break
 
     def _select_eviction_candidate(self) -> Optional[str]:
-        """Select entry for eviction based on configured policy."""
+        """
+Select entry for eviction based on configured policy."""
         if not self._data:
             return None
         
@@ -599,7 +616,8 @@ class IndustrialMemoryCache:
             return next(iter(self._data))
 
     def _compress_value(self, value: Any) -> Tuple[Any, bool, float]:
-        """Compress value if beneficial."""
+        """
+Compress value if beneficial."""
         if not self.config.enable_compression:
             return value, False, 1.0
         
@@ -651,7 +669,8 @@ class IndustrialMemoryCache:
         return min(efficiency, 1.0)
 
     async def _cleanup_loop(self) -> None:
-        """Background cleanup task for expired entries."""
+        """
+Background cleanup task for expired entries."""
         while True:
             try:
                 await asyncio.sleep(self.config.cleanup_interval_seconds)
@@ -693,11 +712,13 @@ class MemoryPressureDetector:
         self.process = psutil.Process()
         
     async def initialize(self) -> None:
-        """Initialize memory monitoring."""
+        """
+Initialize memory monitoring."""
         pass
     
     async def get_pressure(self) -> float:
-        """Get current memory pressure (0.0 - 1.0)."""
+        """
+Get current memory pressure (0.0 - 1.0)."""
         try:
             memory_info = psutil.virtual_memory()
             return memory_info.percent / 100.0
@@ -708,7 +729,8 @@ class MemoryPressureDetector:
 MemoryCache = IndustrialMemoryCache
 
 class LRUCache(IndustrialMemoryCache):
-    """LRU-specific memory cache implementation."""
+    """
+LRU-specific memory cache implementation."""
     
     def __init__(self, max_size_mb: int = 256, max_entries: int = 10000):
         config = MemoryCacheConfig(
@@ -720,7 +742,8 @@ class LRUCache(IndustrialMemoryCache):
         super().__init__(config)
 
 class TTLCache(IndustrialMemoryCache):
-    """TTL-based memory cache implementation."""
+    """
+TTL-based memory cache implementation."""
     
     def __init__(self, max_size_mb: int = 256, default_ttl_seconds: int = 3600):
         config = MemoryCacheConfig(
@@ -742,7 +765,8 @@ class TTLCache(IndustrialMemoryCache):
         return len(expired_keys)
     
     def _evict_lru(self, target_size: int) -> int:
-        """Evict least recently used items to reach target size."""
+        """
+Evict least recently used items to reach target size."""
         evicted = 0
         
         while (self._current_size > target_size or len(self._data) >= self.max_items) and self._data:
@@ -765,7 +789,8 @@ class TTLCache(IndustrialMemoryCache):
         return False
     
     def _move_to_end(self, key: str) -> None:
-        """Move key to end (mark as recently used)."""
+        """
+Move key to end (mark as recently used)."""
         if key in self._data:
             self._data.move_to_end(key)
     
@@ -871,7 +896,8 @@ class TTLCache(IndustrialMemoryCache):
             return self._remove_entry(key)
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in cache."""
+        """
+Check if key exists in cache."""
         with self._lock:
             entry = self._data.get(key)
             if entry is None:
@@ -909,7 +935,8 @@ class TTLCache(IndustrialMemoryCache):
             return len(matching_keys)
     
     async def clear(self) -> bool:
-        """Clear all cache entries."""
+        """
+Clear all cache entries."""
         with self._lock:
             self._data.clear()
             self._current_size = 0
@@ -922,12 +949,14 @@ class TTLCache(IndustrialMemoryCache):
             return len(self._data)
     
     async def get_memory_usage(self) -> int:
-        """Get current memory usage in bytes."""
+        """
+Get current memory usage in bytes."""
         with self._lock:
             return self._current_size
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics."""
+        """
+Get cache statistics."""
         with self._lock:
             hit_rate = 0.0
             if self._hits + self._misses > 0:
@@ -1003,7 +1032,8 @@ class LRUCache(MemoryCache):
     """
     
     def __init__(self, max_items: int = 1000, **kwargs):
-        """Initialize LRU cache with item limit."""
+        """
+Initialize LRU cache with item limit."""
         super().__init__(max_items=max_items, **kwargs)
         self.logger = logging.getLogger(f"{__name__}.LRUCache")
 
@@ -1015,7 +1045,8 @@ class TTLCache(MemoryCache):
     """
     
     def __init__(self, default_ttl: int = 300, **kwargs):
-        """Initialize TTL cache with mandatory expiration."""
+        """
+Initialize TTL cache with mandatory expiration."""
         super().__init__(default_ttl=default_ttl, **kwargs)
         self.logger = logging.getLogger(f"{__name__}.TTLCache")
         

@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ====================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE GESTION MULTI-TENANT ENTERPRISE
@@ -15,6 +15,7 @@ Isolation de données et routage intelligent pour architecture multi-tenant
 - Gestion des ressources et quotas par tenant
 - Sécurité et conformité multi-tenant
 """
+
 import asyncio
 import logging
 import uuid
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class TenantStatus(Enum):
-    """Status des tenants"""
+    """
+Status des tenants"""
+
     ACTIVE = "active"
     SUSPENDED = "suspended"
     TRIAL = "trial"
@@ -40,6 +43,7 @@ class TenantStatus(Enum):
 
 class TenantTier(Enum):
     """Niveaux de service tenant"""
+
     STARTER = "starter"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -65,7 +69,8 @@ class TenantConfig:
 
 @dataclass
 class TenantUsage:
-    """Utilisation actuelle du tenant"""
+    """
+Utilisation actuelle du tenant"""
     tenant_id: str
     current_users: int
     storage_used_gb: float
@@ -77,7 +82,8 @@ class TenantUsage:
 
 
 class TenantManager:
-    """Gestionnaire principal des tenants"""
+    """
+Gestionnaire principal des tenants"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -151,14 +157,16 @@ class TenantManager:
         return self.tenants.get(tenant_id)
     
     async def get_tenant_by_domain(self, domain: str) -> Optional[TenantConfig]:
-        """Récupérer un tenant par son domaine"""
+        """
+Récupérer un tenant par son domaine"""
         for tenant in self.tenants.values():
             if tenant.domain == domain:
                 return tenant
         return None
     
     async def update_tenant_status(self, tenant_id: str, status: TenantStatus) -> bool:
-        """Mettre à jour le statut d'un tenant"""
+        """
+Mettre à jour le statut d'un tenant"""
         try:
             if tenant_id in self.tenants:
                 self.tenants[tenant_id].status = status
@@ -368,7 +376,8 @@ class TenantDataIsolator:
         self.tenant_manager = tenant_manager
         
     async def isolate_query(self, tenant_id: str, query: str, params: Dict[str, Any]) -> str:
-        """Isoler une requête pour un tenant spécifique"""
+        """
+Isoler une requête pour un tenant spécifique"""
         try:
             tenant = await self.tenant_manager.get_tenant(tenant_id)
             if not tenant:

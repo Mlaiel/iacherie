@@ -12,12 +12,14 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
+
 from typing import Dict, Any, Optional, List
 import logging
 
 
 class EntityExtractionError(Exception):
-    """Base exception for entity extraction errors"""
+    """
+Base exception for entity extraction errors"""
     
     def __init__(self, message: str, error_code: str = None, details: Dict[str, Any] = None):
         self.message = message
@@ -36,7 +38,8 @@ class EntityExtractionError(Exception):
 
 
 class ModelLoadError(EntityExtractionError):
-    """Raised when ML models fail to load"""
+    """
+Raised when ML models fail to load"""
     
     def __init__(self, model_name: str, reason: str = None):
         message = f"Failed to load model '{model_name}'"
@@ -351,7 +354,8 @@ class ErrorHandler:
     
     @staticmethod
     def log_error(error: EntityExtractionError, context: str = None):
-        """Log error with appropriate level and context"""
+        """
+Log error with appropriate level and context"""
         log_message = f"EntityExtraction Error: {error.message}"
         if context:
             log_message = f"{context} - {log_message}"
@@ -405,7 +409,8 @@ class ErrorHandler:
     
     @staticmethod
     def is_retryable_error(error: EntityExtractionError) -> bool:
-        """Determine if an error is retryable"""
+        """
+Determine if an error is retryable"""
         retryable_types = (
             APIConnectionError,
             TimeoutError,
@@ -417,7 +422,8 @@ class ErrorHandler:
 
 # Exception context manager
 class EntityExtractionContext:
-    """Context manager for entity extraction operations with error handling"""
+    """
+Context manager for entity extraction operations with error handling"""
     
     def __init__(self, operation_name: str, log_errors: bool = True):
         self.operation_name = operation_name

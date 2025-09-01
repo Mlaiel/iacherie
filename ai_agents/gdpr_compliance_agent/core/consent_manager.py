@@ -8,6 +8,7 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,7 +35,9 @@ from ...schemas.gdpr_schemas import ConsentRequest, ConsentUpdateRequest
 logger = get_logger(__name__)
 
 class ConsentStatus(Enum):
-    """Consent status types"""
+    """
+Consent status types"""
+
     GRANTED = "granted"
     DENIED = "denied"
     WITHDRAWN = "withdrawn"
@@ -43,6 +46,7 @@ class ConsentStatus(Enum):
 
 class ConsentType(Enum):
     """Types of consent according to GDPR"""
+
     EXPLICIT = "explicit"
     IMPLIED = "implied"
     OPT_IN = "opt_in"
@@ -50,6 +54,7 @@ class ConsentType(Enum):
 
 class ProcessingPurpose(Enum):
     """Data processing purposes requiring consent"""
+
     CONTENT_PROTECTION = "content_protection"
     ANALYTICS = "analytics"
     MARKETING = "marketing"
@@ -75,7 +80,8 @@ class ConsentDetails:
 
 @dataclass
 class ConsentMetrics:
-    """Consent collection and management metrics"""
+    """
+Consent collection and management metrics"""
     total_consents: int
     granted_consents: int
     denied_consents: int
@@ -763,7 +769,8 @@ class ConsentManager:
         self._consent_cache[user_id][purpose.value] = consent_details
     
     async def _update_consent_cache_from_record(self, user_id: str, consent_record: ConsentRecord):
-        """Update consent cache from database record"""
+        """
+Update consent cache from database record"""
         try:
             purpose = ProcessingPurpose(consent_record.purpose)
             await self._update_consent_cache(user_id, purpose, consent_record)

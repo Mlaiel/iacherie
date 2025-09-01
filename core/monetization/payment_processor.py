@@ -2,8 +2,9 @@
 Multi-gateway payment handling with advanced security and compliance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ from ...core.exceptions import PaymentError, ValidationError
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateways"""
+    """
+Supported payment gateways"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -35,6 +38,7 @@ class PaymentGateway(Enum):
 
 class PaymentStatus(Enum):
     """Payment processing status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -45,6 +49,7 @@ class PaymentStatus(Enum):
 
 class Currency(Enum):
     """Supported currencies"""
+
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -106,7 +111,8 @@ class PaymentResponse(BaseModel):
 
 
 class PaymentProcessor:
-    """Advanced payment processing engine with multi-gateway support"""
+    """
+Advanced payment processing engine with multi-gateway support"""
     
     def __init__(self, encryption_manager: EncryptionManager):
         self.encryption_manager = encryption_manager
@@ -115,7 +121,8 @@ class PaymentProcessor:
         self.gateway_clients: Dict[PaymentGateway, Any] = {}
         
     def configure_gateway(self, config: PaymentConfig) -> None:
-        """Configure payment gateway"""
+        """
+Configure payment gateway"""
         try:
             self.gateway_configs[config.gateway] = config
             
@@ -318,7 +325,8 @@ class PaymentProcessor:
         signature: str, 
         gateway: PaymentGateway
     ) -> bool:
-        """Verify webhook signature for security"""
+        """
+Verify webhook signature for security"""
         try:
             config = self.gateway_configs.get(gateway)
             if not config:
@@ -403,7 +411,8 @@ class PaymentWebhookHandler:
         signature: str,
         session: AsyncSession
     ) -> bool:
-        """Handle Stripe webhook events"""
+        """
+Handle Stripe webhook events"""
         try:
             if not await self.payment_processor.verify_webhook(
                 payload, signature, PaymentGateway.STRIPE

@@ -4,8 +4,9 @@ Manages creator collaboration requests, project workflows, communication,
 and automated collaboration matching with AI-powered recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -18,7 +19,9 @@ from .marketplace_agent import MarketplaceConfig, CollaborationRequest
 
 
 class CollaborationStatus(Enum):
-    """Collaboration request status enumeration."""
+    """
+Collaboration request status enumeration."""
+
     PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
@@ -30,6 +33,7 @@ class CollaborationStatus(Enum):
 
 class ProjectPhase(Enum):
     """Project phases for collaboration workflow."""
+
     PLANNING = "planning"
     PRODUCTION = "production"
     REVIEW = "review"
@@ -40,6 +44,7 @@ class ProjectPhase(Enum):
 
 class CommunicationType(Enum):
     """Types of collaboration communication."""
+
     MESSAGE = "message"
     VIDEO_CALL = "video_call"
     FILE_SHARE = "file_share"
@@ -99,7 +104,8 @@ class CompatibilityScore:
 
 @dataclass
 class CollaborationCommunication:
-    """Communication record for collaboration projects."""
+    """
+Communication record for collaboration projects."""
     id: Optional[int] = None
     collaboration_id: int = 0
     sender_id: int = 0
@@ -751,6 +757,7 @@ class CollaborationOrchestrator:
         return random.randint(10000, 99999)
 
     async def _generate_communication_id(self) -> int:
-        """Generate unique communication ID."""
+        """
+Generate unique communication ID."""
         import random
         return random.randint(10000, 99999)

@@ -4,7 +4,7 @@
 """Tests complets pour le module analytics des engines IA
 Tous les tests sont industriels, ultra-avancés et clé en main.
 
-Copyright © 2024 Fahed Mlaiel - Tous droits réservés
+Copyright (c) 2024 Fahed Mlaiel - Tous droits réservés
 Email: mlaiel@live.de
 
 ⚠️ AVERTISSEMENT COPYRIGHT STRICT ⚠️
@@ -13,6 +13,7 @@ Toute utilisation, modification ou distribution non autorisée par une personne 
 sans consentement écrit explicite de Fahed Mlaiel (mlaiel@live.de) est strictement interdite.
 Les contrevenants feront l'objet de poursuites judiciaires selon le droit international du copyright.
 """
+
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
@@ -80,10 +81,12 @@ from .test_helpers import MetricAlert
 
 
 class TestPerformanceMetrics:
-    """Tests pour les métriques de performance."""
+    """
+Tests pour les métriques de performance."""
     
     def test_performance_metrics_creation(self):
-        """Test la création des métriques de performance."""
+        """
+Test la création des métriques de performance."""
         metrics = PerformanceMetrics(
             processing_time=0.5,
             throughput=1000,
@@ -103,7 +106,8 @@ class TestPerformanceMetrics:
         assert metrics.error_rate == 0.01
     
     def test_performance_metrics_defaults(self):
-        """Test les valeurs par défaut des métriques de performance."""
+        """
+Test les valeurs par défaut des métriques de performance."""
         metrics = PerformanceMetrics()
         
         assert metrics.processing_time == 0.0
@@ -115,10 +119,12 @@ class TestPerformanceMetrics:
 
 
 class TestBusinessMetrics:
-    """Tests pour les métriques business."""
+    """
+Tests pour les métriques business."""
     
     def test_business_metrics_creation(self):
-        """Test la création des métriques business."""
+        """
+Test la création des métriques business."""
         metrics = BusinessMetrics(
             active_users=5000,
             new_users=250,
@@ -137,10 +143,12 @@ class TestBusinessMetrics:
 
 
 class TestBusinessMetricsEngagement:
-    """Tests pour les métriques d'engagement et revenus."""
+    """
+Tests pour les métriques d'engagement et revenus."""
     
     def test_business_metrics_creation(self):
-        """Test la création des métriques d'affaires."""
+        """
+Test la création des métriques d'affaires."""
         metrics = BusinessMetrics(
             revenue_generated=50000.0,
             total_content_processed=1000,
@@ -162,10 +170,12 @@ class TestBusinessMetricsEngagement:
 
 
 class TestBusinessMetricsRevenue:
-    """Tests pour les métriques de revenus d'affaires."""
+    """
+Tests pour les métriques de revenus d'affaires."""
     
     def test_business_revenue_metrics_creation(self):
-        """Test la création des métriques de revenus d'affaires."""
+        """
+Test la création des métriques de revenus d'affaires."""
         metrics = BusinessMetrics(
             revenue_generated=125000.50,
             total_content_processed=1500,
@@ -186,10 +196,12 @@ class TestBusinessMetricsRevenue:
 
 
 class TestQualityMetricsContent:
-    """Tests pour les métriques de qualité de contenu."""
+    """
+Tests pour les métriques de qualité de contenu."""
     
     def test_quality_metrics_creation(self):
-        """Test la création des métriques de qualité."""
+        """
+Test la création des métriques de qualité."""
         metrics = QualityMetrics(
             avg_quality_score=4.3,
             content_approval_rate=0.95,
@@ -211,10 +223,12 @@ class TestQualityMetricsContent:
 
 
 class TestPerformanceMetricsSystem:
-    """Tests pour les métriques de performance système."""
+    """
+Tests pour les métriques de performance système."""
     
     def test_performance_metrics_creation(self):
-        """Test la création des métriques de performance."""
+        """
+Test la création des métriques de performance."""
         metrics = PerformanceMetrics(
             processing_time=145.5,
             throughput=1250.0,
@@ -237,10 +251,12 @@ class TestPerformanceMetricsSystem:
 
 
 class TestMetricAlert:
-    """Tests pour les alertes de métriques."""
+    """
+Tests pour les alertes de métriques."""
     
     def test_alert_creation(self):
-        """Test la création d'une alerte."""
+        """
+Test la création d'une alerte."""
         alert = MetricAlert(
             metric_name="cpu_usage",
             current_value=85.5,
@@ -262,17 +278,20 @@ class TestMetricsCollector:
     
     @pytest.fixture
     def collector(self):
-        """Fixture pour créer un collecteur de métriques."""
+        """
+Fixture pour créer un collecteur de métriques."""
         return MetricsCollector()
     
     @pytest.fixture
     def mock_redis(self):
-        """Mock Redis pour les tests."""
+        """
+Mock Redis pour les tests."""
         with patch('redis.Redis') as mock:
             yield mock.return_value
     
     def test_collector_initialization(self, collector):
-        """Test l'initialisation du collecteur."""
+        """
+Test l'initialisation du collecteur."""
         assert collector.buffer_size == 10000
         assert collector.aggregation_interval == 60
         assert collector.retention_days == 90
@@ -281,7 +300,8 @@ class TestMetricsCollector:
     
     @pytest.mark.asyncio
     async def test_collect_performance_metrics(self, collector, mock_redis):
-        """Test la collecte des métriques de performance."""
+        """
+Test la collecte des métriques de performance."""
         # Utilise les vraies méthodes de MetricsCollector
         collector.record_processing_time("test_engine", 1.5, "text", True)
         collector.record_metric("cpu_usage", 45.2)
@@ -373,11 +393,13 @@ class TestMetricsCollectorDashboard:
     
     @pytest.fixture
     def collector(self):
-        """Fixture pour créer un collecteur de métriques."""
+        """
+Fixture pour créer un collecteur de métriques."""
         return MetricsCollector()
     
     def test_collector_initialization(self, collector):
-        """Test l'initialisation du collecteur."""
+        """
+Test l'initialisation du collecteur."""
         assert isinstance(collector.raw_metrics, dict)
         assert isinstance(collector.aggregated_metrics, dict)
         assert hasattr(collector, 'performance_metrics')
@@ -385,7 +407,8 @@ class TestMetricsCollectorDashboard:
     
     @pytest.mark.asyncio
     async def test_get_real_time_dashboard(self, collector):
-        """Test la récupération des données de tableau de bord en temps réel."""
+        """
+Test la récupération des données de tableau de bord en temps réel."""
         # Ajouter quelques métriques de test
         collector.record_metric("cpu_usage", 65.5)
         collector.record_metric("memory_usage", 70.2)
@@ -401,11 +424,13 @@ class TestMetricsCollectorReporting:
     
     @pytest.fixture
     def collector(self):
-        """Fixture pour créer un collecteur de métriques."""
+        """
+Fixture pour créer un collecteur de métriques."""
         return MetricsCollector()
     
     def test_collector_reporting_initialization(self, collector):
-        """Test l'initialisation des fonctionnalités de rapport."""
+        """
+Test l'initialisation des fonctionnalités de rapport."""
         assert hasattr(collector, 'raw_metrics')
         assert hasattr(collector, 'aggregated_metrics')
         assert hasattr(collector, 'performance_metrics')
@@ -413,7 +438,8 @@ class TestMetricsCollectorReporting:
     
     @pytest.mark.asyncio
     async def test_generate_metrics_summary(self, collector):
-        """Test la génération de résumé des métriques."""
+        """
+Test la génération de résumé des métriques."""
         # Ajouter des métriques de test
         collector.record_metric("cpu_usage", 75.5)
         collector.record_metric("memory_usage", 68.2)
@@ -445,11 +471,13 @@ class TestAnalyticsIntegration:
     
     @pytest.fixture
     def collector(self):
-        """Fixture pour créer un collecteur de métriques."""
+        """
+Fixture pour créer un collecteur de métriques."""
         return MetricsCollector()
     
     def test_full_analytics_workflow(self, collector):
-        """Test le workflow complet d'analytics."""
+        """
+Test le workflow complet d'analytics."""
         # Enregistre différents types de métriques
         collector.record_processing_time("test_engine", 1.5, "text", True)
         collector.record_revenue("subscription", 99.99, "user123", "monthly")

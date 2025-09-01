@@ -4,6 +4,7 @@ Platform webhooks and external integrations endpoints.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import hmac
 import hashlib
 from typing import List, Dict, Any, Optional
@@ -944,36 +945,42 @@ async def _process_youtube_webhook(webhook_id: str, webhook: IncomingWebhook):
 
 
 async def _process_instagram_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process Instagram webhook"""
+    """
+Process Instagram webhook"""
     # Implementation for Instagram-specific webhook processing
     pass
 
 
 async def _process_tiktok_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process TikTok webhook"""
+    """
+Process TikTok webhook"""
     # Implementation for TikTok-specific webhook processing
     pass
 
 
 async def _process_spotify_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process Spotify webhook"""
+    """
+Process Spotify webhook"""
     # Implementation for Spotify-specific webhook processing
     pass
 
 
 async def _process_stripe_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process Stripe webhook"""
+    """
+Process Stripe webhook"""
     # Implementation for Stripe-specific webhook processing
     pass
 
 
 async def _register_platform_webhook(webhook: WebhookEndpoint, user: dict):
-    """Register webhook with external platform"""
+    """
+Register webhook with external platform"""
     # Implementation for registering webhooks with platforms
     pass
 
 
 async def _unregister_platform_webhook(webhook_id: str, platform: str):
-    """Unregister webhook from external platform"""
+    """
+Unregister webhook from external platform"""
     # Implementation for unregistering webhooks from platforms
     pass

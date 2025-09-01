@@ -32,6 +32,7 @@ Development Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: Infrastructure automation and monitoring
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -154,7 +155,8 @@ class EnterpriseFingerprintingService:
         }
     
     async def initialize(self, config: Optional[Dict[str, Any]] = None) -> bool:
-        """Initialize all fingerprinting service components"""
+        """
+Initialize all fingerprinting service components"""
         try:
             self.logger.info("Initializing Enterprise Fingerprinting Service...")
             
@@ -296,7 +298,8 @@ class EnterpriseFingerprintingService:
         content_type: str,
         search_types: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Search for similar content across all indexes"""
+        """
+Search for similar content across all indexes"""
         async with self.get_service_context():
             results = await self.index_manager.search_fingerprints(
                 query=query,
@@ -324,7 +327,8 @@ class EnterpriseFingerprintingService:
         fingerprint_id: str,
         include_vectors: bool = False
     ) -> Optional[Dict[str, Any]]:
-        """Retrieve fingerprint data"""
+        """
+Retrieve fingerprint data"""
         async with self.get_service_context():
             return await self.storage_manager.retrieve_fingerprint(
                 fingerprint_id=fingerprint_id,
@@ -336,7 +340,8 @@ class EnterpriseFingerprintingService:
         fingerprint_id: str,
         content_type: str
     ) -> bool:
-        """Delete fingerprint from all systems"""
+        """
+Delete fingerprint from all systems"""
         async with self.get_service_context():
             # Remove from indexes
             await self.index_manager.remove_fingerprint(
@@ -368,7 +373,8 @@ class EnterpriseFingerprintingService:
             }
     
     async def run_maintenance(self) -> Dict[str, bool]:
-        """Run comprehensive maintenance operations"""
+        """
+Run comprehensive maintenance operations"""
         async with self.get_service_context():
             results = {}
             
@@ -390,7 +396,8 @@ class EnterpriseFingerprintingService:
             return results
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check of all components"""
+        """
+Comprehensive health check of all components"""
         health_status = {
             'service_initialized': self.is_initialized,
             'storage_healthy': False,
@@ -497,7 +504,7 @@ __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel. All Rights Reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All Rights Reserved."
 
 # Module configuration
 FINGERPRINTING_CONFIG = {

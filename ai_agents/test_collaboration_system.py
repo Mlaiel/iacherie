@@ -30,7 +30,8 @@ from collaboration_integration import (
 )
 
 async def test_collaboration_matching():
-    """Test Collaboration Matching Agent"""
+    """
+Test Collaboration Matching Agent"""
     print("🔍 Testing Collaboration Matching Agent...")
     
     orchestrator = create_collaboration_orchestrator()

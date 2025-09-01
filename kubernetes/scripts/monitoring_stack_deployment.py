@@ -15,6 +15,7 @@ Contact: mlaiel@live.de
 Production monitoring stack deployment with Prometheus, Grafana, Jaeger, and ELK.
 ==========================================================
 """
+
 import os
 import yaml
 import logging
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring stack configuration"""
+    """
+Monitoring stack configuration"""
     namespace: str = "ainflue-monitoring"
     prometheus_enabled: bool = True
     grafana_enabled: bool = True

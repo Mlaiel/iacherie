@@ -8,6 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Content Intake → Fingerprinting → Threat Detection → Protection Application → Compliance Validation → Monitoring Setup
 """
+
 import asyncio
 import logging
 import time
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionStage(Enum):
-    """Protection pipeline stages"""
+    """
+Protection pipeline stages"""
+
     INTAKE_VALIDATION = "intake_validation"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     VECTOR_EMBEDDING = "vector_embedding"
@@ -39,6 +42,7 @@ class ProtectionStage(Enum):
 
 class ProtectionLevel(Enum):
     """Protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -48,6 +52,7 @@ class ProtectionLevel(Enum):
 
 class ThreatLevel(Enum):
     """Threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -56,6 +61,7 @@ class ThreatLevel(Enum):
 
 class FingerprintType(Enum):
     """Fingerprint types"""
+
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_PERCEPTUAL = "video_perceptual"
@@ -453,7 +459,8 @@ class ProtectionProcessingPipeline:
         }
     
     def _initialize_security_gates(self):
-        """Initialize security gates"""
+        """
+Initialize security gates"""
         self.security_gates = [
             SecurityGate(
                 name="content_integrity_check",
@@ -873,18 +880,21 @@ class ProtectionProcessingPipeline:
         return True  # Simplified validation
     
     async def _validate_ccpa_compliance(self, content_path: str, result: ProtectionResult, parameters: Dict[str, Any]) -> bool:
-        """Validate CCPA compliance"""
+        """
+Validate CCPA compliance"""
         # Check for California privacy compliance
         return True  # Simplified validation
     
     async def _validate_dmca_compliance(self, content_path: str, result: ProtectionResult, parameters: Dict[str, Any]) -> bool:
-        """Validate DMCA compliance"""
+        """
+Validate DMCA compliance"""
         # Check for DMCA takedown compliance
         return True  # Simplified validation
     
     # Threat Analysis Methods
     async def _analyze_ml_threats(self, content_path: str, fingerprints: List[FingerprintData]) -> List[ThreatDetection]:
-        """Analyze ML-based threats"""
+        """
+Analyze ML-based threats"""
         threats = []
         
         # Simulate ML threat analysis
@@ -912,7 +922,8 @@ class ProtectionProcessingPipeline:
         return threats
     
     async def _analyze_signature_threats(self, fingerprints: List[FingerprintData]) -> List[ThreatDetection]:
-        """Analyze signature-based threats"""
+        """
+Analyze signature-based threats"""
         threats = []
         
         # Simulate signature matching against known threat database
@@ -924,7 +935,8 @@ class ProtectionProcessingPipeline:
         return threats
     
     def _calculate_protection_score(self, result: ProtectionResult) -> float:
-        """Calculate overall protection score"""
+        """
+Calculate overall protection score"""
         score_components = []
         
         # Fingerprint quality score
@@ -957,11 +969,13 @@ class ProtectionProcessingPipeline:
         return self.active_protections.get(protection_id) or self.completed_protections.get(protection_id)
     
     def get_active_protections(self) -> Dict[str, ProtectionResult]:
-        """Get all active protections"""
+        """
+Get all active protections"""
         return self.active_protections.copy()
     
     def get_protection_metrics(self) -> Dict[str, Any]:
-        """Get protection metrics"""
+        """
+Get protection metrics"""
         completed_protections = list(self.completed_protections.values())
         
         return {

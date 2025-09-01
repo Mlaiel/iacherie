@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Comprehensive Tests for NLP Generators Module
+"""
+Comprehensive Tests for NLP Generators Module
 
 Industrial-grade tests for AdvancedContentGenerator covering content generation,
 optimization, and platform-specific adaptation with real implementations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
+
 import pytest
 import sys
 import os
@@ -47,11 +50,13 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentGenerator:
-    """Comprehensive tests for AdvancedContentGenerator"""
+    """
+Comprehensive tests for AdvancedContentGenerator"""
     
     @pytest.mark.asyncio
     async def test_generator_initialization(self, content_generator):
-        """Test generator initialization and configuration"""
+        """
+Test generator initialization and configuration"""
         assert content_generator is not None
         assert hasattr(content_generator, 'config')
         assert hasattr(content_generator, 'models')
@@ -65,7 +70,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_content_generation_basic(self, content_generator):
-        """Test basic content generation"""
+        """
+Test basic content generation"""
         prompt = "Create content about sustainable fashion"
         
         generated = await content_generator.generate_content(
@@ -306,7 +312,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_story_generation(self, content_generator):
-        """Test story content generation"""
+        """
+Test story content generation"""
         story_prompts = [
             "Behind the scenes of product photoshoot",
             "Daily morning routine for productivity",
@@ -501,7 +508,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_ai_model_integration(self, content_generator):
-        """Test AI model integration for generation"""
+        """
+Test AI model integration for generation"""
         prompt = "Create engaging content about climate change awareness"
         
         # Test with different AI models
@@ -686,34 +694,40 @@ class TestContentGenerator:
     
     @pytest.mark.asyncio
     async def test_content_generator_initialization(self):
-        """Test content generator initialization"""
+        """
+Test content generator initialization"""
         generator = ContentGenerator()
         assert generator is not None
         assert hasattr(generator, 'generate')
 
 class TestCaptionGenerator:
-    """Test specialized caption generator"""
+    """
+Test specialized caption generator"""
     
     @pytest.mark.asyncio
     async def test_caption_generator_initialization(self):
-        """Test caption generator initialization"""
+        """
+Test caption generator initialization"""
         generator = CaptionGenerator()
         assert generator is not None
         assert hasattr(generator, 'generate_caption')
 
 class TestHashtagGenerator:
-    """Test specialized hashtag generator"""
+    """
+Test specialized hashtag generator"""
     
     @pytest.mark.asyncio
     async def test_hashtag_generator_initialization(self):
-        """Test hashtag generator initialization"""
+        """
+Test hashtag generator initialization"""
         generator = HashtagGenerator()
         assert generator is not None
         assert hasattr(generator, 'generate_hashtags')
 
     @pytest.mark.asyncio
     async def test_hashtag_generation_specific(self):
-        """Test specific hashtag generation"""
+        """
+Test specific hashtag generation"""
         generator = HashtagGenerator()
         
         content = "Beautiful sunset at the beach"
@@ -737,7 +751,8 @@ class TestGenerationConfig:
     """Test generation configuration"""
     
     def test_config_creation(self):
-        """Test generation configuration creation"""
+        """
+Test generation configuration creation"""
         config = GenerationConfig(
             models=['gpt-4', 'claude'],
             platforms=[Platform.INSTAGRAM, Platform.TIKTOK],
@@ -751,10 +766,12 @@ class TestGenerationConfig:
         assert config.creativity_level == 0.8
 
 class TestGeneratedContent:
-    """Test generated content structure"""
+    """
+Test generated content structure"""
     
     def test_generated_content_creation(self):
-        """Test generated content creation"""
+        """
+Test generated content creation"""
         content = GeneratedContent(
             content="Generated content text",
             platform=Platform.INSTAGRAM,

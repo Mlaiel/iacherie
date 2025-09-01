@@ -9,6 +9,7 @@ constituera une violation des droits d'auteur.
 
 Common utilities and helper functions for fingerprinting operations
 """
+
 import hashlib
 import mimetypes
 import time
@@ -32,7 +33,8 @@ class FingerprintUtils:
     
     @staticmethod
     def generate_file_hash(file_path: Path) -> str:
-        """Generate SHA-256 hash of file content"""
+        """
+Generate SHA-256 hash of file content"""
         try:
             hash_sha256 = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -105,7 +107,8 @@ class FingerprintUtils:
     
     @staticmethod
     def normalize_array(array: np.ndarray) -> np.ndarray:
-        """Normalize array to [0, 1] range"""
+        """
+Normalize array to [0, 1] range"""
         try:
             if array.size == 0:
                 return array
@@ -204,7 +207,8 @@ class FingerprintUtils:
     
     @staticmethod
     def format_file_size(size_bytes: int) -> str:
-        """Format file size in human-readable format"""
+        """
+Format file size in human-readable format"""
         try:
             if size_bytes == 0:
                 return "0 B"
@@ -277,11 +281,13 @@ class FingerprintUtils:
     
     @staticmethod
     def clamp(value: float, min_value: float, max_value: float) -> float:
-        """Clamp value between min and max"""
+        """
+Clamp value between min and max"""
         return max(min_value, min(value, max_value))
 
 def timer_decorator(func):
-    """Decorator to time function execution"""
+    """
+Decorator to time function execution"""
     if asyncio.iscoroutinefunction(func):
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
@@ -358,6 +364,7 @@ def retry_decorator(max_retries: int = 3, delay: float = 1.0, backoff: float = 2
 
 class FileTypeDetector:
     """Advanced file type detection"""
+
     
     AUDIO_EXTENSIONS = {'.mp3', '.wav', '.flac', '.ogg', '.aac', '.m4a', '.wma'}
     VIDEO_EXTENSIONS = {'.mp4', '.avi', '.mkv', '.mov', '.wmv', '.flv', '.webm', '.m4v'}
@@ -366,40 +373,48 @@ class FileTypeDetector:
     
     @classmethod
     def is_audio_file(cls, file_path: Path) -> bool:
-        """Check if file is audio format"""
+        """
+Check if file is audio format"""
         return file_path.suffix.lower() in cls.AUDIO_EXTENSIONS
     
     @classmethod
     def is_video_file(cls, file_path: Path) -> bool:
-        """Check if file is video format"""
+        """
+Check if file is video format"""
         return file_path.suffix.lower() in cls.VIDEO_EXTENSIONS
     
     @classmethod
     def is_image_file(cls, file_path: Path) -> bool:
-        """Check if file is image format"""
+        """
+Check if file is image format"""
         return file_path.suffix.lower() in cls.IMAGE_EXTENSIONS
     
     @classmethod
     def is_text_file(cls, file_path: Path) -> bool:
-        """Check if file is text format"""
+        """
+Check if file is text format"""
         return file_path.suffix.lower() in cls.TEXT_EXTENSIONS
     
     @classmethod
     def get_all_supported_extensions(cls) -> set:
-        """Get all supported file extensions"""
+        """
+Get all supported file extensions"""
         return cls.AUDIO_EXTENSIONS | cls.VIDEO_EXTENSIONS | cls.IMAGE_EXTENSIONS | cls.TEXT_EXTENSIONS
 
 class DataValidator:
-    """Data validation utilities"""
+    """
+Data validation utilities"""
     
     @staticmethod
     def validate_similarity_score(score: float) -> bool:
-        """Validate similarity score is between 0 and 1"""
+        """
+Validate similarity score is between 0 and 1"""
         return isinstance(score, (int, float)) and 0.0 <= score <= 1.0
     
     @staticmethod
     def validate_file_path(file_path: Path) -> bool:
-        """Validate file path exists and is a file"""
+        """
+Validate file path exists and is a file"""
         try:
             return file_path.exists() and file_path.is_file()
         except Exception:
@@ -407,7 +422,8 @@ class DataValidator:
     
     @staticmethod
     def validate_directory_path(dir_path: Path) -> bool:
-        """Validate directory path exists and is a directory"""
+        """
+Validate directory path exists and is a directory"""
         try:
             return dir_path.exists() and dir_path.is_dir()
         except Exception:
@@ -415,7 +431,8 @@ class DataValidator:
     
     @staticmethod
     def validate_numpy_array(array: np.ndarray, min_size: int = 1) -> bool:
-        """Validate numpy array is not empty and has minimum size"""
+        """
+Validate numpy array is not empty and has minimum size"""
         try:
             return isinstance(array, np.ndarray) and array.size >= min_size
         except Exception:
@@ -423,7 +440,8 @@ class DataValidator:
     
     @staticmethod
     def validate_config_dict(config: Dict[str, Any], required_keys: List[str]) -> bool:
-        """Validate configuration dictionary has required keys"""
+        """
+Validate configuration dictionary has required keys"""
         try:
             return all(key in config for key in required_keys)
         except Exception:
@@ -436,15 +454,18 @@ validator = DataValidator()
 
 # Convenience functions
 def hash_content(content: Union[str, bytes, np.ndarray]) -> str:
-    """Generate hash of content"""
+    """
+Generate hash of content"""
     return utils.generate_content_hash(content)
 
 def get_file_type(file_path: Path) -> Optional[str]:
-    """Get file type from path"""
+    """
+Get file type from path"""
     return utils.get_file_type(file_path)
 
 def calculate_similarity(vec1: np.ndarray, vec2: np.ndarray, method: str = 'cosine') -> float:
-    """Calculate similarity between vectors using specified method"""
+    """
+Calculate similarity between vectors using specified method"""
     if method == 'cosine':
         return utils.cosine_similarity(vec1, vec2)
     elif method == 'euclidean':
@@ -465,7 +486,8 @@ def format_results(results: List[Dict[str, Any]]) -> str:
         successful = sum(1 for r in results if 'error' not in r)
         duplicates = sum(1 for r in results if r.get('is_duplicate', False))
         
-        summary = f"""Processing Summary:
+        summary = f"""
+Processing Summary:
 ==================
 Total files processed: {total}
 Successful: {successful}

@@ -10,7 +10,7 @@ Module: backend/business/__init__.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -27,6 +27,7 @@ Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching → Multi-platform Distribution → Revenue Optimization → Analytics
 """
+
 import logging
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
@@ -41,7 +42,7 @@ logger = logging.getLogger(__name__)
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Business module imports
 try:
@@ -211,6 +212,7 @@ except Exception as e:
 
 class CreatorType(Enum):
     """Supported creator types"""
+
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -224,6 +226,7 @@ class CreatorType(Enum):
 
 class ContentFormat(Enum):
     """Supported content formats"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -235,6 +238,7 @@ class ContentFormat(Enum):
 
 class BusinessProcessStage(Enum):
     """Business process stages"""
+
     REGISTRATION = "registration"
     CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
@@ -261,7 +265,8 @@ class BusinessModuleConfig:
 
 
 class BusinessOrchestrator:
-    """Central business logic orchestrator"""
+    """
+Central business logic orchestrator"""
     
     def __init__(self, config: BusinessModuleConfig):
         self.config = config
@@ -482,7 +487,8 @@ async def get_business_orchestrator(config: Optional[BusinessModuleConfig] = Non
 
 
 async def initialize_business_system(config: Optional[BusinessModuleConfig] = None) -> bool:
-    """Initialize the complete business system"""
+    """
+Initialize the complete business system"""
     try:
         orchestrator = await get_business_orchestrator(config)
         logger.info("Business system initialized successfully")

@@ -4,10 +4,11 @@ This module implements state-of-the-art neural vocoding techniques for
 high-quality audio synthesis from spectral representations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VocoderConfig:
-    """Configuration for neural vocoder models."""
+    """
+Configuration for neural vocoder models."""
     sample_rate: int = 22050
     hop_length: int = 256
     win_length: int = 1024
@@ -80,23 +82,27 @@ class BaseVocoder(ABC, nn.Module):
         
     @abstractmethod
     def forward(self, mel_spectrogram: torch.Tensor) -> torch.Tensor:
-        """Generate waveform from mel-spectrogram."""
+        """
+Generate waveform from mel-spectrogram."""
         pass
         
     @abstractmethod
     def load_checkpoint(self, checkpoint_path: str) -> None:
-        """Load model weights from checkpoint."""
+        """
+Load model weights from checkpoint."""
         pass
         
     def preprocess_mel(self, mel: np.ndarray) -> torch.Tensor:
-        """Preprocess mel-spectrogram for vocoder input."""
+        """
+Preprocess mel-spectrogram for vocoder input."""
         mel_tensor = torch.from_numpy(mel).float()
         if len(mel_tensor.shape) == 2:
             mel_tensor = mel_tensor.unsqueeze(0)
         return mel_tensor.to(self.device)
         
     def postprocess_audio(self, audio: torch.Tensor) -> np.ndarray:
-        """Postprocess generated audio."""
+        """
+Postprocess generated audio."""
         if isinstance(audio, torch.Tensor):
             audio = audio.cpu().numpy()
         if len(audio.shape) > 1:
@@ -105,7 +111,8 @@ class BaseVocoder(ABC, nn.Module):
 
 
 class WaveNetVocoder(BaseVocoder):
-    """WaveNet-based neural vocoder for high-quality audio synthesis."""
+    """
+WaveNet-based neural vocoder for high-quality audio synthesis."""
     
     def __init__(self, config: VocoderConfig):
         super().__init__(config)
@@ -153,7 +160,8 @@ class WaveNetVocoder(BaseVocoder):
         self.receptive_field = receptive_field
         
     def forward(self, mel_spectrogram: torch.Tensor) -> torch.Tensor:
-        """Generate waveform from mel-spectrogram using WaveNet."""
+        """
+Generate waveform from mel-spectrogram using WaveNet."""
         # Upsample mel-spectrogram to match audio length
         mel_upsampled = F.interpolate(
             mel_spectrogram, 
@@ -191,7 +199,8 @@ class WaveNetVocoder(BaseVocoder):
         return x.squeeze(1)
         
     def load_checkpoint(self, checkpoint_path: str) -> None:
-        """Load WaveNet model weights."""
+        """
+Load WaveNet model weights."""
         checkpoint = torch.load(checkpoint_path, map_location=self.device)
         self.load_state_dict(checkpoint['model_state_dict'])
         self.is_trained = True
@@ -251,7 +260,8 @@ class HiFiGANGenerator(nn.Module):
 
 
 class ResBlock(nn.Module):
-    """Residual block for HiFi-GAN."""
+    """
+Residual block for HiFi-GAN."""
     
     def __init__(self, channels: int, kernel_size: int = 3, dilations: List[int] = [1, 3, 5]):
         super().__init__()
@@ -280,18 +290,21 @@ class ResBlock(nn.Module):
 
 
 class HiFiGANVocoder(BaseVocoder):
-    """HiFi-GAN neural vocoder for high-fidelity audio generation."""
+    """
+HiFi-GAN neural vocoder for high-fidelity audio generation."""
     
     def __init__(self, config: VocoderConfig):
         super().__init__(config)
         self.generator = HiFiGANGenerator(config)
         
     def forward(self, mel_spectrogram: torch.Tensor) -> torch.Tensor:
-        """Generate waveform using HiFi-GAN."""
+        """
+Generate waveform using HiFi-GAN."""
         return self.generator(mel_spectrogram).squeeze(1)
         
     def load_checkpoint(self, checkpoint_path: str) -> None:
-        """Load HiFi-GAN model weights."""
+        """
+Load HiFi-GAN model weights."""
         checkpoint = torch.load(checkpoint_path, map_location=self.device)
         self.generator.load_state_dict(checkpoint['generator'])
         self.is_trained = True
@@ -324,7 +337,8 @@ class MelGANVocoder(BaseVocoder):
         
     def _make_upsampling_block(self, in_channels: int, out_channels: int, 
                               kernel_size: int, stride: int) -> nn.Sequential:
-        """Create upsampling block for MelGAN."""
+        """
+Create upsampling block for MelGAN."""
         return nn.Sequential(
             nn.ConvTranspose1d(in_channels, out_channels, kernel_size, stride, 
                               padding=(kernel_size - stride) // 2),
@@ -341,11 +355,13 @@ class MelGANVocoder(BaseVocoder):
         )
         
     def forward(self, mel_spectrogram: torch.Tensor) -> torch.Tensor:
-        """Generate waveform using MelGAN."""
+        """
+Generate waveform using MelGAN."""
         return self.generator(mel_spectrogram).squeeze(1)
         
     def load_checkpoint(self, checkpoint_path: str) -> None:
-        """Load MelGAN model weights."""
+        """
+Load MelGAN model weights."""
         checkpoint = torch.load(checkpoint_path, map_location=self.device)
         self.generator.load_state_dict(checkpoint['generator'])
         self.is_trained = True
@@ -363,7 +379,8 @@ class NeuralVocoderManager:
         
     def register_vocoder(self, name: str, vocoder: BaseVocoder, 
                         is_default: bool = False) -> None:
-        """Register a neural vocoder."""
+        """
+Register a neural vocoder."""
         self.vocoders[name] = vocoder
         self.performance_metrics[name] = {
             'synthesis_time': 0.0,
@@ -422,7 +439,8 @@ class NeuralVocoderManager:
         )
         
     def _select_optimal_vocoder(self, quality_preference: str) -> str:
-        """Select optimal vocoder based on quality preference and performance."""
+        """
+Select optimal vocoder based on quality preference and performance."""
         if quality_preference == "speed":
             # Select fastest vocoder
             return min(self.performance_metrics.keys(),
@@ -457,7 +475,8 @@ class NeuralVocoderManager:
         return results
         
     def get_vocoder_info(self) -> Dict:
-        """Get information about all registered vocoders."""
+        """
+Get information about all registered vocoders."""
         return {
             name: {
                 'type': type(vocoder).__name__,
@@ -470,14 +489,16 @@ class NeuralVocoderManager:
 
 
 class VocoderConfigManager:
-    """Configuration manager for neural vocoders with preset management."""
+    """
+Configuration manager for neural vocoders with preset management."""
     
     def __init__(self):
         self.presets: Dict[str, VocoderConfig] = {}
         self._load_default_presets()
         
     def _load_default_presets(self) -> None:
-        """Load default vocoder presets."""
+        """
+Load default vocoder presets."""
         # High quality preset
         self.presets['high_quality'] = VocoderConfig(
             sample_rate=48000,
@@ -525,13 +546,15 @@ class VocoderConfigManager:
         self.presets[name] = config
         
     def export_config(self, config: VocoderConfig, filepath: str) -> None:
-        """Export configuration to JSON file."""
+        """
+Export configuration to JSON file."""
         config_dict = config.__dict__.copy()
         with open(filepath, 'w') as f:
             json.dump(config_dict, f, indent=2)
             
     def import_config(self, filepath: str) -> VocoderConfig:
-        """Import configuration from JSON file."""
+        """
+Import configuration from JSON file."""
         with open(filepath, 'r') as f:
             config_dict = json.load(f)
         return VocoderConfig(**config_dict)
@@ -539,7 +562,8 @@ class VocoderConfigManager:
 
 # Factory function for easy vocoder creation
 def create_vocoder(vocoder_type: str, config: VocoderConfig) -> BaseVocoder:
-    """Factory function to create vocoder instances."""
+    """
+Factory function to create vocoder instances."""
     vocoders = {
         'wavenet': WaveNetVocoder,
         'hifigan': HiFiGANVocoder,

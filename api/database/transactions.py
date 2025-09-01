@@ -10,6 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
+
 import asyncio
 import uuid
 from typing import Optional, Dict, Any, List, Callable, TypeVar, Generic, Union
@@ -38,7 +39,9 @@ T = TypeVar('T')
 
 
 class TransactionState(Enum):
-    """Transaction state enumeration"""
+    """
+Transaction state enumeration"""
+
     PENDING = "pending"
     ACTIVE = "active"
     COMMITTED = "committed"
@@ -49,6 +52,7 @@ class TransactionState(Enum):
 
 class IsolationLevel(Enum):
     """Transaction isolation levels"""
+
     READ_UNCOMMITTED = "read_uncommitted"
     READ_COMMITTED = "read_committed"
     REPEATABLE_READ = "repeatable_read"
@@ -57,6 +61,7 @@ class IsolationLevel(Enum):
 
 class TransactionType(Enum):
     """Transaction types for different patterns"""
+
     SIMPLE = "simple"                    # Basic single-database transaction
     DISTRIBUTED = "distributed"         # Multi-database transaction
     SAGA = "saga"                       # Saga pattern for microservices
@@ -79,7 +84,8 @@ class TransactionConfig:
 
 @dataclass
 class TransactionContext:
-    """Transaction execution context"""
+    """
+Transaction execution context"""
     transaction_id: str
     transaction_type: TransactionType
     state: TransactionState
@@ -95,14 +101,16 @@ class TransactionContext:
     
     @property
     def duration_ms(self) -> Optional[float]:
-        """Get transaction duration in milliseconds"""
+        """
+Get transaction duration in milliseconds"""
         if self.completed_at:
             return (self.completed_at - self.started_at).total_seconds() * 1000
         return None
 
 
 class TransactionOperation(ABC):
-    """Abstract transaction operation"""
+    """
+Abstract transaction operation"""
     
     def __init__(self, operation_id: str, operation_type: str):
         self.operation_id = operation_id
@@ -112,17 +120,20 @@ class TransactionOperation(ABC):
     
     @abstractmethod
     async def execute(self, session: AsyncSession, context: TransactionContext) -> Any:
-        """Execute the operation"""
+        """
+Execute the operation"""
         pass
     
     @abstractmethod
     async def compensate(self, session: AsyncSession, context: TransactionContext) -> Any:
-        """Compensate (undo) the operation"""
+        """
+Compensate (undo) the operation"""
         pass
 
 
 class DatabaseOperation(TransactionOperation):
-    """Database operation with SQL execution"""
+    """
+Database operation with SQL execution"""
     
     def __init__(self, operation_id: str, sql: str, params: Dict[str, Any] = None):
         super().__init__(operation_id, "database")
@@ -205,7 +216,8 @@ class TransactionManager:
         self._locks: Dict[str, asyncio.Lock] = {}
     
     async def initialize(self):
-        """Initialize transaction manager"""
+        """
+Initialize transaction manager"""
         try:
             self.db_connection = await DatabaseConnection.get_instance()
             self.redis_client = self.db_connection.connections.get('redis_primary')
@@ -264,7 +276,8 @@ class TransactionManager:
     async def begin_transaction(self, 
                               transaction_type: TransactionType,
                               config: TransactionConfig) -> TransactionContext:
-        """Begin a new transaction"""
+        """
+Begin a new transaction"""
         transaction_id = str(uuid.uuid4())
         
         context = TransactionContext(
@@ -411,13 +424,15 @@ class TransactionManager:
         context.metadata['session'] = session
     
     async def _commit_simple_transaction(self, context: TransactionContext):
-        """Commit simple transaction"""
+        """
+Commit simple transaction"""
         session = context.metadata.get('session')
         if session:
             await session.commit()
     
     async def _rollback_simple_transaction(self, context: TransactionContext):
-        """Rollback simple transaction"""
+        """
+Rollback simple transaction"""
         session = context.metadata.get('session')
         if session:
             await session.rollback()
@@ -425,7 +440,8 @@ class TransactionManager:
     # === Distributed Transaction Implementation ===
     
     async def _begin_distributed_transaction(self, context: TransactionContext):
-        """Begin distributed transaction using 2PC pattern"""
+        """
+Begin distributed transaction using 2PC pattern"""
         # For now, use simple approach - in production, implement proper 2PC
         await self._begin_simple_transaction(context)
         
@@ -471,13 +487,15 @@ class TransactionManager:
         context.metadata['compensations'] = []
     
     async def _commit_saga_transaction(self, context: TransactionContext):
-        """Commit saga transaction - all operations already executed"""
+        """
+Commit saga transaction - all operations already executed"""
         # In saga pattern, operations are executed immediately
         # Commit just marks the saga as successful
         pass
     
     async def _rollback_saga_transaction(self, context: TransactionContext):
-        """Rollback saga transaction by executing compensations"""
+        """
+Rollback saga transaction by executing compensations"""
         operations = context.metadata.get('operations', [])
         
         # Execute compensations in reverse order
@@ -498,11 +516,13 @@ class TransactionManager:
         context.metadata['compensations_enabled'] = True
     
     async def _commit_compensating_transaction(self, context: TransactionContext):
-        """Commit compensating transaction"""
+        """
+Commit compensating transaction"""
         await self._commit_simple_transaction(context)
     
     async def _rollback_compensating_transaction(self, context: TransactionContext):
-        """Rollback compensating transaction"""
+        """
+Rollback compensating transaction"""
         # Execute all registered compensations
         for comp_op in context.compensation_operations:
             try:
@@ -533,7 +553,8 @@ class TransactionManager:
         await self._commit_simple_transaction(context)
     
     async def _rollback_nested_transaction(self, context: TransactionContext):
-        """Rollback to savepoint or full rollback"""
+        """
+Rollback to savepoint or full rollback"""
         session = context.metadata.get('session')
         
         if session and context.savepoints:
@@ -559,11 +580,13 @@ class TransactionManager:
         return None
     
     async def get_active_transactions(self) -> List[TransactionContext]:
-        """Get all active transactions"""
+        """
+Get all active transactions"""
         return list(self.active_transactions.values())
     
     async def get_transaction_statistics(self) -> Dict[str, Any]:
-        """Get transaction statistics"""
+        """
+Get transaction statistics"""
         total_transactions = len(self.transaction_history) + len(self.active_transactions)
         
         if not self.transaction_history:
@@ -594,7 +617,8 @@ class TransactionManager:
         }
     
     async def cleanup_stale_transactions(self, max_age_hours: int = 24):
-        """Clean up stale transactions"""
+        """
+Clean up stale transactions"""
         cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         
         stale_transaction_ids = []
@@ -623,11 +647,13 @@ class TransactionExecutor:
         self.operations: List[TransactionOperation] = []
     
     async def add_operation(self, operation: TransactionOperation):
-        """Add operation to transaction"""
+        """
+Add operation to transaction"""
         self.operations.append(operation)
     
     async def execute_operation(self, operation: TransactionOperation) -> Any:
-        """Execute a single operation"""
+        """
+Execute a single operation"""
         session = self.context.metadata.get('session')
         
         if not session:
@@ -716,13 +742,15 @@ class DistributedTransactionCoordinator:
         self.coordinator_state: Dict[str, Dict[str, Any]] = {}
     
     def register_participant(self, participant_id: str, participant_client: Any):
-        """Register a participant in distributed transactions"""
+        """
+Register a participant in distributed transactions"""
         self.participants[participant_id] = participant_client
     
     async def coordinate_distributed_transaction(self, 
                                                transaction_id: str,
                                                operations_by_participant: Dict[str, List[Any]]) -> bool:
-        """Coordinate distributed transaction using 2PC protocol"""
+        """
+Coordinate distributed transaction using 2PC protocol"""
         
         # Phase 1: Prepare
         prepare_results = {}
@@ -821,7 +849,8 @@ async def get_transaction_manager() -> TransactionManager:
 
 @asynccontextmanager
 async def simple_transaction(config: Optional[TransactionConfig] = None):
-    """Simple transaction context manager"""
+    """
+Simple transaction context manager"""
     manager = await get_transaction_manager()
     async with manager.transaction(TransactionType.SIMPLE, config) as tx:
         yield tx
@@ -829,7 +858,8 @@ async def simple_transaction(config: Optional[TransactionConfig] = None):
 
 @asynccontextmanager
 async def saga_transaction(config: Optional[TransactionConfig] = None):
-    """Saga transaction context manager"""
+    """
+Saga transaction context manager"""
     manager = await get_transaction_manager()
     async with manager.transaction(TransactionType.SAGA, config) as tx:
         yield tx
@@ -837,7 +867,8 @@ async def saga_transaction(config: Optional[TransactionConfig] = None):
 
 @asynccontextmanager
 async def distributed_transaction(config: Optional[TransactionConfig] = None):
-    """Distributed transaction context manager"""
+    """
+Distributed transaction context manager"""
     manager = await get_transaction_manager()
     async with manager.transaction(TransactionType.DISTRIBUTED, config) as tx:
         yield tx
@@ -847,7 +878,8 @@ async def distributed_transaction(config: Optional[TransactionConfig] = None):
 def retry_transaction(max_retries: int = 3, 
                      delay_seconds: float = 1.0,
                      backoff_multiplier: float = 2.0):
-    """Decorator for automatic transaction retry on failure"""
+    """
+Decorator for automatic transaction retry on failure"""
     
     def decorator(func: Callable):
         async def wrapper(*args, **kwargs):

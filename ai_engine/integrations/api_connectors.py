@@ -14,6 +14,7 @@ This module provides comprehensive API integration capabilities for external ser
 including streaming platforms, payment processors, analytics services, and content
 distribution networks.
 """
+
 import logging
 import asyncio
 import aiohttp
@@ -37,7 +38,9 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class APIProvider(Enum):
-    """Supported API providers"""
+    """
+Supported API providers"""
+
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     SOUNDCLOUD = "soundcloud"
@@ -61,6 +64,7 @@ class APIProvider(Enum):
 
 class APIConnectionStatus(Enum):
     """API connection status"""
+
     CONNECTED = auto()
     DISCONNECTED = auto()
     AUTHENTICATING = auto()
@@ -71,7 +75,9 @@ class APIConnectionStatus(Enum):
     INVALID_CREDENTIALS = auto()
 
 class APIAuthType(Enum):
-    """Authentication types"""
+    """
+Authentication types"""
+
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
@@ -102,7 +108,8 @@ class APICredentials:
 
 @dataclass 
 class APIRequestConfig:
-    """API request configuration"""
+    """
+API request configuration"""
     method: str = "GET"
     endpoint: str = ""
     params: Dict[str, Any] = field(default_factory=dict)
@@ -130,7 +137,8 @@ class APIResponse(Generic[T]):
     provider: Optional[APIProvider] = None
 
 class APIConnectorError(Exception):
-    """Custom exception for API connector errors"""
+    """
+Custom exception for API connector errors"""
     def __init__(self, message: str, error_code: Optional[str] = None, 
                  provider: Optional[APIProvider] = None):
         super().__init__(message)
@@ -139,7 +147,8 @@ class APIConnectorError(Exception):
         self.timestamp = datetime.utcnow()
 
 class RateLimiter:
-    """Advanced rate limiter with multiple strategies"""
+    """
+Advanced rate limiter with multiple strategies"""
     
     def __init__(self, requests_per_minute: int = 60, 
                  requests_per_hour: int = 3600, 
@@ -153,7 +162,8 @@ class RateLimiter:
         self.lock = asyncio.Lock()
     
     async def acquire(self) -> bool:
-        """Acquire rate limit permission"""
+        """
+Acquire rate limit permission"""
         async with self.lock:
             now = datetime.utcnow()
             
@@ -180,7 +190,8 @@ class RateLimiter:
             return True
     
     def get_wait_time(self) -> float:
-        """Get time to wait before next request"""
+        """
+Get time to wait before next request"""
         now = datetime.utcnow()
         
         if self.minute_window and len(self.minute_window) >= self.requests_per_minute:
@@ -194,7 +205,8 @@ class RateLimiter:
         return 0.0
 
 class BaseAPIConnector(ABC, Generic[T]):
-    """Base class for all API connectors"""
+    """
+Base class for all API connectors"""
     
     def __init__(self, credentials: APICredentials, provider: APIProvider):
         self.credentials = credentials
@@ -219,11 +231,13 @@ class BaseAPIConnector(ABC, Generic[T]):
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         await self._close_session()
     
     async def _create_session(self):
-        """Create HTTP session"""
+        """
+Create HTTP session"""
         if not self.session:
             timeout = aiohttp.ClientTimeout(total=30, connect=10)
             connector = aiohttp.TCPConnector(
@@ -240,13 +254,15 @@ class BaseAPIConnector(ABC, Generic[T]):
             )
     
     async def _close_session(self):
-        """Close HTTP session"""
+        """
+Close HTTP session"""
         if self.session:
             await self.session.close()
             self.session = None
     
     def _get_default_headers(self) -> Dict[str, str]:
-        """Get default headers for requests"""
+        """
+Get default headers for requests"""
         headers = {
             'User-Agent': 'IA-Influencer-Agent/1.0',
             'Accept': 'application/json',
@@ -256,34 +272,40 @@ class BaseAPIConnector(ABC, Generic[T]):
         return headers
     
     def _encrypt_sensitive_data(self, data: str) -> str:
-        """Encrypt sensitive data"""
+        """
+Encrypt sensitive data"""
         if self.cipher:
             return self.cipher.encrypt(data.encode()).decode()
         return data
     
     def _decrypt_sensitive_data(self, encrypted_data: str) -> str:
-        """Decrypt sensitive data"""
+        """
+Decrypt sensitive data"""
         if self.cipher:
             return self.cipher.decrypt(encrypted_data.encode()).decode()
         return encrypted_data
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the API"""
+        """
+Authenticate with the API"""
         pass
     
     @abstractmethod
     async def refresh_credentials(self) -> bool:
-        """Refresh authentication credentials"""
+        """
+Refresh authentication credentials"""
         pass
     
     @abstractmethod
     def _prepare_auth_headers(self) -> Dict[str, str]:
-        """Prepare authentication headers"""
+        """
+Prepare authentication headers"""
         pass
     
     async def _make_request(self, config: APIRequestConfig) -> APIResponse[T]:
-        """Make HTTP request with comprehensive error handling"""
+        """
+Make HTTP request with comprehensive error handling"""
         if not self.session:
             await self._create_session()
         
@@ -446,7 +468,8 @@ class BaseAPIConnector(ABC, Generic[T]):
         return rate_limit if rate_limit else None
     
     async def test_connection(self) -> APIResponse[Dict[str, Any]]:
-        """Test API connection"""
+        """
+Test API connection"""
         test_config = APIRequestConfig(
             method="GET",
             endpoint="/health" if hasattr(self, '_health_endpoint') else "/",
@@ -467,17 +490,20 @@ class BaseAPIConnector(ABC, Generic[T]):
         return self.status
     
     def get_error_count(self) -> int:
-        """Get current error count"""
+        """
+Get current error count"""
         return self.error_count
     
     def reset_error_count(self):
-        """Reset error count"""
+        """
+Reset error count"""
         self.error_count = 0
         if self.error_count == 0:
             self.status = APIConnectionStatus.DISCONNECTED
 
 class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
-    """Specialized connector for streaming platforms"""
+    """
+Specialized connector for streaming platforms"""
     
     def __init__(self, credentials: APICredentials, provider: APIProvider):
         super().__init__(credentials, provider)
@@ -486,7 +512,8 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         self.playlist_cache = {}
     
     async def authenticate(self) -> bool:
-        """Authenticate with streaming platform"""
+        """
+Authenticate with streaming platform"""
         try:
             if self.credentials.auth_type == APIAuthType.OAUTH2:
                 return await self._oauth2_authenticate()
@@ -532,7 +559,8 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return test_response.success
     
     async def refresh_credentials(self) -> bool:
-        """Refresh OAuth2 credentials"""
+        """
+Refresh OAuth2 credentials"""
         if not self.credentials.refresh_token:
             return await self.authenticate()
         
@@ -572,7 +600,8 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return {}
     
     async def search_tracks(self, query: str, limit: int = 50) -> APIResponse[List[Dict[str, Any]]]:
-        """Search for tracks"""
+        """
+Search for tracks"""
         search_config = APIRequestConfig(
             method="GET",
             endpoint="/search",
@@ -655,14 +684,16 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         self.playlist_cache.clear()
 
 class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
-    """Specialized connector for payment gateways"""
+    """
+Specialized connector for payment gateways"""
     
     def __init__(self, credentials: APICredentials, provider: APIProvider):
         super().__init__(credentials, provider)
         self.webhook_validators = {}
     
     async def authenticate(self) -> bool:
-        """Authenticate with payment gateway"""
+        """
+Authenticate with payment gateway"""
         try:
             test_response = await self.test_connection()
             if test_response.success:
@@ -679,7 +710,8 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
         return await self.authenticate()
     
     def _prepare_auth_headers(self) -> Dict[str, str]:
-        """Prepare authentication headers"""
+        """
+Prepare authentication headers"""
         if self.provider == APIProvider.STRIPE and self.credentials.secret_key:
             return {'Authorization': f'Bearer {self.credentials.secret_key}'}
         elif self.credentials.api_key:
@@ -688,7 +720,8 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
     
     async def create_payment_intent(self, amount: int, currency: str = 'usd', 
                                   metadata: Optional[Dict[str, str]] = None) -> APIResponse[Dict[str, Any]]:
-        """Create payment intent"""
+        """
+Create payment intent"""
         payment_config = APIRequestConfig(
             method="POST",
             endpoint="/payment_intents",
@@ -775,7 +808,8 @@ class APIConnectorManager:
         }
     
     async def add_connector(self, credentials: APICredentials) -> bool:
-        """Add new API connector"""
+        """
+Add new API connector"""
         try:
             provider = credentials.provider
             
@@ -806,7 +840,8 @@ class APIConnectorManager:
         return self.connectors.get(provider)
     
     async def remove_connector(self, provider: APIProvider) -> bool:
-        """Remove connector"""
+        """
+Remove connector"""
         if provider in self.connectors:
             connector = self.connectors[provider]
             if hasattr(connector, '_close_session'):
@@ -853,7 +888,8 @@ class APIConnectorManager:
                 for provider, connector in self.connectors.items()}
     
     async def cleanup(self):
-        """Cleanup all connections"""
+        """
+Cleanup all connections"""
         for provider, connector in list(self.connectors.items()):
             await self.remove_connector(provider)
         

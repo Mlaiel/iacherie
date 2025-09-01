@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 from enum import Enum
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -26,7 +27,9 @@ import json
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels for monitoring and alerting"""
+    """
+Error severity levels for monitoring and alerting"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -36,6 +39,7 @@ class ErrorSeverity(Enum):
 
 class ErrorCategory(Enum):
     """Categories of errors for better organization"""
+
     NETWORK = "network"
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
@@ -55,6 +59,7 @@ class ErrorCategory(Enum):
 
 class RecoveryStrategy(Enum):
     """Recovery strategies for different error types"""
+
     RETRY_IMMEDIATE = "retry_immediate"
     RETRY_EXPONENTIAL_BACKOFF = "retry_exponential_backoff"
     RETRY_AFTER_DELAY = "retry_after_delay"
@@ -117,7 +122,8 @@ class CrawlingAgentException(Exception):
 
 
 class CrawlingError(CrawlingAgentException):
-    """Generic crawling operation errors"""
+    """
+Generic crawling operation errors"""
     
     def __init__(self, message: str, url: str = "", **kwargs):
         super().__init__(

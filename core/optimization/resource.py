@@ -8,6 +8,7 @@ Advanced resource optimization for system performance, load balancing,
 storage optimization, and bandwidth management.
 Specialized for high-performance content processing systems.
 """
+
 import asyncio
 import psutil
 import time
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ResourceMetrics:
-    """Comprehensive system resource metrics"""
+    """
+Comprehensive system resource metrics"""
     cpu_usage: float
     cpu_per_core: List[float]
     memory_usage: float
@@ -75,7 +77,8 @@ class ResourceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Advanced resource optimization recommendation"""
+    """
+Advanced resource optimization recommendation"""
     resource_type: str
     current_usage: float
     target_usage: float
@@ -92,7 +95,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ResourcePrediction:
-    """Resource usage prediction"""
+    """
+Resource usage prediction"""
     resource_type: str
     current_value: float
     predicted_values: List[float]  # Next 24 hours
@@ -103,7 +107,8 @@ class ResourcePrediction:
 
 
 class ResourceOptimizer(BaseEngine):
-    """Advanced resource optimization engine with ML predictions"""
+    """
+Advanced resource optimization engine with ML predictions"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -684,7 +689,8 @@ class ResourceOptimizer(BaseEngine):
         return min(100, (network_io.bytes_sent + network_io.bytes_recv) / (1024 * 1024 * 100))
     
     async def _get_gpu_usage(self) -> Optional[float]:
-        """Get GPU usage if available"""
+        """
+Get GPU usage if available"""
         try:
             # Placeholder for GPU monitoring
             return None
@@ -692,27 +698,32 @@ class ResourceOptimizer(BaseEngine):
             return None
     
     async def _get_active_connections(self) -> int:
-        """Get number of active network connections"""
+        """
+Get number of active network connections"""
         return len(psutil.net_connections())
     
     async def _get_request_rate(self) -> float:
-        """Get current request rate"""
+        """
+Get current request rate"""
         # Placeholder implementation
         return 150.0  # requests per second
     
     async def _get_average_response_time(self) -> float:
-        """Get average response time"""
+        """
+Get average response time"""
         # Placeholder implementation
         return 0.25  # seconds
     
     async def _calculate_throughput(self) -> float:
-        """Calculate system throughput"""
+        """
+Calculate system throughput"""
         # Placeholder implementation
         return 1000.0  # operations per second
 
 
 class LoadBalancer(BaseEngine):
-    """Intelligent load balancing optimization"""
+    """
+Intelligent load balancing optimization"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)

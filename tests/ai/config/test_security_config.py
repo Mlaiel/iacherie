@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for SecurityConfig module ensuring 100% security,
 authentication, encryption, and threat protection for the IA platform.
 """
+
 import pytest
 import sys
 import os
@@ -75,7 +76,8 @@ class TestSecurityConfig:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.config = SecurityConfig()
         self.test_env = test_environment
         self.test_credentials = self._generate_test_credentials()
@@ -779,7 +781,8 @@ class TestAuthenticationManager:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.auth_manager = AuthenticationManager()
     
     @pytest_marks["security"]
@@ -822,7 +825,8 @@ class TestEncryptionEngine:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.encryption_engine = EncryptionEngine()
     
     @pytest_marks["security"]
@@ -856,7 +860,8 @@ class TestThreatDetector:
     
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
+        """
+Configuration avant chaque test."""
         self.threat_detector = ThreatDetector()
     
     @pytest_marks["security"]

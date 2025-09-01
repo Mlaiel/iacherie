@@ -9,6 +9,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
+
 import asyncio
 import hashlib
 import pickle
@@ -31,7 +32,9 @@ from ..security.encryption import EncryptionService
 
 
 class CacheLevel(Enum):
-    """Cache level enumeration"""
+    """
+Cache level enumeration"""
+
     L1_MEMORY = "l1_memory"
     L2_REDIS = "l2_redis"
     L3_DISK = "l3_disk"
@@ -40,6 +43,7 @@ class CacheLevel(Enum):
 
 class CacheStrategy(Enum):
     """Cache strategy enumeration"""
+
     LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In, First Out
@@ -50,6 +54,7 @@ class CacheStrategy(Enum):
 
 class CachePolicy(Enum):
     """Cache policy enumeration"""
+
     WRITE_THROUGH = "write_through"
     WRITE_BACK = "write_back"
     WRITE_AROUND = "write_around"
@@ -75,25 +80,29 @@ class CacheEntry:
     
     @property
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""
+        """
+Check if cache entry is expired"""
         if self.ttl is None:
             return False
         return datetime.utcnow() > self.created_at + timedelta(seconds=self.ttl)
     
     @property
     def age_seconds(self) -> int:
-        """Get age of cache entry in seconds"""
+        """
+Get age of cache entry in seconds"""
         return int((datetime.utcnow() - self.created_at).total_seconds())
     
     def update_access(self):
-        """Update access information"""
+        """
+Update access information"""
         self.last_accessed = datetime.utcnow()
         self.access_count += 1
 
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics"""
+    """
+Cache performance metrics"""
     hits: int = 0
     misses: int = 0
     evictions: int = 0
@@ -104,7 +113,8 @@ class CacheMetrics:
     hit_ratio: float = 0.0
     
     def calculate_hit_ratio(self):
-        """Calculate cache hit ratio"""
+        """
+Calculate cache hit ratio"""
         total_requests = self.hits + self.misses
         self.hit_ratio = self.hits / total_requests if total_requests > 0 else 0.0
 
@@ -457,7 +467,8 @@ class IntelligentCacheManager:
             return pickle.dumps(value)
     
     async def _deserialize_value(self, value: bytes, entry: CacheEntry) -> Any:
-        """Deserialize value from storage"""
+        """
+Deserialize value from storage"""
         try:
             # Decrypt if needed
             if entry.encrypted and self.encryption_service:
@@ -485,12 +496,14 @@ class IntelligentCacheManager:
         return gzip.compress(value)
     
     async def _decompress_value(self, value: bytes) -> bytes:
-        """Decompress value using gzip"""
+        """
+Decompress value using gzip"""
         import gzip
         return gzip.decompress(value)
     
     def _hash_key(self, key: str) -> str:
-        """Generate hash for cache key"""
+        """
+Generate hash for cache key"""
         return hashlib.sha256(key.encode()).hexdigest()
     
     async def _determine_cache_level(
@@ -498,7 +511,8 @@ class IntelligentCacheManager:
         entry: CacheEntry,
         strategy: Optional[CacheStrategy]
     ) -> CacheLevel:
-        """Determine optimal cache level for entry"""
+        """
+Determine optimal cache level for entry"""
         strategy = strategy or self.default_strategy
         
         # Size-based decisions
@@ -589,7 +603,8 @@ class IntelligentCacheManager:
         self.cache_metrics.evictions += 1
     
     def _update_access_pattern(self, key: str):
-        """Update access pattern for key"""
+        """
+Update access pattern for key"""
         if key not in self.access_patterns:
             self.access_patterns[key] = []
         
@@ -603,7 +618,8 @@ class IntelligentCacheManager:
         ]
     
     def _update_average_access_time(self, access_time: float):
-        """Update average access time"""
+        """
+Update average access time"""
         if self.cache_metrics.average_access_time == 0:
             self.cache_metrics.average_access_time = access_time
         else:
@@ -615,7 +631,8 @@ class IntelligentCacheManager:
             )
     
     async def _periodic_cleanup(self):
-        """Periodic cleanup of expired entries"""
+        """
+Periodic cleanup of expired entries"""
         while True:
             try:
                 await asyncio.sleep(self.config["cleanup_interval"])
@@ -692,7 +709,8 @@ async def cache_context(
     encryption_service: Optional[EncryptionService] = None,
     metrics_collector: Optional[MetricsCollector] = None
 ):
-    """Context manager for cache operations"""
+    """
+Context manager for cache operations"""
     cache_manager = await get_cache_manager(config, encryption_service, metrics_collector)
     try:
         yield cache_manager
@@ -707,7 +725,8 @@ async def cached_function(
     ttl: Optional[int] = None,
     strategy: Optional[CacheStrategy] = None
 ):
-    """Decorator for caching function results"""
+    """
+Decorator for caching function results"""
     def decorator(func):
         async def wrapper(*args, **kwargs):
             # Generate cache key

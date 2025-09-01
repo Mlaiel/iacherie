@@ -5,7 +5,7 @@ and requirements for different audio content types and platforms.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ AVERTISSEMENT STRICT ⚠️
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -13,6 +13,7 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
+
 import logging
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass, field
@@ -24,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Audio content types"""
+    """
+Audio content types"""
+
     MUSIC = "music"
     SPEECH = "speech"
     PODCAST = "podcast"
@@ -40,6 +43,7 @@ class ContentType(Enum):
 
 class QualityLevel(Enum):
     """Quality requirement levels"""
+
     BASIC = "basic"           # Minimum acceptable quality
     STANDARD = "standard"     # Standard professional quality
     HIGH = "high"             # High professional quality
@@ -49,6 +53,7 @@ class QualityLevel(Enum):
 
 class PlatformType(Enum):
     """Supported platform types"""
+
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -446,36 +451,42 @@ class QualityStandards:
         return self.profiles.get(profile_name)
     
     def get_default_profile(self) -> QualityProfile:
-        """Get default quality profile"""
+        """
+Get default quality profile"""
         return self.profiles[self.default_profile_name]
     
     def list_profiles(self) -> List[str]:
-        """List all available profile names"""
+        """
+List all available profile names"""
         return list(self.profiles.keys())
     
     def get_profiles_by_content_type(self, content_type: ContentType) -> List[QualityProfile]:
-        """Get profiles filtered by content type"""
+        """
+Get profiles filtered by content type"""
         return [
             profile for profile in self.profiles.values()
             if profile.content_type == content_type
         ]
     
     def get_profiles_by_platform(self, platform_type: PlatformType) -> List[QualityProfile]:
-        """Get profiles filtered by platform type"""
+        """
+Get profiles filtered by platform type"""
         return [
             profile for profile in self.profiles.values()
             if profile.platform_type == platform_type or profile.platform_type == PlatformType.GENERAL
         ]
     
     def get_profiles_by_quality_level(self, quality_level: QualityLevel) -> List[QualityProfile]:
-        """Get profiles filtered by quality level"""
+        """
+Get profiles filtered by quality level"""
         return [
             profile for profile in self.profiles.values()
             if profile.quality_level == quality_level
         ]
     
     def add_profile(self, profile: QualityProfile) -> bool:
-        """Add custom quality profile"""
+        """
+Add custom quality profile"""
         if profile.name in self.profiles:
             logger.warning(f"Profile {profile.name} already exists, overwriting")
         
@@ -631,7 +642,8 @@ class QualityStandards:
         return self.get_default_profile()
     
     def export_profiles(self, file_path: str, profile_names: List[str] = None):
-        """Export quality profiles to JSON file"""
+        """
+Export quality profiles to JSON file"""
         
         if profile_names is None:
             profiles_to_export = self.profiles

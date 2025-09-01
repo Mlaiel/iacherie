@@ -28,12 +28,13 @@ Supported Legal Frameworks:
 - Attribution Requirements Verification
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
+
 import asyncio
 import logging
 import json
@@ -53,7 +54,9 @@ from .platform_apis import PlatformAPIManager, APIResponse, PlatformType
 logger = logging.getLogger(__name__)
 
 class ViolationType(str, Enum):
-    """Legal violation type classification."""
+    """
+Legal violation type classification."""
+
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     DMCA_VIOLATION = "dmca_violation"
@@ -69,6 +72,7 @@ class ViolationType(str, Enum):
 
 class LegalJurisdiction(str, Enum):
     """Legal jurisdiction enumeration."""
+
     US_FEDERAL = "us_federal"
     EU_DIRECTIVE = "eu_directive"
     UK_COPYRIGHT = "uk_copyright"
@@ -79,6 +83,7 @@ class LegalJurisdiction(str, Enum):
 
 class ViolationSeverity(str, Enum):
     """Violation severity classification."""
+
     CRITICAL = "critical"      # Immediate legal action required
     HIGH = "high"             # Legal action recommended
     MEDIUM = "medium"         # Monitor and document
@@ -87,6 +92,7 @@ class ViolationSeverity(str, Enum):
 
 class LegalStatus(str, Enum):
     """Legal case status enumeration."""
+
     DETECTED = "detected"
     UNDER_REVIEW = "under_review"
     DMCA_SENT = "dmca_sent"
@@ -125,7 +131,8 @@ class LegalViolationAlert:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice structure."""
+    """
+DMCA takedown notice structure."""
     notice_id: str
     issued_date: datetime
     copyright_owner: Dict[str, Any]
@@ -161,7 +168,8 @@ class LegalViolationCrawler(BasePlatformCrawler):
     """
     
     def __init__(self, config: Dict[str, Any], platform_apis: PlatformAPIManager):
-        """Initialize legal violation crawler with advanced legal analysis."""
+        """
+Initialize legal violation crawler with advanced legal analysis."""
         super().__init__(config)
         self.platform_apis = platform_apis
         self.supported_platforms = [
@@ -256,7 +264,8 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _scan_youtube_violations(self, fingerprint: str) -> List[LegalViolationAlert]:
-        """Scan YouTube for copyright and policy violations."""
+        """
+Scan YouTube for copyright and policy violations."""
         violations = []
         
         try:
@@ -599,7 +608,8 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violation
     
     async def _calculate_content_similarity(self, content: Dict, fingerprint: str) -> float:
-        """Calculate content similarity score using advanced algorithms."""
+        """
+Calculate content similarity score using advanced algorithms."""
         # Placeholder for advanced similarity calculation
         # Would integrate with ML models and content analysis systems
         
@@ -616,7 +626,8 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return min(base_similarity, 1.0)
     
     def _determine_violation_severity(self, similarity_score: float) -> ViolationSeverity:
-        """Determine violation severity based on similarity and other factors."""
+        """
+Determine violation severity based on similarity and other factors."""
         if similarity_score >= 0.95:
             return ViolationSeverity.CRITICAL
         elif similarity_score >= 0.90:
@@ -629,7 +640,8 @@ class LegalViolationCrawler(BasePlatformCrawler):
             return ViolationSeverity.NEGLIGIBLE
     
     async def _analyze_fair_use(self, content: Dict) -> Dict[str, Any]:
-        """Analyze content for fair use considerations."""
+        """
+Analyze content for fair use considerations."""
         fair_use_factors = {
             "purpose_character": 0.5,    # Purpose and character of use
             "nature_work": 0.7,          # Nature of copyrighted work
@@ -864,7 +876,8 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return estimated_damages
     
     async def generate_dmca_notice(self, violation: LegalViolationAlert, copyright_owner: Dict[str, Any]) -> DMCANotice:
-        """Generate DMCA takedown notice for the violation."""
+        """
+Generate DMCA takedown notice for the violation."""
         notice_id = f"dmca_{violation.violation_id}_{int(datetime.now().timestamp())}"
         
         notice_text = await self._generate_dmca_text(violation, copyright_owner)
@@ -888,7 +901,8 @@ class LegalViolationCrawler(BasePlatformCrawler):
     
     async def _generate_dmca_text(self, violation: LegalViolationAlert, copyright_owner: Dict[str, Any]) -> str:
         """Generate DMCA notice text."""
-        template = """DMCA TAKEDOWN NOTICE
+        template = """
+DMCA TAKEDOWN NOTICE
 
 To: {platform} Copyright Agent
 
@@ -943,7 +957,8 @@ class LegalAnalyzer:
         self.analysis_models = {}
         
     async def analyze_violation_strength(self, violation: LegalViolationAlert) -> Dict[str, Any]:
-        """Analyze legal strength of violation case."""
+        """
+Analyze legal strength of violation case."""
         return {
             "copyright_validity": 0.9,
             "infringement_evidence": 0.85,
@@ -959,7 +974,8 @@ class DMCANoticeGenerator:
         self.delivery_systems = {}
         
     async def generate_notice(self, violation: LegalViolationAlert) -> str:
-        """Generate formatted DMCA takedown notice."""
+        """
+Generate formatted DMCA takedown notice."""
         return "DMCA Notice Template"
 
 class LegalPrecedentMatcher:
@@ -969,17 +985,20 @@ class LegalPrecedentMatcher:
         self.precedent_database = {}
         
     async def find_precedents(self, violation: LegalViolationAlert) -> List[LegalPrecedent]:
-        """Find relevant legal precedents."""
+        """
+Find relevant legal precedents."""
         return []
 
 class EvidenceCollector:
-    """Legal-grade evidence collection and preservation system."""
+    """
+Legal-grade evidence collection and preservation system."""
     
     def __init__(self):
         self.collection_tools = {}
         
     async def collect_evidence(self, violation: LegalViolationAlert) -> Dict[str, Any]:
-        """Collect comprehensive evidence package."""
+        """
+Collect comprehensive evidence package."""
         return {"evidence": "collected"}
 
 class ComplianceChecker:
@@ -989,17 +1008,20 @@ class ComplianceChecker:
         self.policy_databases = {}
         
     async def check_compliance(self, content: Dict, platform: str) -> List[str]:
-        """Check platform-specific compliance violations."""
+        """
+Check platform-specific compliance violations."""
         return []
 
 class CopyrightDatabase:
-    """Copyright registration and ownership database."""
+    """
+Copyright registration and ownership database."""
     
     def __init__(self):
         self.registrations = {}
         
     async def verify_ownership(self, content_id: str) -> Dict[str, Any]:
-        """Verify copyright ownership."""
+        """
+Verify copyright ownership."""
         return {"verified": True}
 
 class PlatformPolicyDatabase:
@@ -1009,15 +1031,18 @@ class PlatformPolicyDatabase:
         self.policies = {}
         
     async def get_policy_violations(self, platform: str, content: Dict) -> List[str]:
-        """Get platform policy violations."""
+        """
+Get platform policy violations."""
         return []
 
 class LegalTemplateManager:
-    """Legal document template management system."""
+    """
+Legal document template management system."""
     
     def __init__(self):
         self.templates = {}
         
     async def get_template(self, document_type: str) -> str:
-        """Get legal document template."""
+        """
+Get legal document template."""
         return "Template content"

@@ -23,7 +23,7 @@ Advanced Features:
 - Content Preference Deep Learning
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -42,6 +42,7 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set, NamedTuple
@@ -74,7 +75,9 @@ from .exceptions import ProfileNotFoundError, InsufficientDataError, ProfileAnal
 
 
 class BehaviorPattern(Enum):
-    """User behavior patterns"""
+    """
+User behavior patterns"""
+
     ACTIVE_EXPLORER = "active_explorer"
     PASSIVE_CONSUMER = "passive_consumer"
     SOCIAL_SHARER = "social_sharer"
@@ -87,6 +90,7 @@ class BehaviorPattern(Enum):
 
 class PersonalityTrait(Enum):
     """Personality traits for content creators"""
+
     CREATIVE = "creative"
     ANALYTICAL = "analytical"
     SOCIAL = "social"
@@ -124,7 +128,8 @@ class BehaviorAnalysis:
 
 @dataclass
 class DemographicProfile:
-    """Demographic analysis results"""
+    """
+Demographic analysis results"""
     
     age_group: Optional[str] = None
     gender: Optional[str] = None
@@ -187,7 +192,8 @@ class UserProfileAnalyzer:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for profile analysis"""
+        """
+Initialize ML models for profile analysis"""
         # Placeholder for ML model initialization
         # In production, these would be trained models
         self.behavior_classifier = {"initialized": True}
@@ -295,7 +301,8 @@ class UserProfileAnalyzer:
         )
     
     async def _analyze_demographics(self, profile: UserProfile) -> DemographicProfile:
-        """Analyze and infer user demographics"""
+        """
+Analyze and infer user demographics"""
         
         # Start with explicit demographics
         demographic_profile = DemographicProfile(
@@ -325,7 +332,8 @@ class UserProfileAnalyzer:
         return demographic_profile
     
     async def _analyze_psychographics(self, profile: UserProfile) -> PsychographicProfile:
-        """Analyze user psychographics and personality"""
+        """
+Analyze user psychographics and personality"""
         
         psychographic_profile = PsychographicProfile()
         
@@ -356,7 +364,8 @@ class UserProfileAnalyzer:
         return psychographic_profile
     
     async def _analyze_temporal_patterns(self, profile: UserProfile) -> Dict[str, Any]:
-        """Analyze temporal usage patterns"""
+        """
+Analyze temporal usage patterns"""
         
         interactions = profile.interaction_history
         
@@ -382,7 +391,8 @@ class UserProfileAnalyzer:
         }
     
     async def _analyze_content_preferences(self, profile: UserProfile) -> Dict[str, Any]:
-        """Analyze detailed content preferences"""
+        """
+Analyze detailed content preferences"""
         
         # Genre preferences with confidence scores
         genre_preferences = self._analyze_genre_preferences(profile)
@@ -412,7 +422,8 @@ class UserProfileAnalyzer:
     # Helper methods for behavior analysis
     
     def _calculate_activity_level(self, interactions: List[Dict[str, Any]]) -> float:
-        """Calculate user activity level (0-1)"""
+        """
+Calculate user activity level (0-1)"""
         # Calculate interactions per day over the last 30 days
         if not interactions:
             return 0.0
@@ -430,7 +441,8 @@ class UserProfileAnalyzer:
         return min(interactions_per_day / 50.0, 1.0)
     
     def _calculate_engagement_depth(self, interactions: List[Dict[str, Any]]) -> float:
-        """Calculate engagement depth based on interaction types"""
+        """
+Calculate engagement depth based on interaction types"""
         if not interactions:
             return 0.0
         
@@ -458,7 +470,8 @@ class UserProfileAnalyzer:
         return min(avg_engagement, 1.0)
     
     def _calculate_social_tendency(self, interactions: List[Dict[str, Any]]) -> float:
-        """Calculate social interaction tendency"""
+        """
+Calculate social interaction tendency"""
         if not interactions:
             return 0.0
         
@@ -471,7 +484,8 @@ class UserProfileAnalyzer:
         return social_interactions / len(interactions)
     
     def _calculate_exploration_rate(self, interactions: List[Dict[str, Any]]) -> float:
-        """Calculate how much user explores new content vs sticks to familiar"""
+        """
+Calculate how much user explores new content vs sticks to familiar"""
         if not interactions:
             return 0.5  # Default neutral exploration
         
@@ -499,7 +513,8 @@ class UserProfileAnalyzer:
         social: float, 
         exploration: float
     ) -> BehaviorPattern:
-        """Classify primary behavior pattern based on metrics"""
+        """
+Classify primary behavior pattern based on metrics"""
         
         # Define behavior pattern rules
         if activity > 0.7 and exploration > 0.6:
@@ -520,7 +535,8 @@ class UserProfileAnalyzer:
             return BehaviorPattern.PASSIVE_CONSUMER
     
     def _analyze_personality_traits(self, profile: UserProfile) -> Dict[PersonalityTrait, float]:
-        """Analyze personality traits from user behavior"""
+        """
+Analyze personality traits from user behavior"""
         
         traits = {}
         interactions = profile.interaction_history
@@ -798,7 +814,8 @@ class PreferenceExtractor:
         }
     
     def _get_action_score(self, action: str) -> float:
-        """Get preference score for an action"""
+        """
+Get preference score for an action"""
         action_scores = {
             'view': 0.1,
             'like': 0.5,
@@ -1069,7 +1086,8 @@ class CreatorArchetypeClassifier:
         features: Dict[str, float],
         archetype_info: Dict[str, Any]
     ) -> float:
-        """Calculate score for a specific archetype"""
+        """
+Calculate score for a specific archetype"""
         
         score = 0.0
         total_weight = 0.0
@@ -1095,7 +1113,8 @@ class CreatorArchetypeClassifier:
         secondary_archetype: Optional[str],
         archetype_scores: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Generate detailed archetype analysis"""
+        """
+Generate detailed archetype analysis"""
         
         primary_info = self.archetypes[primary_archetype]
         
@@ -1131,7 +1150,8 @@ class CreatorArchetypeClassifier:
         secondary_archetype: Optional[str],
         archetype_scores: Dict[str, float]
     ) -> List[str]:
-        """Generate personalized recommendations based on archetype"""
+        """
+Generate personalized recommendations based on archetype"""
         
         recommendations = []
         
@@ -1329,7 +1349,8 @@ class CollaborationCompatibilityAnalyzer:
         creator_a: Dict[str, Any],
         creator_b: Dict[str, Any]
     ) -> float:
-        """Calculate content style compatibility"""
+        """
+Calculate content style compatibility"""
         
         # Get content characteristics
         a_content = creator_a.get('content_characteristics', {})
@@ -1364,7 +1385,8 @@ class CollaborationCompatibilityAnalyzer:
         creator_a: Dict[str, Any],
         creator_b: Dict[str, Any]
     ) -> float:
-        """Calculate audience compatibility"""
+        """
+Calculate audience compatibility"""
         
         a_audience = creator_a.get('audience_demographics', {})
         b_audience = creator_b.get('audience_demographics', {})
@@ -1385,7 +1407,8 @@ class CollaborationCompatibilityAnalyzer:
         creator_a: Dict[str, Any],
         creator_b: Dict[str, Any]
     ) -> float:
-        """Calculate brand values and messaging alignment"""
+        """
+Calculate brand values and messaging alignment"""
         
         a_brand = creator_a.get('brand_characteristics', {})
         b_brand = creator_b.get('brand_characteristics', {})
@@ -1406,7 +1429,8 @@ class CollaborationCompatibilityAnalyzer:
         creator_a: Dict[str, Any],
         creator_b: Dict[str, Any]
     ) -> float:
-        """Calculate creative process and workflow compatibility"""
+        """
+Calculate creative process and workflow compatibility"""
         
         a_process = creator_a.get('creative_process', {})
         b_process = creator_b.get('creative_process', {})
@@ -1437,7 +1461,8 @@ class CollaborationCompatibilityAnalyzer:
         creator_a: Dict[str, Any],
         creator_b: Dict[str, Any]
     ) -> float:
-        """Calculate business objectives alignment"""
+        """
+Calculate business objectives alignment"""
         
         a_business = creator_a.get('business_objectives', {})
         b_business = creator_b.get('business_objectives', {})
@@ -1465,7 +1490,8 @@ class CollaborationCompatibilityAnalyzer:
         creator_a: Dict[str, Any],
         creator_b: Dict[str, Any]
     ) -> float:
-        """Calculate communication style compatibility"""
+        """
+Calculate communication style compatibility"""
         
         a_comm = creator_a.get('communication_style', {})
         b_comm = creator_b.get('communication_style', {})
@@ -1486,7 +1512,8 @@ class CollaborationCompatibilityAnalyzer:
         return (responsiveness_score * 0.6 + formality_score * 0.4)
     
     def _get_compatibility_level(self, score: float) -> str:
-        """Convert numerical score to compatibility level"""
+        """
+Convert numerical score to compatibility level"""
         
         if score >= 0.8:
             return "Excellent"
@@ -1733,7 +1760,8 @@ class MonetizationPotentialAssessor:
         creator_data: Dict[str, Any],
         factor: str
     ) -> float:
-        """Calculate score for individual monetization factor"""
+        """
+Calculate score for individual monetization factor"""
         
         analytics = creator_data.get('analytics', {})
         profile = creator_data.get('profile', {})
@@ -1764,7 +1792,8 @@ class MonetizationPotentialAssessor:
             return 0.5  # Default neutral score
     
     def _get_potential_level(self, score: float) -> str:
-        """Convert numerical score to potential level"""
+        """
+Convert numerical score to potential level"""
         
         if score >= 0.8:
             return "High"
@@ -1813,7 +1842,8 @@ class MonetizationPotentialAssessor:
         channel_scores: Dict[str, float],
         overall_potential: float
     ) -> List[str]:
-        """Generate actionable monetization recommendations"""
+        """
+Generate actionable monetization recommendations"""
         
         recommendations = []
         
@@ -1876,7 +1906,8 @@ class MonetizationPotentialAssessor:
         self,
         channel_scores: Dict[str, float]
     ) -> List[str]:
-        """Identify specific growth opportunities"""
+        """
+Identify specific growth opportunities"""
         
         opportunities = []
         
@@ -1914,7 +1945,8 @@ class MonetizationPotentialAssessor:
         creator_data: Dict[str, Any],
         channel_scores: Dict[str, float]
     ) -> List[str]:
-        """Identify potential risks to monetization"""
+        """
+Identify potential risks to monetization"""
         
         risks = []
         
@@ -1966,7 +1998,8 @@ class SocialInfluenceAnalyzer:
         user_id: str,
         social_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze user's social influence metrics"""
+        """
+Analyze user's social influence metrics"""
         
         try:
             # Calculate influence score
@@ -2015,7 +2048,8 @@ class SocialInfluenceAnalyzer:
         return round(sum(platform_scores.values()), 2)
     
     async def _analyze_influence_patterns(self, social_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze influence patterns and trends"""
+        """
+Analyze influence patterns and trends"""
         
         return {
             'dominant_platform': max(self.platform_weights.keys(), 
@@ -2030,7 +2064,8 @@ class SocialInfluenceAnalyzer:
         influence_score: float, 
         patterns: Dict[str, Any]
     ) -> List[str]:
-        """Generate recommendations for increasing social influence"""
+        """
+Generate recommendations for increasing social influence"""
         
         recommendations = []
         
@@ -2073,7 +2108,8 @@ class ContentPreferencePredictor:
         user_id: str,
         behavior_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict user content preferences"""
+        """
+Predict user content preferences"""
         
         try:
             # Analyze viewing patterns
@@ -2110,7 +2146,8 @@ class ContentPreferencePredictor:
         }
     
     async def _predict_preferences(self, patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict detailed content preferences"""
+        """
+Predict detailed content preferences"""
         
         return {
             'topics': ['technology', 'lifestyle', 'education'],
@@ -2123,7 +2160,8 @@ class ContentPreferencePredictor:
         self, 
         preferences: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate specific content recommendations"""
+        """
+Generate specific content recommendations"""
         
         return [
             {

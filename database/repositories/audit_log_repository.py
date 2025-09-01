@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc, text
@@ -51,7 +52,8 @@ class AuditLogRepository(BaseRepository[AuditLog]):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize audit log repository"""
+        """
+Initialize audit log repository"""
         super().__init__(db_session, AuditLog)
         
     def log_action(self,

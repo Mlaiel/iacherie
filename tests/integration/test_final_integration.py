@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,12 +13,14 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Final Integration Test for Business Logic Core with 53 Agents
+"""
+Final Integration Test for Business Logic Core with 53 Agents
 Validates the complete business workflow integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime
@@ -34,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 async def test_complete_integration():
-    """Test complete integration of 53 agents in business logic core"""
+    """
+Test complete integration of 53 agents in business logic core"""
     print("🚀 Testing Complete Business Logic Core Integration")
     print("=" * 60)
     

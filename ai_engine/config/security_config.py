@@ -4,11 +4,12 @@ Enterprise-grade security configuration for the IA Influencer Agent platform.
 Comprehensive authentication, encryption, access control, and audit logging.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import os
 import secrets
 import hashlib
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationMethod(Enum):
-    """Authentication methods"""
+    """
+Authentication methods"""
+
     PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     OAUTH2 = "oauth2"
@@ -36,6 +39,7 @@ class AuthenticationMethod(Enum):
 
 class EncryptionAlgorithm(Enum):
     """Encryption algorithms"""
+
     AES_256_GCM = "aes_256_gcm"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     RSA_4096 = "rsa_4096"
@@ -45,6 +49,7 @@ class EncryptionAlgorithm(Enum):
 
 class AccessLevel(Enum):
     """Access levels"""
+
     NONE = "none"
     READ = "read"
     WRITE = "write"
@@ -55,6 +60,7 @@ class AccessLevel(Enum):
 
 class SecurityLevel(Enum):
     """Security levels"""
+
     BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
@@ -64,6 +70,7 @@ class SecurityLevel(Enum):
 
 class ThreatLevel(Enum):
     """Threat levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -291,7 +298,8 @@ class AuditLoggingConfig:
 
 @dataclass
 class ThreatDetectionConfig:
-    """Threat detection configuration"""
+    """
+Threat detection configuration"""
     enabled: bool = True
     
     # Intrusion detection
@@ -329,7 +337,8 @@ class ThreatDetectionConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance configuration"""
+    """
+Compliance configuration"""
     enabled: bool = True
     
     # Regulatory frameworks
@@ -524,7 +533,8 @@ class SecurityConfig:
         return False
 
     def log_security_event(self, event_type: str, user_id: str, details: Dict[str, Any]):
-        """Log security event"""
+        """
+Log security event"""
         if not self.audit_logging.enabled:
             return
         

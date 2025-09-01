@@ -33,6 +33,7 @@ This code and concept are proprietary to Fahed Mlaiel.
 Any unauthorized copying, modification, or distribution is strictly prohibited.
 For licensing inquiries: mlaiel@live.de
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 import logging
 
@@ -141,7 +142,8 @@ class AlgorithmManager:
         self._initialize_engines()
     
     def _initialize_engines(self) -> None:
-        """Initialize all algorithm engines"""
+        """
+Initialize all algorithm engines"""
         try:
             for name, engine_class in ALGORITHM_ENGINES.items():
                 self.engines[name] = engine_class()
@@ -190,29 +192,34 @@ class AlgorithmManager:
         return engine.analyze(audio_data, config)
     
     def _process_video(self, video_data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video content"""
+        """
+Process video content"""
         engine = self.engines['video_processing']
         return engine.process(video_data, config)
     
     def _process_image(self, image_data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image content"""
+        """
+Process image content"""
         engine = self.engines['image_recognition']
         return engine.recognize(image_data, config)
     
     def _process_text(self, text_data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text content"""
+        """
+Process text content"""
         engine = self.engines['text_processing']
         return engine.process(text_data, config)
     
     def _apply_ml_optimization(self, results: Dict[str, Any], 
                               config: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply ML optimization algorithms"""
+        """
+Apply ML optimization algorithms"""
         engine = self.engines['ml_optimization']
         return engine.optimize(results, config)
     
     def _calculate_similarity(self, results: Dict[str, Any], 
                              config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate content similarity"""
+        """
+Calculate content similarity"""
         engine = self.engines['similarity_matching']
         return engine.calculate_similarity(results, config)
 
@@ -242,7 +249,8 @@ __all__ = [
 ]
 
 def get_algorithm_info() -> Dict[str, Any]:
-    """Get comprehensive information about all available algorithms"""
+    """
+Get comprehensive information about all available algorithms"""
     return {
         'module_name': 'Core Algorithms Module',
         'version': __version__,
@@ -275,7 +283,8 @@ def get_algorithm_info() -> Dict[str, Any]:
     }
 
 def validate_algorithm_installation() -> Dict[str, bool]:
-    """Validate that all algorithm engines can be properly initialized"""
+    """
+Validate that all algorithm engines can be properly initialized"""
     validation_results = {}
     
     for engine_name, engine_class in ALGORITHM_ENGINES.items():

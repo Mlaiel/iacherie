@@ -53,14 +53,12 @@ class BatchSyntaxFixer:
             content = content.replace('™', '(TM)')
             
             # Fix 2: The most common issue - missing newline after docstring before import/code
-            # Pattern: """docstring"""
-import -> """docstring"""\nimport
+            # Pattern: """docstring"""import -> """docstring"""\nimport
             content = re.sub(r'("""[^"]*?""")([a-zA-Z_])', r'\1\n\2', content)
             content = re.sub(r"('''[^']*?''')([a-zA-Z_])", r"\1\n\2", content)
             
             # Fix 3: Missing newline after class/function docstrings
-            # Pattern: """docstring"""
-    VARIABLE = -> """docstring"""\n    VARIABLE =
+            # Pattern: """docstring"""    VARIABLE = -> """docstring"""\n    VARIABLE =
             content = re.sub(r'("""[^"]*?""")(\s+)([A-Z_][A-Z0-9_]*\s*=)', r'\1\n\2\3', content)
             content = re.sub(r"('''[^']*?''')(\s+)([A-Z_][A-Z0-9_]*\s*=)", r"\1\n\2\3", content)
             

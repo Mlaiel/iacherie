@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
@@ -21,6 +21,7 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
+
 import asyncio
 import logging
 import time
@@ -46,7 +47,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class PipelineStageType(Enum):
-    """Types d'étapes de pipeline"""
+    """
+Types d'étapes de pipeline"""
+
     EXTRACTION = "extraction"
     VALIDATION = "validation"
     TRANSFORMATION = "transformation"
@@ -57,6 +60,7 @@ class PipelineStageType(Enum):
 
 class ExecutionMode(Enum):
     """Modes d'exécution du pipeline"""
+
     SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     STREAMING = "streaming"
@@ -64,6 +68,7 @@ class ExecutionMode(Enum):
 
 class PipelineStatus(Enum):
     """États du pipeline"""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -103,7 +108,8 @@ class StageResult:
 
 @dataclass
 class PipelineExecutionResult:
-    """Résultat complet d'exécution de pipeline"""
+    """
+Résultat complet d'exécution de pipeline"""
     pipeline_id: str
     pipeline_name: str
     status: PipelineStatus
@@ -118,7 +124,8 @@ class PipelineExecutionResult:
     checkpoints: List[str]
 
 class PipelineStageBase(ABC):
-    """Classe de base pour les étapes de pipeline"""
+    """
+Classe de base pour les étapes de pipeline"""
     
     def __init__(self, stage_id: str, config: Dict[str, Any]):
         self.stage_id = stage_id
@@ -152,7 +159,8 @@ class DataExtractionStage(PipelineStageBase):
         self.extraction_params = config.get('extraction_params', {})
     
     async def execute(self, input_data: Any, context: Dict[str, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Extrait les données selon la configuration"""
+        """
+Extrait les données selon la configuration"""
         
         start_time = time.time()
         metadata = {'extraction_method': self.source_type}
@@ -251,7 +259,8 @@ class DataExtractionStage(PipelineStageBase):
             return 0
     
     def validate_config(self) -> List[str]:
-        """Valide la configuration d'extraction"""
+        """
+Valide la configuration d'extraction"""
         errors = []
         
         if not self.source_type:
@@ -281,7 +290,8 @@ class DataValidationStage(PipelineStageBase):
         self.strict_mode = config.get('strict_mode', False)
     
     async def execute(self, input_data: Any, context: Dict[str, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Valide les données selon les règles configurées"""
+        """
+Valide les données selon les règles configurées"""
         
         start_time = time.time()
         metadata = {'validation_rules_applied': len(self.validation_rules)}
@@ -378,7 +388,8 @@ class DataValidationStage(PipelineStageBase):
             return 0.0
     
     def _check_format(self, data: Any, expected_format: str) -> bool:
-        """Vérifie le format des données"""
+        """
+Vérifie le format des données"""
         if expected_format == 'json':
             try:
                 if isinstance(data, str):
@@ -412,7 +423,8 @@ class DataValidationStage(PipelineStageBase):
         return 0.8  # Score par défaut
     
     def validate_config(self) -> List[str]:
-        """Valide la configuration de validation"""
+        """
+Valide la configuration de validation"""
         errors = []
         
         if not self.validation_rules and not self.schema:
@@ -437,7 +449,8 @@ class DataTransformationStage(PipelineStageBase):
         self.output_format = config.get('output_format')
     
     async def execute(self, input_data: Any, context: Dict[str, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Applique les transformations configurées"""
+        """
+Applique les transformations configurées"""
         
         start_time = time.time()
         metadata = {'transformation_type': self.transformation_type}
@@ -496,7 +509,8 @@ class DataTransformationStage(PipelineStageBase):
         return data
     
     async def _normalize_data(self, data: Any) -> Any:
-        """Normalisation des données"""
+        """
+Normalisation des données"""
         normalization_type = self.transformation_params.get('normalization_type', 'standard')
         
         if isinstance(data, list) and all(isinstance(x, (int, float)) for x in data):
@@ -524,7 +538,8 @@ class DataTransformationStage(PipelineStageBase):
         return data
     
     async def _enhance_content(self, data: Any) -> Any:
-        """Amélioration de contenu"""
+        """
+Amélioration de contenu"""
         enhancement_type = self.transformation_params.get('enhancement_type', 'basic')
         
         if isinstance(data, str):
@@ -551,7 +566,8 @@ class DataTransformationStage(PipelineStageBase):
         return data
     
     async def _aggregate_data(self, data: Any) -> Any:
-        """Agrégation de données"""
+        """
+Agrégation de données"""
         if isinstance(data, list):
             aggregation_type = self.transformation_params.get('aggregation_type', 'summary')
             
@@ -575,7 +591,8 @@ class DataTransformationStage(PipelineStageBase):
         return data
     
     async def _extract_features(self, data: Any) -> Any:
-        """Extraction de caractéristiques"""
+        """
+Extraction de caractéristiques"""
         if isinstance(data, str):
             features = {
                 'length': len(data),
@@ -607,7 +624,8 @@ class DataTransformationStage(PipelineStageBase):
         return {'type': type(data).__name__, 'size': len(data) if hasattr(data, '__len__') else 0}
     
     def _calculate_size(self, data: Any) -> int:
-        """Calcule la taille des données"""
+        """
+Calcule la taille des données"""
         try:
             if isinstance(data, str):
                 return len(data.encode('utf-8'))
@@ -621,7 +639,8 @@ class DataTransformationStage(PipelineStageBase):
             return 0
     
     def _calculate_transformation_ratio(self, input_data: Any, output_data: Any) -> float:
-        """Calcule le ratio de transformation"""
+        """
+Calcule le ratio de transformation"""
         try:
             input_size = self._calculate_size(input_data)
             output_size = self._calculate_size(output_data)
@@ -634,7 +653,8 @@ class DataTransformationStage(PipelineStageBase):
             return 1.0
     
     def validate_config(self) -> List[str]:
-        """Valide la configuration de transformation"""
+        """
+Valide la configuration de transformation"""
         errors = []
         
         if not self.transformation_type:
@@ -655,7 +675,8 @@ class DataEnrichmentStage(PipelineStageBase):
         self.enrichment_params = config.get('enrichment_params', {})
     
     async def execute(self, input_data: Any, context: Dict[str, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Enrichit les données avec IA"""
+        """
+Enrichit les données avec IA"""
         
         start_time = time.time()
         metadata = {'enrichment_type': self.enrichment_type, 'ai_model': self.ai_model}
@@ -718,7 +739,8 @@ class DataEnrichmentStage(PipelineStageBase):
         return data
     
     async def _extract_keywords(self, data: Any) -> Any:
-        """Extraction de mots-clés"""
+        """
+Extraction de mots-clés"""
         if isinstance(data, str):
             # Extraction simple de mots-clés
             words = data.lower().split()
@@ -743,7 +765,8 @@ class DataEnrichmentStage(PipelineStageBase):
         return data
     
     async def _classify_content(self, data: Any) -> Any:
-        """Classification de contenu"""
+        """
+Classification de contenu"""
         if isinstance(data, str):
             # Classification simple basée sur des mots-clés
             categories = {
@@ -799,7 +822,8 @@ class DataEnrichmentStage(PipelineStageBase):
         return data
     
     async def _enhance_metadata(self, data: Any) -> Any:
-        """Amélioration des métadonnées"""
+        """
+Amélioration des métadonnées"""
         enhanced = {
             'original_data': data,
             'metadata': {
@@ -827,7 +851,8 @@ class DataEnrichmentStage(PipelineStageBase):
         return enhanced
     
     def _count_enrichment_fields(self, original: Any, enriched: Any) -> int:
-        """Compte les champs d'enrichissement ajoutés"""
+        """
+Compte les champs d'enrichissement ajoutés"""
         if isinstance(enriched, dict) and isinstance(original, dict):
             return len(enriched.keys()) - len(original.keys())
         elif isinstance(enriched, dict) and not isinstance(original, dict):
@@ -836,7 +861,8 @@ class DataEnrichmentStage(PipelineStageBase):
             return 0
     
     def validate_config(self) -> List[str]:
-        """Valide la configuration d'enrichissement"""
+        """
+Valide la configuration d'enrichissement"""
         errors = []
         
         if not self.enrichment_type:
@@ -868,7 +894,8 @@ class PipelineExecutor:
         config: PipelineConfig,
         initial_data: Any = None
     ) -> PipelineExecutionResult:
-        """Exécute un pipeline complet"""
+        """
+Exécute un pipeline complet"""
         
         pipeline_id = str(uuid.uuid4())
         start_time = time.time()
@@ -1126,7 +1153,8 @@ class PipelineExecutor:
         initial_data: Any,
         config: PipelineConfig
     ) -> List[StageResult]:
-        """Exécution en streaming"""
+        """
+Exécution en streaming"""
         # Implémentation simplifiée pour streaming
         # Dans un cas réel, ceci traiterait des flux de données
         return await self._execute_sequential(stages, initial_data, config)
@@ -1137,7 +1165,8 @@ class PipelineExecutor:
         input_data: Any,
         context: Dict[str, Any]
     ) -> StageResult:
-        """Exécute une seule étape"""
+        """
+Exécute une seule étape"""
         
         stage_start_time = time.time()
         
@@ -1179,7 +1208,8 @@ class PipelineExecutor:
             )
     
     def _estimate_memory_usage(self, input_data: Any, output_data: Any) -> float:
-        """Estime l'usage mémoire"""
+        """
+Estime l'usage mémoire"""
         try:
             import sys
             input_size = sys.getsizeof(input_data) if input_data is not None else 0
@@ -1193,7 +1223,8 @@ class PipelineExecutor:
         config: PipelineConfig,
         stage_results: List[StageResult]
     ) -> PipelineMetadata:
-        """Crée les métadonnées du pipeline"""
+        """
+Crée les métadonnées du pipeline"""
         
         return PipelineMetadata(
             pipeline_name=config.name,

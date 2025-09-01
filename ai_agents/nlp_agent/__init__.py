@@ -29,6 +29,7 @@ Team Specialties:
 - Protection Team: Content Security, Plagiarism Detection
 - Engineering Team: Performance Optimization, Scalable Infrastructure
 """
+
 import logging
 from typing import Dict, List, Any, Optional, Union
 
@@ -140,47 +141,58 @@ def create_nlp_agent(config: Optional[NLPAgentConfig] = None) -> NLPOrchestrator
     return NLPOrchestrator(config)
 
 def create_text_analyzer(config: Optional[NLPAgentConfig] = None) -> TextAnalyzer:
-    """Create a text analyzer instance"""
+    """
+Create a text analyzer instance"""
     return TextAnalyzer(config)
 
 def create_sentiment_engine(config: Optional[NLPAgentConfig] = None) -> SentimentEngine:
-    """Create a sentiment analysis engine"""
+    """
+Create a sentiment analysis engine"""
     return SentimentEngine(config)
 
 def create_language_detector(config: Optional[NLPAgentConfig] = None) -> LanguageDetector:
-    """Create a language detection engine"""
+    """
+Create a language detection engine"""
     return LanguageDetector(config)
 
 def create_content_classifier(config: Optional[NLPAgentConfig] = None) -> ContentClassifier:
-    """Create a content classification engine"""
+    """
+Create a content classification engine"""
     return ContentClassifier(config)
 
 def create_semantic_processor(config: Optional[NLPAgentConfig] = None) -> SemanticProcessor:
-    """Create a semantic processing engine"""
+    """
+Create a semantic processing engine"""
     return SemanticProcessor(config)
 
 def create_intent_recognizer(config: Optional[NLPAgentConfig] = None) -> IntentRecognizer:
-    """Create an intent recognition engine"""
+    """
+Create an intent recognition engine"""
     return IntentRecognizer(config)
 
 def create_entity_extractor(config: Optional[NLPAgentConfig] = None) -> EntityExtractor:
-    """Create an entity extraction engine"""
+    """
+Create an entity extraction engine"""
     return EntityExtractor(config)
 
 def create_topic_modeler(config: Optional[NLPAgentConfig] = None) -> TopicModeler:
-    """Create a topic modeling engine"""
+    """
+Create a topic modeling engine"""
     return TopicModeler(config)
 
 def create_text_fingerprinter(config: Optional[NLPAgentConfig] = None) -> TextFingerprinter:
-    """Create a text fingerprinting engine"""
+    """
+Create a text fingerprinting engine"""
     return TextFingerprinter(config)
 
 def create_embeddings_engine(config: Optional[NLPAgentConfig] = None) -> EmbeddingsEngine:
-    """Create an embeddings engine"""
+    """
+Create an embeddings engine"""
     return EmbeddingsEngine(config)
 
 def get_supported_languages() -> List[str]:
-    """Get list of supported languages for analysis"""
+    """
+Get list of supported languages for analysis"""
     # This would typically return languages supported by the models
     return [
         'en', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'ja', 'ko', 'zh',
@@ -188,7 +200,8 @@ def get_supported_languages() -> List[str]:
     ]
 
 def get_available_models() -> Dict[str, List[str]]:
-    """Get available models for different NLP tasks"""
+    """
+Get available models for different NLP tasks"""
     return {
         'sentiment': [
             'cardiffnlp/twitter-roberta-base-sentiment-latest',

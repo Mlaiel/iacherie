@@ -16,6 +16,7 @@ Handles load balancing, service mesh, CDN, traffic routing, and network security
 for multi-format content processing and AI protection services.
 ====================================================
 """
+
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkProtocol(Enum):
-    """Network protocol enumeration"""
+    """
+Network protocol enumeration"""
+
     HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
@@ -40,6 +43,7 @@ class NetworkProtocol(Enum):
 
 class LoadBalancerAlgorithm(Enum):
     """Load balancer algorithm enumeration"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
@@ -49,6 +53,7 @@ class LoadBalancerAlgorithm(Enum):
 
 class TrafficRoutingPolicy(Enum):
     """Traffic routing policy enumeration"""
+
     GEOGRAPHIC = "geographic"
     LATENCY_BASED = "latency_based"
     WEIGHTED = "weighted"
@@ -81,7 +86,8 @@ class NetworkSecurityConfig:
 
 @dataclass
 class LoadBalancerConfig:
-    """Load balancer configuration"""
+    """
+Load balancer configuration"""
     algorithm: LoadBalancerAlgorithm = LoadBalancerAlgorithm.LEAST_CONNECTIONS
     health_check_enabled: bool = True
     health_check_interval: int = int(os.getenv('LB_HEALTH_CHECK_INTERVAL', '30'))
@@ -98,7 +104,8 @@ class LoadBalancerConfig:
 
 @dataclass
 class CDNConfig:
-    """Content Delivery Network configuration"""
+    """
+Content Delivery Network configuration"""
     provider: str = os.getenv('CDN_PROVIDER', 'cloudflare')
     edge_locations: List[str] = field(default_factory=lambda: [
         'us-east-1', 'us-west-2', 'eu-central-1', 'ap-southeast-1'
@@ -124,7 +131,8 @@ class CDNConfig:
 
 @dataclass
 class ServiceMeshConfig:
-    """Service mesh configuration"""
+    """
+Service mesh configuration"""
     enabled: bool = bool(os.getenv('SERVICE_MESH_ENABLED', 'true').lower() == 'true')
     provider: str = os.getenv('SERVICE_MESH_PROVIDER', 'istio')
     mtls_enabled: bool = True
@@ -163,7 +171,8 @@ class DNSConfig:
 
 @dataclass
 class NetworkMonitoringConfig:
-    """Network monitoring configuration"""
+    """
+Network monitoring configuration"""
     enable_network_metrics: bool = True
     enable_traffic_analysis: bool = True
     enable_latency_monitoring: bool = True
@@ -545,7 +554,8 @@ class NetworkingEnvironmentManager:
         }
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get networking environment health status"""
+        """
+Get networking environment health status"""
         return {
             'environment': self.environment,
             'status': 'healthy',
@@ -563,7 +573,8 @@ class NetworkingEnvironmentManager:
     
     # Private helper methods
     def _configure_lb_algorithm(self):
-        """Configure load balancer algorithm"""
+        """
+Configure load balancer algorithm"""
         logger.info(f"Configuring load balancer algorithm: {self.load_balancer.algorithm.value}")
     
     def _setup_health_checks(self):
@@ -748,39 +759,48 @@ class NetworkingEnvironmentManager:
         return {'p50': 50.2, 'p95': 120.5, 'p99': 250.8}
     
     def _measure_bandwidth_utilization(self) -> float:
-        """Measure bandwidth utilization"""
+        """
+Measure bandwidth utilization"""
         return 65.8
     
     def _count_active_connections(self) -> int:
-        """Count active connections"""
+        """
+Count active connections"""
         return sum(self.active_connections.values())
     
     def _calculate_error_rate(self) -> float:
-        """Calculate error rate"""
+        """
+Calculate error rate"""
         return 0.8
     
     def _measure_throughput(self) -> float:
-        """Measure network throughput"""
+        """
+Measure network throughput"""
         return 1250.5  # Mbps
     
     def _measure_packet_loss(self) -> float:
-        """Measure packet loss percentage"""
+        """
+Measure packet loss percentage"""
         return 0.1
     
     def _measure_dns_resolution(self) -> float:
-        """Measure DNS resolution time"""
+        """
+Measure DNS resolution time"""
         return 25.3  # milliseconds
     
     def _measure_ssl_handshake(self) -> float:
-        """Measure SSL handshake time"""
+        """
+Measure SSL handshake time"""
         return 85.2  # milliseconds
     
     def _calculate_cdn_hit_ratio(self) -> float:
-        """Calculate CDN cache hit ratio"""
+        """
+Calculate CDN cache hit ratio"""
         return 94.2
     
     def _get_lb_status(self) -> str:
-        """Get load balancer status"""
+        """
+Get load balancer status"""
         return "healthy"
     
     def _check_alert_thresholds(self, metrics: Dict[str, Any]):
@@ -790,32 +810,39 @@ class NetworkingEnvironmentManager:
     
     # Topology methods
     def _get_load_balancer_topology(self) -> Dict[str, Any]:
-        """Get load balancer topology"""
+        """
+Get load balancer topology"""
         return {'type': 'application', 'instances': 3, 'algorithm': self.load_balancer.algorithm.value}
     
     def _get_cdn_topology(self) -> Dict[str, Any]:
-        """Get CDN topology"""
+        """
+Get CDN topology"""
         return {'provider': self.cdn.provider, 'edge_locations': len(self.cdn.edge_locations)}
     
     def _get_service_mesh_topology(self) -> Dict[str, Any]:
-        """Get service mesh topology"""
+        """
+Get service mesh topology"""
         return {'provider': self.service_mesh.provider, 'mtls_enabled': self.service_mesh.mtls_enabled}
     
     def _get_dns_topology(self) -> Dict[str, Any]:
-        """Get DNS topology"""
+        """
+Get DNS topology"""
         return {'primary_servers': len(self.dns.primary_dns_servers), 'secondary_servers': len(self.dns.secondary_dns_servers)}
     
     def _get_traffic_flows(self) -> List[Dict[str, Any]]:
-        """Get traffic flows"""
+        """
+Get traffic flows"""
         return [{'source': 'internet', 'destination': 'load_balancer', 'protocol': 'https'}]
     
     def _get_security_zones(self) -> List[Dict[str, Any]]:
-        """Get security zones"""
+        """
+Get security zones"""
         return [{'name': 'dmz', 'type': 'public'}, {'name': 'private', 'type': 'internal'}]
     
     # Health check methods
     def _check_load_balancer_health(self) -> str:
-        """Check load balancer health"""
+        """
+Check load balancer health"""
         return "healthy"
     
     def _check_cdn_health(self) -> str:

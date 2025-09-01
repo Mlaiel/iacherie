@@ -5,9 +5,10 @@ Advanced text transformation, analysis, and conversion capabilities
 for creators' text content workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
+
 import asyncio
 import logging
 import os
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 class TextFormat(Enum):
     """Supported text formats."""
+
     TXT = "txt"
     JSON = "json"
     XML = "xml"
@@ -49,6 +51,7 @@ class TextFormat(Enum):
 
 class Language(Enum):
     """Supported languages."""
+
     ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
@@ -65,6 +68,7 @@ class Language(Enum):
 
 class TextProcessingMode(Enum):
     """Text processing modes."""
+
     CLEAN = "clean"
     NORMALIZE = "normalize"
     TRANSLATE = "translate"
@@ -889,7 +893,8 @@ class TextTransformer:
         settings: TextSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
+        """
+Generate output file path."""
         if requested_output:
             return Path(requested_output)
         
@@ -929,7 +934,8 @@ class TextConverter:
 
 
 class TextAnalyzer:
-    """Simplified text analyzer interface."""
+    """
+Simplified text analyzer interface."""
     
     def __init__(self, transformer: Optional[TextTransformer] = None):
         self.transformer = transformer or TextTransformer()
@@ -939,5 +945,6 @@ class TextAnalyzer:
         text: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze text content."""
+        """
+Analyze text content."""
         return await self.transformer.analyze(text, options)

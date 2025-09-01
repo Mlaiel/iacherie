@@ -8,7 +8,7 @@ Technologies: Python, Legal Frameworks, Regulatory APIs, Compliance Monitoring
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ BUSINESS LOGIC:
 Content analysis → Regional detection → Legal framework mapping → Compliance validation → 
 Regulatory adherence → Data protection → Content filtering → Audit trail generation
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union, Set
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Major compliance frameworks"""
+    """
+Major compliance frameworks"""
+
     GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"                # Personal Information Protection (Canada)
@@ -45,6 +48,7 @@ class ComplianceFramework(Enum):
 
 class ContentCategory(Enum):
     """Content categories for compliance"""
+
     PERSONAL_DATA = "personal_data"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
@@ -61,6 +65,7 @@ class ContentCategory(Enum):
 
 class ComplianceLevel(Enum):
     """Compliance requirement levels"""
+
     MANDATORY = "mandatory"          # Must comply - legal requirement
     RECOMMENDED = "recommended"      # Should comply - best practice
     OPTIONAL = "optional"            # May comply - nice to have
@@ -69,6 +74,7 @@ class ComplianceLevel(Enum):
 
 class RegulatoryAction(Enum):
     """Required regulatory actions"""
+
     CONSENT_REQUIRED = "consent_required"
     NOTICE_REQUIRED = "notice_required"
     OPT_IN_REQUIRED = "opt_in_required"
@@ -85,6 +91,7 @@ class RegulatoryAction(Enum):
 
 class GeographicScope(Enum):
     """Geographic scope of regulations"""
+
     GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -114,7 +121,8 @@ class ComplianceRule:
 
 @dataclass
 class RegionalRegulation:
-    """Regional regulatory framework"""
+    """
+Regional regulatory framework"""
     region_code: str
     country_codes: List[str]
     regulatory_name: str
@@ -132,7 +140,8 @@ class RegionalRegulation:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
+    """
+Compliance assessment result"""
     content_id: str
     content_type: ContentCategory
     assessed_regions: List[str]
@@ -149,7 +158,8 @@ class ComplianceAssessment:
 
 @dataclass
 class DataProcessingRecord:
-    """Data processing activity record"""
+    """
+Data processing activity record"""
     activity_id: str
     controller_name: str
     processor_name: Optional[str]
@@ -166,7 +176,8 @@ class DataProcessingRecord:
 
 
 class RegionalCompliance:
-    """Advanced regional compliance and regulatory adherence engine"""
+    """
+Advanced regional compliance and regulatory adherence engine"""
     
     def __init__(self):
         self.regional_regulations: Dict[str, RegionalRegulation] = {}

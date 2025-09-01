@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 EXTRACTION MÉTADONNÉES AVANCÉE
@@ -15,6 +15,7 @@ Extraction complète de métadonnées multi-format avec IA
 - Métadonnées vidéo FFprobe/MediaInfo
 - Analyse sémantique contenu avec IA
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -65,7 +66,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class GeolocationData:
-    """Données de géolocalisation"""
+    """
+Données de géolocalisation"""
     latitude: Optional[float] = None
     longitude: Optional[float] = None
     altitude: Optional[float] = None
@@ -77,7 +79,8 @@ class GeolocationData:
 
 @dataclass
 class TechnicalMetadata:
-    """Métadonnées techniques"""
+    """
+Métadonnées techniques"""
     file_size: int
     file_format: str
     mime_type: str
@@ -102,7 +105,8 @@ class MediaDimensions:
 
 @dataclass
 class CreativeMetadata:
-    """Métadonnées créatives"""
+    """
+Métadonnées créatives"""
     title: Optional[str] = None
     description: Optional[str] = None
     creator: Optional[str] = None
@@ -116,7 +120,8 @@ class CreativeMetadata:
 
 @dataclass
 class BusinessMetadata:
-    """Métadonnées business"""
+    """
+Métadonnées business"""
     license: Optional[str] = None
     usage_rights: Optional[str] = None
     commercial_use: Optional[bool] = None
@@ -128,7 +133,8 @@ class BusinessMetadata:
 
 @dataclass
 class ContentMetadata:
-    """Métadonnées de contenu complètes"""
+    """
+Métadonnées de contenu complètes"""
     file_path: str
     technical: TechnicalMetadata
     dimensions: MediaDimensions
@@ -219,7 +225,8 @@ class ImageMetadataExtractor:
         )
     
     def _extract_dimensions(self, image: Image.Image) -> MediaDimensions:
-        """Extrait les dimensions"""
+        """
+Extrait les dimensions"""
         width, height = image.size
         aspect_ratio = f"{width}:{height}"
         
@@ -320,7 +327,8 @@ class ImageMetadataExtractor:
         return 0.0
     
     def _extract_creative_metadata(self, image: Image.Image, exif_data: Dict[str, Any]) -> CreativeMetadata:
-        """Extrait les métadonnées créatives"""
+        """
+Extrait les métadonnées créatives"""
         creative = CreativeMetadata()
         
         # Titre et description depuis EXIF/IPTC
@@ -523,7 +531,8 @@ class AudioMetadataExtractor:
         )
     
     def _extract_audio_tags(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les tags audio avec mutagen"""
+        """
+Extrait les tags audio avec mutagen"""
         tags = {}
         
         try:
@@ -606,11 +615,11 @@ class AudioMetadataExtractor:
         
         # Mapping des tags courants
         tag_mappings = {
-            'title': ['TIT2', 'TITLE', '©nam', 'title'],
-            'creator': ['TPE1', 'ARTIST', '©ART', 'artist'],
-            'description': ['COMM::eng', 'COMMENT', '©cmt', 'comment'],
-            'genre': ['TCON', 'GENRE', '©gen', 'genre'],
-            'copyright': ['TCOP', 'COPYRIGHT', '©cpy', 'copyright']
+            'title': ['TIT2', 'TITLE', '(c)nam', 'title'],
+            'creator': ['TPE1', 'ARTIST', '(c)ART', 'artist'],
+            'description': ['COMM::eng', 'COMMENT', '(c)cmt', 'comment'],
+            'genre': ['TCON', 'GENRE', '(c)gen', 'genre'],
+            'copyright': ['TCOP', 'COPYRIGHT', '(c)cpy', 'copyright']
         }
         
         # Extraction avec mapping flexible
@@ -622,7 +631,7 @@ class AudioMetadataExtractor:
         
         # Album comme contexte
         album = None
-        for key in ['TALB', 'ALBUM', '©alb', 'album']:
+        for key in ['TALB', 'ALBUM', '(c)alb', 'album']:
             if key in tags:
                 album = str(tags[key])
                 break
@@ -642,7 +651,8 @@ class AudioMetadataExtractor:
         return creative
     
     def _extract_business_metadata(self, tags: Dict[str, Any]) -> BusinessMetadata:
-        """Extrait les métadonnées business"""
+        """
+Extrait les métadonnées business"""
         business = BusinessMetadata()
         
         # Licence
@@ -660,7 +670,8 @@ class AudioMetadataExtractor:
         return business
     
     def _perform_audio_ai_analysis(self, file_path: str) -> Dict[str, Any]:
-        """Effectue une analyse IA du fichier audio"""
+        """
+Effectue une analyse IA du fichier audio"""
         ai_analysis = {}
         
         try:
@@ -878,7 +889,8 @@ class VideoMetadataExtractor:
         )
     
     def _extract_video_info(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les informations vidéo avec ffprobe"""
+        """
+Extrait les informations vidéo avec ffprobe"""
         video_info = {}
         
         try:
@@ -1131,7 +1143,8 @@ class TextMetadataExtractor:
         )
     
     def _extract_text_dimensions(self, content: str) -> MediaDimensions:
-        """Extrait les dimensions du texte"""
+        """
+Extrait les dimensions du texte"""
         dimensions = MediaDimensions()
         
         # Statistiques basiques
@@ -1150,7 +1163,8 @@ class TextMetadataExtractor:
         return dimensions
     
     def _extract_creative_from_text(self, content: str) -> CreativeMetadata:
-        """Extrait les métadonnées créatives du texte"""
+        """
+Extrait les métadonnées créatives du texte"""
         creative = CreativeMetadata()
         
         # Titre depuis la première ligne
@@ -1333,7 +1347,8 @@ class MetadataExtractor:
         return 'unknown'
     
     def _create_unsupported_metadata(self, file_path: str, content_type: str) -> ContentMetadata:
-        """Crée des métadonnées pour fichier non supporté"""
+        """
+Crée des métadonnées pour fichier non supporté"""
         file_stat = os.stat(file_path)
         
         technical = TechnicalMetadata(
@@ -1392,7 +1407,8 @@ class AsyncMetadataExtractor:
     
     async def extract_batch_metadata(self, file_paths: List[str], 
                                    force_refresh: bool = False) -> Dict[str, ContentMetadata]:
-        """Extrait les métadonnées d'un lot de fichiers en parallèle"""
+        """
+Extrait les métadonnées d'un lot de fichiers en parallèle"""
         
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             loop = asyncio.get_event_loop()

@@ -36,6 +36,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test package for AI configuration modules supporting multi-format content creators.
 Ensures 100% reliability, security, and performance across all configuration components.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -113,7 +114,8 @@ class TestDataSets:
         self._initialize_platform_configs()
     
     def _initialize_creator_profiles(self):
-        """Initialise les profils de créateurs de test."""
+        """
+Initialise les profils de créateurs de test."""
         self.musician_profiles = [
             {
                 "id": "musician_001",
@@ -329,7 +331,8 @@ class TestUtilities:
     
     @staticmethod
     def setup_test_environment() -> Dict[str, Any]:
-        """Configure l'environnement de test."""
+        """
+Configure l'environnement de test."""
         test_env = {
             "timestamp": datetime.now().isoformat(),
             "python_version": sys.version,
@@ -362,7 +365,8 @@ class TestUtilities:
     @staticmethod
     def generate_test_report(test_results: Dict[str, Any]) -> str:
         """Génère un rapport de test complet."""
-        report = f"""AI Configuration Test Report
+        report = f"""
+AI Configuration Test Report
 ===========================
 Generated: {datetime.now().isoformat()}
 
@@ -501,7 +505,7 @@ __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __status__ = "Production"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Validation de l'environnement au démarrage
 if __name__ == "__main__":

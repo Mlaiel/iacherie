@@ -14,6 +14,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
@@ -59,7 +60,9 @@ from ..storage.learning_storage import LearningStorage
 
 
 class LearningType(Enum):
-    """Learning algorithm types"""
+    """
+Learning algorithm types"""
+
     SUPERVISED = "supervised"
     UNSUPERVISED = "unsupervised"
     REINFORCEMENT = "reinforcement"
@@ -72,6 +75,7 @@ class LearningType(Enum):
 
 class OptimizationObjective(Enum):
     """Optimization objectives"""
+
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     REACH = "reach"
@@ -95,7 +99,8 @@ class LearningConfig:
 
 @dataclass
 class LearningResult:
-    """Learning process result"""
+    """
+Learning process result"""
     algorithm_id: str
     performance_score: float
     improvement_rate: float
@@ -106,7 +111,8 @@ class LearningResult:
 
 
 class OnlineLearner:
-    """Online learning algorithm for continuous adaptation"""
+    """
+Online learning algorithm for continuous adaptation"""
     
     def __init__(self, input_dim: int, output_dim: int, learning_rate: float = 0.01):
         self.input_dim = input_dim
@@ -130,7 +136,8 @@ class OnlineLearner:
         self.is_fitted = False
         
     def update(self, x: np.ndarray, y: np.ndarray) -> float:
-        """Update model with new data"""
+        """
+Update model with new data"""
         try:
             # Add to memory
             self.memory_x.append(x)
@@ -170,14 +177,16 @@ class OnlineLearner:
             return np.zeros(self.output_dim)
     
     def get_performance(self) -> float:
-        """Get recent performance score"""
+        """
+Get recent performance score"""
         if self.performance_history:
             return np.mean(self.performance_history[-10:])
         return 0.0
 
 
 class ReinforcementLearner:
-    """Reinforcement learning for content strategy optimization"""
+    """
+Reinforcement learning for content strategy optimization"""
     
     def __init__(self, state_dim: int, action_dim: int, algorithm: str = "ppo"):
         self.state_dim = state_dim
@@ -208,7 +217,8 @@ class ReinforcementLearner:
         return gym.make('CartPole-v1')  # Placeholder
     
     def train(self, total_timesteps: int = 10000) -> float:
-        """Train the RL agent"""
+        """
+Train the RL agent"""
         try:
             self.agent.learn(total_timesteps=total_timesteps)
             self.training_steps += total_timesteps
@@ -247,7 +257,8 @@ class ReinforcementLearner:
 
 
 class MetaLearner:
-    """Meta-learning for few-shot adaptation"""
+    """
+Meta-learning for few-shot adaptation"""
     
     def __init__(self, input_dim: int, output_dim: int, meta_lr: float = 0.001):
         self.input_dim = input_dim
@@ -263,7 +274,8 @@ class MetaLearner:
         self.adaptation_history = []
         
     def _create_meta_model(self) -> nn.Module:
-        """Create meta-learning model"""
+        """
+Create meta-learning model"""
         return nn.Sequential(
             nn.Linear(self.input_dim, 128),
             nn.ReLU(),
@@ -273,7 +285,8 @@ class MetaLearner:
         )
     
     def meta_train(self, tasks: List[Dict[str, np.ndarray]], steps: int = 100) -> float:
-        """Meta-training on multiple tasks"""
+        """
+Meta-training on multiple tasks"""
         total_loss = 0.0
         
         for step in range(steps):
@@ -322,7 +335,8 @@ class MetaLearner:
         task_data: Dict[str, np.ndarray],
         adaptation_steps: int = 10
     ) -> float:
-        """Quickly adapt to new task"""
+        """
+Quickly adapt to new task"""
         try:
             # Clone meta-model
             adapted_model = type(self.meta_model)(self.input_dim, self.output_dim)
@@ -401,7 +415,8 @@ class AdaptiveModelSelector:
         return np.argmax(recent_performances)
     
     def _select_by_context(self, context: Dict[str, Any]) -> int:
-        """Select model based on context"""
+        """
+Select model based on context"""
         # Context-based selection (simplified)
         if context and 'content_type' in context:
             content_type = context['content_type']
@@ -415,14 +430,16 @@ class AdaptiveModelSelector:
             return self._select_by_performance()
     
     def update_performance(self, model_id: int, performance: float) -> None:
-        """Update model performance"""
+        """
+Update model performance"""
         self.model_performances[model_id].append(performance)
         
         # Update ensemble weights
         self._update_weights()
     
     def _update_weights(self) -> None:
-        """Update ensemble weights based on performance"""
+        """
+Update ensemble weights based on performance"""
         performances = []
         for i in range(len(self.models)):
             if self.model_performances[i]:
@@ -437,7 +454,8 @@ class AdaptiveModelSelector:
         self.model_weights = exp_performances / np.sum(exp_performances)
     
     def predict_ensemble(self, x: np.ndarray) -> np.ndarray:
-        """Make ensemble prediction"""
+        """
+Make ensemble prediction"""
         predictions = []
         
         for model in self.models:
@@ -541,7 +559,8 @@ class LearningEngine:
         self.model_processor = ModelProcessor(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize learning storage"""
+        """
+Initialize learning storage"""
         self.learning_storage = LearningStorage(self.config)
     
     async def learn_from_feedback(
@@ -669,7 +688,8 @@ class LearningEngine:
         return total_score / total_weight if total_weight > 0 else 0.5
     
     def _feedback_to_reward(self, feedback: Dict[str, float]) -> float:
-        """Convert feedback to reward signal for RL"""
+        """
+Convert feedback to reward signal for RL"""
         # Normalize feedback values to [0, 1] and aggregate
         normalized_feedback = {}
         for key, value in feedback.items():
@@ -678,7 +698,8 @@ class LearningEngine:
         return self._aggregate_feedback(normalized_feedback)
     
     def _calculate_improvement_rate(self, algorithm_id: str, current_performance: float) -> float:
-        """Calculate improvement rate compared to previous performance"""
+        """
+Calculate improvement rate compared to previous performance"""
         if algorithm_id in self.learning_history:
             previous_performance = self.learning_history[algorithm_id].performance_score
             if previous_performance > 0:
@@ -687,7 +708,8 @@ class LearningEngine:
         return 0.0
     
     def _get_model_parameters(self, algorithm_id: str) -> Dict[str, Any]:
-        """Get model parameters for given algorithm"""
+        """
+Get model parameters for given algorithm"""
         try:
             if algorithm_id == "online_sgd":
                 if hasattr(self.online_learner.model, 'coef_'):
@@ -731,7 +753,8 @@ class LearningEngine:
         return max(0.0, min(1.0, base_confidence))
     
     def _update_learning_metrics(self, result: LearningResult) -> None:
-        """Update learning performance metrics"""
+        """
+Update learning performance metrics"""
         self.performance_metrics["total_learning_sessions"] += 1
         
         # Update average improvement rate
@@ -865,7 +888,8 @@ class LearningEngine:
         return strategy
     
     def _optimize_for_revenue(self, predictions: Dict[str, Any], constraints: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize strategy for revenue"""
+        """
+Optimize strategy for revenue"""
         strategy = {
             'monetization_focus': True,
             'premium_content_ratio': 0.3,
@@ -884,7 +908,8 @@ class LearningEngine:
         return strategy
     
     def _optimize_for_reach(self, predictions: Dict[str, Any], constraints: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize strategy for reach"""
+        """
+Optimize strategy for reach"""
         strategy = {
             'cross_platform_posting': True,
             'viral_content_focus': True,
@@ -895,7 +920,8 @@ class LearningEngine:
         return strategy
     
     def _optimize_multi_objective(self, predictions: Dict[str, Any], constraints: Dict[str, Any]) -> Dict[str, Any]:
-        """Multi-objective optimization"""
+        """
+Multi-objective optimization"""
         # Combine strategies with weights
         engagement_strategy = self._optimize_for_engagement(predictions, constraints)
         revenue_strategy = self._optimize_for_revenue(predictions, constraints)
@@ -923,7 +949,8 @@ class LearningEngine:
         experiment_name: str,
         experiment_config: Dict[str, Any]
     ) -> str:
-        """Start a learning experiment"""
+        """
+Start a learning experiment"""
         experiment_id = f"exp_{int(datetime.now().timestamp())}"
         
         self.active_experiments[experiment_id] = {
@@ -945,7 +972,8 @@ class LearningEngine:
         content_features: np.ndarray,
         top_k: int = 3
     ) -> List[Dict[str, Any]]:
-        """Get top model recommendations for content"""
+        """
+Get top model recommendations for content"""
         try:
             recommendations = []
             

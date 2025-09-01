@@ -11,6 +11,7 @@ This social competition AI and algorithms are the exclusive intellectual propert
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 """
+
 import asyncio
 import logging
 import json
@@ -23,7 +24,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class CompetitionType(Enum):
-    """Types of social competitions"""
+    """
+Types of social competitions"""
+
     INDIVIDUAL_CHALLENGE = "individual_challenge"
     TEAM_TOURNAMENT = "team_tournament"
     COLLABORATIVE_PROJECT = "collaborative_project"
@@ -34,6 +37,7 @@ class CompetitionType(Enum):
 
 class CompetitionStatus(Enum):
     """Competition status states"""
+
     DRAFT = "draft"
     REGISTRATION_OPEN = "registration_open"
     ACTIVE = "active"
@@ -52,7 +56,8 @@ class CompetitionConfig:
 
 @dataclass
 class SocialCompetition:
-    """Social competition instance"""
+    """
+Social competition instance"""
     competition_id: str
     title: str
     description: str
@@ -108,7 +113,8 @@ class SocialCompetitionManager:
         }
     
     def _initialize_competition_templates(self):
-        """Initialize default competition templates"""
+        """
+Initialize default competition templates"""
         self.competition_templates = {
             'weekly_creator_challenge': {
                 'title': 'Weekly Creator Challenge',
@@ -230,7 +236,8 @@ class SocialCompetitionManager:
         user_profile: Dict[str, Any],
         competition: SocialCompetition
     ) -> float:
-        """Calculate how suitable a competition is for a user"""
+        """
+Calculate how suitable a competition is for a user"""
         suitability_factors = []
         
         # Skill level matching
@@ -271,7 +278,8 @@ class SocialCompetitionManager:
         user_profile: Dict[str, Any],
         competition_type: CompetitionType
     ) -> float:
-        """Get user preference for competition type"""
+        """
+Get user preference for competition type"""
         collaboration_preference = user_profile.get('collaboration_preference', 0.5)
         
         if competition_type in [CompetitionType.TEAM_TOURNAMENT, CompetitionType.COLLABORATIVE_PROJECT]:
@@ -282,7 +290,8 @@ class SocialCompetitionManager:
             return 0.7  # Neutral preference for other types
     
     def _is_similar_competition_type(self, comp_id: str, competition_type: CompetitionType) -> bool:
-        """Check if a competition ID represents similar type"""
+        """
+Check if a competition ID represents similar type"""
         # Simplified implementation - would query actual competition data
         return False
     
@@ -291,7 +300,8 @@ class SocialCompetitionManager:
         user_id: str,
         activity_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Update user's active competition participations"""
+        """
+Update user's active competition participations"""
         updates = []
         
         for comp_id, competition in self.active_competitions.items():
@@ -322,7 +332,8 @@ class SocialCompetitionManager:
         competition: SocialCompetition,
         activity_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Calculate user's progress in a competition"""
+        """
+Calculate user's progress in a competition"""
         if competition.competition_type == CompetitionType.INDIVIDUAL_CHALLENGE:
             # Progress based on content creation metrics
             content_score = activity_data.get('content_quality_score', 0)
@@ -355,7 +366,8 @@ class SocialCompetitionManager:
         user_id: str,
         competition: SocialCompetition
     ) -> int:
-        """Get user's current position in competition leaderboard"""
+        """
+Get user's current position in competition leaderboard"""
         for i, entry in enumerate(competition.leaderboard):
             if entry.get('user_id') == user_id:
                 return i + 1
@@ -366,7 +378,8 @@ class SocialCompetitionManager:
         user_id: str,
         activity_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate competition-related insights for user"""
+        """
+Generate competition-related insights for user"""
         insights = {
             'competitive_strength': self._analyze_competitive_strength(user_id, activity_data),
             'improvement_areas': self._identify_competition_improvement_areas(activity_data),
@@ -381,7 +394,8 @@ class SocialCompetitionManager:
         user_id: str,
         activity_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze user's competitive strengths"""
+        """
+Analyze user's competitive strengths"""
         strengths = {}
         
         # Content creation strength
@@ -411,7 +425,8 @@ class SocialCompetitionManager:
         }
     
     def _determine_competitive_tier(self, rating: float) -> str:
-        """Determine competitive tier based on rating"""
+        """
+Determine competitive tier based on rating"""
         if rating >= 0.8:
             return 'champion'
         elif rating >= 0.6:
@@ -425,7 +440,8 @@ class SocialCompetitionManager:
         self,
         activity_data: Dict[str, Any]
     ) -> List[str]:
-        """Identify areas for competition improvement"""
+        """
+Identify areas for competition improvement"""
         improvements = []
         
         if activity_data.get('avg_content_rating', 2.5) < 4.0:
@@ -497,7 +513,8 @@ class SocialCompetitionManager:
         return opportunities
     
     async def _get_available_competitions(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get all available competitions for user"""
+        """
+Get all available competitions for user"""
         available = []
         
         for comp_id, competition in self.active_competitions.items():
@@ -520,7 +537,8 @@ class SocialCompetitionManager:
         user_id: str,
         activity_data: Dict[str, Any]
     ):
-        """Update user's competition activity tracking"""
+        """
+Update user's competition activity tracking"""
         if user_id not in self.user_competition_history:
             self.user_competition_history[user_id] = []
         
@@ -536,7 +554,8 @@ class SocialCompetitionManager:
         user_id: str,
         activity_data: Dict[str, Any]
     ):
-        """Update competition leaderboard with user's latest performance"""
+        """
+Update competition leaderboard with user's latest performance"""
         competition = self.active_competitions.get(competition_id)
         if not competition:
             return
@@ -572,7 +591,8 @@ class SocialCompetitionManager:
         competition: SocialCompetition,
         activity_data: Dict[str, Any]
     ) -> float:
-        """Calculate user's score in a specific competition"""
+        """
+Calculate user's score in a specific competition"""
         if competition.competition_type == CompetitionType.INDIVIDUAL_CHALLENGE:
             content_score = activity_data.get('content_quality_score', 0.5)
             engagement_score = activity_data.get('engagement_score', 0.5)
@@ -591,7 +611,8 @@ class SocialCompetitionManager:
         return activity_data.get('overall_performance_score', 0.5) * 1000
     
     def get_system_analytics(self) -> Dict[str, Any]:
-        """Get system-wide competition analytics"""
+        """
+Get system-wide competition analytics"""
         total_competitions = len(self.active_competitions)
         total_participants = sum(
             len(comp.current_participants) for comp in self.active_competitions.values()
@@ -615,7 +636,8 @@ class SocialCompetitionManager:
         }
     
     def _get_competition_type_distribution(self) -> Dict[str, int]:
-        """Get distribution of competition types"""
+        """
+Get distribution of competition types"""
         distribution = {}
         for competition in self.active_competitions.values():
             comp_type = competition.competition_type.value

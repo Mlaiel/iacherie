@@ -18,6 +18,7 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
+
 import asyncio
 import logging
 import os
@@ -52,7 +53,9 @@ from ...models.video_models import VideoContent, ProcessingJob
 logger = logging.getLogger(__name__)
 
 class VideoCodec:
-    """Video codec specifications and configurations"""
+    """
+Video codec specifications and configurations"""
+
     H264 = {"name": "libx264", "quality": "high", "compatibility": "excellent"}
     H265 = {"name": "libx265", "quality": "highest", "compatibility": "good"}
     VP8 = {"name": "libvpx", "quality": "good", "compatibility": "good"}
@@ -61,6 +64,7 @@ class VideoCodec:
 
 class AudioCodec:
     """Audio codec specifications"""
+
     AAC = {"name": "aac", "quality": "high", "bitrate": "128k"}
     MP3 = {"name": "mp3", "quality": "good", "bitrate": "128k"}
     OPUS = {"name": "libopus", "quality": "highest", "bitrate": "96k"}
@@ -68,6 +72,7 @@ class AudioCodec:
 
 class ProcessingProfile:
     """Pre-defined processing profiles for different use cases"""
+
     SOCIAL_MEDIA = {
         "resolution": "1080p",
         "fps": 30,

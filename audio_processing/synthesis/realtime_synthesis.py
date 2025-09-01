@@ -4,10 +4,11 @@ This module provides real-time audio synthesis capabilities with optimized
 performance for streaming and interactive applications.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
+
 import torch
 import torch.nn as nn
 import numpy as np
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RealtimeConfig:
-    """Configuration for real-time synthesis."""
+    """
+Configuration for real-time synthesis."""
     # Audio settings
     sample_rate: int = 22050
     buffer_size: int = 1024
@@ -80,7 +82,8 @@ class AudioBuffer:
         self.overruns = 0
         
     def write(self, data: np.ndarray) -> int:
-        """Write audio data to buffer. Returns number of samples written."""
+        """
+Write audio data to buffer. Returns number of samples written."""
         if len(data.shape) == 1:
             data = data.reshape(-1, 1)
             
@@ -107,7 +110,8 @@ class AudioBuffer:
         return samples_to_write
         
     def read(self, num_samples: int) -> np.ndarray:
-        """Read audio data from buffer."""
+        """
+Read audio data from buffer."""
         samples_to_read = min(num_samples, self.available_samples)
         
         if samples_to_read == 0:
@@ -138,11 +142,13 @@ class AudioBuffer:
         return data
         
     def get_fill_level(self) -> float:
-        """Get buffer fill level as fraction."""
+        """
+Get buffer fill level as fraction."""
         return self.available_samples / self.size
         
     def clear(self) -> None:
-        """Clear buffer contents."""
+        """
+Clear buffer contents."""
         with self.lock:
             self.buffer.fill(0)
             self.write_pos = 0
@@ -151,7 +157,8 @@ class AudioBuffer:
 
 
 class StreamingProcessor:
-    """Base class for streaming audio processors."""
+    """
+Base class for streaming audio processors."""
     
     def __init__(self, config: RealtimeConfig):
         self.config = config
@@ -160,7 +167,8 @@ class StreamingProcessor:
         self.samples_processed = 0
         
     def process_chunk(self, audio_chunk: np.ndarray) -> np.ndarray:
-        """Process audio chunk. Override in subclasses."""
+        """
+Process audio chunk. Override in subclasses."""
         start_time = time.perf_counter()
         
         # Default: pass through
@@ -173,14 +181,16 @@ class StreamingProcessor:
         return result
         
     def get_latency(self) -> float:
-        """Get processing latency."""
+        """
+Get processing latency."""
         if self.samples_processed == 0:
             return 0.0
         return self.processing_time / (self.samples_processed / self.config.sample_rate)
 
 
 class RealtimeSynthesisEngine:
-    """Main real-time synthesis engine."""
+    """
+Main real-time synthesis engine."""
     
     def __init__(self, config: RealtimeConfig):
         self.config = config
@@ -213,7 +223,8 @@ class RealtimeSynthesisEngine:
         self.quality_controller = QualityOptimizer(config)
         
     def start(self) -> None:
-        """Start real-time processing."""
+        """
+Start real-time processing."""
         if self.is_running:
             logger.warning("Engine already running")
             return
@@ -275,7 +286,8 @@ class RealtimeSynthesisEngine:
         return self.output_buffer.read(num_samples)
         
     def _processing_loop(self) -> None:
-        """Main processing loop."""
+        """
+Main processing loop."""
         chunk_size = self.config.buffer_size
         
         while self.is_running:
@@ -322,7 +334,8 @@ class RealtimeSynthesisEngine:
         return processed
         
     def _convert_input_to_audio(self, input_data: Any, model_name: str = None) -> np.ndarray:
-        """Convert various input types to audio."""
+        """
+Convert various input types to audio."""
         if isinstance(input_data, np.ndarray):
             return input_data.astype(np.float32)
         elif isinstance(input_data, torch.Tensor):
@@ -367,7 +380,8 @@ class RealtimeSynthesisEngine:
 
 
 class StreamingSynthesizer(StreamingProcessor):
-    """Streaming synthesizer with chunked processing."""
+    """
+Streaming synthesizer with chunked processing."""
     
     def __init__(self, config: RealtimeConfig, model: nn.Module):
         super().__init__(config)
@@ -379,7 +393,8 @@ class StreamingSynthesizer(StreamingProcessor):
         self.previous_chunk = np.zeros(self.overlap_samples, dtype=np.float32)
         
     def process_chunk(self, audio_chunk: np.ndarray) -> np.ndarray:
-        """Process audio chunk with overlap-add."""
+        """
+Process audio chunk with overlap-add."""
         start_time = time.perf_counter()
         
         # Add overlap from previous chunk
@@ -412,7 +427,8 @@ class StreamingSynthesizer(StreamingProcessor):
 
 
 class LowLatencySynthesis:
-    """Ultra-low latency synthesis optimizations."""
+    """
+Ultra-low latency synthesis optimizations."""
     
     def __init__(self, config: RealtimeConfig):
         self.config = config
@@ -429,7 +445,8 @@ class LowLatencySynthesis:
         self.jit_models: Dict[str, torch.jit.ScriptModule] = {}
         
     def optimize_model(self, name: str, model: nn.Module) -> nn.Module:
-        """Optimize model for low latency."""
+        """
+Optimize model for low latency."""
         # JIT compilation
         example_input = torch.randn(1, self.config.buffer_size)
         jit_model = torch.jit.trace(model, example_input)
@@ -458,7 +475,8 @@ class LowLatencySynthesis:
             
     def synthesize_minimal_latency(self, input_data: np.ndarray,
                                   model_name: str) -> np.ndarray:
-        """Synthesize with minimal latency optimizations."""
+        """
+Synthesize with minimal latency optimizations."""
         if model_name in self.jit_models:
             model = self.jit_models[model_name]
         elif model_name in self.quantized_models:
@@ -496,7 +514,8 @@ class BufferedSynthesisManager:
         self.is_active = False
         
     def start_buffered_synthesis(self) -> None:
-        """Start buffered synthesis worker."""
+        """
+Start buffered synthesis worker."""
         self.is_active = True
         self.worker_thread = threading.Thread(
             target=self._synthesis_worker,
@@ -568,7 +587,8 @@ class BufferedSynthesisManager:
 
 
 class AdaptiveSynthesisController:
-    """Adaptive controller for synthesis parameters."""
+    """
+Adaptive controller for synthesis parameters."""
     
     def __init__(self, config: RealtimeConfig):
         self.config = config
@@ -591,7 +611,8 @@ class AdaptiveSynthesisController:
         self.previous_error = 0.0
         
     def update_latency(self, latency: float) -> None:
-        """Update latency measurement and adapt parameters."""
+        """
+Update latency measurement and adapt parameters."""
         self.current_latency = latency
         self.latency_history.append(latency)
         
@@ -615,7 +636,8 @@ class AdaptiveSynthesisController:
         self.previous_error = error
         
     def _reduce_quality(self) -> None:
-        """Reduce synthesis quality to improve speed."""
+        """
+Reduce synthesis quality to improve speed."""
         if self.current_quality_idx > 0:
             self.current_quality_idx -= 1
             quality = self.quality_levels[self.current_quality_idx]
@@ -633,7 +655,8 @@ class AdaptiveSynthesisController:
         return self.quality_levels[self.current_quality_idx]
         
     def get_adaptation_params(self) -> Dict[str, Any]:
-        """Get current adaptation parameters."""
+        """
+Get current adaptation parameters."""
         return {
             'quality_level': self.get_current_quality(),
             'target_latency': self.target_latency,
@@ -645,7 +668,8 @@ class AdaptiveSynthesisController:
 
 
 class QualityOptimizer:
-    """Quality optimization based on performance metrics."""
+    """
+Quality optimization based on performance metrics."""
     
     def __init__(self, config: RealtimeConfig):
         self.config = config
@@ -674,7 +698,8 @@ class QualityOptimizer:
         }
         
     def adjust_quality(self, processing_time: float) -> None:
-        """Adjust quality based on processing time."""
+        """
+Adjust quality based on processing time."""
         target_time = self.config.buffer_size / self.config.sample_rate
         
         if processing_time > target_time * 1.5:  # Too slow
@@ -689,12 +714,14 @@ class QualityOptimizer:
                 self.current_quality = 'high'
                 
     def get_quality_params(self) -> Dict[str, Any]:
-        """Get current quality parameters."""
+        """
+Get current quality parameters."""
         return self.quality_profiles[self.current_quality]
 
 
 class LatencyMonitor:
-    """Monitor and track latency metrics."""
+    """
+Monitor and track latency metrics."""
     
     def __init__(self, config: RealtimeConfig):
         self.config = config
@@ -703,7 +730,8 @@ class LatencyMonitor:
         self.monitor_thread = None
         
     def start(self) -> None:
-        """Start latency monitoring."""
+        """
+Start latency monitoring."""
         self.is_monitoring = True
         self.monitor_thread = threading.Thread(
             target=self._monitoring_loop,
@@ -712,13 +740,15 @@ class LatencyMonitor:
         self.monitor_thread.start()
         
     def stop(self) -> None:
-        """Stop latency monitoring."""
+        """
+Stop latency monitoring."""
         self.is_monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=1.0)
             
     def update_latency(self, latency: float) -> None:
-        """Update latency measurement."""
+        """
+Update latency measurement."""
         self.latencies.append(latency)
         
         # Alert on high latency
@@ -730,7 +760,8 @@ class LatencyMonitor:
         return self.latencies[-1] if self.latencies else 0.0
         
     def get_latency_stats(self) -> Dict[str, float]:
-        """Get latency statistics."""
+        """
+Get latency statistics."""
         if not self.latencies:
             return {'mean': 0.0, 'std': 0.0, 'min': 0.0, 'max': 0.0}
             
@@ -745,7 +776,8 @@ class LatencyMonitor:
         }
         
     def _monitoring_loop(self) -> None:
-        """Background monitoring loop."""
+        """
+Background monitoring loop."""
         while self.is_monitoring:
             if self.config.log_performance and len(self.latencies) % 100 == 0:
                 stats = self.get_latency_stats()
@@ -768,7 +800,8 @@ class ResourceManager:
         self.gpu_memory_usage = deque(maxlen=100)
         
     def start(self) -> None:
-        """Start resource monitoring."""
+        """
+Start resource monitoring."""
         self.is_monitoring = True
         self.monitor_thread = threading.Thread(
             target=self._resource_loop,
@@ -777,25 +810,30 @@ class ResourceManager:
         self.monitor_thread.start()
         
     def stop(self) -> None:
-        """Stop resource monitoring."""
+        """
+Stop resource monitoring."""
         self.is_monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=1.0)
             
     def get_cpu_usage(self) -> float:
-        """Get current CPU usage."""
+        """
+Get current CPU usage."""
         return self.cpu_usage[-1] if self.cpu_usage else 0.0
         
     def get_memory_usage(self) -> float:
-        """Get current memory usage."""
+        """
+Get current memory usage."""
         return self.memory_usage[-1] if self.memory_usage else 0.0
         
     def get_gpu_memory_usage(self) -> float:
-        """Get current GPU memory usage."""
+        """
+Get current GPU memory usage."""
         return self.gpu_memory_usage[-1] if self.gpu_memory_usage else 0.0
         
     def _resource_loop(self) -> None:
-        """Background resource monitoring loop."""
+        """
+Background resource monitoring loop."""
         while self.is_monitoring:
             try:
                 # CPU usage
@@ -836,7 +874,8 @@ def create_realtime_engine(config: RealtimeConfig = None) -> RealtimeSynthesisEn
 
 def create_streaming_synthesizer(model: nn.Module, 
                                 config: RealtimeConfig = None) -> StreamingSynthesizer:
-    """Create streaming synthesizer with model."""
+    """
+Create streaming synthesizer with model."""
     if config is None:
         config = RealtimeConfig()
     return StreamingSynthesizer(config, model)

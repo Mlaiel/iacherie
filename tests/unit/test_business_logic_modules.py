@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,10 +13,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Unit tests for business logic modules
+"""
+Unit tests for business logic modules
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -39,14 +42,16 @@ sys.modules['business.monetization'] = business_module.monetization
 
 
 class MockAnalyticsEngine:
-    """Mock analytics engine for testing"""
+    """
+Mock analytics engine for testing"""
     
     def __init__(self):
         self.metrics = {}
         self.reports = []
     
     async def track_event(self, event_type: str, data: dict):
-        """Track an analytics event"""
+        """
+Track an analytics event"""
         if event_type not in self.metrics:
             self.metrics[event_type] = []
         self.metrics[event_type].append({
@@ -56,7 +61,8 @@ class MockAnalyticsEngine:
         return True
     
     async def generate_report(self, report_type: str, time_range: dict):
-        """Generate analytics report"""
+        """
+Generate analytics report"""
         report = {
             'type': report_type,
             'time_range': time_range,
@@ -67,12 +73,14 @@ class MockAnalyticsEngine:
         return report
     
     def get_metric_count(self, event_type: str) -> int:
-        """Get count of specific metric"""
+        """
+Get count of specific metric"""
         return len(self.metrics.get(event_type, []))
 
 
 class MockBillingEngine:
-    """Mock billing engine for testing"""
+    """
+Mock billing engine for testing"""
     
     def __init__(self):
         self.invoices = {}
@@ -80,7 +88,8 @@ class MockBillingEngine:
         self.subscriptions = {}
     
     async def create_invoice(self, user_id: str, amount: float, description: str):
-        """Create a new invoice"""
+        """
+Create a new invoice"""
         invoice_id = f"inv_{len(self.invoices)}"
         invoice = {
             'id': invoice_id,
@@ -138,7 +147,8 @@ class MockMonetizationEngine:
         self.royalties = {}
     
     async def create_revenue_stream(self, creator_id: str, content_id: str, stream_type: str):
-        """Create revenue stream"""
+        """
+Create revenue stream"""
         stream_id = f"stream_{len(self.revenue_streams)}"
         stream = {
             'id': stream_id,
@@ -189,12 +199,14 @@ class MockMonetizationEngine:
 class TestAnalyticsEngine:
     """Test cases for MockAnalyticsEngine"""
     def setup_method(self):
-        """Setup test fixtures"""
+        """
+Setup test fixtures"""
         self.analytics = MockAnalyticsEngine()
 
     @pytest.mark.asyncio
     async def test_track_event_basic(self):
-        """Test basic event tracking"""
+        """
+Test basic event tracking"""
         result = await self.analytics.track_event('user_login', {'user_id': 'test_user'})
         
         assert result is True
@@ -204,7 +216,8 @@ class TestAnalyticsEngine:
 
     @pytest.mark.asyncio
     async def test_track_multiple_events(self):
-        """Test tracking multiple events"""
+        """
+Test tracking multiple events"""
         await self.analytics.track_event('user_login', {'user_id': 'user1'})
         await self.analytics.track_event('user_login', {'user_id': 'user2'})
         await self.analytics.track_event('content_view', {'content_id': 'content1'})
@@ -214,7 +227,8 @@ class TestAnalyticsEngine:
 
     @pytest.mark.asyncio
     async def test_generate_report(self):
-        """Test report generation"""
+        """
+Test report generation"""
         # Track some events first
         await self.analytics.track_event('user_signup', {'user_id': 'new_user'})
         
@@ -228,7 +242,8 @@ class TestAnalyticsEngine:
         assert len(self.analytics.reports) == 1
 
     def test_get_metric_count(self):
-        """Test getting metric count"""
+        """
+Test getting metric count"""
         # Initially should be 0
         assert self.analytics.get_metric_count('page_view') == 0
         
@@ -238,14 +253,17 @@ class TestAnalyticsEngine:
 
 
 class TestBillingEngine:
-    """Test cases for MockBillingEngine"""
+    """
+Test cases for MockBillingEngine"""
     def setup_method(self):
-        """Setup test fixtures"""
+        """
+Setup test fixtures"""
         self.billing = MockBillingEngine()
 
     @pytest.mark.asyncio
     async def test_create_invoice(self):
-        """Test invoice creation"""
+        """
+Test invoice creation"""
         invoice = await self.billing.create_invoice('user_123', 99.99, 'Premium subscription')
         
         assert invoice['user_id'] == 'user_123'
@@ -258,7 +276,8 @@ class TestBillingEngine:
 
     @pytest.mark.asyncio
     async def test_process_payment_success(self):
-        """Test successful payment processing"""
+        """
+Test successful payment processing"""
         # Create invoice first
         invoice = await self.billing.create_invoice('user_456', 49.99, 'Monthly plan')
         invoice_id = invoice['id']
@@ -276,7 +295,8 @@ class TestBillingEngine:
 
     @pytest.mark.asyncio
     async def test_process_payment_invalid_invoice(self):
-        """Test payment processing with invalid invoice"""
+        """
+Test payment processing with invalid invoice"""
         with pytest.raises(ValueError, match="Invoice invalid_id not found"):
             await self.billing.process_payment('invalid_id', 'credit_card')
 
@@ -296,7 +316,8 @@ class TestBillingEngine:
 
     @pytest.mark.asyncio
     async def test_multiple_invoices_and_payments(self):
-        """Test handling multiple invoices and payments"""
+        """
+Test handling multiple invoices and payments"""
         # Create multiple invoices
         invoice1 = await self.billing.create_invoice('user1', 29.99, 'Basic plan')
         invoice2 = await self.billing.create_invoice('user2', 59.99, 'Pro plan')
@@ -312,14 +333,17 @@ class TestBillingEngine:
 
 
 class TestMonetizationEngine:
-    """Test cases for MockMonetizationEngine"""
+    """
+Test cases for MockMonetizationEngine"""
     def setup_method(self):
-        """Setup test fixtures"""
+        """
+Setup test fixtures"""
         self.monetization = MockMonetizationEngine()
 
     @pytest.mark.asyncio
     async def test_create_revenue_stream(self):
-        """Test revenue stream creation"""
+        """
+Test revenue stream creation"""
         stream = await self.monetization.create_revenue_stream(
             'creator_123', 'content_456', 'subscription'
         )
@@ -334,7 +358,8 @@ class TestMonetizationEngine:
 
     @pytest.mark.asyncio
     async def test_calculate_commission(self):
-        """Test commission calculation"""
+        """
+Test commission calculation"""
         commission = await self.monetization.calculate_commission(1000.0, 0.15)
         
         assert commission['revenue_amount'] == 1000.0
@@ -345,7 +370,8 @@ class TestMonetizationEngine:
 
     @pytest.mark.asyncio
     async def test_distribute_royalties_success(self):
-        """Test successful royalty distribution"""
+        """
+Test successful royalty distribution"""
         # Create revenue stream first
         stream = await self.monetization.create_revenue_stream(
             'creator_456', 'content_789', 'advertising'
@@ -365,7 +391,8 @@ class TestMonetizationEngine:
 
     @pytest.mark.asyncio
     async def test_distribute_royalties_invalid_stream(self):
-        """Test royalty distribution with invalid stream"""
+        """
+Test royalty distribution with invalid stream"""
         with pytest.raises(ValueError, match="Revenue stream invalid_stream not found"):
             await self.monetization.distribute_royalties('invalid_stream', 100.0)
 
@@ -389,7 +416,8 @@ class TestMonetizationEngine:
 
     @pytest.mark.asyncio
     async def test_commission_calculation_edge_cases(self):
-        """Test commission calculation with edge cases"""
+        """
+Test commission calculation with edge cases"""
         # Zero revenue
         commission_zero = await self.monetization.calculate_commission(0.0, 0.1)
         assert commission_zero['commission_amount'] == 0.0
@@ -404,16 +432,19 @@ class TestMonetizationEngine:
 
 
 class TestIntegratedBusinessLogic:
-    """Test cases for integrated business logic scenarios"""
+    """
+Test cases for integrated business logic scenarios"""
     def setup_method(self):
-        """Setup integrated test fixtures"""
+        """
+Setup integrated test fixtures"""
         self.analytics = MockAnalyticsEngine()
         self.billing = MockBillingEngine()
         self.monetization = MockMonetizationEngine()
 
     @pytest.mark.asyncio
     async def test_complete_user_onboarding_flow(self):
-        """Test complete user onboarding with analytics, billing, and monetization"""
+        """
+Test complete user onboarding with analytics, billing, and monetization"""
         user_id = 'new_user_complete'
         
         # Track user signup
@@ -446,7 +477,8 @@ class TestIntegratedBusinessLogic:
 
     @pytest.mark.asyncio
     async def test_creator_revenue_flow(self):
-        """Test creator revenue generation and distribution flow"""
+        """
+Test creator revenue generation and distribution flow"""
         creator_id = 'creator_revenue_test'
         content_id = 'content_revenue_test'
         
@@ -490,7 +522,8 @@ class TestIntegratedBusinessLogic:
 
     @pytest.mark.asyncio
     async def test_analytics_reporting_comprehensive(self):
-        """Test comprehensive analytics reporting across business logic"""
+        """
+Test comprehensive analytics reporting across business logic"""
         # Generate diverse events
         events = [
             ('user_login', {'user_id': 'user1'}),

@@ -1,7 +1,7 @@
 """Legal Compliance Database Module - IA Influencer Agent + Content Protection Platform
 
 🚨 INTELLECTUAL PROPERTY WARNING
-© 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
+(c) 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 Email: mlaiel@live.de
 
 STRICT WARNING: This software, concept and all associated code are the exclusive 
@@ -27,6 +27,7 @@ Expert Team:
 - DevOps Engineer - Production Infrastructure
 - IA Prompt Engineer - AI Integration & Optimization
 """
+
 from typing import List, Dict, Any, Optional
 import logging
 

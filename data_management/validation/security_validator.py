@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE VALIDATION SÉCURITAIRE AVANCÉ
@@ -15,6 +15,7 @@ Validation sécuritaire complète pour protection du contenu
 - Validation signatures numériques
 - Contrôle d'intégrité et authenticité
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -55,7 +56,9 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 class SecurityThreatLevel(Enum):
-    """Niveaux de menace sécuritaire"""
+    """
+Niveaux de menace sécuritaire"""
+
     SAFE = "safe"
     LOW = "low"
     MEDIUM = "medium"
@@ -64,6 +67,7 @@ class SecurityThreatLevel(Enum):
 
 class SecurityViolationType(Enum):
     """Types de violations sécuritaires"""
+
     MALWARE = "malware"
     VIRUS = "virus"
     SUSPICIOUS_CONTENT = "suspicious_content"
@@ -87,7 +91,8 @@ class SecurityValidationResult:
     scan_details: Dict[str, Any]
 
 class MalwareScanner:
-    """Scanner de malwares et virus"""
+    """
+Scanner de malwares et virus"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MalwareScanner")
@@ -744,7 +749,8 @@ class IntegrityValidator:
         return sum(scores)
 
 class AccessControlValidator:
-    """Validateur de contrôle d'accès"""
+    """
+Validateur de contrôle d'accès"""
     
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AccessControlValidator")
@@ -1043,7 +1049,8 @@ class SecurityValidator:
         return SecurityThreatLevel.SAFE
     
     def _calculate_security_score(self, scan_details: Dict[str, Any], violations: List[SecurityViolationType]) -> float:
-        """Calcule le score de sécurité global"""
+        """
+Calcule le score de sécurité global"""
         scores = []
         
         # Score malware (40%)
@@ -1079,7 +1086,8 @@ class SecurityValidator:
         return min(1.0, final_score)
     
     def _generate_security_recommendations(self, violations: List[SecurityViolationType], threat_level: SecurityThreatLevel) -> List[str]:
-        """Génère des recommandations de sécurité"""
+        """
+Génère des recommandations de sécurité"""
         recommendations = []
         
         if SecurityViolationType.MALWARE in violations or SecurityViolationType.VIRUS in violations:

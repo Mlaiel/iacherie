@@ -15,6 +15,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: User content upload → Quality orchestration → Multi-layer validation → 
 Quality scoring → Compliance verification → Protection preparation → Distribution readiness
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ from .reporter import QualityReporter
 
 
 class QualityLevel(Enum):
-    """Quality assessment levels for content"""
+    """
+Quality assessment levels for content"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -52,6 +55,7 @@ class QualityLevel(Enum):
 
 class ContentType(Enum):
     """Supported content types for quality assessment"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -404,7 +408,8 @@ class QualityOrchestrator:
         return round(overall_score, 3)
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level based on score."""
+        """
+Determine quality level based on score."""
         for level, threshold in sorted(
             self.quality_thresholds.items(),
             key=lambda x: x[1],
@@ -420,7 +425,8 @@ class QualityOrchestrator:
         integrity_results: Dict[str, Any],
         compliance_results: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify quality issues from component results."""
+        """
+Identify quality issues from component results."""
         issues = []
         
         # Validation issues
@@ -452,7 +458,8 @@ class QualityOrchestrator:
         quality_level: QualityLevel,
         content_type: ContentType
     ) -> List[str]:
-        """Generate quality improvement recommendations."""
+        """
+Generate quality improvement recommendations."""
         recommendations = []
         
         # Content-type specific recommendations

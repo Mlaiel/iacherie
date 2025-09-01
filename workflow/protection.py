@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Set, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -25,7 +26,9 @@ from .fingerprinting import ContentFingerprintResult
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
+    """
+Content protection levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -34,6 +37,7 @@ class ProtectionLevel(Enum):
 
 class ViolationType(Enum):
     """Types of content violations."""
+
     EXACT_COPY = "exact_copy"
     MODIFIED_VERSION = "modified_version"
     PARTIAL_USE = "partial_use"
@@ -44,6 +48,7 @@ class ViolationType(Enum):
 
 class TakedownStatus(Enum):
     """Status of takedown requests."""
+
     PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -69,7 +74,8 @@ class ContentViolation:
 
 @dataclass
 class TakedownRequest:
-    """Represents a takedown request."""
+    """
+Represents a takedown request."""
     request_id: str
     violation: ContentViolation
     status: TakedownStatus
@@ -79,7 +85,8 @@ class TakedownRequest:
 
 
 class ContentProtectionWorkflow:
-    """Workflow system for comprehensive content protection operations."""
+    """
+Workflow system for comprehensive content protection operations."""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
@@ -827,7 +834,8 @@ class ContentProtectionWorkflow:
             return ViolationType.UNAUTHORIZED_REMIX
     
     async def _capture_violation_screenshot(self, url: str, platform: str) -> str:
-        """Capture screenshot of violating content."""
+        """
+Capture screenshot of violating content."""
         # Simplified screenshot capture
         screenshot_url = f"evidence/screenshots/{platform}_{hashlib.md5(url.encode()).hexdigest()}.png"
         # await self.crawling_engine.capture_screenshot(url, screenshot_url)
@@ -904,7 +912,8 @@ class ContentProtectionWorkflow:
         pass
     
     async def _calculate_revenue_potential(self, violation: ContentViolation) -> float:
-        """Calculate potential revenue recovery from violation."""
+        """
+Calculate potential revenue recovery from violation."""
         # Simplified revenue calculation
         base_amount = 100.0  # Base recovery amount
         similarity_multiplier = violation.similarity_score
@@ -918,7 +927,8 @@ class ContentProtectionWorkflow:
         strategy: str,
         revenue_estimate: float
     ) -> Dict[str, Any]:
-        """Apply revenue recovery strategy."""
+        """
+Apply revenue recovery strategy."""
         # Simplified strategy application
         return {
             "strategy": strategy,
@@ -995,7 +1005,8 @@ class ContentProtectionWorkflow:
         pass
     
     async def _generate_protection_reports(self, analytics_data: Dict[str, Any]) -> List[str]:
-        """Generate protection reports."""
+        """
+Generate protection reports."""
         # Simplified report generation
         return ["protection_summary_report.pdf", "violation_details_report.csv"]
     

@@ -8,7 +8,7 @@ Technologies: Python, CloudFlare, AWS CloudFront, Azure CDN, Multi-CDN
 ================================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -25,6 +25,7 @@ LOGIQUE MÉTIER:
 Content upload → Origin storage → CDN distribution → Edge caching → 
 Global delivery → Performance optimization → Analytics tracking → Cost optimization
 """
+
 import logging
 import asyncio
 import json
@@ -46,7 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class CDNProvider(Enum):
-    """CDN providers supported"""
+    """
+CDN providers supported"""
+
     CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws-cloudfront"
     AZURE_CDN = "azure-cdn"
@@ -58,6 +61,7 @@ class CDNProvider(Enum):
 
 class CachePolicy(Enum):
     """Cache policies for different content types"""
+
     NO_CACHE = "no-cache"
     SHORT_CACHE = "short-cache"  # 1 hour
     MEDIUM_CACHE = "medium-cache"  # 24 hours
@@ -68,6 +72,7 @@ class CachePolicy(Enum):
 
 class ContentType(Enum):
     """Content types for CDN optimization"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -79,6 +84,7 @@ class ContentType(Enum):
 
 class DistributionStatus(Enum):
     """CDN distribution status"""
+
     DEPLOYING = "deploying"
     DEPLOYED = "deployed"
     UPDATING = "updating"
@@ -441,7 +447,8 @@ class CDNManager:
         return ttl_mapping.get(cache_policy, 3600)
     
     def _get_path_pattern(self, content_type: ContentType) -> str:
-        """Get path pattern for content type"""
+        """
+Get path pattern for content type"""
         patterns = {
             ContentType.AUDIO: "*.mp3,*.wav,*.flac,*.aac,*.ogg",
             ContentType.VIDEO: "*.mp4,*.avi,*.mov,*.webm,*.mkv",
@@ -1071,7 +1078,8 @@ class CDNConfigurationManager:
     
     @staticmethod
     def load_config_from_file(config_path: Path) -> CDNConfig:
-        """Load CDN configuration from YAML file"""
+        """
+Load CDN configuration from YAML file"""
         try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -1146,7 +1154,8 @@ def create_cdn_manager(
 
 # Usage Example
 async def main():
-    """Example usage of CDNManager"""
+    """
+Example usage of CDNManager"""
     try:
         # Create CDN manager for global content distribution
         cdn_manager = create_cdn_manager(

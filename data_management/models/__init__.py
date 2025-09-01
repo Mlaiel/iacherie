@@ -8,7 +8,7 @@ Responsibility: Advanced data models for multi-format creators with AI protectio
 ==================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -129,7 +129,8 @@ def get_model(model_name: str):
     return MODEL_REGISTRY.get(model_name.lower())
 
 def list_available_models():
-    """List all available model names"""
+    """
+List all available model names"""
     return list(MODEL_REGISTRY.keys())
 
 

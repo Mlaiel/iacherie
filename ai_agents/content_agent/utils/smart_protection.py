@@ -16,6 +16,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -70,7 +71,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
+    """
+Content protection levels"""
+
     BASIC = "basic"
     STANDARD = "standard" 
     PREMIUM = "premium"
@@ -80,6 +83,7 @@ class ProtectionLevel(Enum):
 
 class RightsType(Enum):
     """Types of content rights"""
+
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PERSONALITY_RIGHTS = "personality_rights"
@@ -91,6 +95,7 @@ class RightsType(Enum):
 
 class ViolationType(Enum):
     """Types of rights violations"""
+
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     PLAGIARISM = "plagiarism"

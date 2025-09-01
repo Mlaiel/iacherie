@@ -11,6 +11,7 @@ Enterprise Content Protection Platform - Ownership Validation Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -39,7 +40,9 @@ settings = get_settings()
 
 
 class OwnershipStatus(str, Enum):
-    """Ownership verification status."""
+    """
+Ownership verification status."""
+
     PENDING = "pending"
     VERIFIED = "verified"
     DISPUTED = "disputed"
@@ -51,6 +54,7 @@ class OwnershipStatus(str, Enum):
 
 class VerificationLevel(str, Enum):
     """Verification confidence levels."""
+
     BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -60,6 +64,7 @@ class VerificationLevel(str, Enum):
 
 class DocumentType(str, Enum):
     """Legal document types for ownership proof."""
+
     COPYRIGHT_CERTIFICATE = "copyright_certificate"
     CREATION_TIMESTAMP = "creation_timestamp"
     LEGAL_REGISTRATION = "legal_registration"
@@ -90,7 +95,8 @@ class OwnershipEvidence:
 
 
 class OwnershipValidationRequest(BaseModel):
-    """Ownership validation request model."""
+    """
+Ownership validation request model."""
     content_id: str = Field(..., description="Content identifier")
     claimed_owner_id: str = Field(..., description="Claimed owner user ID")
     evidence_documents: List[Dict[str, Any]] = Field(default_factory=list)
@@ -125,7 +131,8 @@ class OwnershipValidationResult(BaseModel):
 
 
 class OwnershipDispute(BaseModel):
-    """Ownership dispute model."""
+    """
+Ownership dispute model."""
     dispute_id: str
     content_id: str
     original_owner_id: str
@@ -149,7 +156,8 @@ class OwnershipValidationService:
         db_session: AsyncSession,
         fingerprint_engine: DigitalFingerprintEngine
     ):
-        """Initialize ownership validation service."""
+        """
+Initialize ownership validation service."""
         self.db = db_session
         self.fingerprint_engine = fingerprint_engine
         self.encryption = AdvancedEncryption()
@@ -610,14 +618,16 @@ class OwnershipValidationService:
         pass
     
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
-        """Get content record from database."""
+        """
+Get content record from database."""
         # Database query implementation
         pass
     
     async def _process_evidence_documents(
         self, documents: List[Dict[str, Any]], content_id: str, owner_id: str
     ) -> List[OwnershipEvidence]:
-        """Process and validate evidence documents."""
+        """
+Process and validate evidence documents."""
         evidence_list = []
         
         for doc in documents:
@@ -669,7 +679,8 @@ class OwnershipValidationService:
         legal: Optional[Dict[str, Any]], blockchain: Optional[Dict[str, Any]],
         conflicts: List[Dict[str, Any]]
     ) -> float:
-        """Calculate overall confidence score."""
+        """
+Calculate overall confidence score."""
         base_score = 0.0
         
         # Evidence weight
@@ -721,7 +732,8 @@ class OwnershipValidationService:
         self, status: OwnershipStatus, evidence: List[OwnershipEvidence], 
         legal_validation: Optional[Dict[str, Any]]
     ) -> str:
-        """Assess legal standing of ownership claim."""
+        """
+Assess legal standing of ownership claim."""
         if status == OwnershipStatus.VERIFIED:
             if legal_validation and legal_validation.get("court_admissible"):
                 return "court_admissible"
@@ -749,7 +761,8 @@ class DocumentVerificationEngine:
     async def verify_document_authenticity(
         self, document: OwnershipEvidence
     ) -> Dict[str, Any]:
-        """Verify document authenticity."""
+        """
+Verify document authenticity."""
         return {
             "authentic": True,
             "verification_method": "digital_signature",
@@ -763,7 +776,8 @@ class BlockchainVerificationEngine:
     async def verify_ownership(
         self, content: Any, owner_id: str
     ) -> Dict[str, Any]:
-        """Verify ownership using blockchain records."""
+        """
+Verify ownership using blockchain records."""
         return {
             "verified": True,
             "blockchain": "ethereum",
@@ -778,7 +792,8 @@ class LegalValidationEngine:
     async def validate_ownership(
         self, request: OwnershipValidationRequest, evidence: List[OwnershipEvidence]
     ) -> Dict[str, Any]:
-        """Perform legal validation of ownership claim."""
+        """
+Perform legal validation of ownership claim."""
         return {
             "legally_valid": True,
             "jurisdiction": request.legal_jurisdiction,

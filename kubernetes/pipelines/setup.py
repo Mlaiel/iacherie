@@ -2,11 +2,12 @@
 """Setup script for IA Influencer Agent Pipeline Management System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
+
 from setuptools import setup, find_packages
 import os
 from pathlib import Path
@@ -201,7 +202,7 @@ def print_post_install_message():
 ║    🎉 IA Influencer Agent Pipeline System Successfully Installed!           ║
 ║                                                                              ║
 ║    Author: Fahed Mlaiel <mlaiel@live.de>                                   ║
-║    Copyright: © 2025 Fahed Mlaiel. All rights reserved.                    ║
+║    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.                    ║
 ║                                                                              ║
 ║    ⚠️  WARNING: This software is proprietary and confidential.              ║
 ║        Unauthorized use is strictly prohibited.                             ║

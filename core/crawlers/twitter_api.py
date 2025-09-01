@@ -6,13 +6,14 @@ Combines Twitter API v2, Academic Research API with advanced scraping
 for comprehensive content surveillance and rights protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
+
 import asyncio
 import logging
 import re
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TwitterTweetData:
-    """Comprehensive Twitter/X tweet metadata structure."""
+    """
+Comprehensive Twitter/X tweet metadata structure."""
     
     tweet_id: str
     tweet_url: str
@@ -79,7 +81,8 @@ class TwitterTweetData:
 
 @dataclass
 class TwitterUserData:
-    """Twitter/X user profile comprehensive information."""
+    """
+Twitter/X user profile comprehensive information."""
     
     user_id: str
     username: str
@@ -104,7 +107,8 @@ class TwitterUserData:
     professional_category: Optional[str] = None
 
 class TwitterAPIManager:
-    """Professional Twitter API management with v2 API integration."""
+    """
+Professional Twitter API management with v2 API integration."""
     
     def __init__(
         self,
@@ -114,7 +118,8 @@ class TwitterAPIManager:
         access_token: Optional[str] = None,
         access_token_secret: Optional[str] = None
     ):
-        """Initialize Twitter API service with v2 API credentials."""
+        """
+Initialize Twitter API service with v2 API credentials."""
         self.bearer_token = bearer_token
         self.api_key = api_key
         self.api_secret = api_secret
@@ -137,7 +142,8 @@ class TwitterAPIManager:
         )
     
     async def get_tweet_details(self, tweet_id: str) -> Optional[TwitterTweetData]:
-        """Fetch comprehensive tweet details from Twitter API v2."""
+        """
+Fetch comprehensive tweet details from Twitter API v2."""
         await self.rate_limiter.acquire()
         
         try:
@@ -319,14 +325,16 @@ class TwitterWebScraper:
     """Advanced Twitter web scraping with anti-detection measures."""
     
     def __init__(self, proxy_manager: Optional[ProxyManager] = None):
-        """Initialize Twitter web scraper with proxy support."""
+        """
+Initialize Twitter web scraper with proxy support."""
         self.proxy_manager = proxy_manager
         self.session = None
         self.driver = None
         self._setup_selenium_driver()
     
     def _setup_selenium_driver(self):
-        """Configure Selenium WebDriver with anti-detection measures."""
+        """
+Configure Selenium WebDriver with anti-detection measures."""
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
@@ -486,7 +494,8 @@ class TwitterWebScraper:
             return 0
     
     async def search_hashtag_tweets(self, hashtag: str, limit: int = 50) -> List[str]:
-        """Search tweets by hashtag and return tweet URLs."""
+        """
+Search tweets by hashtag and return tweet URLs."""
         try:
             search_url = f"https://twitter.com/search?q=%23{hashtag.replace('#', '')}&src=typed_query&f=live"
             self.driver.get(search_url)
@@ -531,10 +540,12 @@ class TwitterWebScraper:
             self.driver.quit()
 
 class TwitterCrawler(BaseCrawler):
-    """Professional Twitter crawler with comprehensive monitoring capabilities."""
+    """
+Professional Twitter crawler with comprehensive monitoring capabilities."""
     
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Twitter crawler with configuration."""
+        """
+Initialize Twitter crawler with configuration."""
         super().__init__(config)
         self.api_manager = None
         
@@ -554,7 +565,8 @@ class TwitterCrawler(BaseCrawler):
         self.platform = 'twitter'
     
     async def crawl_tweet(self, tweet_url: str) -> Optional[CrawlResult]:
-        """Crawl comprehensive data for a specific tweet."""
+        """
+Crawl comprehensive data for a specific tweet."""
         try:
             tweet_data = None
             

@@ -4,8 +4,9 @@ Professional rhythm analysis engine providing comprehensive beat tracking,
 tempo estimation, rhythm pattern recognition, and metrical analysis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -19,7 +20,9 @@ from scipy import ndimage
 
 
 class BeatTrackingMethod(Enum):
-    """Beat tracking methods"""
+    """
+Beat tracking methods"""
+
     ELLIS = "ellis"
     DEGARA = "degara"
     CRF = "crf"
@@ -28,6 +31,7 @@ class BeatTrackingMethod(Enum):
 
 class TempoConfidence(Enum):
     """Tempo confidence levels"""
+
     HIGH = 0.8
     MEDIUM = 0.6
     LOW = 0.4
@@ -35,7 +39,8 @@ class TempoConfidence(Enum):
 
 @dataclass
 class BeatEvent:
-    """Individual beat event"""
+    """
+Individual beat event"""
     time: float
     strength: float
     confidence: float
@@ -45,7 +50,8 @@ class BeatEvent:
 
 @dataclass
 class RhythmPattern:
-    """Rhythm pattern analysis"""
+    """
+Rhythm pattern analysis"""
     pattern_id: str
     pattern_sequence: List[float]
     duration: float
@@ -57,7 +63,8 @@ class RhythmPattern:
 
 @dataclass
 class RhythmAnalysisResult:
-    """Complete rhythm analysis results"""
+    """
+Complete rhythm analysis results"""
     tempo_bpm: float
     tempo_confidence: float
     beat_times: np.ndarray
@@ -275,7 +282,8 @@ class RhythmAnalyzer:
         return beat_times, beat_strengths
     
     def _degara_beat_tracking(self, onset_envelope: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Degara beat tracking algorithm (simplified implementation)"""
+        """
+Degara beat tracking algorithm (simplified implementation)"""
         # Use Ellis as fallback with different parameters
         tempo, beats = librosa.beat.beat_track(
             onset_envelope=onset_envelope,
@@ -292,7 +300,8 @@ class RhythmAnalyzer:
         return beat_times, beat_strengths
     
     def _hybrid_beat_tracking(self, onset_envelope: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Hybrid beat tracking combining multiple methods"""
+        """
+Hybrid beat tracking combining multiple methods"""
         # Get results from multiple methods
         ellis_times, ellis_strengths = self._ellis_beat_tracking(onset_envelope)
         degara_times, degara_strengths = self._degara_beat_tracking(onset_envelope)
@@ -304,7 +313,8 @@ class RhythmAnalyzer:
         return combined_times, combined_strengths
     
     async def _detect_onsets(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Detect onset times and strengths"""
+        """
+Detect onset times and strengths"""
         def detect():
             try:
                 # Onset detection
@@ -402,7 +412,8 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, determine)
     
     def _compute_periodicity_score(self, beat_times: np.ndarray, expected_period: float) -> float:
-        """Compute periodicity score for given period"""
+        """
+Compute periodicity score for given period"""
         if len(beat_times) < 2:
             return 0.0
         
@@ -436,7 +447,8 @@ class RhythmAnalyzer:
                                      beat_times: np.ndarray, 
                                      onset_times: np.ndarray, 
                                      tempo_bpm: float) -> List[RhythmPattern]:
-        """Analyze rhythm patterns"""
+        """
+Analyze rhythm patterns"""
         def analyze():
             patterns = []
             
@@ -497,7 +509,8 @@ class RhythmAnalyzer:
         return float(syncopated_onsets / len(onsets))
     
     async def _compute_tempo_stability(self, beat_times: np.ndarray) -> float:
-        """Compute tempo stability"""
+        """
+Compute tempo stability"""
         def compute():
             if len(beat_times) < 3:
                 return 0.0
@@ -518,7 +531,8 @@ class RhythmAnalyzer:
     async def _analyze_syncopation(self, 
                                  beat_times: np.ndarray, 
                                  onset_times: np.ndarray) -> float:
-        """Analyze overall syncopation score"""
+        """
+Analyze overall syncopation score"""
         def analyze():
             if len(beat_times) == 0 or len(onset_times) == 0:
                 return 0.0
@@ -530,7 +544,8 @@ class RhythmAnalyzer:
     async def _compute_rhythmic_complexity(self, 
                                          beat_times: np.ndarray, 
                                          onset_times: np.ndarray) -> float:
-        """Compute rhythmic complexity score"""
+        """
+Compute rhythmic complexity score"""
         def compute():
             if len(beat_times) == 0 or len(onset_times) == 0:
                 return 0.0
@@ -562,7 +577,8 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute)
     
     async def _analyze_groove_consistency(self, beat_times: np.ndarray) -> float:
-        """Analyze groove consistency"""
+        """
+Analyze groove consistency"""
         def analyze():
             if len(beat_times) < 4:
                 return 0.0
@@ -584,7 +600,8 @@ class RhythmAnalyzer:
                                        beat_times: np.ndarray, 
                                        downbeat_times: np.ndarray, 
                                        time_signature: str) -> Dict[str, List[float]]:
-        """Build metrical hierarchy"""
+        """
+Build metrical hierarchy"""
         def build():
             hierarchy = {
                 'beats': beat_times.tolist(),
@@ -616,7 +633,8 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, build)
     
     async def _detect_tempo_changes(self, onset_envelope: np.ndarray) -> List[Tuple[float, float]]:
-        """Detect tempo changes over time"""
+        """
+Detect tempo changes over time"""
         def detect():
             tempo_changes = []
             

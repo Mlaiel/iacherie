@@ -4,11 +4,12 @@ Enterprise-grade content generation pipeline that coordinates multiple generator
 and manages the complete content creation workflow.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, AsyncGenerator
@@ -27,7 +28,9 @@ from .performance_tracker import PerformanceTracker
 
 
 class PipelineStage(str, Enum):
-    """Pipeline execution stages"""
+    """
+Pipeline execution stages"""
+
     PLANNING = "planning"
     GENERATION = "generation"
     OPTIMIZATION = "optimization"
@@ -49,7 +52,8 @@ class PipelineConfiguration(BaseModel):
 
 
 class PipelineResult(BaseModel):
-    """Result from pipeline execution"""
+    """
+Result from pipeline execution"""
     pipeline_id: str = Field(description="Unique pipeline execution ID")
     generated_content: Dict[str, Any] = Field(description="Generated content by type")
     metadata: Dict[str, Any] = Field(description="Pipeline execution metadata")
@@ -102,7 +106,8 @@ class ContentGenerationPipeline:
         }
     
     def _initialize_generators(self) -> None:
-        """Initialize all content generators"""
+        """
+Initialize all content generators"""
         try:
             # Initialize text generator
             if 'text' in self.config.enabled_generators:
@@ -299,7 +304,8 @@ class ContentGenerationPipeline:
         request: Dict[str, Any],
         plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute content generation stage"""
+        """
+Execute content generation stage"""
         stage_start = datetime.now()
         generated_content = {}
         
@@ -369,7 +375,8 @@ class ContentGenerationPipeline:
         content: Dict[str, Any],
         context: ContentGenerationContext
     ) -> Dict[str, Any]:
-        """Execute content optimization stage"""
+        """
+Execute content optimization stage"""
         stage_start = datetime.now()
         optimized_content = {}
         
@@ -428,7 +435,8 @@ class ContentGenerationPipeline:
         content: Dict[str, Any],
         context: ContentGenerationContext
     ) -> Dict[str, Any]:
-        """Execute content enhancement stage"""
+        """
+Execute content enhancement stage"""
         stage_start = datetime.now()
         enhanced_content = {}
         
@@ -475,7 +483,8 @@ class ContentGenerationPipeline:
         }
     
     def _determine_generation_strategy(self, request: Dict[str, Any]) -> str:
-        """Determine the optimal generation strategy"""
+        """
+Determine the optimal generation strategy"""
         content_types = request.get('content_types', [])
         
         if len(content_types) == 1:
@@ -486,7 +495,8 @@ class ContentGenerationPipeline:
             return 'comprehensive_campaign'
     
     def _determine_optimization_priorities(self, context: ContentGenerationContext) -> List[str]:
-        """Determine optimization priorities based on context"""
+        """
+Determine optimization priorities based on context"""
         priorities = ['quality', 'relevance']
         
         if context.platform_requirements:
@@ -498,7 +508,8 @@ class ContentGenerationPipeline:
         return priorities
     
     async def _validate_content(self, content_data: Any, content_type: str) -> bool:
-        """Validate generated content"""
+        """
+Validate generated content"""
         # Basic validation - can be enhanced with specific validators
         if not content_data:
             return False
@@ -514,12 +525,14 @@ class ContentGenerationPipeline:
         content_type: str,
         context: ContentGenerationContext
     ) -> Any:
-        """Apply advanced content enhancements"""
+        """
+Apply advanced content enhancements"""
         # Advanced enhancement logic
         return content_data
     
     async def _calculate_performance_metrics(self, pipeline_id: str) -> Dict[str, Any]:
-        """Calculate performance metrics for pipeline execution"""
+        """
+Calculate performance metrics for pipeline execution"""
         return {
             'throughput': 'high',
             'resource_utilization': 0.85,
@@ -528,7 +541,8 @@ class ContentGenerationPipeline:
         }
     
     async def _calculate_quality_scores(self, content: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate quality scores for generated content"""
+        """
+Calculate quality scores for generated content"""
         return {
             'overall_quality': 0.93,
             'content_relevance': 0.91,
@@ -537,7 +551,8 @@ class ContentGenerationPipeline:
         }
     
     def _update_pipeline_stats(self, execution_time: float, success: bool) -> None:
-        """Update pipeline execution statistics"""
+        """
+Update pipeline execution statistics"""
         self.pipeline_stats['total_executions'] += 1
         
         if success:
@@ -551,11 +566,13 @@ class ContentGenerationPipeline:
             )
     
     def get_pipeline_status(self, pipeline_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific pipeline execution"""
+        """
+Get status of a specific pipeline execution"""
         return self.active_pipelines.get(pipeline_id)
     
     def get_pipeline_stats(self) -> Dict[str, Any]:
-        """Get overall pipeline statistics"""
+        """
+Get overall pipeline statistics"""
         return self.pipeline_stats.copy()
     
     async def stream_pipeline_progress(
@@ -563,7 +580,8 @@ class ContentGenerationPipeline:
         context: ContentGenerationContext,
         content_request: Dict[str, Any]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """Stream pipeline execution progress in real-time"""
+        """
+Stream pipeline execution progress in real-time"""
         pipeline_id = f"stream_{context.user_id}_{datetime.now().timestamp()}"
         
         # Initialize streaming pipeline

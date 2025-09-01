@@ -6,6 +6,7 @@ through machine learning, statistical analysis, and real-time monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BehaviorMetrics:
-    """Comprehensive user behavior metrics"""
+    """
+Comprehensive user behavior metrics"""
     session_duration: float
     action_frequency: float
     click_patterns: List[float]
@@ -51,7 +53,8 @@ class BehaviorMetrics:
 
 @dataclass
 class BehaviorAnomalies:
-    """Detected behavioral anomalies"""
+    """
+Detected behavioral anomalies"""
     velocity_anomalies: List[str]
     pattern_deviations: List[str]
     temporal_inconsistencies: List[str]
@@ -249,7 +252,8 @@ class BehaviorAnalyzer:
         )
 
     def _analyze_click_patterns(self, clicks: List[Dict]) -> List[float]:
-        """Analyze click timing patterns for bot detection"""
+        """
+Analyze click timing patterns for bot detection"""
         if len(clicks) < 2:
             return [0.0]
             
@@ -270,7 +274,8 @@ class BehaviorAnalyzer:
         return [0.0]
 
     def _analyze_navigation_patterns(self, page_visits: List[Dict]) -> List[str]:
-        """Analyze page navigation patterns"""
+        """
+Analyze page navigation patterns"""
         if len(page_visits) < 2:
             return []
             
@@ -297,7 +302,8 @@ class BehaviorAnalyzer:
         return patterns
 
     def _analyze_typing_cadence(self, typing_data: List[Dict]) -> List[float]:
-        """Analyze typing patterns for human vs bot detection"""
+        """
+Analyze typing patterns for human vs bot detection"""
         if not typing_data:
             return [0.0]
             
@@ -316,7 +322,8 @@ class BehaviorAnalyzer:
         return [0.0]
 
     def _calculate_mouse_entropy(self, mouse_movements: List[Dict]) -> float:
-        """Calculate entropy of mouse movements"""
+        """
+Calculate entropy of mouse movements"""
         if len(mouse_movements) < 10:
             return 0.0
             
@@ -346,13 +353,15 @@ class BehaviorAnalyzer:
         return 0.0
 
     def _calculate_device_consistency(self, device_fingerprint: str) -> float:
-        """Calculate device fingerprint consistency score"""
+        """
+Calculate device fingerprint consistency score"""
         # This would compare against historical device fingerprints
         # For now, return a placeholder score
         return 0.8
 
     def _calculate_geolocation_stability(self, geolocation: Dict[str, Any]) -> float:
-        """Calculate geolocation stability score"""
+        """
+Calculate geolocation stability score"""
         # Check for reasonable location consistency
         latitude = geolocation.get('latitude', 0)
         longitude = geolocation.get('longitude', 0)
@@ -368,7 +377,8 @@ class BehaviorAnalyzer:
         session_info: Dict[str, Any], 
         geolocation: Dict[str, Any]
     ) -> float:
-        """Analyze timezone consistency with location"""
+        """
+Analyze timezone consistency with location"""
         session_timezone = session_info.get('timezone', '')
         geo_timezone = geolocation.get('timezone', '')
         
@@ -377,7 +387,8 @@ class BehaviorAnalyzer:
         return 0.5  # Unknown consistency
 
     def _calculate_social_engagement_score(self, social_actions: List[Dict]) -> float:
-        """Calculate social engagement authenticity score"""
+        """
+Calculate social engagement authenticity score"""
         if not social_actions:
             return 0.0
             
@@ -401,7 +412,8 @@ class BehaviorAnalyzer:
         user_id: str, 
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get user's historical behavior baselines"""
+        """
+Get user's historical behavior baselines"""
         try:
             # Try to get from cache first
             cache_key = f"behavior_baseline:{user_id}"
@@ -494,7 +506,8 @@ class BehaviorAnalyzer:
         anomalies: BehaviorAnomalies,
         historical_baselines: Dict[str, Any]
     ) -> float:
-        """Calculate comprehensive behavioral risk score"""
+        """
+Calculate comprehensive behavioral risk score"""
         
         risk_components = {}
         
@@ -535,7 +548,8 @@ class BehaviorAnalyzer:
         current_metrics: BehaviorMetrics,
         historical_baselines: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive behavior profile"""
+        """
+Generate comprehensive behavior profile"""
         return {
             'session_characteristics': {
                 'duration_minutes': current_metrics.session_duration / 60,
@@ -559,7 +573,8 @@ class BehaviorAnalyzer:
         current_metrics: BehaviorMetrics,
         historical_baselines: Dict[str, Any]
     ) -> float:
-        """Calculate deviation score from historical baselines"""
+        """
+Calculate deviation score from historical baselines"""
         deviations = []
         
         # Session duration deviation
@@ -584,7 +599,8 @@ class BehaviorAnalyzer:
         current_metrics: BehaviorMetrics,
         historical_baselines: Dict[str, Any]
     ) -> List[str]:
-        """Extract positive trust indicators from behavior"""
+        """
+Extract positive trust indicators from behavior"""
         trust_indicators = []
         
         # Consistent device usage
@@ -610,7 +626,8 @@ class BehaviorAnalyzer:
         return trust_indicators
 
     async def _update_behavior_history(self, user_id: str, metrics: BehaviorMetrics):
-        """Update user's behavior history for future baseline calculations"""
+        """
+Update user's behavior history for future baseline calculations"""
         try:
             history_key = f"behavior_history:{user_id}"
             

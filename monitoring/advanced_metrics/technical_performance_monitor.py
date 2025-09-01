@@ -9,6 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited.
 """
+
 import asyncio
 import logging
 try:
@@ -86,6 +87,7 @@ logger = logging.getLogger(__name__)
 
 class ComponentType(Enum):
     """Types of system components to monitor"""
+
     API_GATEWAY = "api_gateway"
     WEB_SERVER = "web_server"
     DATABASE = "database"
@@ -100,6 +102,7 @@ class ComponentType(Enum):
 
 class ServiceStatus(Enum):
     """Service health status levels"""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -109,6 +112,7 @@ class ServiceStatus(Enum):
 
 class ErrorSeverity(Enum):
     """Error severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -130,7 +134,8 @@ class PerformanceMetric:
 
 @dataclass
 class ErrorEvent:
-    """System error event record"""
+    """
+System error event record"""
     error_id: str
     component_id: str
     component_type: ComponentType
@@ -146,7 +151,8 @@ class ErrorEvent:
 
 @dataclass
 class SystemPerformanceMetrics:
-    """Comprehensive system performance metrics"""
+    """
+Comprehensive system performance metrics"""
     cpu_usage_percent: float
     memory_usage_percent: float
     disk_usage_percent: float
@@ -161,7 +167,8 @@ class SystemPerformanceMetrics:
 
 @dataclass
 class APIPerformanceMetrics:
-    """API performance and response time metrics"""
+    """
+API performance and response time metrics"""
     total_requests: int
     requests_per_second: float
     avg_response_time_ms: float
@@ -178,7 +185,8 @@ class APIPerformanceMetrics:
 
 @dataclass
 class DatabasePerformanceMetrics:
-    """Database performance and query metrics"""
+    """
+Database performance and query metrics"""
     active_connections: int
     max_connections: int
     connection_usage_percent: float
@@ -195,7 +203,8 @@ class DatabasePerformanceMetrics:
 
 @dataclass
 class UptimeMetrics:
-    """Service uptime and availability metrics"""
+    """
+Service uptime and availability metrics"""
     uptime_percentage_24h: float
     uptime_percentage_7d: float
     uptime_percentage_30d: float
@@ -211,7 +220,8 @@ class UptimeMetrics:
 
 @dataclass
 class CDNPerformanceMetrics:
-    """CDN performance and cache metrics"""
+    """
+CDN performance and cache metrics"""
     cache_hit_rate_percent: float
     cache_miss_rate_percent: float
     bandwidth_usage_gbps: float
@@ -923,12 +933,14 @@ class TechnicalPerformanceMonitor:
         pass
     
     async def _store_error(self, error: ErrorEvent) -> None:
-        """Store error event in database"""
+        """
+Store error event in database"""
         # In production, this would store in database
         pass
     
     async def _update_metric_cache(self, metric: PerformanceMetric) -> None:
-        """Update real-time metric cache"""
+        """
+Update real-time metric cache"""
         cache_key = f"{metric.component_id}_{metric.metric_name}"
         self.metrics_history[cache_key].append({
             "value": metric.value,
@@ -942,23 +954,27 @@ class TechnicalPerformanceMonitor:
         self.error_cache[error.component_id].append(error)
     
     async def _update_component_status(self, error: ErrorEvent) -> None:
-        """Update component status based on error"""
+        """
+Update component status based on error"""
         if error.severity == ErrorSeverity.CRITICAL:
             self.component_status[error.component_id] = ServiceStatus.CRITICAL
         elif error.severity == ErrorSeverity.HIGH:
             self.component_status[error.component_id] = ServiceStatus.WARNING
     
     async def _initialize_system_monitoring(self) -> None:
-        """Initialize system-level monitoring"""
+        """
+Initialize system-level monitoring"""
         # In production, this would setup system monitoring agents
         pass
     
     async def _setup_component_monitoring(self) -> None:
-        """Setup monitoring for individual components"""
+        """
+Setup monitoring for individual components"""
         # In production, this would setup component-specific monitoring
         pass
     
     async def _initialize_alerting(self) -> None:
-        """Initialize alerting system"""
+        """
+Initialize alerting system"""
         # In production, this would setup alerting channels
         pass

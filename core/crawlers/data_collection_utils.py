@@ -1,6 +1,7 @@
 """Data collection utility classes
 Mock implementations for essential data harvester dependencies
 """
+
 import asyncio
 import time
 from typing import Dict, Any, List, Optional
@@ -9,7 +10,8 @@ import logging
 
 
 class RateLimiter:
-    """Simple rate limiter for controlling request frequency"""
+    """
+Simple rate limiter for controlling request frequency"""
     
     def __init__(self, rate_limit: float = 1.0, max_burst: int = 5):
         self.rate_limit = rate_limit  # seconds between requests
@@ -19,7 +21,8 @@ class RateLimiter:
         self.logger = logging.getLogger(__name__)
     
     async def acquire(self):
-        """Acquire permission to make a request"""
+        """
+Acquire permission to make a request"""
         current_time = time.time()
         time_since_last = current_time - self.last_request
         
@@ -173,7 +176,8 @@ class ContentAnalyzer:
         return analysis
     
     def _detect_image_format(self, url: str) -> str:
-        """Detect image format from URL"""
+        """
+Detect image format from URL"""
         url_lower = url.lower()
         if '.jpg' in url_lower or '.jpeg' in url_lower:
             return 'jpeg'
@@ -188,13 +192,15 @@ class ContentAnalyzer:
 
 
 class DataTransformer:
-    """Data transformation utilities"""
+    """
+Data transformation utilities"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     def normalize_text(self, text: str) -> str:
-        """Normalize text content"""
+        """
+Normalize text content"""
         if not text:
             return ""
         
@@ -210,20 +216,23 @@ class DataTransformer:
         return re.findall(url_pattern, text)
     
     def extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text"""
+        """
+Extract hashtags from text"""
         import re
         hashtag_pattern = r'#\w+'
         return re.findall(hashtag_pattern, text)
     
     def extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text"""
+        """
+Extract mentions from text"""
         import re
         mention_pattern = r'@\w+'
         return re.findall(mention_pattern, text)
 
 
 class ProxyManager:
-    """Simple proxy manager for web requests"""
+    """
+Simple proxy manager for web requests"""
     
     def __init__(self, proxies: List[str] = None):
         self.proxies = proxies or []
@@ -231,7 +240,8 @@ class ProxyManager:
         self.logger = logging.getLogger(__name__)
     
     def get_proxy(self) -> Optional[str]:
-        """Get next proxy in rotation"""
+        """
+Get next proxy in rotation"""
         if not self.proxies:
             return None
         
@@ -240,11 +250,13 @@ class ProxyManager:
         return proxy
     
     def add_proxy(self, proxy: str):
-        """Add a proxy to the pool"""
+        """
+Add a proxy to the pool"""
         if proxy not in self.proxies:
             self.proxies.append(proxy)
     
     def remove_proxy(self, proxy: str):
-        """Remove a proxy from the pool"""
+        """
+Remove a proxy from the pool"""
         if proxy in self.proxies:
             self.proxies.remove(proxy)

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -173,7 +174,8 @@ class TestStreamingConfig(unittest.TestCase):
     """Test suite for StreamingConfig class"""
     
     def test_default_configuration(self):
-        """Test StreamingConfig with default values"""
+        """
+Test StreamingConfig with default values"""
         config = StreamingConfig()
         
         self.assertEqual(config.input_resolution, (1920, 1080))
@@ -184,7 +186,8 @@ class TestStreamingConfig(unittest.TestCase):
         self.assertEqual(config.processing_threads, 4)
     
     def test_custom_configuration(self):
-        """Test StreamingConfig with custom values"""
+        """
+Test StreamingConfig with custom values"""
         config = StreamingConfig(
             input_resolution=(3840, 2160),
             output_resolution=(1280, 720),
@@ -202,7 +205,8 @@ class TestStreamingConfig(unittest.TestCase):
         self.assertEqual(config.processing_threads, 8)
     
     def test_4k_configuration(self):
-        """Test 4K streaming configuration"""
+        """
+Test 4K streaming configuration"""
         config = StreamingConfig(
             input_resolution=(3840, 2160),
             output_resolution=(3840, 2160),
@@ -217,7 +221,8 @@ class TestStreamingConfig(unittest.TestCase):
         self.assertEqual(config.bitrate, 15000)
     
     def test_mobile_streaming_configuration(self):
-        """Test mobile-optimized streaming configuration"""
+        """
+Test mobile-optimized streaming configuration"""
         config = StreamingConfig(
             input_resolution=(1280, 720),
             output_resolution=(854, 480),
@@ -234,10 +239,12 @@ class TestStreamingConfig(unittest.TestCase):
         self.assertEqual(config.processing_threads, 2)
 
 class TestLiveStreamProcessor(unittest.TestCase):
-    """Test suite for LiveStreamProcessor class"""
+    """
+Test suite for LiveStreamProcessor class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.config = StreamingConfig(
             input_resolution=(1920, 1080),
             output_resolution=(1920, 1080),
@@ -248,13 +255,15 @@ class TestLiveStreamProcessor(unittest.TestCase):
         self.processor = LiveStreamProcessor(self.config)
     
     def test_processor_initialization(self):
-        """Test LiveStreamProcessor initialization"""
+        """
+Test LiveStreamProcessor initialization"""
         self.assertIsNotNone(self.processor)
         self.assertEqual(self.processor.config, self.config)
         self.assertFalse(self.processor.is_streaming)
     
     def test_start_streaming_webcam(self):
-        """Test starting streaming from webcam"""
+        """
+Test starting streaming from webcam"""
         # Mock the streaming functionality
         with patch.object(self.processor, '_initialize_video_capture') as mock_cap, \
              patch.object(self.processor, '_initialize_video_writers') as mock_writers:
@@ -308,20 +317,23 @@ class TestLiveStreamProcessor(unittest.TestCase):
             self.assertFalse(self.processor.is_streaming)
     
     def test_get_current_metrics(self):
-        """Test getting current streaming metrics"""
+        """
+Test getting current streaming metrics"""
         metrics = self.processor.get_current_metrics()
         
         # Should return None when not streaming, or StreamMetrics when streaming
         self.assertTrue(metrics is None or hasattr(metrics, 'fps_current'))
     
     def test_get_analysis_results(self):
-        """Test getting AI analysis results"""
+        """
+Test getting AI analysis results"""
         results = self.processor.get_analysis_results()
         
         self.assertIsInstance(results, list)
     
     def test_multiple_output_destinations(self):
-        """Test streaming to multiple output destinations"""
+        """
+Test streaming to multiple output destinations"""
         destinations = [
             "output1.mp4",
             "output2.mp4",
@@ -345,17 +357,20 @@ class TestRealTimeAnalyzer(unittest.TestCase):
     """Test suite for RealTimeAnalyzer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.config = StreamingConfig(processing_threads=2)
         self.analyzer = RealTimeAnalyzer(self.config)
     
     def test_analyzer_initialization(self):
-        """Test RealTimeAnalyzer initialization"""
+        """
+Test RealTimeAnalyzer initialization"""
         self.assertIsNotNone(self.analyzer)
         self.assertEqual(self.analyzer.config, self.config)
     
     def test_start_stop_analysis(self):
-        """Test starting and stopping analysis"""
+        """
+Test starting and stopping analysis"""
         # Start analysis
         self.analyzer.start_analysis()
         
@@ -369,7 +384,8 @@ class TestRealTimeAnalyzer(unittest.TestCase):
         self.assertTrue(True)
     
     def test_analyze_frame_async(self):
-        """Test asynchronous frame analysis"""
+        """
+Test asynchronous frame analysis"""
         # Create a test frame
         test_frame = np.zeros((480, 640, 3), dtype=np.uint8)
         
@@ -389,7 +405,8 @@ class TestRealTimeAnalyzer(unittest.TestCase):
             self.analyzer.stop_analysis()
     
     def test_get_analysis_result(self):
-        """Test getting analysis results"""
+        """
+Test getting analysis results"""
         # Start analysis
         self.analyzer.start_analysis()
         
@@ -408,7 +425,8 @@ class TestRealTimeAnalyzer(unittest.TestCase):
             self.analyzer.stop_analysis()
     
     def test_analyze_multiple_frames(self):
-        """Test analyzing multiple frames in sequence"""
+        """
+Test analyzing multiple frames in sequence"""
         self.analyzer.start_analysis()
         
         try:
@@ -437,7 +455,8 @@ class TestRealTimeAnalyzer(unittest.TestCase):
             self.analyzer.stop_analysis()
     
     def test_frame_quality_analysis(self):
-        """Test frame quality analysis functionality"""
+        """
+Test frame quality analysis functionality"""
         # Create frames with different quality characteristics
         frames = [
             np.zeros((480, 640, 3), dtype=np.uint8),  # Black frame
@@ -458,15 +477,18 @@ class TestRealTimeAnalyzer(unittest.TestCase):
             self.analyzer.stop_analysis()
 
 class TestAdaptiveBitrate(unittest.TestCase):
-    """Test suite for AdaptiveBitrate class"""
+    """
+Test suite for AdaptiveBitrate class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.config = StreamingConfig()
         self.adaptive_bitrate = AdaptiveBitrate(self.config)
     
     def test_initialization(self):
-        """Test AdaptiveBitrate initialization"""
+        """
+Test AdaptiveBitrate initialization"""
         self.assertIsNotNone(self.adaptive_bitrate)
         self.assertEqual(self.adaptive_bitrate.config, self.config)
         self.assertIn("1080p", self.adaptive_bitrate.quality_levels)
@@ -482,7 +504,8 @@ class TestAdaptiveBitrate(unittest.TestCase):
                 self.assertIsInstance(conditions[key], (int, float))
     
     def test_quality_adaptation_high_cpu(self):
-        """Test quality adaptation when CPU usage is high"""
+        """
+Test quality adaptation when CPU usage is high"""
         # Create metrics with high CPU usage
         metrics = StreamMetrics()
         metrics.cpu_usage = 90.0
@@ -497,7 +520,8 @@ class TestAdaptiveBitrate(unittest.TestCase):
             self.assertIsInstance(adaptation.adaptation_reason, str)
     
     def test_quality_adaptation_good_performance(self):
-        """Test quality adaptation with good performance"""
+        """
+Test quality adaptation with good performance"""
         # Create metrics with good performance
         metrics = StreamMetrics()
         metrics.cpu_usage = 30.0
@@ -511,7 +535,8 @@ class TestAdaptiveBitrate(unittest.TestCase):
             self.assertIsInstance(adaptation, QualityAdaptation)
     
     def test_quality_level_transitions(self):
-        """Test quality level transitions"""
+        """
+Test quality level transitions"""
         # Test downgrade
         lower = self.adaptive_bitrate._get_lower_quality("1080p")
         self.assertIn(lower, ["720p", "480p"])
@@ -533,7 +558,8 @@ class TestAdaptiveBitrate(unittest.TestCase):
         self.assertGreater(bandwidth, 0)
     
     def test_network_stability_calculation(self):
-        """Test network stability calculation"""
+        """
+Test network stability calculation"""
         # Add mock metrics with varying latencies
         latencies = [50, 55, 45, 60, 40, 65, 35, 70, 30, 75]
         for i, latency in enumerate(latencies):
@@ -548,22 +574,26 @@ class TestAdaptiveBitrate(unittest.TestCase):
         self.assertLessEqual(stability, 1.0)
 
 class TestStreamOptimizer(unittest.TestCase):
-    """Test suite for StreamOptimizer class"""
+    """
+Test suite for StreamOptimizer class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.config = StreamingConfig()
         self.optimizer = StreamOptimizer(self.config)
     
     def test_initialization(self):
-        """Test StreamOptimizer initialization"""
+        """
+Test StreamOptimizer initialization"""
         self.assertIsNotNone(self.optimizer)
         self.assertEqual(self.optimizer.config, self.config)
         self.assertIsInstance(self.optimizer.optimization_strategies, list)
         self.assertGreater(len(self.optimizer.optimization_strategies), 0)
     
     def test_cpu_optimization_strategy(self):
-        """Test CPU optimization strategy"""
+        """
+Test CPU optimization strategy"""
         # Create metrics with high CPU usage
         metrics = StreamMetrics()
         metrics.cpu_usage = 85.0
@@ -578,7 +608,8 @@ class TestStreamOptimizer(unittest.TestCase):
             self.assertIn('performance_improvements', recommendations)
     
     def test_memory_optimization_strategy(self):
-        """Test memory optimization strategy"""
+        """
+Test memory optimization strategy"""
         # Create metrics with high memory usage
         metrics = StreamMetrics()
         metrics.memory_usage_mb = 8192  # 8GB
@@ -592,7 +623,8 @@ class TestStreamOptimizer(unittest.TestCase):
             self.assertIn('resource_optimizations', recommendations)
     
     def test_network_optimization_strategy(self):
-        """Test network optimization strategy"""
+        """
+Test network optimization strategy"""
         # Create metrics with network issues
         metrics = StreamMetrics()
         metrics.latency_ms = 350.0
@@ -607,7 +639,8 @@ class TestStreamOptimizer(unittest.TestCase):
             self.assertIn('quality_adjustments', recommendations)
     
     def test_optimize_stream_settings(self):
-        """Test complete stream settings optimization"""
+        """
+Test complete stream settings optimization"""
         # Create test metrics
         metrics = StreamMetrics()
         metrics.cpu_usage = 75.0
@@ -633,7 +666,8 @@ class TestStreamOptimizer(unittest.TestCase):
             self.assertIn(key, recommendations)
     
     def test_quality_optimization_complex_content(self):
-        """Test quality optimization for complex content"""
+        """
+Test quality optimization for complex content"""
         metrics = StreamMetrics()
         
         # Complex content with many objects and faces
@@ -650,7 +684,8 @@ class TestStreamOptimizer(unittest.TestCase):
             self.assertIsInstance(recommendations, dict)
     
     def test_quality_optimization_simple_content(self):
-        """Test quality optimization for simple content"""
+        """
+Test quality optimization for simple content"""
         metrics = StreamMetrics()
         
         # Simple content with few objects
@@ -667,20 +702,24 @@ class TestStreamOptimizer(unittest.TestCase):
             self.assertIsInstance(recommendations, dict)
 
 class TestPerformanceMonitor(unittest.TestCase):
-    """Test suite for PerformanceMonitor class"""
+    """
+Test suite for PerformanceMonitor class"""
     
     def setUp(self):
-        """Set up test fixtures"""
+        """
+Set up test fixtures"""
         self.monitor = PerformanceMonitor()
     
     def test_initialization(self):
-        """Test PerformanceMonitor initialization"""
+        """
+Test PerformanceMonitor initialization"""
         self.assertIsNotNone(self.monitor)
         self.assertEqual(self.monitor.frame_count, 0)
         self.assertEqual(self.monitor.fps_frame_count, 0)
     
     def test_record_frame_metrics(self):
-        """Test recording frame metrics"""
+        """
+Test recording frame metrics"""
         processing_time = 25.0  # ms
         encoding_time = 15.0    # ms
         latency = 45.0          # ms
@@ -698,7 +737,8 @@ class TestPerformanceMonitor(unittest.TestCase):
         self.assertEqual(self.monitor.frame_count, 1)
     
     def test_fps_calculation(self):
-        """Test FPS calculation over multiple frames"""
+        """
+Test FPS calculation over multiple frames"""
         # Record multiple frames quickly
         for i in range(10):
             metrics = self.monitor.record_frame_metrics(20.0, 10.0, 30.0, 0)
@@ -709,7 +749,8 @@ class TestPerformanceMonitor(unittest.TestCase):
         self.assertGreater(metrics.fps_average, 0)
     
     def test_bitrate_estimation(self):
-        """Test bitrate estimation"""
+        """
+Test bitrate estimation"""
         # Test with different processing times
         processing_times = [10.0, 50.0, 100.0]
         
@@ -719,7 +760,8 @@ class TestPerformanceMonitor(unittest.TestCase):
             self.assertGreater(bitrate, 0)
     
     def test_streaming_quality_score(self):
-        """Test streaming quality score calculation"""
+        """
+Test streaming quality score calculation"""
         # Test with good metrics
         score = self.monitor._calculate_streaming_quality_score(30.0, 50.0, 0)
         self.assertIsInstance(score, float)
@@ -731,7 +773,8 @@ class TestPerformanceMonitor(unittest.TestCase):
         self.assertLess(poor_score, score)  # Poor metrics should give lower score
     
     def test_metrics_history(self):
-        """Test metrics history storage"""
+        """
+Test metrics history storage"""
         initial_history_length = len(self.monitor.metrics_history)
         
         # Record several frames
@@ -745,10 +788,12 @@ class TestPerformanceMonitor(unittest.TestCase):
             self.assertIsInstance(metric, StreamMetrics)
 
 class TestStreamingIntegration(unittest.TestCase):
-    """Integration tests for streaming components"""
+    """
+Integration tests for streaming components"""
     
     def setUp(self):
-        """Set up integration test fixtures"""
+        """
+Set up integration test fixtures"""
         self.config = StreamingConfig(
             input_resolution=(640, 480),  # Smaller for testing
             output_resolution=(640, 480),
@@ -757,7 +802,8 @@ class TestStreamingIntegration(unittest.TestCase):
         )
     
     def test_processor_analyzer_integration(self):
-        """Test integration between LiveStreamProcessor and RealTimeAnalyzer"""
+        """
+Test integration between LiveStreamProcessor and RealTimeAnalyzer"""
         processor = LiveStreamProcessor(self.config)
         analyzer = RealTimeAnalyzer(self.config)
         
@@ -779,7 +825,8 @@ class TestStreamingIntegration(unittest.TestCase):
             analyzer.stop_analysis()
     
     def test_adaptive_bitrate_optimizer_integration(self):
-        """Test integration between AdaptiveBitrate and StreamOptimizer"""
+        """
+Test integration between AdaptiveBitrate and StreamOptimizer"""
         adaptive = AdaptiveBitrate(self.config)
         optimizer = StreamOptimizer(self.config)
         
@@ -801,7 +848,8 @@ class TestStreamingIntegration(unittest.TestCase):
         self.assertIsInstance(optimizations, dict)
     
     def test_end_to_end_streaming_simulation(self):
-        """Test end-to-end streaming simulation"""
+        """
+Test end-to-end streaming simulation"""
         processor = LiveStreamProcessor(self.config)
         monitor = PerformanceMonitor()
         adaptive = AdaptiveBitrate(self.config)
@@ -828,10 +876,12 @@ class TestStreamingIntegration(unittest.TestCase):
             time.sleep(0.01)  # Small delay between frames
 
 class TestStreamingErrorHandling(unittest.TestCase):
-    """Test suite for error handling in streaming components"""
+    """
+Test suite for error handling in streaming components"""
     
     def test_invalid_input_source(self):
-        """Test handling of invalid input sources"""
+        """
+Test handling of invalid input sources"""
         config = StreamingConfig()
         processor = LiveStreamProcessor(config)
         
@@ -880,7 +930,8 @@ class TestStreamingErrorHandling(unittest.TestCase):
             analyzer.stop_analysis()
     
     def test_metrics_with_invalid_data(self):
-        """Test metrics handling with invalid data"""
+        """
+Test metrics handling with invalid data"""
         monitor = PerformanceMonitor()
         
         # Test with negative values

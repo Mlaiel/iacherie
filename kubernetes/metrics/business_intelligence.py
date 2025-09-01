@@ -31,6 +31,7 @@ Features:
 - Competitive analysis and market insights
 - ROI analysis and cost optimization
 """
+
 import logging
 import asyncio
 import time
@@ -67,7 +68,9 @@ settings = get_settings()
 
 
 class BusinessMetricType(Enum):
-    """Business metric types"""
+    """
+Business metric types"""
+
     REVENUE = "revenue"
     CUSTOMER_ACQUISITION_COST = "cac"
     CUSTOMER_LIFETIME_VALUE = "clv"
@@ -91,6 +94,7 @@ class BusinessMetricType(Enum):
 
 class AnalysisType(Enum):
     """Analysis types for business intelligence"""
+
     DESCRIPTIVE = "descriptive"
     DIAGNOSTIC = "diagnostic"
     PREDICTIVE = "predictive"
@@ -105,6 +109,7 @@ class AnalysisType(Enum):
 
 class CustomerSegment(Enum):
     """Customer segmentation categories"""
+
     HIGH_VALUE = "high_value"
     GROWING = "growing"
     AT_RISK = "at_risk"
@@ -118,6 +123,7 @@ class CustomerSegment(Enum):
 
 class RevenueMetric(Enum):
     """Revenue metric types"""
+
     TOTAL_REVENUE = "total_revenue"
     RECURRING_REVENUE = "recurring_revenue"
     AVERAGE_REVENUE_PER_USER = "arpu"
@@ -167,7 +173,8 @@ class CustomerInsight:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis results"""
+    """
+Revenue analysis results"""
     current_revenue: float
     projected_revenue: float
     revenue_growth_rate: float
@@ -215,7 +222,8 @@ class MarketAnalysis:
 
 @dataclass
 class BusinessMetrics:
-    """Comprehensive business metrics"""
+    """
+Comprehensive business metrics"""
     revenue_metrics: RevenueBreakdown
     customer_metrics: Dict[str, Any]
     operational_metrics: Dict[str, Any]
@@ -281,7 +289,8 @@ class BusinessIntelligenceEngine:
         self._initialize_ml_models()
     
     async def start(self) -> None:
-        """Start business intelligence engine"""
+        """
+Start business intelligence engine"""
         try:
             if self._running:
                 self.logger.warning("Business Intelligence Engine already running")
@@ -1208,7 +1217,8 @@ class BusinessIntelligenceEngine:
         )
     
     def _determine_trend(self, growth_rate: float) -> str:
-        """Determine trend from growth rate"""
+        """
+Determine trend from growth rate"""
         if growth_rate > 0.05:  # 5% growth
             return "increasing"
         elif growth_rate < -0.05:  # 5% decline

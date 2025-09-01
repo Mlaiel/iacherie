@@ -2,8 +2,9 @@
 Implements professional event sourcing and domain events patterns.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Dict, List, Optional, Type, Callable, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -17,7 +18,9 @@ from contextlib import asynccontextmanager
 
 
 class EventPriority(Enum):
-    """Event priority levels for processing order."""
+    """
+Event priority levels for processing order."""
+
     LOW = 1
     NORMAL = 2
     HIGH = 3
@@ -25,7 +28,9 @@ class EventPriority(Enum):
 
 
 class EventStatus(Enum):
-    """Event processing status tracking."""
+    """
+Event processing status tracking."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -101,21 +106,25 @@ class IEventHandler(ABC):
     
     @abstractmethod
     async def handle(self, event: DomainEvent) -> bool:
-        """Handle domain event. Return True if successful."""
+        """
+Handle domain event. Return True if successful."""
         pass
     
     @abstractmethod
     def can_handle(self, event_type: str) -> bool:
-        """Check if handler can process event type."""
+        """
+Check if handler can process event type."""
         pass
 
 
 class IEventStore(ABC):
-    """Interface for event store implementation."""
+    """
+Interface for event store implementation."""
     
     @abstractmethod
     async def append_event(self, event: DomainEvent) -> bool:
-        """Append event to store."""
+        """
+Append event to store."""
         pass
     
     @abstractmethod
@@ -125,7 +134,8 @@ class IEventStore(ABC):
         from_version: int = 1,
         to_version: Optional[int] = None
     ) -> List[DomainEvent]:
-        """Get events for aggregate."""
+        """
+Get events for aggregate."""
         pass
     
     @abstractmethod
@@ -135,19 +145,22 @@ class IEventStore(ABC):
         from_date: Optional[datetime] = None,
         to_date: Optional[datetime] = None
     ) -> List[DomainEvent]:
-        """Get events by type and date range."""
+        """
+Get events by type and date range."""
         pass
 
 
 class InMemoryEventStore(IEventStore):
-    """In-memory event store for development/testing."""
+    """
+In-memory event store for development/testing."""
     
     def __init__(self):
         self._events: List[DomainEvent] = []
         self._lock = threading.RLock()
     
     async def append_event(self, event: DomainEvent) -> bool:
-        """Append event to in-memory store."""
+        """
+Append event to in-memory store."""
         with self._lock:
             self._events.append(event)
             return True
@@ -158,7 +171,8 @@ class InMemoryEventStore(IEventStore):
         from_version: int = 1,
         to_version: Optional[int] = None
     ) -> List[DomainEvent]:
-        """Get events for aggregate from memory."""
+        """
+Get events for aggregate from memory."""
         with self._lock:
             events = [
                 e for e in self._events
@@ -176,7 +190,8 @@ class InMemoryEventStore(IEventStore):
         from_date: Optional[datetime] = None,
         to_date: Optional[datetime] = None
     ) -> List[DomainEvent]:
-        """Get events by type from memory."""
+        """
+Get events by type from memory."""
         with self._lock:
             events = [e for e in self._events if e.event_type == event_type]
             
@@ -191,7 +206,8 @@ class InMemoryEventStore(IEventStore):
 
 @dataclass
 class EventSubscription:
-    """Event subscription configuration."""
+    """
+Event subscription configuration."""
     handler: IEventHandler
     event_types: List[str]
     priority: EventPriority = EventPriority.NORMAL
@@ -200,7 +216,8 @@ class EventSubscription:
 
 
 class EventBus:
-    """Professional event bus implementation with async support."""
+    """
+Professional event bus implementation with async support."""
     
     def __init__(self, event_store: Optional[IEventStore] = None):
         self._handlers: Dict[str, List[EventSubscription]] = {}
@@ -211,7 +228,8 @@ class EventBus:
         self._is_running = False
         
     async def start(self):
-        """Start event processing."""
+        """
+Start event processing."""
         if self._is_running:
             return
         
@@ -219,7 +237,8 @@ class EventBus:
         asyncio.create_task(self._process_events())
     
     async def stop(self):
-        """Stop event processing."""
+        """
+Stop event processing."""
         self._is_running = False
     
     def subscribe(
@@ -230,7 +249,8 @@ class EventBus:
         retry_count: int = 3,
         timeout_seconds: int = 30
     ):
-        """Subscribe handler to specific event types."""
+        """
+Subscribe handler to specific event types."""
         subscription = EventSubscription(
             handler=handler,
             event_types=event_types,
@@ -254,7 +274,8 @@ class EventBus:
         retry_count: int = 3,
         timeout_seconds: int = 30
     ):
-        """Subscribe handler to all events."""
+        """
+Subscribe handler to all events."""
         subscription = EventSubscription(
             handler=handler,
             event_types=["*"],
@@ -278,7 +299,8 @@ class EventBus:
         return True
     
     async def _process_events(self):
-        """Background event processing loop."""
+        """
+Background event processing loop."""
         while self._is_running:
             try:
                 # Get event from queue with timeout
@@ -315,7 +337,8 @@ class EventBus:
                 await self._execute_handler(subscription, event)
     
     async def _execute_handler(self, subscription: EventSubscription, event: DomainEvent):
-        """Execute handler with retry logic and timeout."""
+        """
+Execute handler with retry logic and timeout."""
         retry_count = 0
         max_retries = subscription.retry_count
         
@@ -349,7 +372,8 @@ class EventBus:
 # Content Protection Domain Events
 @dataclass
 class ContentUploadedEvent(DomainEvent):
-    """Event raised when content is uploaded."""
+    """
+Event raised when content is uploaded."""
     
     def __init__(
         self,
@@ -493,13 +517,15 @@ async def get_event_bus(event_store: Optional[IEventStore] = None) -> EventBus:
 
 
 async def publish_event(event: DomainEvent) -> bool:
-    """Publish event to global event bus."""
+    """
+Publish event to global event bus."""
     bus = await get_event_bus()
     return await bus.publish(event)
 
 
 def event_handler(event_types: List[str], priority: EventPriority = EventPriority.NORMAL):
-    """Decorator to register event handler."""
+    """
+Decorator to register event handler."""
     def decorator(cls: Type[IEventHandler]) -> Type[IEventHandler]:
         # Store registration info for later use
         cls._event_types = event_types

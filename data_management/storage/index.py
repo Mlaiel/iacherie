@@ -8,7 +8,7 @@ Main entry point for the enterprise storage system.
 Provides unified interface and orchestration for all storage components.
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 ÉQUIPE PROJET - SPÉCIALITÉS:
@@ -17,6 +17,7 @@ Contact: mlaiel@live.de
 - Storage Architecture: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -155,7 +156,8 @@ class IAInfluencerStorageSystem:
     """
     
     def __init__(self, config: Optional[StorageSystemConfig] = None):
-        """Initialize the complete storage system"""
+        """
+Initialize the complete storage system"""
         self.config = config or StorageSystemConfig()
         
         # Initialize all storage components

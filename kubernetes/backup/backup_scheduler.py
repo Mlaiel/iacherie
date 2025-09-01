@@ -7,6 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta, time
@@ -22,7 +23,9 @@ from ...core.exceptions import SchedulerError
 
 
 class ScheduleType(Enum):
-    """Schedule type enumeration."""
+    """
+Schedule type enumeration."""
+
     ONCE = "once"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -33,6 +36,7 @@ class ScheduleType(Enum):
 
 class ScheduleStatus(Enum):
     """Schedule status enumeration."""
+
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -61,7 +65,8 @@ class ScheduleConfig:
 
 @dataclass
 class ScheduleExecution:
-    """Schedule execution record."""
+    """
+Schedule execution record."""
     execution_id: str
     schedule_id: str
     started_at: datetime
@@ -81,7 +86,8 @@ class BackupScheduler:
     interval-based scheduling, and one-time executions.
     """
     def __init__(self):
-        """Initialize backup scheduler."""
+        """
+Initialize backup scheduler."""
         self.logger = logging.getLogger(__name__)
         self.schedules: Dict[str, ScheduleConfig] = {}
         self.executions: List[ScheduleExecution] = []
@@ -91,7 +97,8 @@ class BackupScheduler:
         self._is_running = False
 
     async def start_scheduler(self) -> None:
-        """Start the scheduler service."""
+        """
+Start the scheduler service."""
         if self._is_running:
             self.logger.warning("Scheduler is already running")
             return

@@ -6,6 +6,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Analyser intelligent pour scanner et prioriser les implémentations par impact métier.
 Catégorise le code critique vs optionnel, business vs utilitaires, APIs externes vs logique interne.
 """
+
 import os
 import re
 import ast
@@ -25,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessImpact(Enum):
-    """Niveaux d'impact business pour la priorisation"""
+    """
+Niveaux d'impact business pour la priorisation"""
+
     CRITICAL = "critical"          # Bloquant production - fonctionnalités core métier
     HIGH = "high"                 # Impact fort sur fonctionnalités business
     MEDIUM = "medium"             # Fonctionnalités importantes mais non bloquantes
@@ -35,6 +38,7 @@ class BusinessImpact(Enum):
 
 class CodeType(Enum):
     """Types de code identifiés"""
+
     BUSINESS_CORE = "business_core"        # Logique métier centrale
     AI_AGENTS = "ai_agents"               # Agents IA spécialisés
     API_EXTERNAL = "api_external"         # APIs et interfaces externes
@@ -65,7 +69,8 @@ class TodoAnalysis:
 
 
 class TodoBusinessImpactAnalyzer:
-    """Analyseur intelligent des TODOs par impact métier"""
+    """
+Analyseur intelligent des TODOs par impact métier"""
     
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
@@ -190,7 +195,8 @@ class TodoBusinessImpactAnalyzer:
 
     def _determine_business_impact(self, file_path: Path, code_type: CodeType, 
                                   critical_methods: List[str], external_apis: List[str]) -> BusinessImpact:
-        """Déterminer l'impact business du fichier"""
+        """
+Déterminer l'impact business du fichier"""
         path_str = str(file_path).lower()
         
         # Impact critique pour les modules core business
@@ -233,7 +239,8 @@ class TodoBusinessImpactAnalyzer:
         return critical_methods
 
     def _find_external_apis(self, content: str) -> List[str]:
-        """Identifier les APIs externes utilisées"""
+        """
+Identifier les APIs externes utilisées"""
         external_apis = []
         content_lower = content.lower()
         
@@ -244,7 +251,8 @@ class TodoBusinessImpactAnalyzer:
         return list(set(external_apis))
 
     def _find_dependencies(self, tree: ast.AST) -> List[str]:
-        """Identifier les dépendances importantes"""
+        """
+Identifier les dépendances importantes"""
         dependencies = []
         
         for node in ast.walk(tree):
@@ -259,7 +267,8 @@ class TodoBusinessImpactAnalyzer:
 
     def _calculate_complexity_score(self, total_lines: int, critical_methods: int, 
                                    external_apis: int, dependencies: int) -> float:
-        """Calculer le score de complexité (0-100)"""
+        """
+Calculer le score de complexité (0-100)"""
         line_score = min(50, total_lines / 20)  # Max 50 points pour les lignes
         method_score = critical_methods * 10   # 10 points par méthode critique
         api_score = external_apis * 15         # 15 points par API externe
@@ -270,7 +279,8 @@ class TodoBusinessImpactAnalyzer:
     def _calculate_priority_score(self, business_impact: BusinessImpact, 
                                  implementation_percentage: float, complexity_score: float, 
                                  todo_count: int) -> float:
-        """Calculer le score de priorité (0-100)"""
+        """
+Calculer le score de priorité (0-100)"""
         # Poids par impact business
         impact_weights = {
             BusinessImpact.CRITICAL: 40,
@@ -294,7 +304,8 @@ class TodoBusinessImpactAnalyzer:
         return min(100, impact_score + incompleteness_score + complexity_normalized + todo_boost)
 
     def scan_repository(self) -> None:
-        """Scanner tout le repository pour les TODOs"""
+        """
+Scanner tout le repository pour les TODOs"""
         logger.info(f"🔍 Scanning repository: {self.project_root}")
         
         python_files = list(self.project_root.rglob("*.py"))
@@ -562,7 +573,8 @@ class TodoBusinessImpactAnalyzer:
 
 
 def main():
-    """Point d'entrée principal"""
+    """
+Point d'entrée principal"""
     parser = argparse.ArgumentParser(description="🔍 TODO Business Impact Analyzer for Ainflue")
     parser.add_argument("--project-root", default=".", help="Chemin vers la racine du projet")
     parser.add_argument("--output-json", default="todo_business_impact_analysis.json", 

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,8 +13,10 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Basic test for FastAPI application startup and functionality
 """
+Basic test for FastAPI application startup and functionality
+"""
+
 import pytest
 import sys
 import os
@@ -32,7 +35,8 @@ from test_main_app import app
 client = TestClient(app)
 
 def test_root_endpoint():
-    """Test the root endpoint"""
+    """
+Test the root endpoint"""
     response = client.get("/")
     assert response.status_code == 200
     data = response.json()

@@ -13,6 +13,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,7 +33,9 @@ Base = declarative_base()
 
 
 class SecurityEventType(PyEnum):
-    """Types d'événements de sécurité."""
+    """
+Types d'événements de sécurité."""
+
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILED = "login_failed"
     PASSWORD_CHANGE = "password_change"
@@ -50,6 +53,7 @@ class SecurityEventType(PyEnum):
 
 class ThreatLevel(PyEnum):
     """Niveaux de menace."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -58,6 +62,7 @@ class ThreatLevel(PyEnum):
 
 class DeviceType(PyEnum):
     """Types d'appareils."""
+
     DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
@@ -67,6 +72,7 @@ class DeviceType(PyEnum):
 
 class SecurityStatus(PyEnum):
     """Statuts de sécurité du compte."""
+
     SECURE = "secure"
     AT_RISK = "at_risk"
     COMPROMISED = "compromised"
@@ -146,7 +152,8 @@ class UserSecurity(Base):
         return datetime.utcnow() > self.password_expires_at
     
     def is_account_locked(self) -> bool:
-        """Vérifie si le compte est verrouillé."""
+        """
+Vérifie si le compte est verrouillé."""
         if not self.account_locked:
             return False
         if self.locked_until and datetime.utcnow() > self.locked_until:
@@ -154,7 +161,8 @@ class UserSecurity(Base):
         return True
     
     def calculate_security_score(self) -> float:
-        """Calcule le score de sécurité du compte."""
+        """
+Calcule le score de sécurité du compte."""
         score = 0.0
         
         # Mot de passe récent (+20%)
@@ -285,7 +293,8 @@ class TrustedDevice(Base):
         return datetime.utcnow() > self.expires_at
     
     def update_last_seen(self, ip_address: str):
-        """Met à jour la dernière utilisation de l'appareil."""
+        """
+Met à jour la dernière utilisation de l'appareil."""
         self.last_seen = datetime.utcnow()
         self.last_ip = ip_address
         self.login_count += 1
@@ -343,7 +352,8 @@ class APIKey(Base):
         return datetime.utcnow() > self.expires_at
     
     def can_access_endpoint(self, endpoint: str) -> bool:
-        """Vérifie si la clé peut accéder à un endpoint."""
+        """
+Vérifie si la clé peut accéder à un endpoint."""
         if not self.is_active or self.is_expired():
             return False
         
@@ -354,7 +364,8 @@ class APIKey(Base):
         return endpoint not in restricted
     
     def record_usage(self, ip_address: str, endpoint: str):
-        """Enregistre une utilisation de la clé."""
+        """
+Enregistre une utilisation de la clé."""
         self.last_used = datetime.utcnow()
         self.last_used_ip = ip_address
         self.usage_count += 1
@@ -760,11 +771,13 @@ class SecurityRepository:
         return user_security.calculate_security_score()
     
     def _hash_password(self, password: str, salt: str) -> str:
-        """Hash un mot de passe avec un sel."""
+        """
+Hash un mot de passe avec un sel."""
         return hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000).hex()
     
     def _generate_device_fingerprint(self, device_data: Dict[str, Any]) -> str:
-        """Génère une empreinte unique pour un appareil."""
+        """
+Génère une empreinte unique pour un appareil."""
         fingerprint_data = f"{device_data.get('user_agent', '')}" \
                           f"{device_data.get('screen_resolution', '')}" \
                           f"{device_data.get('timezone', '')}" \

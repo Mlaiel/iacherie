@@ -9,7 +9,7 @@ Module: backend/business/engagement/engagement_analytics.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
@@ -26,6 +26,7 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Engagement Analytics → Distribution → Monetization → Analytics
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementEventType(str, Enum):
-    """Types of engagement events tracked."""
+    """
+Types of engagement events tracked."""
+
     LOGIN = "login"
     CONTENT_UPLOAD = "content_upload"
     CONTENT_VIEW = "content_view"
@@ -66,6 +69,7 @@ class EngagementEventType(str, Enum):
 
 class EngagementMetricType(str, Enum):
     """Types of engagement metrics."""
+
     SESSION_DURATION = "session_duration"
     DAILY_ACTIVE_TIME = "daily_active_time"
     FEATURE_ADOPTION_RATE = "feature_adoption_rate"
@@ -82,6 +86,7 @@ class EngagementMetricType(str, Enum):
 
 class AnalyticsPeriod(str, Enum):
     """Time periods for analytics."""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -145,7 +150,8 @@ class EngagementEvent:
 
 @dataclass
 class EngagementMetrics:
-    """Comprehensive engagement metrics for a user."""
+    """
+Comprehensive engagement metrics for a user."""
     user_id: str = ""
     period_start: datetime = field(default_factory=datetime.utcnow)
     period_end: datetime = field(default_factory=datetime.utcnow)
@@ -210,7 +216,8 @@ class EngagementMetrics:
 
 @dataclass
 class EngagementInsight:
-    """Represents an actionable engagement insight."""
+    """
+Represents an actionable engagement insight."""
     insight_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     insight_type: str = ""
@@ -245,7 +252,8 @@ class EngagementAnalytics:
     """
     
     def __init__(self):
-        """Initialize the engagement analytics system."""
+        """
+Initialize the engagement analytics system."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._events: List[EngagementEvent] = []
         self._user_metrics: Dict[str, EngagementMetrics] = {}
@@ -1016,13 +1024,15 @@ async def track_user_event(
     event_type: EngagementEventType,
     metadata: Optional[Dict[str, Any]] = None
 ) -> EngagementEvent:
-    """Track a user engagement event (convenience function)."""
+    """
+Track a user engagement event (convenience function)."""
     analytics = await get_engagement_analytics()
     return await analytics.track_event(user_id, event_type, metadata=metadata)
 
 
 async def get_user_engagement_summary(user_id: str) -> Dict[str, Any]:
-    """Get engagement summary for a user (convenience function)."""
+    """
+Get engagement summary for a user (convenience function)."""
     analytics = await get_engagement_analytics()
     
     # Get daily, weekly, and monthly metrics

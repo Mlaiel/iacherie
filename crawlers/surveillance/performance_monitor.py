@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -22,6 +22,7 @@ health tracking for surveillance operations. Features include real-time
 metrics collection, performance analytics, resource optimization,
 alerting, and comprehensive system observability.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
@@ -40,7 +41,9 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics."""
+    """
+Types of performance metrics."""
+
     COUNTER = "counter"        # Monotonically increasing value
     GAUGE = "gauge"           # Point-in-time value
     HISTOGRAM = "histogram"   # Distribution of values
@@ -51,6 +54,7 @@ class MetricType(Enum):
 
 class MetricCategory(Enum):
     """Categories of performance metrics."""
+
     SYSTEM = "system"          # System-level metrics (CPU, memory, disk)
     APPLICATION = "application" # Application-level metrics
     BUSINESS = "business"      # Business logic metrics
@@ -64,6 +68,7 @@ class MetricCategory(Enum):
 
 class AlertCondition(Enum):
     """Alert condition types."""
+
     THRESHOLD_EXCEEDED = "threshold_exceeded"
     THRESHOLD_BELOW = "threshold_below"
     RATE_INCREASE = "rate_increase"
@@ -75,6 +80,7 @@ class AlertCondition(Enum):
 
 class HealthStatus(Enum):
     """System health status levels."""
+
     HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -147,7 +153,8 @@ class SystemHealth:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report."""
+    """
+Performance analysis report."""
     report_id: str
     period_start: datetime
     period_end: datetime
@@ -568,7 +575,8 @@ class PerformanceMonitor:
         threshold: MetricThreshold,
         current_value: float
     ) -> None:
-        """Trigger a performance alert."""
+        """
+Trigger a performance alert."""
         alert_id = f"perf_alert_{uuid.uuid4().hex[:8]}"
         
         metric = self.metrics[threshold.metric_id]
@@ -758,7 +766,8 @@ class PerformanceMonitor:
         return trends
     
     def _summarize_alerts(self, start_time: datetime, end_time: datetime) -> Dict[str, int]:
-        """Summarize alerts for the given period."""
+        """
+Summarize alerts for the given period."""
         period_alerts = [
             alert for alert in self.alerts.values()
             if start_time <= alert.triggered_at <= end_time
@@ -775,7 +784,8 @@ class PerformanceMonitor:
         return summary
     
     async def _generate_performance_recommendations(self) -> List[str]:
-        """Generate performance optimization recommendations."""
+        """
+Generate performance optimization recommendations."""
         recommendations = []
         
         # Check CPU usage
@@ -1002,7 +1012,8 @@ class PerformanceMonitor:
     
     # Public API methods
     def get_metric(self, metric_id: str) -> Optional[Metric]:
-        """Get metric by ID."""
+        """
+Get metric by ID."""
         return self.metrics.get(metric_id)
     
     def get_metrics(
@@ -1010,7 +1021,8 @@ class PerformanceMonitor:
         category: Optional[MetricCategory] = None,
         metric_type: Optional[MetricType] = None
     ) -> List[Metric]:
-        """Get metrics with optional filtering."""
+        """
+Get metrics with optional filtering."""
         metrics = list(self.metrics.values())
         
         if category:
@@ -1034,7 +1046,8 @@ class PerformanceMonitor:
         return alerts
     
     async def shutdown(self) -> None:
-        """Shutdown performance monitoring system gracefully."""
+        """
+Shutdown performance monitoring system gracefully."""
         self._logger.info("Shutting down Performance Monitoring System...")
         
         # Signal shutdown to background tasks
@@ -1068,7 +1081,8 @@ class MetricCollector:
     """Base class for metric collectors."""
     
     def __init__(self, monitor: PerformanceMonitor):
-        """Initialize collector."""
+        """
+Initialize collector."""
         self.monitor = monitor
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
@@ -1205,10 +1219,12 @@ class MetricCollector:
 
 
 class SystemMetricsCollector(MetricCollector):
-    """Collector for system-level metrics."""
+    """
+Collector for system-level metrics."""
     
     async def collect_metrics(self) -> None:
-        """Collect system metrics."""
+        """
+Collect system metrics."""
         try:
             # CPU usage
             cpu_metric_id = None
@@ -1252,7 +1268,8 @@ class ApplicationMetricsCollector(MetricCollector):
     """Collector for application-level metrics."""
     
     async def collect_metrics(self) -> None:
-        """Collect application metrics."""
+        """
+Collect application metrics."""
         try:
             # This would collect application-specific metrics
             # For now, just simulate some metrics
@@ -1266,7 +1283,8 @@ class BusinessMetricsCollector(MetricCollector):
     """Collector for business-level metrics."""
     
     async def collect_metrics(self) -> None:
-        """Collect business metrics."""
+        """
+Collect business metrics."""
         try:
             # This would collect business KPIs and metrics
             # For now, just simulate some metrics
@@ -1280,7 +1298,8 @@ class PerformanceAnalyzer:
     """Base class for performance analyzers."""
     
     def __init__(self, monitor: PerformanceMonitor):
-        """Initialize analyzer."""
+        """
+Initialize analyzer."""
         self.monitor = monitor
         self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
@@ -1439,28 +1458,34 @@ class PerformanceAnalyzer:
 
 
 class TrendAnalyzer(PerformanceAnalyzer):
-    """Analyzer for performance trends."""
+    """
+Analyzer for performance trends."""
     
     async def analyze(self) -> None:
-        """Analyze performance trends."""
+        """
+Analyze performance trends."""
         # Implementation would analyze trends in metrics
         pass
 
 
 class CapacityAnalyzer(PerformanceAnalyzer):
-    """Analyzer for capacity planning."""
+    """
+Analyzer for capacity planning."""
     
     async def analyze(self) -> None:
-        """Analyze capacity requirements."""
+        """
+Analyze capacity requirements."""
         # Implementation would analyze capacity needs
         pass
 
 
 class AlertingEngine:
-    """Engine for performance alerting."""
+    """
+Engine for performance alerting."""
     
     async def initialize(self) -> None:
-        """Initialize alerting engine."""
+        """
+Initialize alerting engine."""
         pass
     
     async def send_alert_notifications(
@@ -1468,7 +1493,8 @@ class AlertingEngine:
         alert: PerformanceAlert,
         threshold: MetricThreshold
     ) -> None:
-        """Send alert notifications."""
+        """
+Send alert notifications."""
         # Implementation would send notifications via configured channels
         logger.info(f"Sending alert notification: {alert.message}")
     
@@ -1478,10 +1504,12 @@ class AlertingEngine:
 
 
 class AnomalyDetector:
-    """Engine for anomaly detection."""
+    """
+Engine for anomaly detection."""
     
     async def initialize(self) -> None:
-        """Initialize anomaly detector."""
+        """
+Initialize anomaly detector."""
         pass
     
     async def check_anomaly(
@@ -1490,12 +1518,14 @@ class AnomalyDetector:
         value: float,
         timestamp: datetime
     ) -> bool:
-        """Check for anomalies in metric value."""
+        """
+Check for anomalies in metric value."""
         # Simple implementation - would use more sophisticated algorithms in production
         return False
     
     async def shutdown(self) -> None:
-        """Shutdown anomaly detector."""
+        """
+Shutdown anomaly detector."""
         pass
 
 

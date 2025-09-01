@@ -11,7 +11,7 @@ Real-Time Monitoring → Performance Optimization → Graceful Shutdown
 
 Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
@@ -19,6 +19,7 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -93,7 +94,9 @@ logger = get_logger(__name__)
 
 
 class SystemStatus(Enum):
-    """Creator management system status"""
+    """
+Creator management system status"""
+
     INITIALIZING = "initializing"
     RUNNING = "running"
     DEGRADED = "degraded"
@@ -104,6 +107,7 @@ class SystemStatus(Enum):
 
 class ServiceHealth(Enum):
     """Individual service health status"""
+
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -134,7 +138,8 @@ class SystemMetrics:
 
 @dataclass
 class ServiceRegistry:
-    """Registry of all creator management services"""
+    """
+Registry of all creator management services"""
     profile_manager: Optional[CreatorProfileManager] = None
     registration_handler: Optional[CreatorRegistrationHandler] = None
     authentication_system: Optional[CreatorAuthenticationSystem] = None

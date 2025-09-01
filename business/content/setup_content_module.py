@@ -16,6 +16,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import os
 import sys
 import json
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModuleSetup:
-    """Setup and configuration manager for content module."""
+    """
+Setup and configuration manager for content module."""
     
     def __init__(self):
         self.config = {}
@@ -85,7 +87,8 @@ class ContentModuleSetup:
         }
         
     def validate_environment(self) -> Dict[str, Any]:
-        """Validate system environment for content module."""
+        """
+Validate system environment for content module."""
         logger.info("🔍 Validating Environment...")
         
         validation_results = {
@@ -170,7 +173,8 @@ class ContentModuleSetup:
         }
     
     def _check_redis_connection(self) -> Dict[str, Any]:
-        """Check Redis connection."""
+        """
+Check Redis connection."""
         try:
             import redis
             client = redis.Redis(host='localhost', port=6379, decode_responses=True)
@@ -180,7 +184,8 @@ class ContentModuleSetup:
             return {'available': False, 'error': str(e)}
     
     def _check_database_connection(self) -> Dict[str, Any]:
-        """Check database connection."""
+        """
+Check database connection."""
         try:
             # This would connect to your actual database
             # For demo, we'll simulate the check
@@ -189,7 +194,8 @@ class ContentModuleSetup:
             return {'available': False, 'error': str(e)}
     
     def _check_elasticsearch_connection(self) -> Dict[str, Any]:
-        """Check Elasticsearch connection."""
+        """
+Check Elasticsearch connection."""
         try:
             # This would connect to your actual Elasticsearch
             # For demo, we'll simulate the check
@@ -198,7 +204,8 @@ class ContentModuleSetup:
             return {'available': False, 'error': str(e)}
     
     def _check_directory_structure(self) -> Dict[str, Any]:
-        """Check required directory structure."""
+        """
+Check required directory structure."""
         required_dirs = [
             'logs',
             'temp',
@@ -268,7 +275,8 @@ class ContentModuleSetup:
         }
     
     def _generate_resource_recommendations(self, memory_gb: float, disk_gb: float, cpu_cores: int) -> List[str]:
-        """Generate system resource recommendations."""
+        """
+Generate system resource recommendations."""
         recommendations = []
         
         if memory_gb < 8:
@@ -514,7 +522,8 @@ volumes:
 """
         
         # Dockerfile
-        dockerfile = """FROM python:3.11-slim
+        dockerfile = """
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -575,7 +584,8 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
 
 
 async def main():
-    """Main setup function."""
+    """
+Main setup function."""
     print("""
     ╔══════════════════════════════════════════════════════════════════════════════╗
     ║                 IA Influencer Agent - Content Module Setup                  ║

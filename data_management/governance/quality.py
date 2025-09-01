@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
+
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -28,7 +29,9 @@ from ...ai.models import ContentAnalyzer, QualityClassifier
 
 
 class QualityDimension(Enum):
-    """Data quality dimensions"""
+    """
+Data quality dimensions"""
+
     COMPLETENESS = "completeness"
     ACCURACY = "accuracy"
     CONSISTENCY = "consistency"
@@ -41,6 +44,7 @@ class QualityDimension(Enum):
 
 class QualityLevel(Enum):
     """Quality assessment levels"""
+
     EXCELLENT = "excellent"  # 90-100%
     GOOD = "good"           # 75-89%
     ACCEPTABLE = "acceptable"  # 60-74%
@@ -65,7 +69,8 @@ class QualityRule:
 
 @dataclass
 class QualityIssue:
-    """Quality issue record"""
+    """
+Quality issue record"""
     issue_id: str
     content_id: str
     rule_id: str
@@ -80,7 +85,8 @@ class QualityIssue:
 
 @dataclass
 class QualityMetrics:
-    """Quality metrics for content"""
+    """
+Quality metrics for content"""
     content_id: str
     content_type: str
     overall_score: float  # 0-100
@@ -93,7 +99,8 @@ class QualityMetrics:
 
 
 class BaseQualityChecker(ABC):
-    """Base class for content-specific quality checkers"""
+    """
+Base class for content-specific quality checkers"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
@@ -106,7 +113,8 @@ class BaseQualityChecker(ABC):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check quality for specific content type"""
+        """
+Check quality for specific content type"""
         logger.warning(f"check_quality method not implemented in {self.__class__.__name__}")
         
         # Create default quality metrics
@@ -184,7 +192,8 @@ class AudioQualityChecker(BaseQualityChecker):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check audio content quality"""
+        """
+Check audio content quality"""
         dimension_scores = {}
         issues_count = 0
         critical_issues_count = 0
@@ -319,22 +328,26 @@ class AudioQualityChecker(BaseQualityChecker):
         return 0.0
     
     async def _validate_audio_headers(self, content_data: Any) -> bool:
-        """Validate audio file headers"""
+        """
+Validate audio file headers"""
         # Implementation would check audio format headers
         return True
     
     async def _detect_audio_corruption(self, content_data: Any) -> bool:
-        """Detect audio corruption"""
+        """
+Detect audio corruption"""
         # Implementation would analyze audio for corruption patterns
         return False
     
     async def _verify_checksum(self, content_data: Any, expected_checksum: str) -> bool:
-        """Verify content checksum"""
+        """
+Verify content checksum"""
         # Implementation would calculate and compare checksums
         return True
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score"""
+        """
+Determine quality level from score"""
         if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
@@ -347,7 +360,8 @@ class AudioQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get audio quality rules"""
+        """
+Get audio quality rules"""
         return [
             QualityRule(
                 rule_id="audio_sample_rate",
@@ -383,7 +397,8 @@ class VideoQualityChecker(BaseQualityChecker):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check video content quality"""
+        """
+Check video content quality"""
         dimension_scores = {}
         
         # Check completeness
@@ -450,7 +465,8 @@ class VideoQualityChecker(BaseQualityChecker):
         return 1.0
     
     async def _check_video_validity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check video format validity"""
+        """
+Check video format validity"""
         score = 1.0
         
         codec = metadata.get("codec", "").lower()
@@ -467,7 +483,8 @@ class VideoQualityChecker(BaseQualityChecker):
         return 1.0
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score"""
+        """
+Determine quality level from score"""
         if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
@@ -480,7 +497,8 @@ class VideoQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get video quality rules"""
+        """
+Get video quality rules"""
         return [
             QualityRule(
                 rule_id="video_resolution",
@@ -503,7 +521,8 @@ class ImageQualityChecker(BaseQualityChecker):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check image content quality"""
+        """
+Check image content quality"""
         dimension_scores = {}
         
         # Check completeness
@@ -577,7 +596,8 @@ class ImageQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get image quality rules"""
+        """
+Get image quality rules"""
         return [
             QualityRule(
                 rule_id="image_resolution",
@@ -600,7 +620,8 @@ class TextQualityChecker(BaseQualityChecker):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check text content quality"""
+        """
+Check text content quality"""
         dimension_scores = {}
         
         # Check completeness
@@ -649,12 +670,14 @@ class TextQualityChecker(BaseQualityChecker):
         return 0.9  # Placeholder
     
     async def _check_text_consistency(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check text consistency"""
+        """
+Check text consistency"""
         # Implementation would check for consistent formatting, style
         return 0.95  # Placeholder
     
     async def _check_text_validity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check text validity"""
+        """
+Check text validity"""
         score = 1.0
         
         # Check encoding
@@ -678,7 +701,8 @@ class TextQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get text quality rules"""
+        """
+Get text quality rules"""
         return [
             QualityRule(
                 rule_id="text_not_empty",
@@ -701,7 +725,8 @@ class QualityManager(BaseManager):
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the quality manager"""
+        """
+Initialize the quality manager"""
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
@@ -1222,7 +1247,8 @@ class QualityManager(BaseManager):
         ]
     
     async def _validate_quality_rule(self, rule: QualityRule) -> None:
-        """Validate quality rule configuration"""
+        """
+Validate quality rule configuration"""
         if not rule.rule_id or not rule.name:
             raise ValidationError("Rule ID and name are required")
         
@@ -1240,7 +1266,8 @@ class QualityManager(BaseManager):
                 self.quality_rules[rule.rule_id] = rule
     
     async def _load_quality_history(self) -> None:
-        """Load quality assessment history from database"""
+        """
+Load quality assessment history from database"""
         try:
             self.logger.info("Loading quality assessment history from database")
             

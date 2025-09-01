@@ -15,6 +15,7 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
+
 import asyncio
 import json
 import logging
@@ -55,7 +56,8 @@ settings = get_settings()
 
 
 class ContentCrawlerEngine:
-    """Industrial content crawler with anti-detection and platform integration."""
+    """
+Industrial content crawler with anti-detection and platform integration."""
     
     def __init__(self):
         self.db = get_database()
@@ -873,7 +875,8 @@ class ContentCrawlerEngine:
             return now + timedelta(days=1)  # Default to daily
     
     def _estimate_daily_checks(self, config: Dict[str, Any]) -> int:
-        """Estimate daily content checks based on configuration."""
+        """
+Estimate daily content checks based on configuration."""
         platforms_count = len(config.get('platforms_to_crawl', []))
         search_terms_count = len(config.get('search_terms', []))
         max_results = config.get('max_results_per_platform', 100)
@@ -889,7 +892,8 @@ class ContentCrawlerEngine:
         return int(platforms_count * search_terms_count * max_results * daily_multiplier)
     
     async def _get_platform_session(self, platform: str) -> aiohttp.ClientSession:
-        """Get or create HTTP session for platform."""
+        """
+Get or create HTTP session for platform."""
         if platform not in self.sessions:
             # Configure session with platform-specific settings
             headers = {
@@ -923,7 +927,8 @@ class ContentCrawlerEngine:
         return self.sessions[platform]
     
     async def _get_platform_driver(self, platform: str) -> webdriver.Chrome:
-        """Get or create Selenium driver for platform."""
+        """
+Get or create Selenium driver for platform."""
         if platform not in self.drivers:
             chrome_options = ChromeOptions()
             
@@ -970,7 +975,8 @@ class ContentCrawlerEngine:
         return any(indicator in page_text for indicator in captcha_indicators)
     
     async def _handle_captcha(self, driver: webdriver.Chrome, platform: str):
-        """Handle captcha if detected."""
+        """
+Handle captcha if detected."""
         try:
             # Try automated captcha solving
             if self.captcha_solver.is_available():

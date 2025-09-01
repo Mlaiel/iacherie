@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
+
 import asyncio
 import logging
 import json
@@ -21,7 +22,9 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class ServiceMeshType(Enum):
-    """Service mesh types"""
+    """
+Service mesh types"""
+
     ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
@@ -29,6 +32,7 @@ class ServiceMeshType(Enum):
 
 class TrafficPolicy(Enum):
     """Traffic management policies"""
+
     ROUND_ROBIN = "round_robin"
     LEAST_CONN = "least_conn"
     RANDOM = "random"
@@ -36,6 +40,7 @@ class TrafficPolicy(Enum):
 
 class SecurityPolicy(Enum):
     """Security policies"""
+
     MTLS_STRICT = "mtls_strict"
     MTLS_PERMISSIVE = "mtls_permissive"
     PLAINTEXT = "plaintext"
@@ -65,7 +70,8 @@ class VirtualServiceSpec:
 
 @dataclass
 class DestinationRuleSpec:
-    """Destination Rule specification"""
+    """
+Destination Rule specification"""
     name: str
     namespace: str
     host: str
@@ -74,7 +80,8 @@ class DestinationRuleSpec:
 
 @dataclass
 class GatewaySpec:
-    """Gateway specification"""
+    """
+Gateway specification"""
     name: str
     namespace: str
     selector: Dict[str, str]
@@ -82,7 +89,8 @@ class GatewaySpec:
 
 @dataclass
 class ServiceEntrySpec:
-    """Service Entry specification"""
+    """
+Service Entry specification"""
     name: str
     namespace: str
     hosts: List[str]
@@ -99,7 +107,8 @@ class AuthorizationPolicySpec:
     rules: List[Dict[str, Any]]
 
 class ServiceMeshManager:
-    """Main service mesh manager"""
+    """
+Main service mesh manager"""
     
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
@@ -109,7 +118,8 @@ class ServiceMeshManager:
         self.networking_v1 = client.NetworkingV1Api() if k8s_client else None
         
     async def deploy_service_mesh(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Deploy service mesh infrastructure"""
+        """
+Deploy service mesh infrastructure"""
         try:
             if config.mesh_type == ServiceMeshType.ISTIO:
                 return await self._deploy_istio(config)

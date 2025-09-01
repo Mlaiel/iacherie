@@ -8,7 +8,7 @@ Responsibility: Traitement avancé audio pour créateurs musicaux et podcasters
 ==============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -16,6 +16,7 @@ LOGIQUE MÉTIER AUDIO PROCESSOR:
 Audio Upload → Format Detection → Quality Analysis → Feature Extraction → 
 Fingerprinting → Content Analysis → Noise Reduction → Protection Preparation
 """
+
 import librosa
 import numpy as np
 import soundfile as sf
@@ -40,7 +41,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class AudioProcessor(BaseProcessor):
-    """Processeur avancé pour audio - Production Enterprise"""
+    """
+Processeur avancé pour audio - Production Enterprise"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -71,7 +73,8 @@ class AudioProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_audio_models(self):
-        """Initialize audio AI models"""
+        """
+Initialize audio AI models"""
         try:
             # Audio classification pipeline
             self.audio_classifier = pipeline(
@@ -115,7 +118,8 @@ class AudioProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite un fichier audio complètement"""
+        """
+Traite un fichier audio complètement"""
         try:
             # Load audio data
             audio_data, metadata = self._load_audio(input_data)
@@ -624,14 +628,16 @@ class AudioProcessor(BaseProcessor):
         return 100.0  # Very high SNR if no noise detected
     
     def _detect_clipping(self, audio_data: np.ndarray) -> float:
-        """Détecte le clipping audio"""
+        """
+Détecte le clipping audio"""
         clipping_threshold = 0.99
         clipped_samples = np.sum(np.abs(audio_data) >= clipping_threshold)
         clipping_percentage = (clipped_samples / len(audio_data)) * 100
         return float(clipping_percentage)
     
     def _analyze_frequency_response(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse la réponse en fréquence"""
+        """
+Analyse la réponse en fréquence"""
         # FFT analysis
         fft = np.fft.fft(audio_data)
         freqs = np.fft.fftfreq(len(fft), 1/sr)
@@ -656,7 +662,8 @@ class AudioProcessor(BaseProcessor):
         return 0.0
     
     def _calculate_quality_score(self, snr: float, clipping: float, dynamic_range: float) -> float:
-        """Calcule un score de qualité global"""
+        """
+Calcule un score de qualité global"""
         # Normalize and weight different factors
         snr_score = min(snr / 60, 1.0) * 0.4  # Good SNR is 60dB+
         clipping_score = max(0, 1.0 - clipping / 5) * 0.3  # Penalize clipping
@@ -665,7 +672,8 @@ class AudioProcessor(BaseProcessor):
         return snr_score + clipping_score + dynamic_score
     
     def _get_quality_rating(self, score: float) -> str:
-        """Convertit le score en rating"""
+        """
+Convertit le score en rating"""
         for rating, threshold in self.quality_thresholds.items():
             if score >= threshold:
                 return rating
@@ -689,14 +697,16 @@ class AudioProcessor(BaseProcessor):
         return harmonic_strength > 0.01  # Threshold for harmonic content
     
     def _detect_speech(self, audio_data: np.ndarray, metadata: Dict) -> bool:
-        """Détecte la présence de parole"""
+        """
+Détecte la présence de parole"""
         # Simple speech detection based on spectral characteristics
         mfccs = librosa.feature.mfcc(y=audio_data, sr=metadata.get('sample_rate', self.sample_rate))
         speech_like = np.mean(mfccs[1:3])  # Focus on speech-relevant MFCC coefficients
         return -20 < speech_like < 20  # Typical range for speech
     
     def _analyze_mood_energy(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse l'humeur et l'énergie"""
+        """
+Analyse l'humeur et l'énergie"""
         # Energy analysis
         rms = librosa.feature.rms(y=audio_data)[0]
         energy_level = float(np.mean(rms))
@@ -725,7 +735,8 @@ class AudioProcessor(BaseProcessor):
         return key_names[estimated_key_idx]
     
     def _estimate_genre(self, audio_data: np.ndarray, metadata: Dict) -> str:
-        """Estime le genre musical"""
+        """
+Estime le genre musical"""
         # Placeholder for genre classification
         # In production, this would use a trained genre classification model
         return "unknown"
@@ -755,7 +766,8 @@ class AudioProcessor(BaseProcessor):
         return float(harmonic_ratio)
     
     def _estimate_danceability(self, audio_data: np.ndarray, sr: int) -> float:
-        """Estime la dansabilité"""
+        """
+Estime la dansabilité"""
         # Based on rhythm regularity and tempo
         tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sr)
         beat_regularity = 1.0 / (np.std(np.diff(beats)) + 1e-8) if len(beats) > 1 else 0.0
@@ -767,7 +779,8 @@ class AudioProcessor(BaseProcessor):
         return float(min(danceability, 1.0))
     
     def _analyze_voice_characteristics(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse les caractéristiques vocales"""
+        """
+Analyse les caractéristiques vocales"""
         # Fundamental frequency (pitch)
         f0 = librosa.yin(audio_data, fmin=80, fmax=400)
         f0_clean = f0[f0 > 0]  # Remove unvoiced frames
@@ -807,14 +820,16 @@ class AudioProcessor(BaseProcessor):
         return float(valence)
     
     def _calculate_attack_time(self, audio_data: np.ndarray, sr: int) -> float:
-        """Calcule le temps d'attaque"""
+        """
+Calcule le temps d'attaque"""
         # Find the onset and calculate time to peak
         envelope = np.abs(audio_data)
         peak_idx = np.argmax(envelope[:sr])  # Look in first second
         return float(peak_idx / sr * 1000)  # Return in milliseconds
     
     def _calculate_decay_time(self, audio_data: np.ndarray, sr: int) -> float:
-        """Calcule le temps de déclin"""
+        """
+Calcule le temps de déclin"""
         # Simple decay time estimation
         envelope = np.abs(audio_data)
         peak_idx = np.argmax(envelope)
@@ -832,7 +847,8 @@ class AudioProcessor(BaseProcessor):
         return 0.0
     
     def _detect_codec(self, input_data: Any, metadata: Dict) -> str:
-        """Détecte le codec audio"""
+        """
+Détecte le codec audio"""
         file_ext = metadata.get("file_extension", "").lower()
         
         codec_mapping = {
@@ -861,7 +877,8 @@ class AudioProcessor(BaseProcessor):
 
 
 class AsyncAudioProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur audio"""
+    """
+Version asynchrone du processeur audio"""
     
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
@@ -869,7 +886,8 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
+        """
+Version asynchrone de la validation"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -878,7 +896,8 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
+        """
+Version asynchrone du traitement"""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
@@ -887,10 +906,13 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
+        """
+Traitement en lot asynchrone"""
         tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)
-    """Processeur audio asynchrone"""
+    """
+Processeur audio asynchrone"""
+
     
     SUPPORTED_FORMATS = ['mp3', 'wav', 'flac', 'ogg', 'm4a', 'aiff', 'wma']
     
@@ -899,7 +921,8 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Valide les données audio de manière asynchrone"""
+        """
+Valide les données audio de manière asynchrone"""
         if isinstance(input_data, dict):
             file_path = input_data.get('file_path')
             if file_path:
@@ -908,7 +931,8 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         return False
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite un fichier audio de manière asynchrone"""
+        """
+Traite un fichier audio de manière asynchrone"""
         file_path = input_data.get('file_path')
         
         # Traitement parallèle asynchrone

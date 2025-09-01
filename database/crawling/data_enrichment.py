@@ -13,6 +13,7 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
+
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -34,7 +35,9 @@ from ..core.exceptions import (
 
 
 class EnrichmentType(Enum):
-    """Types of data enrichment operations."""
+    """
+Types of data enrichment operations."""
+
     METADATA_EXTRACTION = "metadata_extraction"
     CONTENT_ANALYSIS = "content_analysis"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
@@ -47,6 +50,7 @@ class EnrichmentType(Enum):
 
 class EnrichmentSource(Enum):
     """Sources for data enrichment."""
+
     AI_MODEL = "ai_model"
     EXTERNAL_API = "external_api"
     DATABASE_LOOKUP = "database_lookup"
@@ -59,6 +63,7 @@ class EnrichmentSource(Enum):
 
 class EnrichmentPriority(Enum):
     """Priority levels for enrichment operations."""
+
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -68,6 +73,7 @@ class EnrichmentPriority(Enum):
 
 class EnrichmentStatus(Enum):
     """Status of enrichment operations."""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -90,7 +96,8 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
     """
     
     def __init__(self, db_session: Session):
-        """Initialize data enrichment manager."""
+        """
+Initialize data enrichment manager."""
         super().__init__(db_session)
         self.enrichment_engines = {}
         self.active_jobs = {}
@@ -638,33 +645,41 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         return 0.85
     
     async def _extract_person_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for person entity extraction."""
+        """
+Placeholder for person entity extraction."""
         return []
     
     async def _extract_organization_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for organization entity extraction."""
+        """
+Placeholder for organization entity extraction."""
         return []
     
     async def _extract_location_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for location entity extraction."""
+        """
+Placeholder for location entity extraction."""
         return []
     
     async def _extract_event_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for event entity extraction."""
+        """
+Placeholder for event entity extraction."""
         return []
     
     async def _extract_product_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for product entity extraction."""
+        """
+Placeholder for product entity extraction."""
         return []
     
     async def _extract_brand_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for brand entity extraction."""
+        """
+Placeholder for brand entity extraction."""
         return []
     
     async def _extract_topic_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for topic entity extraction."""
+        """
+Placeholder for topic entity extraction."""
         return []
     
     async def _extract_temporal_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for temporal entity extraction."""
+        """
+Placeholder for temporal entity extraction."""
         return []

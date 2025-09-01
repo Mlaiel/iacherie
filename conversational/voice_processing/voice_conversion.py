@@ -40,6 +40,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -82,7 +83,9 @@ from .models import (
 logger = logging.getLogger(__name__)
 
 class ConversionMethod(Enum):
-    """Voice conversion method types."""
+    """
+Voice conversion method types."""
+
     NEURAL_VOCODER = "neural_vocoder"
     SPECTRAL_MAPPING = "spectral_mapping"
     STATISTICAL_PARAMETRIC = "statistical_parametric"
@@ -92,6 +95,7 @@ class ConversionMethod(Enum):
 
 class ConversionQuality(Enum):
     """Voice conversion quality levels."""
+
     DRAFT = "draft"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
@@ -100,6 +104,7 @@ class ConversionQuality(Enum):
 
 class VoiceIdentity(Enum):
     """Predefined voice identity categories."""
+
     MALE_YOUNG = "male_young"
     MALE_ADULT = "male_adult" 
     MALE_ELDERLY = "male_elderly"
@@ -123,7 +128,8 @@ class VoiceConversionMetrics:
 
 @dataclass
 class ConversionParameters:
-    """Voice conversion parameter configuration."""
+    """
+Voice conversion parameter configuration."""
     pitch_shift_semitones: float = 0.0
     formant_shift_ratio: float = 1.0
     speaking_rate_ratio: float = 1.0
@@ -143,7 +149,8 @@ class IntelligentVoiceConverter:
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the intelligent voice converter."""
+        """
+Initialize the intelligent voice converter."""
         self.config = config or get_voice_conversion_config()
         self.is_initialized = False
         self.conversion_models = {}

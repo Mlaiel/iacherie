@@ -28,6 +28,7 @@ sera poursuivie selon la loi allemande et internationale.
 
 Contact autorisé: mlaiel@live.de
 """
+
 import asyncio
 import threading
 import time
@@ -49,7 +50,9 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     CONNECTION = "connection"
     QUERY = "query"
     MEMORY = "memory"
@@ -64,6 +67,7 @@ class PerformanceMetricType(Enum):
 
 class AlertSeverity(Enum):
     """Alert severity levels"""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -72,6 +76,7 @@ class AlertSeverity(Enum):
 
 class PerformanceStatus(Enum):
     """Overall performance status"""
+
     EXCELLENT = "excellent"
     GOOD = "good"
     WARNING = "warning"
@@ -94,7 +99,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
+    """
+Performance alert"""
     alert_id: str
     metric_name: str
     severity: AlertSeverity
@@ -108,7 +114,8 @@ class PerformanceAlert:
 
 @dataclass
 class QueryPerformance:
-    """Query performance statistics"""
+    """
+Query performance statistics"""
     query_hash: str
     query_text: str
     calls: int
@@ -126,7 +133,8 @@ class QueryPerformance:
 
 
 class LockInfo(NamedTuple):
-    """Database lock information"""
+    """
+Database lock information"""
     locktype: str
     database: str
     relation: str
@@ -184,7 +192,8 @@ class DatabasePerformanceMonitor:
         self._initialize_monitoring()
     
     def _initialize_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize performance monitoring thresholds"""
+        """
+Initialize performance monitoring thresholds"""
         return {
             'cpu_usage': {'warning': 70.0, 'critical': 90.0},
             'memory_usage': {'warning': 80.0, 'critical': 95.0},
@@ -199,7 +208,8 @@ class DatabasePerformanceMonitor:
         }
     
     def _initialize_monitoring(self) -> None:
-        """Initialize monitoring components"""
+        """
+Initialize monitoring components"""
         try:
             # Enable pg_stat_statements extension
             self._enable_pg_stat_statements()
@@ -715,7 +725,8 @@ class DatabasePerformanceMonitor:
             return PerformanceMetricType.QUERY
     
     def _check_performance_alerts(self) -> None:
-        """Check for performance alerts"""
+        """
+Check for performance alerts"""
         try:
             current_time = datetime.now()
             
@@ -776,7 +787,8 @@ class DatabasePerformanceMonitor:
         threshold_value: float,
         timestamp: datetime
     ) -> None:
-        """Create performance alert"""
+        """
+Create performance alert"""
         try:
             alert_id = f"{metric_name}_{timestamp.strftime('%Y%m%d_%H%M%S')}"
             
@@ -869,7 +881,8 @@ class DatabasePerformanceMonitor:
             return value < threshold * hysteresis_factor
     
     def _collect_single_metric(self, metric_name: str) -> Optional[float]:
-        """Collect a single metric value"""
+        """
+Collect a single metric value"""
         try:
             if metric_name == 'cpu_usage':
                 return psutil.cpu_percent(interval=1)
@@ -1283,7 +1296,8 @@ from .postgresql_manager import get_postgresql_manager
 
 @dataclass
 class QueryMetrics:
-    """Query performance metrics"""
+    """
+Query performance metrics"""
     query_hash: str
     query_text: str
     execution_count: int
@@ -1298,7 +1312,8 @@ class QueryMetrics:
 
 @dataclass
 class ConnectionMetrics:
-    """Database connection metrics"""
+    """
+Database connection metrics"""
     active_connections: int
     idle_connections: int
     waiting_connections: int
@@ -1309,7 +1324,8 @@ class ConnectionMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert information"""
+    """
+Performance alert information"""
     alert_id: str
     alert_type: str
     severity: str
@@ -1363,7 +1379,8 @@ class DatabasePerformanceMonitor:
         self._initialize_monitoring()
     
     def _initialize_monitoring(self) -> None:
-        """Initialize performance monitoring"""
+        """
+Initialize performance monitoring"""
         try:
             # Enable pg_stat_statements if available
             self._enable_pg_stat_statements()

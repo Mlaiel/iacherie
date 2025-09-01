@@ -8,7 +8,7 @@ Responsibility: Creator partnerships, matching, and collaboration management
 ================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -21,6 +21,7 @@ COLLABORATION REPOSITORY ARCHITECTURE:
 Matching Algorithm → Partnership Management → Project Workflow → 
 Revenue Distribution → Performance Analytics → Relationship Tracking
 """
+
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -40,7 +41,9 @@ except ImportError:
         pass
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     CONTENT_CREATION = "content_creation"
     SKILL_EXCHANGE = "skill_exchange"
     CROSS_PROMOTION = "cross_promotion"
@@ -51,6 +54,7 @@ class CollaborationType(Enum):
 
 class CollaborationStatus(Enum):
     """Collaboration status"""
+
     PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
@@ -61,6 +65,7 @@ class CollaborationStatus(Enum):
 
 class MatchingCriteria(Enum):
     """Criteria for matching creators"""
+
     SKILLS = "skills"
     AUDIENCE = "audience"
     STYLE = "style"
@@ -72,6 +77,7 @@ class MatchingCriteria(Enum):
 
 class ProjectRole(Enum):
     """Roles in collaboration projects"""
+
     LEAD = "lead"
     CONTRIBUTOR = "contributor"
     CONSULTANT = "consultant"
@@ -94,7 +100,8 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal"""
+    """
+Collaboration proposal"""
     proposal_id: str
     proposer_id: str
     recipient_id: str
@@ -111,7 +118,8 @@ class CollaborationProposal:
 
 @dataclass
 class ActiveCollaboration:
-    """Active collaboration project"""
+    """
+Active collaboration project"""
     collaboration_id: str
     participants: List[str]
     collaboration_type: CollaborationType
@@ -131,7 +139,8 @@ class ActiveCollaboration:
 
 @dataclass
 class CollaborationAnalytics:
-    """Analytics for collaborations"""
+    """
+Analytics for collaborations"""
     total_collaborations: int
     active_collaborations: int
     completed_collaborations: int
@@ -373,7 +382,8 @@ class CollaborationRepository(BaseRepository):
     
     def _generate_match_reasons(self, profile1: Dict[str, Any], 
                               profile2: Dict[str, Any]) -> List[str]:
-        """Generate reasons why two creators are a good match"""
+        """
+Generate reasons why two creators are a good match"""
         reasons = []
         
         # Check skill complementarity
@@ -409,7 +419,8 @@ class CollaborationRepository(BaseRepository):
     
     def _estimate_collaboration_revenue(self, profile1: Dict[str, Any], 
                                       profile2: Dict[str, Any]) -> float:
-        """Estimate potential revenue from collaboration"""
+        """
+Estimate potential revenue from collaboration"""
         # Base revenue on combined audience and engagement
         audience1 = profile1.get('follower_count', 0)
         audience2 = profile2.get('follower_count', 0)
@@ -428,32 +439,39 @@ class CollaborationRepository(BaseRepository):
     
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator profile for matching"""
+        """
+Get creator profile for matching"""
         return {}
     
     def _get_collaboration_data(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[ActiveCollaboration]:
-        """Get collaboration data for analytics"""
+        """
+Get collaboration data for analytics"""
         return []
     
     def _calculate_partner_satisfaction(self, creator_id: str) -> float:
-        """Calculate partner satisfaction score"""
+        """
+Calculate partner satisfaction score"""
         return 85.0  # Placeholder
     
     def _get_default_collaboration_terms(self, collaboration_type: CollaborationType) -> Dict[str, Any]:
-        """Get default terms for collaboration type"""
+        """
+Get default terms for collaboration type"""
         return {}
     
     def _suggest_roles(self, proposer_id: str, recipient_id: str, collaboration_type: CollaborationType) -> Dict[str, ProjectRole]:
-        """Suggest roles for collaboration participants"""
+        """
+Suggest roles for collaboration participants"""
         return {}
     
     def _generate_collaboration_timeline(self, collaboration_type: CollaborationType, terms: Dict[str, Any]) -> Dict[str, datetime]:
-        """Generate collaboration timeline"""
+        """
+Generate collaboration timeline"""
         return {}
 
 
 class AsyncCollaborationRepository(AsyncBaseRepository):
-    """Asynchronous collaboration repository for high-performance operations"""
+    """
+Asynchronous collaboration repository for high-performance operations"""
     
     def __init__(self, db_connection=None, cache_manager=None,
                  ai_matcher=None, analytics_service=None):
@@ -471,7 +489,8 @@ class AsyncCollaborationRepository(AsyncBaseRepository):
         pass
     
     async def process_bulk_collaboration_updates_async(self, updates: List[Dict[str, Any]]) -> List[bool]:
-        """Process multiple collaboration updates asynchronously"""
+        """
+Process multiple collaboration updates asynchronously"""
         # Async implementation would go here
         pass
         return collaboration

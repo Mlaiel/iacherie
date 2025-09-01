@@ -5,7 +5,7 @@
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
-© 2024 IA Influencer Agent Development Team. All rights reserved.
+(c) 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
 distribution, or reverse engineering is strictly prohibited by law.
 
@@ -20,6 +20,7 @@ legal action. Contact mlaiel@live.de for licensing.
 This module provides enterprise-grade alert management and notification
 systems for content surveillance operations.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 class AlertType(Enum):
-    """Types of alerts in the system."""
+    """
+Types of alerts in the system."""
+
     VIOLATION = "violation"
     THREAT = "threat"
     INSIGHT = "insight"
@@ -52,6 +55,7 @@ class AlertType(Enum):
 
 class AlertStatus(Enum):
     """Alert processing status."""
+
     NEW = "new"
     ACKNOWLEDGED = "acknowledged"
     IN_PROGRESS = "in_progress"
@@ -63,6 +67,7 @@ class AlertStatus(Enum):
 
 class NotificationChannel(Enum):
     """Available notification channels."""
+
     EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
@@ -76,6 +81,7 @@ class NotificationChannel(Enum):
 
 class EscalationLevel(Enum):
     """Alert escalation levels."""
+
     NONE = "none"
     SUPERVISOR = "supervisor"
     MANAGER = "manager"
@@ -105,7 +111,8 @@ class NotificationRule:
 
 @dataclass
 class EscalationRule:
-    """Alert escalation rule definition."""
+    """
+Alert escalation rule definition."""
     rule_id: str
     name: str
     conditions: Dict[str, Any]
@@ -120,7 +127,8 @@ class EscalationRule:
 
 @dataclass
 class AlertWorkflow:
-    """Alert processing workflow definition."""
+    """
+Alert processing workflow definition."""
     workflow_id: str
     name: str
     alert_types: List[AlertType]
@@ -134,7 +142,8 @@ class AlertWorkflow:
 
 @dataclass
 class UnifiedAlert:
-    """Unified alert combining different alert types."""
+    """
+Unified alert combining different alert types."""
     alert_id: str
     alert_type: AlertType
     severity: AlertSeverity
@@ -542,7 +551,8 @@ class AlertManager:
         return False
     
     async def _handle_duplicate_alert(self, alert: UnifiedAlert) -> None:
-        """Handle duplicate alert by merging with existing."""
+        """
+Handle duplicate alert by merging with existing."""
         # Find the original alert to merge with
         for existing_alert in self.alerts.values():
             similarity = await self._calculate_alert_similarity(alert, existing_alert)
@@ -565,7 +575,8 @@ class AlertManager:
                 break
     
     async def _should_suppress_alert(self, alert: UnifiedAlert) -> bool:
-        """Check if alert should be suppressed."""
+        """
+Check if alert should be suppressed."""
         # Implement suppression logic based on rules
         # This is a simplified version
         
@@ -579,7 +590,8 @@ class AlertManager:
         return False
     
     async def _find_matching_workflow(self, alert: UnifiedAlert) -> Optional[AlertWorkflow]:
-        """Find workflow that matches the alert."""
+        """
+Find workflow that matches the alert."""
         for workflow in self.alert_workflows.values():
             if not workflow.enabled:
                 continue
@@ -590,7 +602,8 @@ class AlertManager:
         return None
     
     async def _execute_workflow(self, alert: UnifiedAlert, workflow: AlertWorkflow) -> None:
-        """Execute workflow steps for alert."""
+        """
+Execute workflow steps for alert."""
         try:
             for step in workflow.steps:
                 step_type = step.get('type')
@@ -650,7 +663,8 @@ class AlertManager:
         return matching_rules
     
     async def _rule_matches_alert(self, rule: NotificationRule, alert: UnifiedAlert) -> bool:
-        """Check if notification rule matches alert."""
+        """
+Check if notification rule matches alert."""
         conditions = rule.conditions
         
         # Check alert type
@@ -683,7 +697,8 @@ class AlertManager:
         return True
     
     async def _queue_notification(self, alert: UnifiedAlert, rule: NotificationRule) -> None:
-        """Queue notification for sending."""
+        """
+Queue notification for sending."""
         notification_data = {
             'alert_id': alert.alert_id,
             'rule_id': rule.rule_id,
@@ -698,7 +713,8 @@ class AlertManager:
         await self.notification_queue.put(notification_data)
     
     async def _find_matching_escalation_rules(self, alert: UnifiedAlert) -> List[EscalationRule]:
-        """Find escalation rules that match the alert."""
+        """
+Find escalation rules that match the alert."""
         matching_rules = []
         
         for rule in self.escalation_rules.values():
@@ -711,7 +727,8 @@ class AlertManager:
         return matching_rules
     
     async def _escalation_rule_matches_alert(self, rule: EscalationRule, alert: UnifiedAlert) -> bool:
-        """Check if escalation rule matches alert."""
+        """
+Check if escalation rule matches alert."""
         conditions = rule.conditions
         
         # Check severity
@@ -734,7 +751,8 @@ class AlertManager:
         return True
     
     async def _schedule_escalation(self, alert: UnifiedAlert, rule: EscalationRule) -> None:
-        """Schedule escalation for alert."""
+        """
+Schedule escalation for alert."""
         escalation_time = datetime.now() + timedelta(minutes=rule.delay_minutes)
         
         escalation_data = {
@@ -749,7 +767,8 @@ class AlertManager:
         await self.escalation_queue.put(escalation_data)
     
     async def _process_notifications(self) -> None:
-        """Process notification queue."""
+        """
+Process notification queue."""
         while True:
             try:
                 notification_data = await self.notification_queue.get()
@@ -856,7 +875,8 @@ Recommendations:
         return content
     
     async def _process_escalations(self) -> None:
-        """Process escalation queue."""
+        """
+Process escalation queue."""
         while True:
             try:
                 escalation_data = await self.escalation_queue.get()
@@ -1207,24 +1227,28 @@ Immediate action required.
         return score
     
     async def _update_alert_metrics(self, alert: UnifiedAlert, processing_time: float) -> None:
-        """Update metrics after processing alert."""
+        """
+Update metrics after processing alert."""
         # Update processing time metrics
         # This would be more sophisticated in production
         pass
     
     # Storage methods (placeholders)
     async def _load_configuration(self) -> None:
-        """Load alert management configuration."""
+        """
+Load alert management configuration."""
         # Placeholder for loading configuration from storage
         pass
     
     async def _load_existing_alerts(self) -> None:
-        """Load existing alerts from storage."""
+        """
+Load existing alerts from storage."""
         # Placeholder for loading from persistent storage
         pass
     
     async def _initialize_notification_providers(self) -> None:
-        """Initialize notification providers."""
+        """
+Initialize notification providers."""
         # Placeholder for initializing notification providers
         # Would initialize email, SMS, webhook, etc. providers
         pass
@@ -1238,7 +1262,8 @@ Immediate action required.
         creator_id: Optional[str] = None,
         limit: int = 100
     ) -> List[UnifiedAlert]:
-        """Get alerts with optional filtering."""
+        """
+Get alerts with optional filtering."""
         alerts = list(self.alerts.values())
         
         if status:
@@ -1259,27 +1284,33 @@ Immediate action required.
         return alerts[:limit]
     
     def get_alert(self, alert_id: str) -> Optional[UnifiedAlert]:
-        """Get specific alert by ID."""
+        """
+Get specific alert by ID."""
         return self.alerts.get(alert_id)
     
     def get_alert_metrics(self) -> AlertMetrics:
-        """Get current alert metrics."""
+        """
+Get current alert metrics."""
         return self.metrics
     
     def add_alert_callback(self, callback: Callable) -> None:
-        """Add alert processing callback."""
+        """
+Add alert processing callback."""
         self.alert_callbacks.append(callback)
     
     def add_escalation_callback(self, callback: Callable) -> None:
-        """Add escalation callback."""
+        """
+Add escalation callback."""
         self.escalation_callbacks.append(callback)
     
     def add_resolution_callback(self, callback: Callable) -> None:
-        """Add resolution callback."""
+        """
+Add resolution callback."""
         self.resolution_callbacks.append(callback)
     
     async def shutdown(self) -> None:
-        """Shutdown alert manager gracefully."""
+        """
+Shutdown alert manager gracefully."""
         self._logger.info("Shutting down Alert Manager...")
         
         # Cancel background tasks

@@ -2,6 +2,7 @@
 """Application Deployment Manager
 Handles complete application deployment lifecycle including zero-downtime deployments
 """
+
 import os
 import sys
 import time
@@ -27,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy enumeration"""
+    """
+Deployment strategy enumeration"""
+
     ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
@@ -36,6 +39,7 @@ class DeploymentStrategy(Enum):
 
 class Environment(Enum):
     """Environment enumeration"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -63,7 +67,8 @@ class AppDeploymentManager:
     """
     
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize deployment manager"""
+        """
+Initialize deployment manager"""
         self.config_path = config_path or "/etc/deployment/config.yaml"
         self.k8s_client = None
         self.apps_v1 = None

@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,11 +13,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Tests Ultra-Industriels Avancés pour le Module Content Detection & Monitoring
+"""
+Tests Ultra-Industriels Avancés pour le Module Content Detection & Monitoring
 
 🚨 AVERTISSEMENT STRICT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie 
-au maximum de la loi. Tous droits réservés. Copyright © 2025 Fahed Mlaiel.
+au maximum de la loi. Tous droits réservés. Copyright (c) 2025 Fahed Mlaiel.
 
 ⚖️ INTERDICTION FORMELLE : Il est formellement interdit de copier, voler, utiliser ou s'inspirer de ce code/concept sans 
 autorisation personnelle écrite de Fahed Mlaiel. Violation = Poursuites légales immédiates.
@@ -34,6 +36,7 @@ IA Prompt Engineer
 
 Contact Officiel : Fahed Mlaiel <mlaiel@live.de>
 """
+
 import pytest
 import sys
 import os
@@ -81,7 +84,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RealWorldTestScenario:
-    """Real-world test scenario for piracy detection"""
+    """
+Real-world test scenario for piracy detection"""
     scenario_name: str
     content_type: ContentType
     attack_vector: str
@@ -104,7 +108,8 @@ class TestUltraIndustrialPiracyDetection:
     """
     @pytest.fixture
     def enterprise_detection_config(self):
-        """Configuration ultra-avancée pour la détection de piratage"""
+        """
+Configuration ultra-avancée pour la détection de piratage"""
         return {
             'detection_algorithms': {
                 'similarity_threshold': 0.85,
@@ -167,19 +172,22 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.fixture
     def enterprise_piracy_detector(self, enterprise_detection_config):
-        """Create enterprise-grade piracy detector"""
+        """
+Create enterprise-grade piracy detector"""
         detector = PiracyDetector(enterprise_detection_config)
         return detector
 
     @pytest.fixture
     def enterprise_monitoring_detector(self, enterprise_detection_config):
-        """Create enterprise unauthorized use detector"""
+        """
+Create enterprise unauthorized use detector"""
         detector = UnauthorizedUseDetector(enterprise_detection_config)
         return detector
 
     @pytest.fixture
     def real_world_attack_scenarios(self):
-        """Generate real-world attack scenarios for comprehensive testing"""
+        """
+Generate real-world attack scenarios for comprehensive testing"""
         scenarios = []
         
         # Audio piracy scenarios
@@ -536,7 +544,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.fixture
     def sample_text_features(self):
-        """Generate sample text features for testing"""
+        """
+Generate sample text features for testing"""
         return {
             'word_embeddings': np.random.random((100, 300)).tolist(),
             'sentence_embeddings': np.random.random((10, 768)).tolist(),
@@ -560,7 +569,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.fixture
     def sample_audio_features(self):
-        """Generate sample audio features for testing"""
+        """
+Generate sample audio features for testing"""
         return {
             'mfcc_features': np.random.random((13, 100)).tolist(),
             'spectral_features': {
@@ -584,7 +594,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.fixture
     def sample_image_features(self):
-        """Generate sample image features for testing"""
+        """
+Generate sample image features for testing"""
         return {
             'phash': 'a1b2c3d4e5f6',
             'histogram_features': {
@@ -621,7 +632,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.fixture
     def sample_video_features(self):
-        """Generate sample video features for testing"""
+        """
+Generate sample video features for testing"""
         frame_count = 30  # 30 frames for test
         return {
             'frame_features': [
@@ -669,7 +681,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.mark.asyncio
     async def test_audio_content_detection(self, content_detector, sample_audio_features, sample_content_metadata):
-        """Test audio content detection and matching"""
+        """
+Test audio content detection and matching"""
         
         # Store reference audio content
         reference_content_id = sample_content_metadata['content_id']
@@ -716,7 +729,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.mark.asyncio
     async def test_image_content_detection(self, content_detector, sample_image_features, sample_content_metadata):
-        """Test image content detection and visual similarity matching"""
+        """
+Test image content detection and visual similarity matching"""
         
         # Store reference image content
         reference_content_id = f"{sample_content_metadata['content_id']}_image"
@@ -905,7 +919,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.mark.asyncio
     async def test_infringement_detector(self, content_detector, sample_content_metadata, sample_audio_features):
-        """Test infringement detection and analysis"""
+        """
+Test infringement detection and analysis"""
         
         infringement_detector = InfringementDetector()
         
@@ -1136,7 +1151,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.mark.asyncio
     async def test_real_time_detection_pipeline(self, content_detector):
-        """Test real-time content detection pipeline"""
+        """
+Test real-time content detection pipeline"""
         
         # Simulate real-time content stream
         content_stream = []
@@ -1184,7 +1200,8 @@ class TestUltraIndustrialPiracyDetection:
 
     @pytest.mark.asyncio
     async def test_machine_learning_enhanced_detection(self, content_detector):
-        """Test machine learning enhanced content detection"""
+        """
+Test machine learning enhanced content detection"""
         
         # Create training dataset
         training_data = []
@@ -1238,7 +1255,8 @@ class TestUltraIndustrialPiracyDetection:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_detection_performance_scalability(self, content_detector):
-        """Test detection system performance and scalability"""
+        """
+Test detection system performance and scalability"""
         
         import time
         
@@ -1305,7 +1323,8 @@ class TestDetectionIntegration:
     """Integration tests for content detection system"""
     @pytest.mark.asyncio
     async def test_end_to_end_detection_workflow(self, test_config, sample_content_metadata):
-        """Test complete content detection workflow"""
+        """
+Test complete content detection workflow"""
         
         content_detector = ContentDetector(test_config.get('content_detection', {}))
         

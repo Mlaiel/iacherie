@@ -8,6 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
+
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -26,7 +27,9 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams."""
+    """
+Types of revenue streams."""
+
     STREAMING = "streaming"
     LICENSING = "licensing"
     ADVERTISING = "advertising"
@@ -39,6 +42,7 @@ class RevenueStreamType(Enum):
 
 class MonetizationStrategy(Enum):
     """Content monetization strategies."""
+
     DIRECT_SALES = "direct_sales"
     SUBSCRIPTION_MODEL = "subscription_model"
     ADVERTISING_REVENUE = "advertising_revenue"
@@ -51,6 +55,7 @@ class MonetizationStrategy(Enum):
 
 class CollaborationType(Enum):
     """Types of content collaborations."""
+
     BRAND_PARTNERSHIP = "brand_partnership"
     CROSS_PROMOTION = "cross_promotion"
     CONTENT_EXCHANGE = "content_exchange"
@@ -76,7 +81,8 @@ class RevenueOpportunity:
 
 @dataclass
 class CollaborationMatch:
-    """Represents a collaboration opportunity."""
+    """
+Represents a collaboration opportunity."""
     match_id: str
     creator_id: str
     partner_id: str
@@ -89,7 +95,8 @@ class CollaborationMatch:
 
 
 class RevenueOptimizationWorkflow:
-    """Workflow system for revenue optimization and monetization."""
+    """
+Workflow system for revenue optimization and monetization."""
     
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}

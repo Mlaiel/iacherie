@@ -13,6 +13,7 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
+
 import asyncio
 import logging
 import hashlib
@@ -53,7 +54,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(str, Enum):
-    """Types of content"""
+    """
+Types of content"""
+
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -65,6 +68,7 @@ class ContentType(str, Enum):
 
 class ProcessingStage(str, Enum):
     """Content processing stages"""
+
     UPLOAD = "upload"
     VALIDATION = "validation"
     ANALYSIS = "analysis"
@@ -78,6 +82,7 @@ class ProcessingStage(str, Enum):
 
 class ProcessingPriority(str, Enum):
     """Processing priority levels"""
+
     LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
@@ -87,6 +92,7 @@ class ProcessingPriority(str, Enum):
 
 class ContentStatus(str, Enum):
     """Content status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     PROCESSED = "processed"
@@ -206,7 +212,8 @@ class ProcessingJob:
 
 @dataclass
 class ContentEnhancement:
-    """Content enhancement results"""
+    """
+Content enhancement results"""
     auto_generated_title: Optional[str] = None
     auto_generated_description: Optional[str] = None
     auto_generated_tags: List[str] = field(default_factory=list)
@@ -222,7 +229,8 @@ class ContentEnhancement:
 
 @dataclass
 class ContentProtection:
-    """Content protection measures"""
+    """
+Content protection measures"""
     watermark_applied: bool = False
     fingerprint_registered: bool = False
     copyright_claimed: bool = False
@@ -254,7 +262,8 @@ class QualityAssessment:
 
 @dataclass
 class ContentAnalysisResult:
-    """Comprehensive content analysis result"""
+    """
+Comprehensive content analysis result"""
     content_metadata: ContentMetadata
     processing_results: Dict[str, Any] = field(default_factory=dict)
     enhancement: Optional[ContentEnhancement] = None
@@ -772,7 +781,8 @@ class ContentProcessor:
             return None
     
     async def _handle_job_failure(self, job: ProcessingJob, error_message: str):
-        """Handle job failure with retry logic"""
+        """
+Handle job failure with retry logic"""
         try:
             job.error_message = error_message
             job.retry_count += 1

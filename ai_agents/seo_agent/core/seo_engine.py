@@ -6,6 +6,7 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import re
@@ -44,7 +45,9 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of SEO optimizations"""
+    """
+Types of SEO optimizations"""
+
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     CONTENT_STRUCTURE = "content_structure"
     METADATA_OPTIMIZATION = "metadata_optimization"
@@ -55,6 +58,7 @@ class OptimizationType(Enum):
 
 class ContentType(Enum):
     """Types of content for SEO optimization"""
+
     BLOG_POST = "blog_post"
     VIDEO = "video"
     AUDIO = "audio"
@@ -65,6 +69,7 @@ class ContentType(Enum):
 
 class SearchEngine(Enum):
     """Target search engines"""
+
     GOOGLE = "google"
     BING = "bing"
     YOUTUBE = "youtube"
@@ -88,7 +93,8 @@ class SEOAnalysis:
 
 @dataclass
 class SEOOptimization:
-    """SEO optimization recommendation"""
+    """
+SEO optimization recommendation"""
     optimization_type: OptimizationType
     target_keywords: List[str]
     current_performance: Dict[str, Any]
@@ -101,7 +107,8 @@ class SEOOptimization:
 
 @dataclass
 class KeywordResearch:
-    """Keyword research and analysis results"""
+    """
+Keyword research and analysis results"""
     primary_keywords: List[Dict[str, Any]]
     secondary_keywords: List[Dict[str, Any]]
     long_tail_keywords: List[Dict[str, Any]]
@@ -113,7 +120,8 @@ class KeywordResearch:
 
 @dataclass
 class SeoJob:
-    """SEO processing job definition"""
+    """
+SEO processing job definition"""
     job_id: str
     content_id: str
     job_type: str
@@ -469,7 +477,8 @@ class SeoEngine:
         return processed
 
     async def _extract_keywords(self, content: Dict[str, str]) -> List[str]:
-        """Extract keywords from content"""
+        """
+Extract keywords from content"""
         # Combine all text
         all_text = ' '.join(content.values()).lower()
         
@@ -491,7 +500,8 @@ class SeoEngine:
         content_analysis: Dict[str, Any],
         technical_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate overall SEO score"""
+        """
+Calculate overall SEO score"""
         scores = []
         
         # Keyword score (30%)
@@ -509,7 +519,8 @@ class SeoEngine:
         return sum(scores)
 
     def _load_ranking_factors(self) -> Dict[str, float]:
-        """Load SEO ranking factors and their weights"""
+        """
+Load SEO ranking factors and their weights"""
         return {
             'keyword_in_title': 0.15,
             'keyword_in_description': 0.10,
@@ -524,7 +535,8 @@ class SeoEngine:
         }
 
     def _load_schema_templates(self) -> Dict[str, Dict]:
-        """Load schema markup templates"""
+        """
+Load schema markup templates"""
         return {
             'article': {
                 '@context': 'https://schema.org',
@@ -547,7 +559,8 @@ class SeoEngine:
         }
 
     def _load_optimization_rules(self) -> Dict[str, Any]:
-        """Load SEO optimization rules"""
+        """
+Load SEO optimization rules"""
         return {
             'title_length': {'min': 30, 'max': 60},
             'description_length': {'min': 120, 'max': 160},
@@ -557,7 +570,8 @@ class SeoEngine:
         }
 
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process SEO operation (legacy interface)"""
+        """
+Process SEO operation (legacy interface)"""
         try:
             operation_type = data.get('operation_type', 'analyze')
             content_id = data.get('content_id', 'unknown')
@@ -625,7 +639,8 @@ class SeoEngine:
         return await self.content_optimizer.optimize_content_structure(content, keywords)
     
     async def _analyze_technical_seo(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze technical SEO factors"""
+        """
+Analyze technical SEO factors"""
         return {
             'technical_score': 0.7,
             'page_speed': 0.8,
@@ -637,7 +652,8 @@ class SeoEngine:
     
     async def _identify_optimization_opportunities(self, keyword_analysis: Dict[str, Any], content_analysis: Dict[str, Any], 
                                                  technical_analysis: Dict[str, Any], competition_analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify SEO optimization opportunities"""
+        """
+Identify SEO optimization opportunities"""
         opportunities = []
         
         # Keyword optimization opportunities
@@ -670,13 +686,15 @@ class SeoEngine:
         return opportunities
     
     def _generate_priority_recommendations(self, opportunities: List[Dict[str, Any]]) -> List[str]:
-        """Generate priority recommendations from opportunities"""
+        """
+Generate priority recommendations from opportunities"""
         high_priority = [opp['description'] for opp in opportunities if opp.get('priority') == 'high']
         medium_priority = [opp['description'] for opp in opportunities if opp.get('priority') == 'medium']
         return high_priority + medium_priority
     
     async def _estimate_optimization_impact(self, opportunities: List[Dict[str, Any]], current_score: float) -> Dict[str, float]:
-        """Estimate impact of optimizations"""
+        """
+Estimate impact of optimizations"""
         if not opportunities:
             return {'seo_score_improvement': 0.0, 'traffic_increase': 0.0}
         
@@ -690,7 +708,8 @@ class SeoEngine:
         }
     
     async def _optimize_keyword_usage(self, content_data: Dict[str, Any], target_keywords: List[str]) -> SEOOptimization:
-        """Optimize keyword usage in content"""
+        """
+Optimize keyword usage in content"""
         suggestions = []
         for keyword in target_keywords:
             suggestions.append({
@@ -733,7 +752,8 @@ class SeoEngine:
         )
     
     async def _optimize_metadata(self, content_data: Dict[str, Any], target_keywords: List[str]) -> SEOOptimization:
-        """Optimize metadata for SEO"""
+        """
+Optimize metadata for SEO"""
         suggestions = [
             {'meta_type': 'title', 'suggestion': f'Include primary keyword in title tag'},
             {'meta_type': 'description', 'suggestion': 'Write compelling meta description with keywords'},
@@ -753,7 +773,8 @@ class SeoEngine:
         )
     
     async def _generate_schema_markup(self, content_data: Dict[str, Any], target_keywords: List[str]) -> SEOOptimization:
-        """Generate schema markup for content"""
+        """
+Generate schema markup for content"""
         content_type = content_data.get('type', 'article')
         schema_template = self.schema_templates.get(content_type, self.schema_templates['article'])
         
@@ -775,7 +796,8 @@ class SeoEngine:
         )
     
     async def _optimize_technical_seo(self, content_data: Dict[str, Any]) -> SEOOptimization:
-        """Optimize technical SEO factors"""
+        """
+Optimize technical SEO factors"""
         suggestions = [
             {'factor': 'page_speed', 'suggestion': 'Optimize images and minify CSS/JS'},
             {'factor': 'mobile_friendly', 'suggestion': 'Ensure responsive design'},
@@ -795,7 +817,8 @@ class SeoEngine:
         )
     
     async def _analyze_primary_keywords(self, seed_keywords: List[str], content_type: ContentType, search_engines: List[SearchEngine]) -> List[Dict[str, Any]]:
-        """Analyze primary keywords for SEO potential"""
+        """
+Analyze primary keywords for SEO potential"""
         primary_keywords = []
         for keyword in seed_keywords:
             primary_keywords.append({
@@ -808,7 +831,8 @@ class SeoEngine:
         return primary_keywords
     
     async def _discover_secondary_keywords(self, primary_keywords: List[Dict[str, Any]], content_type: ContentType) -> List[Dict[str, Any]]:
-        """Discover secondary keywords related to primary"""
+        """
+Discover secondary keywords related to primary"""
         secondary_keywords = []
         for primary in primary_keywords:
             base_keyword = primary['keyword']
@@ -875,7 +899,8 @@ class SeoEngine:
         }
     
     async def _calculate_keyword_difficulty(self, keywords: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate keyword difficulty scores"""
+        """
+Calculate keyword difficulty scores"""
         difficulty_scores = {}
         for keyword_data in keywords:
             # Simulate difficulty calculation
@@ -884,7 +909,8 @@ class SeoEngine:
     
     def _calculate_opportunity_score(self, primary_keywords: List[Dict[str, Any]], secondary_keywords: List[Dict[str, Any]], 
                                    long_tail_keywords: List[Dict[str, Any]], difficulty_scores: Dict[str, float]) -> float:
-        """Calculate overall keyword opportunity score"""
+        """
+Calculate overall keyword opportunity score"""
         all_keywords = primary_keywords + secondary_keywords + long_tail_keywords
         if not all_keywords:
             return 0.0
@@ -901,7 +927,8 @@ class SeoEngine:
     
     async def _generate_market_insights(self, primary_keywords: List[Dict[str, Any]], search_trends: Dict[str, Any], 
                                       competitor_keywords: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate market insights from keyword analysis"""
+        """
+Generate market insights from keyword analysis"""
         return {
             'market_size': sum(k.get('search_volume', 0) for k in primary_keywords),
             'competition_level': 'medium',
@@ -913,7 +940,8 @@ class SeoEngine:
 
 # Supporting AI model classes for SEO optimization
 class KeywordAnalyzer:
-    """Advanced keyword analysis and research engine"""
+    """
+Advanced keyword analysis and research engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -923,7 +951,8 @@ class KeywordAnalyzer:
         keywords: List[str],
         content: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Analyze keyword usage and optimization opportunities"""
+        """
+Analyze keyword usage and optimization opportunities"""
         analysis = {
             'target_keywords': keywords,
             'keyword_density': {},
@@ -952,7 +981,8 @@ class KeywordAnalyzer:
         return analysis
     
     def _calculate_keyword_density(self, keyword: str, content: Dict[str, str]) -> float:
-        """Calculate keyword density in content"""
+        """
+Calculate keyword density in content"""
         all_text = ' '.join(content.values()).lower()
         keyword_count = all_text.count(keyword.lower())
         total_words = len(all_text.split())
@@ -960,7 +990,8 @@ class KeywordAnalyzer:
         return keyword_count / max(total_words, 1)
     
     def _check_keyword_placement(self, keyword: str, content: Dict[str, str]) -> float:
-        """Check keyword placement quality"""
+        """
+Check keyword placement quality"""
         score = 0.0
         
         # Check if in title
@@ -979,7 +1010,8 @@ class KeywordAnalyzer:
 
 
 class ContentOptimizer:
-    """Content structure and quality optimization engine"""
+    """
+Content structure and quality optimization engine"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -989,7 +1021,8 @@ class ContentOptimizer:
         content: Dict[str, str],
         keywords: List[str]
     ) -> Dict[str, Any]:
-        """Optimize content structure for SEO"""
+        """
+Optimize content structure for SEO"""
         optimization = {
             'structure_analysis': self._analyze_structure(content),
             'keyword_integration': self._suggest_keyword_integration(content, keywords),
@@ -1000,7 +1033,8 @@ class ContentOptimizer:
         return optimization
     
     def _analyze_structure(self, content: Dict[str, str]) -> Dict[str, Any]:
-        """Analyze content structure"""
+        """
+Analyze content structure"""
         body = content.get('body', '')
         
         # Count headings (simplified)
@@ -1026,7 +1060,8 @@ class ContentOptimizer:
         }
     
     def _suggest_keyword_integration(self, content: Dict[str, str], keywords: List[str]) -> List[str]:
-        """Suggest keyword integration improvements"""
+        """
+Suggest keyword integration improvements"""
         suggestions = []
         
         for keyword in keywords:
@@ -1091,7 +1126,8 @@ class CompetitorAnalyzer:
         competitor_urls: List[str],
         target_keywords: List[str]
     ) -> Dict[str, Any]:
-        """Analyze competitor content and strategies"""
+        """
+Analyze competitor content and strategies"""
         # Placeholder for real competitor analysis
         analysis = {
             'competitor_count': len(competitor_urls),
@@ -1106,7 +1142,8 @@ class CompetitorAnalyzer:
 
 
 class PerformancePredictor:
-    """SEO performance prediction and forecasting"""
+    """
+SEO performance prediction and forecasting"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -1116,7 +1153,8 @@ class PerformancePredictor:
         current_metrics: Dict[str, Any],
         optimizations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Predict SEO performance after optimizations"""
+        """
+Predict SEO performance after optimizations"""
         # Placeholder for real performance prediction
         current_score = current_metrics.get('seo_score', 50)
         optimization_impact = len(optimizations) * 5  # 5 points per optimization

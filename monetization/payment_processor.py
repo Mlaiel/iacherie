@@ -4,6 +4,7 @@ Automated payment processing and distribution system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import hashlib
 import hmac
@@ -19,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(Enum):
-    """Payment providers"""
+    """
+Payment providers"""
+
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -29,6 +32,7 @@ class PaymentProvider(Enum):
 
 class PaymentStatus(Enum):
     """Payment status"""
+
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -40,6 +44,7 @@ class PaymentStatus(Enum):
 
 class PaymentType(Enum):
     """Payment types"""
+
     LICENSE_PAYMENT = "license_payment"
     ROYALTY_PAYMENT = "royalty_payment"
     REVENUE_SHARE = "revenue_share"
@@ -69,7 +74,8 @@ class PaymentTransaction:
 
 @dataclass
 class EscrowTransaction:
-    """Escrow transaction for dispute management"""
+    """
+Escrow transaction for dispute management"""
     id: str
     payment_id: str
     amount: float

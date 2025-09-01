@@ -6,6 +6,7 @@ Simple test runner that validates core functionality without complex dependencie
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import sys
 from pathlib import Path
@@ -14,7 +15,8 @@ import re
 import hashlib
 
 def test_security_components():
-    """Test security components directly"""
+    """
+Test security components directly"""
     print("Testing Security Components...")
     
     # Test password validation

@@ -5,13 +5,14 @@ Specialized parsers for various content formats including HTML, JSON, XML, CSV, 
 Provides content extraction and structure analysis capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
+
 import csv
 import json
 import re
@@ -31,23 +32,27 @@ from .parser_config import ParserConfig
 
 
 class BaseContentParser(ABC):
-    """Abstract base class for content parsers"""
+    """
+Abstract base class for content parsers"""
     
     def __init__(self, config: ParserConfig):
         self.config = config
     
     @abstractmethod
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse content and extract structured data"""
+        """
+Parse content and extract structured data"""
         pass
     
     @abstractmethod
     def get_parser_type(self) -> str:
-        """Get the type of content this parser handles"""
+        """
+Get the type of content this parser handles"""
         pass
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text content"""
+        """
+Clean and normalize text content"""
         if not text:
             return ""
         
@@ -72,7 +77,8 @@ class BaseContentParser(ABC):
 
 
 class HTMLContentParser(BaseContentParser):
-    """Parser for HTML content with advanced extraction capabilities"""
+    """
+Parser for HTML content with advanced extraction capabilities"""
     
     def get_parser_type(self) -> str:
         return "html_content"
@@ -172,7 +178,8 @@ class HTMLContentParser(BaseContentParser):
         return soup.get_text(separator=' ', strip=True)
     
     async def _analyze_document_structure(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Analyze HTML document structure"""
+        """
+Analyze HTML document structure"""
         structure = {
             'doctype': '',
             'html_lang': '',
@@ -228,7 +235,8 @@ class HTMLContentParser(BaseContentParser):
         return structure
     
     async def _extract_links(self, soup: BeautifulSoup, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Extract and categorize links"""
+        """
+Extract and categorize links"""
         links = {
             'internal': [],
             'external': [],
@@ -285,7 +293,8 @@ class HTMLContentParser(BaseContentParser):
         return links
     
     async def _extract_media(self, soup: BeautifulSoup, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Extract media elements (images, videos, audio)"""
+        """
+Extract media elements (images, videos, audio)"""
         media = {
             'images': [],
             'videos': [],
@@ -384,7 +393,8 @@ class HTMLContentParser(BaseContentParser):
         return media
     
     async def _calculate_text_statistics(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Calculate text-based statistics"""
+        """
+Calculate text-based statistics"""
         text = soup.get_text(separator=' ', strip=True)
         
         return {
@@ -400,7 +410,8 @@ class HTMLContentParser(BaseContentParser):
         }
     
     async def _extract_semantic_elements(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract semantic HTML5 elements content"""
+        """
+Extract semantic HTML5 elements content"""
         semantic = {}
         
         # Extract header content
@@ -443,7 +454,8 @@ class HTMLContentParser(BaseContentParser):
         return semantic
     
     def _extract_title(self, soup: BeautifulSoup) -> str:
-        """Extract document title"""
+        """
+Extract document title"""
         title_tag = soup.find('title')
         return self._clean_text(title_tag.get_text()) if title_tag else ""
     
@@ -462,7 +474,8 @@ class HTMLContentParser(BaseContentParser):
         return headings
     
     def _extract_paragraphs(self, soup: BeautifulSoup) -> List[str]:
-        """Extract all paragraph content"""
+        """
+Extract all paragraph content"""
         paragraphs = []
         
         for p in soup.find_all('p'):
@@ -474,7 +487,8 @@ class HTMLContentParser(BaseContentParser):
 
 
 class MarkdownParser(BaseContentParser):
-    """Parser for Markdown content"""
+    """
+Parser for Markdown content"""
     
     def get_parser_type(self) -> str:
         return "markdown"
@@ -703,7 +717,8 @@ class JSONContentParser(BaseContentParser):
 
 
 class XMLContentParser(BaseContentParser):
-    """Parser for XML content"""
+    """
+Parser for XML content"""
     
     def get_parser_type(self) -> str:
         return "xml"
@@ -789,7 +804,8 @@ class XMLContentParser(BaseContentParser):
         return result if result else None
     
     async def _analyze_xml_structure(self, root: ET.Element) -> Dict[str, Any]:
-        """Analyze XML structure"""
+        """
+Analyze XML structure"""
         all_elements = list(root.iter())
         tag_counts = {}
         
@@ -807,7 +823,8 @@ class XMLContentParser(BaseContentParser):
         }
     
     async def _calculate_xml_depth(self, element: ET.Element, current_depth: int = 0) -> int:
-        """Calculate maximum depth of XML tree"""
+        """
+Calculate maximum depth of XML tree"""
         if not list(element):
             return current_depth
         
@@ -815,7 +832,8 @@ class XMLContentParser(BaseContentParser):
 
 
 class CSVParser(BaseContentParser):
-    """Parser for CSV content"""
+    """
+Parser for CSV content"""
     
     def get_parser_type(self) -> str:
         return "csv"
@@ -942,7 +960,8 @@ class CSVParser(BaseContentParser):
 
 
 class RSSParser(BaseContentParser):
-    """Parser for RSS feeds"""
+    """
+Parser for RSS feeds"""
     
     def get_parser_type(self) -> str:
         return "rss"
@@ -1053,7 +1072,8 @@ class AtomParser(BaseContentParser):
 
 
 class SitemapParser(BaseContentParser):
-    """Parser for XML sitemaps"""
+    """
+Parser for XML sitemaps"""
     
     def get_parser_type(self) -> str:
         return "sitemap"

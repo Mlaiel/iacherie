@@ -2,8 +2,9 @@
 Advanced performance tracking, insights generation and optimization recommendations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +22,9 @@ from .platform_revenue_integration import PlatformType, RevenueType
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
+    """
+Types of performance metrics"""
+
     REVENUE = "revenue"
     GROWTH = "growth"
     ENGAGEMENT = "engagement"
@@ -33,6 +36,7 @@ class MetricType(Enum):
 
 class TimeGranularity(Enum):
     """Time granularity for analytics"""
+
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -43,6 +47,7 @@ class TimeGranularity(Enum):
 
 class InsightType(Enum):
     """Types of insights generated"""
+
     OPPORTUNITY = "opportunity"
     WARNING = "warning"
     RECOMMENDATION = "recommendation"
@@ -63,7 +68,8 @@ class PerformanceMetric:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "metric_type": self.metric_type.value,
             "value": self.value,
@@ -90,7 +96,8 @@ class PerformanceInsight:
     generated_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
+        """
+Convert to dictionary"""
         return {
             "insight_id": self.insight_id,
             "insight_type": self.insight_type.value,
@@ -117,7 +124,8 @@ class PerformanceBenchmark:
     percentile_rank: float
     
     def get_performance_tier(self) -> str:
-        """Get performance tier classification"""
+        """
+Get performance tier classification"""
         if self.percentile_rank >= 90:
             return "EXCELLENT"
         elif self.percentile_rank >= 75:
@@ -143,7 +151,8 @@ class RevenueAnalyzer:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Comprehensive revenue performance analysis"""
+        """
+Comprehensive revenue performance analysis"""
         
         try:
             # Get revenue data
@@ -568,7 +577,8 @@ class EngagementAnalyzer:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze engagement performance across platforms"""
+        """
+Analyze engagement performance across platforms"""
         
         try:
             # Get engagement data from revenue records
@@ -676,7 +686,8 @@ class PerformanceAnalyticsEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance analytics report"""
+        """
+Generate comprehensive performance analytics report"""
         
         try:
             # Run all analyses in parallel

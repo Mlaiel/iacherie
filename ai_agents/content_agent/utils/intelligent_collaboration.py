@@ -16,6 +16,7 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -65,7 +66,9 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
+    """
+Types of collaborations"""
+
     CONTENT_COLLAB = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"  
     JOINT_PROJECT = "joint_project"
@@ -78,6 +81,7 @@ class CollaborationType(Enum):
 
 class MatchingStrategy(Enum):
     """Collaboration matching strategies"""
+
     CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     COMPLEMENTARY_SKILLS = "complementary_skills"
@@ -89,6 +93,7 @@ class MatchingStrategy(Enum):
 
 class CollaborationStatus(Enum):
     """Status of collaboration requests"""
+
     SUGGESTED = "suggested"
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -136,7 +141,8 @@ class CreatorProfileAnalysis:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity recommendation"""
+    """
+Collaboration opportunity recommendation"""
     opportunity_id: str
     primary_creator: str
     suggested_collaborator: str

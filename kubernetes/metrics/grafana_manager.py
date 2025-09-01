@@ -14,6 +14,7 @@ Features:
 - Infrastructure monitoring
 - Alert integration and visualization
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -36,7 +37,8 @@ settings = get_settings()
 
 @dataclass
 class DashboardConfig:
-    """Dashboard configuration structure"""
+    """
+Dashboard configuration structure"""
     title: str
     description: str
     tags: List[str] = field(default_factory=list)
@@ -83,7 +85,8 @@ class GrafanaManager:
         self._initialize_templates()
         
     async def __aenter__(self):
-        """Async context manager entry"""
+        """
+Async context manager entry"""
         self.session = aiohttp.ClientSession(
             headers={
                 'Authorization': f'Bearer {self.api_key}',
@@ -93,12 +96,14 @@ class GrafanaManager:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
+        """
+Async context manager exit"""
         if self.session:
             await self.session.close()
     
     def _initialize_templates(self) -> None:
-        """Initialize dashboard templates"""
+        """
+Initialize dashboard templates"""
         self._dashboard_templates = {
             'application_overview': self._get_application_overview_template(),
             'ai_model_performance': self._get_ai_model_performance_template(),
@@ -117,7 +122,8 @@ class GrafanaManager:
         template_name: Optional[str] = None,
         custom_panels: Optional[List[PanelConfig]] = None
     ) -> Dict[str, Any]:
-        """Create new dashboard"""
+        """
+Create new dashboard"""
         try:
             if template_name and template_name in self._dashboard_templates:
                 dashboard_json = self._dashboard_templates[template_name].copy()

@@ -2,8 +2,9 @@
 Enterprise-grade validators with comprehensive business rule enforcement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
+Copyright: (c) 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
+
 from typing import Any, Dict, List, Optional, Union, Callable, Type
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -14,7 +15,9 @@ from email_validator import validate_email, EmailNotValidError
 
 
 class ValidationType(Enum):
-    """Types of validation for categorization."""
+    """
+Types of validation for categorization."""
+
     CONTENT = "content"
     USER = "user"
     BUSINESS = "business"
@@ -38,7 +41,8 @@ class ValidationResult:
 
 
 class ValidationError(Exception):
-    """Custom validation error with structured information."""
+    """
+Custom validation error with structured information."""
     
     def __init__(self, results: List[ValidationResult]):
         self.results = results
@@ -58,7 +62,8 @@ class ContentValidator:
     
     @staticmethod
     def validate_content_type(content_type: str) -> ValidationResult:
-        """Validate content type against supported formats."""
+        """
+Validate content type against supported formats."""
         allowed_types = {
             'audio': ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a'],
             'video': ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv'],
@@ -200,7 +205,8 @@ class UserValidator:
     
     @staticmethod
     def validate_email(email: str) -> ValidationResult:
-        """Validate email address with comprehensive checks."""
+        """
+Validate email address with comprehensive checks."""
         if not email:
             return ValidationResult(
                 is_valid=False,
@@ -467,7 +473,8 @@ class SecurityValidator:
     
     @staticmethod
     def validate_api_key(api_key: str) -> ValidationResult:
-        """Validate API key format and structure."""
+        """
+Validate API key format and structure."""
         if not api_key:
             return ValidationResult(
                 is_valid=False,
@@ -557,7 +564,8 @@ class CompoundValidator:
         self.security_validator = SecurityValidator()
     
     def validate_content_upload(self, data: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate complete content upload data."""
+        """
+Validate complete content upload data."""
         results = []
         
         # Validate required fields
@@ -576,7 +584,8 @@ class CompoundValidator:
         return results
     
     def validate_user_registration(self, data: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate user registration data."""
+        """
+Validate user registration data."""
         results = []
         
         if 'email' in data:
@@ -591,7 +600,8 @@ class CompoundValidator:
         return results
     
     def validate_and_raise(self, validation_func: Callable, *args, **kwargs):
-        """Validate and raise ValidationError if any validation fails."""
+        """
+Validate and raise ValidationError if any validation fails."""
         results = validation_func(*args, **kwargs)
         
         if not isinstance(results, list):
@@ -610,15 +620,18 @@ _validator = CompoundValidator()
 
 
 def get_validator() -> CompoundValidator:
-    """Get global validator instance."""
+    """
+Get global validator instance."""
     return _validator
 
 
 def validate_content_upload(data: Dict[str, Any]) -> List[ValidationResult]:
-    """Validate content upload data using global validator."""
+    """
+Validate content upload data using global validator."""
     return _validator.validate_content_upload(data)
 
 
 def validate_user_registration(data: Dict[str, Any]) -> List[ValidationResult]:
-    """Validate user registration data using global validator."""
+    """
+Validate user registration data using global validator."""
     return _validator.validate_user_registration(data)

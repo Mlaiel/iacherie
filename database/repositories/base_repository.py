@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 from sqlalchemy.orm import Session, Query
@@ -40,7 +41,8 @@ ModelType = TypeVar('ModelType', bound=DeclarativeMeta)
 logger = logging.getLogger(__name__)
 
 class RepositoryException(Exception):
-    """Custom exception for repository operations"""
+    """
+Custom exception for repository operations"""
     pass
 
 class BaseRepository(ABC, Generic[ModelType]):

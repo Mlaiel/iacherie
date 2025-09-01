@@ -5,12 +5,13 @@ Advanced AI-driven optimization system for campaign performance enhancement
 with machine learning models, automated A/B testing, and real-time adjustments.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -29,7 +30,9 @@ from backend.utils.performance_monitor import PerformanceMonitor
 
 
 class OptimizationType(str, Enum):
-    """Types of optimization strategies"""
+    """
+Types of optimization strategies"""
+
     BUDGET_ALLOCATION = "budget_allocation"
     AUDIENCE_TARGETING = "audience_targeting"
     CONTENT_TIMING = "content_timing"
@@ -42,6 +45,7 @@ class OptimizationType(str, Enum):
 
 class OptimizationStrategy(str, Enum):
     """Available optimization strategies"""
+
     MACHINE_LEARNING = "machine_learning"
     REINFORCEMENT_LEARNING = "reinforcement_learning"
     GENETIC_ALGORITHM = "genetic_algorithm"
@@ -53,6 +57,7 @@ class OptimizationStrategy(str, Enum):
 
 class OptimizationObjective(str, Enum):
     """Optimization objectives"""
+
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_CONVERSIONS = "maximize_conversions"
@@ -82,7 +87,8 @@ class OptimizationConfiguration:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result data"""
+    """
+Optimization result data"""
     campaign_id: str
     optimization_id: str
     configuration: OptimizationConfiguration
@@ -99,7 +105,8 @@ class OptimizationResult:
 
 @dataclass
 class OptimizationRecommendation:
-    """AI-generated optimization recommendation"""
+    """
+AI-generated optimization recommendation"""
     recommendation_id: str
     optimization_type: OptimizationType
     title: str
@@ -657,7 +664,8 @@ class CampaignOptimization:
             return self.optimization_model  # Default
     
     async def _get_campaign_metrics(self, campaign_id: str) -> Dict[str, float]:
-        """Get current campaign metrics"""
+        """
+Get current campaign metrics"""
         # Implementation for metrics retrieval
         return {
             "reach": 25000.0,
@@ -701,7 +709,8 @@ class CampaignOptimization:
         initial_metrics: Dict[str, float],
         optimized_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate improvement percentages"""
+        """
+Calculate improvement percentages"""
         improvements = {}
         for metric, initial_value in initial_metrics.items():
             if metric in optimized_metrics and initial_value > 0:

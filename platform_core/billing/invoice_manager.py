@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==========================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 GESTIONNAIRE DE FACTURATION AUTOMATISÉE
@@ -15,6 +15,7 @@ Génération et gestion complète des factures enterprise
 - Comptabilité analytique et réconciliation
 - Export comptable (SAP, QuickBooks, etc.)
 """
+
 import asyncio
 import json
 import logging
@@ -40,6 +41,7 @@ logger = logging.getLogger(__name__)
 
 class InvoiceStatus(Enum):
     """États des factures"""
+
     DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
@@ -52,6 +54,7 @@ class InvoiceStatus(Enum):
 
 class InvoiceType(Enum):
     """Types de factures"""
+
     STANDARD = "standard"
     RECURRING = "recurring"
     CREDIT_NOTE = "credit_note"
@@ -81,7 +84,8 @@ class InvoiceItem:
         
     @property
     def discount_amount(self) -> Decimal:
-        """Montant de la remise"""
+        """
+Montant de la remise"""
         return self.subtotal * (self.discount_percentage / Decimal("100"))
         
     @property
@@ -91,7 +95,8 @@ class InvoiceItem:
         
     @property
     def tax_amount(self) -> Decimal:
-        """Montant des taxes"""
+        """
+Montant des taxes"""
         return self.net_amount * (self.tax_percentage / Decimal("100"))
         
     @property
@@ -101,7 +106,8 @@ class InvoiceItem:
 
 @dataclass
 class InvoiceAddress:
-    """Adresse de facturation/livraison"""
+    """
+Adresse de facturation/livraison"""
     name: str = ""
     company: Optional[str] = None
     address_line1: str = ""
@@ -179,7 +185,8 @@ class Invoice:
         
     @property
     def total_discount(self) -> Decimal:
-        """Total des remises"""
+        """
+Total des remises"""
         items_discount = sum(item.discount_amount for item in self.items)
         global_discount = self.global_discount_amount
         if self.global_discount_percentage > 0:
@@ -193,17 +200,20 @@ class Invoice:
         
     @property
     def total_tax(self) -> Decimal:
-        """Total des taxes"""
+        """
+Total des taxes"""
         return sum(item.tax_amount for item in self.items)
         
     @property
     def total_amount(self) -> Decimal:
-        """Montant total TTC"""
+        """
+Montant total TTC"""
         return self.net_amount + self.total_tax
         
     @property
     def amount_paid(self) -> Decimal:
-        """Montant payé"""
+        """
+Montant payé"""
         return sum(Decimal(str(payment.get("amount", 0))) for payment in self.payments)
         
     @property
@@ -213,13 +223,15 @@ class Invoice:
         
     @property
     def is_overdue(self) -> bool:
-        """Vérifie si la facture est en retard"""
+        """
+Vérifie si la facture est en retard"""
         if not self.due_at or self.status in [InvoiceStatus.PAID, InvoiceStatus.CANCELLED]:
             return False
         return datetime.utcnow() > self.due_at
         
     def add_item(self, description: str, quantity: Decimal, unit_price: Decimal, **kwargs) -> InvoiceItem:
-        """Ajoute une ligne à la facture"""
+        """
+Ajoute une ligne à la facture"""
         item = InvoiceItem(
             description=description,
             quantity=quantity,
@@ -230,7 +242,8 @@ class Invoice:
         return item
         
     def add_payment(self, amount: Decimal, payment_method: str, transaction_id: str, **kwargs):
-        """Ajoute un paiement à la facture"""
+        """
+Ajoute un paiement à la facture"""
         payment = {
             "payment_id": str(uuid.uuid4()),
             "amount": float(amount),
@@ -259,7 +272,8 @@ class InvoiceTemplate:
         self.layout_config = {}
         
     def generate_pdf(self, invoice: Invoice) -> bytes:
-        """Génère un PDF de facture"""
+        """
+Génère un PDF de facture"""
         buffer = io.BytesIO()
         
         # Créer le document PDF
@@ -443,7 +457,8 @@ class InvoiceManager:
         return None
         
     async def update_invoice(self, invoice: Invoice):
-        """Met à jour une facture"""
+        """
+Met à jour une facture"""
         if self.database_client:
             await self._save_invoice(invoice)
         logger.info(f"Facture mise à jour: {invoice.invoice_number}")
@@ -518,7 +533,8 @@ class InvoiceManager:
         return []
         
     async def generate_invoice_pdf(self, invoice: Invoice) -> bytes:
-        """Génère le PDF d'une facture"""
+        """
+Génère le PDF d'une facture"""
         template = self.templates.get(invoice.template_id or "default")
         return template.generate_pdf(invoice)
         

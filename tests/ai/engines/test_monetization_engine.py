@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Monetization Engine Testing Module
+"""
+Monetization Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for all monetization engines.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +31,7 @@ Enterprise-grade validation with 100% coverage and industrial performance standa
 ✅ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This software is proprietary and confidential. 
@@ -41,6 +43,7 @@ THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
 """
+
 import pytest
 import sys
 import os
@@ -70,10 +73,12 @@ from ai.config.monetization_config import (
 
 
 class TestableRevenueEngine(RevenueOptimizationEngine):
-    """Test implementation with abstract methods"""
+    """
+Test implementation with abstract methods"""
     
     async def analyze_monetization_potential(self, content: Any) -> Dict[str, Any]:
-        """Implementation pour les tests"""
+        """
+Implementation pour les tests"""
         return {
             'potential_score': 0.85,
             'revenue_streams': ['premium', 'ads'],
@@ -81,7 +86,8 @@ class TestableRevenueEngine(RevenueOptimizationEngine):
         }
     
     async def find_collaboration_opportunities(self, content: Any) -> List[Dict]:
-        """Implementation pour les tests"""
+        """
+Implementation pour les tests"""
         return [
             {'type': 'brand_partnership', 'value': 500.0},
             {'type': 'sponsored_content', 'value': 750.0}
@@ -92,18 +98,21 @@ class TestableRevenueEngine(RevenueOptimizationEngine):
 from .test_helpers import TestEngineValidator, PerformanceTracker
 
 class TestMonetizationEngine:
-    """Comprehensive tests for MonetizationEngine"""
+    """
+Comprehensive tests for MonetizationEngine"""
     
     @pytest.fixture
     async def monetization_engine(self):
-        """Create and initialize monetization engine"""
+        """
+Create and initialize monetization engine"""
         engine = RevenueOptimizationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def sample_monetization_content(self):
-        """Provide sample content for monetization"""
+        """
+Provide sample content for monetization"""
         return {
             'premium_content': {
                 'type': 'premium_article',
@@ -143,7 +152,8 @@ class TestMonetizationEngine:
     
     @pytest.fixture
     def monetization_options(self):
-        """Provide monetization options"""
+        """
+Provide monetization options"""
         return {
             'content_id': 'monetization_test_123',
             'monetization_model': MonetizationModel.FREEMIUM,
@@ -159,7 +169,8 @@ class TestMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self):
-        """Test monetization engine initialization"""
+        """
+Test monetization engine initialization"""
         # Créer l'engine directement dans le test
         engine = TestableRevenueEngine()
         await engine.initialize()
@@ -223,7 +234,8 @@ class TestMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_pricing_strategy_calculation(self, monetization_engine, sample_monetization_content):
-        """Test different pricing strategy calculations"""
+        """
+Test different pricing strategy calculations"""
         pricing_tests = [
             {
                 'strategy': PricingStrategy.VALUE_BASED,
@@ -360,7 +372,8 @@ class TestMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_payment_method_integration(self, monetization_engine, sample_monetization_content):
-        """Test payment method integration and optimization"""
+        """
+Test payment method integration and optimization"""
         payment_configurations = [
             {
                 'methods': [PaymentMethod.CREDIT_CARD],
@@ -406,7 +419,8 @@ class TestMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_conversion_optimization(self, monetization_engine, sample_monetization_content):
-        """Test conversion rate optimization"""
+        """
+Test conversion rate optimization"""
         conversion_strategies = [
             {
                 'strategy': 'a_b_testing',
@@ -479,7 +493,8 @@ class TestMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_monetization_seo_optimization(self, monetization_engine, sample_monetization_content):
-        """Test monetization SEO optimization"""
+        """
+Test monetization SEO optimization"""
         target_keywords = ['premium content', 'professional course', 'AI consultation', 'business value']
         
         result = await monetization_engine.optimize_for_seo(
@@ -497,7 +512,8 @@ class TestMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_monetization_protection(self, monetization_engine, sample_monetization_content):
-        """Test monetization content protection"""
+        """
+Test monetization content protection"""
         result = await monetization_engine.protect_content(sample_monetization_content['course_content'])
         
         assert result['monetization_protected'] is True
@@ -510,18 +526,21 @@ class TestMonetizationEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestRevenueOptimizationEngine:
-    """Comprehensive tests for RevenueOptimizationEngine"""
+    """
+Comprehensive tests for RevenueOptimizationEngine"""
     
     @pytest.fixture
     async def revenue_optimization_engine(self):
-        """Create and initialize revenue optimization engine"""
+        """
+Create and initialize revenue optimization engine"""
         engine = RevenueOptimizationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def revenue_optimization_options(self):
-        """Provide revenue optimization options"""
+        """
+Provide revenue optimization options"""
         return {
             'content_id': 'revenue_opt_test_123',
             'optimization_goals': ['maximize_revenue', 'increase_conversion', 'improve_ltv'],
@@ -535,7 +554,8 @@ class TestRevenueOptimizationEngine:
     
     @pytest.mark.asyncio
     async def test_revenue_optimization_engine_initialization(self, revenue_optimization_engine):
-        """Test revenue optimization engine initialization"""
+        """
+Test revenue optimization engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(revenue_optimization_engine)
@@ -688,7 +708,8 @@ class TestRevenueOptimizationEngine:
     
     @pytest.mark.asyncio
     async def test_ab_testing_optimization(self, revenue_optimization_engine):
-        """Test A/B testing for revenue optimization"""
+        """
+Test A/B testing for revenue optimization"""
         ab_test_scenarios = [
             {
                 'test_type': 'pricing',
@@ -765,7 +786,8 @@ class TestRevenueOptimizationEngine:
     
     @pytest.mark.asyncio
     async def test_revenue_optimization_seo(self, revenue_optimization_engine):
-        """Test revenue optimization SEO features"""
+        """
+Test revenue optimization SEO features"""
         target_keywords = ['revenue optimization', 'pricing strategy', 'conversion optimization', 'business growth']
         sample_data = 'revenue optimization content data'
         
@@ -780,7 +802,8 @@ class TestRevenueOptimizationEngine:
     
     @pytest.mark.asyncio
     async def test_revenue_optimization_protection(self, revenue_optimization_engine):
-        """Test revenue optimization protection"""
+        """
+Test revenue optimization protection"""
         sample_data = 'sensitive_revenue_optimization_data'
         
         result = await revenue_optimization_engine.protect_content(sample_data)
@@ -792,18 +815,21 @@ class TestRevenueOptimizationEngine:
         assert 'revenue_signature' in result
 
 class TestSubscriptionEngine:
-    """Comprehensive tests for SubscriptionEngine"""
+    """
+Comprehensive tests for SubscriptionEngine"""
     
     @pytest.fixture
     async def subscription_engine(self):
-        """Create and initialize subscription engine"""
+        """
+Create and initialize subscription engine"""
         engine = SubscriptionEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def subscription_options(self):
-        """Provide subscription options"""
+        """
+Provide subscription options"""
         return {
             'content_id': 'subscription_test_123',
             'subscription_tiers': [
@@ -835,7 +861,8 @@ class TestSubscriptionEngine:
     
     @pytest.mark.asyncio
     async def test_subscription_engine_initialization(self, subscription_engine):
-        """Test subscription engine initialization"""
+        """
+Test subscription engine initialization"""
         validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(subscription_engine)
@@ -1065,7 +1092,8 @@ class TestSubscriptionEngine:
     
     @pytest.mark.asyncio
     async def test_subscription_seo_optimization(self, subscription_engine):
-        """Test subscription SEO optimization"""
+        """
+Test subscription SEO optimization"""
         target_keywords = ['subscription service', 'recurring billing', 'premium membership', 'business subscription']
         sample_service = 'Professional AI content creation subscription'
         
@@ -1080,7 +1108,8 @@ class TestSubscriptionEngine:
     
     @pytest.mark.asyncio
     async def test_subscription_protection(self, subscription_engine):
-        """Test subscription content protection"""
+        """
+Test subscription content protection"""
         sample_service = 'premium_subscription_service_data'
         
         result = await subscription_engine.protect_content(sample_service)
@@ -1093,11 +1122,13 @@ class TestSubscriptionEngine:
         assert 'billing_fingerprint' in result
 
 class TestMonetizationEngineIntegration:
-    """Integration tests for monetization engines"""
+    """
+Integration tests for monetization engines"""
     
     @pytest.mark.asyncio
     async def test_complete_monetization_workflow(self, sample_content):
-        """Test complete monetization workflow"""
+        """
+Test complete monetization workflow"""
         # Initialize all monetization engines
         monetization_engine = RevenueOptimizationEngine()
         revenue_optimization_engine = RevenueOptimizationEngine()
@@ -1167,7 +1198,8 @@ class TestMonetizationEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_monetization_compliance_validation(self):
-        """Test monetization compliance with regulations"""
+        """
+Test monetization compliance with regulations"""
         monetization_engine = RevenueOptimizationEngine()
         await monetization_engine.initialize()
         

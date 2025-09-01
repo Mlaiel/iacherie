@@ -14,6 +14,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Process Creation → Resource Allocation → Execution → Monitoring → Completion → Cleanup
 """
+
 import asyncio
 import uuid
 import psutil
@@ -33,7 +34,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessType(Enum):
-    """Types of processes managed by the system"""
+    """
+Types of processes managed by the system"""
+
     CONTENT_PROCESSING = "content_processing"
     AI_FINGERPRINTING = "ai_fingerprinting"
     PROTECTION_MONITORING = "protection_monitoring"
@@ -46,6 +49,7 @@ class ProcessType(Enum):
 
 class ProcessStatus(Enum):
     """Process execution status"""
+
     INITIALIZING = "initializing"
     READY = "ready"
     RUNNING = "running"
@@ -59,6 +63,7 @@ class ProcessStatus(Enum):
 
 class ProcessPriority(Enum):
     """Process execution priority"""
+
     CRITICAL = 1
     HIGH = 2
     NORMAL = 3
@@ -67,7 +72,9 @@ class ProcessPriority(Enum):
 
 
 class ExecutionContext(Enum):
-    """Process execution context"""
+    """
+Process execution context"""
+
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     THREADED = "threaded"
@@ -89,7 +96,8 @@ class ProcessResource:
 
 @dataclass
 class ProcessConfiguration:
-    """Complete process configuration"""
+    """
+Complete process configuration"""
     process_id: str
     name: str
     process_type: ProcessType
@@ -108,7 +116,8 @@ class ProcessConfiguration:
 
 @dataclass
 class ProcessExecution:
-    """Process execution state and tracking"""
+    """
+Process execution state and tracking"""
     execution_id: str
     process_id: str
     configuration: ProcessConfiguration
@@ -128,7 +137,8 @@ class ProcessExecution:
 
 
 class ProcessManager:
-    """Enterprise process lifecycle management and execution control"""
+    """
+Enterprise process lifecycle management and execution control"""
     
     def __init__(self, max_processes: int = 100, monitoring_interval: int = 5):
         self.max_processes = max_processes
@@ -459,7 +469,8 @@ class ProcessManager:
             raise
     
     async def _execute_asynchronous(self, execution: ProcessExecution):
-        """Execute process asynchronously"""
+        """
+Execute process asynchronously"""
         try:
             # Create async task for processing
             task = asyncio.create_task(self._process_business_logic(execution))
@@ -510,7 +521,8 @@ class ProcessManager:
             raise
     
     async def _execute_multi_process(self, execution: ProcessExecution):
-        """Execute process in process pool"""
+        """
+Execute process in process pool"""
         try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
@@ -533,7 +545,8 @@ class ProcessManager:
             raise
     
     async def _process_business_logic(self, execution: ProcessExecution) -> Dict[str, Any]:
-        """Process business logic asynchronously"""
+        """
+Process business logic asynchronously"""
         # Simulate processing time based on process type
         processing_time = {
             ProcessType.CONTENT_PROCESSING: 5,
@@ -845,7 +858,8 @@ class ProcessManager:
         self.event_handlers[event_type].append(handler)
     
     def shutdown(self):
-        """Shutdown process manager and cleanup"""
+        """
+Shutdown process manager and cleanup"""
         try:
             self.stop_monitoring()
             

@@ -14,6 +14,7 @@ This module provides comprehensive Azure deployment and management capabilities
 for the IA Influencer Agent platform, including App Service, Container Instances,
 Function Apps, Azure SQL, Storage Accounts, and other Azure services.
 """
+
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -34,7 +35,9 @@ from azure.mgmt.monitor import MonitorManagementClient
 logger = logging.getLogger(__name__)
 
 class AzureRegion(Enum):
-    """Azure regions for global deployment"""
+    """
+Azure regions for global deployment"""
+
     WEST_EUROPE = "westeurope"
     NORTH_EUROPE = "northeurope"
     EAST_US = "eastus"
@@ -44,6 +47,7 @@ class AzureRegion(Enum):
 
 class AzureServiceType(Enum):
     """Azure service types"""
+
     APP_SERVICE = "app_service"
     CONTAINER_INSTANCE = "container_instance"
     FUNCTION_APP = "function_app"
@@ -86,7 +90,8 @@ class AzureDeploymentConfig:
 
 @dataclass
 class AzureResource:
-    """Azure resource representation"""
+    """
+Azure resource representation"""
     resource_id: str
     resource_type: AzureServiceType
     region: AzureRegion
@@ -99,10 +104,12 @@ class AzureResource:
     security_compliance: bool = True
 
 class AzureDeploymentManager:
-    """Enterprise Azure deployment and management system"""
+    """
+Enterprise Azure deployment and management system"""
     
     def __init__(self, credentials: AzureCredentials):
-        """Initialize Azure deployment manager"""
+        """
+Initialize Azure deployment manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.credentials = credentials
         self.credential = ClientSecretCredential(
@@ -141,7 +148,8 @@ class AzureDeploymentManager:
         self.deployment_history: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize Azure connection and validate credentials"""
+        """
+Initialize Azure connection and validate credentials"""
         try:
             # Test connectivity by listing resource groups
             resource_groups = list(self.resource_client.resource_groups.list())
@@ -478,7 +486,8 @@ class AzureDeploymentManager:
         return services
     
     async def _deploy_app_service(self, service_config: Dict[str, Any], config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure App Service"""
+        """
+Deploy Azure App Service"""
         # Create App Service Plan
         plan_name = f"{service_config['name']}-plan-{config.environment}"
         plan_params = {

@@ -25,6 +25,7 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -42,7 +43,9 @@ from eth_account import Account
 logger = logging.getLogger(__name__)
 
 class ChainType(Enum):
-    """Supported blockchain networks."""
+    """
+Supported blockchain networks."""
+
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BSC = "bsc"
@@ -54,6 +57,7 @@ class ChainType(Enum):
 
 class BridgeType(Enum):
     """Types of cross-chain bridges."""
+
     NATIVE_BRIDGE = "native_bridge"
     THIRD_PARTY_BRIDGE = "third_party_bridge"
     ATOMIC_SWAP = "atomic_swap"
@@ -63,6 +67,7 @@ class BridgeType(Enum):
 
 class TransferStatus(Enum):
     """Status of cross-chain transfers."""
+
     INITIATED = "initiated"
     PENDING_SOURCE = "pending_source"
     CONFIRMED_SOURCE = "confirmed_source"
@@ -73,6 +78,7 @@ class TransferStatus(Enum):
 
 class AssetType(Enum):
     """Types of assets that can be bridged."""
+
     NATIVE_TOKEN = "native_token"
     ERC20_TOKEN = "erc20_token"
     NFT_721 = "nft_721"
@@ -94,7 +100,8 @@ class ChainConfig:
 
 @dataclass
 class BridgeRoute:
-    """Route information for cross-chain transfers."""
+    """
+Route information for cross-chain transfers."""
     route_id: str
     source_chain: ChainType
     destination_chain: ChainType
@@ -108,7 +115,8 @@ class BridgeRoute:
 
 @dataclass
 class CrossChainTransfer:
-    """Cross-chain transfer record."""
+    """
+Cross-chain transfer record."""
     transfer_id: str
     user_address: str
     source_chain: ChainType
@@ -128,7 +136,8 @@ class CrossChainTransfer:
 
 @dataclass
 class LiquidityPool:
-    """Cross-chain liquidity pool information."""
+    """
+Cross-chain liquidity pool information."""
     pool_id: str
     chain: ChainType
     asset_address: str
@@ -161,7 +170,8 @@ class CrossChainBridge:
         self._initialize_bridge_routes()
     
     def _initialize_chains(self) -> None:
-        """Initialize supported blockchain networks."""
+        """
+Initialize supported blockchain networks."""
         chain_configs = self.config.get("chains", {})
         
         for chain_name, chain_config in chain_configs.items():
@@ -299,7 +309,8 @@ class CrossChainBridge:
         return []
     
     def _calculate_route_score(self, route: BridgeRoute, priority: str) -> float:
-        """Calculate a score for a route based on priority."""
+        """
+Calculate a score for a route based on priority."""
         if priority == "speed":
             # Prioritize faster routes
             time_score = 100 / max(route.estimated_time_minutes, 1)
@@ -498,7 +509,8 @@ class CrossChainBridge:
             return False
     
     async def _initiate_destination_transaction(self, transfer: CrossChainTransfer) -> None:
-        """Initiate the transaction on the destination chain."""
+        """
+Initiate the transaction on the destination chain."""
         try:
             # Mock destination transaction
             # In production, would trigger the bridge contract on destination chain

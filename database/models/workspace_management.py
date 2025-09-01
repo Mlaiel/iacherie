@@ -23,6 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
+
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -36,7 +37,9 @@ Base = declarative_base()
 
 
 class WorkspaceType(Enum):
-    """Workspace type enumeration"""
+    """
+Workspace type enumeration"""
+
     PERSONAL = "personal"
     TEAM = "team"
     ORGANIZATION = "organization"
@@ -53,6 +56,7 @@ class WorkspaceType(Enum):
 
 class WorkspaceStatus(Enum):
     """Workspace status enumeration"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -66,6 +70,7 @@ class WorkspaceStatus(Enum):
 
 class AccessLevel(Enum):
     """Access level enumeration"""
+
     PUBLIC = "public"
     PRIVATE = "private"
     RESTRICTED = "restricted"
@@ -76,6 +81,7 @@ class AccessLevel(Enum):
 
 class ResourceType(Enum):
     """Resource type enumeration"""
+
     STORAGE = "storage"
     COMPUTE = "compute"
     BANDWIDTH = "bandwidth"
@@ -90,6 +96,7 @@ class ResourceType(Enum):
 
 class UsageStatus(Enum):
     """Usage status enumeration"""
+
     NORMAL = "normal"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -99,6 +106,7 @@ class UsageStatus(Enum):
 
 class EnvironmentType(Enum):
     """Environment type enumeration"""
+
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -109,6 +117,7 @@ class EnvironmentType(Enum):
 
 class BackupStatus(Enum):
     """Backup status enumeration"""
+
     ACTIVE = "active"
     SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
@@ -371,13 +380,15 @@ class WorkspaceManagement(Base):
         return (self.storage_used_gb / self.storage_quota_gb) * 100
     
     def get_compute_usage_percentage(self) -> float:
-        """Get compute usage as percentage"""
+        """
+Get compute usage as percentage"""
         if not self.compute_quota_hours or self.compute_quota_hours == 0:
             return 0.0
         return (self.compute_used_hours / self.compute_quota_hours) * 100
     
     def check_resource_limits(self) -> Dict[str, bool]:
-        """Check if any resource limits are exceeded"""
+        """
+Check if any resource limits are exceeded"""
         limits_status = {
             'storage_exceeded': self.storage_used_gb >= self.storage_quota_gb,
             'compute_exceeded': False,
@@ -401,7 +412,8 @@ class WorkspaceManagement(Base):
         return limits_status
     
     def update_usage_status(self) -> UsageStatus:
-        """Update and return current usage status"""
+        """
+Update and return current usage status"""
         limits = self.check_resource_limits()
         
         if any(limits.values()):
@@ -427,7 +439,8 @@ class WorkspaceManagement(Base):
         return False
     
     def add_storage_usage(self, gb_amount: float) -> bool:
-        """Add storage usage and check limits"""
+        """
+Add storage usage and check limits"""
         if self.storage_used_gb + gb_amount > self.storage_quota_gb:
             return False
         
@@ -437,7 +450,8 @@ class WorkspaceManagement(Base):
         return True
     
     def add_compute_usage(self, hours_amount: float) -> bool:
-        """Add compute usage and check limits"""
+        """
+Add compute usage and check limits"""
         if self.compute_quota_hours and self.compute_used_hours + hours_amount > self.compute_quota_hours:
             return False
         
@@ -447,7 +461,8 @@ class WorkspaceManagement(Base):
         return True
     
     def reset_usage_metrics(self) -> None:
-        """Reset usage metrics for billing cycle"""
+        """
+Reset usage metrics for billing cycle"""
         if self.usage_reset_frequency == "monthly":
             self.compute_used_hours = 0.0
             self.bandwidth_used_gb = 0.0
@@ -475,7 +490,8 @@ class WorkspaceManagement(Base):
         }
     
     def restore_workspace(self, restored_by: str) -> None:
-        """Restore archived workspace"""
+        """
+Restore archived workspace"""
         self.status = WorkspaceStatus.ACTIVE
         self.archived_at = None
         self.updated_at = datetime.now(timezone.utc)
@@ -495,7 +511,8 @@ class WorkspaceManagement(Base):
         created_by: str,
         include_data: bool = False
     ) -> 'WorkspaceManagement':
-        """Clone workspace to create a new one"""
+        """
+Clone workspace to create a new one"""
         clone_data = {
             'name': new_name,
             'workspace_type': self.workspace_type,

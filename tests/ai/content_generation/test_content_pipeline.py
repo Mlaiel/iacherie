@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,17 +13,19 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Content Pipeline Tests
+"""
+Content Pipeline Tests
 
 Comprehensive tests for the ContentGenerationPipeline class that orchestrates
 the multi-stage content generation workflow.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
+
 import pytest
 import sys
 import os
@@ -55,7 +58,8 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def pipeline(self):
-        """Create a pipeline instance for testing"""
+        """
+Create a pipeline instance for testing"""
         config = PipelineConfiguration(
             enabled_generators=["text", "audio", "video", "image"],
             parallel_execution=True,
@@ -80,7 +84,8 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def mock_optimizers(self):
-        """Create mock optimizers for testing"""
+        """
+Create mock optimizers for testing"""
         return {
             'seo': AsyncMock(),
             'quality': AsyncMock(),
@@ -89,7 +94,8 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def valid_request(self):
-        """Create a valid pipeline request"""
+        """
+Create a valid pipeline request"""
         return ContentGenerationRequest(
             content_type="blog_post",
             topic="AI technology trends",
@@ -134,7 +140,8 @@ class TestContentGenerationPipeline:
         assert len(pipeline.stages) == 6  # 6 standard stages
     
     def test_workflow_registration(self, pipeline):
-        """Test workflow registration"""
+        """
+Test workflow registration"""
         # Test default workflows exist
         assert "standard" in pipeline.workflows
         assert "blog_premium" in pipeline.workflows
@@ -433,7 +440,8 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_content_type_specific_processing(self, pipeline):
-        """Test processing for different content types"""
+        """
+Test processing for different content types"""
         content_types = [
             "blog_post",
             "instagram_post",
@@ -577,11 +585,13 @@ class TestPipelineConfiguration:
     
     @pytest.fixture
     def pipeline(self):
-        """Create a pipeline for configuration testing"""
+        """
+Create a pipeline for configuration testing"""
         return ContentGenerationPipeline()
     
     def test_default_configuration(self, pipeline):
-        """Test default pipeline configuration"""
+        """
+Test default pipeline configuration"""
         config = pipeline.get_configuration()
         
         assert config is not None

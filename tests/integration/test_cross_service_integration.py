@@ -5,6 +5,7 @@
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
+
 import sys
 import os
 from pathlib import Path
@@ -12,7 +13,8 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Cross-Service Integration Tests
+"""
+Cross-Service Integration Tests
 
 Tests integration between multiple services and components
 including API to database, external services coordination,
@@ -21,6 +23,7 @@ and service-to-service communication.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import pytest
 import sys
 import os
@@ -35,7 +38,8 @@ from unittest.mock import AsyncMock, patch
 
 
 class CrossServiceTestClient:
-    """Test client for cross-service integration testing."""
+    """
+Test client for cross-service integration testing."""
     
     def __init__(self, base_url: str = "http://localhost:8000"):
         self.base_url = base_url
@@ -101,12 +105,14 @@ async def cross_service_client():
 
 
 class TestAPIToDatabaseIntegration:
-    """Test API to database integration."""
+    """
+Test API to database integration."""
     
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_api_crud_database_consistency(self, cross_service_client):
-        """Test API CRUD operations maintain database consistency."""
+        """
+Test API CRUD operations maintain database consistency."""
         client = cross_service_client
         
         # Create content via API
@@ -261,7 +267,8 @@ class TestServiceToServiceCommunication:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_fingerprinting_to_monitoring_service(self, cross_service_client):
-        """Test fingerprinting service to monitoring service communication."""
+        """
+Test fingerprinting service to monitoring service communication."""
         client = cross_service_client
         
         # Create content for fingerprinting
@@ -413,7 +420,8 @@ class TestExternalServiceCoordination:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_payment_processor_coordination(self, cross_service_client):
-        """Test coordination with external payment processors."""
+        """
+Test coordination with external payment processors."""
         client = cross_service_client
         
         # Setup payment method
@@ -556,7 +564,8 @@ class TestDataFlowIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_lifecycle_data_flow(self, cross_service_client):
-        """Test data flow throughout content lifecycle."""
+        """
+Test data flow throughout content lifecycle."""
         client = cross_service_client
         
         # Step 1: Upload content
@@ -671,7 +680,8 @@ class TestErrorHandlingAcrossServices:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_service_failure_recovery(self, cross_service_client):
-        """Test system behavior when individual services fail."""
+        """
+Test system behavior when individual services fail."""
         client = cross_service_client
         
         # Simulate external service failure

@@ -15,6 +15,7 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
+
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -25,7 +26,8 @@ import yaml
 
 @dataclass
 class TerraformProvider:
-    """Terraform provider configuration"""
+    """
+Terraform provider configuration"""
     name: str
     source: str
     version: str
@@ -34,7 +36,8 @@ class TerraformProvider:
 
 @dataclass
 class TerraformModule:
-    """Terraform module configuration"""
+    """
+Terraform module configuration"""
     name: str
     source: str
     version: Optional[str] = None
@@ -43,7 +46,8 @@ class TerraformModule:
 
 @dataclass
 class TerraformResource:
-    """Terraform resource configuration"""
+    """
+Terraform resource configuration"""
     type: str
     name: str
     configuration: Dict[str, Any] = field(default_factory=dict)

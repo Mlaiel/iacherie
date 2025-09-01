@@ -12,6 +12,7 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
+
 import logging
 import hashlib
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ logger = logging.getLogger(__name__)
 
 
 class AccessLevel(Enum):
-    """Access levels for resources"""
+    """
+Access levels for resources"""
+
     NONE = "none"
     READ = "read"
     WRITE = "write"
@@ -41,6 +44,7 @@ class AccessLevel(Enum):
 
 class ResourceType(Enum):
     """Types of resources that can be secured"""
+
     DEPLOYMENT = "deployment"
     CONFIGURATION = "configuration"
     CERTIFICATE = "certificate"
@@ -53,6 +57,7 @@ class ResourceType(Enum):
 
 class ActionType(Enum):
     """Types of actions that can be performed"""
+
     CREATE = "create"
     READ = "read"
     UPDATE = "update"
@@ -78,7 +83,8 @@ class Permission:
 
 @dataclass
 class Role:
-    """Role definition with permissions"""
+    """
+Role definition with permissions"""
     id: str
     name: str
     description: str
@@ -90,7 +96,8 @@ class Role:
 
 @dataclass
 class User:
-    """User definition for access control"""
+    """
+User definition for access control"""
     id: str
     username: str
     email: str
@@ -104,7 +111,8 @@ class User:
 
 @dataclass
 class AccessRequest:
-    """Access request for authorization"""
+    """
+Access request for authorization"""
     user_id: str
     resource_type: ResourceType
     resource_id: str
@@ -115,7 +123,8 @@ class AccessRequest:
 
 @dataclass
 class AccessSession:
-    """User access session"""
+    """
+User access session"""
     session_id: str
     user_id: str
     created_at: datetime
@@ -816,7 +825,8 @@ class DeploymentAccessControl:
         return self.pwd_context.hash(password)
     
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Verify password against hash"""
+        """
+Verify password against hash"""
         return self.pwd_context.verify(plain_password, hashed_password)
     
     def generate_jwt_token(self, user_id: str, session_id: str, expires_in: int = None) -> str:

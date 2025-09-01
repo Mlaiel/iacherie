@@ -6,8 +6,9 @@ services using Chromaprint and Essentia for high-accuracy music and audio
 content identification and protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -23,7 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 class AudioProcessingQuality(Enum):
-    """Audio processing quality levels"""
+    """
+Audio processing quality levels"""
+
     BASIC = "basic"
     HIGH = "high"
     ULTRA = "ultra"
@@ -31,6 +34,7 @@ class AudioProcessingQuality(Enum):
 
 class DeploymentStatus(Enum):
     """Deployment status enumeration"""
+
     PENDING = "pending"
     DEPLOYING = "deploying"
     RUNNING = "running"
@@ -83,7 +87,8 @@ class AudioFingerprintDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""
+        """
+Initialize Kubernetes, Docker, and Redis clients"""
         try:
             # Kubernetes client
             config.load_incluster_config()

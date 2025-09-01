@@ -10,6 +10,7 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
+
 import asyncio
 import logging
 import pickle
@@ -33,7 +34,9 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class PredictionType(Enum):
-    """Types of predictions available in the system."""
+    """
+Types of predictions available in the system."""
+
     REVENUE_FORECAST = "revenue_forecast"
     ENGAGEMENT_PREDICTION = "engagement_prediction"
     CONTENT_PERFORMANCE = "content_performance"
@@ -63,7 +66,8 @@ class PredictionResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics."""
+    """
+Model performance metrics."""
     model_name: str
     accuracy: float
     mae: float
@@ -478,7 +482,8 @@ class PredictiveAnalytics:
         return (max(0, prediction - margin), prediction + margin)
     
     def _calculate_overall_performance_score(self, engagement: float, viral: float, monetization: float) -> float:
-        """Calculate overall content performance score."""
+        """
+Calculate overall content performance score."""
         # Weighted combination of different prediction scores
         weights = {'engagement': 0.4, 'viral': 0.3, 'monetization': 0.3}
         return (engagement * weights['engagement'] + 
@@ -486,7 +491,8 @@ class PredictiveAnalytics:
                 monetization * weights['monetization'])
     
     def _categorize_churn_risk(self, churn_probability: float) -> str:
-        """Categorize churn risk level."""
+        """
+Categorize churn risk level."""
         if churn_probability > 0.8:
             return "high"
         elif churn_probability > 0.5:

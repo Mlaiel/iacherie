@@ -15,6 +15,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
+
 import asyncio
 import logging
 import numpy as np
@@ -67,6 +68,7 @@ logger = logging.getLogger(__name__)
 
 class PlagiarismType(Enum):
     """Types of plagiarism detected"""
+
     EXACT_COPY = "exact_copy"
     NEAR_EXACT = "near_exact"
     PARAPHRASE = "paraphrase"
@@ -80,6 +82,7 @@ class PlagiarismType(Enum):
 
 class SimilarityLevel(Enum):
     """Levels of similarity"""
+
     IDENTICAL = "identical"
     VERY_HIGH = "very_high"
     HIGH = "high"
@@ -89,6 +92,7 @@ class SimilarityLevel(Enum):
 
 class DetectionStrategy(Enum):
     """Detection strategies"""
+
     COMPREHENSIVE = "comprehensive"
     FAST_SCREENING = "fast_screening"
     DEEP_SEMANTIC = "deep_semantic"
@@ -112,7 +116,8 @@ class PlagiarismMatch:
 
 @dataclass
 class PlagiarismReport:
-    """Comprehensive plagiarism detection report"""
+    """
+Comprehensive plagiarism detection report"""
     query_id: str
     query_text: str
     total_matches: int
@@ -126,7 +131,8 @@ class PlagiarismReport:
 
 @dataclass
 class SemanticAnalysisConfig:
-    """Configuration for semantic analysis"""
+    """
+Configuration for semantic analysis"""
     # Thresholds
     exact_match_threshold: float = 0.98
     near_exact_threshold: float = 0.90
@@ -159,7 +165,8 @@ class SemanticPlagiarismDetector:
     def __init__(self, 
                  embeddings_engine: IndustrialEmbeddingsEngine,
                  config: Optional[SemanticAnalysisConfig] = None):
-        """Initialize semantic plagiarism detector"""
+        """
+Initialize semantic plagiarism detector"""
         self.embeddings_engine = embeddings_engine
         self.config = config or SemanticAnalysisConfig()
         
@@ -311,7 +318,8 @@ class SemanticPlagiarismDetector:
         candidate_embedding: ContextualEmbedding,
         config: SemanticAnalysisConfig
     ) -> Dict[str, float]:
-        """Calculate comprehensive similarity metrics"""
+        """
+Calculate comprehensive similarity metrics"""
         
         similarities = {}
         
@@ -484,7 +492,8 @@ class SemanticPlagiarismDetector:
     async def _calculate_stylistic_similarity(
         self, embedding1: ContextualEmbedding, embedding2: ContextualEmbedding
     ) -> float:
-        """Calculate stylistic similarity between embeddings"""
+        """
+Calculate stylistic similarity between embeddings"""
         
         try:
             # Use pre-computed stylometric features if available
@@ -577,7 +586,8 @@ class SemanticPlagiarismDetector:
     def _classify_plagiarism(
         self, similarities: Dict[str, float], config: SemanticAnalysisConfig
     ) -> Tuple[PlagiarismType, float]:
-        """Classify the type of plagiarism and calculate confidence"""
+        """
+Classify the type of plagiarism and calculate confidence"""
         
         semantic_sim = similarities.get('semantic', 0.0)
         lexical_sim = similarities.get('lexical', 0.0)
@@ -622,7 +632,8 @@ class SemanticPlagiarismDetector:
         return PlagiarismType.SEMANTIC_SIMILARITY, 0.0
     
     def _determine_similarity_level(self, similarities: Dict[str, float]) -> SimilarityLevel:
-        """Determine the overall similarity level"""
+        """
+Determine the overall similarity level"""
         
         # Use the highest semantic or combined similarity
         max_sim = max(
@@ -647,7 +658,8 @@ class SemanticPlagiarismDetector:
     async def _extract_matched_segments(
         self, text1: str, text2: str, similarities: Dict[str, float]
     ) -> List[Tuple[str, str]]:
-        """Extract matched segments between texts"""
+        """
+Extract matched segments between texts"""
         
         matched_segments = []
         
@@ -766,7 +778,8 @@ class SemanticPlagiarismDetector:
         candidate_embeddings: List[ContextualEmbedding],
         config: SemanticAnalysisConfig
     ) -> List[PlagiarismMatch]:
-        """Perform deep semantic detection"""
+        """
+Perform deep semantic detection"""
         
         matches = []
         
@@ -835,7 +848,8 @@ class SemanticPlagiarismDetector:
         candidate_embeddings: List[ContextualEmbedding],
         config: SemanticAnalysisConfig
     ) -> List[PlagiarismMatch]:
-        """Perform linguistic analysis based detection"""
+        """
+Perform linguistic analysis based detection"""
         
         matches = []
         
@@ -901,7 +915,8 @@ class SemanticPlagiarismDetector:
         processing_time: float,
         strategy: DetectionStrategy
     ) -> PlagiarismReport:
-        """Generate comprehensive plagiarism report"""
+        """
+Generate comprehensive plagiarism report"""
         
         # Calculate summary statistics
         if matches:
@@ -945,7 +960,8 @@ class SemanticPlagiarismDetector:
     def _generate_recommendations(
         self, matches: List[PlagiarismMatch], risk_assessment: Dict[str, float]
     ) -> List[str]:
-        """Generate recommendations based on detection results"""
+        """
+Generate recommendations based on detection results"""
         
         recommendations = []
         
@@ -990,7 +1006,8 @@ class SemanticPlagiarismDetector:
         return config
     
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection performance statistics"""
+        """
+Get detection performance statistics"""
         return {
             'total_detections': self.detection_stats['total_detections'],
             'total_matches': self.detection_stats['total_matches'],

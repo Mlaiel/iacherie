@@ -28,6 +28,7 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
+
 import asyncio
 import logging
 import time
@@ -44,7 +45,9 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities."""
+    """
+Types of collaboration opportunities."""
+
     REMIX = "remix"
     COVER_VERSION = "cover_version"
     FEATURING = "featuring"
@@ -61,6 +64,7 @@ class CollaborationType(Enum):
 
 class CompatibilityLevel(Enum):
     """Collaboration compatibility levels."""
+
     PERFECT_MATCH = "perfect_match"    # 90-100%
     EXCELLENT = "excellent"            # 80-89%
     GOOD = "good"                     # 70-79%
@@ -71,6 +75,7 @@ class CompatibilityLevel(Enum):
 
 class CreatorProfile(Enum):
     """Creator profile types."""
+
     MUSICIAN_SOLO = "musician_solo"
     MUSICIAN_BAND = "musician_band"
     PRODUCER = "producer"
@@ -99,7 +104,8 @@ class CollaborationOpportunity:
     success_probability: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
+        """
+Convert to dictionary."""
         return {
             "type": self.collaboration_type.value,
             "compatibility": self.compatibility_score,
@@ -142,10 +148,12 @@ class CollaborationMetrics:
 
 
 class CreatorProfileAnalyzer:
-    """Analyzes creator profiles for collaboration matching."""
+    """
+Analyzes creator profiles for collaboration matching."""
     
     def __init__(self):
-        """Initialize creator profile analyzer."""
+        """
+Initialize creator profile analyzer."""
         self.logger = logging.getLogger(__name__)
         
         # Profile characteristics mapping
@@ -450,13 +458,15 @@ class CollaborationMatcher:
     """Matches collaboration opportunities based on content analysis."""
     
     def __init__(self, profile_analyzer: CreatorProfileAnalyzer):
-        """Initialize collaboration matcher."""
+        """
+Initialize collaboration matcher."""
         self.logger = logging.getLogger(__name__)
         self.profile_analyzer = profile_analyzer
     
     async def find_collaboration_opportunities(self, content_item: ContentItem, 
                                              creator_profile: Dict[str, Any]) -> List[CollaborationOpportunity]:
-        """Find potential collaboration opportunities."""
+        """
+Find potential collaboration opportunities."""
         try:
             opportunities = []
             
@@ -697,14 +707,16 @@ class CollaborationEngine:
     """Main collaboration assessment engine."""
     
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize collaboration engine."""
+        """
+Initialize collaboration engine."""
         self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.profile_analyzer = CreatorProfileAnalyzer()
         self.collaboration_matcher = CollaborationMatcher(self.profile_analyzer)
     
     async def assess_collaboration_potential(self, content_item: ContentItem) -> CollaborationMetrics:
-        """Assess comprehensive collaboration potential."""
+        """
+Assess comprehensive collaboration potential."""
         try:
             start_time = time.time()
             
@@ -784,7 +796,8 @@ class CollaborationEngine:
     
     async def _calculate_market_synergy(self, content_item: ContentItem, 
                                       creator_profile: Dict[str, Any]) -> float:
-        """Calculate market synergy potential."""
+        """
+Calculate market synergy potential."""
         try:
             synergy_score = 0.5
             

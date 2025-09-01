@@ -12,7 +12,7 @@ Technical Specifications:
 - Auto-scaling monitoring capacity
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 ⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
@@ -20,6 +20,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
+
 import asyncio
 import logging
 import json
@@ -39,7 +40,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 logger = logging.getLogger(__name__)
 
 class MonitoringPriority(str, Enum):
-    """Priority levels for monitoring tasks."""
+    """
+Priority levels for monitoring tasks."""
+
     CRITICAL = "critical"  # VIP content, high-value assets
     HIGH = "high"         # Premium content, verified artists
     MEDIUM = "medium"     # Standard content
@@ -47,6 +50,7 @@ class MonitoringPriority(str, Enum):
 
 class ThreatLevel(str, Enum):
     """Threat severity levels."""
+
     CRITICAL = "critical"  # Immediate action required
     HIGH = "high"         # Priority enforcement
     MEDIUM = "medium"     # Standard response
@@ -55,6 +59,7 @@ class ThreatLevel(str, Enum):
 
 class MonitoringEventType(str, Enum):
     """Types of monitoring events."""
+
     VIOLATION_DETECTED = "violation_detected"
     CONTENT_PUBLISHED = "content_published"
     PLATFORM_SCAN_COMPLETE = "platform_scan_complete"
@@ -77,7 +82,8 @@ class RealTimeEvent:
     processed: bool = False
 
 class MonitoringMetrics(BaseModel):
-    """Real-time monitoring metrics."""
+    """
+Real-time monitoring metrics."""
     total_scans: int = 0
     violations_detected: int = 0
     false_positives: int = 0
@@ -89,7 +95,8 @@ class MonitoringMetrics(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class LiveDetectionResult(BaseModel):
-    """Live detection result from monitoring."""
+    """
+Live detection result from monitoring."""
     detection_id: str
     fingerprint_id: str
     platform: str
@@ -104,13 +111,15 @@ class LiveDetectionResult(BaseModel):
 
     @validator('similarity_score', 'confidence_score')
     def validate_scores(cls, v):
-        """Validate score ranges."""
+        """
+Validate score ranges."""
         if not 0.0 <= v <= 1.0:
             raise ValueError('Score must be between 0.0 and 1.0')
         return v
 
 class PlatformMonitorConfig(BaseModel):
-    """Configuration for platform-specific monitoring."""
+    """
+Configuration for platform-specific monitoring."""
     platform_name: str
     enabled: bool = True
     scan_interval_seconds: int = 30
@@ -141,7 +150,8 @@ class RealTimeMonitor:
         redis_client: Optional[aioredis.Redis] = None,
         db_session: Optional[AsyncSession] = None
     ):
-        """Initialize real-time monitor."""
+        """
+Initialize real-time monitor."""
         self.config = config
         self.redis_client = redis_client
         self.db_session = db_session
@@ -485,7 +495,8 @@ class RealTimeMonitor:
             return ThreatLevel.NOISE
 
     async def _queue_event(self, event: RealTimeEvent) -> None:
-        """Queue an event for processing."""
+        """
+Queue an event for processing."""
         try:
             await self._event_queue.put(event)
         except asyncio.QueueFull:
@@ -577,7 +588,8 @@ class RealTimeMonitor:
     async def _start_websocket_server(self) -> None:
         """Start WebSocket server for real-time notifications."""
         async def handle_websocket(websocket, path):
-            """Handle WebSocket connections."""
+            """
+Handle WebSocket connections."""
             self._websocket_clients.add(websocket)
             logger.info(f"WebSocket client connected: {websocket.remote_address}")
             
@@ -695,12 +707,14 @@ class RealTimeMonitor:
         self._event_handlers[event_type].append(handler)
 
     async def get_realtime_metrics(self) -> MonitoringMetrics:
-        """Get current real-time monitoring metrics."""
+        """
+Get current real-time monitoring metrics."""
         await self._update_metrics()
         return self._metrics
 
     async def get_active_sessions(self) -> List[Dict[str, Any]]:
-        """Get all active monitoring sessions."""
+        """
+Get all active monitoring sessions."""
         try:
             # Scan for active sessions in Redis
             sessions = []

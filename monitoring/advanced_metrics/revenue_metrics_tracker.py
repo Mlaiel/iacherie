@@ -9,6 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited.
 """
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -26,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
+    """
+Types of revenue streams"""
+
     SUBSCRIPTION_PREMIUM = "subscription_premium"
     SUBSCRIPTION_ENTERPRISE = "subscription_enterprise"
     LICENSING_FEES = "licensing_fees"
@@ -40,6 +43,7 @@ class RevenueType(Enum):
 
 class ChurnType(Enum):
     """Types of customer churn"""
+
     VOLUNTARY = "voluntary"
     INVOLUNTARY = "involuntary"
     DOWNGRADE = "downgrade"
@@ -51,6 +55,7 @@ class ChurnType(Enum):
 
 class CustomerSegment(Enum):
     """Customer segmentation for analytics"""
+
     INDIVIDUAL_CREATOR = "individual_creator"
     PROFESSIONAL_CREATOR = "professional_creator"
     ENTERPRISE_CLIENT = "enterprise_client"
@@ -75,7 +80,8 @@ class RevenueTransaction:
 
 @dataclass
 class MRRMetrics:
-    """Monthly Recurring Revenue metrics"""
+    """
+Monthly Recurring Revenue metrics"""
     total_mrr: Decimal
     new_mrr: Decimal
     expansion_mrr: Decimal
@@ -92,7 +98,8 @@ class MRRMetrics:
 
 @dataclass
 class ARRMetrics:
-    """Annual Recurring Revenue metrics"""
+    """
+Annual Recurring Revenue metrics"""
     total_arr: Decimal
     new_arr: Decimal
     expansion_arr: Decimal
@@ -108,7 +115,8 @@ class ARRMetrics:
 
 @dataclass
 class CLVMetrics:
-    """Customer Lifetime Value metrics"""
+    """
+Customer Lifetime Value metrics"""
     avg_clv: Decimal
     clv_by_segment: Dict[CustomerSegment, Decimal]
     clv_by_acquisition_channel: Dict[str, Decimal]
@@ -122,7 +130,8 @@ class CLVMetrics:
 
 @dataclass
 class ChurnMetrics:
-    """Comprehensive churn analysis metrics"""
+    """
+Comprehensive churn analysis metrics"""
     monthly_churn_rate: float
     annual_churn_rate: float
     revenue_churn_rate: float
@@ -138,7 +147,8 @@ class ChurnMetrics:
 
 @dataclass
 class RevenueInsights:
-    """Revenue analysis insights and recommendations"""
+    """
+Revenue analysis insights and recommendations"""
     revenue_health_score: float
     growth_trajectory: str
     key_metrics_summary: Dict[str, Any]
@@ -558,23 +568,28 @@ class RevenueMetricsTracker:
         return base_mrr + variation
     
     async def _calculate_new_mrr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate new MRR from new customers"""
+        """
+Calculate new MRR from new customers"""
         return Decimal('28500.00') + Decimal(str(5000 * np.random.random()))
     
     async def _calculate_expansion_mrr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate expansion MRR from upgrades"""
+        """
+Calculate expansion MRR from upgrades"""
         return Decimal('12800.00') + Decimal(str(3000 * np.random.random()))
     
     async def _calculate_contraction_mrr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate contraction MRR from downgrades"""
+        """
+Calculate contraction MRR from downgrades"""
         return Decimal('4200.00') + Decimal(str(1000 * np.random.random()))
     
     async def _calculate_churned_mrr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate churned MRR from lost customers"""
+        """
+Calculate churned MRR from lost customers"""
         return Decimal('6800.00') + Decimal(str(2000 * np.random.random()))
     
     async def _calculate_mrr_by_segment(self, start_time: datetime, end_time: datetime) -> Dict[CustomerSegment, Decimal]:
-        """Calculate MRR breakdown by customer segment"""
+        """
+Calculate MRR breakdown by customer segment"""
         return {
             CustomerSegment.INDIVIDUAL_CREATOR: Decimal('58000.00'),
             CustomerSegment.PROFESSIONAL_CREATOR: Decimal('72000.00'),
@@ -584,7 +599,8 @@ class RevenueMetricsTracker:
         }
     
     async def _calculate_mrr_by_platform(self, start_time: datetime, end_time: datetime) -> Dict[str, Decimal]:
-        """Calculate MRR breakdown by platform"""
+        """
+Calculate MRR breakdown by platform"""
         return {
             "spotify": Decimal('45200.00'),
             "youtube": Decimal('58300.00'),
@@ -598,31 +614,38 @@ class RevenueMetricsTracker:
         return int(2180 + 200 * np.random.random())
     
     async def _get_latest_mrr(self) -> Decimal:
-        """Get the latest MRR value"""
+        """
+Get the latest MRR value"""
         return Decimal('185000.00')
     
     async def _calculate_period_arr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate ARR for a specific period"""
+        """
+Calculate ARR for a specific period"""
         return Decimal('2100000.00')
     
     async def _calculate_new_arr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate new ARR"""
+        """
+Calculate new ARR"""
         return Decimal('342000.00')
     
     async def _calculate_expansion_arr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate expansion ARR"""
+        """
+Calculate expansion ARR"""
         return Decimal('153600.00')
     
     async def _calculate_contraction_arr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate contraction ARR"""
+        """
+Calculate contraction ARR"""
         return Decimal('50400.00')
     
     async def _calculate_churned_arr(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate churned ARR"""
+        """
+Calculate churned ARR"""
         return Decimal('81600.00')
     
     async def _calculate_arr_by_segment(self, start_time: datetime, end_time: datetime) -> Dict[CustomerSegment, Decimal]:
-        """Calculate ARR by customer segment"""
+        """
+Calculate ARR by customer segment"""
         return {
             CustomerSegment.INDIVIDUAL_CREATOR: Decimal('696000.00'),
             CustomerSegment.PROFESSIONAL_CREATOR: Decimal('864000.00'),
@@ -632,15 +655,18 @@ class RevenueMetricsTracker:
         }
     
     async def _calculate_total_revenue(self, start_time: datetime, end_time: datetime) -> Decimal:
-        """Calculate total revenue including one-time"""
+        """
+Calculate total revenue including one-time"""
         return Decimal('2450000.00')
     
     async def _calculate_average_clv(self, analysis_date: datetime) -> Decimal:
-        """Calculate average customer lifetime value"""
+        """
+Calculate average customer lifetime value"""
         return Decimal('2847.50') + Decimal(str(500 * np.random.random()))
     
     async def _calculate_clv_by_segment(self, analysis_date: datetime) -> Dict[CustomerSegment, Decimal]:
-        """Calculate CLV by customer segment"""
+        """
+Calculate CLV by customer segment"""
         return {
             CustomerSegment.INDIVIDUAL_CREATOR: Decimal('1850.00'),
             CustomerSegment.PROFESSIONAL_CREATOR: Decimal('3200.00'),
@@ -650,7 +676,8 @@ class RevenueMetricsTracker:
         }
     
     async def _calculate_clv_by_acquisition_channel(self, analysis_date: datetime) -> Dict[str, Decimal]:
-        """Calculate CLV by acquisition channel"""
+        """
+Calculate CLV by acquisition channel"""
         return {
             "organic_search": Decimal('3200.00'),
             "social_media": Decimal('2800.00'),
@@ -664,20 +691,24 @@ class RevenueMetricsTracker:
         return Decimal('145.80')
     
     async def _calculate_payback_period(self, analysis_date: datetime) -> float:
-        """Calculate average payback period in months"""
+        """
+Calculate average payback period in months"""
         return 8.5 + (np.random.random() - 0.5) * 2
     
     async def _get_gross_margin_rate(self) -> float:
-        """Get current gross margin rate"""
+        """
+Get current gross margin rate"""
         return 0.78  # 78% gross margin
     
     async def _predict_clv_12_months(self, analysis_date: datetime) -> Decimal:
-        """Predict CLV for next 12 months"""
+        """
+Predict CLV for next 12 months"""
         current_clv = await self._calculate_average_clv(analysis_date)
         return current_clv * Decimal('1.15')  # 15% growth prediction
     
     async def _calculate_clv_percentiles(self, analysis_date: datetime) -> Dict[str, Decimal]:
-        """Calculate CLV distribution percentiles"""
+        """
+Calculate CLV distribution percentiles"""
         return {
             "p25": Decimal('850.00'),
             "p50": Decimal('2200.00'),
@@ -691,15 +722,18 @@ class RevenueMetricsTracker:
         return 3.2 + (np.random.random() - 0.5) * 1.0  # ~3.2% monthly churn
     
     async def _calculate_revenue_churn_rate(self, analysis_date: datetime) -> float:
-        """Calculate revenue churn rate"""
+        """
+Calculate revenue churn rate"""
         return 2.8 + (np.random.random() - 0.5) * 0.8  # ~2.8% revenue churn
     
     async def _calculate_net_revenue_churn_rate(self, analysis_date: datetime) -> float:
-        """Calculate net revenue churn rate (including expansion)"""
+        """
+Calculate net revenue churn rate (including expansion)"""
         return -0.5 + (np.random.random() - 0.5) * 1.0  # Negative churn (expansion > churn)
     
     async def _calculate_churn_by_segment(self, analysis_date: datetime) -> Dict[CustomerSegment, float]:
-        """Calculate churn rate by customer segment"""
+        """
+Calculate churn rate by customer segment"""
         return {
             CustomerSegment.INDIVIDUAL_CREATOR: 4.5,
             CustomerSegment.PROFESSIONAL_CREATOR: 2.8,
@@ -709,7 +743,8 @@ class RevenueMetricsTracker:
         }
     
     async def _calculate_churn_by_reason(self, analysis_date: datetime) -> Dict[ChurnType, float]:
-        """Calculate churn breakdown by reason"""
+        """
+Calculate churn breakdown by reason"""
         return {
             ChurnType.VOLUNTARY: 45.0,
             ChurnType.PAYMENT_FAILURE: 25.0,
@@ -719,7 +754,8 @@ class RevenueMetricsTracker:
         }
     
     async def _calculate_churn_by_tenure(self, analysis_date: datetime) -> Dict[str, float]:
-        """Calculate churn rate by customer tenure"""
+        """
+Calculate churn rate by customer tenure"""
         return {
             "0-3_months": 8.5,
             "3-6_months": 4.2,
@@ -733,15 +769,18 @@ class RevenueMetricsTracker:
         return int(125 + 25 * np.random.random())
     
     async def _calculate_churn_prevention_success_rate(self, analysis_date: datetime) -> float:
-        """Calculate success rate of churn prevention efforts"""
+        """
+Calculate success rate of churn prevention efforts"""
         return 68.5 + (np.random.random() - 0.5) * 10
     
     async def _calculate_avg_time_to_churn(self, analysis_date: datetime) -> float:
-        """Calculate average time from signup to churn in days"""
+        """
+Calculate average time from signup to churn in days"""
         return 185.0 + (np.random.random() - 0.5) * 50
     
     async def _calculate_revenue_health_score(self, mrr_metrics, arr_metrics, clv_metrics, churn_metrics) -> float:
-        """Calculate overall revenue health score (0-100)"""
+        """
+Calculate overall revenue health score (0-100)"""
         growth_score = min(25, mrr_metrics.mrr_growth_rate * 2.5)
         clv_score = min(25, clv_metrics.clv_to_cac_ratio * 5)
         churn_score = max(0, 25 - churn_metrics.monthly_churn_rate * 5)
@@ -750,7 +789,8 @@ class RevenueMetricsTracker:
         return growth_score + clv_score + churn_score + retention_score
     
     async def _determine_growth_trajectory(self, mrr_metrics, arr_metrics) -> str:
-        """Determine growth trajectory classification"""
+        """
+Determine growth trajectory classification"""
         if mrr_metrics.mrr_growth_rate > 15:
             return "accelerating"
         elif mrr_metrics.mrr_growth_rate > 8:
@@ -847,27 +887,32 @@ class RevenueMetricsTracker:
         return segments[hash(customer_id) % len(segments)]
     
     async def _store_transaction(self, transaction: RevenueTransaction) -> None:
-        """Store revenue transaction in database"""
+        """
+Store revenue transaction in database"""
         # In production, this would store in database
         pass
     
     async def _update_transaction_cache(self, transaction: RevenueTransaction) -> None:
-        """Update real-time transaction cache"""
+        """
+Update real-time transaction cache"""
         if transaction.customer_id not in self.transaction_cache:
             self.transaction_cache[transaction.customer_id] = []
         self.transaction_cache[transaction.customer_id].append(transaction)
     
     async def _initialize_data_connections(self) -> None:
-        """Initialize database and external connections"""
+        """
+Initialize database and external connections"""
         # In production, this would initialize actual connections
         pass
     
     async def _setup_transaction_tracking(self) -> None:
-        """Setup real-time transaction tracking"""
+        """
+Setup real-time transaction tracking"""
         # In production, this would setup event listeners
         pass
     
     async def _initialize_customer_segmentation(self) -> None:
-        """Initialize customer segmentation logic"""
+        """
+Initialize customer segmentation logic"""
         # In production, this would load segmentation rules
         pass
