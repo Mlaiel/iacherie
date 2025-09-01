@@ -1,5 +1,5 @@
-"""Core package init."""
+"""Business Intelligence Core Engine Components"""
 
-from .business_intelligence_agent import BusinessIntelligenceAgent
+from .business_intelligence_engine import BusinessIntelligenceEngine
 
-__all__ = ['BusinessIntelligenceAgent']
+__all__ = ['BusinessIntelligenceEngine']

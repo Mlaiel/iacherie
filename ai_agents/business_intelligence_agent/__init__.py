@@ -1,25 +1,17 @@
-"""Business Intelligence Agent - Advanced BI and Analytics
+"""Business Intelligence Agent - AI-Powered Business Intelligence
 
-This agent provides comprehensive business intelligence and advanced analytics.
+Advanced AI agent for comprehensive business intelligence, analytics, and reporting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .core.business_intelligence_agent import BusinessIntelligenceAgent
-from .models.bi_models import (
-    BusinessIntelligenceRequest,
-    BusinessIntelligenceResult,
-    KPIDashboard,
-    BusinessInsight
+from .manager import (
+    BusinessIntelligenceManager,
+    BusinessIntelligenceSystemStatus
 )
 
 __all__ = [
-    'BusinessIntelligenceAgent',
-    'BusinessIntelligenceRequest',
-    'BusinessIntelligenceResult',
-    'KPIDashboard', 
-    'BusinessInsight'
+    'BusinessIntelligenceManager',
+    'BusinessIntelligenceSystemStatus'
 ]
-
-__version__ = "1.0.0"
