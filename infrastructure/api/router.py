@@ -24,6 +24,7 @@ Rollen: Lead Dev, Architecte IA, Backend Senior, Security Specialist
 import os
 import subprocess
 import shutil
+from datetime import datetime
 
 API_DOCS_DIR = "../../app/api/docs"
 LANGS = ["en", "fr", "de"]
@@ -14358,11 +14359,155 @@ class APIResponseHandler:
     
     async def handle_response(self, response: Any) -> Dict[str, Any]:
         """Traite et normalise les réponses API"""
-        pass
+        try:
+            response_id = str(hash(str(response)))
+            
+            # Check cache first
+            if response_id in self.response_cache:
+                return self.response_cache[response_id]
+            
+            # Normalize response structure
+            if hasattr(response, 'status_code'):
+                # HTTP response object
+                normalized_response = {
+                    'status_code': response.status_code,
+                    'success': 200 <= response.status_code < 300,
+                    'data': response.json() if hasattr(response, 'json') else str(response.content),
+                    'headers': dict(response.headers) if hasattr(response, 'headers') else {},
+                    'response_time': getattr(response, 'elapsed', None),
+                    'timestamp': datetime.now().isoformat()
+                }
+            elif isinstance(response, dict):
+                # Dictionary response
+                normalized_response = {
+                    'status_code': response.get('status_code', 200),
+                    'success': response.get('success', True),
+                    'data': response.get('data', response),
+                    'headers': response.get('headers', {}),
+                    'response_time': response.get('response_time'),
+                    'timestamp': datetime.now().isoformat()
+                }
+            else:
+                # Raw response
+                normalized_response = {
+                    'status_code': 200,
+                    'success': True,
+                    'data': response,
+                    'headers': {},
+                    'response_time': None,
+                    'timestamp': datetime.now().isoformat()
+                }
+            
+            # Add to cache
+            self.response_cache[response_id] = normalized_response
+            
+            # Limit cache size
+            if len(self.response_cache) > 1000:
+                # Remove oldest entries
+                oldest_key = next(iter(self.response_cache))
+                del self.response_cache[oldest_key]
+            
+            return normalized_response
+            
+        except Exception as e:
+            # Fallback response on error
+            return {
+                'status_code': 500,
+                'success': False,
+                'data': None,
+                'error': str(e),
+                'headers': {},
+                'response_time': None,
+                'timestamp': datetime.now().isoformat()
+            }
     
     async def handle_error(self, error: Exception) -> Dict[str, Any]:
         """Gère les erreurs API avec retry et fallback"""
-        pass
+        try:
+            error_type = type(error).__name__
+            error_message = str(error)
+            
+            # Check if we have a specific handler for this error type
+            if error_type in self.error_handlers:
+                return await self.error_handlers[error_type](error)
+            
+            # Standard error categorization
+            if 'timeout' in error_message.lower():
+                error_category = 'timeout'
+                status_code = 408
+                retry_recommended = True
+            elif 'connection' in error_message.lower():
+                error_category = 'connection'
+                status_code = 503
+                retry_recommended = True
+            elif 'rate limit' in error_message.lower():
+                error_category = 'rate_limit'
+                status_code = 429
+                retry_recommended = True
+            elif 'auth' in error_message.lower() or 'permission' in error_message.lower():
+                error_category = 'authentication'
+                status_code = 401
+                retry_recommended = False
+            elif 'not found' in error_message.lower():
+                error_category = 'not_found'
+                status_code = 404
+                retry_recommended = False
+            else:
+                error_category = 'general'
+                status_code = 500
+                retry_recommended = True
+            
+            # Create error response
+            error_response = {
+                'success': False,
+                'error': {
+                    'type': error_type,
+                    'message': error_message,
+                    'category': error_category,
+                    'timestamp': datetime.now().isoformat()
+                },
+                'status_code': status_code,
+                'retry_recommended': retry_recommended,
+                'fallback_available': self._has_fallback(error_category)
+            }
+            
+            # Add retry strategy if applicable
+            if retry_recommended:
+                error_response['retry_strategy'] = {
+                    'max_retries': 3,
+                    'backoff_factor': 2,
+                    'initial_delay': 1.0
+                }
+            
+            return error_response
+            
+        except Exception as nested_error:
+            # Fallback error handling
+            return {
+                'success': False,
+                'error': {
+                    'type': 'ErrorHandlerFailure',
+                    'message': f"Error handler failed: {str(nested_error)}",
+                    'original_error': str(error),
+                    'category': 'critical',
+                    'timestamp': datetime.now().isoformat()
+                },
+                'status_code': 500,
+                'retry_recommended': False,
+                'fallback_available': False
+            }
+    
+    def _has_fallback(self, error_category: str) -> bool:
+        """Check if fallback is available for error category"""
+        fallback_available = {
+            'timeout': True,
+            'connection': True,
+            'rate_limit': True,
+            'authentication': False,
+            'not_found': False,
+            'general': True
+        }
+        return fallback_available.get(error_category, False)
 
 
 
