@@ -29,6 +29,120 @@ from .gdpr_compliance import GDPRComplianceManager, ConsentPurpose
 logger = get_logger(__name__)
 
 
+class DataRetentionAutomation:
+    """
+    Automated data retention policies execution system
+    Handles scheduled deletion, archival, and anonymization
+    """
+    
+    def __init__(self, retention_manager: 'DataRetentionManager'):
+        self.retention_manager = retention_manager
+        self.logger = logger
+        
+    async def run_automated_retention_policies(self) -> Dict[str, Any]:
+        """
+        Execute all automated retention policies
+        Called by scheduled jobs (cron/kubernetes cronjob)
+        """
+        try:
+            results = {
+                "execution_time": datetime.utcnow().isoformat(),
+                "policies_processed": 0,
+                "records_processed": 0,
+                "records_deleted": 0,
+                "records_archived": 0,
+                "records_anonymized": 0,
+                "errors": []
+            }
+            
+            # Get all active retention policies
+            policies = await self.retention_manager.get_active_policies()
+            
+            for policy_name, policy in policies.items():
+                if not policy.automated_execution:
+                    continue
+                    
+                try:
+                    policy_result = await self._execute_policy(policy)
+                    
+                    results["policies_processed"] += 1
+                    results["records_processed"] += policy_result.get("records_processed", 0)
+                    results["records_deleted"] += policy_result.get("records_deleted", 0)
+                    results["records_archived"] += policy_result.get("records_archived", 0)
+                    results["records_anonymized"] += policy_result.get("records_anonymized", 0)
+                    
+                    self.logger.info(f"Executed retention policy {policy_name}: {policy_result}")
+                    
+                except Exception as e:
+                    error_msg = f"Failed to execute policy {policy_name}: {str(e)}"
+                    results["errors"].append(error_msg)
+                    self.logger.error(error_msg)
+            
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Automated retention execution failed: {str(e)}")
+            raise
+    
+    async def _execute_policy(self, policy: 'RetentionPolicyDefinition') -> Dict[str, Any]:
+        """Execute a specific retention policy"""
+        results = {
+            "policy_id": policy.policy_id,
+            "records_processed": 0,
+            "records_deleted": 0,
+            "records_archived": 0,
+            "records_anonymized": 0
+        }
+        
+        # Calculate cutoff date
+        cutoff_date = datetime.utcnow() - timedelta(days=policy.retention_period_days)
+        
+        # Get records that need processing
+        records = await self._get_records_for_policy(policy, cutoff_date)
+        results["records_processed"] = len(records)
+        
+        for record in records:
+            try:
+                if policy.action_on_expiry == RetentionAction.DELETE:
+                    await self._delete_record(record, policy)
+                    results["records_deleted"] += 1
+                    
+                elif policy.action_on_expiry == RetentionAction.ARCHIVE:
+                    await self._archive_record(record, policy)
+                    results["records_archived"] += 1
+                    
+                elif policy.action_on_expiry == RetentionAction.ANONYMIZE:
+                    await self._anonymize_record(record, policy)
+                    results["records_anonymized"] += 1
+                    
+            except Exception as e:
+                self.logger.error(f"Failed to process record {record.get('id')}: {str(e)}")
+                continue
+        
+        return results
+    
+    async def _get_records_for_policy(self, policy: 'RetentionPolicyDefinition', cutoff_date: datetime) -> List[Dict[str, Any]]:
+        """Get records that need to be processed for a policy"""
+        # This would query the database based on policy category and cutoff date
+        # Implementation depends on your data models
+        return []
+    
+    async def _delete_record(self, record: Dict[str, Any], policy: 'RetentionPolicyDefinition'):
+        """Securely delete a record"""
+        # Implementation for secure deletion
+        pass
+    
+    async def _archive_record(self, record: Dict[str, Any], policy: 'RetentionPolicyDefinition'):
+        """Archive a record to cold storage"""
+        # Implementation for archival
+        pass
+    
+    async def _anonymize_record(self, record: Dict[str, Any], policy: 'RetentionPolicyDefinition'):
+        """Anonymize a record"""
+        # Implementation for anonymization
+        pass
+
+
 class RetentionReason(str, Enum):
     """
 Data retention reasons"""
