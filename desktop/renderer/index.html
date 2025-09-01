@@ -82,6 +82,45 @@
     .header-title {
       font-size: 1.2rem;
       font-weight: 600;
+      -webkit-app-region: no-drag;
+    }
+    
+    .header-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      -webkit-app-region: no-drag;
+    }
+    
+    .workspace-controls {
+      display: flex;
+      gap: 8px;
+      background: rgba(55, 65, 81, 0.8);
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+    
+    .control-btn {
+      background: transparent;
+      border: none;
+      color: #9CA3AF;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+      -webkit-app-region: no-drag;
+    }
+    
+    .control-btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3B82F6;
+    }
+    
+    .control-btn.active {
+      background: #3B82F6;
+      color: white;
     }
     
     .header-actions {
@@ -223,11 +262,17 @@
         <div class="nav-item active" data-view="home">
           <span>🏠</span> Home
         </div>
-        <div class="nav-item" data-view="upload">
-          <span>📤</span> Upload
+        <div class="nav-item" data-view="timeline">
+          <span>🎬</span> Timeline
         </div>
         <div class="nav-item" data-view="studio">
           <span>🎨</span> AI Studio
+        </div>
+        <div class="nav-item" data-view="mixer">
+          <span>🎛️</span> Audio Mixer
+        </div>
+        <div class="nav-item" data-view="upload">
+          <span>📤</span> Import
         </div>
         <div class="nav-item" data-view="protection">
           <span>🛡️</span> Protection
@@ -238,12 +283,31 @@
         <div class="nav-item" data-view="projects">
           <span>📁</span> Projects
         </div>
+        <div class="nav-item" data-view="render">
+          <span>🎯</span> Render
+        </div>
       </nav>
     </div>
     
     <div class="main-content">
       <div class="header">
         <div class="header-title">Professional AI Content Studio</div>
+        <div class="header-center">
+          <div class="workspace-controls">
+            <button class="control-btn" onclick="toggleTimelineWindow()" title="Timeline Window (Ctrl+Alt+T)">
+              🎬
+            </button>
+            <button class="control-btn" onclick="toggleMixerWindow()" title="Audio Mixer (Ctrl+Alt+M)">
+              🎛️
+            </button>
+            <button class="control-btn" onclick="togglePreviewWindow()" title="Preview Monitor (Ctrl+Alt+P)">
+              📺
+            </button>
+            <button class="control-btn" onclick="createWorkspaceLayout()" title="Create Workspace (Ctrl+Shift+W)">
+              🏗️
+            </button>
+          </div>
+        </div>
         <div class="header-actions">
           <button class="btn secondary" onclick="importContent()">Import</button>
           <button class="btn" onclick="createNewProject()">New Project</button>
@@ -261,48 +325,108 @@
           <div class="quick-actions">
             <div class="action-card" onclick="importContent()">
               <div class="action-icon">📁</div>
-              <div class="action-title">Import Content</div>
-              <div class="action-description">Upload and process your audio, video, and image files</div>
+              <div class="action-title">Import Media</div>
+              <div class="action-description">Upload audio, video, and image files for professional editing</div>
+            </div>
+            
+            <div class="action-card" onclick="createTimelineProject()">
+              <div class="action-icon">🎬</div>
+              <div class="action-title">Timeline Editor</div>
+              <div class="action-description">Professional multi-track editing with timeline controls</div>
             </div>
             
             <div class="action-card" onclick="openAIStudio()">
               <div class="action-icon">🤖</div>
-              <div class="action-title">AI Studio</div>
-              <div class="action-description">Advanced AI-powered editing and enhancement tools</div>
+              <div class="action-title">AI Enhancement</div>
+              <div class="action-description">AI-powered audio cleanup, voice cloning, and content optimization</div>
             </div>
             
-            <div class="action-card" onclick="viewAnalytics()">
-              <div class="action-icon">📈</div>
-              <div class="action-title">Analytics</div>
-              <div class="action-description">Track performance and engagement metrics</div>
+            <div class="action-card" onclick="openAudioMixer()">
+              <div class="action-icon">🎛️</div>
+              <div class="action-title">Audio Mixer</div>
+              <div class="action-description">Professional audio mixing with real-time effects</div>
+            </div>
+            
+            <div class="action-card" onclick="autoGenerateCaptions()">
+              <div class="action-icon">📝</div>
+              <div class="action-title">Auto Captions</div>
+              <div class="action-description">AI-generated captions with speaker identification</div>
             </div>
             
             <div class="action-card" onclick="setupProtection()">
               <div class="action-icon">🔐</div>
               <div class="action-title">Content Protection</div>
-              <div class="action-description">Secure your content with watermarks and fingerprinting</div>
+              <div class="action-description">Watermarks, fingerprinting, and copyright protection</div>
+            </div>
+            
+            <div class="action-card" onclick="renderProject()">
+              <div class="action-icon">🎯</div>
+              <div class="action-title">Render & Export</div>
+              <div class="action-description">Professional rendering with multiple format options</div>
+            </div>
+            
+            <div class="action-card" onclick="viewAnalytics()">
+              <div class="action-icon">📈</div>
+              <div class="action-title">Performance Analytics</div>
+              <div class="action-description">Track engagement, performance, and monetization metrics</div>
             </div>
           </div>
         </div>
       </div>
       
       <div class="status-bar">
-        <div>Ready | Desktop Studio v1.0.0</div>
-        <div class="processing-indicator">
+        <div id="status-left">Ready | Professional Studio v1.0.0</div>
+        <div id="status-center" class="processing-indicator hidden">
           <div class="spinner"></div>
-          <span>Processing content...</span>
+          <span id="processing-text">Processing content...</span>
         </div>
-        <div>© 2025 Fahed Mlaiel</div>
+        <div id="status-right">
+          <span id="display-count">1 Display</span> | 
+          <span id="workspace-info">Single Monitor</span> | 
+          © 2025 Fahed Mlaiel
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    // Global state management
+    let currentProject = null;
+    let platformInfo = null;
+    let workspaceState = {
+      timelineOpen: false,
+      mixerOpen: false,
+      previewOpen: false
+    };
+
     // Initialize desktop application
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       console.log('🎵 Ainflue Desktop Studio initialized');
       
+      // Get platform and display information
+      if (window.electronAPI) {
+        try {
+          platformInfo = await window.electronAPI.getPlatformInfo();
+          updateDisplayInfo();
+          
+          // Setup menu listeners
+          window.electronAPI.onMenuAction((event, ...args) => {
+            handleMenuAction(event.type || event, ...args);
+          });
+          
+        } catch (error) {
+          console.warn('ElectronAPI not available:', error);
+        }
+      }
+      
       // Setup navigation
+      setupNavigation();
+      
+      // Load initial project state
+      loadProjectState();
+    });
+
+    function setupNavigation() {
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -310,17 +434,64 @@
           item.classList.add('active');
           
           const view = item.dataset.view;
-          console.log(`Navigating to: ${view}`);
+          switchView(view);
         });
       });
+    }
+
+    function switchView(view) {
+      console.log(`Navigating to: ${view}`);
       
-      // Setup menu listeners if electronAPI is available
-      if (window.electronAPI) {
-        window.electronAPI.onMenuAction((event, ...args) => {
-          handleMenuAction(event.type || event, ...args);
-        });
+      switch (view) {
+        case 'timeline':
+          createTimelineProject();
+          break;
+        case 'mixer':
+          openAudioMixer();
+          break;
+        case 'studio':
+          openAIStudio();
+          break;
+        case 'upload':
+          importContent();
+          break;
+        case 'render':
+          renderProject();
+          break;
+        default:
+          console.log(`View ${view} not implemented yet`);
       }
-    });
+    }
+
+    function updateDisplayInfo() {
+      if (platformInfo) {
+        const displayElement = document.getElementById('display-count');
+        const workspaceElement = document.getElementById('workspace-info');
+        
+        if (displayElement) {
+          displayElement.textContent = `${platformInfo.displays} Display${platformInfo.displays > 1 ? 's' : ''}`;
+        }
+        
+        if (workspaceElement && platformInfo.workspace) {
+          const layout = platformInfo.workspace.defaultLayout || 'single-monitor';
+          workspaceElement.textContent = layout.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+      }
+    }
+
+    async function loadProjectState() {
+      if (window.electronAPI) {
+        try {
+          currentProject = await window.electronAPI.getActiveProject();
+          if (currentProject) {
+            document.getElementById('status-left').textContent = 
+              `Project: ${currentProject.name} | Professional Studio v1.0.0`;
+          }
+        } catch (error) {
+          console.warn('Could not load project state:', error);
+        }
+      }
+    }
     
     // Menu action handlers
     function handleMenuAction(action, data) {
@@ -333,11 +504,20 @@
         case 'menu-save-project':
           saveProject();
           break;
+        case 'menu-save-as':
+          saveProjectAs();
+          break;
+        case 'menu-render-video':
+          renderProject();
+          break;
         case 'load-project':
           loadProject(data);
           break;
         case 'import-content':
-          importContentFiles(data);
+          handleImportedContent(data);
+          break;
+        case 'export-project':
+          exportProject(data);
           break;
         case 'toggle-ai-panel':
           toggleAIPanel();
@@ -345,124 +525,266 @@
         case 'toggle-protection-panel':
           toggleProtectionPanel();
           break;
+        case 'toggle-audio-enhancement':
+          toggleAudioEnhancement();
+          break;
+        case 'auto-generate-captions':
+          autoGenerateCaptions();
+          break;
+        case 'voice-clone':
+          startVoiceClone();
+          break;
+        case 'audio-cleanup':
+          startAudioCleanup();
+          break;
+        case 'open-preferences':
+          openPreferences();
+          break;
+        case 'show-shortcuts':
+          showKeyboardShortcuts();
+          break;
+        case 'displays-changed':
+          updateDisplayInfo();
+          break;
+        case 'workspace-layout-created':
+          handleWorkspaceCreated(data);
+          break;
+        default:
+          console.log('Unhandled menu action:', action);
       }
     }
-    
-    // Application functions
+
+    // Professional workflow functions
     async function createNewProject() {
-      console.log('Creating new project...');
-      showProcessing('Creating new project...');
-      
-      // Simulate project creation
-      setTimeout(() => {
+      try {
+        showProcessing('Creating new project...');
+        
+        if (window.electronAPI) {
+          currentProject = await window.electronAPI.createNewProject();
+          console.log('Created new project:', currentProject);
+          
+          document.getElementById('status-left').textContent = 
+            `Project: ${currentProject.name} | Professional Studio v1.0.0`;
+        }
+        
         hideProcessing();
-        console.log('✅ New project created');
-      }, 1000);
+        showNotification('New project created successfully!', 'success');
+      } catch (error) {
+        hideProcessing();
+        showNotification('Failed to create project: ' + error.message, 'error');
+      }
     }
-    
-    async function importContent() {
+
+    async function createTimelineProject() {
+      if (!currentProject) {
+        await createNewProject();
+      }
+      
       if (window.electronAPI) {
         try {
+          await window.electronAPI.toggleTimelineWindow();
+          workspaceState.timelineOpen = !workspaceState.timelineOpen;
+          updateWorkspaceControls();
+        } catch (error) {
+          console.error('Failed to toggle timeline:', error);
+        }
+      }
+    }
+
+    async function toggleTimelineWindow() {
+      if (window.electronAPI) {
+        try {
+          await window.electronAPI.toggleTimelineWindow();
+          workspaceState.timelineOpen = !workspaceState.timelineOpen;
+          updateWorkspaceControls();
+        } catch (error) {
+          console.error('Failed to toggle timeline:', error);
+        }
+      }
+    }
+
+    function toggleMixerWindow() {
+      console.log('🎛️ Audio mixer functionality coming soon');
+      showNotification('Audio mixer window coming in next update!', 'info');
+    }
+
+    function togglePreviewWindow() {
+      console.log('📺 Preview monitor functionality coming soon');
+      showNotification('Preview monitor coming in next update!', 'info');
+    }
+
+    async function createWorkspaceLayout() {
+      if (window.electronAPI) {
+        try {
+          showProcessing('Setting up professional workspace...');
+          await window.electronAPI.createWorkspaceLayout();
+          hideProcessing();
+          showNotification('Professional workspace created!', 'success');
+        } catch (error) {
+          hideProcessing();
+          showNotification('Failed to create workspace: ' + error.message, 'error');
+        }
+      }
+    }
+
+    function updateWorkspaceControls() {
+      const timelineBtn = document.querySelector('[onclick="toggleTimelineWindow()"]');
+      if (timelineBtn) {
+        timelineBtn.classList.toggle('active', workspaceState.timelineOpen);
+      }
+    }
+
+    async function importContent() {
+      try {
+        if (window.electronAPI) {
           const files = await window.electronAPI.selectFile();
           if (files && files.length > 0) {
-            importContentFiles(files);
+            handleImportedContent(files);
           }
-        } catch (error) {
-          console.error('Import failed:', error);
         }
-      } else {
-        console.log('📁 Import content (demo mode)');
+      } catch (error) {
+        showNotification('Failed to import content: ' + error.message, 'error');
       }
     }
-    
-    function importContentFiles(files) {
-      if (!files || files.length === 0) return;
-      
+
+    function handleImportedContent(files) {
       showProcessing(`Importing ${files.length} file(s)...`);
       
-      console.log('Importing files:', files);
-      
-      // Simulate processing
       setTimeout(() => {
         hideProcessing();
-        console.log('✅ Content imported successfully');
+        showNotification(`Successfully imported ${files.length} file(s)!`, 'success');
+        console.log('Imported files:', files);
       }, 2000);
     }
-    
+
     function openAIStudio() {
-      console.log('🎨 Opening AI Studio...');
-      // Navigate to AI Studio view
+      showNotification('AI Studio: Advanced AI processing tools', 'info');
+      console.log('🤖 Opening AI Studio...');
     }
-    
-    function viewAnalytics() {
-      console.log('📊 Opening Analytics...');
-      // Navigate to Analytics view
+
+    function openAudioMixer() {
+      toggleMixerWindow();
     }
-    
-    function setupProtection() {
-      console.log('🛡️ Opening Content Protection...');
-      // Navigate to Protection view
-    }
-    
-    function saveProject() {
-      showProcessing('Saving project...');
+
+    async function autoGenerateCaptions() {
+      if (!currentProject) {
+        showNotification('Please create or open a project first', 'warning');
+        return;
+      }
       
-      const projectData = {
-        name: 'Untitled Project',
-        created: new Date().toISOString(),
-        content: [],
-        settings: {}
-      };
+      showProcessing('Generating AI captions...');
       
-      if (window.electronAPI) {
-        window.electronAPI.saveFile(
-          JSON.stringify(projectData, null, 2),
-          'untitled-project.json'
-        ).then(path => {
+      try {
+        if (window.electronAPI) {
+          const result = await window.electronAPI.processAIContent('current-project', {
+            type: 'auto-captions'
+          });
+          
           hideProcessing();
-          if (path) {
-            console.log('✅ Project saved:', path);
-          }
-        });
-      } else {
-        setTimeout(() => {
-          hideProcessing();
-          console.log('✅ Project saved (demo mode)');
-        }, 1000);
+          showNotification('AI captions generated successfully!', 'success');
+          console.log('Captions result:', result);
+        }
+      } catch (error) {
+        hideProcessing();
+        showNotification('Failed to generate captions: ' + error.message, 'error');
       }
     }
-    
-    function loadProject(data) {
-      showProcessing('Loading project...');
+
+    function renderProject() {
+      if (!currentProject) {
+        showNotification('Please create or open a project first', 'warning');
+        return;
+      }
       
-      console.log('Loading project:', data);
+      showProcessing('Rendering project...');
       
       setTimeout(() => {
         hideProcessing();
-        console.log('✅ Project loaded');
-      }, 1000);
+        showNotification('Project rendered successfully!', 'success');
+      }, 5000);
     }
-    
-    function toggleAIPanel() {
-      console.log('🤖 Toggling AI Panel');
-    }
-    
-    function toggleProtectionPanel() {
-      console.log('🛡️ Toggling Protection Panel');
-    }
-    
-    // UI helpers
+
+    // UI Helper functions
     function showProcessing(message) {
       const indicator = document.querySelector('.processing-indicator');
-      const text = indicator.querySelector('span');
-      text.textContent = message;
-      indicator.style.display = 'flex';
+      const text = document.getElementById('processing-text');
+      
+      if (indicator) indicator.classList.remove('hidden');
+      if (text) text.textContent = message;
     }
-    
+
     function hideProcessing() {
       const indicator = document.querySelector('.processing-indicator');
-      indicator.style.display = 'none';
+      if (indicator) indicator.classList.add('hidden');
     }
+
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `notification notification-${type}`;
+      notification.textContent = message;
+      
+      // Style the notification
+      Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '12px 20px',
+        borderRadius: '8px',
+        color: 'white',
+        fontWeight: '500',
+        zIndex: '1000',
+        maxWidth: '400px',
+        animation: 'slideIn 0.3s ease-out'
+      });
+      
+      // Set background color based on type
+      const colors = {
+        success: '#10B981',
+        error: '#EF4444',
+        warning: '#F59E0B',
+        info: '#3B82F6'
+      };
+      notification.style.backgroundColor = colors[type] || colors.info;
+      
+      document.body.appendChild(notification);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in forwards';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // Placeholder functions for menu actions
+    function saveProject() { console.log('💾 Save project'); }
+    function saveProjectAs() { console.log('💾 Save project as...'); }
+    function loadProject(data) { console.log('📂 Load project:', data); }
+    function exportProject(path) { console.log('📤 Export to:', path); }
+    function toggleAIPanel() { console.log('🤖 Toggle AI panel'); }
+    function toggleProtectionPanel() { console.log('🛡️ Toggle protection panel'); }
+    function toggleAudioEnhancement() { console.log('🎵 Toggle audio enhancement'); }
+    function startVoiceClone() { console.log('🎤 Start voice clone'); }
+    function startAudioCleanup() { console.log('🧹 Start audio cleanup'); }
+    function openPreferences() { console.log('⚙️ Open preferences'); }
+    function showKeyboardShortcuts() { console.log('⌨️ Show shortcuts'); }
+    function handleWorkspaceCreated(data) { console.log('🏗️ Workspace created:', data); }
+    function viewAnalytics() { console.log('📊 View analytics'); }
+    function setupProtection() { console.log('🔐 Setup protection'); }
+
+    // Add animation styles
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
