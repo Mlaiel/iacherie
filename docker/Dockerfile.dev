@@ -1,0 +1,104 @@
+# Multi-stage Dockerfile for Ainflue Platform Development
+# Optimized for development with hot-reload and debugging capabilities
+FROM python:3.12-slim AS base
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    git \
+    libpq-dev \
+    libffi-dev \
+    libssl-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app user and directory
+RUN useradd --create-home --shell /bin/bash app && \
+    mkdir -p /app && \
+    chown -R app:app /app
+
+WORKDIR /app
+
+# Development stage
+FROM base AS development
+
+# Install development dependencies
+RUN apt-get update && apt-get install -y \
+    vim \
+    htop \
+    tree \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt /app/
+COPY requirements-dev.txt /app/
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install -r requirements-dev.txt
+
+# Install debugging and profiling tools
+RUN pip install \
+    ipdb \
+    py-spy \
+    memory-profiler \
+    line-profiler \
+    pytest-profiling \
+    pytest-benchmark
+
+# Copy application code
+COPY --chown=app:app . /app/
+
+# Create necessary directories
+RUN mkdir -p /app/logs /app/storage /app/data && \
+    chown -R app:app /app
+
+# Switch to app user
+USER app
+
+# Expose ports
+EXPOSE 8000 8001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Development command with hot-reload
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/app", "--log-level", "debug"]
+
+# Production stage
+FROM base AS production
+
+# Install production dependencies only
+COPY requirements.txt /app/
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install gunicorn
+
+# Copy application code
+COPY --chown=app:app . /app/
+
+# Create necessary directories
+RUN mkdir -p /app/logs /app/storage /app/data && \
+    chown -R app:app /app
+
+# Switch to app user
+USER app
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Production command
+CMD ["gunicorn", "main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]

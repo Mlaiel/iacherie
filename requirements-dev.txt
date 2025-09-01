@@ -1,0 +1,75 @@
+# Development Dependencies for Ainflue Platform
+# These are additional packages needed for development, testing, and debugging
+
+# Testing Framework
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+pytest-xdist==3.5.0
+pytest-benchmark==4.0.0
+pytest-profiling==1.7.0
+httpx==0.25.2  # For testing FastAPI
+
+# Code Quality and Linting
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+mypy==1.7.1
+pylint==3.0.3
+bandit==1.7.5
+safety==2.3.4
+
+# Pre-commit Hooks
+pre-commit==3.6.0
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.4.8
+mkdocs-swagger-ui-tag==0.6.6
+
+# Debugging and Profiling
+ipdb==0.13.13
+pdb++==0.10.3
+py-spy==0.3.14
+memory-profiler==0.61.0
+line-profiler==4.1.1
+objgraph==3.6.0
+
+# Development Tools
+watchdog==3.0.0
+rich==13.7.0
+typer==0.9.0
+click==8.1.7
+
+# API Development
+httpie==3.2.2
+faker==20.1.0
+
+# Database Tools
+alembic==1.13.0
+asyncpg-stubs==0.29.1
+
+# Type Checking
+types-requests==2.31.0.10
+types-redis==4.6.0.11
+types-passlib==1.7.7.13
+
+# Additional FastAPI tools
+fastapi-users==12.1.2
+fastapi-limiter==0.1.6
+fastapi-pagination==0.12.14
+
+# File processing (for development)
+python-magic==0.4.27
+pillow==10.1.0
+
+# Email validation (fixes the missing dependency)
+pydantic[email]==2.5.0
+
+# Async task queue
+celery==5.3.4
+flower==2.0.1
+
+# Environment management
+python-dotenv==1.0.0

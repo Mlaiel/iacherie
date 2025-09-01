@@ -59,3 +59,26 @@ private_keys/
 certificates/
 *.pem
 *.key
+
+# Development additions
+.vscode/settings.json.local
+.env.local
+*.local
+profile.svg
+profiles/
+bandit-report.json
+safety-report.json
+htmlcov/
+.coverage
+.nyc_output
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+reports/
+test_reports/
+
+# SDK builds
+sdk/python/build/
+sdk/python/dist/
+sdk/python/*.egg-info/
