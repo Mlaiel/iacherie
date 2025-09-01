@@ -289,6 +289,10 @@ Initialize the leaderboard manager."""
         
         self.logger.info("LeaderboardManager initialized successfully")
     
+    def get_supported_leaderboard_types(self) -> List[str]:
+        """Get all supported leaderboard types."""
+        return ["Global", "Regional", "Category", "Tier", "Real-time", "Historical"]
+    
     def _initialize_default_leaderboards(self) -> None:
         """Initialize default platform leaderboards."""
         

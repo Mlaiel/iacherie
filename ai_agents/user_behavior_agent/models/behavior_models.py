@@ -19,6 +19,16 @@ class UserSegmentType(Enum):
     BASIC = "basic"
 
 
+class BehaviorPatternType(Enum):
+    """Behavior pattern types for analysis."""
+    CONTENT_CONSUMPTION = "content_consumption"
+    ENGAGEMENT = "engagement"
+    MONETIZATION = "monetization"
+    COLLABORATION = "collaboration"
+    LEARNING = "learning"
+    SOCIAL_INTERACTION = "social_interaction"
+
+
 @dataclass
 class BehaviorMetrics:
     """Metrics for user behavior analysis."""

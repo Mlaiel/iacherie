@@ -1788,6 +1788,15 @@ Complete an achievement for a user."""
             self.logger.error(f"Error getting user achievements: {e}")
             return []
     
+    def get_all_achievements(self) -> List[Achievement]:
+        """Get all defined achievements."""
+        return list(self._achievements.values())
+    
+    def get_achievements_by_category(self, category: AchievementCategory) -> List[Achievement]:
+        """Get achievements by category."""
+        return [achievement for achievement in self._achievements.values() 
+                if achievement.category == category]
+    
     async def get_achievement_statistics(self) -> Dict[str, Any]:
         """Get platform-wide achievement statistics."""
         try:

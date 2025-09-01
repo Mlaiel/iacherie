@@ -868,6 +868,32 @@ Submit an entry for a challenge."""
         
         return len(completed_participations) + 1
     
+    def get_supported_challenge_types(self) -> List[str]:
+        """Get all supported challenge types."""
+        return [challenge_type.value for challenge_type in ChallengeType]
+    
+    def get_monthly_challenges(self) -> List[Dict[str, Any]]:
+        """Get information about monthly challenges."""
+        return [
+            {
+                "type": "Creative Monthly",
+                "description": "Monthly themed creative challenges",
+                "prize_structure": {"grand_prize": 500, "second": 200, "third": 100},
+                "features": ["cash_prizes", "community_voting", "expert_judging", "collaboration"]
+            },
+            {
+                "type": "Remix Challenge", 
+                "description": "AI-powered remix competitions",
+                "duration": "30 days",
+                "features": ["ai_tools", "innovation_required", "format_flexibility"]
+            },
+            {
+                "type": "Collaboration Sprint",
+                "description": "Cross-creator collaboration challenges", 
+                "features": ["team_building", "skill_sharing", "network_expansion"]
+            }
+        ]
+    
     async def get_active_challenges(
         self,
         user_id: Optional[str] = None,
