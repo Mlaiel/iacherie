@@ -35,6 +35,15 @@ class AinflueMasterStudio {
     this.isProduction = !process.argv.includes('--dev');
     this.displays = [];
     
+    // Platform detection and configuration
+    this.platform = {
+      isMac: process.platform === 'darwin',
+      isWindows: process.platform === 'win32',
+      isLinux: process.platform === 'linux',
+      current: process.platform,
+      arch: process.arch
+    };
+    
     this.initializeApp();
   }
 
@@ -64,8 +73,8 @@ class AinflueMasterStudio {
     const primaryDisplay = screen.getPrimaryDisplay();
     const { width, height } = primaryDisplay.workAreaSize;
 
-    // Create main window
-    this.mainWindow = new BrowserWindow({
+    // Platform-specific window options
+    const windowOptions = {
       width: Math.min(1400, width - 100),
       height: Math.min(900, height - 100),
       minWidth: 1200,
@@ -77,12 +86,27 @@ class AinflueMasterStudio {
         preload: path.join(__dirname, 'preload.js'),
         webSecurity: this.isProduction
       },
-      icon: path.join(__dirname, 'assets', 'icon.png'),
+      icon: path.join(__dirname, 'assets', this.platform.isWindows ? 'icon.ico' : this.platform.isMac ? 'icon.icns' : 'icon.png'),
       title: 'Ainflue Studio - Professional AI Content Creation',
-      titleBarStyle: 'hiddenInset',
       backgroundColor: '#1f2937',
       show: false
-    });
+    };
+
+    // Platform-specific configurations
+    if (this.platform.isMac) {
+      windowOptions.titleBarStyle = 'hiddenInset';
+      windowOptions.vibrancy = 'under-window';
+      windowOptions.transparent = false;
+    } else if (this.platform.isWindows) {
+      windowOptions.frame = true;
+      windowOptions.autoHideMenuBar = true;
+    } else if (this.platform.isLinux) {
+      windowOptions.frame = true;
+      windowOptions.autoHideMenuBar = false;
+    }
+
+    // Create main window
+    this.mainWindow = new BrowserWindow(windowOptions);
 
     // Load application
     if (this.isProduction) {
@@ -181,6 +205,19 @@ class AinflueMasterStudio {
   }
 
   setupIpcHandlers() {
+    // Platform information
+    ipcMain.handle('get-platform-info', () => {
+      return {
+        platform: this.platform.current,
+        isMac: this.platform.isMac,
+        isWindows: this.platform.isWindows,
+        isLinux: this.platform.isLinux,
+        arch: this.platform.arch,
+        version: app.getVersion(),
+        name: app.getName()
+      };
+    });
+
     // File operations
     ipcMain.handle('select-file', async () => {
       const result = await dialog.showOpenDialog(this.mainWindow, {
