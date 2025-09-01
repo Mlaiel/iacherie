@@ -283,12 +283,19 @@ Initialize performance metrics collector"""
         
         # Performance baselines
         self.baselines = {
-            "api_response_time": 200.0,  # ms
+            "api_response_time": 200.0,  # ms - <200ms P95
             "database_query_time": 50.0,  # ms
             "cpu_usage": 70.0,  # percent
             "memory_usage": 80.0,  # percent
             "disk_io_latency": 10.0,  # ms
-            "network_latency": 100.0  # ms
+            "network_latency": 100.0,  # ms
+            "error_rate": 0.1,  # percent - <0.1% error rate
+            "uptime_sla": 99.9,  # percent - 99.9% uptime
+            "mttr": 15.0,  # minutes - <15 minutes MTTR
+            "security_score": 95.0,  # percent - A+ (95%+)
+            "code_coverage": 90.0,  # percent - >90% code coverage
+            "technical_debt_ratio": 5.0,  # percent - <5% technical debt
+            "deployment_frequency": 10.0  # per day - >10/jour
         }
         
         # Initialize default alerts
@@ -671,17 +678,17 @@ Initialize performance metrics collector"""
             default_alerts = [
                 PerformanceAlert(
                     "api_response_time",
-                    1000.0,
+                    200.0,  # Warning at 200ms (target threshold)
                     "greater_than",
                     "warning",
-                    "API response time is high"
+                    "API response time exceeds 200ms P95 target"
                 ),
                 PerformanceAlert(
                     "api_response_time",
-                    2000.0,
+                    500.0,  # Critical at 500ms
                     "greater_than",
                     "critical",
-                    "API response time is critically high"
+                    "API response time is critically high (>500ms)"
                 ),
                 PerformanceAlert(
                     "database_query_time",
@@ -692,17 +699,17 @@ Initialize performance metrics collector"""
                 ),
                 PerformanceAlert(
                     "api_error_rate",
-                    5.0,
+                    0.1,  # Warning at 0.1% error rate (target threshold)
                     "greater_than",
                     "warning",
-                    "API error rate is high"
+                    "API error rate exceeds 0.1% target"
                 ),
                 PerformanceAlert(
                     "api_error_rate",
-                    10.0,
+                    1.0,  # Critical at 1% error rate
                     "greater_than",
                     "critical",
-                    "API error rate is critically high"
+                    "API error rate is critically high (>1%)"
                 )
             ]
             

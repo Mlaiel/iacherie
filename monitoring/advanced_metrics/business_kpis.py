@@ -163,6 +163,20 @@ class BusinessKPICollector:
         self.collection_cache = {}
         self.data_sources = {}
         
+        # Business KPI targets from industrialization requirements
+        self.business_kpi_targets = {
+            "time_to_market_days": 1.0,  # <1 jour time to market
+            "customer_satisfaction_score": 4.5,  # >4.5/5 customer satisfaction
+            "cost_per_transaction_euros": 0.10,  # <€0.10 cost per transaction
+            "revenue_growth_mom_percent": 20.0,  # +20% MoM revenue growth
+            "user_retention_percent": 85.0,  # >85% user retention
+            "support_ticket_volume_daily": 100.0,  # <100/jour support tickets
+            "customer_acquisition_cost": 50.0,  # €50 target CAC
+            "monthly_recurring_revenue": 25000.0,  # €25K+ MRR target
+            "net_promoter_score": 50.0,  # 50+ NPS target
+            "churn_rate_percent": 5.0,  # <5% monthly churn
+        }
+        
         # Prometheus metrics
         self.prometheus_metrics = {
             "kpi_collection_total": Counter(
