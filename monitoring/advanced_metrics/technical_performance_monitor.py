@@ -19,20 +19,13 @@ except ImportError:
     class MockPsutil:
         @staticmethod
         def cpu_percent(interval=1):
-        try:
-            logger.info(f"Executing cpu_percent")
-            
-            # Implementation for cpu_percent
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"cpu_percent completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"cpu_percent failed: {e}")
-            raise
+            """Mock CPU percentage implementation"""
+            import random
+            import time
+            if interval:
+                time.sleep(min(interval, 0.1))  # Don't sleep too long
+            # Return realistic CPU usage between 10-90%
+            return 10 + (random.random() * 80)
         @staticmethod
         def virtual_memory():
             class Memory:
@@ -59,27 +52,19 @@ except ImportError:
             logger.info(f"Executing net_connections")
             
             # Implementation for net_connections
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing pids")
+        @staticmethod
+        def pids():
+            """Mock process IDs list"""
+            import random
+            # Return list of mock PIDs
+            return [1000 + i + random.randint(0, 100) for i in range(10, 25)]
             
-            # Implementation for pids
-            # TODO: Add specific business logic here
-        try:
-        try:
-            logger.info(f"Executing num_threads")
-            
-            # Implementation for num_threads
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"num_threads completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"num_threads failed: {e}")
-            raise
+        @staticmethod  
+        def num_threads():
+            """Mock number of threads"""
+            import random
+            # Return realistic thread count 
+            return 50 + random.randint(0, 150)
             result = None  # Replace with actual implementation
             
             logger.info(f"info completed successfully")
