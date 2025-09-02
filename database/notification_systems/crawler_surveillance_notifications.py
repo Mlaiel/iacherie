@@ -685,8 +685,49 @@ Retourne les canaux par défaut selon le type d'événement et la sévérité"""
         logger.info(f"Augmentation surveillance pour {data.content_id}")
 
     async def _update_violation_statistics(self, data: CrawlerNotificationData):
-        """Met à jour les statistiques de violation"""
-        pass
+        """Met à jour les statistiques de violation et les métriques de surveillance"""
+        try:
+            # Connexion à la base de données pour les statistiques
+            async with asyncpg.create_pool(self.config.database_url) as pool:
+                async with pool.acquire() as conn:
+                    # Mise à jour des statistiques de violations par plateforme
+                    await conn.execute("""
+                        INSERT INTO violation_statistics 
+                        (platform, violation_type, detected_at, content_hash, severity)
+                        VALUES ($1, $2, $3, $4, $5)
+                        ON CONFLICT (platform, content_hash) 
+                        DO UPDATE SET 
+                            violation_count = violation_statistics.violation_count + 1,
+                            last_detected = $3
+                    """, data.platform, data.event_type.value, data.timestamp, 
+                        data.content_hash, data.priority.value)
+                    
+                    # Mise à jour des métriques quotidiennes
+                    today = data.timestamp.date()
+                    await conn.execute("""
+                        INSERT INTO daily_violation_metrics 
+                        (date, platform, total_violations, content_violations, copyright_violations)
+                        VALUES ($1, $2, 1, 1, 1)
+                        ON CONFLICT (date, platform) 
+                        DO UPDATE SET 
+                            total_violations = daily_violation_metrics.total_violations + 1,
+                            content_violations = daily_violation_metrics.content_violations + 1,
+                            copyright_violations = daily_violation_metrics.copyright_violations + 1
+                    """, today, data.platform)
+                    
+                    # Cache des statistiques pour accès rapide
+                    if hasattr(self, 'redis_client'):
+                        stats_key = f"violation_stats:{data.platform}:{today}"
+                        await self.redis_client.hincrby(stats_key, "total_violations", 1)
+                        await self.redis_client.hincrby(stats_key, "content_violations", 1)
+                        await self.redis_client.expire(stats_key, 86400 * 7)  # 7 jours
+                    
+                    logger.info(f"Violation statistics updated for platform {data.platform}")
+                    
+        except Exception as e:
+            logger.error(f"Error updating violation statistics: {e}")
+            # Ne pas lever l'erreur pour ne pas bloquer le workflow principal
+            pass
 
     async def _analyze_mass_upload_pattern(self, data: CrawlerNotificationData) -> Dict[str, Any]:
         """
@@ -698,8 +739,68 @@ Analyse les patterns d'upload en masse"""
         logger.info(f"Escalade légale: {reason}")
 
     async def _temporary_block_similar_uploads(self, data: CrawlerNotificationData):
-        """Bloque temporairement les uploads similaires"""
-        pass
+        """Bloque temporairement les uploads similaires pour prévenir la propagation"""
+        try:
+            # Génération d'empreintes pour bloquer le contenu similaire
+            content_fingerprints = []
+            if data.content_hash:
+                content_fingerprints.append(data.content_hash)
+            
+            # Génération d'empreintes additionnelles basées sur les métadonnées
+            if hasattr(data, 'metadata') and data.metadata:
+                title_hash = hashlib.sha256(str(data.metadata.get('title', '')).encode()).hexdigest()[:16]
+                description_hash = hashlib.sha256(str(data.metadata.get('description', '')).encode()).hexdigest()[:16]
+                content_fingerprints.extend([title_hash, description_hash])
+            
+            # Connexion à la base de données pour enregistrer les blocages
+            async with asyncpg.create_pool(self.config.database_url) as pool:
+                async with pool.acquire() as conn:
+                    for fingerprint in content_fingerprints:
+                        if fingerprint:
+                            # Enregistrement du blocage temporaire
+                            await conn.execute("""
+                                INSERT INTO temporary_content_blocks 
+                                (content_fingerprint, platform, block_reason, blocked_at, expires_at, created_by)
+                                VALUES ($1, $2, $3, $4, $5, $6)
+                                ON CONFLICT (content_fingerprint, platform) 
+                                DO UPDATE SET 
+                                    block_count = temporary_content_blocks.block_count + 1,
+                                    last_blocked = $4
+                            """, fingerprint, data.platform, "violation_detected", 
+                                data.timestamp, data.timestamp + timedelta(hours=24), "crawler_surveillance")
+                    
+                    # Mise à jour du cache Redis pour les vérifications rapides
+                    if hasattr(self, 'redis_client'):
+                        for fingerprint in content_fingerprints:
+                            if fingerprint:
+                                block_key = f"content_block:{fingerprint}:{data.platform}"
+                                await self.redis_client.setex(block_key, 86400, json.dumps({
+                                    "blocked_at": data.timestamp.isoformat(),
+                                    "reason": "violation_detected",
+                                    "platform": data.platform,
+                                    "block_duration": "24h"
+                                }))
+                    
+                    # Notification aux systèmes de upload pour mise à jour des filtres
+                    upload_filter_notification = {
+                        "action": "update_filters",
+                        "fingerprints": content_fingerprints,
+                        "platform": data.platform,
+                        "duration": "24h",
+                        "reason": "violation_detected"
+                    }
+                    
+                    # Publication sur le canal de notification des filtres
+                    if hasattr(self, 'redis_client'):
+                        await self.redis_client.publish("upload_filter_updates", 
+                                                       json.dumps(upload_filter_notification))
+                    
+                    logger.info(f"Temporary blocks applied for {len(content_fingerprints)} fingerprints on {data.platform}")
+                    
+        except Exception as e:
+            logger.error(f"Error applying temporary blocks: {e}")
+            # Ne pas lever l'erreur pour ne pas bloquer le workflow principal
+            pass
 
     async def _create_investigation_case(self, data: CrawlerNotificationData) -> str:
         """
@@ -707,8 +808,115 @@ Crée un cas d'investigation"""
         return f"INV_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
 
     async def _collect_extended_evidence(self, data: CrawlerNotificationData, investigation_id: str):
-        """Collecte des preuves étendues"""
-        pass
+        """Collecte des preuves étendues pour l'investigation et documentation légale"""
+        try:
+            evidence_collection = {
+                "investigation_id": investigation_id,
+                "collection_timestamp": datetime.utcnow().isoformat(),
+                "evidence_items": [],
+                "metadata": {},
+                "chain_of_custody": []
+            }
+            
+            # Collecte des métadonnées du contenu original
+            if hasattr(data, 'metadata') and data.metadata:
+                evidence_collection["metadata"]["original_content"] = {
+                    "title": data.metadata.get('title'),
+                    "description": data.metadata.get('description'),
+                    "upload_date": data.metadata.get('upload_date'),
+                    "author": data.metadata.get('author'),
+                    "duration": data.metadata.get('duration'),
+                    "file_size": data.metadata.get('file_size'),
+                    "resolution": data.metadata.get('resolution'),
+                    "format": data.metadata.get('format')
+                }
+            
+            # Collecte des empreintes techniques
+            evidence_collection["evidence_items"].append({
+                "type": "content_fingerprint",
+                "value": data.content_hash,
+                "algorithm": "sha256",
+                "collected_at": data.timestamp.isoformat(),
+                "source": "crawler_detection"
+            })
+            
+            # Collecte des URLs et références
+            if hasattr(data, 'url'):
+                evidence_collection["evidence_items"].append({
+                    "type": "source_url",
+                    "value": data.url,
+                    "collected_at": data.timestamp.isoformat(),
+                    "platform": data.platform
+                })
+                
+                # Analyse de l'URL pour extraction d'identifiants
+                parsed_url = urllib.parse.urlparse(data.url)
+                evidence_collection["evidence_items"].append({
+                    "type": "url_components",
+                    "value": {
+                        "domain": parsed_url.netloc,
+                        "path": parsed_url.path,
+                        "query": parsed_url.query,
+                        "fragment": parsed_url.fragment
+                    },
+                    "collected_at": data.timestamp.isoformat()
+                })
+            
+            # Collecte des métadonnées de détection
+            evidence_collection["evidence_items"].append({
+                "type": "detection_metadata",
+                "value": {
+                    "detection_method": "automated_crawler",
+                    "confidence_score": getattr(data, 'confidence_score', 0.95),
+                    "detection_timestamp": data.timestamp.isoformat(),
+                    "platform": data.platform,
+                    "event_type": data.event_type.value,
+                    "priority": data.priority.value
+                },
+                "collected_at": datetime.utcnow().isoformat()
+            })
+            
+            # Ajout de la chaîne de custody
+            evidence_collection["chain_of_custody"].append({
+                "action": "evidence_collection_initiated",
+                "timestamp": datetime.utcnow().isoformat(),
+                "actor": "crawler_surveillance_system",
+                "details": "Automated evidence collection for violation investigation"
+            })
+            
+            # Sauvegarde en base de données
+            async with asyncpg.create_pool(self.config.database_url) as pool:
+                async with pool.acquire() as conn:
+                    await conn.execute("""
+                        INSERT INTO investigation_evidence 
+                        (investigation_id, evidence_data, collection_timestamp, evidence_type, platform)
+                        VALUES ($1, $2, $3, $4, $5)
+                    """, investigation_id, json.dumps(evidence_collection), 
+                        datetime.utcnow(), "extended_crawl_evidence", data.platform)
+                    
+                    # Mise à jour du statut de l'investigation
+                    await conn.execute("""
+                        UPDATE investigations 
+                        SET evidence_collected = true, evidence_count = evidence_count + 1,
+                            last_evidence_update = $2
+                        WHERE investigation_id = $1
+                    """, investigation_id, datetime.utcnow())
+            
+            # Stockage en cache pour accès rapide
+            if hasattr(self, 'redis_client'):
+                evidence_key = f"evidence:{investigation_id}:{datetime.utcnow().timestamp()}"
+                await self.redis_client.setex(evidence_key, 86400 * 30, 
+                                            json.dumps(evidence_collection))  # 30 jours
+            
+            logger.info(f"Extended evidence collected for investigation {investigation_id}, "
+                       f"{len(evidence_collection['evidence_items'])} items collected")
+            
+            return evidence_collection
+            
+        except Exception as e:
+            logger.error(f"Error collecting extended evidence: {e}")
+            # Ne pas lever l'erreur pour ne pas bloquer le workflow principal
+            return None
 
     async def _notify_security_team(self, data: CrawlerNotificationData, investigation_id: str):
         """
