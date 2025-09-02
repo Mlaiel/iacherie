@@ -14357,12 +14357,387 @@ class APIResponseHandler:
         self.error_handlers = {}
     
     async def handle_response(self, response: Any) -> Dict[str, Any]:
-        """Traite et normalise les réponses API"""
-        pass
+        """Traite et normalise les réponses API avec validation et transformation"""
+        try:
+            # Import necessary modules
+            import asyncio
+            import logging
+            from datetime import datetime, timezone
+            
+            logger = logging.getLogger(__name__)
+            
+            # Initialize response structure
+            normalized_response = {
+                "success": False,
+                "data": None,
+                "metadata": {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "processing_time_ms": 0,
+                    "response_type": type(response).__name__,
+                    "content_length": 0
+                },
+                "errors": [],
+                "warnings": []
+            }
+            
+            start_time = asyncio.get_event_loop().time()
+            
+            # Handle different response types
+            if hasattr(response, 'status_code'):
+                # HTTP Response handling
+                normalized_response["metadata"]["status_code"] = response.status_code
+                normalized_response["metadata"]["headers"] = dict(getattr(response, 'headers', {}))
+                
+                if 200 <= response.status_code < 300:
+                    # Success response
+                    normalized_response["success"] = True
+                    
+                    # Extract content based on Content-Type
+                    content_type = response.headers.get('Content-Type', '').lower()
+                    
+                    if 'application/json' in content_type:
+                        try:
+                            if hasattr(response, 'json'):
+                                normalized_response["data"] = await response.json() if asyncio.iscoroutinefunction(response.json) else response.json()
+                            else:
+                                import json
+                                text_content = await response.text() if hasattr(response, 'text') else str(response.content)
+                                normalized_response["data"] = json.loads(text_content)
+                        except json.JSONDecodeError as e:
+                            normalized_response["errors"].append(f"JSON decode error: {str(e)}")
+                            normalized_response["data"] = {"raw_content": str(response.content)}
+                    
+                    elif 'text/' in content_type:
+                        normalized_response["data"] = await response.text() if hasattr(response, 'text') else str(response.content)
+                    
+                    elif 'application/xml' in content_type:
+                        normalized_response["data"] = {
+                            "xml_content": await response.text() if hasattr(response, 'text') else str(response.content),
+                            "parsed": "XML parsing would require xml library"
+                        }
+                    
+                    else:
+                        # Binary or unknown content
+                        normalized_response["data"] = {
+                            "content_type": content_type,
+                            "size_bytes": len(response.content) if hasattr(response, 'content') else 0,
+                            "note": "Binary content not parsed"
+                        }
+                
+                elif 400 <= response.status_code < 500:
+                    # Client error
+                    normalized_response["errors"].append(f"Client error: {response.status_code}")
+                    try:
+                        error_content = await response.text() if hasattr(response, 'text') else str(response.content)
+                        normalized_response["data"] = {"error_details": error_content}
+                    except Exception as e:
+                        normalized_response["errors"].append(f"Could not extract error details: {str(e)}")
+                
+                elif 500 <= response.status_code < 600:
+                    # Server error
+                    normalized_response["errors"].append(f"Server error: {response.status_code}")
+                    normalized_response["data"] = {"server_error": True, "retry_recommended": True}
+                
+            elif isinstance(response, dict):
+                # Direct dictionary response
+                normalized_response["success"] = True
+                normalized_response["data"] = response
+                normalized_response["metadata"]["response_type"] = "dict"
+                
+            elif isinstance(response, (list, tuple)):
+                # List/tuple response
+                normalized_response["success"] = True
+                normalized_response["data"] = list(response)
+                normalized_response["metadata"]["response_type"] = "list"
+                normalized_response["metadata"]["item_count"] = len(response)
+                
+            elif isinstance(response, str):
+                # String response
+                normalized_response["success"] = True
+                normalized_response["data"] = response
+                normalized_response["metadata"]["response_type"] = "string"
+                normalized_response["metadata"]["content_length"] = len(response)
+                
+            elif hasattr(response, '__dict__'):
+                # Object with attributes
+                normalized_response["success"] = True
+                normalized_response["data"] = {
+                    "object_type": type(response).__name__,
+                    "attributes": {k: str(v) for k, v in response.__dict__.items() if not k.startswith('_')}
+                }
+                
+            else:
+                # Unknown response type
+                normalized_response["warnings"].append(f"Unknown response type: {type(response)}")
+                normalized_response["data"] = {"raw_response": str(response)}
+                normalized_response["success"] = True  # Assume success if we can stringify it
+            
+            # Calculate processing time
+            end_time = asyncio.get_event_loop().time()
+            normalized_response["metadata"]["processing_time_ms"] = round((end_time - start_time) * 1000, 2)
+            
+            # Cache successful responses if configured
+            if normalized_response["success"] and hasattr(self, 'response_cache'):
+                cache_key = self._generate_cache_key(response)
+                if cache_key:
+                    self.response_cache[cache_key] = {
+                        "response": normalized_response,
+                        "timestamp": datetime.now(timezone.utc),
+                        "ttl": 300  # 5 minutes default TTL
+                    }
+            
+            # Log response handling
+            if normalized_response["success"]:
+                logger.debug(f"Successfully handled response of type {normalized_response['metadata']['response_type']}")
+            else:
+                logger.warning(f"Response handling completed with errors: {normalized_response['errors']}")
+            
+            return normalized_response
+            
+        except Exception as e:
+            # Fallback error handling
+            return {
+                "success": False,
+                "data": None,
+                "metadata": {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "processing_time_ms": 0,
+                    "response_type": "error"
+                },
+                "errors": [f"Response handling failed: {str(e)}"],
+                "warnings": ["Fallback error handler used"]
+            }
     
     async def handle_error(self, error: Exception) -> Dict[str, Any]:
-        """Gère les erreurs API avec retry et fallback"""
-        pass
+        """Gère les erreurs API avec retry et fallback sophistiqués"""
+        try:
+            import asyncio
+            import logging
+            import traceback
+            from datetime import datetime, timezone
+            import random
+            
+            logger = logging.getLogger(__name__)
+            
+            # Initialize error response structure
+            error_response = {
+                "success": False,
+                "data": None,
+                "error": {
+                    "type": type(error).__name__,
+                    "message": str(error),
+                    "code": None,
+                    "severity": "medium",
+                    "retryable": False,
+                    "retry_after_seconds": None,
+                    "suggested_action": None
+                },
+                "metadata": {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "error_id": f"err_{random.randint(100000, 999999)}",
+                    "traceback": None
+                },
+                "retry_strategy": None,
+                "fallback_options": []
+            }
+            
+            # Analyze error type and determine handling strategy
+            error_type = type(error).__name__
+            error_message = str(error)
+            
+            # HTTP and Network Errors
+            if 'ConnectionError' in error_type or 'TimeoutError' in error_type:
+                error_response["error"]["severity"] = "high"
+                error_response["error"]["retryable"] = True
+                error_response["error"]["retry_after_seconds"] = self._calculate_retry_delay("network")
+                error_response["error"]["suggested_action"] = "Retry with exponential backoff"
+                error_response["retry_strategy"] = {
+                    "type": "exponential_backoff",
+                    "max_retries": 5,
+                    "base_delay": 1.0,
+                    "max_delay": 60.0,
+                    "jitter": True
+                }
+                error_response["fallback_options"] = ["use_cached_response", "alternative_endpoint"]
+                
+            elif 'HTTPError' in error_type:
+                # Extract status code if available
+                status_code = getattr(error, 'response', {}).status_code if hasattr(error, 'response') else None
+                error_response["error"]["code"] = status_code
+                
+                if status_code:
+                    if 400 <= status_code < 500:
+                        # Client errors - usually not retryable
+                        error_response["error"]["severity"] = "medium"
+                        error_response["error"]["retryable"] = status_code in [408, 429, 499]  # Request timeout, rate limit, client disconnect
+                        
+                        if status_code == 429:  # Rate limit
+                            retry_after = getattr(error.response, 'headers', {}).get('Retry-After', '60')
+                            error_response["error"]["retry_after_seconds"] = int(retry_after)
+                            error_response["error"]["suggested_action"] = f"Rate limited. Retry after {retry_after} seconds"
+                            error_response["retry_strategy"] = {
+                                "type": "fixed_delay",
+                                "delay": int(retry_after),
+                                "max_retries": 3
+                            }
+                        elif status_code == 401:
+                            error_response["error"]["suggested_action"] = "Authentication required. Check API credentials"
+                            error_response["fallback_options"] = ["refresh_auth_token", "use_alternative_auth"]
+                        elif status_code == 403:
+                            error_response["error"]["suggested_action"] = "Access forbidden. Check permissions"
+                            error_response["fallback_options"] = ["request_elevated_permissions"]
+                        elif status_code == 404:
+                            error_response["error"]["suggested_action"] = "Resource not found. Check endpoint URL"
+                            error_response["fallback_options"] = ["use_alternative_endpoint", "search_for_resource"]
+                            
+                    elif 500 <= status_code < 600:
+                        # Server errors - usually retryable
+                        error_response["error"]["severity"] = "high"
+                        error_response["error"]["retryable"] = True
+                        error_response["error"]["retry_after_seconds"] = self._calculate_retry_delay("server")
+                        error_response["error"]["suggested_action"] = "Server error. Retry with backoff"
+                        error_response["retry_strategy"] = {
+                            "type": "exponential_backoff",
+                            "max_retries": 3,
+                            "base_delay": 2.0,
+                            "max_delay": 30.0
+                        }
+                        error_response["fallback_options"] = ["alternative_server", "cached_response"]
+            
+            # Authentication Errors
+            elif 'AuthenticationError' in error_type or 'Unauthorized' in error_type:
+                error_response["error"]["severity"] = "high"
+                error_response["error"]["code"] = 401
+                error_response["error"]["suggested_action"] = "Refresh authentication token"
+                error_response["fallback_options"] = ["refresh_token", "re_authenticate", "use_backup_credentials"]
+                
+            # Rate Limiting Errors
+            elif 'RateLimitError' in error_type or 'TooManyRequests' in error_type:
+                error_response["error"]["severity"] = "medium"
+                error_response["error"]["retryable"] = True
+                error_response["error"]["retry_after_seconds"] = self._calculate_retry_delay("rate_limit")
+                error_response["error"]["suggested_action"] = "Rate limit exceeded. Implement backoff"
+                error_response["retry_strategy"] = {
+                    "type": "exponential_backoff",
+                    "max_retries": 5,
+                    "base_delay": 30.0,
+                    "max_delay": 300.0,
+                    "jitter": True
+                }
+                error_response["fallback_options"] = ["use_alternative_api_key", "batch_requests"]
+                
+            # Validation Errors
+            elif 'ValidationError' in error_type or 'ValueError' in error_type:
+                error_response["error"]["severity"] = "low"
+                error_response["error"]["retryable"] = False
+                error_response["error"]["suggested_action"] = "Fix input validation errors"
+                error_response["fallback_options"] = ["sanitize_input", "use_default_values"]
+                
+            # JSON/Parsing Errors
+            elif 'JSONDecodeError' in error_type or 'ParseError' in error_type:
+                error_response["error"]["severity"] = "medium"
+                error_response["error"]["retryable"] = True
+                error_response["error"]["retry_after_seconds"] = 5
+                error_response["error"]["suggested_action"] = "Response parsing failed. May be temporary"
+                error_response["fallback_options"] = ["raw_response_fallback", "alternative_parser"]
+                
+            # Database Errors
+            elif any(db_error in error_type for db_error in ['DatabaseError', 'OperationalError', 'IntegrityError']):
+                error_response["error"]["severity"] = "high"
+                error_response["error"]["retryable"] = 'OperationalError' in error_type
+                if error_response["error"]["retryable"]:
+                    error_response["error"]["retry_after_seconds"] = self._calculate_retry_delay("database")
+                    error_response["retry_strategy"] = {
+                        "type": "exponential_backoff",
+                        "max_retries": 3,
+                        "base_delay": 5.0,
+                        "max_delay": 60.0
+                    }
+                error_response["fallback_options"] = ["read_replica", "cached_data", "eventual_consistency"]
+                
+            # Generic errors
+            else:
+                error_response["error"]["severity"] = "medium"
+                error_response["error"]["retryable"] = True
+                error_response["error"]["retry_after_seconds"] = self._calculate_retry_delay("generic")
+                error_response["error"]["suggested_action"] = "Unknown error. Try again or contact support"
+                error_response["fallback_options"] = ["graceful_degradation", "notify_admin"]
+            
+            # Add traceback in development/debug mode
+            if logger.isEnabledFor(logging.DEBUG):
+                error_response["metadata"]["traceback"] = traceback.format_exc()
+            
+            # Store error in error handlers for analysis
+            if hasattr(self, 'error_handlers'):
+                error_key = f"{error_type}_{datetime.now().strftime('%Y%m%d_%H')}"
+                if error_key not in self.error_handlers:
+                    self.error_handlers[error_key] = {"count": 0, "first_seen": datetime.now(timezone.utc), "last_seen": None}
+                self.error_handlers[error_key]["count"] += 1
+                self.error_handlers[error_key]["last_seen"] = datetime.now(timezone.utc)
+            
+            # Log error with appropriate level
+            if error_response["error"]["severity"] == "critical":
+                logger.critical(f"Critical API error: {error_message}", extra={"error_id": error_response["metadata"]["error_id"]})
+            elif error_response["error"]["severity"] == "high":
+                logger.error(f"High severity API error: {error_message}", extra={"error_id": error_response["metadata"]["error_id"]})
+            elif error_response["error"]["severity"] == "medium":
+                logger.warning(f"Medium severity API error: {error_message}", extra={"error_id": error_response["metadata"]["error_id"]})
+            else:
+                logger.info(f"Low severity API error: {error_message}", extra={"error_id": error_response["metadata"]["error_id"]})
+            
+            return error_response
+            
+        except Exception as meta_error:
+            # Fallback error handling for errors in error handling
+            return {
+                "success": False,
+                "data": None,
+                "error": {
+                    "type": "ErrorHandlingError",
+                    "message": f"Error handling failed: {str(meta_error)}. Original error: {str(error)}",
+                    "severity": "critical",
+                    "retryable": False
+                },
+                "metadata": {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "error_id": f"meta_err_{random.randint(100000, 999999)}"
+                },
+                "fallback_options": ["manual_intervention_required"]
+            }
+    
+    def _calculate_retry_delay(self, error_category: str) -> float:
+        """Calculate appropriate retry delay based on error category"""
+        import random
+        
+        base_delays = {
+            "network": 2.0,
+            "server": 5.0,
+            "rate_limit": 60.0,
+            "database": 10.0,
+            "generic": 3.0
+        }
+        
+        base_delay = base_delays.get(error_category, 3.0)
+        # Add jitter (±25%)
+        jitter = random.uniform(0.75, 1.25)
+        return round(base_delay * jitter, 2)
+    
+    def _generate_cache_key(self, response: Any) -> Optional[str]:
+        """Generate cache key for response caching"""
+        try:
+            import hashlib
+            
+            # Create a simple hash based on response characteristics
+            if hasattr(response, 'url'):
+                return hashlib.md5(str(response.url).encode()).hexdigest()[:16]
+            elif hasattr(response, '__dict__'):
+                content = str(sorted(response.__dict__.items()))
+                return hashlib.md5(content.encode()).hexdigest()[:16]
+            else:
+                content = str(response)[:1000]  # Limit content for hashing
+                return hashlib.md5(content.encode()).hexdigest()[:16]
+        except Exception:
+            return None
 
 
 
