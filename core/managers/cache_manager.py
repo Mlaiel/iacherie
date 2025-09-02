@@ -967,8 +967,8 @@ class CacheManagerDocumentation:
     - Nettoyage automatique des ressources
     """
     
-    def __init__(self, config: CacheManagerConfig = None):
-        self.config = config or CacheManagerConfig()
+    def __init__(self, config: CacheConfig = None):
+        self.config = config or CacheConfig()
         self._pool = []
         self._active_connections = 0
         self._lock = threading.Lock()

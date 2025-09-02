@@ -848,6 +848,9 @@ def get_database_manager() -> ProductionDatabaseManager:
 
 # Alias for backward compatibility
 DatabaseManager = EnterpriseDatabaseManager
+
+
+class DatabaseManagerDocumentation:
     """
     🎯 Gestionnaire DatabaseManager - IA-Influencer-Agent
     
@@ -865,8 +868,8 @@ DatabaseManager = EnterpriseDatabaseManager
     - Nettoyage automatique des ressources
     """
     
-    def __init__(self, config: DatabaseManagerConfig = None):
-        self.config = config or DatabaseManagerConfig()
+    def __init__(self, config: DatabaseConfig = None):
+        self.config = config or DatabaseConfig()
         self._pool = []
         self._active_connections = 0
         self._lock = threading.Lock()

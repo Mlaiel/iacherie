@@ -721,6 +721,9 @@ def get_queue_manager() -> ProductionQueueManager:
 
 # Alias for backward compatibility
 QueueManager = IntelligentQueueManager
+
+
+class QueueManagerDocumentation:
     """
     🎯 Gestionnaire QueueManager - IA-Influencer-Agent
     
