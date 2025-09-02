@@ -620,6 +620,18 @@ Get trending content across platforms"""
     
     def clear_cache(self):
         """
+        try:
+            logger.info(f"Executing clear_cache")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"clear_cache completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"clear_cache failed: {e}")
+            raise
 Clear aggregation cache"""
         self.cached_results.clear()
         logger.info("Aggregation cache cleared")
