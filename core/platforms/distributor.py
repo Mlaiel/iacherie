@@ -545,6 +545,18 @@ Upload with retry logic"""
     
     def _is_content_type_allowed(self, content_type: ContentType, rules: List[DistributionRule]) -> bool:
         """
+        try:
+            logger.info(f"Executing _is_content_type_allowed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_is_content_type_allowed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_is_content_type_allowed failed: {e}")
+            raise
 Check if content type is allowed by rules"""
         if not rules:
             return True
@@ -586,6 +598,18 @@ Check if platform is compatible with content"""
     def _get_applicable_rules(self, metadata: ContentMetadata) -> List[DistributionRule]:
         """
         try:
+            logger.info(f"Executing _generate_warnings")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_generate_warnings completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_generate_warnings failed: {e}")
+            raise
+        try:
             logger.info(f"Executing _get_applicable_rules")
             
             # Implement operation logic
@@ -603,6 +627,18 @@ Get applicable distribution rules for content"""
     
     def _generate_warnings(self, task: DistributionTask, results: Dict[str, UploadResult]) -> List[str]:
         """
+        try:
+            logger.info(f"Executing _generate_warnings")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_generate_warnings completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_generate_warnings failed: {e}")
+            raise
 Generate warnings based on distribution results"""
         warnings = []
         
@@ -675,6 +711,18 @@ Get status of a distribution task"""
     
     def get_distribution_stats(self) -> Dict[str, Any]:
         """
+        try:
+            logger.info(f"Executing get_distribution_stats")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"get_distribution_stats completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"get_distribution_stats failed: {e}")
+            raise
 Get distribution statistics"""
         total_tasks = len(self.completed_tasks)
         successful_tasks = sum(1 for r in self.completed_tasks.values() if r.success_count > 0)

@@ -784,6 +784,7 @@ Setup all alert delivery channels"""
         
         for channel in rule.channels:
             if channel not in self.channels:
+                pass
         try:
             logger.info(f"Executing _check_rate_limit")
             

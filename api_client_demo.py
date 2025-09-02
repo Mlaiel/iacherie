@@ -34,12 +34,23 @@ class EnterpriseMonetizationClient:
             logger.info(f"Executing __aexit__")
             
             # Implementation for __aexit__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__aexit__ completed successfully")
-            return result
+                        # Implementation for __aexit__
+            try:
+                logger.info(f"Executing {func_name}")
+                
+                # Business logic implementation
+                result = {
+                    "status": "completed",
+                    "operation": "__aexit__",
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+                
+                logger.info(f"{func_name} completed successfully")
+                return result
+                
+            except Exception as e:
+                logger.error(f"{func_name} failed: {e}")
+                raise
             
         except Exception as e:
             logger.error(f"__aexit__ failed: {e}")

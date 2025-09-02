@@ -271,6 +271,42 @@ Mark task execution as started"""
     
     def mark_execution_complete(self, result: Any = None):
         """
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing mark_execution_failed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_failed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_failed failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing mark_execution_complete")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_complete completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_complete failed: {e}")
+            raise
 Mark task execution as completed"""
         self.status = TaskStatus.COMPLETED
         self.last_result = result
@@ -279,6 +315,30 @@ Mark task execution as completed"""
     
     def mark_execution_failed(self, error: str):
         """
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing mark_execution_failed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_failed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_failed failed: {e}")
+            raise
 Mark task execution as failed"""
         self.status = TaskStatus.FAILED
         self.last_error = error
@@ -748,6 +808,18 @@ _global_scheduler: Optional[PlatformScheduler] = None
 
 def get_scheduler() -> PlatformScheduler:
     """
+    try:
+        logger.info(f"Executing get_scheduler")
+        
+        # Implement operation logic
+        result = await self._execute_operation()
+        
+        logger.info(f"get_scheduler completed successfully")
+        return result
+        
+    except Exception as e:
+        logger.error(f"get_scheduler failed: {e}")
+        raise
 Get global scheduler instance"""
     global _global_scheduler
     

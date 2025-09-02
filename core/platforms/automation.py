@@ -303,6 +303,30 @@ Check if workflow is complete"""
     
     def has_failed(self) -> bool:
         """
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing has_failed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"has_failed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"has_failed failed: {e}")
+            raise
 Check if workflow has failed"""
         return any(step.status == WorkflowStatus.FAILED for step in self.steps)
 
@@ -313,6 +337,18 @@ Core automation engine for platform operations"""
     
     def __init__(self):
         """
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 Initialize automation engine"""
         self.rules: Dict[str, AutomationRule] = {}
         self.workflows: Dict[str, AutomationWorkflow] = {}
@@ -822,6 +858,18 @@ _global_engine: Optional[AutomationEngine] = None
 
 def get_automation_engine() -> AutomationEngine:
     """
+    try:
+        logger.info(f"Executing get_automation_engine")
+        
+        # Implement operation logic
+        result = await self._execute_operation()
+        
+        logger.info(f"get_automation_engine completed successfully")
+        return result
+        
+    except Exception as e:
+        logger.error(f"get_automation_engine failed: {e}")
+        raise
 Get global automation engine instance"""
     global _global_engine
     
