@@ -488,6 +488,7 @@ async def quick_restore(
             start_time = datetime.now()
             
             while True:
+                pass
                 # Vérifier le statut de la restauration
                 # Note: Dans une implémentation réelle, on interrogerait le recovery_engine
                 # pour obtenir le statut de la tâche de restauration

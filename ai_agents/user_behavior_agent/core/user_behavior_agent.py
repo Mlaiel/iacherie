@@ -16,13 +16,7 @@ except ImportError:
     # Fallback for when base agent is not available
     class BaseAIAgent:
         def __init__(self, config=None):
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            self.config = config or {}
             
             logger.info(f"__init__ completed successfully")
             return result

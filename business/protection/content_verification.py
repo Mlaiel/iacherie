@@ -308,6 +308,10 @@ class ContentHashGenerator:
     async def generate_comprehensive_hash(self, content_path: str, content_type: ContentType) -> ContentHash:
         """Generate comprehensive hash for content"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             file_path = Path(content_path)
             
             if not file_path.exists():
@@ -346,7 +350,6 @@ class ContentHashGenerator:
             logger.info(f"Generated comprehensive hash for content: {content_hash.content_id}")
             return content_hash
             
-        except Exception as e:
             logger.error(f"Error generating content hash: {str(e)}")
             raise
     
@@ -375,6 +378,10 @@ class ContentHashGenerator:
     async def _generate_video_hashes(self, video_path: str, content_hash: ContentHash):
         """Generate video-specific fingerprints"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Extract key frames for fingerprinting
             cap = cv2.VideoCapture(video_path)
             frame_hashes = []
@@ -404,7 +411,6 @@ class ContentHashGenerator:
                 content_hash.video_fingerprint = hashlib.sha256(combined_hash.encode()).hexdigest()
                 content_hash.content_hash = content_hash.video_fingerprint
                 
-        except Exception as e:
             logger.error(f"Error generating video hashes: {str(e)}")
     
     async def _generate_audio_hashes(self, audio_path: str, content_hash: ContentHash):
@@ -434,6 +440,10 @@ class ContentHashGenerator:
     async def _generate_text_hashes(self, text_path: str, content_hash: ContentHash):
         """Generate text-specific semantic hashes"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             with open(text_path, 'r', encoding='utf-8', errors='ignore') as f:
                 text_content = f.read()
             
@@ -455,7 +465,6 @@ class ContentHashGenerator:
                 content_hash.text_semantic_hash = hashlib.sha256(feature_array.tobytes()).hexdigest()
                 content_hash.content_hash = content_hash.text_semantic_hash
                 
-        except Exception as e:
             logger.error(f"Error generating text hashes: {str(e)}")
 
 
@@ -476,6 +485,10 @@ class ForensicAnalysisEngine:
                                          content_type: ContentType) -> Dict[str, Any]:
         """Comprehensive forensic analysis"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             results = {
                 'authenticity_score': 0.0,
                 'tampering_indicators': [],
@@ -497,13 +510,16 @@ class ForensicAnalysisEngine:
             logger.info(f"Forensic analysis completed with score: {results['authenticity_score']}")
             return results
             
-        except Exception as e:
             logger.error(f"Error in forensic analysis: {str(e)}")
             return {'authenticity_score': 0.0, 'error': str(e)}
     
     async def _analyze_image_forensics(self, image_path: str, results: Dict[str, Any]) -> Dict[str, Any]:
         """Forensic analysis specific to images"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             with Image.open(image_path) as img:
                 img_array = np.array(img)
                 
@@ -538,7 +554,6 @@ class ForensicAnalysisEngine:
             
             return results
             
-        except Exception as e:
             logger.error(f"Error in image forensics: {str(e)}")
             results['analysis_details']['error'] = str(e)
             return results
@@ -546,6 +561,10 @@ class ForensicAnalysisEngine:
     async def _error_level_analysis(self, img: Image.Image) -> Dict[str, Any]:
         """Error Level Analysis for JPEG tampering detection"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Save image with known compression quality
             with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as temp_file:
                 img.save(temp_file.name, 'JPEG', quality=95)
@@ -590,7 +609,6 @@ class ForensicAnalysisEngine:
                 
                 Path(temp_file.name).unlink(missing_ok=True)
                 
-        except Exception as e:
             logger.error(f"Error in ELA: {str(e)}")
         
         return {'suspicious': False, 'regions': [], 'error': 'Analysis failed'}
@@ -619,6 +637,10 @@ class ForensicAnalysisEngine:
     async def _copy_move_detection(self, img_array: np.ndarray) -> Dict[str, Any]:
         """Detect copy-move forgery in images"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             else:
@@ -685,13 +707,16 @@ class ForensicAnalysisEngine:
             
             return {'detected': False, 'regions': []}
             
-        except Exception as e:
             logger.error(f"Error in copy-move detection: {str(e)}")
             return {'detected': False, 'regions': [], 'error': str(e)}
     
     async def _noise_pattern_analysis(self, img_array: np.ndarray) -> Dict[str, Any]:
         """Analyze noise patterns for tampering indicators"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             else:
@@ -731,13 +756,16 @@ class ForensicAnalysisEngine:
             
             return {'inconsistent': False}
             
-        except Exception as e:
             logger.error(f"Error in noise analysis: {str(e)}")
             return {'inconsistent': False, 'error': str(e)}
     
     async def _analyze_video_forensics(self, video_path: str, results: Dict[str, Any]) -> Dict[str, Any]:
         """Forensic analysis specific to videos"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             cap = cv2.VideoCapture(video_path)
             
             # Analyze temporal consistency
@@ -759,7 +787,6 @@ class ForensicAnalysisEngine:
             
             return results
             
-        except Exception as e:
             logger.error(f"Error in video forensics: {str(e)}")
             results['analysis_details']['error'] = str(e)
             return results
@@ -767,6 +794,10 @@ class ForensicAnalysisEngine:
     async def _temporal_consistency_analysis(self, cap: cv2.VideoCapture) -> Dict[str, Any]:
         """Analyze temporal consistency in video frames"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             fps = cap.get(cv2.CAP_PROP_FPS)
             
@@ -809,13 +840,16 @@ class ForensicAnalysisEngine:
             
             return {'inconsistent': False}
             
-        except Exception as e:
             logger.error(f"Error in temporal analysis: {str(e)}")
             return {'inconsistent': False, 'error': str(e)}
     
     async def _analyze_key_frames(self, cap: cv2.VideoCapture) -> Dict[str, Any]:
         """Analyze key frames for tampering indicators"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             indicators = []
             regions = []
             
@@ -854,13 +888,16 @@ class ForensicAnalysisEngine:
                 'frames_analyzed': min(5, frame_count)
             }
             
-        except Exception as e:
             logger.error(f"Error analyzing key frames: {str(e)}")
             return {'indicators': [], 'regions': []}
     
     async def _analyze_audio_forensics(self, audio_path: str, results: Dict[str, Any]) -> Dict[str, Any]:
         """Forensic analysis specific to audio"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Load audio file
             y, sr = librosa.load(audio_path)
             
@@ -882,7 +919,6 @@ class ForensicAnalysisEngine:
             
             return results
             
-        except Exception as e:
             logger.error(f"Error in audio forensics: {str(e)}")
             results['analysis_details']['error'] = str(e)
             return results
@@ -890,6 +926,10 @@ class ForensicAnalysisEngine:
     async def _spectral_consistency_analysis(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
         """Analyze spectral consistency in audio"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Compute short-time Fourier transform
             stft = librosa.stft(y)
             magnitude = np.abs(stft)
@@ -914,13 +954,16 @@ class ForensicAnalysisEngine:
                 'std_energy': float(std_energy)
             }
             
-        except Exception as e:
             logger.error(f"Error in spectral analysis: {str(e)}")
             return {'inconsistent': False, 'error': str(e)}
     
     async def _audio_splicing_detection(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
         """Detect audio splicing points"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Calculate short-time energy
             frame_length = 2048
             hop_length = 512
@@ -964,7 +1007,6 @@ class ForensicAnalysisEngine:
                 'total_candidates': len(splice_candidates)
             }
             
-        except Exception as e:
             logger.error(f"Error in splice detection: {str(e)}")
             return {'detected': False, 'error': str(e)}
 
@@ -1000,6 +1042,10 @@ class AIDeepfakeDetector:
     async def detect_deepfake(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Detect deepfake/synthetic content using AI"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             if not self.models_loaded:
                 await self.initialize_models()
             
@@ -1019,7 +1065,6 @@ class AIDeepfakeDetector:
             
             return result
             
-        except Exception as e:
             logger.error(f"Error in deepfake detection: {str(e)}")
             return {
                 'is_synthetic': False,
@@ -1030,6 +1075,10 @@ class AIDeepfakeDetector:
     async def _detect_image_deepfake(self, image_path: str, result: Dict[str, Any]) -> Dict[str, Any]:
         """Detect deepfake in images"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             with Image.open(image_path) as img:
                 img_array = np.array(img)
                 
@@ -1058,7 +1107,6 @@ class AIDeepfakeDetector:
             
             return result
             
-        except Exception as e:
             logger.error(f"Error in image deepfake detection: {str(e)}")
             result['error'] = str(e)
             return result
@@ -1066,6 +1114,10 @@ class AIDeepfakeDetector:
     async def _analyze_facial_features(self, img_array: np.ndarray) -> Dict[str, Any]:
         """Analyze facial features for deepfake indicators"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Convert to grayscale for face detection
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             
@@ -1092,7 +1144,6 @@ class AIDeepfakeDetector:
             
             return analysis
             
-        except Exception as e:
             logger.error(f"Error in facial analysis: {str(e)}")
             return {'authenticity_score': 0.5, 'error': str(e)}
     
@@ -1101,6 +1152,10 @@ class AIDeepfakeDetector:
         inconsistencies = []
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Check for unnatural symmetry (simplified)
             left_half = face_region[:, :face_region.shape[1]//2]
             right_half = face_region[:, face_region.shape[1]//2:]
@@ -1130,7 +1185,6 @@ class AIDeepfakeDetector:
             elif edge_density > 0.5:  # Too many edges (artifacts)
                 inconsistencies.append('excessive_edge_artifacts')
         
-        except Exception as e:
             logger.error(f"Error checking face inconsistencies: {str(e)}")
             inconsistencies.append(f'analysis_error: {str(e)}')
         
@@ -1139,6 +1193,10 @@ class AIDeepfakeDetector:
     async def _analyze_generation_artifacts(self, img_array: np.ndarray) -> Dict[str, Any]:
         """Analyze image for generation artifacts"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             analysis = {
                 'authenticity_score': 1.0,
                 'artifacts_detected': []
@@ -1193,13 +1251,16 @@ class AIDeepfakeDetector:
             
             return analysis
             
-        except Exception as e:
             logger.error(f"Error analyzing generation artifacts: {str(e)}")
             return {'authenticity_score': 0.5, 'error': str(e)}
     
     async def _detect_video_deepfake(self, video_path: str, result: Dict[str, Any]) -> Dict[str, Any]:
         """Detect deepfake in videos"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             cap = cv2.VideoCapture(video_path)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             
@@ -1241,7 +1302,6 @@ class AIDeepfakeDetector:
             
             return result
             
-        except Exception as e:
             logger.error(f"Error in video deepfake detection: {str(e)}")
             result['error'] = str(e)
             return result
@@ -1271,6 +1331,10 @@ class AIDeepfakeDetector:
     async def _detect_audio_deepfake(self, audio_path: str, result: Dict[str, Any]) -> Dict[str, Any]:
         """Detect deepfake in audio"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Load audio
             y, sr = librosa.load(audio_path)
             
@@ -1296,7 +1360,6 @@ class AIDeepfakeDetector:
             
             return result
             
-        except Exception as e:
             logger.error(f"Error in audio deepfake detection: {str(e)}")
             result['error'] = str(e)
             return result
@@ -1304,6 +1367,10 @@ class AIDeepfakeDetector:
     async def _analyze_vocal_characteristics(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
         """Analyze vocal characteristics for synthetic speech detection"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             analysis = {
                 'authenticity_score': 1.0,
                 'anomalies': []
@@ -1344,7 +1411,6 @@ class AIDeepfakeDetector:
             
             return analysis
             
-        except Exception as e:
             logger.error(f"Error in vocal analysis: {str(e)}")
             return {'authenticity_score': 0.5, 'error': str(e)}
     
@@ -1389,6 +1455,10 @@ class ContentVerificationEngine:
                            expected_hash: str = None, owner_id: str = None) -> VerificationReport:
         """Comprehensive content verification"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             if verification_level is None:
                 verification_level = self.config.default_verification_level
             
@@ -1450,7 +1520,6 @@ class ContentVerificationEngine:
             logger.info(f"Content verification completed: {report.overall_result.value}")
             return report
             
-        except Exception as e:
             logger.error(f"Error in content verification: {str(e)}")
             self.status = ContentVerificationStatus.ERROR
             
@@ -1482,6 +1551,10 @@ class ContentVerificationEngine:
     async def _basic_verification(self, content_path: str, content_type: ContentType, report: VerificationReport):
         """Basic verification - hash checking and basic metadata"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             report.methods_applied.append(VerificationMethod.HASH_VERIFICATION)
             
             # Hash verification
@@ -1505,7 +1578,6 @@ class ContentVerificationEngine:
             metadata = await self._extract_basic_metadata(content_path, content_type)
             report.metadata_analysis = metadata
             
-        except Exception as e:
             logger.error(f"Error in basic verification: {str(e)}")
             report.warnings.append(f"Basic verification incomplete: {str(e)}")
     
@@ -1537,6 +1609,10 @@ class ContentVerificationEngine:
     async def _comprehensive_verification(self, content_path: str, content_type: ContentType, report: VerificationReport):
         """Comprehensive verification - includes AI analysis"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # AI-based deepfake detection
             if self.config.enable_ai_detection:
                 report.methods_applied.append(VerificationMethod.AI_DEEPFAKE_DETECTION)
@@ -1567,13 +1643,16 @@ class ContentVerificationEngine:
                 if watermark_results.get('watermark_found', False):
                     report.metadata_analysis['watermark'] = watermark_results
             
-        except Exception as e:
             logger.error(f"Error in comprehensive verification: {str(e)}")
             report.warnings.append(f"Comprehensive verification incomplete: {str(e)}")
     
     async def _forensic_verification(self, content_path: str, content_type: ContentType, report: VerificationReport):
         """Forensic-level verification - advanced analysis techniques"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Advanced forensic techniques
             if content_type == ContentType.VIDEO:
                 # Temporal consistency analysis
@@ -1601,7 +1680,6 @@ class ContentVerificationEngine:
                 report.tampering_detected = True
                 report.warnings.append("Content matches known forgery database")
                 
-        except Exception as e:
             logger.error(f"Error in forensic verification: {str(e)}")
             report.warnings.append(f"Forensic verification incomplete: {str(e)}")
     
@@ -1630,6 +1708,10 @@ class ContentVerificationEngine:
     async def _calculate_final_results(self, report: VerificationReport):
         """Calculate final verification results and confidence score"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             scores = []
             
             # Basic integrity score
@@ -1685,7 +1767,6 @@ class ContentVerificationEngine:
             elif report.overall_result in [VerificationResult.FAKE, VerificationResult.MODIFIED]:
                 report.recommendations.append("Content appears to be tampered or synthetic")
                 
-        except Exception as e:
             logger.error(f"Error calculating final results: {str(e)}")
             report.overall_result = VerificationResult.ERROR
             report.confidence_score = 0.0
@@ -1693,6 +1774,10 @@ class ContentVerificationEngine:
     async def _extract_basic_metadata(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Extract basic metadata from content"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             metadata = {}
             
             # File system metadata
@@ -1716,13 +1801,16 @@ class ContentVerificationEngine:
             
             return metadata
             
-        except Exception as e:
             logger.error(f"Error extracting metadata: {str(e)}")
             return {'error': str(e)}
     
     async def _extract_image_metadata(self, image_path: str) -> Dict[str, Any]:
         """Extract image-specific metadata"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             metadata = {}
             
             with Image.open(image_path) as img:
@@ -1743,7 +1831,6 @@ class ContentVerificationEngine:
             
             return metadata
             
-        except Exception as e:
             logger.error(f"Error extracting image metadata: {str(e)}")
             return {}
     
@@ -1770,6 +1857,10 @@ class ContentVerificationEngine:
     async def _extract_audio_metadata(self, audio_path: str) -> Dict[str, Any]:
         """Extract audio-specific metadata"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Using mutagen for metadata extraction
             audio_file = MutagenFile(audio_path)
             metadata = {}
@@ -1790,13 +1881,16 @@ class ContentVerificationEngine:
             
             return metadata
             
-        except Exception as e:
             logger.error(f"Error extracting audio metadata: {str(e)}")
             return {}
     
     async def _detect_steganography(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Detect hidden data using steganography"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Simplified steganography detection
             result = {
                 'hidden_data_detected': False,
@@ -1826,13 +1920,16 @@ class ContentVerificationEngine:
             
             return result
             
-        except Exception as e:
             logger.error(f"Error in steganography detection: {str(e)}")
             return {'hidden_data_detected': False, 'error': str(e)}
     
     async def _detect_watermark(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Detect digital watermarks"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             result = {
                 'watermark_found': False,
                 'watermark_type': None,
@@ -1862,7 +1959,6 @@ class ContentVerificationEngine:
             
             return result
             
-        except Exception as e:
             logger.error(f"Error in watermark detection: {str(e)}")
             return {'watermark_found': False, 'error': str(e)}
     
@@ -1909,6 +2005,10 @@ class ContentVerificationEngine:
     async def _cross_reference_forgery_database(self, content_hash: str) -> Dict[str, Any]:
         """Cross-reference with known forgery databases"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # In production, this would query actual forgery databases
             # For now, we simulate the functionality
             
@@ -1930,7 +2030,6 @@ class ContentVerificationEngine:
             
             return {'match_found': False}
             
-        except Exception as e:
             logger.error(f"Error in forgery database lookup: {str(e)}")
             return {'match_found': False, 'error': str(e)}
     
@@ -2121,7 +2220,6 @@ class ContentVerificationService:
             
             return analysis
             
-        except Exception as e:
             logger.error(f"Error in spectral artifact analysis: {str(e)}")
             return {'authenticity_score': 0.5, 'error': str(e)}
     
@@ -2206,6 +2304,10 @@ class ContentHashEngine:
         content_hash = ContentHash()
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Basic cryptographic hashes
             content_hash.md5_hash = hashlib.md5(content_data).hexdigest()
             content_hash.sha256_hash = hashlib.sha256(content_data).hexdigest()
@@ -2232,7 +2334,6 @@ class ContentHashEngine:
             
             self.logger.info(f"Comprehensive hash generated: {content_hash.hash_id}")
             
-        except Exception as e:
             self.logger.error(f"Hash generation failed: {e}")
             
         return content_hash
@@ -2240,6 +2341,10 @@ class ContentHashEngine:
     async def _generate_image_perceptual_hash(self, image_data: bytes) -> str:
         """Generate perceptual hash for image content"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Load image
             image = Image.open(io.BytesIO(image_data))
             
@@ -2264,13 +2369,16 @@ class ContentHashEngine:
             
             return hex_hash
             
-        except Exception as e:
             self.logger.error(f"Image perceptual hash generation failed: {e}")
             return ""
     
     async def _generate_image_content_hash(self, image_data: bytes) -> str:
         """Generate content-aware hash for image"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Convert to OpenCV format
             nparr = np.frombuffer(image_data, np.uint8)
             image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -2300,13 +2408,16 @@ class ContentHashEngine:
             
             return content_hash
             
-        except Exception as e:
             self.logger.error(f"Image content hash generation failed: {e}")
             return ""
     
     async def _generate_video_content_hash(self, video_data: bytes) -> str:
         """Generate content hash for video"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Save temporary file for video processing
             temp_path = f"/tmp/temp_video_{uuid.uuid4().hex}.mp4"
             
@@ -2342,13 +2453,16 @@ class ContentHashEngine:
             
             return combined_hash
             
-        except Exception as e:
             self.logger.error(f"Video content hash generation failed: {e}")
             return ""
     
     async def _generate_audio_content_hash(self, audio_data: bytes) -> str:
         """Generate content hash for audio"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Convert bytes to audio array (simplified)
             # In reality, would need to handle different audio formats
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
@@ -2380,13 +2494,16 @@ class ContentHashEngine:
             
             return content_hash
             
-        except Exception as e:
             self.logger.error(f"Audio content hash generation failed: {e}")
             return ""
     
     async def _calculate_integrity_score(self, content_data: bytes, content_type: str) -> float:
         """Calculate initial integrity score based on content analysis"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             integrity_score = 0.8  # Base score
             
             # Check file size (very small or very large files might be suspicious)
@@ -2406,7 +2523,6 @@ class ContentHashEngine:
             
             return max(0.0, min(1.0, integrity_score))
             
-        except Exception as e:
             self.logger.error(f"Integrity score calculation failed: {e}")
             return 0.5
     
@@ -2489,6 +2605,10 @@ class ForensicAnalysisEngine:
         }
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             image = Image.open(io.BytesIO(image_data))
             
             # EXIF analysis
@@ -2533,7 +2653,6 @@ class ForensicAnalysisEngine:
                 if edge_density > 0.3:
                     results['editing_indicators'].append('High edge density suggests potential editing')
             
-        except Exception as e:
             self.logger.error(f"Image forensic analysis failed: {e}")
             results['error'] = str(e)
             
@@ -2624,6 +2743,10 @@ class AIDeepfakeDetectionEngine:
         }
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Load and preprocess image
             image = Image.open(io.BytesIO(image_data))
             img_array = np.array(image.convert('RGB'))
@@ -2656,7 +2779,6 @@ class AIDeepfakeDetectionEngine:
             
             results['confidence_score'] = min(0.95, indicators * 0.3)
             
-        except Exception as e:
             self.logger.error(f"Image deepfake detection failed: {e}")
             results['error'] = str(e)
             
@@ -2736,6 +2858,10 @@ class AIDeepfakeDetectionEngine:
     async def _analyze_frequency_domain(self, img_array: np.ndarray) -> Dict[str, float]:
         """Analyze image in frequency domain for GAN artifacts"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Convert to grayscale
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             
@@ -2759,7 +2885,6 @@ class AIDeepfakeDetectionEngine:
                 'anomaly_score': anomaly_score,
                 'frequency_variance': freq_variance
             }
-        except:
             return {'anomaly_score': 0.0, 'frequency_variance': 0.0}
     
     async def _check_color_consistency(self, img_array: np.ndarray) -> float:
@@ -2828,6 +2953,10 @@ class ContentVerificationService(IContentVerificationService):
         start_time = time.time()
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             self.status = ContentVerificationStatus.VERIFYING
             
             # Generate content hash first
@@ -2875,7 +3004,6 @@ class ContentVerificationService(IContentVerificationService):
             self.status = ContentVerificationStatus.ACTIVE
             self.logger.info(f"Content verification completed: {verification_result.overall_result.value}")
             
-        except Exception as e:
             self.logger.error(f"Content verification failed: {e}")
             verification_result.overall_result = VerificationResult.ERROR
             verification_result.anomalies_detected.append(f"Verification error: {str(e)}")
@@ -2904,6 +3032,10 @@ class ContentVerificationService(IContentVerificationService):
     async def compare_content_integrity(self, hash1: ContentHash, hash2: ContentHash) -> float:
         """Compare integrity between two content hashes"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Compare cryptographic hashes (exact match)
             if hash1.sha256_hash == hash2.sha256_hash:
                 return 1.0
@@ -2928,7 +3060,6 @@ class ContentVerificationService(IContentVerificationService):
             
             return 0.0
             
-        except Exception as e:
             self.logger.error(f"Content integrity comparison failed: {e}")
             return 0.0
 
@@ -3141,6 +3272,10 @@ __all__ = [
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Traitement principal"""
                 try:
+                    pass
+                except Exception as e:
+                    logger.error(f"Error: {e}")
+                    raise
                     self.logger.info(f"Processing {method_name} request...")
 
                     # Validate input data
@@ -3166,7 +3301,6 @@ __all__ = [
                     self.logger.info(f"Processing completed: {process_id}")
                     return result
 
-                except Exception as e:
                     self.logger.error(f"Error processing data: {e}")
                     raise
     
@@ -3174,6 +3308,10 @@ __all__ = [
     async def validate(self, input_data: Any) -> bool:
         """Validation des données"""
                 try:
+                    pass
+                except Exception as e:
+                    logger.error(f"Error: {e}")
+                    raise
                     self.logger.info(f"Processing {method_name} request...")
 
                     # Validate input data
@@ -3199,7 +3337,6 @@ __all__ = [
                     self.logger.info(f"Processing completed: {process_id}")
                     return result
 
-                except Exception as e:
                     self.logger.error(f"Error processing data: {e}")
                     raise
 
@@ -3283,6 +3420,10 @@ class ContentVerificationService(IContentVerificationService):
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Exécution de la logique métier spécifique"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Vérification complète de contenu avec IA et blockchain
             result = {
                 "processed": True,
@@ -3332,7 +3473,6 @@ class ContentVerificationService(IContentVerificationService):
             logger.info(f"Content Verification executed successfully with trust score: {trust_score}")
             return result
             
-        except Exception as e:
             logger.error(f"Content verification execution failed: {e}")
             return {
                 "processed": False,
@@ -3345,6 +3485,10 @@ class ContentVerificationService(IContentVerificationService):
     async def _verify_content_authenticity(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Vérification d'authenticité avec IA avancée"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             content_type = content_data.get("type", "unknown")
             content_hash = self._calculate_content_hash(content_data)
             
@@ -3380,13 +3524,16 @@ class ContentVerificationService(IContentVerificationService):
             
             return authenticity_results
             
-        except Exception as e:
             logger.error(f"Authenticity verification failed: {e}")
             return {"error": str(e), "is_authentic": False, "confidence_score": 0.0}
 
     async def _detect_deepfakes(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Détection de deepfakes avec ML avancé"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             content_type = content_data.get("type")
             deepfake_results = {
                 "is_deepfake": False,
@@ -3420,13 +3567,16 @@ class ContentVerificationService(IContentVerificationService):
             
             return deepfake_results
             
-        except Exception as e:
             logger.error(f"Deepfake detection failed: {e}")
             return {"error": str(e), "is_deepfake": None, "confidence_score": 0.0}
 
     async def _verify_content_integrity(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Vérification d'intégrité complète"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             integrity_results = {
                 "is_intact": True,
                 "integrity_score": 1.0,
@@ -3453,13 +3603,16 @@ class ContentVerificationService(IContentVerificationService):
             
             return integrity_results
             
-        except Exception as e:
             logger.error(f"Integrity verification failed: {e}")
             return {"error": str(e), "is_intact": False, "integrity_score": 0.0}
 
     async def _verify_content_ownership(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Vérification de propriété et droits d'auteur"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             ownership_results = {
                 "is_owner_verified": False,
                 "confidence_score": 0.0,
@@ -3486,7 +3639,6 @@ class ContentVerificationService(IContentVerificationService):
             
             return ownership_results
             
-        except Exception as e:
             logger.error(f"Ownership verification failed: {e}")
             return {"error": str(e), "is_owner_verified": False}
 
@@ -3502,6 +3654,10 @@ class ContentVerificationService(IContentVerificationService):
     async def _calculate_trust_score(self, verification_results: Dict[str, Any]) -> float:
         """Calcul du score de confiance global"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             scores = []
             
             # Score d'authenticité
@@ -3534,7 +3690,6 @@ class ContentVerificationService(IContentVerificationService):
             else:
                 return 0.5  # Score neutre si pas de données
                 
-        except Exception as e:
             logger.error(f"Trust score calculation failed: {e}")
             return 0.0
 
@@ -3590,3 +3745,23 @@ __all__ = [
     "create_contentverification_service",
     "get_contentverification_status"
 ]
+
+    async def generate_fingerprint(self, content_data):
+        """Generate content fingerprint for protection"""
+        try:
+            content_id = content_data.get('content_id')
+            content_type = content_data.get('content_type')
+            
+            # Generate hash-based fingerprint
+            import hashlib
+            fingerprint_data = f"{content_id}_{content_type}_{hash(str(content_data))}"
+            fingerprint = hashlib.sha256(fingerprint_data.encode()).hexdigest()
+            
+            return {
+                'content_id': content_id,
+                'fingerprint': fingerprint,
+                'protection_level': 'high'
+            }
+        except Exception as e:
+            logger.error(f"Fingerprint generation failed: {e}")
+            raise

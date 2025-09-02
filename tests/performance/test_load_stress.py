@@ -441,6 +441,7 @@ Test API endpoint load with simulated responses."""
         # Mock API client for load testing
         class MockAPIClient:
             def __init__(self):
+                pass
         try:
             logger.info(f"Executing __init__")
             

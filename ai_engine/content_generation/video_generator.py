@@ -89,6 +89,7 @@ class VideoContentGenerator(BaseContentGenerator):
     """
     Advanced video content generator that creates high-quality video content
     for various purposes including:
+        pass
     - Social media videos (Instagram Reels, TikTok, YouTube Shorts)
     - Promotional videos and advertisements
     - Product showcase videos

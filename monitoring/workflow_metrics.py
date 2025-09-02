@@ -32,22 +32,18 @@ Workflow metrics collection"""
             raise
     async def setup_content_tracking(self, config: Dict[str, Any]):
         """
-Setup content tracking configuration"""
+        """Setup content tracking configuration"""
         workflow_id = config.get("workflow_id")
         content_id = config.get("content_id")
         
         tracking_config = {
             "workflow_id": workflow_id,
             "content_id": content_id,
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
+            "start_time": datetime.now(),
+            "status": "initialized"
+        }
+        
+        return tracking_config
             return result
             
         except Exception as e:

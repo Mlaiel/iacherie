@@ -143,16 +143,8 @@ Track test results across test runs"""
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing add_pass")
-            
-            # Implementation for add_pass
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"add_pass completed successfully")
-            return result
+            logger.error(f"__init__ failed: {e}")
+            raise
             
         except Exception as e:
         try:

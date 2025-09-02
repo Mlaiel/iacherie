@@ -95,6 +95,7 @@ class ImageContentGenerator(BaseContentGenerator):
     """
     Advanced image content generator that creates high-quality images
     for various purposes including:
+        pass
     - Social media posts and stories
     - Product photography and showcases
     - Marketing materials and advertisements

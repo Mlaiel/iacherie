@@ -348,6 +348,10 @@ Return list of required configuration keys for this agent"""
         start_time = time.time()
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Pre-processing security and validation
             await self._validate_request(request)
             await self._check_rate_limits(request)
@@ -448,6 +452,10 @@ Comprehensive request validation"""
     async def _validate_request_data(self, data: Dict[str, Any]):
         """Validate request data structure and content"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Basic data structure validation
             if not isinstance(data, dict):
                 raise ValidationError("Request data must be a dictionary")
@@ -507,25 +515,12 @@ Comprehensive request validation"""
         
         # User/Tenant ID validation
         for id_field in ['user_id', 'tenant_id']:
-        try:
-            logger.info(f"Executing _custom_data_validation")
-            
-            # Implementation for _custom_data_validation
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_custom_data_validation completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_custom_data_validation failed: {e}")
-            raise
+            if id_field in data:
                 id_value = str(data[id_field])
-                if not id_value.strip():
-                    raise ValidationError(f"{id_field} cannot be empty")
-                if len(id_value) > 255:
-                    raise ValidationError(f"{id_field} cannot exceed 255 characters")
+                if len(id_value) < 1 or len(id_value) > 50:
+                    raise ValidationError(f"{id_field} must be between 1 and 50 characters")
+        
+        return True
 
     async def _custom_data_validation(self, data: Dict[str, Any]):
         """Agent-specific custom validation - to be overridden by subclasses"""
@@ -651,40 +646,11 @@ Get comprehensive agent health status"""
         # Wait for active requests to complete
         start_time = time.time()
         while self._active_requests and (time.time() - start_time) < timeout_seconds:
-        try:
-            logger.info(f"Executing __repr__")
-            
-            # Implementation for __repr__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__repr__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__repr__ failed: {e}")
-            raise
-        self.shutdown_requested = True
-        self.status = AgentStatus.SHUTDOWN
-        
-        # Wait for active requests to complete
-        start_time = time.time()
-        while self._active_requests and (time.time() - start_time) < timeout_seconds:
-            await asyncio.sleep(0.1)
-        
-        # Force close remaining requests
-        if self._active_requests:
-            logger.warning(f"Force closing {len(self._active_requests)} active requests")
-            self._active_requests.clear()
-        
-        # Close connections
-        if self._db_session:
-            await self._db_session.close()
-        if self._redis_client:
-            await self._redis_client.close()
+            time.sleep(0.1)  # Brief wait
         
         logger.info(f"Agent {self.agent_id} shutdown completed")
+        return True
     
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(id={self.agent_id}, type={self.agent_type}, status={self.status.value})"
+        """String representation of the agent"""
+        return f"BaseAgent(id={self.agent_id}, status={self.status.value}, type={self.agent_type})"

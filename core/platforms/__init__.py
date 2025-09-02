@@ -131,6 +131,30 @@ SUPPORTED_PLATFORMS = {
 
 def get_platform_count() -> int:
     """
+    try:
+        logger.info(f"Executing get_platform_categories")
+        
+        # Implement operation logic
+        result = await self._execute_operation()
+        
+        logger.info(f"get_platform_categories completed successfully")
+        return result
+        
+    except Exception as e:
+        logger.error(f"get_platform_categories failed: {e}")
+        raise
+    try:
+        logger.info(f"Executing get_platform_count")
+        
+        # Implement operation logic
+        result = await self._execute_operation()
+        
+        logger.info(f"get_platform_count completed successfully")
+        return result
+        
+    except Exception as e:
+        logger.error(f"get_platform_count failed: {e}")
+        raise
 Get total number of supported platforms"""
     return len(SUPPORTED_PLATFORMS)
 

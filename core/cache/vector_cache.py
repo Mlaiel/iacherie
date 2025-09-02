@@ -1350,6 +1350,7 @@ Remove vector from FAISS index (marks for rebuild)"""
                 # Restore vector entries
                 vectors_metadata = metadata.get('vectors_metadata', {})
                 for content_id, entry_data in vectors_metadata.items():
+                    pass
                     # Reconstruct VectorEntry from saved data
                     # Note: vector data is not saved with metadata, only in FAISS index
                     # This is a simplified restoration - in production, you might want

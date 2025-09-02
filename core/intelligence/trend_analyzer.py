@@ -1339,6 +1339,7 @@ Initialize ensemble of prediction models"""
                 )
             
             def forward(self, x):
+                pass
         try:
             logger.info(f"Executing forward")
             

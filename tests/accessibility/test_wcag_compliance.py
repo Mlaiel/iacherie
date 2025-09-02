@@ -222,20 +222,20 @@ class WCAGComplianceTester:
         )
     
     def check_keyboard_accessibility(self) -> AccessibilityResult:
-        try:
-            logger.info(f"Executing check_keyboard_accessibility")
-            
-            # Implementation for check_keyboard_accessibility
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"check_keyboard_accessibility completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"check_keyboard_accessibility failed: {e}")
-            raise
+        """Check keyboard accessibility (WCAG 2.1.1)"""
+        html_content = self.test_content["html_content"]
+        issues = []
+        recommendations = []
+        
+        # Check for interactive elements without keyboard support
+        interactive_elements = re.findall(r'<(button|input|select|textarea|a)[^>]*>', html_content)
+        
+        for element in interactive_elements:
+            if 'tabindex="-1"' in element:
+                issues.append("Interactive element not keyboard accessible")
+                recommendations.append("Remove tabindex=-1 or add keyboard event handlers")
+        
+        return AccessibilityResult(
             check_id="2.1.1",
             check_name="Keyboard",
             passed=len(issues) == 0,

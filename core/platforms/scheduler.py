@@ -135,6 +135,18 @@ Scheduled task definition"""
     
     def __post_init__(self):
         """
+        try:
+            logger.info(f"Executing __post_init__")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"__post_init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__post_init__ failed: {e}")
+            raise
 Post-initialization processing"""
         if not self.task_id:
             self.task_id = str(uuid.uuid4())
@@ -181,6 +193,30 @@ Post-initialization processing"""
     
     def should_execute(self) -> bool:
         """Check if task should be executed now"""
+        try:
+            logger.info(f"Executing mark_execution_failed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_failed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_failed failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing mark_execution_complete")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_complete completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_complete failed: {e}")
+            raise
         if not self.enabled or self.status in [TaskStatus.RUNNING, TaskStatus.CANCELLED]:
             return False
         
@@ -261,6 +297,18 @@ Advanced scheduler for platform operations"""
     
     def set_content_distributor(self, distributor: PlatformDistributor):
         """
+        try:
+            logger.info(f"Executing set_content_distributor")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"set_content_distributor completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"set_content_distributor failed: {e}")
+            raise
 Set content distributor for distribution tasks"""
         self.content_distributor = distributor
     

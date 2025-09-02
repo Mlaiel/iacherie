@@ -229,6 +229,10 @@ Initialize business workflow definitions"""
         logger.info(f"🚀 Starting workflow for content {content.content_id}")
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Stage 1: Content Analysis
             analysis_result = await self._process_content_analysis(content)
             results.append(analysis_result)
@@ -430,6 +434,24 @@ Initialize business workflow definitions"""
     
     def get_workflow_status(self) -> Dict[str, Any]:
         """
+        try:
+            logger.info(f"Executing workflow get_workflow_status")
+            
+            # Initialize workflow state
+            workflow_state = {"status": "processing", "steps": []}
+            
+            # Execute business workflow steps
+            for step in self._get_workflow_steps():
+                result = await self._execute_workflow_step(step)
+                workflow_state["steps"].append(result)
+            
+            workflow_state["status"] = "completed"
+            logger.info(f"Workflow get_workflow_status completed successfully")
+            return workflow_state
+            
+        except Exception as e:
+            logger.error(f"Workflow get_workflow_status failed: {e}")
+            raise
 Get status of workflows"""
         return {
             'total_workflows': len(self.workflows),
@@ -450,6 +472,10 @@ Get status of workflows"""
         workflow_results = []
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Stage 1: Content Upload and Initial Processing
             upload_result = await self._process_content_upload(content)
             workflow_results.append(upload_result)
@@ -563,4 +589,84 @@ if __name__ == "__main__":
         print("🏆 Business Logic Core test completed successfully!")
     
     # Run the test
+
+    async def initialize_business_core(self):
+        """Initialize the core business logic system"""
+        try:
+            logger.info("Initializing business logic core...")
+            
+            # Initialize core components
+            self.agents = {}
+            self.workflows = {}
+            self.metrics = {}
+            
+            # Setup business rules engine
+            await self._setup_business_rules()
+            
+            # Initialize monetization engine
+            await self._setup_monetization_engine()
+            
+            # Initialize protection system
+            await self._setup_protection_system()
+            
+            logger.info("Business logic core initialized successfully")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize business core: {e}")
+            raise
+
+
+    async def _setup_business_rules(self):
+        """Setup business rules engine"""
+        self.business_rules = {
+            'content_validation': True,
+            'monetization_enabled': True,
+            'protection_required': True,
+            'analytics_tracking': True
+        }
+        return self.business_rules
+
+
+    async def _setup_monetization_engine(self):
+        """Setup monetization engine"""
+        self.monetization_config = {
+            'payment_methods': ['stripe', 'paypal'],
+            'commission_rate': 0.15,
+            'min_payout': 50.0,
+            'currency': 'USD'
+        }
+        return self.monetization_config
+
+
+    async def _setup_protection_system(self):
+        """Setup content protection system"""
+        self.protection_config = {
+            'fingerprinting_enabled': True,
+            'dmca_protection': True,
+            'watermarking': True,
+            'usage_tracking': True
+        }
+        return self.protection_config
+
+
+    async def _validate_content(self, content_data):
+        """Validate content data"""
+        errors = []
+        
+        if not content_data.get('content_id'):
+            errors.append('Missing content_id')
+        
+        if not content_data.get('content_type'):
+            errors.append('Missing content_type')
+        
+        if not content_data.get('creator_id'):
+            errors.append('Missing creator_id')
+        
+        return {
+            'valid': len(errors) == 0,
+            'errors': errors,
+            'content_score': 100 - (len(errors) * 25)
+        }
+
     asyncio.run(test_business_logic_core())

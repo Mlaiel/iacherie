@@ -267,12 +267,10 @@ Check if platform is active"""
                     # Return response
                     return {"status": "success", "data": result}
             
-                except Exception as e:
                     logger.error(f"API handler get_user_content failed: {e}")
                     return {"status": "error", "message": str(e)}
             return result
             
-        except Exception as e:
             logger.error(f"search_content failed: {e}")
             raise
                         raise ValueError("Invalid request")
@@ -283,12 +281,10 @@ Check if platform is active"""
                     # Return response
                     return {"status": "success", "data": result}
             
-                except Exception as e:
                     logger.error(f"API handler get_analytics failed: {e}")
                     return {"status": "error", "message": str(e)}
             return result
             
-        except Exception as e:
             logger.error(f"upload_content failed: {e}")
             raise
             result = None  # Replace with actual implementation
@@ -296,12 +292,10 @@ Check if platform is active"""
             logger.info(f"refresh_token completed successfully")
             return result
             
-        except Exception as e:
             logger.error(f"refresh_token failed: {e}")
             raise
             return result
             
-        except Exception as e:
             logger.error(f"authenticate failed: {e}")
             raise
     @abstractmethod

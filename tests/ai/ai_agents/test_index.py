@@ -231,6 +231,7 @@ Test getting list of available agents"""
 Test registering a custom agent type"""
         class CustomTestAgent:
             def __init__(self):
+                pass
         try:
             logger.info(f"Executing __init__")
             

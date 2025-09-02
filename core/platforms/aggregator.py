@@ -120,6 +120,30 @@ Multi-platform data aggregation and analytics engine"""
     
     def __init__(self, platform_manager: PlatformManager):
         """
+        try:
+            logger.info(f"Executing _initialize_default_metrics")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_initialize_default_metrics completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_default_metrics failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 Initialize aggregator with platform manager"""
         self.platform_manager = platform_manager
         self.content_mappings: Dict[str, CrossPlatformContent] = {}
