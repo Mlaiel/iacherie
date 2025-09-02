@@ -242,6 +242,11 @@ class IntelligentCacheManager(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"initialize_cache_system failed: {e}")
+            raise
+    
+    async def cache_operation(self, key: str) -> Any:
+        """Perform cache operation"""
         try:
                     # Request validation
                     if not key:

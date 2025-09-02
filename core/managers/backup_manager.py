@@ -305,8 +305,14 @@ class BackupManager:
             return await self._upload_to_local(job, backup_path)
         elif destination == BackupDestination.S3:
             return await self._upload_to_s3(job, backup_path)
+        elif destination == BackupDestination.AZURE:
+            return await self._upload_to_azure(job, backup_path)
+        elif destination == BackupDestination.GCP:
+            return await self._upload_to_gcp(job, backup_path)
+        elif destination == BackupDestination.SFTP:
+            return await self._upload_to_sftp(job, backup_path)
         else:
-            raise NotImplementedError(f"Destination {destination} not yet implemented")
+            raise ValueError(f"Unsupported backup destination: {destination}")
     
     async def _upload_to_local(self, job: BackupJob, backup_path: str) -> str:
         """Upload backup to local filesystem"""
@@ -346,6 +352,130 @@ class BackupManager:
             
         except ClientError as e:
             raise Exception(f"S3 upload failed: {e}")
+    
+    async def _upload_to_azure(self, job: BackupJob, backup_path: str) -> str:
+        """Upload backup to Azure Blob Storage"""
+        try:
+            from azure.storage.blob.aio import BlobServiceClient
+        except ImportError:
+            raise Exception("Azure Storage library not installed. Install with: pip install azure-storage-blob")
+        
+        dest_config = job.config.destination_config
+        connection_string = dest_config.get('connection_string')
+        container_name = dest_config.get('container', 'backups')
+        
+        if not connection_string:
+            raise ValueError("Azure connection string not configured")
+        
+        blob_name = f"{job.job_id}/{os.path.basename(backup_path)}"
+        
+        try:
+            async with BlobServiceClient.from_connection_string(connection_string) as blob_service_client:
+                blob_client = blob_service_client.get_blob_client(
+                    container=container_name, 
+                    blob=blob_name
+                )
+                
+                with open(backup_path, 'rb') as data:
+                    await blob_client.upload_blob(data, overwrite=True)
+                
+                azure_path = f"azure://{container_name}/{blob_name}"
+                logger.info(f"Backup uploaded to Azure: {azure_path}")
+                return azure_path
+                
+        except Exception as e:
+            raise Exception(f"Azure upload failed: {e}")
+    
+    async def _upload_to_gcp(self, job: BackupJob, backup_path: str) -> str:
+        """Upload backup to Google Cloud Storage"""
+        try:
+            from google.cloud import storage
+        except ImportError:
+            raise Exception("Google Cloud Storage library not installed. Install with: pip install google-cloud-storage")
+        
+        dest_config = job.config.destination_config
+        bucket_name = dest_config.get('bucket')
+        credentials_path = dest_config.get('credentials_path')
+        
+        if not bucket_name:
+            raise ValueError("GCP bucket name not configured")
+        
+        # Initialize client
+        if credentials_path and os.path.exists(credentials_path):
+            client = storage.Client.from_service_account_json(credentials_path)
+        else:
+            # Use default credentials
+            client = storage.Client()
+        
+        blob_name = f"{job.job_id}/{os.path.basename(backup_path)}"
+        
+        try:
+            bucket = client.bucket(bucket_name)
+            blob = bucket.blob(blob_name)
+            
+            blob.upload_from_filename(backup_path)
+            
+            gcp_path = f"gs://{bucket_name}/{blob_name}"
+            logger.info(f"Backup uploaded to GCP: {gcp_path}")
+            return gcp_path
+            
+        except Exception as e:
+            raise Exception(f"GCP upload failed: {e}")
+    
+    async def _upload_to_sftp(self, job: BackupJob, backup_path: str) -> str:
+        """Upload backup to SFTP server"""
+        try:
+            import asyncssh
+        except ImportError:
+            raise Exception("AsyncSSH library not installed. Install with: pip install asyncssh")
+        
+        dest_config = job.config.destination_config
+        host = dest_config.get('host')
+        port = dest_config.get('port', 22)
+        username = dest_config.get('username')
+        password = dest_config.get('password')
+        private_key = dest_config.get('private_key')
+        remote_path = dest_config.get('remote_path', '/backups')
+        
+        if not host or not username:
+            raise ValueError("SFTP host and username must be configured")
+        
+        remote_file_path = f"{remote_path}/{job.job_id}/{os.path.basename(backup_path)}"
+        
+        try:
+            # Setup connection options
+            connect_kwargs = {
+                'host': host,
+                'port': port,
+                'username': username,
+                'known_hosts': None  # Skip host key verification for simplicity
+            }
+            
+            if private_key:
+                connect_kwargs['client_keys'] = [private_key]
+            elif password:
+                connect_kwargs['password'] = password
+            else:
+                raise ValueError("Either password or private key must be provided for SFTP")
+            
+            async with asyncssh.connect(**connect_kwargs) as conn:
+                async with conn.start_sftp_client() as sftp:
+                    # Create remote directory if needed
+                    remote_dir = os.path.dirname(remote_file_path)
+                    try:
+                        await sftp.makedirs(remote_dir)
+                    except Exception:
+                        pass  # Directory might already exist
+                    
+                    # Upload file
+                    await sftp.put(backup_path, remote_file_path)
+                    
+                    sftp_path = f"sftp://{host}:{port}{remote_file_path}"
+                    logger.info(f"Backup uploaded to SFTP: {sftp_path}")
+                    return sftp_path
+                    
+        except Exception as e:
+            raise Exception(f"SFTP upload failed: {e}")
     
     async def _store_backup_metadata(self, job: BackupJob):
         """Store backup metadata for tracking"""
@@ -427,6 +557,12 @@ class BackupManager:
             return job.backup_path
         elif job.config.destination == BackupDestination.S3:
             return await self._download_from_s3(job)
+        elif job.config.destination == BackupDestination.AZURE:
+            return await self._download_from_azure(job)
+        elif job.config.destination == BackupDestination.GCP:
+            return await self._download_from_gcp(job)
+        elif job.config.destination == BackupDestination.SFTP:
+            return await self._download_from_sftp(job)
         else:
             raise NotImplementedError(f"Download from {job.config.destination} not implemented")
     
@@ -454,6 +590,148 @@ class BackupManager:
         except ClientError as e:
             os.unlink(temp_file.name)
             raise Exception(f"Failed to download from S3: {e}")
+    
+    async def _download_from_azure(self, job: BackupJob) -> str:
+        """Download backup from Azure Blob Storage to temporary file"""
+        try:
+            from azure.storage.blob.aio import BlobServiceClient
+        except ImportError:
+            raise Exception("Azure Storage library not installed")
+        
+        # Parse Azure path
+        azure_path = job.backup_path
+        if not azure_path.startswith('azure://'):
+            raise ValueError(f"Invalid Azure path: {azure_path}")
+        
+        path_parts = azure_path[8:].split('/', 1)
+        container = path_parts[0]
+        blob_name = path_parts[1]
+        
+        # Create temporary file
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.tar.gz')
+        temp_file.close()
+        
+        try:
+            dest_config = job.config.destination_config
+            connection_string = dest_config.get('connection_string')
+            
+            async with BlobServiceClient.from_connection_string(connection_string) as blob_service_client:
+                blob_client = blob_service_client.get_blob_client(
+                    container=container, 
+                    blob=blob_name
+                )
+                
+                with open(temp_file.name, 'wb') as download_file:
+                    download_stream = await blob_client.download_blob()
+                    async for chunk in download_stream.chunks():
+                        download_file.write(chunk)
+                
+                return temp_file.name
+                
+        except Exception as e:
+            os.unlink(temp_file.name)
+            raise Exception(f"Failed to download from Azure: {e}")
+    
+    async def _download_from_gcp(self, job: BackupJob) -> str:
+        """Download backup from Google Cloud Storage to temporary file"""
+        try:
+            from google.cloud import storage
+        except ImportError:
+            raise Exception("Google Cloud Storage library not installed")
+        
+        # Parse GCP path
+        gcp_path = job.backup_path
+        if not gcp_path.startswith('gs://'):
+            raise ValueError(f"Invalid GCP path: {gcp_path}")
+        
+        path_parts = gcp_path[5:].split('/', 1)
+        bucket_name = path_parts[0]
+        blob_name = path_parts[1]
+        
+        # Create temporary file
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.tar.gz')
+        temp_file.close()
+        
+        try:
+            dest_config = job.config.destination_config
+            credentials_path = dest_config.get('credentials_path')
+            
+            # Initialize client
+            if credentials_path and os.path.exists(credentials_path):
+                client = storage.Client.from_service_account_json(credentials_path)
+            else:
+                client = storage.Client()
+            
+            bucket = client.bucket(bucket_name)
+            blob = bucket.blob(blob_name)
+            
+            blob.download_to_filename(temp_file.name)
+            return temp_file.name
+            
+        except Exception as e:
+            os.unlink(temp_file.name)
+            raise Exception(f"Failed to download from GCP: {e}")
+    
+    async def _download_from_sftp(self, job: BackupJob) -> str:
+        """Download backup from SFTP server to temporary file"""
+        try:
+            import asyncssh
+        except ImportError:
+            raise Exception("AsyncSSH library not installed")
+        
+        # Parse SFTP path
+        sftp_path = job.backup_path
+        if not sftp_path.startswith('sftp://'):
+            raise ValueError(f"Invalid SFTP path: {sftp_path}")
+        
+        # Extract host, port, and file path
+        path_without_protocol = sftp_path[7:]  # Remove sftp://
+        if ':' in path_without_protocol:
+            host_port, file_path = path_without_protocol.split('/', 1)
+            if ':' in host_port:
+                host, port = host_port.split(':')
+                port = int(port)
+            else:
+                host = host_port
+                port = 22
+            file_path = '/' + file_path
+        else:
+            parts = path_without_protocol.split('/', 1)
+            host = parts[0]
+            port = 22
+            file_path = '/' + parts[1] if len(parts) > 1 else '/'
+        
+        # Create temporary file
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.tar.gz')
+        temp_file.close()
+        
+        try:
+            dest_config = job.config.destination_config
+            username = dest_config.get('username')
+            password = dest_config.get('password')
+            private_key = dest_config.get('private_key')
+            
+            # Setup connection options
+            connect_kwargs = {
+                'host': host,
+                'port': port,
+                'username': username,
+                'known_hosts': None
+            }
+            
+            if private_key:
+                connect_kwargs['client_keys'] = [private_key]
+            elif password:
+                connect_kwargs['password'] = password
+            
+            async with asyncssh.connect(**connect_kwargs) as conn:
+                async with conn.start_sftp_client() as sftp:
+                    await sftp.get(file_path, temp_file.name)
+                    return temp_file.name
+                    
+        except Exception as e:
+            os.unlink(temp_file.name)
+            raise Exception(f"Failed to download from SFTP: {e}")
     
     async def cleanup_old_backups(self):
         """Clean up old backups based on retention policies"""
@@ -489,6 +767,12 @@ class BackupManager:
                 os.unlink(job.backup_path)
         elif job.config.destination == BackupDestination.S3:
             await self._delete_from_s3(job)
+        elif job.config.destination == BackupDestination.AZURE:
+            await self._delete_from_azure(job)
+        elif job.config.destination == BackupDestination.GCP:
+            await self._delete_from_gcp(job)
+        elif job.config.destination == BackupDestination.SFTP:
+            await self._delete_from_sftp(job)
     
     async def _delete_from_s3(self, job: BackupJob):
         """Delete backup from S3"""
@@ -506,6 +790,127 @@ class BackupManager:
             
         except ClientError as e:
             logger.error(f"Failed to delete S3 backup: {e}")
+    
+    async def _delete_from_azure(self, job: BackupJob):
+        """Delete backup from Azure Blob Storage"""
+        try:
+            from azure.storage.blob.aio import BlobServiceClient
+        except ImportError:
+            logger.error("Azure Storage library not installed")
+            return
+        
+        if not job.backup_path:
+            return
+        
+        try:
+            # Parse Azure path
+            azure_path = job.backup_path
+            path_parts = azure_path[8:].split('/', 1)  # Remove azure://
+            container = path_parts[0]
+            blob_name = path_parts[1]
+            
+            dest_config = job.config.destination_config
+            connection_string = dest_config.get('connection_string')
+            
+            async with BlobServiceClient.from_connection_string(connection_string) as blob_service_client:
+                blob_client = blob_service_client.get_blob_client(
+                    container=container, 
+                    blob=blob_name
+                )
+                await blob_client.delete_blob()
+                
+        except Exception as e:
+            logger.error(f"Failed to delete Azure backup: {e}")
+    
+    async def _delete_from_gcp(self, job: BackupJob):
+        """Delete backup from Google Cloud Storage"""
+        try:
+            from google.cloud import storage
+        except ImportError:
+            logger.error("Google Cloud Storage library not installed")
+            return
+        
+        if not job.backup_path:
+            return
+        
+        try:
+            # Parse GCP path
+            gcp_path = job.backup_path
+            path_parts = gcp_path[5:].split('/', 1)  # Remove gs://
+            bucket_name = path_parts[0]
+            blob_name = path_parts[1]
+            
+            dest_config = job.config.destination_config
+            credentials_path = dest_config.get('credentials_path')
+            
+            # Initialize client
+            if credentials_path and os.path.exists(credentials_path):
+                client = storage.Client.from_service_account_json(credentials_path)
+            else:
+                client = storage.Client()
+            
+            bucket = client.bucket(bucket_name)
+            blob = bucket.blob(blob_name)
+            blob.delete()
+            
+        except Exception as e:
+            logger.error(f"Failed to delete GCP backup: {e}")
+    
+    async def _delete_from_sftp(self, job: BackupJob):
+        """Delete backup from SFTP server"""
+        try:
+            import asyncssh
+        except ImportError:
+            logger.error("AsyncSSH library not installed")
+            return
+        
+        if not job.backup_path:
+            return
+        
+        try:
+            # Parse SFTP path (similar to download)
+            sftp_path = job.backup_path
+            path_without_protocol = sftp_path[7:]  # Remove sftp://
+            
+            if ':' in path_without_protocol:
+                host_port, file_path = path_without_protocol.split('/', 1)
+                if ':' in host_port:
+                    host, port = host_port.split(':')
+                    port = int(port)
+                else:
+                    host = host_port
+                    port = 22
+                file_path = '/' + file_path
+            else:
+                parts = path_without_protocol.split('/', 1)
+                host = parts[0]
+                port = 22
+                file_path = '/' + parts[1] if len(parts) > 1 else '/'
+            
+            dest_config = job.config.destination_config
+            username = dest_config.get('username')
+            password = dest_config.get('password')
+            private_key = dest_config.get('private_key')
+            
+            # Setup connection options
+            connect_kwargs = {
+                'host': host,
+                'port': port,
+                'username': username,
+                'known_hosts': None
+            }
+            
+            if private_key:
+                connect_kwargs['client_keys'] = [private_key]
+            elif password:
+                connect_kwargs['password'] = password
+            
+            async with asyncssh.connect(**connect_kwargs) as conn:
+                async with conn.start_sftp_client() as sftp:
+                    await sftp.remove(file_path)
+                    
+        except Exception as e:
+            logger.error(f"Failed to delete SFTP backup: {e}")
 
 
 # Global backup manager instance
